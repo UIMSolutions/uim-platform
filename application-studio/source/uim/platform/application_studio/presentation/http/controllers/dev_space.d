@@ -73,7 +73,7 @@ class DevSpaceController : ManageHttpController {
         auto data = precheck.data;
         DevSpaceDTO dto;
         dto.id = precheck.id;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.devSpaceTypeId = DevSpaceTypeId(data.getString("devSpaceTypeId"));

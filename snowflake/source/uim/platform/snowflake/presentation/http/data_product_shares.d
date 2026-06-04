@@ -35,7 +35,7 @@ class DataProductShareController : ManageHttpController {
   void handleCreate(HTTPServerRequest req, HTTPServerResponse res) {
     auto data = precheck.data;
     CreateShareRequest r;
-    r.tenantId      = req.getTenantId;
+    r.tenantId      = tenantId;
     r.id            = precheck.id;
     r.accountId     = data.getString("accountId");
     r.connectorId   = data.getString("connectorId");
@@ -52,7 +52,7 @@ class DataProductShareController : ManageHttpController {
   void handleUpdate(HTTPServerRequest req, HTTPServerResponse res) {
     auto data = precheck.data;
     UpdateShareRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.id       = extractIdFromPath(req.requestPath.to!string);
     r.status   = data.getString("status");
     r.comment  = data.getString("comment");

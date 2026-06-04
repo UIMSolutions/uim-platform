@@ -36,7 +36,7 @@ class UserAssignmentController : ManageHttpController {
 
     auto data = precheck.data;
     CreateUserAssignmentRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.userId = data.getString("userId");
     r.userEmail = data.getString("userEmail");
     r.roleCollectionId = RoleCollectionId(data.getString("roleCollectionId"));

@@ -37,7 +37,7 @@ class BuildpackController : ManageHttpController {
 
     auto data = precheck.data;
     auto r = CreateBuildpackRequest();
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.name = data.getString("name");
     r.type_ = parseBuildpackType(data.getString("type"));
     r.position = data.getInteger("position");
@@ -100,7 +100,7 @@ class BuildpackController : ManageHttpController {
     auto data = precheck.data;
     auto r = UpdateBuildpackRequest();
     r.id = buildpackId;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.name = data.getString("name");
     r.position = data.getInteger("position");
     r.stack = data.getString("stack");

@@ -55,7 +55,7 @@ class DomainDashboardController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         RefreshDashboardRequest r;
-        r.tenantId = tenantId;
+        r.tenantId = precheck.tenantId;
 
         auto result = usecase.refreshDashboard(r);
         if (!result.success)

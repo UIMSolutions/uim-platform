@@ -90,7 +90,7 @@ class EventMessageController : ManageHttpController {
 
         EventMessageDTO dto;
         dto.messageId = EventMessageId(createId);
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.serviceId = BrokerServiceId(data.getString("serviceId"));
         dto.topicId = data.getString("topicId");
         dto.queueId = data.getString("queueId"); // TODO: dto.publisherId = data.getString("publisherId");

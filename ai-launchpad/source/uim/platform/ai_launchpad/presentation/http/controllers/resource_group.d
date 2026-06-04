@@ -59,7 +59,7 @@ class ResourceGroupController : ManageHttpController {
     auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
     CreateResourceGroupRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.connectionId = connectionId;
     r.resourceGroupId = data.getString("resourceGroupId");
     r.labels = jsonPairArray(data, "labels");
@@ -111,7 +111,7 @@ class ResourceGroupController : ManageHttpController {
 
     auto data = precheck.data;
     PatchResourceGroupRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.connectionId = connectionId;
     r.resourceGroupId = id;
     r.labels = jsonPairArray(data, "labels");

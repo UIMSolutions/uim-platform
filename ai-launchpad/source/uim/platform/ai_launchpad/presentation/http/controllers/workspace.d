@@ -39,7 +39,7 @@ class WorkspaceController : ManageHttpController {
 
     auto data = precheck.data;
     CreateWorkspaceRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.name = data.getString("name");
     r.description = data.getString("description");
 
@@ -97,7 +97,7 @@ class WorkspaceController : ManageHttpController {
     auto data = precheck.data;
     PatchWorkspaceRequest r;
     r.workspaceId = id;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.name = data.getString("name");
     r.description = data.getString("description");
 

@@ -63,7 +63,7 @@ class FolderController : ManageHttpController {
         auto data = precheck.data;
         FolderDTO dto;
         dto.folderId = FolderId(precheck.id);
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.repositoryId = RepositoryId(data.getString("repositoryId"));
         dto.parentFolderId = FolderId(data.getString("parentFolderId"));
         dto.name = data.getString("name");
@@ -133,7 +133,7 @@ class FolderController : ManageHttpController {
 
         FolderDTO dto;
         dto.folderId = id;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.allowedDocumentTypes = data.getString("allowedDocumentTypes");

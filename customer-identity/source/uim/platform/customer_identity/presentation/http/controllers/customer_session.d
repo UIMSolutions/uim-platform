@@ -50,7 +50,7 @@ class CustomerSessionController : ManageHttpController {
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         CustomerSessionDTO dto;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.customerId = CustomerId(data.getString("customerId"));
         dto.token = data.getString("token");
         dto.deviceInfo = data.getString("deviceInfo");

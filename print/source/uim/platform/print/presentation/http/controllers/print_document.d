@@ -71,7 +71,7 @@ class PrintDocumentController : ManageHttpController {
         auto data = precheck.data;
             PrintDocumentDTO dto;
             dto.documentId = PrintDocumentId(precheck.id);
-            dto.tenantId = tenantId;
+            dto.tenantId = precheck.tenantId;
             dto.fileName = data.getString("fileName");
             dto.mimeType = data.getString("mimeType");
             dto.format = data.getString("format");

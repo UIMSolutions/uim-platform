@@ -42,7 +42,7 @@ class TrainingJobController : ManageHttpController {
     auto data = precheck.data;
 
     CreateTrainingJobRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
     r.documentTypeId = data.getString("documentTypeId");
     r.schemaId = data.getString("schemaId");
@@ -100,7 +100,7 @@ class TrainingJobController : ManageHttpController {
     auto id = TrainingJobId(precheck.id);
     auto data = precheck.data;
     PatchTrainingJobRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
     r.trainingJobId = id;
     r.targetStatus = data.getString("targetStatus");

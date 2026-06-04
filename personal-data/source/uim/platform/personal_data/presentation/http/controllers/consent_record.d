@@ -37,7 +37,7 @@ class ConsentRecordController : ManageHttpController {
 
         auto data = precheck.data;
         CreateConsentRecordRequest r;
-        r.tenantId = tenantId;
+        r.tenantId = precheck.tenantId;
         r.dataSubjectId = data.getString("dataSubjectId");
         r.purposeId = data.getString("purposeId");
         r.consentText = data.getString("consentText");

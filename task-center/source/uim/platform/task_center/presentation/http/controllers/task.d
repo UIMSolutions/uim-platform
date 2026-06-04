@@ -42,7 +42,7 @@ class TaskController : ManageHttpController {
 
         auto data = precheck.data;
         CreateTaskRequest r;
-        r.tenantId = tenantId;
+        r.tenantId = precheck.tenantId;
         r.id = precheck.id;
         r.taskDefinitionId = data.getString("taskDefinitionId");
         r.providerId = data.getString("providerId");
@@ -144,7 +144,7 @@ override protected Json updateHandler(HTTPServerRequest req) {
 
     auto data = precheck.data;
     UpdateTaskRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.taskId = id;
     r.title = data.getString("title");
     r.description = data.getString("description");

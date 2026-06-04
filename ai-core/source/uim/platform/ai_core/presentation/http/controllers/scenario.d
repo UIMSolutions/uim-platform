@@ -68,7 +68,7 @@ class ScenarioController : ManageHttpController {
     auto rgId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
 
     CreateScenarioRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.resourceGroupId = rgId;
     r.scenarioId = ScenarioId(data.getString("id"));
     r.name = data.getString("name");

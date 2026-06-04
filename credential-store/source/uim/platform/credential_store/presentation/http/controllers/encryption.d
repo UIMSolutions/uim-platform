@@ -38,7 +38,7 @@ class EncryptionController : HttpController {
     const namespaceIdStr = data.getString("namespaceId");
 
     GenerateDekRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.namespaceId = NamespaceId(req.headers.get("X-Namespace-Id", namespaceIdStr));
     r.keyringName = data.getString("keyringName");
 
@@ -73,7 +73,7 @@ class EncryptionController : HttpController {
     const namespaceIdStr = data.getString("namespaceId");
 
     EncryptDekRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.namespaceId = NamespaceId(req.headers.get("X-Namespace-Id", namespaceIdStr));
     r.keyringName = data.getString("keyringName");
     r.dek = data.getString("dek");
@@ -108,7 +108,7 @@ class EncryptionController : HttpController {
     const namespaceIdStr = data.getString("namespaceId");
 
     DecryptDekRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.namespaceId = NamespaceId(req.headers.get("X-Namespace-Id", namespaceIdStr));
     r.keyringName = data.getString("keyringName");
     r.encryptedDek = data.getString("encryptedDek");

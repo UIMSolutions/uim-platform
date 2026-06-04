@@ -54,7 +54,7 @@ class FunctionModuleController : HttpController {
         auto tenantId = precheck.tenantId;
             auto data = precheck.data;
             CreateFunctionModuleRequest r;
-            r.tenantId      = req.getTenantId;
+            r.tenantId      = tenantId;
             r.id            = precheck.id;
             r.functionGroup = data.getString("functionGroup", "");
             r.shortText     = data.getString("shortText", "");
@@ -102,7 +102,7 @@ class FunctionModuleController : HttpController {
         auto tenantId = precheck.tenantId;
             auto data = precheck.data;
             UpdateFunctionModuleRequest r;
-            r.tenantId      = req.getTenantId;
+            r.tenantId      = tenantId;
             r.id            = extractIdFromPath(req.requestURI.to!string);
             r.shortText     = data.getString("shortText", "");
             r.remoteEnabled = data.getString("remoteEnabled", "ENABLED");

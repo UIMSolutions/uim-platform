@@ -43,9 +43,9 @@ class PlatformController : ManageHttpController {
 
         auto data = precheck.data;
         ScanJobDTO dto;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
       CreateEnvironmentRequest r;
-      r.tenantId = tenantId;
+      r.tenantId = precheck.tenantId;
       r.subaccountId = SubaccountId(req.headers.get("X-Subaccount-Id", ""));
       r.name = data.getString("name");
       r.description = data.getString("description");
@@ -122,7 +122,7 @@ class PlatformController : ManageHttpController {
       auto id = KymaEnvironmentId(precheck.id);
       auto data = precheck.data;
       UpdateEnvironmentRequest r;
-      r.tenantId = tenantId;
+      r.tenantId = precheck.tenantId;
       r.id = id;
       r.name = data.getString("name");
       r.description = data.getString("description");

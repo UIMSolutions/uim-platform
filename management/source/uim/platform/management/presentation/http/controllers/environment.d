@@ -61,7 +61,7 @@ class PlatformController : ManageHttpController {
 
     auto data = precheck.data;
     CreateEnvironmentInstanceRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.subaccountId = data.getString("subaccountId");
     r.globalAccountId = data.getString("globalAccountId");
     r.name = data.getString("name");
@@ -116,7 +116,7 @@ class PlatformController : ManageHttpController {
 
     auto data = precheck.data;
     UpdateEnvironmentInstanceRequest request;
-    request.tenantId = tenantId;
+    request.tenantId = precheck.tenantId;
     request.instanceId = id;
     request.description = data.getString("description");
     request.memoryQuotaMb = data.getInteger("memoryQuotaMb");

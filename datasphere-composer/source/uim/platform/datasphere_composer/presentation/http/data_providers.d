@@ -46,7 +46,7 @@ class DataProviderController : ManageHttpController {
   void handleCreate(HTTPServerRequest req, HTTPServerResponse res) {
     auto data = precheck.data;
     CreateDataProviderRequest r;
-    r.tenantId    = req.getTenantId;
+    r.tenantId    = tenantId;
     r.id          = precheck.id;
     r.name        = data.getString("name");
     r.description = data.getString("description");
@@ -63,7 +63,7 @@ class DataProviderController : ManageHttpController {
   void handleUpdate(HTTPServerRequest req, HTTPServerResponse res) {
     auto data = precheck.data;
     UpdateDataProviderRequest r;
-    r.tenantId    = req.getTenantId;
+    r.tenantId    = tenantId;
     r.id          = extractIdFromPath(req.requestPath.to!string);
     r.name        = data.getString("name");
     r.description = data.getString("description");

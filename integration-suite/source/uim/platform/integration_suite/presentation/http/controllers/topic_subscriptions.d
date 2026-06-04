@@ -29,7 +29,7 @@ public:
 
         auto data = precheck.data;
       CreateSubscriptionRequest r;
-      r.tenantId     = req.getTenantId;
+      r.tenantId     = tenantId;
       r.id           = precheck.id;
       r.name         = data.getString("name");
       r.queueId      = data.getString("queueId");

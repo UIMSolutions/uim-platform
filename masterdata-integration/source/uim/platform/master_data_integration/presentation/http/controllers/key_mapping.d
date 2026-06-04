@@ -46,9 +46,9 @@ class KeyMappingController : ManageHttpController {
 
         auto data = precheck.data;
         ScanJobDTO dto;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
       CreateKeyMappingRequest r;
-      r.tenantId = tenantId;
+      r.tenantId = precheck.tenantId;
       r.masterDataObjectId = data.getString("masterDataObjectId");
       r.category = data.getString("category");
       r.objectType = data.getString("objectType");
@@ -101,7 +101,7 @@ class KeyMappingController : ManageHttpController {
   protected void handleLookup(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       LookupKeyRequest r;
-      r.tenantId = tenantId;
+      r.tenantId = precheck.tenantId;
       r.sourceClientId = req.params.get("sourceClientId", "");
       r.sourceLocalKey = req.params.get("sourceLocalKey", "");
       r.targetClientId = req.params.get("targetClientId", "");

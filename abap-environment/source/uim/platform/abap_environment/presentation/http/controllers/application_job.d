@@ -61,7 +61,7 @@ class ApplicationJobController : ManageHttpController {
     auto data = precheck.data;
 
     CreateApplicationJobRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.systemInstanceId = SystemInstanceId(data.getString("systemInstanceId"));
     r.name = data.getString("name");
     r.description = data.getString("description");
@@ -105,7 +105,7 @@ class ApplicationJobController : ManageHttpController {
     auto data = req.json;
 
     UpdateApplicationJobRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.applicationJobId = id;
     r.description = data.getString("description");
     r.frequency = data.getString("frequency");

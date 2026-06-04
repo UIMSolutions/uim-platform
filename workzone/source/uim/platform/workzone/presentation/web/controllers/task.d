@@ -28,7 +28,7 @@ class TaskWebController : ManageHttpController {
 
     private void handleList(scope HTTPServerRequest req,
                             scope HTTPServerResponse res) {
-        immutable tenantId  = req.getTenantId;
+        immutable tenantId  = tenantId;
         immutable assigneeId = req.query.get("assignee", "");
         try {
             WZTask[] tasks;

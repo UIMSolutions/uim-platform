@@ -39,7 +39,7 @@ class RemoteTableController : ManageHttpController {
     auto data = precheck.data;
     
     CreateRemoteTableRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
     r.connectionId = ConnectionId(data.getString("connectionId"));
     r.name = data.getString("name");

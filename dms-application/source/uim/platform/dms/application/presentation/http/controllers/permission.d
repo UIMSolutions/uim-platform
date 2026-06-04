@@ -39,7 +39,7 @@ class PermissionController : ManageHttpController {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
       auto r = CreatePermissionRequest();
-      r.tenantId = tenantId;
+      r.tenantId = precheck.tenantId;
       r.resourceId = data.getString("resourceId");
       r.resourceType = data.getString("resourceType").to!ResourceType;
       r.userId = UserId(data.getString("userId"));
@@ -135,7 +135,7 @@ class PermissionController : ManageHttpController {
     auto data = precheck.data;
     auto r = UpdatePermissionRequest();
     r.id = id;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.level = data.getString("level").to!PermissionLevel;
 
     auto result = permissions.updatePermission(r);

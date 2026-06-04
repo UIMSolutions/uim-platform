@@ -38,9 +38,9 @@ class DataLakeController : ManageHttpController {
 
         auto data = precheck.data;
         ScanJobDTO dto;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
       CreateDataLakeRequest r;
-      r.tenantId = tenantId;
+      r.tenantId = precheck.tenantId;
       r.instanceId = data.getString("instanceId");
       r.id = precheck.id;
       r.name = data.getString("name");
@@ -134,7 +134,7 @@ class DataLakeController : ManageHttpController {
 
       auto data = precheck.data;
       UpdateDataLakeRequest r;
-      r.tenantId = tenantId;
+      r.tenantId = precheck.tenantId;
       r.id = precheck.id;
       r.name = data.getString("name");
       r.description = data.getString("description");

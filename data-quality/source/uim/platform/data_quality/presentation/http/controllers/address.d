@@ -37,7 +37,7 @@ class AddressController : HttpController {
     auto tenantId = precheck.tenantId;
     auto data = precheck.data;
     auto r = CleanseAddressRequest();
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.sourceRecordId = data.getString("sourceRecordId");
     r.line1 = data.getString("line1");
     r.line2 = data.getString("line2");
@@ -67,7 +67,7 @@ class AddressController : HttpController {
     auto tenantId = precheck.tenantId;
     auto data = precheck.data;
     auto batchReq = CleanseBatchAddressRequest();
-    batchReq.tenantId = tenantId;
+    batchReq.tenantId = precheck.tenantId;
 
     foreach (item; data.getArray("addresses")) {
       if (item.isObject) {

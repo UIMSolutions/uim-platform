@@ -61,7 +61,7 @@ class BusinessUserController : ManageHttpController {
     auto data = precheck.data;
 
     CreateBusinessUserRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.systemInstanceId = SystemInstanceId(data.getString("systemInstanceId"));
     r.username = data.getString("username");
     r.firstName = data.getString("firstName");
@@ -109,7 +109,7 @@ class BusinessUserController : ManageHttpController {
       return errorResponse("Invalid business user ID", 400);
 
     UpdateBusinessUserRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.businessUserId = id;
     r.firstName = data.getString("firstName");
     r.lastName = data.getString("lastName");

@@ -34,7 +34,7 @@ class SnowflakeTenantUserController : ManageHttpController {
   void handleCreate(HTTPServerRequest req, HTTPServerResponse res) {
     auto data = precheck.data;
     CreateTenantUserRequest r;
-    r.tenantId       = req.getTenantId;
+    r.tenantId       = tenantId;
     r.id             = precheck.id;
     r.email          = data.getString("email");
     r.firstName      = data.getString("firstName");
@@ -51,7 +51,7 @@ class SnowflakeTenantUserController : ManageHttpController {
   void handleUpdate(HTTPServerRequest req, HTTPServerResponse res) {
     auto data = precheck.data;
     UpdateTenantUserRequest r;
-    r.tenantId  = req.getTenantId;
+    r.tenantId  = tenantId;
     r.id        = extractIdFromPath(req.requestPath.to!string);
     r.firstName = data.getString("firstName");
     r.lastName  = data.getString("lastName");

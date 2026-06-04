@@ -68,7 +68,7 @@ class CliEventTopicController {
         if (args.length < 2) { _view.renderError("Usage: update <id> <name>"); return; }
         EventTopicDTO dto;
         dto.topicId  = EventTopicId(args[0]);
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.name     = args[1];
         auto result = _useCase.updateEventTopic(dto);
         if (result.success) _view.renderSuccess("Updated topic: " ~ result.id);

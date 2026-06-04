@@ -44,7 +44,7 @@ class DataRecordController : ManageHttpController {
 
     auto data = precheck.data;
     auto r = CreateDataRecordRequest();
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.datasetId = data.getString("datasetId");
     r.attributes = data.getString("attributes");
     r.labels = data.getString("labels");

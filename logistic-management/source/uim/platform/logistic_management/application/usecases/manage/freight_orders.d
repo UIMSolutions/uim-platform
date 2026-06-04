@@ -34,7 +34,7 @@ public:
     
     FreightOrder fo;
     fo.id = FreightOrderId(generateId());
-    fo.tenantId = tenantId;
+    fo.tenantId = precheck.tenantId;
     fo.orderNumber = req.orderNumber;
     fo.description = req.description;
     fo.originName = req.originName;

@@ -13,15 +13,15 @@ class ManageServiceOfferingsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    ServiceOffering[] listServiceOfferings(TenantId tenantId) {
+    ServiceOffering[] listOfferings(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    ServiceOffering getServiceOffering(TenantId tenantId, ServiceOfferingId id) {
+    ServiceOffering getOffering(TenantId tenantId, ServiceOfferingId id) {
         return repo.findById(tenantId, id);
     }
 
-    CommandResult createServiceOffering(CreateServiceOfferingRequest dto) {
+    CommandResult createOffering(CreateServiceOfferingRequest dto) {
         ServiceOffering e;
         e.initEntity(dto.tenantId);
 
@@ -41,7 +41,7 @@ class ManageServiceOfferingsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, e.id.value, "");
     }
 
-    CommandResult updateServiceOffering(UpdateServiceOfferingRequest dto) {
+    CommandResult updateOffering(UpdateServiceOfferingRequest dto) {
         auto existing = repo.findById(dto.tenantId, dto.id);
         if (existing.isNull)
             return CommandResult(false, "", "Service offering not found");
@@ -57,7 +57,7 @@ class ManageServiceOfferingsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteServiceOffering(TenantId tenantId, ServiceOfferingId id) {
+    CommandResult deleteOffering(TenantId tenantId, ServiceOfferingId id) {
         auto offering = repo.findById(tenantId, id);
         if (offering.isNull)
             return CommandResult(false, "", "Service offering not found");

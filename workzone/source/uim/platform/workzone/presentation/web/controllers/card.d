@@ -29,11 +29,11 @@ class CardWebController : ManageHttpController {
 
     private void handleList(scope HTTPServerRequest req,
                             scope HTTPServerResponse res) {
-        immutable tenantId = req.getTenantId;
+        immutable tenantId = precheck.tenantId;
         try {
             auto cards = useCase.listCards(tenantId);
             CardListViewModel vm;
-            vm.tenantId = tenantId;
+            vm.tenantId = precheck.tenantId;
             foreach (c; cards)
                 vm.items ~= CardViewModel.from(c);
             res.writeBody(renderCardList(vm), "text/html; charset=utf-8");

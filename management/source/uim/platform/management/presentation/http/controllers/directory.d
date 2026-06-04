@@ -65,7 +65,7 @@ class DirectoryController : ManageHttpController {
     auto data = precheck.data;
 
     CreateDirectoryRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.accountId = data.getString("globalAccountId");
     r.parentDirectoryId = data.getString("parentDirectoryId");
     r.displayName = data.getString("displayName");
@@ -119,7 +119,7 @@ class DirectoryController : ManageHttpController {
       return errorResponse("Invalid directory ID", 400);
 
     UpdateDirectoryRequest request;
-    request.tenantId = tenantId;
+    request.tenantId = precheck.tenantId;
     request.directoryId = id;
     request.displayName = data.getString("displayName");
     request.description = data.getString("description");

@@ -68,7 +68,7 @@ class PipelineController : ManageHttpController {
         auto data = precheck.data;
         PipelineDTO dto;
         dto.pipelineId = PipelineId(data.getString("pipelineId", ""));
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.name = data.getString("name", "");
         dto.description = data.getString("description", "");
         dto.configurationYaml = data.getString("configurationYaml", "");
@@ -94,7 +94,7 @@ class PipelineController : ManageHttpController {
             return Json.emptyObject.set("error", "Invalid pipeline ID").set("statusCode", 400);
 
         PipelineDTO dto;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.pipelineId = id;
         dto.name = data.getString("name", "");
         dto.description = data.getString("description", "");

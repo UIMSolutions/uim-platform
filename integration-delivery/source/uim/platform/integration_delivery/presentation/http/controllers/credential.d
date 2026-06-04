@@ -68,7 +68,7 @@ class CredentialController : ManageHttpController {
         auto data = precheck.data;
         CredentialDTO dto;
         dto.credentialId = CredentialId(data.getString("credentialId", ""));
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.name = data.getString("name", "");
         dto.description = data.getString("description", "");
         dto.username = data.getString("username", "");
@@ -95,7 +95,7 @@ class CredentialController : ManageHttpController {
             return Json.emptyObject.set("error", "Invalid credential ID").set("statusCode", 400);
 
         CredentialDTO dto;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.credentialId = id;
         dto.name = data.getString("name", "");
         dto.description = data.getString("description", "");

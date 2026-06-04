@@ -48,7 +48,7 @@ class AppController : ManageHttpController {
 
     auto data = precheck.data;
     auto r = CreateAppRequest();
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.spaceId = data.getString("spaceId");
     r.name = data.getString("name");
     r.instances = data.getInteger("instances", 0);
@@ -117,7 +117,7 @@ class AppController : ManageHttpController {
     auto data = precheck.data;
     auto r = UpdateAppRequest();
     r.appId = appId;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.name = data.getString("name");
     r.instances = data.getInteger("instances", 0);
     r.memoryMb = data.getInteger("memoryMb", 0);
@@ -225,7 +225,7 @@ class AppController : ManageHttpController {
     auto data = precheck.data;
     auto r = ScaleAppRequest();
     r.appId = appId;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.instances = data.getInteger("instances", 0);
     r.memoryMb = data.getInteger("memoryMb", 0);
     r.diskMb = data.getInteger("diskMb", 0);

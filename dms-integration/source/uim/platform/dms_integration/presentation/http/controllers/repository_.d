@@ -54,7 +54,7 @@ class RepositoryController : ManageHttpController {
         auto data = precheck.data;
         RepositoryDTO dto;
         dto.repositoryId = RepositoryId(precheck.id);
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.repositoryType = data.getString("repositoryType");
@@ -126,7 +126,7 @@ class RepositoryController : ManageHttpController {
         default:
             RepositoryDTO dto;
             dto.repositoryId = id;
-            dto.tenantId = tenantId;
+            dto.tenantId = precheck.tenantId;
             dto.name = data.getString(
                 "name");
             dto.description = data.getString("description");

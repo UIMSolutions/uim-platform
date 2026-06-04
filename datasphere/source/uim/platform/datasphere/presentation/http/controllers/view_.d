@@ -39,7 +39,7 @@ class ViewController : ManageHttpController {
     auto data = precheck.data;
 
     CreateViewRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
     r.name = data.getString("name");
     r.description = data.getString("description");
@@ -131,7 +131,7 @@ class ViewController : ManageHttpController {
     auto data = precheck.data;
 
     UpdateViewRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.spaceId = SpaceId(
       req.headers.get("X-Space-Id", ""));
     r.viewId = ViewId(precheck.id);

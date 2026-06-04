@@ -30,7 +30,7 @@ public:
 
         auto data = precheck.data;
       CreateApiProductRequest r;
-      r.tenantId    = req.getTenantId;
+      r.tenantId    = tenantId;
       r.id          = precheck.id;
       r.name        = data.getString("name");
       r.description = data.getString("description");
@@ -77,7 +77,7 @@ public:
         auto tenantId = precheck.tenantId;
       auto data = precheck.data;
       UpdateApiProductRequest r;
-      r.tenantId    = req.getTenantId;
+      r.tenantId    = tenantId;
       r.id          = precheck.id;
       r.name        = data.getString("name");
       r.description = data.getString("description");

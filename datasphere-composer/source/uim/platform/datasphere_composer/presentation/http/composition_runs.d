@@ -43,7 +43,7 @@ class CompositionRunController : ManageHttpController {
   void handleStart(HTTPServerRequest req, HTTPServerResponse res) {
     auto data = precheck.data;
     StartCompositionRunRequest r;
-    r.tenantId      = req.getTenantId;
+    r.tenantId      = tenantId;
     r.id            = precheck.id;
     r.name          = data.getString("name");
     r.triggeredBy   = data.getString("triggeredBy");
@@ -58,7 +58,7 @@ class CompositionRunController : ManageHttpController {
   void handleAction(HTTPServerRequest req, HTTPServerResponse res) {
     auto data = precheck.data;
     CompositionRunActionRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.id       = extractIdFromPath(req.requestPath.to!string);
     r.action   = data.getString("action");
     auto result = usecase.performAction(r);

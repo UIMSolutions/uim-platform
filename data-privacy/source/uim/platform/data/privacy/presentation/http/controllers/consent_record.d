@@ -40,7 +40,7 @@ class ConsentController : ManageHttpController {
     auto tenantId = precheck.tenantId;
     auto data = precheck.data;
     CreateConsentRecordRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.dataSubjectId = data.getString("dataSubjectId");
     r.purpose = data.getString("purpose");
     r.channel = data.getString("channel");
@@ -145,7 +145,7 @@ class ConsentController : ManageHttpController {
     auto data = precheck.data;
     RevokeConsentRequest r;
     r.id = ConsentRecordId(precheck.id);
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
 
     auto result = usecase.revokeConsent(r);
     if (result.hasError)

@@ -45,7 +45,7 @@ class RepositoryController : ManageHttpController {
 
         auto data = precheck.data;
       auto r = CreateRepositoryRequest();
-      r.tenantId = tenantId;
+      r.tenantId = precheck.tenantId;
       r.name = data.getString("name");
       r.description = data.getString("description");
       r.maxFileSize = data.getLong("maxFileSize");
@@ -107,7 +107,7 @@ auto list = items.map!(item => item.toJson()).array.toJson;
       auto data = precheck.data;
       auto r = UpdateRepositoryRequest();
       r.repositoryId = id;
-      r.tenantId = tenantId;
+      r.tenantId = precheck.tenantId;
       r.name = data.getString("name");
       r.description = data.getString("description");
       r.maxFileSize = data.getLong("maxFileSize");

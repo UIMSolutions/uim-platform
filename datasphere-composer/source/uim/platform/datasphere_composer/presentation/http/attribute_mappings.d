@@ -43,7 +43,7 @@ class AttributeMappingController : ManageHttpController {
   void handleCreate(HTTPServerRequest req, HTTPServerResponse res) {
     auto data = precheck.data;
     CreateAttributeMappingRequest r;
-    r.tenantId            = req.getTenantId;
+    r.tenantId            = tenantId;
     r.id                  = precheck.id;
     r.configId            = data.getString("configId");
     r.sourceAttributeName = data.getString("sourceAttributeName");
@@ -62,7 +62,7 @@ class AttributeMappingController : ManageHttpController {
   void handleUpdate(HTTPServerRequest req, HTTPServerResponse res) {
     auto data = precheck.data;
     UpdateAttributeMappingRequest r;
-    r.tenantId            = req.getTenantId;
+    r.tenantId            = tenantId;
     r.id                  = extractIdFromPath(req.requestPath.to!string);
     r.sourceAttributeName = data.getString("sourceAttributeName");
     r.sourceDataType      = data.getString("sourceDataType");

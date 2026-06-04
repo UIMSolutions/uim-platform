@@ -41,7 +41,7 @@ class DocumentController : HttpController {
     auto tenantId = precheck.tenantId;
     auto data = precheck.data;
     CreateDocumentRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
     r.fileName = data.getString("fileName");
     r.mimeType = data.getString("mimeType");
@@ -140,7 +140,7 @@ class DocumentController : HttpController {
 
     auto data = precheck.data;
     ConfirmDocumentRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
     r.documentId = id;
     r.correctedFields = jsonKeyValuePairs(data, "correctedFields");

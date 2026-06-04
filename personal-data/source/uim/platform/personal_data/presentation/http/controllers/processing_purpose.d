@@ -37,7 +37,7 @@ class ProcessingPurposeController : ManageHttpController {
 
         auto data = precheck.data;
             CreateProcessingPurposeRequest r;
-            r.tenantId = tenantId;
+            r.tenantId = precheck.tenantId;
             r.id = precheck.id;
             r.name = data.getString("name");
             r.description = data.getString("description");
@@ -115,7 +115,7 @@ class ProcessingPurposeController : ManageHttpController {
 
             auto data = precheck.data;
             UpdateProcessingPurposeRequest r;
-            r.tenantId = tenantId;
+            r.tenantId = precheck.tenantId;
             r.id = precheck.id;
             r.name = data.getString("name");
             r.description = data.getString("description");

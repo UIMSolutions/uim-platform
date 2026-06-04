@@ -72,7 +72,7 @@ class MobileApplicationController : ManageHttpController {
         auto data = precheck.data;
         MobileApplicationDTO dto;
         dto.applicationId = MobileApplicationId(precheck.id);
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.iconUrl = data.getString("iconUrl");
@@ -108,7 +108,7 @@ class MobileApplicationController : ManageHttpController {
         auto data = precheck.data;
         MobileApplicationDTO dto;
         dto.applicationId = id;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.iconUrl = data.getString("iconUrl");

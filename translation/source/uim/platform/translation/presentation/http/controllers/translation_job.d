@@ -36,7 +36,7 @@ class TranslationJobController : ManageHttpController {
             auto tenantId = precheck.tenantId;
             auto data = precheck.data;
             SubmitTranslationJobRequest r;
-            r.tenantId = tenantId;
+            r.tenantId = precheck.tenantId;
             r.sourceLanguage = data.getString("sourceLanguage");
             r.targetLanguage = data.getString("targetLanguage");
             r.provider = data.getString("provider");

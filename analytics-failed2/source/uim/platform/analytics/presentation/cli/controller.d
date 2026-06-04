@@ -17,7 +17,7 @@ class CliController {
     auto items = useCase.listAssets(tenantId);
 
     CliAssetListModel model;
-    model.tenantId = tenantId;
+    model.tenantId = precheck.tenantId;
     model.count = items.length;
     foreach (item; items) model.assetNames ~= item.name;
 

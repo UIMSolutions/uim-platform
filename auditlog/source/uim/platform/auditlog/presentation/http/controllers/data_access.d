@@ -36,7 +36,7 @@ class DataAccessController : HttpController {
     auto data = precheck.data;
 
     auto r = WriteDataAccessLogRequest();
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.accessedBy = data.getString("accessedBy");
     r.dataSubject = data.getString("dataSubject");
     r.dataObjectType = data.getString("dataObjectType");

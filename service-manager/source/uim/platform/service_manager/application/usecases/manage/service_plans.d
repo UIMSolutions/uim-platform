@@ -13,39 +13,39 @@ class ManageServicePlansUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    ServicePlan[] listByTenant(TenantId tenantId) {
+    ServicePlan[] listPlans(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    ServicePlan getById(TenantId tenantId, ServicePlanId id) {
+    ServicePlan getPlan(TenantId tenantId, ServicePlanId id) {
         return repo.findById(tenantId, id);
     }
 
-    CommandResult createServicePlan(CreateServicePlanRequest dto) {
-        ServicePlan e;
-        e.initEntity(TenantId(dto.tenantId), dto.createdBy);
+    CommandResult createPlan(CreateServicePlanRequest dto) {
+        auto plan = ServicePlan();
+        plan.initEntity(TenantId(dto.tenantId), dto.createdBy);
 
-        e.id = ServicePlanId(currentTimestamp.to!string);
-        e.tenantId = TenantId(dto.tenantId);
-        e.name = dto.name;
-        e.description = dto.description;
-        e.catalogName = dto.catalogName;
-        e.offeringId = ServiceOfferingId(dto.offeringId);
-        e.maxInstances = dto.maxInstances;
-        e.schemas = dto.schemas;
-        e.metadata = dto.metadata;
-        e.createdAt = currentTimestamp;
-        e.updatedAt = e.createdAt;
+        plan.id = ServicePlanId(currentTimestamp.to!string);
+        plan.tenantId = TenantId(dto.tenantId);
+        plan.name = dto.name;
+        plan.description = dto.description;
+        plan.catalogName = dto.catalogName;
+        plan.offeringId = ServiceOfferingId(dto.offeringId);
+        plan.maxInstances = dto.maxInstances;
+        plan.schemas = dto.schemas;
+        plan.metadata = dto.metadata;
+        plan.createdAt = currentTimestamp;
+        plan.updatedAt = plan.createdAt;
 
         if (dto.name.length == 0)
             return CommandResult(false, "", "Service plan name is required");
 
-        repo.save(e);
-        return CommandResult(true, e.id.value, "");
+        repo.save(plan);
+        return CommandResult(true, plan.id.value, "");
     }
 
-    CommandResult updateServicePlan(UpdateServicePlanRequest dto) {
-        auto existing = repo.findById(TenantId(dto.tenantId), ServicePlanId(dto.id));
+    CommandResult updatePlan(UpdateServicePlanRequest dto) {
+        auto existing = repo.findById(dto.tenantId, dto.planId);
         if (existing.isNull)
             return CommandResult(false, "", "Service plan not found");
 
@@ -60,7 +60,7 @@ class ManageServicePlansUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteServicePlan(TenantId tenantId, ServicePlanId id) {
+    CommandResult deletePlan(TenantId tenantId, ServicePlanId id) {
         auto plan = repo.findById(tenantId, id);
         if (plan.isNull)
             return CommandResult(false, "", "Service plan not found");

@@ -37,7 +37,7 @@ class ScopeController : ManageHttpController {
 
     auto data = precheck.data;
     CreateScopeRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.name = data.getString("name");
     r.description = data.getString("description");
     r.appId = data.getString("appId");
@@ -97,7 +97,7 @@ class ScopeController : ManageHttpController {
 
     auto data = precheck.data;
     UpdateScopeRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.scopeId = id;
     r.description = data.getString("description");
 

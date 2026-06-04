@@ -40,7 +40,7 @@ class KeystoreController : ManageHttpController {
     auto tenantId = precheck.tenantId;
     auto data = precheck.data;
     UploadKeystoreRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.accountId = data.getString("accountId");
     r.applicationId = data.getString("applicationId");
     r.subscriptionId = data.getString("subscriptionId");
@@ -150,7 +150,7 @@ class KeystoreController : ManageHttpController {
 
     auto data = precheck.data;
     UpdateKeystoreRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.keystoreId = id;
     r.description = data.getString("description");
     r.content = data.getString("content");

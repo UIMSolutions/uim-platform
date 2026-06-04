@@ -15,7 +15,7 @@ mixin template TenantEntity(TId) {
   long updatedAt; // timestamp of when the entity was last updated
 
   this(TenantId tenantId) {
-    this.tenantId = tenantId;
+    this.tenantId = precheck.tenantId;
     this.id = randomUUID().toString;
     this.createdAt = Clock.currStdTime();
     this.updatedAt = createdAt;
@@ -51,7 +51,7 @@ mixin template TenantEntity(TId) {
 
   void initEntity(TenantId tenantId) {
     this.id = randomUUID();
-    this.tenantId = tenantId;
+    this.tenantId = precheck.tenantId;
     this.createdAt = Clock.currStdTime();
     this.updatedAt = createdAt;
   }
@@ -77,7 +77,7 @@ mixin template TenantEntity(TId) {
   // Call this method when creating a new entity to initialize ID, tenantId, and timestamps
   void createEntity(TenantId tenantId) {
     id = randomUUID();
-    this.tenantId = tenantId;
+    this.tenantId = precheck.tenantId;
     createdAt = Clock.currStdTime();
     updatedAt = createdAt;
   }
@@ -145,7 +145,7 @@ unittest {
     TestEntity entity;
     entity.initEntity(tenantId);
     entity.id = TestId("entity1");
-    entity.tenantId = tenantId;
+    entity.tenantId = precheck.tenantId;
     entity.createdBy = UserId("user1");
     entity.updatedBy = UserId("user1");
     entity.name = "Test Entity";

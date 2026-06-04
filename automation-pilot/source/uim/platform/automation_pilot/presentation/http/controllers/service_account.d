@@ -71,9 +71,9 @@ class ServiceAccountController : ManageHttpController {
 
         auto data = precheck.data;
         ServiceAccountDTO dto;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.serviceAccountId = ServiceAccountId(precheck.id);
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.clientId = data.getString("clientId");
@@ -98,7 +98,7 @@ class ServiceAccountController : ManageHttpController {
 
         auto data = precheck.data;
         ServiceAccountDTO dto;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.serviceAccountId = ServiceAccountId(precheck.id);
         dto.name = data.getString("name");
         dto.description = data.getString("description");

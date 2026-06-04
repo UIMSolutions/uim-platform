@@ -68,7 +68,7 @@ class JobController : ManageHttpController {
         auto data = precheck.data;
         JobDTO dto;
         dto.jobId = JobId(data.getString("jobId", ""));
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.name = data.getString("name", "");
         dto.description = data.getString("description", "");
         dto.branch = data.getString("branch", "main");
@@ -98,7 +98,7 @@ class JobController : ManageHttpController {
             return Json.emptyObject.set("error", "Invalid job ID").set("statusCode", 400);
 
         JobDTO dto;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.jobId = id;
         dto.name = data.getString("name", "");
         dto.description = data.getString("description", "");

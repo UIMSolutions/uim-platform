@@ -18,11 +18,11 @@ class GuiAccessControlController {
     private TenantIf _tenantId;
 
     this(ManageAccessControlsUseCase useCase, TenantIf tenantId = TenantId("default")) {
-        _useCase = useCase; _tenantId = tenantId;
+        _useCase = useCase; _tenantId = precheck.tenantId;
         _model = new GuiAccessControlModel(); _view = new GuiAccessControlView();
     }
 
-    void setTenant(TenantIf tenantId) { _tenantId = tenantId; }
+    void setTenant(TenantIf tenantId) { _tenantId = precheck.tenantId; }
     GuiAccessControlModel model() { return _model; }
 
     Json loadList() {

@@ -35,7 +35,7 @@ class PushRegistrationController : ManageHttpController {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
       RegisterPushRequest r;
-      r.tenantId = tenantId;
+      r.tenantId = precheck.tenantId;
       r.appId = data.getString("appId");
       r.deviceId = data.getString("deviceId");
       r.provider = data.getString("provider");

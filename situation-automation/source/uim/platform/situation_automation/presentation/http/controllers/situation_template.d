@@ -39,7 +39,7 @@ class SituationTemplateController : ManageHttpController {
 
         auto data = precheck.data;
             CreateSituationTemplateRequest r;
-            r.tenantId = tenantId;
+            r.tenantId = precheck.tenantId;
             r.situationTemplateId = precheck.id;
             r.name = data.getString("name");
             r.description = data.getString("description");
@@ -152,7 +152,7 @@ class SituationTemplateController : ManageHttpController {
 
             auto data = precheck.data;
             UpdateSituationTemplateRequest r;
-            r.tenantId = tenantId;
+            r.tenantId = precheck.tenantId;
             r.situationTemplateId = id;
             r.name = data.getString("name");
             r.description = data.getString("description");

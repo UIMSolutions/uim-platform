@@ -63,7 +63,7 @@ class DocumentVersionController : ManageHttpController {
 
         auto data = precheck.data;
         DocumentVersionDTO dto;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.documentId = DocumentId(data.getString("documentId"));
         dto.repositoryId = RepositoryId(data.getString("repositoryId"));
         dto.versionLabel = data.getString("versionLabel");

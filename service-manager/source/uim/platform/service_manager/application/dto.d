@@ -44,6 +44,7 @@ struct CreateServiceBrokerRequest {
 
 struct UpdateServiceBrokerRequest {
     TenantId tenantId;
+    ServiceBrokerId serviceBrokerId;
 
     string name;
     string description;
@@ -67,6 +68,7 @@ struct CreateServiceOfferingRequest {
 
 struct UpdateServiceOfferingRequest {
     TenantId tenantId;
+    ServiceOfferingId serviceOfferingId;
 
     string name;
     string description;
@@ -134,6 +136,8 @@ struct UpdateServiceInstanceRequest {
 // --- Service Binding DTOs ---
 
 struct CreateServiceBindingRequest {
+    TenantId tenantId;
+    
     string name;
     string instanceId;
     string parameters;
@@ -143,6 +147,9 @@ struct CreateServiceBindingRequest {
 }
 
 struct UpdateServiceBindingRequest {
+    TenantId tenantId;
+    ServiceBindingId serviceBindingId;
+
     string name;
     string parameters;
     string labels;
@@ -151,6 +158,8 @@ struct UpdateServiceBindingRequest {
 // --- Operation DTOs ---
 
 struct CreateOperationRequest {
+    TenantId tenantId;
+
     string resourceId;
     string resourceType;
     string type;
@@ -158,6 +167,9 @@ struct CreateOperationRequest {
 }
 
 struct UpdateOperationRequest {
+    TenantId tenantId;  
+    OperationId operationId;
+
     string status;
     string errorMessage;
 }
@@ -165,6 +177,8 @@ struct UpdateOperationRequest {
 // --- Label DTOs ---
 
 struct CreateLabelRequest {
+    TenantId tenantId;
+
     string resourceId;
     string resourceType;
     string key;
@@ -172,6 +186,9 @@ struct CreateLabelRequest {
 }
 
 struct UpdateLabelRequest {
+    TenantId tenantId;
+    LabelId labelId;
+
     string key;
     string value;
 }

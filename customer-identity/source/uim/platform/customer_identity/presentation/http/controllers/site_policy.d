@@ -51,7 +51,7 @@ class SitePolicyController : ManageHttpController {
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         SitePolicyDTO dto;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.policyType = data.getString("policyType");
@@ -110,7 +110,7 @@ class SitePolicyController : ManageHttpController {
         auto data = precheck.data;
         SitePolicyDTO dto;
         dto.sitePolicyId = id;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.passwordMinLength = data.getInteger("passwordMinLength");

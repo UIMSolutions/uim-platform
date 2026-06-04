@@ -36,7 +36,7 @@ class TaskActionController : ManageHttpController {
 
         auto data = precheck.data;
             PerformTaskActionRequest r;
-            r.tenantId = tenantId;
+            r.tenantId = precheck.tenantId;
             r.taskActionId = TaskActionId(precheck.id);
             r.taskId = TaskId(data.getString("taskId"));
             r.actionType = data.getString("actionType");

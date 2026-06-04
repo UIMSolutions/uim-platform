@@ -67,7 +67,7 @@ class TransportRouteController : ManageHttpController {
         auto data = precheck.data;
             TransportRouteDTO dto;
             dto.routeId = TransportRouteId(precheck.id);
-            dto.tenantId = tenantId;
+            dto.tenantId = precheck.tenantId;
             dto.name = data.getString("name");
             dto.description = data.getString("description");
             dto.sourceNodeId = data.getString("sourceNodeId");
@@ -109,7 +109,7 @@ class TransportRouteController : ManageHttpController {
             }
             TransportRouteDTO dto;
             dto.routeId = id;
-            dto.tenantId = tenantId;
+            dto.tenantId = precheck.tenantId;
             dto.name = data.getString("name");
             dto.description = data.getString("description");
             dto.isSequential = data.getBoolean("isSequential");

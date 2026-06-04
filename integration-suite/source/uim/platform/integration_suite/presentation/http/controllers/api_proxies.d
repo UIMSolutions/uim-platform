@@ -30,7 +30,7 @@ public:
 
         auto data = precheck.data;
       CreateApiProxyRequest r;
-      r.tenantId       = req.getTenantId;
+      r.tenantId       = tenantId;
       r.id             = precheck.id;
       r.name           = data.getString("name");
       r.description    = data.getString("description");
@@ -80,7 +80,7 @@ public:
         auto tenantId = precheck.tenantId;
       auto data = precheck.data;
       UpdateApiProxyRequest r;
-      r.tenantId       = req.getTenantId;
+      r.tenantId       = tenantId;
       r.id             = precheck.id;
       r.name           = data.getString("name");
       r.description    = data.getString("description");

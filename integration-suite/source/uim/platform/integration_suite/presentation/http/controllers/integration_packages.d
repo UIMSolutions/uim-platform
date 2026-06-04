@@ -29,7 +29,7 @@ public:
 
         auto data = precheck.data;
       CreatePackageRequest r;
-      r.tenantId    = req.getTenantId;
+      r.tenantId    = tenantId;
       r.id          = precheck.id;
       r.name        = data.getString("name");
       r.version_    = data.getString("version");
@@ -79,7 +79,7 @@ public:
         auto tenantId = precheck.tenantId;
       auto data = precheck.data;
       UpdatePackageRequest r;
-      r.tenantId    = req.getTenantId;
+      r.tenantId    = tenantId;
       r.id          = precheck.id;
       r.name        = data.getString("name");
       r.version_    = data.getString("version");

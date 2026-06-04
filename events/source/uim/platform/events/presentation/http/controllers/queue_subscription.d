@@ -87,7 +87,7 @@ class QueueSubscriptionController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto tenantId      = req.getTenantId;
+            auto tenantId      = tenantId;
             auto subscriptionId = QueueSubscriptionId(precheck.id);
             auto data = precheck.data;
             QueueSubscriptionDTO dto;

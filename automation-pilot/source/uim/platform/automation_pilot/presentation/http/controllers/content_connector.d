@@ -73,7 +73,7 @@ class ContentConnectorController : ManageHttpController {
         auto data = precheck.data;
         ContentConnectorDTO dto;
         dto.contentConnectorId = ContentConnectorId(precheck.id);
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.repositoryUrl = data.getString("repositoryUrl");

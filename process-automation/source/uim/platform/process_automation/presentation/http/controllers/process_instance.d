@@ -35,7 +35,7 @@ class ProcessInstanceController : ManageHttpController {
 
             auto data = precheck.data;
             StartProcessInstanceRequest r;
-            r.tenantId = tenantId;
+            r.tenantId = precheck.tenantId;
             r.processId = ProcessId(data.getString("processId"));
             r.processInstanceId = ProcessInstanceId(precheck.id);
             r.startedBy = UserId(data.getString("startedBy"));
@@ -142,7 +142,7 @@ class ProcessInstanceController : ManageHttpController {
 
             auto data = precheck.data;
             ProcessInstanceActionRequest r;
-            r.tenantId = tenantId;
+            r.tenantId = precheck.tenantId;
             r.processInstanceId = ProcessInstanceId(id);
             r.action = data.getString("action");
 

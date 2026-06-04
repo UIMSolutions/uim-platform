@@ -39,7 +39,7 @@ class BusinessSubprocessController : ManageHttpController {
 
     auto data = precheck.data;
     CreateBusinessSubprocessRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.parentProcessId = BusinessProcessId(data.getString("parentProcessId"));
     r.name = data.getString("name");
     r.description = data.getString("description");
@@ -96,7 +96,7 @@ class BusinessSubprocessController : ManageHttpController {
     auto data = precheck.data;
     
     UpdateBusinessSubprocessRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.subprocessId = BusinessSubprocessId(precheck.id);
     r.name = data.getString("name");
     r.description = data.getString("description");

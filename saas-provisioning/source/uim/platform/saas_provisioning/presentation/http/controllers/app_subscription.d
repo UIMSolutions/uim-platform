@@ -129,7 +129,7 @@ class AppSubscriptionController : ManageHttpController {
 
     protected void handleUnsubscribe(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId    = req.getTenantId;
+            auto tenantId    = tenantId;
             auto id          = AppSubscriptionId(precheck.id);
             string requestedBy = "";
             try { requestedBy = safeStr(req.json, "requestedBy"); } catch (Exception) {}

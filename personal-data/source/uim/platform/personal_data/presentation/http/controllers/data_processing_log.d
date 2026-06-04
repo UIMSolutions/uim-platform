@@ -36,7 +36,7 @@ class DataProcessingLogController : ManageHttpController {
 
         auto data = precheck.data;
         CreateDataProcessingLogRequest r;
-        r.tenantId = tenantId;
+        r.tenantId = precheck.tenantId;
         r.id = precheck.id;
         r.dataSubjectId = data.getString("dataSubjectId");
         r.requestId = data.getString("requestId");

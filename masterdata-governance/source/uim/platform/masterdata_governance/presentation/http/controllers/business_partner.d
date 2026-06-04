@@ -71,7 +71,7 @@ class BusinessPartnerController : ManageHttpController {
 
         auto data = precheck.data;
         BusinessPartnerDTO dto;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.bpNumber = data.getString("bpNumber");
         dto.firstName = data.getString(
             "firstName");
@@ -147,7 +147,7 @@ class BusinessPartnerController : ManageHttpController {
         auto data = precheck.data;
         BusinessPartnerDTO dto;
         dto.businessPartnerId = id;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.firstName = data.getString(
             "firstName");
         dto.lastName = data.getString("lastName");

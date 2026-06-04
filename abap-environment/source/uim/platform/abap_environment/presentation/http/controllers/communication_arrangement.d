@@ -61,7 +61,7 @@ class CommunicationArrangementController : ManageHttpController {
     auto data = precheck.data;
 
     CreateCommunicationArrangementRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.systemInstanceId = SystemInstanceId(data.getString("systemInstanceId"));
     r.scenarioId = data.getString("scenarioId");
     r.name = data.getString("name");
@@ -114,7 +114,7 @@ class CommunicationArrangementController : ManageHttpController {
 
     auto data = precheck.data;
     UpdateCommunicationArrangementRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.communicationArrangementId = id;
     r.description = data.getString("description");
     r.status = data.getString("status");

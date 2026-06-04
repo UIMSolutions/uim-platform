@@ -122,7 +122,7 @@ class ModelController : ManageHttpController {
     auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
     PatchModelRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.connectionId = connectionId;
     r.modelId = id;
     r.description = data.getString("description");

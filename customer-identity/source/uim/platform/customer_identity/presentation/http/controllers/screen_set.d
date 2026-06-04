@@ -51,7 +51,7 @@ class ScreenSetController : ManageHttpController {
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         ScreenSetDTO dto;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.flowType = data.getString("flowType");
@@ -102,7 +102,7 @@ class ScreenSetController : ManageHttpController {
         auto data = precheck.data;
         ScreenSetDTO dto;
         dto.screenSetId = id;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.htmlContent = data.getString("htmlContent");

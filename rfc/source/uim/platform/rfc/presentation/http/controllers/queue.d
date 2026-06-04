@@ -30,7 +30,7 @@ class QueueController : HttpController {
 
     override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId  = req.getTenantId;
+            auto tenantId  = tenantId;
             auto queueName = extractIdFromPath(req.requestURI.to!string);
             auto entries   = _usecase.listQueue(tenantId, queueName);
             auto jarr      = Json.emptyArray;
@@ -44,7 +44,7 @@ class QueueController : HttpController {
 
     protected void handleProcess(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId  = req.getTenantId;
+            auto tenantId  = tenantId;
             // Path: /api/v1/rfc/queues/<queueName>/process — extract queue name
             auto path      = req.requestURI.to!string;
             auto parts     = path.split("/");

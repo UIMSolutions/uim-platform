@@ -34,7 +34,7 @@ class SnowflakeWarehouseController : ManageHttpController {
   void handleCreate(HTTPServerRequest req, HTTPServerResponse res) {
     auto data = precheck.data;
     CreateWarehouseRequest r;
-    r.tenantId   = req.getTenantId;
+    r.tenantId   = tenantId;
     r.id         = precheck.id;
     r.accountId  = data.getString("accountId");
     r.name       = data.getString("name");
@@ -52,7 +52,7 @@ class SnowflakeWarehouseController : ManageHttpController {
   void handleUpdate(HTTPServerRequest req, HTTPServerResponse res) {
     auto data = precheck.data;
     UpdateWarehouseRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.id       = extractIdFromPath(req.requestPath.to!string);
     r.size     = data.getString("size");
     r.status   = data.getString("status");

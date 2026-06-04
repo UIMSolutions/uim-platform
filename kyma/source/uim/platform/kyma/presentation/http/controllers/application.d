@@ -43,7 +43,7 @@ class ApplicationController : ManageHttpController {
       RegisterApplicationRequest r;
       with (r) {
         environmentId = data.getString("environmentId");
-        tenantId = req.getTenantId;
+        tenantId = precheck.tenantId;
         name = data.getString("name");
         description = data.getString("description");
         registrationType = data.getString("registrationType");

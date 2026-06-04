@@ -37,7 +37,7 @@ class DnsRecordController : ManageHttpController {
 
         auto data = precheck.data;
         CreateDnsRecordRequest r;
-        r.tenantId = tenantId;
+        r.tenantId = precheck.tenantId;
         r.dnsRecordId = DnsRecordId(precheck.id);
         r.customDomainId = CustomDomainId(data.getString("customDomainId"));
         r.recordType = data.getString("recordType");
@@ -118,7 +118,7 @@ class DnsRecordController : ManageHttpController {
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         UpdateDnsRecordRequest r;
-        r.tenantId = tenantId;
+        r.tenantId = precheck.tenantId;
         r.dnsRecordId = DnsRecordId(precheck.id);
         r.value = data.getString("value");
         r.ttl = data.getInteger("ttl");

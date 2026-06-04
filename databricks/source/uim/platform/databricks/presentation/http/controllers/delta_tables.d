@@ -29,7 +29,7 @@ public:
 
         auto data = precheck.data;
       CreateDeltaTableRequest r;
-      r.tenantId         = req.getTenantId;
+      r.tenantId         = tenantId;
       r.id               = precheck.id;
       r.workspaceId      = data.getString("workspaceId");
       r.catalogName      = data.getString("catalogName");
@@ -84,7 +84,7 @@ public:
       
       auto data = precheck.data;
       UpdateDeltaTableRequest r;
-      r.tenantId        = req.getTenantId;
+      r.tenantId        = tenantId;
       r.id              = req.requestPath.to!string.split("/")[$-1];
       r.comment         = data.getString("comment");
       r.storageLocation = data.getString("storageLocation");

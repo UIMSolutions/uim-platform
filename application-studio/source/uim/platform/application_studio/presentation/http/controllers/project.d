@@ -54,7 +54,7 @@ class ProjectController : ManageHttpController {
         auto data = precheck.data;
         ProjectDTO dto;
         dto.projectId = ProjectId(precheck.id);
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.devSpaceId = data.getString("devSpaceId");
         dto.name = data.getString("name");
         dto.description = data.getString("description");
@@ -99,7 +99,7 @@ class ProjectController : ManageHttpController {
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         ProjectDTO dto;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.gitRepositoryUrl = data.getString("gitRepositoryUrl");

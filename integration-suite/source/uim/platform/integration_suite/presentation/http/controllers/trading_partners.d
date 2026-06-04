@@ -29,7 +29,7 @@ public:
 
         auto data = precheck.data;
       CreateTradingPartnerRequest r;
-      r.tenantId     = req.getTenantId;
+      r.tenantId     = tenantId;
       r.id           = precheck.id;
       r.name         = data.getString("name");
       r.description  = data.getString("description");
@@ -82,7 +82,7 @@ public:
         auto tenantId = precheck.tenantId;
       auto data = precheck.data;
       UpdateTradingPartnerRequest r;
-      r.tenantId     = req.getTenantId;
+      r.tenantId     = tenantId;
       r.id           = precheck.id;
       r.name         = data.getString("name");
       r.contactEmail = data.getString("contactEmail");

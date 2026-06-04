@@ -42,7 +42,7 @@ class ProvisioningRequestController : ManageHttpController {
   void handleCreate(HTTPServerRequest req, HTTPServerResponse res) {
     auto data = precheck.data;
     CreateProvisioningRequest r;
-    r.tenantId = req.getTenantId;
+    r.tenantId = precheck.tenantId;
     r.id = precheck.id;
     r.requestedBy = data.getString("requestedBy");
     r.accountName = data.getString("accountName");
@@ -81,7 +81,7 @@ class ProvisioningRequestController : ManageHttpController {
   void handleComplete(HTTPServerRequest req, HTTPServerResponse res) {
     auto data = precheck.data;
     UpdateProvisioningStatusRequest r;
-    r.tenantId = req.getTenantId;
+    r.tenantId = precheck.tenantId;
     r.id = extractIdFromPath(req.requestPath.to!string);
     r.resultAccountId = data.getString("resultAccountId");
     auto result = usecase.complete(r);
@@ -95,7 +95,7 @@ class ProvisioningRequestController : ManageHttpController {
   void handleFail(HTTPServerRequest req, HTTPServerResponse res) {
     auto data = precheck.data;
     UpdateProvisioningStatusRequest r;
-    r.tenantId = req.getTenantId;
+    r.tenantId = precheck.tenantId;
     r.id = extractIdFromPath(req.requestPath.to!string);
     r.errorMessage = data.getString("errorMessage");
     auto result = usecase.fail(r);

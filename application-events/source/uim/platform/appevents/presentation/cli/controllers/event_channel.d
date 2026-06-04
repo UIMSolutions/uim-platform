@@ -55,7 +55,7 @@ class CliEventChannelController {
     void handleCreate(TenantId tenantId, string[] args) {
         if (args.length < 2) { _view.renderError("Usage: create <name> <topicId>"); return; }
         EventChannelDTO dto;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.name     = args[0];
         dto.topicId  = EventTopicId(args[1]);
         auto result = _useCase.createEventChannel(dto);

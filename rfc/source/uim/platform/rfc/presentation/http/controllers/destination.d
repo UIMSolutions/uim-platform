@@ -54,7 +54,7 @@ class DestinationController : HttpController {
         auto tenantId = precheck.tenantId;
             auto data = precheck.data;
             CreateDestinationRequest r;
-            r.tenantId       = req.getTenantId;
+            r.tenantId       = tenantId;
             r.id             = precheck.id;
             r.connectionType = cast(ConnectionType) data.getString("connectionType", "abapSystem").to!int;
             r.description    = data.getString("description", "");
@@ -96,7 +96,7 @@ class DestinationController : HttpController {
         auto tenantId = precheck.tenantId;
             auto data = precheck.data;
             UpdateDestinationRequest r;
-            r.tenantId   = req.getTenantId;
+            r.tenantId   = tenantId;
             r.id         = extractIdFromPath(req.requestURI.to!string);
             r.description = data.getString("description", "");
             r.host        = data.getString("host", "");

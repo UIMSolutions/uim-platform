@@ -66,7 +66,7 @@ class TransportActionController : ManageHttpController {
         auto data = precheck.data;
             TransportActionDTO dto;
             dto.actionId = TransportActionId(precheck.id);
-            dto.tenantId = tenantId;
+            dto.tenantId = precheck.tenantId;
             dto.actionType = data.getString("actionType");
             dto.nodeId = data.getString("nodeId");
             dto.requestId = data.getString("requestId");

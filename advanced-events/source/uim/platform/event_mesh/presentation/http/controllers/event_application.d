@@ -69,7 +69,7 @@ class EventApplicationController : ManageHttpController {
 
         EventApplicationDTO dto;
         dto.applicationId = EventApplicationId(createId);
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.serviceId = BrokerServiceId(data.getString("serviceId"));
         dto.name = data.getString("name");
         dto.description = data.getString("description");
@@ -122,7 +122,7 @@ class EventApplicationController : ManageHttpController {
             return errorResponse("Invalid event application ID", 400);
 
         EventApplicationDTO dto;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.applicationId = id;
         dto.name = data.getString("name");
         dto.description = data.getString("description");

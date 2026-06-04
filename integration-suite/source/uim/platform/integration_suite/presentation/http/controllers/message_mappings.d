@@ -29,7 +29,7 @@ public:
 
         auto data = precheck.data;
       CreateMappingRequest r;
-      r.tenantId          = req.getTenantId;
+      r.tenantId          = tenantId;
       r.id                = precheck.id;
       r.packageId         = data.getString("packageId");
       r.name              = data.getString("name");
@@ -81,7 +81,7 @@ public:
         auto tenantId = precheck.tenantId;
       auto data = precheck.data;
       UpdateMappingRequest r;
-      r.tenantId          = req.getTenantId;
+      r.tenantId          = tenantId;
       r.id                = precheck.id;
       r.name              = data.getString("name");
       r.description       = data.getString("description");

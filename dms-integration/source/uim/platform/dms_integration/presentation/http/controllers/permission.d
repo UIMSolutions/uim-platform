@@ -64,7 +64,7 @@ class PermissionController : ManageHttpController {
         auto data = precheck.data;
         PermissionDTO dto;
         dto.permissionId = PermissionId(precheck.id);
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.repositoryId = RepositoryId(data.getString("repositoryId"));
         dto.documentId = DocumentId(data.getString("documentId"));
         dto.folderId = FolderId(data.getString("folderId"));

@@ -13,53 +13,57 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    ServiceBinding[] listServiceBindings(TenantId tenantId) {
+    ServiceBinding[] listBindings(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    ServiceBinding getServiceBinding(TenantId tenantId, ServiceBindingId id) {
+    ServiceBinding getBinding(TenantId tenantId, ServiceBindingId id) {
         return repo.findById(tenantId, id);
     }
 
-    CommandResult createServiceBinding(CreateServiceBindingRequest dto) {
+    CommandResult createBinding(CreateServiceBindingRequest dto) {
 
-        ServiceBinding e;
-        e.id = ServiceBindingId(currentTimestamp.to!string);
-        e.tenantId = dto.tenantId;
-        e.name = dto.name;
-        e.instanceId = ServiceInstanceId(dto.instanceId);
-        e.parameters = dto.parameters;
-        e.bindResource = dto.bindResource;
-        e.context = dto.context;
-        e.labels = dto.labels;
-        e.status = ServiceBindingStatus.creating;
-        e.createdAt = currentTimestamp;
-        e.updatedAt = e.createdAt;
+        auto binding = ServiceBinding();
+        binding.initEntity(dto.tenantId);
+
+        binding.tenantId = dto.tenantId;
+        binding.name = dto.name;
+        binding.id = ServiceBindingId(currentTimestamp.to!string);
+        binding.tenantId = dto.tenantId;
+        binding.name = dto.name;
+        binding.instanceId = ServiceInstanceId(dto.instanceId);
+        binding.parameters = dto.parameters;
+        binding.bindResource = dto.bindResource;
+        binding.context = dto.context;
+        binding.labels = dto.labels;
+        binding.status = ServiceBindingStatus.creating;
+        binding.createdAt = currentTimestamp;
+        binding.updatedAt = binding.createdAt;
 
         if (dto.name.length == 0)
             return CommandResult(false, "", "Service binding name is required");
         if (dto.instanceId.length == 0)
             return CommandResult(false, "", "Service instance ID is required");
 
-        repo.save(e);
-        return CommandResult(true, e.id.value, "");
+        repo.save(binding);
+        return CommandResult(true, binding.id.value, "");
     }
 
-    CommandResult updateServiceBinding(TenantId tenantId, ServiceBindingId id, UpdateServiceBindingRequest dto) {
-        auto existing = repo.findById(tenantId, id);
-        if (existing.isNull)
+    CommandResult updateBinding(TenantId tenantId, ServiceBindingId id, UpdateServiceBindingRequest dto) {
+        auto binding = repo.findById(tenantId, id);
+        if (binding.isNull)
             return CommandResult(false, "", "Service binding not found");
 
-        if (dto.name.length > 0) existing.name = dto.name;
-        if (dto.parameters.length > 0) existing.parameters = dto.parameters;
-        if (dto.labels.length > 0) existing.labels = dto.labels;
-        existing.updatedAt = currentTimestamp;
+        if (dto.name.length > 0) binding.name = dto.name;
+        if (dto.parameters.length > 0) binding.parameters = dto.parameters;
+        if (dto.labels.length > 0) binding.labels = dto.labels;
+        binding.updatedAt = currentTimestamp;
 
-        repo.update(existing);
-        return CommandResult(true, id.value, "");
+        repo.update(binding);
+        return CommandResult(true, binding.id.value, "");
     }
 
-    CommandResult deleteServiceBinding(TenantId tenantId, ServiceBindingId id) {
+    CommandResult deleteBinding(TenantId tenantId, ServiceBindingId id) {
         auto binding = repo.findById(tenantId, id);
         if (binding.isNull)
             return CommandResult(false, "", "Service binding not found");

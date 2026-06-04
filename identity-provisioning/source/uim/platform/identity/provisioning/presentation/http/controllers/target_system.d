@@ -45,7 +45,7 @@ class TargetSystemController : ManageHttpController {
 
         auto data = precheck.data;
       auto r = CreateTargetSystemRequest();
-      r.tenantId = tenantId;
+      r.tenantId = precheck.tenantId;
       r.name = data.getString("name");
       r.description = data.getString("description");
       r.systemType = parseSystemType(data.getString("systemType"));
@@ -107,7 +107,7 @@ class TargetSystemController : ManageHttpController {
       auto data = precheck.data;
       auto r = UpdateTargetSystemRequest();
       r.id = id;
-      r.tenantId = tenantId;
+      r.tenantId = precheck.tenantId;
       r.name = data.getString("name");
       r.description = data.getString("description");
       r.connectionConfig = data.getString("connectionConfig");

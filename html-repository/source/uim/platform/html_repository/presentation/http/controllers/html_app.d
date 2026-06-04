@@ -38,9 +38,9 @@ class HtmlAppController : ManageHttpController {
 
         auto data = precheck.data;
         ScanJobDTO dto;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
       CreateHtmlAppRequest r;
-      r.tenantId = tenantId;
+      r.tenantId = precheck.tenantId;
       r.name = data.getString("name");
       r.namespace_ = data.getString("namespace");
       r.description = data.getString("description");
@@ -139,7 +139,7 @@ class HtmlAppController : ManageHttpController {
       }
       UpdateHtmlAppRequest r;
       r.id = id;
-      r.tenantId = tenantId;
+      r.tenantId = precheck.tenantId;
       r.description = data.getString("description");
       r.visibility = data.getString("visibility");
       r.updatedBy = UserId(data.getString("updatedBy"));

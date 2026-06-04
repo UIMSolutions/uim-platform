@@ -53,7 +53,7 @@ class ConsentRecordController : ManageHttpController {
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         ConsentRecordDTO dto;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.customerId = CustomerId(data.getString("customerId"));
         dto.consentType = data.getString("consentType");
         dto.purpose = data.getString("purpose");

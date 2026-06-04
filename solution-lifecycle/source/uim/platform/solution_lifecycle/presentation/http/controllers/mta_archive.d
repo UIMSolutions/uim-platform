@@ -31,7 +31,7 @@ class MtaArchiveController : ManageHttpController {
         try {
             auto data = precheck.data;
             UploadMtaArchiveRequest r;
-            r.tenantId     = req.getTenantId;
+            r.tenantId     = tenantId;
             r.fileName     = data.getString("fileName");
             r.mtaId        = data.getString("mtaId");
             r.mtaVersion   = data.getString("mtaVersion");

@@ -39,9 +39,9 @@ class DatabaseUserController : ManageHttpController {
 
         auto data = precheck.data;
         ScanJobDTO dto;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
       CreateDatabaseUserRequest r;
-      r.tenantId = tenantId;
+      r.tenantId = precheck.tenantId;
       r.instanceId = data.getString("instanceId");
       r.id = precheck.id;
       r.userName = data.getString("userName");
@@ -138,7 +138,7 @@ class DatabaseUserController : ManageHttpController {
 
       auto data = precheck.data;
       UpdateDatabaseUserRequest r;
-      r.tenantId = tenantId;
+      r.tenantId = precheck.tenantId;
       r.id = DatabaseUserId(precheck.id);
       r.password = data.getString("password");
       r.defaultSchema = data.getString("defaultSchema");

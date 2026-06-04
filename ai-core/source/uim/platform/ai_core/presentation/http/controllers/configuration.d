@@ -72,7 +72,7 @@ class ConfigurationController : ManageHttpController {
     auto tenantId = precheck.tenantId;
 
     CreateConfigurationRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     auto data = precheck.data;
     r.resourceGroupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
     r.scenarioId = ScenarioId(req.params.get("scenarioId", ""));

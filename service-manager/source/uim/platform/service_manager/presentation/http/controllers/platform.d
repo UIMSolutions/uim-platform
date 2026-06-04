@@ -63,9 +63,11 @@ class PlatformController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-        auto tenantId = precheck.tenantId;
-        auto id = precheck.id;
-        auto e = usecase.getById(tenantId, PlatformId(id));
+        auto id = PlatformId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid platform ID", 400);
+
+        auto e = usecase.getPlatform(tenantId, id);
         if (e.isNull)
             return errorResponse("Platform not found", 404);
 

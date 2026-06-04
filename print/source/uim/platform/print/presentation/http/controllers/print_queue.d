@@ -72,7 +72,7 @@ class PrintQueueController : ManageHttpController {
         auto data = precheck.data;
             PrintQueueDTO dto;
             dto.queueId = PrintQueueId(precheck.id);
-            dto.tenantId = tenantId;
+            dto.tenantId = precheck.tenantId;
             dto.name = data.getString("name");
             dto.description = data.getString("description");
             dto.printerId = data.getString("printerId");
@@ -104,7 +104,7 @@ class PrintQueueController : ManageHttpController {
             auto data = precheck.data;
             PrintQueueDTO dto;
             dto.queueId = PrintQueueId(precheck.id);
-            dto.tenantId = tenantId;
+            dto.tenantId = precheck.tenantId;
             dto.name = data.getString("name");
             dto.description = data.getString("description");
             dto.location = data.getString("location");

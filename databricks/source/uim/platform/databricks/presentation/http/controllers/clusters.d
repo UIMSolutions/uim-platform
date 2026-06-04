@@ -29,7 +29,7 @@ public:
 
         auto data = precheck.data;
       CreateClusterRequest r;
-      r.tenantId              = req.getTenantId;
+      r.tenantId              = tenantId;
       r.id                    = precheck.id;
       r.workspaceId           = data.getString("workspaceId");
       r.name                  = data.getString("name");
@@ -93,7 +93,7 @@ public:
       
       auto data = precheck.data;
       UpdateClusterRequest r;
-      r.tenantId             = req.getTenantId;
+      r.tenantId             = tenantId;
       r.id                   = req.requestPath.to!string.split("/")[$-1];
       r.name                 = data.getString("name");
       r.numWorkers           = j.getInt("numWorkers");

@@ -65,7 +65,7 @@ class ApplicationController : ManageHttpController {
 
         ApplicationDTO dto;
         dto.applicationId = id;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.appType = data.getString("appType");
@@ -141,7 +141,7 @@ class ApplicationController : ManageHttpController {
         auto data = precheck.data;
         ApplicationDTO dto;
         dto.applicationId = id;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.version_ = data.getString("version");

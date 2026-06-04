@@ -43,10 +43,10 @@ class NamespaceController : ManageHttpController {
 
         auto data = precheck.data;
         ScanJobDTO dto;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
       CreateNamespaceRequest r;
       r.environmentId = data.getString("environmentId");
-      r.tenantId = tenantId;
+      r.tenantId = precheck.tenantId;
       r.name = data.getString("name");
       r.description = data.getString("description");
       r.cpuLimit = data.getString("cpuLimit");

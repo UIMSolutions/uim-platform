@@ -36,7 +36,7 @@ class WebBrokerServiceModel {
     CommandResult create(TenantId tenantId, Json data) {
         BrokerServiceDTO dto;
         dto.serviceId = BrokerServiceId(data.getString("id").length > 0 ? data.getString("id") : newId());
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.region = data.getString("region");
@@ -53,7 +53,7 @@ class WebBrokerServiceModel {
     CommandResult update(TenantId tenantId, string id, Json data) {
         BrokerServiceDTO dto;
         dto.serviceId = BrokerServiceId(id);
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.region = data.getString("region");
@@ -87,7 +87,7 @@ class WebQueueModel {
     CommandResult create(TenantId tenantId, Json data) {
         QueueDTO dto;
         dto.queueId = QueueId(data.getString("id").length > 0 ? data.getString("id") : newId());
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.serviceId = BrokerServiceId(data.getString("brokerServiceId"));
         dto.name = data.getString("name");
         dto.description = data.getString("description");
@@ -108,7 +108,7 @@ class WebQueueModel {
     CommandResult update(TenantId tenantId, string id, Json data) {
         QueueDTO dto;
         dto.queueId = QueueId(id);
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.maxMsgSpoolUsage = data.getString("maxMsgSpoolUsage");
@@ -141,7 +141,7 @@ class WebTopicModel {
     CommandResult create(TenantId tenantId, Json data) {
         TopicDTO dto;
         dto.topicId = TopicId(data.getString("id").length > 0 ? data.getString("id") : newId());
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.serviceId = BrokerServiceId(data.getString("brokerServiceId"));
         dto.name = data.getString("name");
         dto.description = data.getString("description");
@@ -156,7 +156,7 @@ class WebTopicModel {
     CommandResult update(TenantId tenantId, string id, Json data) {
         TopicDTO dto;
         dto.topicId = TopicId(id);
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.topicString = data.getString("topicString");
@@ -188,7 +188,7 @@ class WebSubscriptionModel {
     CommandResult create(TenantId tenantId, Json data) {
         SubscriptionDTO dto;
         dto.subscriptionId = EventSubscriptionId(data.getString("id").length > 0 ? data.getString("id") : newId());
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.serviceId = BrokerServiceId(data.getString("brokerServiceId"));
         dto.topicId = TopicId(data.getString("topicId"));
         dto.queueId = QueueId(data.getString("queueId"));
@@ -206,7 +206,7 @@ class WebSubscriptionModel {
     CommandResult update(TenantId tenantId, string id, Json data) {
         SubscriptionDTO dto;
         dto.subscriptionId = EventSubscriptionId(id);
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.topicFilter = data.getString("topicFilter");
@@ -238,7 +238,7 @@ class WebEventMessageModel {
     CommandResult create(TenantId tenantId, Json data) {
         EventMessageDTO dto;
         dto.messageId = EventMessageId(data.getString("id").length > 0 ? data.getString("id") : newId());
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.serviceId = BrokerServiceId(data.getString("serviceId"));
         dto.topicId = TopicId(data.getString("topicId"));
         dto.queueId = QueueId(data.getString("queueId"));
@@ -285,7 +285,7 @@ class WebEventSchemaModel {
     CommandResult create(TenantId tenantId, Json data) {
         EventSchemaDTO dto;
         dto.schemaId = EventSchemaId(data.getString("id").length > 0 ? data.getString("id") : newId());
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.version_ = data.getString("version");
@@ -299,7 +299,7 @@ class WebEventSchemaModel {
     CommandResult update(TenantId tenantId, string id, Json data) {
         EventSchemaDTO dto;
         dto.schemaId = EventSchemaId(id);
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.version_ = data.getString("version");
@@ -331,7 +331,7 @@ class WebEventApplicationModel {
     CommandResult create(TenantId tenantId, Json data) {
         EventApplicationDTO dto;
         dto.applicationId = EventApplicationId(data.getString("id").length > 0 ? data.getString("id") : newId());
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.serviceId = BrokerServiceId(data.getString("brokerServiceId"));
         dto.applicationDomainId = data.getString("applicationDomainId");
         dto.name = data.getString("name");
@@ -351,7 +351,7 @@ class WebEventApplicationModel {
     CommandResult update(TenantId tenantId, string id, Json data) {
         EventApplicationDTO dto;
         dto.applicationId = EventApplicationId(id);
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.clientUsername = data.getString("clientUsername");
@@ -386,7 +386,7 @@ class WebMeshBridgeModel {
     CommandResult create(TenantId tenantId, Json data) {
         MeshBridgeDTO dto;
         dto.bridgeId = MeshBridgeId(data.getString("id").length > 0 ? data.getString("id") : newId());
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.sourceServiceId = BrokerServiceId(data.getString("sourceServiceId"));
         dto.targetServiceId = BrokerServiceId(data.getString("targetServiceId"));
         dto.name = data.getString("name");
@@ -407,7 +407,7 @@ class WebMeshBridgeModel {
     CommandResult update(TenantId tenantId, string id, Json data) {
         MeshBridgeDTO dto;
         dto.bridgeId = MeshBridgeId(id);
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.remoteAddress = data.getString("remoteAddress");

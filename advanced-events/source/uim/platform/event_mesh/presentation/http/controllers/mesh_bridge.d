@@ -87,7 +87,7 @@ class MeshBridgeController : ManageHttpController {
 
         MeshBridgeDTO dto;
         dto.bridgeId = MeshBridgeId(createId);
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.sourceServiceId = BrokerServiceId(data.getString("sourceServiceId"));
         dto.targetServiceId = BrokerServiceId(data.getString("targetServiceId"));
         dto.name = data.getString("name");
@@ -121,7 +121,7 @@ class MeshBridgeController : ManageHttpController {
         auto data = precheck.data;
         MeshBridgeDTO dto;
         dto.bridgeId = MeshBridgeId(precheck.id);
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.remoteAddress = data.getString("remoteAddress");

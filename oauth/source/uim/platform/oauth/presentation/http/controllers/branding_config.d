@@ -76,7 +76,7 @@ class BrandingConfigController : ManageHttpController {
         auto data = precheck.data;
             BrandingConfigDTO dto;
             dto.configId = BrandingConfigId(precheck.id);
-            dto.tenantId = tenantId;
+            dto.tenantId = precheck.tenantId;
             dto.name = data.getString("name");
             dto.description = data.getString("description");
             dto.logoUrl = data.getString("logoUrl");
@@ -113,7 +113,7 @@ class BrandingConfigController : ManageHttpController {
             auto path = precheck.path;
             auto data = precheck.data;
             BrandingConfigDTO dto;
-            dto.tenantId = tenantId;
+            dto.tenantId = precheck.tenantId;
             dto.configId = BrandingConfigId(precheck.id);
             dto.name = data.getString("name");
             dto.description = data.getString("description");

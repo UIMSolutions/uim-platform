@@ -47,7 +47,7 @@ class ScheduleController : ManageHttpController {
         auto jobId = extractJobIdFromSchedulePath(path);
         auto data = precheck.data;
         CreateScheduleRequest r;
-        r.tenantId = tenantId;
+        r.tenantId = precheck.tenantId;
         r.jobId = jobId;
         r.description = data.getString("description");
         r.type = data.getString("type");
@@ -118,7 +118,7 @@ override protected Json updateHandler(HTTPServerRequest req) {
     auto ids = extractJobAndScheduleIds(path);
     auto data = precheck.data;
     UpdateScheduleRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.jobId = JobId(ids[0]);
     r.scheduleId = ScheduleId(ids[1]);
     r.description = data.getString("description");
@@ -166,7 +166,7 @@ protected Json activateAllHandler(HTTPServerRequest req) {
         auto jobId = JobId(extractJobIdFromSchedulePath(path));
         auto data = precheck.data;
         ActivateAllSchedulesRequest r;
-        r.tenantId = tenantId;
+        r.tenantId = precheck.tenantId;
         r.jobId = jobId;
         r.active = data.getBoolean("active", true);
 

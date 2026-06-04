@@ -54,7 +54,7 @@ class RoleCollectionController : ManageHttpController {
     auto data = precheck.data;
 
     CreateRoleCollectionRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.name = data.getString("name");
     r.description = data.getString("description");
     r.roleReferences = data.getArray("roleReferences").map!(e => e.getString).array;
@@ -99,7 +99,7 @@ class RoleCollectionController : ManageHttpController {
 
     auto data = precheck.data;
     UpdateRoleCollectionRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.collectionId = id;
     // r.name = data.getString("name");
     r.description = data.getString("description");

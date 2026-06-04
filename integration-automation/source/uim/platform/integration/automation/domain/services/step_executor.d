@@ -105,7 +105,7 @@ class StepExecutor {
 
     log.workflowId = workflowId;
     log.stepId = stepId;
-    log.tenantId = tenantId;
+    log.tenantId = precheck.tenantId;
     log.action = action;
     log.outcome = outcome;
     log.message = message;

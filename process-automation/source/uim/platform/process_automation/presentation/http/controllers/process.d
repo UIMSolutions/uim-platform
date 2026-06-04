@@ -41,7 +41,7 @@ class ProcessController : ManageHttpController {
 
             auto data = precheck.data;
             CreateProcessRequest r;
-            r.tenantId = tenantId;
+            r.tenantId = precheck.tenantId;
             r.projectId = ProjectId(data.getString("projectId"));
             r.processId = ProcessId(precheck.id);
             r.name = data.getString("name");
@@ -144,7 +144,7 @@ class ProcessController : ManageHttpController {
 
             auto data = precheck.data;
             UpdateProcessRequest r;
-            r.tenantId = tenantId;
+            r.tenantId = precheck.tenantId;
             r.processId = ProcessId(precheck.id);
             r.name = data.getString("name");
             r.description = data.getString("description");
@@ -185,7 +185,7 @@ class ProcessController : ManageHttpController {
 
             auto data = precheck.data;
             DeployProcessRequest r;
-            r.tenantId = tenantId;
+            r.tenantId = precheck.tenantId;
             r.processId = id;
             r.action = data.getString("action");
 

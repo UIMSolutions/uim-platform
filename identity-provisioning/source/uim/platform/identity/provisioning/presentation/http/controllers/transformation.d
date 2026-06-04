@@ -45,7 +45,7 @@ class TransformationController : ManageHttpController {
 
         auto data = precheck.data;
       auto r = CreateTransformationRequest();
-      r.tenantId = tenantId;
+      r.tenantId = precheck.tenantId;
       r.systemId = data.getString("systemId");
       r.systemRole = parseSystemRole(data.getString("systemRole"));
       r.name = data.getString("name");
@@ -108,7 +108,7 @@ class TransformationController : ManageHttpController {
       auto data = precheck.data;
       auto r = UpdateTransformationRequest();
       r.id = id;
-      r.tenantId = tenantId;
+      r.tenantId = precheck.tenantId;
       r.name = data.getString("name");
       r.mappingRules = data.getString("mappingRules");
       r.conditions = data.getString("conditions");

@@ -39,7 +39,7 @@ class InformationReportController : ManageHttpController {
 
     auto data = precheck.data;
     CreateInformationReportRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.subjectId = DataSubjectId(data.getString("dataSubjectId"));
     r.requestedBy = UserId(data.getString("requestedBy"));
     r.format = data.getString("format");
@@ -100,7 +100,7 @@ class InformationReportController : ManageHttpController {
     auto data = precheck.data;
     UpdateInformationReportStatusRequest r;
     r.reportId = id;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.status = data.getString("status");
     r.downloadUrl = data.getString("downloadUrl");
     r.totalRecords = data.getLong("totalRecords");

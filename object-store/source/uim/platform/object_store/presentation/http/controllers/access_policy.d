@@ -42,7 +42,7 @@ class AccessPolicyController : ManageHttpController {
     auto data = precheck.data;
 
     auto r = CreateAccessPolicyRequest();
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.bucketId = data.getString("bucketId");
     r.name = data.getString("name");
     r.effect = data.getString("effect");
@@ -118,7 +118,7 @@ override protected Json updateHandler(HTTPServerRequest req) {
     auto data = precheck.data;
 
     auto r = UpdateAccessPolicyRequest();
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.accessPolicyId = id;
     r.name = data.getString("name");
     r.effect = data.getString("effect");

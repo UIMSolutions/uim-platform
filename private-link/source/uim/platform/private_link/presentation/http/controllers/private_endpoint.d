@@ -41,7 +41,7 @@ class PrivateEndpointController : ManageHttpController {
     auto tenantId = precheck.tenantId;
     auto data = precheck.data;
     auto r = CreatePrivateEndpointRequest();
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.serviceInstanceId = ServiceInstanceId(data.getString("serviceInstanceId"));
     r.name = data.getString("name");
     r.privateIpAddress = data.getString("privateIpAddress");
@@ -74,7 +74,7 @@ class PrivateEndpointController : ManageHttpController {
     auto id = PrivateEndpointId(precheck.id);
     auto data = precheck.data;
     auto r = UpdatePrivateEndpointStatusRequest();
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.endpointId = id;
     r.status = data.getString("status");
     r.statusMessage = data.getString("statusMessage");
@@ -112,7 +112,7 @@ class PrivateEndpointController : ManageHttpController {
     auto id = PrivateEndpointId(rawId);
     auto data = precheck.data;
     auto r = ApprovePrivateEndpointRequest();
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.endpointId = id;
     r.providerEndpointId = data.getString("providerEndpointId");
     r.privateIpAddress = data.getString("privateIpAddress");

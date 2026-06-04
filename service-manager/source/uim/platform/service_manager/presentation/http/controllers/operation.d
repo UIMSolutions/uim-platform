@@ -51,7 +51,6 @@ class OperationController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-        auto tenantId = precheck.tenantId;
         auto id = OperationId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid operation ID", 400);
@@ -81,7 +80,7 @@ class OperationController : ManageHttpController {
 
         auto data = precheck.data;
         CreateOperationRequest r;
-        r.tenantId = tenantId;
+        r.tenantId = precheck.tenantId;
         r.resourceId = data.getString("resourceId");
         r.resourceType = data.getString("resourceType");
         r.type = data.getString("type");
@@ -107,7 +106,7 @@ class OperationController : ManageHttpController {
 
         auto data = precheck.data;
         UpdateOperationRequest r;
-        r.tenantId = tenantId;
+        r.tenantId = precheck.tenantId;
         r.operationId = id;
         r.status = data.getString("status");
         r.errorMessage = data.getString("errorMessage");

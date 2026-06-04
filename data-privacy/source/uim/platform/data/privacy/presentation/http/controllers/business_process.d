@@ -39,7 +39,7 @@ class BusinessProcessController : ManageHttpController {
 
     auto data = precheck.data;
     CreateBusinessProcessRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.name = data.getString("name");
     r.description = data.getString("description");
     r.controllerId = data.getString("controllerId");
@@ -99,7 +99,7 @@ class BusinessProcessController : ManageHttpController {
 
     UpdateBusinessProcessRequest r;
     r.processId = BusinessProcessId(precheck.id);
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.name = data.getString("name");
     r.description = data.getString("description");
     r.purposes = data.getStrings("purposes");

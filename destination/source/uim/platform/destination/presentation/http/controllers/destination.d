@@ -58,7 +58,7 @@ class DestinationController : ManageHttpController {
 
     auto data = precheck.data;
     CreateDestinationRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.subaccountId = req.headers.get("X-Subaccount-Id", "");
     r.serviceInstanceId = data.getString("serviceInstanceId");
     r.name = data.getString("name");
@@ -138,7 +138,7 @@ class DestinationController : ManageHttpController {
 
     auto data = precheck.data;
     UpdateDestinationRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.destinationId = id;
     r.description = data.getString("description");
     r.url = data.getString("url");

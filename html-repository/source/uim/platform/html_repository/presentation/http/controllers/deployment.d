@@ -40,9 +40,9 @@ class DeploymentController : HttpController {
 
         auto data = precheck.data;
         ScanJobDTO dto;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
       DeployApplicationRequest r;
-      r.tenantId = tenantId;
+      r.tenantId = precheck.tenantId;
       r.appId = data.getString("appId");
       r.versionId = data.getString("versionId");
       r.serviceInstanceId = data.getString("serviceInstanceId");

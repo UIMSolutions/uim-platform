@@ -71,7 +71,7 @@ class ActivityController : ManageHttpController {
         auto data = precheck.data;
         ActivityDTO dto;
         dto.activityId = ActivityId(precheck.id);
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.serviceCallId = ServiceCallId(data.getString("serviceCallId"));
         dto.technicianId = TechnicianId(data.getString("technicianId"));
         dto.subject = data.getString("subject");
@@ -105,7 +105,7 @@ class ActivityController : ManageHttpController {
         auto data = precheck.data;
         ActivityDTO dto;
         dto.activityId = ActivityId(precheck.id);
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.subject = data.getString("subject");
         dto.description = data.getString("description");
         dto.plannedStart = data.getString("plannedStart");

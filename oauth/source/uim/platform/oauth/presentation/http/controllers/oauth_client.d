@@ -71,9 +71,9 @@ class OAuthClientController : ManageHttpController {
 
         auto data = precheck.data;
         OAuthClientDTO dto;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.clientId = precheck.id;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.parentClientId = data.getString("clientId");
         dto.clientSecret = data.getString("clientSecret");
         dto.name = data.getString("name");
@@ -104,7 +104,7 @@ class OAuthClientController : ManageHttpController {
         auto path = precheck.path;
         auto data = precheck.data;
         OAuthClientDTO dto;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.clientId = OAuthClientId(precheck.id);
         dto.name = data.getString("name");
         dto.description = data.getString("description");

@@ -72,7 +72,7 @@ class AuthorizationCodeController : ManageHttpController {
         auto data = precheck.data;
         AuthorizationCodeDTO dto;
         dto.codeId = id;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.code = data.getString("code");
         dto.clientId = data.getString("clientId");
         dto.userId = data.getString("userId");

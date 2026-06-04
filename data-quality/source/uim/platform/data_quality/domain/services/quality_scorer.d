@@ -20,7 +20,7 @@ class QualityScorer {
   QualityDashboard computeDashboard(TenantId tenantId, DatasetId datasetId,
       string datasetName, ValidationResult[] results, DataProfile* profile) {
     QualityDashboard d;
-    d.tenantId = tenantId;
+    d.tenantId = precheck.tenantId;
     d.datasetId = datasetId;
     d.datasetName = datasetName;
     d.totalRecords = results.length;

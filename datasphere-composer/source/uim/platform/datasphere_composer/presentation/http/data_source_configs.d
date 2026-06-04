@@ -44,7 +44,7 @@ class DataSourceConfigController : ManageHttpController {
   void handleCreate(HTTPServerRequest req, HTTPServerResponse res) {
     auto data = precheck.data;
     CreateDataSourceConfigRequest r;
-    r.tenantId          = req.getTenantId;
+    r.tenantId          = tenantId;
     r.id                = precheck.id;
     r.dataProductId     = data.getString("dataProductId");
     r.providerId        = data.getString("providerId");
@@ -64,7 +64,7 @@ class DataSourceConfigController : ManageHttpController {
   void handleUpdate(HTTPServerRequest req, HTTPServerResponse res) {
     auto data = precheck.data;
     UpdateDataSourceConfigRequest r;
-    r.tenantId          = req.getTenantId;
+    r.tenantId          = tenantId;
     r.id                = extractIdFromPath(req.requestPath.to!string);
     r.qualityRank       = data.getString("qualityRank");
     r.timestampFormat   = data.getString("timestampFormat");
@@ -80,7 +80,7 @@ class DataSourceConfigController : ManageHttpController {
   void handleAddMapping(HTTPServerRequest req, HTTPServerResponse res) {
     auto data = precheck.data;
     AddIdentifierMappingRequest r;
-    r.tenantId           = req.getTenantId;
+    r.tenantId           = tenantId;
     r.configId           = extractIdFromPath(req.requestPath.to!string);
     r.ruleId             = data.getString("ruleId");
     r.ruleAttributeName  = data.getString("ruleAttributeName");

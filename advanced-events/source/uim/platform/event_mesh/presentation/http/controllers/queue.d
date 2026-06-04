@@ -86,7 +86,7 @@ class QueueController : ManageHttpController {
 
         QueueDTO dto;
         dto.queueId = QueueId(createId);
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.serviceId = BrokerServiceId(data.getString("brokerServiceId"));
         dto.name = data.getString("name");
         dto.description = data.getString("description");
@@ -120,7 +120,7 @@ class QueueController : ManageHttpController {
         auto data = precheck.data;
         QueueDTO dto;
         dto.queueId = QueueId(precheck.id);
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.maxMsgSpoolUsage = data.getString("maxMsgSpoolUsage");

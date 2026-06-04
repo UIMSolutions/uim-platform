@@ -40,7 +40,7 @@ class AnonymizationConfigController : ManageHttpController {
 
     auto data = precheck.data;
     CreateAnonymizationConfigRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.name = data.getString("name");
     r.description = data.getString("description");
     r.isReversible = data.getBoolean("isReversible", false);
@@ -96,7 +96,7 @@ class AnonymizationConfigController : ManageHttpController {
     auto data = precheck.data;
     UpdateAnonymizationConfigRequest r;
     r.configId = AnonymizationConfigId(precheck.id);
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.name = data.getString("name");
     r.description = data.getString("description");
     r.isReversible = data.getBoolean("isReversible", false);

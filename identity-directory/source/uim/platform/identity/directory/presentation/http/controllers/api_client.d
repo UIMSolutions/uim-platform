@@ -62,7 +62,7 @@ class ApiClientController : ManageHttpController {
 
     auto data = precheck.data;
     CreateApiClientRequest createReq;
-    createReq.tenantId = tenantId;
+    createReq.tenantId = precheck.tenantId;
     createReq.name = data.getString("name");
     createReq.description = data.getString("description");
     createReq.scopes = getStrings(j, "scopes");

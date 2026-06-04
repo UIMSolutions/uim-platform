@@ -39,9 +39,9 @@ class AppFileController : ManageHttpController {
 
         auto data = precheck.data;
         ScanJobDTO dto;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
       UploadAppFileRequest r;
-      r.tenantId = tenantId;
+      r.tenantId = precheck.tenantId;
       r.versionId = data.getString("versionId");
       r.filePath = data.getString("filePath");
       r.contentType = data.getString("contentType");

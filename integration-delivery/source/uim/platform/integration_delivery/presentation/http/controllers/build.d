@@ -68,7 +68,7 @@ class BuildController : ManageHttpController {
         auto data = precheck.data;
         BuildDTO dto;
         dto.buildId = BuildId(data.getString("buildId", ""));
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.commitSha = data.getString("commitSha", "");
         dto.branch = data.getString("branch", "");
         dto.commitMessage = data.getString("commitMessage", "");

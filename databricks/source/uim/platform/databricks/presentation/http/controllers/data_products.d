@@ -29,7 +29,7 @@ public:
 
         auto data = precheck.data;
       CreateDataProductRequest r;
-      r.tenantId      = req.getTenantId;
+      r.tenantId      = tenantId;
       r.id            = precheck.id;
       r.workspaceId   = data.getString("workspaceId");
       r.name          = data.getString("name");
@@ -85,7 +85,7 @@ public:
       
       auto data = precheck.data;
       UpdateDataProductRequest r;
-      r.tenantId     = req.getTenantId;
+      r.tenantId     = tenantId;
       r.id           = req.requestPath.to!string.split("/")[$-1];
       r.description  = data.getString("description");
       r.version_     = data.getString("version");

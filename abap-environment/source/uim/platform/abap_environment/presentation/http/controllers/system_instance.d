@@ -42,7 +42,7 @@ class SystemInstanceController : ManageHttpController {
     auto data = precheck.data;
 
     CreateSystemInstanceRequest request;
-    request.tenantId = tenantId;
+    request.tenantId = precheck.tenantId;
     request.subaccountId = data.getString("subaccountId");
     request.name = data.getString("name");
     request.description = data.getString("description");
@@ -112,7 +112,7 @@ class SystemInstanceController : ManageHttpController {
     auto data = precheck.data;
 
     UpdateSystemInstanceRequest request;
-    request.tenantId = tenantId;
+    request.tenantId = precheck.tenantId;
     request.systemInstanceId = id;
     request.description = data.getString("description");
     request.status = data.getString("status");

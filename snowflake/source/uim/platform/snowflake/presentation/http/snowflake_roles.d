@@ -34,7 +34,7 @@ class SnowflakeRoleController : ManageHttpController {
   void handleCreate(HTTPServerRequest req, HTTPServerResponse res) {
     auto data = precheck.data;
     CreateRoleRequest r;
-    r.tenantId    = req.getTenantId;
+    r.tenantId    = tenantId;
     r.id          = precheck.id;
     r.accountId   = data.getString("accountId");
     r.name        = data.getString("name");
@@ -50,7 +50,7 @@ class SnowflakeRoleController : ManageHttpController {
   void handleUpdate(HTTPServerRequest req, HTTPServerResponse res) {
     auto data = precheck.data;
     UpdateRoleRequest r;
-    r.tenantId    = req.getTenantId;
+    r.tenantId    = tenantId;
     r.id          = extractIdFromPath(req.requestPath.to!string);
     r.description = data.getString("description");
     r.privileges  = data.getStrings("privileges");

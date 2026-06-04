@@ -32,7 +32,7 @@ class DataSubjectController : ManageHttpController {
 
         auto data = precheck.data;
             CreateDataSubjectRequest r;
-            r.tenantId = tenantId;
+            r.tenantId = precheck.tenantId;
             r.roleId = RoleId(data.getString("roleId"));
             r.applicationGroupId = ApplicationGroupId(data.getString("applicationGroupId"));
             r.externalId = data.getString("externalId");
@@ -112,7 +112,7 @@ class DataSubjectController : ManageHttpController {
 
             auto data = precheck.data;
             UpdateDataSubjectRequest r;
-            r.tenantId = tenantId;
+            r.tenantId = precheck.tenantId;
             r.lifecycleStatus = data.getString("lifecycleStatus");
             r.roleId = RoleId(data.getString("roleId"));
 

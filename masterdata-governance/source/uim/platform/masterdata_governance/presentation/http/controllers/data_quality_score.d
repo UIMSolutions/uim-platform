@@ -70,7 +70,7 @@ class DataQualityScoreController : ManageHttpController {
 
         auto data = precheck.data;
         DataQualityScoreDTO dto;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.businessPartnerId = BusinessPartnerId(data.getString("businessPartnerId"));
         dto.overallScore = data.getInteger("overallScore");
         dto.completenessScore = data.getInteger("completenessScore");
@@ -104,7 +104,7 @@ class DataQualityScoreController : ManageHttpController {
         auto data = precheck.data;
         DataQualityScoreDTO dto;
         dto.scoreId = DataQualityScoreId(precheck.id);
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.overallScore = data.getInteger("overallScore");
         dto.completenessScore = data.getInteger("completenessScore");
         dto.consistencyScore = data.getInteger("consistencyScore");

@@ -40,7 +40,7 @@ class CleansingRuleController : ManageHttpController {
 
     auto data = precheck.data;
     auto r = CreateCleansingRuleRequest();
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.name = data.getString("name");
     r.description = data.getString("description");
     r.datasetPattern = data.getString("datasetPattern");
@@ -109,7 +109,7 @@ override protected Json updateHandler(HTTPServerRequest req) {
   auto tenantId = precheck.tenantId;
   auto r = UpdateCleansingRuleRequest();
   r.id = precheck.id;
-  r.tenantId = tenantId;
+  r.tenantId = precheck.tenantId;
   r.name = data.getString("name");
   r.description = data.getString("description");
   r.datasetPattern = data.getString("datasetPattern");

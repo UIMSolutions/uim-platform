@@ -39,7 +39,7 @@ class CallController : HttpController {
         try {
             auto data = precheck.data;
             InvokeRfcRequest r;
-            r.tenantId        = req.getTenantId;
+            r.tenantId        = tenantId;
             r.destinationId   = data.getString("destinationId");
             r.functionModule  = data.getString("functionModule");
             r.rfcType         = _parseRfcType(data.getString("rfcType", "sRFC"));

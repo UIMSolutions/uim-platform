@@ -17,43 +17,43 @@ class ManageServiceBrokersUseCase { // TODO: UIMUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    ServiceBroker getServiceBroker(TenantId tenantId, ServiceBrokerId id) {
+    ServiceBroker getBroker(TenantId tenantId, ServiceBrokerId id) {
         return repo.findById(tenantId, id);
     }
 
-    CommandResult createServiceBroker(TenantId tenantId, CreateServiceBrokerRequest dto) {
-        ServiceBroker e;
-        e.initEntity(tenantId);
+    CommandResult createBroker(CreateServiceBrokerRequest dto) {
+        auto broker = ServiceBroker();
+        broker.initEntity(dto.tenantId);
 
-        e.id = ServiceBrokerId(currentTimestamp.to!string);
-        e.name = dto.name;
-        e.description = dto.description;
-        e.brokerUrl = dto.brokerUrl;
+        broker.id = ServiceBrokerId(currentTimestamp.to!string);
+        broker.name = dto.name;
+        broker.description = dto.description;
+        broker.brokerUrl = dto.brokerUrl;
 
         if (dto.name.length == 0)
             return CommandResult(false, "", "Service broker name is required");
         if (dto.brokerUrl.length == 0)
             return CommandResult(false, "", "Broker URL is required");
 
-        repo.save(e);
-        return CommandResult(true, e.id.value, "");
+        repo.save(broker);
+        return CommandResult(true, broker.id.value, "");
     }
 
-    CommandResult updateServiceBroker(TenantId tenantId, ServiceBrokerId id, UpdateServiceBrokerRequest dto) {
-        auto existing = repo.findById(tenantId, id);
-        if (existing.isNull)
+    CommandResult updateBroker(UpdateServiceBrokerRequest dto) {
+        auto broker = repo.findById(dto.tenantId, dto.serviceBrokerId);
+        if (broker.isNull)
             return CommandResult(false, "", "Service broker not found");
 
-        if (dto.name.length > 0) existing.name = dto.name;
-        if (dto.description.length > 0) existing.description = dto.description;
-        if (dto.brokerUrl.length > 0) existing.brokerUrl = dto.brokerUrl;
-        existing.updatedAt = currentTimestamp;
+        if (dto.name.length > 0) broker.name = dto.name;
+        if (dto.description.length > 0) broker.description = dto.description;
+        if (dto.brokerUrl.length > 0) broker.brokerUrl = dto.brokerUrl;
+        broker.updatedAt = currentTimestamp;
 
-        repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        repo.update(broker);
+        return CommandResult(true, broker.id.value, "");
     }
 
-    CommandResult deleteServiceBroker(TenantId tenantId, ServiceBrokerId id) {
+    CommandResult deleteBroker(TenantId tenantId, ServiceBrokerId id) {
         auto broker = repo.findById(tenantId, id);
         if (broker.isNull)
             return CommandResult(false, "", "Service broker not found");

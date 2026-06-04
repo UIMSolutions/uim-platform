@@ -34,9 +34,9 @@ class IsolineController : ManageHttpController {
 
         auto data = precheck.data;
         ScanJobDTO dto;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
       CalculateIsolineRequest r;
-      r.tenantId = tenantId;
+      r.tenantId = precheck.tenantId;
       r.id = precheck.id;
       r.centerLat = jsonDouble(j, "centerLat");
       r.centerLon = jsonDouble(j, "centerLon");

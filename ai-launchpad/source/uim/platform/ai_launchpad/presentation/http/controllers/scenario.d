@@ -39,7 +39,7 @@ class ScenarioController : ManageHttpController {
 
     auto data = precheck.data;
     ScenarioDTO dto;
-    dto.tenantId = tenantId;
+    dto.tenantId = precheck.tenantId;
     dto.scenarioId = ScenarioId(data.getString("scenarioId"));
     dto.name = data.getString("name");
     dto.description = data.getString("description");

@@ -53,7 +53,7 @@ class DeviceController : ManageHttpController {
         DeviceDTO dto;
         dto.deviceId = DeviceId(precheck.id);
         dto.applicationId = MobileApplicationId(data.getString("mobileApplicationId"));
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.deviceName = data.getString("deviceName");
         dto.deviceModel = data.getString("deviceModel");
         dto.manufacturer = data.getString("manufacturer");
@@ -101,7 +101,7 @@ class DeviceController : ManageHttpController {
         auto data = precheck.data;
         DeviceDTO dto;
         dto.deviceId = DeviceId(precheck.id);
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.osVersion = data.getString("osVersion");
         dto.appVersionInstalled = data.getString("appVersionInstalled");
         dto.groupName = data.getString("groupName");

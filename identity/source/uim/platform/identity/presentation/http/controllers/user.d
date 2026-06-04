@@ -64,7 +64,7 @@ class UserController : ManageHttpController {
         auto data = precheck.data;
             UserDTO dto;
             dto.userId = UserId(precheck.id);
-            dto.tenantId = tenantId;
+            dto.tenantId = precheck.tenantId;
             dto.userName = data.getString("userName");
             dto.email = data.getString("email");
             dto.displayName = data.getString("displayName");
@@ -92,7 +92,7 @@ class UserController : ManageHttpController {
             auto data = precheck.data;
             UserDTO dto;
             dto.userId = UserId(precheck.id);
-            dto.tenantId = tenantId;
+            dto.tenantId = precheck.tenantId;
             dto.displayName = data.getString("displayName");
             dto.firstName = data.getString("firstName");
             dto.lastName = data.getString("lastName");

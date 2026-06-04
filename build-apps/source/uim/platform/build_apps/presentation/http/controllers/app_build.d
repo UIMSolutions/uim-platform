@@ -61,7 +61,7 @@ class AppBuildController : ManageHttpController {
         auto data = precheck.data;
         AppBuildDTO dto;
         dto.appBuildId = AppBuildId(precheck.id);
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.applicationId = ApplicationId(data.getString("applicationId"));
         dto.name = data.getString("name");
         dto.description = data.getString("description");
@@ -109,7 +109,7 @@ class AppBuildController : ManageHttpController {
         auto data = precheck.data;
         AppBuildDTO dto;
         dto.appBuildId = id;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.buildTarget = data.getString("buildTarget");

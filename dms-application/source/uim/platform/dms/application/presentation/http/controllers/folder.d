@@ -45,7 +45,7 @@ class FolderController : ManageHttpController {
 
     auto data = precheck.data;
     auto r = CreateFolderRequest();
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.repositoryId = data.getString("repositoryId");
     r.parentFolderId = data.getString("parentFolderId");
     r.name = data.getString("name");
@@ -119,7 +119,7 @@ override protected Json updateHandler(HTTPServerRequest req) {
   auto data = precheck.data;
   auto r = UpdateFolderRequest();
   r.folderId = id;
-  r.tenantId = tenantId;
+  r.tenantId = precheck.tenantId;
   r.name = data.getString("name");
   r.description = data.getString("description");
 
@@ -147,7 +147,7 @@ protected void handleMove(scope HTTPServerRequest req, scope HTTPServerResponse 
     auto data = precheck.data;
     auto r = MoveFolderRequest();
     r.folderId = id;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.newParentFolderId = data.getString("newParentFolderId");
 
     auto result = usecase.moveFolder(r);

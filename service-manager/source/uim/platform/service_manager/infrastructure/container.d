@@ -16,7 +16,7 @@ struct Container {
     ManageOperationsUseCase manageOperationsUseCase;
     ManageLabelsUseCase manageLabelsUseCase;
 
-    PlatformController PlatformController;
+    PlatformController platformController;
     ServiceBrokerController serviceBrokerController;
     ServiceOfferingController serviceOfferingController;
     ServicePlanController servicePlanController;

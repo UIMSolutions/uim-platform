@@ -77,7 +77,7 @@ class RefreshTokenController : ManageHttpController {
         auto data = precheck.data;
             RefreshTokenDTO dto;
             dto.tokenId = precheck.id;
-            dto.tenantId = tenantId;
+            dto.tenantId = precheck.tenantId;
             dto.tokenValue = data.getString("tokenValue");
             dto.clientId = data.getString("clientId");
             dto.userId = data.getString("userId");

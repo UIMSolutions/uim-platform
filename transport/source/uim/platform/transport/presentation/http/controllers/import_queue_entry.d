@@ -71,7 +71,7 @@ class ImportQueueEntryController : ManageHttpController {
         auto data = precheck.data;
         ImportQueueEntryDTO dto;
         dto.entryId = ImportQueueEntryId(precheck.id);
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.nodeId = data.getString("nodeId");
         dto.requestId = data.getString("requestId");
         dto.queuePosition = data.getInteger("queuePosition");

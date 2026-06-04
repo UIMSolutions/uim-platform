@@ -38,9 +38,9 @@ class ServiceInstanceController : ManageHttpController {
 
         auto data = precheck.data;
         ScanJobDTO dto;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
       CreateServiceInstanceRequest r;
-      r.tenantId = tenantId;
+      r.tenantId = precheck.tenantId;
       r.name = data.getString("name");
       r.description = data.getString("description");
       r.spaceId = data.getString("spaceId");
@@ -137,7 +137,7 @@ class ServiceInstanceController : ManageHttpController {
       }
       UpdateServiceInstanceRequest r;
       r.id = id;
-      r.tenantId = tenantId;
+      r.tenantId = precheck.tenantId;
       r.description = data.getString("description");
       r.updatedBy = UserId(data.getString("updatedBy"));
 

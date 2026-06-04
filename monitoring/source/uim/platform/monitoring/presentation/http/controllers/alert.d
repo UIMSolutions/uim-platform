@@ -79,7 +79,7 @@ class AlertController : ManageHttpController {
     auto data = precheck.data;
     AcknowledgeAlertRequest r;
     r.alertId = AlertId(data.getString("alertId"));
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.acknowledgedBy = UserId(req.headers.get("X-User-Id", ""));
 
     auto result = usecase.acknowledgeAlert(r);
@@ -108,7 +108,7 @@ class AlertController : ManageHttpController {
       auto data = precheck.data;
       ResolveAlertRequest r;
       r.alertId = AlertId(data.getString("alertId"));
-      r.tenantId = tenantId;
+      r.tenantId = precheck.tenantId;
       r.resolvedBy = UserId(req.headers.get("X-User-Id", ""));
 
       auto result = usecase.resolveAlert(r);

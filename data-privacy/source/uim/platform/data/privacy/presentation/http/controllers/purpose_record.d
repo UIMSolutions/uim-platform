@@ -40,7 +40,7 @@ class PurposeRecordController : ManageHttpController {
 
     auto data = precheck.data;
     CreatePurposeRecordRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.subjectId = DataSubjectId(data.getString("dataSubjectId"));
     r.contextId = BusinessContextId(data.getString("businessContextId"));
     r.purpose = data.getString("purpose");
@@ -97,7 +97,7 @@ class PurposeRecordController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     DeactivatePurposeRecordRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.recordId = PurposeRecordId(precheck.id);
 
     auto result = usecase.deactivateRecord(r);

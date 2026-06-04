@@ -40,7 +40,7 @@ class ArtifactController : ManageHttpController {
 
         auto data = precheck.data;
         CreateArtifactRequest r;
-        r.tenantId = tenantId;
+        r.tenantId = precheck.tenantId;
         r.artifactId = ArtifactId(precheck.id);
         r.name = data.getString("name");
         r.description = data.getString("description");
@@ -136,7 +136,7 @@ override protected Json updateHandler(HTTPServerRequest req) {
 
     auto data = precheck.data;
     UpdateArtifactRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.artifactId = ArtifactId(precheck.id);
     r.name = data.getString("name");
     r.description = data.getString("description");

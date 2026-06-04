@@ -71,7 +71,7 @@ class CustomerController : ManageHttpController {
         auto data = precheck.data;
         CustomerDTO dto;
         dto.customerId = CustomerId(precheck.id);
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.customerType = data.getString("customerType");
@@ -106,7 +106,7 @@ class CustomerController : ManageHttpController {
         auto data = precheck.data;
         CustomerDTO dto;
         dto.customerId = CustomerId(precheck.id);
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.contactPerson = data.getString("contactPerson");

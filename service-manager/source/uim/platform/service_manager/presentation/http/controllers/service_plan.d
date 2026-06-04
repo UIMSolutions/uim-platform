@@ -84,7 +84,7 @@ class ServicePlanController : ManageHttpController {
 
         auto data = precheck.data;
         CreateServicePlanRequest r;
-        r.tenantId = tenantId;
+        r.tenantId = precheck.tenantId;
         r.name = data.getString("name");
         r.description = data.getString("description");
         r.catalogName = data.getString("catalogName");

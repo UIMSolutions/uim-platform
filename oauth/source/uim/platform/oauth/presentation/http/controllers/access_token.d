@@ -71,7 +71,7 @@ class AccessTokenController : ManageHttpController {
         auto data = precheck.data;
         AccessTokenDTO dto;
         dto.tokenId = AccessTokenId(precheck.id);
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.tokenValue = data.getString("tokenValue");
         dto.clientId = data.getString("clientId");
         dto.userId = data.getString("userId");

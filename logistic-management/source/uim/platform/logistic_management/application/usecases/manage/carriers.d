@@ -28,7 +28,7 @@ public:
 
     Carrier c;
     c.id = CarrierId(generateId());
-    c.tenantId = tenantId;
+    c.tenantId = precheck.tenantId;
     c.name = req.name;
     c.description = req.description;
     c.contactEmail = req.contactEmail;

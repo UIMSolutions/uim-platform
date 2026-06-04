@@ -36,7 +36,7 @@ class SecurityEventController : HttpController {
     auto data = precheck.data;
 
     auto r = WriteSecurityEventRequest();
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.userId = data.getString("userId");
     r.userName = data.getString("userName");
     r.eventType = data.getString("eventType");

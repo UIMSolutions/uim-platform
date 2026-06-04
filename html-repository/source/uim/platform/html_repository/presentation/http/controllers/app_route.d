@@ -39,10 +39,10 @@ class AppRouteController : ManageHttpController {
 
         auto data = precheck.data;
         ScanJobDTO dto;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
       CreateAppRouteRequest request;
       with (request) {
-        tenantId = tenantId;
+        tenantId = precheck.tenantId;
         appId = data.getString("appId");
         pathPrefix = data.getString("pathPrefix");
         targetPath = data.getString("targetPath");
@@ -141,7 +141,7 @@ class AppRouteController : ManageHttpController {
       }
       UpdateAppRouteRequest r;
       r.id = id;
-      r.tenantId = tenantId;
+      r.tenantId = precheck.tenantId;
       r.description = data.getString("description");
       r.targetUrl = data.getString("targetUrl");
       r.updatedBy = UserId(data.getString("updatedBy"));

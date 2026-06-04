@@ -41,7 +41,7 @@ class AlertRuleController : ManageHttpController {
     auto data = precheck.data;
     
     CreateAlertRuleRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.resourceId = data.getString("resourceId");
     r.name = data.getString("name");
     r.description = data.getString("description");
@@ -107,7 +107,7 @@ class AlertRuleController : ManageHttpController {
     auto id = AlertRuleId(precheck.id);
     auto data = precheck.data;
     UpdateAlertRuleRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.alertRuleId = id;
     // r.name = data.getString("name");
     r.description = data.getString("description");

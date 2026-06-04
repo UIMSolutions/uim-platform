@@ -37,7 +37,7 @@ class ArtifactController : ManageHttpController {
     auto data = precheck.data;
 
     CreateArtifactRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.resourceGroupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
     r.scenarioId = ScenarioId(data.getString("scenarioId"));
     r.name = data.getString("name");

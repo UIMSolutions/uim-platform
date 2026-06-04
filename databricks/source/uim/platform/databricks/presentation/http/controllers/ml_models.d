@@ -29,7 +29,7 @@ public:
 
         auto data = precheck.data;
       CreateMlModelRequest r;
-      r.tenantId    = req.getTenantId;
+      r.tenantId    = tenantId;
       r.id          = precheck.id;
       r.workspaceId = data.getString("workspaceId");
       r.name        = data.getString("name");
@@ -81,7 +81,7 @@ public:
       
       auto data = precheck.data;
       UpdateMlModelRequest r;
-      r.tenantId    = req.getTenantId;
+      r.tenantId    = tenantId;
       r.id          = req.requestPath.to!string.split("/")[$-1];
       r.description = data.getString("description");
       r.tags        = data.getString("tags");

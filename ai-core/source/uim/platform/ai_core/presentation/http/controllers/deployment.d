@@ -38,7 +38,7 @@ class DeploymentController : ManageHttpController {
     auto data = precheck.data;
 
     CreateDeploymentRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.resourceGroupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
     r.configurationId = ConfigurationId(data.getString("configurationId"));
     r.ttl = data.getInteger("ttl");
@@ -102,7 +102,7 @@ class DeploymentController : ManageHttpController {
       return errorResponse("Invalid deployment ID", 400);
 
     PatchDeploymentRequest request;
-    request.tenantId = tenantId;
+    request.tenantId = precheck.tenantId;
     request.resourceGroupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
     request.deploymentId = id;
     request.targetStatus = data.getString("targetStatus");

@@ -39,7 +39,7 @@ class MetricController : ManageHttpController {
     auto tenantId = precheck.tenantId;
     auto data = precheck.data;
     PushMetricRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.resourceId = data.getString("resourceId");
     r.name = data.getString("name");
     r.value_ = data.getDouble("value");
@@ -68,14 +68,14 @@ class MetricController : ManageHttpController {
     try {
       auto tenantId = precheck.tenantId;
       PushMetricBatchRequest batchReq;
-      batchReq.tenantId = tenantId;
+      batchReq.tenantId = precheck.tenantId;
 
       foreach (mj; data.getArray("metrics")) {
         if (!mj.isObject)
           continue;
 
         PushMetricRequest r;
-        r.tenantId = tenantId;
+        r.tenantId = precheck.tenantId;
         r.resourceId = mdata.getString("resourceId");
         r.name = mdata.getString("name");
         r.value_ = getDouble(mj, "value");
@@ -102,7 +102,7 @@ class MetricController : ManageHttpController {
       auto metricName = req.params.get("name", "");
 
       QueryMetricsRequest qr;
-      qr.tenantId = tenantId;
+      qr.tenantId = precheck.tenantId;
       qr.resourceId = resourceId;
       qr.metricName = metricName;
 

@@ -31,7 +31,7 @@ class LegalGroundController : ManageHttpController {
 
         auto data = precheck.data;
         CreateLegalGroundRequest r;
-        r.tenantId = tenantId;
+        r.tenantId = precheck.tenantId;
         r.name = data.getString("name");
         r.description = data.getString("description");
         r.businessPurposeId = BusinessPurposeId(data.getString("businessPurposeId"));
@@ -103,7 +103,7 @@ class LegalGroundController : ManageHttpController {
         auto id = LegalGroundId(precheck.id);
         auto data = precheck.data;
         UpdateLegalGroundRequest r;
-        r.tenantId = tenantId;
+        r.tenantId = precheck.tenantId;
         r.legalGroundId = id;
         r.name = data.getString("name");
         r.description = data.getString("description");

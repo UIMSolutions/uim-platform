@@ -44,7 +44,7 @@ class DestinationController : ManageHttpController {
 
         auto data = precheck.data;
       auto r = CreateDestinationRequest();
-      r.tenantId = tenantId;
+      r.tenantId = precheck.tenantId;
       r.name = data.getString("name");
       r.description = data.getString("description");
       r.systemId = data.getString("systemId");
@@ -123,7 +123,7 @@ class DestinationController : ManageHttpController {
       auto data = precheck.data;
       auto r = UpdateDestinationRequest();
       r.id = id;
-      r.tenantId = tenantId;
+      r.tenantId = precheck.tenantId;
       r.name = data.getString("name");
       r.description = data.getString("description");
       r.systemId = data.getString("systemId");

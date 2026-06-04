@@ -57,7 +57,7 @@ class ExportController : ManageHttpController {
     auto data = precheck.data;
 
     CreateExportJobRequest jobRequest = CreateExportJobRequest();
-    jobRequest.tenantId = tenantId;
+    jobRequest.tenantId = precheck.tenantId;
     jobRequest.requestedBy = data.getString("requestedBy");
     jobRequest.timeFrom = jsonLong(data, "timeFrom");
     jobRequest.timeTo = jsonLong(data, "timeTo");

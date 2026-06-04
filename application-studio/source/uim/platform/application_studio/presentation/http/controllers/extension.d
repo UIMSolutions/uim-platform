@@ -73,7 +73,7 @@ class ExtensionController : ManageHttpController {
         auto data = precheck.data;
         ExtensionDTO dto;
         dto.extensionId = ExtensionId(precheck.id);
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.version_ = data.getString("version");

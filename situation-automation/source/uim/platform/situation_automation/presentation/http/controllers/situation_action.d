@@ -40,7 +40,7 @@ class SituationActionController : ManageHttpController {
 
         auto data = precheck.data;
             CreateSituationActionRequest r;
-            r.tenantId = tenantId;
+            r.tenantId = precheck.tenantId;
             r.situationActionId = SituationActionId(precheck.id);
             r.name = data.getString("name");
             r.description = data.getString("description");
@@ -153,7 +153,7 @@ class SituationActionController : ManageHttpController {
         auto tenantId = precheck.tenantId;
             auto data = precheck.data;
             UpdateSituationActionRequest r;
-            r.tenantId = tenantId;
+            r.tenantId = precheck.tenantId;
             r.situationActionId = SituationActionId(precheck.id);
             r.name = data.getString("name");
             r.description = data.getString("description");

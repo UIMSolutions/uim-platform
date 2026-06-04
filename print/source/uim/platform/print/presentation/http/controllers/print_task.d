@@ -72,7 +72,7 @@ class PrintTaskController : ManageHttpController {
         auto data = precheck.data;
             PrintTaskDTO dto;
             dto.taskId = PrintTaskId(precheck.id);
-            dto.tenantId = tenantId;
+            dto.tenantId = precheck.tenantId;
             dto.queueId = data.getString("queueId");
             dto.documentId = data.getString("documentId");
             dto.applicationId = data.getString("applicationId");

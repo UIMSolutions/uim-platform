@@ -30,7 +30,7 @@ class LabelController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-        auto items = usecase.listByTenant(tenantId);
+        auto items = usecase.listLabels(tenantId);
         auto jarr = Json.emptyArray;
         foreach (e; items) {
             jarr ~= Json.emptyObject
@@ -53,10 +53,11 @@ class LabelController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
+        auto id = LabelId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid label ID", 400);
 
-        auto tenantId = precheck.tenantId;
-        auto id = precheck.id;
-        auto e = usecase.getById(tenantId, LabelId(id));
+        auto e = usecase.getLabel(tenantId, id);
         if (e.isNull)
             return errorResponse("Label not found", 404);
 
@@ -85,7 +86,7 @@ class LabelController : ManageHttpController {
         r.key = data.getString("key");
         r.value = data.getString("value");
 
-        auto result = usecase.create(req.getTenantId, r);
+        auto result = usecase.createLabel(r);
         if (result.hasError)
             return errorResponse(result.message, 400);
 
@@ -100,15 +101,19 @@ class LabelController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-        auto id = precheck.id;
+        auto id = LabelId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid label ID", 400);
+
         auto data = precheck.data;
         UpdateLabelRequest r;
         r.key = data.getString("key");
         r.value = data.getString("value");
 
-        auto result = usecase.update(req.getTenantId, LabelId(id), r);
+        auto result = usecase.updateLabel(r);
         if (result.hasError)
             return errorResponse(result.message, 400);
+
         auto responseData = Json.emptyObject.set("id", result.id);
         return successResponse("Label updated successfully", 200, responseData);
     }
@@ -120,8 +125,11 @@ class LabelController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-        auto id = precheck.id;
-        auto result = usecase.deleteLabel(req.getTenantId, LabelId(id));
+        auto id = LabelId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid label ID", 400);
+
+        auto result = usecase.deleteLabel(req.getTenantId, id);
         if (result.hasError)
             return errorResponse(result.message, 400);
 

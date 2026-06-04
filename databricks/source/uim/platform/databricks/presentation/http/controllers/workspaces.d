@@ -29,7 +29,7 @@ public:
 
         auto data = precheck.data;
       CreateWorkspaceRequest r;
-      r.tenantId      = req.getTenantId;
+      r.tenantId      = tenantId;
       r.id            = precheck.id;
       r.name          = data.getString("name");
       r.region        = data.getString("region");
@@ -81,7 +81,7 @@ public:
       
       auto data = precheck.data;
       UpdateWorkspaceRequest r;
-      r.tenantId    = req.getTenantId;
+      r.tenantId    = tenantId;
       r.id          = req.requestPath.to!string.split("/")[$-1];
       r.name        = data.getString("name");
       r.storageRoot = data.getString("storageRoot");

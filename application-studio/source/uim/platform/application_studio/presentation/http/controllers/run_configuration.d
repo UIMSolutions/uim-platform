@@ -74,7 +74,7 @@ class RunConfigurationController : ManageHttpController {
         RunConfigurationDTO dto;
         dto.runConfigurationId = RunConfigurationId(
             precheck.id);
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.projectId = ProjectId(
             data.getString("projectId"));
         dto.name = data.getString("name");
@@ -111,7 +111,7 @@ class RunConfigurationController : ManageHttpController {
 
         auto data = precheck.data;
         RunConfigurationDTO dto;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.runConfigurationId = id;
         dto.name = data.getString("name");
         dto.description = data.getString("description");

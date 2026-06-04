@@ -42,7 +42,7 @@ class ModelController : ManageHttpController {
 
     auto data = precheck.data;
     auto r = CreateModelConfigRequest();
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.datasetId = data.getString("datasetId");
     r.name = data.getString("name");
     r.description = data.getString("description");
@@ -104,7 +104,7 @@ class ModelController : ManageHttpController {
     auto data = precheck.data;
     auto r = UpdateModelConfigRequest();
     r.id = id;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.name = data.getString("name");
     r.description = data.getString("description");
     r.modelType = parseModelType(data.getString("modelType"));
@@ -159,7 +159,7 @@ class ModelController : ManageHttpController {
 
     auto r = StartTrainingRequest();
     r.modelConfigId = id;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
     auto result = usecase.startTraining(r);

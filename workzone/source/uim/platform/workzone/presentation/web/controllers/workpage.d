@@ -32,7 +32,7 @@ class WorkpageWebController : ManageHttpController {
 
     private void handleList(scope HTTPServerRequest req,
                             scope HTTPServerResponse res) {
-        immutable tenantId   = req.getTenantId;
+        immutable tenantId   = tenantId;
         immutable rawPath    = req.requestPath.to!string;
         // /ui/workspaces/{wsId}/pages  → extract {wsId}
         immutable workspaceId = extractSegmentAt(rawPath, 3); // 0-indexed after /ui

@@ -41,7 +41,7 @@ class SchemaController : ManageHttpController {
     auto data = precheck.data;
     
     CreateSchemaRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
     r.documentTypeId = data.getString("documentTypeId");
     r.name = data.getString("name");
@@ -109,7 +109,7 @@ class SchemaController : ManageHttpController {
 
     auto data = precheck.data;
     UpdateSchemaRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
     r.schemaId = id;
     r.name = data.getString("name");

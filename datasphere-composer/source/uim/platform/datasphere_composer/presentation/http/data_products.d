@@ -36,7 +36,7 @@ class DataProductController : ManageHttpController {
   }
 
   void handleListByProvider(HTTPServerRequest req, HTTPServerResponse res) {
-    auto tenantId  = req.getTenantId;
+    auto tenantId  = tenantId;
     auto path      = req.requestPath.to!string;
     // path: /api/v1/composer/providers/<id>/products
     auto parts = path.split("/");
@@ -57,7 +57,7 @@ class DataProductController : ManageHttpController {
   void handleCreate(HTTPServerRequest req, HTTPServerResponse res) {
     auto data = precheck.data;
     CreateDataProductRequest r;
-    r.tenantId     = req.getTenantId;
+    r.tenantId     = tenantId;
     r.id           = precheck.id;
     r.providerId   = data.getString("providerId");
     r.name         = data.getString("name");
@@ -75,7 +75,7 @@ class DataProductController : ManageHttpController {
   void handleUpdate(HTTPServerRequest req, HTTPServerResponse res) {
     auto data = precheck.data;
     UpdateDataProductRequest r;
-    r.tenantId    = req.getTenantId;
+    r.tenantId    = tenantId;
     r.id          = extractIdFromPath(req.requestPath.to!string);
     r.name        = data.getString("name");
     r.description = data.getString("description");

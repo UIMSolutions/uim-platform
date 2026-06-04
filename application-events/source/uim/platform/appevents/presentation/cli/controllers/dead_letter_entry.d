@@ -74,7 +74,7 @@ class CliDeadLetterEntryController {
             return;
         }
         DeadLetterEntryDTO dto;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.channelId = EventChannelId(args[0]);
         dto.errorMessage = args[1];
         auto result = _useCase.createDeadLetterEntry(dto);

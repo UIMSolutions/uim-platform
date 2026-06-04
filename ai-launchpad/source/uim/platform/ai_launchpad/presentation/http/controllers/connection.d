@@ -57,7 +57,7 @@ class ConnectionController : ManageHttpController {
 
     auto data = precheck.data;
     CreateConnectionRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.connectionId = ConnectionId(data.getString("id"));
     r.workspaceId = WorkspaceId(req.headers.get("X-Workspace-Id", ""));
     r.clientSecret = data.getString("clientSecret");
@@ -101,7 +101,7 @@ class ConnectionController : ManageHttpController {
 
     auto data = precheck.data;
     PatchConnectionRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.connectionId = id;
     r.name = data.getString("name");
     r.description = data.getString("description");

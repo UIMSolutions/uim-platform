@@ -70,7 +70,7 @@ class SmartformController : ManageHttpController {
         auto data = precheck.data;
         SmartformDTO dto;
         dto.smartformId = SmartformId(precheck.id);
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.serviceCallId = ServiceCallId(data.getString("serviceCallId"));
         dto.activityId = ActivityId(data.getString("activityId"));
         dto.name = data.getString("name");
@@ -99,7 +99,7 @@ class SmartformController : ManageHttpController {
         auto data = precheck.data;
         SmartformDTO dto;
         dto.smartformId = SmartformId(precheck.id);
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.formData = data.getString("formData");

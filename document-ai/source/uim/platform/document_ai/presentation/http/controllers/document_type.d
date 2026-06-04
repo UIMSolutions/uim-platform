@@ -42,7 +42,7 @@ class DocumentTypeController : ManageHttpController {
     auto data = precheck.data;
     
     CreateDocumentTypeRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
     r.name = data.getString("name");
     r.description = data.getString("description");
@@ -118,7 +118,7 @@ class DocumentTypeController : ManageHttpController {
 
     auto data = precheck.data;
     UpdateDocumentTypeRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
     r.documentTypeId = id;
     r.name = data.getString("name");

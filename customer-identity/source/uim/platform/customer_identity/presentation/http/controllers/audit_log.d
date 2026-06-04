@@ -50,7 +50,7 @@ class AuditLogController : ManageHttpController {
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         AuditLogDTO dto;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.actorId = data.getString("actorId");
         dto.action = data.getString("action");
         dto.resourceType = data.getString("resourceType");

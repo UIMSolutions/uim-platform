@@ -41,7 +41,7 @@ class EnrichmentDataController : ManageHttpController {
     auto data = precheck.data;
     
     CreateEnrichmentDataRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
     r.documentTypeId = data.getString("documentTypeId");
     r.name = data.getString("name");
@@ -109,7 +109,7 @@ class EnrichmentDataController : ManageHttpController {
 
     auto data = precheck.data;
     UpdateEnrichmentDataRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
     r.enrichmentDataId = id;
     r.name = data.getString("name");

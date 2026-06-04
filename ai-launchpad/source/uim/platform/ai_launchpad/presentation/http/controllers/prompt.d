@@ -39,7 +39,7 @@ class PromptController : ManageHttpController {
 
     auto data = precheck.data;
     CreatePromptRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.collectionId = data.getString("collectionId");
     r.name = data.getString("name");
     r.modelName = data.getString("modelName");
@@ -111,7 +111,7 @@ class PromptController : ManageHttpController {
 
     auto data = precheck.data;
     PatchPromptRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.promptId = id;
     r.name = data.getString("name");
     r.status = data.getString("status");

@@ -73,7 +73,7 @@ class ChangeRequestController : ManageHttpController {
 
         auto data = precheck.data;
         ChangeRequestDTO dto;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.businessPartnerId = BusinessPartnerId(data.getString("businessPartnerId"));
         dto.subject = data.getString("subject");
         dto.description = data.getString("description");

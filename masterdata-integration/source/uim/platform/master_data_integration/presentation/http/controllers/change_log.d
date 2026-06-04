@@ -31,7 +31,7 @@ class ChangeLogController : HttpController {
   protected void handleQuery(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       ChangeLogQueryRequest r;
-      r.tenantId = tenantId;
+      r.tenantId = precheck.tenantId;
       r.objectId = req.params.get("objectId", "");
       r.category = req.params.get("category", "");
       r.deltaToken = req.params.get("deltaToken", "");

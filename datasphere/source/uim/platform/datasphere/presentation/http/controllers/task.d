@@ -38,7 +38,7 @@ class TaskController : ManageHttpController {
 
     auto data = precheck.data;
     CreateTaskRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
     r.name = data.getString("name");
     r.description = data.getString("description");

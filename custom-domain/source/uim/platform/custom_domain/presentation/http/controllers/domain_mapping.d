@@ -60,7 +60,7 @@ class DomainMappingController : ManageHttpController {
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         CreateDomainMappingRequest r;
-        r.tenantId = tenantId;
+        r.tenantId = precheck.tenantId;
         r.domainMappingId = DomainMappingId(precheck.id);
         r.customDomainId = CustomDomainId(data.getString("customDomainId"));
         r.standardRoute = data.getString("standardRoute");

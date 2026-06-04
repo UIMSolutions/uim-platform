@@ -41,7 +41,7 @@ class DatasetController : ManageHttpController {
     auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
     RegisterDatasetRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.connectionId = connectionId;
     r.name = data.getString("name");
     r.description = data.getString("description");
@@ -122,7 +122,7 @@ class DatasetController : ManageHttpController {
     auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
     PatchDatasetRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.connectionId = connectionId;
     r.datasetId = id;
     r.description = data.getString("description");

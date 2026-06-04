@@ -41,7 +41,7 @@ class PackageController : ManageHttpController {
 
     auto data = precheck.data;
     auto r = CreatePackageRequest();
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.subaccountId = req.headers.get("X-Subaccount-Id", "");
     r.name = data.getString("name");
     r.description = data.getString("description");
@@ -99,7 +99,7 @@ class PackageController : ManageHttpController {
     auto id = PackageId(precheck.id);
     auto data = precheck.data;
     auto r = UpdatePackageRequest();
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.description = data.getString("description");
     r.version_ = data.getString("version");
     r.tags = data.getStrings("tags");
@@ -137,7 +137,7 @@ class PackageController : ManageHttpController {
     auto data = precheck.data;
     auto r = AssemblePackageRequest();
     r.packageId = data.getString("packageId");
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.assembledBy = UserId(req.headers.get("X-User-Id", ""));
 
     auto result = usecase.assemblePackage(r);

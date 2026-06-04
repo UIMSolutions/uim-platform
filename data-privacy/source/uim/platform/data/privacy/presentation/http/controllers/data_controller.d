@@ -39,7 +39,7 @@ class DataControllerController : ManageHttpController {
 
     auto data = precheck.data;
     CreateDataControllerRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.name = data.getString("name");
     r.description = data.getString("description");
     r.legalEntityName = data.getString("legalEntityName");
@@ -99,7 +99,7 @@ class DataControllerController : ManageHttpController {
     auto data = precheck.data;
 
     UpdateDataControllerRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.controllerId = DataControllerId(precheck.id);
     r.name = data.getString("name");
     r.description = data.getString("description");

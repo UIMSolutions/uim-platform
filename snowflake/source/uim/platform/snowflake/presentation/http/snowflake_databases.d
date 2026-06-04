@@ -34,7 +34,7 @@ class SnowflakeDatabaseController : ManageHttpController {
   void handleCreate(HTTPServerRequest req, HTTPServerResponse res) {
     auto data = precheck.data;
     CreateDatabaseRequest r;
-    r.tenantId      = req.getTenantId;
+    r.tenantId      = tenantId;
     r.id            = precheck.id;
     r.accountId     = data.getString("accountId");
     r.name          = data.getString("name");
@@ -50,7 +50,7 @@ class SnowflakeDatabaseController : ManageHttpController {
   void handleUpdate(HTTPServerRequest req, HTTPServerResponse res) {
     auto data = precheck.data;
     UpdateDatabaseRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.id       = extractIdFromPath(req.requestPath.to!string);
     r.status   = data.getString("status");
     r.comment  = data.getString("comment");

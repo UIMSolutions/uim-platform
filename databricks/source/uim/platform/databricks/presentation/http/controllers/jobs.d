@@ -31,7 +31,7 @@ public:
 
     auto data = precheck.data;
     CreateJobRequest r;
-    r.tenantId = req.getTenantId;
+    r.tenantId = precheck.tenantId;
     r.id = precheck.id;
     r.workspaceId = data.getString("workspaceId");
     r.name = data.getString("name");
@@ -89,7 +89,7 @@ override protected Json updateHandler(HTTPServerRequest req) {
 
   auto data = precheck.data;
   UpdateJobRequest r;
-  r.tenantId = req.getTenantId;
+  r.tenantId = precheck.tenantId;
   r.id = req.requestPath.to!string.split("/")[$ - 1];
   r.name = data.getString("name");
   r.description = data.getString("description");

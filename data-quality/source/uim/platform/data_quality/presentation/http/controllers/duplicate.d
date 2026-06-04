@@ -35,7 +35,7 @@ class DuplicateController : HttpController {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
       auto r = DetectDuplicatesRequest();
-      r.tenantId = tenantId;
+      r.tenantId = precheck.tenantId;
       r.datasetId = DataSetId(data.getString("datasetId"));
       r.matchFields = j.getStringsArray("matchFields");
       r.strategy = data.getString("strategy").to!MatchStrategy;
@@ -69,7 +69,7 @@ class DuplicateController : HttpController {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
       auto r = ResolveDuplicateRequest();
-      r.tenantId = tenantId;
+      r.tenantId = precheck.tenantId;
       r.groupId = data.getString("groupId");
       r.survivorRecordId = data.getString("survivorRecordId");
 

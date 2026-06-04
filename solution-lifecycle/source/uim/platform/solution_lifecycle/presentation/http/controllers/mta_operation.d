@@ -89,7 +89,7 @@ class MtaOperationController : ManageHttpController {
         try {
             auto data = precheck.data;
             AbortOperationRequest r;
-            r.tenantId    = req.getTenantId;
+            r.tenantId    = tenantId;
             auto path = precheck.path;
             import std.string : indexOf;
             auto bare = path[0 .. path.indexOf("/abort")];

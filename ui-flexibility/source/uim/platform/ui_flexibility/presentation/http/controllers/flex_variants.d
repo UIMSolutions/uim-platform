@@ -40,7 +40,7 @@ class FlexVariantsController : ManageHttpController {
 
         auto data = precheck.data;
         ScanJobDTO dto;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
       CreateFlexVariantRequest request;
       request.tenantId    = tenantId;
       request.variantId   = FlexVariantId(precheck.id);

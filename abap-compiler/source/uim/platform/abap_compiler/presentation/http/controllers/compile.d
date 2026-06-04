@@ -32,7 +32,7 @@ class CompileController : HttpController {
 
         auto data = precheck.data;
         CompileRequest r;
-        r.tenantId = req.getTenantId;
+        r.tenantId = precheck.tenantId;
         r.programId = data.getString("programId");
         r.sourceCode = data.getString("sourceCode");
 

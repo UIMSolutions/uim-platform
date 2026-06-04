@@ -42,9 +42,9 @@ class UserController : ManageHttpController {
 
         auto data = precheck.data;
         ScanJobDTO dto;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
       CreateUserRequest request;
-      request.tenantId = tenantId;
+      request.tenantId = precheck.tenantId;
       request.userName = data.getString("userName");
       request.email = data.getString("email");
       request.firstName = data.getString("firstName");
@@ -77,7 +77,7 @@ class UserController : ManageHttpController {
         auto tenantId = precheck.tenantId;
       TenantId tenantId = req.params.get("tenantId", "");
       if (tenantId.isEmpty)
-        tenantId = req.getTenantId;
+        tenantId = precheck.tenantId;
 
       auto users = useCase.listUsers(tenantId);
       auto response = Json.emptyObject;

@@ -65,7 +65,7 @@ class MtaSubscriptionController : ManageHttpController {
         try {
             auto data = precheck.data;
             SubscribeMtaRequest r;
-            r.tenantId            = req.getTenantId;
+            r.tenantId            = tenantId;
             r.providerMtaId       = data.getString("providerMtaId");
             r.providerTenantId    = data.getString("providerTenantId");
             r.providerSpaceId     = data.getString("providerSpaceId");
@@ -92,7 +92,7 @@ class MtaSubscriptionController : ManageHttpController {
     protected void handleUnsubscribe(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             UnsubscribeMtaRequest r;
-            r.tenantId        = req.getTenantId;
+            r.tenantId        = tenantId;
             r.subscriptionId  = extractIdFromPath(req.requestURI.to!string);
             r.unsubscribedBy  = req.json.getString("unsubscribedBy");
 

@@ -72,7 +72,7 @@ class DataConnectionController : ManageHttpController {
 
         auto data = precheck.data;
         DataConnectionDTO dto;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.dataConnectionId = id;
         dto.applicationId = ApplicationId(data.getString("applicationId"));
         dto.name = data.getString("name");
@@ -105,7 +105,7 @@ class DataConnectionController : ManageHttpController {
         auto data = precheck.data;
         DataConnectionDTO dto;
         dto.dataConnectionId = DataConnectionId(precheck.id);
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.baseUrl = data.getString("baseUrl");

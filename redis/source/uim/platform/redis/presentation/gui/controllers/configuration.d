@@ -18,11 +18,11 @@ class GuiConfigurationController {
     private TenantIf _tenantId;
 
     this(ManageConfigurationsUseCase useCase, TenantIf tenantId = TenantId("default")) {
-        _useCase = useCase; _tenantId = tenantId;
+        _useCase = useCase; _tenantId = precheck.tenantId;
         _model = new GuiConfigurationModel(); _view = new GuiConfigurationView();
     }
 
-    void setTenant(TenantIf tenantId) { _tenantId = tenantId; }
+    void setTenant(TenantIf tenantId) { _tenantId = precheck.tenantId; }
     GuiConfigurationModel model() { return _model; }
 
     Json loadList() {

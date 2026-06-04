@@ -41,7 +41,7 @@ class ZerocopyConnectorController : ManageHttpController {
   void handleCreate(HTTPServerRequest req, HTTPServerResponse res) {
     auto data = precheck.data;
     CreateConnectorRequest r;
-    r.tenantId = req.getTenantId;
+    r.tenantId = precheck.tenantId;
     r.id = precheck.id;
     r.accountId = data.getString("accountId");
     r.name = data.getString("name");
@@ -61,7 +61,7 @@ class ZerocopyConnectorController : ManageHttpController {
   void handleUpdate(HTTPServerRequest req, HTTPServerResponse res) {
     auto data = precheck.data;
     UpdateConnectorRequest r;
-    r.tenantId = req.getTenantId;
+    r.tenantId = precheck.tenantId;
     r.id = extractIdFromPath(req.requestPath.to!string);
     r.name = data.getString("name");
     r.status = data.getString("status");
@@ -86,7 +86,7 @@ class ZerocopyConnectorController : ManageHttpController {
   void handleEnroll(HTTPServerRequest req, HTTPServerResponse res) {
     auto data = precheck.data;
     EnrollConnectorRequest r;
-    r.tenantId = req.getTenantId;
+    r.tenantId = precheck.tenantId;
     r.connectorId = extractIdFromPath(req.requestPath.to!string);
     r.bdcTenantId = data.getString("bdcTenantId");
     auto result = usecase.enroll(r);

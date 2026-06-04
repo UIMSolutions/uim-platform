@@ -43,7 +43,7 @@ class BucketController : ManageHttpController {
     auto data = precheck.data;
 
     auto r = CreateBucketRequest();
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.name = data.getString("name");
     r.region = data.getString("region");
     r.storageClass = data.getString("storageClass");
@@ -90,7 +90,7 @@ class BucketController : ManageHttpController {
     auto data = precheck.data;
 
     UpdateBucketRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.bucketId = id;
     r.storageClass = data.getString("storageClass");
     r.versioningEnabled = data.getBoolean("versioningEnabled");

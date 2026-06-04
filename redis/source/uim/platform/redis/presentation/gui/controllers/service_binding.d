@@ -18,11 +18,11 @@ class GuiServiceBindingController {
     private TenantIf _tenantId;
 
     this(ManageServiceBindingsUseCase useCase, TenantIf tenantId = TenantId("default")) {
-        _useCase = useCase; _tenantId = tenantId;
+        _useCase = useCase; _tenantId = precheck.tenantId;
         _model = new GuiServiceBindingModel(); _view = new GuiServiceBindingView();
     }
 
-    void setTenant(TenantIf tenantId) { _tenantId = tenantId; }
+    void setTenant(TenantIf tenantId) { _tenantId = precheck.tenantId; }
     GuiServiceBindingModel model() { return _model; }
 
     Json loadList() {

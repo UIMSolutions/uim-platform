@@ -45,7 +45,7 @@ class ProvisioningJobController : HttpController {
 
         auto data = precheck.data;
       auto r = CreateProvisioningJobRequest();
-      r.tenantId = tenantId;
+      r.tenantId = precheck.tenantId;
       r.sourceSystemId = data.getString("sourceSystemId");
       r.targetSystemId = data.getString("targetSystemId");
       r.jobType = parseJobType(data.getString("jobType"));
@@ -136,7 +136,7 @@ class ProvisioningJobController : HttpController {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
       auto r = CreateProvisioningJobRequest();
-      r.tenantId = tenantId;
+      r.tenantId = precheck.tenantId;
       r.sourceSystemId = data.getString("sourceSystemId");
       r.targetSystemId = data.getString("targetSystemId");
       r.jobType = parseJobType(data.getString("jobType"));

@@ -75,7 +75,7 @@ class SyncSessionController : ManageHttpController {
         dto.deviceId = DeviceId(data.getString("deviceId"));
         dto.applicationId = MobileApplicationId(data.getString("applicationId"));
         dto.connectionId = BackendConnectionId(data.getString("connectionId"));
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.triggeredBy = data.getString("triggeredBy");
         dto.clientAppVersion = data.getString("clientAppVersion");
 
@@ -97,7 +97,7 @@ class SyncSessionController : ManageHttpController {
         auto data = precheck.data;
         SyncSessionDTO dto;
         dto.sessionId = SyncSessionId(precheck.id);
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.status = data.getString("status");
 
         auto result = usecase.updateSyncSession(dto);

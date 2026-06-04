@@ -30,7 +30,7 @@ public:
 
         auto data = precheck.data;
       CreateFlowRequest r;
-      r.tenantId            = req.getTenantId;
+      r.tenantId            = tenantId;
       r.id                  = precheck.id;
       r.packageId           = data.getString("packageId");
       r.name                = data.getString("name");
@@ -81,7 +81,7 @@ public:
         auto tenantId = precheck.tenantId;
       auto data = precheck.data;
       UpdateFlowRequest r;
-      r.tenantId    = req.getTenantId;
+      r.tenantId    = tenantId;
       r.id          = precheck.id;
       r.name        = data.getString("name");
       r.description = data.getString("description");
@@ -113,7 +113,7 @@ public:
   protected void handleDeploy(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       DeployFlowRequest r;
-      r.tenantId   = req.getTenantId;
+      r.tenantId   = tenantId;
       r.id         = precheck.id;
       r.deployedBy = req.headers.get("X-User-Id", "system");
       auto result = _usecase.deploy(r);

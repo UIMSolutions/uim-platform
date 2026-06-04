@@ -46,7 +46,7 @@ class WorkflowController : ManageHttpController {
 
         auto data = precheck.data;
       auto r = CreateWorkflowRequest();
-      r.tenantId = tenantId;
+      r.tenantId = precheck.tenantId;
       r.scenarioId = data.getString("scenarioId");
       r.name = data.getString("name");
       r.description = data.getString("description");

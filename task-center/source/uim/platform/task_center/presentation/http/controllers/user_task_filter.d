@@ -38,7 +38,7 @@ class UserTaskFilterController : ManageHttpController {
 
         auto data = precheck.data;
         CreateUserTaskFilterRequest r;
-        r.tenantId = tenantId;
+        r.tenantId = precheck.tenantId;
         r.id = precheck.id;
         r.userId = data.getString("userId");
         r.name = data.getString("name");
@@ -107,7 +107,7 @@ class UserTaskFilterController : ManageHttpController {
 
         auto data = precheck.data;
         UpdateUserTaskFilterRequest r;
-        r.tenantId = tenantId;
+        r.tenantId = precheck.tenantId;
         r.userTaskFilterId = id;
         r.name = data.getString("name");
         r.description = data.getString("description");

@@ -35,7 +35,7 @@ class DeviceRegistrationController : ManageHttpController {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
       RegisterDeviceRequest r;
-      r.tenantId = tenantId;
+      r.tenantId = precheck.tenantId;
       r.appId = data.getString("appId");
       r.deviceModel = data.getString("deviceModel");
       r.osVersion = data.getString("osVersion");

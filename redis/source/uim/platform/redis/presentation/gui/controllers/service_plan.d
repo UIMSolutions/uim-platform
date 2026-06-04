@@ -18,11 +18,11 @@ class GuiServicePlanController {
     private TenantIf _tenantId;
 
     this(ManageServicePlansUseCase useCase, TenantIf tenantId = TenantId("default")) {
-        _useCase = useCase; _tenantId = tenantId;
+        _useCase = useCase; _tenantId = precheck.tenantId;
         _model = new GuiServicePlanModel(); _view = new GuiServicePlanView();
     }
 
-    void setTenant(TenantIf tenantId) { _tenantId = tenantId; }
+    void setTenant(TenantIf tenantId) { _tenantId = precheck.tenantId; }
     GuiServicePlanModel model() { return _model; }
 
     Json loadList() {

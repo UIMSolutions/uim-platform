@@ -37,7 +37,7 @@ class TranslationProjectController : ManageHttpController {
 
         auto data = precheck.data;
             CreateTranslationProjectRequest r;
-            r.tenantId = tenantId;
+            r.tenantId = precheck.tenantId;
             r.name = data.getString("name");
             r.description = data.getString("description");
             r.projectType = data.getString("projectType");
@@ -128,7 +128,7 @@ class TranslationProjectController : ManageHttpController {
         auto tenantId = precheck.tenantId;
             auto data = precheck.data;
             UpdateTranslationProjectRequest r;
-            r.tenantId = tenantId;
+            r.tenantId = precheck.tenantId;
             r.projectId = TranslationProjectId(precheck.id);
             r.name = data.getString("name");
             r.description = data.getString("description");

@@ -66,7 +66,7 @@ class DocumentController : ManageHttpController {
         auto data = precheck.data;
         DocumentDTO dto;
         dto.documentId = DocumentId(precheck.id);
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.repositoryId = RepositoryId(data.getString("repositoryId"));
         dto.folderId = FolderId(data.getString("folderId"));
         dto.name = data.getString("name");
@@ -191,7 +191,7 @@ class DocumentController : ManageHttpController {
 
         DocumentDTO dto;
         dto.documentId = id;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.tags = data.getString("tags");

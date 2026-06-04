@@ -41,7 +41,7 @@ class ClientController : ManageHttpController {
     auto data = precheck.data;
     
     CreateClientRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.clientName = data.getString("clientName");
     r.description = data.getString("description");
 
@@ -100,7 +100,7 @@ class ClientController : ManageHttpController {
 
     auto data = precheck.data;
     PatchClientRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.clientId = id;
     r.clientName = data.getString("clientName");
     r.description = data.getString("description");

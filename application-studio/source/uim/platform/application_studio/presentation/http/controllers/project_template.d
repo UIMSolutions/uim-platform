@@ -73,7 +73,7 @@ class ProjectTemplateController : ManageHttpController {
         auto data = precheck.data;
         ProjectTemplateDTO dto;
         dto.projectTemplateId = ProjectTemplateId(precheck.id);
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.version_ = data.getString("version");
@@ -106,7 +106,7 @@ class ProjectTemplateController : ManageHttpController {
 
         auto data = precheck.data;
         ProjectTemplateDTO dto;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.projectTemplateId = id;
         dto.name = data.getString(
             "name");

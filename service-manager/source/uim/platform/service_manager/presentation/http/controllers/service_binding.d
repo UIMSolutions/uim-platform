@@ -52,13 +52,14 @@ class ServiceBindingController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-        auto tenantId = precheck.tenantId;
         auto id = ServiceBindingId(precheck.id);
-        auto e = usecase.getById(tenantId, ServiceBindingId(id));
-        if (e.isNull) {
-            writeError(res, 404, "Service binding not found");
-            return;
-        }
+        if (id.isNull)
+            return errorResponse("Invalid service binding ID", 400);
+
+        auto e = usecase.getBinding(tenantId, id);
+        if (e.isNull)
+            return errorResponse("Service binding not found", 404);
+
         auto responseData = Json.emptyObject
             .set("id", e.id.value).set("name", e.name)
             .set("instanceId", e.instanceId.value)
@@ -85,12 +86,12 @@ class ServiceBindingController : ManageHttpController {
         r.context = data.getString("context");
         r.labels = data.getString("labels");
 
-        auto result = usecase.create(req.getTenantId, r);
+        auto result = usecase.createBinding(req.getTenantId, r);
         if (result.hasError)
             return errorResponse(result.message, 400);
 
-        return successResponse("Service binding created successfully", 201, Json.emptyObject.set("id", result
-                .id));
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Service binding created successfully", 201, responseData);
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -101,13 +102,16 @@ class ServiceBindingController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto id = ServiceBindingId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid service binding ID", 400);
+
         auto data = precheck.data;
         UpdateServiceBindingRequest r;
         r.name = data.getString("name");
         r.parameters = data.getString("parameters");
         r.labels = data.getString("labels");
 
-        auto result = usecase.update(req.getTenantId, ServiceBindingId(id), r);
+        auto result = usecase.updateBinding(r);
         if (result.hasError)
             return errorResponse(result.message, 400);
 
@@ -123,7 +127,10 @@ class ServiceBindingController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto id = ServiceBindingId(precheck.id);
-        auto result = usecase.deleteServiceBinding(req.getTenantId, id);
+        if (id.isNull)
+            return errorResponse("Invalid service binding ID", 400);
+
+        auto result = usecase.deleteServiceBinding(tenantId, id);
         if (result.hasError)
             return errorResponse(result.message, 400);
 

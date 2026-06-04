@@ -66,7 +66,7 @@ class CustomDomainController : ManageHttpController {
             return errorResponse("Invalid Custom Domain ID", 400);
 
         CreateCustomDomainRequest r;
-        r.tenantId = tenantId;
+        r.tenantId = precheck.tenantId;
         r.customDomainId = id;
         r.domainName = data.getString("domainName");
         r.organizationId = data.getString("organizationId");
@@ -142,7 +142,7 @@ class CustomDomainController : ManageHttpController {
         auto data = precheck.data;
         UpdateCustomDomainRequest r;
         r.customDomainId = id;
-        r.tenantId = tenantId;
+        r.tenantId = precheck.tenantId;
         r.activeCertificateId = data.getString("activeCertificateId");
         r.tlsConfigurationId = data.getString("tlsConfigurationId");
         r.isShared = data.getBoolean("isShared");

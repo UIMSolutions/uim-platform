@@ -40,7 +40,7 @@ class FormController : ManageHttpController {
 
             auto data = precheck.data;
             CreateFormRequest r;
-            r.tenantId = tenantId;
+            r.tenantId = precheck.tenantId;
             r.projectId = ProjectId(data.getString("projectId"));
             r.formId = FormId(precheck.id);
             r.name = data.getString("name");
@@ -139,7 +139,7 @@ class FormController : ManageHttpController {
 
             auto data = precheck.data;
             UpdateFormRequest r;
-            r.tenantId = tenantId;
+            r.tenantId = precheck.tenantId;
             r.formId = FormId(precheck.id);
             r.name = data.getString("name");
             r.description = data.getString("description");

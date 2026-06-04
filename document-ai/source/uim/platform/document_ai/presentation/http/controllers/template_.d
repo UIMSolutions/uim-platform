@@ -41,7 +41,7 @@ class TemplateController : ManageHttpController {
     auto data = precheck.data;
     
     CreateTemplateRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
     r.schemaId = data.getString("schemaId");
     r.documentTypeId = data.getString("documentTypeId");
@@ -100,7 +100,7 @@ class TemplateController : ManageHttpController {
     auto id = precheck.id;
     auto data = precheck.data;
     UpdateTemplateRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.clientId = ClientId(req.headers.get("X-Client-Id", ""));
     r.templateId = id;
     r.name = data.getString("name");

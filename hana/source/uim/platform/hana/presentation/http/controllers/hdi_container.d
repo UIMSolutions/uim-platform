@@ -38,9 +38,9 @@ class HDIContainerController : ManageHttpController {
 
         auto data = precheck.data;
         ScanJobDTO dto;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
       CreateHDIContainerRequest r;
-      r.tenantId = tenantId;
+      r.tenantId = precheck.tenantId;
       r.instanceId = data.getString("instanceId");
       r.id = precheck.id;
       r.name = data.getString("name");
@@ -126,7 +126,7 @@ class HDIContainerController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
       UpdateHDIContainerRequest r;
-      r.tenantId = tenantId;
+      r.tenantId = precheck.tenantId;
       r.id = HDIContainerId(precheck.id);
       r.name = data.getString("name");
       r.description = data.getString("description");

@@ -71,7 +71,7 @@ class ProjectMemberController : ManageHttpController {
         auto data = precheck.data;
         ProjectMemberDTO dto;
         dto.id = precheck.id;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.applicationId = data.getString("applicationId");
         dto.userId = UserId(data.getString("userId"));
         dto.displayName = data.getString("displayName");
@@ -100,7 +100,7 @@ class ProjectMemberController : ManageHttpController {
 
         auto data = precheck.data;
         ProjectMemberDTO dto;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.id = precheck.id;
         dto.displayName = data.getString("displayName");
         dto.email = data.getString("email");

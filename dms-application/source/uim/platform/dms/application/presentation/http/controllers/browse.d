@@ -88,7 +88,7 @@ class BrowseController : HttpController {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
       auto r = CreateFavoriteRequest();
-      r.tenantId = tenantId;
+      r.tenantId = precheck.tenantId;
       r.userId = UserId(req.headers.get("X-User-Id", "system"));
       r.resourceId = data.getString("resourceId");
       r.resourceType = data.getString("resourceType").to!ResourceType;

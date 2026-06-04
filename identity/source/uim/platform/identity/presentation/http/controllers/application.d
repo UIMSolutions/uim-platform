@@ -64,7 +64,7 @@ class ApplicationController : ManageHttpController {
         auto data = precheck.data;
             ApplicationDTO dto;
             dto.applicationId = ApplicationId(precheck.id);
-            dto.tenantId = tenantId;
+            dto.tenantId = precheck.tenantId;
             dto.name = data.getString("name");
             dto.description = data.getString("description");
             dto.protocol = data.getString("protocol");
@@ -92,7 +92,7 @@ class ApplicationController : ManageHttpController {
             auto data = precheck.data;
             ApplicationDTO dto;
             dto.applicationId = ApplicationId(precheck.id);
-            dto.tenantId = tenantId;
+            dto.tenantId = precheck.tenantId;
             dto.name = data.getString("name");
             dto.description = data.getString("description");
             dto.status = data.getString("status");

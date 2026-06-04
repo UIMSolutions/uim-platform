@@ -29,7 +29,7 @@ public:
     
     WarehouseTask wt;
     wt.id = WarehouseTaskId(generateId());
-    wt.tenantId = tenantId;
+    wt.tenantId = precheck.tenantId;
     wt.taskNumber = req.taskNumber;
     wt.warehouseOrderId = WarehouseOrderId(req.warehouseOrderId);
     wt.warehouseId = req.warehouseId;

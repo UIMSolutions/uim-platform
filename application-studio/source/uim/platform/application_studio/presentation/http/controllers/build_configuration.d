@@ -54,7 +54,7 @@ class BuildConfigurationController : ManageHttpController {
         auto data = precheck.data;
         BuildConfigurationDTO dto;
         dto.configId = precheck.id;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.projectId = data.getString("projectId");
         dto.name = data.getString("name");
         dto.description = data.getString("description");
@@ -102,7 +102,7 @@ class BuildConfigurationController : ManageHttpController {
 
         auto data = precheck.data;
         BuildConfigurationDTO dto;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.configId = id;
         dto.name = data.getString("name");
         dto.description = data.getString("description");

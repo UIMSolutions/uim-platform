@@ -42,12 +42,12 @@ class ServiceInstanceController : ManageHttpController {
 
         auto data = precheck.data;
         ScanJobDTO dto;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
       CreateServiceInstanceRequest r;
-      r.tenantId = tenantId;
+      r.tenantId = precheck.tenantId;
       r.namespaceId = data.getString("namespaceId");
       r.environmentId = data.getString("environmentId");
-      r.tenantId = tenantId;
+      r.tenantId = precheck.tenantId;
       r.name = data.getString("name");
       r.description = data.getString("description");
       r.serviceOfferingName = data.getString("serviceOfferingName");
@@ -126,7 +126,7 @@ class ServiceInstanceController : ManageHttpController {
           req.requestURI));
       auto data = precheck.data;
       UpdateServiceInstanceRequest r;
-      r.tenantId = tenantId;
+      r.tenantId = precheck.tenantId;
       r.serviceInstanceId = id;
       r.description = data.getString(
         "description");

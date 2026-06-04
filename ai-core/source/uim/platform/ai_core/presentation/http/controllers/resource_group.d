@@ -69,7 +69,7 @@ class ResourceGroupController : ManageHttpController {
 
     auto data = precheck.data;
     CreateResourceGroupRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.resourceGroupId = ResourceGroupId(data.getString("resourceGroupId"));
     // r.status = data.getString("status");
     // r.description = data.getString("description");
@@ -88,7 +88,7 @@ class ResourceGroupController : ManageHttpController {
     if (precheck.hasError)
       return precheck;
 
-    auto tenantId = req.getTenantId();
+    auto tenantId = precheck.tenantId;
     auto id = ResourceGroupId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid resource group ID", 400);
@@ -113,7 +113,7 @@ class ResourceGroupController : ManageHttpController {
 
     auto data = precheck.data;
     PatchResourceGroupRequest r;
-    r.tenantId = tenantId;
+    r.tenantId = precheck.tenantId;
     r.resourceGroupId = id;
     r.labels = jsonKeyValuePairs(data, "labels");
 

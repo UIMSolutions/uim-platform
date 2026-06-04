@@ -74,7 +74,7 @@ class AppVersionController : ManageHttpController {
         dto.versionId = AppVersionId(data.getString("id"));
         dto.applicationId = MobileApplicationId(data.getString("mobileApplicationId"));
         dto.definitionId = AppDefinitionId(data.getString("definitionId"));
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.versionNumber = data.getString("versionNumber");
         dto.releaseNotes = data.getString("releaseNotes");
         dto.artifactUrl = data.getString("artifactUrl");
@@ -105,7 +105,7 @@ class AppVersionController : ManageHttpController {
         auto data = precheck.data;
         AppVersionDTO dto;
         dto.versionId = id;
-        dto.tenantId = tenantId;
+        dto.tenantId = precheck.tenantId;
         dto.releaseNotes = data.getString("releaseNotes");
         dto.artifactUrl = data.getString("artifactUrl");
         dto.changeLog = data.getString("changeLog");

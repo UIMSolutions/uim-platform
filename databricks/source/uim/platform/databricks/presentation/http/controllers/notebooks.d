@@ -29,7 +29,7 @@ public:
 
         auto data = precheck.data;
       CreateNotebookRequest r;
-      r.tenantId    = req.getTenantId;
+      r.tenantId    = tenantId;
       r.id          = precheck.id;
       r.workspaceId = data.getString("workspaceId");
       r.path        = data.getString("path");
@@ -82,7 +82,7 @@ public:
       
       auto data = precheck.data;
       UpdateNotebookRequest r;
-      r.tenantId = tenantId;
+      r.tenantId = precheck.tenantId;
       r.id       = req.requestPath.to!string.split("/")[$-1];
       r.name     = data.getString("name");
       r.content  = data.getString("content");

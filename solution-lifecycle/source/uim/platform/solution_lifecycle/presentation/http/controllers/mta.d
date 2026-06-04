@@ -32,7 +32,7 @@ class MtaController : ManageHttpController {
         try {
             auto data = precheck.data;
             DeployMtaRequest r;
-            r.tenantId            = req.getTenantId;
+            r.tenantId            = tenantId;
             r.archiveId           = data.getString("archiveId");
             r.solutionType        = data.getString("solutionType");
             r.spaceId             = data.getString("spaceId");
@@ -99,7 +99,7 @@ class MtaController : ManageHttpController {
         auto tenantId = precheck.tenantId;
             auto data = precheck.data;
             UpdateMtaRequest r;
-            r.tenantId            = req.getTenantId;
+            r.tenantId            = tenantId;
             r.mtaId               = extractIdFromPath(req.requestURI.to!string);
             r.archiveId           = data.getString("archiveId");
             r.extensionDescriptor = data.getString("extensionDescriptor");
@@ -129,7 +129,7 @@ class MtaController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
             DeleteMtaRequest r;
-            r.tenantId  = req.getTenantId;
+            r.tenantId  = tenantId;
             r.mtaId     = extractIdFromPath(req.requestURI.to!string);
             r.deletedBy = req.json.getString("deletedBy");
 

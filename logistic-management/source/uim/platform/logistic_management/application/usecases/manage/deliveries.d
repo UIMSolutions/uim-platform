@@ -29,7 +29,7 @@ public:
     
     Delivery d;
     d.id = DeliveryId(generateId());
-    d.tenantId = tenantId;
+    d.tenantId = precheck.tenantId;
     d.deliveryNumber = req.deliveryNumber;
     d.description = req.description;
     d.shipmentId = ShipmentId(req.shipmentId);

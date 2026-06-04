@@ -44,7 +44,7 @@ class UnificationRuleController : ManageHttpController {
   void handleCreate(HTTPServerRequest req, HTTPServerResponse res) {
     auto data = precheck.data;
     CreateUnificationRuleRequest r;
-    r.tenantId    = req.getTenantId;
+    r.tenantId    = tenantId;
     r.id          = precheck.id;
     r.name        = data.getString("name");
     r.description = data.getString("description");
@@ -64,7 +64,7 @@ class UnificationRuleController : ManageHttpController {
   void handleReorder(HTTPServerRequest req, HTTPServerResponse res) {
     auto data = precheck.data;
     ReorderRulesRequest r;
-    r.tenantId  = req.getTenantId;
+    r.tenantId  = tenantId;
     r.orderedIds = data.getStrings("orderedIds");
     // Update priority of each rule per ordered list
     foreach (int i, string id; r.orderedIds) {
@@ -88,7 +88,7 @@ class UnificationRuleController : ManageHttpController {
   void handleUpdate(HTTPServerRequest req, HTTPServerResponse res) {
     auto data = precheck.data;
     UpdateUnificationRuleRequest r;
-    r.tenantId    = req.getTenantId;
+    r.tenantId    = tenantId;
     r.id          = extractIdFromPath(req.requestPath.to!string);
     r.name        = data.getString("name");
     r.description = data.getString("description");
