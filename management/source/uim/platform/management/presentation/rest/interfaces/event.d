@@ -7,8 +7,10 @@ mixin(ShowModule!());
 @safe:
 interface IEnvironmentEventApi {
     // GET /rest/v1/events
-    EnvironmentEventId[] getEvents();
+    // @headerParam("tenantId", "X-Tenant-ID")
+    // EnvironmentEventId[] getEvents(string tenantId);
 
-    // GET /rest/v1/events/:id
-    EnvironmentEventId getEvent(string id);
+    // // GET /rest/v1/events/:id
+    // @headerParam("tenantId", "X-Tenant-ID")
+    // EnvironmentEventId getEvent(string tenantId, string id);
 }

@@ -7,8 +7,10 @@ mixin(ShowModule!());
 @safe:
 interface IDirectoryApi {
     // GET /rest/v1/directories
-    Directory[] getDirectories();
+    @headerParam("tenantId", "X-Tenant-ID")
+    Directory[] getDirectories(string tenantId);
 
     // GET /rest/v1/directories/:id
-    Directory getDirectory(string id);
+    @headerParam("tenantId", "X-Tenant-ID")
+    Directory getDirectory(string tenantId, string id);
 }

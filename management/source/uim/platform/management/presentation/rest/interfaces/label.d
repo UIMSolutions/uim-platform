@@ -7,8 +7,10 @@ mixin(ShowModule!());
 @safe:
 interface ILabelApi {
     // GET /rest/v1/labels
-    Label[] getLabels();
+    @headerParam("tenantId", "X-Tenant-ID")
+    Label[] getLabels(string tenantId);
 
     // GET /rest/v1/labels/:id
-    Label getLabel(string id);
+    @headerParam("tenantId", "X-Tenant-ID")
+    Label getLabel(string tenantId, string id);
 }

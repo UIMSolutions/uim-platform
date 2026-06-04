@@ -7,8 +7,10 @@ mixin(ShowModule!());
 @safe:
 interface IGlobalAccountApi {
     // GET /rest/v1/global-accounts
-    GlobalAccount[] getGlobalAccounts();
+    @headerParam("tenantId", "X-Tenant-ID")
+    GlobalAccount[] getGlobalAccounts(string tenantId);
 
     // GET /rest/v1/global-accounts/:id
-    GlobalAccount getGlobalAccount(string id);
+    @headerParam("tenantId", "X-Tenant-ID")
+    GlobalAccount getGlobalAccount(string tenantId, string id);
 }

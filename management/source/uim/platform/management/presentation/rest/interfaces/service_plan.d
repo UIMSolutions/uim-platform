@@ -7,8 +7,10 @@ mixin(ShowModule!());
 @safe:
 interface IServicePlanApi {
     // GET /rest/v1/service_plans
-    ServicePlan[] getServicePlans();
+    @headerParam("tenantId", "X-Tenant-ID")
+    ServicePlan[] getServicePlans(string tenantId);
 
     // GET /rest/v1/service_plans/:id
-    ServicePlan getServicePlan(string id);
+    @headerParam("tenantId", "X-Tenant-ID")
+    ServicePlan getServicePlan(string tenantId, string id);
 }

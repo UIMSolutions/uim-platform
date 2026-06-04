@@ -7,5 +7,6 @@ mixin(ShowModule!());
 @safe:
 interface IEntitlementApi {
     // GET /rest/v1/entitlements
-    Entitlement[] getEntitlements();
+    @headerParam("tenantId", "X-Tenant-ID")
+    Entitlement[] getEntitlements(string tenantId);
 }

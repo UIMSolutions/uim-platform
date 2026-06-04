@@ -39,6 +39,7 @@ class ManageSubscriptionsUseCase { // TODO: UIMUseCase {
     }
 
     auto subscription = Subscription(request.tenantId);
+    subscription.tenantId = request.tenantId;
     subscription.subaccountId = request.subaccountId;
     subscription.globalAccountId = request.globalAccountId;
     subscription.appName = request.appName;
@@ -56,7 +57,6 @@ class ManageSubscriptionsUseCase { // TODO: UIMUseCase {
     subscription.status = SubscriptionStatus.subscribed;
     subscription.isSubscriptionDone = true;
     subscription.appUrl = "/apps/" ~ request.appName ~ "/" ~ subscription.id.value;
-    subscription.tenantId = "tenant-" ~ subscription.id.value[0 .. 8];
     repo.update(subscription);
 
     emitEvent(eventRepo, request.globalAccountId.value, request.subaccountId.value, EnvironmentEventCategory.subscriptionLifecycle,

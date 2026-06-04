@@ -7,8 +7,10 @@ mixin(ShowModule!());
 @safe:
 interface ISubaccountApi {
     // GET /rest/v1/subaccounts
-    Subaccount[] getSubaccounts();
+    @headerParam("tenantId", "X-Tenant-ID")
+    Subaccount[] getSubaccounts(string tenantId);
 
     // GET /rest/v1/subaccounts/:id
-    Subaccount getSubaccount(string id);
+    @headerParam("tenantId", "X-Tenant-ID")
+    Subaccount getSubaccount(string tenantId, string id);
 }

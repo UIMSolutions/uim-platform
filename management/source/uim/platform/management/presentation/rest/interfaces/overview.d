@@ -7,5 +7,6 @@ mixin(ShowModule!());
 @safe:
 interface IOverviewApi {
     // GET /rest/v1/overview
-    // Overview getOverview();
+    @headerParam("tenantId", "X-Tenant-ID")
+    Json getOverview(string tenantId);
 }

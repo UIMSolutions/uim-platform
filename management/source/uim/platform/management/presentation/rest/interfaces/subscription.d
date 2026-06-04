@@ -7,8 +7,10 @@ mixin(ShowModule!());
 @safe:
 interface ISubscriptionApi {
     // GET /rest/v1/subscriptions
-    Subscription[] getSubscriptions();
+    @headerParam("tenantId", "X-Tenant-ID")
+    Subscription[] getSubscriptions(string tenantId);
 
     // GET /rest/v1/subscriptions/:id
-    Subscription getSubscription(string id);
+    @headerParam("tenantId", "X-Tenant-ID")
+    Subscription getSubscription(string tenantId, string id);
 }
