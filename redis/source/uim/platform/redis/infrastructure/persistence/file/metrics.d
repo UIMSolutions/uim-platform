@@ -50,11 +50,11 @@ class FileMetricRepository
             m.memoryTotalMb = data.getLong("memoryTotalMb", 0);
             m.connectedClients = data.getLong("connectedClients", 0);
             m.commandsPerSecond = data.getLong("commandsPerSecond", 0);
-            m.hitRate    = j.getDouble("hitRate", 0.0);
+            m.hitRate    = data.getDouble("hitRate", 0.0);
             m.evictedKeys = data.getLong("evictedKeys", 0);
             m.expiredKeys = data.getLong("expiredKeys", 0);
             m.totalCommandsProcessed = data.getLong("totalCommandsProcessed", 0);
-            m.cpuUsagePercent = j.getDouble("cpuUsagePercent", 0.0);
+            m.cpuUsagePercent = data.getDouble("cpuUsagePercent", 0.0);
             m.networkInputKbs = data.getLong("networkInputKbs", 0);
             m.networkOutputKbs = data.getLong("networkOutputKbs", 0);
             m.createdAt  = data.getLong("createdAt", 0);

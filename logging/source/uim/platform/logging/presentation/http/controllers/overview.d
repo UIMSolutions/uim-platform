@@ -26,24 +26,34 @@ class OverviewController : PlatformController {
     router.get("/api/v1/overview", &handleOverview);
   }
 
+  protected Json overviewHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+
+    auto summary = usecase.getSummary(tenantId);
+
+    auto response = Json.emptyObject
+      .set("totalLogEntries", summary.totalLogEntries)
+      .set("totalSpans", summary.totalSpans)
+      .set("totalStreams", summary.totalStreams)
+      .set("totalDashboards", summary.totalDashboards)
+      .set("totalAlerts", summary.totalAlerts)
+      .set("openAlerts", summary.openAlerts)
+      .set("criticalAlerts", summary.criticalAlerts)
+      .set("totalPipelines", summary.totalPipelines)
+      .set("activePipelines", summary.activePipelines)
+      .set("totalChannels", summary.totalChannels);
+
+    return successResponse("Overview retrieved successfully", "Success", 200, response);
+  }
+
   protected void handleOverview(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto summary = usecase.getSummary(tenantId);
-
-      auto response = Json.emptyObject
-        .set("totalLogEntries", summary.totalLogEntries)
-        .set("totalSpans", summary.totalSpans)
-        .set("totalStreams", summary.totalStreams)
-        .set("totalDashboards", summary.totalDashboards)
-        .set("totalAlerts", summary.totalAlerts)
-        .set("openAlerts", summary.openAlerts)
-        .set("criticalAlerts", summary.criticalAlerts)
-        .set("totalPipelines", summary.totalPipelines)
-        .set("activePipelines", summary.activePipelines)
-        .set("totalChannels", summary.totalChannels);
-
-      res.writeJsonBody(response, 200);
+      auto response = overviewHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

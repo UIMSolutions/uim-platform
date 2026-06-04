@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.logging.domain.ports.repositories.spans;
 // import uim.platform.logging.domain.entities.span;
-// import uim.platform.logging.domain.types;
+
 import uim.platform.logging;
 
 mixin(ShowModule!());
@@ -13,7 +13,7 @@ mixin(ShowModule!());
 @safe:
 interface SpanRepository : ITenantRepository!(Span, SpanId) {
 
-  Span[] findByTrace(TenantId tenantId, string traceId);
+  Span[] findByTrace(TenantId tenantId, TraceId traceId);
   Span[] findByService(TenantId tenantId, string serviceName);
   Span[] findByTimeRange(TenantId tenantId, long startTime, long endTime);
   Span[] findByOperation(TenantId tenantId, string serviceName, string operationName);

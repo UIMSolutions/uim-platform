@@ -7,7 +7,7 @@ module uim.platform.logging.presentation.http.controllers.stream;
 // import uim.platform.logging.application.usecases.manage.log_streams;
 // import uim.platform.logging.application.dto;
 // import uim.platform.logging.domain.entities.log_stream;
-// import uim.platform.logging.domain.types;
+
 
 import uim.platform.logging;
 
@@ -24,7 +24,7 @@ class StreamController : ManageController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/streams", &handleCreate);
     router.get("/api/v1/streams", &handleList);
     router.get("/api/v1/streams/*", &handleGet);
@@ -33,138 +33,119 @@ class StreamController : ManageController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateLogStreamRequest r;
-      r.tenantId = tenantId;
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.sourceType = data.getString("sourceType");
-      r.retentionPolicyId = data.getString("retentionPolicyId");
-      r.createdBy = UserId(data.getString("createdBy"));
+    auto data = precheck.data;
+        CreateLogStreamRequest r;
+    r.tenantId = tenantId;
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.sourceType = data.getString("sourceType");
+    r.retentionPolicyId = data.getString("retentionPolicyId");
+    r.createdBy = UserId(data.getString("createdBy"));
 
-      auto result = usecase.createStream(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Log stream created");
+    auto result = usecase.createStream(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+    auto resp = Json.emptyObject
+      .set("id", result.id);
 
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    return successResponse("Log stream created successfully", "Created", 201, resp);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto streams = usecase.listStreams(tenantId);
+    auto tenantId = precheck.tenantId;
+    auto streams = usecase.listStreams(tenantId);
 
-      auto jarr = Json.emptyArray;
-      foreach (s; streams) {
-        jarr ~= Json.emptyObject
-          .set("id", s.id)
-          .set("name", s.name)
-          .set("description", s.description)
-          .set("isActive", s.isActive);
-      }
-
-      auto resp = Json.emptyObject
-        .set("items", jarr)
-        .set("totalCount", streams.length)
-        .set("message", "Log stream list retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+    auto jarr = Json.emptyArray;
+    foreach (s; streams) {
+      jarr ~= Json.emptyObject
+        .set("id", s.id)
+        .set("name", s.name)
+        .set("description", s.description)
+        .set("isActive", s.isActive);
     }
+
+    auto resp = Json.emptyObject
+      .set("items", jarr)
+      .set("totalCount", streams.length);
+
+    return successResponse("Log stream list retrieved successfully", "Retrieved", 200, resp);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = LogStreamId(precheck.id);
-      auto s = usecase.getStream(tenantId, id);
+    auto tenantId = precheck.tenantId;
+    auto id = LogStreamId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid log stream ID", 400);
 
-      if (s.isNull) {
-        writeError(res, 404, "Log stream not found");
-        return;
-      }
+    auto s = usecase.getStream(tenantId, id);
+    if (s.isNull) 
+    return errorResponse("Log stream not found", 404);
 
-      auto response = Json.emptyObject
-        .set("id", s.id)
-        .set("tenantId", s.tenantId)
-        .set("name", s.name)
-        .set("description", s.description)
-        .set("isActive", s.isActive)
-        .set("retentionPolicyId", s.retentionPolicyId);
+    auto response = Json.emptyObject
+      .set("id", s.id)
+      .set("tenantId", s.tenantId)
+      .set("name", s.name)
+      .set("description", s.description)
+      .set("isActive", s.isActive)
+      .set("retentionPolicyId", s.retentionPolicyId);
 
-      res.writeJsonBody(response, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    return successResponse("Log stream retrieved successfully", "Retrieved", 200, response);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = LogStreamId(precheck.id);
-      auto data = precheck.data;
-      UpdateLogStreamRequest r;
-      r.tenantId = tenantId;
-      r.streamId = id;
-      r.description = data.getString("description");
-      r.retentionPolicyId = data.getString("retentionPolicyId");
-      r.isActive = data.getBoolean("isActive", true);
+    auto tenantId = precheck.tenantId;
+    auto id = LogStreamId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid log stream ID", 400);
 
-      auto result = usecase.updateStream(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Log stream updated");
+    auto data = precheck.data;
+    UpdateLogStreamRequest r;
+    r.tenantId = tenantId;
+    r.streamId = id;
+    r.description = data.getString("description");
+    r.retentionPolicyId = data.getString("retentionPolicyId");
+    r.isActive = data.getBoolean("isActive", true);
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto result = usecase.updateStream(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+    auto resp = Json.emptyObject
+      .set("id", result.id);
+    return successResponse("Log stream updated successfully", "Updated", 200, resp);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto streamId = LogStreamId(precheck.id);
-      usecase.deleteStream(tenantId, streamId);
+    auto tenantId = precheck.tenantId;
+    auto id = LogStreamId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid log stream ID", 400);
 
-      res.writeJsonBody(Json.emptyObject, 204);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto result = usecase.deleteStream(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    return successResponse("Log stream deleted successfully", "Deleted", 200, Json.emptyObject.set("id", id));
   }
 }

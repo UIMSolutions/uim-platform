@@ -6,7 +6,7 @@
 module uim.platform.logging.infrastructure.persistence.memory.spans;
 // import uim.platform.logging.domain.entities.span;
 // import uim.platform.logging.domain.ports.repositories.spans;
-// import uim.platform.logging.domain.types;
+
 // 
 
  
@@ -18,7 +18,7 @@ mixin(ShowModule!());
 
 class MemorySpanRepository : TenantRepository!(Span, SpanId), SpanRepository {
 
-  Span[] findByTrace(TenantId tenantId, string traceId) {
+  Span[] findByTrace(TenantId tenantId, TraceId traceId) {
     return findByTenant(tenantId).filter!(s => s.traceId == traceId).array;
   }
 

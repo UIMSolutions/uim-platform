@@ -7,7 +7,7 @@ module uim.platform.logging.presentation.http.controllers.alert;
 // import uim.platform.logging.application.usecases.manage.alerts;
 // import uim.platform.logging.application.dto;
 // import uim.platform.logging.domain.entities.alert;
-// import uim.platform.logging.domain.types;
+
 
 import uim.platform.logging;
 
@@ -40,9 +40,9 @@ class AlertController : ManageController {
     auto tenantId = precheck.tenantId;
 
     auto alerts = usecase.list(tenantId);
-    auto jarr = Json.emptyArray;
+    auto list = Json.emptyArray;
     foreach (a; alerts) {
-      jarr ~= Json.emptyObject
+      list ~= Json.emptyObject
         .set("id", a.id)
         .set("ruleId", a.ruleId)
         .set("ruleName", a.ruleName)
@@ -52,7 +52,7 @@ class AlertController : ManageController {
     }
 
     auto resp = Json.emptyObject
-      .set("items", jarr)
+      .set("items", list)
       .set("totalCount", Json(alerts.length));
 
     return successResponse("Alerts retrieved successfully", 200, resp);
@@ -65,6 +65,9 @@ class AlertController : ManageController {
 
     auto tenantId = precheck.tenantId;
     auto id = AlertId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid alert ID", 400);
+
     auto a = usecase.getById(tenantId, id);
     if (a.isNull)
       return errorResponse("Alert not found", 404);
@@ -103,7 +106,7 @@ class AlertController : ManageController {
       return errorResponse(result.message, 400);
 
     auto responseData = Json.emptyObject.set("id", result.id);
-    return successResponse("Alert acknowledged successfully", 200, resp);
+    return successResponse("Alert acknowledged successfully", 200, responseData);
   }
 
   protected void handleAcknowledge(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -133,7 +136,7 @@ class AlertController : ManageController {
       return errorResponse(result.message, 400);
 
     auto responseData = Json.emptyObject.set("id", result.id);
-    return successResponse("Alert resolved successfully", 200, resp);
+    return successResponse("Alert resolved successfully", 200, responseData);
   }
 
   protected void handleResolve(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -152,11 +155,14 @@ class AlertController : ManageController {
 
     auto tenantId = precheck.tenantId;
     auto id = AlertId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid alert ID", 400);
 
     auto result = usecase.deleteAlert(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
 
-    return successResponse("Alert deleted successfully", 204);
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Alert deleted successfully", 204, responseData);
   }
 }

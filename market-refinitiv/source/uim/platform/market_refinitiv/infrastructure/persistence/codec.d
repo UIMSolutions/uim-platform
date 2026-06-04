@@ -90,7 +90,7 @@ MarketRate marketRateFromJson(Json j) {
   r.marketDataProperty = getString(j, "marketDataProperty");
   r.effectiveDate = getString(j, "effectiveDate");
   r.effectiveTime = getString(j, "effectiveTime");
-  r.marketDataValue = getDouble(j, "marketDataValue");
+  r.marketDataValue = data.getDouble("marketDataValue");
   r.securityCurrency = getString(j, "securityCurrency");
   r.fromFactor = getInt(j, "fromFactor", 1);
   r.toFactor = getInt(j, "toFactor", 1);

@@ -42,7 +42,7 @@ class MetricController : ManageController {
     r.tenantId = tenantId;
     r.resourceId = data.getString("resourceId");
     r.name = data.getString("name");
-    r.value_ = getDouble(j, "value");
+    r.value_ = data.getDouble("value");
     r.unit = data.getString("unit");
     r.category = data.getString("category");
 
@@ -70,7 +70,7 @@ class MetricController : ManageController {
       PushMetricBatchRequest batchReq;
       batchReq.tenantId = tenantId;
 
-      foreach (mj; j.getArray("metrics")) {
+      foreach (mj; data.getArray("metrics")) {
         if (!mj.isObject)
           continue;
 

@@ -6,7 +6,7 @@
 module uim.platform.logging.application.usecases.ingest_traces;
 // import uim.platform.logging.domain.entities.span;
 // import uim.platform.logging.domain.ports.repositories.spans;
-// import uim.platform.logging.domain.types;
+
 // import uim.platform.logging.application.dto;
 // import std.format : format;
 import uim.platform.logging;
@@ -68,7 +68,7 @@ class IngestTracesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, "", format("Ingested %d spans", count));
   }
 
-  Span[] getTrace(TenantId tenantId, string traceId) {
+  Span[] getTrace(TenantId tenantId, TraceId traceId) {
     return spanRepo.findByTrace(tenantId, traceId);
   }
 

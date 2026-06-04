@@ -38,9 +38,7 @@ class AlertController : ManageController {
     auto tenantId = precheck.tenantId;
 
     auto data = precheck.data;
-    ScanJobDTO dto;
-    dto.tenantId = tenantId;
-    CreateAlertRequest r;
+        CreateAlertRequest r;
     r.tenantId = tenantId;
     r.instanceId = data.getString("instanceId");
     r.id = precheck.id;
@@ -49,8 +47,8 @@ class AlertController : ManageController {
     r.severity = data.getString("severity");
     r.category = data.getString("category");
     r.metricName = data.getString("metricName");
-    r.warningValue = getDouble(j, "warningValue");
-    r.criticalValue = getDouble(j, "criticalValue");
+    r.warningValue = data.getDouble("warningValue");
+    r.criticalValue = data.getDouble("criticalValue");
     r.unit = data.getString("unit");
 
     auto result = usecase.create(r);
@@ -132,8 +130,8 @@ class AlertController : ManageController {
     r.name = data.getString("name");
     r.description = data.getString("description");
     r.severity = data.getString("severity");
-    r.warningValue = getDouble(j, "warningValue");
-    r.criticalValue = getDouble(j, "criticalValue");
+    r.warningValue = data.getDouble("warningValue");
+    r.criticalValue = data.getDouble("criticalValue");
 
     auto result = usecase.update(r);
     if (result.hasError)

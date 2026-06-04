@@ -7,7 +7,7 @@ module uim.platform.logging.application.usecases.search_logs;
 // import uim.platform.logging.domain.entities.log_entry;
 // import uim.platform.logging.domain.ports.repositories.log_entrys;
 // import uim.platform.logging.domain.services.log_parser;
-// import uim.platform.logging.domain.types;
+
 // import uim.platform.logging.application.dto;
 import uim.platform.logging;
 

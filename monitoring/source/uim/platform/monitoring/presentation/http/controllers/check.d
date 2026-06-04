@@ -41,10 +41,7 @@ class CheckController : ManageController {
     auto tenantId = precheck.tenantId;
 
     auto data = precheck.data;
-    ScanJobDTO dto;
-    dto.tenantId = tenantId;
-
-    CreateHealthCheckRequest r;
+        CreateHealthCheckRequest r;
     r.tenantId = tenantId;
     r.resourceId = data.getString("resourceId");
     r.name = data.getString("name");
@@ -57,8 +54,8 @@ class CheckController : ManageController {
     r.mbeanAttribute = data.getString("mbeanAttribute");
     r.customUrl = data.getString("customUrl");
     r.expectedResponseContains = data.getString("expectedResponseContains");
-    r.warningThreshold = getDouble(j, "warningThreshold");
-    r.criticalThreshold = getDouble(j, "criticalThreshold");
+    r.warningThreshold = data.getDouble("warningThreshold");
+    r.criticalThreshold = data.getDouble("criticalThreshold");
     r.thresholdOperator = data.getString("thresholdOperator");
     r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
@@ -119,8 +116,8 @@ class CheckController : ManageController {
     r.intervalSeconds = data.getInteger("intervalSeconds");
     r.url = data.getString("url");
     r.expectedStatus = data.getString("expectedStatus");
-    r.warningThreshold = getDouble(j, "warningThreshold");
-    r.criticalThreshold = getDouble(j, "criticalThreshold");
+    r.warningThreshold = data.getDouble("warningThreshold");
+    r.criticalThreshold = data.getDouble("criticalThreshold");
     r.thresholdOperator = data.getString("thresholdOperator");
 
     auto result = usecase.updateCheck(r);
@@ -159,7 +156,7 @@ class CheckController : ManageController {
     r.checkId = HealthCheckId(data.getString("checkId"));
     r.resourceId = MonitoredResourceId(data.getString("resourceId"));
     r.status = data.getString("status");
-    r.value_ = getDouble(j, "value");
+    r.value_ = data.getDouble("value");
     r.message = data.getString("message");
     r.responseTimeMs = data.getInteger("responseTimeMs");
     r.httpStatusCode = data.getInteger("httpStatusCode");

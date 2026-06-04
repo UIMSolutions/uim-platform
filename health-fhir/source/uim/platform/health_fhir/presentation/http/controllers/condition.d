@@ -43,9 +43,7 @@ class ConditionController : ManageController {
     auto tenantId = precheck.tenantId;
 
     auto data = precheck.data;
-    ScanJobDTO dto;
-    dto.tenantId = tenantId;
-    CreateConditionRequest r;
+        CreateConditionRequest r;
     r.tenantId = tenantId;
     r.conditionId = ConditionId(precheck.id);
     r.note_ = data.getString("note");

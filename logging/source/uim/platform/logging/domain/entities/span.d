@@ -4,7 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.logging.domain.entities.span;
-// import uim.platform.logging.domain.types;
+
 import uim.platform.logging;
 
 mixin(ShowModule!());
@@ -30,7 +30,7 @@ struct SpanEvent {
 struct Span {
   mixin TenantEntity!(SpanId);
 
-  string traceId;
+  TraceId traceId;
   SpanId parentSpanId;
   string operationName;
   string serviceName;

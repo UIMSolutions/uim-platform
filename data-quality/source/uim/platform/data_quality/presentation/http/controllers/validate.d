@@ -58,7 +58,7 @@ class ValidateController : PlatformController {
       r.tenantId = tenantId;
       r.datasetId = data.getString("datasetId");
 
-      foreach (item; j.getArray("records")) {
+      foreach (item; data.getArray("records")) {
         if (item.isObject) {
           RecordFieldValues rfv;
           rfv.recordId = item.getString("recordId");

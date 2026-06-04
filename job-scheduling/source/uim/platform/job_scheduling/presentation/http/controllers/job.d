@@ -61,7 +61,7 @@ class JobController : ManageController {
                 return;
             }
 
-            foreach (sj; j.getArray("schedules")) {
+            foreach (sj; data.getArray("schedules")) {
                 CreateScheduleRequest sr;
                 sr.tenantId = r.tenantId;
                 sr.jobId = result.id;

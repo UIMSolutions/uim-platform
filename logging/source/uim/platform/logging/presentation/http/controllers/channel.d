@@ -31,146 +31,119 @@ class ChannelController : ManageController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
- 
-      CreateNotificationChannelRequest r;
-      r.tenantId = tenantId;
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.channelType = data.getString("channelType");
-      r.emailRecipients = data.getStrings("emailRecipients");
-      r.emailSubjectPrefix = data.getString("emailSubjectPrefix");
-      r.webhookUrl = data.getString("webhookUrl");
-      r.webhookSecret = data.getString("webhookSecret");
-      r.webhookMethod = data.getString("webhookMethod");
-      r.slackWebhookUrl = data.getString("slackWebhookUrl");
-      r.slackChannel = data.getString("slackChannel");
-      r.createdBy = UserId(data.getString("createdBy"));
+    auto data = precheck.data;
+    CreateNotificationChannelRequest r;
+    r.tenantId = tenantId;
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.channelType = data.getString("channelType");
+    r.emailRecipients = data.getStrings("emailRecipients");
+    r.emailSubjectPrefix = data.getString("emailSubjectPrefix");
+    r.webhookUrl = data.getString("webhookUrl");
+    r.webhookSecret = data.getString("webhookSecret");
+    r.webhookMethod = data.getString("webhookMethod");
+    r.slackWebhookUrl = data.getString("slackWebhookUrl");
+    r.slackChannel = data.getString("slackChannel");
+    r.createdBy = UserId(data.getString("createdBy"));
 
-      auto result = usecase.createChannel(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id);
-        
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto result = usecase.createChannel(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto resp = Json.emptyObject.set("id", result.id);
+    return successResponse("Notification channel created successfully", "Created", 201, resp);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-      auto channels = usecase.listChannels(tenantId);
+    auto channels = usecase.listChannels(tenantId);
 
-      auto jarr = Json.emptyArray;
-      foreach (ch; channels) {
-        jarr ~= Json.emptyObject
-          .set("id", ch.id)
-          .set("name", ch.name)
-          .set("description", ch.description);
-      }
-
-      auto resp = Json.emptyObject
-        .set("items", jarr)
-        .set("totalCount", Json(channels.length))
-        .set("message", "Notification channels retrieved successfully");
-        
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+    auto list = Json.emptyArray;
+    foreach (ch; channels) {
+      list ~= Json.emptyObject
+        .set("id", ch.id)
+        .set("name", ch.name)
+        .set("description", ch.description);
     }
+
+    auto resp = Json.emptyObject
+      .set("items", list)
+      .set("totalCount", Json(channels.length));
+
+    return successResponse("Notification channels retrieved successfully", "Retrieved", 200, resp);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      
+    auto tenantId = precheck.tenantId;
 
-      auto id = NotificationChannelId(precheck.id);
-      auto ch = usecase.getChannel(tenantId, id);
-      if (ch.isNull) {
-        writeError(res, 404, "Notification channel not found");
-        return;
-      }
+    auto id = NotificationChannelId(precheck.id);
+    auto ch = usecase.getChannel(tenantId, id);
+    if (ch.isNull) 
+      return errorResponse("Notification channel not found", "Not Found", 404);
 
-      auto cj = Json.emptyObject
+    auto cj = Json.emptyObject
       .set("id", ch.id)
       .set("name", ch.name)
-      .set("description", ch.description) ;
+      .set("description", ch.description);
 
-      res.writeJsonBody(cj, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    return successResponse("Notification channel retrieved successfully", "Retrieved", 200, cj);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = NotificationChannelId(precheck.id);
-      auto data = precheck.data;
-      UpdateNotificationChannelRequest r;
-      r.channelId = id;
-      r.tenantId = tenantId;
-      r.description = data.getString("description");
-      r.state = data.getString("state");
-      r.emailRecipients = data.getStrings("emailRecipients");
-      r.emailSubjectPrefix = data.getString("emailSubjectPrefix");
-      r.webhookUrl = data.getString("webhookUrl");
-      r.webhookSecret = data.getString("webhookSecret");
-      r.slackWebhookUrl = data.getString("slackWebhookUrl");
-      r.slackChannel = data.getString("slackChannel");
+    auto tenantId = precheck.tenantId;
+    auto id = NotificationChannelId(precheck.id);
+    auto data = precheck.data;
+    UpdateNotificationChannelRequest r;
+    r.channelId = id;
+    r.tenantId = tenantId;
+    r.description = data.getString("description");
+    r.state = data.getString("state");
+    r.emailRecipients = data.getStrings("emailRecipients");
+    r.emailSubjectPrefix = data.getString("emailSubjectPrefix");
+    r.webhookUrl = data.getString("webhookUrl");
+    r.webhookSecret = data.getString("webhookSecret");
+    r.slackWebhookUrl = data.getString("slackWebhookUrl");
+    r.slackChannel = data.getString("slackChannel");
 
-      auto result = usecase.updateChannel(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id);
-          
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto result = usecase.updateChannel(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto resp = Json.emptyObject.set("id", result.id);
+    return successResponse("Notification channel updated successfully", "Updated", 200, resp);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto channelId = NotificationChannelId(precheck.id);
+    auto tenantId = precheck.tenantId;
+    auto channelId = NotificationChannelId(precheck.id);
 
-      usecase.deleteChannel(tenantId, channelId);
-      res.writeJsonBody(Json.emptyObject, 204);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto result = usecase.deleteChannel(tenantId, channelId);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    return successResponse("Notification channel deleted successfully", "Deleted", 200, Json.emptyObject.set("id", channelId));
   }
 }

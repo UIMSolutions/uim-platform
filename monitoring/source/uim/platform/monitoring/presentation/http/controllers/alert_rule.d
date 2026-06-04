@@ -48,12 +48,12 @@ class AlertRuleController : ManageController {
     r.metricName = data.getString("metricName");
     r.metricDefinitionId = data.getString("metricDefinitionId");
     r.operator_ = data.getString("operator");
-    r.warningThreshold = getDouble(j, "warningThreshold");
-    r.criticalThreshold = getDouble(j, "criticalThreshold");
+    r.warningThreshold = data.getDouble("warningThreshold");
+    r.criticalThreshold = data.getDouble("criticalThreshold");
     r.evaluationPeriodSeconds = data.getInteger("evaluationPeriodSeconds");
     r.consecutiveBreaches = data.getInteger("consecutiveBreaches");
     r.severity = data.getString("severity");
-    r.channelIds = j.getArray("channelIds").map!(c => NotificationChannelId(c.to!string)).array;
+    r.channelIds = data.getArray("channelIds").map!(c => NotificationChannelId(c.to!string)).array;
     r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
     auto result = usecase.createRule(r);
@@ -111,13 +111,13 @@ class AlertRuleController : ManageController {
     r.alertRuleId = id;
     // r.name = data.getString("name");
     r.description = data.getString("description");
-    r.warningThreshold = getDouble(j, "warningThreshold");
-    r.criticalThreshold = getDouble(j, "criticalThreshold");
+    r.warningThreshold = data.getDouble("warningThreshold");
+    r.criticalThreshold = data.getDouble("criticalThreshold");
     r.evaluationPeriodSeconds = data.getInteger("evaluationPeriodSeconds");
     r.consecutiveBreaches = data.getInteger("consecutiveBreaches");
     r.severity = data.getString("severity");
     r.isEnabled = data.getBoolean("isEnabled", true);
-    r.channelIds = j.getArray("channelIds").map!(c => NotificationChannelId(c.to!string)).array;
+    r.channelIds = data.getArray("channelIds").map!(c => NotificationChannelId(c.to!string)).array;
 
     auto result = usecase.updateRule(r);
     if (result.hasError)

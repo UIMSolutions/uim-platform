@@ -70,7 +70,7 @@ class ConfigChangeController : PlatformController {
     // if (!j.isArray("changes"))
     //   return result;
 
-    foreach (item; j.getArray("changes")) {
+    foreach (item; data.getArray("changes")) {
       if (item.isObject) {
         AuditAttribute change;
         change.name = item.getString("name");

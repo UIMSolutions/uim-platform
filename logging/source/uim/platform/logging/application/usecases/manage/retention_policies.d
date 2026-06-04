@@ -7,7 +7,7 @@ module uim.platform.logging.application.usecases.manage.retention_policies;
 // import uim.platform.logging.domain.entities.retention_policy;
 // import uim.platform.logging.domain.ports.repositories.retention_policys;
 // import uim.platform.logging.domain.services.retention_evaluator;
-// import uim.platform.logging.domain.types;
+
 // import uim.platform.logging.application.dto;
 
 import uim.platform.logging;

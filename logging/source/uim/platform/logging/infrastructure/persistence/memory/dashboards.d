@@ -6,7 +6,7 @@
 module uim.platform.logging.infrastructure.persistence.memory.dashboards;
 // import uim.platform.logging.domain.entities.dashboard;
 // import uim.platform.logging.domain.ports.repositories.dashboards;
-// import uim.platform.logging.domain.types;
+
 import uim.platform.logging;
 
 mixin(ShowModule!());

@@ -49,7 +49,7 @@ struct SpanId {
   mixin DomainId;
 }
 
-struct QualityDashboardId {
+struct DashboardId {
   string value;
 
   this(string value) {

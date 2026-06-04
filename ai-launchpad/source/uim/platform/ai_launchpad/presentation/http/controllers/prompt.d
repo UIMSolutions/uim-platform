@@ -45,11 +45,11 @@ class PromptController : ManageController {
     r.modelName = data.getString("modelName");
     r.modelVersion = data.getString("modelVersion");
     r.messages = jsonMessageArray(data, "messages");
-    r.temperature = getDouble(data, "temperature");
+    r.temperature = data.getDouble("temperature");
     r.maxTokens = data.getInteger("maxTokens");
-    r.topP = getDouble(data, "topP");
-    r.frequencyPenalty = getDouble(data, "frequencyPenalty");
-    r.presencePenalty = getDouble(data, "presencePenalty");
+    r.topP = data.getDouble("topP");
+    r.frequencyPenalty = data.getDouble("frequencyPenalty");
+    r.presencePenalty = data.getDouble("presencePenalty");
     r.inputParams = data.getStrings("inputParams");
     r.createdBy = UserId(data.getString("createdBy"));
 
@@ -116,11 +116,11 @@ class PromptController : ManageController {
     r.name = data.getString("name");
     r.status = data.getString("status");
     r.messages = jsonMessageArray(data, "messages");
-    r.temperature = getDouble(data, "temperature");
+    r.temperature = data.getDouble("temperature");
     r.maxTokens = data.getInteger("maxTokens");
-    r.topP = getDouble(data, "topP");
-    r.frequencyPenalty = getDouble(data, "frequencyPenalty");
-    r.presencePenalty = getDouble(data, "presencePenalty");
+    r.topP = data.getDouble("topP");
+    r.frequencyPenalty = data.getDouble("frequencyPenalty");
+    r.presencePenalty = data.getDouble("presencePenalty");
     r.inputParams = data.getStrings("inputParams");
 
     auto result = usecase.patchPrompt(r);

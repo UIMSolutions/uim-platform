@@ -4,7 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.logging.domain.entities.log_stream;
-// import uim.platform.logging.domain.types;
+
 import uim.platform.logging;
 
 mixin(ShowModule!());

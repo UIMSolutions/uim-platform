@@ -7,7 +7,7 @@ module uim.platform.logging.presentation.http.controllers.dashboard;
 // import uim.platform.logging.application.usecases.manage.dashboards;
 // import uim.platform.logging.application.dto;
 // import uim.platform.logging.domain.entities.dashboard;
-// import uim.platform.logging.domain.types;
+
 
 import uim.platform.logging;
 
@@ -33,166 +33,138 @@ class DashboardController : ManageController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CreateDashboardRequest r;
-      r.tenantId = tenantId;
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.isDefault = data.getBoolean("isDefault");
-      r.createdBy = UserId(data.getString("createdBy"));
+    auto data = precheck.data;
+        CreateDashboardRequest r;
+    r.tenantId = tenantId;
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.isDefault = data.getBoolean("isDefault");
+    r.createdBy = UserId(data.getString("createdBy"));
 
-      foreach (pj; j.getArray("panels")) {
-        PanelDTO p;
-        p.panelId = PanelId(getString(pj, "id"));
-        p.title = getString(pj, "title");
-        p.panelType = getString(pj, "panelType");
-        p.query = getString(pj, "query");
-        p.positionX = jsonInt(pj, "positionX");
-        p.positionY = jsonInt(pj, "positionY");
-        p.width = jsonInt(pj, "width");
-        p.height = jsonInt(pj, "height");
-        r.panels ~= p;
-      }
-
-      auto result = usecase.createDashboard(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Dashboard created successfully");
-
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+    foreach (pj; data.getArray("panels")) {
+      PanelDTO p;
+      p.panelId = PanelId(pj.getString("id"));
+      p.title = pj.getString("title");
+      p.panelType = pj.getString("panelType");
+      p.query = pj.getString("query");
+      p.positionX = pj.getInteger("positionX");
+      p.positionY = pj.getInteger("positionY");
+      p.width = pj.getInteger("width");
+      p.height = pj.getInteger("height");
+      r.panels ~= p;
     }
+
+    auto result = usecase.createDashboard(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto resp = Json.emptyObject.set("id", result.id);
+    return successResponse("Dashboard created successfully", "Created", 201, resp);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto dashboards = usecase.listDashboards(tenantId);
+    auto tenantId = precheck.tenantId;
+    auto dashboards = usecase.listDashboards(tenantId);
 
-      auto jarr = Json.emptyArray;
-      foreach (d; dashboards) {
-        jarr ~= Json.emptyObject
-          .set("id", d.id)
-          .set("name", d.name)
-          .set("description", d.description)
-          .set("isDefault", d.isDefault)
-          .set("panelCount", d.panels.length);
-      }
-
-      auto resp = Json.emptyObject
-        .set("items", jarr)
-        .set("totalCount", dashboards.length)
-        .set("message", "Dashboards retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
-
-  override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
-
-        auto tenantId = precheck.tenantId;
-      auto id = DashboardId(precheck.id);
-
-      auto d = usecase.getDashboard(tenantId, id);
-      if (d.isNull) {
-        writeError(res, 404, "Dashboard not found");
-        return;
-      }
-
-      auto dj = Json.emptyObject
+    auto jarr = Json.emptyArray;
+    foreach (d; dashboards) {
+      jarr ~= Json.emptyObject
         .set("id", d.id)
         .set("name", d.name)
         .set("description", d.description)
-        .set("isDefault", d.isDefault);
-
-      auto parr = Json.emptyArray;
-      foreach (p; d.panels) {
-        parr ~= Json.emptyObject
-          .set("id", p.id)
-          .set("title", p.title)
-          .set("query", p.query)
-          .set("positionX", p.positionX)
-          .set("positionY", p.positionY)
-          .set("width", p.width)
-          .set("height", p.height);
-      }
-      dj["panels"] = parr;
-
-      res.writeJsonBody(dj, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+        .set("isDefault", d.isDefault)
+        .set("panelCount", d.panels.length);
     }
+
+    auto resp = Json.emptyObject
+      .set("items", jarr)
+      .set("totalCount", dashboards.length);
+
+    return successResponse("Dashboards retrieved successfully", "Retrieved", 200, resp);
+  }
+
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = DashboardId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid dashboard ID", 400);
+
+    auto d = usecase.getDashboard(tenantId, id);
+    if (d.isNull)
+      return errorResponse("Dashboard not found", 404); 
+
+    auto dj = Json.emptyObject
+      .set("id", d.id)
+      .set("name", d.name)
+      .set("description", d.description)
+      .set("isDefault", d.isDefault);
+
+    auto parr = Json.emptyArray;
+    foreach (p; d.panels) {
+      parr ~= Json.emptyObject
+        .set("id", p.id)
+        .set("title", p.title)
+        .set("query", p.query)
+        .set("positionX", p.positionX)
+        .set("positionY", p.positionY)
+        .set("width", p.width)
+        .set("height", p.height);
+    }
+    dj["panels"] = parr;
+
+    return successResponse("Dashboard retrieved successfully", "Retrieved", 200, dj);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = DashboardId(precheck.id);
-      auto data = precheck.data;
-      UpdateDashboardRequest r;
-      r.tenantId = tenantId;
-      r.dashboardId = id;
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.isDefault = data.getBoolean("isDefault");
+    auto tenantId = precheck.tenantId;
+    auto id = DashboardId(precheck.id);
+    auto data = precheck.data;
+    UpdateDashboardRequest r;
+    r.tenantId = tenantId;
+    r.dashboardId = id;
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.isDefault = data.getBoolean("isDefault");
 
-      auto result = usecase.updateDashboard(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Dashboard updated successfully");
+    auto result = usecase.updateDashboard(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+    auto resp = Json.emptyObject
+      .set("id", result.id);
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    return successResponse("Dashboard updated successfully", "Updated", 200, resp);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = DashboardId(precheck.id);
+    auto tenantId = precheck.tenantId;
+    auto id = DashboardId(precheck.id);
 
-      usecase.deleteDashboard(tenantId, id);
-      auto resp = Json.emptyObject
-        .set("id", id)
-        .set("message", "Dashboard deleted successfully");
-        
-      res.writeJsonBody(resp, 204);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    usecase.deleteDashboard(tenantId, id);
+    auto resp = Json.emptyObject
+      .set("id", id);
+
+    return successResponse("Dashboard deleted successfully", "Deleted", 200, resp);
   }
 }

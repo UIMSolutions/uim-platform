@@ -160,7 +160,7 @@ class PackageController : ManageController {
   private static ContentItem[] parseContentItems(Json j) {
     ContentItem[] items;
 
-    foreach (itemJson; j.getArray("items")) {
+    foreach (itemJson; data.getArray("items")) {
       if (!itemJson.isObject)
         continue;
       ContentItem item;

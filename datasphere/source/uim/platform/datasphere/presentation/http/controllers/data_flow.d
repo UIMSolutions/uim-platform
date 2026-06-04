@@ -37,10 +37,7 @@ class DataFlowController : ManageController {
     auto tenantId = precheck.tenantId;
 
     auto data = precheck.data;
-    ScanJobDTO dto;
-    dto.tenantId = tenantId;
-
-    CreateDataFlowRequest r;
+        CreateDataFlowRequest r;
     r.tenantId = tenantId;
     r.spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
     r.name = data.getString("name");

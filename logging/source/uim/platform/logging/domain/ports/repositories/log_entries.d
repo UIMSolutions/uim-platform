@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.logging.domain.ports.repositories.log_entries;
 // import uim.platform.logging.domain.entities.log_entry;
-// import uim.platform.logging.domain.types;
+
 import uim.platform.logging;
 
 mixin(ShowModule!());

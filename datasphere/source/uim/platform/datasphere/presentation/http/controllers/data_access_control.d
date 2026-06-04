@@ -44,8 +44,8 @@ class DataAccessControlController : ManageController {
     r.name = data.getString("name");
     r.description = data.getString("description");
     r.criteriaType = data.getString("criteriaType");
-    r.targetViewIds = j.getArray("targetViewIds").map!(v => ViewId(v.to!string)).array.toJson;
-    r.assignedUserIds = j.getArray("assignedUserIds")
+    r.targetViewIds = data.getArray("targetViewIds").map!(v => ViewId(v.to!string)).array.toJson;
+    r.assignedUserIds = data.getArray("assignedUserIds")
       .map!(v => UserId(v.to!string)).array.toJson;
 
     auto result = usecase.createDataAccessControl(r);

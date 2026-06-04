@@ -6,7 +6,7 @@
 module uim.platform.logging.infrastructure.persistence.memory.log_streams;
 // import uim.platform.logging.domain.entities.log_stream;
 // import uim.platform.logging.domain.ports.repositories.log_streams;
-// import uim.platform.logging.domain.types;
+
 import uim.platform.logging;
 
 mixin(ShowModule!());

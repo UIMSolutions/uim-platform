@@ -8,7 +8,7 @@ module uim.platform.logging.presentation.http.controllers.search;
 // import uim.platform.logging.application.dto;
 // import uim.platform.logging.domain.entities.log_entry;
 // import uim.platform.logging.domain.services.log_parser;
-// import uim.platform.logging.domain.types;
+
 
 import uim.platform.logging;
 
@@ -30,96 +30,102 @@ class SearchController : PlatformController {
     router.get("/api/v1/logs/*", &handleGet);
   }
 
+  protected Json searchHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+
+    SearchLogsRequest r;
+    r.tenantId = tenantId;
+    r.query = req.params.get("q", "");
+    r.level = req.params.get("level", "");
+    r.streamId = LogStreamId(req.params.get("streamId", ""));
+    r.traceId = TraceId(req.params.get("traceId", ""));
+    r.correlationId = req.params.get("correlationId", "");
+
+    auto startStr = req.params.get("startTime", "");
+    if (startStr.length > 0) {
+      try
+        r.startTime = startStr.to!long;
+      catch (Exception) {
+      }
+    }
+    auto endStr = req.params.get("endTime", "");
+    if (endStr.length > 0) {
+      try
+        r.endTime = endStr.to!long;
+      catch (Exception) {
+      }
+    }
+
+    auto entries = usecase.searchLogs(r);
+
+    auto list = Json.emptyArray;
+    foreach (e; entries) {
+      list ~= Json.emptyObject
+        .set("id", e.id)
+        .set("timestamp", e.timestamp)
+        .set("level", LogParser.levelToString(e.level))
+        .set("source", e.source)
+        .set("message", e.message)
+        .set("traceId", e.traceId)
+        .set("spanId", e.spanId)
+        .set("correlationId", e.correlationId)
+        .set("componentName", e.componentName)
+        .set("streamId", e.streamId);
+    }
+
+    auto responseData = Json.emptyObject
+      .set("items", list)
+      .set("totalCount", entries.length);
+
+    return successResponse("Search completed successfully", "Retrieved", 200, responseData);
+  }
+
   protected void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-
-      SearchLogsRequest r;
-      r.tenantId = tenantId;
-      r.query = req.params.get("q", "");
-      r.level = req.params.get("level", "");
-      r.streamId = LogStreamId(req.params.get("streamId", ""));
-      r.traceId = TraceId(req.params.get("traceId", ""));
-      r.correlationId = req.params.get("correlationId", "");
-
-      auto startStr = req.params.get("startTime", "");
-      if (startStr.length > 0) {
-        try
-          r.startTime = startStr.to!long;
-        catch (Exception) {
-        }
-      }
-      auto endStr = req.params.get("endTime", "");
-      if (endStr.length > 0) {
-        try
-          r.endTime = endStr.to!long;
-        catch (Exception) {
-        }
-      }
-
-      auto entries = usecase.searchLogs(r);
-
-      auto jarr = Json.emptyArray;
-      foreach (e; entries) {
-        jarr ~= Json.emptyObject
-          .set("id", e.id)
-          .set("timestamp", e.timestamp)
-          .set("level", LogParser.levelToString(e.level))
-          .set("source", e.source)
-          .set("message", e.message)
-          .set("traceId", e.traceId)
-          .set("spanId", e.spanId)
-          .set("correlationId", e.correlationId)
-          .set("componentName", e.componentName)
-          .set("streamId", e.streamId);
-      }
-
-      auto resp = Json.emptyObject
-        .set("items", jarr)
-        .set("totalCount", entries.length);
-
-      res.writeJsonBody(resp, 200);
+      auto response = searchHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = LogEntryId(precheck.id);
-      auto entry = usecase.getLog(tenantId, id);
+    auto tenantId = precheck.tenantId;
+    auto id = LogEntryId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid log entry ID", "Bad Request", 400);
 
-      if (entry.isNull) {
-        writeError(res, 404, "Log entry not found");
-        return;
-      }
+    auto entry = usecase.getLog(tenantId, id);
+    if (entry.isNull)
+      return errorResponse("Log entry not found", "Not Found", 404);
 
-      auto response = Json.emptyObject
-        .set("id", entry.id)
-        .set("tenantId", entry.tenantId)
-        .set("streamId", entry.streamId)
-        .set("timestamp", entry.timestamp)
-        .set("level", LogParser.levelToString(entry.level))
-        .set("source", entry.source)
-        .set("message", entry.message)
-        .set("traceId", entry.traceId)
-        .set("spanId", entry.spanId)
-        .set("requestId", entry.requestId)
-        .set("correlationId", entry.correlationId)
-        .set("componentName", entry.componentName)
-        .set("spaceName", entry.spaceName)
-        .set("orgName", entry.orgName)
-        .set("resourceType", entry.resourceType)
-        .set("resourceId", entry.resourceId)
-        .set("tags", entry.tags.toJson);
+    auto response = Json.emptyObject
+      .set("id", entry.id)
+      .set("tenantId", entry.tenantId)
+      .set("streamId", entry.streamId)
+      .set("timestamp", entry.timestamp)
+      .set("level", LogParser.levelToString(entry.level))
+      .set("source", entry.source)
+      .set("message", entry.message)
+      .set("traceId", entry.traceId)
+      .set("spanId", entry.spanId)
+      .set("requestId", entry.requestId)
+      .set("correlationId", entry.correlationId)
+      .set("componentName", entry.componentName)
+      .set("spaceName", entry.spaceName)
+      .set("orgName", entry.orgName)
+      .set("resourceType", entry.resourceType)
+      .set("resourceId", entry.resourceId)
+      .set("tags", entry.tags.toJson);
 
-      res.writeJsonBody(response, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    return successResponse("Log entry retrieved successfully", "Retrieved", 200, response);
   }
 }

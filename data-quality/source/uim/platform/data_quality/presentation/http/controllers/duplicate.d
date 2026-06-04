@@ -39,9 +39,9 @@ class DuplicateController : PlatformController {
       r.datasetId = DataSetId(data.getString("datasetId"));
       r.matchFields = j.getStringsArray("matchFields");
       r.strategy = data.getString("strategy").to!MatchStrategy;
-      r.threshold = j.getDouble("threshold", 70.0);
+      r.threshold = data.getDouble("threshold", 70.0);
 
-      foreach (item; j.getArray("records")) {
+      foreach (item; data.getArray("records")) {
         if (item.isObject) {
           DuplicateRecordInput dri;
           dri.recordId = item.getString("recordId");
