@@ -73,7 +73,7 @@ class ServiceBindingController : ManageHttpController {
         auto data = precheck.data;
         ServiceBindingDTO dto;
         dto.id = ServiceBindingId(precheck.id);
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
         dto.devSpaceId = DevSpaceId(data.getString("devSpaceId"));
         dto.name = data.getString("name");
         dto.description = data.getString("description");
@@ -104,7 +104,7 @@ class ServiceBindingController : ManageHttpController {
 
         auto data = precheck.data;
         ServiceBindingDTO dto;
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
         dto.id = ServiceBindingId(precheck.id);
         dto.name = data.getString("name");
         dto.description = data.getString("description");

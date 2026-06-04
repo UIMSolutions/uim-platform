@@ -40,7 +40,7 @@ class DataSubjectController : ManageHttpController {
 
         auto data = precheck.data;
         CreateDataSubjectRequest r;
-        r.tenantId = precheck.tenantId;
+        r.tenantId = tenantId;
         r.id = precheck.id;
         r.subjectType = data.getString("subjectType");
         r.firstName = data.getString("firstName");
@@ -141,7 +141,7 @@ class DataSubjectController : ManageHttpController {
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         UpdateDataSubjectRequest request;
-        request.tenantId = precheck.tenantId;
+        request.tenantId = tenantId;
         request.id = DataSubjectId(precheck.id);
         request.firstName = data.getString("firstName");
         request.lastName = data.getString("lastName");

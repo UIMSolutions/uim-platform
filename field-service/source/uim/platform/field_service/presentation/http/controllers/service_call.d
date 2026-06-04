@@ -70,7 +70,7 @@ class ServiceCallController : ManageHttpController {
         auto data = precheck.data;
         ServiceCallDTO dto;
         dto.serviceCallId = ServiceCallId(precheck.id);
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
         dto.customerId = CustomerId(data.getString("customerId"));
         dto.equipmentId = EquipmentId(data.getString("equipmentId"));
         dto.subject = data.getString("subject");
@@ -105,7 +105,7 @@ class ServiceCallController : ManageHttpController {
         auto data = precheck.data;
         ServiceCallDTO dto;
         dto.serviceCallId = ServiceCallId(precheck.id);
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
         dto.subject = data.getString("subject");
         dto.description = data.getString("description");
         dto.contactPerson = data.getString("contactPerson");

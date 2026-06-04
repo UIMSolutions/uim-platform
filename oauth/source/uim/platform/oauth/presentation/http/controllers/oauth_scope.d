@@ -70,7 +70,7 @@ class OAuthScopeController : ManageHttpController {
 
         auto data = precheck.data;
         OAuthScopeDTO dto;
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
         dto.scopeId = OAuthScopeId(precheck.id);
         dto.applicationId = data.getString("applicationId");
         dto.name = data.getString("name");
@@ -94,7 +94,7 @@ class OAuthScopeController : ManageHttpController {
 
         auto data = precheck.data;
         OAuthScopeDTO dto;
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
         dto.scopeId = OAuthScopeId(precheck.id);
         dto.name = data.getString("name");
         dto.description = data.getString("description");

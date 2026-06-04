@@ -72,7 +72,7 @@ class PageController : ManageHttpController {
         auto data = precheck.data;
         PageDTO dto;
         dto.pageId = PageId(precheck.id);
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
         dto.applicationId = ApplicationId(data.getString("applicationId"));
         dto.name = data.getString("name");
         dto.description = data.getString("description");

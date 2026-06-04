@@ -36,7 +36,7 @@ class PersonalDataRecordController : ManageHttpController {
 
         auto data = precheck.data;
             CreatePersonalDataRecordRequest r;
-            r.tenantId = precheck.tenantId;
+            r.tenantId = tenantId;
             r.id = precheck.id;
             r.dataSubjectId = data.getString("dataSubjectId");
             r.applicationId = data.getString("applicationId");

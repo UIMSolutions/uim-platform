@@ -84,7 +84,7 @@ class RunLogController : ManageHttpController {
             auto data = precheck.data;
             UpdateRunLogRequest r;
             r.runLogId = runLogId;
-            r.tenantId = precheck.tenantId;
+            r.tenantId = tenantId;
             r.status = data.getString("status");
             r.statusMessage = data.getString("statusMessage");
             r.httpStatus = data.getInteger("httpStatus");

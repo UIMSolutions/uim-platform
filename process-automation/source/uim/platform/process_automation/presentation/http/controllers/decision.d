@@ -40,7 +40,7 @@ class DecisionController : ManageHttpController {
 
             auto data = precheck.data;
             CreateDecisionRequest r;
-            r.tenantId = precheck.tenantId;
+            r.tenantId = tenantId;
             r.projectId = ProjectId(data.getString("projectId"));
             r.decisionId = DecisionId(precheck.id);
             r.name = data.getString("name");
@@ -142,7 +142,7 @@ class DecisionController : ManageHttpController {
 
             auto data = precheck.data;
             UpdateDecisionRequest r;
-            r.tenantId = precheck.tenantId;
+            r.tenantId = tenantId;
             r.decisionId = DecisionId(precheck.id);
             r.name = data.getString("name");
             r.description = data.getString("description");

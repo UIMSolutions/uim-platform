@@ -72,7 +72,7 @@ class ScheduledExecutionController : ManageHttpController {
 
         auto data = precheck.data;
         ScheduledExecutionDTO dto;
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
         dto.scheduledExecutionId = ScheduledExecutionId(precheck.id);
         dto.commandId = CommandId(data.getString("commandId"));
         dto.cronExpression = data.getString("cronExpression");
@@ -100,7 +100,7 @@ class ScheduledExecutionController : ManageHttpController {
 
         auto data = precheck.data;
         ScheduledExecutionDTO dto;
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
         dto.scheduledExecutionId = ScheduledExecutionId(precheck.id);
         dto.cronExpression = data.getString("cronExpression");
         dto.scheduledAt = data.getLong("scheduledAt");

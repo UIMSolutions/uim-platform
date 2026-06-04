@@ -25,7 +25,7 @@ public:
     
     Shipment s;
     s.id = ShipmentId(generateId());
-    s.tenantId = precheck.tenantId;
+    s.tenantId = tenantId;
     s.shipmentNumber = req.shipmentNumber;
     s.description = req.description;
     s.freightOrderId = FreightOrderId(req.freightOrderId);

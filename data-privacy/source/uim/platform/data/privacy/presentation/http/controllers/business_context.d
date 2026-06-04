@@ -40,7 +40,7 @@ class BusinessContextController : ManageHttpController {
 
     auto data = precheck.data;
     CreateBusinessContextRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.name = data.getString("name");
     r.description = data.getString("description");
     r.controllerGroupId = data.getString("controllerGroupId");
@@ -97,7 +97,7 @@ class BusinessContextController : ManageHttpController {
     auto tenantId = precheck.tenantId;
     auto data = precheck.data;
     UpdateBusinessContextRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.contextId = BusinessContextId(precheck.id);
     r.name = data.getString("name");
     r.description = data.getString("description");
@@ -123,7 +123,7 @@ class BusinessContextController : ManageHttpController {
 
     ActivateBusinessContextRequest r;
     r.contextId = BusinessContextId(precheck.id);
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
 
     auto result = usecase.activateContext(r);
     if (result.hasError)

@@ -38,9 +38,9 @@ class SchemaController : ManageHttpController {
 
         auto data = precheck.data;
         ScanJobDTO dto;
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
       CreateSchemaRequest r;
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.instanceId = data.getString("instanceId");
       r.id = precheck.id;
       r.name = data.getString("name");
@@ -135,7 +135,7 @@ class SchemaController : ManageHttpController {
 
       auto data = precheck.data;
       UpdateSchemaRequest r;
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.id = precheck.id;
       r.owner = data.getString("owner");
 

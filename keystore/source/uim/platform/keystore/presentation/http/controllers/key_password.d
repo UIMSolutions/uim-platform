@@ -35,7 +35,7 @@ class KeyPasswordController : ManageHttpController {
     auto tenantId = precheck.tenantId;
     auto data = precheck.data;
     SetPasswordRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.accountId = data.getString("accountId");
     r.applicationId = data.getString("applicationId");
     r.alias_ = extractIdFromPath(req.requestURI.to!string);

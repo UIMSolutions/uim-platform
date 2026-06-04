@@ -39,7 +39,7 @@ class ConsentPurposeController : ManageHttpController {
 
     auto data = precheck.data;
     CreateConsentPurposeRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.controllerId = DataControllerId(data.getString("controllerId"));
     r.name = data.getString("name");
     r.description = data.getString("description");
@@ -102,7 +102,7 @@ class ConsentPurposeController : ManageHttpController {
 
     auto data = precheck.data;
     UpdateConsentPurposeRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.purposeId = ConsentPurposeId(precheck.id);
 
     r.name = data.getString("name");

@@ -68,7 +68,7 @@ class WebhookController : ManageHttpController {
         auto data = precheck.data;
         WebhookDTO dto;
         dto.webhookId = WebhookId(data.getString("webhookId", ""));
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
         dto.secret = data.getString("secret", "");
         dto.callbackUrl = data.getString("callbackUrl", "");
         dto.createdBy = UserId(data.getString("createdBy", ""));
@@ -92,7 +92,7 @@ class WebhookController : ManageHttpController {
             return Json.emptyObject.set("error", "Invalid webhook ID").set("statusCode", 400);
 
         WebhookDTO dto;
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
         dto.webhookId = id;
         dto.callbackUrl = data.getString("callbackUrl", "");
         dto.secret = data.getString("secret", "");

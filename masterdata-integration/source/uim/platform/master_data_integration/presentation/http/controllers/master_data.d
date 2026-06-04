@@ -46,9 +46,9 @@ class MasterDataController : ManageHttpController {
 
         auto data = precheck.data;
         ScanJobDTO dto;
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
       CreateMasterDataObjectRequest r;
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.dataModelId = data.getString("dataModelId");
       r.category = data.getString("category");
       r.objectType = data.getString("objectType");

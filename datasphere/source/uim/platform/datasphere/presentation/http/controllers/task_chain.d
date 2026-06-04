@@ -39,7 +39,7 @@ class TaskChainController : ManageHttpController {
     auto data = precheck.data;
     
     CreateTaskChainRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
     r.name = data.getString("name");
     r.description = data.getString("description");

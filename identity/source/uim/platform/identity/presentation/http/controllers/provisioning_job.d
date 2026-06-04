@@ -68,7 +68,7 @@ class ProvisioningJobController : ManageHttpController {
         auto data = precheck.data;
             ProvisioningJobDTO dto;
             dto.jobId = ProvisioningJobId(precheck.id);
-            dto.tenantId = precheck.tenantId;
+            dto.tenantId = tenantId;
             dto.name = data.getString("name");
             dto.description = data.getString("description");
             dto.sourceSystem = data.getString("sourceSystem");

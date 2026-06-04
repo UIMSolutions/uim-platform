@@ -43,7 +43,7 @@ class AuditLogController : HttpController {
     auto data = precheck.data;
 
     auto r = WriteAuditLogRequest();
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.userId = data.getString("userId");
     r.userName = data.getString("userName");
     r.serviceId = data.getString("serviceId");
@@ -83,9 +83,9 @@ class AuditLogController : HttpController {
     if (!precheck.isNull)
       return precheck;
 
-    auto tenantId = precheck.tenantId;
+    auto tenantId = tenantId;
     auto queryReq = AuditLogQueryRequest();
-    queryReq.tenantId = precheck.tenantId;
+    queryReq.tenantId = tenantId;
 
     // Parse category filter (comma-separated)
     auto catParam = req.headers.get("X-Category-Filter", "");

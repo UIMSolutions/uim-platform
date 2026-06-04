@@ -42,7 +42,7 @@ class ModuleController : ManageHttpController {
       auto data = precheck.data;
       EnableModuleRequest r;
       r.environmentId = data.getString("environmentId");
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.name = data.getString("name");
       r.moduleType = data.getString("moduleType");
       r.version_ = data.getString("version");

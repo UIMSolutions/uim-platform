@@ -82,7 +82,7 @@ public:
       
       auto data = precheck.data;
       UpdateNotebookRequest r;
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.id       = req.requestPath.to!string.split("/")[$-1];
       r.name     = data.getString("name");
       r.content  = data.getString("content");

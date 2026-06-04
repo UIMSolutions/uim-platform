@@ -41,7 +41,7 @@ class SpaceController : ManageHttpController {
 
     auto data = precheck.data;
     auto r = CreateSpaceRequest();
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.orgId = OrgId(data.getString("orgId"));
     r.name = data.getString("name");
     r.allowSsh = data.getBoolean("allowSsh", true);
@@ -102,7 +102,7 @@ class SpaceController : ManageHttpController {
     auto data = precheck.data;
     auto r = UpdateSpaceRequest();
     r.id = id;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.name = data.getString("name");
     r.allowSsh = data.getBoolean("allowSsh", true);
 

@@ -38,7 +38,7 @@ class ProfileController : HttpController {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
       auto r = ProfileDatasetRequest();
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.datasetId = data.getString("datasetId");
       r.datasetName = data.getString("datasetName");
 

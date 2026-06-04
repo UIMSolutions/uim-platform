@@ -37,7 +37,7 @@ class RoleController : ManageHttpController {
 
     auto data = precheck.data;
     CreateRoleRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.name = data.getString("name");
     r.description = data.getString("description");
     r.appId = data.getString("appId");
@@ -101,7 +101,7 @@ class RoleController : ManageHttpController {
 
     auto data = precheck.data;
     UpdateRoleRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.roleId = id;
     r.description = data.getString("description");
 

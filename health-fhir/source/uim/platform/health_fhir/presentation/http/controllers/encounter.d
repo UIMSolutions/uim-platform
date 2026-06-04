@@ -58,7 +58,7 @@ class EncounterController : ManageHttpController {
 
         auto data = precheck.data;
         ScanJobDTO dto;
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
       CreateEncounterRequest r;
       r.tenantId    = tenantId;
       r.encounterId = EncounterId(precheck.id);

@@ -43,7 +43,7 @@ class ScenarioController : ManageHttpController {
 
         auto data = precheck.data;
       auto r = CreateScenarioRequest();
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.name = data.getString("name");
       r.description = data.getString("description");
       r.category = parseScenarioCategory(data.getString("category"));
@@ -119,7 +119,7 @@ class ScenarioController : ManageHttpController {
       auto data = precheck.data;
       auto r = UpdateScenarioRequest();
       r.id = id;
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.name = data.getString("name");
       r.description = data.getString("description");
       r.category = parseScenarioCategory(data.getString("category"));

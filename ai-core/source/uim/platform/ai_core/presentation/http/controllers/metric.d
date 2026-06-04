@@ -35,7 +35,7 @@ class MetricController : HttpController {
     auto tenantId = precheck.tenantId;
     auto data = precheck.data;
     PatchMetricsRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.resourceGroupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
     r.executionId = ExecutionId(data.getString("executionId"));
     r.metrics = jsonKeyValuePairs(data, "metrics");

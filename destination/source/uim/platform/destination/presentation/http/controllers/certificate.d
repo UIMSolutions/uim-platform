@@ -41,7 +41,7 @@ class CertificateController : ManageHttpController {
 
       auto data = precheck.data;
       UploadCertificateRequest r;
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.subaccountId = SubaccountId(req.headers.get("X-Subaccount-Id", ""));
       r.name = data.getString("name");
       r.description = data.getString("description");
@@ -153,7 +153,7 @@ class CertificateController : ManageHttpController {
     auto data = precheck.data;
 
     UpdateCertificateRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.certificateId = id;
     r.description = data.getString("description");
     r.content = data.getString("content");

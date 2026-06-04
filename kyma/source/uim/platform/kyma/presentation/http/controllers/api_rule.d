@@ -44,7 +44,7 @@ class ApiRuleController : ManageHttpController {
     CreateApiRuleRequest r;
     r.namespaceId = data.getString("namespaceId");
     r.environmentId = data.getString("environmentId");
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.name = data.getString("name");
     r.description = data.getString("description");
     r.serviceName = data.getString("serviceName");

@@ -35,9 +35,9 @@ class PoiController : ManageHttpController {
 
         auto data = precheck.data;
         ScanJobDTO dto;
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
       CreatePoiRequest r;
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.id = precheck.id;
       r.name = data.getString("name");
       r.description = data.getString("description");
@@ -123,7 +123,7 @@ class PoiController : ManageHttpController {
       auto id = precheck.id;
       auto data = precheck.data;
       UpdatePoiRequest r;
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.id = id;
       r.name = data.getString("name");
       r.description = data.getString("description");

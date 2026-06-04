@@ -42,7 +42,7 @@ class LifecycleRuleController : ManageHttpController {
     auto data = precheck.data;
 
     auto request = CreateLifecycleRuleRequest();
-    request.tenantId = precheck.tenantId;
+    request.tenantId = tenantId;
     request.bucketId = data.getString("bucketId");
     request.name = data.getString("name");
     request.prefix = data.getString("prefix");
@@ -115,7 +115,7 @@ class LifecycleRuleController : ManageHttpController {
     auto data = precheck.data;
 
     UpdateLifecycleRuleRequest request;
-    request.tenantId = precheck.tenantId;
+    request.tenantId = tenantId;
     request.lifecycleRuleId = id;
     request.name = data.getString("name");
     request.prefix = data.getString("prefix");

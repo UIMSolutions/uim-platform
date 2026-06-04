@@ -55,7 +55,7 @@ class AccessRuleController : ManageHttpController {
 
     CreateAccessRuleRequest r;
     r.connectorId = data.getString("connectorId");
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.description = data.getString("description");
     r.protocol = data.getString("protocol");
     r.virtualHost = data.getString("virtualHost");
@@ -104,7 +104,7 @@ class AccessRuleController : ManageHttpController {
 
     UpdateAccessRuleRequest r;
     r.ruleId = id;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.description = data.getString("description");
     r.urlPathPrefix = data.getString("urlPathPrefix");
     r.policy = data.getString("policy");

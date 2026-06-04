@@ -37,7 +37,7 @@ class DataSubjectRequestController : ManageHttpController {
 
         auto data = precheck.data;
         CreateDataSubjectRequestRequest r;
-        r.tenantId = precheck.tenantId;
+        r.tenantId = tenantId;
         r.id = precheck.id;
         r.dataSubjectId = data.getString("dataSubjectId");
         r.requestType = data.getString("requestType");
@@ -115,7 +115,7 @@ class DataSubjectRequestController : ManageHttpController {
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         UpdateDataSubjectRequestRequest r;
-        r.tenantId = precheck.tenantId;
+        r.tenantId = tenantId;
         r.dataSubjectRequestId = DataSubjectRequestId(precheck.id);
         r.status = data.getString("status");
         r.priority = data.getString("priority");

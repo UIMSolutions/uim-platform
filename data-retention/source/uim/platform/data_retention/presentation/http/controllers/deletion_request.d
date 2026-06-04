@@ -31,7 +31,7 @@ class DeletionRequestController : ManageHttpController {
 
         auto data = precheck.data;
         CreateDeletionRequestRequest r;
-        r.tenantId = precheck.tenantId;
+        r.tenantId = tenantId;
         r.dataSubjectId = DataSubjectId(data.getString("dataSubjectId"));
         r.applicationGroupId = ApplicationGroupId(data.getString("applicationGroupId"));
         r.actionType = data.getString("actionType").to!ActionType;
@@ -104,7 +104,7 @@ override protected Json updateHandler(HTTPServerRequest req) {
     auto id = DeletionRequestId(precheck.id);
     auto data = precheck.data;
     UpdateDeletionRequestRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.deletionRequestId = id;
     r.dataSubjectId = DataSubjectId(data.getString("dataSubjectId"));
     r.status = data.getString("status");
@@ -132,7 +132,7 @@ override protected Json updateHandler(HTTPServerRequest req) {
     auto id = DeletionRequestId(precheck.id);
     auto data = precheck.data;
     UpdateDeletionRequestRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.dataSubjectId = DataSubjectId(data.getString("dataSubjectId"));
     r.status = data.getString("status");
     r.errorMessage = data.getString("errorMessage");

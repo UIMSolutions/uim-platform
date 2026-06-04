@@ -55,7 +55,7 @@ class SoftwareComponentController : ManageHttpController {
     auto data = precheck.data;
 
     CreateSoftwareComponentRequest request;
-    request.tenantId = precheck.tenantId;
+    request.tenantId = tenantId;
     request.systemInstanceId = SystemInstanceId(data.getString("systemInstanceId"));
     request.name = data.getString("name");
     request.description = data.getString("description");
@@ -113,7 +113,7 @@ class SoftwareComponentController : ManageHttpController {
 
     auto data = precheck.data;
     CloneSoftwareComponentRequest request;
-    request.tenantId = precheck.tenantId;
+    request.tenantId = tenantId;
     request.componentId = id;
     request.branch = data.getString("branch");
     request.commitId = data.getString("commitId");
@@ -147,7 +147,7 @@ class SoftwareComponentController : ManageHttpController {
 
     auto data = precheck.data;
     PullSoftwareComponentRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.softwareComponentId = id;
     r.commitId = data.getString("commitId");
 

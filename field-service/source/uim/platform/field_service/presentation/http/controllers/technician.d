@@ -72,7 +72,7 @@ class TechnicianController : ManageHttpController {
         auto data = precheck.data;
         TechnicianDTO dto;
         dto.technicianId = TechnicianId(precheck.id);
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
         dto.firstName = data.getString("firstName");
         dto.lastName = data.getString("lastName");
         dto.email = data.getString("email");
@@ -106,7 +106,7 @@ class TechnicianController : ManageHttpController {
         auto data = precheck.data;
         TechnicianDTO dto;
         dto.technicianId = TechnicianId(precheck.id);
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
         dto.firstName = data.getString("firstName");
         dto.lastName = data.getString("lastName");
         dto.email = data.getString("email");

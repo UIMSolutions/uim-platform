@@ -54,7 +54,7 @@ class AppDefinitionController : ManageHttpController {
         AppDefinitionDTO dto;
         dto.definitionId = AppDefinitionId(precheck.id);
         dto.applicationId = MobileApplicationId(data.getString("mobileApplicationId"));
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.definitionContent = data.getString("definitionContent");
@@ -106,7 +106,7 @@ class AppDefinitionController : ManageHttpController {
 
         AppDefinitionDTO dto;
         dto.definitionId = id;
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.definitionContent = data.getString("definitionContent");

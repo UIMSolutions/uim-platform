@@ -39,7 +39,7 @@ class PipelineController : ManageHttpController {
 
     auto data = precheck.data;
     CreatePipelineRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.name = data.getString("name");
     r.description = data.getString("description");
     r.sourceType = data.getString("sourceType");
@@ -124,7 +124,7 @@ class PipelineController : ManageHttpController {
     r.format = data.getString("format");
     r.targetStreamId = data.getString("targetStreamId");
     r.isActive = data.getBoolean("isActive", true);
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
 
     auto result = usecase.updatePipeline(r);
     if (result.hasError)

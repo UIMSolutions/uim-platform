@@ -42,7 +42,7 @@ class CheckController : ManageHttpController {
 
     auto data = precheck.data;
         CreateHealthCheckRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.resourceId = data.getString("resourceId");
     r.name = data.getString("name");
     r.description = data.getString("description");
@@ -110,7 +110,7 @@ class CheckController : ManageHttpController {
 
     auto data = precheck.data;
     UpdateHealthCheckRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.description = data.getString("description");
     r.isEnabled = data.getBoolean("isEnabled", true);
     r.intervalSeconds = data.getInteger("intervalSeconds");
@@ -152,7 +152,7 @@ class CheckController : ManageHttpController {
     auto tenantId = precheck.tenantId;
     auto data = precheck.data;
     RecordCheckResultRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.checkId = HealthCheckId(data.getString("checkId"));
     r.resourceId = MonitoredResourceId(data.getString("resourceId"));
     r.status = data.getString("status");

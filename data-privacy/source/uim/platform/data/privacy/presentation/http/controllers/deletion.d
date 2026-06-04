@@ -40,7 +40,7 @@ class DeletionController : ManageHttpController {
 
     auto data = precheck.data;
     CreateDeletionRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.dataSubjectId = DataSubjectId(data.getString("dataSubjectId"));
     r.requestedBy = UserId(data.getString("requestedBy"));
     r.targetSystems = data.getStrings("targetSystems");
@@ -107,7 +107,7 @@ class DeletionController : ManageHttpController {
 
     UpdateDeletionStatusRequest r;
     r.requestId = DeletionRequestId(precheck.id);
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.status = data.getString("status");
     r.blockerReason = data.getString("blockerReason");
 

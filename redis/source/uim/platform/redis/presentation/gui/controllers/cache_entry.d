@@ -18,11 +18,11 @@ class GuiCacheEntryController {
     private TenantIf _tenantId;
 
     this(ManageCacheEntriesUseCase useCase, TenantIf tenantId = TenantId("default")) {
-        _useCase = useCase; _tenantId = precheck.tenantId;
+        _useCase = useCase; _tenantId = tenantId;
         _model = new GuiCacheEntryModel(); _view = new GuiCacheEntryView();
     }
 
-    void setTenant(TenantIf tenantId) { _tenantId = precheck.tenantId; }
+    void setTenant(TenantIf tenantId) { _tenantId = tenantId; }
     GuiCacheEntryModel model() { return _model; }
 
     Json loadList() {

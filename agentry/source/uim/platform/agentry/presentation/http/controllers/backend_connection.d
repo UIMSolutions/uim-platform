@@ -72,7 +72,7 @@ class BackendConnectionController : ManageHttpController {
         auto data = precheck.data;
         BackendConnectionDTO dto;
         dto.connectionId = BackendConnectionId(data.getString("id"));
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.backendUrl = data.getString("backendUrl");
@@ -108,7 +108,7 @@ class BackendConnectionController : ManageHttpController {
         auto data = precheck.data;
         BackendConnectionDTO dto;
         dto.connectionId = id;
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.backendUrl = data.getString("backendUrl");

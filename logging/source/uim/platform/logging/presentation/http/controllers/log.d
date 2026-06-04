@@ -35,7 +35,7 @@ class LogController : HttpController {
     auto tenantId = precheck.tenantId;
     auto data = precheck.data;
     IngestLogRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.streamId = data.getString("streamId");
     r.level = data.getString("level");
     r.source = data.getString("source");
@@ -78,11 +78,11 @@ class LogController : HttpController {
     auto tenantId = precheck.tenantId;
     auto data = precheck.data;
     IngestLogBatchRequest batchReq;
-    batchReq.tenantId = precheck.tenantId;
+    batchReq.tenantId = tenantId;
 
     foreach (ej; data.getArray("entries")) {
       IngestLogRequest r;
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.streamId = getString(ej, "streamId");
       r.level = getString(ej, "level");
       r.source = getString(ej, "source");

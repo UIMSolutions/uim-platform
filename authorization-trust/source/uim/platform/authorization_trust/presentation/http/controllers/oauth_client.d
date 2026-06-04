@@ -38,7 +38,7 @@ class OAuthClientController : ManageHttpController {
 
     auto data = precheck.data;
     CreateOAuthClientRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.clientId = data.getString("clientId");
     r.clientSecret = data.getString("clientSecret");
     r.name = data.getString("name");
@@ -116,7 +116,7 @@ class OAuthClientController : ManageHttpController {
     auto data = precheck.data;
     UpdateOAuthClientRequest r;
     r.clientId = id;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.name = data.getString("name");
     r.description = data.getString("description");
 

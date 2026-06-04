@@ -53,7 +53,7 @@ class CommandController : ManageHttpController {
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         CommandDTO dto;
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
         dto.commandId = CommandId(precheck.id);
         dto.catalogId = CatalogId(data.getString("catalogId"));
         dto.name = data.getString("name");
@@ -106,7 +106,7 @@ class CommandController : ManageHttpController {
         auto id = CommandId(precheck.id);
 
         CommandDTO dto;
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
         dto.commandId = CommandId(precheck.id);
         dto.name = data.getString("name");
         dto.description = data.getString("description");

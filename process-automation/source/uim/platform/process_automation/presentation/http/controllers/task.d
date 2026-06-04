@@ -38,7 +38,7 @@ class TaskController : ManageHttpController {
 
       auto data = precheck.data;
       CreateTaskRequest r;
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.processInstanceId = data.getString("processInstanceId");
       r.taskId = precheck.id;
       r.name = data.getString("name");
@@ -150,7 +150,7 @@ class TaskController : ManageHttpController {
 
       auto data = precheck.data;
       UpdateTaskRequest r;
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.taskId = TaskId(precheck.id);
       r.name = data.getString("name");
       r.description = data.getString("description");
@@ -182,7 +182,7 @@ class TaskController : ManageHttpController {
 
       auto data = precheck.data;
       ClaimTaskRequest r;
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.taskId = id;
       r.userId = data.getString("userId");
 
@@ -219,7 +219,7 @@ class TaskController : ManageHttpController {
 
       auto data = precheck.data;
       CompleteTaskRequest r;
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.taskId = id;
       r.completedBy = UserId(data.getString("completedBy"));
       r.outcome = data.getString("outcome");

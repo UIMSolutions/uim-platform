@@ -40,7 +40,7 @@ class SubscriptionController : ManageHttpController {
     auto tenantId = precheck.tenantId;
     auto data = precheck.data;
     CreateSubscriptionRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.subaccountId = SubaccountId(data.getString("subaccountId"));
     r.globalAccountId = GlobalAccountId(data.getString("globalAccountId"));
     r.appName = data.getString("appName");
@@ -121,7 +121,7 @@ class SubscriptionController : ManageHttpController {
 
         auto data = precheck.data;
         UpdateSubscriptionRequest r;
-        r.tenantId = precheck.tenantId;
+        r.tenantId = tenantId;
         r.planName = data.getString("planName");
         // r.status = data.getString("status");
         // r.updatedBy = UserId(req.headers.get("X-User-Id", ""));

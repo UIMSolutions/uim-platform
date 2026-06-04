@@ -40,7 +40,7 @@ class ActionController : ManageHttpController {
 
         auto data = precheck.data;
         CreateActionRequest r;
-        r.tenantId = precheck.tenantId;
+        r.tenantId = tenantId;
         r.projectId = ProjectId(data.getString("projectId"));
         r.actionId = ActionId(precheck.id);
         r.name = data.getString("name");
@@ -137,7 +137,7 @@ class ActionController : ManageHttpController {
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         UpdateActionRequest r;
-        r.tenantId = precheck.tenantId;
+        r.tenantId = tenantId;
         r.actionId = ActionId(precheck.id);
         r.name = data.getString("name");
         r.description = data.getString("description");

@@ -38,7 +38,7 @@ class TraceController : HttpController {
     auto tenantId = precheck.tenantId;
     auto data = precheck.data;
     IngestSpanRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.traceId = data.getString("traceId");
     r.parentSpanId = data.getString("parentSpanId");
     r.operationName = data.getString("operationName");
@@ -75,11 +75,11 @@ class TraceController : HttpController {
     auto tenantId = precheck.tenantId;
     auto data = precheck.data;
     IngestSpanBatchRequest batchReq;
-    batchReq.tenantId = precheck.tenantId;
+    batchReq.tenantId = tenantId;
 
     foreach (sj; data.getArray("spans")) {
       IngestSpanRequest r;
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.traceId = getString(sj, "traceId");
       r.parentSpanId = getString(sj, "parentSpanId");
       r.operationName = getString(sj, "operationName");

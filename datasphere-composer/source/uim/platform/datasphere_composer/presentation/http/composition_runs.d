@@ -58,7 +58,7 @@ class CompositionRunController : ManageHttpController {
   void handleAction(HTTPServerRequest req, HTTPServerResponse res) {
     auto data = precheck.data;
     CompositionRunActionRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.id       = extractIdFromPath(req.requestPath.to!string);
     r.action   = data.getString("action");
     auto result = usecase.performAction(r);

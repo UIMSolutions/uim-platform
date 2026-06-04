@@ -89,7 +89,7 @@ class BrokerServiceController : ManageHttpController {
 
     BrokerServiceDTO dto;
     dto.serviceId = BrokerServiceId(createId);
-    dto.tenantId = precheck.tenantId;
+    dto.tenantId = tenantId;
     dto.name = data.getString("name");
     dto.description = data.getString("description");
     dto.region = data.getString("region");
@@ -124,7 +124,7 @@ class BrokerServiceController : ManageHttpController {
     auto data = precheck.data;
 
     BrokerServiceDTO dto;
-    dto.tenantId = precheck.tenantId;
+    dto.tenantId = tenantId;
     dto.serviceId = id;
     dto.name = data.getString("name");
     dto.description = data.getString("description");

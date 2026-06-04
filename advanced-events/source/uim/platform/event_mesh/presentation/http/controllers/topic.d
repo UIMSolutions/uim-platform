@@ -67,7 +67,7 @@ class TopicController : ManageHttpController {
 
     TopicDTO dto;
     dto.topicId = TopicId(createId);
-    dto.tenantId = precheck.tenantId;
+    dto.tenantId = tenantId;
     dto.serviceId = BrokerServiceId(data.getString("brokerServiceId"));
     dto.name = data.getString("name");
     dto.description = data.getString("description");
@@ -116,7 +116,7 @@ class TopicController : ManageHttpController {
 
     TopicDTO dto;
     dto.topicId = TopicId(precheck.id);
-    dto.tenantId = precheck.tenantId;
+    dto.tenantId = tenantId;
     dto.name = data.getString("name");
     dto.description = data.getString("description");
     dto.topicString = data.getString("topicString");

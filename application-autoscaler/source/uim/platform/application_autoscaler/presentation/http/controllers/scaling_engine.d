@@ -37,7 +37,7 @@ class ScalingEngineController : HttpController {
     auto tenantId = precheck.tenantId;
     auto data = precheck.data;
     TriggerScalingRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.appId = data.getString("app_id");
     r.metricType = data.getString("metric_type");
     r.currentValue = data["current_value"].isFloat

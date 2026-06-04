@@ -104,7 +104,7 @@ unittest {
   // Create sample entitlements
   Entitlement e1;
   e1.id = EntitlementId("ent1");
-  e1.tenantId = precheck.tenantId;
+  e1.tenantId = tenantId;
   e1.globalAccountId = globalAccountId;
   e1.subaccountId = subaccountId;
   e1.directoryId = directoryId;

@@ -72,7 +72,7 @@ class ExecutionController : ManageHttpController {
         auto data = precheck.data;
         ExecutionDTO dto;
         dto.executionId = ExecutionId(precheck.id);
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
         dto.commandId = CommandId(data.getString("commandId"));
         dto.inputValues = data.getString("inputValues");
         dto.triggeredBy = UserId(data.getString("triggeredBy"));
@@ -97,7 +97,7 @@ class ExecutionController : ManageHttpController {
             return errorResponse("Invalid execution ID", 400);
 
         ExecutionDTO dto;
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
         dto.executionId = id;
 
         auto result = executions.updateExecution(dto);

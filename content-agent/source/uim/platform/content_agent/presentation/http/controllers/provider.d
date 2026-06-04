@@ -40,7 +40,7 @@ class ProviderController : ManageHttpController {
     auto tenantId = precheck.tenantId;
     auto data = precheck.data;
     auto r = RegisterProviderRequest();
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.name = data.getString("name");
     r.description = data.getString("description");
     r.endpoint = data.getString("endpoint");
@@ -111,7 +111,7 @@ class ProviderController : ManageHttpController {
 
     auto data = precheck.data;
     auto r = UpdateProviderRequest();
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.description = data.getString("description");
     r.endpoint = data.getString("endpoint");
     r.authToken = data.getString("authToken");

@@ -53,7 +53,7 @@ class BusinessRoleController : ManageHttpController {
     auto tenantId = TenantId(data.getString("tenantId"));
 
     CreateBusinessRoleRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.systemInstanceId = SystemInstanceId(data.getString("systemInstanceId"));
     r.name = data.getString("name");
     r.description = data.getString("description");
@@ -153,7 +153,7 @@ class BusinessRoleController : ManageHttpController {
     auto tenantId = TenantId(data.getString("tenantId"));
 
     UpdateBusinessRoleRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.businessRoleId = id;
     r.description = data.getString("description");
     r.roleType = data.getString("roleType");

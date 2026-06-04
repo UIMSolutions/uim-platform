@@ -50,21 +50,21 @@ unittest {
     // Create sample services
     BrokerService s1;
     s1.id = BrokerServiceId("s1");
-    s1.tenantId = precheck.tenantId;
+    s1.tenantId = tenantId;
     s1.status = BrokerServiceStatus.running;
     s1.cloudProvider = CloudProvider.aws;
     repo.save(s1);
 
     BrokerService s2;
     s2.id = BrokerServiceId("s2");
-    s2.tenantId = precheck.tenantId;
+    s2.tenantId = tenantId;
     s2.status = BrokerServiceStatus.provisioning;
     s2.cloudProvider = CloudProvider.azure;
     repo.save(s2);
 
     BrokerService s3;
     s3.id = BrokerServiceId("s3");
-    s3.tenantId = precheck.tenantId;
+    s3.tenantId = tenantId;
     s3.status = BrokerServiceStatus.running;
     s3.cloudProvider = CloudProvider.aws;
     repo.save(s3);

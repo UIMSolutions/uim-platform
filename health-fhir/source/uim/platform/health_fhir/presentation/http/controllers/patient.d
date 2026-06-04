@@ -35,7 +35,7 @@ class PatientController : ManageHttpController {
 
         auto data = precheck.data;
         ScanJobDTO dto;
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
       CreatePatientRequest r;
       r.tenantId  = tenantId;
       r.patientId = PatientId(precheck.id);

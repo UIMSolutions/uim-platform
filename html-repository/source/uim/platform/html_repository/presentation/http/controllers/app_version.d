@@ -39,9 +39,9 @@ class AppVersionController : ManageHttpController {
 
         auto data = precheck.data;
         ScanJobDTO dto;
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
       CreateAppVersionRequest r;
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.appId = AppVersionId(data.getString("appId"));
       r.versionCode = data.getString("versionCode");
       r.description = data.getString("description");

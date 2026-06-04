@@ -58,7 +58,7 @@ class ProgramController : ManageHttpController {
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         CreateProgramRequest r;
-        r.tenantId = precheck.tenantId;
+        r.tenantId = tenantId;
         r.programId = AbapProgramId(data.getString("programId"));
         r.title = data.getString("title");
         r.language = data.getString("language", "EN");
@@ -101,7 +101,7 @@ class ProgramController : ManageHttpController {
         auto id = AbapProgramId(precheck.id);
 
         UpdateProgramRequest r;
-        r.tenantId = precheck.tenantId;
+        r.tenantId = tenantId;
         r.programId = id;
         r.title = data.getString("title");
         r.language = data.getString("language", "EN");

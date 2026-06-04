@@ -41,7 +41,7 @@ class DashboardController : ManageHttpController {
 
     auto data = precheck.data;
         CreateDashboardRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.name = data.getString("name");
     r.description = data.getString("description");
     r.isDefault = data.getBoolean("isDefault");
@@ -138,7 +138,7 @@ class DashboardController : ManageHttpController {
     auto id = DashboardId(precheck.id);
     auto data = precheck.data;
     UpdateDashboardRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.dashboardId = id;
     r.name = data.getString("name");
     r.description = data.getString("description");

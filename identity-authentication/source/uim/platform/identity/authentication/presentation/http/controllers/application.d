@@ -41,9 +41,9 @@ class ApplicationController : ManageHttpController {
 
         auto data = precheck.data;
         ScanJobDTO dto;
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
       CreateAppRequest request;
-      request.tenantId = precheck.tenantId;
+      request.tenantId = tenantId;
       request.name = data.getString("name");
       request.description = data.getString("description");
       request.protocol = SsoProtocol.oidc;
@@ -135,7 +135,7 @@ class ApplicationController : ManageHttpController {
 
       auto data = precheck.data;
       UpdateAppRequest request;
-      request.tenantId = precheck.tenantId;
+      request.tenantId = tenantId;
       request.applicationId = appId;
       request.name = data.getString("name");
       request.redirectUris = data.getStrings("redirectUris");

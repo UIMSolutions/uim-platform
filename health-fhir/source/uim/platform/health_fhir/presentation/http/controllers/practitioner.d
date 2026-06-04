@@ -44,7 +44,7 @@ class PractitionerController : ManageHttpController {
 
         auto data = precheck.data;
         ScanJobDTO dto;
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
       CreatePractitionerRequest r;
       r.tenantId        = tenantId;
       r.practitionerId  = PractitionerId(precheck.id);
@@ -104,7 +104,7 @@ class PractitionerController : ManageHttpController {
       auto id = PractitionerId(precheck.id);
       auto data = precheck.data;
       UpdatePractitionerRequest r;
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.practitionerId = id;
       r.birthDate_ = data.getString("birthDate");
       r.active_    = j.get("active", Json(true)).get!bool;

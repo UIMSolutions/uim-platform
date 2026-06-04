@@ -42,7 +42,7 @@ class SubaccountController : ManageHttpController {
 
     auto data = precheck.data;
     CreateSubaccountRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.globalAccountId = data.getString("globalAccountId");
     r.parentDirectoryId = data.getString("parentDirectoryId");
     r.displayName = data.getString("displayName");
@@ -122,7 +122,7 @@ class SubaccountController : ManageHttpController {
 
     auto data = precheck.data;
     UpdateSubaccountRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.subaccountId = id;
     r.displayName = data.getString("displayName");
     r.description = data.getString("description");
@@ -152,7 +152,7 @@ class SubaccountController : ManageHttpController {
 
     auto data = precheck.data;
     MoveSubaccountRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.subaccountId = id;
     r.globalAccountId = GlobalAccountId(data.getString("globalAccountId"));
     r.targetDirectoryId = DirectoryId(data.getString("targetDirectoryId"));

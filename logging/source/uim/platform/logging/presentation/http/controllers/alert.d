@@ -97,7 +97,7 @@ class AlertController : ManageHttpController {
     auto data = precheck.data;
 
     AcknowledgeAlertRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.alertId = AlertId(data.getString("alertId"));
     r.acknowledgedBy = data.getString("acknowledgedBy");
 
@@ -127,7 +127,7 @@ class AlertController : ManageHttpController {
     auto data = precheck.data;
 
     ResolveAlertRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.alertId = AlertId(data.getString("alertId"));
     r.resolvedBy = data.getString("resolvedBy");
 

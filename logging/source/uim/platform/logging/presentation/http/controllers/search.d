@@ -38,7 +38,7 @@ class SearchController : HttpController {
     auto tenantId = precheck.tenantId;
 
     SearchLogsRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.query = req.params.get("q", "");
     r.level = req.params.get("level", "");
     r.streamId = LogStreamId(req.params.get("streamId", ""));

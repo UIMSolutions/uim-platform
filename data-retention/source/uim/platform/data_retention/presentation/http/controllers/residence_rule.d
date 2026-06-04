@@ -31,7 +31,7 @@ class ResidenceRuleController : ManageHttpController {
 
         auto data = precheck.data;
             CreateResidenceRuleRequest r;
-            r.tenantId = precheck.tenantId;
+            r.tenantId = tenantId;
             r.businessPurposeId = BusinessPurposeId(data.getString("businessPurposeId"));
             r.legalGroundId = LegalGroundId(data.getString("legalGroundId"));
             r.duration = jsonInt(j, "duration");

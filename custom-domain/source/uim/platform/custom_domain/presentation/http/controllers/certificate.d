@@ -69,7 +69,7 @@ class CertificateController : ManageHttpController {
             return errorResponse("Invalid Certificate ID", 400);
 
         CreateCertificateRequest r;
-        r.tenantId = precheck.tenantId;
+        r.tenantId = tenantId;
         r.certificateId = id;
         r.keyId = data.getString("keyId");
         r.certificateType = data.getString("certificateType");
@@ -151,7 +151,7 @@ class CertificateController : ManageHttpController {
 
         auto data = req.json;
         UploadCertificateChainRequest r;
-        r.tenantId = precheck.tenantId;
+        r.tenantId = tenantId;
         r.certificateId = id;
         r.certificatePem = data.getString("certificatePem");
 
@@ -191,7 +191,7 @@ class CertificateController : ManageHttpController {
 
         auto data = req.json;
         ActivateCertificateRequest r;
-        r.tenantId = precheck.tenantId;
+        r.tenantId = tenantId;
         r.certificateId = id;
         r.domains = getStrings(data, "domains");
 

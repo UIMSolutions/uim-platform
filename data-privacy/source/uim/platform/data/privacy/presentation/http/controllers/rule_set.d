@@ -40,7 +40,7 @@ class RuleSetController : ManageHttpController {
 
     auto data = precheck.data;
     CreateRuleSetRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.contextId = data.getString("businessContextId");
     r.name = data.getString("name");
     r.description = data.getString("description");
@@ -97,7 +97,7 @@ class RuleSetController : ManageHttpController {
     auto data = precheck.data;
 
     UpdateRuleSetRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.setId = RuleSetId(precheck.id);
     r.name = data.getString("name");
     r.description = data.getString("description");

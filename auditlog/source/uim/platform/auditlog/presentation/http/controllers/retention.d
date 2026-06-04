@@ -57,7 +57,7 @@ class RetentionController : ManageHttpController {
     auto data = precheck.data;
 
     CreateRetentionPolicyRequest policyRequest;
-    policyRequest.tenantId = precheck.tenantId;
+    policyRequest.tenantId = tenantId;
     policyRequest.name = data.getString("name");
     policyRequest.description = data.getString("description");
     policyRequest.retentionDays = data.getInteger("retentionDays");
@@ -100,7 +100,7 @@ class RetentionController : ManageHttpController {
 
     UpdateRetentionPolicyRequest policyRequest;
     policyRequest.retentionPolicyId = RetentionPolicyId(precheck.id);
-    policyRequest.tenantId = precheck.tenantId;
+    policyRequest.tenantId = tenantId;
     policyRequest.name = data.getString("name");
     policyRequest.description = data.getString("description");
     policyRequest.retentionDays = data.getInteger("retentionDays");

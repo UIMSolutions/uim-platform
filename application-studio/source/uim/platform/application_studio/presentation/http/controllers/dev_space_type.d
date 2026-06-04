@@ -55,7 +55,7 @@ class DevSpaceTypeController : ManageHttpController {
         auto data = precheck.data;
         DevSpaceTypeDTO dto;
         dto.typeId = precheck.id;
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.predefinedExtensions = data.getString("predefinedExtensions");
@@ -100,7 +100,7 @@ class DevSpaceTypeController : ManageHttpController {
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         DevSpaceTypeDTO dto;
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
         dto.typeId = DevSpaceTypeId(precheck.id);
         dto.name = data.getString("name");
         dto.description = data.getString("description");

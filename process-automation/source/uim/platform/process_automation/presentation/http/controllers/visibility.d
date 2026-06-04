@@ -40,7 +40,7 @@ class VisibilityController : ManageHttpController {
 
             auto data = precheck.data;
             CreateVisibilityRequest r;
-            r.tenantId = precheck.tenantId;
+            r.tenantId = tenantId;
             r.visibilityId = VisibilityId(precheck.id);
             r.name = data.getString("name");
             r.description = data.getString("description");
@@ -131,7 +131,7 @@ class VisibilityController : ManageHttpController {
 
             auto data = precheck.data;
             UpdateVisibilityRequest r;
-            r.tenantId = precheck.tenantId;
+            r.tenantId = tenantId;
             r.visibilityId = VisibilityId(precheck.id);
             r.name = data.getString("name");
             r.description = data.getString("description");

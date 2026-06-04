@@ -40,7 +40,7 @@ class AutomationController : ManageHttpController {
 
             auto data = precheck.data;
             CreateAutomationRequest r;
-            r.tenantId = precheck.tenantId;
+            r.tenantId = tenantId;
             r.projectId = ProjectId(data.getString("projectId"));
             r.automationId = AutomationId(precheck.id);
             r.name = data.getString("name");
@@ -144,7 +144,7 @@ class AutomationController : ManageHttpController {
 
             auto data = precheck.data;
             UpdateAutomationRequest r;
-            r.tenantId = precheck.tenantId;
+            r.tenantId = tenantId;
             r.automationId = AutomationId(precheck.id);
             r.name = data.getString("name");
             r.description = data.getString("description");

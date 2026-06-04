@@ -31,7 +31,7 @@ class ArchivingJobController : ManageHttpController {
 
         auto data = precheck.data;
         CreateArchivingJobRequest r;
-        r.tenantId = precheck.tenantId;
+        r.tenantId = tenantId;
         r.applicationGroupId = ApplicationGroupId(data.getString("applicationGroupId"));
         r.operationType = data.getString("operationType");
         r.selectionCriteria = data.getString("selectionCriteria");
@@ -106,7 +106,7 @@ class ArchivingJobController : ManageHttpController {
         auto id = ArchivingJobId(precheck.id);
         auto data = precheck.data;
         UpdateArchivingJobRequest r;
-        r.tenantId = precheck.tenantId;
+        r.tenantId = tenantId;
         r.archivingJobId = id;
         r.operationType = data.getString("operationType").to!OperationType;
         r.status = data.getString("status");

@@ -42,7 +42,7 @@ class ExecutionController : ManageHttpController {
 
     auto data = precheck.data;
     CreateExecutionRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.connectionId = connectionId;
     r.configurationId = data.getString("configurationId");
     r.resourceGroupId = data.getString("resourceGroupId");
@@ -112,7 +112,7 @@ class ExecutionController : ManageHttpController {
     auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
     PatchExecutionRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.connectionId = connectionId;
     r.executionId = id;
     r.targetStatus = data.getString("targetStatus");
@@ -144,7 +144,7 @@ class ExecutionController : ManageHttpController {
     auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
     BulkPatchExecutionRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.connectionId = connectionId;
     r.executionIds = data.getStrings("executionIds").map!(s => ExecutionId(s)).array;
     r.targetStatus = data.getString("targetStatus");

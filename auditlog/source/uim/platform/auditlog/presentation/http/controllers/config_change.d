@@ -37,7 +37,7 @@ class ConfigChangeController : HttpController {
 
     auto data = precheck.data;
     auto r = WriteConfigChangeLogRequest();
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.changedBy = data.getString("changedBy");
     r.configType = data.getString("configType");
     r.configObjectId = data.getString("configObjectId");

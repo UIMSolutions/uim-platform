@@ -126,7 +126,7 @@ class EntitlementController : ManageHttpController {
 
     auto data = precheck.data;
     UpdateEntitlementQuotaRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.entitlementId = id;
     r.quotaAssigned = data.getInteger("quotaAssigned");
     r.unlimited = data.getBoolean("unlimited");

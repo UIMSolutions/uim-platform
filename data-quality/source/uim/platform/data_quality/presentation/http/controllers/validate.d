@@ -38,7 +38,7 @@ class ValidateController : HttpController {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
       auto r = ValidateRecordRequest();
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.datasetId = data.getString("datasetId");
       r.recordId = data.getString("recordId");
       r.fieldValues = data.jsonStrMap("fieldValues");
@@ -55,7 +55,7 @@ class ValidateController : HttpController {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
       auto r = ValidateBatchRequest();
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.datasetId = data.getString("datasetId");
 
       foreach (item; data.getArray("records")) {

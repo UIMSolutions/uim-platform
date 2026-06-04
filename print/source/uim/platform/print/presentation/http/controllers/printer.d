@@ -72,7 +72,7 @@ class PrinterController : ManageHttpController {
         auto data = precheck.data;
             PrinterDTO dto;
             dto.printerId = PrinterId(precheck.id);
-            dto.tenantId = precheck.tenantId;
+            dto.tenantId = tenantId;
             dto.name = data.getString("name");
             dto.description = data.getString("description");
             dto.host = data.getString("host");
@@ -109,7 +109,7 @@ class PrinterController : ManageHttpController {
             auto data = precheck.data;
             PrinterDTO dto;
             dto.printerId = PrinterId(precheck.id);
-            dto.tenantId = precheck.tenantId;
+            dto.tenantId = tenantId;
             dto.name = data.getString("name");
             dto.description = data.getString("description");
             dto.host = data.getString("host");

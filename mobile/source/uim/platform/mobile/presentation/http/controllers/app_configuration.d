@@ -39,9 +39,9 @@ class AppConfigurationController : ManageHttpController {
 
         auto data = precheck.data;
         ScanJobDTO dto;
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
       CreateAppConfigurationRequest r;
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.appId = data.getString("appId");
       r.key = data.getString("key");
       r.value = data.getString("value");

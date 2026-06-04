@@ -53,7 +53,7 @@ class ApplicationGroupController : ManageHttpController {
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         CreateApplicationGroupRequest r;
-        r.tenantId = precheck.tenantId;
+        r.tenantId = tenantId;
         r.name = data.getString("name");
         r.description = data.getString("description");
         r.scope_ = data.getString("scope");
@@ -106,7 +106,7 @@ class ApplicationGroupController : ManageHttpController {
             return errorResponse("Invalid application group ID", 400);
 
         UpdateApplicationGroupRequest r;
-        r.tenantId = precheck.tenantId;
+        r.tenantId = tenantId;
         r.applicationGroupId = id;
         r.name = data.getString("name");
         r.description = data.getString("description");

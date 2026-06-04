@@ -40,7 +40,7 @@ class CertificateController : ManageHttpController {
 
     auto data = precheck.data;
     auto r = CreateCertificateRequest();
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.name = data.getString("name");
     r.description = data.getString("description");
     r.certType = data.getString("type");
@@ -103,7 +103,7 @@ class CertificateController : ManageHttpController {
     auto data = precheck.data;
     auto r = UpdateCertificateRequest();
     r.certificateId = CertificateId(precheck.id);
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.description = data.getString("description");
     r.active = data.getBoolean("active", true);
 

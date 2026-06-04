@@ -21,7 +21,7 @@ class ValidationEngine {
       DatasetId datasetId, string[string] fieldValues, ValidationRule[] rules) {
     ValidationResult result;
     result.recordId = recordId;
-    result.tenantId = precheck.tenantId;
+    result.tenantId = tenantId;
     result.datasetId = datasetId;
     result.totalRulesChecked = cast(int) rules.length;
 

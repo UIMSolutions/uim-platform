@@ -100,7 +100,7 @@ class PromptCollectionController : ManageHttpController {
     auto id = PromptCollectionId(precheck.id);
     auto data = precheck.data;
     PatchPromptCollectionRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.collectionId = id;
     r.name = data.getString("name");
     r.description = data.getString("description");

@@ -40,7 +40,7 @@ class ServiceInstanceController : ManageHttpController {
     auto tenantId = precheck.tenantId;
     auto data = precheck.data;
     auto r = CreateServiceInstanceRequest();
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.name = data.getString("name");
     r.description = data.getString("description");
     r.resourceId = data.getString("resourceId");
@@ -72,7 +72,7 @@ class ServiceInstanceController : ManageHttpController {
     auto id = ServiceInstanceId(precheck.id);
     auto data = precheck.data;
     auto r = UpdateServiceInstanceRequest();
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.instanceId = id;
     r.description = data.getString("description");
     r.statusMessage = data.getString("statusMessage");

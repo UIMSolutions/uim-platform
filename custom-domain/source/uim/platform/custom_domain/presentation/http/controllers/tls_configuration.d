@@ -68,7 +68,7 @@ class TlsConfigurationController : ManageHttpController {
             return errorResponse("TLS Configuration ID is required", 400);
 
         CreateTlsConfigurationRequest r;
-        r.tenantId = precheck.tenantId;
+        r.tenantId = tenantId;
         r.tlsConfigurationId = id;
         r.name = data.getString("name");
         r.description = data.getString("description");
@@ -130,7 +130,7 @@ class TlsConfigurationController : ManageHttpController {
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         UpdateTlsConfigurationRequest r;
-        r.tenantId = precheck.tenantId;
+        r.tenantId = tenantId;
         r.tlsConfigurationId = TlsConfigurationId(precheck.id);
         r.name = data.getString("name");
         r.description = data.getString("description");

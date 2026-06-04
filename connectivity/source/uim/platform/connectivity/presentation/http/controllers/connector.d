@@ -39,7 +39,7 @@ class ConnectorController : ManageHttpController {
     auto data = precheck.data;
     RegisterConnectorRequest r;
     r.subaccountId = data.getString("subaccountId");
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.locationId = data.getString("locationId");
     r.description = data.getString("description");
     r.connectorVersion = data.getString("connectorVersion");

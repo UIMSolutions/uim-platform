@@ -42,7 +42,7 @@ class MetricDefinitionController : ManageHttpController {
     auto data = precheck.data;
     
     CreateMetricDefinitionRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.name = data.getString("name");
     r.displayName = data.getString("displayName");
     r.description = data.getString("description");
@@ -101,7 +101,7 @@ class MetricDefinitionController : ManageHttpController {
 
     auto data = precheck.data;
     UpdateMetricDefinitionRequest request;
-    request.tenantId = precheck.tenantId;
+    request.tenantId = tenantId;
     request.id = id;
     request.displayName = data.getString("displayName");
     request.description = data.getString("description");

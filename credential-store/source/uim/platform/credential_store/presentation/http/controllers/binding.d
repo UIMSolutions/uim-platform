@@ -65,7 +65,7 @@ class BindingController : ManageHttpController {
     auto data = precheck.data;
 
     CreateServiceBindingRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.name = data.getString("name");
     r.description = data.getString("description");
     r.permission = data.getString("permission");
@@ -136,7 +136,7 @@ class BindingController : ManageHttpController {
 
     UpdateServiceBindingRequest r;
     r.serviceBindingId = id;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.description = data.getString("description");
     r.permission = data.getString("permission");
     r.status = data.getString("status");

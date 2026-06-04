@@ -39,7 +39,7 @@ class AlertController : ManageHttpController {
 
     auto data = precheck.data;
         CreateAlertRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.instanceId = data.getString("instanceId");
     r.id = precheck.id;
     r.name = data.getString("name");
@@ -125,7 +125,7 @@ class AlertController : ManageHttpController {
 
     auto data = precheck.data;
     UpdateAlertRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.id = precheck.id;
     r.name = data.getString("name");
     r.description = data.getString("description");
@@ -160,7 +160,7 @@ class AlertController : ManageHttpController {
 
     auto data = precheck.data;
     AcknowledgeAlertRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.alertId = id;
     r.acknowledgedBy = data.getString("acknowledgedBy");
 

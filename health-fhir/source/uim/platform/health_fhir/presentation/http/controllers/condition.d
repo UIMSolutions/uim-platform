@@ -44,7 +44,7 @@ class ConditionController : ManageHttpController {
 
     auto data = precheck.data;
         CreateConditionRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.conditionId = ConditionId(precheck.id);
     r.note_ = data.getString("note");
     r.onsetDateTime_ = data.getString("onsetDateTime");
@@ -105,7 +105,7 @@ class ConditionController : ManageHttpController {
     auto id = ConditionId(precheck.id);
     auto data = precheck.data;
     UpdateConditionRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.conditionId = id;
     r.note_ = data.getString("note");
     r.onsetDateTime_ = data.getString("onsetDateTime");

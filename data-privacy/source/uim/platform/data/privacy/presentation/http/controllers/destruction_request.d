@@ -39,7 +39,7 @@ class DestructionRequestController : ManageHttpController {
 
     auto data = precheck.data;
     CreateDestructionRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.dataSubjectId = DataSubjectId(data.getString("dataSubjectId"));
     r.requestedBy = UserId(data.getString("requestedBy"));
     r.targetSystems = data.getStrings("targetSystems");
@@ -103,7 +103,7 @@ class DestructionRequestController : ManageHttpController {
     auto data = precheck.data;
     UpdateDestructionStatusRequest r;
     r.requestId = id;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.status = data.getString("status");
 
     auto result = usecase.updateStatus(r);

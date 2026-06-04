@@ -40,7 +40,7 @@ class SpaceController : ManageHttpController {
     auto data = precheck.data;
     
     CreateSpaceRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.spaceId = SpaceId(precheck.id);
     r.name = data.getString("name");
     r.description = data.getString("description");
@@ -118,7 +118,7 @@ class SpaceController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     UpdateSpaceRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.spaceId = SpaceId(precheck.id);
     r.name = data.getString("name");
     r.description = data.getString("description");

@@ -55,7 +55,7 @@ class DeploymentController : ManageHttpController {
         dto.deploymentId = DeploymentId(precheck.id);
         dto.applicationId = MobileApplicationId(data.getString("mobileApplicationId"));
         dto.versionId = AppVersionId(data.getString("appVersionId"));
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
         dto.scope_ = data.getString("scope");
         dto.targetDeviceId = data.getString("targetDeviceId");
         dto.targetGroupName = data.getString("targetGroupName");
@@ -108,7 +108,7 @@ class DeploymentController : ManageHttpController {
         auto data = precheck.data;
         DeploymentDTO dto;
         dto.deploymentId = id;
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
         dto.notes = data.getString("notes");
         dto.scheduledAt = data.getLong("scheduledAt");
 

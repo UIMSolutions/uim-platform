@@ -38,7 +38,7 @@ class CleansingJobController : ManageHttpController {
 
     auto data = precheck.data;
     auto r = CreateCleansingJobRequest();
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.datasetId = data.getString("datasetId");
     r.requestedBy = data.getString("requestedBy");
     r.ruleIds = data.getStrings("ruleIds");

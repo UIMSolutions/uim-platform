@@ -59,7 +59,7 @@ class CatalogController : ManageHttpController {
 
         CatalogDTO dto;
         dto.catalogId = id;
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.tags = data.getString("tags");
@@ -104,7 +104,7 @@ class CatalogController : ManageHttpController {
             return errorResponse("Invalid catalog ID", 400);
 
         CatalogDTO dto;
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
         dto.catalogId = id;
         dto.name = data.getString("name", "");
         dto.description = data.getString("description", "");

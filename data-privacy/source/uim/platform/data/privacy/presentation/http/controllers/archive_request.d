@@ -39,7 +39,7 @@ class ArchiveRequestController : ManageHttpController {
 
     auto data = precheck.data;
     CreateArchiveRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.subjectId = data.getString("dataSubjectId");
     r.requestedBy = data.getString("requestedBy");
     r.targetSystems = data.getStrings("targetSystems");
@@ -103,7 +103,7 @@ class ArchiveRequestController : ManageHttpController {
 
     auto data = precheck.data;
     UpdateArchiveStatusRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.requestId = id;
     r.status = data.getString("status");
 

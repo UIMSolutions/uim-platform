@@ -23,7 +23,7 @@ class MarketRateWebView {
     auto tenantId = TenantId(req.query.get("tenantId", "default"));
 
     QueryRatesRequest q;
-    q.tenantId = precheck.tenantId;
+    q.tenantId = tenantId;
 
     auto rates = ratesUC.query(q);
     auto providers = providersUC.list(tenantId);

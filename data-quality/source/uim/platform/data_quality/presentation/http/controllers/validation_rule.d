@@ -44,7 +44,7 @@ class ValidationRuleController : ManageHttpController {
 
         auto data = precheck.data;
       auto r = CreateValidationRuleRequest();
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.name = data.getString("name");
       r.description = data.getString("description");
       r.datasetPattern = data.getString("datasetPattern");
@@ -112,7 +112,7 @@ class ValidationRuleController : ManageHttpController {
       auto data = precheck.data;
       auto r = UpdateValidationRuleRequest();
       r.id = precheck.id;
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.name = data.getString("name");
       r.description = data.getString("description");
       r.datasetPattern = data.getString("datasetPattern");

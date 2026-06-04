@@ -45,7 +45,7 @@ class ObjectController : ManageHttpController {
     auto data = precheck.data;
     auto r = CreateObjectRequest();
 
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.bucketId = data.getString("bucketId");
     r.key = data.getString("key");
     r.contentType = data.getString("contentType");
@@ -121,7 +121,7 @@ class ObjectController : ManageHttpController {
     auto data = precheck.data;
 
     auto r = UpdateObjectMetadataRequest();
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.bucketId = id;
     r.contentType = data.getString("contentType");
     r.metadata = data.getString("metadata");
@@ -173,7 +173,7 @@ class ObjectController : ManageHttpController {
     auto tenantId = precheck.tenantId;
     auto data = precheck.data;
     auto r = CopyObjectRequest();
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.sourceBucketId = data.getString("sourceBucketId");
     r.sourceKey = data.getString("sourceKey");
     r.destBucketId = data.getString("destBucketId");

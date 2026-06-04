@@ -15,7 +15,7 @@ class MarketRateWidget {
 
   Json buildModel(TenantId tenantId) {
     QueryRatesRequest q;
-    q.tenantId = precheck.tenantId;
+    q.tenantId = tenantId;
 
     auto rates = ratesUC.query(q);
     auto providers = providersUC.list(tenantId);

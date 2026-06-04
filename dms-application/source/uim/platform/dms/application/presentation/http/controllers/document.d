@@ -45,7 +45,7 @@ class DocumentController : ManageHttpController {
 
     auto data = precheck.data;
     auto r = CreateDocumentRequest();
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.repositoryId = data.getString("repositoryId");
     r.folderId = data.getString("folderId");
     r.name = data.getString("name");
@@ -147,7 +147,7 @@ class DocumentController : ManageHttpController {
     auto data = precheck.data;
     auto r = UpdateDocumentRequest();
     r.documentId = id;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.name = data.getString("name");
     r.description = data.getString("description");
     r.tags = data.getString("tags");
@@ -168,7 +168,7 @@ class DocumentController : ManageHttpController {
       auto data = precheck.data;
       auto r = MoveDocumentRequest();
       r.documentId = id;
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.newFolderId = data.getString("newFolderId");
 
       auto result = usecase.moveDocument(r);

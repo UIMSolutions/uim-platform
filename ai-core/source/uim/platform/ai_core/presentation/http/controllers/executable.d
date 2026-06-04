@@ -37,7 +37,7 @@ class ExecutableController : ManageHttpController {
 
     auto data = precheck.data;
     CreateExecutableRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.resourceGroupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
     r.scenarioId = ScenarioId(data.getString("scenarioId"));
     r.name = data.getString("name");

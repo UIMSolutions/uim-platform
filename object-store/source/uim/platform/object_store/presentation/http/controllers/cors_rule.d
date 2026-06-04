@@ -40,7 +40,7 @@ class CorsRuleController : ManageHttpController {
     auto data = precheck.data;
 
     auto r = CreateCorsRuleRequest();
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.bucketId = data.getString("bucketId");
     r.allowedOrigins = data.getString("allowedOrigins");
     r.allowedMethods = data.getString("allowedMethods");
@@ -114,7 +114,7 @@ class CorsRuleController : ManageHttpController {
     auto data = precheck.data;
 
     auto r = UpdateCorsRuleRequest();
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.corsRuleId = id;
     r.allowedOrigins = data.getString("allowedOrigins");
     r.allowedMethods = data.getString("allowedMethods");

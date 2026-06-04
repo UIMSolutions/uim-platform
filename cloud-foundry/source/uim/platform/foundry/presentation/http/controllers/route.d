@@ -50,7 +50,7 @@ class RouteController : ManageHttpController {
 
     auto data = precheck.data;
     auto r = CreateRouteRequest();
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.spaceId = data.getString("spaceId");
     r.domainId = data.getString("domainId");
     r.host = data.getString("host");
@@ -153,7 +153,7 @@ class RouteController : ManageHttpController {
 
     MapRouteRequest r;
     r.routeId = routeId;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.appId = data.getString("appId");
 
     auto result = useCase.mapRoute(r);
@@ -183,7 +183,7 @@ class RouteController : ManageHttpController {
     auto data = precheck.data;
     auto r = MapRouteRequest();
     r.routeId = routeId;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.appId = data.getString("appId");
 
     auto result = useCase.unmapRoute(r);
@@ -213,7 +213,7 @@ class RouteController : ManageHttpController {
 
       auto data = precheck.data;
       auto r = CreateDomainRequest();
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.ownerOrgId = data.getString("ownerOrgId");
       r.name = data.getString("name");
       r.scope_ = parseDomainScope(data.getString("scope"));

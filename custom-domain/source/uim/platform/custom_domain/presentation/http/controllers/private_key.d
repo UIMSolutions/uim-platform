@@ -63,7 +63,7 @@ class PrivateKeyController : ManageHttpController {
             return errorResponse("Private key ID is required", 400);
 
         CreatePrivateKeyRequest r;
-        r.tenantId = precheck.tenantId;
+        r.tenantId = tenantId;
         r.privateKeyId = id;
         r.subject = data.getString("subject");
         r.domains = getStrings(data, "domains");

@@ -40,9 +40,9 @@ class DataModelController : ManageHttpController {
 
         auto data = precheck.data;
         ScanJobDTO dto;
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
       CreateDataModelRequest r;
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.name = data.getString("name");
       r.namespace = data.getString("namespace");
       r.version_ = data.getString("version");

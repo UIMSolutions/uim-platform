@@ -39,7 +39,7 @@ class OrgController : ManageHttpController {
 
     auto data = precheck.data;
     auto r = CreateOrgRequest();
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.name = data.getString("name");
     r.memoryQuotaMb = data.getInteger("memoryQuotaMb", 0);
     r.instanceMemoryLimitMb = data.getInteger("instanceMemoryLimitMb", 0);
@@ -100,7 +100,7 @@ class OrgController : ManageHttpController {
     auto data = precheck.data;
     auto r = UpdateOrgRequest();
     r.orgId = id;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.name = data.getString("name");
     r.memoryQuotaMb = data.getInteger("memoryQuotaMb", 0);
     r.instanceMemoryLimitMb = data.getInteger("instanceMemoryLimitMb", 0);

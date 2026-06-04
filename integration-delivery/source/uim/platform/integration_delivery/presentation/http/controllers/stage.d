@@ -68,7 +68,7 @@ class StageController : ManageHttpController {
         auto data = precheck.data;
         StageDTO dto;
         dto.stageId = StageId(data.getString("stageId", ""));
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
         dto.name = data.getString("name", "");
         dto.order_ = cast(int) data.gLong("order_");
         dto.isOptional = data.gBool("isOptional");
@@ -93,7 +93,7 @@ class StageController : ManageHttpController {
             return Json.emptyObject.set("error", "Invalid stage ID").set("statusCode", 400);
 
         StageDTO dto;
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
         dto.stageId = id;
         dto.name = data.getString("name", "");
         dto.updatedBy = UserId(data.getString("updatedBy", ""));

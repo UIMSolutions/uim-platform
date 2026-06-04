@@ -43,7 +43,7 @@ class DeploymentController : ManageHttpController {
     auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
 
     CreateDeploymentRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.connectionId = connectionId;
     r.configurationId = data.getString("configurationId");
     r.resourceGroupId = data.getString("resourceGroupId");
@@ -106,7 +106,7 @@ class DeploymentController : ManageHttpController {
     auto data = precheck.data;
 
     PatchDeploymentRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.connectionId = connectionId;
     r.deploymentId = id;
     r.targetStatus = data.getString("targetStatus");
@@ -140,7 +140,7 @@ class DeploymentController : ManageHttpController {
     auto data = precheck.data;
 
     BulkPatchDeploymentRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.connectionId = connectionId;
     r.deploymentIds = data.getStrings("deploymentIds").map!(id => DeploymentId(id)).array;
     r.targetStatus = data.getString("targetStatus");

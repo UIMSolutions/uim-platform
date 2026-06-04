@@ -39,7 +39,7 @@ class RetentionController : ManageHttpController {
 
     auto data = precheck.data;
         CreateRetentionPolicyRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.name = data.getString("name");
     r.description = data.getString("description");
     r.dataType = data.getString("dataType");
@@ -121,7 +121,7 @@ class RetentionController : ManageHttpController {
     r.maxSizeGB = data.getDouble("maxSizeGB");
     r.isDefault = data.getBoolean("isDefault");
     r.isActive = data.getBoolean("isActive", true);
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
 
     auto result = usecase.updateRetentionPolicy(r);
     if (result.hasError)

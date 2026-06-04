@@ -38,9 +38,9 @@ class ConfigurationController : ManageHttpController {
 
         auto data = precheck.data;
         ScanJobDTO dto;
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
       CreateConfigurationRequest r;
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.instanceId = data.getString("instanceId");
       r.id = precheck.id;
       r.section = data.getString("section");
@@ -138,7 +138,7 @@ class ConfigurationController : ManageHttpController {
 
       auto data = precheck.data;
       UpdateConfigurationRequest r;
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.id = precheck.id;
       r.value = data.getString("value");
 

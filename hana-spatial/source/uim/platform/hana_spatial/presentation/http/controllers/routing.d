@@ -34,9 +34,9 @@ class RoutingController : ManageHttpController {
 
         auto data = precheck.data;
         ScanJobDTO dto;
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
       CalculateRouteRequest r;
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.id = precheck.id;
       r.originLat = jsonDouble(j, "originLat");
       r.originLon = jsonDouble(j, "originLon");

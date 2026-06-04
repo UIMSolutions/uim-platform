@@ -39,7 +39,7 @@ class NamespaceController : ManageHttpController {
 
     auto data = precheck.data;
     CreateNamespaceRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.name = data.getString("name");
     r.description = data.getString("description");
     r.createdBy = UserId(data.getString("createdBy"));
@@ -105,7 +105,7 @@ class NamespaceController : ManageHttpController {
       
     auto data = precheck.data;
     UpdateNamespaceRequest request;
-    request.tenantId = precheck.tenantId;
+    request.tenantId = tenantId;
     request.namespaceId = id;
     request.description = data.getString("description");
 

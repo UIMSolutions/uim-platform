@@ -48,7 +48,7 @@ class ServiceController : ManageHttpController {
 
     auto data = precheck.data;
     auto r = CreateServiceInstanceRequest();
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.spaceId = SpaceId(data.getString("spaceId"));
     r.name = data.getString("name");
     r.serviceName = data.getString("serviceName");
@@ -139,7 +139,7 @@ class ServiceController : ManageHttpController {
     auto data = precheck.data;
     auto r = UpdateServiceInstanceRequest();
     r.id = id;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.name = data.getString("name");
     r.parameters = data.getString("parameters");
     r.tags = data.getString("tags");
@@ -194,7 +194,7 @@ class ServiceController : ManageHttpController {
     auto tenantId = precheck.tenantId;
     auto data = precheck.data;
     auto r = CreateServiceBindingRequest();
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.appId = AppId(data.getString("appId"));
     r.serviceInstanceId = ServiceInstanceId(data.getString("serviceInstanceId"));
     r.name = data.getString("name");

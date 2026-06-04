@@ -54,7 +54,7 @@ class IdentityProviderController : ManageHttpController {
     auto data = precheck.data;
 
     CreateIdentityProviderRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.alias_ = data.getString("alias");
     r.displayName = data.getString("displayName");
     r.idpType = data.getString("idpType");
@@ -108,7 +108,7 @@ class IdentityProviderController : ManageHttpController {
       return errorResponse("Invalid identity provider ID", 400);
 
     UpdateIdentityProviderRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.providerId = id;
     r.displayName = data.getString("displayName");
     r.metadataUrl = data.getString("metadataUrl");

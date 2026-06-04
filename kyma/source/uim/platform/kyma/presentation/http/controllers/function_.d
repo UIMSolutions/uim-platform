@@ -42,11 +42,11 @@ class FunctionController : ManageHttpController {
 
         auto data = precheck.data;
         ScanJobDTO dto;
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
       CreateFunctionRequest r;
       r.namespaceId = data.getString("namespaceId");
       r.environmentId = data.getString("environmentId");
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.name = data.getString("name");
       r.description = data.getString("description");
       r.runtime = data.getString("runtime");

@@ -64,7 +64,7 @@ class IdentityProviderController : ManageHttpController {
         auto data = precheck.data;
             IdentityProviderDTO dto;
             dto.idpId = IdentityProviderId(precheck.id);
-            dto.tenantId = precheck.tenantId;
+            dto.tenantId = tenantId;
             dto.name = data.getString("name");
             dto.description = data.getString("description");
             dto.type_ = data.getString("type");
@@ -90,7 +90,7 @@ class IdentityProviderController : ManageHttpController {
             auto data = precheck.data;
             IdentityProviderDTO dto;
             dto.idpId = IdentityProviderId(precheck.id);
-            dto.tenantId = precheck.tenantId;
+            dto.tenantId = tenantId;
             dto.name = data.getString("name");
             dto.description = data.getString("description");
             dto.ssoUrl = data.getString("ssoUrl");

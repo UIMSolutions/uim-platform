@@ -34,7 +34,7 @@ class ClientLogController : ManageHttpController {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
       UploadClientLogRequest r;
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.appId = data.getString("appId");
       r.deviceId = data.getString("deviceId");
       r.userId = data.getString("userId");

@@ -61,7 +61,7 @@ class EventSchemaController : ManageHttpController {
 
         EventSchemaDTO dto;
         dto.schemaId = id;
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.version_ = data.getString("version");
@@ -105,7 +105,7 @@ class EventSchemaController : ManageHttpController {
         auto data = precheck.data;
         EventSchemaDTO dto;
         dto.schemaId = EventSchemaId(precheck.id);
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.schemaContent = data.getString("schemaContent");

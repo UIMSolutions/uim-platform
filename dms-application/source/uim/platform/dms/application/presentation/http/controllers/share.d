@@ -44,7 +44,7 @@ class ShareController : ManageHttpController {
 
         auto data = precheck.data;
       auto r = CreateShareRequest();
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.documentId = DocumentId(data.getString("documentId"));
       r.shareType = data.getString("shareType").to!ShareType;
       r.sharedWith = data.getString("sharedWith");

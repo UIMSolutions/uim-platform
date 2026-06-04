@@ -32,7 +32,7 @@ class BusinessPurposeController : ManageHttpController {
 
         auto data = precheck.data;
         CreateBusinessPurposeRequest r;
-        r.tenantId = precheck.tenantId;
+        r.tenantId = tenantId;
         r.name = data.getString("name");
         r.description = data.getString("description");
         r.applicationGroupId = ApplicationGroupId(data.getString("applicationGroupId"));
@@ -110,7 +110,7 @@ override protected Json updateHandler(HTTPServerRequest req) {
         precheck.id);
     auto data = precheck.data;
     UpdateBusinessPurposeRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.businessPurposeId = id;
     r.name = data
         .getString("name");

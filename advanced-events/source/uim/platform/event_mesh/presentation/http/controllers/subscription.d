@@ -66,7 +66,7 @@ class SubscriptionController : ManageHttpController {
 
         SubscriptionDTO dto;
         dto.subscriptionId = EventSubscriptionId(createId);
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
         dto.serviceId = BrokerServiceId(data.getString("serviceId"));
         dto.topicId = TopicId(data.getString("topicId"));
         dto.queueId = QueueId(data.getString("queueId"));
@@ -118,7 +118,7 @@ class SubscriptionController : ManageHttpController {
 
         SubscriptionDTO dto;
         dto.subscriptionId = EventSubscriptionId(precheck.id);
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.topicFilter = data.getString("topicFilter");

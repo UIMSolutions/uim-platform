@@ -28,7 +28,7 @@ public:
 
     WarehouseOrder wo;
     wo.id = WarehouseOrderId(generateId());
-    wo.tenantId = precheck.tenantId;
+    wo.tenantId = tenantId;
     wo.orderNumber = req.orderNumber;
     wo.description = req.description;
     wo.deliveryId = DeliveryId(req.deliveryId);

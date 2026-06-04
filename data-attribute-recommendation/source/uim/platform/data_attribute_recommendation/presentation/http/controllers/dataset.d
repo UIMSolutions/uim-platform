@@ -43,7 +43,7 @@ class DatasetController : ManageHttpController {
 
     auto data = precheck.data;
     auto r = CreateDatasetRequest();
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.name = data.getString("name");
     r.description = data.getString("description");
     r.dataType = parseDataType(data.getString("dataType"));
@@ -104,7 +104,7 @@ class DatasetController : ManageHttpController {
       
     auto data = precheck.data;
     auto r = UpdateDatasetRequest();
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.datasetId = id;
     r.name = data.getString("name");
     r.description = data.getString("description");

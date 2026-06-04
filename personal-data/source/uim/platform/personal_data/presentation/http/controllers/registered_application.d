@@ -55,7 +55,7 @@ class RegisteredApplicationController : ManageHttpController {
         auto id = precheck.id;
 
         CreateRegisteredApplicationRequest r;
-        r.tenantId = precheck.tenantId;
+        r.tenantId = tenantId;
         r.id = id;
         r.name = data.getString("name");
         r.description = data.getString("description");
@@ -110,7 +110,7 @@ class RegisteredApplicationController : ManageHttpController {
             return errorResponse("Invalid application ID");
 
         UpdateRegisteredApplicationRequest r;
-        r.tenantId = precheck.tenantId;
+        r.tenantId = tenantId;
         r.applicationId = id;
         r.name = data.getString("name");
         r.description = data.getString("description");

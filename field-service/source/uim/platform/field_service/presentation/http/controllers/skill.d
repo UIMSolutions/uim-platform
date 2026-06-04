@@ -74,7 +74,7 @@ class SkillController : ManageHttpController {
         auto data = precheck.data;
         SkillDTO dto;
         dto.skillId = SkillId(precheck.id);
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
         dto.technicianId = TechnicianId(data.getString("technicianId"));
         dto.name = data.getString("name");
         dto.description = data.getString("description");
@@ -106,7 +106,7 @@ class SkillController : ManageHttpController {
         auto data = precheck.data;
         SkillDTO dto;
         dto.skillId = SkillId(precheck.id);
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.certificationDate = data.getString("certificationDate");

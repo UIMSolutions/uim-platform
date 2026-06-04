@@ -72,7 +72,7 @@ class DataQualityRuleController : ManageHttpController {
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         DataQualityRuleDTO dto;
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.fieldName = data.getString("fieldName");
@@ -112,7 +112,7 @@ class DataQualityRuleController : ManageHttpController {
         auto data = precheck.data;
         DataQualityRuleDTO dto;
         dto.ruleId = DataQualityRuleId(precheck.id);
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.condition = data.getString("condition");

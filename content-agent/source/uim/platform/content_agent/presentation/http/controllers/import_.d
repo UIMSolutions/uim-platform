@@ -34,7 +34,7 @@ class ImportController : HttpController {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
       auto r = StartImportRequest();
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.packageId = ContentPackageId(data.getString("packageId"));
       r.transportRequestId = TransportRequestId(data.getString("transportRequestId"));
       r.sourceFilePath = data.getString("sourceFilePath");

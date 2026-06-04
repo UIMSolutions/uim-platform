@@ -125,7 +125,7 @@ class StepController : ManageHttpController {
       auto data = precheck.data;
       auto r = CompleteStepRequest();
       r.id = id;
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.completedBy = UserId(req.headers.get("X-User-Id", ""));
       r.result = data.getString("result");
 
@@ -152,7 +152,7 @@ class StepController : ManageHttpController {
       auto data = precheck.data;
       auto r = FailStepRequest();
       r.id = id;
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.reportedBy = UserId(req.headers.get("X-User-Id", ""));
       r.errorMessage = data.getString("errorMessage");
 
@@ -179,7 +179,7 @@ class StepController : ManageHttpController {
       auto data = precheck.data;
       auto r = SkipStepRequest();
       r.id = id;
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.skippedBy = UserId(req.headers.get("X-User-Id", ""));
       r.reason = data.getString("reason");
 
@@ -206,7 +206,7 @@ class StepController : ManageHttpController {
       auto data = precheck.data;
       auto r = AssignStepRequest();
       r.id = id;
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.assignedTo = UserId(data.getString("assignedTo"));
       r.assignedRole = data.getString("assignedRole");
 

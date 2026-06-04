@@ -41,7 +41,7 @@ class ChannelController : ManageHttpController {
     auto data = precheck.data;
     auto r = CreateChannelRequest();
     r.connectorId = data.getString("connectorId");
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.name = data.getString("name");
     r.channelType = data.getString("type");
     r.virtualHost = data.getString("virtualHost");

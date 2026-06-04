@@ -41,7 +41,7 @@ class PersonalDataModelController : ManageHttpController {
 
     auto data = precheck.data;
     CreatePersonalDataModelRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.fieldName = data.getString("fieldName");
     r.fieldDescription = data.getString("fieldDescription");
     r.category = data.getString("category");
@@ -132,7 +132,7 @@ class PersonalDataModelController : ManageHttpController {
     
     UpdatePersonalDataModelRequest r;
     r.id = PersonalDataModelId(precheck.id);
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.fieldName = data.getString("fieldName");
     r.fieldDescription = data.getString("fieldDescription");
     r.category = data.getString("category");

@@ -41,9 +41,9 @@ class ResourceController : ManageHttpController {
 
     auto data = precheck.data;
     ScanJobDTO dto;
-    dto.tenantId = precheck.tenantId;
+    dto.tenantId = tenantId;
     RegisterResourceRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.subaccountId = SubaccountId(req.headers.get("X-Subaccount-Id", ""));
     r.name = data.getString("name");
     r.description = data.getString("description");
@@ -106,7 +106,7 @@ class ResourceController : ManageHttpController {
     auto id = MonitoredResourceId(precheck.id);
     auto data = precheck.data;
     UpdateResourceRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.resourceId = id;
     r.description = data.getString("description");
     r.url = data.getString("url");

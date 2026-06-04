@@ -39,7 +39,7 @@ string uimTenantEntityTemplate() {
 
   this(UUID tenantId) {
     super();
-    this.tenantId = precheck.tenantId;
+    this.tenantId = tenantId;
   }
 
   this(Json initData) {
@@ -52,7 +52,7 @@ string uimTenantEntityTemplate() {
 
   this(UUID tenantId, Json[string] initData) {
     super(initData);
-    this.tenantId = precheck.tenantId;
+    this.tenantId = tenantId;
   }
   };
 }

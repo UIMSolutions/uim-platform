@@ -40,7 +40,7 @@ class TransportController : ManageHttpController {
 
     auto data = precheck.data;
     auto r = CreateTransportRequest();
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.sourceSubaccount = data.getString("sourceSubaccount");
     r.targetSubaccount = data.getString("targetSubaccount");
     r.description = data.getString("description");
@@ -101,7 +101,7 @@ class TransportController : ManageHttpController {
     auto data = precheck.data;
     auto r = ReleaseTransportRequest();
     r.requestId = data.getString("requestId");
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.releasedBy = UserId(req.headers.get("X-User-Id", ""));
 
     auto result = usecase.releaseTransport(r);

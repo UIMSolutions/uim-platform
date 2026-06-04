@@ -18,11 +18,11 @@ class GuiMetricController {
     private TenantIf _tenantId;
 
     this(ManageMetricsUseCase useCase, TenantIf tenantId = TenantId("default")) {
-        _useCase = useCase; _tenantId = precheck.tenantId;
+        _useCase = useCase; _tenantId = tenantId;
         _model = new GuiMetricModel(); _view = new GuiMetricView();
     }
 
-    void setTenant(TenantIf tenantId) { _tenantId = precheck.tenantId; }
+    void setTenant(TenantIf tenantId) { _tenantId = tenantId; }
     GuiMetricModel model() { return _model; }
 
     Json loadList() {

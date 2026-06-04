@@ -43,13 +43,13 @@ class ServiceBindingController : ManageHttpController {
 
         auto data = precheck.data;
         ScanJobDTO dto;
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
       CreateServiceBindingRequest r;
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.serviceInstanceId = data.getString("serviceInstanceId");
       r.namespaceId = data.getString("namespaceId");
       r.environmentId = data.getString("environmentId");
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.name = data.getString("name");
       r.description = data.getString("description");
       r.secretName = data.getString("secretName");
@@ -130,7 +130,7 @@ class ServiceBindingController : ManageHttpController {
       auto id = ServiceBindingId(tenantId, Id(precheck.id);
       auto data = precheck.data;
       UpdateServiceBindingRequest r;
-      r.tenantId = precheck.tenantId;  
+      r.tenantId = tenantId;  
       r.serviceBindingId = id;
       r.description = data.getString("description");
       r.secretName = data.getString("secretName");

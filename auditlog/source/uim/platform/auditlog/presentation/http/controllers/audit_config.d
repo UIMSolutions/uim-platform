@@ -56,7 +56,7 @@ class AuditConfigController : ManageHttpController {
         auto tenantId = precheck.tenantId;
     auto data = precheck.data;
     auto request = CreateAuditConfigRequest();
-    request.tenantId = precheck.tenantId;
+    request.tenantId = tenantId;
     request.name = data.getString("name");
     request.logDataAccess = data.getBoolean("logDataAccess", true);
     request.logDataModification = data.getBoolean("logDataModification", true);
@@ -111,7 +111,7 @@ class AuditConfigController : ManageHttpController {
     auto data = precheck.data;
     auto r = UpdateAuditConfigRequest();
     r.id = AuditConfigId(precheck.id);
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.name = data.getString("name");
     r.logDataAccess = data.getBoolean("logDataAccess", true);
     r.logDataModification = data.getBoolean("logDataModification", true);

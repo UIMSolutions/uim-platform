@@ -31,7 +31,7 @@ public:
 
     auto data = precheck.data;
     CreateMlExperimentRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.id = precheck.id;
     r.workspaceId = data.getString("workspaceId");
     r.name = data.getString("name");
@@ -86,7 +86,7 @@ public:
 
     auto data = precheck.data;
     UpdateMlExperimentRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.id = req.requestPath.to!string.split("/")[$ - 1];
     r.name = data.getString("name");
     r.tags = data.getString("tags");

@@ -35,9 +35,9 @@ class ProviderController : ManageHttpController {
 
         auto data = precheck.data;
         ScanJobDTO dto;
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
       CreateProviderRequest r;
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.id = precheck.id;
       r.name = data.getString("name");
       r.description = data.getString("description");
@@ -117,7 +117,7 @@ class ProviderController : ManageHttpController {
       auto id = precheck.id;
       auto data = precheck.data;
       UpdateProviderRequest r;
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.id = id;
       r.name = data.getString("name");
       r.description = data.getString("description");

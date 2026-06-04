@@ -79,7 +79,7 @@ class DeadLetterEntryController : ManageHttpController {
 
         DeadLetterEntryDTO dto;
         dto.entryId = id;
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
         dto.originalMessageId = EventMessageId(data.getString("originalMessageId", ""));
         dto.channelId = EventChannelId(data.getString("channelId", ""));
         dto.errorMessage = data.getString("errorMessage", "");

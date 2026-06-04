@@ -41,7 +41,7 @@ class ChannelController : ManageHttpController {
     auto data = precheck.data;
     
     CreateNotificationChannelRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.name = data.getString("name");
     r.description = data.getString("description");
     r.channelType = data.getString("channelType");
@@ -108,7 +108,7 @@ class ChannelController : ManageHttpController {
     auto data = precheck.data;
 
     UpdateNotificationChannelRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.channelId = id;
     r.description = data.getString("description");
     r.state = data.getString("state");

@@ -41,7 +41,7 @@ class ManageRunLogsUseCase { // TODO: UIMUseCase {
         runlog.initEntity(tenantId);
         runlog.scheduleId = scheduleId;
         runlog.jobId = jobId;
-        runlog.tenantId = precheck.tenantId;
+        runlog.tenantId = tenantId;
         runlog.status = RunStatus.scheduled;
         runlog.scheduledAt = runlog.createdAt;
 

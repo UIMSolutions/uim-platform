@@ -52,7 +52,7 @@ class ServiceBindingController : ManageHttpController {
     auto data = precheck.data;
 
     CreateServiceBindingRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.systemInstanceId = data.getString("systemInstanceId");
     r.serviceDefinitionId = data.getString("serviceDefinitionId");
     r.name = data.getString("name");
@@ -95,7 +95,7 @@ class ServiceBindingController : ManageHttpController {
     auto data = precheck.data;
 
     UpdateServiceBindingRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.serviceBindingId = id;
     r.description = data.getString("description");
     r.status = data.getString("status");

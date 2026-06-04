@@ -31,7 +31,7 @@ class GeocodingController : ManageHttpController {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
       GeocodeAddressRequest r;
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.id = precheck.id;
       r.address = data.getString("address");
       r.language = data.getString("language");
@@ -55,7 +55,7 @@ class GeocodingController : ManageHttpController {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
       ReverseGeocodeRequest r;
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.id = precheck.id;
       r.latitude = jsonDouble(j, "latitude");
       r.longitude = jsonDouble(j, "longitude");

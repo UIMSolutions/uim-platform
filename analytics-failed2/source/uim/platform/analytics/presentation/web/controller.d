@@ -25,7 +25,7 @@ class WebController {
 
     WebDashboardModel model;
     model.title = "Analytics Web Console";
-    model.tenantId = precheck.tenantId;
+    model.tenantId = tenantId;
     model.assetCount = assets.length;
     model.highlights = [
       "Data preparation metadata",

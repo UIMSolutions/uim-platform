@@ -21,12 +21,12 @@ class GuiServiceInstanceController {
 
     this(ManageServiceInstancesUseCase useCase, TenantIf tenantId = TenantId("default")) {
         _useCase  = useCase;
-        _tenantId = precheck.tenantId;
+        _tenantId = tenantId;
         _model    = new GuiServiceInstanceModel();
         _view     = new GuiServiceInstanceView();
     }
 
-    void setTenant(TenantIf tenantId) { _tenantId = precheck.tenantId; }
+    void setTenant(TenantIf tenantId) { _tenantId = tenantId; }
 
     GuiServiceInstanceModel model() { return _model; }
 

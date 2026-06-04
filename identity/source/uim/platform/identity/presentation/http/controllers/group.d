@@ -75,7 +75,7 @@ override protected Json createHandler(HTTPServerRequest req) {
     auto data = precheck.data;
     GroupDTO dto;
     dto.groupId = GroupId(precheck.id);
-    dto.tenantId = precheck.tenantId;
+    dto.tenantId = tenantId;
     dto.name = data.getString("name");
     dto.description = data.getString("description");
     dto.type_ = data.getString("type");
@@ -97,7 +97,7 @@ override protected Json updateHandler(HTTPServerRequest req) {
     auto data = precheck.data;
     GroupDTO dto;
     dto.groupId = GroupId(precheck.id);
-    dto.tenantId = precheck.tenantId;
+    dto.tenantId = tenantId;
     dto.name = data.getString("name");
     dto.description = data.getString("description");
 

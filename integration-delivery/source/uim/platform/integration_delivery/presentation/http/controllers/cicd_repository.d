@@ -68,7 +68,7 @@ class CicdRepositoryController : ManageHttpController {
         auto data = precheck.data;
         CicdRepositoryDTO dto;
         dto.cicdRepositoryId = CicdRepositoryId(data.getString("cicdRepositoryId", ""));
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
         dto.name = data.getString("name", "");
         dto.description = data.getString("description", "");
         dto.url = data.getString("url", "");
@@ -95,7 +95,7 @@ class CicdRepositoryController : ManageHttpController {
             return Json.emptyObject.set("error", "Invalid repository ID").set("statusCode", 400);
 
         CicdRepositoryDTO dto;
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
         dto.cicdRepositoryId = id;
         dto.name = data.getString("name", "");
         dto.description = data.getString("description", "");

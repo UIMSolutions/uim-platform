@@ -40,7 +40,7 @@ class TriggerController : ManageHttpController {
 
             auto data = precheck.data;
             CreateTriggerRequest r;
-            r.tenantId = precheck.tenantId;
+            r.tenantId = tenantId;
             r.processId = ProcessId(data.getString("processId"));
             r.triggerId = TriggerId(precheck.id);
             r.name = data.getString("name");
@@ -146,7 +146,7 @@ class TriggerController : ManageHttpController {
 
             auto data = precheck.data;
             UpdateTriggerRequest r;
-            r.tenantId = precheck.tenantId;
+            r.tenantId = tenantId;
             r.triggerId = TriggerId(precheck.id);
             r.name = data.getString("name");
             r.description = data.getString("description");

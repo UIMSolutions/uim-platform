@@ -29,7 +29,7 @@ class LegalEntityController : ManageHttpController {
 
         auto data = precheck.data;
             CreateLegalEntityRequest r;
-            r.tenantId = precheck.tenantId;
+            r.tenantId = tenantId;
             r.name = data.getString("name");
             r.description = data.getString("description");
             r.country = data.getString("country");

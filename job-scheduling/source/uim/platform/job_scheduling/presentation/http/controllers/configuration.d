@@ -57,7 +57,7 @@ class ConfigurationController : ManageHttpController {
         auto tenantId = precheck.tenantId;
             auto data = precheck.data;
             UpdateConfigurationRequest r;
-            r.tenantId = precheck.tenantId;
+            r.tenantId = tenantId;
             r.defaultRetries = data.getInteger("defaultRetries", 3);
             r.defaultRetryDelayMs = data.getLong("defaultRetryDelayMs", 30000);
             r.maxRunDurationMs = data.getLong("maxRunDurationMs", 600000);

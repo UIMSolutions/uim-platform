@@ -34,7 +34,7 @@ class PushNotificationController : ManageHttpController {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
       SendPushNotificationRequest r;
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.appId = data.getString("appId");
       r.title = data.getString("title");
       r.body_ = data.getString("body");

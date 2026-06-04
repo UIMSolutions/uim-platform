@@ -40,7 +40,7 @@ class LabelController : ManageHttpController {
 
     auto data = precheck.data;
     CreateLabelRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.resourceType = data.getString("resourceType");
     r.resourceId = data.getString("resourceId");
     r.key = data.getString("key");
@@ -111,7 +111,7 @@ class LabelController : ManageHttpController {
 
     auto data = precheck.data;
     UpdateLabelRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.values = data.getStrings("values");
 
     auto result = usecase.updateLabel(tenantId, id, r);

@@ -57,7 +57,7 @@ class CommandInputController : ManageHttpController {
         auto data = precheck.data;
         CommandInputDTO dto;
         dto.commandInputId = CommandInputId(precheck.id);
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.keys = data.getString("keys");
@@ -127,7 +127,7 @@ class CommandInputController : ManageHttpController {
 
         auto data = precheck.data;
         CommandInputDTO dto;
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
         dto.commandInputId = CommandInputId(precheck.id);
         dto.name = data.getString("name");
         dto.description = data.getString("description");

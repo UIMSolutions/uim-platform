@@ -41,7 +41,7 @@ class InferenceController : HttpController {
     auto tenantId = precheck.tenantId;
     auto data = precheck.data;
     auto r = SubmitInferenceRequest();
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.deploymentId = data.getString("deploymentId");
     r.inputData = data.getString("inputData");
 

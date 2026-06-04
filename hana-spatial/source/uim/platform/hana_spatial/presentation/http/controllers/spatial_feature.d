@@ -35,9 +35,9 @@ class SpatialFeatureController : ManageHttpController {
 
         auto data = precheck.data;
         ScanJobDTO dto;
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
       CreateSpatialFeatureRequest r;
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.id = precheck.id;
       r.layerId = data.getString("layerId");
       r.name = data.getString("name");
@@ -115,7 +115,7 @@ class SpatialFeatureController : ManageHttpController {
       auto id = precheck.id;
       auto data = precheck.data;
       UpdateSpatialFeatureRequest r;
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.id = id;
       r.name = data.getString("name");
       r.geometry = data.getString("geometry");

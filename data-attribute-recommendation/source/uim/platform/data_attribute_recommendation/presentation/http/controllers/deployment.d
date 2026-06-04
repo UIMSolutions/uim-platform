@@ -43,7 +43,7 @@ class DeploymentController : ManageHttpController {
 
     auto data = precheck.data;
     auto r = CreateDeploymentRequest();
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.trainingJobId = data.getString("trainingJobId");
     r.name = data.getString("name");
     r.replicas = data.getInteger("replicas", 1);

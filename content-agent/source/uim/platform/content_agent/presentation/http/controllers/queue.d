@@ -40,7 +40,7 @@ class QueueController : ManageHttpController {
 
     auto data = precheck.data;
     auto r = CreateQueueRequest();
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.name = data.getString("name");
     r.description = data.getString("description");
     r.queueType = data.getString("queueType");
@@ -103,7 +103,7 @@ class QueueController : ManageHttpController {
 
     auto data = precheck.data;
     auto r = UpdateQueueRequest();
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.description = data.getString("description");
     r.endpoint = data.getString("endpoint");
     r.authToken = data.getString("authToken");

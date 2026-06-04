@@ -36,7 +36,7 @@ class TrustedCertificateController : ManageHttpController {
 
         auto data = precheck.data;
         CreateTrustedCertificateRequest r;
-        r.tenantId = precheck.tenantId;
+        r.tenantId = tenantId;
         r.trustedCertificateId = TrustedCertificateId(precheck.id);
         r.customDomainId = CustomDomainId(data.getString("customDomainId"));
         r.certificatePem = data.getString("certificatePem");

@@ -40,7 +40,7 @@ class KeyringController : ManageHttpController {
 
     auto data = precheck.data;
     CreateKeyringRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.namespaceId = req.headers.get("X-Namespace-Id", data.getString("namespaceId"));
     r.name = data.getString("name");
     r.metadata = data.getString("metadata");
@@ -125,7 +125,7 @@ class KeyringController : ManageHttpController {
     auto data = precheck.data;
     RotateKeyringRequest r;
     r.keyringId = data.getString("keyringId");
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
 
     auto result = usecase.rotateKeyring(r);
     if (result.hasError)

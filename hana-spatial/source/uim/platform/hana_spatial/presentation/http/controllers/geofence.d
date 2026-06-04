@@ -36,9 +36,9 @@ class GeofenceController : ManageHttpController {
 
         auto data = precheck.data;
         ScanJobDTO dto;
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
       CreateGeofenceZoneRequest r;
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.id = precheck.id;
       r.name = data.getString("name");
       r.description = data.getString("description");
@@ -114,7 +114,7 @@ class GeofenceController : ManageHttpController {
       auto id = precheck.id;
       auto data = precheck.data;
       UpdateGeofenceZoneRequest r;
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.id = id;
       r.name = data.getString("name");
       r.description = data.getString("description");
@@ -158,7 +158,7 @@ class GeofenceController : ManageHttpController {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
       GeofenceCheckRequest r;
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.zoneId = data.getString("zoneId");
       r.latitude = jsonDouble(j, "latitude");
       r.longitude = jsonDouble(j, "longitude");

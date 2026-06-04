@@ -18,11 +18,11 @@ class GuiBackupPolicyController {
     private TenantIf _tenantId;
 
     this(ManageBackupPoliciesUseCase useCase, TenantIf tenantId = TenantId("default")) {
-        _useCase = useCase; _tenantId = precheck.tenantId;
+        _useCase = useCase; _tenantId = tenantId;
         _model = new GuiBackupPolicyModel(); _view = new GuiBackupPolicyView();
     }
 
-    void setTenant(TenantIf tenantId) { _tenantId = precheck.tenantId; }
+    void setTenant(TenantIf tenantId) { _tenantId = tenantId; }
     GuiBackupPolicyModel model() { return _model; }
 
     Json loadList() {

@@ -74,7 +74,7 @@ class EquipmentController : ManageHttpController {
         auto data = precheck.data;
         EquipmentDTO dto;
         dto.equipmentId = EquipmentId(precheck.id);
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
         dto.customerId = CustomerId(data.getString("customerId"));
         dto.serialNumber = data.getString("serialNumber");
         dto.name = data.getString("name");
@@ -110,7 +110,7 @@ class EquipmentController : ManageHttpController {
         auto data = precheck.data;
         EquipmentDTO dto;
         dto.equipmentId = EquipmentId(precheck.id);
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.manufacturer = data.getString("manufacturer");

@@ -37,7 +37,7 @@ class ExportController : HttpController {
     auto tenantId = precheck.tenantId;
     auto data = precheck.data;
     auto r = StartExportRequest();
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.packageId = data.getString("packageId");
     r.transportRequestId = data.getString("transportRequestId");
     r.queueId = data.getString("queueId");

@@ -39,7 +39,7 @@ class CorrectionRequestController : ManageHttpController {
 
     auto data = precheck.data;
     CreateCorrectionRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.subjectId = DataSubjectId(data.getString("dataSubjectId"));
     r.requestedBy = UserId(data.getString("requestedBy"));
     r.targetSystems = data.getStrings("targetSystems");
@@ -98,7 +98,7 @@ class CorrectionRequestController : ManageHttpController {
 
     auto data = precheck.data;
     UpdateCorrectionStatusRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.requestId = id;
     r.status = data.getString("status");
 

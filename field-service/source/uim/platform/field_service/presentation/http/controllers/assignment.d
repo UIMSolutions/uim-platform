@@ -70,7 +70,7 @@ class AssignmentController : ManageHttpController {
         auto data = precheck.data;
         AssignmentDTO dto;
         dto.assignmentId = AssignmentId(precheck.id);
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
         dto.activityId = data.getString("activityId");
         dto.technicianId = data.getString("technicianId");
         dto.assignedDate = data.getString("assignedDate");
@@ -97,7 +97,7 @@ class AssignmentController : ManageHttpController {
         auto data = precheck.data;
         AssignmentDTO dto;
         dto.assignmentId = AssignmentId(precheck.id);
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
         dto.acceptedDate = data.getString("acceptedDate");
         dto.startedDate = data.getString("startedDate");
         dto.completedDate = data.getString("completedDate");

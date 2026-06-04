@@ -31,7 +31,7 @@ class RetentionRuleController : ManageHttpController {
 
         auto data = precheck.data;
             CreateRetentionRuleRequest r;
-            r.tenantId = precheck.tenantId;
+            r.tenantId = tenantId;
             r.businessPurposeId = data.getString("businessPurposeId");
             r.legalGroundId = data.getString("legalGroundId");
             r.duration = jsonInt(j, "duration");
@@ -118,7 +118,7 @@ class RetentionRuleController : ManageHttpController {
             auto data = precheck.data;
             UpdateRetentionRuleRequest r;
             r.retentionRuleId = id;
-            r.tenantId = precheck.tenantId;
+            r.tenantId = tenantId;
             r.duration = jsonInt(j, "duration");
             r.periodUnit = data.getString("periodUnit");
             r.actionOnExpiry = data.getString("actionOnExpiry");

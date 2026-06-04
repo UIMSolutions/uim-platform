@@ -41,7 +41,7 @@ class StreamController : ManageHttpController {
 
     auto data = precheck.data;
         CreateLogStreamRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.name = data.getString("name");
     r.description = data.getString("description");
     r.sourceType = data.getString("sourceType");
@@ -118,7 +118,7 @@ class StreamController : ManageHttpController {
 
     auto data = precheck.data;
     UpdateLogStreamRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.streamId = id;
     r.description = data.getString("description");
     r.retentionPolicyId = data.getString("retentionPolicyId");

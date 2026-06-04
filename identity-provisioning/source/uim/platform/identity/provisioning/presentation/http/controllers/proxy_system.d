@@ -45,7 +45,7 @@ class ProxySystemController : ManageHttpController {
 
         auto data = precheck.data;
       auto r = CreateProxySystemRequest();
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.name = data.getString("name");
       r.description = data.getString("description");
       r.systemType = parseSystemType(data.getString("systemType"));
@@ -109,7 +109,7 @@ class ProxySystemController : ManageHttpController {
       auto data = precheck.data;
       auto r = UpdateProxySystemRequest();
       r.id = id;
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.name = data.getString("name");
       r.description = data.getString("description");
       r.connectionConfig = data.getString("connectionConfig");

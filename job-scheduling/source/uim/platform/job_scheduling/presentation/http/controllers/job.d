@@ -45,7 +45,7 @@ class JobController : ManageHttpController {
 
         auto data = precheck.data;
             CreateJobRequest r;
-            r.tenantId = precheck.tenantId;
+            r.tenantId = tenantId;
             r.name = data.getString("name");
             r.description = data.getString("description");
             r.actionUrl = data.getString("action");
@@ -140,7 +140,7 @@ class JobController : ManageHttpController {
             auto jobId = JobId(precheck.id);
             auto data = precheck.data;
             UpdateJobRequest r;
-            r.tenantId = precheck.tenantId;
+            r.tenantId = tenantId;
             r.jobId = jobId;
             r.name = data.getString("name");
             r.description = data.getString("description");

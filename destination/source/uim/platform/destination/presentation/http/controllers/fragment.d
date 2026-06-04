@@ -58,7 +58,7 @@ class FragmentController : ManageHttpController {
 
     auto data = precheck.data;
     CreateFragmentRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.subaccountId = SubaccountId(req.headers.get("X-Subaccount-Id", ""));
     r.name = data.getString("name");
     r.description = data.getString("description");
@@ -117,7 +117,7 @@ class FragmentController : ManageHttpController {
 
     auto data = precheck.data;
     UpdateFragmentRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.fragmentId = id;
     r.description = data.getString("description");
     r.url = data.getString("url");

@@ -40,7 +40,7 @@ class BlockingController : ManageHttpController {
 
     auto data = precheck.data;
     CreateBlockingRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.dataSubjectId = data.getString("dataSubjectId");
     r.requestedBy = data.getString("requestedBy");
     r.targetSystems = data.getStrings("targetSystems");
@@ -100,7 +100,7 @@ class BlockingController : ManageHttpController {
     auto data = precheck.data;
     UpdateBlockingStatusRequest r;
     r.id = BlockingRequestId(precheck.id);
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.status = data.getString("status");
 
     auto result = usecase.updateStatus(r);

@@ -70,7 +70,7 @@ class TriggerController : ManageHttpController {
         auto data = precheck.data;
         TriggerDTO dto;
         dto.triggerId = TriggerId(precheck.id);
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
         dto.commandId = data.getString("commandId");
         dto.name = data.getString("name");
         dto.description = data.getString("description");
@@ -100,7 +100,7 @@ class TriggerController : ManageHttpController {
 
         auto data = precheck.data;
         TriggerDTO dto;
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
         dto.triggerId = id;
         dto.name = data.getString("name");
         dto.description = data.getString("description");

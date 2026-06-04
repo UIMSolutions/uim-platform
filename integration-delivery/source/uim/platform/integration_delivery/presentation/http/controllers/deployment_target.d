@@ -68,7 +68,7 @@ class DeploymentTargetController : ManageHttpController {
         auto data = precheck.data;
         DeploymentTargetDTO dto;
         dto.deploymentTargetId = DeploymentTargetId(data.getString("deploymentTargetId", ""));
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
         dto.name = data.getString("name", "");
         dto.description = data.getString("description", "");
         dto.url = data.getString("url", "");
@@ -96,7 +96,7 @@ class DeploymentTargetController : ManageHttpController {
             return Json.emptyObject.set("error", "Invalid deployment target ID").set("statusCode", 400);
 
         DeploymentTargetDTO dto;
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
         dto.deploymentTargetId = id;
         dto.name = data.getString("name", "");
         dto.description = data.getString("description", "");

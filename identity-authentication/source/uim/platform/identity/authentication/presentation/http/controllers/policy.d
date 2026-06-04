@@ -40,7 +40,7 @@ class PolicyController : ManageHttpController {
 
         auto data = precheck.data;
         ScanJobDTO dto;
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
       PolicyRule[] rules;
       auto rulesJson = "rules" in j;
       if (rulesJson !is null && (rulesJson).isArray) {

@@ -60,7 +60,7 @@ class GroupController : ManageHttpController {
     auto data = precheck.data;
     auto members = parseMembers(j);
     CreateGroupRequest createReq;
-    createReq.tenantId = precheck.tenantId;
+    createReq.tenantId = tenantId;
     createReq.externalId = data.getString("externalId");
     createReq.displayName = data.getString("displayName");
     createReq.description = data.getString("description");

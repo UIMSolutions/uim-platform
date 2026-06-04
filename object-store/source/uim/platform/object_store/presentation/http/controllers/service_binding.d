@@ -39,7 +39,7 @@ class ServiceBindingController : ManageHttpController {
     auto data = precheck.data;
 
     auto request = CreateServiceBindingRequest();
-    request.tenantId = precheck.tenantId;
+    request.tenantId = tenantId;
     request.bucketId = data.getString("bucketId");
     request.name = data.getString("name");
     request.permission = data.getString("permission");

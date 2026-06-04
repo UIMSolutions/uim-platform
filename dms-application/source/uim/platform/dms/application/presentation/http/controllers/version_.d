@@ -64,7 +64,7 @@ class VersionController : ManageHttpController {
       auto data = precheck.data;
       auto r = CheckInRequest();
       r.documentId = DocumentId(data.getString("documentId"));
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.userId = UserId(req.headers.get("X-User-Id", "system"));
       r.isMajor = data.getBoolean("isMajor", true);
       r.comment = data.getString("comment");

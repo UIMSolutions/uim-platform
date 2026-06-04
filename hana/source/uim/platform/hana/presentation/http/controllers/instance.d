@@ -39,9 +39,9 @@ class InstanceController : ManageHttpController {
 
         auto data = precheck.data;
         ScanJobDTO dto;
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
       CreateInstanceRequest r;
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.id = precheck.id;
       r.name = data.getString("name");
       r.description = data.getString("description");
@@ -159,7 +159,7 @@ class InstanceController : ManageHttpController {
 
       auto data = precheck.data;
       UpdateInstanceRequest r;
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.id = precheck.id;
       r.name = data.getString("name");
       r.description = data.getString("description");
@@ -204,7 +204,7 @@ class InstanceController : ManageHttpController {
 
       auto data = precheck.data;
       InstanceActionRequest r;
-      r.tenantId = precheck.tenantId;
+      r.tenantId = tenantId;
       r.id = id;
       r.action = data.getString("action");
 

@@ -52,7 +52,7 @@ class ReplicationController : ManageHttpController {
 
         auto data = precheck.data;
         ReplicationDTO dto;
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
         dto.businessPartnerId = BusinessPartnerId(data.getString("businessPartnerId"));
         dto.targetSystem = data.getString("targetSystem");
         dto.targetSystemType = data.getString("targetSystemType");

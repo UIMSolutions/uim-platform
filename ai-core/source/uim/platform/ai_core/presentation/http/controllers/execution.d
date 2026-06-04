@@ -39,7 +39,7 @@ class ExecutionController : ManageHttpController {
 
     auto data = precheck.data;
     CreateExecutionRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.resourceGroupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
     r.configurationId = ConfigurationId(data.getString("configurationId"));
 
@@ -103,7 +103,7 @@ class ExecutionController : ManageHttpController {
 
     auto data = precheck.data;
     PatchExecutionRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.resourceGroupId = rgId;
     r.executionId = id;
     r.targetStatus = data.getString("targetStatus");
