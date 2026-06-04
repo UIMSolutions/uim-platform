@@ -44,9 +44,12 @@ class ManageServiceBrokersUseCase { // TODO: UIMUseCase {
         if (broker.isNull)
             return CommandResult(false, "", "Service broker not found");
 
-        if (dto.name.length > 0) broker.name = dto.name;
-        if (dto.description.length > 0) broker.description = dto.description;
-        if (dto.brokerUrl.length > 0) broker.brokerUrl = dto.brokerUrl;
+        if (dto.name.length > 0)
+            broker.name = dto.name;
+        if (dto.description.length > 0)
+            broker.description = dto.description;
+        if (dto.brokerUrl.length > 0)
+            broker.brokerUrl = dto.brokerUrl;
         broker.updatedAt = currentTimestamp;
 
         repo.update(broker);

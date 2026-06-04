@@ -67,7 +67,7 @@ class TransportRequestController : ManageHttpController {
         auto data = precheck.data;
             TransportRequestDTO dto;
             dto.requestId = TransportRequestId(precheck.id);
-            dto.tenantId = precheck.tenantId;
+            dto.tenantId = tenantId;
             dto.name = data.getString("name");
             dto.description = data.getString("description");
             dto.externalId = data.getString("externalId");

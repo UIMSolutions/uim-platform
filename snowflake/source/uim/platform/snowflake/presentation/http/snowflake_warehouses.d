@@ -52,7 +52,7 @@ class SnowflakeWarehouseController : ManageHttpController {
   void handleUpdate(HTTPServerRequest req, HTTPServerResponse res) {
     auto data = precheck.data;
     UpdateWarehouseRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.id       = extractIdFromPath(req.requestPath.to!string);
     r.size     = data.getString("size");
     r.status   = data.getString("status");

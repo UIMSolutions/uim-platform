@@ -39,7 +39,7 @@ class DataContextController : ManageHttpController {
 
         auto data = precheck.data;
             CreateDataContextRequest r;
-            r.tenantId = precheck.tenantId;
+            r.tenantId = tenantId;
             r.situationInstanceId = SituationInstanceId(data.getString("instanceId"));
             r.dataContextId = DataContextId(precheck.id);
             r.entityId = data.getString("entityId");

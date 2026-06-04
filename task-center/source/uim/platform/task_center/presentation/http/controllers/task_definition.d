@@ -39,7 +39,7 @@ class TaskDefinitionController : ManageHttpController {
 
         auto data = precheck.data;
             CreateTaskDefinitionRequest r;
-            r.tenantId = precheck.tenantId;
+            r.tenantId = tenantId;
             r.id = precheck.id;
             r.providerId = data.getString("providerId");
             r.name = data.getString("name");
@@ -108,7 +108,7 @@ class TaskDefinitionController : ManageHttpController {
             auto id = TaskDefinitionId(precheck.id);
             auto data = precheck.data;
             UpdateTaskDefinitionRequest r;
-            r.tenantId = precheck.tenantId;
+            r.tenantId = tenantId;
             r.id = id;
             r.name = data.getString("name");
             r.description = data.getString("description");

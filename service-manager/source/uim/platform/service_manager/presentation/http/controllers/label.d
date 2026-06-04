@@ -129,7 +129,7 @@ class LabelController : ManageHttpController {
         if (id.isNull)
             return errorResponse("Invalid label ID", 400);
 
-        auto result = usecase.deleteLabel(req.getTenantId, id);
+        auto result = usecase.deleteLabel(tenantId, id);
         if (result.hasError)
             return errorResponse(result.message, 400);
 

@@ -38,10 +38,10 @@ class PlatformController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-        auto items = usecase.listByTenant(tenantId);
-        auto jarr = Json.emptyArray;
+        auto items = usecase.listPlatforms(tenantId);
+        auto list = Json.emptyArray;
         foreach (e; items) {
-            jarr ~= Json.emptyObject
+            list ~= Json.emptyObject
                 .set("id", e.id.value).set("name", e.name)
                 .set("description", e.description)
                 .set("type", e.type.to!string)
@@ -50,9 +50,8 @@ class PlatformController : ManageHttpController {
         }
 
         auto response = Json.emptyObject
-            .set("items", jarr)
+            .set("items", list)
             .set("totalCount", items.length);
-
         return successResponse("Platforms retrieved successfully", 200, response);
     }
 
@@ -101,7 +100,7 @@ class PlatformController : ManageHttpController {
         r.region = data.getString("region");
         r.subaccountId = data.getString("subaccountId");
 
-        auto result = usecase.create(req.getTenantId, r);
+        auto result = usecase.createPlatform(r);
         if (result.hasError)
             return errorResponse(result.message, 400);
 
@@ -126,7 +125,7 @@ class PlatformController : ManageHttpController {
         r.credentials = data.getString("credentials");
         r.region = data.getString("region");
 
-        auto result = usecase.update(req.getTenantId, PlatformId(id), r);
+        auto result = usecase.updatePlatform(r);
         if (result.hasError)
             return errorResponse(result.message, 400);
 
@@ -140,9 +139,11 @@ class PlatformController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
+        auto id = PlatformId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid platform ID", 400);
 
-        auto id = precheck.id;
-        auto result = usecase.deletePlatform(req.getTenantId, PlatformId(id));
+        auto result = usecase.deletePlatform(tenantId, id);
         if (result.hasError)
             return errorResponse(result.message, 400);
         

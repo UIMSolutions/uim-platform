@@ -25,7 +25,7 @@ final class WorkspaceGuiModel {
 
     this(ManageWorkspacesUseCase useCase, TenantId tenantId) {
         _useCase  = useCase;
-        _tenantId = precheck.tenantId;
+        _tenantId = tenantId;
     }
 
     // ── Read ──────────────────────────────────────────────────────────────

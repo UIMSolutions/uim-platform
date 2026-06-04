@@ -113,7 +113,7 @@ override protected Json deleteHandler(HTTPServerRequest req) {
   auto tenantId = precheck.tenantId;
 
   auto id = req.requestPath.to!string.split("/")[$ - 1];
-  auto result = _usecase.remove(req.getTenantId, id);
+  auto result = _usecase.remove(tenantId, id);
   if (result.hasError)
     return errorResponse(result.message, 400);
 

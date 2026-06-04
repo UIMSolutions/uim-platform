@@ -50,7 +50,7 @@ class SnowflakeDatabaseController : ManageHttpController {
   void handleUpdate(HTTPServerRequest req, HTTPServerResponse res) {
     auto data = precheck.data;
     UpdateDatabaseRequest r;
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
     r.id       = extractIdFromPath(req.requestPath.to!string);
     r.status   = data.getString("status");
     r.comment  = data.getString("comment");

@@ -15,7 +15,7 @@ struct WorkspaceCliModel {
 
     this(ManageWorkspacesUseCase useCase, TenantId tenantId) {
         _useCase  = useCase;
-        _tenantId = precheck.tenantId;
+        _tenantId = tenantId;
     }
 
     Workspace[] list() { return _useCase.listWorkspaces(_tenantId); }

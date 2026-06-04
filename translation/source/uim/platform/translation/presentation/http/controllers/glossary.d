@@ -38,7 +38,7 @@ class GlossaryController : ManageHttpController {
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         CreateGlossaryEntryRequest r;
-        r.tenantId = precheck.tenantId;
+        r.tenantId = tenantId;
         r.sourceLanguage = data.getString("sourceLanguage");
         r.targetLanguage = data.getString("targetLanguage");
         r.sourceTerm = data.getString("sourceTerm");
@@ -114,7 +114,7 @@ class GlossaryController : ManageHttpController {
         auto entryId = GlossaryEntryId(precheck.id);
         auto data = precheck.data;
         UpdateGlossaryEntryRequest r;
-        r.tenantId = precheck.tenantId;
+        r.tenantId = tenantId;
         r.entryId = entryId;
         r.targetTerm = data.getString("targetTerm");
         r.domainName = data.getString("domain");

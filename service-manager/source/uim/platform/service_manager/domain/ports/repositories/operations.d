@@ -8,12 +8,12 @@ mixin(ShowModule!());
 
 interface OperationRepository : ITenantRepository!(Operation, OperationId) {
 
-    size_t countByOperationType(OperationType type);
-    Operation[] findByOperationType(OperationType type);
-    void removeByOperationType(OperationType type);
+    size_t countByOperationType(TenantId tenantId, OperationType type);
+    Operation[] findByOperationType(TenantId tenantId, OperationType type);
+    void removeByOperationType(TenantId tenantId, OperationType type);
 
-    size_t countByOperationStatus(OperationStatus status);
-    Operation[] findByOperationStatus(OperationStatus status);
-    void removeByOperationStatus(OperationStatus status);
+    size_t countByOperationStatus(TenantId tenantId, OperationStatus status);
+    Operation[] findByOperationStatus(TenantId tenantId, OperationStatus status);
+    void removeByOperationStatus(TenantId tenantId, OperationStatus status);
 
 }

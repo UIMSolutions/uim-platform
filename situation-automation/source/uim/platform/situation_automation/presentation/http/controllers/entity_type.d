@@ -40,7 +40,7 @@ class EntityTypeController : ManageHttpController {
         auto data = precheck.data;
             
             CreateEntityTypeRequest r;
-            r.tenantId = precheck.tenantId;
+            r.tenantId = tenantId;
             r.entityTypeId = EntityTypeId(data.getString("entityTypeId"));
             r.name = data.getString("name");
             r.description = data.getString("description");
@@ -136,7 +136,7 @@ class EntityTypeController : ManageHttpController {
             auto data = precheck.data;
             
             UpdateEntityTypeRequest r;
-            r.tenantId = precheck.tenantId;
+            r.tenantId = tenantId;
             r.entityTypeId = EntityTypeId(precheck.id);
             r.name = data.getString("name");
             r.description = data.getString("description");

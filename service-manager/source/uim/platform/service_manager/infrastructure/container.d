@@ -51,7 +51,7 @@ Container buildContainer(SrvConfig config) {
     c.manageLabelsUseCase = new ManageLabelsUseCase(labelRepo);
 
     // Controllers
-    c.PlatformController = new PlatformController(c.managePlatformsUseCase);
+    c.platformController = new PlatformController(c.managePlatformsUseCase);
     c.serviceBrokerController = new ServiceBrokerController(c.manageServiceBrokersUseCase);
     c.serviceOfferingController = new ServiceOfferingController(c.manageServiceOfferingsUseCase);
     c.servicePlanController = new ServicePlanController(c.manageServicePlansUseCase);

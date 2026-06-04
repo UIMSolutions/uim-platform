@@ -22,14 +22,13 @@ class ManageServiceOfferingsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createOffering(CreateServiceOfferingRequest dto) {
-        ServiceOffering e;
-        e.initEntity(dto.tenantId);
+        auto e = ServiceOffering(dto.tenantId);
 
-        e.id = dto.serviceOfferingId;
+        e.id = dto.offeringId;
         e.name = dto.name;
         e.description = dto.description;
         e.catalogName = dto.catalogName;
-        e.brokerId = dto.serviceBrokerId;
+        e.brokerId = dto.brokerId;
         e.tags = dto.tags;
         e.metadata = dto.metadata;
         e.createdAt = currentTimestamp;
@@ -42,7 +41,7 @@ class ManageServiceOfferingsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateOffering(UpdateServiceOfferingRequest dto) {
-        auto existing = repo.findById(dto.tenantId, dto.id);
+        auto existing = repo.findById(dto.tenantId, dto.offeringId);
         if (existing.isNull)
             return CommandResult(false, "", "Service offering not found");
 

@@ -30,10 +30,10 @@ class ServiceOfferingController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-        auto items = usecase.listByTenant(tenantId);
-        auto jarr = Json.emptyArray;
+        auto items = usecase.listOfferings(tenantId);
+        auto list = Json.emptyArray;
         foreach (e; items) {
-            jarr ~= Json.emptyObject
+            list ~= Json.emptyObject
                 .set("id", e.id.value).set("name", e.name)
                 .set("description", e.description)
                 .set("catalogName", e.catalogName)
@@ -52,14 +52,17 @@ class ServiceOfferingController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto id = precheck.id;
-        auto e = usecase.getById(tenantId, ServiceOfferingId(id));
-        if (e.isNull) {
-            writeError(res, 404, "Service offering not found");
-            return;
-        }
+        auto id = ServiceOfferingId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid service offering ID", 400);
+
+        auto e = usecase.getOffering(tenantId, id);
+        if (e.isNull)
+            return errorResponse("Service offering not found", 404);
+
         auto responseData = Json.emptyObject
-            .set("id", e.id.value).set("name", e.name)
+            .set("id", e.id.value)
+            .set("name", e.name)
             .set("description", e.description)
             .set("catalogName", e.catalogName)
             .set("brokerId", e.brokerId.value)
@@ -81,6 +84,7 @@ class ServiceOfferingController : ManageHttpController {
 
         auto data = precheck.data;
         CreateServiceOfferingRequest r;
+        r.tenantId = tenantId;
         r.name = data.getString("name");
         r.description = data.getString("description");
         r.catalogName = data.getString("catalogName");
@@ -89,7 +93,7 @@ class ServiceOfferingController : ManageHttpController {
         r.tags = data.getString("tags");
         r.metadata = data.getString("metadata");
 
-        auto result = usecase.create(req.getTenantId, r);
+        auto result = usecase.createOffering(r);
         if (result.hasError)
             return errorResponse(result.message, 400);
 
@@ -103,17 +107,21 @@ class ServiceOfferingController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
+        auto id = ServiceOfferingId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid service offering ID", 400);
 
-        auto id = precheck.id;
         auto data = precheck.data;
         UpdateServiceOfferingRequest r;
+        r.tenantId = tenantId;
+        r.offeringId = id;
         r.name = data.getString("name");
         r.description = data.getString("description");
         r.catalogName = data.getString("catalogName");
         r.tags = data.getString("tags");
         r.metadata = data.getString("metadata");
 
-        auto result = usecase.update(req.getTenantId, ServiceOfferingId(id), r);
+        auto result = usecase.updateOffering(r);
         if (result.hasError)
             return errorResponse(result.message, 400);
 
@@ -128,8 +136,11 @@ class ServiceOfferingController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-        auto id = precheck.id;
-        auto result = usecase.deleteServiceOffering(req.getTenantId, ServiceOfferingId(id));
+        auto id = ServiceOfferingId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid service offering ID", 400);
+
+        auto result = usecase.deleteOffering(tenantId, id);
         if (result.hasError)
             return errorResponse(result.message, 400);
 

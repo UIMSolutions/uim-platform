@@ -39,7 +39,7 @@ class NotificationController : ManageHttpController {
 
         auto data = precheck.data;
             CreateNotificationRequest r;
-            r.tenantId = precheck.tenantId;
+            r.tenantId = tenantId;
             r.situationInstanceId = SituationInstanceId(data.getString("instanceId"));
             r.notificationId = NotificationId(precheck.id);
             r.recipientId = data.getString("recipientId");
@@ -144,7 +144,7 @@ class NotificationController : ManageHttpController {
             auto data = precheck.data;
             
             UpdateNotificationRequest r;
-            r.tenantId = precheck.tenantId;
+            r.tenantId = tenantId;
             r.notificationId = NotificationId(precheck.id);
             r.status = data.getString("status");
 

@@ -192,7 +192,7 @@ override protected Json deleteHandler(HTTPServerRequest req) {
 
   auto tenantId = precheck.tenantId;
   auto id = FolderId(precheck.id);
-  auto result = usecase.deleteFolder(req.getTenantId, id);
+  auto result = usecase.deleteFolder(tenantId, id);
 
   if (result.isSuccess) {
     auto resp = Json.emptyObject

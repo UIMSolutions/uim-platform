@@ -8,36 +8,39 @@ mixin(ShowModule!());
 
 class MemoryOperationRepository : TenantRepository!(Operation, OperationId), OperationRepository {
 
-    size_t countByOperationType(OperationType type) {
-        return this.findByOperationType(type).length;
+    // #region ByOperationType
+    size_t countByOperationType(TenantId tenantId, OperationType type) {
+        return this.findByOperationType(tenantId, type).length;
     }
 
     Operation[] filterByOperationType(Operation[] operations, OperationType type) {
         return operations.filter!(op => op.type == type).array;
     }
 
-    Operation[] findByOperationType(OperationType type) {
+    Operation[] findByOperationType(TenantId tenantId, OperationType type) {
         return this.filterByOperationType(this.findByTenant(tenantId), type);
     }
 
-    void removeByOperationType(OperationType type) {
-        this.removeAll(this.findByOperationType(type));
+    void removeByOperationType(TenantId tenantId, OperationType type) {
+        this.removeAll(this.findByOperationType(tenantId, type));
     }
+    // #endregion ByOperationType
 
-    size_t countByOperationStatus(OperationStatus status) {
-        return this.findByOperationStatus(status).length;
+    // #region ByOperationStatus
+    size_t countByOperationStatus(TenantId tenantId, OperationStatus status) {
+        return this.findByOperationStatus(tenantId, status).length;
     }
 
     Operation[] filterByOperationStatus(Operation[] operations, OperationStatus status) {
         return operations.filter!(op => op.status == status).array;
     }
 
-    Operation[] findByOperationStatus(OperationStatus status) {
+    Operation[] findByOperationStatus(TenantId tenantId, OperationStatus status) {
         return this.filterByOperationStatus(this.findByTenant(tenantId), status);
     }
 
-    void removeByOperationStatus(OperationStatus status) {
-        this.removeAll(this.findByOperationStatus(status));
+    void removeByOperationStatus(TenantId tenantId, OperationStatus status) {
+        this.removeAll(this.findByOperationStatus(tenantId, status));
     }
-
+    // #endregion ByOperationStatus
 }

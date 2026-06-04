@@ -44,7 +44,7 @@ struct CreateServiceBrokerRequest {
 
 struct UpdateServiceBrokerRequest {
     TenantId tenantId;
-    ServiceBrokerId serviceBrokerId;
+    ServiceBrokerId brokerId;
 
     string name;
     string description;
@@ -55,7 +55,7 @@ struct UpdateServiceBrokerRequest {
 
 struct CreateServiceOfferingRequest {
     TenantId tenantId;
-    ServiceBrokerId serviceBrokerId;
+    ServiceBrokerId brokerId;
 
     string name;
     string description;
@@ -68,7 +68,7 @@ struct CreateServiceOfferingRequest {
 
 struct UpdateServiceOfferingRequest {
     TenantId tenantId;
-    ServiceOfferingId serviceOfferingId;
+    ServiceOfferingId offeringId;
 
     string name;
     string description;
@@ -86,7 +86,7 @@ struct CreateServicePlanRequest {
     string name;
     string description;
     string catalogName;
-    ServiceOfferingId serviceOfferingId;
+    ServiceOfferingId offeringId;
     string pricing;
     string free;
     string bindable;
@@ -97,7 +97,7 @@ struct CreateServicePlanRequest {
 
 struct UpdateServicePlanRequest {
     TenantId tenantId;
-    ServicePlanId servicePlanId;
+    ServicePlanId planId;
     
     string name;
     string description;
@@ -124,10 +124,10 @@ struct CreateServiceInstanceRequest {
 
 struct UpdateServiceInstanceRequest {
     TenantId tenantId;
-    ServiceInstanceId serviceInstanceId;
+    ServiceInstanceId instanceId;
 
     string name;
-    ServicePlanId servicePlanId;
+    ServicePlanId planId;
     string parameters;
     string labels;
     string shared_;
@@ -148,7 +148,7 @@ struct CreateServiceBindingRequest {
 
 struct UpdateServiceBindingRequest {
     TenantId tenantId;
-    ServiceBindingId serviceBindingId;
+    ServiceBindingId bindingId;
 
     string name;
     string parameters;

@@ -15,7 +15,7 @@ struct TaskCliModel {
 
     this(ManageTasksUseCase useCase, TenantId tenantId) {
         _useCase  = useCase;
-        _tenantId = precheck.tenantId;
+        _tenantId = tenantId;
     }
 
     WZTask[] list()                           { return _useCase.listTasks(_tenantId); }

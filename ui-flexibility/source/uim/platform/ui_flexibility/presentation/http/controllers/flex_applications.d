@@ -40,7 +40,7 @@ class FlexApplicationsController : ManageHttpController {
 
         auto data = precheck.data;
         ScanJobDTO dto;
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
       CreateFlexApplicationRequest r;
       r.tenantId       = tenantId;
       r.applicationId  = FlexApplicationId(precheck.id);

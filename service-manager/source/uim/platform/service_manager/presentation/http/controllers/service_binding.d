@@ -30,7 +30,7 @@ class ServiceBindingController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-        auto items = usecase.listByTenant(tenantId);
+        auto items = usecase.listBindings(tenantId);
         auto list = Json.emptyArray;
         foreach (e; items) {
             list ~= Json.emptyObject
@@ -79,6 +79,7 @@ class ServiceBindingController : ManageHttpController {
 
         auto data = precheck.data;
         CreateServiceBindingRequest r;
+        r.tenantId = tenantId;
         r.name = data.getString("name");
         r.instanceId = data.getString("instanceId");
         r.parameters = data.getString("parameters");
@@ -86,7 +87,7 @@ class ServiceBindingController : ManageHttpController {
         r.context = data.getString("context");
         r.labels = data.getString("labels");
 
-        auto result = usecase.createBinding(req.getTenantId, r);
+        auto result = usecase.createBinding(r);
         if (result.hasError)
             return errorResponse(result.message, 400);
 
@@ -107,6 +108,8 @@ class ServiceBindingController : ManageHttpController {
 
         auto data = precheck.data;
         UpdateServiceBindingRequest r;
+        r.tenantId = tenantId;
+        r.bindingId = id;
         r.name = data.getString("name");
         r.parameters = data.getString("parameters");
         r.labels = data.getString("labels");
@@ -130,7 +133,7 @@ class ServiceBindingController : ManageHttpController {
         if (id.isNull)
             return errorResponse("Invalid service binding ID", 400);
 
-        auto result = usecase.deleteServiceBinding(tenantId, id);
+        auto result = usecase.deleteBinding(tenantId, id);
         if (result.hasError)
             return errorResponse(result.message, 400);
 

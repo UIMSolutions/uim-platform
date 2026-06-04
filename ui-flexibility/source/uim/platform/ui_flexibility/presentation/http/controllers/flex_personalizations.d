@@ -57,7 +57,7 @@ class FlexPersonalizationsController : ManageHttpController {
 
         auto data = precheck.data;
         ScanJobDTO dto;
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
       CreateFlexPersonalizationRequest r;
       r.tenantId           = tenantId;
       r.personalizationId  = FlexPersonalizationId(precheck.id);

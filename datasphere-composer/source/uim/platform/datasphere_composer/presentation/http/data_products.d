@@ -49,7 +49,7 @@ class DataProductController : ManageHttpController {
 
   void handleGet(HTTPServerRequest req, HTTPServerResponse res) {
     auto id   = extractIdFromPath(req.requestPath.to!string);
-    auto item = usecase.getById(req.getTenantId, id);
+    auto item = usecase.getById(tenantId, id);
     if (item.isNull) { writeError(res, 404, "Data product not found"); return; }
     res.writeJsonBody(item.toJson(), cast(int) HTTPStatus.ok);
   }

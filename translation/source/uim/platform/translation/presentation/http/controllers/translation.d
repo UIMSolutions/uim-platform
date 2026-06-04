@@ -29,7 +29,7 @@ class TranslationController : HttpController {
             auto tenantId = precheck.tenantId;
             auto data = precheck.data;
             TranslateTextRequest r;
-            r.tenantId = precheck.tenantId;
+            r.tenantId = tenantId;
             r.sourceLanguage = data.getString("sourceLanguage");
             r.targetLanguage = data.getString("targetLanguage");
             r.domainName = data.getString("domain");

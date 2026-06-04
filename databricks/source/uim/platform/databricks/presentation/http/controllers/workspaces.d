@@ -104,7 +104,7 @@ public:
         auto tenantId = precheck.tenantId;
       
       auto id     = req.requestPath.to!string.split("/")[$-1];
-      auto result = _usecase.remove(req.getTenantId, id);
+      auto result = _usecase.remove(tenantId, id);
       if (result.success) res.writeBody("", cast(int) HTTPStatus.noContent, "application/json");
       else writeError(res, 404, result.message);
     } catch (Exception e) { writeError(res, 500, "Internal server error"); }

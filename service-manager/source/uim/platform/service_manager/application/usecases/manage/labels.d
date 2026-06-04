@@ -28,7 +28,7 @@ class ManageLabelsUseCase { // TODO: UIMUseCase {
     CommandResult createLabel(TenantId tenantId, CreateLabelRequest dto) {
         Label e;
         e.id = LabelId(currentTimestamp.to!string);
-        e.tenantId = precheck.tenantId;
+        e.tenantId = tenantId;
         e.resourceId = dto.resourceId;
         e.resourceType = dto.resourceType;
         e.key = dto.key;

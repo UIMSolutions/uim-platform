@@ -22,11 +22,10 @@ class ManageServicePlansUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createPlan(CreateServicePlanRequest dto) {
-        auto plan = ServicePlan();
-        plan.initEntity(TenantId(dto.tenantId), dto.createdBy);
+        auto plan = ServicePlan(dto.tenantId);
 
         plan.id = ServicePlanId(currentTimestamp.to!string);
-        plan.tenantId = TenantId(dto.tenantId);
+        plan.tenantId = dto.tenantId;
         plan.name = dto.name;
         plan.description = dto.description;
         plan.catalogName = dto.catalogName;

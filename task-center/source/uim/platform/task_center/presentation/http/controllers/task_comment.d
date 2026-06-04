@@ -37,7 +37,7 @@ class TaskCommentController : ManageHttpController {
 
         auto data = precheck.data;
             CreateTaskCommentRequest r;
-            r.tenantId = precheck.tenantId;
+            r.tenantId = tenantId;
             r.taskCommentId = TaskCommentId(precheck.id);
             r.taskId = TaskId(data.getString("taskId"));
             r.author = data.getString("author");
@@ -112,7 +112,7 @@ class TaskCommentController : ManageHttpController {
             auto id = TaskCommentId(precheck.id);
             auto data = precheck.data;
             UpdateTaskCommentRequest r;
-            r.tenantId = precheck.tenantId;
+            r.tenantId = tenantId;
             r.taskCommentId = id;
             r.content = data.getString("content");
 

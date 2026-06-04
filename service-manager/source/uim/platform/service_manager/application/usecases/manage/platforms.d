@@ -42,7 +42,7 @@ class ManagePlatformsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, platform.id.value, "");
     }
 
-    CommandResult updatePlatform(TenantId tenantId, PlatformId id, UpdatePlatformRequest dto) {
+    CommandResult updatePlatform(UpdatePlatformRequest dto) {
         auto platform = repo.findById(tenantId, id);
         if (platform.isNull)
             return CommandResult(false, "", "Platform not found");

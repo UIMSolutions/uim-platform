@@ -41,7 +41,7 @@ class FlexChangesController : ManageHttpController {
 
         auto data = precheck.data;
         ScanJobDTO dto;
-        dto.tenantId = precheck.tenantId;
+        dto.tenantId = tenantId;
       CreateFlexChangeRequest r;
       r.tenantId   = tenantId;
       r.changeId   = FlexChangeId(precheck.id);

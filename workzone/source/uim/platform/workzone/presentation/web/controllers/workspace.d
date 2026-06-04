@@ -33,11 +33,11 @@ class WorkspaceWebController : ManageHttpController {
     // ── List ──────────────────────────────────────────────────────────────
     private void handleList(scope HTTPServerRequest req,
                             scope HTTPServerResponse res) {
-        immutable tenantId = precheck.tenantId;
+        immutable tenantId = tenantId;
         try {
             auto workspaces = useCase.listWorkspaces(tenantId);
             WorkspaceListViewModel vm;
-            vm.tenantId = precheck.tenantId;
+            vm.tenantId = tenantId;
             foreach (ws; workspaces)
                 vm.items ~= WorkspaceListItem.from(ws);
             res.writeBody(renderWorkspaceList(vm), "text/html; charset=utf-8");
@@ -52,7 +52,7 @@ class WorkspaceWebController : ManageHttpController {
     // ── Detail ────────────────────────────────────────────────────────────
     private void handleDetail(scope HTTPServerRequest req,
                               scope HTTPServerResponse res) {
-        immutable tenantId = precheck.tenantId;
+        immutable tenantId = tenantId;
         immutable id       = extractLastSegment(req.requestPath.to!string, '/');
         // skip sub-routes like /ui/workspaces/new (handled by handleNewForm)
         if (id == "new") { handleNewForm(req, res); return; }
@@ -84,7 +84,7 @@ class WorkspaceWebController : ManageHttpController {
     // ── Edit form ─────────────────────────────────────────────────────────
     private void handleEditForm(scope HTTPServerRequest req,
                                 scope HTTPServerResponse res) {
-        immutable tenantId = precheck.tenantId;
+        immutable tenantId = tenantId;
         // Path: /ui/workspaces/{id}/edit  → second-to-last segment is the id
         immutable rawPath = req.requestPath.to!string;
         immutable id = extractSegmentBeforeLast(rawPath, '/');

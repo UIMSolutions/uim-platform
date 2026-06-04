@@ -67,7 +67,7 @@ class TransportNodeController : ManageHttpController {
         auto data = precheck.data;
             TransportNodeDTO dto;
             dto.nodeId = TransportNodeId(precheck.id);
-            dto.tenantId = precheck.tenantId;
+            dto.tenantId = tenantId;
             dto.name = data.getString("name");
             dto.description = data.getString("description");
             dto.nodeType = data.getString("nodeType");
@@ -114,7 +114,7 @@ class TransportNodeController : ManageHttpController {
             }
             TransportNodeDTO dto;
             dto.nodeId = id;
-            dto.tenantId = precheck.tenantId;
+            dto.tenantId = tenantId;
             dto.name = data.getString("name");
             dto.description = data.getString("description");
             dto.region = data.getString("region");

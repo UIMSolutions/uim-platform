@@ -65,7 +65,7 @@ public:
 
         auto tenantId = precheck.tenantId;
       auto id     = precheck.id;
-      auto result = _usecase.getById(req.getTenantId, id);
+      auto result = _usecase.getById(tenantId, id);
       if (result.success) res.writeJsonBody(result.data, 200);
       else writeError(res, 404, result.message);
     } catch (Exception e) { writeError(res, 500, "Internal server error"); }

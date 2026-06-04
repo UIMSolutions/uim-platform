@@ -30,7 +30,7 @@ class ServiceBrokerController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-        auto items = usecase.listByTenant(tenantId);
+        auto items = usecase.listBrokers(tenantId);
         auto list = Json.emptyArray;
         foreach (e; items) {
             list ~= Json.emptyObject
@@ -53,12 +53,11 @@ class ServiceBrokerController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-        auto tenantId = precheck.tenantId;
         auto id = ServiceBrokerId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid service broker ID", 400);
 
-        auto e = usecase.getById(tenantId, ServiceBrokerId(id));
+        auto e = usecase.getBroker(tenantId, id);
         if (e.isNull)
             return errorResponse("Service broker not found", 404);
 
@@ -68,6 +67,7 @@ class ServiceBrokerController : ManageHttpController {
             .set("brokerUrl", e.brokerUrl)
             .set("status", e.status.to!string)
             .set("createdAt", e.createdAt);
+
         return successResponse("Service broker retrieved successfully", 200, responseData);
     }
 
@@ -80,11 +80,12 @@ class ServiceBrokerController : ManageHttpController {
 
         auto data = precheck.data;
         CreateServiceBrokerRequest r;
+        r.tenantId = tenantId;
         r.name = data.getString("name");
         r.description = data.getString("description");
         r.brokerUrl = data.getString("brokerUrl");
 
-        auto result = usecase.create(req.getTenantId, r);
+        auto result = usecase.createBroker(r);
         if (result.hasError)
             return errorResponse(result.message, 400);
 
@@ -98,23 +99,24 @@ class ServiceBrokerController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-
         auto id = ServiceBrokerId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid service broker ID", 400);
 
         auto data = precheck.data;
         UpdateServiceBrokerRequest r;
+        r.tenantId = tenantId;
+        r.brokerId = id;
         r.name = data.getString("name");
         r.description = data.getString("description");
         r.brokerUrl = data.getString("brokerUrl");
 
-        auto result = usecase.update(req.getTenantId, ServiceBrokerId(id), r);
+        auto result = usecase.updateBroker(r);
         if (result.hasError)
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("Service broker updated successfully", 200, Json.emptyObject.set("id", id));
+        return successResponse("Service broker updated successfully", 200, responseData);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -127,7 +129,7 @@ class ServiceBrokerController : ManageHttpController {
         if (id.isNull)
             return errorResponse("Invalid service broker ID", 400);
 
-        auto result = usecase.delete(tenantId, id);
+        auto result = usecase.deleteBroker(tenantId, id);
         if (result.hasError)
             return errorResponse(result.message, 400);
 

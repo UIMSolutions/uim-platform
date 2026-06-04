@@ -40,7 +40,7 @@ class SituationInstanceController : ManageHttpController {
 
         auto data = precheck.data;
             CreateSituationInstanceRequest r;
-            r.tenantId = precheck.tenantId;
+            r.tenantId = tenantId;
             r.situationTemplateId = SituationTemplateId(data.getString("situationTemplateId"));
             r.situationInstanceId = SituationInstanceId(precheck.id);
             r.description = data.getString("description");
@@ -158,7 +158,7 @@ class SituationInstanceController : ManageHttpController {
             auto id = SituationInstanceId(precheck.id);
             auto data = precheck.data;
             UpdateSituationInstanceRequest r;
-            r.tenantId = precheck.tenantId;
+            r.tenantId = tenantId;
             r.situationInstanceId = id;
             r.status = data.getString("status");
             r.severity = data.getString("severity").to!SituationSeverity;
@@ -196,7 +196,7 @@ class SituationInstanceController : ManageHttpController {
 
             auto data = precheck.data;
             ResolveSituationRequest r;
-            r.tenantId = precheck.tenantId;
+            r.tenantId = tenantId;
             r.situationInstanceId = id;
             r.resolutionType = data.getString("resolutionType");
             r.resolvedBy = data.getString("resolvedBy");

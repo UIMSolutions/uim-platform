@@ -22,38 +22,39 @@ class ManageServiceInstancesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createInstance(CreateServiceInstanceRequest dto) {
-        ServiceInstance e;
-        e.initEntity(dto.tenantId);
+        auto instance = ServiceInstance(dto.tenantId);
+        instance.initEntity(dto.tenantId);
 
-        e.id = ServiceInstanceId(currentTimestamp.to!string);
-        e.tenantId = dto.tenantId;
-        e.name = dto.name;
-        e.planId = ServicePlanId(dto.planId);
-        e.offeringId = ServiceOfferingId(dto.offeringId);
-        e.platformId = PlatformId(dto.platformId);
-        e.context = dto.context;
-        e.parameters = dto.parameters;
-        e.labels = dto.labels;
-        e.status = ServiceInstanceStatus.creating;
-        e.createdAt = currentTimestamp;
-        e.updatedAt = e.createdAt;
+        instance.id = ServiceInstanceId(currentTimestamp.to!string);
+        instance.tenantId = dto.tenantId;
+        instance.name = dto.name;
+        instance.planId = ServicePlanId(dto.planId);
+        instance.offeringId = ServiceOfferingId(dto.offeringId);
+        instance.platformId = PlatformId(dto.platformId);
+        instance.context = dto.context;
+        instance.parameters = dto.parameters;
+        instance.labels = dto.labels;
+        instance.status = ServiceInstanceStatus.creating;
+        instance.createdAt = currentTimestamp;
+        instance.updatedAt = instance.createdAt;
 
         if (dto.name.length == 0)
             return CommandResult(false, "", "Service instance name is required");
-        if (dto.planId.length == 0)
+
+        if (dto.planId.isNull)
             return CommandResult(false, "", "Service plan ID is required");
 
-        repo.save(e);
-        return CommandResult(true, e.id.value, "");
+        repo.save(instance);
+        return CommandResult(true, instance.id.value, "");
     }
 
     CommandResult updateInstance(UpdateServiceInstanceRequest dto) {
-        auto existing = repo.findById(dto.tenantId, dto.id);
+        auto existing = repo.findById(dto.tenantId, dto.instanceId);
         if (existing.isNull)
             return CommandResult(false, "", "Service instance not found");
 
         if (dto.name.length > 0) existing.name = dto.name;
-        if (dto.planId.length > 0) existing.planId = ServicePlanId(dto.planId);
+        if (!dto.planId.isNull) existing.planId = ServicePlanId(dto.planId);
         if (dto.parameters.length > 0) existing.parameters = dto.parameters;
         if (dto.labels.length > 0) existing.labels = dto.labels;
         existing.updatedAt = currentTimestamp;

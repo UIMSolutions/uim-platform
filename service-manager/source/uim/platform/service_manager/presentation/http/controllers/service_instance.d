@@ -30,7 +30,7 @@ class ServiceInstanceController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-        auto items = usecase.listByTenant(tenantId);
+        auto items = usecase.listInstances(tenantId);
         auto list = Json.emptyArray;
         foreach (e; items) {
             list ~= Json.emptyObject
@@ -53,8 +53,11 @@ class ServiceInstanceController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto id = precheck.id;
-        auto e = usecase.getById(tenantId, ServiceInstanceId(id));
+        auto id = ServiceInstanceId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid service instance ID", 400);
+
+        auto e = usecase.getInstance(tenantId, id);
         if (e.isNull)
             return errorResponse("Service instance not found", 404);
 
@@ -69,7 +72,7 @@ class ServiceInstanceController : ManageHttpController {
             .set("dashboardUrl", e.dashboardUrl)
             .set("createdAt", e.createdAt);
 
-        return successResponse("Scan job retrieved successfully", "Retrieved", 200, responseData);
+        return successResponse("Service instance retrieved successfully", "Retrieved", 200, responseData);
     }
 
     override protected Json createHandler(HTTPServerRequest req) {
@@ -81,6 +84,7 @@ class ServiceInstanceController : ManageHttpController {
 
         auto data = precheck.data;
         CreateServiceInstanceRequest r;
+        r.tenantId = tenantId;
         r.name = data.getString("name");
         r.planId = data.getString("planId");
         r.offeringId = data.getString("offeringId");
@@ -89,12 +93,12 @@ class ServiceInstanceController : ManageHttpController {
         r.parameters = data.getString("parameters");
         r.labels = data.getString("labels");
 
-        auto result = usecase.create(req.getTenantId, r);
+        auto result = usecase.createInstance(r);
         if (result.hasError)
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("Scan job created successfully", "Created", 201, responseData);
+        return successResponse("Service instance created successfully", "Created", 201, responseData);
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -104,15 +108,19 @@ class ServiceInstanceController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto id = ServiceInstanceId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid service instance ID", 400);
 
         auto data = precheck.data;
         UpdateServiceInstanceRequest r;
+        r.tenantId = tenantId;
+        r.instanceId = id;
         r.name = data.getString("name");
         r.planId = data.getString("planId");
         r.parameters = data.getString("parameters");
         r.labels = data.getString("labels");
 
-        auto result = usecase.update(r);
+        auto result = usecase.updateInstance(r);
         if (result.hasError)
             return errorResponse(result.message, 400);
 
@@ -126,9 +134,11 @@ class ServiceInstanceController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
+        auto id = ServiceInstanceId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid service instance ID", 400);
 
-        auto id = precheck.id;
-        auto result = usecase.deleteServiceInstance(req.getTenantId, ServiceInstanceId(id));
+        auto result = usecase.deleteInstance(tenantId, id);
         if (result.hasError)
             return errorResponse(result.message, 400);
 

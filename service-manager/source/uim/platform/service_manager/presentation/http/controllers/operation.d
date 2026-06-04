@@ -80,7 +80,7 @@ class OperationController : ManageHttpController {
 
         auto data = precheck.data;
         CreateOperationRequest r;
-        r.tenantId = precheck.tenantId;
+        r.tenantId = tenantId;
         r.resourceId = data.getString("resourceId");
         r.resourceType = data.getString("resourceType");
         r.type = data.getString("type");
@@ -106,7 +106,7 @@ class OperationController : ManageHttpController {
 
         auto data = precheck.data;
         UpdateOperationRequest r;
-        r.tenantId = precheck.tenantId;
+        r.tenantId = tenantId;
         r.operationId = id;
         r.status = data.getString("status");
         r.errorMessage = data.getString("errorMessage");

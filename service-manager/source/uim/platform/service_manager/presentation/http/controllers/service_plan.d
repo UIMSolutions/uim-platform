@@ -30,7 +30,7 @@ class ServicePlanController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-        auto items = usecase.listByTenant(tenantId);
+        auto items = usecase.listPlans(tenantId);
         auto list = Json.emptyArray;
         foreach (e; items) {
             list ~= Json.emptyObject
@@ -52,13 +52,11 @@ class ServicePlanController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-
-        auto tenantId = precheck.tenantId;
         auto id = ServicePlanId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid service plan ID", 400);
 
-        auto e = usecase.getById(tenantId, id);
+        auto e = usecase.getPlan(tenantId, id);
         if (e.isNull)
             return errorResponse("Service plan not found", 404);
 
@@ -84,7 +82,7 @@ class ServicePlanController : ManageHttpController {
 
         auto data = precheck.data;
         CreateServicePlanRequest r;
-        r.tenantId = precheck.tenantId;
+        r.tenantId = tenantId;
         r.name = data.getString("name");
         r.description = data.getString("description");
         r.catalogName = data.getString("catalogName");
@@ -107,13 +105,14 @@ class ServicePlanController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-
         auto id = ServicePlanId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid service plan ID", 400);
 
         auto data = precheck.data;
         UpdateServicePlanRequest r;
+        r.tenantId = tenantId;
+        r.planId = id;
         r.name = data.getString("name");
         r.description = data.getString("description");
         r.schemas = data.getString("schemas");
@@ -137,7 +136,7 @@ class ServicePlanController : ManageHttpController {
         if (id.isNull)
             return errorResponse("Invalid service plan ID", 400);
 
-        auto result = usecase.deleteServicePlan(tenantId, id);
+        auto result = usecase.deletePlan(tenantId, id);
         if (result.hasError)
             return errorResponse(result.message, 400);
 

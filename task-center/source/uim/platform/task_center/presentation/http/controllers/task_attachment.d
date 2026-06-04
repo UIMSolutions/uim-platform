@@ -36,7 +36,7 @@ class TaskAttachmentController : ManageHttpController {
 
         auto data = precheck.data;
         CreateTaskAttachmentRequest r;
-        r.tenantId = precheck.tenantId;
+        r.tenantId = tenantId;
         r.taskAttachmentId = TaskAttachmentId(precheck.id);
         r.taskId = TaskId(data.getString("taskId"));
         r.fileName = data.getString("fileName");
