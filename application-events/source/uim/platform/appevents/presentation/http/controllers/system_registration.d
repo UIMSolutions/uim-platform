@@ -17,7 +17,7 @@ import std.algorithm : map;
 
 @safe:
 
-class SystemRegistrationController : ManageController {
+class SystemRegistrationController : ManageHttpController {
     private ManageSystemRegistrationsUseCase _useCase;
 
     this(ManageSystemRegistrationsUseCase useCase) { _useCase = useCase; }

@@ -18,7 +18,7 @@ import uim.platform.dms.application;
 mixin(ShowModule!());
 @safe:
 
-class ShareController : ManageController {
+class ShareController : ManageHttpController {
   private ManageSharesUseCase usecase;
 
   this(ManageSharesUseCase usecase) {

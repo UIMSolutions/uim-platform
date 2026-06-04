@@ -14,7 +14,7 @@ import uim.platform.data_quality;
 mixin(ShowModule!());
 
 @safe:
-class AddressController : PlatformController {
+class AddressController : HttpController {
   private CleanseAddressesUseCase usecase;
 
   this(CleanseAddressesUseCase usecase) {

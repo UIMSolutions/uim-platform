@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DomainMappingController : ManageController {
+class DomainMappingController : ManageHttpController {
     private ManageDomainMappingsUseCase usecase;
 
     this(ManageDomainMappingsUseCase usecase) {

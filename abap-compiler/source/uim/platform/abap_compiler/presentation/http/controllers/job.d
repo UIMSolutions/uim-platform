@@ -15,7 +15,7 @@ mixin(ShowModule!());
 ///   GET /api/v1/abap/jobs             — list all jobs for tenant
 ///   GET /api/v1/abap/jobs/*           — get specific job
 ///   DELETE /api/v1/abap/jobs/*        — delete job record
-class JobController : ManageController {
+class JobController : ManageHttpController {
     private ManageJobsUseCase usecase;
 
     this(ManageJobsUseCase usecase) {

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemberFunctionController : ManageController {
+class MemberFunctionController : ManageHttpController {
     private ManageMemberFunctionsUseCase _uc;
 
     this(ManageMemberFunctionsUseCase uc) { _uc = uc; }

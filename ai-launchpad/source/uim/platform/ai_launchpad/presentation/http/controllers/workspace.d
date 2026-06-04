@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class WorkspaceController : ManageController {
+class WorkspaceController : ManageHttpController {
   private ManageWorkspacesUseCase usecase;
 
   this(ManageWorkspacesUseCase usecase) {

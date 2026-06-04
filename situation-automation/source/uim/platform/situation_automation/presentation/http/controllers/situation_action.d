@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class SituationActionController : ManageController {
+class SituationActionController : ManageHttpController {
     private ManageSituationActionsUseCase usecase;
 
     this(ManageSituationActionsUseCase usecase) {

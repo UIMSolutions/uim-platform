@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class TeamTypeController : ManageController {
+class TeamTypeController : ManageHttpController {
     private ManageTeamTypesUseCase _uc;
 
     this(ManageTeamTypesUseCase uc) { _uc = uc; }

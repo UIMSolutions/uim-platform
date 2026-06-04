@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class CicdRepositoryController : ManageController {
+class CicdRepositoryController : ManageHttpController {
     private ManageCicdRepositoriesUseCase repos;
 
     this(ManageCicdRepositoriesUseCase repos) {

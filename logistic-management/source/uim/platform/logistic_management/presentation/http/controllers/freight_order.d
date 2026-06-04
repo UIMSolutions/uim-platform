@@ -9,7 +9,7 @@ import uim.platform.logistic_management;
 mixin(ShowModule!());
 
 @safe:
-class FreightOrderController : ManageController {
+class FreightOrderController : ManageHttpController {
 private:
   ManageFreightOrdersUseCase _useCase;
 

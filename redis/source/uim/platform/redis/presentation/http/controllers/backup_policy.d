@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class BackupPolicyController : ManageController {
+class BackupPolicyController : ManageHttpController {
     private ManageBackupPoliciesUseCase backupPolicies;
 
     this(ManageBackupPoliciesUseCase backupPolicies) {

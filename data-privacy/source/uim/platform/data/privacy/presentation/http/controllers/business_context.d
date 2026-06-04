@@ -13,7 +13,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class BusinessContextController : ManageController {
+class BusinessContextController : ManageHttpController {
   private ManageBusinessContextsUseCase usecase;
 
   this(ManageBusinessContextsUseCase usecase) {

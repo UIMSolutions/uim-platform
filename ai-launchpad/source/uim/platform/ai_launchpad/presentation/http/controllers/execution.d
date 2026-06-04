@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ExecutionController : ManageController {
+class ExecutionController : ManageHttpController {
   private ManageExecutionsUseCase usecase;
 
   this(ManageExecutionsUseCase usecase) {

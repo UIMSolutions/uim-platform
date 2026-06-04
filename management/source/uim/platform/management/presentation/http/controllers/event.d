@@ -13,7 +13,7 @@ import uim.platform.management;
 
 mixin(ShowModule!());
 @safe:
-class EventController : ManageController {
+class EventController : ManageHttpController {
   private QueryPlatformEventsUseCase usecase;
 
   this(QueryPlatformEventsUseCase usecase) {

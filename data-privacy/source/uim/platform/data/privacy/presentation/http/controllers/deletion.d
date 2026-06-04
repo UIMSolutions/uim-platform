@@ -14,7 +14,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class DeletionController : ManageController {
+class DeletionController : ManageHttpController {
   private ManageDeletionRequestsUseCase usecase;
 
   this(ManageDeletionRequestsUseCase usecase) {

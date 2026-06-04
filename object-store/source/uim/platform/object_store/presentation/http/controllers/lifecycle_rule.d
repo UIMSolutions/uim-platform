@@ -16,7 +16,7 @@ import uim.platform.object_store;
 mixin(ShowModule!());
 
 @safe:
-class LifecycleRuleController : ManageController {
+class LifecycleRuleController : ManageHttpController {
   private ManageLifecycleRulesUseCase usecase;
 
   this(ManageLifecycleRulesUseCase usecase) {

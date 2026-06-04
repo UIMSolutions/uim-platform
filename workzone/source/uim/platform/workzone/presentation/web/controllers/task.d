@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Web MVC controller — renders HTML for the My Tasks inbox.
-class TaskWebController : ManageController {
+class TaskWebController : ManageHttpController {
     private ManageTasksUseCase useCase;
 
     this(ManageTasksUseCase useCase) {

@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MetricController : PlatformController {
+class MetricController : HttpController {
   private GetMetricsUseCase usecase;
 
   this(GetMetricsUseCase usecase) {

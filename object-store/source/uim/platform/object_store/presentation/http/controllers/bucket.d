@@ -17,7 +17,7 @@ import uim.platform.object_store;
 mixin(ShowModule!());
 
 @safe:
-class BucketController : ManageController {
+class BucketController : ManageHttpController {
   private ManageBucketsUseCase usecase;
 
   this(ManageBucketsUseCase usecase) {

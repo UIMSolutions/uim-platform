@@ -14,7 +14,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class LegalGroundController : ManageController {
+class LegalGroundController : ManageHttpController {
   private ManageLegalGroundsUseCase usecase;
 
   this(ManageLegalGroundsUseCase usecase) {

@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class FormController : ManageController {
+class FormController : ManageHttpController {
     private ManageFormsUseCase formUsecase;
 
     this(ManageFormsUseCase formUsecase) {

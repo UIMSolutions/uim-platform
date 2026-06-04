@@ -5,7 +5,7 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-class ChannelController : ManageController {
+class ChannelController : ManageHttpController {
   private ManageChannelsUseCase useCase;
 
   this(ManageChannelsUseCase useCase) {

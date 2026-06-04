@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class CustomDomainController : ManageController {
+class CustomDomainController : ManageHttpController {
     private ManageCustomDomainsUseCase usecase;
 
     this(ManageCustomDomainsUseCase usecase) {

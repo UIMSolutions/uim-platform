@@ -14,7 +14,7 @@ import uim.platform.mobile;
 mixin(Showmodule!());
 
 @safe:
-class PushNotificationController : ManageController {
+class PushNotificationController : ManageHttpController {
   private ManagePushNotificationsUseCase usecase;
 
   this(ManagePushNotificationsUseCase usecase) {

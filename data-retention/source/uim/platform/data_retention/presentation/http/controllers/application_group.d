@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ApplicationGroupController : ManageController {
+class ApplicationGroupController : ManageHttpController {
     private ManageApplicationGroupsUseCase usecase;
 
     this(ManageApplicationGroupsUseCase usecase) {

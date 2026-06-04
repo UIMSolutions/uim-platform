@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class SqlWarehouseController : ManageController {
+class SqlWarehouseController : ManageHttpController {
 private:
   ManageSqlWarehousesUseCase _usecase;
 

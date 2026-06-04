@@ -14,7 +14,7 @@ import uim.platform.master_data_integration;
 mixin(ShowModule!());
 
 @safe:
-class ClientController : ManageController {
+class ClientController : ManageHttpController {
   private ManageClientsUseCase usecase;
 
   this(ManageClientsUseCase usecase) {

@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class QueueController : ManageController {
+class QueueController : ManageHttpController {
     private ManageQueuesUseCase usecase;
 
     this(ManageQueuesUseCase usecase) {

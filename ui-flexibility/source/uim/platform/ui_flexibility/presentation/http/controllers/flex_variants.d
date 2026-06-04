@@ -11,7 +11,7 @@ mixin(ShowModule!());
 @safe:
 
 /// Routes: /keyuser/v2/variants
-class FlexVariantsController : ManageController {
+class FlexVariantsController : ManageHttpController {
   private ManageFlexVariantsUseCase usecase;
 
   this(ManageFlexVariantsUseCase usecase) {

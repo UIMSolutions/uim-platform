@@ -14,7 +14,7 @@ import uim.platform.content_agent;
 mixin(ShowModule!());
 
 @safe:
-class ProviderController : ManageController {
+class ProviderController : ManageHttpController {
   private ManageContentProvidersUseCase usecase;
 
   this(ManageContentProvidersUseCase usecase) {

@@ -14,7 +14,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class PersonalDataModelController : ManageController {
+class PersonalDataModelController : ManageHttpController {
   private ManagePersonalDataModelsUseCase usecase;
 
   this(ManagePersonalDataModelsUseCase usecase) {

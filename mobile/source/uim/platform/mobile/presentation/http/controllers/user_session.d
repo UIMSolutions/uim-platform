@@ -15,7 +15,7 @@ mixin(Showmodule!());
 
 @safe:
 
-class UserSessionController : ManageController {
+class UserSessionController : ManageHttpController {
   private ManageUserSessionsUseCase usecase;
 
   this(ManageUserSessionsUseCase usecase) {

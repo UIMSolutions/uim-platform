@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ScheduleController : ManageController {
+class ScheduleController : ManageHttpController {
     private ManageSchedulesUseCase usecase;
 
     this(ManageSchedulesUseCase usecase) {

@@ -18,7 +18,7 @@ import std.algorithm : map;
 
 @safe:
 
-class EventChannelController : ManageController {
+class EventChannelController : ManageHttpController {
     private ManageEventChannelsUseCase _useCase;
 
     this(ManageEventChannelsUseCase useCase) { _useCase = useCase; }

@@ -16,7 +16,7 @@ import uim.platform.identity.authentication;
 mixin(ShowModule!());
 @safe:
 /// HTTP controller for application (service provider) management.
-class ApplicationController : ManageController {
+class ApplicationController : ManageHttpController {
   private ManageApplicationsUseCase useCase;
 
   this(ManageApplicationsUseCase useCase) {

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class AccessControlController : ManageController {
+class AccessControlController : ManageHttpController {
     private ManageAccessControlsUseCase accessControls;
 
     this(ManageAccessControlsUseCase accessControls) {

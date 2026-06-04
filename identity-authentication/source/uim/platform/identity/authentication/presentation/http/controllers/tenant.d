@@ -17,7 +17,7 @@ import uim.platform.identity.authentication;
 mixin(ShowModule!());
 @safe:
 /// HTTP controller for tenant management.
-class TenantController : ManageController {
+class TenantController : ManageHttpController {
   private ManageTenantsUseCase useCase;
 
   this(ManageTenantsUseCase useCase) {

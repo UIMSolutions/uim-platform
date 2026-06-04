@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DataSubjectRoleController : ManageController {
+class DataSubjectRoleController : ManageHttpController {
     private ManageDataSubjectRolesUseCase usecase;
 
     this(ManageDataSubjectRolesUseCase usecase) { this.usecase = usecase; }

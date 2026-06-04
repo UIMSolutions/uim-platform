@@ -14,7 +14,7 @@ import uim.platform.auditlog;
 mixin(ShowModule!());
 
 @safe:
-class DataAccessController : PlatformController {
+class DataAccessController : HttpController {
   private WriteDataAccessLogUseCase useCase;
 
   this(WriteDataAccessLogUseCase useCase) {

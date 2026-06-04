@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class PrintClientController : ManageController {
+class PrintClientController : ManageHttpController {
     private ManagePrintClientsUseCase usecase;
 
     this(ManagePrintClientsUseCase usecase) {

@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class SituationTemplateController : ManageController {
+class SituationTemplateController : ManageHttpController {
     private ManageSituationTemplatesUseCase usecase;
 
     this(ManageSituationTemplatesUseCase usecase) {

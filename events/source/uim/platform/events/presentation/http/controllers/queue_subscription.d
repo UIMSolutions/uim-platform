@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class QueueSubscriptionController : ManageController {
+class QueueSubscriptionController : ManageHttpController {
     private ManageQueueSubscriptionsUseCase usecase;
 
     this(ManageQueueSubscriptionsUseCase usecase) { this.usecase = usecase; }

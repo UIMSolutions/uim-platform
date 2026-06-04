@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class CustomerSessionController : ManageController {
+class CustomerSessionController : ManageHttpController {
     private ManageCustomerSessionsUseCase sessions;
 
     this(ManageCustomerSessionsUseCase sessions) {

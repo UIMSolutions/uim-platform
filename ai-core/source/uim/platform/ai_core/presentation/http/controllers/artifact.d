@@ -12,7 +12,7 @@ import uim.platform.ai_core;
 mixin(ShowModule!());
 
 @safe:
-class ArtifactController : ManageController {
+class ArtifactController : ManageHttpController {
   private ManageArtifactsUseCase usecase;
 
   this(ManageArtifactsUseCase usecase) {

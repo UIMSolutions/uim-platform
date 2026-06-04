@@ -10,7 +10,7 @@ import uim.platform.hana_spatial;
 mixin(ShowModule!());
 
 @safe:
-class GeocodingJobController : ManageController {
+class GeocodingJobController : ManageHttpController {
   private ManageGeocodingJobsUseCase usecase;
 
   this(ManageGeocodingJobsUseCase usecase) {

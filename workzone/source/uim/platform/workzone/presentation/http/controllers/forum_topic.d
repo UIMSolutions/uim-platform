@@ -5,7 +5,7 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-class ForumTopicController : ManageController {
+class ForumTopicController : ManageHttpController {
   private ManageForumTopicsUseCase useCase;
 
   this(ManageForumTopicsUseCase useCase) {

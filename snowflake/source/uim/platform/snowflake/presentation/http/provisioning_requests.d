@@ -5,7 +5,7 @@ import vibe.http.router;
 
 mixin(ShowModule!());
 @safe:
-class ProvisioningRequestController : ManageController {
+class ProvisioningRequestController : ManageHttpController {
   private ManageProvisioningRequestsUseCase usecase;
   this(ManageProvisioningRequestsUseCase usecase) {
     this.usecase = usecase;

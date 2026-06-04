@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MessageMappingController : ManageController {
+class MessageMappingController : ManageHttpController {
 private:
   ManageMessageMappingsUseCase _usecase;
 

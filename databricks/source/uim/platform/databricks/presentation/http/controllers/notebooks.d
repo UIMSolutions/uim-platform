@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class NotebookController : ManageController {
+class NotebookController : ManageHttpController {
 private:
   ManageNotebooksUseCase _usecase;
 

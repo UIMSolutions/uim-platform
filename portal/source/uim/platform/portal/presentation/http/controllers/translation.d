@@ -16,7 +16,7 @@ import uim.platform.portal;
 mixin(ShowModule!());
 
 @safe:
-class TranslationController : ManageController {
+class TranslationController : ManageHttpController {
   private ManageTranslationsUseCase useCase;
 
   this(ManageTranslationsUseCase useCase) {

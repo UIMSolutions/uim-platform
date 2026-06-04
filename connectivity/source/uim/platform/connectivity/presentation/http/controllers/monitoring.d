@@ -23,7 +23,7 @@ mixin(ShowModule!());
  * - ConnectivityLog[] listBySeverity(TenantId tenantId, LogSeverity severity) 
  * - ConnectivityLog[] listBySource(TenantId tenantId, SourceId sourceId) 
  */
-class MonitoringController : PlatformController {
+class MonitoringController : HttpController {
   private MonitorConnectivityUseCase usecase;
 
   this(MonitorConnectivityUseCase usecase) {

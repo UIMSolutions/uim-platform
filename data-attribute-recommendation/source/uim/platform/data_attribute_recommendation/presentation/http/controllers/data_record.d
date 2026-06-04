@@ -17,7 +17,7 @@ import uim.platform.data_attribute_recommendation;
 mixin(ShowModule!());
 @safe:
 
-class DataRecordController : ManageController {
+class DataRecordController : ManageHttpController {
   private ManageDataRecordsUseCase usecase;
 
   this(ManageDataRecordsUseCase usecase) {

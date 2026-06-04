@@ -5,7 +5,7 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-class GroupController : ManageController {
+class GroupController : ManageHttpController {
   private ManageGroupsUseCase useCase;
 
   this(ManageGroupsUseCase useCase) {

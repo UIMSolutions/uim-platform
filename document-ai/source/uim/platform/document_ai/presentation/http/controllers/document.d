@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DocumentController : PlatformController {
+class DocumentController : HttpController {
   private ProcessDocumentsUseCase usecase;
 
   this(ProcessDocumentsUseCase usecase) {

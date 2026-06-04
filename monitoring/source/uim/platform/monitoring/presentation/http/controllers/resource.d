@@ -15,7 +15,7 @@ import uim.platform.monitoring;
 mixin(ShowModule!());
 
 @safe:
-class ResourceController : ManageController {
+class ResourceController : ManageHttpController {
   private ManageMonitoredResourcesUseCase usecase;
 
   this(ManageMonitoredResourcesUseCase usecase) {

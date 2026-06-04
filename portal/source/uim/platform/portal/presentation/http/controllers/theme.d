@@ -16,7 +16,7 @@ import uim.platform.portal.application.usecases.manage;
 mixin(ShowModule!());
 
 @safe:
-class ThemeController : ManageController {
+class ThemeController : ManageHttpController {
   private ManageThemesUseCase useCase;
 
   this(ManageThemesUseCase useCase) {

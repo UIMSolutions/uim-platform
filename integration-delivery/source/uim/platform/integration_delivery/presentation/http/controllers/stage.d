@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class StageController : ManageController {
+class StageController : ManageHttpController {
     private ManageStagesUseCase stages;
 
     this(ManageStagesUseCase stages) {

@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class EventSchemaController : ManageController {
+class EventSchemaController : ManageHttpController {
     private ManageEventSchemasUseCase usecase;
 
     this(ManageEventSchemasUseCase usecase) {

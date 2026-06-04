@@ -16,7 +16,7 @@ import uim.platform.object_store;
 mixin(ShowModule!());
 
 @safe:
-class AccessPolicyController : ManageController {
+class AccessPolicyController : ManageHttpController {
   private ManageAccessPoliciesUseCase usecase;
 
   this(ManageAccessPoliciesUseCase usecase) {

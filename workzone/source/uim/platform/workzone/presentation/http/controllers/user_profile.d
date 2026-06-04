@@ -5,7 +5,7 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-class UserProfileController : ManageController {
+class UserProfileController : ManageHttpController {
   private ManageUserProfilesUseCase useCase;
 
   this(ManageUserProfilesUseCase useCase) {

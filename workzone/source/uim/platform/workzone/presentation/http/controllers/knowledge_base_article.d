@@ -5,7 +5,7 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-class KnowledgeBaseArticleController : ManageController {
+class KnowledgeBaseArticleController : ManageHttpController {
   private ManageKnowledgeBaseArticlesUseCase useCase;
 
   this(ManageKnowledgeBaseArticlesUseCase useCase) {

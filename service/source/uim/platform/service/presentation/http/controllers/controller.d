@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class PlatformController {
+class HttpController {
   this() {
     initialize();
   }

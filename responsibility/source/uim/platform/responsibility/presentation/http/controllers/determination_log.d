@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DeterminationLogController : ManageController {
+class DeterminationLogController : ManageHttpController {
     private ManageDeterminationLogsUseCase _uc;
 
     this(ManageDeterminationLogsUseCase uc) { _uc = uc; }

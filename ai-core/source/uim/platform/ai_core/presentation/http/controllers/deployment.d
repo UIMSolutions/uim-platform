@@ -12,7 +12,7 @@ import uim.platform.ai_core;
 mixin(ShowModule!());
 
 @safe:
-class DeploymentController : ManageController {
+class DeploymentController : ManageHttpController {
   private ManageDeploymentsUseCase usercase;
 
   this(ManageDeploymentsUseCase usercase) {

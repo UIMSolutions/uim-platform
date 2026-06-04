@@ -5,7 +5,7 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-class NotificationController : ManageController {
+class NotificationController : ManageHttpController {
   private ManageNotificationsUseCase useCase;
 
   this(ManageNotificationsUseCase useCase) {

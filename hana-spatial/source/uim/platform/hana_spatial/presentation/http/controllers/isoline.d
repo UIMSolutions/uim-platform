@@ -10,7 +10,7 @@ import uim.platform.hana_spatial;
 mixin(ShowModule!());
 
 @safe:
-class IsolineController : ManageController {
+class IsolineController : ManageHttpController {
   private ManageIsolinesUseCase usecase;
 
   this(ManageIsolinesUseCase usecase) {

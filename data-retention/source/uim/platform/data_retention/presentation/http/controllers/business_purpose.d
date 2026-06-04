@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class BusinessPurposeController : ManageController {
+class BusinessPurposeController : ManageHttpController {
     private ManageBusinessPurposesUseCase usecase;
 
     this(ManageBusinessPurposesUseCase usecase) {

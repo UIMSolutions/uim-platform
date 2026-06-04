@@ -16,7 +16,7 @@ import uim.platform.identity.authentication;
 mixin(ShowModule!());
 @safe:
 /// HTTP controller for SCIM-like user management API.
-class UserController : ManageController {
+class UserController : ManageHttpController {
   private ManageUsersUseCase useCase;
 
   this(ManageUsersUseCase useCase) {

@@ -17,7 +17,7 @@ import uim.platform.portal;
 mixin(ShowModule!());
 
 @safe:
-class TileController : ManageController {
+class TileController : ManageHttpController {
   private ManageTilesUseCase useCase;
 
   this(ManageTilesUseCase useCase) {

@@ -5,7 +5,7 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-class SurveyController : ManageController {
+class SurveyController : ManageHttpController {
   private ManageSurveysUseCase useCase;
 
   this(ManageSurveysUseCase useCase) {

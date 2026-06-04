@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 /// HTTP controller for audit log queries.
-class AuditController : PlatformController {
+class AuditController : HttpController {
   private QueryAuditLogUseCase useCase;
 
   this(QueryAuditLogUseCase useCase) {

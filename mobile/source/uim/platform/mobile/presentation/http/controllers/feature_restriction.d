@@ -14,7 +14,7 @@ mixin(Showmodule!());
 
 @safe:
 
-class FeatureRestrictionController : ManageController {
+class FeatureRestrictionController : ManageHttpController {
   private ManageFeatureRestrictionsUseCase usecase;
 
   this(ManageFeatureRestrictionsUseCase usecase) {

@@ -15,7 +15,7 @@ import uim.platform.auditlog;
 mixin(ShowModule!());
 
 @safe:
-class ConfigChangeController : PlatformController {
+class ConfigChangeController : HttpController {
   private WriteConfigChangeUseCase useCase;
 
   this(WriteConfigChangeUseCase useCase) {

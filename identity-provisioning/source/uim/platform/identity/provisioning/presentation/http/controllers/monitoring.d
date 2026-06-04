@@ -17,7 +17,7 @@ import uim.platform.identity.provisioning;
 mixin(ShowModule!());
 
 @safe:
-class MonitoringController : PlatformController {
+class MonitoringController : HttpController {
   private MonitorProvisioningUseCase usecase;
 
   this(MonitorProvisioningUseCase usecase) {

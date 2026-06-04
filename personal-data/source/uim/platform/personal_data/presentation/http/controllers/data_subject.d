@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DataSubjectController : ManageController {
+class DataSubjectController : ManageHttpController {
     private ManageDataSubjectsUseCase usecase;
 
     this(ManageDataSubjectsUseCase usecase) {

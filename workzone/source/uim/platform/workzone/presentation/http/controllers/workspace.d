@@ -5,7 +5,7 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-class WorkspaceController : ManageController {
+class WorkspaceController : ManageHttpController {
   private ManageWorkspacesUseCase useCase;
 
   this(ManageWorkspacesUseCase useCase) {

@@ -13,7 +13,7 @@ mixin(ShowModule!());
 /// HTTP controller: trigger ABAP compilation.
 /// Endpoints:
 ///   POST /api/v1/abap/compile   — compile submitted ABAP source inline or by programId
-class CompileController : PlatformController {
+class CompileController : HttpController {
     private CompileUseCase usecase;
 
     this(CompileUseCase usecase) {

@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class StatisticsController : PlatformController {
+class StatisticsController : HttpController {
   private GetUsageStatisticsUseCase usecase;
 
   this(GetUsageStatisticsUseCase usecase) {

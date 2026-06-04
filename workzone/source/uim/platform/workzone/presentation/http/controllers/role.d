@@ -5,7 +5,7 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-class RoleController : ManageController {
+class RoleController : ManageHttpController {
   private ManageRolesUseCase useCase;
 
   this(ManageRolesUseCase useCase) {

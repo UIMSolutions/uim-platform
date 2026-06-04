@@ -26,7 +26,7 @@ import uim.platform.abap_environment;
   * - DELETE /api/v1/business-roles/{id}: Delete a business role.
   * Each endpoint expects and returns JSON data, and uses standard HTTP status codes to indicate success or failure.
   */
-class BusinessRoleController : ManageController {
+class BusinessRoleController : ManageHttpController {
   private ManageBusinessRolesUseCase usecase;
 
   this(ManageBusinessRolesUseCase usecase) {

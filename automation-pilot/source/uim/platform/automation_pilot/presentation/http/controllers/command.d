@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class CommandController : ManageController {
+class CommandController : ManageHttpController {
     private ManageCommandsUseCase commands;
 
     this(ManageCommandsUseCase commands) {

@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ConfigurationController : ManageController {
+class ConfigurationController : ManageHttpController {
   private ManageConfigurationsUseCase configurations;
 
   this(ManageConfigurationsUseCase configurations) {

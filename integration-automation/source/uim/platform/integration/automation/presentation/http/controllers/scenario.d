@@ -17,7 +17,7 @@ import uim.platform.integration.automation;
 mixin(ShowModule!());
 
 @safe:
-class ScenarioController : ManageController {
+class ScenarioController : ManageHttpController {
   private ManageScenariosUseCase useCase;
 
   this(ManageScenariosUseCase useCase) {

@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ProcessController : ManageController {
+class ProcessController : ManageHttpController {
     private ManageProcessesUseCase processUsecase;
 
     this(ManageProcessesUseCase processUsecase) {

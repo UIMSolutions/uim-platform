@@ -9,7 +9,7 @@ import uim.platform.logistic_management;
 mixin(ShowModule!());
 
 @safe:
-class WarehouseTaskController : ManageController {
+class WarehouseTaskController : ManageHttpController {
 private:
   ManageWarehouseTasksUseCase _useCase;
 

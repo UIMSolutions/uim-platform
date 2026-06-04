@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class LogController : PlatformController {
+class LogController : HttpController {
   private IngestLogsUseCase usecase;
 
   this(IngestLogsUseCase usecase) {

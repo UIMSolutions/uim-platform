@@ -5,7 +5,7 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-class EventController : ManageController {
+class EventController : ManageHttpController {
   private ManageEventsUseCase useCase;
 
   this(ManageEventsUseCase useCase) {

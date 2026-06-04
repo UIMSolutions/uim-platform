@@ -10,7 +10,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class HealthController : PlatformController {
+class HealthController : HttpController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);

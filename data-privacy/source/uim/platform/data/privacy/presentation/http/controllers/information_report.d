@@ -13,7 +13,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class InformationReportController : ManageController {
+class InformationReportController : ManageHttpController {
   private ManageInformationReportsUseCase usecase;
 
   this(ManageInformationReportsUseCase usecase) {

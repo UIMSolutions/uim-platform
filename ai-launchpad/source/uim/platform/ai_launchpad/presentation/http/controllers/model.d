@@ -13,7 +13,7 @@ import uim.platform.ai_launchpad;
 mixin(ShowModule!());
 
 @safe:
-class ModelController : ManageController {
+class ModelController : ManageHttpController {
   private ManageModelsUseCase usecase;
 
   this(ManageModelsUseCase usecase) {

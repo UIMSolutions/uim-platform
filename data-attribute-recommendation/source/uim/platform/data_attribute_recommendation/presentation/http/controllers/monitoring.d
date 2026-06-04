@@ -15,7 +15,7 @@ import uim.platform.data_attribute_recommendation;
 mixin(ShowModule!());
 @safe:
 
-class MonitoringController : PlatformController {
+class MonitoringController : HttpController {
   private MonitorTrainingUseCase usecase;
 
   this(MonitorTrainingUseCase usecase) {

@@ -16,7 +16,7 @@ import uim.platform.kyma;
 mixin(ShowModule!());
 
 @safe:
-class FunctionController : ManageController {
+class FunctionController : ManageHttpController {
   private ManageFunctionsUseCase usecase;
 
   this(ManageFunctionsUseCase usecase) {

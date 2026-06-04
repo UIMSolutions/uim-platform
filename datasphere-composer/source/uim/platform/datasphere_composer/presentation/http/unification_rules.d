@@ -13,7 +13,7 @@ import vibe.http.router;
 mixin(ShowModule!());
 
 @safe:
-class UnificationRuleController : ManageController {
+class UnificationRuleController : ManageHttpController {
   private ManageUnificationRulesUseCase usecase;
 
   this(ManageUnificationRulesUseCase usecase) { this.usecase = usecase; }

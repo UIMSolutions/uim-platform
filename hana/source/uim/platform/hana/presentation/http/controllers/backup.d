@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class BackupController : ManageController {
+class BackupController : ManageHttpController {
   private ManageBackupsUseCase usecase;
 
   this(ManageBackupsUseCase usecase) {

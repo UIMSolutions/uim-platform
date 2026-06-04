@@ -13,7 +13,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class DestructionRequestController : ManageController {
+class DestructionRequestController : ManageHttpController {
   private ManageDestructionRequestsUseCase usecase;
 
   this(ManageDestructionRequestsUseCase usecase) {

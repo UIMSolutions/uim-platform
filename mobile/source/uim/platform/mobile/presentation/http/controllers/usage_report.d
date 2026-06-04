@@ -14,7 +14,7 @@ mixin(Showmodule!());
 
 @safe:
 
-class UsageReportController : ManageController {
+class UsageReportController : ManageHttpController {
   private ManageUsageReportsUseCase usecase;
 
   this(ManageUsageReportsUseCase usecase) {

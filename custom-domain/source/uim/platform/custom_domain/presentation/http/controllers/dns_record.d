@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DnsRecordController : ManageController {
+class DnsRecordController : ManageHttpController {
     private ManageDnsRecordsUseCase usecase;
 
     this(ManageDnsRecordsUseCase usecase) {

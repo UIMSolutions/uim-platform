@@ -5,7 +5,7 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-class PageTemplateController : ManageController {
+class PageTemplateController : ManageHttpController {
   private ManagePageTemplatesUseCase useCase;
 
   this(ManagePageTemplatesUseCase useCase) {

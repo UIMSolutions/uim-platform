@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class TopicController : ManageController {
+class TopicController : ManageHttpController {
   private ManageTopicsUseCase usecase;
 
   this(ManageTopicsUseCase usecase) {

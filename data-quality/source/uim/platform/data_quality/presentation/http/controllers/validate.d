@@ -18,7 +18,7 @@ import uim.platform.data_quality;
 mixin(ShowModule!());
 
 @safe:
-class ValidateController : PlatformController {
+class ValidateController : HttpController {
   private ValidateDataUseCase usecase;
 
   this(ValidateDataUseCase usecase) {

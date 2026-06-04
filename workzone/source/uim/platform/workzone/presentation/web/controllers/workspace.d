@@ -15,7 +15,7 @@ mixin(ShowModule!());
 @safe:
 /// Web MVC controller — renders HTML pages for workspace management.
 /// Routes are mounted under /ui/workspaces by WebRouter.
-class WorkspaceWebController : ManageController {
+class WorkspaceWebController : ManageHttpController {
     private ManageWorkspacesUseCase useCase;
 
     this(ManageWorkspacesUseCase useCase) {

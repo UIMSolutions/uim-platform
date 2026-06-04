@@ -14,7 +14,7 @@ import uim.platform.master_data_integration;
 mixin(ShowModule!());
 
 @safe:
-class FilterRuleController : ManageController {
+class FilterRuleController : ManageHttpController {
   private ManageFilterRulesUseCase usecase;
 
   this(ManageFilterRulesUseCase usecase) {

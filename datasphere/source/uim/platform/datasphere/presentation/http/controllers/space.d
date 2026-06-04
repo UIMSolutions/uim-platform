@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class SpaceController : ManageController {
+class SpaceController : ManageHttpController {
   private ManageSpacesUseCase usecase;
 
   this(ManageSpacesUseCase usecase) {

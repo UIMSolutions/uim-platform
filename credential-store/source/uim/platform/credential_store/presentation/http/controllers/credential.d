@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class CredentialController : ManageController {
+class CredentialController : ManageHttpController {
   private ManageCredentialsUseCase usecase;
 
   this(ManageCredentialsUseCase usecase) {

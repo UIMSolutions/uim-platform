@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 /// POST /api/v1/translation/documents/translate          — synchronous document translation
 /// POST /api/v1/translation/documents/translate/async    — submit async document translation job
-class DocumentTranslationController : PlatformController {
+class DocumentTranslationController : HttpController {
     private PerformTranslationUseCase usecase;
 
     this(PerformTranslationUseCase usecase) {

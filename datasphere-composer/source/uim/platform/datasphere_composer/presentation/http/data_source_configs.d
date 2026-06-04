@@ -13,7 +13,7 @@ import vibe.http.router;
 mixin(ShowModule!());
 
 @safe:
-class DataSourceConfigController : ManageController {
+class DataSourceConfigController : ManageHttpController {
   private ManageDataSourceConfigsUseCase usecase;
 
   this(ManageDataSourceConfigsUseCase usecase) { this.usecase = usecase; }

@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ClusterController : ManageController {
+class ClusterController : ManageHttpController {
 private:
   ManageClustersUseCase _usecase;
 

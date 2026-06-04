@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ProjectMemberController : ManageController {
+class ProjectMemberController : ManageHttpController {
     private ManageProjectMembersUseCase usecase;
 
     this(ManageProjectMembersUseCase usecase) {

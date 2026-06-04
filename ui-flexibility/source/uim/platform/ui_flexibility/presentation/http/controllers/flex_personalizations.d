@@ -11,7 +11,7 @@ mixin(ShowModule!());
 @safe:
 
 /// Routes: /user/v2/personalizations
-class FlexPersonalizationsController : ManageController {
+class FlexPersonalizationsController : ManageHttpController {
   private ManageFlexPersonalizationsUseCase usecase;
 
   this(ManageFlexPersonalizationsUseCase usecase) {

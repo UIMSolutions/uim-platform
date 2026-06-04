@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class AlertEventController : PlatformController {
+class AlertEventController : HttpController {
     private ProduceEventsUseCase usecase;
 
     this(ProduceEventsUseCase usecase) { this.usecase = usecase; }

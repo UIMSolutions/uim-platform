@@ -10,7 +10,7 @@ import uim.platform.hana_spatial;
 mixin(ShowModule!());
 
 @safe:
-class SpatialFeatureController : ManageController {
+class SpatialFeatureController : ManageHttpController {
   private ManageSpatialFeaturesUseCase usecase;
 
   this(ManageSpatialFeaturesUseCase usecase) {

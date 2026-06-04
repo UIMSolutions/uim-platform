@@ -18,7 +18,7 @@ import uim.platform.data_quality;
 mixin(ShowModule!());
 
 @safe:
-class ValidationRuleController : ManageController {
+class ValidationRuleController : ManageHttpController {
   private ManageValidationRulesUseCase usecase;
 
   this(ManageValidationRulesUseCase usecase) {

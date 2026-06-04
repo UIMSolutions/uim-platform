@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 /// REST /api/v1/slm/mta-archives — upload, list, get, delete MTA archive files.
-class MtaArchiveController : ManageController {
+class MtaArchiveController : ManageHttpController {
     private ManageMtaArchivesUseCase usecase;
 
     this(ManageMtaArchivesUseCase usecase) {

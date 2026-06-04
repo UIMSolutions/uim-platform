@@ -5,7 +5,7 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-class CardController : ManageController {
+class CardController : ManageHttpController {
   private ManageCardsUseCase useCase;
 
   this(ManageCardsUseCase useCase) {

@@ -13,7 +13,7 @@ import uim.platform.html_repository;
 mixin(ShowModule!());
 
 @safe:
-class AppFileController : ManageController {
+class AppFileController : ManageHttpController {
   private ManageAppFilesUseCase usecase;
 
   this(ManageAppFilesUseCase usecase) {

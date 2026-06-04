@@ -6,7 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class EnvironmentController : ManageController {
+class EnvironmentController : ManageHttpController {
     private ManagePlatformsUseCase usecase;
 
     this(ManagePlatformsUseCase usecase) {
@@ -15,7 +15,7 @@ class EnvironmentController : ManageController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        
+
         router.get("/api/v1/service-manager/platforms", &handleList);
         router.get("/api/v1/service-manager/platforms/*", &handleGet);
         router.post("/api/v1/service-manager/platforms", &handleCreate);
@@ -38,52 +38,48 @@ class EnvironmentController : ManageController {
 
         auto tenantId = precheck.tenantId;
 
-            
-            auto items = usecase.listByTenant(tenantId);
-            auto jarr = Json.emptyArray;
-            foreach (e; items) {
-                jarr ~= Json.emptyObject
-                    .set("id", e.id.value).set("name", e.name)
-                    .set("description", e.description)
-                    .set("type", e.type.to!string)
-                    .set("status", e.status.to!string)
-                    .set("region", e.region);
-            }
-
-            auto response = Json.emptyObject
-                .set("items", jarr)
-                .set("totalCount", items.length)
-                .set("message", "Platforms retrieved successfully");
-
-            res.writeJsonBody(response, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
+        auto items = usecase.listByTenant(tenantId);
+        auto jarr = Json.emptyArray;
+        foreach (e; items) {
+            jarr ~= Json.emptyObject
+                .set("id", e.id.value).set("name", e.name)
+                .set("description", e.description)
+                .set("type", e.type.to!string)
+                .set("status", e.status.to!string)
+                .set("region", e.region);
         }
+
+        auto response = Json.emptyObject
+            .set("items", jarr)
+            .set("totalCount", items.length);
+
+        return successResponse("Platforms retrieved successfully", 200, response);
     }
 
-    override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto tenantId = precheck.tenantId;
-            auto id = precheck.id;
-            auto e = usecase.getById(tenantId, PlatformId(id));
-            if (e.isNull) {
-                writeError(res, 404, "Platform not found");
-                return;
-            }
-            res.writeJsonBody(Json.emptyObject
-                    .set("id", e.id.value).set("name", e.name)
-                    .set("description", e.description)
-                    .set("type", e.type.to!string)
-                    .set("status", e.status.to!string)
-                    .set("brokerUrl", e.brokerUrl)
-                    .set("region", e.region)
-                    .set("subaccountId", e.subaccountId)
-                    .set("createdAt", e.createdAt), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto tenantId = precheck.tenantId;
+
+        auto tenantId = precheck.tenantId;
+        auto id = precheck.id;
+        auto e = usecase.getById(tenantId, PlatformId(id));
+        if (e.isNull)
+            return errorResponse("Platform not found", 404);
+
+        auto responseData = Json.emptyObject
+            .set("id", e.id.value).set("name", e.name)
+            .set("description", e.description)
+            .set("type", e.type.to!string)
+            .set("status", e.status.to!string)
+            .set("brokerUrl", e.brokerUrl)
+            .set("region", e.region)
+            .set("subaccountId", e.subaccountId)
+            .set("createdAt", e.createdAt);
+
+        return successResponse("Platform retrieved successfully", 200, responseData);
     }
 
     override protected Json createHandler(HTTPServerRequest req) {
@@ -94,29 +90,21 @@ class EnvironmentController : ManageController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-            CreatePlatformRequest r;
-            r.name = data.getString("name");
-            r.description = data.getString("description");
-            r.type = data.getString("type");
-            r.brokerUrl = data.getString("brokerUrl");
-            r.credentials = data.getString("credentials");
-            r.region = data.getString("region");
-            r.subaccountId = data.getString("subaccountId");
+        CreatePlatformRequest r;
+        r.name = data.getString("name");
+        r.description = data.getString("description");
+        r.type = data.getString("type");
+        r.brokerUrl = data.getString("brokerUrl");
+        r.credentials = data.getString("credentials");
+        r.region = data.getString("region");
+        r.subaccountId = data.getString("subaccountId");
 
-            auto result = usecase.create(req.getTenantId, r);
-            if (result.hasError)
+        auto result = usecase.create(req.getTenantId, r);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto response = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Platform created successfully");
 
-                res.writeJsonBody(response, 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto response = Json.emptyObject.set("id", result.id);
+        return successResponse("Platform created successfully", 201, response);
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -125,28 +113,23 @@ class EnvironmentController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            
 
-            auto id = precheck.id;
-            auto data = precheck.data;
-            UpdatePlatformRequest r;
-            r.name = data.getString("name");
-            r.description = data.getString("description");
-            r.type = data.getString("type");
-            r.brokerUrl = data.getString("brokerUrl");
-            r.credentials = data.getString("credentials");
-            r.region = data.getString("region");
+        auto id = precheck.id;
+        auto data = precheck.data;
+        UpdatePlatformRequest r;
+        r.name = data.getString("name");
+        r.description = data.getString("description");
+        r.type = data.getString("type");
+        r.brokerUrl = data.getString("brokerUrl");
+        r.credentials = data.getString("credentials");
+        r.region = data.getString("region");
 
-            auto result = usecase.update(req.getTenantId, PlatformId(id), r);
-            if (result.hasError)
+        auto result = usecase.update(req.getTenantId, PlatformId(id), r);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Platform updated successfully", 200, responseData);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -155,18 +138,13 @@ class EnvironmentController : ManageController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            
 
-            auto id = precheck.id;
-            auto result = usecase.deletePlatform(req.getTenantId, PlatformId(id));
-            if (result.hasError)
+        auto id = precheck.id;
+        auto result = usecase.deletePlatform(req.getTenantId, PlatformId(id));
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                res.writeJsonBody(Json.emptyObject, 204);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        
+        auto responseData = Json.emptyObject.set("id", id);
+        return successResponse("Platform deleted successfully", 200, responseData);
     }
 }

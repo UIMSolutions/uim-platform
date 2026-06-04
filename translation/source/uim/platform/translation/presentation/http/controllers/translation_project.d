@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 /// CRUD /api/v1/translation/projects — manage software translation projects.
-class TranslationProjectController : ManageController {
+class TranslationProjectController : ManageHttpController {
     private ManageTranslationProjectsUseCase usecase;
 
     this(ManageTranslationProjectsUseCase usecase) {

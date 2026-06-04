@@ -7,7 +7,7 @@ module uim.platform.ai_core.presentation.http.controllers.meta;
 
 import uim.platform.ai_core;
 
-class MetaController : PlatformController {
+class MetaController : HttpController {
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
 

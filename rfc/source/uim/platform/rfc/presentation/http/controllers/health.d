@@ -11,7 +11,7 @@ mixin(ShowModule!());
 @safe:
 
 /// Health-check endpoint for Kubernetes liveness and readiness probes.
-class HealthController : PlatformController {
+class HealthController : HttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);

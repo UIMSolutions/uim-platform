@@ -16,7 +16,7 @@ import std.algorithm : map;
 
 @safe:
 
-class FormationController : ManageController {
+class FormationController : ManageHttpController {
     private ManageFormationsUseCase _useCase;
 
     this(ManageFormationsUseCase useCase) { _useCase = useCase; }

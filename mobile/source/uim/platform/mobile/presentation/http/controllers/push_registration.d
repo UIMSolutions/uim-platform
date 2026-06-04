@@ -14,7 +14,7 @@ mixin(Showmodule!());
 
 @safe:
 
-class PushRegistrationController : ManageController {
+class PushRegistrationController : ManageHttpController {
   private ManagePushRegistrationsUseCase usecase;
 
   this(ManagePushRegistrationsUseCase usecase) {

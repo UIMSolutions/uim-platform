@@ -10,7 +10,7 @@ import uim.platform.service;
 mixin(ShowModule!());
 
 @safe:
-class HealthController : PlatformController {
+class HealthController : HttpController {
   this() {
     super();
   }

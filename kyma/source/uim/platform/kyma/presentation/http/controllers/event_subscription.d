@@ -17,7 +17,7 @@ import uim.platform.kyma;
 mixin(ShowModule!());
 
 @safe:
-class EventSubscriptionController : ManageController {
+class EventSubscriptionController : ManageHttpController {
   private ManageEventSubscriptionsUseCase usecase;
 
   this(ManageEventSubscriptionsUseCase usecase) {

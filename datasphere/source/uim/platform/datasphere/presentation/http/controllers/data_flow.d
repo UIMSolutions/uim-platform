@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DataFlowController : ManageController {
+class DataFlowController : ManageHttpController {
   private ManageDataFlowsUseCase usecase;
 
   this(ManageDataFlowsUseCase usecase) {

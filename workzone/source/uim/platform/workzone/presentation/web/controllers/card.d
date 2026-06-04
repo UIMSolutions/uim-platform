@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Web MVC controller — renders HTML for the card catalogue.
-class CardWebController : ManageController {
+class CardWebController : ManageHttpController {
     private ManageCardsUseCase useCase;
 
     this(ManageCardsUseCase useCase) {

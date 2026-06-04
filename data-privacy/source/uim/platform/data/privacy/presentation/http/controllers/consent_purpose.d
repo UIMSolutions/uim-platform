@@ -13,7 +13,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class ConsentPurposeController : ManageController {
+class ConsentPurposeController : ManageHttpController {
   private ManageConsentPurposesUseCase usecase;
 
   this(ManageConsentPurposesUseCase usecase) {

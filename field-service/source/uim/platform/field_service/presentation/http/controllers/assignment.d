@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class AssignmentController : ManageController {
+class AssignmentController : ManageHttpController {
     private ManageAssignmentsUseCase usecase;
 
     this(ManageAssignmentsUseCase usecase) {

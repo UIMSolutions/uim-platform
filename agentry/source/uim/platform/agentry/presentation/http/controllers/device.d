@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DeviceController : ManageController {
+class DeviceController : ManageHttpController {
     private ManageDevicesUseCase usecase;
 
     this(ManageDevicesUseCase usecase) {

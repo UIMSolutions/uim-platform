@@ -11,7 +11,7 @@ mixin(ShowModule!());
 @safe:
 
 /// Serves FHIR R4 CapabilityStatement at /fhir/R4/metadata
-class CapabilityController : PlatformController {
+class CapabilityController : HttpController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);

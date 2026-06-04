@@ -12,7 +12,7 @@ import uim.platform.connectivity;
 mixin(ShowModule!());
 
 @safe:
-class AccessRuleController : ManageController {
+class AccessRuleController : ManageHttpController {
   private ManageAccessRulesUseCase usecase;
 
   this(ManageAccessRulesUseCase usecase) {

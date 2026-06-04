@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DataEntityController : ManageController {
+class DataEntityController : ManageHttpController {
     private ManageDataEntitiesUseCase usecase;
 
     this(ManageDataEntitiesUseCase usecase) {

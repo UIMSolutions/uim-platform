@@ -14,7 +14,7 @@ import uim.platform.master_data_integration;
 mixin(ShowModule!());
 
 @safe:
-class DataModelController : ManageController {
+class DataModelController : ManageHttpController {
   private ManageDataModelsUseCase usecase;
 
   this(ManageDataModelsUseCase usecase) {

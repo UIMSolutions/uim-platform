@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DomainDashboardController : ManageController {
+class DomainDashboardController : ManageHttpController {
     private ManageDomainDashboardsUseCase usecase;
 
     this(ManageDomainDashboardsUseCase usecase) {

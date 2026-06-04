@@ -17,7 +17,7 @@ mixin(ShowModule!());
 ///   GET    /api/v1/rfc/functions/*        — get function module by ID
 ///   PUT    /api/v1/rfc/functions/*        — update function module
 ///   DELETE /api/v1/rfc/functions/*        — delete function module
-class FunctionModuleController : PlatformController {
+class FunctionModuleController : HttpController {
 
     private ManageFunctionModulesUseCase _usecase;
 

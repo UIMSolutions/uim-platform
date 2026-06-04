@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class NamespaceController : ManageController {
+class NamespaceController : ManageHttpController {
   private ManageNamespacesUseCase usecase;
 
   this(ManageNamespacesUseCase usecase) {

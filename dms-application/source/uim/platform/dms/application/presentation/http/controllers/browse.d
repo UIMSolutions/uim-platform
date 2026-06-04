@@ -19,7 +19,7 @@ import uim.platform.dms.application;
 mixin(ShowModule!());
 @safe:
 
-class BrowseController : PlatformController {
+class BrowseController : HttpController {
   private BrowseContentUseCase usecase;
 
   this(BrowseContentUseCase usecase) {

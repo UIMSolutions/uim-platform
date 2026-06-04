@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class AuditLogController : ManageController {
+class AuditLogController : ManageHttpController {
     private ManageAuditLogsUseCase auditLogs;
 
     this(ManageAuditLogsUseCase auditLogs) {

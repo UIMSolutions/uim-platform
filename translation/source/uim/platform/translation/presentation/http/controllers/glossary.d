@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 /// CRUD /api/v1/translation/glossaries — manage company MLTR (custom translation memory).
-class GlossaryController : ManageController {
+class GlossaryController : ManageHttpController {
     private ManageGlossaryEntriesUseCase usecase;
 
     this(ManageGlossaryEntriesUseCase usecase) {

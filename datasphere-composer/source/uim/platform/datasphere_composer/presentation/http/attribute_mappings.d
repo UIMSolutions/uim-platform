@@ -13,7 +13,7 @@ import vibe.http.router;
 mixin(ShowModule!());
 
 @safe:
-class AttributeMappingController : ManageController {
+class AttributeMappingController : ManageHttpController {
   private ManageAttributeMappingsUseCase usecase;
 
   this(ManageAttributeMappingsUseCase usecase) { this.usecase = usecase; }

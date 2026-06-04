@@ -13,7 +13,7 @@ import uim.platform.destination;
 mixin(ShowModule!());
 
 @safe:
-class FindController : PlatformController {
+class FindController : HttpController {
   private FindDestinationUseCase usecase;
 
   this(FindDestinationUseCase usecase) {

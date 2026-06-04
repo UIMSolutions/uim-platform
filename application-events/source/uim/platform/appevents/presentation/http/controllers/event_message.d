@@ -15,7 +15,7 @@ import std.algorithm : map;
 
 @safe:
 
-class EventMessageController : ManageController {
+class EventMessageController : ManageHttpController {
     private ManageEventMessagesUseCase _useCase;
 
     this(ManageEventMessagesUseCase useCase) { _useCase = useCase; }

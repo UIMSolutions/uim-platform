@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 /// POST /api/v1/translation/translate — synchronous software / UI text translation.
-class TranslationController : PlatformController {
+class TranslationController : HttpController {
     private PerformTranslationUseCase usecase;
 
     this(PerformTranslationUseCase usecase) {

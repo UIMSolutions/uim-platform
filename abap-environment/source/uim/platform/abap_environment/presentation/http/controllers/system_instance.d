@@ -16,7 +16,7 @@ import uim.platform.abap_environment;
 
 // mixin(ShowModule!());
 @safe:
-class SystemInstanceController : ManageController {
+class SystemInstanceController : ManageHttpController {
   private ManageSystemInstancesUseCase usecase;
 
   this(ManageSystemInstancesUseCase usecase) {

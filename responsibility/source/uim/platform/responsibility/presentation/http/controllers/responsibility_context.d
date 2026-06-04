@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ResponsibilityContextController : ManageController {
+class ResponsibilityContextController : ManageHttpController {
     private ManageResponsibilityContextsUseCase _uc;
 
     this(ManageResponsibilityContextsUseCase uc) { _uc = uc; }

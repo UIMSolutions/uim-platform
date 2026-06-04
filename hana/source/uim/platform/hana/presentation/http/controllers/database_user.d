@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DatabaseUserController : ManageController {
+class DatabaseUserController : ManageHttpController {
   private ManageDatabaseUsersUseCase usecase;
 
   this(ManageDatabaseUsersUseCase usecase) {

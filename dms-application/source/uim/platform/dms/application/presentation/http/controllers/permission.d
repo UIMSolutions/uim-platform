@@ -16,7 +16,7 @@ import uim.platform.dms.application;
 
 mixin(ShowModule!());
 @safe:
-class PermissionController : ManageController {
+class PermissionController : ManageHttpController {
   private ManagePermissionsUseCase permissions;
 
   this(ManagePermissionsUseCase permissions) {

@@ -16,7 +16,7 @@ import uim.platform.kyma;
 mixin(ShowModule!());
 
 @safe:
-class ServiceInstanceController : ManageController {
+class ServiceInstanceController : ManageHttpController {
   private ManageServiceInstancesUseCase usecase;
 
   this(ManageServiceInstancesUseCase usecase) {

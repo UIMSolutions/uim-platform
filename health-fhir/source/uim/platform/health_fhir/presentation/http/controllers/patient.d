@@ -10,7 +10,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class PatientController : ManageController {
+class PatientController : ManageHttpController {
   private ManagePatientsUseCase usecase;
 
   this(ManagePatientsUseCase usecase) {

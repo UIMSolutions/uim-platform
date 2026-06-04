@@ -17,7 +17,7 @@ import uim.platform.dms.application;
 mixin(ShowModule!());
 @safe:
 
-class RepositoryController : ManageController {
+class RepositoryController : ManageHttpController {
   private ManageRepositoriesUseCase usecase;
 
   this(ManageRepositoriesUseCase usecase) {

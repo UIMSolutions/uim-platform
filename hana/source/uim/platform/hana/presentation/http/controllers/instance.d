@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class InstanceController : ManageController {
+class InstanceController : ManageHttpController {
   private ManageInstancesUseCase usecase;
 
   this(ManageInstancesUseCase usecase) {

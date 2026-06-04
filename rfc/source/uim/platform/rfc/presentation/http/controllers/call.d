@@ -16,7 +16,7 @@ mixin(ShowModule!());
 ///   GET    /api/v1/rfc/calls             — list all calls for tenant (with ?status=... filter)
 ///   GET    /api/v1/rfc/calls/*           — get call by ID
 ///   DELETE /api/v1/rfc/calls/*           — delete call record
-class CallController : PlatformController {
+class CallController : HttpController {
 
     private InvokeRfcUseCase  _invokeUC;
     private ManageCallsUseCase _manageUC;

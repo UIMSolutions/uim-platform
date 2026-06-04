@@ -11,7 +11,7 @@ module uim.platform.foundry.presentation.http.controllers.org;
 // import uim.platform.foundry.domain.entities.organization;
 import uim.platform.foundry;
 
-class OrgController : ManageController {
+class OrgController : ManageHttpController {
   private ManageOrgsUseCase useCase;
 
   this(ManageOrgsUseCase useCase) {

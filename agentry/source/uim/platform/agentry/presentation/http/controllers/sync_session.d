@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class SyncSessionController : ManageController {
+class SyncSessionController : ManageHttpController {
     private ManageSyncSessionsUseCase usecase;
 
     this(ManageSyncSessionsUseCase usecase) {

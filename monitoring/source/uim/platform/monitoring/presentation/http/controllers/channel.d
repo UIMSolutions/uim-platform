@@ -14,7 +14,7 @@ import uim.platform.monitoring;
 mixin(ShowModule!());
 
 @safe:
-class ChannelController : ManageController {
+class ChannelController : ManageHttpController {
   private ManageNotificationChannelsUseCase usecase;
 
   this(ManageNotificationChannelsUseCase usecase) {

@@ -15,7 +15,7 @@ import uim.platform.kyma;
 mixin(ShowModule!());
 
 @safe:
-class ApiRuleController : ManageController {
+class ApiRuleController : ManageHttpController {
   private ManageApiRulesUseCase usecase;
 
   this(ManageApiRulesUseCase usecase) {

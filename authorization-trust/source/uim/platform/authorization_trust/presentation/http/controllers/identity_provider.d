@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class IdentityProviderController : ManageController {
+class IdentityProviderController : ManageHttpController {
   private ManageIdentityProvidersUseCase usecase;
 
   this(ManageIdentityProvidersUseCase usecase) {

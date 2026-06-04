@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class HDIContainerController : ManageController {
+class HDIContainerController : ManageHttpController {
   private ManageHDIContainersUseCase usecase;
 
   this(ManageHDIContainersUseCase usecase) {

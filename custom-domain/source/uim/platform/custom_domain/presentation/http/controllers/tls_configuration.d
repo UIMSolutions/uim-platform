@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class TlsConfigurationController : ManageController {
+class TlsConfigurationController : ManageHttpController {
     private ManageTlsConfigurationsUseCase usecase;
 
     this(ManageTlsConfigurationsUseCase usecase) {

@@ -14,7 +14,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class DataRetrievalController : ManageController {
+class DataRetrievalController : ManageHttpController {
   private ManageDataRetrievalsUseCase usecase;
 
   this(ManageDataRetrievalsUseCase usecase) {

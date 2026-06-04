@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class OAuthScopeController : ManageController {
+class OAuthScopeController : ManageHttpController {
     private ManageOAuthScopesUseCase usecase;
 
     this(ManageOAuthScopesUseCase usecase) {

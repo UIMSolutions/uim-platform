@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class BrandingConfigController : ManageController {
+class BrandingConfigController : ManageHttpController {
     private ManageBrandingConfigsUseCase usecase;
 
     this(ManageBrandingConfigsUseCase usecase) {

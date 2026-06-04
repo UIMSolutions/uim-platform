@@ -5,7 +5,7 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-class TaskController : ManageController {
+class TaskController : ManageHttpController {
   private ManageTasksUseCase useCase;
 
   this(ManageTasksUseCase useCase) {

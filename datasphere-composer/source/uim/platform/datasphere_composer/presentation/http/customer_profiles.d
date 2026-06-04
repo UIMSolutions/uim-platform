@@ -13,7 +13,7 @@ import vibe.http.router;
 mixin(ShowModule!());
 
 @safe:
-class CustomerProfileController : ManageController {
+class CustomerProfileController : ManageHttpController {
   private ManageCustomerProfilesUseCase usecase;
 
   this(ManageCustomerProfilesUseCase usecase) { this.usecase = usecase; }

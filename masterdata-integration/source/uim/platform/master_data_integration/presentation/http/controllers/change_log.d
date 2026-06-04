@@ -14,7 +14,7 @@ import uim.platform.master_data_integration;
 mixin(ShowModule!());
 
 @safe:
-class ChangeLogController : PlatformController {
+class ChangeLogController : HttpController {
   private QueryChangeLogUseCase changeLogs;
 
   this(QueryChangeLogUseCase changeLogs) {

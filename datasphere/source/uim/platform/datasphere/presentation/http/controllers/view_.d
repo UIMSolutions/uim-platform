@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ViewController : ManageController {
+class ViewController : ManageHttpController {
   private ManageViewsUseCase usecase;
 
   this(ManageViewsUseCase usecase) {

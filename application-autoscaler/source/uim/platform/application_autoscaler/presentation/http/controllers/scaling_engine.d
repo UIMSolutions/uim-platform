@@ -14,7 +14,7 @@ mixin(ShowModule!());
 /// Driving adapter for the scaling engine use case.
 /// In a real deployment this would be called internally by a metric poller;
 /// here it is also exposed as an HTTP endpoint for testing / manual triggers.
-class ScalingEngineController : PlatformController {
+class ScalingEngineController : HttpController {
   private ScalingEngineUseCase usecase;
 
   this(ScalingEngineUseCase usecase) {

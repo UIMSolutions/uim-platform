@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DatabaseExtensionController : ManageController {
+class DatabaseExtensionController : ManageHttpController {
     private ManageDatabaseExtensionsUseCase extensions;
 
     this(ManageDatabaseExtensionsUseCase extensions) { this.extensions = extensions; }

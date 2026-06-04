@@ -14,7 +14,7 @@ import uim.platform.management;
 
 mixin(ShowModule!());
 @safe:
-class GlobalAccountController : ManageController {
+class GlobalAccountController : ManageHttpController {
   private ManageGlobalAccountsUseCase usecase;
 
   this(ManageGlobalAccountsUseCase usecase) {

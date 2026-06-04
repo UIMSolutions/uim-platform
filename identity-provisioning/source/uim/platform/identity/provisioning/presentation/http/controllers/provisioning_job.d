@@ -17,7 +17,7 @@ import uim.platform.identity.provisioning;
 mixin(ShowModule!());
 
 @safe:
-class ProvisioningJobController : PlatformController {
+class ProvisioningJobController : HttpController {
   private RunProvisioningJobsUseCase usecase;
 
   this(RunProvisioningJobsUseCase usecase) {

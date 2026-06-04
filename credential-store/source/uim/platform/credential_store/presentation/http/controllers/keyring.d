@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class KeyringController : ManageController {
+class KeyringController : ManageHttpController {
   private ManageKeyringsUseCase usecase;
 
   this(ManageKeyringsUseCase usecase) {

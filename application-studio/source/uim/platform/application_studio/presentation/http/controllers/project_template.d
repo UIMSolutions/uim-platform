@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ProjectTemplateController : ManageController {
+class ProjectTemplateController : ManageHttpController {
     private ManageProjectTemplatesUseCase usecase;
 
     this(ManageProjectTemplatesUseCase usecase) {

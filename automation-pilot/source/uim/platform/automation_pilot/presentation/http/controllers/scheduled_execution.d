@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ScheduledExecutionController : ManageController {
+class ScheduledExecutionController : ManageHttpController {
     private ManageScheduledExecutionsUseCase scheduledExecutions;
 
     this(ManageScheduledExecutionsUseCase scheduledExecutions) {

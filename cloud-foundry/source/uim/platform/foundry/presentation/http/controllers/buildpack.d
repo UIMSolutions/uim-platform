@@ -11,7 +11,7 @@ module uim.platform.foundry.presentation.http.controllers.buildpack;
 // import uim.platform.foundry.domain.entities.buildpack;
 import uim.platform.foundry;
 
-class BuildpackController : ManageController {
+class BuildpackController : ManageHttpController {
   private ManageBuildpacksUseCase useCase;
 
   this(ManageBuildpacksUseCase useCase) {

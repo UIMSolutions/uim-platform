@@ -15,7 +15,7 @@ import std.algorithm : map;
 
 @safe:
 
-class DeadLetterEntryController : ManageController {
+class DeadLetterEntryController : ManageHttpController {
     private ManageDeadLetterEntriesUseCase _useCase;
 
     this(ManageDeadLetterEntriesUseCase useCase) {

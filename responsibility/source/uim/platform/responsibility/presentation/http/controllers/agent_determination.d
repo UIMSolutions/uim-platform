@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class AgentDeterminationController : ManageController {
+class AgentDeterminationController : ManageHttpController {
     private DetermineAgentsUseCase _uc;
 
     this(DetermineAgentsUseCase uc) { _uc = uc; }

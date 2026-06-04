@@ -18,7 +18,7 @@ import uim.platform.master_data_integration;
 mixin(ShowModule!());
 
 @safe:
-class ReplicationController : ManageController {
+class ReplicationController : ManageHttpController {
   private ManageReplicationJobsUseCase usecase;
 
   this(ManageReplicationJobsUseCase usecase) {

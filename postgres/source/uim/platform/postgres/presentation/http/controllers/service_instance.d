@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ServiceInstanceController : ManageController {
+class ServiceInstanceController : ManageHttpController {
     private ManageServiceInstancesUseCase instances;
 
     this(ManageServiceInstancesUseCase instances) { this.instances = instances; }

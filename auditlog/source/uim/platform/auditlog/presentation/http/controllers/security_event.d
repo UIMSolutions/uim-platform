@@ -14,7 +14,7 @@ import uim.platform.auditlog;
 mixin(ShowModule!());
 
 @safe:
-class SecurityEventController : PlatformController {
+class SecurityEventController : HttpController {
   private WriteSecurityEventUseCase useCase;
 
   this(WriteSecurityEventUseCase useCase) {

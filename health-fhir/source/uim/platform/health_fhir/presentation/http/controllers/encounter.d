@@ -10,7 +10,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class EncounterController : ManageController {
+class EncounterController : ManageHttpController {
   private ManageEncountersUseCase usecase;
 
   this(ManageEncountersUseCase usecase) {

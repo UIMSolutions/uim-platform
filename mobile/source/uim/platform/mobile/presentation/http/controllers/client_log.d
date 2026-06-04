@@ -14,7 +14,7 @@ import uim.platform.mobile;
 mixin(Showmodule!());
 
 @safe:
-class ClientLogController : ManageController {
+class ClientLogController : ManageHttpController {
   private ManageClientLogsUseCase usecase;
 
   this(ManageClientLogsUseCase usecase) {

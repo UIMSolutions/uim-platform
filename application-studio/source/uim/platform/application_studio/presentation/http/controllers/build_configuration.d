@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class BuildConfigurationController : ManageController {
+class BuildConfigurationController : ManageHttpController {
     private ManageBuildConfigurationsUseCase usecase;
 
     this(ManageBuildConfigurationsUseCase usecase) {

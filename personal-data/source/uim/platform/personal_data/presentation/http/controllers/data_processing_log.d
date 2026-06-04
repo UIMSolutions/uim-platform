@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DataProcessingLogController : ManageController {
+class DataProcessingLogController : ManageHttpController {
     private ManageDataProcessingLogsUseCase usecase;
 
     this(ManageDataProcessingLogsUseCase usecase) {

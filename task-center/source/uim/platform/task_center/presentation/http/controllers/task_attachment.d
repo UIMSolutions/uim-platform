@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class TaskAttachmentController : ManageController {
+class TaskAttachmentController : ManageHttpController {
     private ManageTaskAttachmentsUseCase usecase;
 
     this(ManageTaskAttachmentsUseCase usecase) {

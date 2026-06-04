@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 /// GET /api/v1/translation/domains — returns the list of translation domains.
-class DomainController : PlatformController {
+class DomainController : HttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);

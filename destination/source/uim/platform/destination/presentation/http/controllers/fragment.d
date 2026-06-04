@@ -14,7 +14,7 @@ import uim.platform.destination;
 mixin(ShowModule!());
 
 @safe:
-class FragmentController : ManageController {
+class FragmentController : ManageHttpController {
   private ManageFragmentsUseCase usecase;
 
   this(ManageFragmentsUseCase usecase) {

@@ -15,7 +15,7 @@ import uim.platform.monitoring;
 mixin(ShowModule!());
 
 @safe:
-class MetricDefinitionController : ManageController {
+class MetricDefinitionController : ManageHttpController {
   private ManageMetricsUseCase usecase;
 
   this(ManageMetricsUseCase usecase) {

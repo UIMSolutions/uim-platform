@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MlExperimentController : ManageController {
+class MlExperimentController : ManageHttpController {
 private:
   ManageMlExperimentsUseCase _usecase;
 

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ImportQueueEntryController : ManageController {
+class ImportQueueEntryController : ManageHttpController {
     private ManageImportQueueEntriesUseCase usecase;
 
     this(ManageImportQueueEntriesUseCase usecase) {

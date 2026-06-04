@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class TopicSubscriptionController : ManageController {
+class TopicSubscriptionController : ManageHttpController {
 private:
   ManageTopicSubscriptionsUseCase _usecase;
 

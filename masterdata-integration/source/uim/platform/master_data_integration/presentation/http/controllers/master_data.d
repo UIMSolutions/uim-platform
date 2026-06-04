@@ -19,7 +19,7 @@ import uim.platform.master_data_integration;
 mixin(ShowModule!());
 
 @safe:
-class MasterDataController : ManageController {
+class MasterDataController : ManageHttpController {
   private ManageMasterDataObjectsUseCase usecase;
 
   this(ManageMasterDataObjectsUseCase usecase) {

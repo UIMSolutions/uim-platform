@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class SocialIdentityController : ManageController {
+class SocialIdentityController : ManageHttpController {
     private ManageSocialIdentitiesUseCase socialIdentities;
 
     this(ManageSocialIdentitiesUseCase socialIdentities) {

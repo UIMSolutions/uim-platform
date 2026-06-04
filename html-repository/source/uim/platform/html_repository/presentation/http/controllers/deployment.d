@@ -14,7 +14,7 @@ import uim.platform.html_repository;
 mixin(ShowModule!());
 
 @safe:
-class DeploymentController : PlatformController {
+class DeploymentController : HttpController {
   private DeployApplicationUseCase deployApp;
   private GetDeploymentHistoryUseCase getHistory;
 

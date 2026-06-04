@@ -10,7 +10,7 @@ import uim.platform.abap_environment;
 // mixin(ShowModule!());
 @safe:
 
-class CommunicationArrangementWebController : ManageController {
+class CommunicationArrangementWebController : ManageHttpController {
   private ManageCommunicationArrangementsUseCase usecase;
 
   this(ManageCommunicationArrangementsUseCase usecase) {

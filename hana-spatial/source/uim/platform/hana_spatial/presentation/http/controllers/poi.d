@@ -10,7 +10,7 @@ import uim.platform.hana_spatial;
 mixin(ShowModule!());
 
 @safe:
-class PoiController : ManageController {
+class PoiController : ManageHttpController {
   private ManagePointsOfInterestUseCase usecase;
 
   this(ManagePointsOfInterestUseCase usecase) {

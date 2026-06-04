@@ -5,7 +5,7 @@ import vibe.http.router;
 
 mixin(ShowModule!());
 @safe:
-class ZerocopyConnectorController : ManageController {
+class ZerocopyConnectorController : ManageHttpController {
   private ManageZerocopyConnectorsUseCase usecase;
   this(ManageZerocopyConnectorsUseCase usecase) {
     this.usecase = usecase;

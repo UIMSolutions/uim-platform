@@ -5,7 +5,7 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-class ExternalContentProviderController : ManageController {
+class ExternalContentProviderController : ManageHttpController {
   private ManageExternalContentProvidersUseCase useCase;
 
   this(ManageExternalContentProvidersUseCase useCase) {

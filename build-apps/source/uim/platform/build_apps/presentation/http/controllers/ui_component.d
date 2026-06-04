@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class UIComponentController : ManageController {
+class UIComponentController : ManageHttpController {
     private ManageUIComponentsUseCase components;
 
     this(ManageUIComponentsUseCase components) {

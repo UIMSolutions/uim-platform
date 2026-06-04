@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ArtifactController : ManageController {
+class ArtifactController : ManageHttpController {
     private ManageArtifactsUseCase artifactUsecase;
 
     this(ManageArtifactsUseCase artifactUsecase) {

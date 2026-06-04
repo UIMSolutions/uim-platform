@@ -16,7 +16,7 @@ import uim.platform.data_attribute_recommendation;
 
 mixin(ShowModule!());
 @safe:
-class DeploymentController : ManageController {
+class DeploymentController : ManageHttpController {
   private ManageDeploymentsUseCase usecase;
 
   this(ManageDeploymentsUseCase usecase) {

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class SmartformController : ManageController {
+class SmartformController : ManageHttpController {
     private ManageSmartformsUseCase usecase;
 
     this(ManageSmartformsUseCase usecase) {

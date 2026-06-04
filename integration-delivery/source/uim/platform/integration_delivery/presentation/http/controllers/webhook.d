@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class WebhookController : ManageController {
+class WebhookController : ManageHttpController {
     private ManageWebhooksUseCase webhooks;
 
     this(ManageWebhooksUseCase webhooks) {

@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class LegalGroundController : ManageController {
+class LegalGroundController : ManageHttpController {
     private ManageLegalGroundsUseCase usecase;
 
     this(ManageLegalGroundsUseCase usecase) {

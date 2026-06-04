@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class PermissionController : ManageController {
+class PermissionController : ManageHttpController {
     private ManagePermissionsUseCase usecase;
 
     this(ManagePermissionsUseCase usecase) {

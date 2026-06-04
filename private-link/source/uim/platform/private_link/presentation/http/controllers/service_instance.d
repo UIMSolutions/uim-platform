@@ -10,7 +10,7 @@ mixin(ShowModule!());
 
 @safe:
 /// HTTP controller for private link service instance lifecycle management.
-class ServiceInstanceController : ManageController {
+class ServiceInstanceController : ManageHttpController {
   private ManageServiceInstancesUseCase usecase;
 
   this(ManageServiceInstancesUseCase usecase) {

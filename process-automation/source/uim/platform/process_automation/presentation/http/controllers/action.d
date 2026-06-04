@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ActionController : ManageController {
+class ActionController : ManageHttpController {
     private ManageActionsUseCase actionUsecase;
 
     this(ManageActionsUseCase actionUsecase) {
@@ -92,10 +92,12 @@ class ActionController : ManageController {
         return successResponse("Actions retrieved successfully", "Retrieved", 200, resp);
     }
 
-    override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto tenantId = precheck.tenantId;
+        auto tenantId = precheck.tenantId;
             auto id = ActionId(precheck.id);
 
             auto a = actionUsecase.getAction(tenantId, id);

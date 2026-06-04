@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class SkillController : ManageController {
+class SkillController : ManageHttpController {
     private ManageSkillsUseCase usecase;
 
     this(ManageSkillsUseCase usecase) {

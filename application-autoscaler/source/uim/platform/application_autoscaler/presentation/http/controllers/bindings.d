@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class AppBindingController : ManageController {
+class AppBindingController : ManageHttpController {
   private ManageAppBindingsUseCase usecase;
 
   this(ManageAppBindingsUseCase usecase) {

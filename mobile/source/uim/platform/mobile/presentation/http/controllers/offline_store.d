@@ -14,7 +14,7 @@ mixin(Showmodule!());
 
 @safe:
 
-class OfflineStoreController : ManageController {
+class OfflineStoreController : ManageHttpController {
   private ManageOfflineStoresUseCase usecase;
 
   this(ManageOfflineStoresUseCase usecase) {

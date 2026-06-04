@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MobileApplicationController : ManageController {
+class MobileApplicationController : ManageHttpController {
     private ManageMobileApplicationsUseCase usecase;
 
     this(ManageMobileApplicationsUseCase usecase) {

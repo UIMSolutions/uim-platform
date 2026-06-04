@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class AlertController : ManageController {
+class AlertController : ManageHttpController {
   private ManageAlertsUseCase usecase;
 
   this(ManageAlertsUseCase usecase) {

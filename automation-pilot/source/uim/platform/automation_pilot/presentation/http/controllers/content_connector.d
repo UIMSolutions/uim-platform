@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ContentConnectorController : ManageController {
+class ContentConnectorController : ManageHttpController {
     private ManageContentConnectorsUseCase usecase;
 
     this(ManageContentConnectorsUseCase usecase) {

@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ResourceGroupController : ManageController {
+class ResourceGroupController : ManageHttpController {
   private ManageResourceGroupsUseCase usecase;
 
   this(ManageResourceGroupsUseCase usecase) {

@@ -17,7 +17,7 @@ import uim.platform.abap_environment;
 // mixin(ShowModule!());
 
 @safe:
-class BusinessUserController : ManageController {
+class BusinessUserController : ManageHttpController {
   private ManageBusinessUsersUseCase usecase;
 
   this(ManageBusinessUsersUseCase usecase) {

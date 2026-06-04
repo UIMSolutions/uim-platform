@@ -17,7 +17,7 @@ import uim.platform.portal;
 mixin(ShowModule!());
 
 @safe:
-class MenuItemController : ManageController {
+class MenuItemController : ManageHttpController {
   private ManageMenuItemsUseCase useCase;
 
   this(ManageMenuItemsUseCase useCase) {

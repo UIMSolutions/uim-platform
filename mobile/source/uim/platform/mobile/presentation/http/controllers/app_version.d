@@ -15,7 +15,7 @@ mixin(Showmodule!());
 
 @safe:
 
-class AppVersionController : ManageController {
+class AppVersionController : ManageHttpController {
   private ManageAppVersionsUseCase usecase;
 
   this(ManageAppVersionsUseCase usecase) {

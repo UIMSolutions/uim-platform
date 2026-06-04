@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ApiProxyController : ManageController {
+class ApiProxyController : ManageHttpController {
 private:
   ManageApiProxiesUseCase _usecase;
 

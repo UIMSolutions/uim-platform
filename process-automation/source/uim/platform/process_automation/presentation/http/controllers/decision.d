@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DecisionController : ManageController {
+class DecisionController : ManageHttpController {
     private ManageDecisionsUseCase decisionUsecase;
 
     this(ManageDecisionsUseCase decisionUsecase) {
@@ -99,10 +99,12 @@ class DecisionController : ManageController {
         }
     }
 
-    override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto tenantId = precheck.tenantId;
+        auto tenantId = precheck.tenantId;
 
             auto id = DecisionId(precheck.id);
             auto d = decisionUsecase.getDecision(tenantId, id);

@@ -12,7 +12,7 @@ import uim.platform.ai_core;
 mixin(ShowModule!());
 
 @safe:
-class ConfigurationController : ManageController {
+class ConfigurationController : ManageHttpController {
   private ManageConfigurationsUseCase usecase;
 
   this(ManageConfigurationsUseCase usecase) {

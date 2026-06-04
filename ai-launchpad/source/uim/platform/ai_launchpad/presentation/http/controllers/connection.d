@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ConnectionController : ManageController {
+class ConnectionController : ManageHttpController {
   private ManageConnectionsUseCase usecase;
 
   this(ManageConnectionsUseCase usecase) {

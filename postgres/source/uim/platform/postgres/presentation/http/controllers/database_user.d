@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DatabaseUserController : ManageController {
+class DatabaseUserController : ManageHttpController {
     private ManageDatabaseUsersUseCase users;
 
     this(ManageDatabaseUsersUseCase users) { this.users = users; }

@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class LegalEntityController : ManageController {
+class LegalEntityController : ManageHttpController {
     private ManageLegalEntitiesUseCase usecase;
 
     this(ManageLegalEntitiesUseCase usecase) { this.usecase = usecase; }
@@ -75,7 +75,7 @@ class LegalEntityController : ManageController {
 
             auto le = usecase.getLegalEntity(tenantId, id);
             if (le.isNull) { writeError(res, 404, "Legal entity not found"); return; }
-            res.writeJsonBody(Json.emptyObject
+            auto responseData = Json.emptyObject
                 .set("id", le.id.value).set("name", le.name)
                 .set("description", le.description)
                 .set("country", le.country).set("region", le.region)

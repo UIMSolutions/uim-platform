@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DataConnectionController : ManageController {
+class DataConnectionController : ManageHttpController {
     private ManageDataConnectionsUseCase usecase;
 
     this(ManageDataConnectionsUseCase usecase) {

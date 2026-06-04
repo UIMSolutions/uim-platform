@@ -14,7 +14,7 @@ mixin(Showmodule!());
 
 @safe:
 
-class ClientResourceController : ManageController {
+class ClientResourceController : ManageHttpController {
   private ManageClientResourcesUseCase usecase;
 
   this(ManageClientResourcesUseCase usecase) {

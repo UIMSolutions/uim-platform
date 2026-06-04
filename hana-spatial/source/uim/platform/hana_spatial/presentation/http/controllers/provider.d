@@ -10,7 +10,7 @@ import uim.platform.hana_spatial;
 mixin(ShowModule!());
 
 @safe:
-class ProviderController : ManageController {
+class ProviderController : ManageHttpController {
   private ManageProvidersUseCase usecase;
 
   this(ManageProvidersUseCase usecase) {

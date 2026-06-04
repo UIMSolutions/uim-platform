@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class TransportRouteController : ManageController {
+class TransportRouteController : ManageHttpController {
     private ManageTransportRoutesUseCase usecase;
 
     this(ManageTransportRoutesUseCase usecase) {

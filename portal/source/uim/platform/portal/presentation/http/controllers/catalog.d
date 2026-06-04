@@ -17,7 +17,7 @@ import uim.platform.portal;
 mixin(ShowModule!());
 
 @safe:
-class CatalogController : ManageController {
+class CatalogController : ManageHttpController {
   private ManageCatalogsUseCase useCase;
 
   this(ManageCatalogsUseCase useCase) {

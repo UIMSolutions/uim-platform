@@ -19,7 +19,7 @@ import uim.platform.portal;
 mixin(ShowModule!());
 
 @safe:
-class PageController : ManageController {
+class PageController : ManageHttpController {
   private ManagePagesUseCase useCase;
 
   this(ManagePagesUseCase useCase) {

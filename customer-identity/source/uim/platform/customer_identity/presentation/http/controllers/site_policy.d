@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class SitePolicyController : ManageController {
+class SitePolicyController : ManageHttpController {
     private ManageSitePoliciesUseCase sitePolicies;
 
     this(ManageSitePoliciesUseCase sitePolicies) {

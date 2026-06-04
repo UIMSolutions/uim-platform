@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DataLakeController : ManageController {
+class DataLakeController : ManageHttpController {
   private ManageDataLakesUseCase usecase;
 
   this(ManageDataLakesUseCase usecase) {

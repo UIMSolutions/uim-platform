@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class TriggerController : ManageController {
+class TriggerController : ManageHttpController {
     private ManageTriggersUseCase usecase;
 
     this(ManageTriggersUseCase usecase) {

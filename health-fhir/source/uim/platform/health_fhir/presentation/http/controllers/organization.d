@@ -10,7 +10,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class OrganizationController : ManageController {
+class OrganizationController : ManageHttpController {
   private ManageOrganizationsUseCase usecase;
 
   this(ManageOrganizationsUseCase usecase) {

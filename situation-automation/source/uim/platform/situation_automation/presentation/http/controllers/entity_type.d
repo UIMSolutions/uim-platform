@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class EntityTypeController : ManageController {
+class EntityTypeController : ManageHttpController {
     private ManageEntityTypesUseCase usecase;
 
     this(ManageEntityTypesUseCase usecase) {

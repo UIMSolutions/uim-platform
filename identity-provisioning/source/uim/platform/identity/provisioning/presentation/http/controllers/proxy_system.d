@@ -17,7 +17,7 @@ import uim.platform.identity.provisioning;
 mixin(ShowModule!());
 
 @safe:
-class ProxySystemController : ManageController {
+class ProxySystemController : ManageHttpController {
   private ManageProxySystemsUseCase usecase;
 
   this(ManageProxySystemsUseCase usecase) {

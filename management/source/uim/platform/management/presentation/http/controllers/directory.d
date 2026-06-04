@@ -14,7 +14,7 @@ import uim.platform.management;
 
 mixin(ShowModule!());
 @safe:
-class DirectoryController : ManageController {
+class DirectoryController : ManageHttpController {
   private ManageDirectoriesUseCase usecase;
 
   this(ManageDirectoriesUseCase usecase) {

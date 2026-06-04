@@ -16,7 +16,7 @@ import uim.platform.auditlog;
 mixin(ShowModule!());
 
 @safe:
-class ExportController : ManageController {
+class ExportController : ManageHttpController {
   private ManageExportsUseCase useCase;
 
   this(ManageExportsUseCase useCase) {

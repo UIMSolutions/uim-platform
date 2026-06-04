@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 /// REST /api/v1/slm/subscriptions — subscribe/unsubscribe/list MTA subscriptions.
-class MtaSubscriptionController : ManageController {
+class MtaSubscriptionController : ManageHttpController {
     private ManageMtaSubscriptionsUseCase usecase;
 
     this(ManageMtaSubscriptionsUseCase usecase) {

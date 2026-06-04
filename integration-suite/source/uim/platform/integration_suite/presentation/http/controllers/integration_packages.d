@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class IntegrationPackageController : ManageController {
+class IntegrationPackageController : ManageHttpController {
 private:
   ManageIntegrationPackagesUseCase _usecase;
 

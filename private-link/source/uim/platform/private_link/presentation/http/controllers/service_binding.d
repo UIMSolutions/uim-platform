@@ -10,7 +10,7 @@ mixin(ShowModule!());
 
 @safe:
 /// HTTP controller for service binding management.
-class ServiceBindingController : ManageController {
+class ServiceBindingController : ManageHttpController {
   private ManageServiceBindingsUseCase usecase;
 
   this(ManageServiceBindingsUseCase usecase) {

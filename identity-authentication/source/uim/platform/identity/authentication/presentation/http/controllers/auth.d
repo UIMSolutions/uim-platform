@@ -15,7 +15,7 @@ import uim.platform.identity.authentication;
 mixin(ShowModule!());
 @safe:
 /// HTTP controller for authentication endpoints.
-class AuthController : PlatformController {
+class AuthController : HttpController {
   private AuthenticateUserUseCase authUseCase;
   private IssueTokenUseCase tokenUseCase;
 

@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class CorsRuleController : ManageController {
+class CorsRuleController : ManageHttpController {
   private ManageCorsRulesUseCase usecase;
 
   this(ManageCorsRulesUseCase usecase) {

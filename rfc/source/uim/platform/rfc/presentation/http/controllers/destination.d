@@ -17,7 +17,7 @@ mixin(ShowModule!());
 ///   GET    /api/v1/rfc/destinations/*    — get destination by ID
 ///   PUT    /api/v1/rfc/destinations/*    — update destination
 ///   DELETE /api/v1/rfc/destinations/*    — delete destination
-class DestinationController : PlatformController {
+class DestinationController : HttpController {
 
     private ManageDestinationsUseCase _usecase;
 

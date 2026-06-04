@@ -10,7 +10,7 @@ import uim.platform.hana_spatial;
 mixin(ShowModule!());
 
 @safe:
-class RoutingController : ManageController {
+class RoutingController : ManageHttpController {
   private ManageRoutesUseCase usecase;
 
   this(ManageRoutesUseCase usecase) {

@@ -14,7 +14,7 @@ import uim.platform.content_agent;
 mixin(ShowModule!());
 
 @safe:
-class ImportController : PlatformController {
+class ImportController : HttpController {
   private ImportContentUseCase usecase;
 
   this(ImportContentUseCase usecase) {

@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 /// HTTP controller for SCIM 2.0 group management.
-class GroupController : ManageController {
+class GroupController : ManageHttpController {
   private ManageGroupsUseCase useCase;
 
   this(ManageGroupsUseCase useCase) {

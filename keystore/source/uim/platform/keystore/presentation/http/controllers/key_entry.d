@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class KeyEntryController : ManageController {
+class KeyEntryController : ManageHttpController {
   private ManageKeyEntriesUseCase usecase;
 
   this(ManageKeyEntriesUseCase usecase) {

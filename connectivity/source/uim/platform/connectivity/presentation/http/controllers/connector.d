@@ -13,7 +13,7 @@ import uim.platform.connectivity;
 mixin(ShowModule!());
 
 @safe:
-class ConnectorController : ManageController {
+class ConnectorController : ManageHttpController {
   private ManageConnectorsUseCase usecase;
 
   this(ManageConnectorsUseCase usecase) {

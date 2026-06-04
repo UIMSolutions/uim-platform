@@ -14,7 +14,7 @@ import uim.platform.data_quality;
 mixin(ShowModule!());
 
 @safe:
-class DuplicateController : PlatformController {
+class DuplicateController : HttpController {
   private DetectDuplicatesUseCase usecase;
 
   this(DetectDuplicatesUseCase usecase) {

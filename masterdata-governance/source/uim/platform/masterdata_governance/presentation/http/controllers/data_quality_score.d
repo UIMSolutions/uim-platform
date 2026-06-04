@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DataQualityScoreController : ManageController {
+class DataQualityScoreController : ManageHttpController {
     private ManageDataQualityScoresUseCase usecase;
 
     this(ManageDataQualityScoresUseCase usecase) {

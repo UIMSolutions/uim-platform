@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class AccessTokenController : ManageController {
+class AccessTokenController : ManageHttpController {
     private ManageAccessTokensUseCase usecase;
 
     this(ManageAccessTokensUseCase usecase) {

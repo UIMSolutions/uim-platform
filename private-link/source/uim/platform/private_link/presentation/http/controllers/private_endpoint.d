@@ -10,7 +10,7 @@ mixin(ShowModule!());
 
 @safe:
 /// HTTP controller for private endpoint management and approval workflow.
-class PrivateEndpointController : ManageController {
+class PrivateEndpointController : ManageHttpController {
   private ManagePrivateEndpointsUseCase usecase;
 
   this(ManagePrivateEndpointsUseCase usecase) {

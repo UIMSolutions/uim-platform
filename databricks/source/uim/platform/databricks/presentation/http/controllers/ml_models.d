@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MlModelController : ManageController {
+class MlModelController : ManageHttpController {
 private:
   ManageMlModelsUseCase _usecase;
 

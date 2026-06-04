@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class PrivateKeyController : ManageController {
+class PrivateKeyController : ManageHttpController {
     private ManagePrivateKeysUseCase usecase;
 
     this(ManagePrivateKeysUseCase usecase) {

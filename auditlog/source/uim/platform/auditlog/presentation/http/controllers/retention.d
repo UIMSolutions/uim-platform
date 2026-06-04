@@ -16,7 +16,7 @@ import uim.platform.auditlog;
 mixin(ShowModule!());
 
 @safe:
-class RetentionController : ManageController {
+class RetentionController : ManageHttpController {
   private ManageRetentionUseCase useCase;
 
   this(ManageRetentionUseCase useCase) {

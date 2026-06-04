@@ -13,7 +13,7 @@ import uim.platform.html_repository;
 mixin(ShowModule!());
 
 @safe:
-class HtmlAppController : ManageController {
+class HtmlAppController : ManageHttpController {
   private ManageHtmlAppsUseCase usecase;
 
   this(ManageHtmlAppsUseCase usecase) {

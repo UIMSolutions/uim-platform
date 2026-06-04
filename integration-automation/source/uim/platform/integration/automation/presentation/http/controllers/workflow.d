@@ -17,7 +17,7 @@ import uim.platform.integration.automation;
 mixin(ShowModule!());
 
 @safe:
-class WorkflowController : ManageController {
+class WorkflowController : ManageHttpController {
   private ManageWorkflowsUseCase useCase;
 
   this(ManageWorkflowsUseCase useCase) {

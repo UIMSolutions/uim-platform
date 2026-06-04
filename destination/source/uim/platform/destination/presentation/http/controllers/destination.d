@@ -14,7 +14,7 @@ import uim.platform.destination;
 mixin(ShowModule!());
 
 @safe:
-class DestinationController : ManageController {
+class DestinationController : ManageHttpController {
   private ManageDestinationsUseCase usecase;
 
   this(ManageDestinationsUseCase usecase) {

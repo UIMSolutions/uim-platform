@@ -14,7 +14,7 @@ import uim.platform.ai_launchpad;
 mixin(ShowModule!());
 
 @safe:
-class CapabilitiesController : PlatformController {
+class CapabilitiesController : HttpController {
   private GetCapabilitiesUseCase usecase;
 
   this(GetCapabilitiesUseCase usecase) {

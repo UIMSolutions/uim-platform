@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class RunLogController : ManageController {
+class RunLogController : ManageHttpController {
     private ManageRunLogsUseCase usecase;
 
     this(ManageRunLogsUseCase usecase) {

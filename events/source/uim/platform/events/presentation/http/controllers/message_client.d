@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MessageClientController : ManageController {
+class MessageClientController : ManageHttpController {
     private ManageMessageClientsUseCase usecase;
 
     this(ManageMessageClientsUseCase usecase) { this.usecase = usecase; }

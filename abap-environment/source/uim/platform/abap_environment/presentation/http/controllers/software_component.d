@@ -15,7 +15,7 @@ import uim.platform.abap_environment;
 
 // mixin(ShowModule!());
 @safe:
-class SoftwareComponentController : ManageController {
+class SoftwareComponentController : ManageHttpController {
   private ManageSoftwareComponentsUseCase usecase;
 
   this(ManageSoftwareComponentsUseCase usecase) {

@@ -13,7 +13,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class DataControllerGroupController : ManageController {
+class DataControllerGroupController : ManageHttpController {
   private ManageDataControllerGroupsUseCase usecase;
 
   this(ManageDataControllerGroupsUseCase usecase) {

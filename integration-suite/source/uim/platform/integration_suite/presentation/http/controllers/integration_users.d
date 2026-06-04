@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class IntegrationUserController : ManageController {
+class IntegrationUserController : ManageHttpController {
 private:
   IntegrationUserRepository _repo;
 

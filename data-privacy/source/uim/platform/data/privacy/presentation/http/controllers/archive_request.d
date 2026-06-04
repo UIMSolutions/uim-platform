@@ -13,7 +13,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class ArchiveRequestController : ManageController {
+class ArchiveRequestController : ManageHttpController {
   private ManageArchiveRequestsUseCase usecase;
 
   this(ManageArchiveRequestsUseCase usecase) {

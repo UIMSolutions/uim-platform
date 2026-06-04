@@ -15,7 +15,7 @@ import uim.platform.portal;
 mixin(ShowModule!());
 
 @safe:
-class ProviderController : ManageController {
+class ProviderController : ManageHttpController {
   private ManageProvidersUseCase useCase;
 
   this(ManageProvidersUseCase useCase) {

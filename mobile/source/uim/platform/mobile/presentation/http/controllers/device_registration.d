@@ -14,7 +14,7 @@ mixin(Showmodule!());
 
 @safe:
 
-class DeviceRegistrationController : ManageController {
+class DeviceRegistrationController : ManageHttpController {
   private ManageDeviceRegistrationsUseCase usecase;
 
   this(ManageDeviceRegistrationsUseCase usecase) {

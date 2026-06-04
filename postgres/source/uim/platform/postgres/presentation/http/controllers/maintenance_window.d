@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MaintenanceWindowController : ManageController {
+class MaintenanceWindowController : ManageHttpController {
     private ManageMaintenanceWindowsUseCase maintenanceWindows;
 
     this(ManageMaintenanceWindowsUseCase maintenanceWindows) { this.maintenanceWindows = maintenanceWindows; }

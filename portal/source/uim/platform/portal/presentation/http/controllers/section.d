@@ -15,7 +15,7 @@ import uim.platform.portal;
 mixin(ShowModule!());
 
 @safe:
-class SectionController : ManageController {
+class SectionController : ManageHttpController {
   private ManageSectionsUseCase useCase;
 
   this(ManageSectionsUseCase useCase) {

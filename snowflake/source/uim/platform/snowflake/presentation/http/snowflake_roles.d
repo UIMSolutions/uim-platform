@@ -5,7 +5,7 @@ import vibe.http.router;
 
 mixin(ShowModule!());
 @safe:
-class SnowflakeRoleController : ManageController {
+class SnowflakeRoleController : ManageHttpController {
   private ManageSnowflakeRolesUseCase usecase;
   this(ManageSnowflakeRolesUseCase usecase) { this.usecase = usecase; }
 

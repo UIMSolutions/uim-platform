@@ -15,7 +15,7 @@ import uim.platform.monitoring;
 mixin(ShowModule!());
 
 @safe:
-class DashboardController : PlatformController {
+class DashboardController : HttpController {
   private GetDashboardUseCase usecase;
 
   this(GetDashboardUseCase usecase) {

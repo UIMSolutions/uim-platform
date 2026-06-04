@@ -12,7 +12,7 @@ import uim.platform.management;
 
 mixin(ShowModule!());
 @safe:
-class OverviewController : PlatformController {
+class OverviewController : HttpController {
   private GetAccountOverviewUseCase usecase;
 
   this(GetAccountOverviewUseCase usecase) {

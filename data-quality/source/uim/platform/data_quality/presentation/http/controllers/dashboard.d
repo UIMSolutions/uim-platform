@@ -18,7 +18,7 @@ import uim.platform.data_quality;
 mixin(ShowModule!());
 
 @safe:
-class DashboardController : PlatformController {
+class DashboardController : HttpController {
   private ComputeDashboardUseCase usecase;
 
   this(ComputeDashboardUseCase usecase) {

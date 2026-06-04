@@ -16,7 +16,7 @@ import uim.platform.integration.automation;
 mixin(ShowModule!());
 
 @safe:
-class MonitoringController : PlatformController {
+class MonitoringController : HttpController {
   private MonitorExecutionsUseCase useCase;
 
   this(MonitorExecutionsUseCase useCase) {

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class RunConfigurationController : ManageController {
+class RunConfigurationController : ManageHttpController {
     private ManageRunConfigurationsUseCase usecase;
 
     this(ManageRunConfigurationsUseCase usecase) {

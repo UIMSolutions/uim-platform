@@ -13,7 +13,7 @@ import uim.platform.management;
 
 mixin(ShowModule!());
 @safe:
-class SubaccountController : ManageController {
+class SubaccountController : ManageHttpController {
   private ManageSubaccountsUseCase usecase;
 
   this(ManageSubaccountsUseCase usecase) {

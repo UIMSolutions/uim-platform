@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class IntegrationFlowController : ManageController {
+class IntegrationFlowController : ManageHttpController {
 private:
   ManageIntegrationFlowsUseCase _usecase;
 

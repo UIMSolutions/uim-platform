@@ -14,7 +14,7 @@ import uim.platform.content_agent;
 mixin(ShowModule!());
 
 @safe:
-class QueueController : ManageController {
+class QueueController : ManageHttpController {
   private ManageTransportQueuesUseCase usecase;
 
   this(ManageTransportQueuesUseCase usecase) {

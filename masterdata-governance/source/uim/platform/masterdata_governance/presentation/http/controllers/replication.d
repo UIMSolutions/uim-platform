@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ReplicationController : ManageController {
+class ReplicationController : ManageHttpController {
     private ManageReplicationsUseCase usecase;
 
     this(ManageReplicationsUseCase usecase) {

@@ -13,7 +13,7 @@ import uim.platform.mobile;
 mixin(Showmodule!());
 
 @safe:
-class AppConfigurationController : ManageController {
+class AppConfigurationController : ManageHttpController {
   private ManageAppConfigurationsUseCase usecase;
 
   this(ManageAppConfigurationsUseCase usecase) {

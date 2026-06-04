@@ -14,7 +14,7 @@ import uim.platform.master_data_integration;
 mixin(ShowModule!());
 
 @safe:
-class DistributionController : ManageController {
+class DistributionController : ManageHttpController {
   private ManageDistributionModelsUseCase usecase;
 
   this(ManageDistributionModelsUseCase usecase) {

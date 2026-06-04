@@ -19,7 +19,7 @@ import uim.platform.master_data_integration;
 mixin(ShowModule!());
 
 @safe:
-class KeyMappingController : ManageController {
+class KeyMappingController : ManageHttpController {
   private ManageKeyMappingsUseCase usecase;
 
   this(ManageKeyMappingsUseCase usecase) {

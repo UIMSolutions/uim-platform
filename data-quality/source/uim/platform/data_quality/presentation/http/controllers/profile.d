@@ -18,7 +18,7 @@ import uim.platform.data_quality;
 mixin(ShowModule!());
 
 @safe:
-class ProfileController : PlatformController {
+class ProfileController : HttpController {
   private ProfileDataUseCase usecase;
 
   this(ProfileDataUseCase usecase) {

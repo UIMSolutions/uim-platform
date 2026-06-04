@@ -11,7 +11,7 @@ mixin(ShowModule!());
 @safe:
 
 /// Routes: /api/v2/applications
-class FlexApplicationsController : ManageController {
+class FlexApplicationsController : ManageHttpController {
   private ManageFlexApplicationsUseCase usecase;
 
   this(ManageFlexApplicationsUseCase usecase) {

@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class EncryptionController : PlatformController {
+class EncryptionController : HttpController {
   private EncryptDekUseCase usecase;
 
   this(EncryptDekUseCase usecase) {

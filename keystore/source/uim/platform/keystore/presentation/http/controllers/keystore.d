@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class KeystoreController : ManageController {
+class KeystoreController : ManageHttpController {
   private ManageKeystoresUseCase usecase;
   private KeystoreSearchService searchSvc;
 

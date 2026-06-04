@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class RetentionRuleController : ManageController {
+class RetentionRuleController : ManageHttpController {
     private ManageRetentionRulesUseCase usecase;
 
     this(ManageRetentionRulesUseCase usecase) {

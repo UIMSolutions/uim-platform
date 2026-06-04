@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class UserController : ManageController {
+class UserController : ManageHttpController {
     private ManageUsersUseCase usecase;
 
     this(ManageUsersUseCase usecase) { this.usecase = usecase; }

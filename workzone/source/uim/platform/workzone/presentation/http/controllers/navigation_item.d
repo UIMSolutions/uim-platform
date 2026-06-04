@@ -5,7 +5,7 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-class NavigationItemController : ManageController {
+class NavigationItemController : ManageHttpController {
   private ManageNavigationItemsUseCase useCase;
 
   this(ManageNavigationItemsUseCase useCase) {

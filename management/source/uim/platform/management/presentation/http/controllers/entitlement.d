@@ -14,7 +14,7 @@ import uim.platform.management;
 
 mixin(ShowModule!());
 @safe:
-class EntitlementController : ManageController {
+class EntitlementController : ManageHttpController {
   private ManageEntitlementsUseCase usecase;
 
   this(ManageEntitlementsUseCase usecase) {

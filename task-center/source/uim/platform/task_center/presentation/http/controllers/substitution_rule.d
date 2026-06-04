@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class SubstitutionRuleController : ManageController {
+class SubstitutionRuleController : ManageHttpController {
     private ManageSubstitutionRulesUseCase usecase;
 
     this(ManageSubstitutionRulesUseCase usecase) {

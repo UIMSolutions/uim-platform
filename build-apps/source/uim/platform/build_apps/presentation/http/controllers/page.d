@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class PageController : ManageController {
+class PageController : ManageHttpController {
     private ManagePagesUseCase usecase;
 
     this(ManagePagesUseCase usecase) {

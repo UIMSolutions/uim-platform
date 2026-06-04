@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 /// REST /api/v1/slm/mtas — deploy, list, get, update, delete deployed MTA solutions.
-class MtaController : ManageController {
+class MtaController : ManageHttpController {
     private ManageMtasUseCase usecase;
 
     this(ManageMtasUseCase usecase) {

@@ -13,7 +13,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class AnonymizationConfigController : ManageController {
+class AnonymizationConfigController : ManageHttpController {
   private ManageAnonymizationConfigsUseCase usecase;
 
   this(ManageAnonymizationConfigsUseCase usecase) {

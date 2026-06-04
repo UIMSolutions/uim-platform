@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 /// GET /api/v1/translation/languages — returns the list of supported BCP-47 language codes.
-class LanguageController : PlatformController {
+class LanguageController : HttpController {
     private PerformTranslationUseCase usecase;
 
     this(PerformTranslationUseCase usecase) {

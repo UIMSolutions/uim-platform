@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ApiProductController : ManageController {
+class ApiProductController : ManageHttpController {
 private:
   ManageApiProductsUseCase _usecase;
 

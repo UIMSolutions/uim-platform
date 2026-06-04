@@ -17,7 +17,7 @@ import uim.platform.identity.provisioning;
 mixin(ShowModule!());
 
 @safe:
-class SourceSystemController : ManageController {
+class SourceSystemController : ManageHttpController {
   private ManageSourceSystemsUseCase usecase;
 
   this(ManageSourceSystemsUseCase usecase) {

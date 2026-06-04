@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class TradingPartnerController : ManageController {
+class TradingPartnerController : ManageHttpController {
 private:
   ManageTradingPartnersUseCase _usecase;
 

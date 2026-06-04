@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class JobController : ManageController {
+class JobController : ManageHttpController {
 private:
   ManageJobsUseCase _usecase;
 

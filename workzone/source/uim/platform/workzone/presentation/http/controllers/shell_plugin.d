@@ -5,7 +5,7 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-class ShellPluginController : ManageController {
+class ShellPluginController : ManageHttpController {
   private ManageShellPluginsUseCase useCase;
 
   this(ManageShellPluginsUseCase useCase) {

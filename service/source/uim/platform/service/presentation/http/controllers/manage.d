@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ManageController : PlatformController {
+class ManageHttpController : HttpController {
   this() {
     super();
   }
@@ -130,14 +130,14 @@ class ManageController : PlatformController {
 }
 ///
 unittest {
-  auto controller = new ManageController();
+  auto controller = new ManageHttpController();
   assert(controller.requiredTenant() == true);
   // 
-  auto controllerWithInit = new ManageController(Json.emptyObject.set("requiredTenant", false));
+  auto controllerWithInit = new ManageHttpController(Json.emptyObject.set("requiredTenant", false));
   assert(controllerWithInit.requiredTenant() == false);
   // 
   Json[string] initData = ["requiredTenant": Json(true)];
-  auto controllerWithInit2 = new ManageController(initData);
+  auto controllerWithInit2 = new ManageHttpController(initData);
   assert(controllerWithInit2.requiredTenant() == true);
 
   // Test listHandler

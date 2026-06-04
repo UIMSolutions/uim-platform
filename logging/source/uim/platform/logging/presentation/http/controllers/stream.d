@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class StreamController : ManageController {
+class StreamController : ManageHttpController {
   private ManageLogStreamsUseCase usecase;
 
   this(ManageLogStreamsUseCase usecase) {

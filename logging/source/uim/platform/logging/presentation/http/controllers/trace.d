@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class TraceController : PlatformController {
+class TraceController : HttpController {
   private IngestTracesUseCase usecase;
 
   this(IngestTracesUseCase usecase) {

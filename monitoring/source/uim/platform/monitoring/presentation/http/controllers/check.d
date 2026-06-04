@@ -14,7 +14,7 @@ import uim.platform.monitoring;
 mixin(ShowModule!());
 
 @safe:
-class CheckController : ManageController {
+class CheckController : ManageHttpController {
   private ManageHealthChecksUseCase usecase;
 
   this(ManageHealthChecksUseCase usecase) {

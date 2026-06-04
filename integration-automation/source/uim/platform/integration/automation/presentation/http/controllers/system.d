@@ -17,7 +17,7 @@ import uim.platform.integration.automation;
 mixin(ShowModule!());
 
 @safe:
-class SystemController : ManageController {
+class SystemController : ManageHttpController {
   private ManageSystemsUseCase useCase;
 
   this(ManageSystemsUseCase useCase) {

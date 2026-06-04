@@ -17,7 +17,7 @@ import uim.platform.integration.automation;
 mixin(ShowModule!());
 
 @safe:
-class StepController : ManageController {
+class StepController : ManageHttpController {
   private ManageStepsUseCase useCase;
 
   this(ManageStepsUseCase useCase) {

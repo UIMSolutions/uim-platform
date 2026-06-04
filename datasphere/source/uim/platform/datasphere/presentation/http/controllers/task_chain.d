@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class TaskChainController : ManageController {
+class TaskChainController : ManageHttpController {
   private ManageTaskChainsUseCase usecase;
 
   this(ManageTaskChainsUseCase usecase) {

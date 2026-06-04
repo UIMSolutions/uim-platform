@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DeltaTableController : ManageController {
+class DeltaTableController : ManageHttpController {
 private:
   ManageDeltaTablesUseCase _usecase;
 

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ConditionController : ManageController {
+class ConditionController : ManageHttpController {
     private ManageConditionsUseCase usecase;
 
     this(ManageConditionsUseCase usecase) { this.usecase = usecase; }

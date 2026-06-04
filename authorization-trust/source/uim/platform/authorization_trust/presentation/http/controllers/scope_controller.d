@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ScopeController : ManageController {
+class ScopeController : ManageHttpController {
   private ManageScopesUseCase usecase;
 
   this(ManageScopesUseCase usecase) {

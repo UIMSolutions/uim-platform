@@ -5,7 +5,7 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-class WidgetController : ManageController {
+class WidgetController : ManageHttpController {
   private ManageWidgetsUseCase useCase;
 
   this(ManageWidgetsUseCase useCase) {

@@ -10,7 +10,7 @@ import uim.platform.hana_spatial;
 mixin(ShowModule!());
 
 @safe:
-class GeofenceController : ManageController {
+class GeofenceController : ManageHttpController {
   private ManageGeofenceZonesUseCase usecase;
 
   this(ManageGeofenceZonesUseCase usecase) {

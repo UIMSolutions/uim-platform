@@ -12,7 +12,7 @@ import uim.platform.connectivity;
 mixin(ShowModule!());
 
 @safe:
-class DestinationController : ManageController {
+class DestinationController : ManageHttpController {
   private ManageDestinationsUseCase usecase;
 
   this(ManageDestinationsUseCase usecase) {

@@ -14,7 +14,7 @@ import uim.platform.data_quality;
 mixin(ShowModule!());
 
 @safe:
-class CleansingJobController : ManageController {
+class CleansingJobController : ManageHttpController {
   private ManageCleansingJobsUseCase usecase;
 
   this(ManageCleansingJobsUseCase usecase) {

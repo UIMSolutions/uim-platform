@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ProcessInstanceController : ManageController {
+class ProcessInstanceController : ManageHttpController {
     private ManageProcessInstancesUseCase processInstanceUsecase;
 
     this(ManageProcessInstancesUseCase processInstanceUsecase) {
@@ -92,10 +92,12 @@ class ProcessInstanceController : ManageController {
         }
     }
 
-    override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto tenantId = precheck.tenantId;
+        auto tenantId = precheck.tenantId;
 
             auto id = ProcessInstanceId(precheck.id);
             auto i = processInstanceUsecase.getProcessInstance(tenantId, id);

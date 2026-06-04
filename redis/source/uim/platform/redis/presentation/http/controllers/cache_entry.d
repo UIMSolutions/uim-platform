@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class CacheEntryController : ManageController {
+class CacheEntryController : ManageHttpController {
     private ManageCacheEntriesUseCase cacheEntries;
 
     this(ManageCacheEntriesUseCase cacheEntries) {

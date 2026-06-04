@@ -14,7 +14,7 @@ import uim.platform.management;
 
 mixin(ShowModule!());
 @safe:
-class EnvironmentController : ManageController {
+class EnvironmentController : ManageHttpController {
   private ManageEnvironmentInstancesUseCase usecase;
 
   this(ManageEnvironmentInstancesUseCase usecase) {

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ExtensionController : ManageController {
+class ExtensionController : ManageHttpController {
     private ManageExtensionsUseCase usecase;
 
     this(ManageExtensionsUseCase usecase) {

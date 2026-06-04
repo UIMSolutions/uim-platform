@@ -5,7 +5,7 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-class TagController : ManageController {
+class TagController : ManageHttpController {
   private ManageTagsUseCase useCase;
 
   this(ManageTagsUseCase useCase) {

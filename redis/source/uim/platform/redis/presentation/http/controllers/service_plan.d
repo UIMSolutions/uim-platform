@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ServicePlanController : ManageController {
+class ServicePlanController : ManageHttpController {
     private ManageServicePlansUseCase plans;
 
     this(ManageServicePlansUseCase plans) {

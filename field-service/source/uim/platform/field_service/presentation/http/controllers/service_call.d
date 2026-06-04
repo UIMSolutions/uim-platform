@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ServiceCallController : ManageController {
+class ServiceCallController : ManageHttpController {
     private ManageServiceCallsUseCase usecase;
 
     this(ManageServiceCallsUseCase usecase) {

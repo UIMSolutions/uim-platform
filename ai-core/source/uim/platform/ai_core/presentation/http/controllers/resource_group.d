@@ -12,7 +12,7 @@ import uim.platform.ai_core;
 mixin(ShowModule!());
 
 @safe:
-class ResourceGroupController : ManageController {
+class ResourceGroupController : ManageHttpController {
   private ManageResourceGroupsUseCase groups;
 
   this(ManageResourceGroupsUseCase groups) {

@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 /// GET /api/v1/translation/text-types — returns the list of supported text types.
-class TextTypeController : PlatformController {
+class TextTypeController : HttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);

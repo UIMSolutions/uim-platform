@@ -19,7 +19,7 @@ mixin(ShowModule!());
     * @property lastCatalogFetch The timestamp of the last time the service catalog was fetched from this broker.
     */  
 struct ServiceBroker {
-    mixin TenantEntity!(ServiceBrokerId);
+    mixin TenantEntity!ServiceBrokerId;
 
     string name;
     string description;

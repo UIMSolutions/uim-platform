@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class CredentialController : ManageController {
+class CredentialController : ManageHttpController {
     private ManageCredentialsUseCase creds;
 
     this(ManageCredentialsUseCase creds) {
