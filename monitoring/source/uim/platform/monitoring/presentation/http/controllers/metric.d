@@ -64,32 +64,43 @@ class MetricController : ManageHttpController {
     }
   }
 
+  protected Json batchPushHandler(HTTPServerRequest req) {
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    PushMetricBatchRequest batchReq;
+    batchReq.tenantId = tenantId;
+
+    auto data = precheck.data;
+    foreach (mj; data.getArray("metrics")) {
+      if (!mj.isObject)
+        continue;
+
+      PushMetricRequest r;
+      r.tenantId = tenantId;
+      r.resourceId = mj.getString("resourceId");
+      r.name = mj.getString("name");
+      r.value_ = getDouble(mj, "value");
+      r.unit = mj.getString("unit");
+      r.category = mj.getString("category");
+      batchReq.metrics ~= r;
+    }
+
+    auto result = usecase.pushMetricBatch(batchReq);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject
+      .set("accepted", batchReq.metrics.length);
+    return successResponse("Metrics batch pushed successfully", "Created", 201, responseData);
+  }
+
   protected void handleBatchPush(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      PushMetricBatchRequest batchReq;
-      batchReq.tenantId = tenantId;
-
-      foreach (mj; data.getArray("metrics")) {
-        if (!mj.isObject)
-          continue;
-
-        PushMetricRequest r;
-        r.tenantId = tenantId;
-        r.resourceId = mdata.getString("resourceId");
-        r.name = mdata.getString("name");
-        r.value_ = getDouble(mj, "value");
-        r.unit = mdata.getString("unit");
-        r.category = mdata.getString("category");
-        batchReq.metrics ~= r;
-      }
-
-      auto result = usecase.pushMetricBatch(batchReq);
-      auto resp = Json.emptyObject
-        .set("accepted", batchReq.metrics.length)
-        .set("message", "Metrics batch pushed successfully");
-
-      res.writeJsonBody(resp, 201);
+      auto response = batchPushHandler(req);
+      res.writeJsonBody(response.data, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -97,10 +108,11 @@ class MetricController : ManageHttpController {
 
   protected void handleQuery(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto resourceId = req.params.get("resourceId", "");
-      auto metricName = req.params.get("name", "");
-
+      auto response = queryHandler(req);
+      res.writeJsonBody(response.data, response.code);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
+    }
       QueryMetricsRequest qr;
       qr.tenantId = tenantId;
       qr.resourceId = resourceId;

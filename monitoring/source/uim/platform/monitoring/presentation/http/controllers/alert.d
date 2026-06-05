@@ -102,51 +102,50 @@ class AlertController : ManageHttpController {
     }
   }
 
+  protected Json resolveHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
+    ResolveAlertRequest r;
+    r.alertId = AlertId(data.getString("alertId"));
+    r.tenantId = tenantId;
+    r.resolvedBy = UserId(req.headers.get("X-User-Id", ""));
+
+    auto result = usecase.resolveAlert(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+    auto response = Json.emptyObject
+      .set("id", result.id)
+      .set("state", "resolved")
+      .set("message", "Alert resolved successfully");
+
+    return successResponse("Alert resolved successfully", "Resolved", 200, response);
+  }
+
   protected void handleResolve(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
-      ResolveAlertRequest r;
-      r.alertId = AlertId(data.getString("alertId"));
-      r.tenantId = tenantId;
-      r.resolvedBy = UserId(req.headers.get("X-User-Id", ""));
-
-      auto result = usecase.resolveAlert(r);
-      if (result.hasError)
-        return errorResponse(result.message, 400);
-      auto resp = Json.emptyObject
-        .set("id", result.id)
-        .set("state", "resolved")
-        .set("message", "Alert resolved successfully");
-
-      res.writeJsonBody(resp, 200);
-    } else {
-      writeError(res, 400, result.message);
+      auto response = resolveHandler(req);
+      res.writeJsonBody(response, response.code);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
     }
-  } catch (Exception e) {
-    writeError(res, 500, "Internal server error");
+  }
+
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = AlertId(precheck.id);
+    auto result = usecase.deleteAlert(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+    auto resp = Json.emptyObject.set("id", result.id);
+    return successResponse("Alert deleted successfully", "Deleted", 200, resp);
   }
 }
 
-override protected Json deleteHandler(HTTPServerRequest req) {
-  auto precheck = super.deleteHandler(req);
-  if (precheck.hasError)
-    return precheck;
-
-  auto tenantId = precheck.tenantId;
-  auto id = AlertId(precheck.id);
-  auto result = usecase.deleteAlert(tenantId, id);
-  if (result.hasError)
-    return errorResponse(result.message, 400);
-  auto resp = Json.emptyObject
-    .set("deleted", true)
-    .set("message", "Alert deleted successfully");
-
-  res.writeJsonBody(resp, 200);
-} else {
-  writeError(res, 404, result.message);
-}
-} catch (Exception e) {
-  writeError(res, 500, "Internal server error");
-}
-}

@@ -40,8 +40,6 @@ class ResourceController : ManageHttpController {
     auto tenantId = precheck.tenantId;
 
     auto data = precheck.data;
-    ScanJobDTO dto;
-    dto.tenantId = tenantId;
     RegisterResourceRequest r;
     r.tenantId = tenantId;
     r.subaccountId = SubaccountId(req.headers.get("X-Subaccount-Id", ""));
