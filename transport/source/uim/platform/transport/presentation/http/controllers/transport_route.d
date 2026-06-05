@@ -34,12 +34,13 @@ class TransportRouteController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-            auto items = usecase.listRoutes(tenantId);
-            auto list = items.map!(e => e.toJson).array.toJson;
-            res.writeJsonBody(Json.emptyObject.set("count", items.length).set("resources", jarr), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto items = usecase.listRoutes(tenantId);
+        auto list = items.map!(e => e.toJson).array.toJson;
+
+        auto resp = Json.emptyObject
+            .set("count", items.length)
+            .set("resources", list);
+        return successResponse("Transport routes retrieved successfully", "Retrieved", 200, resp);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -48,13 +49,16 @@ class TransportRouteController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto id = TransportRouteId(precheck.id);
-            auto item = usecase.getRoute(tenantId, id);
-            if (item.isNull) { writeError(res, 404, "Transport route not found"); return; }
-            res.writeJsonBody(item.toJson, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto id = TransportRouteId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid route ID", 400);
+            
+        auto item = usecase.getRoute(tenantId, id);
+        if (item.isNull)
+            return errorResponse("Transport route not found", 404);
+
+        auto responseData = item.toJson();
+        return successResponse("Transport route retrieved successfully", "Retrieved", 200, responseData);
     }
 
     override protected Json createHandler(HTTPServerRequest req) {
@@ -65,25 +69,24 @@ class TransportRouteController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-            TransportRouteDTO dto;
-            dto.routeId = TransportRouteId(precheck.id);
-            dto.tenantId = tenantId;
-            dto.name = data.getString("name");
-            dto.description = data.getString("description");
-            dto.sourceNodeId = data.getString("sourceNodeId");
-            dto.destinationNodeId = data.getString("destinationNodeId");
-            dto.status = data.getString("status");
-            dto.isSequential = data.getBoolean("isSequential");
-            dto.sequence = cast(int) data.getLong("sequence");
-            dto.createdBy = UserId(data.getString("createdBy"));
-            auto result = usecase.createRoute(dto);
-            if (result.success)
-                res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Transport route created"), 201);
-            else
-                writeError(res, 400, result.message);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        TransportRouteDTO dto;
+        dto.routeId = TransportRouteId(precheck.id);
+        dto.tenantId = tenantId;
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.sourceNodeId = data.getString("sourceNodeId");
+        dto.destinationNodeId = data.getString("destinationNodeId");
+        dto.status = data.getString("status");
+        dto.isSequential = data.getBoolean("isSequential");
+        dto.sequence = cast(int)data.getLong("sequence");
+        dto.createdBy = UserId(data.getString("createdBy"));
+
+        auto result = usecase.createRoute(dto);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Transport route created successfully", "Created", 201, responseData);
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -92,35 +95,41 @@ class TransportRouteController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto id = TransportRouteId(precheck.id);
-            auto data = precheck.data;
-            auto action = data.getString("action");
-            if (action == "enable") {
-                auto result = usecase.enableRoute(tenantId, id);
-                if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Route enabled"), 200);
-                else writeError(res, 400, result.message);
-                return;
-            }
-            if (action == "disable") {
-                auto result = usecase.disableRoute(tenantId, id);
-                if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Route disabled"), 200);
-                else writeError(res, 400, result.message);
-                return;
-            }
-            TransportRouteDTO dto;
-            dto.routeId = id;
-            dto.tenantId = tenantId;
-            dto.name = data.getString("name");
-            dto.description = data.getString("description");
-            dto.isSequential = data.getBoolean("isSequential");
-            dto.sequence = cast(int) data.getLong("sequence");
-            dto.updatedBy = UserId(data.getString("updatedBy"));
-            auto result = usecase.updateRoute(dto);
-            if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Transport route updated"), 200);
-            else writeError(res, 400, result.message);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
+        auto id = TransportRouteId(precheck.id);
+        auto data = precheck.data;
+        auto action = data.getString("action");
+        if (action == "enable") {
+            auto result = usecase.enableRoute(tenantId, id);
+            if (result.hasError)
+                return errorResponse(result.message, 400);
+
+            auto responseData = Json.emptyObject.set("id", result.id);
+            return successResponse("Transport route enabled successfully", "Enabled", 200, responseData);
         }
+        if (action == "disable") {
+            auto result = usecase.disableRoute(tenantId, id);
+            if (result.hasError)
+                return errorResponse(result.message, 400);
+
+            auto responseData = Json.emptyObject.set("id", result.id);
+            return successResponse("Transport route disabled successfully", "Disabled", 200, responseData);
+        }
+
+        TransportRouteDTO dto;
+        dto.routeId = id;
+        dto.tenantId = tenantId;
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.isSequential = data.getBoolean("isSequential");
+        dto.sequence = data.getInteger("sequence");
+        dto.updatedBy = UserId(data.getString("updatedBy"));
+
+        auto result = usecase.updateRoute(dto);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Transport route updated successfully", "Updated", 200, responseData);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -129,12 +138,15 @@ class TransportRouteController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto id = TransportRouteId(precheck.id);
-            auto result = usecase.deleteRoute(tenantId, id);
-            if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Transport route deleted"), 200);
-            else writeError(res, 404, result.message);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto id = TransportRouteId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid route ID", 400);  
+
+        auto result = usecase.deleteRoute(tenantId, id);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Transport route deleted successfully", "Deleted", 200, responseData);
     }
 }

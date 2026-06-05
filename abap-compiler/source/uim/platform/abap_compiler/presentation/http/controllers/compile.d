@@ -30,6 +30,8 @@ class CompileController : HttpController {
         if (precheck.hasError)
             return precheck;
 
+        auto tenantId = precheck.tenantId;
+        
         auto data = precheck.data;
         CompileRequest r;
         r.tenantId = tenantId;

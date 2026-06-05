@@ -5,10 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.data_quality.presentation.http.controllers.profile;
 
-
-
-
-
 // import uim.platform.data_quality.application.usecases.profile_data;
 // import uim.platform.data_quality.application.dto;
 // import uim.platform.data_quality.domain.types;
@@ -33,71 +29,71 @@ class ProfileController : HttpController {
     router.get("/api/v1/profiles/*", &handleGet);
   }
 
-  protected void handleProfile(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
-      auto r = ProfileDatasetRequest();
-      r.tenantId = tenantId;
-      r.datasetId = data.getString("datasetId");
-      r.datasetName = data.getString("datasetName");
+  protected Json profileHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto recordsJson = "records" in j;
-      if (recordsJson !is null && (recordsJson).isArray) {
-        foreach (item; *recordsJson) {
-          if (item.isObject) {
-            ProfileRecordInput pri;
-            pri.recordId = item.getString("recordId");
-            pri.fieldValues = jsonStrMap(item, "fieldValues");
-            r.records ~= pri;
-          }
-        }
+    auto tenantId = precheck.tenantId;
+
+    auto data = precheck.data;
+    auto r = ProfileDatasetRequest();
+    r.tenantId = tenantId;
+    r.datasetId = data.getString("datasetId");
+    r.datasetName = data.getString("datasetName");
+
+    foreach (item; data.getArray("records")) {
+      if (item.isObject) {
+        ProfileRecordInput pri;
+        pri.recordId = item.getString("recordId");
+        pri.fieldValues = jsonStrMap(item, "fieldValues");
+        r.records ~= pri;
       }
-
-      auto profile = usecase.profile(r);
-      res.writeJsonBody(profile.toJson, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
     }
+
+    auto profile = usecase.profile(r);
+    if (profile.isNull)
+      return errorResponse("Failed to profile dataset", 500);
+
+      return successResponse("Data profile created successfully", "Created", 201, profile.toJson);
   }
 
-  override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    protected void handleProfile(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+      try {
+        auto response = profileHandler(req);  
+        res.writeJsonBody(response, response.code);
+      } catch (Exception e) {
+        writeError(res, 500, "Internal server error");
+      }
+    }
 
-        auto tenantId = precheck.tenantId;
+    override protected Json listHandler(HTTPServerRequest req) {
+      auto precheck = super.listHandler(req);
+      if (precheck.hasError)
+        return precheck;
+
+      auto tenantId = precheck.tenantId;
 
       auto profiles = usecase.listByTenant(tenantId);
       auto arr = profiles.map!(p => p.toJson).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", Json(profiles.length))
-        .set("message", "Data profiles retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+        .set("totalCount", Json(profiles.length));
+      return successResponse("Data profiles retrieved successfully", 200, resp);
     }
-  }
 
-  override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    override protected Json getHandler(HTTPServerRequest req) {
+      auto precheck = super.getHandler(req);
+      if (precheck.hasError)
+        return precheck;
 
-        auto tenantId = precheck.tenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto tenantId = precheck.tenantId;
       auto profile = usecase.getById(tenantId, id);
-      if (profile.isNull) {
-        writeError(res, 404, "Data profile not found");
-        return;
-      }
-      res.writeJsonBody(profile.toJson, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+      if (profile.isNull)
+        return errorResponse("Data profile not found", 404);
+        
+      return successResponse("Data profile retrieved successfully", 200, profile.toJson);
     }
-  }
-}

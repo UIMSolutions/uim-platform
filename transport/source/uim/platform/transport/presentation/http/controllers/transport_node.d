@@ -34,12 +34,11 @@ class TransportNodeController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-            auto items = usecase.listNodes(tenantId);
-            auto list = items.map!(e => e.toJson).array.toJson;
-            res.writeJsonBody(Json.emptyObject.set("count", items.length).set("resources", jarr), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto items = usecase.listNodes(tenantId);
+        auto list = items.map!(e => e.toJson).array.toJson;
+
+        auto resp = Json.emptyObject.set("count", items.length).set("resources", list);
+        return successResponse("Transport nodes retrieved successfully", "Retrieved", 200, resp);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -48,13 +47,13 @@ class TransportNodeController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto id = TransportNodeId(precheck.id);
-            auto item = usecase.getNode(tenantId, id);
-            if (item.isNull) { writeError(res, 404, "Transport node not found"); return; }
-            res.writeJsonBody(item.toJson, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto id = TransportNodeId(precheck.id);
+        auto item = usecase.getNode(tenantId, id);
+        if (item.isNull)
+            return errorResponse("Transport node not found", 404);
+
+        auto responseData = item.toJson();
+        return successResponse("Transport node retrieved successfully", "Retrieved", 200, responseData);
     }
 
     override protected Json createHandler(HTTPServerRequest req) {
@@ -65,30 +64,29 @@ class TransportNodeController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-            TransportNodeDTO dto;
-            dto.nodeId = TransportNodeId(precheck.id);
-            dto.tenantId = tenantId;
-            dto.name = data.getString("name");
-            dto.description = data.getString("description");
-            dto.nodeType = data.getString("nodeType");
-            dto.environment = data.getString("environment");
-            dto.region = data.getString("region");
-            dto.globalAccount = data.getString("globalAccount");
-            dto.subaccountId = data.getString("subaccountId");
-            dto.spaceId = data.getString("spaceId");
-            dto.serviceKey = data.getString("serviceKey");
-            dto.isForwardEnabled = data.getBoolean("isForwardEnabled");
-            dto.autoImport = data.getBoolean("autoImport");
-            dto.autoImportSchedule = data.getString("autoImportSchedule");
-            dto.createdBy = UserId(data.getString("createdBy"));
-            auto result = usecase.createNode(dto);
-            if (result.success)
-                res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Transport node created"), 201);
-            else
-                writeError(res, 400, result.message);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        TransportNodeDTO dto;
+        dto.nodeId = TransportNodeId(precheck.id);
+        dto.tenantId = tenantId;
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.nodeType = data.getString("nodeType");
+        dto.environment = data.getString("environment");
+        dto.region = data.getString("region");
+        dto.globalAccount = data.getString("globalAccount");
+        dto.subaccountId = data.getString("subaccountId");
+        dto.spaceId = data.getString("spaceId");
+        dto.serviceKey = data.getString("serviceKey");
+        dto.isForwardEnabled = data.getBoolean("isForwardEnabled");
+        dto.autoImport = data.getBoolean("autoImport");
+        dto.autoImportSchedule = data.getString("autoImportSchedule");
+        dto.createdBy = UserId(data.getString("createdBy"));
+        auto result = usecase.createNode(dto);
+
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Transport node created successfully", "Created", 201, responseData);
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -97,38 +95,43 @@ class TransportNodeController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto id = TransportNodeId(precheck.id);
-            auto data = precheck.data;
-            auto action = data.getString("action");
-            if (action == "enable") {
-                auto result = usecase.enableNode(tenantId, id);
-                if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Node enabled"), 200);
-                else writeError(res, 400, result.message);
-                return;
-            }
-            if (action == "disable") {
-                auto result = usecase.disableNode(tenantId, id);
-                if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Node disabled"), 200);
-                else writeError(res, 400, result.message);
-                return;
-            }
-            TransportNodeDTO dto;
-            dto.nodeId = id;
-            dto.tenantId = tenantId;
-            dto.name = data.getString("name");
-            dto.description = data.getString("description");
-            dto.region = data.getString("region");
-            dto.environment = data.getString("environment");
-            dto.isForwardEnabled = data.getBoolean("isForwardEnabled");
-            dto.autoImport = data.getBoolean("autoImport");
-            dto.autoImportSchedule = data.getString("autoImportSchedule");
-            dto.updatedBy = UserId(data.getString("updatedBy"));
-            auto result = usecase.updateNode(dto);
-            if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Transport node updated"), 200);
-            else writeError(res, 400, result.message);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
+        auto id = TransportNodeId(precheck.id);
+        auto data = precheck.data;
+        auto action = data.getString("action");
+        if (action == "enable") {
+            auto result = usecase.enableNode(tenantId, id);
+            if (result.hasError)
+                return errorResponse(result.message, 400);
+
+            auto responseData = Json.emptyObject.set("id", result.id);
+            return successResponse("Transport node enabled successfully", "Enabled", 200, responseData);
         }
+        if (action == "disable") {
+            auto result = usecase.disableNode(tenantId, id);
+            if (result.hasError)
+                return errorResponse(result.message, 400);
+
+            auto responseData = Json.emptyObject.set("id", result.id);
+            return successResponse("Transport node disabled successfully", "Disabled", 200, responseData);
+        }
+        TransportNodeDTO dto;
+        dto.nodeId = id;
+        dto.tenantId = tenantId;
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.region = data.getString("region");
+        dto.environment = data.getString("environment");
+        dto.isForwardEnabled = data.getBoolean("isForwardEnabled");
+        dto.autoImport = data.getBoolean("autoImport");
+        dto.autoImportSchedule = data.getString("autoImportSchedule");
+        dto.updatedBy = UserId(data.getString("updatedBy"));
+        auto result = usecase.updateNode(dto);
+
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Transport node updated successfully", "Updated", 200, responseData);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -137,12 +140,12 @@ class TransportNodeController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto id = TransportNodeId(precheck.id);
-            auto result = usecase.deleteNode(tenantId, id);
-            if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Transport node deleted"), 200);
-            else writeError(res, 404, result.message);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto id = TransportNodeId(precheck.id);
+        auto result = usecase.deleteNode(tenantId, id);
+        if (result.hasError)
+            return errorResponse(result.message, 404);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Transport node deleted successfully", "Deleted", 200, responseData);
     }
 }

@@ -33,12 +33,11 @@ class TransportActionController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-            auto items = usecase.listActions(tenantId);
-            auto list = items.map!(e => e.toJson).array.toJson;
-            res.writeJsonBody(Json.emptyObject.set("count", items.length).set("resources", jarr), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto items = usecase.listActions(tenantId);
+        auto list = items.map!(e => e.toJson).array.toJson;
+
+        auto resp = Json.emptyObject.set("count", items.length).set("resources", list);
+        return successResponse("Transport actions retrieved successfully", "Retrieved", 200, resp);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -47,13 +46,17 @@ class TransportActionController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto id = TransportActionId(precheck.id);
-            auto item = usecase.getAction(tenantId, id);
-            if (item.isNull) { writeError(res, 404, "Transport action not found"); return; }
-            res.writeJsonBody(item.toJson, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto id = TransportActionId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid action ID", 400);
+            
+        auto item = usecase.getAction(tenantId, id);
+        if (item.isNull)
+            return errorResponse("Transport action not found", 404);
+
+        auto responseData = item.toJson();
+        return successResponse("Transport action retrieved successfully", "Retrieved", 200, responseData);
+
     }
 
     override protected Json createHandler(HTTPServerRequest req) {
@@ -64,24 +67,22 @@ class TransportActionController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-            TransportActionDTO dto;
-            dto.actionId = TransportActionId(precheck.id);
-            dto.tenantId = tenantId;
-            dto.actionType = data.getString("actionType");
-            dto.nodeId = data.getString("nodeId");
-            dto.requestId = data.getString("requestId");
-            dto.routeId = data.getString("routeId");
-            dto.performedBy = data.getString("performedBy");
-            dto.description = data.getString("description");
-            dto.logDetails = data.getString("logDetails");
-            auto result = usecase.recordAction(dto);
-            if (result.success)
-                res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Transport action recorded"), 201);
-            else
-                writeError(res, 400, result.message);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        TransportActionDTO dto;
+        dto.actionId = TransportActionId(precheck.id);
+        dto.tenantId = tenantId;
+        dto.actionType = data.getString("actionType");
+        dto.nodeId = data.getString("nodeId");
+        dto.requestId = data.getString("requestId");
+        dto.routeId = data.getString("routeId");
+        dto.performedBy = data.getString("performedBy");
+        dto.description = data.getString("description");
+        dto.logDetails = data.getString("logDetails");
+        auto result = usecase.recordAction(dto);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Transport action recorded successfully", "Recorded", 201, responseData);
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -90,25 +91,23 @@ class TransportActionController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto id = TransportActionId(precheck.id);
-            auto data = precheck.data;
-            auto statusStr = data.getString("actionStatus");
-            if (statusStr.length > 0) {
-                
-                try {
-                    auto status = statusStr.to!ActionStatus;
-                    auto errorMsg = data.getString("errorMessage");
-                    auto result = usecase.updateActionStatus(tenantId, id, status, errorMsg);
-                    if (result.success) res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Action status updated"), 200);
-                    else writeError(res, 400, result.message);
-                } catch (Exception) {
-                    writeError(res, 400, "Invalid actionStatus value");
-                }
-            } else {
-                writeError(res, 400, "actionStatus field is required");
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
+        auto id = TransportActionId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid action ID", 400);
+
+        auto data = precheck.data;
+        auto statusStr = data.getString("actionStatus");
+        if (statusStr.length > 0) {
+            auto status = statusStr.to!ActionStatus;
+            auto errorMsg = data.getString("errorMessage");
+            auto result = usecase.updateActionStatus(tenantId, id, status, errorMsg);
+            if (result.hasError)
+                return errorResponse(result.message, 400);
+
+            auto responseData = Json.emptyObject.set("id", result.id);
+            return successResponse("Action status updated successfully", "Updated", 200, responseData);
+
         }
+        return errorResponse("No valid fields to update", 400);
     }
 }

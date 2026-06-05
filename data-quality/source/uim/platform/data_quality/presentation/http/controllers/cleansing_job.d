@@ -44,51 +44,46 @@ class CleansingJobController : ManageHttpController {
     r.ruleIds = data.getStrings("ruleIds");
 
     auto result = usecase.createCleansingJob(r);
-    if (result.isSuccess()) {
-      auto resp = Json.emptyObject
-        .set("id", result.id)
-        .set("status", "pending")
-        .set("message", "Cleansing job created successfully");
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+      
+    auto resp = Json.emptyObject
+      .set("id", result.id)
+      .set("status", "pending")
+      .set("message", "Cleansing job created successfully");
 
-      res.writeJsonBody(resp, 201);
-    } else {
-      writeError(res, 400, result.message);
-    }
+    return successResponse("Cleansing job created successfully", "Created", 201, resp);
   }
- catch (Exception e) {
-    writeError(res, 500, "Internal server error");
+
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+
+    auto jobs = usecase.listCleansingJobs(tenantId);
+    auto arr = jobs.map!(j => j.toJson).array.toJson;
+
+    auto resp = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", Json(jobs.length));
+    return successResponse("Cleansing jobs retrieved successfully", 0, resp);
   }
-}
 
-override protected Json listHandler(HTTPServerRequest req) {
-  auto precheck = super.listHandler(req);
-  if (precheck.hasError)
-    return precheck;
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-  auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
+    auto id = CleansingJobId(precheck.id);
 
-  auto jobs = usecase.listCleansingJobs(tenantId);
-  auto arr = jobs.map!(j => j.toJson).array.toJson;
+    auto job = usecase.getCleansingJob(tenantId, id);
+    if (job.isNull)
+      return errorResponse("Cleansing job not found", 404);
 
-  auto resp = Json.emptyObject
-    .set("items", arr)
-    .set("totalCount", Json(jobs.length));
-  return successResponse("Cleansing jobs retrieved successfully", 0, resp);
-}
-
-override protected Json getHandler(HTTPServerRequest req) {
-  auto precheck = super.getHandler(req);
-  if (precheck.hasError)
-    return precheck;
-
-  auto tenantId = precheck.tenantId;
-  auto id = CleansingJobId(precheck.id);
-
-  auto job = usecase.getCleansingJob(tenantId, id);
-  if (job.isNull)
-    return errorResponse("Cleansing job not found", 404);
-
-  return successResponse("Cleansing job retrieved successfully", 200, job.toJson);
-}
+    return successResponse("Cleansing job retrieved successfully", 200, job.toJson);
+  }
 
 }

@@ -213,6 +213,7 @@ struct ResolveAlertRequest {
 
 struct CreateNotificationChannelRequest {
   TenantId tenantId;
+  NotificationChannelId channelId; // optional for create, required for update
 
   string name;
   string description;
@@ -229,7 +230,7 @@ struct CreateNotificationChannelRequest {
 
 struct UpdateNotificationChannelRequest {
   TenantId tenantId;
-  NotificationChannelId channelId;
+  NotificationChannelId channelId; // required
 
   string description;
   string state;
@@ -251,6 +252,9 @@ struct ProcessorDTO {
 
 struct CreatePipelineRequest {
   TenantId tenantId;
+  PipelineId pipelineId; // optional for create, required for update
+  
+
   string name;
   string description;
   string sourceType;
@@ -262,7 +266,8 @@ struct CreatePipelineRequest {
 
 struct UpdatePipelineRequest {
   TenantId tenantId;
-  PipelineId pipelineId;
+  PipelineId pipelineId; // required for update
+
   string description;
   string format;
   ProcessorDTO[] processors;

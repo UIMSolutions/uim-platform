@@ -108,24 +108,21 @@ class ImportQueueEntryController : ManageHttpController {
             auto responseData = Json.emptyObject.set("id", result.id);
             return successResponse("Import queue entry reset successfully", "Reset", 200, responseData);
         }
+
         auto statusStr = data.getString("status");
         if (statusStr.length > 0) {
-            
+            auto status = statusStr.to!ImportStatus;
+            auto errorMsg = data.getString("errorMessage");
+            auto result = usecase.updateEntryStatus(tenantId, id, status, errorMsg);
+            if (result.hasError)
+                return errorResponse(result.message, 400);
 
-            try {
-                auto status = statusStr.to!ImportStatus;
-                auto errorMsg = data.getString("errorMessage");
-                auto result = usecase.updateEntryStatus(tenantId, id, status, errorMsg);
-                if (result.hasError)
-                    return errorResponse(result.message, 400);
-
-                auto responseData = Json.emptyObject.set("id", result.id);
-                return successResponse("Import queue entry status updated successfully", "Updated", 200, responseData);
-            }
+            auto responseData = Json.emptyObject.set("id", result.id);
+            return successResponse("Import queue entry status updated successfully", "Updated", 200, responseData);
         }
-        auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("Import queue entry updated successfully", "Updated", 200, responseData);
-    }
+
+        return errorResponse("Invalid action or status field is required", 400);
+   }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto precheck = super.deleteHandler(req);
