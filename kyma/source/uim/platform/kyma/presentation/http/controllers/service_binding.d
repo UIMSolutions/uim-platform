@@ -5,9 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.kyma.presentation.http.controllers.service_binding;
 
-
-
-
 // import uim.platform.kyma.application.usecases.manage.service_bindings;
 // import uim.platform.kyma.application.dto;
 // import uim.platform.kyma.domain.entities.service_binding;
@@ -35,130 +32,120 @@ class ServiceBindingController : ManageHttpController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-              CreateServiceBindingRequest r;
-      r.tenantId = tenantId;
-      r.serviceInstanceId = data.getString("serviceInstanceId");
-      r.namespaceId = data.getString("namespaceId");
-      r.environmentId = data.getString("environmentId");
-      r.tenantId = tenantId;
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.secretName = data.getString("secretName");
-      r.secretNamespace = data.getString("secretNamespace");
-      r.parametersJson = data.getString("parameters");
-      r.labels = data.jsonStrMap("labels");
-      r.createdBy = UserId(req.headers.get("X-User-Id", ""));
+    auto data = precheck.data;
+    CreateServiceBindingRequest r;
+    r.tenantId = tenantId;
+    r.serviceInstanceId = data.getString("serviceInstanceId");
+    r.namespaceId = data.getString("namespaceId");
+    r.environmentId = data.getString("environmentId");
+    r.tenantId = tenantId;
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.secretName = data.getString("secretName");
+    r.secretNamespace = data.getString("secretNamespace");
+    r.parametersJson = data.getString("parameters");
+    r.labels = data.jsonStrMap("labels");
+    r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
-      auto result = usecase.create(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id);
+    auto result = usecase.create(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+    auto resp = Json.emptyObject
+      .set("id", result.id);
 
-        res.writeJsonBody(resp, 201);
-      }
-      else
-        writeError(res, 400, result.message);
-    }
-    catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    return successResponse("Service binding created successfully", 201, resp);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto nsId = NamespaceId(req.params.get("namespaceId"));
-      auto instId = ServiceInstanceId(req.params.get("serviceInstanceId"));
+    auto tenantId = precheck.tenantId;
+    auto nsId = NamespaceId(req.params.get("namespaceId"));
+    auto instId = ServiceInstanceId(req.params.get("serviceInstanceId"));
 
-      ServiceBinding[] items;
-      if (!instId.isEmpty)
-        items = usecase.listServiceBindings(tenantId, instId);
-      else if (!nsId.isEmpty)
-        items = usecase.listServiceBindings(tenantId, nsId);
+    ServiceBinding[] items;
+    if (!instId.isEmpty)
+      items = usecase.listServiceBindings(tenantId, instId);
+    else if (!nsId.isEmpty)
+      items = usecase.listServiceBindings(tenantId, nsId);
 
-      auto arr = items.map!(b => b.toJson).array.toJson;
+    auto arr = items.map!(b => b.toJson).array.toJson;
 
-      auto resp = Json.emptyObject
-          .set("items", arr)
-          .set("totalCount", items.length);
-          
-      res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto resp = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", items.length);
+
+    return successResponse("Service binding list retrieved successfully", 200, resp);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto b = usecase.getBinding(ServiceBindingId(tenantId, id));
-      if (b.isNull) {
-        writeError(res, 404, "Service binding not found");
-        return;
-      }
-      res.writeJsonBody(b.toJson, 200);
-    }
-    catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto tenantId = precheck.tenantId;
+    auto id = ServiceBindingId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid service binding ID", 400);
+
+    auto b = usecase.getBinding(tenantId, id);
+    if (b.isNull)
+      return errorResponse("Service binding not found", 404);
+
+    auto resp = b.toJson;
+    return successResponse("Service binding retrieved successfully", 200, resp);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = ServiceBindingId(tenantId, Id(precheck.id);
-      auto data = precheck.data;
-      UpdateServiceBindingRequest r;
-      r.tenantId = tenantId;  
-      r.serviceBindingId = id;
-      r.description = data.getString("description");
-      r.secretName = data.getString("secretName");
-      r.parametersJson = data.getString("parameters");
-      r.labels = data.jsonStrMap("labels");
+    auto tenantId = precheck.tenantId;
+    auto id = ServiceBindingId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid service binding ID", 400);
 
-      auto result = usecase.updateBinding(r);
-      if (result.success)
-        res.writeJsonBody(Json.emptyObject, 200);
-      else
-        writeError(res, 400, result.message);
-    }
-    catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto data = precheck.data;
+    UpdateServiceBindingRequest r;
+    r.tenantId = tenantId;
+    r.serviceBindingId = id;
+    r.description = data.getString("description");
+    r.secretName = data.getString("secretName");
+    r.parametersJson = data.getString("parameters");
+    r.labels = data.jsonStrMap("labels");
+
+    auto result = usecase.updateBinding(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Service binding updated successfully", 200, responseData);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = ServiceBindingId(tenantId, Id(precheck.id);
+    auto tenantId = precheck.tenantId;
+    auto id = ServiceBindingId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid service binding ID", 400);
 
-      auto result = usecase.deleteBinding(tenantId, id);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
+    auto result = usecase.deleteBinding(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-        auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("Service binding deleted successfully", 200, responseData);
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Service binding deleted successfully", 200, responseData);
   }
 }

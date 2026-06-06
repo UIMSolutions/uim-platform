@@ -7,14 +7,6 @@ enum JobType {
     cloudFoundryTask,
 }
 
-enum HttpMethod : string {
-    get = "GET",
-    post = "POST",
-    put = "PUT",
-    delete_ = "DELETE",
-    patch = "PATCH",
-}
-
 enum JobStatus {
     active,
     inactive,

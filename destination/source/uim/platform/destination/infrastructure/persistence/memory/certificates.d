@@ -72,6 +72,4 @@ class MemoryCertificateRepository : TenantRepository!(Certificate, CertificateId
   void removeExpiring(TenantId tenantId, long beforeTimestamp) {
     findExpiring(tenantId, beforeTimestamp).each!(e => remove(e));
   }
-
-  
 }

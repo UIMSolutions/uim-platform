@@ -79,13 +79,6 @@ enum ActionStatus {
     error,
 }
 
-enum HttpMethod {
-    get_,
-    post_,
-    put_,
-    patch_,
-    delete_,
-}
 // --- Automation Rule ---
 
 enum RuleStatus {

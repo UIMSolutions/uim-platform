@@ -259,13 +259,6 @@ package "Value Types" {
         httpEndpoint
         cloudFoundryTask
     }
-    enum HttpMethod {
-        get
-        post
-        put
-        delete_
-        patch
-    }
     enum JobStatus {
         active
         inactive

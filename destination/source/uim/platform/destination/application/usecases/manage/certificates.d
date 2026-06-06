@@ -117,5 +117,51 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
     repo.remove(entity);
     return CommandResult(true, entity.id.value, "");
   }
+}
 
+unittest {
+  auto repo = new MemoryCertificateRepository();
+  auto usecase = new ManageCertificatesUseCase(repo);
+  auto tenantId = TenantId("test-tenant");
+  auto subaccountId = SubaccountId("sub-123");
+
+  // 1. Test Upload Certificate
+  UploadCertificateRequest uploadReq;
+  uploadReq.tenantId = tenantId;
+  uploadReq.subaccountId = subaccountId;
+  uploadReq.name = "Internal-CA";
+  uploadReq.content = "---BEGIN CERTIFICATE---...---END CERTIFICATE---";
+  uploadReq.certificateType = "pem"; // Assuming lowercase or exact match for Enum conversion
+  uploadReq.format_ = "pem";
+  uploadReq.uploadedBy = "admin-user";
+
+  auto uploadRes = usecase.upload(uploadReq);
+  assert(uploadRes.success, "Certificate upload failed: " ~ uploadRes.message);
+  auto certId = CertificateId(uploadRes.id);
+
+  // 2. Test Get Certificate
+  auto cert = usecase.getCertificate(tenantId, certId);
+  assert(!cert.isNull);
+  assert(cert.name == "Internal-CA");
+  assert(cert.uploadedBy == "admin-user");
+
+  // 3. Test Update Certificate
+  UpdateCertificateRequest updateReq;
+  updateReq.tenantId = tenantId;
+  updateReq.certificateId = certId;
+  updateReq.description = "Updated root certificate description";
+  
+  auto updateRes = usecase.updateCertificate(updateReq);
+  assert(updateRes.success);
+  assert(usecase.getCertificate(tenantId, certId).description == "Updated root certificate description");
+
+  // 4. Test List by Subaccount
+  auto list = usecase.listBySubaccount(tenantId, subaccountId);
+  assert(list.length == 1);
+  assert(list[0].id == certId);
+
+  // 5. Test Delete Certificate
+  auto deleteRes = usecase.deleteCertificate(tenantId, certId);
+  assert(deleteRes.success);
+  assert(usecase.getCertificate(tenantId, certId).isNull);
 }

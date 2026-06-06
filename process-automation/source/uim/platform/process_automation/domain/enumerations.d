@@ -231,15 +231,6 @@ enum ActionType {
     custom,
 }
 
-enum HttpMethod {
-    get_,
-    post_,
-    put_,
-    patch_,
-    delete_,
-    head_,
-    options_,
-}
 // --- Visibility (Process Monitoring) ---
 
 enum VisibilityStatus {

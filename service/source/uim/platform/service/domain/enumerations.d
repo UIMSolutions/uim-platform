@@ -199,3 +199,26 @@ LoggingLevel toLoggingLevel(string s) {
     default: return LoggingLevel.info; // default
   }
 }
+
+/// HTTP method used during destination health checks or probing.
+enum HttpMethod {
+  get_ = "GET",
+  post_ = "POST",
+  put_ = "PUT",
+  delete_ = "DELETE",
+  patch_ = "PATCH",
+  head_ = "HEAD",
+  options_ = "OPTIONS",
+}
+HttpMethod toHttpMethod(string s) {
+  switch (s.toLower()) {
+    case "get": return HttpMethod.get_;
+    case "post": return HttpMethod.post_;
+    case "put": return HttpMethod.put_;
+    case "delete": return HttpMethod.delete_;
+    case "patch": return HttpMethod.patch_;
+    case "head": return HttpMethod.head_;
+    case "options": return HttpMethod.options_;
+    default: return HttpMethod.get_; // default
+  }
+}

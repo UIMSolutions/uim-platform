@@ -91,14 +91,27 @@ class ManageFragmentsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, fragment.id.value, "");
   }
 
+  /// Checks if a fragment with the given ID exists for the tenant.
+  bool hasFragment(TenantId tenantId, DestinationFragmentId id) {
+    return repo.existsById(tenantId, id);
+  }
+
+  /// Retrieves a fragment by its ID.
   DestinationFragment getFragment(TenantId tenantId, DestinationFragmentId id) {
     return repo.findById(tenantId, id);
   }
 
+  /// Lists all fragments for a given tenant and subaccount.
   DestinationFragment[] listBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
     return repo.findBySubaccount(tenantId, subaccountId);
   }
 
+  /// Lists all fragments for a given tenant and level.
+  DestinationFragment[] listByLevel(TenantId tenantId, DestinationLevel level) {
+    return repo.findByLevel(tenantId, level);
+  }
+
+  /// Deletes a fragment by its ID.
   CommandResult deleteFragment(TenantId tenantId, DestinationFragmentId id) {
     auto fragment = repo.findById(tenantId, id);
     if (fragment.isNull)
