@@ -53,10 +53,9 @@ override protected Json getHandler(HTTPServerRequest req) {
     auto tenantId = precheck.tenantId;
     auto id = precheck.id;
     auto e = usecase.getClient(tenantId, MessageClientId(id));
-    if (e.isNull) {
-        writeError(res, 404, "Message client not found");
-        return;
-    }
+    if (e.isNull)
+            return errorResponse("", 0);
+            
     res.writeJsonBody(Json.emptyObject
             .set("message", "Message client retrieved successfully")
             .set("resource", e.toJson), 200);

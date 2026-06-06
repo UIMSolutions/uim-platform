@@ -101,10 +101,8 @@ class DataLakeController : ManageHttpController {
         auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto d = usecase.getById(tenantId, id);
-      if (d.isNull) {
-        writeError(res, 404, "Data lake not found");
-        return;
-      }
+      if (d.isNull)
+            return errorResponse("", 0);
 
       auto resp = Json.emptyObject
       .set("id", d.id)

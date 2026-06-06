@@ -116,10 +116,8 @@ class InstanceController : ManageHttpController {
         auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto instance = usecase.getById(tenantId, id);
-      if (instance.isNull) {
-        writeError(res, 404, "Instance not found");
-        return;
-      }
+      if (instance.isNull)
+            return errorResponse("", 0);
 
       auto resp = Json.emptyObject
         .set("id", instance.id)

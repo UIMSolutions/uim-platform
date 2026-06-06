@@ -102,10 +102,8 @@ class BackupController : ManageHttpController {
         auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto b = usecase.getById(tenantId, id);
-      if (b.isNull) {
-        writeError(res, 404, "Backup not found");
-        return;
-      }
+      if (b.isNull)
+            return errorResponse("", 0);
 
       auto resp = Json.emptyObject
         .set("id", b.id)

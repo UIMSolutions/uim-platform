@@ -104,10 +104,9 @@ class DatabaseUserController : ManageHttpController {
       auto id = DatabaseUserId(precheck.id);
 
       auto u = usecase.getDatabaseUser(tenantId, id);
-      if (u.isNull) {
-        writeError(res, 404, "Database user not found");
-        return;
-      }
+      if (u.isNull)
+            
+            return errorResponse("", 0);
 
       auto resp = Json.emptyObject
         .set("id", u.id)

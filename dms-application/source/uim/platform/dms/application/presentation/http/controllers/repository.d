@@ -87,10 +87,9 @@ auto list = items.map!(item => item.toJson()).array.toJson;
       auto id = RepositoryId(precheck.id);
 
       auto repository = usecase.getRepository(tenantId, id);
-      if (repository.isNull) {
-        writeError(res, 404, "Repository not found");
-        return;
-      }
+      if (repository.isNull)
+            return errorResponse("", 0);
+
       res.writeJsonBody(repository.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

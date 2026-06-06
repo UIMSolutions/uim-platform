@@ -102,10 +102,9 @@ class AppRouteController : ManageHttpController {
         return;
       }
       auto entry = usecase.getAppRoute(tenantId, id);
-      if (entry.isNull) {
-        writeError(res, 404, "Route not found");
-        return;
-      }
+      if (entry.isNull) 
+        return errorResponse("Route not found", 404);
+      
 
       auto response = Json.emptyObject
         .set("id", entry.id)
@@ -119,9 +118,7 @@ class AppRouteController : ManageHttpController {
         .set("updatedBy", entry.updatedBy)
         .set("updatedAt", entry.updatedAt);
 
-      res.writeJsonBody(response, 200);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+      return successResponse("Route retrieved successfully", "Retrieved", 200, response);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
@@ -133,10 +130,9 @@ class AppRouteController : ManageHttpController {
 
       auto data = precheck.data;
       auto id = precheck.id;
-      if (id.isNull) {
-        writeError(res, 404, "Route not found");
-        return;
-      }
+      if (id.isNull)
+            return errorResponse("Route not found", 404);
+
       UpdateAppRouteRequest r;
       r.id = id;
       r.tenantId = tenantId;
@@ -145,16 +141,11 @@ class AppRouteController : ManageHttpController {
       r.updatedBy = UserId(data.getString("updatedBy"));
 
       auto result = usecase.updateAppRoute(r);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("id", id)
-          .set("message", "Route updated successfully");
+      if (result.hasError) 
+      return errorResponse(result.message, 400);
 
-        res.writeJsonBody(resp, 200);
-      } else
-        writeError(res, 400, result.message);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+        auto resp = Json.emptyObject.set("id", id);
+        return successResponse("Route updated successfully", "Updated", 200, resp);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
@@ -164,19 +155,14 @@ class AppRouteController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      if (id.isNull) {
-        writeError(res, 404, "Route not found");
-        return;
-      }
+      if (id.isNull)
+            return errorResponse("Route not found", 404);
+
       auto result = usecase.deleteAppRoute(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("id", id)
           .set("message", "Route deleted successfully");
-        res.writeJsonBody(resp, 200);
-      } else
-        writeError(res, 400, result.message);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
-  }
+        
+        return successResponse("Route deleted successfully", "Deleted", 200, resp);
 }

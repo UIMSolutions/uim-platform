@@ -96,10 +96,9 @@ class RoutingController : ManageHttpController {
         auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto item = usecase.getById(tenantId, id);
-      if (item.isNull) {
-        writeError(res, 404, "Route not found");
-        return;
-      }
+      if (item.isNull)
+            return errorResponse("", 0);
+            
       res.writeJsonBody(item.toJson(), 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
