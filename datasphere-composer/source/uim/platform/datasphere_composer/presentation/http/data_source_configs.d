@@ -46,7 +46,13 @@ class DataSourceConfigController : ManageHttpController {
     res.writeJsonBody(item.toJson(), cast(int)HTTPStatus.ok);
   }
 
-  void handleCreate(HTTPServerRequest req, HTTPServerResponse res) {
+  override protected Json createHandler(HTTPServerRequest req) {
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+
     auto data = precheck.data;
     CreateDataSourceConfigRequest r;
     r.tenantId = tenantId;
@@ -60,16 +66,19 @@ class DataSourceConfigController : ManageHttpController {
     r.enabled = data.getBoolean("enabled");
     r.disabledRuleIds = data.getStrings("disabledRuleIds");
     auto result = usecase.create(r);
-    if (!result.success) {
-      writeError(res, 400, result.message);
-      return;
-    }
-    auto resp = Json.emptyObject;
-    resp["id"] = Json(result.id);
-    res.writeJsonBody(resp, cast(int)HTTPStatus.created);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Config created successfully", "Created", 201, responseData);
   }
 
-  void handleUpdate(HTTPServerRequest req, HTTPServerResponse res) {
+  override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
     auto data = precheck.data;
     UpdateDataSourceConfigRequest r;
     r.tenantId = tenantId;
@@ -81,11 +90,11 @@ class DataSourceConfigController : ManageHttpController {
     r.enabled = data.getBoolean("enabled");
     r.disabledRuleIds = data.getStrings("disabledRuleIds");
     auto result = usecase.update(r);
-    if (!result.success) {
-      writeError(res, 400, result.message);
-      return;
-    }
-    res.writeJsonBody(Json.emptyObject, cast(int)HTTPStatus.ok);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Config updated successfully", "Updated", 200, responseData);
   }
 
   void handleAddMapping(HTTPServerRequest req, HTTPServerResponse res) {
@@ -105,12 +114,20 @@ class DataSourceConfigController : ManageHttpController {
     res.writeJsonBody(Json.emptyObject, cast(int)HTTPStatus.ok);
   }
 
-  void handleDelete(HTTPServerRequest req, HTTPServerResponse res) {
-    auto result = usecase.remove(req.getTenantId, extractIdFromPath(req.requestPath.to!string));
-    if (!result.success) {
-      writeError(res, 404, result.message);
-      return;
-    }
-    res.writeJsonBody(Json.emptyObject, cast(int)HTTPStatus.ok);
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto path = precheck.path;
+    auto id = DataSourceConfigId(precheck.id);
+
+    auto result = usecase.deleteConfig(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Config deleted successfully", 200, responseData);
   }
 }

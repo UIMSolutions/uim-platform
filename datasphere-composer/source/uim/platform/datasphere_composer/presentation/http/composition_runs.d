@@ -66,9 +66,17 @@ class CompositionRunController : ManageHttpController {
     res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.ok);
   }
 
-  void handleDelete(HTTPServerRequest req, HTTPServerResponse res) {
-    auto result = usecase.remove(req.getTenantId, extractIdFromPath(req.requestPath.to!string));
-    if (!result.success) { writeError(res, 404, result.message); return; }
-    res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.ok);
+  override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+    auto result = usecase.remove(tenantId, extractIdFromPath(req.requestPath.to!string));
+    if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Composition run deleted successfully", "Deleted", 200, responseData);
   }
 }

@@ -20,7 +20,7 @@ class RefreshTokenController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        
+
         router.get("/api/v1/oauth/refresh-tokens", &handleList);
         router.get("/api/v1/oauth/refresh-tokens/*", &handleGet);
         router.post("/api/v1/oauth/refresh-tokens", &handleCreate);
@@ -35,19 +35,13 @@ class RefreshTokenController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
+        auto items = usecase.listTokens(tenantId);
+        auto list = items.map!(e => e.toJson()).array.toJson;
 
-            auto items = usecase.listTokens(tenantId);
-            auto list = items.map!(e => e.toJson()).array.toJson;
-
-            auto resp = Json.emptyObject
-              .set("count", items.length)
-              .set("resources", jarr)
-              .set("message", "Refresh tokens retrieved successfully");
-
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = Json.emptyObject
+            .set("count", list.length)
+            .set("resources", list);
+        return successResponse("Refresh token list retrieved successfully", "Retrieved", 200, responseData);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -56,15 +50,15 @@ class RefreshTokenController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = precheck.path;
-            auto id = RefreshTokenId(precheck.id);
+        auto path = precheck.path;
+        auto id = RefreshTokenId(precheck.id);
 
-            auto e = usecase.getToken(tenantId, id);
-            if (e.isNull) { writeError(res, 404, "Refresh token not found"); return; }
-            res.writeJsonBody(e.toJson(), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto e = usecase.getToken(tenantId, id);
+        if (item.isNull)
+            return errorResponse("Scan job not found", 404);
+
+        auto responseData = item.toJson();
+        return successResponse("Refresh token retrieved successfully", "Retrieved", 200, responseData);
     }
 
     override protected Json createHandler(HTTPServerRequest req) {
@@ -75,49 +69,46 @@ class RefreshTokenController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-            RefreshTokenDTO dto;
-            dto.tokenId = precheck.id;
-            dto.tenantId = tenantId;
-            dto.tokenValue = data.getString("tokenValue");
-            dto.clientId = data.getString("clientId");
-            dto.userId = data.getString("userId");
-            dto.scopes = data.getString("scopes");
-            dto.accessTokenId = data.getString("accessTokenId");
-            dto.expiresAt = 0;
-            dto.createdBy = UserId(data.getString("createdBy"));
+        RefreshTokenDTO dto;
+        dto.tokenId = precheck.id;
+        dto.tenantId = tenantId;
+        dto.tokenValue = data.getString("tokenValue");
+        dto.clientId = data.getString("clientId");
+        dto.userId = data.getString("userId");
+        dto.scopes = data.getString("scopes");
+        dto.accessTokenId = data.getString("accessTokenId");
+        dto.expiresAt = 0;
+        dto.createdBy = UserId(data.getString("createdBy"));
 
-            auto result = usecase.createToken(dto);
-            if (result.hasError)
+        auto result = usecase.createToken(dto);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Refresh token created");
 
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Refresh token created successfully", "Created", 201, responseData);
+    }
+
+    protected Json revokeHandler(HTTPServerRequest req) {
+        auto precheck = super.postHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+        auto path = precheck.path;
+        auto id = RefreshTokenId(precheck.id);
+
+        auto result = usecase.revokeToken(tenantId, id);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("", 0, responseData);
     }
 
     protected void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = precheck.tenantId;
-            auto path = precheck.path;
-            auto id = RefreshTokenId(precheck.id);
-
-            auto result = usecase.revokeToken(tenantId, id);
-            if (result.hasError)
-            return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                  .set("message", "Refresh token revoked");
-
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
+            auto response = revokeHandler(req);
+            res.writeJsonBody(response, response.code);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
@@ -129,11 +120,11 @@ class RefreshTokenController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = precheck.path;
-            auto id = RefreshTokenId(precheck.id);
+        auto path = precheck.path;
+        auto id = RefreshTokenId(precheck.id);
 
-            auto result = usecase.deleteToken(tenantId, id);
-            if (result.hasError)
+        auto result = usecase.deleteToken(tenantId, id);
+        if (result.hasError)
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);

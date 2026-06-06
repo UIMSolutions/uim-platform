@@ -83,16 +83,13 @@ override protected Json getHandler(HTTPServerRequest req) {
 
   auto tenantId = precheck.tenantId;
 
-  auto id = req.requestPath.to!string.split("/")[$ - 1];
+  auto id = DataProductId(req.requestPath.to!string.split("/")[$ - 1]);
   auto result = _usecase.get(tenantId, id);
-  if (result.success)
-    res.writeJsonBody(serializeToJson(result.data));
-  else
-    writeError(res, 404, result.message);
-}
- catch (Exception e) {
-  writeError(res, 500, "Internal server error");
-}
+  if (result.isNull)
+    return errorResponse("Scan job not found", 404);
+
+  auto responseData = result.toJson();
+  return successResponse("Data product retrieved successfully", "Retrieved", 200, responseData);
 }
 
 override protected Json updateHandler(HTTPServerRequest req) {
@@ -105,7 +102,8 @@ override protected Json updateHandler(HTTPServerRequest req) {
   auto data = precheck.data;
   UpdateDataProductRequest r;
   r.tenantId = tenantId;
-  r.id = req.requestPath.to!string.split("/")[$ - 1];
+  r.id = DataProductId(req.requestPath.to!string.split("/")[$ - 1]);
+  r.name = data.getString("name");
   r.description = data.getString("description");
   r.version_ = data.getString("version");
   r.targetCatalog = data.getString("targetCatalog");
@@ -121,14 +119,11 @@ override protected Json updateHandler(HTTPServerRequest req) {
     }
   }
   auto result = _usecase.update(r);
-  if (result.success)
-    res.writeJsonBody(serializeToJson(result.data));
-  else
-    writeError(res, 404, result.message);
-}
- catch (Exception e) {
-  writeError(res, 500, "Internal server error");
-}
+  if (result.hasError)
+    return errorResponse(result.message, 400);
+
+  auto responseData = Json.emptyObject.set("id", result.id);
+  return successResponse("Data product updated successfully", "Updated", 200, responseData);
 }
 
 override protected Json deleteHandler(HTTPServerRequest req) {
