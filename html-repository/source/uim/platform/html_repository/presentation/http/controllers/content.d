@@ -42,10 +42,9 @@ class ContentController : ManageHttpController {
         return;
       }
       auto entry = fileUc.getAppFile(path, tenantId);
-      if (entry.isNull) {
-        writeError(res, 404, "Content not found");
-        return;
-      }
+      if (entry.isNull) 
+      return errorResponse("Content not found", 404);
+      
       res.headers["Content-Type"] = entry.contentType;
       res.writeBody(entry.data, 200);
     } catch (Exception e)

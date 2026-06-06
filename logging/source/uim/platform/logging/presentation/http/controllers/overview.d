@@ -47,7 +47,7 @@ class OverviewController : HttpController {
       .set("activePipelines", summary.activePipelines)
       .set("totalChannels", summary.totalChannels);
 
-    return successResponse("Overview retrieved successfully", "Success", 200, response);
+    return successResponse("Overview retrieved successfully", 200, response);
   }
 
   protected void handleOverview(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -73,7 +73,15 @@ unittest {
       auto pipelineRepo = new MemoryPipelineRepository();
       auto channelRepo = new MemoryNotificationChannelRepository();
 
-      auto usecase = new GetOverviewUseCase(logRepo, spanRepo, streamRepo, dashboardRepo, alertRepo, pipelineRepo, channelRepo);
+      auto usecase = new GetOverviewUseCase(
+        logRepo,
+        spanRepo,
+        streamRepo,
+        dashboardRepo,
+        alertRepo,
+        pipelineRepo,
+        channelRepo
+      );
       auto controller = new OverviewController(usecase);
       auto tenantId = TenantId("test-tenant");
 

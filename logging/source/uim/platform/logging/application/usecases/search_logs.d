@@ -78,7 +78,7 @@ unittest {
 
   // Test search by level
   req.traceId = TraceId.init;
-  req.level = "error";
+  req.level = "warning";
   results = usecase.searchLogs(req);
   assert(results.length == 1);
 }

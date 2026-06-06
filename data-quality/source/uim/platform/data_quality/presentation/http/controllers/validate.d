@@ -86,13 +86,9 @@ class ValidateController : HttpController {
       auto recordId = precheck.id;
       auto tenantId = precheck.tenantId;
       auto result = usecase.getResultByRecord(tenantId, recordId);
-      if (result.isNull) {
-        writeError(res, 404, "Validation result not found");
-        return;
-      }
-      res.writeJsonBody(result.toJson, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+      if (result.isNull) 
+      return errorResponse("Validation result not found", 404);
+
+  return successResponse("Validation result retrieved successfully", 200, result.toJson);
   }
 }

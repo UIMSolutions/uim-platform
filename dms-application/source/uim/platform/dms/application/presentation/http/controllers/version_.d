@@ -56,7 +56,7 @@ class VersionController : ManageHttpController {
     else
       return errorResponse(result.message, 400);
   }
-  
+
   protected void handleCheckOut(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto docId = DocumentId(precheck.id);
@@ -159,10 +159,9 @@ class VersionController : ManageHttpController {
       auto docId = DocumentId(precheck.id);
       auto tenantId = precheck.tenantId;
       auto ver = usecase.getCurrentVersion(tenantId, docId);
-      if (ver.isNull) {
-        writeError(res, 404, "No current version found");
-        return;
-      }
+      if (ver.isNull)
+      return errorResponse("Document not found", 404);
+      
       res.writeJsonBody(ver.toJson, 200);
     }
     catch (Exception e) {

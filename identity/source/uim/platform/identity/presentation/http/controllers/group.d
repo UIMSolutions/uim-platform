@@ -54,15 +54,10 @@ override protected Json getHandler(HTTPServerRequest req) {
     auto tenantId = precheck.tenantId;
     auto id = GroupId(precheck.id);
     auto e = usecase.getGroup(tenantId, id);
-    if (e.isNull) {
-        writeError(res, 404, "Group not found");
-        return;
-    }
-    res.writeJsonBody(e.toJson(), 200);
-}
- catch (Exception e) {
-    writeError(res, 500, "Internal server error");
-}
+    if (e.isNull)
+        return errorResponse("Group not found", 404);
+
+    return successResponse("Group retrieved successfully", 200, e.toJson);
 }
 
 override protected Json createHandler(HTTPServerRequest req) {
@@ -81,11 +76,11 @@ override protected Json createHandler(HTTPServerRequest req) {
     dto.type_ = data.getString("type");
 
     auto result = usecase.createGroup(dto);
-if (result.hasError)
-            return errorResponse(result.message, 400);
+    if (result.hasError)
+        return errorResponse(result.message, 400);
 
-        auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("Group created successfully", "Created", 201, responseData);
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Group created successfully", "Created", 201, responseData);
 }
 
 override protected Json updateHandler(HTTPServerRequest req) {
@@ -116,6 +111,9 @@ override protected Json deleteHandler(HTTPServerRequest req) {
 
     auto tenantId = precheck.tenantId;
     auto id = GroupId(precheck.id);
+    if (id.isNull)
+        return errorResponse("Invalid group ID", 400);
+        
     auto result = usecase.deleteGroup(tenantId, id);
     if (result.hasError)
         return errorResponse(result.message, 400);

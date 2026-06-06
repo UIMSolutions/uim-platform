@@ -10,6 +10,8 @@ module uim.platform.logging.application.usecases.manage.log_streams;
 
 
 
+import std.conv : ConvException, to;
+import std.string : toLower;
 import uim.platform.logging;
 
 mixin(ShowModule!());
@@ -17,6 +19,21 @@ mixin(ShowModule!());
 @safe:
 class ManageLogStreamsUseCase { // TODO: UIMUseCase {
   private LogStreamRepository repo;
+
+  private bool tryParseSourceType(string raw, out LogSourceType sourceType) {
+    auto normalized = raw.toLower;
+    if (normalized == "app")
+      normalized = "application";
+    if (normalized == "cloudfoundry" || normalized == "cloud_foundry")
+      normalized = "cloudFoundry";
+
+    try {
+      sourceType = normalized.to!LogSourceType;
+      return true;
+    } catch (ConvException) {
+      return false;
+    }
+  }
 
   this(LogStreamRepository repo) {
     this.repo = repo;
@@ -26,11 +43,15 @@ class ManageLogStreamsUseCase { // TODO: UIMUseCase {
     if (req.name.length == 0)
       return CommandResult(false, "", "Stream name is required");
 
+    LogSourceType sourceType;
+    if (!tryParseSourceType(req.sourceType, sourceType))
+      return CommandResult(false, "", "Invalid source type: " ~ req.sourceType);
+
     LogStream stream;
     stream.initEntity(req.tenantId);
     stream.name = req.name;
     stream.description = req.description;
-    stream.sourceType = req.sourceType.to!LogSourceType;
+    stream.sourceType = sourceType;
     stream.retentionPolicyId = req.retentionPolicyId;
     stream.isActive = true;
     stream.createdBy = req.createdBy;

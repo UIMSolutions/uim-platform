@@ -81,7 +81,7 @@ class SearchController : HttpController {
       .set("items", list)
       .set("totalCount", entries.length);
 
-    return successResponse("Search completed successfully", "Retrieved", 200, responseData);
+    return successResponse("Search completed successfully", 200, responseData);
   }
 
   protected void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -126,7 +126,7 @@ class SearchController : HttpController {
       .set("resourceId", entry.resourceId)
       .set("tags", entry.tags.toJson);
 
-    return successResponse("Log entry retrieved successfully", "Retrieved", 200, response);
+    return successResponse("Log entry retrieved successfully", 200, response);
   }
 }
 

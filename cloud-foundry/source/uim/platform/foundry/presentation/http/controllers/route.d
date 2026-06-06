@@ -188,8 +188,7 @@ class RouteController : ManageHttpController {
 
     auto result = useCase.unmapRoute(r);
     if (result.isSuccess()) {
-      auto resp = Json.emptyObject
-        .set("id", result.id);
+      auto resp = Json.emptyObject.set("id", result.id);
 
       return successResponse("Route unmapped from app successfully", 200, resp);
     }

@@ -51,8 +51,7 @@ class AppFileController : ManageHttpController {
 
     auto result = usecase.uploadAppFile(r);
     if (result.isSuccess()) {
-      auto resp = Json.emptyObject
-        .set("id", result.id);
+      auto resp = Json.emptyObject.set("id", result.id);
 
       res.writeJsonBody(resp, 201);
     } else

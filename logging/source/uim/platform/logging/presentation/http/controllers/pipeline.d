@@ -61,11 +61,11 @@ class PipelineController : ManageHttpController {
       return errorResponse(result.message, 400);
 
     auto resp = Json.emptyObject.set("id", result.id);
-    return successResponse("Pipeline created successfully", "Created", 201, resp);
+    return successResponse("Pipeline created successfully", 201, resp);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-    auto precheck = super.listHandler(req);
+    auto precheck = super.getHandler(req);
     if (precheck.hasError)
       return precheck;
 
@@ -85,7 +85,7 @@ class PipelineController : ManageHttpController {
       .set("items", jarr)
       .set("totalCount", pipelines.length);
 
-    return successResponse("Pipelines retrieved successfully", "Retrieved", 200, resp);
+    return successResponse("Pipelines retrieved successfully", 200, resp);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
@@ -107,7 +107,7 @@ class PipelineController : ManageHttpController {
       .set("targetStreamId", p.targetStreamId)
       .set("message", "Pipeline retrieved successfully");
 
-    return successResponse("Pipeline retrieved successfully", "Retrieved", 200, response);
+    return successResponse("Pipeline retrieved successfully", 200, response);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
@@ -132,7 +132,7 @@ class PipelineController : ManageHttpController {
     auto response = Json.emptyObject
       .set("id", result.id);
 
-    return successResponse("Pipeline updated successfully", "Updated", 200, response);
+    return successResponse("Pipeline updated successfully", 200, response);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
@@ -147,7 +147,7 @@ class PipelineController : ManageHttpController {
     auto response = Json.emptyObject
       .set("id", pipelineId);
 
-    return successResponse("Pipeline deleted successfully", "Deleted", 200, response);
+    return successResponse("Pipeline deleted successfully", 200, response);
   }
 }
 
@@ -165,7 +165,7 @@ unittest {
       Json createData = Json.emptyObject
         .set("name", "test-pipeline")
         .set("description", "A test pipeline")
-        .set("sourceType", "app")
+        .set("sourceType", "custom")
         .set("format", "json")
         .set("targetStreamId", "stream-1")
         .set("createdBy", "user-1")

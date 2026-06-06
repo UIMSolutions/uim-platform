@@ -102,10 +102,8 @@ class ConfigurationController : ManageHttpController {
         auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto c = usecase.getById(tenantId, id);
-      if (c.isNull) {
-        writeError(res, 404, "Configuration not found");
-        return;
-      }
+      if (c.isNull)
+      return errorResponse("Configuration not found", 404);
 
       auto resp = Json.emptyObject
         .set("id", c.id)
@@ -120,10 +118,7 @@ class ConfigurationController : ManageHttpController {
         .set("updatedAt", c.updatedAt)
         .set("updatedBy", c.updatedBy);
 
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    return successResponse("Configuration retrieved successfully", 200, resp);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {

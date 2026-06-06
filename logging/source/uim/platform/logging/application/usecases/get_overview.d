@@ -68,48 +68,70 @@ unittest {
   auto pipelineRepo = new MemoryPipelineRepository();
   auto channelRepo = new MemoryNotificationChannelRepository();
 
-  auto usecase = new GetOverviewUseCase(logRepo, spanRepo, streamRepo, dashboardRepo, alertRepo, pipelineRepo, channelRepo);
+  auto usecase = new GetOverviewUseCase(
+    logRepo,
+    spanRepo,
+    streamRepo,
+    dashboardRepo,
+    alertRepo,
+    pipelineRepo,
+    channelRepo
+  );
   auto tenantId = TenantId("test-tenant");
 
   // Seed Test Data
   // 1 Log Entry
-  LogEntry log; log.tenantId = tenantId;
+  LogEntry log;
+  log.initEntity(tenantId);
   logRepo.save(log);
 
   // 1 Span
-  Span span; span.tenantId = tenantId;
+  Span span;
+  span.initEntity(tenantId);
   spanRepo.save(span);
 
   // 1 Stream
-  LogStream stream; stream.tenantId = tenantId; stream.name = "default";
+  LogStream stream;
+  stream.initEntity(tenantId);
+  stream.name = "default";
   streamRepo.save(stream);
 
   // 1 Dashboard
-  Dashboard dashboard; dashboard.tenantId = tenantId; dashboard.name = "Main View";
+  Dashboard dashboard;
+  dashboard.initEntity(tenantId);
+  dashboard.name = "Main View";
   dashboardRepo.save(dashboard);
 
   // 2 Alerts: 1 Open + Critical, 1 Resolved + Low
-  Alert alert1; 
-  alert1.tenantId = tenantId; 
+  Alert alert1;
+  alert1.initEntity(tenantId);
   alert1.state = AlertState.open; 
   alert1.severity = AlertSeverity.critical;
   alertRepo.save(alert1);
   
-  Alert alert2; 
-  alert2.tenantId = tenantId; 
+  Alert alert2;
+  alert2.initEntity(tenantId);
   alert2.state = AlertState.resolved; 
   alert2.severity = AlertSeverity.warning;
   alertRepo.save(alert2);
 
   // 2 Pipelines: 1 Active, 1 Inactive
-  Pipeline p1; p1.tenantId = tenantId; p1.isActive = true; p1.name = "Active Pipe";
+  Pipeline p1;
+  p1.initEntity(tenantId);
+  p1.isActive = true;
+  p1.name = "Active Pipe";
   pipelineRepo.save(p1);
   
-  Pipeline p2; p2.tenantId = tenantId; p2.isActive = false; p2.name = "Inactive Pipe";
+  Pipeline p2;
+  p2.initEntity(tenantId);
+  p2.isActive = false;
+  p2.name = "Inactive Pipe";
   pipelineRepo.save(p2);
 
   // 1 Channel
-  NotificationChannel channel; channel.tenantId = tenantId; channel.name = "Email Admin";
+  NotificationChannel channel;
+  channel.initEntity(tenantId);
+  channel.name = "Email Admin";
   channelRepo.save(channel);
 
   // Execute

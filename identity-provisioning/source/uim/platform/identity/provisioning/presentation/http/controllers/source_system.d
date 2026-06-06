@@ -5,9 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.identity.provisioning.presentation.http.source_system;
 
-
-
-
 // import uim.platform.identity.provisioning.application.usecases.manage.source_systems;
 // import uim.platform.identity.provisioning.application.dto;
 // import uim.platform.identity.provisioning.domain.entities.source_system;
@@ -26,7 +23,7 @@ class SourceSystemController : ManageHttpController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/source-systems", &handleCreate);
     router.get("/api/v1/source-systems", &handleList);
     router.get("/api/v1/source-systems/*", &handleGet);
@@ -37,178 +34,164 @@ class SourceSystemController : ManageHttpController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-      auto r = CreateSourceSystemRequest();
-      r.tenantId = tenantId;
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.systemType = parseSystemType(data.getString("systemType"));
-      r.connectionConfig = data.getString("connectionConfig");
-      r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
+    auto data = precheck.data;
+    auto r = CreateSourceSystemRequest();
+    r.tenantId = tenantId;
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.systemType = parseSystemType(data.getString("systemType"));
+    r.connectionConfig = data.getString("connectionConfig");
+    r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
-      auto result = usecase.createSourceSystem(r);
-      if (result.isSuccess) {
-        auto resp = Json.emptyObject
-          .set("id", result.id);
+    auto result = usecase.createSourceSystem(r);
+    if (result.isSuccess) {
+      auto resp = Json.emptyObject.set("id", result.id);
 
-        res.writeJsonBody(resp, 201);
-      }
-      else
-        writeError(res, 400, result.message);
-    }
-    catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+      res.writeJsonBody(resp, 201);
+    } else
+      writeError(res, 400, result.message);
   }
+ catch (Exception e) {
+    writeError(res, 500, "Internal server error");
+  }
+}
 
-  override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+override protected Json listHandler(HTTPServerRequest req) {
+  auto precheck = super.listHandler(req);
+  if (precheck.hasError)
+    return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto items = usecase.listSourceSystems(tenantId);
+  auto tenantId = precheck.tenantId;
+  auto items = usecase.listSourceSystems(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (s; items)
-        arr ~= s.toJson;
+  auto arr = Json.emptyArray;
+  foreach (s; items)
+    arr ~= s.toJson;
 
+  auto resp = Json.emptyObject
+    .set("items", arr)
+    .set("totalCount", items.length);
+
+  res.writeJsonBody(resp, 200);
+}
+ catch (Exception e) {
+  writeError(res, 500, "Internal server error");
+}
+}
+
+override protected Json getHandler(HTTPServerRequest req) {
+  auto precheck = super.getHandler(req);
+  if (precheck.hasError)
+    return precheck;
+
+  auto tenantId = precheck.tenantId;
+  auto id = precheck.id;
+  auto tenantId = precheck.tenantId;
+  auto sys = usecase.getSourceSystem(tenantId, id);
+  if (sys.isNull)
+    return errorResponse("Source system not found", 404);
+
+  auto responseData = sys.toJson;
+  return successResponse("Source system retrieved successfully", 200, responseData);
+}
+
+override protected Json updateHandler(HTTPServerRequest req) {
+  auto precheck = super.updateHandler(req);
+  if (precheck.hasError)
+    return precheck;
+
+  auto tenantId = precheck.tenantId;
+  auto id = precheck.id;
+  auto data = precheck.data;
+  auto r = UpdateSourceSystemRequest();
+  r.id = id;
+  r.tenantId = tenantId;
+  r.name = data.getString("name");
+  r.description = data.getString("description");
+  r.connectionConfig = data.getString("connectionConfig");
+
+  auto result = usecase.updateSourceSystem(r);
+  if (result.isSuccess) {
+    auto resp = Json.emptyObject
+      .set("id", result.id);
+
+    res.writeJsonBody(resp, 200);
+  } else {
+    auto status = result.message == "Source system not found" ? 404 : 400;
+    writeError(res, status, result.message);
+  }
+}
+ catch (Exception e) {
+  writeError(res, 500, "Internal server error");
+}
+}
+
+protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  try {
+    auto tenantId = precheck.tenantId;
+    auto id = precheck.id;
+    auto tenantId = precheck.tenantId;
+    auto result = usecase.activateSystem(tenantId, id);
+    if (result.isSuccess) {
       auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", items.length);
+        .set("id", result.id)
+        .set("status", "active");
 
       res.writeJsonBody(resp, 200);
+    } else {
+      auto status = result.message == "Source system not found" ? 404 : 400;
+      writeError(res, status, result.message);
     }
-    catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+  } catch (Exception e) {
+    writeError(res, 500, "Internal server error");
   }
+}
 
-  override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+protected void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  try {
+    auto tenantId = precheck.tenantId;
+    auto id = precheck.id;
+    auto tenantId = precheck.tenantId;
+    auto result = usecase.deactivateSystem(tenantId, id);
+    if (result.isSuccess) {
+      auto resp = Json.emptyObject
+        .set("id", result.id)
+        .set("status", "inactive");
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto tenantId = precheck.tenantId;
-      auto sys = usecase.getSourceSystem(tenantId, id);
-      if (sys.isNull) {
-        writeError(res, 404, "Source system not found");
-        return;
-      }
-      res.writeJsonBody(sys.toJson, 200);
-    }
-    catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+      res.writeJsonBody(resp, 200);
+    } else
+      writeError(res, 404, result.message);
+  } catch (Exception e) {
+    writeError(res, 500, "Internal server error");
   }
+}
 
-  override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+override protected Json deleteHandler(HTTPServerRequest req) {
+  auto precheck = super.deleteHandler(req);
+  if (precheck.hasError)
+    return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto data = precheck.data;
-      auto r = UpdateSourceSystemRequest();
-      r.id = id;
-      r.tenantId = tenantId;
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.connectionConfig = data.getString("connectionConfig");
+  auto tenantId = precheck.tenantId;
+  auto id = precheck.id;
+  auto tenantId = precheck.tenantId;
+  auto result = usecase.deleteSourceSystem(tenantId, id);
+  if (result.isSuccess) {
+    auto resp = Json.emptyObject
+      .set("deleted", true);
 
-      auto result = usecase.updateSourceSystem(r);
-      if (result.isSuccess) {
-        auto resp = Json.emptyObject
-          .set("id", result.id);
-
-        res.writeJsonBody(resp, 200);
-      }
-      else
-      {
-        auto status = result.message == "Source system not found" ? 404 : 400;
-        writeError(res, status, result.message);
-      }
-    }
-    catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
-
-  protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto tenantId = precheck.tenantId;
-      auto result = usecase.activateSystem(tenantId, id);
-      if (result.isSuccess) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("status", "active");
-
-        res.writeJsonBody(resp, 200);
-      }
-      else
-      {
-        auto status = result.message == "Source system not found" ? 404 : 400;
-        writeError(res, status, result.message);
-      }
-    }
-    catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
-
-  protected void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto tenantId = precheck.tenantId;
-      auto result = usecase.deactivateSystem(tenantId, id);
-      if (result.isSuccess) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("status", "inactive");
-
-        res.writeJsonBody(resp, 200);
-      }
-      else
-        writeError(res, 404, result.message);
-    }
-    catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
-
-  override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
-
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto tenantId = precheck.tenantId;
-      auto result = usecase.deleteSourceSystem(tenantId, id);
-      if (result.isSuccess) {
-        auto resp = Json.emptyObject
-          .set("deleted", true);
-          
-        res.writeJsonBody(resp, 200);
-      }
-      else
-        writeError(res, 404, result.message);
-    }
-    catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+    res.writeJsonBody(resp, 200);
+  } else
+    writeError(res, 404, result.message);
+}
+ catch (Exception e) {
+  writeError(res, 500, "Internal server error");
+}
+}
 
 }
