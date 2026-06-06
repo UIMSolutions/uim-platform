@@ -84,17 +84,14 @@ class TargetSystemController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
+      auto id = TargetSystemId(precheck.id);
       auto tenantId = precheck.tenantId;
       auto sys = usecase.getTargetSystem(tenantId, id);
-      if (sys.isNull) {
-        writeError(res, 404, "Target system not found");
-        return;
-      }
-      res.writeJsonBody(sys.toJson, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+      if (sys.isNull) 
+      return errorResponse("Target system not found", 404);
+
+      auto responseData = sys.toJson();
+      return successResponse("Target system retrieved successfully", 200, responseData);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {

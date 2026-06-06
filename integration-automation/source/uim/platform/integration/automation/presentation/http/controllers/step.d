@@ -5,9 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.integration.automation.presentation.http.step;
 
-
-
-
 // import uim.platform.integration.automation.application.usecases.manage.steps;
 // import uim.platform.integration.automation.application.dto;
 // import uim.platform.integration.automation.domain.types;
@@ -26,7 +23,7 @@ class StepController : ManageHttpController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.get("/api/v1/steps", &handleListByWorkflow);
     router.get("/api/v1/steps/*", &handleGet);
     router.get("/api/v1/my-tasks", &handleMyTasks);
@@ -46,11 +43,11 @@ class StepController : ManageHttpController {
       auto arr = steps.map!(s => s.toJson).array.toJson;
 
       auto resp = Json.emptyObject
-          .set("items", arr)
-          .set("totalCount", steps.length)
-          .set("workflowId", workflowId)
-          .set("message", "Steps retrieved successfully");
-          
+        .set("items", arr)
+        .set("totalCount", steps.length)
+        .set("workflowId", workflowId)
+        .set("message", "Steps retrieved successfully");
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -58,22 +55,38 @@ class StepController : ManageHttpController {
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto tenantId = precheck.tenantId;
-      auto step = useCase.getStep(tenantId, id);
-      if (step.isNull) {
-        writeError(res, 404, "Step not found");
-        return;
-      }
-      res.writeJsonBody(step.toJson, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto tenantId = precheck.tenantId;
+    auto id = precheck.id;
+    auto tenantId = precheck.tenantId;
+    auto step = useCase.getStep(tenantId, id);
+    if (step.isNull)
+      return errorResponse("Step not found", "Not Found", 404);
+
+    return successResponse("Step retrieved successfully", 200, step.toJson);
+  }
+
+  protected Json myTasksHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = UserId(req.headers.get("X-User-Id", ""));
+    if (id.isNull)
+      return errorResponse("User ID is required in X-User-Id header", "Bad Request", 400);
+
+    auto tasks = useCase.getMyTasks(tenantId, id);
+    auto list = tasks.map!(s => s.toJson).array.toJson;
+
+    auto responseData = Json.emptyObject
+      .set("items", list)
+      .set("totalCount", tasks.length);
+
+    return successResponse("My tasks retrieved successfully", 200, responseData);
   }
 
   protected void handleMyTasks(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -86,9 +99,8 @@ class StepController : ManageHttpController {
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", Json(tasks.length))
-        .set("message", "My tasks retrieved successfully");
-        
+        .set("totalCount", Json(tasks.length));
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -96,7 +108,7 @@ class StepController : ManageHttpController {
   }
 
   protected void handlert(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto tenantId = precheck.tenantId;
@@ -119,7 +131,7 @@ class StepController : ManageHttpController {
   }
 
   protected void handleplete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto data = precheck.data;
@@ -146,7 +158,7 @@ class StepController : ManageHttpController {
   }
 
   protected void handlel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto data = precheck.data;
@@ -173,7 +185,7 @@ class StepController : ManageHttpController {
   }
 
   protected void handleSkip(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto data = precheck.data;
@@ -200,7 +212,7 @@ class StepController : ManageHttpController {
   }
 
   protected void handleAssign(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto data = precheck.data;

@@ -115,6 +115,14 @@ mixin template TenantEntity(TId) {
     updatedAt = src.getLong("updatedAt");
     return src;
   }
+
+// bool opEquals(ref const TId) const {
+//   return this.id == id;
+// }
+
+//    bool opEquals(string anId) const {
+//        return this.id.value == anId;
+//    }
 }
 ///
 unittest {

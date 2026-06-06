@@ -22,4 +22,8 @@ interface FragmentRepository : ITenantRepository!(DestinationFragment, Destinati
   DestinationFragment[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId);
   void removeBySubaccount(TenantId tenantId, SubaccountId subaccountId);
 
+  size_t countByLevel(TenantId tenantId, DestinationLevel level);
+  DestinationFragment[] findByLevel(TenantId tenantId, DestinationLevel level);
+  void removeByLevel(TenantId tenantId, DestinationLevel level);
+
 }

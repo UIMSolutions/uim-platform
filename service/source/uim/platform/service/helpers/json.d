@@ -142,11 +142,23 @@ Json successResponse(Json json, string message = "Success", int code = 200, Json
         .set("code", code)
         .set("data", data) : successResponse(message, code);
 }
+
+Json successResponse(string message = "Success", int code = 200, CommandResult result) {
+    return Json.emptyObject
+        .set("status", "success")
+        .set("message", message)
+        .set("code", code)
+        .set("data", Json.emptyObject
+            .set("success", result.success)
+            .set("message", result.message)
+            .set("id", result.id));
+}
+
 ///
 unittest {
     auto baseJson = Json.emptyObject.set("info", "Additional info");
     auto data = Json.emptyObject.set("id", 123).set("name", "Test");
-    auto response = successResponse(baseJson, "Operation successful", 200, data);
+    auto response = successResponse("Operation successful", 200, CommandResult(true, "Operation completed", 123));
     assert(response.getString("status") == "success");
     assert(response.getString("message") == "Operation successful");
     assert(response.getInteger("code") == 200);

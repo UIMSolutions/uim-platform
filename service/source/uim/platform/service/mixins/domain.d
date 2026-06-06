@@ -15,6 +15,10 @@ mixin template DomainId() {
   //     this.value = newValue.toString();
   // }
 
+  //  bool opEquals(string anId) const {
+  //      return this.value == anId;
+  //  }
+
   void opAssign(UUID newValue) {
     this.value = newValue.toString();
   }

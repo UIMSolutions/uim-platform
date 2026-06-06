@@ -10,6 +10,7 @@ module uim.platform.destination.application.usecases.manage.certificates;
 // import uim.platform.destination.domain.services.certificate_validator;
 // import uim.platform.destination.domain.types;
 // 
+import std.string : replace, toLower;
 import uim.platform.destination;
 
 mixin(ShowModule!());
@@ -18,6 +19,44 @@ mixin(ShowModule!());
 /// Application service for certificate CRUD operations.
 class ManageCertificatesUseCase { // TODO: UIMUseCase {
   private CertificateRepository repo;
+
+  private string normalizeToken(string value) {
+    return value.toLower.replace("-", "").replace("_", "").replace(" ", "");
+  }
+
+  private bool tryParseCertificateType(string raw, out CertificateType certificateType) {
+    switch (normalizeToken(raw)) {
+      case "keystore":
+        certificateType = CertificateType.keystore;
+        return true;
+      case "truststore":
+        certificateType = CertificateType.truststore;
+        return true;
+      default:
+        return false;
+    }
+  }
+
+  private bool tryParseCertificateFormat(string raw, out CertificateFormat format_) {
+    switch (normalizeToken(raw)) {
+      case "p12":
+      case "pkcs12":
+        format_ = CertificateFormat.p12;
+        return true;
+      case "jks":
+        format_ = CertificateFormat.jks;
+        return true;
+      case "pem":
+        format_ = CertificateFormat.pem;
+        return true;
+      case "pfx":
+      case "pkcsfx":
+        format_ = CertificateFormat.pfx;
+        return true;
+      default:
+        return false;
+    }
+  }
 
   this(CertificateRepository repo) {
     this.repo = repo;
@@ -34,14 +73,22 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
     if (!existing.isNull)
       return CommandResult(false, "", "Certificate '" ~ req.name ~ "' already exists");
 
+    CertificateType certificateType;
+    if (!tryParseCertificateType(req.certificateType, certificateType))
+      return CommandResult(false, "", "Invalid certificate type: " ~ req.certificateType);
+
+    CertificateFormat format_;
+    if (!tryParseCertificateFormat(req.format_, format_))
+      return CommandResult(false, "", "Invalid certificate format: " ~ req.format_);
+
     Certificate certificate;
     certificate.initEntity(req.tenantId);
 
     certificate.subaccountId = req.subaccountId;
     certificate.name = req.name;
     certificate.description = req.description;
-    certificate.certificateType = req.certificateType.to!CertificateType;
-    certificate.format_ = req.format_.to!CertificateFormat;
+    certificate.certificateType = certificateType;
+    certificate.format_ = format_;
     certificate.content = req.content;
     certificate.password = req.password;
     certificate.subject = req.subject;
@@ -94,7 +141,11 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
   }
 
   Certificate[] listByType(TenantId tenantId, SubaccountId subaccountId, string typeStr) {
-    return repo.findByType(tenantId, subaccountId, typeStr.to!CertificateType);
+    CertificateType certificateType;
+    if (!tryParseCertificateType(typeStr, certificateType))
+      return [];
+
+    return repo.findByType(tenantId, subaccountId, certificateType);
   }
 
   Certificate[] listExpiring(TenantId tenantId, long beforeTimestamp) {
@@ -131,7 +182,7 @@ unittest {
   uploadReq.subaccountId = subaccountId;
   uploadReq.name = "Internal-CA";
   uploadReq.content = "---BEGIN CERTIFICATE---...---END CERTIFICATE---";
-  uploadReq.certificateType = "pem"; // Assuming lowercase or exact match for Enum conversion
+  uploadReq.certificateType = "keystore";
   uploadReq.format_ = "pem";
   uploadReq.uploadedBy = "admin-user";
 
@@ -143,7 +194,7 @@ unittest {
   auto cert = usecase.getCertificate(tenantId, certId);
   assert(!cert.isNull);
   assert(cert.name == "Internal-CA");
-  assert(cert.uploadedBy == "admin-user");
+  assert(cert.uploadedBy.value== "admin-user");
 
   // 3. Test Update Certificate
   UpdateCertificateRequest updateReq;
@@ -159,6 +210,11 @@ unittest {
   auto list = usecase.listBySubaccount(tenantId, subaccountId);
   assert(list.length == 1);
   assert(list[0].id == certId);
+
+  // 4b. Test List by Type with alias normalization
+  auto typedList = usecase.listByType(tenantId, subaccountId, "key-store");
+  assert(typedList.length == 1);
+  assert(typedList[0].id == certId);
 
   // 5. Test Delete Certificate
   auto deleteRes = usecase.deleteCertificate(tenantId, certId);

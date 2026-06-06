@@ -56,14 +56,17 @@ class CertificateController : ManageHttpController {
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-    auto precheck = super.listHandler(req);
+    auto precheck = super.getHandler(req);
     if (precheck.hasError)
       return precheck;
 
     auto tenantId = precheck.tenantId;
     auto subaccountId = SubaccountId(req.params.get("subaccountId", ""));
-    
-    auto certificates = usecase.listBySubaccount(tenantId, subaccountId);
+    auto certificateType = req.params.get("certificateType", "");
+
+    auto certificates = certificateType.length > 0
+      ? usecase.listByType(tenantId, subaccountId, certificateType)
+      : usecase.listBySubaccount(tenantId, subaccountId);
 
     auto items = Json.emptyArray;
     foreach (c; certificates) {
@@ -173,6 +176,13 @@ unittest {
       auto resList = controller.listHandler(reqList);
       assert(resList.getString("status") == "success");
       assert(resList["data"]["totalCount"].get!int == 1);
+
+      auto reqTypedList = createMockRequest("GET", "/api/v1/certificates", tenantId);
+      reqTypedList.params["subaccountId"] = "sub-1";
+      reqTypedList.params["certificateType"] = "key-store";
+      auto resTypedList = controller.listHandler(reqTypedList);
+      assert(resTypedList.getString("status") == "success");
+      assert(resTypedList["data"]["totalCount"].get!int == 1);
 
       // 3. Get
       auto reqGet = createMockRequest("GET", "/api/v1/certificates/" ~ certId, tenantId);

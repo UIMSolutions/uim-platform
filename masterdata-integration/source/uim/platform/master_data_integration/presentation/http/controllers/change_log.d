@@ -72,13 +72,10 @@ class ChangeLogController : HttpController {
         auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto entry = changeLogs.getEntry(id);
-      if (entry.isNull) {
-        writeError(res, 404, "Change log entry not found");
-        return;
-      }
-      res.writeJsonBody(entry.toJson, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+      if (entry.isNull) 
+        return errorResponse("Change log entry not found", "Not Found", 404);
+
+    auto responseData = entry.toJson;
+    return successResponse("Change log entry retrieved successfully", 200, responseData);
   }
 }
