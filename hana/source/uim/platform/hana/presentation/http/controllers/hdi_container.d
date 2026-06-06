@@ -30,127 +30,121 @@ class HDIContainerController : ManageHttpController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-              CreateHDIContainerRequest r;
-      r.tenantId = tenantId;
-      r.instanceId = data.getString("instanceId");
-      r.id = precheck.id;
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.appUser = data.getString("appUser");
-      r.grantedSchemas = data.getStrings("grantedSchemas");
+    auto data = precheck.data;
+    CreateHDIContainerRequest r;
+    r.tenantId = tenantId;
+    r.instanceId = data.getString("instanceId");
+    r.id = precheck.id;
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.appUser = data.getString("appUser");
+    r.grantedSchemas = data.getStrings("grantedSchemas");
 
-      auto result = usecase.createHDIContainer(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
+    auto result = usecase.createHDIContainer(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-        auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("HDI Container created successfully", 201, responseData);
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("HDI Container created successfully", 201, responseData);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto containers = usecase.listHDIContainers(tenantId);
+    auto tenantId = precheck.tenantId;
+    auto containers = usecase.listHDIContainers(tenantId);
 
-      auto jarr = Json.emptyArray;
-      foreach (c; containers) {
-        jarr ~= Json.emptyObject
-          .set("id", c.id)
-          .set("instanceId", c.instanceId)
-          .set("name", c.name)
-          .set("status", c.status.to!string)
-          .set("artifactCount", c.artifactCount)
-          .set("sizeBytes", c.sizeBytes)
-          .set("createdAt", c.createdAt);
-      }
-
-      auto resp = Json.emptyObject
-        .set("count", Json(containers.length))
-        .set("resources", list);
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
-
-  override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
-
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto c = usecase.getById(tenantId, id);
-      if (c.isNull) {
-        writeError(res, 404, "HDI Container not found");
-        return;
-      }
-
-      auto resp = Json.emptyObject
+    auto jarr = Json.emptyArray;
+    foreach (c; containers) {
+      jarr ~= Json.emptyObject
         .set("id", c.id)
         .set("instanceId", c.instanceId)
         .set("name", c.name)
-        .set("description", c.description)
         .set("status", c.status.to!string)
-        .set("schemaName", c.schemaName)
-        .set("appUser", c.appUser)
         .set("artifactCount", c.artifactCount)
         .set("sizeBytes", c.sizeBytes)
-        .set("grantedSchemas", stringsToJsonArray(c.grantedSchemas))
-        .set("createdAt", c.createdAt)
-        .set("updatedAt", c.updatedAt);
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+        .set("createdAt", c.createdAt);
     }
+
+    auto resp = Json.emptyObject
+      .set("count", Json(containers.length))
+      .set("resources", jarr);
+
+    return successResponse("HDI Containers retrieved successfully", 200, resp);
+  }
+
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = HDIContainerId(precheck.id);
+    auto c = usecase.getById(tenantId, id);
+    if (c.isNull)
+      return errorResponse("HDI Container not found", 404);
+
+    auto resp = Json.emptyObject
+      .set("id", c.id)
+      .set("instanceId", c.instanceId)
+      .set("name", c.name)
+      .set("description", c.description)
+      .set("status", c.status.to!string)
+      .set("schemaName", c.schemaName)
+      .set("appUser", c.appUser)
+      .set("artifactCount", c.artifactCount)
+      .set("sizeBytes", c.sizeBytes)
+      .set("grantedSchemas", stringsToJsonArray(c.grantedSchemas))
+      .set("createdAt", c.createdAt)
+      .set("updatedAt", c.updatedAt);
+
+    return successResponse("HDI Container retrieved successfully", 200, resp);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      UpdateHDIContainerRequest r;
-      r.tenantId = tenantId;
-      r.id = HDIContainerId(precheck.id);
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.grantedSchemas = data.getStrings("grantedSchemas");
+    auto tenantId = precheck.tenantId;
+    UpdateHDIContainerRequest r;
+    r.tenantId = tenantId;
+    r.id = HDIContainerId(precheck.id);
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.grantedSchemas = data.getStrings("grantedSchemas");
 
-      auto result = usecase.updateHDIContainer(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
+    auto result = usecase.updateHDIContainer(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-        auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("HDI Container updated successfully", 200, responseData);
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("HDI Container updated successfully", 200, responseData);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = HDIContainerId(precheck.id);
+    auto tenantId = precheck.tenantId;
+    auto id = HDIContainerId(precheck.id);
+    if (id.isNull)
+      return errorResponse("HDI Container not found", 404);
 
-      auto result = usecase.deleteHDIContainer(tenantId, id);
-     if (result.hasError)
-            return errorResponse(result.message, 400);
+    auto result = usecase.deleteHDIContainer(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-        auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("HDI Container deleted successfully", 200, responseData);
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("HDI Container deleted successfully", 200, responseData);
   }
 }

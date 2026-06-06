@@ -23,6 +23,7 @@ class DeviceRegistrationController : ManageHttpController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+
     router.post("/api/v1/devices", &handleRegister);
     router.get("/api/v1/devices", &handleList);
     router.get("/api/v1/devices/*", &handleGet);
@@ -30,6 +31,31 @@ class DeviceRegistrationController : ManageHttpController {
     router.delete_("/api/v1/devices/*", &handleDelete);
   }
 
+  protected Json registerHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
+    RegisterDeviceRequest r;
+    r.tenantId = tenantId;
+    r.appId = data.getString("appId");
+    r.deviceModel = data.getString("deviceModel");
+    r.osVersion = data.getString("osVersion");
+    r.appVersion = data.getString("appVersion");
+    r.platform = data.getString("platform");
+    r.userId = data.getString("userId");
+    r.deviceToken = data.getString("deviceToken");
+    auto result = usecase.register(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+    auto resp = Json.emptyObject
+      .set("id", result.id);
+
+    return successResponse("Device registered successfully", "Created", 201, resp);
+  }
+  
   protected void handleRegister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
       auto tenantId = precheck.tenantId;

@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.kyma.domain.ports.repositories.applications;
 // import uim.platform.kyma.domain.entities.application;
-// import uim.platform.kyma.domain.types;
+
 import uim.platform.kyma;
 
 mixin(ShowModule!());

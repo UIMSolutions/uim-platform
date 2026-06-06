@@ -29,163 +29,148 @@ class DatabaseConnectionController : ManageHttpController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-              CreateDatabaseConnectionRequest r;
-      r.tenantId = tenantId;
-      r.instanceId = data.getString("instanceId");
-      r.id = precheck.id;
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.type = data.getString("type");
-      r.host = data.getString("host");
-      r.port = data.getInteger("port", 443);
-      r.database = data.getString("database");
-      r.user = data.getString("user");
-      r.password = data.getString("password");
-      r.useTls = data.getBoolean("useTls", true);
-      r.minConnections = data.getInteger("minConnections", 1);
-      r.maxConnections = data.getInteger("maxConnections", 10);
-      r.properties = jsonKeyValuePairs(j, "properties");
+    auto data = precheck.data;
+    CreateDatabaseConnectionRequest r;
+    r.tenantId = tenantId;
+    r.instanceId = data.getString("instanceId");
+    r.id = precheck.id;
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.type = data.getString("type");
+    r.host = data.getString("host");
+    r.port = data.getInteger("port", 443);
+    r.database = data.getString("database");
+    r.user = data.getString("user");
+    r.password = data.getString("password");
+    r.useTls = data.getBoolean("useTls", true);
+    r.minConnections = data.getInteger("minConnections", 1);
+    r.maxConnections = data.getInteger("maxConnections", 10);
+    r.properties = jsonKeyValuePairs(j, "properties");
 
-      auto result = usecase.create(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Database connection created");
-        
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto result = usecase.create(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+    auto resp = Json.emptyObject
+      .set("id", result.id)
+      .set("message", "Database connection created");
+
+    res.writeJsonBody(resp, 201);
+  } else {
+    writeError(res, 400, result.message);
+  }
+} catch (Exception e) {
+  writeError(res, 500, "Internal server error");
+}
+}
+
+override protected Json listHandler(HTTPServerRequest req) {
+  auto precheck = super.listHandler(req);
+  if (precheck.hasError)
+    return precheck;
+
+  auto tenantId = precheck.tenantId;
+  auto conns = usecase.list(tenantId);
+
+  auto jarr = Json.emptyArray;
+  foreach (c; conns) {
+    jarr ~= Json.emptyObject
+      .set("id", c.id)
+      .set("instanceId", c.instanceId)
+      .set("name", c.name)
+      .set("type", c.type.to!string)
+      .set("status", c.status.to!string)
+      .set("host", c.host)
+      .set("port", c.port)
+      .set("createdAt", c.createdAt);
   }
 
-  override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+  auto resp = Json.emptyObject
+    .set("count", Json(conns.length))
+    .set("resources", list);
 
-        auto tenantId = precheck.tenantId;
-      auto conns = usecase.list(tenantId);
+  res.writeJsonBody(resp, 200);
+}
+ catch (Exception e) {
+  writeError(res, 500, "Internal server error");
+}
+}
 
-      auto jarr = Json.emptyArray;
-      foreach (c; conns) {
-        jarr ~= Json.emptyObject
-          .set("id", c.id)
-          .set("instanceId", c.instanceId)
-          .set("name", c.name)
-          .set("type", c.type.to!string)
-          .set("status", c.status.to!string)
-          .set("host", c.host)
-          .set("port", c.port)
-          .set("createdAt", c.createdAt);
-      }
+override protected Json getHandler(HTTPServerRequest req) {
+  auto precheck = super.getHandler(req);
+  if (precheck.hasError)
+    return precheck;
 
-      auto resp = Json.emptyObject
-        .set("count", Json(conns.length))
-        .set("resources", list);
+  auto tenantId = precheck.tenantId;
+  auto id = precheck.id;
+  auto c = usecase.getById(tenantId, id);
+  if (c.isNull)
+    return errorResponse("Database connection not found", 404);
 
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  auto resp = Json.emptyObject
+    .set("id", c.id)
+    .set("instanceId", c.instanceId)
+    .set("name", c.name)
+    .set("description", c.description)
+    .set("type", c.type.to!string)
+    .set("status", c.status.to!string)
+    .set("host", c.host)
+    .set("port", c.port)
+    .set("database", c.database)
+    .set("user", c.user)
+    .set("useTls", c.useTls)
+    .set("createdAt", c.createdAt)
+    .set("updatedAt", c.updatedAt);
 
-  override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+  return successResponse("Database connection retrieved successfully", "Retrieved", 200, resp);
+}
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto c = usecase.getById(tenantId, id);
-      if (c.isNull) {
-        writeError(res, 404, "Database connection not found");
-        return;
-      }
+override protected Json updateHandler(HTTPServerRequest req) {
+  auto precheck = super.updateHandler(req);
+  if (precheck.hasError)
+    return precheck;
 
-      auto resp = Json.emptyObject
-        .set("id", c.id)
-        .set("instanceId", c.instanceId)
-        .set("name", c.name)
-        .set("description", c.description)
-        .set("type", c.type.to!string)
-        .set("status", c.status.to!string)
-        .set("host", c.host)
-        .set("port", c.port)
-        .set("database", c.database)
-        .set("user", c.user)
-        .set("useTls", c.useTls)
-        .set("createdAt", c.createdAt)
-        .set("updatedAt", c.updatedAt);
-        
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  auto tenantId = precheck.tenantId;
 
-  override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+  auto data = precheck.data;
+  UpdateDatabaseConnectionRequest r;
+  r.tenantId = tenantId;
+  r.id = precheck.id;
+  r.name = data.getString("name");
+  r.description = data.getString("description");
+  r.host = data.getString("host");
+  r.port = data.getInteger("port", 443);
+  r.database = data.getString("database");
+  r.user = data.getString("user");
+  r.password = data.getString("password");
 
-        auto tenantId = precheck.tenantId;
-      
+  auto result = usecase.update(r);
+  if (result.hasError)
+    return errorResponse(result.message, 400);
 
-      auto data = precheck.data;
-      UpdateDatabaseConnectionRequest r;
-      r.tenantId = tenantId;
-      r.id = precheck.id;
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.host = data.getString("host");
-      r.port = data.getInteger("port", 443);
-      r.database = data.getString("database");
-      r.user = data.getString("user");
-      r.password = data.getString("password");
+  auto resp = Json.emptyObject.set("id", result.id);
+  return successResponse("Database connection updated successfully", "Updated", 200, resp);
+}
 
-      auto result = usecase.update(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Database connection updated");
-          
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+override protected Json deleteHandler(HTTPServerRequest req) {
+  auto precheck = super.deleteHandler(req);
+  if (precheck.hasError)
+    return precheck;
 
-  override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+  auto tenantId = precheck.tenantId;
+  auto id = DatabaseConnectionId(precheck.id);
+  if (id.isNull)
+    return errorResponse("Database connection not found", 404);
 
-        auto tenantId = precheck.tenantId;
-      auto id = DatabaseConnectionId(precheck.id);
-      auto result = usecase.deleteDatabaseConnection(id);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        res.writeJsonBody(Json.emptyObject, 204);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  auto result = usecase.deleteDatabaseConnection(tenantId, id);
+  if (result.hasError)
+    return errorResponse(result.message, 400);
+  
+  return successResponse("Database connection deleted successfully", "Deleted", 200, Json.emptyObject.set("id", id));
+}
 }

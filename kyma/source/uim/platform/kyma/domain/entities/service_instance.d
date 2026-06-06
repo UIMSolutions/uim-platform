@@ -4,7 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.kyma.domain.entities.service_instance;
-// import uim.platform.kyma.domain.types;
+
 import uim.platform.kyma;
 
 mixin(ShowModule!());

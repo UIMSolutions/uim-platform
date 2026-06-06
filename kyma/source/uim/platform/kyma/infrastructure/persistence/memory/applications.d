@@ -4,7 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.kyma.infrastructure.persistence.memory.applications;
-// import uim.platform.kyma.domain.types;
+
 // import uim.platform.kyma.domain.entities.application;
 // import uim.platform.kyma.domain.ports.repositories.applications;
 

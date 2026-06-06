@@ -8,7 +8,7 @@ module uim.platform.kyma.application.usecases.manage.modules;
 // import uim.platform.kyma.domain.entities.kyma_module;
 // import uim.platform.kyma.domain.ports.repositories.modules;
 // import uim.platform.kyma.domain.services.module_dependency_resolver;
-// import uim.platform.kyma.domain.types;
+
 import uim.platform.kyma;
 
 mixin(ShowModule!());

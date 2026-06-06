@@ -7,7 +7,7 @@ module uim.platform.kyma.application.usecases.manage.namespaces;
 // import uim.platform.kyma.application.dto;
 // import uim.platform.kyma.domain.entities.namespace;
 // import uim.platform.kyma.domain.ports.repositories.namespaces;
-// import uim.platform.kyma.domain.types;
+
 import uim.platform.kyma;
 
 mixin(ShowModule!());

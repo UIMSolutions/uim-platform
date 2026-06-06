@@ -8,7 +8,7 @@ module uim.platform.kyma.presentation.http.controllers.api_rule;
 // import uim.platform.kyma.application.usecases.manage.api_rules;
 // import uim.platform.kyma.application.dto;
 // import uim.platform.kyma.domain.entities.api_rule;
-// import uim.platform.kyma.domain.types;
+
 // import uim.platform.kyma.presentation.http
 import uim.platform.kyma;
 

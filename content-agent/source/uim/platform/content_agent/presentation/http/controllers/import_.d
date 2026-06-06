@@ -29,8 +29,12 @@ class ImportController : HttpController {
     router.get("/api/v1/imports/*", &handleGet);
   }
 
-  protected void handleStartImport(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected Json startImportHandler(HTTPServerRequest req) {
     try {
+      auto precheck = super.createHandler(req);
+      if (precheck.hasError)
+        return precheck;
+
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
       auto r = StartImportRequest();
@@ -42,54 +46,52 @@ class ImportController : HttpController {
 
       auto result = usecase.startImport(r);
       if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("status", "completed")
-          .set("message", "Import started successfully");
+        return errorResponse(result.message, 400);
+      auto resp = Json.emptyObject
+        .set("id", result.id)
+        .set("status", "completed");
 
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
+      return successResponse("Import started successfully", "Started", 201, resp);
+    }
+    protected void handleStartImport(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+      try {
+auto response = startImportHandler(req);
+        res.writeJsonBody(response, response.code);
+    }
+ catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto jobs = usecase.listImportJobs(tenantId);
+    auto tenantId = precheck.tenantId;
+    auto jobs = usecase.listImportJobs(tenantId);
 
-      auto arr = jobs.map!(j => j.toJson).array.toJson;
+    auto arr = jobs.map!(j => j.toJson).array.toJson;
 
-      auto list = items.map!(item => item.toJson()).array.toJson;
+    auto list = items.map!(item => item.toJson()).array.toJson;
 
-        auto responseData = Json.emptyObject
-            .set("count", list.length)
-            .set("resources", list);
-        return successResponse("", 0, responseData);
+    auto responseData = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+    return successResponse("", 0, responseData);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = ImportJobId(precheck.id);
-      auto job = usecase.getImportJob(tenantId, id);
-      if (job.isNull) {
-        writeError(res, 404, "Import job not found");
-        return;
-      }
-      res.writeJsonBody(job.toJson, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto tenantId = precheck.tenantId;
+    auto id = ImportJobId(precheck.id);
+    auto job = usecase.getImportJob(tenantId, id);
+    if (job.isNull)
+      return errorResponse("Import job not found", 404);
+
+    return successResponse("Import job retrieved successfully", "Retrieved", 200, job.toJson());
   }
 }

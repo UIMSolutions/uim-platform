@@ -8,7 +8,6 @@ module uim.platform.mobile.presentation.http.controllers.client_log;
 // import uim.platform.mobile.application.dto;
 // import uim.platform.mobile;
 
-
 import uim.platform.mobile;
 
 mixin(Showmodule!());
@@ -23,51 +22,55 @@ class ClientLogController : ManageHttpController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/logs", &handleUpload);
     router.get("/api/v1/logs", &handleList);
     router.get("/api/v1/logs/*", &handleGet);
   }
 
-  protected void handleUpload(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
-      UploadClientLogRequest r;
-      r.tenantId = tenantId;
-      r.appId = data.getString("appId");
-      r.deviceId = data.getString("deviceId");
-      r.userId = data.getString("userId");
-      r.level = data.getString("level");
-      r.source = data.getString("source");
-      r.message = data.getString("message");
-      r.stackTrace = data.getString("stackTrace");
-      r.metadata = data.getString("metadata");
-      r.platform = data.getString("platform");
-      r.appVersion = data.getString("appVersion");
-      r.timestamp = data.getLong("timestamp");
-      auto result = usecase.upload(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Client log uploaded successfully");
+  protected Json uploadHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
+    UploadClientLogRequest r;
+    r.tenantId = tenantId;
+    r.appId = data.getString("appId");
+    r.deviceId = data.getString("deviceId");
+    r.userId = data.getString("userId");
+    r.level = data.getString("level");
+    r.source = data.getString("source");
+    r.message = data.getString("message");
+    r.stackTrace = data.getString("stackTrace");
+    r.metadata = data.getString("metadata");
+    r.platform = data.getString("platform");
+    r.appVersion = data.getString("appVersion");
+    r.timestamp = data.getLong("timestamp");
+    auto result = usecase.upload(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+    auto resp = Json.emptyObject
+      .set("id", result.id);
   }
 
-  override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+  protected void handleUpload(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto response = uploadHandler(req);
+      if (response.hasError) {
+        res.writeJsonBody(response, response.code);
+      } catch (Exception e) {
+        writeError(res, 500, "Internal server error");
+      }
+    }
 
-        auto tenantId = precheck.tenantId;
+    override protected Json listHandler(HTTPServerRequest req) {
+      auto precheck = super.listHandler(req);
+      if (precheck.hasError)
+        return precheck;
+
+      auto tenantId = precheck.tenantId;
       auto results = usecase.list(tenantId);
       auto items = Json.emptyArray;
       foreach (item; results) {
@@ -81,47 +84,37 @@ class ClientLogController : ManageHttpController {
 
       auto resp = Json.emptyObject
         .set("items", items)
-        .set("totalCount", results.length)
-        .set("message", "Client logs retrieved successfully");
-        
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+        .set("totalCount", results.length);
+
+      return successResponse("Client logs retrieved successfully", "Retrieved", 200, resp);
     }
-  }
 
-  override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    override protected Json getHandler(HTTPServerRequest req) {
+      auto precheck = super.getHandler(req);
+      if (precheck.hasError)
+        return precheck;
 
-        auto tenantId = precheck.tenantId;
+      auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto result = usecase.get(id);
       if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.data.id)
-          .set("tenantId", result.data.tenantId)
-          .set("appId", result.data.appId)
-          .set("deviceId", result.data.deviceId)
-          .set("userId", result.data.userId)
-          .set("level", result.data.level)
-          .set("source", result.data.source)
-          .set("message", result.data.message)
-          .set("stackTrace", result.data.stackTrace)
-          .set("metadata", result.data.metadata)
-          .set("platform", result.data.platform)
-          .set("appVersion", result.data.appVersion)
-          .set("timestamp", result.data.timestamp)
-          .set("message", "Client log retrieved successfully");
+        return errorResponse(result.message, 400);
+      auto resp = Json.emptyObject
+        .set("id", result.data.id)
+        .set("tenantId", result.data.tenantId)
+        .set("appId", result.data.appId)
+        .set("deviceId", result.data.deviceId)
+        .set("userId", result.data.userId)
+        .set("level", result.data.level)
+        .set("source", result.data.source)
+        .set("message", result.data.message)
+        .set("stackTrace", result.data.stackTrace)
+        .set("metadata", result.data.metadata)
+        .set("platform", result.data.platform)
+        .set("appVersion", result.data.appVersion)
+        .set("timestamp", result.data.timestamp)
+        .set("message", "Client log retrieved successfully");
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+      return successResponse("Client log retrieved successfully", "Retrieved", 200, resp);
     }
   }
-}
