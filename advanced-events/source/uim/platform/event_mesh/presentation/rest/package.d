@@ -4,3 +4,8 @@
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.event_mesh.presentation.rest;
+
+public:
+    import uim.platform.event_mesh.presentation.rest.interfaces;
+    import uim.platform.event_mesh.presentation.rest.services;
+    import uim.platform.event_mesh.presentation.rest.tests;
