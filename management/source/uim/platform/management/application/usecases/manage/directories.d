@@ -25,10 +25,26 @@ class ManageDirectoriesUseCase { // TODO: UIMUseCase {
   CommandResult createDirectory(CreateDirectoryRequest request) {
     if (request.accountId.isEmpty)
       return CommandResult(false, "", "Global account ID is required");
+
     if (request.displayName.length == 0)
       return CommandResult(false, "", "Display name is required");
 
-    Directory directory = Directory.createFromRequest(request);
+    if (directories.existsById(request.tenantId, request.directoryId))
+      return CommandResult(false, "", "Directory with the same ID already exists");
+
+    auto directory = Directory(request.tenantId);
+    directory.id = request.directoryId.isNull ? DirectoryId(generateUniqueId()) : request.directoryId;
+    directory.globalAccountId = request.accountId;
+    directory.displayName = request.displayName;
+    directory.description = request.description;
+    directory.features = parseFeatures(request.features);
+    directory.manageEntitlements = request.manageEntitlements;
+    directory.manageAuthorizations = request.manageAuthorizations;
+    directory.labels = request.labels;
+    directory.customProperties = request.customProperties;
+
+    writeln("Creating directory: ", directory);
+
     directories.save(directory);
     return CommandResult(true, directory.id.value, "");
   }

@@ -44,128 +44,122 @@ class DeletionRequestController : ManageHttpController {
 
         auto responseData = Json.emptyObject.set("id", result.id);
         return successResponse("Scan job created successfully", "Created", 201, responseData);
-}
+    }
 
-override protected Json listHandler(HTTPServerRequest req) {
-    auto precheck = super.listHandler(req);
-    if (precheck.hasError)
-        return precheck;
+    override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-    auto tenantId = precheck.tenantId;
+        auto tenantId = precheck.tenantId;
 
-    auto items = usecase.listDeletionRequests(tenantId);
-    auto list = Json.emptyArray;
-    foreach (dr; items) {
-        list ~= Json.emptyObject
+        auto items = usecase.listDeletionRequests(tenantId);
+        auto list = Json.emptyArray;
+        foreach (dr; items) {
+            list ~= Json.emptyObject
+                .set("id", dr.id.value)
+                .set("dataSubjectId", dr.dataSubjectId.value)
+                .set("applicationGroupId", dr.applicationGroupId.value)
+                .set("actionType", dr.actionType.to!string)
+                .set("status", dr.status.to!string);
+        }
+
+        auto responseData = Json.emptyObject
+            .set("count", list.length)
+            .set("resources", list);
+        return successResponse("Data subject list retrieved successfully", "Retrieved", 200, responseData);
+    }
+
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+        auto id = DeletionRequestId(precheck.id);
+        auto dr = usecase.getDeletionRequest(tenantId, id);
+        if (dr.isNull)
+            return errorResponse("Data subject not found", 404);
+
+        auto responseData = Json.emptyObject
             .set("id", dr.id.value)
             .set("dataSubjectId", dr.dataSubjectId.value)
             .set("applicationGroupId", dr.applicationGroupId.value)
             .set("actionType", dr.actionType.to!string)
-            .set("status", dr.status.to!string);
+            .set("status", dr.status.to!string)
+            .set("reason", dr.reason)
+            .set("requestedBy", dr.requestedBy)
+            .set("requestedAt", dr.requestedAt);
+
+        return successResponse("Data subject retrieved successfully", "Retrieved", 200, responseData);
     }
 
-    auto responseData = Json.emptyObject
-        .set("count", list.length)
-        .set("resources", list);
-    return successResponse("Data subject list retrieved successfully", "Retrieved", 200, responseData);
-}
-}
+    override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-override protected Json getHandler(HTTPServerRequest req) {
-    auto precheck = super.getHandler(req);
-    if (precheck.hasError)
-        return precheck;
+        auto tenantId = precheck.tenantId;
+        auto id = DeletionRequestId(precheck.id);
+        auto data = precheck.data;
+        UpdateDeletionRequestRequest r;
+        r.tenantId = tenantId;
+        r.deletionRequestId = id;
+        r.dataSubjectId = DataSubjectId(data.getString("dataSubjectId"));
+        r.status = data.getString("status");
+        r.errorMessage = data.getString("errorMessage");
 
-    auto tenantId = precheck.tenantId;
-    auto id = DeletionRequestId(precheck.id);
-    auto dr = usecase.getDeletionRequest(tenantId, id);
-    if (dr.isNull)
-        return errorResponse("Data subject not found", 404);
+        auto result = usecase.updateDeletionRequest(r);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
 
-    auto responseData = Json.emptyObject
-        .set("id", dr.id.value)
-        .set("dataSubjectId", dr.dataSubjectId.value)
-        .set("applicationGroupId", dr.applicationGroupId.value)
-        .set("actionType", dr.actionType.to!string)
-        .set("status", dr.status.to!string)
-        .set("reason", dr.reason)
-        .set("requestedBy", dr.requestedBy)
-        .set("requestedAt", dr.requestedAt);
+        auto response = Json.emptyObject
+            .set("id", result.id.value)
+            .set("dataSubjectId", r.dataSubjectId.value)
+            .set("status", r.status)
+            .set("errorMessage", r.errorMessage);
 
-    return successResponse("Data subject retrieved successfully", "Retrieved", 200, responseData);
-}
+        return successResponse(response, 200);
+    }
 
-override protected Json updateHandler(HTTPServerRequest req) {
-    auto precheck = super.updateHandler(req);
-    if (precheck.hasError)
-        return precheck;
+    override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-    auto tenantId = precheck.tenantId;
-    auto id = DeletionRequestId(precheck.id);
-    auto data = precheck.data;
-    UpdateDeletionRequestRequest r;
-    r.tenantId = tenantId;
-    r.deletionRequestId = id;
-    r.dataSubjectId = DataSubjectId(data.getString("dataSubjectId"));
-    r.status = data.getString("status");
-    r.errorMessage = data.getString("errorMessage");
+        auto tenantId = precheck.tenantId;
+        auto id = DeletionRequestId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid deletion request ID", 400);
 
-    auto result = usecase.updateDeletionRequest(r);
-    if (result.hasError)
-        return errorResponse(result.message, 400);
+        auto data = precheck.data;
+        UpdateDeletionRequestRequest r;
+        r.tenantId = tenantId;
+        r.dataSubjectId = DataSubjectId(data.getString("dataSubjectId"));
+        r.status = data.getString("status");
+        r.errorMessage = data.getString("errorMessage");
 
-    auto response = Json.emptyObject
-        .set("id", result.id.value)
-        .set("dataSubjectId", r.dataSubjectId.value)
-        .set("status", r.status)
-        .set("errorMessage", r.errorMessage);
+        auto result = usecase.updateDeletionRequest(id, r);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
 
-    return successResponse(response, 200);
-}
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Deletion request updated successfully", "Updated", 200, responseData);
+    }
 
-override protected Json updateHandler(HTTPServerRequest req) {
-    auto precheck = super.updateHandler(req);
-    if (precheck.hasError)
-        return precheck;
+    override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-    auto tenantId = precheck.tenantId;
-    auto id = DeletionRequestId(precheck.id);
-    auto data = precheck.data;
-    UpdateDeletionRequestRequest r;
-    r.tenantId = tenantId;
-    r.dataSubjectId = DataSubjectId(data.getString("dataSubjectId"));
-    r.status = data.getString("status");
-    r.errorMessage = data.getString("errorMessage");
+        auto tenantId = precheck.tenantId;
+        auto id = DeletionRequestId(precheck.id);
 
-    auto result = usecase.updateDeletionRequest(id, r);
-    if (result.hasError)
-        return errorResponse(result.message, 400);
-    res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
-} else {
-    writeError(res, 400, result.message);
-}
-} catch (Exception e) {
-    writeError(res, 500, "Internal server error");
-}
-}
+        auto result = usecase.deleteDeletionRequest(tenantId, id);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
 
-override protected Json deleteHandler(HTTPServerRequest req) {
-    auto precheck = super.deleteHandler(req);
-    if (precheck.hasError)
-        return precheck;
-
-    auto tenantId = precheck.tenantId;
-    auto id = DeletionRequestId(precheck.id);
-
-    auto result = usecase.deleteDeletionRequest(tenantId, id);
-    if (result.hasError)
-        return errorResponse(result.message, 400);
-    res.writeJsonBody(Json.emptyObject, 204);
-} else {
-    writeError(res, 404, result.message);
-}
-} catch (Exception e) {
-    writeError(res, 500, "Internal server error");
-}
-}
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Deletion request deleted successfully", "Deleted", 200, responseData);
+    }
 }

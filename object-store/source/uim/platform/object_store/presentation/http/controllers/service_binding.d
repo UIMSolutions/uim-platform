@@ -57,19 +57,31 @@ class ServiceBindingController : ManageHttpController {
     return successResponse("Service binding created successfully", 201, resp);
   }
 
+  protected Json listByBucketHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto bucketId = BucketId(extractBucketIdFromBindingsPath(req.requestURI));
+    if (bucketId.isEmpty)
+      return errorResponse("Invalid bucket ID in path");
+
+    auto bindings = usecase.listBindings(tenantId, bucketId);
+    auto arr = bindings.map!(b => b.toJson).array.toJson;
+
+    auto resp = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", bindings.length)
+      .set("message", "Service bindings retrieved successfully");
+
+    return successResponse("Service bindings retrieved successfully", 200, resp);
+  }
+
   protected void handleListByBucket(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto bucketId = extractBucketIdFromBindingsPath(req.requestURI);
-
-      auto bindings = usecase.listBindings(bucketId);
-      auto arr = bindings.map!(b => b.toJson).array.toJson;
-
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", bindings.length)
-        .set("message", "Service bindings retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
+      auto response = listByBucketHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -94,33 +106,38 @@ class ServiceBindingController : ManageHttpController {
     return successResponse("Service binding retrieved successfully", 200, binding.toJson);
   }
 
+  protected Json revokeHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    // /api/v1/service-bindings/{id}/revoke
+    auto path = req.requestURI;
+    // import std.string : indexOf;
+    auto bindingsPos = path.indexOf("service-bindings/");
+    if (bindingsPos < 0) 
+      return errorResponse("Invalid URI format", 400);
+    
+    auto start = bindingsPos + 17; // length of "service-bindings/"
+    auto rest = path[start .. $];
+    auto slashPos = rest.indexOf('/');
+    auto id = slashPos > 0 ? rest[0 .. slashPos] : rest;
+
+    auto result = usecase.revokeBinding(tenantId, ServiceBindingId(id));
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+    
+    auto resp = Json.emptyObject
+      .set("revoked", true)
+      .set("message", "Service binding revoked");
+    return successResponse("Service binding revoked successfully", "Revoked", 200, resp);
+  }
+
   protected void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      // /api/v1/service-bindings/{id}/revoke
-      auto path = req.requestURI;
-      // import std.string : indexOf;
-      auto bindingsPos = path.indexOf("service-bindings/");
-      if (bindingsPos < 0) {
-        writeError(res, 400, "Invalid path");
-        return;
-      }
-      auto start = bindingsPos + 17; // length of "service-bindings/"
-      auto rest = path[start .. $];
-      auto slashPos = rest.indexOf('/');
-      auto id = slashPos > 0 ? rest[0 .. slashPos] : rest;
-
-      auto result = usecase.revokeBinding(tenantId, ServiceBindingId(id));
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("revoked", true)
-          .set("message", "Service binding revoked");
-
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 404, result.message);
-      }
+      auto response = revokeHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

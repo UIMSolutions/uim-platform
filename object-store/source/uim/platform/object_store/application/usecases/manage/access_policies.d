@@ -77,8 +77,8 @@ class ManageAccessPoliciesUseCase { // TODO: UIMUseCase {
     return policyRepo.findByBucket(tenantId, bucketId);
   }
 
-  CommandResult deletePolicy(UpdateAccessPolicyRequest req) {
-    auto policy = policyRepo.findById(req.tenantId, req.accessPolicyId);
+  CommandResult deletePolicy(TenantId tenantId, AccessPolicyId id) {
+    auto policy = policyRepo.findById(tenantId, id);
     if (policy.isNull)
       return CommandResult(false, "", "Access policy not found");
 

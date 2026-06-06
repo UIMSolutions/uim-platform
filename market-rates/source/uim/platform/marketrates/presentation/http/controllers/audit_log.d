@@ -6,7 +6,6 @@
 module uim.platform.marketrates.presentation.http.controllers.audit_log;
 import uim.platform.marketrates;
 
-
 mixin(ShowModule!());
 
 @safe:

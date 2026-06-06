@@ -8,7 +8,7 @@ import uim.platform.analytics.application.dto;
 import uim.platform.analytics.application.usecases.manage_assets;
 import uim.platform.analytics.presentation.http.json_utils;
 
-class AnalyticsAssetsController {
+class AnalyticsAssetsController : ManageHttpController {
   private ManageAssetsUseCase useCase;
 
   this(ManageAssetsUseCase useCase) {
@@ -16,6 +16,8 @@ class AnalyticsAssetsController {
   }
 
   void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+
     router.get("/api/v1/analytics/assets", &handleList);
     router.post("/api/v1/analytics/assets", &handleCreate);
     router.get("/api/v1/analytics/assets/*", &handleGet);
@@ -24,55 +26,70 @@ class AnalyticsAssetsController {
     router.post("/api/v1/analytics/assets/*/publish", &handlePublish);
   }
 
-  private void handleList(HTTPServerRequest req, HTTPServerResponse res) {
-    auto tenantId = tenantFromQuery(req);
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
     auto items = useCase.listAssets(tenantId);
 
     auto jsonItems = Json.emptyArray;
     foreach (item; items) jsonItems ~= item.toJson();
 
-    auto payload = Json.emptyObject;
-    payload["count"] = Json(items.length);
-    payload["resources"] = jsonItems;
-    res.writeJsonBody(payload, 200);
+    auto responseData = Json.emptyObject
+      .set("count", jsonItems.length)
+      .set("resources", jsonItems);
+    return successResponse("Asset list retrieved successfully", "Retrieved", 200, responseData);
   }
 
-  private void handleCreate(HTTPServerRequest req, HTTPServerResponse res) {
-    auto body = req.json;
+  override protected Json createHandler(HTTPServerRequest req) {
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+
+    auto data = precheck.data;
     CreateAssetRequest dto;
-    dto.tenantId = tenantFromQuery(req);
-    dto.name = body["name"].get!string;
-    dto.kind = body["kind"].get!string;
-    dto.sourceSystem = body["sourceSystem"].get!string;
+    dto.tenantId = tenantId;
+    dto.name = data["name"].get!string;
+    dto.kind = data["kind"].get!string;
+    dto.sourceSystem = data["sourceSystem"].get!string;
     dto.dimensions = readStringArray(body, "dimensions");
     dto.measures = readStringArray(body, "measures");
 
     auto result = useCase.createAsset(dto);
-    if (result.hasError) {
-      writeError(res, 400, result.message);
-      return;
-    }
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-    auto payload = Json.emptyObject;
-    payload["id"] = Json(result.id);
-    res.writeJsonBody(payload, 201);
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Asset created successfully", "Created", 201, responseData);
   }
 
-  private void handleGet(HTTPServerRequest req, HTTPServerResponse res) {
-    auto tenantId = tenantFromQuery(req);
+ override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
     auto id = extractAssetId(req);
 
-    auto item = useCase.getAsset(tenantId, id);
-    if (item.isNull) {
-      writeError(res, 404, "Asset not found");
-      return;
-    }
+    if (item.isNull)
+      return errorResponse("Scan job not found", 404);
 
-    res.writeJsonBody(item.toJson(), 200);
+    auto responseData = item.toJson();
+    return successResponse("Asset retrieved successfully", "Retrieved", 200, responseData);
   }
 
-  private void handleUpdate(HTTPServerRequest req, HTTPServerResponse res) {
-    auto body = req.json;
+  override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = extractAssetId(req);
+    auto data = precheck.data;  
     UpdateAssetRequest dto;
     dto.tenantId = tenantFromQuery(req);
     dto.id = extractAssetId(req);
@@ -83,29 +100,26 @@ class AnalyticsAssetsController {
     dto.measures = readStringArray(body, "measures");
 
     auto result = useCase.updateAsset(dto);
-    if (result.hasError) {
-      writeError(res, 400, result.message);
-      return;
-    }
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-    auto payload = Json.emptyObject;
-    payload["id"] = Json(result.id);
-    res.writeJsonBody(payload, 200);
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Asset updated successfully", "Updated", 200, responseData);
   }
 
-  private void handleDelete(HTTPServerRequest req, HTTPServerResponse res) {
-    auto tenantId = tenantFromQuery(req);
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
     auto id = extractAssetId(req);
     auto result = useCase.deleteAsset(tenantId, id);
+if (result.hasError)
+      return errorResponse(result.message, 400);
 
-    if (result.hasError) {
-      writeError(res, 404, result.message);
-      return;
-    }
-
-    auto payload = Json.emptyObject;
-    payload["id"] = Json(result.id);
-    res.writeJsonBody(payload, 200);
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Asset deleted successfully", "Deleted", 200, responseData);
   }
 
   private void handlePublish(HTTPServerRequest req, HTTPServerResponse res) {

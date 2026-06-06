@@ -31,10 +31,11 @@ class RunLogController : ManageHttpController {
         router.put("/api/v1/scheduler/jobs/*/runLogs/*", &handleUpdateStatus);
     }
 
-    override protected void handleListBySchedule(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleListBySchedule(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+
             import std.string : split;
+
             auto path = precheck.path;
             auto ids = extractIds(path);
             auto tenantId = precheck.tenantId;
@@ -47,17 +48,18 @@ class RunLogController : ManageHttpController {
                 .set("total", logs.length)
                 .set("results", jarr)
                 .set("message", "Run log list retrieved successfully");
-                
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    override protected void handleListByJob(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    protected void handleListByJob(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            
+
             import std.string : split;
+
             auto path = precheck.path;
             auto jobId = JobId(extractJobId(path));
             auto tenantId = precheck.tenantId;
@@ -93,43 +95,46 @@ class RunLogController : ManageHttpController {
 
             auto result = usecase.updateStatus(r);
             if (result.hasError)
-            return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Run log updated");
+                return errorResponse(result.message, 400);
+                
+            auto resp = Json.emptyObject
+                .set("id", result.id)
+                .set("message", "Run log updated");
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
+            res.writeJsonBody(resp, 200);
+        } else {
+            writeError(res, 400, result.message);
         }
+    } catch (Exception e) {
+        writeError(res, 500, "Internal server error");
     }
+}
 
-    // Extract jobId from path: /api/v1/scheduler/jobs/{jobId}/runLogs
-    private static string extractJobId(string path) {
-        import std.string : split;
-        auto parts = path.split("/");
-        foreach (i, p; parts) {
-            if (p == "jobs" && i + 1 < parts.length)
-                return parts[i + 1];
-        }
-        return "";
-    }
+// Extract jobId from path: /api/v1/scheduler/jobs/{jobId}/runLogs
+private static string extractJobId(string path) {
+    import std.string : split;
 
-    // Extract [jobId, scheduleId] from path
-    private static string[2] extractIds(string path) {
-        import std.string : split;
-        string[2] ids;
-        auto parts = path.split("/");
-        foreach (i, p; parts) {
-            if (p == "jobs" && i + 1 < parts.length)
-                ids[0] = parts[i + 1];
-            if (p == "schedules" && i + 1 < parts.length)
-                ids[1] = parts[i + 1];
-        }
-        return ids;
+    auto parts = path.split("/");
+    foreach (i, p; parts) {
+        if (p == "jobs" && i + 1 < parts.length)
+            return parts[i + 1];
     }
+    return "";
+}
+
+// Extract [jobId, scheduleId] from path
+private static string[2] extractIds(string path) {
+    import std.string : split;
+
+    string[2] ids;
+    auto parts = path.split("/");
+    foreach (i, p; parts) {
+        if (p == "jobs" && i + 1 < parts.length)
+            ids[0] = parts[i + 1];
+        if (p == "schedules" && i + 1 < parts.length)
+            ids[1] = parts[i + 1];
+    }
+    return ids;
+}
 
 }

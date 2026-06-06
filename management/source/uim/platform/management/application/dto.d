@@ -43,6 +43,7 @@ struct UpdateGlobalAccountRequest {
 /// --- Directory DTOs ---
 struct CreateDirectoryRequest {
   TenantId tenantId;
+  DirectoryId directoryId; // optional, for subdirectories
   GlobalAccountId accountId;
   DirectoryId parentDirectoryId;
   
@@ -58,7 +59,7 @@ struct CreateDirectoryRequest {
 
 struct UpdateDirectoryRequest {
   TenantId tenantId;
-  DirectoryId directoryId;
+  DirectoryId directoryId; // required for update
 
   string displayName;
   string description;

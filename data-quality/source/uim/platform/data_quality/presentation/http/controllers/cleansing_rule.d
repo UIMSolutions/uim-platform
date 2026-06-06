@@ -88,17 +88,16 @@ override protected Json getHandler(HTTPServerRequest req) {
     return precheck;
 
   auto tenantId = precheck.tenantId;
-  auto id = precheck.id;
+  auto id = CleansingRuleId(precheck.id);
+  if (id.isNull)
+    return errorResponse("Invalid cleansing rule ID", 400);
+  
   auto rule = usecase.getCleansingRule(tenantId, id);
-  if (rule.isNull) {
-    writeError(res, 404, "Cleansing rule not found");
-    return;
-  }
-  res.writeJsonBody(rule.toJson, 200);
-}
- catch (Exception e) {
-  writeError(res, 500, "Internal server error");
-}
+  if (rule.isNull)
+      return errorResponse("Cleansing rule not found", 404);
+
+    auto responseData = rule.toJson();
+    return successResponse("Cleansing rule retrieved successfully", "Retrieved", 200, responseData);
 }
 
 override protected Json updateHandler(HTTPServerRequest req) {

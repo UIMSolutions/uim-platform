@@ -9,18 +9,19 @@ import uim.platform.datasphere_composer;
 import vibe.http.server;
 import vibe.http.router;
 
-
 mixin(ShowModule!());
 
 @safe:
 class DataProviderController : ManageHttpController {
   private ManageDataProvidersUseCase usecase;
 
-  this(ManageDataProvidersUseCase usecase) { this.usecase = usecase; }
+  this(ManageDataProvidersUseCase usecase) {
+    this.usecase = usecase;
+  }
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    router.get("/api/v1/composer/providers",  &handleList);
+    router.get("/api/v1/composer/providers", &handleList);
     router.get("/api/v1/composer/providers/*", &handleGet);
     router.post("/api/v1/composer/providers", &handleCreate);
     router.put("/api/v1/composer/providers/*", &handleUpdate);
@@ -31,55 +32,91 @@ class DataProviderController : ManageHttpController {
     auto tenantId = precheck.tenantId;
     auto items = usecase.list(tenantId);
     auto arr = Json.emptyArray;
-    foreach (item; items) arr ~= item.toJson();
-    res.writeJsonBody(arr, cast(int) HTTPStatus.ok);
+    foreach (item; items)
+      arr ~= item.toJson();
+    res.writeJsonBody(arr, cast(int)HTTPStatus.ok);
   }
 
-  void handleGet(HTTPServerRequest req, HTTPServerResponse res) {
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
     auto tenantId = precheck.tenantId;
-    auto id = extractIdFromPath(req.requestPath.to!string);
+    auto id = DataProviderId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid data provider ID", 400);
+      
     auto item = usecase.getById(tenantId, id);
-    if (item.isNull) { writeError(res, 404, "Data provider not found"); return; }
-    res.writeJsonBody(item.toJson(), cast(int) HTTPStatus.ok);
+    if (item.isNull)
+      return errorResponse("Scan job not found", 404);
+
+    auto responseData = item.toJson();
+    return successResponse("Data provider retrieved successfully", "Retrieved", 200, responseData);
   }
 
-  void handleCreate(HTTPServerRequest req, HTTPServerResponse res) {
+  override protected Json createHandler(HTTPServerRequest req) {
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+
     auto data = precheck.data;
     CreateDataProviderRequest r;
-    r.tenantId    = tenantId;
-    r.id          = precheck.id;
-    r.name        = data.getString("name");
+    r.tenantId = tenantId;
+    r.id = precheck.id;
+    r.name = data.getString("name");
     r.description = data.getString("description");
-    r.systemType  = data.getString("systemType");
+    r.systemType = data.getString("systemType");
     r.connectionUrl = data.getString("connectionUrl");
-    r.region      = data.getString("region");
+    r.region = data.getString("region");
     auto result = usecase.create(r);
-    if (!result.success) { writeError(res, 400, result.message); return; }
-    auto resp = Json.emptyObject;
-    resp["id"] = Json(result.id);
-    res.writeJsonBody(resp, cast(int) HTTPStatus.created);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Data provider created successfully", "Created", 201, responseData);
   }
 
-  void handleUpdate(HTTPServerRequest req, HTTPServerResponse res) {
+  override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
     auto data = precheck.data;
     UpdateDataProviderRequest r;
-    r.tenantId    = tenantId;
-    r.id          = extractIdFromPath(req.requestPath.to!string);
-    r.name        = data.getString("name");
+    r.tenantId = tenantId;
+    r.id = extractIdFromPath(req.requestPath.to!string);
+    r.name = data.getString("name");
     r.description = data.getString("description");
-    r.status      = data.getString("status");
+    r.status = data.getString("status");
     r.connectionUrl = data.getString("connectionUrl");
-    r.region      = data.getString("region");
+    r.region = data.getString("region");
     auto result = usecase.update(r);
-    if (!result.success) { writeError(res, 400, result.message); return; }
-    res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.ok);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Data provider updated successfully", "Updated", 200, responseData);
   }
 
-  void handleDelete(HTTPServerRequest req, HTTPServerResponse res) {
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
     auto tenantId = precheck.tenantId;
-    auto id = extractIdFromPath(req.requestPath.to!string);
+    auto id = DataProviderId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid data provider ID", 400);
+
     auto result = usecase.remove(tenantId, id);
-    if (!result.success) { writeError(res, 404, result.message); return; }
-    res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.ok);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Data provider deleted successfully", 200, responseData);
   }
 }

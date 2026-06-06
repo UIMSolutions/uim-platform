@@ -90,42 +90,33 @@ class DuplicateController : HttpController {
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto groups = usecase.getUnresolved(tenantId);
-      auto arr = groups.map!(g => g.toJson).array.toJson;
+    auto tenantId = precheck.tenantId;
+    auto groups = usecase.getUnresolved(tenantId);
+    auto arr = groups.map!(g => g.toJson).array.toJson;
 
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", groups.length)
-        .set("message", "Duplicate groups retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto responseData = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+    return successResponse("Duplicate groups retrieved successfully", "Retrieved", 200, responseData);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto tenantId = precheck.tenantId;
-      auto group = usecase.getById(tenantId, id);
-      if (group.isNull) {
-        writeError(res, 404, "Match group not found");
-        return;
-      }
-      res.writeJsonBody(group.toJson, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+    auto tenantId = precheck.tenantId;
+    auto id = precheck.id;
+    auto tenantId = precheck.tenantId;
+    auto group = usecase.getById(tenantId, id);
+    if (group.isNull)
+      return errorResponse("Scan job not found", 404);
 
+    auto responseData = group.toJson();
+    return successResponse("Duplicate group retrieved successfully", "Retrieved", 200, responseData);
   }
+}

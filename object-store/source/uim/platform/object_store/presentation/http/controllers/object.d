@@ -59,7 +59,7 @@ class ObjectController : ManageHttpController {
       return errorResponse(result.errorMessage);
 
     auto responseData = Json.emptyObject.set("id", result.id);
-    return successResponse("Object created successfully", "Created", 201, resp);
+    return successResponse("Object created successfully", "Created", 201, responseData);
   }
 
   protected Json listByBucketHandler(HTTPServerRequest req) {
@@ -133,7 +133,7 @@ class ObjectController : ManageHttpController {
           .errorMessage == "Object not found" ? 404 : 400);
 
     auto responseData = Json.emptyObject.set("id", result.id);
-    return successResponse("Object metadata updated successfully", "Updated", 200, resp);
+    return successResponse("Object metadata updated successfully", "Updated", 200, responseData);
   }
 
   protected void handleUpdateMetadata(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -151,7 +151,9 @@ class ObjectController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = extractIdFromPath(precheck.path);
+    auto id = StorageObjectId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid object ID", 400);
 
     auto result = usecase.deleteObject(tenantId, id);
     if (result.hasError)
@@ -206,10 +208,12 @@ class ObjectController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto objectId = extractObjectIdFromVersionsPath(req.requestURI);
+    auto id = StorageObjectId(extractObjectIdFromVersionsPath(req.requestURI));
+    if (id.isNull)
+      return errorResponse("Invalid object ID", 400);
 
-    auto versions = usecase.listVersions(tenantId, objectId);
-    auto arr = versions.map!(v => v.toJson).array.toJson;
+    auto versions = usecase.listVersions(tenantId, id);
+      auto arr = versions.map!(v => v.toJson).array.toJson;
 
     auto resp = Json.emptyObject
       .set("items", arr)

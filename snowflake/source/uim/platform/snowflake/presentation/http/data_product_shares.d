@@ -57,8 +57,11 @@ class DataProductShareController : ManageHttpController {
     r.status   = data.getString("status");
     r.comment  = data.getString("comment");
     auto result = usecase.update(r);
-    if (!result.success) { writeError(res, 400, result.message); return; }
-    res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.ok);
+    if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Share updated successfully", "Updated", 200, responseData);
   }
 
   void handleDelete(HTTPServerRequest req, HTTPServerResponse res) {

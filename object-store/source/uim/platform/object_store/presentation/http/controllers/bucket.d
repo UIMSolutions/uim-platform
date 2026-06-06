@@ -74,7 +74,7 @@ class BucketController : ManageHttpController {
     if (bucket.isNull)
       return errorResponse("Bucket not found", 404);
 
-    return successResponse("Bucket retrieved successfully", 200, serializeBucket(bucket));
+    return successResponse("Bucket retrieved successfully", 200, bucket.toJson);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {

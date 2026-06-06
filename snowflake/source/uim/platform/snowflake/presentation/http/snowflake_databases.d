@@ -18,20 +18,41 @@ class SnowflakeDatabaseController : ManageHttpController {
     router.delete_("/api/v1/snowflake/databases/*", &handleDelete);
   }
 
-  void handleList(HTTPServerRequest req, HTTPServerResponse res) {
-    auto items = usecase.list(req.getTenantId);
+ override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+            auto items = usecase.list(req.getTenantId);
     auto arr = Json.emptyArray;
     foreach (item; items) arr ~= item.toJson();
-    res.writeJsonBody(arr, cast(int) HTTPStatus.ok);
+    auto responseData = Json.emptyObject
+            .set("count", list.length)
+            .set("resources", list);
+        return successResponse("Database list retrieved successfully", "Retrieved", 200, responseData);
   }
 
-  void handleGet(HTTPServerRequest req, HTTPServerResponse res) {
+ override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
     auto item = usecase.getById(req.getTenantId, extractIdFromPath(req.requestPath.to!string));
-    if (item.isNull) { writeError(res, 404, "Database not found"); return; }
-    res.writeJsonBody(item.toJson(), cast(int) HTTPStatus.ok);
+    if (item.isNull)
+            return errorResponse("Scan job not found", 404);
+
+        auto responseData = item.toJson();
+        return successResponse("Database retrieved successfully", "Retrieved", 200, responseData);
   }
 
-  void handleCreate(HTTPServerRequest req, HTTPServerResponse res) {
+  override protected Json createHandler(HTTPServerRequest req) {
+          auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
     auto data = precheck.data;
     CreateDatabaseRequest r;
     r.tenantId      = tenantId;
@@ -41,13 +62,19 @@ class SnowflakeDatabaseController : ManageHttpController {
     r.comment       = data.getString("comment");
     if (j["retentionDays"].isInteger) r.retentionDays = cast(int) j["retentionDays"].get!long;
     auto result = usecase.create(r);
-    if (!result.success) { writeError(res, 400, result.message); return; }
-    auto resp = Json.emptyObject;
-    resp["id"] = Json(result.id);
-    res.writeJsonBody(resp, cast(int) HTTPStatus.created);
+    if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Database created successfully", "Created", 201, responseData);
   }
 
-  void handleUpdate(HTTPServerRequest req, HTTPServerResponse res) {
+  override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
     auto data = precheck.data;
     UpdateDatabaseRequest r;
     r.tenantId = tenantId;
@@ -56,13 +83,28 @@ class SnowflakeDatabaseController : ManageHttpController {
     r.comment  = data.getString("comment");
     if (j["retentionDays"].isInteger) r.retentionDays = cast(int) j["retentionDays"].get!long;
     auto result = usecase.update(r);
-    if (!result.success) { writeError(res, 400, result.message); return; }
-    res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.ok);
+    if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Database updated successfully", "Updated", 200, responseData);
   }
 
-  void handleDelete(HTTPServerRequest req, HTTPServerResponse res) {
+  override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+        auto id = extractIdFromPath(req.requestPath.to!string);
+        if (id.isNull)
+            return errorResponse("Invalid database ID", 400); 
+
     auto result = usecase.remove(req.getTenantId, extractIdFromPath(req.requestPath.to!string));
-    if (!result.success) { writeError(res, 404, result.message); return; }
-    res.writeJsonBody(Json.emptyObject, cast(int) HTTPStatus.ok);
+    if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse(
   }
 }

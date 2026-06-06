@@ -44,8 +44,26 @@ unittest {
             clientSettings.baseURL = URL(basisUrl);
 
             // Client connects to the dynamic port
-            auto client = new RestInterfaceClient!ILabelApi(basisUrl);
+            auto client = new RestInterfaceClient!IDirectoryApi(basisUrl);
 
+            writeln("Testing Directory API at: ", basisUrl);
+            writeln("Client Settings: ", clientSettings);
+            writeln("Client Instance: ", client);
+            
+            CreateDirectoryRequest request;
+            request.directoryId = DirectoryId("test-directory");
+            request.tenantId = TenantId("test-tenant");
+            request.accountId = "test-account"; 
+            request.displayName = "Test Directory";
+
+            // Test action: Call the service over HTTP
+            auto result = client.createDirectory("test-tenant", request);
+            writeln("Create Directory Response: ", result.toJson);
+
+            writeln("Directories: ", client.getDirectories("test-tenant"));
+            writeln("Directory: ", client.getDirectory("test-tenant", result.id));
+            // writeln("Directory2: ", client.getDirectories("test-tenant", "result.id"));
+            
             testSuccessful = true;
         } catch (Throwable t) {
             errorMessage = t.msg;

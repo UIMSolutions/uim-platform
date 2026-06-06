@@ -211,8 +211,8 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
 }
 
 private string generateEtag(string id) {
-  // import std.digest.md : md5Of, toHexString;
-  // import std.string : representation;
+  import std.digest.md : md5Of, toHexString;
+  import std.string : representation;
   auto hash = md5Of(id.representation);
   return toHexString(hash).idup;
 }

@@ -44,14 +44,14 @@ class AnalyticsAssetsController : ManageHttpController {
 
   }
 
-override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+  override protected Json createHandler(HTTPServerRequest req) {
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
+    auto data = precheck.data;
     CreateAssetRequest dto;
     dto.tenantId = tenantId;
     dto.name = data.getString("name");
@@ -62,10 +62,10 @@ override protected Json createHandler(HTTPServerRequest req) {
 
     auto result = useCase.createAsset(dto);
     if (result.hasError)
-            return errorResponse(result.message, 400);
+      return errorResponse(result.message, 400);
 
-        auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("Asset created successfully", "Created", 201, responseData);
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Asset created successfully", "Created", 201, responseData);
   }
 
   private void handleGet(HTTPServerRequest req, HTTPServerResponse res) {
@@ -94,11 +94,10 @@ override protected Json createHandler(HTTPServerRequest req) {
 
     auto result = useCase.updateAsset(dto);
     if (result.hasError)
-      return errorResponse(res, 400, result.message);
+      return errorResponse(result.message, 400);
 
-    auto payload = Json.emptyObject;
-    payload["id"] = Json(result.id);
-    res.writeJsonBody(payload, 200);
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Asset updated successfully", "Updated", 200, responseData);
   }
 
   private void handleDelete(HTTPServerRequest req, HTTPServerResponse res) {

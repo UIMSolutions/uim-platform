@@ -67,11 +67,11 @@ class SnowflakeAccountController : ManageHttpController {
     r.name = data.getString("name");
     r.status = data.getString("status");
     auto result = usecase.update(r);
-    if (!result.success) {
-      writeError(res, 400, result.message);
-      return;
-    }
-    res.writeJsonBody(Json.emptyObject, cast(int)HTTPStatus.ok);
+    if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Account updated successfully", "Updated", 200, responseData);
   }
 
   void handleDelete(HTTPServerRequest req, HTTPServerResponse res) {

@@ -5,12 +5,10 @@
 *****************************************************************************************************************/
 module app;
 
-
 // 
 // import uim.platform.management.infrastructure.config;
 // import uim.platform.management.infrastructure.container;
 // 
-
 
 import uim.platform.management;
 
@@ -20,58 +18,65 @@ mixin(ShowModule!());
 
 version (unittest) {
 } else {
-    void main() {
-  auto config = loadConfig();
-  auto container = buildContainer(config);
+  void main() {
+    auto config = loadConfig();
+    auto container = buildContainer(config);
 
-  auto router = new URLRouter();
-  router.registerRestInterface(new LabelApi(container.manageLabels), "/rest/v1/");
+    auto restPath = "/rest/v1/";
+    auto router = new URLRouter();
+    router.registerRestInterface(new DirectoryApi(container.manageDirectories), restPath);
+    router.registerRestInterface(new EntitlementApi(container.manageEntitlements), restPath);
+    router.registerRestInterface(new EnvironmentEventApi(container.queryEvents), restPath);
+    router.registerRestInterface(new LabelApi(container.manageLabels), restPath);
+    foreach (route; router.getAllRoutes()) {
+      writeln("Methode: ", route.method, ", Pfad: ", route.pattern);
+    }
 
-  // Register all controller routes (driving adapters)
-  container.globalAccountController.registerRoutes(router);
-  container.directoryController.registerRoutes(router);
-  container.subaccountController.registerRoutes(router);
-  container.entitlementController.registerRoutes(router);
-  container.environmentController.registerRoutes(router);
-  container.subscriptionController.registerRoutes(router);
-  container.servicePlanController.registerRoutes(router);
-  container.labelController.registerRoutes(router);
-  container.eventController.registerRoutes(router);
-  container.overviewController.registerRoutes(router);
-  container.healthController.registerRoutes(router);
+    // Register all controller routes (driving adapters)
+    container.globalAccountController.registerRoutes(router);
+    container.directoryController.registerRoutes(router);
+    container.subaccountController.registerRoutes(router);
+    container.entitlementController.registerRoutes(router);
+    container.environmentController.registerRoutes(router);
+    container.subscriptionController.registerRoutes(router);
+    container.servicePlanController.registerRoutes(router);
+    container.labelController.registerRoutes(router);
+    container.eventController.registerRoutes(router);
+    container.overviewController.registerRoutes(router);
+    container.healthController.registerRoutes(router);
 
-  auto settings = new HTTPServerSettings();
-  settings.port = config.port;
-  settings.bindAddresses = [config.host];
+    auto settings = new HTTPServerSettings();
+    settings.port = config.port;
+    settings.bindAddresses = [config.host];
 
-  auto listener = listenHTTP(settings, router);
+    auto listener = listenHTTP(settings, router);
 
-  writefln("==========================================================");
-  writefln("  Cloud Management Service");
-  writefln("  Listening on %s:%d", config.host, config.port);
-  writefln("                                                          ");
-  writefln("  Endpoints:                                              ");
-  writefln("    CRUD    /api/v1/accounts          (global accounts)   ");
-  writefln("    POST    /api/v1/accounts/suspend/{id}                 ");
-  writefln("    POST    /api/v1/accounts/reactivate/{id}              ");
-  writefln("    CRUD    /api/v1/directories       (directories)       ");
-  writefln("    CRUD    /api/v1/subaccounts       (subaccounts)       ");
-  writefln("    POST    /api/v1/subaccounts/move/{id}                 ");
-  writefln("    POST    /api/v1/subaccounts/suspend/{id}              ");
-  writefln("    POST    /api/v1/subaccounts/reactivate/{id}           ");
-  writefln("    CRUD    /api/v1/entitlements      (entitlements)      ");
-  writefln("    POST    /api/v1/entitlements/revoke/{id}              ");
-  writefln("    CRUD    /api/v1/environments      (env instances)     ");
-  writefln("    POST    /api/v1/environments/deprovision/{id}         ");
-  writefln("    CRUD    /api/v1/subscriptions     (SaaS subs)        ");
-  writefln("    POST    /api/v1/subscriptions/unsubscribe/{id}        ");
-  writefln("    CRUD    /api/v1/service-plans     (service catalog)   ");
-  writefln("    CRUD    /api/v1/labels            (resource labels)   ");
-  writefln("    GET     /api/v1/events            (platform events)   ");
-  writefln("    GET     /api/v1/overview           (account overview) ");
-  writefln("    GET     /api/v1/health            (health check)      ");
-  writefln("==========================================================");
+    writefln("==========================================================");
+    writefln("  Cloud Management Service");
+    writefln("  Listening on %s:%d", config.host, config.port);
+    writefln("                                                          ");
+    writefln("  Endpoints:                                              ");
+    writefln("    CRUD    /api/v1/accounts          (global accounts)   ");
+    writefln("    POST    /api/v1/accounts/suspend/{id}                 ");
+    writefln("    POST    /api/v1/accounts/reactivate/{id}              ");
+    writefln("    CRUD    /api/v1/directories       (directories)       ");
+    writefln("    CRUD    /api/v1/subaccounts       (subaccounts)       ");
+    writefln("    POST    /api/v1/subaccounts/move/{id}                 ");
+    writefln("    POST    /api/v1/subaccounts/suspend/{id}              ");
+    writefln("    POST    /api/v1/subaccounts/reactivate/{id}           ");
+    writefln("    CRUD    /api/v1/entitlements      (entitlements)      ");
+    writefln("    POST    /api/v1/entitlements/revoke/{id}              ");
+    writefln("    CRUD    /api/v1/environments      (env instances)     ");
+    writefln("    POST    /api/v1/environments/deprovision/{id}         ");
+    writefln("    CRUD    /api/v1/subscriptions     (SaaS subs)        ");
+    writefln("    POST    /api/v1/subscriptions/unsubscribe/{id}        ");
+    writefln("    CRUD    /api/v1/service-plans     (service catalog)   ");
+    writefln("    CRUD    /api/v1/labels            (resource labels)   ");
+    writefln("    GET     /api/v1/events            (platform events)   ");
+    writefln("    GET     /api/v1/overview           (account overview) ");
+    writefln("    GET     /api/v1/health            (health check)      ");
+    writefln("==========================================================");
 
-  runApplication();
-}
+    runApplication();
+  }
 }

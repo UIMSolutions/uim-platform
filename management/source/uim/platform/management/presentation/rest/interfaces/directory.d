@@ -6,11 +6,15 @@ mixin(ShowModule!());
 
 @safe:
 interface IDirectoryApi {
-    // GET /rest/v1/directories
+    @path("/rest/v1/directories")
     @headerParam("tenantId", "X-Tenant-ID")
     Directory[] getDirectories(string tenantId);
 
-    // GET /rest/v1/directories/:id
+    @path("/rest/v1/directories/:id")
     @headerParam("tenantId", "X-Tenant-ID")
-    Directory getDirectory(string tenantId, string id);
+    Directory getDirectory(string tenantId, string _id);
+
+    @path("/rest/v1/directories")
+    @headerParam("tenantId", "X-Tenant-ID")
+    CommandResult createDirectory(string tenantId, CreateDirectoryRequest request);
 }

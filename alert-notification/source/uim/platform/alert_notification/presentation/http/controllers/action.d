@@ -67,8 +67,14 @@ class ActionController : ManageHttpController {
         res.writeJsonBody(result.data, cast(int)HTTPStatus.ok);
     }
 
-    private void handleUpdate(HTTPServerRequest req, HTTPServerResponse res) @safe {
-        auto tenantId = TenantId(req.headers.get("X-Tenant-Id", "default"));
+     override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+
+
         auto id = req.requestPath.to!string.split("/")[$ - 1];
         auto body_ = req.json;
         UpdateActionRequest dto;
@@ -81,11 +87,11 @@ class ActionController : ManageHttpController {
             foreach (k, v; propsNode.byKeyValue())
                 dto.properties[k] = v.to!string;
         auto result = usecase.updateAction(tenantId, ActionId(id), dto);
-        if (!result.success) {
-            writeError(res, cast(int)HTTPStatus.notFound, result.message);
-            return;
-        }
-        res.writeBody(result.message, cast(int)HTTPStatus.ok, "application/json");
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Action updated successfully", "Updated", 200, responseData);
     }
 
     private void handleDelete(HTTPServerRequest req, HTTPServerResponse res) @safe {

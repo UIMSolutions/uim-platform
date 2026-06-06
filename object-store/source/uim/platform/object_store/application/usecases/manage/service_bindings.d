@@ -35,8 +35,8 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
     if (bucket.isNull)
       return CommandResult(false, "", "Bucket not found");
 
-    auto accessKeyId = AccessKeyId(randomUUID());
-    auto secretKey = SecretKey(randomUUID());
+    auto accessKeyId = randomUUID().toString;
+    auto secretKey = randomUUID().toString;
 
     ServiceBinding binding;
     binding.initEntity(req.tenantId, req.createdBy);
@@ -82,8 +82,8 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
 }
 
 private string hashSecret(string secret) {
-  // import std.digest.md : md5Of, toHexString;
-  // import std.string : representation;
+  import std.digest.md : md5Of, toHexString;
+  import std.string : representation;
 
   auto hash = md5Of(secret.representation);
   return toHexString(hash).idup;

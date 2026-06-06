@@ -62,7 +62,7 @@ class CorsRuleController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto bucketId = Bucketid(extractBucketIdFromCorsPath(req.requestURI));
+    auto bucketId = BucketId(extractBucketIdFromCorsPath(req.requestURI));
     if (bucketId.isEmpty)
       return errorResponse("Invalid bucket ID in path");
 
