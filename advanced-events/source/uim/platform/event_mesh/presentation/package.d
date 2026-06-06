@@ -1,8 +1,5 @@
 module uim.platform.event_mesh.presentation;
 
-import uim.platform.service.mixins.imports;
-mixin(ImportPresentation!("uim.platform.event_mesh.presentation"));
-
 public:
     import uim.platform.event_mesh.presentation.cli;
     import uim.platform.event_mesh.presentation.gui;

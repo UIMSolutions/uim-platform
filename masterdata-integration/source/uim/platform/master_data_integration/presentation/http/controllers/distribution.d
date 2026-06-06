@@ -88,13 +88,9 @@ class DistributionController : ManageHttpController {
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", models.length)
-        .set("message", "Distribution models retrieved successfully");
+        .set("totalCount", models.length);
 
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+        return successResponse("Distribution models retrieved successfully", 200, resp);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
@@ -105,14 +101,11 @@ class DistributionController : ManageHttpController {
         auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto model = usecase.getModel(id);
-      if (model.isNull) {
-        writeError(res, 404, "Distribution model not found");
-        return;
-      }
-      res.writeJsonBody(model.toJson, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+      if (model.isNull) 
+      return errorResponse("Distribution model not found", 404);
+
+      auto responseData = model.toJson();
+      return successResponse("Distribution model retrieved successfully", 200, responseData);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {

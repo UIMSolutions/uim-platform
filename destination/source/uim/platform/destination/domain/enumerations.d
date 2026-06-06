@@ -40,15 +40,17 @@ AuthenticationType toAuthenticationType(string s) {
 }   
 /// Proxy type for network routing.
 enum ProxyType {
-  internet,
-  onPremise,
-  privateLink,
+  internet, // Direct connection to the destination without a proxy.
+  onPremise, // Connection to the destination through an on-premise connectivity agent (e.g., SAP Cloud Connector).
+  privateLink, // Connection to the destination through a private link (e.g., AWS PrivateLink, Azure Private Link).
+  privateNetwork // Connection to the destination through a private network (e.g., SAP Cloud Hub).
 }
 ProxyType toProxyType(string s) {
   const map = [
     "internet": ProxyType.internet,
     "onpremise": ProxyType.onPremise,
-    "privateLink": ProxyType.privateLink,
+    "privatelink": ProxyType.privateLink,
+    "privatenetwork": ProxyType.privateNetwork,
   ];
   return map.get(s.toLower, ProxyType.internet); // Default to internet if not found
 }

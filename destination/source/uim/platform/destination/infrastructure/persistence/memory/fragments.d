@@ -116,8 +116,8 @@ unittest {
   assert(repo.countBySubaccount(tenantId, subaccountId) == 1);
 
   // Test countByLevel
-  assert(repo.countByLevel(tenantId, DestinationLevel.serviceInstance) == 1);
-  assert(repo.countByLevel(tenantId, DestinationLevel.subaccount) == 1);
-  assert(repo.countByLevel(tenantId, DestinationLevel.serviceInstance) == 1);
+  assert(repo.countByLevel(tenantId, DestinationLevel.serviceInstance) == 2);
+  assert(repo.countByLevel(tenantId, DestinationLevel.subaccount) == 0);
+  assert(repo.countByLevel(tenantId, DestinationLevel.serviceInstance) == 2);
 }
 

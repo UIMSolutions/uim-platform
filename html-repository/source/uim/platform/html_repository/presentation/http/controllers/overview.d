@@ -26,15 +26,16 @@ class OverviewController : HttpController {
     router.get("/api/v1/overview", &handleOverview);
   }
 
-  override protected void handleGetOverview(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
-      auto summary = usecase.getSummary(tenantId);
-      if (summary.isNull) {
-        writeError(res, 404, "Overview not available");
-        return;
-      }
-      auto obj = Json.emptyObject
+  protected Json getOverviewHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+
+    auto summary = usecase.getSummary(tenantId);
+
+    auto response = Json.emptyObject
       .set("totalApps", summary.totalApps)
       .set("totalVersions", summary.totalVersions)
       .set("totalFiles", summary.totalFiles)
@@ -44,8 +45,14 @@ class OverviewController : HttpController {
       .set("totalCacheEntries", summary.totalCacheEntries)
       .set("cacheHitRate", summary.cacheHitRate)
       .set("totalStorageBytes", summary.totalStorageBytes);
-      
-      res.writeJsonBody(obj, 200);
+
+    return successResponse("Overview retrieved successfully", 200, response);
+  }
+  
+  protected void handleGetOverview(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto response = getOverviewHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }

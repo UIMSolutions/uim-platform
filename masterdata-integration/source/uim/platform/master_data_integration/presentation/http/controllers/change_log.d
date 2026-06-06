@@ -38,7 +38,7 @@ class ChangeLogController : HttpController {
 
       auto sinceStr = req.params.get("since", "");
       if (sinceStr.length > 0) {
-        
+
         try
           r.sinceTimestamp = sinceStr.to!long;
         catch (Exception) {
@@ -65,15 +65,18 @@ class ChangeLogController : HttpController {
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto entry = changeLogs.getEntry(id);
-      if (entry.isNull) 
-        return errorResponse("Change log entry not found", "Not Found", 404);
+    auto tenantId = precheck.tenantId;
+    auto id = ChangeLogEntryId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid change log entry ID", "Bad Request", 400);
+
+    auto entry = changeLogs.getEntry(tenantId, id);
+    if (entry.isNull)
+      return errorResponse("Change log entry not found", "Not Found", 404);
 
     auto responseData = entry.toJson;
     return successResponse("Change log entry retrieved successfully", 200, responseData);

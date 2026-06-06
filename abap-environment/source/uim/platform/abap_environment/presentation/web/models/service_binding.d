@@ -5,6 +5,8 @@
 *****************************************************************************************************************/
 module uim.platform.abap_environment.presentation.web.models.service_binding;
 
+import uim.platform.abap_environment;
+
 @safe:
 
 class ServiceBindingViewModel {

@@ -6,6 +6,6 @@
 module uim.platform.analytics.presentation.rest;
 
 public:
-    import uim.platform.event_mesh.presentation.rest.interfaces;
-    import uim.platform.event_mesh.presentation.rest.services;
-    import uim.platform.event_mesh.presentation.rest.tests;
+    import uim.platform.analytics.presentation.rest.interfaces;
+    import uim.platform.analytics.presentation.rest.services;
+    import uim.platform.analytics.presentation.rest.tests;

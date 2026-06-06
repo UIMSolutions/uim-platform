@@ -30,144 +30,130 @@ class ServiceInstanceController : ManageHttpController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-              CreateServiceInstanceRequest r;
-      r.tenantId = tenantId;
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.spaceId = data.getString("spaceId");
-      r.plan = data.getString("plan");
-      r.createdBy = UserId(data.getString("createdBy"));
+    auto data = precheck.data;
+    CreateServiceInstanceRequest r;
+    r.tenantId = tenantId;
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.spaceId = data.getString("spaceId");
+    r.plan = data.getString("plan");
+    r.createdBy = UserId(data.getString("createdBy"));
 
-      auto result = usecase.create(r);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("id", result.id);
+    auto result = usecase.create(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-        res.writeJsonBody(resp, 201);
-      } else
-        writeError(res, 400, result.message);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    auto resp = Json.emptyObject
+      .set("id", result.id);
+
+    return successResponse("Service instance created successfully", 201, resp);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto items = usecase.listByTenant(tenantId);
+    auto tenantId = precheck.tenantId;
+    auto items = usecase.listByTenant(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (e; items) {
-        arr ~= Json.emptyObject
-          .set("id", e.id)
-          .set("name", e.name)
-          .set("plan", e.plan)
-          .set("status", e.status)
-          .set("appCount", e.appCount);
-      }
+    auto arr = Json.emptyArray;
+    foreach (e; items) {
+      arr ~= Json.emptyObject
+        .set("id", e.id)
+        .set("name", e.name)
+        .set("plan", e.plan)
+        .set("status", e.status)
+        .set("appCount", e.appCount);
+    }
 
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", items.length);
+    auto resp = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", items.length);
 
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    return successResponse("Service instances retrieved successfully", 200, resp);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto tenantId = precheck.tenantId;
-      if (id.isNull) {
-        writeError(res, 404, "Service instance not found");
-        return;
-      }
-      auto entry = usecase.getById(tenantId, id);
-      if (entry.isNull) {
-        writeError(res, 404, "Service instance not found");
-        return;
-      }
+    auto tenantId = precheck.tenantId;
+    auto id = precheck.id;
+    auto tenantId = precheck.tenantId;
+    if (id.isNull)
+      return errorResponse("Service instance not found", 404);
 
-      auto response = Json.emptyObject
-        .set("id", entry.id)
-        .set("name", entry.name)
-        .set("description", entry.description)
-        .set("spaceId", entry.spaceId)
-        .set("plan", entry.plan)
-        .set("status", entry.status)
-        .set("appCount", entry.appCount)
-        .set("createdBy", entry.createdBy)
-        .set("createdAt", entry.createdAt)
-        .set("updatedBy", entry.updatedBy)
-        .set("updatedAt", entry.updatedAt);
+    auto entry = usecase.getById(tenantId, id);
+    if (entry.isNull)
+      return errorResponse("Service instance not found", 404);
 
-      res.writeJsonBody(response, 200);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    auto response = Json.emptyObject
+      .set("id", entry.id)
+      .set("name", entry.name)
+      .set("description", entry.description)
+      .set("spaceId", entry.spaceId)
+      .set("plan", entry.plan)
+      .set("status", entry.status)
+      .set("appCount", entry.appCount)
+      .set("createdBy", entry.createdBy)
+      .set("createdAt", entry.createdAt)
+      .set("updatedBy", entry.updatedBy)
+      .set("updatedAt", entry.updatedAt);
+
+    return successResponse("Service instance retrieved successfully", 200, response);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
-      auto id = precheck.id;
-      auto tenantId = precheck.tenantId;
-      if (id.isNull) {
-        writeError(res, 404, "Service instance not found");
-        return;
-      }
-      UpdateServiceInstanceRequest r;
-      r.id = id;
-      r.tenantId = tenantId;
-      r.description = data.getString("description");
-      r.updatedBy = UserId(data.getString("updatedBy"));
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
+    auto id = precheck.id;
+    auto tenantId = precheck.tenantId;
+    if (id.isNull)
+      return errorResponse("Service instance not found", 404);
 
-      auto result = usecase.update(r);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("id", id);
+    UpdateServiceInstanceRequest r;
+    r.id = id;
+    r.tenantId = tenantId;
+    r.description = data.getString("description");
+    r.updatedBy = UserId(data.getString("updatedBy"));
 
-        res.writeJsonBody(resp, 200);
-      } else
-        writeError(res, 400, result.message);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    auto result = usecase.update(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    return successResponse("Service instance updated successfully", "Updated", 200, result);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      if (id.isNull) {
-        writeError(res, 404, "Service instance not found");
-        return;
-      }
-      auto id = ServiceInstanceId(precheck.id);
-      auto result = usecase.deleteServiceInstance(tenantId, id);
-      if (result.isSuccess())
-        res.writeBody("", 204);
-      else
-        writeError(res, 400, result.message);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    auto tenantId = precheck.tenantId;
+    auto id = ServiceInstanceId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Service instance not found", 404);
+
+    auto tenantId = precheck.tenantId;
+    if (id.isNull)
+      return errorResponse("Service instance not found", 404);
+
+    auto result = usecase.deleteServiceInstance(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    return successResponse("Service instance deleted successfully", "Deleted", 200, Json.emptyObject.set("id", id));
   }
 }

@@ -9,6 +9,7 @@ import uim.platform.abap_environment;
 import gtk.Application;
 import gtk.ApplicationWindow;
 import gtk.Box;
+import gtk.ListStore;
 import gtk.Button;
 import gtk.Label;
 import gtk.ScrolledWindow;

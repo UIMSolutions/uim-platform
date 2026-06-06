@@ -34,7 +34,7 @@ class SystemInstanceController : ManageHttpController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-    autp precheck = super.createHandler(req);
+    auto precheck = super.createHandler(req);
     if (precheck.hasError)
       return precheck;
 
@@ -124,7 +124,7 @@ class SystemInstanceController : ManageHttpController {
     if (result.hasError())
       return errorResponse(result.message);
 
-    return successResponse("System instance updated", "Updated", 200);
+    return successResponse("System instance updated", 200);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
@@ -141,6 +141,6 @@ class SystemInstanceController : ManageHttpController {
     if (result.hasError())
       return errorResponse(result.message);
 
-    return successResponse("System instance deleted", "Deleted", 200);
+    return successResponse("System instance deleted", 200);
   }
 }

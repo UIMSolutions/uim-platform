@@ -5,6 +5,8 @@
 *****************************************************************************************************************/
 module uim.platform.abap_environment.presentation.web.models.transport_request;
 
+import uim.platform.abap_environment;
+
 @safe:
 
 class TransportRequestViewModel {

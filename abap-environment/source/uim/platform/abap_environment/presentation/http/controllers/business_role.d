@@ -76,6 +76,11 @@ class BusinessRoleController : ManageHttpController {
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError) {
+      return precheck;
+    }
+
     auto tenantId = precheck.tenantId;
     if (tenantId.isNull) {
       return Json.emptyObject
@@ -104,6 +109,11 @@ class BusinessRoleController : ManageHttpController {
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError) {
+      return precheck;
+    }
+
     auto tenantId = precheck.tenantId;
     if (tenantId.isNull) {
       return Json.emptyObject
@@ -211,25 +221,25 @@ unittest {
   // Test createHandler with missing tenant ID
   auto createResponse = controller.createHandler(null);
   assert(createResponse.getString("status") == "error");
-  assert(createResponse.getString("message") == "Tenant ID is required");
+  assert(createResponse.getString("message") == "Request is required");
 
   // Test listHandler with missing tenant ID
   auto listResponse = controller.listHandler(null);
   assert(listResponse.getString("status") == "error");
-  assert(listResponse.getString("message") == "Tenant ID is required");
+  assert(listResponse.getString("message") == "Request is required");
 
   // Test getHandler with missing tenant ID
   auto getResponse = controller.getHandler(null);
   assert(getResponse.getString("status") == "error");
-  assert(getResponse.getString("message") == "Tenant ID is required");  
+  assert(getResponse.getString("message") == "Request is required");  
 
   // Test updateHandler with missing tenant ID
   auto updateResponse = controller.updateHandler(null);
   assert(updateResponse.getString("status") == "error");
-  assert(updateResponse.getString("message") == "Tenant ID is required");
+  assert(updateResponse.getString("message") == "Request is required");
 
   // Test deleteHandler with missing tenant ID
   auto deleteResponse = controller.deleteHandler(null); 
   assert(deleteResponse.getString("status") == "error");
-  assert(deleteResponse.getString("message") == "Tenant ID is required");
+  assert(deleteResponse.getString("message") == "Request is required");
 }

@@ -5,6 +5,8 @@
 *****************************************************************************************************************/
 module uim.platform.abap_environment.presentation.web.models.application_job;
 
+import uim.platform.abap_environment;
+
 @safe:
 
 class ApplicationJobViewModel {

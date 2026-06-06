@@ -109,15 +109,11 @@ class EventSubscriptionController : ManageHttpController {
         auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto sub = usecase.getSubscription(tenantId, id);
-      if (sub.isNull) {
-        writeError(res, 404, "Subscription not found");
-        return;
-      }
-      res.writeJsonBody(sub.toJson, 200);
-    }
-    catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+      if (sub.isNull) 
+        return errorResponse("Subscription not found", 404);
+
+      auto response = sub.toJson();
+      return successResponse("Subscription retrieved successfully", 200, response);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {

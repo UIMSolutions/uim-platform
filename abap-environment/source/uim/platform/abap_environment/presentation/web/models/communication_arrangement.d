@@ -5,6 +5,8 @@
 *****************************************************************************************************************/
 module uim.platform.abap_environment.presentation.web.models.communication_arrangement;
 
+import uim.platform.abap_environment;
+
 @safe:
 
 class CommunicationArrangementViewModel {

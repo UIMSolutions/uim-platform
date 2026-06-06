@@ -32,154 +32,144 @@ class DataModelController : ManageHttpController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-              CreateDataModelRequest r;
-      r.tenantId = tenantId;
-      r.name = data.getString("name");
-      r.namespace = data.getString("namespace");
-      r.version_ = data.getString("version");
-      r.description = data.getString("description");
-      r.category = data.getString("category");
-      r.keyFields = data.getStrings("keyFields");
-      r.requiredFields = data.getStrings("requiredFields");
-      r.createdBy = UserId(req.headers.get("X-User-Id", ""));
+    auto data = precheck.data;
+    CreateDataModelRequest r;
+    r.tenantId = tenantId;
+    r.name = data.getString("name");
+    r.namespace = data.getString("namespace");
+    r.version_ = data.getString("version");
+    r.description = data.getString("description");
+    r.category = data.getString("category");
+    r.keyFields = data.getStrings("keyFields");
+    r.requiredFields = data.getStrings("requiredFields");
+    r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
-      // Parse field definitions
-      auto fieldsArr = jsonObjArray(j, "fields");
-      FieldDefinitionDto[] fields;
-      foreach (fj; fieldsArr) {
-        FieldDefinitionDto fd;
-        fd.name = fdata.getString("name");
-        fd.displayName = fdata.getString("displayName");
-        fd.type_ = fdata.getString("type");
-        fd.isRequired = fdata.getBoolean("isRequired");
-        fd.isKey = fdata.getBoolean("isKey");
-        fd.defaultValue = fdata.getString("defaultValue");
-        fd.maxLength = jsonInt(fj, "maxLength");
-        fd.referenceModel = fdata.getString("referenceModel");
-        fd.description = fdata.getString("description");
-        fields ~= fd;
-      }
-      r.fields = fields;
-
-      auto result = usecase.create(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Data model created successfully");
-
-        res.writeJsonBody(resp, 201);
-      } else
-        writeError(res, 400, result.message);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+    // Parse field definitions
+    auto fieldsArr = jsonObjArray(j, "fields");
+    FieldDefinitionDto[] fields;
+    foreach (fj; fieldsArr) {
+      FieldDefinitionDto fd;
+      fd.name = fdata.getString("name");
+      fd.displayName = fdata.getString("displayName");
+      fd.type_ = fdata.getString("type");
+      fd.isRequired = fdata.getBoolean("isRequired");
+      fd.isKey = fdata.getBoolean("isKey");
+      fd.defaultValue = fdata.getString("defaultValue");
+      fd.maxLength = jsonInt(fj, "maxLength");
+      fd.referenceModel = fdata.getString("referenceModel");
+      fd.description = fdata.getString("description");
+      fields ~= fd;
     }
+    r.fields = fields;
+
+    auto result = usecase.create(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    return successResponse("Data model created successfully", 201, result);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto category = req.params.get("category", "");
+    auto tenantId = precheck.tenantId;
+    auto category = req.params.get("category", "");
 
-      DataModel[] models = category.length > 0
-        ? usecase.listByCategory(tenantId, category) : usecase.listByTenant(tenantId);
+    DataModel[] models = category.length > 0
+      ? usecase.listByCategory(tenantId, category) : usecase.listByTenant(tenantId);
 
-      auto arr = models.map!(m => m.toJson).array.toJson;
+    auto arr = models.map!(m => m.toJson).array.toJson;
 
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", Json(models.length))
-        .set("message", "Data models retrieved successfully");
-        
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto resp = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", models.length);
+
+    return successResponse("Data models retrieved successfully", 200, resp);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto model = usecase.getModel(id);
-      if (model.isNull) {
-        writeError(res, 404, "Data model not found");
-        return;
-      }
-      res.writeJsonBody(model.toJson, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto tenantId = precheck.tenantId;
+    auto id = DataModelId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid data model ID", 400);
+
+    auto model = usecase.getModel(tenantId, id);
+    if (model.isNull)
+      return errorResponse("Data model not found", 404);
+
+    auto responseData = model.toJson();
+    return successResponse("Data model retrieved successfully", 200, responseData);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto data = precheck.data;
-      UpdateDataModelRequest r;
-      r.description = data.getString("description");
-      r.version_ = data.getString("version");
-      r.keyFields = data.getStrings("keyFields");
-      r.requiredFields = data.getStrings("requiredFields");
+    auto tenantId = precheck.tenantId;
+    auto id = DataModelId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid data model ID", 400);
 
-      auto fieldsArr = jsonObjArray(j, "fields");
-      FieldDefinitionDto[] fields;
-      foreach (fj; fieldsArr) {
-        FieldDefinitionDto fd;
-        fd.name = fdata.getString("name");
-        fd.displayName = fdata.getString("displayName");
-        fd.type_ = fdata.getString("type");
-        fd.isRequired = fdata.getBoolean("isRequired");
-        fd.isKey = fdata.getBoolean("isKey");
-        fd.defaultValue = fdata.getString("defaultValue");
-        fd.maxLength = jsonInt(fj, "maxLength");
-        fd.referenceModel = fdata.getString("referenceModel");
-        fd.description = fdata.getString("description");
-        fields ~= fd;
-      }
-      r.fields = fields;
+    auto data = precheck.data;
+    UpdateDataModelRequest r;
+    r.tenantId = tenantId;
+    r.modelId = id;
+    r.description = data.getString("description");
+    r.version_ = data.getString("version");
+    r.keyFields = data.getStrings("keyFields");
+    r.requiredFields = data.getStrings("requiredFields");
 
-      auto result = usecase.updateModel(id, r);
-      if (result.success)
-        res.writeJsonBody(Json.emptyObject, 200);
-      else
-        writeError(res, 400, result.message);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+    auto fieldsArr = jsonObjArray(j, "fields");
+    FieldDefinitionDto[] fields;
+    foreach (fj; fieldsArr) {
+      FieldDefinitionDto fd;
+      fd.name = fdata.getString("name");
+      fd.displayName = fdata.getString("displayName");
+      fd.type_ = fdata.getString("type");
+      fd.isRequired = fdata.getBoolean("isRequired");
+      fd.isKey = fdata.getBoolean("isKey");
+      fd.defaultValue = fdata.getString("defaultValue");
+      fd.maxLength = jsonInt(fj, "maxLength");
+      fd.referenceModel = fdata.getString("referenceModel");
+      fd.description = fdata.getString("description");
+      fields ~= fd;
     }
+    r.fields = fields;
+
+    auto result = usecase.updateModel(id, r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    return successResponse("Data model updated successfully", 200, result);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto result = usecase.deleteModel(id);
-      if (result.success)
-        res.writeBody("", 204);
-      else
-        writeError(res, 404, result.message);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto tenantId = precheck.tenantId;
+    auto id = DataModelId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid data model ID", 400);
+
+    auto result = usecase.deleteModel(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    return successResponse("Data model deleted successfully", 200, result);
   }
 }

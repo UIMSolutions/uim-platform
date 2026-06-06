@@ -5,6 +5,8 @@
 *****************************************************************************************************************/
 module uim.platform.abap_environment.presentation.web.models.business_user;
 
+import uim.platform.abap_environment;
+
 @safe:
 
 class BusinessUserViewModel {

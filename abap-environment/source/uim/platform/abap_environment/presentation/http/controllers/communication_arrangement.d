@@ -98,7 +98,7 @@ class CommunicationArrangementController : ManageHttpController {
     if (arrangement.isNull)
       return errorResponse("Communication arrangement not found", 404);
 
-    auto responseData = job.toJson();
+    auto responseData = arrangement.toJson();
     return successResponse("Communication arrangement retrieved successfully", "Retrieved", 200, responseData);
   }
 

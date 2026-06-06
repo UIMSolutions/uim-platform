@@ -5,6 +5,8 @@
 *****************************************************************************************************************/
 module uim.platform.abap_environment.presentation.web.models.system_instance;
 
+import uim.platform.abap_environment;
+
 @safe:
 
 class SystemInstanceViewModel {

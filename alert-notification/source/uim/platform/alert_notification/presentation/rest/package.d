@@ -6,6 +6,6 @@
 module uim.platform.alert_notification.presentation.rest;
 
 public:
-    import uim.platform.event_mesh.presentation.rest.interfaces;
-    import uim.platform.event_mesh.presentation.rest.services;
-    import uim.platform.event_mesh.presentation.rest.tests;
+    import uim.platform.alert_notification.presentation.rest.interfaces;
+    import uim.platform.alert_notification.presentation.rest.services;
+    import uim.platform.alert_notification.presentation.rest.tests;

@@ -62,6 +62,11 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
+  bool supportsCertificateType(string typeStr) {
+    CertificateType certificateType;
+    return tryParseCertificateType(typeStr, certificateType);
+  }
+
   CommandResult upload(UploadCertificateRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Certificate name is required");
@@ -215,6 +220,9 @@ unittest {
   auto typedList = usecase.listByType(tenantId, subaccountId, "key-store");
   assert(typedList.length == 1);
   assert(typedList[0].id == certId);
+
+  auto invalidTypedList = usecase.listByType(tenantId, subaccountId, "pem");
+  assert(invalidTypedList.length == 0);
 
   // 5. Test Delete Certificate
   auto deleteRes = usecase.deleteCertificate(tenantId, certId);

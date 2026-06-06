@@ -1,5 +1,10 @@
 module uim.platform.abap_environment.presentation.cli.commands;
 
+@safe:
+
+class ManageCommand {
+}
+
 public {
     import uim.platform.abap_environment.presentation.cli.commands.application_job;
     import uim.platform.abap_environment.presentation.cli.commands.business_role;

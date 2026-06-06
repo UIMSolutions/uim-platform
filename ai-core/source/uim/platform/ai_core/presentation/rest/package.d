@@ -6,6 +6,6 @@
 module uim.platform.ai_core.presentation.rest;
 
 public:
-    import uim.platform.event_mesh.presentation.rest.interfaces;
-    import uim.platform.event_mesh.presentation.rest.services;
-    import uim.platform.event_mesh.presentation.rest.tests;
+    import uim.platform.ai_core.presentation.rest.interfaces;
+    import uim.platform.ai_core.presentation.rest.services;
+    import uim.platform.ai_core.presentation.rest.tests;

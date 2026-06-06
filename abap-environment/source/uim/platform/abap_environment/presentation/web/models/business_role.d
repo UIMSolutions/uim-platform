@@ -5,6 +5,8 @@
 *****************************************************************************************************************/
 module uim.platform.abap_environment.presentation.web.models.business_role;
 
+import uim.platform.abap_environment;
+
 @safe:
 
 class BusinessRoleViewModel {

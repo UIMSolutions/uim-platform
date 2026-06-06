@@ -98,14 +98,11 @@ class WorkflowController : ManageHttpController {
       auto id = precheck.id;
       auto tenantId = precheck.tenantId;
       auto wf = useCase.getWorkflow(tenantId, id);
-      if (wf.isNull) {
-        writeError(res, 404, "Workflow not found");
-        return;
-      }
-      res.writeJsonBody(wf.toJson, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+      if (wf.isNull) 
+      return errorResponse("Workflow not found", 404);
+      
+      auto response = wf.toJson();
+      return successResponse("Workflow retrieved successfully", 200, response);
   }
 
   protected void handleStart(scope HTTPServerRequest req, scope HTTPServerResponse res) {

@@ -34,7 +34,7 @@ class TransportRequestController : ManageHttpController {
     router.delete_("/api/v1/transports/*", &handleDelete);
   }
 
-  protected Json listHandler(HTTPServerRequest req) {
+  override protected Json listHandler(HTTPServerRequest req) {
     auto precheck = super.listHandler(req);
     if (precheck.hasError)
       return precheck;
@@ -51,7 +51,7 @@ class TransportRequestController : ManageHttpController {
         .set("totalCount", requests.length));
   }
 
-  protected Json createHandler(HTTPServerRequest req) {
+  override protected Json createHandler(HTTPServerRequest req) {
     auto precheck = super.createHandler(req);
     if (precheck.hasError)
       return precheck;
@@ -139,7 +139,7 @@ class TransportRequestController : ManageHttpController {
     if (result.hasError)
       return errorResponse(result.message);
 
-    return successResponse("Transport request released", "Released", 200);
+    return successResponse("Transport request released", 200);
   }
 
   protected void handleRelease(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -170,7 +170,7 @@ class TransportRequestController : ManageHttpController {
     if (result.hasError)
       return errorResponse(result.message);
 
-    return successResponse("Transport task released", "Released", 200);
+    return successResponse("Transport task released", 200);
   }
 
   protected void handleReleaseTask(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -182,7 +182,7 @@ class TransportRequestController : ManageHttpController {
     }
   }
 
-  protected Json deleteHandler(HTTPServerRequest req) {
+  override protected Json deleteHandler(HTTPServerRequest req) {
     auto precheck = super.createHandler(req);
     if (precheck.hasError)
       return precheck;

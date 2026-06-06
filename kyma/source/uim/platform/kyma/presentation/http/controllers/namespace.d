@@ -102,14 +102,11 @@ class NamespaceController : ManageHttpController {
         auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto ns = usecase.getNamespace(NamespaceId(id));
-      if (ns.isNull) {
-        writeError(res, 404, "Namespace not found");
-        return;
-      }
-      res.writeJsonBody(ns.toJson, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+      if (ns.isNull) 
+      return errorResponse("Namespace not found", 404);
+
+      auto responseData = ns.toJson();
+      return successResponse("Namespace retrieved successfully", 200, responseData);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {

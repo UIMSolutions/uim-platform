@@ -102,14 +102,11 @@ class SystemController : ManageHttpController {
       auto id = precheck.id;
       auto tenantId = precheck.tenantId;
       auto sys = useCase.getSystem(tenantId, id);
-      if (sys.isNull) {
-        writeError(res, 404, "System not found");
-        return;
-      }
-      res.writeJsonBody(sys.toJson, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+      if (sys.isNull) 
+      return errorResponse("System not found", 404);
+
+      auto responseData = sys.toJson();
+      return successResponse("System retrieved successfully", 200, responseData);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
@@ -137,17 +134,12 @@ class SystemController : ManageHttpController {
       r.tenant = data.getString("tenant");
 
       auto result = useCase.updateSystem(r);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("id", result.id);
+      if (resulat.hasError)
+        return errorResponse(result.message, 400);
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+  auto resp = Json.emptyObject.set("id", result.id);
+        return successResponse("System updated successfully", 200, resp);
+    
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {

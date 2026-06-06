@@ -5,6 +5,8 @@
 *****************************************************************************************************************/
 module uim.platform.abap_environment.presentation.web.models.software_component;
 
+import uim.platform.abap_environment;
+
 @safe:
 
 class SoftwareComponentViewModel {

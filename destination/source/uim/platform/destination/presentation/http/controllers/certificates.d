@@ -64,6 +64,9 @@ class CertificateController : ManageHttpController {
     auto subaccountId = SubaccountId(req.params.get("subaccountId", ""));
     auto certificateType = req.params.get("certificateType", "");
 
+    if (certificateType.length > 0 && !usecase.supportsCertificateType(certificateType))
+      return errorResponse("Invalid certificate type: " ~ certificateType, 400);
+
     auto certificates = certificateType.length > 0
       ? usecase.listByType(tenantId, subaccountId, certificateType)
       : usecase.listBySubaccount(tenantId, subaccountId);
@@ -183,6 +186,13 @@ unittest {
       auto resTypedList = controller.listHandler(reqTypedList);
       assert(resTypedList.getString("status") == "success");
       assert(resTypedList["data"]["totalCount"].get!int == 1);
+
+      auto reqInvalidTypedList = createMockRequest("GET", "/api/v1/certificates", tenantId);
+      reqInvalidTypedList.params["subaccountId"] = "sub-1";
+      reqInvalidTypedList.params["certificateType"] = "pem";
+      auto resInvalidTypedList = controller.listHandler(reqInvalidTypedList);
+      assert(resInvalidTypedList.getString("status") == "error");
+      assert(resInvalidTypedList.getInteger("code") == 400);
 
       // 3. Get
       auto reqGet = createMockRequest("GET", "/api/v1/certificates/" ~ certId, tenantId);
