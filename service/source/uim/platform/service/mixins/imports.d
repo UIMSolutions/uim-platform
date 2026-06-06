@@ -17,6 +17,6 @@ template GenerateImports(string namespace, string[] modules, bool isPublic = tru
 
 template ImportPresentation(string namespace) {
     const char[] ImportPresentation = generateImports(namespace, [
-            "http", "cli", "gui", "rest", "rpc", "web", "socket", "tcp", "unix"
+            "http", "cli", "gui", "rest", "grpc", "web", "socket", "tcp", "unix"
         ], true);
 }
