@@ -28,8 +28,8 @@ class DashboardHandler {
   }
 
   void getOne(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = precheck.id;
-    if (id.length == 0) {
+    auto id = DashboardId(precheck.id);
+    if (id.isNull) {
       res.writeJsonBody(errorJson("Missing dashboard id"), 400);
       return;
     }
@@ -55,7 +55,12 @@ class DashboardHandler {
   }
 
   void addPage(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = precheck.id;
+    auto id = DashboardId(precheck.id);
+    if (id.isNull) {
+      res.writeJsonBody(errorJson("Missing dashboard id"), 400);
+      return;
+    }
+    
     try {
       auto json = req.json;
       auto result = useCases.addPageToDashboard(TenantId.init, DashboardId(id), json["title"].get!string);
@@ -67,7 +72,11 @@ class DashboardHandler {
   }
 
   void publish(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = precheck.id;
+    auto id = DashboardId(precheck.id);
+    if (id.isNull) {
+      res.writeJsonBody(errorJson("Missing dashboard id"), 400);
+      return;
+    }
     auto result = useCases.publishDashboard(TenantId.init, DashboardId(id));
     if (result.dashboardId.isEmpty) {
       res.writeJsonBody(errorJson("Dashboard not found", 404), 404);
@@ -77,7 +86,11 @@ class DashboardHandler {
   }
 
   void remove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = precheck.id;
+    auto id = DashboardId(precheck.id);
+    if (id.isNull) {
+      res.writeJsonBody(errorJson("Missing dashboard id"), 400);
+      return;
+    }
     useCases.deleteDashboard(TenantId.init, DashboardId(id));
     res.writeJsonBody(Json.emptyObject, 204);
   }

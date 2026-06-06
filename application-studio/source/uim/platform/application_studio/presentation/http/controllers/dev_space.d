@@ -69,10 +69,11 @@ class DevSpaceController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
+        auto id = DevSpaceId(precheck.id);
 
         auto data = precheck.data;
         DevSpaceDTO dto;
-        dto.id = precheck.id;
+        dto.spaceId = id;
         dto.tenantId = tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");

@@ -151,8 +151,10 @@ class DeploymentController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
-    auto tenantId = precheck.tenantId;
+    auto id = DeploymentId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid deployment ID", 400);
+
     auto result = usecase.deleteDeployment(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);

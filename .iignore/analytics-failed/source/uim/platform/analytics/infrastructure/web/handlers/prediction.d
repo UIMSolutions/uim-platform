@@ -26,14 +26,14 @@ class PredictionHandler {
   }
 
   void getOne(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = precheck.id;
-    if (id.length == 0) {
-      res.writeJsonBody(errorJson("Missing id"), 400);
+    auto id = PredictionId(precheck.id);
+    if (id.isNull) {
+      res.writeJsonBody(errorJson("Missing prediction id"), 400);
       return;
     }
     auto item = useCases.getPrediction(id);
     if (item.predictionId.isEmpty) {
-      res.writeJsonBody(errorJson("Not found", 404), 404);
+      res.writeJsonBody(errorJson("Prediction not found", 404), 404);
       return;
     }
     res.writeJsonBody(toJsonValue(item));
@@ -56,17 +56,25 @@ class PredictionHandler {
   }
 
   void train(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = precheck.id;
+    auto id = PredictionId(precheck.id);
+    if (id.isNull) {
+      res.writeJsonBody(errorJson("Missing prediction id"), 400);
+      return;
+    }
     auto result = useCases.trainPrediction(id);
     if (result.predictionId.isEmpty) {
-      res.writeJsonBody(errorJson("Not found", 404), 404);
+      res.writeJsonBody(errorJson("Prediction not found", 404), 404);
       return;
     }
     res.writeJsonBody(toJsonValue(result));
   }
 
   void remove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = precheck.id;
+    auto id = PredictionId(precheck.id);
+    if (id.isNull) {
+      res.writeJsonBody(errorJson("Missing prediction id"), 400);
+      return;
+    }
     useCases.deletePrediction(id);
     res.writeJsonBody(Json.emptyObject, 204);
   }

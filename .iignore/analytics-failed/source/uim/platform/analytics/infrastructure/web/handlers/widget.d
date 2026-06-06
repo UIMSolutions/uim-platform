@@ -28,14 +28,14 @@ class WidgetHandler {
   }
 
   void getOne(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = precheck.id;
-    if (id.length == 0) {
-      res.writeJsonBody(errorJson("Missing id"), 400);
+    auto id = WidgetId(precheck.id);
+    if (id.isNull) {
+      res.writeJsonBody(errorJson("Missing widget id"), 400);
       return;
     }
     auto item = useCases.getWidget(id);
-    if (item.id.length == 0) {
-      res.writeJsonBody(errorJson("Not found", 404), 404);
+    if (item.id.isNull) {
+      res.writeJsonBody(errorJson("Widget not found", 404), 404);
       return;
     }
     res.writeJsonBody(toJsonValue(item));
@@ -55,7 +55,11 @@ class WidgetHandler {
   }
 
   void remove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = precheck.id;
+    auto id = WidgetId(precheck.id);
+    if (id.isNull) {
+      res.writeJsonBody(errorJson("Missing widget id"), 400);
+      return;
+    }
     useCases.deleteWidget(id);
     res.writeJsonBody(Json.emptyObject, 204);
   }

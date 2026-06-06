@@ -20,6 +20,7 @@ class MessageBindingController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+
         router.get("/api/v1/sap-event-mesh/message-bindings", &handleList);
         router.get("/api/v1/sap-event-mesh/message-bindings/*", &handleGet);
         router.post("/api/v1/sap-event-mesh/message-bindings", &handleCreate);
@@ -35,98 +36,94 @@ class MessageBindingController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto items = usecase.listBindings(tenantId);
-        res.writeJsonBody(Json.emptyObject
-                .set("count", items.length)
-                .set("resources", items.map!(e => e.toJson).array.toJson)
-                .set("message", "Message binding list retrieved successfully"), 200);
+        auto list = items.map!(item => item.toJson()).array.toJson;
+
+        auto responseData = Json.emptyObject
+            .set("count", list.length)
+            .set("resources", list);
+        return successResponse("Message binding list retrieved successfully", "Retrieved", 200, responseData);
     }
- catch (Exception e) {
-        writeError(res, 500, "Internal server error");
+
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+        auto id = MessageBindingId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid message binding ID", 400);
+
+        auto e = usecase.getBinding(tenantId, MessageBindingId(id));
+        if (e.isNull)
+            return errorResponse("Message binding not found", 404);
+
+        auto responseData = e.toJson;
+        return successResponse("Message binding retrieved successfully", "Retrieved", 200, responseData);
     }
-}
 
-override protected Json getHandler(HTTPServerRequest req) {
-    auto precheck = super.getHandler(req);
-    if (precheck.hasError)
-        return precheck;
+    override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-    auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
-    auto e = usecase.getBinding(tenantId, MessageBindingId(id));
-    if (e.isNull)
-            return errorResponse("", 0);
-            
-    res.writeJsonBody(Json.emptyObject
-            .set("message", "Message binding retrieved successfully")
-            .set("resource", e.toJson), 200);
-}
- catch (Exception e) {
-    writeError(res, 500, "Internal server error");
-}
-}
+        auto tenantId = precheck.tenantId;
 
-override protected Json createHandler(HTTPServerRequest req) {
-    auto precheck = super.createHandler(req);
-    if (precheck.hasError)
-        return precheck;
+        auto data = precheck.data;
+        MessageBindingDTO dto;
+        dto.bindingId = MessageBindingId(precheck.id);
+        dto.tenantId = tenantId;
+        dto.clientId = MessageClientId(data.getString("clientId"));
+        dto.serviceId = MessagingServiceId(data.getString("serviceId"));
+        dto.queueId = QueueId(data.getString("queueId"));
+        dto.channelId = EventChannelId(data.getString("channelId"));
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.permission = data.getString("permission");
+        dto.bindingType = data.getString("bindingType");
+        dto.createdBy = UserId(data.getString("createdBy"));
+        auto result = usecase.createBinding(dto);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
 
-    auto tenantId = precheck.tenantId;
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Message binding created successfully", "Created", 201, responseData);
+    }
 
-    auto data = precheck.data;
-    MessageBindingDTO dto;
-    dto.bindingId = MessageBindingId(precheck.id);
-    dto.tenantId = tenantId;
-    dto.clientId = MessageClientId(data.getString("clientId"));
-    dto.serviceId = MessagingServiceId(data.getString("serviceId"));
-    dto.queueId = QueueId(data.getString("queueId"));
-    dto.channelId = EventChannelId(data.getString("channelId"));
-    dto.name = data.getString("name");
-    dto.description = data.getString("description");
-    dto.permission = data.getString("permission");
-    dto.bindingType = data.getString("bindingType");
-    dto.createdBy = UserId(data.getString("createdBy"));
-    auto result = usecase.createBinding(dto);
-    if (result.hasError)
-        return errorResponse(result.message, 400);
+    override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-    auto responseData = Json.emptyObject.set("id", result.id);
-    return successResponse("Message binding created successfully", "Created", 201, responseData);
-}
+        auto tenantId = precheck.tenantId;
+        auto bindingId = MessageBindingId(precheck.id);
+        auto data = precheck.data;
+        MessageBindingDTO dto;
+        dto.tenantId = tenantId;
+        dto.bindingId = bindingId;
+        dto.description = data.getString("description");
+        dto.bindingType = data.getString("bindingType");
+        dto.updatedBy = UserId(data.getString("updatedBy"));
+        auto result = usecase.updateBinding(dto);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
 
-override protected Json updateHandler(HTTPServerRequest req) {
-    auto precheck = super.updateHandler(req);
-    if (precheck.hasError)
-        return precheck;
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Message binding updated successfully", "Updated", 200, responseData);
+    }
 
-    auto tenantId = precheck.tenantId;
-    auto bindingId = MessageBindingId(precheck.id);
-    auto data = precheck.data;
-    MessageBindingDTO dto;
-    dto.tenantId = tenantId;
-    dto.bindingId = bindingId;
-    dto.description = data.getString("description");
-    dto.bindingType = data.getString("bindingType");
-    dto.updatedBy = UserId(data.getString("updatedBy"));
-    auto result = usecase.updateBinding(dto);
-    if (result.hasError)
-        return errorResponse(result.message, 400);
+    override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-    auto responseData = Json.emptyObject.set("id", result.id);
-    return successResponse("Message binding updated successfully", "Updated", 200, responseData);
-}
+        auto tenantId = precheck.tenantId;
+        auto id = MessageBindingId(precheck.id);
+        auto result = usecase.deleteBinding(tenantId, id);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
 
-override protected Json deleteHandler(HTTPServerRequest req) {
-    auto precheck = super.deleteHandler(req);
-    if (precheck.hasError)
-        return precheck;
-
-    auto tenantId = precheck.tenantId;
-    auto id = MessageBindingId(precheck.id);
-    auto result = usecase.deleteBinding(tenantId, id);
-    if (result.hasError)
-        return errorResponse(result.message, 400);
-
-    auto responseData = Json.emptyObject.set("id", result.id);
-    return successResponse("Message binding deleted successfully", "Deleted", 200, responseData);
-}
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Message binding deleted successfully", "Deleted", 200, responseData);
+    }
 }

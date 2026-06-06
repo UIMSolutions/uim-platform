@@ -28,14 +28,14 @@ class DataSourceHandler {
   }
 
   void getOne(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = precheck.id;
-    if (id.length == 0) {
-      res.writeJsonBody(errorJson("Missing id"), 400);
+    auto id = DataSourceId(precheck.id);
+    if (id.isNull) {
+      res.writeJsonBody(errorJson("Missing data source id"), 400);
       return;
     }
     auto item = useCases.getSource(TenantId.init, DataSourceId(id));
     if (item.id.isNull) {
-      res.writeJsonBody(errorJson("Not found", 404), 404);
+      res.writeJsonBody(errorJson("Data source not found", 404), 404);
       return;
     }
     res.writeJsonBody(toJsonValue(item));
@@ -62,17 +62,25 @@ class DataSourceHandler {
   }
 
   void testConn(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = precheck.id;
+    auto id = DataSourceId(precheck.id);
+    if (id.isNull) {
+      res.writeJsonBody(errorJson("Missing data source id"), 400);
+      return;
+    }
     auto result = useCases.testConnection(TenantId.init, DataSourceId(id));
     if (result.id.isNull) {
-      res.writeJsonBody(errorJson("Not found", 404), 404);
+      res.writeJsonBody(errorJson("Data source not found", 404), 404);
       return;
     }
     res.writeJsonBody(toJsonValue(result));
   }
 
   void remove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = precheck.id;
+    auto id = DataSourceId(precheck.id);
+    if (id.isNull) {
+      res.writeJsonBody(errorJson("Missing data source id"), 400);
+      return;
+    }
     useCases.deleteSource(TenantId.init, DataSourceId(id));
     res.writeJsonBody(Json.emptyObject, 204);
   }

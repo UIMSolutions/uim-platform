@@ -28,14 +28,14 @@ class DatasetHandler {
   }
 
   void getOne(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = precheck.id;
-    if (id.length == 0) {
-      res.writeJsonBody(errorJson("Missing id"), 400);
+    auto id = DatasetId(precheck.id);
+    if (id.isNull) {
+      res.writeJsonBody(errorJson("Missing dataset id"), 400);
       return;
     }
     auto item = useCases.getDataset(id);
     if (item.datasetId.isEmpty) {
-      res.writeJsonBody(errorJson("Not found", 404), 404);
+      res.writeJsonBody(errorJson("Dataset not found", 404), 404);
       return;
     }
     res.writeJsonBody(toJsonValue(item));
@@ -56,7 +56,11 @@ class DatasetHandler {
   }
 
   void remove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = precheck.id;
+    auto id = DatasetId(precheck.id);
+    if (id.isNull) {
+      res.writeJsonBody(errorJson("Missing dataset id"), 400);
+      return;
+    }
     useCases.deleteDataset(id);
     res.writeJsonBody(Json.emptyObject, 204);
   }

@@ -27,14 +27,14 @@ class PlanningHandler {
   }
 
   void getOne(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = precheck.id;
-    if (id.length == 0) {
-      res.writeJsonBody(errorJson("Missing id"), 400);
+    auto id = PlanningModelId(precheck.id);
+    if (id.isNull) {
+      res.writeJsonBody(errorJson("Missing planning model id"), 400);
       return;
     }
     auto item = useCases.getById(id);
     if (item.planningModelId.isEmpty) {
-      res.writeJsonBody(errorJson("Not found", 404), 404);
+      res.writeJsonBody(errorJson("Planning model not found", 404), 404);
       return;
     }
     res.writeJsonBody(toJsonValue(item));
@@ -55,27 +55,39 @@ class PlanningHandler {
   }
 
   void lockModel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = precheck.id;
+    auto id = PlanningModelId(precheck.id);
+    if (id.isNull) {
+      res.writeJsonBody(errorJson("Missing planning model id"), 400);
+      return;
+    }
     auto result = useCases.lockPlanningModel(TenantId.init, id);
     if (result.planningModelId.isEmpty) {
-      res.writeJsonBody(errorJson("Not found", 404), 404);
+      res.writeJsonBody(errorJson("Planning model not found", 404), 404);
       return;
     }
     res.writeJsonBody(toJsonValue(result));
   }
 
   void approveModel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = precheck.id;
+    auto id = PlanningModelId(precheck.id);
+    if (id.isNull) {
+      res.writeJsonBody(errorJson("Missing planning model id"), 400);
+      return;
+    }
     auto result = useCases.approvePlanningModel(TenantId.init, id);
     if (result.planningModelId.isEmpty) {
-      res.writeJsonBody(errorJson("Not found", 404), 404);
+      res.writeJsonBody(errorJson("Planning model not found", 404), 404);
       return;
     }
     res.writeJsonBody(toJsonValue(result));
   }
 
   void remove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = precheck.id;
+    auto id = PlanningModelId(precheck.id);
+    if (id.isNull) {
+      res.writeJsonBody(errorJson("Missing planning model id"), 400);
+      return;
+    }
     useCases.deletePlanningModel(TenantId.init, id);
     res.writeJsonBody(Json.emptyObject, 204);
   }

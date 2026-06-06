@@ -6,6 +6,6 @@
 module uim.platform.authorization_trust.presentation.rest;
 
 public:
-    import uim.platform.event_mesh.presentation.rest.interfaces;
-    import uim.platform.event_mesh.presentation.rest.services;
-    import uim.platform.event_mesh.presentation.rest.tests;
+    import uim.platform.authorization_trust.presentation.rest.interfaces;
+    import uim.platform.authorization_trust.presentation.rest.services;
+    import uim.platform.authorization_trust.presentation.rest.tests;

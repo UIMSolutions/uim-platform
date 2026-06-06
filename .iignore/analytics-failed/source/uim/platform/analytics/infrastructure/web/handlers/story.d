@@ -28,14 +28,14 @@ class StoryHandler {
   }
 
   void getOne(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = precheck.id;
-    if (id.length == 0) {
-      res.writeJsonBody(errorJson("Missing id"), 400);
+    auto id = StoryId(precheck.id);
+    if (id.isNull) {
+      res.writeJsonBody(errorJson("Missing story id"), 400);
       return;
     }
     auto item = useCases.getStory(id);
-    if (item.id.length == 0) {
-      res.writeJsonBody(errorJson("Not found", 404), 404);
+    if (item.id.isNull) {
+      res.writeJsonBody(errorJson("Story not found", 404), 404);
       return;
     }
     res.writeJsonBody(toJsonValue(item));
@@ -54,17 +54,25 @@ class StoryHandler {
   }
 
   void publish(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = precheck.id;
+    auto id = StoryId(precheck.id);
+    if (id.isNull) {
+      res.writeJsonBody(errorJson("Missing story id"), 400);
+      return;
+    }
     auto result = useCases.publishStory(id);
-    if (result.id.length == 0) {
-      res.writeJsonBody(errorJson("Not found", 404), 404);
+    if (result.id.isNull) {
+      res.writeJsonBody(errorJson("Story not found", 404), 404);
       return;
     }
     res.writeJsonBody(toJsonValue(result));
   }
 
   void remove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = precheck.id;
+    auto id = StoryId(precheck.id);
+    if (id.isNull) {
+      res.writeJsonBody(errorJson("Missing story id"), 400);
+      return;
+    }
     useCases.deleteStory(id);
     res.writeJsonBody(Json.emptyObject, 204);
   }

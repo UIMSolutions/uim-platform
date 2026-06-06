@@ -128,3 +128,60 @@ class ScopeController : ManageHttpController {
     return successResponse("Scope deleted successfully", "Deleted", 200, responseData);
   }
 }
+
+unittest {
+  import uim.platform.service.tests;
+
+  @safe class ScopeControllerTest : ControllerTestBase {
+    void runTests() {
+      auto repo = new MemoryScopeRepository();
+      auto usecase = new ManageScopesUseCase(repo);
+      auto controller = new ScopeController(usecase);
+      auto tenantId = TenantId("test-tenant");
+
+      // 1. Create
+      Json createData = Json.emptyObject
+        .set("name", "read:data")
+        .set("description", "Permission to read data")
+        .set("appId", "app-123");
+
+      auto reqCreate = createMockRequest("POST", "/api/v1/scopes", tenantId, createData);
+      auto resCreate = controller.createHandler(reqCreate);
+      assert(resCreate.getString("status") == "success");
+      string scopeId = resCreate["data"]["id"].get!string;
+
+      // 2. List
+      auto reqList = createMockRequest("GET", "/api/v1/scopes", tenantId);
+      auto resList = controller.listHandler(reqList);
+      assert(resList.getString("status") == "success");
+      assert(resList["data"]["count"].get!int == 1);
+
+      // 3. Get
+      auto reqGet = createMockRequest("GET", "/api/v1/scopes/" ~ scopeId, tenantId);
+      reqGet.params["id"] = scopeId;
+      auto resGet = controller.getHandler(reqGet);
+      assert(resGet.getString("status") == "success");
+      assert(resGet["data"]["name"].get!string == "read:data");
+
+      // 4. Update
+      Json updateData = Json.emptyObject
+        .set("description", "Updated description");
+      auto reqUpdate = createMockRequest("PUT", "/api/v1/scopes/" ~ scopeId, tenantId, updateData);
+      reqUpdate.params["id"] = scopeId;
+      auto resUpdate = controller.updateHandler(reqUpdate);
+      assert(resUpdate.getString("status") == "success");
+      
+      auto updatedScope = repo.findById(tenantId, ScopeId(scopeId));
+      assert(updatedScope.description == "Updated description");
+
+      // 5. Delete
+      auto reqDelete = createMockRequest("DELETE", "/api/v1/scopes/" ~ scopeId, tenantId);
+      reqDelete.params["id"] = scopeId;
+      auto resDelete = controller.deleteHandler(reqDelete);
+      assert(resDelete.getString("status") == "success");
+      assert(repo.countByTenant(tenantId) == 0);
+    }
+  }
+
+  (new ScopeControllerTest).runTests();
+}

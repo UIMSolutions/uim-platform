@@ -146,3 +146,65 @@ class IdentityProviderController : ManageHttpController {
     return successResponse("Identity provider deleted successfully", "Deleted", 200, responseData);
   }
 }
+
+unittest {
+  import uim.platform.service.tests;
+
+  @safe class IdentityProviderControllerTest : ControllerTestBase {
+    void runTests() {
+      auto repo = new MemoryIdentityProviderRepository();
+      auto usecase = new ManageIdentityProvidersUseCase(repo);
+      auto controller = new IdentityProviderController(usecase);
+      auto tenantId = TenantId("test-tenant");
+
+      // 1. Create
+      Json createData = Json.emptyObject
+        .set("alias", "sap-id-service")
+        .set("displayName", "SAP ID Service")
+        .set("idpType", "saml")
+        .set("metadataUrl", "https://idp.example.com/metadata")
+        .set("isActive", true)
+        .set("isDefault", false);
+
+      auto reqCreate = createMockRequest("POST", "/api/v1/identity-providers", tenantId, createData);
+      auto resCreate = controller.createHandler(reqCreate);
+      assert(resCreate.getString("status") == "success");
+      string providerId = resCreate["data"]["id"].get!string;
+
+      // 2. List
+      auto reqList = createMockRequest("GET", "/api/v1/identity-providers", tenantId);
+      auto resList = controller.listHandler(reqList);
+      assert(resList.getString("status") == "success");
+      assert(resList["data"]["totalCount"].get!int == 1);
+
+      // 3. Get
+      auto reqGet = createMockRequest("GET", "/api/v1/identity-providers/" ~ providerId, tenantId);
+      reqGet.params["id"] = providerId;
+      auto resGet = controller.getHandler(reqGet);
+      assert(resGet.getString("status") == "success");
+      assert(resGet["data"]["alias"].get!string == "sap-id-service");
+
+      // 4. Update
+      Json updateData = Json.emptyObject
+        .set("displayName", "Updated IDP Name")
+        .set("isActive", false);
+      auto reqUpdate = createMockRequest("PUT", "/api/v1/identity-providers/" ~ providerId, tenantId, updateData);
+      reqUpdate.params["id"] = providerId;
+      auto resUpdate = controller.updateHandler(reqUpdate);
+      assert(resUpdate.getString("status") == "success");
+      
+      auto updatedIdp = repo.findById(tenantId, IdentityProviderId(providerId));
+      assert(updatedIdp.displayName == "Updated IDP Name");
+      assert(updatedIdp.isActive == false);
+
+      // 5. Delete
+      auto reqDelete = createMockRequest("DELETE", "/api/v1/identity-providers/" ~ providerId, tenantId);
+      reqDelete.params["id"] = providerId;
+      auto resDelete = controller.deleteHandler(reqDelete);
+      assert(resDelete.getString("status") == "success");
+      assert(repo.countByTenant(tenantId) == 0);
+    }
+  }
+
+  (new IdentityProviderControllerTest).runTests();
+}
