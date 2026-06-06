@@ -5,11 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.master_data_integration.presentation.http.master_data;
 
-
-
-
-
-
 // import uim.platform.master_data_integration.application.usecases.manage.master_data_objects;
 // import uim.platform.master_data_integration.application.dto;
 // import uim.platform.master_data_integration.domain.entities.master_data_object;
@@ -38,135 +33,126 @@ class MasterDataController : ManageHttpController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-              CreateMasterDataObjectRequest r;
-      r.tenantId = tenantId;
-      r.dataModelId = data.getString("dataModelId");
-      r.category = data.getString("category");
-      r.objectType = data.getString("objectType");
-      r.displayName = data.getString("displayName");
-      r.description = data.getString("description");
-      r.localId = data.getString("localId");
-      r.globalId = data.getString("globalId");
-      r.attributes = data.jsonStrMap("attributes");
-      r.sourceSystem = data.getString("sourceSystem");
-      r.sourceClient = data.getString("sourceClient");
-      r.createdBy = UserId(req.headers.get("X-User-Id", ""));
+    auto data = precheck.data;
+    CreateMasterDataObjectRequest r;
+    r.tenantId = tenantId;
+    r.dataModelId = data.getString("dataModelId");
+    r.category = data.getString("category");
+    r.objectType = data.getString("objectType");
+    r.displayName = data.getString("displayName");
+    r.description = data.getString("description");
+    r.localId = data.getString("localId");
+    r.globalId = data.getString("globalId");
+    r.attributes = data.jsonStrMap("attributes");
+    r.sourceSystem = data.getString("sourceSystem");
+    r.sourceClient = data.getString("sourceClient");
+    r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
-      auto result = usecase.create(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
+    auto result = usecase.create(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-        auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("Master data object created successfully", "Created", 201, responseData);
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Master data object created successfully", "Created", 201, responseData);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto category = req.params.get("category", "");
+    auto tenantId = precheck.tenantId;
+    auto category = req.params.get("category", "");
 
-      MasterDataObject[] objs;
-      if (category.length > 0)
-        objs = usecase.listByCategory(tenantId, category);
-      else
-        objs = usecase.listByTenant(tenantId);
+    MasterDataObject[] objs;
+    if (category.length > 0)
+      objs = usecase.listByCategory(tenantId, category);
+    else
+      objs = usecase.listByTenant(tenantId);
 
-      auto arr = objs.map!(o => o.toJson).array.toJson;
+    auto arr = objs.map!(o => o.toJson).array.toJson;
 
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", objs.length)
-        .set("message", "Master data objects retrieved successfully");
-        
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+    auto resp = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", objs.length)
+      .set("message", "Master data objects retrieved successfully");
+
+    return successResponse("Master data objects retrieved successfully", 200, resp);
+}
+
+protected void handleLookupByGlobalId(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  try {
+    auto tenantId = precheck.tenantId;
+    auto globalId = req.params.get("globalId", "");
+    if (globalId.isEmpty) {
+      writeError(res, 400, "globalId query parameter is required");
+      return;
     }
+
+    auto obj = usecase.findByGlobalId(tenantId, globalId);
+    if (obj.isNull)
+      return errorResponse("Master data object not found", 404);
+    auto response = obj.toJson();
+    return successResponse("Master data object retrieved successfully", 200, response);
   }
+}
 
-  protected void handleLookupByGlobalId(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
-      auto globalId = req.params.get("globalId", "");
-      if (globalId.isEmpty) {
-        writeError(res, 400, "globalId query parameter is required");
-        return;
-      }
+override protected Json getHandler(HTTPServerRequest req) {
+  auto precheck = super.getHandler(req);
+  if (precheck.hasError)
+    return precheck;
 
-      auto obj = usecase.findByGlobalId(tenantId, globalId);
-      if (obj.isNull) {
-        writeError(res, 404, "Master data object not found");
-        return;
-      }
-      res.writeJsonBody(obj.toJson, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  auto tenantId = precheck.tenantId;
+  auto id = precheck.id;
+  auto obj = usecase.getObject(id);
+  if (obj.isNull)
+    return errorResponse("Master data object not found", 404);
 
-  override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+  auto response = obj.toJson();
+  return successResponse("Master data object retrieved successfully", 200, response);
+}
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto obj = usecase.getObject(id);
-      if (obj.isNull) {
-        writeError(res, 404, "Master data object not found");
-        return;
-      }
-      res.writeJsonBody(obj.toJson, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+override protected Json updateHandler(HTTPServerRequest req) {
+  auto precheck = super.updateHandler(req);
+  if (precheck.hasError)
+    return precheck;
 
-  override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+  auto tenantId = precheck.tenantId;
+  auto id = precheck.id;
+  auto data = precheck.data;
+  UpdateMasterDataObjectRequest r;
+  r.displayName = data.getString("displayName");
+  r.description = data.getString("description");
+  r.status = data.getString("status");
+  r.attributes = data.jsonStrMap("attributes");
+  r.updatedBy = UserId(req.headers.get("X-User-Id", ""));
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto data = precheck.data;
-      UpdateMasterDataObjectRequest r;
-      r.displayName = data.getString("displayName");
-      r.description = data.getString("description");
-      r.status = data.getString("status");
-      r.attributes = data.jsonStrMap("attributes");
-      r.updatedBy = UserId(req.headers.get("X-User-Id", ""));
+  auto result = usecase.updateObject(id, r);
+  if (result.hasError)
+    return errorResponse(result.message, 400);
 
-      auto result = usecase.updateObject(id, r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
+  auto responseData = Json.emptyObject.set("id", result.id);
+  return successResponse("Master data object updated successfully", "Updated", 200, responseData);
+}
 
-        auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("Master data object updated successfully", "Updated", 200, responseData);
-  }
+override protected Json deleteHandler(HTTPServerRequest req) {
+  auto precheck = super.deleteHandler(req);
+  if (precheck.hasError)
+    return precheck;
 
-  override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+  auto tenantId = precheck.tenantId;
+  auto id = precheck.id;
+  auto result = usecase.deleteObject(tenantId, id);
+  if (result.hasError)
+    return errorResponse(result.message, 400);
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto result = usecase.deleteObject(tenantId, id);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-
-        auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("Master data object deleted successfully", "Deleted", 200, responseData);
-  }
+  auto responseData = Json.emptyObject.set("id", result.id);
+  return successResponse("Master data object deleted successfully", "Deleted", 200, responseData);
+}
 }

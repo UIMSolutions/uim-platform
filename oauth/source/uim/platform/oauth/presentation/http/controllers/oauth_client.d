@@ -127,7 +127,6 @@ class OAuthClientController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto tenantId = precheck.tenantId;
         auto id = OAuthClientId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid OAuth client ID", 400);

@@ -93,13 +93,9 @@ class ReplicationController : ManageHttpController {
 
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", jobs.length)
-        .set("message", "Replication jobs retrieved successfully");
+        .set("totalCount", jobs.length);
 
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+      return successResponse("Replication jobs retrieved successfully", 200, resp);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
@@ -111,13 +107,11 @@ class ReplicationController : ManageHttpController {
       auto id = ReplicationJobId(precheck.id);
 
       auto job = usecase.getReplicationJob(tenantId, id);
-      if (job.isNull) {
-        writeError(res, 404, "Replication job not found");
-        return;
-      }
-      res.writeJsonBody(job.toJson, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+      if (job.isNull) 
+      return errorResponse("Replication job not found", 404);
+
+      auto response = job.toJson();
+      return successResponse("Replication job retrieved successfully", 200, response);
     }
   }
 

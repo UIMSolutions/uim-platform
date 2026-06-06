@@ -53,11 +53,11 @@ class RefreshTokenController : ManageHttpController {
         auto path = precheck.path;
         auto id = RefreshTokenId(precheck.id);
 
-        auto e = usecase.getToken(tenantId, id);
-        if (item.isNull)
-            return errorResponse("Scan job not found", 404);
+        auto token = usecase.getToken(tenantId, id);
+        if (token.isNull)
+            return errorResponse("Refresh token not found", 404);
 
-        auto responseData = item.toJson();
+        auto responseData = token.toJson();
         return successResponse("Refresh token retrieved successfully", "Retrieved", 200, responseData);
     }
 

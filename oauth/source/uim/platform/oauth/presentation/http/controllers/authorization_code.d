@@ -40,7 +40,7 @@ class AuthorizationCodeController : ManageHttpController {
 
         auto resp = Json.emptyObject
             .set("count", items.length)
-            .set("resources", jarr);
+            .set("resources", list);
 
         return successResponse("Authorization codes retrieved successfully", "Retrieved", 200, resp);
     }

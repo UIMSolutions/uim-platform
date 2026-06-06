@@ -102,15 +102,12 @@ class FilterRuleController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
       auto id = precheck.id;
-      auto rule = usecase.getRule(id);
-      if (rule.isNull) {
-        writeError(res, 404, "Filter rule not found");
-        return;
-      }
-      res.writeJsonBody(rule.toJson, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+      auto rule = usecase.getRule(tenantId, id);
+      if (rule.isNull) 
+        return errorResponse("Filter rule not found", 404);
+      
+      auto response = rule.toJson();
+      return successResponse("Filter rule retrieved successfully", 200, response);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {

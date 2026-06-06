@@ -136,14 +136,11 @@ class KeyMappingController : ManageHttpController {
         auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto mapping = usecase.getMapping(id);
-      if (mapping.isNull) {
-        writeError(res, 404, "Key mapping not found");
-        return;
-      }
-      res.writeJsonBody(mapping.toJson, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+      if (mapping.isNull)
+      return errorResponse("Key mapping not found", 404);
+
+      auto response = mapping.toJson();
+      return successResponse("Key mapping retrieved successfully", 200, response);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {

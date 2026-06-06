@@ -31,150 +31,135 @@ class AutomationRuleController : ManageHttpController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-              CreateAutomationRuleRequest r;
-      r.tenantId = tenantId;
-      r.situationTemplateId = SituationTemplateId(data.getString("templateId"));
-      r.automationRuleId = AutomationRuleId(precheck.id);
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.priority = data.getString("priority");
-      r.executionOrder = data.getInteger("executionOrder");
-      r.createdBy = UserId(data.getString("createdBy"));
+    auto data = precheck.data;
+    CreateAutomationRuleRequest r;
+    r.tenantId = tenantId;
+    r.situationTemplateId = SituationTemplateId(data.getString("templateId"));
+    r.automationRuleId = AutomationRuleId(precheck.id);
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.priority = data.getString("priority");
+    r.executionOrder = data.getInteger("executionOrder");
+    r.createdBy = UserId(data.getString("createdBy"));
 
-      auto result = usecase.createAutomationRule(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Automation rule created");
+    auto result = usecase.createAutomationRule(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+    auto resp = Json.emptyObject
+      .set("id", result.id);
 
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    return successResponse("Automation rule created successfully", 201, resp);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto rules = usecase.listAutomationRules(tenantId);
+    auto tenantId = precheck.tenantId;
+    auto rules = usecase.listAutomationRules(tenantId);
 
-      auto jarr = Json.emptyArray;
-      foreach (r; rules) {
-        jarr ~= Json.emptyObject
-          .set("id", r.id.value)
-          .set("name", r.name)
-          .set("situationTemplateId", r.situationTemplateId.value)
-          .set("status", r.status.to!string)
-          .set("priority", r.priority.to!string)
-          .set("enabled", r.enabled)
-          .set("executionOrder", r.executionOrder)
-          .set("triggerCount", r.triggerCount)
-          .set("successCount", r.successCount)
-          .set("failureCount", r.failureCount)
-          .set("createdAt", r.createdAt);
-      }
-
-      auto resp = Json.emptyObject
-        .set("count", Json(rules.length))
-        .set("resources", list);
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
-
-  override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
-
-        auto tenantId = precheck.tenantId;
-
-      auto id = AutomationRuleId(precheck.id);
-      auto r = usecase.getAutomationRule(tenantId, id);
-      if (r.isNull) {
-        writeError(res, 404, "Automation rule not found");
-        return;
-      }
-
-      auto resp = Json.emptyObject
+    auto jarr = Json.emptyArray;
+    foreach (r; rules) {
+      jarr ~= Json.emptyObject
         .set("id", r.id.value)
         .set("name", r.name)
-        .set("description", r.description)
         .set("situationTemplateId", r.situationTemplateId.value)
         .set("status", r.status.to!string)
         .set("priority", r.priority.to!string)
         .set("enabled", r.enabled)
         .set("executionOrder", r.executionOrder)
-        .set("createdBy", r.createdBy)
-        .set("updatedBy", r.updatedBy)
-        .set("createdAt", r.createdAt)
-        .set("updatedAt", r.updatedAt)
-        .set("lastTriggeredAt", r.lastTriggeredAt)
         .set("triggerCount", r.triggerCount)
         .set("successCount", r.successCount)
-        .set("failureCount", r.failureCount);
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+        .set("failureCount", r.failureCount)
+        .set("createdAt", r.createdAt);
     }
+
+    auto resp = Json.emptyObject
+      .set("count", Json(rules.length))
+      .set("resources", jarr);
+
+    return successResponse("Automation rules retrieved successfully", 200, resp);
+  }
+
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+
+    auto id = AutomationRuleId(precheck.id);
+    auto r = usecase.getAutomationRule(tenantId, id);
+    if (r.isNull)
+      return errorResponse("Automation rule not found", 404);
+
+    auto resp = Json.emptyObject
+      .set("id", r.id.value)
+      .set("name", r.name)
+      .set("description", r.description)
+      .set("situationTemplateId", r.situationTemplateId.value)
+      .set("status", r.status.to!string)
+      .set("priority", r.priority.to!string)
+      .set("enabled", r.enabled)
+      .set("executionOrder", r.executionOrder)
+      .set("createdBy", r.createdBy)
+      .set("updatedBy", r.updatedBy)
+      .set("createdAt", r.createdAt)
+      .set("updatedAt", r.updatedAt)
+      .set("lastTriggeredAt", r.lastTriggeredAt)
+      .set("triggerCount", r.triggerCount)
+      .set("successCount", r.successCount)
+      .set("failureCount", r.failureCount);
+
+    return successResponse("Automation rule retrieved successfully", 200, resp);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-      auto data = precheck.data;
-      UpdateAutomationRuleRequest r;
-      r.tenantId = tenantId;
-      r.automationRuleId = AutomationRuleId(precheck.id);
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.priority = data.getString("priority");
-      r.executionOrder = data.getInteger("executionOrder");
-      r.enabled = data.getBoolean("enabled", true);
-      r.updatedBy = UserId(data.getString("updatedBy"));
+    auto data = precheck.data;
+    UpdateAutomationRuleRequest r;
+    r.tenantId = tenantId;
+    r.automationRuleId = AutomationRuleId(precheck.id);
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.priority = data.getString("priority");
+    r.executionOrder = data.getInteger("executionOrder");
+    r.enabled = data.getBoolean("enabled", true);
+    r.updatedBy = UserId(data.getString("updatedBy"));
 
-      auto result = usecase.updateAutomationRule(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
+    auto result = usecase.updateAutomationRule(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-        auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("Automation rule updated successfully", 200, responseData);
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Automation rule updated successfully", 200, responseData);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-      auto id = AutomationRuleId(precheck.id);
-      auto result = usecase.deleteAutomationRule(tenantId, id);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
+    auto id = AutomationRuleId(precheck.id);
+    auto result = usecase.deleteAutomationRule(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-        auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("Automation rule deleted successfully", 200, responseData);
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Automation rule deleted successfully", 200, responseData);
   }
 }
