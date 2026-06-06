@@ -159,22 +159,7 @@ CheckStatus toCheckStatus(string s) {
     default: return CheckStatus.unknown; // default
   }
 }
-/// Severity level for alerts.
-enum AlertSeverity {
-  info,
-  warning,
-  critical,
-  fatal,
-}
-AlertSeverity toAlertSeverity(string s) {
-  switch (s.toLower()) {
-    case "info": return AlertSeverity.info;
-    case "warning": return AlertSeverity.warning;
-    case "critical": return AlertSeverity.critical;
-    case "fatal": return AlertSeverity.fatal;
-    default: return AlertSeverity.info; // default
-  }
-}
+
 /// Current state of an alert.
 enum AlertState {
   open,

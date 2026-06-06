@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.logging.presentation.http.controllers.search;
 // import uim.platform.logging.application.usecases.search_logs;
-// import uim.platform.logging.application.dto;
+
 // import uim.platform.logging.domain.entities.log_entry;
 // import uim.platform.logging.domain.services.log_parser;
 
@@ -67,7 +67,7 @@ class SearchController : HttpController {
       list ~= Json.emptyObject
         .set("id", e.id)
         .set("timestamp", e.timestamp)
-        .set("level", LogParser.levelToString(e.level))
+        .set("level", e.level.to!string)
         .set("source", e.source)
         .set("message", e.message)
         .set("traceId", e.traceId)
@@ -112,7 +112,7 @@ class SearchController : HttpController {
       .set("tenantId", entry.tenantId)
       .set("streamId", entry.streamId)
       .set("timestamp", entry.timestamp)
-      .set("level", LogParser.levelToString(entry.level))
+      .set("level", entry.level.to!string)
       .set("source", entry.source)
       .set("message", entry.message)
       .set("traceId", entry.traceId)
@@ -128,4 +128,32 @@ class SearchController : HttpController {
 
     return successResponse("Log entry retrieved successfully", "Retrieved", 200, response);
   }
+}
+
+unittest {
+  import uim.platform.service.tests;
+
+  @safe class SearchControllerTest : ControllerTestBase {
+    void runTests() {
+      auto repo = new MemoryLogEntryRepository();
+      auto usecase = new SearchLogsUseCase(repo);
+      auto controller = new SearchController(usecase);
+      auto tenantId = TenantId("test-tenant");
+
+      LogEntry entry;
+      entry.tenantId = tenantId;
+      entry.message = "Searching for this";
+      repo.save(entry);
+
+      auto request = createMockRequest("GET", "/api/v1/search", tenantId);
+      request.params["q"] = "Searching";
+      auto response = controller.searchHandler(request);
+
+      assert(response.getString("status") == "success");
+      assert(response["data"]["totalCount"].get!int == 1);
+      assert(response["data"]["items"][0]["message"].get!string == "Searching for this");
+    }
+  }
+
+  (new SearchControllerTest).runTests();
 }

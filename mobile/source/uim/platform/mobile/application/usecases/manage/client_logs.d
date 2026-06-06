@@ -29,7 +29,7 @@ class ManageClientLogsUseCase { // TODO: UIMUseCase {
         entry.appId = r.appId;
         entry.deviceId = r.deviceId;
         entry.userId = r.userId;
-        entry.level = parseLogLevel(r.level);
+        entry.level = r.level.toLoggingLevel();
         entry.message = r.message;
         entry.stackTrace = r.stackTrace;
         entry.context = r.context;
@@ -68,17 +68,6 @@ class ManageClientLogsUseCase { // TODO: UIMUseCase {
 
     size_t countClientLogs(TenantId tenantId, MobileAppId appId) {
         return repo.countByApp(tenantId, appId);
-    }
-
-    private static LogLevel parseLogLevel(string s) {
-        switch (s) {
-            case "debug": return LogLevel.debug_;
-            case "info": return LogLevel.info;
-            case "warn": return LogLevel.warn;
-            case "error": return LogLevel.error;
-            case "fatal": return LogLevel.fatal;
-            default: return LogLevel.info;
-        }
     }
 
 }

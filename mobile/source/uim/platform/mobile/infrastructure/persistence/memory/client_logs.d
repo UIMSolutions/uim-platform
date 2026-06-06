@@ -44,19 +44,19 @@ class MemoryClientLogRepository : TenantRepository!(ClientLogEntry, ClientLogEnt
     findByDevice(tenantId, deviceId).each!(e => remove(e));
   }
 
-  size_t countByLevel(TenantId tenantId, MobileAppId appId, LogLevel level) {
+  size_t countByLevel(TenantId tenantId, MobileAppId appId, LoggingLevel level) {
     return findByLevel(tenantId, appId, level).length;
   }
 
-  ClientLogEntry[] filterByLevel(ClientLogEntry[] entries, MobileAppId appId, LogLevel level) {
+  ClientLogEntry[] filterByLevel(ClientLogEntry[] entries, MobileAppId appId, LoggingLevel level) {
     return entries.filter!(e => e.appId == appId && e.level == level).array;
   }
 
-  ClientLogEntry[] findByLevel(TenantId tenantId, MobileAppId appId, LogLevel level) {
+  ClientLogEntry[] findByLevel(TenantId tenantId, MobileAppId appId, LoggingLevel level) {
     return filterByLevel(findByApp(tenantId, appId), appId, level);
   }
 
-  void removeByLevel(TenantId tenantId, MobileAppId appId, LogLevel level) {
+  void removeByLevel(TenantId tenantId, MobileAppId appId, LoggingLevel level) {
     findByLevel(tenantId, appId, level).each!(e => remove(e));
   }
 

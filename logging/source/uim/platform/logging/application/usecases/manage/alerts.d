@@ -7,7 +7,7 @@ module uim.platform.logging.application.usecases.manage.alerts;
 // import uim.platform.logging.domain.entities.alert;
 // import uim.platform.logging.domain.ports.repositories.alerts;
 
-// import uim.platform.logging.application.dto;
+
 
 import uim.platform.logging;
 
@@ -88,4 +88,40 @@ class ManageAlertsUseCase : TenantUseCase!(AlertRepository, Alert, AlertId) {
     return CommandResult(true, alert.id.value, "");
   }
 
+}
+
+unittest {
+  auto repo = new MemoryAlertRepository();
+  auto usecase = new ManageAlertsUseCase(repo);
+  auto tenantId = TenantId("test-tenant");
+
+  // Trigger an alert
+  usecase.triggerAlert(tenantId, AlertRuleId("rule-1"), "High CPU", 
+    AlertSeverity.critical, "CPU usage over 90%", 1, LogEntryId("log-123"));
+
+  assert(usecase.countByTenant(tenantId) == 1);
+  assert(usecase.countOpen(tenantId) == 1);
+
+  auto alerts = usecase.listAlerts(tenantId, AlertState.open);
+  assert(alerts.length == 1);
+  auto alertId = alerts[0].id;
+
+  // Acknowledge the alert
+  AcknowledgeAlertRequest ackReq;
+  ackReq.tenantId = tenantId;
+  ackReq.alertId = alertId;
+  ackReq.acknowledgedBy = "operator-1";
+  usecase.acknowledgeAlert(ackReq);
+
+  assert(usecase.countOpen(tenantId) == 0);
+
+  // Resolve the alert
+  ResolveAlertRequest resReq;
+  resReq.tenantId = tenantId;
+  resReq.alertId = alertId;
+  resReq.resolvedBy = "operator-1";
+  usecase.resolveAlert(resReq);
+
+  auto alert = repo.findById(tenantId, alertId);
+  assert(alert.state == AlertState.resolved);
 }

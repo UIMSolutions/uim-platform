@@ -7,7 +7,7 @@ module uim.platform.logging.application.usecases.manage.log_streams;
 // import uim.platform.logging.domain.entities.log_stream;
 // import uim.platform.logging.domain.ports.repositories.log_streams;
 
-// import uim.platform.logging.application.dto;
+
 
 
 import uim.platform.logging;
@@ -76,4 +76,37 @@ class ManageLogStreamsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, stream.id.value, "");
   }
 
+}
+
+unittest {
+  auto repo = new MemoryLogStreamRepository();
+  auto usecase = new ManageLogStreamsUseCase(repo);
+  auto tenantId = TenantId("test-tenant");
+
+  // Create a stream
+  CreateLogStreamRequest createReq;
+  createReq.tenantId = tenantId;
+  createReq.name = "application-logs";
+  createReq.sourceType = "app";
+  
+  auto createRes = usecase.createStream(createReq);
+  assert(createRes.success);
+  auto streamId = LogStreamId(createRes.id);
+  assert(usecase.hasStream(tenantId, streamId));
+
+  // Update the stream
+  UpdateLogStreamRequest updateReq;
+  updateReq.tenantId = tenantId;
+  updateReq.streamId = streamId;
+  updateReq.description = "New description";
+  updateReq.isActive = true;
+
+  auto updateRes = usecase.updateStream(updateReq);
+  assert(updateRes.success);
+  auto stream = usecase.getStream(tenantId, streamId);
+  assert(stream.description == "New description");
+
+  // Delete the stream
+  usecase.deleteStream(tenantId, streamId);
+  assert(!usecase.hasStream(tenantId, streamId));
 }

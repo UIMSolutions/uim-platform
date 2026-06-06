@@ -35,6 +35,28 @@ class VersionController : ManageHttpController {
     router.get("/api/v1/versions/current/*", &handleGetCurrentVersion);
   }
 
+  protected Json checkOutHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto docId = DocumentId(precheck.id);
+    auto tenantId = precheck.tenantId;
+    auto userId = UserId(req.headers.get("X-User-Id", "system"));
+
+    auto result = usecase.checkOut(tenantId, docId, userId);
+    if (result.isSuccess) {
+      auto resp = Json.emptyObject
+        .set("documentId", docId.value)
+        .set("status", Json("locked"))
+        .set("message", "Document checked out successfully");
+
+      return successResponse("Document checked out successfully", "CheckedOut", 200, resp);
+    }
+    else
+      return errorResponse(result.message, 400);
+  }
+  
   protected void handleCheckOut(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto docId = DocumentId(precheck.id);

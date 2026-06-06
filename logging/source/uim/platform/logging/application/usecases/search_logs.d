@@ -8,7 +8,7 @@ module uim.platform.logging.application.usecases.search_logs;
 // import uim.platform.logging.domain.ports.repositories.log_entrys;
 // import uim.platform.logging.domain.services.log_parser;
 
-// import uim.platform.logging.application.dto;
+
 import uim.platform.logging;
 
 mixin(ShowModule!());
@@ -33,7 +33,7 @@ class SearchLogsUseCase { // TODO: UIMUseCase {
       return logRepo.findByStream(req.tenantId, req.streamId);
 
     if (!req.level.isEmpty) {
-      auto level = LogParser.parseLevel(req.level);
+      auto level = req.level.toLoggingLevel();
       return logRepo.findByLevel(req.tenantId, level);
     } 
 
@@ -53,4 +53,32 @@ class SearchLogsUseCase { // TODO: UIMUseCase {
   size_t count(TenantId tenantId) {
     return logRepo.countByTenant(tenantId);
   }
+}
+
+unittest {
+  auto logRepo = new MemoryLogEntryRepository();
+  auto usecase = new SearchLogsUseCase(logRepo);
+  auto tenantId = TenantId("test-tenant");
+
+  // Seed data
+  LogEntry entry;
+  entry.tenantId = tenantId;
+  entry.level = LoggingLevel.warning;
+  entry.message = "Something went wrong";
+  entry.traceId = "trace-1";
+  logRepo.save(entry);
+
+  // Test search by traceId
+  SearchLogsRequest req;
+  req.tenantId = tenantId;
+  req.traceId = TraceId("trace-1");
+  auto results = usecase.searchLogs(req);
+  assert(results.length == 1);
+  assert(results[0].traceId.value == "trace-1");
+
+  // Test search by level
+  req.traceId = TraceId.init;
+  req.level = "error";
+  results = usecase.searchLogs(req);
+  assert(results.length == 1);
 }

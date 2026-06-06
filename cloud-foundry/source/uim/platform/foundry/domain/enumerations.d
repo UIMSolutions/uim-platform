@@ -100,11 +100,3 @@ string toString(HealthCheckType t) {
   }
 }
 
-/// Application log message severity level.
-// enum LogLevel {
-//   debug_,
-//   info,
-//   warning,
-//   error,
-// }
-

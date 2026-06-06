@@ -9,7 +9,7 @@ module uim.platform.logging.application.usecases.ingest_logs;
 // import uim.platform.logging.domain.ports.repositories.log_streams;
 // import uim.platform.logging.domain.services.log_parser;
 
-// import uim.platform.logging.application.dto;
+
 // import std.format : format;
 import uim.platform.logging;
 
@@ -33,7 +33,7 @@ class IngestLogsUseCase { // TODO: UIMUseCase {
 
     entry.streamId = req.streamId;
     entry.timestamp = clockSeconds();
-    entry.level = LogParser.parseLevel(req.level);
+    entry.level = req.level.toLoggingLevel();
     entry.source = req.source;
     entry.message = req.message;
     entry.structuredData = cast(string[string]) req.structuredData;
@@ -71,6 +71,33 @@ class IngestLogsUseCase { // TODO: UIMUseCase {
     }
     return CommandResult(true, "", format("Ingested %d log entries", count));
   }
+}
 
+unittest {
+  auto logRepo = new MemoryLogEntryRepository();
+  auto streamRepo = new MemoryLogStreamRepository();
+  auto usecase = new IngestLogsUseCase(logRepo, streamRepo);
+  auto tenantId = TenantId("test-tenant");
 
+  // Test single ingestion
+  IngestLogRequest req;
+  req.tenantId = tenantId;
+  req.level = "info";
+  req.message = "Application started";
+  req.source = "main-app";
+
+  auto result = usecase.ingest(req);
+  assert(result.success);
+  assert(!result.id.isEmpty);
+  assert(logRepo.countByTenant(tenantId) == 1);
+
+  // Test batch ingestion
+  IngestLogBatchRequest batch;
+  batch.tenantId = tenantId;
+  // Reuse the request for batch entries
+  batch.entries = [req, req];
+  
+  auto batchResult = usecase.ingestBatch(batch);
+  assert(batchResult.success);
+  assert(logRepo.countByTenant(tenantId) == 3); // 1 + 2
 }

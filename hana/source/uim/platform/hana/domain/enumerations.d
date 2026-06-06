@@ -113,13 +113,7 @@ enum BackupStatus {
   failed,
   cancelled,
 }
-// Alert severity
-enum AlertSeverity {
-  info,
-  warning,
-  error,
-  critical,
-}
+
 // Alert status
 enum AlertStatus {
   active,

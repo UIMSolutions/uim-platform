@@ -12,7 +12,7 @@ module uim.platform.logging.application.usecases.get_overview;
 // import uim.platform.logging.domain.ports.repositories.pipelines;
 // import uim.platform.logging.domain.ports.repositories.notification_channels;
 
-// import uim.platform.logging.application.dto;
+
 import uim.platform.logging;
 
 mixin(ShowModule!());
@@ -56,4 +56,74 @@ class GetOverviewUseCase { // TODO: UIMUseCase {
 
     return s;
   }
+}
+
+unittest {
+  // Setup Mock Repositories
+  auto logRepo = new MemoryLogEntryRepository();
+  auto spanRepo = new MemorySpanRepository();
+  auto streamRepo = new MemoryLogStreamRepository();
+  auto dashboardRepo = new MemoryDashboardRepository();
+  auto alertRepo = new MemoryAlertRepository();
+  auto pipelineRepo = new MemoryPipelineRepository();
+  auto channelRepo = new MemoryNotificationChannelRepository();
+
+  auto usecase = new GetOverviewUseCase(logRepo, spanRepo, streamRepo, dashboardRepo, alertRepo, pipelineRepo, channelRepo);
+  auto tenantId = TenantId("test-tenant");
+
+  // Seed Test Data
+  // 1 Log Entry
+  LogEntry log; log.tenantId = tenantId;
+  logRepo.save(log);
+
+  // 1 Span
+  Span span; span.tenantId = tenantId;
+  spanRepo.save(span);
+
+  // 1 Stream
+  LogStream stream; stream.tenantId = tenantId; stream.name = "default";
+  streamRepo.save(stream);
+
+  // 1 Dashboard
+  Dashboard dashboard; dashboard.tenantId = tenantId; dashboard.name = "Main View";
+  dashboardRepo.save(dashboard);
+
+  // 2 Alerts: 1 Open + Critical, 1 Resolved + Low
+  Alert alert1; 
+  alert1.tenantId = tenantId; 
+  alert1.state = AlertState.open; 
+  alert1.severity = AlertSeverity.critical;
+  alertRepo.save(alert1);
+  
+  Alert alert2; 
+  alert2.tenantId = tenantId; 
+  alert2.state = AlertState.resolved; 
+  alert2.severity = AlertSeverity.warning;
+  alertRepo.save(alert2);
+
+  // 2 Pipelines: 1 Active, 1 Inactive
+  Pipeline p1; p1.tenantId = tenantId; p1.isActive = true; p1.name = "Active Pipe";
+  pipelineRepo.save(p1);
+  
+  Pipeline p2; p2.tenantId = tenantId; p2.isActive = false; p2.name = "Inactive Pipe";
+  pipelineRepo.save(p2);
+
+  // 1 Channel
+  NotificationChannel channel; channel.tenantId = tenantId; channel.name = "Email Admin";
+  channelRepo.save(channel);
+
+  // Execute
+  auto summary = usecase.getSummary(tenantId);
+
+  // Assertions
+  assert(summary.totalLogEntries == 1);
+  assert(summary.totalSpans == 1);
+  assert(summary.totalStreams == 1);
+  assert(summary.totalDashboards == 1);
+  assert(summary.totalAlerts == 2);
+  assert(summary.openAlerts == 1);
+  assert(summary.criticalAlerts == 1);
+  assert(summary.totalPipelines == 2);
+  assert(summary.activePipelines == 1);
+  assert(summary.totalChannels == 1);
 }

@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.logging.presentation.http.controllers.pipeline;
 // import uim.platform.logging.application.usecases.manage.pipelines;
-// import uim.platform.logging.application.dto;
+
 
 import uim.platform.logging;
 
@@ -149,4 +149,62 @@ class PipelineController : ManageHttpController {
 
     return successResponse("Pipeline deleted successfully", "Deleted", 200, response);
   }
+}
+
+unittest {
+  import uim.platform.service.tests;
+
+  @safe class PipelineControllerTest : ControllerTestBase {
+    void runTests() {
+      auto repo = new MemoryPipelineRepository();
+      auto usecase = new ManagePipelinesUseCase(repo);
+      auto controller = new PipelineController(usecase);
+      auto tenantId = TenantId("test-tenant");
+
+      // 1. Create
+      Json createData = Json.emptyObject
+        .set("name", "test-pipeline")
+        .set("description", "A test pipeline")
+        .set("sourceType", "app")
+        .set("format", "json")
+        .set("targetStreamId", "stream-1")
+        .set("createdBy", "user-1")
+        .set("processors", Json.emptyArray);
+
+      auto reqCreate = createMockRequest("POST", "/api/v1/pipelines", tenantId, createData);
+      auto resCreate = controller.createHandler(reqCreate);
+      assert(resCreate.getString("status") == "success");
+      string pipelineId = resCreate["data"]["id"].get!string;
+
+      // 2. List
+      auto reqList = createMockRequest("GET", "/api/v1/pipelines", tenantId);
+      auto resList = controller.listHandler(reqList);
+      assert(resList.getString("status") == "success");
+      assert(resList["data"]["totalCount"].get!int == 1);
+
+      // 3. Get
+      auto reqGet = createMockRequest("GET", "/api/v1/pipelines/" ~ pipelineId, tenantId);
+      reqGet.params["id"] = pipelineId;
+      auto resGet = controller.getHandler(reqGet);
+      assert(resGet.getString("status") == "success");
+      assert(resGet["data"]["name"].get!string == "test-pipeline");
+
+      // 4. Update
+      Json updateData = Json.emptyObject
+        .set("description", "Updated description")
+        .set("isActive", false);
+      auto reqUpdate = createMockRequest("PUT", "/api/v1/pipelines/" ~ pipelineId, tenantId, updateData);
+      reqUpdate.params["id"] = pipelineId;
+      auto resUpdate = controller.updateHandler(reqUpdate);
+      assert(resUpdate.getString("status") == "success");
+
+      // 5. Delete
+      auto reqDelete = createMockRequest("DELETE", "/api/v1/pipelines/" ~ pipelineId, tenantId);
+      reqDelete.params["id"] = pipelineId;
+      auto resDelete = controller.deleteHandler(reqDelete);
+      assert(resDelete.getString("status") == "success");
+    }
+  }
+
+  (new PipelineControllerTest).runTests();
 }

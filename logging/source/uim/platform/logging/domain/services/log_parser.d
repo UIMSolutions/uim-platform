@@ -15,6 +15,13 @@ struct ParseResult {
   bool valid;
   string[] errors;
   LogEntry entry;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("valid", valid)
+      .set("errors", errors.toJson())
+      .set("entry", entry.toJson());
+  }
 }
 
 struct LogParser {
@@ -32,41 +39,5 @@ struct LogParser {
     result.valid = errors.length == 0;
     result.errors = errors;
     return result;
-  }
-
-  static LoggingLevel parseLevel(string levelStr) {
-    switch (levelStr) {
-    case "trace":
-      return LoggingLevel.trace;
-    case "debug":
-      return LoggingLevel.debug_;
-    case "info":
-      return LoggingLevel.info;
-    case "warn", "warning":
-      return LoggingLevel.warn;
-    case "error":
-      return LoggingLevel.error;
-    case "fatal":
-      return LoggingLevel.fatal;
-    default:
-      return LoggingLevel.info;
-    }
-  }
-
-  static string levelToString(LoggingLevel level) {
-    final switch (level) {
-    case LoggingLevel.trace:
-      return "trace";
-    case LoggingLevel.debug_:
-      return "debug";
-    case LoggingLevel.info:
-      return "info";
-    case LoggingLevel.warn:
-      return "warn";
-    case LoggingLevel.error:
-      return "error";
-    case LoggingLevel.fatal:
-      return "fatal";
-    }
   }
 }

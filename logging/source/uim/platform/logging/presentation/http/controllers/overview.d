@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.logging.presentation.http.controllers.overview;
 // import uim.platform.logging.application.usecases.get_overview;
-// import uim.platform.logging.application.dto;
+
 
 import uim.platform.logging;
 
@@ -58,4 +58,35 @@ class OverviewController : HttpController {
       writeError(res, 500, "Internal server error");
     }
   }
+}
+
+unittest {
+  import uim.platform.service.tests;
+
+  @safe class OverviewControllerTest : ControllerTestBase {
+    void runTests() {
+      auto logRepo = new MemoryLogEntryRepository();
+      auto spanRepo = new MemorySpanRepository();
+      auto streamRepo = new MemoryLogStreamRepository();
+      auto dashboardRepo = new MemoryDashboardRepository();
+      auto alertRepo = new MemoryAlertRepository();
+      auto pipelineRepo = new MemoryPipelineRepository();
+      auto channelRepo = new MemoryNotificationChannelRepository();
+
+      auto usecase = new GetOverviewUseCase(logRepo, spanRepo, streamRepo, dashboardRepo, alertRepo, pipelineRepo, channelRepo);
+      auto controller = new OverviewController(usecase);
+      auto tenantId = TenantId("test-tenant");
+
+      // Seed a log entry
+      LogEntry log; log.tenantId = tenantId;
+      logRepo.save(log);
+
+      auto request = createMockRequest("GET", "/api/v1/overview", tenantId);
+      auto response = controller.overviewHandler(request);
+
+      assert(response.getString("status") == "success");
+      assert(response["data"]["totalLogEntries"].get!int == 1);
+    }
+  }
+  (new OverviewControllerTest).runTests();
 }

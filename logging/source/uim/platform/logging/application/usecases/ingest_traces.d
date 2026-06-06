@@ -7,7 +7,7 @@ module uim.platform.logging.application.usecases.ingest_traces;
 // import uim.platform.logging.domain.entities.span;
 // import uim.platform.logging.domain.ports.repositories.spans;
 
-// import uim.platform.logging.application.dto;
+
 // import std.format : format;
 import uim.platform.logging;
 
@@ -80,4 +80,28 @@ class IngestTracesUseCase { // TODO: UIMUseCase {
     return spanRepo.findByTimeRange(tenantId, startTime, endTime);
   }
 
+}
+
+unittest {
+  auto repo = new MemorySpanRepository();
+  auto usecase = new IngestTracesUseCase(repo);
+  auto tenantId = TenantId("test-tenant");
+
+  IngestSpanRequest req;
+  req.tenantId = tenantId;
+  req.traceId = "trace-123";
+  req.operationName = "test-op";
+  req.serviceName = "test-service";
+  req.startTime = 1700000000;
+  req.endTime = 1700000100;
+  req.status = "ok";
+  req.kind = "server";
+
+  auto result = usecase.ingestSpan(req);
+  assert(result.success);
+  assert(!result.id.isEmpty);
+  
+  auto trace = usecase.getTrace(tenantId, TraceId("trace-123"));
+  assert(trace.length == 1);
+  assert(trace[0].operationName == "test-op");
 }

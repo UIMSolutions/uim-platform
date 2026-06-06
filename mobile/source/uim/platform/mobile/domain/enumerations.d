@@ -99,14 +99,7 @@ enum SessionStatus {
   expired,
   terminated,
 }
-// Log level
-enum LogLevel {
-  debug_,
-  info,
-  warning,
-  error,
-  fatal,
-}
+
 // Log source
 enum LogSource {
   client,

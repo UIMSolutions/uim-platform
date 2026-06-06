@@ -21,8 +21,8 @@ interface ClientLogRepository : ITenantRepository!(ClientLogEntry, ClientLogEntr
   ClientLogEntry[] findByDevice(TenantId tenantId, DeviceRegistrationId deviceId);
   void removeByDevice(TenantId tenantId, DeviceRegistrationId deviceId);
 
-  size_t countByLevel(TenantId tenantId, MobileAppId appId, LogLevel level);
-  ClientLogEntry[] findByLevel(TenantId tenantId, MobileAppId appId, LogLevel level);
-  void removeByLevel(TenantId tenantId, MobileAppId appId, LogLevel level);
+  size_t countByLevel(TenantId tenantId, MobileAppId appId, LoggingLevel level);
+  ClientLogEntry[] findByLevel(TenantId tenantId, MobileAppId appId, LoggingLevel level);
+  void removeByLevel(TenantId tenantId, MobileAppId appId, LoggingLevel level);
 
 }

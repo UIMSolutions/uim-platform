@@ -160,3 +160,42 @@ unittest {
   assert("noexists".toPersistenceType2 == PersistenceType.memory); // Default case
   assert("".toPersistenceType2 == PersistenceType.memory); // Default case
 }
+
+// Alert severity
+enum AlertSeverity {
+  info,
+  warning,
+  error,
+  critical,
+}
+
+AlertSeverity toAlertSeverity(string s) {
+  switch (s.toLower()) {
+    case "info": return AlertSeverity.info;
+    case "warning": return AlertSeverity.warning;
+    case "critical": return AlertSeverity.critical;
+    // case "fatal": return AlertSeverity.fatal;
+    default: return AlertSeverity.info; // default
+  }
+}
+
+// Log level
+enum LoggingLevel {
+  info,
+  debug_,
+  warning,
+  error,
+  fatal,
+  trace
+}
+LoggingLevel toLoggingLevel(string s) {
+  switch (s.toLower()) {
+    case "debug": return LoggingLevel.debug_;
+    case "info": return LoggingLevel.info;
+    case "warning": return LoggingLevel.warning;
+    case "error": return LoggingLevel.error;
+    case "fatal": return LoggingLevel.fatal;
+    case "trace": return LoggingLevel.trace;
+    default: return LoggingLevel.info; // default
+  }
+}
