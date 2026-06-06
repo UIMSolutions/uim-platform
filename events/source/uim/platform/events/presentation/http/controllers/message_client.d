@@ -14,14 +14,16 @@ mixin(ShowModule!());
 class MessageClientController : ManageHttpController {
     private ManageMessageClientsUseCase usecase;
 
-    this(ManageMessageClientsUseCase usecase) { this.usecase = usecase; }
+    this(ManageMessageClientsUseCase usecase) {
+        this.usecase = usecase;
+    }
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        router.get("/api/v1/sap-event-mesh/message-clients",    &handleList);
-        router.get("/api/v1/sap-event-mesh/message-clients/*",  &handleGet);
-        router.post("/api/v1/sap-event-mesh/message-clients",   &handleCreate);
-        router.put("/api/v1/sap-event-mesh/message-clients/*",  &handleUpdate);
+        router.get("/api/v1/sap-event-mesh/message-clients", &handleList);
+        router.get("/api/v1/sap-event-mesh/message-clients/*", &handleGet);
+        router.post("/api/v1/sap-event-mesh/message-clients", &handleCreate);
+        router.put("/api/v1/sap-event-mesh/message-clients/*", &handleUpdate);
         router.delete_("/api/v1/sap-event-mesh/message-clients/*", &handleDelete);
     }
 
@@ -32,92 +34,101 @@ class MessageClientController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-            auto items = usecase.listClients(tenantId);
-            res.writeJsonBody(Json.emptyObject
+        auto items = usecase.listClients(tenantId);
+        res.writeJsonBody(Json.emptyObject
                 .set("count", items.length)
                 .set("resources", items.map!(e => e.toJson).array.toJson)
                 .set("message", "Message client list retrieved successfully"), 200);
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
-
-    override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
-
-        auto tenantId = precheck.tenantId;
-            auto id = precheck.id;
-            auto e = usecase.getClient(tenantId, MessageClientId(id));
-            if (e.isNull) { writeError(res, 404, "Message client not found"); return; }
-            res.writeJsonBody(Json.emptyObject
-                .set("message", "Message client retrieved successfully")
-                .set("resource", e.toJson), 200);
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+ catch (Exception e) {
+        writeError(res, 500, "Internal server error");
     }
+}
 
-    override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+        return precheck;
 
-        auto tenantId = precheck.tenantId;
-
-        auto data = precheck.data;
-            MessageClientDTO dto;
-            dto.clientId           = MessageClientId(precheck.id);
-            dto.tenantId           = tenantId;
-            dto.serviceId          = MessagingServiceId(data.getString("serviceId"));
-            dto.name               = data.getString("name");
-            dto.description        = data.getString("description");
-            dto.protocol           = data.getString("protocol");
-            dto.xsappname          = data.getString("xsappname");
-            dto.namespace          = data.getString("namespace");
-            dto.permittedNamespace = data.getString("permittedNamespace");
-            dto.createdBy          = UserId(data.getString("createdBy"));
-            auto result = usecase.createClient(dto);
-            if (result.hasError)
-            return errorResponse(result.message, 400);
-                res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Message client created"), 201);
-            } else { writeError(res, 400, result.message); }
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+    auto tenantId = precheck.tenantId;
+    auto id = precheck.id;
+    auto e = usecase.getClient(tenantId, MessageClientId(id));
+    if (e.isNull) {
+        writeError(res, 404, "Message client not found");
+        return;
     }
+    res.writeJsonBody(Json.emptyObject
+            .set("message", "Message client retrieved successfully")
+            .set("resource", e.toJson), 200);
+}
+ catch (Exception e) {
+    writeError(res, 500, "Internal server error");
+}
+}
 
-    override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+override protected Json createHandler(HTTPServerRequest req) {
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+        return precheck;
 
-        auto tenantId = precheck.tenantId;
-            auto clientId = MessageClientId(precheck.id);
-            auto data = precheck.data;
-            MessageClientDTO dto;
-            dto.tenantId           = tenantId;
-            dto.clientId           = clientId;
-            dto.name               = data.getString("name");
-            dto.description        = data.getString("description");
-            dto.namespace          = data.getString("namespace");
-            dto.permittedNamespace = data.getString("permittedNamespace");
-            dto.updatedBy          = UserId(data.getString("updatedBy"));
-            auto result = usecase.updateClient(dto);
-            if (result.hasError)
-            return errorResponse(result.message, 400);
-                res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Message client updated"), 200);
-            } else { writeError(res, 404, result.message); }
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
-    }
+    auto tenantId = precheck.tenantId;
 
-    override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto data = precheck.data;
+    MessageClientDTO dto;
+    dto.clientId = MessageClientId(precheck.id);
+    dto.tenantId = tenantId;
+    dto.serviceId = MessagingServiceId(data.getString("serviceId"));
+    dto.name = data.getString("name");
+    dto.description = data.getString("description");
+    dto.protocol = data.getString("protocol");
+    dto.xsappname = data.getString("xsappname");
+    dto.namespace = data.getString("namespace");
+    dto.permittedNamespace = data.getString("permittedNamespace");
+    dto.createdBy = UserId(data.getString("createdBy"));
+    auto result = usecase.createClient(dto);
+    if (result.hasError)
+        return errorResponse(result.message, 400);
 
-        auto tenantId = precheck.tenantId;
-            auto id = MessageClientId(precheck.id);
-            auto result = usecase.deleteClient(tenantId, id);
-            if (result.hasError)
-            return errorResponse(result.message, 400);
-                res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Message client deleted"), 200);
-            } else { writeError(res, 404, result.message); }
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
-    }
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Message client created successfully", "Created", 201, responseData);
+}
+
+override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+        return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto clientId = MessageClientId(precheck.id);
+    auto data = precheck.data;
+    MessageClientDTO dto;
+    dto.tenantId = tenantId;
+    dto.clientId = clientId;
+    dto.name = data.getString("name");
+    dto.description = data.getString("description");
+    dto.namespace = data.getString("namespace");
+    dto.permittedNamespace = data.getString("permittedNamespace");
+    dto.updatedBy = UserId(data.getString("updatedBy"));
+    auto result = usecase.updateClient(dto);
+    if (result.hasError)
+        return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Message client updated successfully", "Updated", 200, responseData);
+}
+
+override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+        return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = MessageClientId(precheck.id);
+    auto result = usecase.deleteClient(tenantId, id);
+    if (result.hasError)
+        return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Message client deleted successfully", "Deleted", 200, responseData);
+}
 }

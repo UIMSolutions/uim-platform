@@ -8,11 +8,13 @@ mixin(ShowModule!());
 class LegalEntityController : ManageHttpController {
     private ManageLegalEntitiesUseCase usecase;
 
-    this(ManageLegalEntitiesUseCase usecase) { this.usecase = usecase; }
+    this(ManageLegalEntitiesUseCase usecase) {
+        this.usecase = usecase;
+    }
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        
+
         router.post("/api/v1/data-retention/legal-entities", &handleCreate);
         router.get("/api/v1/data-retention/legal-entities", &handleList);
         router.get("/api/v1/data-retention/legal-entities/*", &handleGet);
@@ -28,94 +30,107 @@ class LegalEntityController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-            CreateLegalEntityRequest r;
-            r.tenantId = tenantId;
-            r.name = data.getString("name");
-            r.description = data.getString("description");
-            r.country = data.getString("country");
-            r.region = data.getString("region");
-            r.createdBy = UserId(data.getString("createdBy"));
+        CreateLegalEntityRequest r;
+        r.tenantId = tenantId;
+        r.name = data.getString("name");
+        r.description = data.getString("description");
+        r.country = data.getString("country");
+        r.region = data.getString("region");
+        r.createdBy = UserId(data.getString("createdBy"));
 
-            auto result = usecase.createLegalEntity(r);
-            if (result.hasError)
+        auto result = usecase.createLegalEntity(r);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                res.writeJsonBody(Json.emptyObject.set("id", result.id), 201);
-            } else { writeError(res, 400, result.message); }
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+        res.writeJsonBody(Json.emptyObject.set("id", result.id), 201);
+    } else {
+        writeError(res, 400, result.message);
     }
+} catch (Exception e) {
+    writeError(res, 500, "Internal server error");
+}
+}
 
-    override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+        return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-            
-            auto items = usecase.listLegalEntity(tenantId);
-            auto jarr = Json.emptyArray;
-            foreach (le; items) {
-                jarr ~= Json.emptyObject
-                    .set("id", le.id.value).set("name", le.name)
-                    .set("description", le.description)
-                    .set("country", le.country)
-                    .set("isActive", le.isActive);
-            }
-            res.writeJsonBody(Json.emptyObject.set("items", jarr).set("totalCount", items.length), 200);
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+    auto items = usecase.listLegalEntity(tenantId);
+    auto jarr = Json.emptyArray;
+    foreach (le; items) {
+        jarr ~= Json.emptyObject
+            .set("id", le.id.value).set("name", le.name)
+            .set("description", le.description)
+            .set("country", le.country)
+            .set("isActive", le.isActive);
     }
+    res.writeJsonBody(Json.emptyObject.set("items", jarr).set("totalCount", items.length), 200);
+}
+ catch (Exception e) {
+    writeError(res, 500, "Internal server error");
+}
+}
 
-    override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+        return precheck;
 
-        auto tenantId = precheck.tenantId;
-            auto id = LegalEntityId(precheck.id);
+    auto tenantId = precheck.tenantId;
+    auto id = LegalEntityId(precheck.id);
+    if (id.isNull)
+        return errorResponse("Invalid legal entity ID", 400);
 
-            auto le = usecase.getLegalEntity(tenantId, id);
-            if (le.isNull) { writeError(res, 404, "Legal entity not found"); return; }
-            auto responseData = Json.emptyObject
-                .set("id", le.id.value).set("name", le.name)
-                .set("description", le.description)
-                .set("country", le.country).set("region", le.region)
-                .set("isActive", le.isActive), 200);
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
-    }
+    auto le = usecase.getLegalEntity(tenantId, id);
+    if (le.isNull)
+            return errorResponse("Legal entity not found", 404);
 
-    override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto responseData = Json.emptyObject
+        .set("id", le.id.value).set("name", le.name)
+        .set("description", le.description)
+        .set("country", le.country).set("region", le.region)
+        .set("isActive", le.isActive), 200);
+return successResponse("Legal entity retrieved successfully", "Retrieved", 200, responseData);
+}
 
-        auto tenantId = precheck.tenantId;
-            auto id = LegalEntityId(precheck.id);
-            auto data = precheck.data;
-            UpdateLegalEntityRequest r;
-            r.name = data.getString("name");
-            r.description = data.getString("description");
-            r.country = data.getString("country");
-            r.region = data.getString("region");
-            r.isActive = data.getBoolean("isActive", true);
+override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+        return precheck;
 
-            auto result = usecase.updateLegalEntity(r);
-            if (result.hasError)
-            return errorResponse(result.message, 400);
-                res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
-            } else { writeError(res, 400, result.message); }
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
-    }
+    auto tenantId = precheck.tenantId;
+    auto id = LegalEntityId(precheck.id);
+    auto data = precheck.data;
+    UpdateLegalEntityRequest r;
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.country = data.getString("country");
+    r.region = data.getString("region");
+    r.isActive = data.getBoolean("isActive", true);
 
-    override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto result = usecase.updateLegalEntity(r);
+    if (result.hasError)
+        return errorResponse(result.message, 400);
+    
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Legal entity updated successfully", "Updated", 200, responseData);
+}
 
-        auto tenantId = precheck.tenantId;
-            auto id = precheck.id;
+override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+        return precheck;
 
-            usecase.deleteLegalEntity(tenantId, id);
-            res.writeJsonBody(Json.emptyObject, 204);
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
-    }
+    auto tenantId = precheck.tenantId;
+    auto id = precheck.id;
+
+    auto result = usecase.deleteLegalEntity(tenantId, id);
+    if (result.hasError)
+        return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Legal entity deleted successfully", "Deleted", 200, responseData);
+}
 }

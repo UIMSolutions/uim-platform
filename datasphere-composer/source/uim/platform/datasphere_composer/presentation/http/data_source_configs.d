@@ -37,13 +37,18 @@ class DataSourceConfigController : ManageHttpController {
     res.writeJsonBody(arr, cast(int)HTTPStatus.ok);
   }
 
-  void handleGet(HTTPServerRequest req, HTTPServerResponse res) {
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
     auto item = usecase.getById(req.getTenantId, extractIdFromPath(req.requestPath.to!string));
-    if (item.isNull) {
-      writeError(res, 404, "Config not found");
-      return;
-    }
-    res.writeJsonBody(item.toJson(), cast(int)HTTPStatus.ok);
+    if (itemisNull)
+      return errorResponse("Scan job not found", 404);
+
+    auto responseData = item.toJson();
+    return successResponse("Config retrieved successfully", "Retrieved", 200, responseData);
   }
 
   override protected Json createHandler(HTTPServerRequest req) {

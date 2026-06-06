@@ -53,7 +53,7 @@ class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateChannel(UpdateNotificationChannelRequest request) {
-    NotificationChannel channel = channels.findById(request.tenantId, request.id);
+    NotificationChannel channel = channels.findById(request.tenantId, request.channelId);
 
     if (channel.isNull)
       return CommandResult(false, "", "Notification channel not found");

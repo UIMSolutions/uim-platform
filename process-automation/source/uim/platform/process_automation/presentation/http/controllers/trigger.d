@@ -36,36 +36,27 @@ class TriggerController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto tenantId = precheck.tenantId;
 
-            auto data = precheck.data;
-            CreateTriggerRequest r;
-            r.tenantId = tenantId;
-            r.processId = ProcessId(data.getString("processId"));
-            r.triggerId = TriggerId(precheck.id);
-            r.name = data.getString("name");
-            r.description = data.getString("description");
-            r.type = data.getString("type");
-            r.cronExpression = data.getString("cronExpression");
-            r.eventType = data.getString("eventType");
-            r.eventSource = data.getString("eventSource");
-            r.filterExpression = data.getString("filterExpression");
-            r.createdBy = UserId(data.getString("createdBy"));
+        auto data = precheck.data;
+        CreateTriggerRequest r;
+        r.tenantId = tenantId;
+        r.processId = ProcessId(data.getString("processId"));
+        r.triggerId = TriggerId(precheck.id);
+        r.name = data.getString("name");
+        r.description = data.getString("description");
+        r.type = data.getString("type");
+        r.cronExpression = data.getString("cronExpression");
+        r.eventType = data.getString("eventType");
+        r.eventSource = data.getString("eventSource");
+        r.filterExpression = data.getString("filterExpression");
+        r.createdBy = UserId(data.getString("createdBy"));
 
-            auto result = triggerUsecase.createTrigger(r);
-            if (result.hasError)
+        auto result = triggerUsecase.createTrigger(r);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Trigger created");
 
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Trigger created successfully", "Created", 201, responseData);
     }
 
     override protected Json listHandler(HTTPServerRequest req) {
@@ -75,30 +66,26 @@ class TriggerController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
+        auto triggers = triggerUsecase.listTriggers(tenantId);
 
-            auto triggers = triggerUsecase.listTriggers(tenantId);
-
-            auto jarr = Json.emptyArray;
-            foreach (t; triggers) {
-                jarr ~= Json.emptyObject
-                    .set("id", t.id)
-                    .set("name", t.name)
-                    .set("type", t.type.to!string)
-                    .set("status", t.status.to!string)
-                    .set("processId", t.processId)
-                    .set("eventType", t.eventType)
-                    .set("lastFiredAt", t.lastFiredAt)
-                    .set("fireCount", t.fireCount);
-            }
-
-            auto resp = Json.emptyObject
-                .set("count", Json(triggers.length))
-                .set("resources", list);
-
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
+        auto jarr = Json.emptyArray;
+        foreach (t; triggers) {
+            jarr ~= Json.emptyObject
+                .set("id", t.id)
+                .set("name", t.name)
+                .set("type", t.type.to!string)
+                .set("status", t.status.to!string)
+                .set("processId", t.processId)
+                .set("eventType", t.eventType)
+                .set("lastFiredAt", t.lastFiredAt)
+                .set("fireCount", t.fireCount);
         }
+
+        auto resp = Json.emptyObject
+            .set("count", Json(triggers.length))
+            .set("resources", jarr);
+
+        return successResponse("Scan job list retrieved successfully", "Retrieved", 200, responseData);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -108,33 +95,28 @@ class TriggerController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-            auto id = TriggerId(precheck.id);
-            auto t = triggerUsecase.getTrigger(tenantId, id);
-            if (t.isNull) {
-                writeError(res, 404, "Trigger not found");
-                return;
-            }
+        auto id = TriggerId(precheck.id);
+        auto t = triggerUsecase.getTrigger(tenantId, id);
+        if (t.isNull)
+            return errorResponse("Trigger not found", 404);
 
-            auto resp = Json.emptyObject
-                .set("id", t.id)
-                .set("name", t.name)
-                .set("description", t.description)
-                .set("type", t.type.to!string)
-                .set("status", t.status.to!string)
-                .set("processId", t.processId)
-                .set("eventType", t.eventType)
-                .set("eventSource", t.eventSource)
-                .set("filterExpression", t.filterExpression)
-                .set("createdBy", t.createdBy)
-                .set("createdAt", t.createdAt)
-                .set("updatedAt", t.updatedAt)
-                .set("lastFiredAt", t.lastFiredAt)
-                .set("fireCount", t.fireCount);
+        auto resp = Json.emptyObject
+            .set("id", t.id)
+            .set("name", t.name)
+            .set("description", t.description)
+            .set("type", t.type.to!string)
+            .set("status", t.status.to!string)
+            .set("processId", t.processId)
+            .set("eventType", t.eventType)
+            .set("eventSource", t.eventSource)
+            .set("filterExpression", t.filterExpression)
+            .set("createdBy", t.createdBy)
+            .set("createdAt", t.createdAt)
+            .set("updatedAt", t.updatedAt)
+            .set("lastFiredAt", t.lastFiredAt)
+            .set("fireCount", t.fireCount);
 
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        return successResponse("Trigger retrieved successfully", "Retrieved", 200, resp);
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -144,30 +126,22 @@ class TriggerController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-            auto data = precheck.data;
-            UpdateTriggerRequest r;
-            r.tenantId = tenantId;
-            r.triggerId = TriggerId(precheck.id);
-            r.name = data.getString("name");
-            r.description = data.getString("description");
-            r.cronExpression = data.getString("cronExpression");
-            r.eventType = data.getString("eventType");
-            r.filterExpression = data.getString("filterExpression");
+        auto data = precheck.data;
+        UpdateTriggerRequest r;
+        r.tenantId = tenantId;
+        r.triggerId = TriggerId(precheck.id);
+        r.name = data.getString("name");
+        r.description = data.getString("description");
+        r.cronExpression = data.getString("cronExpression");
+        r.eventType = data.getString("eventType");
+        r.filterExpression = data.getString("filterExpression");
 
-            auto result = triggerUsecase.updateTrigger(r);
-            if (result.hasError)
+        auto result = triggerUsecase.updateTrigger(r);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Trigger updated");
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Trigger updated successfully", "Updated", 200, responseData);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -177,20 +151,12 @@ class TriggerController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-            auto id = TriggerId(precheck.id);
-            auto result = triggerUsecase.deleteTrigger(tenantId, id);
-            if (result.hasError)
+        auto id = TriggerId(precheck.id);
+        auto result = triggerUsecase.deleteTrigger(tenantId, id);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Trigger deleted");
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Trigger deleted successfully", "Deleted", 200, responseData);
     }
 }

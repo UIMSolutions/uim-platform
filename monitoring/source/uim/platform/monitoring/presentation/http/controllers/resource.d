@@ -87,10 +87,10 @@ class ResourceController : ManageHttpController {
     if (id.isNull)
       return errorResponse("Invalid resource ID", 400);
 
-    auto item = usecase.existsResource(tenantId, id);
+    auto item = usecase.getResource(tenantId, id);
     if (item.isNull)
-      return errorResponse("Scan job not found", 404);
-
+      return errorResponse("Resource not found", 404);
+      
     auto responseData = item.toJson();
     return successResponse("Resource retrieved successfully", "Retrieved", 200, responseData);
   }

@@ -68,21 +68,29 @@ class AnalyticsAssetsController : ManageHttpController {
     return successResponse("Asset created successfully", "Created", 201, responseData);
   }
 
-  private void handleGet(HTTPServerRequest req, HTTPServerResponse res) {
-    auto tenantId = tenantFromQuery(req);
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
     auto id = extractAssetId(req);
 
     auto item = useCase.getAsset(tenantId, id);
-    if (item.isNull) {
-      writeError(res, 404, "Asset not found");
-      return;
-    }
+    if (item.isNull)
+      return errorResponse("Invalid scan job ID", 400);
 
-    res.writeJsonBody(item.toJson(), 200);
+    return successResponse("Asset retrieved successfully", "Retrieved", 200, item.toJson());
   }
 
-  private void handleUpdate(HTTPServerRequest req, HTTPServerResponse res) {
-    auto body = req.json;
+  override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+
+    auto data = precheck.data;
     UpdateAssetRequest dto;
     dto.tenantId = tenantFromQuery(req);
     dto.id = extractAssetId(req);
@@ -100,19 +108,19 @@ class AnalyticsAssetsController : ManageHttpController {
     return successResponse("Asset updated successfully", "Updated", 200, responseData);
   }
 
-  private void handleDelete(HTTPServerRequest req, HTTPServerResponse res) {
-    auto tenantId = tenantFromQuery(req);
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
     auto id = extractAssetId(req);
     auto result = useCase.deleteAsset(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-    if (result.hasError) {
-      writeError(res, 404, result.message);
-      return;
-    }
-
-    auto payload = Json.emptyObject;
-    payload["id"] = Json(result.id);
-    res.writeJsonBody(payload, 200);
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Asset deleted successfully", "Deleted", 200, responseData);
   }
 
   private void handlePublish(HTTPServerRequest req, HTTPServerResponse res) {

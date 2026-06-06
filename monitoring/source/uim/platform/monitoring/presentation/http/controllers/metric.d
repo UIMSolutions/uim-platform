@@ -106,6 +106,28 @@ class MetricController : ManageHttpController {
     }
   }
 
+  protected Json queryHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto resourceId = MonitoredResourceId(req.params.get("resourceId", ""));
+    auto metricName = req.params.get("name", "");
+
+QueryMetricsRequest qr;
+      qr.tenantId = tenantId;
+      qr.resourceId = resourceId;
+      qr.metricName = metricName;
+    auto metrics = usecase.queryMetrics(qr);
+    auto arr = metrics.map!(m => m.toJson).array.toJson;
+
+    auto responseData = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", Json(metrics.length));
+    return successResponse("Metrics retrieved successfully", "Retrieved", 200, responseData);
+  }
+
   protected void handleQuery(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto response = queryHandler(req);
@@ -113,49 +135,38 @@ class MetricController : ManageHttpController {
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
-      QueryMetricsRequest qr;
-      qr.tenantId = tenantId;
-      qr.resourceId = resourceId;
-      qr.metricName = metricName;
-
-      auto metrics = usecase.queryMetrics(qr);
-      auto arr = metrics.map!(m => m.toJson).array.toJson;
-
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", Json(metrics.length))
-        .set("message", "Metrics retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
   }
 
+  protected Json summaryHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto resourceId = MonitoredResourceId(req.params.get("resourceId", ""));
+    auto metricName = req.params.get("name", "");
+
+    auto now = Clock.currTime().toUnixTime();
+    auto windowStart = now - 3600; // Default 1 hour window
+
+    auto summary = usecase.computeSummary(tenantId, resourceId, metricName, windowStart, now);
+
+    auto responseData = Json.emptyObject
+      .set("name", summary.name)
+      .set("resourceId", summary.resourceId)
+      .set("minValue", summary.minValue)
+      .set("maxValue", summary.maxValue)
+      .set("avgValue", summary.avgValue)
+      .set("sumValue", summary.sumValue)
+      .set("dataPointCount", summary.dataPointCount)
+      .set("windowStartTime", summary.windowStartTime)
+      .set("windowEndTime", summary.windowEndTime);
+    return successResponse("Metric summary retrieved successfully", "Retrieved", 200, responseData);
+  }
   protected void handleSummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto resourceId = MonitoredResourceId(req.params.get("resourceId", ""));
-      auto metricName = req.params.get("name", "");
-
-      auto now = Clock.currTime().toUnixTime();
-      auto windowStart = now - 3600; // Default 1 hour window
-
-      auto summary = usecase.computeSummary(tenantId, resourceId, metricName, windowStart, now);
-
-      auto resp = Json.emptyObject
-        .set("name", summary.name)
-        .set("resourceId", summary.resourceId)
-        .set("minValue", summary.minValue)
-        .set("maxValue", summary.maxValue)
-        .set("avgValue", summary.avgValue)
-        .set("sumValue", summary.sumValue)
-        .set("dataPointCount", summary.dataPointCount)
-        .set("windowStartTime", summary.windowStartTime)
-        .set("windowEndTime", summary.windowEndTime)
-        .set("message", "Metric summary retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
+      auto response = summaryHandler(req);
+      res.writeJsonBody(response.data, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

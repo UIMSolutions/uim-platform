@@ -36,32 +36,26 @@ class FormController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto tenantId = precheck.tenantId;
+        auto tenantId = precheck.tenantId;
 
-            auto data = precheck.data;
-            CreateFormRequest r;
-            r.tenantId = tenantId;
-            r.projectId = ProjectId(data.getString("projectId"));
-            r.formId = FormId(precheck.id);
-            r.name = data.getString("name");
-            r.description = data.getString("description");
-            r.version_ = data.getString("version");
-            r.createdBy = UserId(data.getString("createdBy"));
+        auto data = precheck.data;
+        CreateFormRequest r;
+        r.tenantId = tenantId;
+        r.projectId = ProjectId(data.getString("projectId"));
+        r.formId = FormId(precheck.id);
+        r.name = data.getString("name");
+        r.description = data.getString("description");
+        r.version_ = data.getString("version");
+        r.createdBy = UserId(data.getString("createdBy"));
 
-            auto result = formUsecase.createForm(r);
-            if (result.hasError)
+        auto result = formUsecase.createForm(r);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Form created");
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Form created");
 
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        return successResponse("Form created successfully", "Created", 201, resp);
     }
 
     override protected Json listHandler(HTTPServerRequest req) {
@@ -71,29 +65,25 @@ class FormController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
+        auto forms = formUsecase.listForms(tenantId);
 
-            auto forms = formUsecase.listForms(tenantId);
-
-            auto jarr = Json.emptyArray;
-            foreach (f; forms) {
-                jarr ~= Json.emptyObject
-                    .set("id", f.id)
-                    .set("name", f.name)
-                    .set("description", f.description)
-                    .set("status", f.status.to!string)
-                    .set("version", f.version_)
-                    .set("createdAt", f.createdAt)
-                    .set("updatedAt", f.updatedAt);
-            }
-
-            auto resp = Json.emptyObject
-                .set("count", forms.length)
-                .set("resources", list);
-
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
+        auto jarr = Json.emptyArray;
+        foreach (f; forms) {
+            jarr ~= Json.emptyObject
+                .set("id", f.id)
+                .set("name", f.name)
+                .set("description", f.description)
+                .set("status", f.status.to!string)
+                .set("version", f.version_)
+                .set("createdAt", f.createdAt)
+                .set("updatedAt", f.updatedAt);
         }
+
+        auto resp = Json.emptyObject
+            .set("count", forms.length)
+            .set("resources", jarr);
+
+        return successResponse("Forms retrieved successfully", "Retrieved", 200, resp);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -103,29 +93,25 @@ class FormController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-            auto id = FormId(precheck.id);
-            auto f = formUsecase.getForm(tenantId, id);
-            if (f.isNull) {
-                writeError(res, 404, "Form not found");
-                return;
-            }
-
-            auto resp = Json.emptyObject
-                .set("id", f.id)
-                .set("name", f.name)
-                .set("description", f.description)
-                .set("status", f.status.to!string)
-                .set("version", f.version_)
-                .set("projectId", f.projectId)
-                .set("createdBy", f.createdBy)
-                .set("updatedBy", f.updatedBy)
-                .set("createdAt", f.createdAt)
-                .set("updatedAt", f.updatedAt);
-
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
+        auto id = FormId(precheck.id);
+        auto f = formUsecase.getForm(tenantId, id);
+        if (f.isNull) {
+            return errorResponse("Form not found", 404);
         }
+
+        auto resp = Json.emptyObject
+            .set("id", f.id)
+            .set("name", f.name)
+            .set("description", f.description)
+            .set("status", f.status.to!string)
+            .set("version", f.version_)
+            .set("projectId", f.projectId)
+            .set("createdBy", f.createdBy)
+            .set("updatedBy", f.updatedBy)
+            .set("createdAt", f.createdAt)
+            .set("updatedAt", f.updatedAt);
+
+        return successResponse("Form retrieved successfully", "Retrieved", 200, resp);
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -135,31 +121,24 @@ class FormController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-            auto tenantId = precheck.tenantId;
+        auto data = precheck.data;
+        UpdateFormRequest r;
+        r.tenantId = tenantId;
+        r.formId = FormId(precheck.id);
+        r.name = data.getString("name");
+        r.description = data.getString("description");
+        r.version_ = data.getString("version");
+        r.updatedBy = UserId(data.getString("updatedBy"));
 
-            auto data = precheck.data;
-            UpdateFormRequest r;
-            r.tenantId = tenantId;
-            r.formId = FormId(precheck.id);
-            r.name = data.getString("name");
-            r.description = data.getString("description");
-            r.version_ = data.getString("version");
-            r.updatedBy = UserId(data.getString("updatedBy"));
-
-            auto result = formUsecase.updateForm(r);
-            if (result.hasError)
+        auto result = formUsecase.updateForm(r);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Form updated");
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Form updated");
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        return successResponse("Form updated successfully", "Updated", 200, resp);
+
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -169,22 +148,15 @@ class FormController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-            auto tenantId = precheck.tenantId;
-
-            auto id = FormId(precheck.id);
-            auto result = formUsecase.deleteForm(tenantId, id);
-            if (result.hasError)
+        auto id = FormId(precheck.id);
+        auto result = formUsecase.deleteForm(tenantId, id);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Form deleted");
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Form deleted");
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        return successResponse("Form deleted successfully", "Deleted", 200, resp);
+
     }
 }

@@ -86,22 +86,22 @@ class ArtifactController : ManageHttpController {
 
         auto resp = Json.emptyObject
             .set("count", artifacts.length)
-            .set("resources", list);
+            .set("resources", jarr);
 
         return successResponse("Artifacts retrieved successfully", "Retrieved", 200, resp);
-}
+    }
 
-override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
         auto tenantId = precheck.tenantId;
 
         auto id = ArtifactId(precheck.id);
         auto a = artifactUsecase.getArtifact(tenantId, id);
-        if (a.isNull) {
-            writeError(res, 404, "Artifact not found");
-            return;
-        }
+        if (a.isNull)
+            return errorResponse("Artifact not found", 404);
 
         auto resp = Json.emptyObject
             .set("id", a.id)
@@ -119,69 +119,48 @@ override protected void handleGet(scope HTTPServerRequest req, scope HTTPServerR
             .set("publishedAt", a.publishedAt)
             .set("updatedAt", a.updatedAt);
 
-        res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-        writeError(res, 500, "Internal server error");
+        return successResponse("Artifact retrieved successfully", "Retrieved", 200, resp);
     }
-}
 
-override protected Json updateHandler(HTTPServerRequest req) {
-    auto precheck = super.updateHandler(req);
-    if (precheck.hasError)
-        return precheck;
+    override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-    auto tenantId = precheck.tenantId;
+        auto tenantId = precheck.tenantId;
 
-    auto tenantId = precheck.tenantId;
+        auto tenantId = precheck.tenantId;
 
-    auto data = precheck.data;
-    UpdateArtifactRequest r;
-    r.tenantId = tenantId;
-    r.artifactId = ArtifactId(precheck.id);
-    r.name = data.getString("name");
-    r.description = data.getString("description");
-    r.version_ = data.getString("version");
-    r.contentUrl = data.getString("contentUrl");
+        auto data = precheck.data;
+        UpdateArtifactRequest r;
+        r.tenantId = tenantId;
+        r.artifactId = ArtifactId(precheck.id);
+        r.name = data.getString("name");
+        r.description = data.getString("description");
+        r.version_ = data.getString("version");
+        r.contentUrl = data.getString("contentUrl");
 
-    auto result = artifactUsecase.updateArtifact(r);
-    if (result.hasError)
-        return errorResponse(result.message, 400);
-    auto resp = Json.emptyObject
-        .set("id", result.id)
-        .set("message", "Artifact updated");
+        auto result = artifactUsecase.updateArtifact(r);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
 
-    res.writeJsonBody(resp, 200);
-} else {
-    writeError(res, 404, result.message);
-}
-} catch (Exception e) {
-    writeError(res, 500, "Internal server error");
-}
-}
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Artifact updated successfully", "Updated", 200, responseData);
+    }
 
-override protected Json deleteHandler(HTTPServerRequest req) {
-    auto precheck = super.deleteHandler(req);
-    if (precheck.hasError)
-        return precheck;
+    override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-    auto tenantId = precheck.tenantId;
+        auto tenantId = precheck.tenantId;
+        auto id = ArtifactId(precheck.id);
 
-    auto tenantId = precheck.tenantId;
-    auto id = ArtifactId(precheck.id);
+        auto result = artifactUsecase.deleteArtifact(tenantId, id);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
 
-    auto result = artifactUsecase.deleteArtifact(tenantId, id);
-    if (result.hasError)
-        return errorResponse(result.message, 400);
-    auto resp = Json.emptyObject
-        .set("id", result.id)
-        .set("message", "Artifact deleted");
-
-    res.writeJsonBody(resp, 200);
-} else {
-    writeError(res, 404, result.message);
-}
-} catch (Exception e) {
-    writeError(res, 500, "Internal server error");
-}
-}
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Artifact deleted successfully", "Deleted", 200, responseData);
+    }
 }

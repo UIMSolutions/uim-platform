@@ -36,34 +36,28 @@ class AutomationController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto tenantId = precheck.tenantId;
+        auto tenantId = precheck.tenantId;
 
-            auto data = precheck.data;
-            CreateAutomationRequest r;
-            r.tenantId = tenantId;
-            r.projectId = ProjectId(data.getString("projectId"));
-            r.automationId = AutomationId(precheck.id);
-            r.name = data.getString("name");
-            r.description = data.getString("description");
-            r.type = data.getString("type");
-            r.targetApplication = data.getString("targetApplication");
-            r.version_ = data.getString("version");
-            r.createdBy = UserId(data.getString("createdBy"));
+        auto data = precheck.data;
+        CreateAutomationRequest r;
+        r.tenantId = tenantId;
+        r.projectId = ProjectId(data.getString("projectId"));
+        r.automationId = AutomationId(precheck.id);
+        r.name = data.getString("name");
+        r.description = data.getString("description");
+        r.type = data.getString("type");
+        r.targetApplication = data.getString("targetApplication");
+        r.version_ = data.getString("version");
+        r.createdBy = UserId(data.getString("createdBy"));
 
-            auto result = automationUsecase.createAutomation(r);
-            if (result.hasError)
+        auto result = automationUsecase.createAutomation(r);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Automation created");
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Automation created");
 
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        return successResponse("Automation created successfully", "Created", 201, resp);
     }
 
     override protected Json listHandler(HTTPServerRequest req) {
@@ -73,31 +67,27 @@ class AutomationController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
+        auto automations = automationUsecase.listAutomations(tenantId);
 
-            auto automations = automationUsecase.listAutomations(tenantId);
-
-            auto jarr = Json.emptyArray;
-            foreach (a; automations) {
-                jarr ~= Json.emptyObject
-                    .set("id", a.id)
-                    .set("name", a.name)
-                    .set("description", a.description)
-                    .set("status", a.status.to!string)
-                    .set("type", a.type.to!string)
-                    .set("targetApplication", a.targetApplication)
-                    .set("version", a.version_)
-                    .set("createdAt", a.createdAt)
-                    .set("updatedAt", a.updatedAt);
-            }
-
-            auto resp = Json.emptyObject
-                .set("count", automations.length)
-                .set("resources", list);
-
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
+        auto jarr = Json.emptyArray;
+        foreach (a; automations) {
+            jarr ~= Json.emptyObject
+                .set("id", a.id)
+                .set("name", a.name)
+                .set("description", a.description)
+                .set("status", a.status.to!string)
+                .set("type", a.type.to!string)
+                .set("targetApplication", a.targetApplication)
+                .set("version", a.version_)
+                .set("createdAt", a.createdAt)
+                .set("updatedAt", a.updatedAt);
         }
+
+        auto resp = Json.emptyObject
+            .set("count", automations.length)
+            .set("resources", list);
+
+        return successResponse("Automations retrieved successfully", "Retrieved", 200, resp);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -107,32 +97,28 @@ class AutomationController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-            auto id = AutomationId(precheck.id);
-            
-            auto a = automationUsecase.getAutomation(tenantId, id);
-            if (a.isNull) {
-                writeError(res, 404, "Automation not found");
-                return;
-            }
+        auto id = AutomationId(precheck.id);
 
-            auto resp = Json.emptyObject
-                .set("id", a.id)
-                .set("name", a.name)
-                .set("description", a.description)
-                .set("status", a.status.to!string)
-                .set("type", a.type.to!string)
-                .set("targetApplication", a.targetApplication)
-                .set("version", a.version_)
-                .set("projectId", a.projectId)
-                .set("createdBy", a.createdBy)
-                .set("updatedBy", a.updatedBy)
-                .set("createdAt", a.createdAt)
-                .set("updatedAt", a.updatedAt);
-
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
+        auto a = automationUsecase.getAutomation(tenantId, id);
+        if (a.isNull) {
+            return errorResponse("Automation not found", 404);
         }
+
+        auto resp = Json.emptyObject
+            .set("id", a.id)
+            .set("name", a.name)
+            .set("description", a.description)
+            .set("status", a.status.to!string)
+            .set("type", a.type.to!string)
+            .set("targetApplication", a.targetApplication)
+            .set("version", a.version_)
+            .set("projectId", a.projectId)
+            .set("createdBy", a.createdBy)
+            .set("updatedBy", a.updatedBy)
+            .set("createdAt", a.createdAt)
+            .set("updatedAt", a.updatedAt);
+
+        return successResponse("Automation retrieved successfully", "Retrieved", 200, resp);
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -142,31 +128,25 @@ class AutomationController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-            auto data = precheck.data;
-            UpdateAutomationRequest r;
-            r.tenantId = tenantId;
-            r.automationId = AutomationId(precheck.id);
-            r.name = data.getString("name");
-            r.description = data.getString("description");
-            r.type = data.getString("type");
-            r.targetApplication = data.getString("targetApplication");
-            r.version_ = data.getString("version");
-            r.updatedBy = UserId(data.getString("updatedBy"));
+        auto data = precheck.data;
+        UpdateAutomationRequest r;
+        r.tenantId = tenantId;
+        r.automationId = AutomationId(precheck.id);
+        r.name = data.getString("name");
+        r.description = data.getString("description");
+        r.type = data.getString("type");
+        r.targetApplication = data.getString("targetApplication");
+        r.version_ = data.getString("version");
+        r.updatedBy = UserId(data.getString("updatedBy"));
 
-            auto result = automationUsecase.updateAutomation(r);
-            if (result.hasError)
+        auto result = automationUsecase.updateAutomation(r);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Automation updated");
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Automation updated");
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        return successResponse("Automation updated successfully", "Updated", 200, resp);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -176,22 +156,14 @@ class AutomationController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-            auto tenantId = precheck.tenantId;
-
-            auto id = AutomationId(precheck.id);
-            auto result = automationUsecase.deleteAutomation(tenantId, id);
-            if (result.hasError)
+        auto id = AutomationId(precheck.id);
+        auto result = automationUsecase.deleteAutomation(tenantId, id);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Automation deleted");
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Automation deleted");
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        return successResponse("Automation deleted successfully", "Deleted", 200, resp);
     }
 }

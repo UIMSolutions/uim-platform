@@ -29,31 +29,37 @@ class ProcessInstanceController : ManageHttpController {
         router.delete_("/api/v1/process-automation/instances/*", &handleDelete);
     }
 
+    protected Json startHandler(HTTPServerRequest req) {
+        auto precheck = super.postHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+
+        auto data = precheck.data;
+        StartProcessInstanceRequest r;
+        r.tenantId = tenantId;
+        r.processId = ProcessId(data.getString("processId"));
+        r.processInstanceId = ProcessInstanceId(precheck.id);
+        r.startedBy = UserId(data.getString("startedBy"));
+        r.priority = data.getString("priority");
+        r.dueDate = data.getLong("dueDate");
+        r.context = jsonKeyValuePairs(j, "context");
+
+        auto result = processInstanceUsecase.startProcessInstance(r);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Process instance started");
+
+        return successResponse("Process instance started successfully", "Started", 201, resp);
+    }
+
     protected void handleStart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = precheck.tenantId;
-
-            auto data = precheck.data;
-            StartProcessInstanceRequest r;
-            r.tenantId = tenantId;
-            r.processId = ProcessId(data.getString("processId"));
-            r.processInstanceId = ProcessInstanceId(precheck.id);
-            r.startedBy = UserId(data.getString("startedBy"));
-            r.priority = data.getString("priority");
-            r.dueDate = data.getLong("dueDate");
-            r.context = jsonKeyValuePairs(j, "context");
-
-            auto result = processInstanceUsecase.startProcessInstance(r);
-            if (result.hasError)
-            return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Process instance started");
-
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
+            auto response = startHandler(req);
+            res.writeJsonBody(response, response.code);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
@@ -66,30 +72,26 @@ class ProcessInstanceController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
+        auto instances = processInstanceUsecase.listProcessInstances(tenantId);
 
-            auto instances = processInstanceUsecase.listProcessInstances(tenantId);
-
-            auto jarr = Json.emptyArray;
-            foreach (i; instances) {
-                jarr ~= Json.emptyObject
-                    .set("id", i.id)
-                    .set("processId", i.processId)
-                    .set("processName", i.processName)
-                    .set("status", i.status.to!string)
-                    .set("priority", i.priority.to!string)
-                    .set("startedBy", i.startedBy)
-                    .set("startedAt", i.startedAt)
-                    .set("completedAt", i.completedAt);
-            }
-
-            auto resp = Json.emptyObject
-                .set("count", instances.length)
-                .set("resources", list);
-
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
+        auto list = Json.emptyArray;
+        foreach (i; instances) {
+            list ~= Json.emptyObject
+                .set("id", i.id)
+                .set("processId", i.processId)
+                .set("processName", i.processName)
+                .set("status", i.status.to!string)
+                .set("priority", i.priority.to!string)
+                .set("startedBy", i.startedBy)
+                .set("startedAt", i.startedAt)
+                .set("completedAt", i.completedAt);
         }
+
+        auto resp = Json.emptyObject
+            .set("count", instances.length)
+            .set("resources", list);
+
+        return successResponse("Process instance list retrieved successfully", "Retrieved", 200, resp);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -99,63 +101,63 @@ class ProcessInstanceController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-            auto id = ProcessInstanceId(precheck.id);
-            auto i = processInstanceUsecase.getProcessInstance(tenantId, id);
-            if (i.isNull) {
-                writeError(res, 404, "Process instance not found");
-                return;
-            }
+        auto id = ProcessInstanceId(precheck.id);
+        auto i = processInstanceUsecase.getProcessInstance(tenantId, id);
+        if (i.isNull)
+            return errorResponse("Process instance not found", 404);
 
-            auto resp = Json.emptyObject
-                .set("id", i.id)
-                .set("processId", i.processId)
-                .set("processName", i.processName)
-                .set("status", i.status.to!string)
-                .set("priority", i.priority.to!string)
-                .set("startedBy", i.startedBy)
-                .set("currentStepId", i.currentStepId)
-                .set("errorMessage", i.errorMessage)
-                .set("retryCount", i.retryCount)
-                .set("startedAt", i.startedAt)
-                .set("completedAt", i.completedAt)
-                .set("dueDate", i.dueDate);
+        auto resp = Json.emptyObject
+            .set("id", i.id)
+            .set("processId", i.processId)
+            .set("processName", i.processName)
+            .set("status", i.status.to!string)
+            .set("priority", i.priority.to!string)
+            .set("startedBy", i.startedBy)
+            .set("currentStepId", i.currentStepId)
+            .set("errorMessage", i.errorMessage)
+            .set("retryCount", i.retryCount)
+            .set("startedAt", i.startedAt)
+            .set("completedAt", i.completedAt)
+            .set("dueDate", i.dueDate);
 
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
+        return successResponse("Process instance retrieved successfully", "Retrieved", 200, resp);
+    }
+
+    protected Json actionHandler(HTTPServerRequest req) {
+        auto precheck = super.postHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+        import std.string : lastIndexOf;
+
+        auto path = precheck.path;
+        auto actionIdx = lastIndexOf(path, "/action");
+        if (actionIdx < 0) {
+            return errorResponse("Invalid action path", 400);
         }
+        auto sub = path[0 .. actionIdx];
+        auto id = extractIdFromPath(sub);
+
+        auto data = precheck.data;
+        ProcessInstanceActionRequest r;
+        r.tenantId = tenantId;
+        r.processInstanceId = ProcessInstanceId(id);
+        r.action = data.getString("action");
+
+        auto result = processInstanceUsecase.performProcessInstanceAction(r);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Action performed: " ~ r.action);
+        return successResponse("Action performed successfully", "Performed", 200, resp);
     }
 
     protected void handleAction(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = precheck.tenantId;
-            import std.string : lastIndexOf;
-
-            auto path = precheck.path;
-            auto actionIdx = lastIndexOf(path, "/action");
-            if (actionIdx < 0) {
-                writeError(res, 400, "Invalid action path");
-                return;
-            }
-            auto sub = path[0 .. actionIdx];
-            auto id = extractIdFromPath(sub);
-
-            auto data = precheck.data;
-            ProcessInstanceActionRequest r;
-            r.tenantId = tenantId;
-            r.processInstanceId = ProcessInstanceId(id);
-            r.action = data.getString("action");
-
-            auto result = processInstanceUsecase.performProcessInstanceAction(r);
-            if (result.hasError)
-            return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Action performed: " ~ r.action);
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 400, result.message);
-            }
+            auto response = actionHandler(req);
+            res.writeJsonBody(response, response.code);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
@@ -167,21 +169,15 @@ class ProcessInstanceController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto id = ProcessInstanceId(precheck.id);
-            
-            auto result = processInstanceUsecase.deleteProcessInstance(tenantId, id);
-            if (result.hasError)
-            return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Process instance deleted");
+        auto id = ProcessInstanceId(precheck.id);
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto result = processInstanceUsecase.deleteProcessInstance(tenantId, id);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Process instance deleted");
+
+        return successResponse("Process instance deleted successfully", "Deleted", 200, resp);
     }
 }

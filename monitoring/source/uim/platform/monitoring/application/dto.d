@@ -207,7 +207,9 @@ struct CreateNotificationChannelRequest {
 
 struct UpdateNotificationChannelRequest {
   TenantId tenantId;
-  NotificationChannelId id;
+  NotificationChannelId channelId;
+
+  string name;
   string description;
   string state; // "active", "inactive"
   string[] emailRecipients;

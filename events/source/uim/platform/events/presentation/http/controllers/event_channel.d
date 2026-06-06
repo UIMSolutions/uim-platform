@@ -14,14 +14,16 @@ mixin(ShowModule!());
 class EventChannelController : ManageHttpController {
     private ManageEventChannelsUseCase usecase;
 
-    this(ManageEventChannelsUseCase usecase) { this.usecase = usecase; }
+    this(ManageEventChannelsUseCase usecase) {
+        this.usecase = usecase;
+    }
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        router.get("/api/v1/sap-event-mesh/event-channels",    &handleList);
-        router.get("/api/v1/sap-event-mesh/event-channels/*",  &handleGet);
-        router.post("/api/v1/sap-event-mesh/event-channels",   &handleCreate);
-        router.put("/api/v1/sap-event-mesh/event-channels/*",  &handleUpdate);
+        router.get("/api/v1/sap-event-mesh/event-channels", &handleList);
+        router.get("/api/v1/sap-event-mesh/event-channels/*", &handleGet);
+        router.post("/api/v1/sap-event-mesh/event-channels", &handleCreate);
+        router.put("/api/v1/sap-event-mesh/event-channels/*", &handleUpdate);
         router.delete_("/api/v1/sap-event-mesh/event-channels/*", &handleDelete);
     }
 
@@ -32,94 +34,99 @@ class EventChannelController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-            auto items = usecase.listChannels(tenantId);
-            res.writeJsonBody(Json.emptyObject
-                .set("count", items.length)
-                .set("resources", items.map!(e => e.toJson).array.toJson)
-                .set("message", "Event channel list retrieved successfully"), 200);
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
-    }
+        auto items = usecase.listChannels(tenantId);
+        auto list = items.map!(item => item.toJson()).array.toJson;
 
-    override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+        auto responseData = Json.emptyObject
+            .set("count", list.length)
+            .set("resources", list);
+        return successResponse("Event channel list retrieved successfully", "Retrieved", 200, responseData);
+}
 
-        auto tenantId = precheck.tenantId;
-            auto id = precheck.id;
-            auto e = usecase.getChannel(tenantId, EventChannelId(id));
-            if (e.isNull) { writeError(res, 404, "Event channel not found"); return; }
-            res.writeJsonBody(Json.emptyObject
-                .set("message", "Event channel retrieved successfully")
-                .set("resource", e.toJson), 200);
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
-    }
+override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+        return precheck;
 
-    override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto tenantId = precheck.tenantId;
+    auto id = precheck.id;
+    auto e = usecase.getChannel(tenantId, EventChannelId(id));
+    if (e.isNull)
+        return errorResponse("Scan job not found", 404);
 
-        auto tenantId = precheck.tenantId;
+    auto responseData = item.toJson();
+    return successResponse("Event channel retrieved successfully", "Retrieved", 200, responseData);
+}
 
-        auto data = precheck.data;
-            EventChannelDTO dto;
-            dto.channelId          = EventChannelId(precheck.id);
-            dto.tenantId           = tenantId;
-            dto.serviceId          = MessagingServiceId(data.getString("serviceId"));
-            dto.name               = data.getString("name");
-            dto.description        = data.getString("description");
-            dto.channelType        = data.getString("channelType");
-            dto.namespace          = data.getString("namespace");
-            dto.topicName          = data.getString("topicName");
-            dto.asyncapiDefinition = data.getString("asyncapiDefinition");
-            dto.maxRetentionPeriod = data.getString("maxRetentionPeriod");
-            dto.maxPartitions      = data.getString("maxPartitions");
-            dto.createdBy          = UserId(data.getString("createdBy"));
-            auto result = usecase.createChannel(dto);
-            if (result.hasError)
-            return errorResponse(result.message, 400);
-                res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Event channel created"), 201);
-            } else { writeError(res, 400, result.message); }
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
-    }
+override protected Json createHandler(HTTPServerRequest req) {
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+        return precheck;
 
-    override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto tenantId = precheck.tenantId;
 
-        auto tenantId = precheck.tenantId;
-            auto channelId = EventChannelId(precheck.id);
-            auto data = precheck.data;
-            EventChannelDTO dto;
-            dto.tenantId           = tenantId;
-            dto.channelId          = channelId;
-            dto.description        = data.getString("description");
-            dto.asyncapiDefinition = data.getString("asyncapiDefinition");
-            dto.maxRetentionPeriod = data.getString("maxRetentionPeriod");
-            dto.maxPartitions      = data.getString("maxPartitions");
-            dto.updatedBy          = UserId(data.getString("updatedBy"));
-            auto result = usecase.updateChannel(dto);
-            if (result.hasError)
-            return errorResponse(result.message, 400);
-                res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Event channel updated"), 200);
-            } else { writeError(res, 404, result.message); }
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
-    }
+    auto data = precheck.data;
+    EventChannelDTO dto;
+    dto.channelId = EventChannelId(precheck.id);
+    dto.tenantId = tenantId;
+    dto.serviceId = MessagingServiceId(data.getString("serviceId"));
+    dto.name = data.getString("name");
+    dto.description = data.getString("description");
+    dto.channelType = data.getString("channelType");
+    dto.namespace = data.getString("namespace");
+    dto.topicName = data.getString("topicName");
+    dto.asyncapiDefinition = data.getString("asyncapiDefinition");
+    dto.maxRetentionPeriod = data.getString("maxRetentionPeriod");
+    dto.maxPartitions = data.getString("maxPartitions");
+    dto.createdBy = UserId(data.getString("createdBy"));
+    auto result = usecase.createChannel(dto);
+    if (result.hasError)
+        return errorResponse(result.message, 400);
 
-    override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Event channel created successfully", "Created", 201, responseData);
+}
 
-        auto tenantId = precheck.tenantId;
-            auto id = EventChannelId(precheck.id);
-            auto result = usecase.deleteChannel(tenantId, id);
-            if (result.hasError)
-            return errorResponse(result.message, 400);
-                res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Event channel deleted"), 200);
-            } else { writeError(res, 404, result.message); }
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
-    }
+override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+        return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto channelId = EventChannelId(precheck.id);
+    auto data = precheck.data;
+    EventChannelDTO dto;
+    dto.tenantId = tenantId;
+    dto.channelId = channelId;
+    dto.description = data.getString("description");
+    dto.asyncapiDefinition = data.getString("asyncapiDefinition");
+    dto.maxRetentionPeriod = data.getString("maxRetentionPeriod");
+    dto.maxPartitions = data.getString("maxPartitions");
+    dto.updatedBy = UserId(data.getString("updatedBy"));
+    auto result = usecase.updateChannel(dto);
+    if (result.hasError)
+        return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Event channel updated successfully", "Updated", 200, responseData);
+}
+
+override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+        return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = EventChannelId(precheck.id);
+    auto result = usecase.deleteChannel(tenantId, id);
+    if (result.hasError)
+        return errorResponse(result.message, 400);
+    res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Event channel deleted"), 200);
+} else {
+    writeError(res, 404, result.message);
+}
+} catch (Exception e) {
+    writeError(res, 500, "Internal server error");
+}
+}
 }

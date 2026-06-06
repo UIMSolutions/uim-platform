@@ -36,7 +36,6 @@ class ActionController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
         CreateActionRequest r;
@@ -98,35 +97,30 @@ class ActionController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto id = ActionId(precheck.id);
+        auto id = ActionId(precheck.id);
 
-            auto a = actionUsecase.getAction(tenantId, id);
-            if (a.isNull) {
-                writeError(res, 404, "Action not found");
-                return;
-            }
+        auto a = actionUsecase.getAction(tenantId, id);
+        if (a.isNull)
+            return errorResponse("Action not found", 404);
 
-            auto resp = Json.emptyObject
-                .set("id", a.id)
-                .set("name", a.name)
-                .set("description", a.description)
-                .set("status", a.status.to!string)
-                .set("type", a.type.to!string)
-                .set("baseUrl", a.baseUrl)
-                .set("path", a.path)
-                .set("authType", a.authType)
-                .set("destinationName", a.destinationName)
-                .set("version", a.version_)
-                .set("projectId", a.projectId)
-                .set("createdBy", a.createdBy)
-                .set("updatedBy", a.updatedBy)
-                .set("createdAt", a.createdAt)
-                .set("updatedAt", a.updatedAt);
+        auto resp = Json.emptyObject
+            .set("id", a.id)
+            .set("name", a.name)
+            .set("description", a.description)
+            .set("status", a.status.to!string)
+            .set("type", a.type.to!string)
+            .set("baseUrl", a.baseUrl)
+            .set("path", a.path)
+            .set("authType", a.authType)
+            .set("destinationName", a.destinationName)
+            .set("version", a.version_)
+            .set("projectId", a.projectId)
+            .set("createdBy", a.createdBy)
+            .set("updatedBy", a.updatedBy)
+            .set("createdAt", a.createdAt)
+            .set("updatedAt", a.updatedAt);
 
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        return successResponse("Action retrieved successfully", "Retrieved", 200, resp);
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -153,7 +147,7 @@ class ActionController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("Action updated successfully", 200, responseData);
+        return successResponse("Action updated successfully", "Updated", 200, responseData);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -166,12 +160,12 @@ class ActionController : ManageHttpController {
         auto id = ActionId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid action ID", 400);
-            
+
         auto result = actionUsecase.deleteAction(tenantId, id);
         if (result.hasError)
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("Action deleted successfully", 200, responseData);
+        return successResponse("Action deleted successfully", "Deleted", 200, responseData);
     }
 }

@@ -28,9 +28,12 @@ class DashboardController : HttpController {
     router.get("/api/v1/dashboard", &handleDashboard);
   }
 
-  protected void handleDashboard(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
+  protected Json dashboardHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
       auto summary = usecase.getSummary(tenantId);
 
       auto j = Json.emptyObject
@@ -44,8 +47,13 @@ class DashboardController : HttpController {
         .set("failingChecks", summary.failingChecks)
         .set("totalMetricDefinitions", summary.totalMetricDefinitions)
         .set("totalChannels", summary.totalChannels);
+    return successResponse("Dashboard retrieved successfully", "Retrieved", 200, j);
+  }
 
-      res.writeJsonBody(j, 200);
+  protected void handleDashboard(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto response = dashboardHandler(req);
+      res.writeJsonBody(response, response.code);
     }
     catch (Exception e) {
       writeError(res, 500, "Internal server error");
