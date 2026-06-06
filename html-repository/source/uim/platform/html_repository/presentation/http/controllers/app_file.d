@@ -31,151 +31,142 @@ class AppFileController : ManageHttpController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      UploadAppFileRequest r;
-      r.tenantId = tenantId;
-      r.versionId = data.getString("versionId");
-      r.filePath = data.getString("filePath");
-      r.contentType = data.getString("contentType");
-      r.data = data.getString("data");
-      r.encoding = data.getString("encoding");
-      r.createdBy = UserId(data.getString("createdBy"));
+    auto data = precheck.data;
+    ScanJobDTO dto;
+    dto.tenantId = tenantId;
+    UploadAppFileRequest r;
+    r.tenantId = tenantId;
+    r.versionId = data.getString("versionId");
+    r.filePath = data.getString("filePath");
+    r.contentType = data.getString("contentType");
+    r.data = data.getString("data");
+    r.encoding = data.getString("encoding");
+    r.createdBy = UserId(data.getString("createdBy"));
 
-      auto result = usecase.uploadAppFile(r);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("id", result.id);
+    auto result = usecase.uploadAppFile(r);
+    if (result.isSuccess()) {
+      auto resp = Json.emptyObject
+        .set("id", result.id);
 
-        res.writeJsonBody(resp, 201);
-      } else
-        writeError(res, 400, result.message);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+      res.writeJsonBody(resp, 201);
+    } else
+      writeError(res, 400, result.message);
+  }
+ catch (Exception e)
+    writeError(res, 500, "Internal server error");
+}
+
+override protected Json listHandler(HTTPServerRequest req) {
+  auto precheck = super.listHandler(req);
+  if (precheck.hasError)
+    return precheck;
+
+  auto tenantId = precheck.tenantId;
+  auto versionId = getString(req.json, "versionId");
+  if (versionId.isEmpty)
+    versionId = req.headers.get("X-Version-Id", "");
+
+  auto items = usecase.listAppFiles(tenantId, versionId);
+  auto arr = Json.emptyArray;
+  foreach (e; items) {
+    auto obj = Json.emptyObject
+      .set("id", e.id)
+      .set("filePath", e.filePath)
+      .set("contentType", e.contentType)
+      .set("category", e.category)
+      .set("sizeBytes", e.sizeBytes);
+
+    arr ~= obj;
   }
 
-  override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+  auto list = items.map!(item => item.toJson()).array.toJson;
 
-        auto tenantId = precheck.tenantId;
-      auto versionId = getString(req.json, "versionId");
-      if (versionId.isEmpty)
-        versionId = req.headers.get("X-Version-Id", "");
+  auto responseData = Json.emptyObject
+    .set("count", list.length)
+    .set("resources", list);
+  return successResponse("", 0, responseData);
+}
 
-      auto items = usecase.listAppFiles(tenantId, versionId);
-      auto arr = Json.emptyArray;
-      foreach (e; items) {
-        auto obj = Json.emptyObject
-          .set("id", e.id)
-          .set("filePath", e.filePath)
-          .set("contentType", e.contentType)
-          .set("category", e.category)
-          .set("sizeBytes", e.sizeBytes);
+override protected Json getHandler(HTTPServerRequest req) {
+  auto precheck = super.getHandler(req);
+  if (precheck.hasError)
+    return precheck;
 
-        arr ~= obj;
-      }
+  auto tenantId = precheck.tenantId;
+  auto id = AppFileId(precheck.id);
+  auto tenantId = precheck.tenantId;
+  if (isNull)
+    return errorResponse("File not found", 404);
 
-      auto list = items.map!(item => item.toJson()).array.toJson;
+  auto entry = usecase.getAppFile(tenantId, id);
+  if (entry.isNull)
+    return errorResponse("File not found", 404);
 
-        auto responseData = Json.emptyObject
-            .set("count", list.length)
-            .set("resources", list);
-        return successResponse("", 0, responseData);
-  }
+  auto response = Json.emptyObject
+    .set("id", entry.id)
+    .set("versionId", entry.versionId)
+    .set("filePath", entry.filePath)
+    .set("contentType", entry.contentType)
+    .set("category", entry.category)
+    .set("sizeBytes", entry.sizeBytes)
+    .set("data", entry.data)
+    .set("encoding", entry.encoding)
+    .set("createdBy", entry.createdBy)
+    .set("createdAt", entry.createdAt)
+    .set("updatedAt", entry.updatedAt);
 
-  override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+  return successResponse("File retrieved successfully", "Retrieved", 200, response);
+}
 
-        auto tenantId = precheck.tenantId;
-      auto id = AppFileId(precheck.id);
-      auto tenantId = precheck.tenantId;
-      if (isNull) {
-        writeError(res, 404, "File not found");
-        return;
-      }
-      auto entry = usecase.getAppFile(tenantId, id);
-      if (entry.isNull) {
-        writeError(res, 404, "File not found");
-        return;
-      }
-      auto response = Json.emptyObject
-        .set("id", entry.id)
-        .set("versionId", entry.versionId)
-        .set("filePath", entry.filePath)
-        .set("contentType", entry.contentType)
-        .set("category", entry.category)
-        .set("sizeBytes", entry.sizeBytes)
-        .set("data", entry.data)
-        .set("encoding", entry.encoding)
-        .set("createdBy", entry.createdBy)
-        .set("createdAt", entry.createdAt)
-        .set("updatedAt", entry.updatedAt);
+override protected Json updateHandler(HTTPServerRequest req) {
+  auto precheck = super.updateHandler(req);
+  if (precheck.hasError)
+    return precheck;
 
-      res.writeJsonBody(response, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  auto tenantId = precheck.tenantId;
+  auto id = AppFileId(precheck.id);
+  if (id.isNull)
+    return errorResponse("File not found", 404);
 
-  override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+  UpdateAppFileRequest r;
+  r.tenantId = tenantId;
+  r.fileId = id;
+  r.contentType = data.getString("contentType");
+  r.data = data.getString("data");
+  r.encoding = data.getString("encoding");
 
-        auto tenantId = precheck.tenantId;
-      auto id = AppFileId(precheck.id);
+  auto result = usecase.updateAppFile(r);
+  if (result.isSuccess()) {
+    auto resp = Json.emptyObject
+      .set("id", id);
 
-      auto tenantId = precheck.tenantId;
-      if (id.isNull) {
-        writeError(res, 404, "File not found");
-        return;
-      }
-      UpdateAppFileRequest r;
-      r.contentType = data.getString("contentType");
-      r.data = data.getString("data");
-      r.encoding = data.getString("encoding");
-
-      auto result = usecase.updateAppFile(r);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("id", id)
-          .set("message", "File updated");
-
-        res.writeJsonBody(resp, 200);
-      } else
-        writeError(res, 400, result.message);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    return successResponse("File updated successfully", "Updated", 200, resp);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = AppFileId(precheck.id);
-      if (id.isNull) {
-        writeError(res, 404, "File not found");
-        return;
-      }
-      auto result = usecase.deleteAppFile(tenantId, id);
-      if (result.isSuccess())
-        res.writeBody("", 204);
-      else
-        writeError(res, 400, result.message);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+    auto tenantId = precheck.tenantId;
+    auto id = AppFileId(precheck.id);
+    if (id.isNull) {
+      writeError(res, 404, "File not found");
+      return;
+    }
+    auto result = usecase.deleteAppFile(tenantId, id);
+    if (result.isSuccess())
+      res.writeBody("", 204);
+    else
+      writeError(res, 400, result.message);
   }
+ catch (Exception e)
+    writeError(res, 500, "Internal server error");
+}
 }

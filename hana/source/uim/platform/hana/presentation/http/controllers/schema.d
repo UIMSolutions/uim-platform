@@ -30,48 +30,40 @@ class SchemaController : ManageHttpController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-              CreateSchemaRequest r;
-      r.tenantId = tenantId;
-      r.instanceId = data.getString("instanceId");
-      r.id = precheck.id;
-      r.name = data.getString("name");
-      r.owner = data.getString("owner");
-      r.type = data.getString("type");
+    auto data = precheck.data;
+    CreateSchemaRequest r;
+    r.tenantId = tenantId;
+    r.instanceId = data.getString("instanceId");
+    r.id = precheck.id;
+    r.name = data.getString("name");
+    r.owner = data.getString("owner");
+    r.type = data.getString("type");
 
-      auto result = usecase.create(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Schema created");
-
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto result = usecase.create(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+    auto resp = Json.emptyObject
+      .set("id", result.id);
+    return successResponse("Schema created successfully", "Created", 201, resp);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto schemas = usecase.list(tenantId);
+    auto tenantId = precheck.tenantId;
+    auto schemas = usecase.list(tenantId);
 
-      auto jarr = Json.emptyArray;
-      foreach (s; schemas) {
-        jarr ~= Json.emptyObject
+    auto jarr = Json.emptyArray;
+    foreach (s; schemas) {
+      jarr ~= Json.emptyObject
         .set("id", s.id)
         .set("instanceId", s.instanceId)
         .set("name", s.name)
@@ -80,95 +72,77 @@ class SchemaController : ManageHttpController {
         .set("viewCount", s.viewCount)
         .set("sizeBytes", s.sizeBytes)
         .set("createdAt", s.createdAt);
-      }
-
-      auto resp = Json.emptyObject
-        .set("count", schemas.length)
-        .set("resources", list);
-        
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
     }
+
+    auto resp = Json.emptyObject
+      .set("count", schemas.length)
+      .set("resources", list);
+
+    res.writeJsonBody(resp, 200);
   }
-
-  override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
-
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto s = usecase.getById(tenantId, id);
-      if (s.isNull) {
-        writeError(res, 404, "Schema not found");
-        return;
-      }
-
-      auto resp = Json.emptyObject
-        .set("id", s.id)
-        .set("instanceId", s.instanceId)
-        .set("name", s.name)
-        .set("owner", s.owner)
-        .set("tableCount", s.tableCount)
-        .set("viewCount", s.viewCount)
-        .set("procedureCount", s.procedureCount)
-        .set("sizeBytes", s.sizeBytes)
-        .set("createdAt", s.createdAt)
-        .set("updatedAt", s.updatedAt);
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+ catch (Exception e) {
+    writeError(res, 500, "Internal server error");
   }
+}
 
-  override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+override protected Json getHandler(HTTPServerRequest req) {
+  auto precheck = super.getHandler(req);
+  if (precheck.hasError)
+    return precheck;
 
-        auto tenantId = precheck.tenantId;
-      
+  auto tenantId = precheck.tenantId;
+  auto id = precheck.id;
+  auto s = usecase.getById(tenantId, id);
+  if (s.isNull)
+    return errorResponse("Schema not found", 404);
 
-      auto data = precheck.data;
-      UpdateSchemaRequest r;
-      r.tenantId = tenantId;
-      r.id = precheck.id;
-      r.owner = data.getString("owner");
+  auto resp = Json.emptyObject
+    .set("id", s.id)
+    .set("instanceId", s.instanceId)
+    .set("name", s.name)
+    .set("owner", s.owner)
+    .set("tableCount", s.tableCount)
+    .set("viewCount", s.viewCount)
+    .set("procedureCount", s.procedureCount)
+    .set("sizeBytes", s.sizeBytes)
+    .set("createdAt", s.createdAt)
+    .set("updatedAt", s.updatedAt);
 
-      auto result = usecase.update(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Schema updated");
+  return successResponse("Schema retrieved successfully", "Retrieved", 200, resp);
+}
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+override protected Json updateHandler(HTTPServerRequest req) {
+  auto precheck = super.updateHandler(req);
+  if (precheck.hasError)
+    return precheck;
 
-  override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+  auto tenantId = precheck.tenantId;
 
-        auto tenantId = precheck.tenantId;
-      auto id = SchemaId(precheck.id);
-      auto result = usecase.deleteSchema(id);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        res.writeJsonBody(Json.emptyObject, 204);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  auto data = precheck.data;
+  UpdateSchemaRequest r;
+  r.tenantId = tenantId;
+  r.id = precheck.id;
+  r.owner = data.getString("owner");
+
+  auto result = usecase.update(r);
+  if (result.hasError)
+    return errorResponse(result.message, 400);
+  auto resp = Json.emptyObject
+    .set("id", result.id);
+
+  return successResponse("Schema updated successfully", "Updated", 200, resp);
+}
+
+override protected Json deleteHandler(HTTPServerRequest req) {
+  auto precheck = super.deleteHandler(req);
+  if (precheck.hasError)
+    return precheck;
+
+  auto tenantId = precheck.tenantId;
+  auto id = SchemaId(precheck.id);
+  auto result = usecase.deleteSchema(id);
+  if (result.hasError)
+    return errorResponse(result.message, 400);
+  return successResponse("Schema deleted successfully", "Deleted", 204, Json.emptyObject);
+}
 }

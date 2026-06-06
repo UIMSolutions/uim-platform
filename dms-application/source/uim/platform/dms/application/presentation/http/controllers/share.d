@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.dms.application.presentation.http.controllers.share;
 
-
 // 
 // 
 // import uim.platform.dms.application.application.usecases.manage.shares;
@@ -36,72 +35,69 @@ class ShareController : ManageHttpController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-      auto r = CreateShareRequest();
-      r.tenantId = tenantId;
-      r.documentId = DocumentId(data.getString("documentId"));
-      r.shareType = data.getString("shareType").to!ShareType;
-      r.sharedWith = data.getString("sharedWith");
-      r.permissionLevel = data.getString("permissionLevel").to!PermissionLevel;
-      r.expiresAt = data.getLong("expiresAt");
-      r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
+    auto data = precheck.data;
+    auto r = CreateShareRequest();
+    r.tenantId = tenantId;
+    r.documentId = DocumentId(data.getString("documentId"));
+    r.shareType = data.getString("shareType").to!ShareType;
+    r.sharedWith = data.getString("sharedWith");
+    r.permissionLevel = data.getString("permissionLevel").to!PermissionLevel;
+    r.expiresAt = data.getLong("expiresAt");
+    r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
-      auto result = usecase.createShare(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
+    auto result = usecase.createShare(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-        auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("", 0, responseData);
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("", 0, responseData);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto shares = usecase.listShares(tenantId);
+    auto tenantId = precheck.tenantId;
+    auto shares = usecase.listShares(tenantId);
 
-      auto arr = shares.map!(share => share.toJson).array.toJson;
+    auto arr = shares.map!(share => share.toJson).array.toJson;
 
-auto list = items.map!(item => item.toJson()).array.toJson;
+    auto list = items.map!(item => item.toJson()).array.toJson;
 
-        auto responseData = Json.emptyObject
-            .set("count", list.length)
-            .set("resources", list);
-        return successResponse("", 0, responseData);
+    auto responseData = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+    return successResponse("", 0, responseData);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = ShareId(precheck.id);
-      
-      auto share = usecase.getShare(tenantId, id);
-      if (share.isNull) {
-        writeError(res, 404, "Share not found");
-        return;
-      }
-      res.writeJsonBody(share.toJson, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto tenantId = precheck.tenantId;
+    auto id = ShareId(precheck.id);
+
+    auto item = usecase.getShare(tenantId, id);
+    if (item.isNull)
+      return errorResponse("Share not found", 404);
+
+    auto responseData = item.toJson();
+    return successResponse("Share retrieved successfully", "Retrieved", 200, responseData);
   }
 
   protected void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = precheck.tenantId;
       auto id = ShareId(precheck.id);
-      
+
       auto result = usecase.revokeShare(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
@@ -118,18 +114,18 @@ auto list = items.map!(item => item.toJson()).array.toJson;
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = ShareId(precheck.id);
-      
-      auto result = usecase.deleteShare(tenantId, id);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
+    auto tenantId = precheck.tenantId;
+    auto id = ShareId(precheck.id);
 
-        auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("Share deleted successfully", 200, responseData);
+    auto result = usecase.deleteShare(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Share deleted successfully", 200, responseData);
   }
 }

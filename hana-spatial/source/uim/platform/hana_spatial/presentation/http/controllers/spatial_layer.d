@@ -76,10 +76,10 @@ class SpatialLayerController : ManageHttpController {
           .set("createdAt", item.createdAt);
       }
 
-      res.writeJsonBody(Json.emptyObject.set("count", Json(items.length)).set("resources", jarr), 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+      auto resp = Json.emptyObject
+        .set("count", items.length)
+        .set("resources", jarr);
+        return successResponse("Spatial layers retrieved successfully", "Retrieved", 200, resp);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
