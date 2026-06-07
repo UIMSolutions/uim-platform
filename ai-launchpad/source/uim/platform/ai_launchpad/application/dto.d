@@ -465,7 +465,9 @@ struct GetStatisticsRequest {
 
 // --- Capabilities ---
 struct CapabilitiesResponse {
+  TenantId tenantId;
   string serviceName;
+  string apiVersion;
   string serviceVersion;
   string[] supportedRuntimes;
   string[] features;
@@ -478,7 +480,9 @@ struct CapabilitiesResponse {
 
   Json toJson() const {
     return Json.emptyObject
+      .set("tenantId", tenantId.value)
       .set("serviceName", serviceName)
+      .set("apiVersion", apiVersion)
       .set("serviceVersion", serviceVersion)
       .set("supportedRuntimes", supportedRuntimes.array.toJson)
       .set("features", features.array.toJson)

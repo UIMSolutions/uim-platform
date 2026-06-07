@@ -24,7 +24,7 @@ struct CreateScenarioRequest {
 }
 
 struct UpdateScenarioRequest {
-  ScenarioId id;
+  ScenarioId scenarioId;
   TenantId tenantId;
   string name;
   string description;
@@ -49,7 +49,7 @@ struct CreateWorkflowRequest {
 }
 
 struct UpdateWorkflowStatusRequest {
-  WorkflowId id;
+  WorkflowId workflowId;
   TenantId tenantId;
   WorkflowStatus status;
 }
@@ -75,28 +75,28 @@ struct CreateStepRequest {
 }
 
 struct CompleteStepRequest {
-  StepId id;
+  StepId stepId;
   TenantId tenantId;
   UserId completedBy;
   string result;
 }
 
 struct FailStepRequest {
-  StepId id;
+  StepId stepId;
   TenantId tenantId;
   UserId reportedBy;
   string errorMessage;
 }
 
 struct SkipStepRequest {
-  StepId id;
+  StepId stepId;
   TenantId tenantId;
   UserId skippedBy;
   string reason;
 }
 
 struct AssignStepRequest {
-  StepId id;
+  StepId stepId;
   TenantId tenantId;
   UserId assignedTo;
   string assignedRole;
@@ -120,7 +120,7 @@ struct CreateSystemRequest {
 }
 
 struct UpdateSystemRequest {
-  SystemConnectionId id;
+  SystemConnectionId connectionId;
   TenantId tenantId;
   string name;
   string description;
@@ -141,7 +141,7 @@ struct CreateDestinationRequest {
   TenantId tenantId;
   string name;
   string description;
-  SystemConnectionId systemId;
+  SystemConnectionId connectionId;
   DestinationType destinationType;
   string url;
   AuthenticationType authenticationType;
@@ -156,11 +156,11 @@ struct CreateDestinationRequest {
 }
 
 struct UpdateDestinationRequest {
-  DestinationId id;
+  DestinationId destinationId;
   TenantId tenantId;
   string name;
   string description;
-  SystemConnectionId systemId;
+  SystemConnectionId connectionId;
   DestinationType destinationType;
   string url;
   AuthenticationType authenticationType;

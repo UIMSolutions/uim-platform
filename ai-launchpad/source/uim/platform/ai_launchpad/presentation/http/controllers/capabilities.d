@@ -33,8 +33,8 @@ class CapabilitiesController : HttpController {
 
     auto tenantId = precheck.tenantId;
     auto cap = usecase.getCapabilities(tenantId);
-    if (cap.tenantId.isNull)
-      return errorResponse("Capabilities not found", 404);
+    // if (cap)
+    //   return errorResponse("Capabilities not found", 404);
 
     auto responseData = cap.toJson();
     return successResponse("Capabilities retrieved successfully", "Retrieved", 200, responseData);

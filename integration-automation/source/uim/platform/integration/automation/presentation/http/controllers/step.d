@@ -34,21 +34,30 @@ class StepController : ManageHttpController {
     router.put("/api/v1/steps/assign/*", &handleAssign);
   }
 
-  override protected void handleListByWorkflow(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected Json listByWorkflowHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto workflowId = WorkflowId(req.headers.get("X-Workflow-Id", ""));
+    auto steps = useCase.listSteps(tenantId, workflowId);
+
+    auto arr = steps.map!(s => s.toJson).array.toJson;
+
+    auto resp = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", steps.length)
+      .set("workflowId", workflowId)
+      .set("message", "Steps retrieved successfully");
+
+    return successResponse("Steps retrieved successfully", 200, resp);
+  }
+
+  protected void handleListByWorkflow(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto workflowId = WorkflowId(req.headers.get("X-Workflow-Id", ""));
-      auto steps = useCase.listSteps(tenantId, workflowId);
-
-      auto arr = steps.map!(s => s.toJson).array.toJson;
-
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", steps.length)
-        .set("workflowId", workflowId)
-        .set("message", "Steps retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
+      auto response = listByWorkflowHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -91,147 +100,190 @@ class StepController : ManageHttpController {
 
   protected void handleMyTasks(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto userId = UserId(req.headers.get("X-User-Id", ""));
-      auto tasks = useCase.getMyTasks(tenantId, userId);
-
-      auto arr = tasks.map!(s => s.toJson).array.toJson;
-
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", Json(tasks.length));
-
-      res.writeJsonBody(resp, 200);
+      auto response = myTasksHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  protected void handlert(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected Json startHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = precheck.id;
+    auto userId = UserId(req.headers.get("X-User-Id", ""));
+
+    auto result = useCase.startStep(tenantId, id, userId);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto resp = Json.emptyObject
+      .set("id", result.id)
+      .set("status", "inProgress")
+      .set("message", "Step started successfully");
+
+    return successResponse("Step started successfully", 200, resp);
+  }
+
+  protected void handleStart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto tenantId = precheck.tenantId;
-      auto userId = UserId(req.headers.get("X-User-Id", ""));
-
-      auto result = useCase.startStep(tenantId, id, userId);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("status", "inProgress")
-          .set("message", "Step started successfully");
-
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 400, result.message);
-      }
+      auto response = startHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  protected void handleplete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected Json completeHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = StepId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid Step ID", 400);
+
+    auto data = precheck.data;
+    CompleteStepRequest r;
+    r.tenantId = tenantId;
+    r.stepId = id;
+    r.completedBy = UserId(req.headers.get("X-User-Id", ""));
+    r.result = data.getString("result");
+
+    auto result = useCase.completeStep(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto resp = Json.emptyObject
+      .set("id", result.id)
+      .set("status", "completed")
+      .set("message", "Step completed successfully");
+
+    return successResponse("Step completed successfully", 200, resp);
+  }
+
+  protected void handleComplete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto data = precheck.data;
-      auto r = CompleteStepRequest();
-      r.id = id;
-      r.tenantId = tenantId;
-      r.completedBy = UserId(req.headers.get("X-User-Id", ""));
-      r.result = data.getString("result");
-
-      auto result = useCase.completeStep(r);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("status", "completed")
-          .set("message", "Step completed successfully");
-
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 400, result.message);
-      }
+      auto response = completeHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  protected void handlel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected Json failHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = StepId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid Step ID", 400);
+
+    auto data = precheck.data;
+    auto r = FailStepRequest();
+    r.tenantId = tenantId;
+    r.stepId = id;
+    r.reportedBy = UserId(req.headers.get("X-User-Id", ""));
+    r.errorMessage = data.getString("errorMessage");
+
+    auto result = useCase.failStep(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto resp = Json.emptyObject
+      .set("id", result.id)
+      .set("status", "failed");
+
+    return successResponse("Step marked as failed", 200, resp);
+  }
+
+  protected void handleFail(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto data = precheck.data;
-      auto r = FailStepRequest();
-      r.id = id;
-      r.tenantId = tenantId;
-      r.reportedBy = UserId(req.headers.get("X-User-Id", ""));
-      r.errorMessage = data.getString("errorMessage");
-
-      auto result = useCase.failStep(r);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("status", "failed")
-          .set("message", "Step marked as failed");
-
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 400, result.message);
-      }
+      auto response = failHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
+  }
+
+  protected Json skipHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = StepId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid Step ID", 400);
+
+    auto data = precheck.data;
+    auto r = SkipStepRequest();
+    r.stepId = id;
+    r.tenantId = tenantId;
+    r.skippedBy = UserId(req.headers.get("X-User-Id", ""));
+    r.reason = data.getString("reason");
+
+    auto result = useCase.skipStep(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto resp = Json.emptyObject
+      .set("id", result.id)
+      .set("status", "skipped")
+      .set("message", "Step skipped successfully");
+
+    return successResponse("Step skipped successfully", 200, resp);
   }
 
   protected void handleSkip(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto data = precheck.data;
-      auto r = SkipStepRequest();
-      r.id = id;
-      r.tenantId = tenantId;
-      r.skippedBy = UserId(req.headers.get("X-User-Id", ""));
-      r.reason = data.getString("reason");
+      auto response = skipHandler(req);
+      res.writeJsonBody(response, response.code);
 
-      auto result = useCase.skipStep(r);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("status", "skipped")
-          .set("message", "Step skipped successfully");
-
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 400, result.message);
-      }
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
+  protected Json assignHandler(HTTPServerRequest req) {
+    auto precheck = super.putHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = StepId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid Step ID", 400);
+
+    auto data = precheck.data;
+    AssignStepRequest r;
+    r.stepId = id;
+    r.tenantId = tenantId;
+    r.assignedTo = UserId(data.getString("assignedTo"));
+    r.assignedRole = data.getString("assignedRole");
+    r.assignedBy = UserId(req.headers.get("X-User-Id", ""));
+
+    auto result = useCase.assignStep(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto resp = Json.emptyObject
+      .set("id", result.id)
+      .set("message", "Step assigned successfully");
+
+    return successResponse("Step assigned successfully", 200, resp);
+  }
+
   protected void handleAssign(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto data = precheck.data;
-      auto r = AssignStepRequest();
-      r.id = id;
-      r.tenantId = tenantId;
-      r.assignedTo = UserId(data.getString("assignedTo"));
-      r.assignedRole = data.getString("assignedRole");
-
-      auto result = useCase.assignStep(r);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Step assigned successfully");
-
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 400, result.message);
-      }
+      auto response = assignHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

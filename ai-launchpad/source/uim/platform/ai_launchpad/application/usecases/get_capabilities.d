@@ -16,6 +16,7 @@ class GetCapabilitiesUseCase { // TODO: UIMUseCase {
     CapabilitiesResponse r;
     r.tenantId = tenantId;
     r.serviceName = "AI Launchpad Service";
+    r.apiVersion = "v1";
     r.serviceVersion = "1.0.0";
     r.supportedRuntimes = ["ai_core", "custom"];
     r.features = [
@@ -42,4 +43,17 @@ class GetCapabilitiesUseCase { // TODO: UIMUseCase {
     r.maxConnections = 50;
     return r;
   }
+}
+
+unittest {
+  auto usecase = new GetCapabilitiesUseCase();
+  auto tenantId = TenantId("tenant-a");
+
+  auto result = usecase.getCapabilities(tenantId);
+
+  assert(result.tenantId == tenantId);
+  assert(result.apiVersion == "v1");
+  assert(result.serviceName.length > 0);
+  assert(result.supportedRuntimes.length > 0);
+  assert(result.features.length > 0);
 }

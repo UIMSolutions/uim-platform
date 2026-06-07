@@ -13,7 +13,7 @@ mixin(ShowModule!());
 /// An integration scenario template — defines a reusable set of steps
 /// for integrating SAP cloud solutions with on-premise or other cloud systems.
 struct IntegrationScenario {
-  mixin(TenantEntity!ScenarioId);
+  mixin TenantEntity!ScenarioId;
 
   string name; // e.g. "SAP S/4HANA Cloud Integration"
   string description;
