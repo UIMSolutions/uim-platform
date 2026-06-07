@@ -6,6 +6,6 @@
 module uim.platform.customer_identity.presentation.rest;
 
 public:
-    import uim.platform.event_mesh.presentation.rest.interfaces;
-    import uim.platform.event_mesh.presentation.rest.services;
-    import uim.platform.event_mesh.presentation.rest.tests;
+    import uim.platform.customer_identity.presentation.rest.interfaces;
+    import uim.platform.customer_identity.presentation.rest.services;
+    import uim.platform.customer_identity.presentation.rest.tests;

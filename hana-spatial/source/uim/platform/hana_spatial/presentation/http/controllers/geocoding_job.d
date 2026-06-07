@@ -37,7 +37,7 @@ class GeocodingJobController : ManageHttpController {
     auto data = precheck.data;
     CreateGeocodingJobRequest r;
     r.tenantId = tenantId;
-    r.id = precheck.id;
+    r.jobId = GeocodingJobId(precheck.id);
     r.name = data.getString("name");
     r.description = data.getString("description");
     r.providerId = data.getString("providerId");
@@ -85,7 +85,10 @@ class GeocodingJobController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
+    auto id = GeocodingJobId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid geocoding job ID", 400);
+
     auto item = usecase.getById(tenantId, id);
     if (item.isNull)
       return errorResponse("", 0);
@@ -97,7 +100,10 @@ class GeocodingJobController : ManageHttpController {
   private void handleAction(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
+      auto id = GeocodingJobId(precheck.id);
+      if (id.isNull)
+        return errorResponse("Invalid geocoding job ID", 400);
+
       auto data = precheck.data;
       GeocodingJobActionRequest r;
       r.tenantId = tenantId;
@@ -122,7 +128,10 @@ override protected Json deleteHandler(HTTPServerRequest req) {
     return precheck;
 
   auto tenantId = precheck.tenantId;
-  auto id = precheck.id;
+  auto id = GeocodingJobId(precheck.id);
+  if (id.isNull)
+    return errorResponse("Invalid geocoding job ID", 400);
+
   auto result = usecase.remove(tenantId, id);
   if (result.hasError)
     return errorResponse(result.message, 400);

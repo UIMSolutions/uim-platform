@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 struct Provider {
-  mixin TenantEntity!(ProviderId);
+  mixin TenantEntity!ProviderId;
 
   string name;
   string description;

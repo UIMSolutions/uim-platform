@@ -33,7 +33,7 @@ struct GeocodingJobItem {
 }
 
 struct GeocodingJob {
-  mixin TenantEntity!(GeocodingJobId);
+  mixin TenantEntity!GeocodingJobId;
 
   string name;
   string description;

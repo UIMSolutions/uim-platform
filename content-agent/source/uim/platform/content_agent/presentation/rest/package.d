@@ -6,6 +6,6 @@
 module uim.platform.content_agent.presentation.rest;
 
 public:
-    import uim.platform.event_mesh.presentation.rest.interfaces;
-    import uim.platform.event_mesh.presentation.rest.services;
-    import uim.platform.event_mesh.presentation.rest.tests;
+    import uim.platform.content_agent.presentation.rest.interfaces;
+    import uim.platform.content_agent.presentation.rest.services;
+    import uim.platform.content_agent.presentation.rest.tests;

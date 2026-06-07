@@ -6,6 +6,6 @@
 module uim.platform.buildcode.presentation.rest;
 
 public:
-    import uim.platform.event_mesh.presentation.rest.interfaces;
-    import uim.platform.event_mesh.presentation.rest.services;
-    import uim.platform.event_mesh.presentation.rest.tests;
+    import uim.platform.buildcode.presentation.rest.interfaces;
+    import uim.platform.buildcode.presentation.rest.services;
+    import uim.platform.buildcode.presentation.rest.tests;

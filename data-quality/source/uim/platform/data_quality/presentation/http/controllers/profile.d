@@ -55,45 +55,46 @@ class ProfileController : HttpController {
     if (profile.isNull)
       return errorResponse("Failed to profile dataset", 500);
 
-      return successResponse("Data profile created successfully", "Created", 201, profile.toJson);
+    return successResponse("Data profile created successfully", "Created", 201, profile.toJson);
   }
 
-    protected void handleProfile(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-      try {
-        auto response = profileHandler(req);  
-        res.writeJsonBody(response, response.code);
-      } catch (Exception e) {
-        writeError(res, 500, "Internal server error");
-      }
+  protected void handleProfile(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto response = profileHandler(req);
+      res.writeJsonBody(response, response.code);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
     }
+  }
 
-    override protected Json listHandler(HTTPServerRequest req) {
-      auto precheck = super.listHandler(req);
-      if (precheck.hasError)
-        return precheck;
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-      auto profiles = usecase.listByTenant(tenantId);
-      auto arr = profiles.map!(p => p.toJson).array.toJson;
+    auto profiles = usecase.listByTenant(tenantId);
+    auto arr = profiles.map!(p => p.toJson).array.toJson;
 
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", Json(profiles.length));
-      return successResponse("Data profiles retrieved successfully", 200, resp);
-    }
+    auto resp = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", Json(profiles.length));
+    return successResponse("Data profiles retrieved successfully", 200, resp);
+  }
 
-    override protected Json getHandler(HTTPServerRequest req) {
-      auto precheck = super.getHandler(req);
-      if (precheck.hasError)
-        return precheck;
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto tenantId = precheck.tenantId;
-      auto profile = usecase.getById(tenantId, id);
-      if (profile.isNull)
-        return errorResponse("Data profile not found", 404);
-        
-      return successResponse("Data profile retrieved successfully", 200, profile.toJson);
-    }
+    auto tenantId = precheck.tenantId;
+    auto id = precheck.id;
+    auto tenantId = precheck.tenantId;
+    auto profile = usecase.getById(tenantId, id);
+    if (profile.isNull)
+      return errorResponse("Data profile not found", 404);
+
+    return successResponse("Data profile retrieved successfully", 200, profile.toJson);
+  }
+}
