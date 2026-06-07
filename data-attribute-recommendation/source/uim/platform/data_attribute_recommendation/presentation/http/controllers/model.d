@@ -7,7 +7,7 @@ module uim.platform.data_attribute_recommendation.presentation.http.controllers.
 
 // 
 // import uim.platform.data_attribute_recommendation.application.usecases.manage.models;
-// import uim.platform.data_attribute_recommendation.application.dto;
+
 // import uim.platform.data_attribute_recommendation.domain.entities.model_configuration;
 
 import uim.platform.data_attribute_recommendation;

@@ -6,7 +6,6 @@
 module uim.platform.data_quality.domain.services.quality_scorer;
 
 // import uim.platform.data_quality.domain.entities.quality_dashboard;
-// import uim.platform.data_quality.domain.entities.validation_result;
 // import uim.platform.data_quality.domain.entities.data_profile;
 
 import uim.platform.data_quality;

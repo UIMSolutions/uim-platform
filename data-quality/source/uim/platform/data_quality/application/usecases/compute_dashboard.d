@@ -6,9 +6,7 @@
 module uim.platform.data_quality.application.usecases.compute_dashboard;
 
 // import uim.platform.data_quality.domain.entities.quality_dashboard;
-// import uim.platform.data_quality.domain.entities.validation_result;
 // import uim.platform.data_quality.domain.entities.data_profile;
-// import uim.platform.data_quality.domain.ports.repositories.validation_results;
 // import uim.platform.data_quality.domain.ports.repositories.data_profiles;
 // import uim.platform.data_quality.domain.services.quality_scorer;
 
