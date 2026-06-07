@@ -22,7 +22,7 @@ class ManageClientLogsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult upload(UploadClientLogRequest r) {
+    CommandResult uploadLog(UploadClientLogRequest r) {
         ClientLogEntry entry;
         entry.initEntity(r.tenantId);
 
@@ -41,23 +41,23 @@ class ManageClientLogsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, entry.id.value, "");
     }
 
-    ClientLogEntry getClientLog(TenantId tenantId, ClientLogEntryId id) {
+    ClientLogEntry getLog(TenantId tenantId, ClientLogEntryId id) {
         return repo.findById(tenantId, id);
     }
 
-    ClientLogEntry[] listClientLogs(TenantId tenantId, MobileAppId appId) {
+    ClientLogEntry[] listLogs(TenantId tenantId, MobileAppId appId) {
         return repo.findByApp(tenantId, appId);
     }
 
-    ClientLogEntry[] listClientLogs(TenantId tenantId, DeviceRegistrationId deviceId) {
+    ClientLogEntry[] listLogs(TenantId tenantId, DeviceRegistrationId deviceId) {
         return repo.findByDevice(tenantId, deviceId);
     }
 
-    ClientLogEntry[] listClientLogs(TenantId tenantId, MobileAppId appId, string level) {
+    ClientLogEntry[] listLogs(TenantId tenantId, MobileAppId appId, string level) {
         return repo.findByLevel(tenantId, appId, level.toLoggingLevel());
     }
 
-    CommandResult deleteClientLog(TenantId tenantId, ClientLogEntryId id) {
+    CommandResult deleteLog(TenantId tenantId, ClientLogEntryId id) {
         auto entry = repo.findById(tenantId, id);
         if (entry.isNull)
             return CommandResult(false, "", "Client log entry not found");
@@ -66,7 +66,7 @@ class ManageClientLogsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, entry.id.value, "");
     }
 
-    size_t countClientLogs(TenantId tenantId, MobileAppId appId) {
+    size_t countLogs(TenantId tenantId, MobileAppId appId) {
         return repo.countByApp(tenantId, appId);
     }
 

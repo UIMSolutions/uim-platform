@@ -14,13 +14,13 @@ import uim.platform.mobile;
 struct MobileApp {
   mixin TenantEntity!(MobileAppId);
 
-  string name;
-  string description;
-  string bundleId;        // e.g. com.example.app
-  AppPlatform platform;
-  AppStatus status;
-  string securityConfig;  // JSON security configuration
-  string authProvider;    // identity provider URL
+  string name; // e.g. "My Mobile App"
+  string description; // optional app description
+  string bundleId; // e.g. "com.example.myapp", must be unique within tenant
+  AppPlatform platform; // e.g. iOS, Android
+  AppStatus status; // e.g. Active, Inactive, Deleted
+  string securityConfig; // JSON string with security settings (e.g. allowed origins, CORS config)
+  string authProvider; //  e.g. "Firebase", "Auth0", "Custom"
   bool pushEnabled;
   bool offlineEnabled;
   string iconUrl;

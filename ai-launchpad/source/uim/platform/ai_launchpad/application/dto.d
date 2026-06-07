@@ -356,7 +356,11 @@ struct PatchPromptRequest {
   string[][] messages;
   double temperature;
   int maxTokens;
-
+  double presencePenalty;
+  double frequencyPenalty; 
+  double topP; 
+  string[] inputParams;
+  
   Json toJson() const {
     return Json.emptyObject
       .set("promptId", promptId)
@@ -364,7 +368,11 @@ struct PatchPromptRequest {
       .set("status", status)
       .set("messages", messages.array.toJson)
       .set("temperature", temperature)
-      .set("maxTokens", maxTokens);
+      .set("maxTokens", maxTokens)
+      .set("topP", topP)
+      .set("inputParams", inputParams.array.toJson)
+      .set("frequencyPenalty", frequencyPenalty)
+      .set("presencePenalty", presencePenalty);
   }
 }
 

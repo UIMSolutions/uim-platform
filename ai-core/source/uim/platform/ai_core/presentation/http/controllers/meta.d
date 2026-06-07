@@ -84,7 +84,7 @@ class MetaController : HttpController {
   protected void handleMeta(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto response = metaHandler(req);
-      res.writeJsonBody(response, response.statusCode);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

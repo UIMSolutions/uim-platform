@@ -63,7 +63,7 @@ class ModelController : ManageHttpController {
   protected void handleRegister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto response = registerHandler(req);
-      res.writeJsonBody(resp, 201);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -82,10 +82,10 @@ class ModelController : ManageHttpController {
     auto models = scenarioId.isEmpty
       ? usecase.listModels(tenantId, connectionId) : usecase.listModels(tenantId, connectionId, scenarioId);
 
-    auto list = items.map!(item => item.toJson()).array.toJson;
+    auto list = models.map!(item => item.toJson()).array.toJson;
 
     auto responseData = Json.emptyObject
-      .set("count", items.length)
+      .set("count", models.length)
       .set("resources", list);
     return successResponse("Model list retrieved successfully", "Retrieved", 200, responseData);
   }
@@ -134,15 +134,6 @@ class ModelController : ManageHttpController {
 
     auto resp = Json.emptyObject.set("id", result.id);
     return successResponse("Model updated successfully", "Updated", 200, resp);
-  }
-
-  protected void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = patchHandler(req);
-      res.writeJsonBody(response.data, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {

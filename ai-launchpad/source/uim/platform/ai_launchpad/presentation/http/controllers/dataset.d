@@ -82,7 +82,7 @@ class DatasetController : ManageHttpController {
     auto list = datasets.map!(item => item.toJson()).array.toJson;
 
     auto responseData = Json.emptyObject
-      .set("count", items.length)
+      .set("count", datasets.length)
       .set("resources", list);
     return successResponse("Dataset list retrieved successfully", "Retrieved", 200, responseData);
   }

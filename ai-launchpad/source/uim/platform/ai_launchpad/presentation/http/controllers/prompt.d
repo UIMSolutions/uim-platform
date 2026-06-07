@@ -99,7 +99,7 @@ class PromptController : ManageHttpController {
     return successResponse("Prompt retrieved successfully", 200, responseData);
   }
 
-  protected Json patchHandler(HTTPServerRequest req) {
+  override protected Json patchHandler(HTTPServerRequest req) {
     auto precheck = super.patchHandler(req);
     if (precheck.hasError)
       return precheck;
@@ -129,14 +129,5 @@ class PromptController : ManageHttpController {
 
     auto responseData = Json.emptyObject.set("id", result.id);
     return successResponse("Prompt updated successfully", 200, responseData);
-  }
-
-  protected void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = patchHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
   }
 }

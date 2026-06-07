@@ -70,10 +70,10 @@ class ExecutionController : ManageHttpController {
     auto executions = scenarioId.isEmpty
       ? usecase.listExecutions(tenantId, connectionId) : usecase.listExecutions(tenantId, connectionId, scenarioId);
 
-    aauto list = items.map!(item => item.toJson()).array.toJson;
+    auto list = executions.map!(item => item.toJson()).array.toJson;
 
     auto responseData = Json.emptyObject
-      .set("count", list.length)
+      .set("count", executions.length)
       .set("resources", list);
     return successResponse("Execution list retrieved successfully", 200, responseData);
   }
@@ -98,7 +98,7 @@ class ExecutionController : ManageHttpController {
     return successResponse("Execution retrieved successfully", 200, responseData);
   }
 
-  protected Json patchHandler(HTTPServerRequest req) {
+  override protected Json patchHandler(HTTPServerRequest req) {
     auto precheck = super.patchHandler(req);
     if (precheck.hasError)
       return precheck;
@@ -123,15 +123,6 @@ class ExecutionController : ManageHttpController {
 
     auto resp = Json.emptyObject.set("id", result.id);
     return successResponse("Execution updated successfully", 200, resp);
-  }
-
-  protected void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto resp = patchHandler(req);
-      res.writeJsonBody(resp, resp.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
   }
 
   protected Json bulkPatchHandler(HTTPServerRequest req) {

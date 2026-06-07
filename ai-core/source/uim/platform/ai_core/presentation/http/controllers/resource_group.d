@@ -88,7 +88,7 @@ class ResourceGroupController : ManageHttpController {
     if (precheck.hasError)
       return precheck;
 
-    auto tenantId = tenantId;
+    auto tenantId = precheck.tenantId;
     auto id = ResourceGroupId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid resource group ID", 400);

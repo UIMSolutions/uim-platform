@@ -32,9 +32,9 @@ class CapabilitiesController : HttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto cap = usecase.getCapabilities();
+    auto cap = usecase.getCapabilities(tenantId);
     if (cap.isNull)
-      return errorResponse("Scan job not found", 404);
+      return errorResponse("Capabilities not found", 404);
 
     auto responseData = cap.toJson();
     return successResponse("Capabilities retrieved successfully", "Retrieved", 200, responseData);

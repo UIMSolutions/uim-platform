@@ -95,9 +95,9 @@ class ScenarioController : ManageHttpController {
 
     auto s = usecase.getScenario(tenantId, connectionId, id);
     if (s.isNull)
-      return errorResponse("Invalid scan job ID", 400);
+      return errorResponse("Scenario not found", 404);
 
-    auto responseData = job.toJson();
+    auto responseData = s.toJson();
     return successResponse("Scenario retrieved successfully", "Retrieved", 200, responseData);
   }
 

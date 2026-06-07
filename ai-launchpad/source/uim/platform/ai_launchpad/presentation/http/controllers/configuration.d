@@ -84,9 +84,9 @@ class ConfigurationController : ManageHttpController {
 
     auto c = configurations.getConfiguration(tenantId, connectionId, id);
     if (c.isNull)
-      return errorResponse("Scan job not found", 404);
+      return errorResponse("Configuration not found", 404);
 
-    auto responseData = job.toJson();
+    auto responseData = c.toJson();
     return successResponse("Configuration retrieved successfully", 200, responseData);
   }
 

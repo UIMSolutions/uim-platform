@@ -115,15 +115,6 @@ class PromptCollectionController : ManageHttpController {
     return successResponse("Prompt collection updated successfully", 200, resp);
   }
 
-  protected void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto resp = patchHandler(req);
-      res.writeJsonBody(resp, resp.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
-
   override protected Json deleteHandler(HTTPServerRequest req) {
     auto precheck = super.deleteHandler(req);
     if (precheck.hasError)

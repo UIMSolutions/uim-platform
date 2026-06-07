@@ -94,10 +94,11 @@ class ClientLogController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
-    auto result = usecase.get(id);
+    auto id = ClientLogEntryId(precheck.id);
+    auto result = usecase.get(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
+      
     auto resp = Json.emptyObject
       .set("id", result.data.id)
       .set("tenantId", result.data.tenantId)

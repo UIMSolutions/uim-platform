@@ -95,10 +95,14 @@ class DeviceRegistrationController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
+    auto id = DeviceRegistrationId(precheck.id);
+    if (id.isNull)
+      errorResponse("Invalid Device Registraion ID", 400);
+
     auto result = usecase.get(id);
     if (result.hasError)
       return errorResponse(result.message, 400);
+
     auto resp = Json.emptyObject
       .set("id", result.data.id)
       .set("tenantId", result.data.tenantId)
@@ -120,12 +124,16 @@ class DeviceRegistrationController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
+    auto id = DeviceRegistrationId(precheck.id);
+    if (id.isNull)
+      errorResponse("Invalid Device Registraion ID", 400);
+
     auto data = precheck.data;
     auto status = data.getString("status");
     auto result = usecase.updateStatus(id, status);
     if (result.hasError)
       return errorResponse(result.message, 400);
+
     auto resp = Json.emptyObject
       .set("id", result.id);
 
@@ -147,7 +155,10 @@ class DeviceRegistrationController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
+    auto id = DeviceRegistrationId(precheck.id);
+    if (id.isNull)
+      errorResponse("Invalid Device Registraion ID", 400);
+      
     auto result = usecase.deleteDeviceRegistration(DeviceRegistrationId(id));
     if (result.hasError)
       return errorResponse(result.message, 400);

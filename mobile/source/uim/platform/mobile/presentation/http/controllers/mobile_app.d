@@ -88,7 +88,10 @@ class MobileAppController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
+    auto id = MobileAppId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid mobile app ID", 400);
+
     auto result = usecase.get(id);
     if (result.hasError)
       return errorResponse(result.message, 400);
@@ -117,7 +120,10 @@ class MobileAppController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
+    auto id = MobileAppId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid mobile app ID", 400);
+
     auto data = precheck.data;
     UpdateMobileAppRequest r;
     r.id = id;
@@ -132,13 +138,13 @@ class MobileAppController : ManageHttpController {
     auto result = usecase.update(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
+
     auto resp = Json.emptyObject
       .set("id", result.id)
       .set("message", "Mobile app updated successfully");
 
     return successResponse("Mobile app updated successfully", "Updated", 200, resp);
-
-  }
+    }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
     auto precheck = super.deleteHandler(req);
@@ -147,13 +153,15 @@ class MobileAppController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto id = MobileAppId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid mobile app ID", 400);
+
     auto result = usecase.deleteMobileApp(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
-    auto resp = Json.emptyObject
-      .set("id", result.id)
-      .set("message", "Mobile app deleted successfully");
 
+    auto resp = Json.emptyObject
+      .set("id", result.id);
     return successResponse("Mobile app deleted successfully", "Deleted", 200, resp);
 
   }

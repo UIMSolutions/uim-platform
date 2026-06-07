@@ -87,7 +87,7 @@ class WorkspaceController : ManageHttpController {
     return successResponse("Workspace retrieved successfully", "Retrieved", 200, responseData);
   }
 
-  protected Json patchHandler(HTTPServerRequest req) {
+  override protected Json patchHandler(HTTPServerRequest req) {
     auto precheck = super.patchHandler(req);
     if (precheck.hasError)
       return precheck;
@@ -108,15 +108,6 @@ class WorkspaceController : ManageHttpController {
       .set("message", "Workspace updated");
 
     return successResponse("Workspace updated successfully", "Updated", 200, resp);
-  }
-
-  protected void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = patchHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {

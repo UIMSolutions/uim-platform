@@ -80,9 +80,11 @@ class TemplateController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
     auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
-
+    auto id = TemplateId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid template ID", 400);
+      
     auto t = usecase.getById(id, clientId);
     if (t.isNull)
       return errorResponse("Template not found", 404);
@@ -97,7 +99,10 @@ class TemplateController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
+    auto id = TemplateId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid template ID", 400);
+
     auto data = precheck.data;
     UpdateTemplateRequest r;
     r.tenantId = tenantId;
@@ -123,15 +128,18 @@ class TemplateController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
     auto clientId = ClientId(req.headers.get("X-Client-Id", ""));
+    auto id = TemplateId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid template ID", 400);
 
-    auto result = usecase.deleteTemplate(TemplateId(id), clientId);
+    auto result = usecase.deleteTemplate(tenantId, id, clientId);
     if (result.hasError)
       return errorResponse(result.message, 400);
+      
     auto resp = Json.emptyObject
       .set("message", "Template deleted");
 
-    return successResponse("Template deleted", 0, resp);
+    return successResponse("Template deleted successfully", 200, resp);
   }
 }

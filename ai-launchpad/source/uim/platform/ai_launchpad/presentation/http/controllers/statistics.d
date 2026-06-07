@@ -35,10 +35,10 @@ class StatisticsController : HttpController {
     auto tenantId = precheck.tenantId;
 
     auto id = ScenarioId(precheck.id);
-    // if (id.isNull)
-    //     return errorResponse("Invalid scenario ID", 400);
+    if (id.isNull)
+         return errorResponse("Invalid scenario ID", 400);
 
-    auto tenantId = precheck.tenantId;
+    auto tenantId =precheck.tenantId;
     auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
     auto scenarioId = ScenarioId(req.headers.get("X-Scenario-Id", ""));
     auto period = req.headers.get("X-Period", "").to!StatisticsPeriod;
@@ -51,7 +51,7 @@ class StatisticsController : HttpController {
     else
       stats = usecase.listStatistics(tenantId);
 
-    auto list = items.map!(item => item.toJson()).array.toJson;
+    auto list = stats.map!(item => item.toJson()).array.toJson;
 
     auto responseData = Json.emptyObject
       .set("count", list.length)
