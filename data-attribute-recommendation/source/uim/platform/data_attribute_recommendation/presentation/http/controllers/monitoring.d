@@ -9,7 +9,7 @@ module uim.platform.data_attribute_recommendation.presentation.http.controllers
 // 
 // 
 // import uim.platform.data_attribute_recommendation.application.usecases.monitor_training;
-// import uim.platform.data_attribute_recommendation.domain.types;
+
 import uim.platform.data_attribute_recommendation;
 
 // mixin(ShowModule!());

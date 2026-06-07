@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.data_attribute_recommendation.infrastructure.persistence.memory.training_jobs;
 
-// import uim.platform.data_attribute_recommendation.domain.types;
+
 // import uim.platform.data_attribute_recommendation.domain.entities.training_job;
 // import uim.platform.data_attribute_recommendation.domain.ports.repositories.training_jobs;
 import uim.platform.data_attribute_recommendation;

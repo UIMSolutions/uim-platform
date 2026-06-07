@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.data_attribute_recommendation.domain.ports.deployments;
 
-// import uim.platform.data_attribute_recommendation.domain.types;
+
 // import uim.platform.data_attribute_recommendation.domain.entities.model_deployment;
 import uim.platform.data_attribute_recommendation;
 

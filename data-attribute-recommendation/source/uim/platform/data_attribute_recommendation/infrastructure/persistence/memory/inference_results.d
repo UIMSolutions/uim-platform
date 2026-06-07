@@ -6,7 +6,7 @@
 module uim.platform.data_attribute_recommendation.infrastructure.persistence
   .memory.inference_results;
 
-// import uim.platform.data_attribute_recommendation.domain.types;
+
 // import uim.platform.data_attribute_recommendation.domain.entities.inference_result;
 // import uim.platform.data_attribute_recommendation.domain.ports.repositories.inference_results;
 import uim.platform.data_attribute_recommendation;

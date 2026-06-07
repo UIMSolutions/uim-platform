@@ -6,7 +6,7 @@
 module uim.platform.data_quality.presentation.http.controllers.validate;
 
 // import uim.platform.data_quality.application.usecases.validate_data;
-// import uim.platform.data_quality.application.dto;
+
 
 // import uim.platform.data_quality.domain.entities.validation_result;
 import uim.platform.data_quality;
