@@ -11,7 +11,7 @@ module uim.platform.management.application.usecases.query_platform_events;
 
 import uim.platform.management;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Use case: query platform events for audit and monitoring.

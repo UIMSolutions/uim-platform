@@ -6,7 +6,7 @@
 module uim.platform.ui_flexibility.infrastructure.persistence.memory.flex_applications;
 import uim.platform.ui_flexibility;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

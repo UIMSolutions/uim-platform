@@ -9,7 +9,7 @@ module uim.platform.foundry.domain.ports.repositories.space;
 // import uim.platform.foundry.domain.entities.space;
 import uim.platform.foundry;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Port for persisting and querying spaces.

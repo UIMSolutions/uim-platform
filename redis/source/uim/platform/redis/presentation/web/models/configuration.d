@@ -7,7 +7,7 @@ module uim.platform.redis.presentation.web.models.configuration;
 
 import uim.platform.redis;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

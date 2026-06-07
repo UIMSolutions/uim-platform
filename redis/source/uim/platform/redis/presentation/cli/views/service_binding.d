@@ -9,7 +9,7 @@ import uim.platform.redis;
 import std.stdio : writeln, writefln;
 import std.conv  : to;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

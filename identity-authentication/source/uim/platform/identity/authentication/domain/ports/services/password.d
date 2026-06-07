@@ -6,7 +6,7 @@
 module uim.platform.identity.authentication.domain.ports.repositories.services.password;
 import uim.platform.identity.authentication;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 /// Port: outgoing — password hashing adapter.
 interface PasswordService {

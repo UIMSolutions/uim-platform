@@ -7,7 +7,7 @@ module uim.platform.rfc.infrastructure.container;
 
 import uim.platform.rfc;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 struct Container {

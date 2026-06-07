@@ -9,7 +9,7 @@ module uim.platform.logging.infrastructure.persistence.memory.notification_chann
 
 import uim.platform.logging;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

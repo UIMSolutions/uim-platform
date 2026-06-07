@@ -9,7 +9,7 @@ module uim.platform.identity.authentication.domain.services.risk_evaluator;
 // import uim.platform.identity.authentication.domain.types;
 import uim.platform.identity.authentication;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 /// Domain service: evaluates risk level for an authentication attempt.
 struct RiskEvaluationContext {

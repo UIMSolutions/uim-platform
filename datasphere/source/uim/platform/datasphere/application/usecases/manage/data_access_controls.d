@@ -13,7 +13,7 @@ module uim.platform.datasphere.application.usecases.manage.data_access_controls;
 
 import uim.platform.datasphere;
 
-mixin(ShowModule!()); 
+// mixin(ShowModule!()); 
 
 @safe:
 class ManageDataAccessControlsUseCase { // TODO: UIMUseCase {

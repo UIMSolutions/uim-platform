@@ -7,7 +7,7 @@ module uim.platform.datasphere_composer.domain.entities.attribute_mapping;
 
 import uim.platform.datasphere_composer;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

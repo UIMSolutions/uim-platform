@@ -7,7 +7,7 @@ module uim.platform.responsibility.domain.repositories.team_members;
 
 import uim.platform.responsibility;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

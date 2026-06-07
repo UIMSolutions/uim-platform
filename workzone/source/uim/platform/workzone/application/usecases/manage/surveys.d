@@ -12,7 +12,7 @@ module uim.platform.workzone.application.usecases.manage.surveys;
 // import uim.platform.workzone.application.dto;
 import uim.platform.workzone;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class ManageSurveysUseCase { // TODO: UIMUseCase {

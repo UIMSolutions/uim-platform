@@ -18,7 +18,7 @@ module uim.platform.content_agent.application.usecases.manage.transport_requests
 
 import uim.platform.content_agent;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Application service for transport request lifecycle management.

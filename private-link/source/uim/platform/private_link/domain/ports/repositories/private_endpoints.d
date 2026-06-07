@@ -6,7 +6,7 @@
 module uim.platform.private_link.domain.ports.repositories.private_endpoints;
 import uim.platform.private_link;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Port: repository contract for PrivateEndpoint persistence.

@@ -7,7 +7,7 @@ module uim.platform.usage_data.infrastructure.persistence.memory.repositories.mo
 
 import uim.platform.usage_data;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 /// In-memory adapter implementing MonthlyCostReportRepository port.
 class MemoryMonthlyCostReportRepository

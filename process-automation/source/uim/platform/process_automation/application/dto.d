@@ -7,7 +7,7 @@ module uim.platform.process_automation.application.dto;
 
 import uim.platform.process_automation.domain.types;import uim.platform.process_automation;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

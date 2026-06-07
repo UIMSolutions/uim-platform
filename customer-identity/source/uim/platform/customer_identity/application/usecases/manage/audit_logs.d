@@ -7,7 +7,7 @@ module uim.platform.customer_identity.application.usecases.manage.audit_logs;
 
 import uim.platform.customer_identity;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

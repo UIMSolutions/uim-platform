@@ -13,7 +13,7 @@ module uim.platform.auditlog.application.usecases.manage.retention;
 
 import uim.platform.auditlog;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

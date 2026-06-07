@@ -12,7 +12,7 @@ module uim.platform.document_ai.infrastructure.persistence.memory.schema;
  
 import uim.platform.document_ai;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemorySchemaRepository : TenantRepository!(Schema, SchemaId), SchemaRepository {

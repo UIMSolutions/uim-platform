@@ -1,7 +1,7 @@
 module uim.platform.integration_suite.presentation.http.controllers.trading_partners;
 import uim.platform.integration_suite;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

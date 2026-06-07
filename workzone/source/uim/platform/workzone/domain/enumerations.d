@@ -2,7 +2,7 @@ module uim.platform.workzone.domain.enumerations;
 
 import uim.platform.workzone;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

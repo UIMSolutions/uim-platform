@@ -12,7 +12,7 @@ import std.path       : buildPath;
 import std.algorithm  : filter;
 import std.array      : array;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

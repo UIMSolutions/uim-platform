@@ -13,7 +13,7 @@ module uim.platform.identity.authentication.presentation.http.controllers.group;
 
 import uim.platform.identity.authentication;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 /// HTTP controller for group management API.
 class GroupController : ManageHttpController {

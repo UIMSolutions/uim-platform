@@ -9,7 +9,7 @@ module uim.platform.dms.application.domain.ports.repositories.repositories;
 
 import uim.platform.dms.application;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 interface IRepositoryRepository : ITenantRepository!(Repository, RepositoryId) {
   bool existsByName(TenantId tenantId, string name);

@@ -7,7 +7,7 @@ module uim.platform.customer_identity.infrastructure.persistence.memory.site_pol
 
 import uim.platform.customer_identity;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

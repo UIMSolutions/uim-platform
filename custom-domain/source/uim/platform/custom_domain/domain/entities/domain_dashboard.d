@@ -7,7 +7,7 @@ module uim.platform.custom_domain.domain.entities.domain_dashboard;
 // import uim.platform.custom_domain.domain.types;
 import uim.platform.custom_domain;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Dashboard metric representing a specific aspect of the domain management system, such as total domains, active certificates, etc.

@@ -7,7 +7,7 @@ module uim.platform.data_attribute_recommendation.domain.entities.inference_requ
 
 import uim.platform.data_attribute_recommendation;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// A request to predict/recommend attributes for input data

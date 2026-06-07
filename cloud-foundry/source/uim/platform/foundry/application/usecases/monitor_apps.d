@@ -14,7 +14,7 @@ module uim.platform.foundry.application.usecases.monitor_apps;
 // import uim.platform.foundry.domain.ports;
 import uim.platform.foundry;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Read-only summaries for application health and space resource usage.

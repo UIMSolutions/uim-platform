@@ -10,7 +10,7 @@ module uim.platform.connectivity.infrastructure.persistence.memory.access_rules;
 
 import uim.platform.connectivity;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryAccessRuleRepository : TenantRepository!(AccessRule, RuleId), AccessRuleRepository {

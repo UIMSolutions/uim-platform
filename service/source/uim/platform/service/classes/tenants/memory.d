@@ -7,7 +7,7 @@ module uim.platform.service.classes.tenants.memory;
 
 import uim.platform.service;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

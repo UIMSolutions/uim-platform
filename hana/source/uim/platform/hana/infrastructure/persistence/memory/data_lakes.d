@@ -13,7 +13,7 @@ module uim.platform.hana.infrastructure.persistence.memory.data_lakes;
 
 import uim.platform.hana;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryDataLakeRepository : TenantRepository!(DataLake, DataLakeId), DataLakeRepository {

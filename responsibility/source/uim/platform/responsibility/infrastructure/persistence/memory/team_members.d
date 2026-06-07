@@ -7,7 +7,7 @@ module uim.platform.responsibility.infrastructure.persistence.memory.team_member
 
 import uim.platform.responsibility;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

@@ -10,7 +10,7 @@ module uim.platform.ai_core.infrastructure.persistence.memory.deployments;
 
 import uim.platform.ai_core;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryDeploymentRepository : TenantRepository!(Deployment, DeploymentId), DeploymentRepository {

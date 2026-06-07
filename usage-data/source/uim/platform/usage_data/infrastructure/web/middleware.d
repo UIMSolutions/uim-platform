@@ -7,7 +7,7 @@ module uim.platform.usage_data.infrastructure.web.middleware;
 
 import uim.platform.usage_data;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 /// CORS middleware — adds cross-origin headers for browser access.
 void corsMiddleware(scope HTTPServerRequest req, scope HTTPServerResponse res) {

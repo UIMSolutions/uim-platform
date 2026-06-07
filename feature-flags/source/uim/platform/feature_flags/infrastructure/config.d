@@ -8,7 +8,7 @@ module uim.platform.feature_flags.infrastructure.config;
 import std.process : environment;
 import std.conv    : to, ConvException;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

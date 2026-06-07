@@ -8,7 +8,7 @@ module uim.platform.workzone.domain.ports.repositories.knowledge_base_articles;
 // import uim.platform.workzone.domain.entities.knowledge_base_article;
 import uim.platform.workzone;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 interface KnowledgeBaseArticleRepository : ITenantRepository!(KnowledgeBaseArticle, KBArticleId) {

@@ -8,7 +8,7 @@ module uim.platform.logging.domain.services.log_parser;
 
 import uim.platform.logging;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 struct ParseResult {

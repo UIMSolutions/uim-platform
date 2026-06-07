@@ -6,7 +6,7 @@
 module uim.platform.market_refinitiv.infrastructure.container;
 import uim.platform.market_refinitiv;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

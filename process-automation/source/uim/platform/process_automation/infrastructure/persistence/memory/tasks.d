@@ -7,7 +7,7 @@ module uim.platform.process_automation.infrastructure.persistence.memory.tasks;
 
 import uim.platform.process_automation;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryTaskRepository : TenantRepository!(PATask, TaskId), TaskRepository {

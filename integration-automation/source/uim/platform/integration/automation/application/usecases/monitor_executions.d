@@ -14,7 +14,7 @@ module uim.platform.integration.automation.application.usecases.monitor_executio
 // import uim.platform.integration.automation.domain.ports;
 import uim.platform.integration.automation;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MonitorExecutionsUseCase { // TODO: UIMUseCase {

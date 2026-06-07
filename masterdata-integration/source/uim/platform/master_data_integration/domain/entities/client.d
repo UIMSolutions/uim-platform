@@ -7,7 +7,7 @@ module uim.platform.master_data_integration.domain.entities.client;
 
 import uim.platform.master_data_integration;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// A connected client system participating in master data integration.

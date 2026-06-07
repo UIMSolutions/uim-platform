@@ -7,7 +7,7 @@ module uim.platform.portal.domain.entities.content_provider;
 // mport uim.platform.portal.domain.types;
 import uim.platform.portal;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Content provider — source of apps and content.

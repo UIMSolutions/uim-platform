@@ -7,7 +7,7 @@ module uim.platform.alert_notification.application.usecases.produce.events;
 
 import uim.platform.alert_notification;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

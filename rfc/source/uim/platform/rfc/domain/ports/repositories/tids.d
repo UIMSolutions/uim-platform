@@ -7,7 +7,7 @@ module uim.platform.rfc.domain.ports.repositories.tids;
 
 import uim.platform.rfc;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 interface TidRepository {

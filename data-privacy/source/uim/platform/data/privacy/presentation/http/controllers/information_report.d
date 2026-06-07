@@ -10,7 +10,7 @@ module uim.platform.data.privacy.presentation.http.controllers.information_repor
 // import uim.platform.data.privacy.domain.entities.information_report;
 import uim.platform.data.privacy;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class InformationReportController : ManageHttpController {

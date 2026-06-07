@@ -16,7 +16,7 @@ module uim.platform.foundry.application.usecases.manage.routes;
 // import uim.platform.foundry.application.dto;
 import uim.platform.foundry;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class ManageRoutesUseCase { // TODO: UIMUseCase {

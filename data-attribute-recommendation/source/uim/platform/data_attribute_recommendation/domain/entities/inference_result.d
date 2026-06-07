@@ -7,7 +7,7 @@ module uim.platform.data_attribute_recommendation.domain.entities.inference_resu
 
 import uim.platform.data_attribute_recommendation;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// The predicted attributes and confidence scores returned

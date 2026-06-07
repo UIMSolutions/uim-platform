@@ -7,7 +7,7 @@ module uim.platform.integration_delivery.presentation.http.controllers.stage;
 
 import uim.platform.integration_delivery;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

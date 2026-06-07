@@ -7,7 +7,7 @@ module uim.platform.snowflake.domain.entities.data_product_share;
 
 import uim.platform.snowflake;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 struct DataProductShare {

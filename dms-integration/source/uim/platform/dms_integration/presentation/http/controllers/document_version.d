@@ -7,7 +7,7 @@ module uim.platform.dms_integration.presentation.http.controllers.document_versi
 
 import uim.platform.dms_integration;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

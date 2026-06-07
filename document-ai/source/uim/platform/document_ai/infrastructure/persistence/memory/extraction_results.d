@@ -12,7 +12,7 @@ module uim.platform.document_ai.infrastructure.persistence.memory.extraction_res
  
 import uim.platform.document_ai;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryExtractionResultRepository : ExtractionResultRepository {

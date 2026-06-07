@@ -9,7 +9,7 @@ module uim.platform.analytics.app.dto.story;
 import uim.platform.analytics.domain.entities.story;
 import uim.platform.analytics;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 struct CreateStoryRequest {
   string title;

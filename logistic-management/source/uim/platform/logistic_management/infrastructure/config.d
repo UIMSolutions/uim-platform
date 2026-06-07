@@ -6,7 +6,7 @@
 module uim.platform.logistic_management.infrastructure.config;
 import uim.platform.logistic_management;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 struct SrvConfig {

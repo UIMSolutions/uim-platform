@@ -7,7 +7,7 @@ module uim.platform.custom_domain.domain.ports.repositories.certificates;
 
 import uim.platform.custom_domain;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Repository interface for managing TLS certificates associated with custom domains.

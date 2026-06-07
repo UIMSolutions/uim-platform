@@ -7,7 +7,7 @@ module uim.platform.application_studio.presentation.http.controllers.dev_space_t
 
 import uim.platform.application_studio;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

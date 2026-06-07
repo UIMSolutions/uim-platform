@@ -8,7 +8,7 @@ module uim.platform.logging.domain.ports.repositories.dashboards;
 
 import uim.platform.logging;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 interface DashboardRepository : ITenantRepository!(Dashboard, DashboardId) {

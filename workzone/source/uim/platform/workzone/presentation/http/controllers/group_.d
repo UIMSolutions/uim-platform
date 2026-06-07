@@ -2,7 +2,7 @@ module uim.platform.workzone.presentation.http.controllers.group_;
 
 import uim.platform.workzone;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class GroupController : ManageHttpController {

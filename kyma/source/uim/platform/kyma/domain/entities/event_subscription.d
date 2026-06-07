@@ -7,7 +7,7 @@ module uim.platform.kyma.domain.entities.event_subscription;
 
 import uim.platform.kyma;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// An event subscription — subscribes to events from a source.

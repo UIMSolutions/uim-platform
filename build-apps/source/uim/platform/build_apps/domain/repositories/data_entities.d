@@ -7,7 +7,7 @@ module uim.platform.build_apps.domain.repositories.data_entities;
 
 import uim.platform.build_apps;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

@@ -8,7 +8,7 @@ module uim.platform.buildcode.application.usecases.manage.service_bindings;
 import uim.platform.buildcode;
 
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

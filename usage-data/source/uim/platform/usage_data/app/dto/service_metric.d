@@ -7,7 +7,7 @@ module uim.platform.usage_data.app.dto.service_metric;
 
 import uim.platform.usage_data;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 struct CreateServiceMetricRequest {

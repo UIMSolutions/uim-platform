@@ -2,7 +2,7 @@ module uim.platform.workzone.presentation.http.controllers.workspace;
 
 import uim.platform.workzone;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class WorkspaceController : ManageHttpController {

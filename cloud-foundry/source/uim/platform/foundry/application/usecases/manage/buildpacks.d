@@ -13,7 +13,7 @@ module uim.platform.foundry.application.usecases.manage.buildpacks;
 // import uim.platform.foundry.application.dto;
 import uim.platform.foundry;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class ManageBuildpacksUseCase { // TODO: UIMUseCase {

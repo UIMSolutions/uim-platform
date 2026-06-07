@@ -7,7 +7,7 @@ module uim.platform.abap_compiler.domain.services.code_generator;
 
 import uim.platform.abap_compiler;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 /// Transforms a semantically-valid ParsedStatement list into a simplified

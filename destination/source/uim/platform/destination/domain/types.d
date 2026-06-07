@@ -6,7 +6,7 @@
 module uim.platform.destination.domain.types;
 import uim.platform.destination;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Unique identifier type aliases for type safety.

@@ -12,7 +12,7 @@ module uim.platform.identity.authentication.infrastructure.persistence.memory.se
 
 import uim.platform.identity.authentication;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 /// In-memory adapter for session persistence.
 class MemorySessionRepository : SessionRepository {

@@ -6,7 +6,7 @@
 module uim.platform.market_refinitiv.domain.ports.repositories.providers;
 import uim.platform.market_refinitiv;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 interface ProviderRepository : ITenantRepository!(Provider, ProviderId) {

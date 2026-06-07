@@ -7,7 +7,7 @@ module uim.platform.usage_data.infrastructure.web.handlers.monthly_cost_report;
 
 import uim.platform.usage_data;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 class MonthlyCostReportHandler {

@@ -7,7 +7,7 @@ module uim.platform.credential_store.domain.entities.keyring_version;
 
 import uim.platform.credential_store;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 struct KeyringVersion {

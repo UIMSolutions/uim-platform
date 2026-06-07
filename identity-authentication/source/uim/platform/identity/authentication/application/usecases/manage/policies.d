@@ -13,7 +13,7 @@ module uim.platform.identity.authentication.application.usecases.manage.policies
 // 
 import uim.platform.identity.authentication;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 /// Application use case: authorization policy management.
 class ManagePoliciesUseCase { // TODO: UIMUseCase {

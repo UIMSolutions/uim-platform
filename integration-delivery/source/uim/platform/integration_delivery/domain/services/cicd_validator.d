@@ -7,7 +7,7 @@ module uim.platform.integration_delivery.domain.services.cicd_validator;
 
 import uim.platform.integration_delivery;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

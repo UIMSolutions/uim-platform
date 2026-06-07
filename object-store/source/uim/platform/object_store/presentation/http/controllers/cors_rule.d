@@ -10,7 +10,7 @@ module uim.platform.object_store.presentation.http.controllers.cors_rule;
 // import uim.platform.object_store.domain.entities.cors_rule;
 import uim.platform.object_store;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

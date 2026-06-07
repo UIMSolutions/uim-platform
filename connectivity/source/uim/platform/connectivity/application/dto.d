@@ -9,7 +9,7 @@ module uim.platform.connectivity.application.dto;
 
 import uim.platform.connectivity;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// --- Destination DTOs ---

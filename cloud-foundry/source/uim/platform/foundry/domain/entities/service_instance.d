@@ -8,7 +8,7 @@ module uim.platform.foundry.domain.entities.service_instance;
 // import uim.platform.foundry.domain.types;
 import uim.platform.foundry;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// A service instance — a provisioned instance of a marketplace service

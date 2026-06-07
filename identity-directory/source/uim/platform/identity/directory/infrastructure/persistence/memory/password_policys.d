@@ -9,7 +9,7 @@ module uim.platform.identity.directory.infrastructure.persistence.memory.passwor
 // import uim.platform.identity.directory.domain.ports.repositories.password_policys;
 import uim.platform.identity.directory;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// In-memory adapter for password policy persistence.

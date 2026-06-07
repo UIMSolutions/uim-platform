@@ -7,7 +7,7 @@ module uim.platform.agentry.domain.repositories.backend_connections;
 
 import uim.platform.agentry;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

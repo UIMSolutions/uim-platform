@@ -7,7 +7,7 @@ module uim.platform.application_autoscaler.domain.ports.repositories.scaling_his
 
 import uim.platform.application_autoscaler;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

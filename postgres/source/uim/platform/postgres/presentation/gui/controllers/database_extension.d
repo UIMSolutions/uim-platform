@@ -7,7 +7,7 @@ module uim.platform.postgres.presentation.gui.controllers.database_extension;
 
 import uim.platform.postgres;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

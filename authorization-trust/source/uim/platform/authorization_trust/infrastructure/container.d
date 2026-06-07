@@ -33,7 +33,7 @@ module uim.platform.authorization_trust.infrastructure.container;
 // import uim.platform.service.presentation.controllers.health;
 import uim.platform.authorization_trust;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 struct Container {

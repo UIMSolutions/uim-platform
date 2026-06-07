@@ -14,7 +14,7 @@ import uim.platform.portal.application.usecases.manage;
 
 import uim.platform.portal;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class CatalogController : ManageHttpController {

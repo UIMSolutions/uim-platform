@@ -1,7 +1,7 @@
 module uim.platform.databricks.domain.ports.repositories.notebooks;
 import uim.platform.databricks;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

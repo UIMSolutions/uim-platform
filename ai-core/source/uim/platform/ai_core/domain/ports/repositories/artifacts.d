@@ -8,7 +8,7 @@ module uim.platform.ai_core.domain.ports.repositories.artifacts;
 // import uim.platform.ai_core.domain.entities.artifact;
 import uim.platform.ai_core;
 
-mixin(ShowModule!()); 
+// mixin(ShowModule!()); 
 
 @safe:
 interface ArtifactRepository : ITenantRepository!(Artifact, ArtifactId) {

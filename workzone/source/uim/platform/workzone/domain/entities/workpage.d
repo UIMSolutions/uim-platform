@@ -7,7 +7,7 @@ module uim.platform.workzone.domain.entities.workpage;
 // import uim.platform.workzone.domain.types;
 import uim.platform.workzone;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// A page within a workspace — containers for widgets and content.

@@ -10,7 +10,7 @@ module uim.platform.connectivity.application.usecases.monitor.connectivity;
 
 import uim.platform.connectivity;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Summary of connectivity status for a tenant.

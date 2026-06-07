@@ -1,7 +1,7 @@
 module uim.platform.data_retention.application.usecases.manage.business_purposes;
 import uim.platform.data_retention;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

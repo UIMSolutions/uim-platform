@@ -14,7 +14,7 @@ module uim.platform.object_store.presentation.http.controllers.object;
 
 import uim.platform.object_store;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class ObjectController : ManageHttpController {

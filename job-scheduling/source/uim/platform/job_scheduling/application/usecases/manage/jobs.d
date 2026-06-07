@@ -13,7 +13,7 @@ module uim.platform.job_scheduling.application.usecases.manage.jobs;
 // alias Job = uim.platform.job_scheduling.domain.entities.job.Job;
 import uim.platform.job_scheduling;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class ManageJobsUseCase { // TODO: UIMUseCase {

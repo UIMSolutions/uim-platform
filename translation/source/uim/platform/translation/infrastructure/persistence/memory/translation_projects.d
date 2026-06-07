@@ -7,7 +7,7 @@ module uim.platform.translation.infrastructure.persistence.memory.translation_pr
 
 import uim.platform.translation;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

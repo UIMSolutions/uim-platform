@@ -7,7 +7,7 @@ module uim.platform.automation_pilot.domain.entities.execution;
 
 import uim.platform.automation_pilot;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

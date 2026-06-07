@@ -12,7 +12,7 @@ module uim.platform.workzone.infrastructure.persistence.memory.user_profiles;
  
 import uim.platform.workzone;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryUserProfileRepository : TenantRepository!(UserProfile, UserProfileId), UserProfileRepository {

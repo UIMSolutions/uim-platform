@@ -7,7 +7,7 @@ module uim.platform.translation.domain.enumerations;
 
 import uim.platform.translation;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

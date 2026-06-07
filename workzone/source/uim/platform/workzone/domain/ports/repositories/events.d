@@ -8,7 +8,7 @@ module uim.platform.workzone.domain.ports.repositories.events;
 // import uim.platform.workzone.domain.entities.event;
 import uim.platform.workzone;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 interface EventRepository : ITenantRepository!(Event, EventId) {

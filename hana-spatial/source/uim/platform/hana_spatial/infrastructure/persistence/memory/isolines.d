@@ -7,7 +7,7 @@ module uim.platform.hana_spatial.infrastructure.persistence.memory.isolines;
 
 import uim.platform.hana_spatial;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryIsolineRepository

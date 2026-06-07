@@ -7,7 +7,7 @@ module uim.platform.application_autoscaler.application.usecases.manage.policies;
 
 import uim.platform.application_autoscaler;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

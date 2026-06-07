@@ -9,7 +9,7 @@ module uim.platform.connectivity.presentation.http.controllers.access_rule;
 // import uim.platform.connectivity.domain.entities.access_rule;
 import uim.platform.connectivity;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class AccessRuleController : ManageHttpController {

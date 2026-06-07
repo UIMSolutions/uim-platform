@@ -2,7 +2,7 @@ module uim.platform.management.application.helpers;
 
 import uim.platform.management;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 void emitEvent(EnvironmentEventRepository eventRepo, string gaId, string subId, EnvironmentEventCategory cat,

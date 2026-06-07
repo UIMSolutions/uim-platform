@@ -9,7 +9,7 @@ module uim.platform.ai_launchpad.infrastructure.persistence.memory.executions;
 // import uim.platform.ai_launchpad.domain.types;
 import uim.platform.ai_launchpad;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryExecutionRepository : TenantRepository!(Execution, ExecutionId), IExecutionRepository {

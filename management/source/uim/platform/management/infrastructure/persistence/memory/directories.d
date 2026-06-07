@@ -12,7 +12,7 @@ module uim.platform.management.infrastructure.persistence.memory.directories;
 
 import uim.platform.management;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 class MemoryDirectoryRepository : TenantRepository!(Directory, DirectoryId), DirectoryRepository {
 

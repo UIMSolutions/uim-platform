@@ -14,7 +14,7 @@ module uim.platform.identity.authentication.application.usecases.manage.applicat
 
 import uim.platform.identity.authentication;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 /// Application use case: service provider / application registration.
 class ManageApplicationsUseCase { // TODO: UIMUseCase {

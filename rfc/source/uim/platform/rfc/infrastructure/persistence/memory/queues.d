@@ -7,7 +7,7 @@ module uim.platform.rfc.infrastructure.persistence.memory.queues;
 
 import uim.platform.rfc;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 class MemoryRfcQueueRepository : RfcQueueRepository {

@@ -7,7 +7,7 @@ module uim.platform.agentry.domain.entities.mobile_application;
 
 import uim.platform.agentry;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

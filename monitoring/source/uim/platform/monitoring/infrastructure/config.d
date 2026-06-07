@@ -7,7 +7,7 @@ module uim.platform.monitoring.infrastructure.config;
 import std.process : environment;
 import uim.platform.monitoring;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Service configuration.

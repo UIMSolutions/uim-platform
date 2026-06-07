@@ -11,7 +11,7 @@ module uim.platform.content_agent.presentation.http.controllers.package_;
 
 import uim.platform.content_agent;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class PackageController : ManageHttpController {

@@ -1,7 +1,7 @@
 module uim.platform.analytics.domain.enumerations.dataset;
 import uim.platform.analytics;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 enum ColumnRole {
   Dimension,

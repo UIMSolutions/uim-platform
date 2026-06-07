@@ -1,7 +1,7 @@
 module uim.platform.integration_suite.application.usecases.manage_message_mappings;
 import uim.platform.integration_suite;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 class ManageMessageMappingsUseCase {

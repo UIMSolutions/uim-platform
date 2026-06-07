@@ -17,7 +17,7 @@ module uim.platform.monitoring.application.usecases.get_dashboard;
 // import uim.platform.monitoring.domain.types;
 import uim.platform.monitoring;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Application service: aggregates monitoring data for dashboard overview.

@@ -1,6 +1,6 @@
 module uim.platform.snowflake.infrastructure.persistence.memory.snowflake_accounts;
 import uim.platform.snowflake;
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 class MemorySnowflakeAccountRepository
     : TenantRepository!(SnowflakeAccount, SnowflakeAccountId),

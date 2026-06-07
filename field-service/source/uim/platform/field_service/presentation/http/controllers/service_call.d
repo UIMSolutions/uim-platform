@@ -7,7 +7,7 @@ module uim.platform.field_service.presentation.http.controllers.service_call;
 
 import uim.platform.field_service;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

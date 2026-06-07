@@ -8,7 +8,7 @@ module uim.platform.integration.automation.domain.ports.repositories.execution_l
 // import uim.platform.integration.automation.domain.entities.execution_log;
 import uim.platform.integration.automation;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Port for persisting and querying execution logs.

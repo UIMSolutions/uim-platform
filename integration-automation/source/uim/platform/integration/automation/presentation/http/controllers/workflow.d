@@ -14,7 +14,7 @@ module uim.platform.integration.automation.presentation.http.workflow;
 // import uim.platform.integration.automation.domain.entities.workflow;
 import uim.platform.integration.automation;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class WorkflowController : ManageHttpController {

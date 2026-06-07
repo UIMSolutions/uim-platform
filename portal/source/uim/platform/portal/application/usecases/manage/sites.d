@@ -15,7 +15,7 @@ module uim.platform.portal.application.usecases.manage.sites;
 // import uim.platform.portal.domain.types;
 import uim.platform.portal;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class ManageSitesUseCase { // TODO: UIMUseCase {

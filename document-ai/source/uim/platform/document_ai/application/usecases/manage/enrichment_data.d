@@ -12,7 +12,7 @@ module uim.platform.document_ai.application.usecases.manage.enrichment_data;
 
 import uim.platform.document_ai;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class ManageEnrichmentDataUseCase { // TODO: UIMUseCase {

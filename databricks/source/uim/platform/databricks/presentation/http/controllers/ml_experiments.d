@@ -1,7 +1,7 @@
 module uim.platform.databricks.presentation.http.controllers.ml_experiments;
 import uim.platform.databricks;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

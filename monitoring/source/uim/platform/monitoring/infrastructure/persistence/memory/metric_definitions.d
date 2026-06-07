@@ -12,7 +12,7 @@ module uim.platform.monitoring.infrastructure.persistence.memory.metric_definiti
  
 import uim.platform.monitoring;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryMetricDefinitionRepository : TenantRepository!(MetricDefinition, MetricDefinitionId), MetricDefinitionRepository {

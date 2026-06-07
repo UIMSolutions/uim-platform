@@ -7,7 +7,7 @@ module uim.platform.integration.automation.domain.entities.integration_scenario;
 // import uim.platform.integration.automation.domain.types;
 import uim.platform.integration.automation;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// An integration scenario template — defines a reusable set of steps

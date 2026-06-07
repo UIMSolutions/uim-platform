@@ -6,7 +6,7 @@
 module uim.platform.private_link.presentation.http.controllers.service_binding;
 import uim.platform.private_link;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// HTTP controller for service binding management.

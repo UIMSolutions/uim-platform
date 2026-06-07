@@ -7,7 +7,7 @@ module uim.platform.alert_notification.presentation.http.controllers.undelivered
 
 import uim.platform.alert_notification;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

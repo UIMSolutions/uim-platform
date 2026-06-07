@@ -11,7 +11,7 @@ module uim.platform.monitoring.application.usecases.manage.monitored_resources;
 // 
 import uim.platform.monitoring;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Application service for monitored resource CRUD operations.

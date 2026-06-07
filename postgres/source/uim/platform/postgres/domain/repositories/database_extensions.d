@@ -7,7 +7,7 @@ module uim.platform.postgres.domain.repositories.database_extensions;
 
 import uim.platform.postgres;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

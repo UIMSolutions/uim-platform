@@ -8,7 +8,7 @@ module uim.platform.hana.domain.ports.repositories.replication_tasks;
 // import uim.platform.hana.domain.entities.replication_task;
 import uim.platform.hana;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 interface ReplicationTaskRepository : ITenantRepository!(ReplicationTask, ReplicationTaskId) {

@@ -13,7 +13,7 @@ import std.array    : array;
 import std.conv     : to;
 import std.string   : lastIndexOf;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

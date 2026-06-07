@@ -7,7 +7,7 @@ module uim.platform.content_agent.domain.entities.transport_request;
 
 import uim.platform.content_agent;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// A request to transport one or more content packages between landscapes.

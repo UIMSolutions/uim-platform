@@ -7,7 +7,7 @@ module uim.platform.responsibility.infrastructure.persistence.memory;
 
 import uim.platform.responsibility;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 public {
     import uim.platform.responsibility.infrastructure.persistence.memory.responsibility_rules;

@@ -7,7 +7,7 @@ module uim.platform.situation_automation.infrastructure.persistence.memory.entit
 
 import uim.platform.situation_automation;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryEntityTypeRepository : TenantRepository!(EntityType, EntityTypeId), EntityTypeRepository {

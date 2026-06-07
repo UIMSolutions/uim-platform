@@ -6,7 +6,7 @@
 module uim.platform.private_link.presentation.http.controllers.service_instance;
 import uim.platform.private_link;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// HTTP controller for private link service instance lifecycle management.

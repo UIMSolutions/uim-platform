@@ -7,7 +7,7 @@ module uim.platform.print.application.usecases.manage.print_documents;
 
 import uim.platform.print;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

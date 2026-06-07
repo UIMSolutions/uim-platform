@@ -7,7 +7,7 @@ module uim.platform.abap_environment.presentation.web.controllers.service_bindin
 
 import uim.platform.abap_environment;
 
-// mixin(ShowModule!());
+// // mixin(ShowModule!());
 @safe:
 
 class ServiceBindingWebController : ManageHttpController {

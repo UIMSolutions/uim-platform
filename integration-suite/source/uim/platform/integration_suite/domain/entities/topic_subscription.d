@@ -1,6 +1,6 @@
 module uim.platform.integration_suite.domain.entities.topic_subscription;
 import uim.platform.integration_suite;
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 /// An Event Mesh topic subscription for event-driven integration.

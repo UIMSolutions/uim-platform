@@ -7,7 +7,7 @@ module uim.platform.logging.domain.entities.ingestion_token;
 
 import uim.platform.logging;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 struct IngestionToken {

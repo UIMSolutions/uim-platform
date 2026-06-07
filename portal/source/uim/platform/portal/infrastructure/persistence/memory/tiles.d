@@ -10,7 +10,7 @@ module uim.platform.portal.infrastructure.persistence.memory.tiles;
 // import std.string : toLower, indexOf;
 import uim.platform.portal;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryTileRepository : TenantRepository!(Tile, TileId), TileRepository {

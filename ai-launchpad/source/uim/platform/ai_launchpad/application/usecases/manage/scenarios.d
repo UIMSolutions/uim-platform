@@ -10,7 +10,7 @@ module uim.platform.ai_launchpad.application.usecases.manage.scenarios;
 // import uim.platform.ai_launchpad.application.dto;
 import uim.platform.ai_launchpad;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class ManageScenariosUseCase { // TODO: UIMUseCase {

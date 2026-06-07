@@ -7,7 +7,7 @@ module uim.platform.datasphere_composer.domain.entities.tenant_user;
 
 import uim.platform.datasphere_composer;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

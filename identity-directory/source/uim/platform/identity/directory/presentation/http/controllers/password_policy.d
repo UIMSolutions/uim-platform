@@ -11,7 +11,7 @@ module uim.platform.identity.authentication.presentation.http.password_policy;
 // import uim.platform.identity.directory.domain.entities.password_policy;
 import uim.platform.identity.directory;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// HTTP controller for password policy management.

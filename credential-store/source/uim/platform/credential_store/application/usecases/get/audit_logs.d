@@ -10,7 +10,7 @@ module uim.platform.credential_store.application.usecases.get.audit_logs;
 // import uim.platform.credential_store.application.dto;
 import uim.platform.credential_store;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class GetAuditLogsUseCase { // TODO: UIMUseCase {

@@ -12,7 +12,7 @@ module uim.platform.auditlog.presentation.http.controllers.config_change;
 
 import uim.platform.auditlog;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class ConfigChangeController : HttpController {

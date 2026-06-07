@@ -10,7 +10,7 @@ module uim.platform.identity.provisioning.infrastructure.persistence.memory.prov
 // import uim.platform.identity.provisioning.domain.ports.repositories.provisioning_logs;
 import uim.platform.identity.provisioning;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryProvisioningLogRepository : TenantRepository!(ProvisioningLog, ProvisioningLogId), ProvisioningLogRepository {

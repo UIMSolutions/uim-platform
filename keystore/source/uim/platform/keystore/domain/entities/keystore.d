@@ -7,7 +7,7 @@ module uim.platform.keystore.domain.entities.keystore;
 
 import uim.platform.keystore;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// A named keystore file containing cryptographic keys and/or certificates.

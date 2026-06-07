@@ -7,7 +7,7 @@ module uim.platform.workzone.domain.entities.role;
 // import uim.platform.workzone.domain.types;
 import uim.platform.workzone;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// A role — defines access permissions for site content and workspaces.

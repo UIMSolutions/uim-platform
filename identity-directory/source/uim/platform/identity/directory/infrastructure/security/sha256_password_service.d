@@ -10,7 +10,7 @@ module uim.platform.identity.directory.infrastructure.security.sha256_password_s
 // import std.string : representation;
 import uim.platform.identity.directory;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// SHA-256 password hashing adapter (production: replace with bcrypt/argon2).

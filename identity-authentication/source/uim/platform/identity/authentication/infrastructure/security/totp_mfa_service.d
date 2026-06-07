@@ -13,7 +13,7 @@ module uim.platform.identity.authentication.infrastructure.security.totp_mfa_ser
 // 
 import uim.platform.identity.authentication;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 /// Adapter: TOTP-based MFA service.
 /// In production, implement with proper RFC 6238 TOTP and SMS/email gateways.

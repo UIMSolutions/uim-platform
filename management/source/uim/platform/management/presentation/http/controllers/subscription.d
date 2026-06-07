@@ -13,7 +13,7 @@ module uim.platform.management.presentation.http.controllers.subscription;
 
 import uim.platform.management;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 class SubscriptionController : ManageHttpController {
   private ManageSubscriptionsUseCase usecase;

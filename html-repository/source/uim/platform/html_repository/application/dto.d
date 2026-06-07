@@ -6,7 +6,7 @@
 module uim.platform.html_repository.application.dto;
 import uim.platform.html_repository;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 // HtmlApp DTOs

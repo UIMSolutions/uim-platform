@@ -8,7 +8,7 @@ module uim.platform.management.domain.ports.repositories.subaccounts;
 
 import uim.platform.management;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — subaccount persistence.

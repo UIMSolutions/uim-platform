@@ -2,7 +2,7 @@ module uim.platform.management.presentation.rest.interfaces.label;
 
 import uim.platform.management;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 interface ILabelApi {

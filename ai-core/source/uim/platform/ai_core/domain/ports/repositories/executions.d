@@ -8,7 +8,7 @@ module uim.platform.ai_core.domain.ports.repositories.executions;
 // import uim.platform.ai_core.domain.entities.execution;
 import uim.platform.ai_core;
 
-mixin(ShowModule!()); 
+// mixin(ShowModule!()); 
 
 @safe:
 interface ExecutionRepository : ITenantRepository!(Execution, ExecutionId) {

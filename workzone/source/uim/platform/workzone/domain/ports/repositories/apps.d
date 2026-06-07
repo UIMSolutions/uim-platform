@@ -8,7 +8,7 @@ module uim.platform.workzone.domain.ports.repositories.apps;
 // import uim.platform.workzone.domain.entities.app_registration;
 import uim.platform.workzone;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 interface AppRepository : ITenantRepository!(AppRegistration, AppId) {

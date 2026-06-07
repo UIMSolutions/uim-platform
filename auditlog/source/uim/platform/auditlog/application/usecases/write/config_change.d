@@ -15,7 +15,7 @@ module uim.platform.auditlog.application.usecases.write.config_change;
 
 import uim.platform.auditlog; 
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class WriteConfigChangeUseCase { // TODO: UIMUseCase {

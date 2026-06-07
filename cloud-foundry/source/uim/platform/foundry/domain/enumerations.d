@@ -7,7 +7,7 @@ module uim.platform.foundry.domain.enumerations;
 
 import uim.platform.foundry;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

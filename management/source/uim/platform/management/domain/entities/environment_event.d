@@ -7,7 +7,7 @@ module uim.platform.management.domain.entities.environment_event;
 
 import uim.platform.management;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// A platform event represents an auditable action or state change

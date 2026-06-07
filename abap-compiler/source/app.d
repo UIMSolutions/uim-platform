@@ -8,7 +8,7 @@ module app;
 import uim.platform.abap_compiler;
 import std.algorithm : canFind;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

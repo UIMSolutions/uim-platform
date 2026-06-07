@@ -9,7 +9,7 @@ module uim.platform.object_store.domain.ports.repositories.cors_rules;
 // import uim.platform.object_store.domain.types;
 import uim.platform.object_store;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing - CORS rule persistence.

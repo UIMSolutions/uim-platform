@@ -7,7 +7,7 @@ module uim.platform.data_attribute_recommendation.domain.entities.dataset;
 
 import uim.platform.data_attribute_recommendation;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// A training dataset containing column definitions and data records

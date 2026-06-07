@@ -7,7 +7,7 @@ module uim.platform.events.domain.entities.message_client;
 
 import uim.platform.events;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

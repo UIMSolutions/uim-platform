@@ -7,7 +7,7 @@ module uim.platform.agentry.domain.entities.deployment;
 
 import uim.platform.agentry;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

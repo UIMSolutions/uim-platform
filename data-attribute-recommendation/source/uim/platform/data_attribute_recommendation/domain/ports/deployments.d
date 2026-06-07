@@ -9,7 +9,7 @@ module uim.platform.data_attribute_recommendation.domain.ports.deployments;
 // import uim.platform.data_attribute_recommendation.domain.entities.model_deployment;
 import uim.platform.data_attribute_recommendation;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 interface DeploymentRepository : ITenantRepository!(ModelDeployment, DeploymentId) {

@@ -12,7 +12,7 @@ module uim.platform.management.presentation.http.controllers.global_account;
 
 import uim.platform.management;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 class GlobalAccountController : ManageHttpController {
   private ManageGlobalAccountsUseCase usecase;

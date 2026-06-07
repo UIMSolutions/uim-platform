@@ -6,7 +6,7 @@
 module uim.platform.logistic_management.application.usecases.manage.warehouse_tasks;
 import uim.platform.logistic_management;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class ManageWarehouseTasksUseCase {

@@ -12,7 +12,7 @@ module uim.platform.foundry.domain.services.route_resolver;
 // import uim.platform.foundry.domain.ports.repositories.domain;
 import uim.platform.foundry;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 // import std.algorithm : canFind, remove;

@@ -7,7 +7,7 @@ module uim.platform.buildcode.domain.services.project_validator;
 
 import uim.platform.buildcode;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

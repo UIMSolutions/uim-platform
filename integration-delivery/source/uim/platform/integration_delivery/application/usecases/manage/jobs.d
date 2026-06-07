@@ -7,7 +7,7 @@ module uim.platform.integration_delivery.application.usecases.manage.jobs;
 
 import uim.platform.integration_delivery;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

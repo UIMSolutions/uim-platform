@@ -11,7 +11,7 @@ module uim.platform.credential_store.presentation.http.controllers.audit;
 
 import uim.platform.credential_store;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class AuditController : HttpController {

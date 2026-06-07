@@ -7,7 +7,7 @@ module uim.platform.workzone.domain.types;
 
 import uim.platform.workzone;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Unique identifier type aliases for type safety.

@@ -7,7 +7,7 @@ module uim.platform.situation_automation.infrastructure.persistence.memory.notif
 
 import uim.platform.situation_automation;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryNotificationRepository : TenantRepository!(Notification, NotificationId), NotificationRepository {

@@ -7,7 +7,7 @@ module uim.platform.agentry.domain.entities.device;
 
 import uim.platform.agentry;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

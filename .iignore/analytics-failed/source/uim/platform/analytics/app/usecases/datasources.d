@@ -12,7 +12,7 @@ module uim.platform.analytics.app.usecases.datasources;
 
 import uim.platform.analytics;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 class DataSourceUseCases {
   private DataSourceRepository repo;

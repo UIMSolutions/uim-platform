@@ -7,7 +7,7 @@ module uim.platform.hana.domain.enumerations;
 
 import uim.platform.hana;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

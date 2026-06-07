@@ -1,6 +1,6 @@
 module uim.platform.integration_suite.domain.entities.integration_package;
 import uim.platform.integration_suite;
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 /// A container that groups related integration artifacts (flows, mappings).

@@ -10,7 +10,7 @@ module uim.platform.portal.infrastructure.persistence.memory.sections;
 
 import uim.platform.portal;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemorySectionRepository : SectionRepository {

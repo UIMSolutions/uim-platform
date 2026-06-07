@@ -7,7 +7,7 @@ module uim.platform.personal_data.domain.entities.data_subject;
 
 import uim.platform.personal_data;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

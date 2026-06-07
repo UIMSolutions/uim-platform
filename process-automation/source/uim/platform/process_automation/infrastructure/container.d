@@ -41,7 +41,7 @@ module uim.platform.process_automation.infrastructure.container;
 // import uim.platform.process_automation.presentation.http.controllers.health;
 import uim.platform.process_automation;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 struct Container {

@@ -7,7 +7,7 @@ module uim.platform.customer_identity.domain.entities.screen_set;
 
 import uim.platform.customer_identity;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

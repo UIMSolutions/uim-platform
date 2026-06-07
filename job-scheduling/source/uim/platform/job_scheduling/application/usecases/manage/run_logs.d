@@ -14,7 +14,7 @@ module uim.platform.job_scheduling.application.usecases.manage.run_logs;
 // alias RunLog = uim.platform.job_scheduling.domain.entities.run_log.RunLog;
 import uim.platform.job_scheduling;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class ManageRunLogsUseCase { // TODO: UIMUseCase {

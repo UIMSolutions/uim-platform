@@ -7,7 +7,7 @@ module uim.platform.process_automation.infrastructure.persistence.memory.automat
 
 import uim.platform.process_automation;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryAutomationRepository : TenantRepository!(Automation, AutomationId), AutomationRepository {

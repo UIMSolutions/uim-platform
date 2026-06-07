@@ -6,7 +6,7 @@
 module uim.platform.marketrates.domain.entities.audit_log;
 import uim.platform.marketrates;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

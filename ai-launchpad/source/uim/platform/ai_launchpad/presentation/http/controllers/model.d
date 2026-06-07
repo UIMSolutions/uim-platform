@@ -10,7 +10,7 @@ module uim.platform.ai_launchpad.presentation.http.controllers.model;
 
 import uim.platform.ai_launchpad;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class ModelController : ManageHttpController {

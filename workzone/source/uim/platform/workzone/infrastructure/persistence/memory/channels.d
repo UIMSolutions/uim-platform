@@ -13,7 +13,7 @@ module uim.platform.workzone.infrastructure.persistence.memory.channels;
  
 import uim.platform.workzone;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryChannelRepository : TenantRepository!(Channel, ChannelId), ChannelRepository {

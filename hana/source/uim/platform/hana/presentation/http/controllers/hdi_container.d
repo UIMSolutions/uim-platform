@@ -8,7 +8,7 @@ module uim.platform.hana.presentation.http.controllers.hdi_container;
 // import uim.platform.hana.application.dto;
 import uim.platform.hana;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

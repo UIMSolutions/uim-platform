@@ -9,7 +9,7 @@ module uim.platform.data.privacy.infrastructure.persistence.memory.data_controll
 // import uim.platform.data.privacy.domain.ports.data_controller_group_repository;
 import uim.platform.data.privacy;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryDataControllerGroupRepository : TenantRepository!(DataControllerGroup, DataControllerGroupId), DataControllerGroupRepository {

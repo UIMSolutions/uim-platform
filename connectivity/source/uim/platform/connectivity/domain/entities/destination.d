@@ -7,7 +7,7 @@ module uim.platform.connectivity.domain.entities.destination;
 // import uim.platform.connectivity.domain.types;
 import uim.platform.connectivity;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Custom property key-value pair attached to a destination.

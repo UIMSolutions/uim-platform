@@ -7,7 +7,7 @@ module uim.platform.rfc.application.usecases.manage.function_modules;
 
 import uim.platform.rfc;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 class ManageFunctionModulesUseCase {

@@ -8,7 +8,7 @@ module uim.platform.data.privacy.domain.ports.repositories.data_controller_group
 // import uim.platform.data.privacy.domain.entities.data_controller_group;
 import uim.platform.data.privacy;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Port for persisting and querying data controller groups.

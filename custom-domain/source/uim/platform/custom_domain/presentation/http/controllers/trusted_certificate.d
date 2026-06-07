@@ -7,7 +7,7 @@ module uim.platform.custom_domain.presentation.http.controllers.trusted_certific
 
 import uim.platform.custom_domain;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

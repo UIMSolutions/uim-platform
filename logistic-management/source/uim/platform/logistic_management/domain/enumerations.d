@@ -6,7 +6,7 @@
 module uim.platform.logistic_management.domain.enumerations;
 import uim.platform.logistic_management;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Direction of a shipment or delivery.

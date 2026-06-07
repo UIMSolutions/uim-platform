@@ -12,7 +12,7 @@ module uim.platform.kyma.infrastructure.persistence.memory.applications;
  
 import uim.platform.kyma;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryApplicationRepository : TenantRepository!(Application, ApplicationId), ApplicationRepository {

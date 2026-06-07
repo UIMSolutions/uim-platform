@@ -12,7 +12,7 @@ module uim.platform.ai_core.infrastructure.persistence.memory.scenarios;
  
 import uim.platform.ai_core;
 
-mixin(ShowModule!()); 
+// mixin(ShowModule!()); 
 
 @safe:
 class MemoryScenarioRepository : TenantRepository!(Scenario, ScenarioId), ScenarioRepository {

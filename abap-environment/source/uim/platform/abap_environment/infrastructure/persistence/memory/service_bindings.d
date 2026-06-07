@@ -10,7 +10,7 @@ module uim.platform.abap_environment.infrastructure.persistence.memory.service_b
 
 import uim.platform.abap_environment;
 
-// mixin(ShowModule!());
+// // mixin(ShowModule!());
 @safe:
 class MemoryServiceBindingRepository : TenantRepository!(ServiceBinding, ServiceBindingId), ServiceBindingRepository {
 

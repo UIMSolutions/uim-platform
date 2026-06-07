@@ -11,7 +11,7 @@ module uim.platform.monitoring.application.usecases.manage.notification_channels
 // 
 import uim.platform.monitoring;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Application service for notification channel CRUD (email, webhook, on-premise).

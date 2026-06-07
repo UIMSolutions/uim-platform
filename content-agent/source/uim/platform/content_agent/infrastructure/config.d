@@ -8,7 +8,7 @@ import std.process : environment;
 
 import uim.platform.content_agent;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Service configuration.

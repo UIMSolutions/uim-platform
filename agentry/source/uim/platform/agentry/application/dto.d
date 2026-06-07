@@ -7,7 +7,7 @@ module uim.platform.agentry.application.dto;
 
 import uim.platform.agentry;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

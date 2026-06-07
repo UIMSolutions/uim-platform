@@ -9,7 +9,7 @@ import uim.platform.redis;
 import std.algorithm : filter, any, count;
 import std.array : array;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

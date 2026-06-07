@@ -11,7 +11,7 @@ module uim.platform.content_agent.presentation.http.controllers.provider_control
 
 import uim.platform.content_agent;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class ProviderController : ManageHttpController {

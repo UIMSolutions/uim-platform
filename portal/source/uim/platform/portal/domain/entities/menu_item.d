@@ -7,7 +7,7 @@ module uim.platform.portal.domain.entities.menu_item;
 // import uim.platform.portal.domain.types;
 import uim.platform.portal;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Navigation menu item within a site.

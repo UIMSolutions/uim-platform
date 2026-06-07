@@ -10,7 +10,7 @@ import uim.platform.print;
 import vibe.db.mongo.mongo;
 import vibe.data.bson;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

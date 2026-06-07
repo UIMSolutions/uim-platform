@@ -36,7 +36,7 @@ module uim.platform.abap_environment.infrastructure.container;
 
 import uim.platform.abap_environment;
 
-// mixin(ShowModule!());
+// // mixin(ShowModule!());
 
 @safe:
 /// Dependency injection container - wires all layers together.

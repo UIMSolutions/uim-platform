@@ -7,7 +7,7 @@ module uim.platform.workzone.domain.entities.feed_entry;
 
 import uim.platform.workzone;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// An activity feed entry — records actions and events in a workspace.

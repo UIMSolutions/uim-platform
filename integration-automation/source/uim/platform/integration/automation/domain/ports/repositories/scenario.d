@@ -8,7 +8,7 @@ module uim.platform.integration.automation.domain.ports.repositories.scenario;
 // import uim.platform.integration.automation.domain.entities.integration_scenario;
 import uim.platform.integration.automation;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Port for persisting and querying integration scenarios.

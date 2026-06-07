@@ -7,7 +7,7 @@ module uim.platform.usage_data.infrastructure.persistence.memory.repositories.se
 
 import uim.platform.usage_data;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 /// In-memory adapter implementing ServiceMetricRepository port.
 class MemoryServiceMetricRepository

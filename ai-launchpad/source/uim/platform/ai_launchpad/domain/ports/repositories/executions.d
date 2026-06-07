@@ -9,7 +9,7 @@ module uim.platform.ai_launchpad.domain.ports.repositories.executions;
 // import uim.platform.ai_launchpad.domain.entities.execution : Execution;
 import uim.platform.ai_launchpad;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

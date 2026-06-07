@@ -7,7 +7,7 @@ module uim.platform.authorization_trust.presentation.http.controllers.oauth_clie
 
 import uim.platform.authorization_trust;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

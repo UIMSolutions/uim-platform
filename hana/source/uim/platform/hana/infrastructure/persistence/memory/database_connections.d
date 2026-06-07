@@ -12,7 +12,7 @@ module uim.platform.hana.infrastructure.persistence.memory.database_connections;
  
 import uim.platform.hana;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryDatabaseConnectionRepository : TenantRepository!(DatabaseConnection, DatabaseConnectionId), DatabaseConnectionRepository {

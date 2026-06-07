@@ -2,7 +2,7 @@ module uim.platform.integration_suite.infrastructure.config;
 import std.process : environment;
 import uim.platform.integration_suite;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

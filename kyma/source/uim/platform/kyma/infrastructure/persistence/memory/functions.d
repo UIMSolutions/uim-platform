@@ -12,7 +12,7 @@ module uim.platform.kyma.infrastructure.persistence.memory.functions;
  
 import uim.platform.kyma;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryFunctionRepository : FunctionRepository {

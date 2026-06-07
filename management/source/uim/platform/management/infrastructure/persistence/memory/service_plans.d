@@ -12,7 +12,7 @@ module uim.platform.management.infrastructure.persistence.memory.service_plans;
 
 import uim.platform.management;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 class MemoryServicePlanRepository : TenantRepository!(ServicePlan, ServicePlanId), ServicePlanRepository {

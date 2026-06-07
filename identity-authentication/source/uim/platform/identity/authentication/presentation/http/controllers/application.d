@@ -11,7 +11,7 @@ module uim.platform.identity.authentication.presentation.http.controllers.applic
 // import uim.platform.identity.authentication.domain.types;
 import uim.platform.identity.authentication;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 /// HTTP controller for application (service provider) management.
 class ApplicationController : ManageHttpController {

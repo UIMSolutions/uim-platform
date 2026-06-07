@@ -11,7 +11,7 @@ module uim.platform.html_repository.presentation.http.controllers.deployment;
 
 import uim.platform.html_repository;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class DeploymentController : HttpController {

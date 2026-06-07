@@ -9,7 +9,7 @@ module uim.platform.workzone.infrastructure.persistence.memory.navigation_items;
 // import uim.platform.workzone.domain.ports.repositories.navigation_items;
 import uim.platform.workzone;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

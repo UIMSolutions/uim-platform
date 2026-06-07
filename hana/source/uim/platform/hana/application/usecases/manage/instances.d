@@ -14,7 +14,7 @@ module uim.platform.hana.application.usecases.manage.instances;
 
 import uim.platform.hana;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class ManageInstancesUseCase { // TODO: UIMUseCase {

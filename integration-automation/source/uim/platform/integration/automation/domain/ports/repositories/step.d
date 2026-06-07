@@ -8,7 +8,7 @@ module uim.platform.integration.automation.domain.ports.repositories.step;
 // import uim.platform.integration.automation.domain.entities.workflow_step;
 import uim.platform.integration.automation;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Port for persisting and querying workflow steps.

@@ -7,7 +7,7 @@ module uim.platform.solution_lifecycle.presentation.http.controllers.mta;
 
 import uim.platform.solution_lifecycle;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

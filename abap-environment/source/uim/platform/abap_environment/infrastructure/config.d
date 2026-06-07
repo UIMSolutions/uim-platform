@@ -8,7 +8,7 @@ module uim.platform.abap_environment.infrastructure.config;
 import std.process : environment;
 import uim.platform.abap_environment;
 
-// mixin(ShowModule!());
+// // mixin(ShowModule!());
 @safe:
 /// Service configuration.
 struct SrvConfig {

@@ -12,7 +12,7 @@ module uim.platform.workzone.infrastructure.persistence.memory.widgets;
  
 import uim.platform.workzone;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryWidgetRepository : TenantRepository!(Widget, WidgetId), WidgetRepository {

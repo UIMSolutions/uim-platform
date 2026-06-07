@@ -7,7 +7,7 @@ module uim.platform.datasphere_composer.infrastructure.config;
 
 import uim.platform.datasphere_composer;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 struct SrvConfig {

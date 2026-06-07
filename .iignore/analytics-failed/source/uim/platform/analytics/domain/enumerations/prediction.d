@@ -1,7 +1,7 @@
 module uim.platform.analytics.domain.enumerations.prediction;
 import uim.platform.analytics;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 enum PredictionType {
   Classification,

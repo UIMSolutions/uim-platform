@@ -10,7 +10,7 @@ module uim.platform.management.application.usecases.manage.service_plans;
 
 import uim.platform.management;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Use case: manage the service plan catalog.

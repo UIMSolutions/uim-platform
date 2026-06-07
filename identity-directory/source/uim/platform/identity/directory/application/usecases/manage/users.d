@@ -17,7 +17,7 @@ module uim.platform.identity.directory.application.usecases.manage.users;
 
 import uim.platform.identity.directory;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Application use case: SCIM 2.0 user management (CRUD + search).

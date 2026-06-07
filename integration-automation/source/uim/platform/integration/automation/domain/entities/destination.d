@@ -7,7 +7,7 @@ module uim.platform.integration.automation.domain.entities.destination;
 // import uim.platform.integration.automation.domain.types;
 import uim.platform.integration.automation;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// A destination configuration — defines how to connect to a target system

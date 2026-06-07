@@ -9,7 +9,7 @@ import uim.platform.postgres;
 import std.algorithm : filter, any;
 import std.array : array;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

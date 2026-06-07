@@ -13,7 +13,7 @@ module uim.platform.foundry.infrastructure.persistence.memory.spaces;
  
 import uim.platform.foundry;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemorySpaceRepository : TenantRepository!(Space, SpaceId), ISpaceRepository {

@@ -6,7 +6,7 @@
 module uim.platform.private_link.infrastructure.persistence.memory.service_bindings;
 import uim.platform.private_link;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryServiceBindingRepository

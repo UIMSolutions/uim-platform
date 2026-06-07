@@ -6,7 +6,7 @@
 module uim.platform.ui_flexibility.application.usecases.manage.flex_applications;
 import uim.platform.ui_flexibility;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

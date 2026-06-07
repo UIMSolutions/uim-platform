@@ -2,7 +2,7 @@ module uim.platform.service_manager.presentation.http.controllers.service_offeri
 
 import uim.platform.service_manager;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

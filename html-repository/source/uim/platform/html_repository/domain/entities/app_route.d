@@ -7,7 +7,7 @@ module uim.platform.html_repository.domain.entities.app_route;
 // import uim.platform.html_repository.domain.types;
 import uim.platform.html_repository;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 struct AppRoute {

@@ -7,7 +7,7 @@ module uim.platform.custom_domain.domain.entities.private_key;
 // import uim.platform.custom_domain.domain.types;
 import uim.platform.custom_domain;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 struct PrivateKey {

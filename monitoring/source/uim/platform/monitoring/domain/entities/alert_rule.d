@@ -7,7 +7,7 @@ module uim.platform.monitoring.domain.entities.alert_rule;
 // import uim.platform.monitoring.domain.types;
 import uim.platform.monitoring;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// An alert rule that defines thresholds for triggering alerts.

@@ -11,7 +11,7 @@ module uim.platform.kyma.presentation.http.controllers.namespace;
 
 import uim.platform.kyma;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class NamespaceController : ManageHttpController {

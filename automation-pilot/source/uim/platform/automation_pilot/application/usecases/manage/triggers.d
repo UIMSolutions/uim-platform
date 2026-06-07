@@ -7,7 +7,7 @@ module uim.platform.automation_pilot.application.usecases.manage.triggers;
 
 import uim.platform.automation_pilot;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

@@ -7,7 +7,7 @@ module uim.platform.ui_flexibility.domain.enumerations;
 
 import uim.platform.ui_flexibility;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 // ─── Storage backend selection ────────────────────────────────────────────────

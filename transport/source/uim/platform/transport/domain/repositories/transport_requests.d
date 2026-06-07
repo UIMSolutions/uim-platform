@@ -7,7 +7,7 @@ module uim.platform.transport.domain.repositories.transport_requests;
 
 import uim.platform.transport;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

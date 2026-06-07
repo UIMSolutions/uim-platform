@@ -7,7 +7,7 @@ module uim.platform.abap_environment.domain.entities.business_role;
 
 import uim.platform.abap_environment;
 
-// mixin(ShowModule!());
+// // mixin(ShowModule!());
 @safe:
 /// Business role for authorization in the ABAP environment.
 struct BusinessRole {

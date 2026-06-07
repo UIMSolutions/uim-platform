@@ -13,7 +13,7 @@ module uim.platform.foundry.infrastructure.persistence.memory.routes;
  
 import uim.platform.foundry;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryRouteRepository : TenantRepository!(Route, RouteId), IRouteRepository {

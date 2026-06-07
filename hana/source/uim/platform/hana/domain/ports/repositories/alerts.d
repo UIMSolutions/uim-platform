@@ -8,7 +8,7 @@ module uim.platform.hana.domain.ports.repositories.alerts;
 // import uim.platform.hana.domain.entities.alert;
 import uim.platform.hana;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 interface AlertRepository : ITenantRepository!(Alert, AlertId){

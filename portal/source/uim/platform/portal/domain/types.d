@@ -7,7 +7,7 @@ module uim.platform.portal.domain.types;
 
 import uim.platform.portal;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Unique identifier type aliases for type safety.

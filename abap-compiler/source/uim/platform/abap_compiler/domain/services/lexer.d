@@ -7,7 +7,7 @@ module uim.platform.abap_compiler.domain.services.lexer;
 
 import uim.platform.abap_compiler;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 /// Pure domain service: tokenises ABAP source code.

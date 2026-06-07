@@ -12,7 +12,7 @@ module uim.platform.auditlog.infrastructure.persistence.memory.security_event;
 
 import uim.platform.auditlog;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemorySecurityEventRepository : TenantRepository!(SecurityEvent, SecurityEventId), SecurityEventRepository {

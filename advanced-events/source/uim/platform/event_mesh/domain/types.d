@@ -2,7 +2,7 @@ module uim.platform.event_mesh.domain.types;
 
 import uim.platform.event_mesh;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 // --- ID Aliases ---

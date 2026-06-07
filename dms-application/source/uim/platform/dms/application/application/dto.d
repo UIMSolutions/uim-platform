@@ -8,7 +8,7 @@ module uim.platform.dms.application.application.dto;
 // --- Repository DTOs ---
 import uim.platform.dms.application;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 struct CreateRepositoryRequest {

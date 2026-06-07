@@ -7,7 +7,7 @@ module uim.platform.task_center.domain.types;
 
 import uim.platform.task_center;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 // --- ID Aliases ---

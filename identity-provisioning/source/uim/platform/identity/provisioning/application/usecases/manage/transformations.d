@@ -13,7 +13,7 @@ module uim.platform.identity.provisioning.application.usecases.manage.transforma
 // import uim.platform.identity.provisioning.application.dto;
 import uim.platform.identity.provisioning;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class ManageTransformationsUseCase { // TODO: UIMUseCase {

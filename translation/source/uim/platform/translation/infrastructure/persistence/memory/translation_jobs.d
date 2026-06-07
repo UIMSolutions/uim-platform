@@ -9,7 +9,7 @@ import uim.platform.translation;
 import std.algorithm : filter;
 import std.array : array;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

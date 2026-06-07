@@ -8,7 +8,7 @@ module uim.platform.html_repository.domain.services.visibility_service;
 // import uim.platform.html_repository.domain.entities.html_app;
 import uim.platform.html_repository;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 struct VisibilityService {

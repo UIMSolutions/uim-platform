@@ -10,7 +10,7 @@ module uim.platform.analytics.app.usecases.datasets;
 // import uim.platform.analytics.app.dto.dataset;
 import uim.platform.analytics;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 class DatasetUseCases {
   private DatasetRepository repo;

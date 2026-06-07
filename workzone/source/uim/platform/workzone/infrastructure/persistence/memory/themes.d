@@ -12,7 +12,7 @@ module uim.platform.workzone.infrastructure.persistence.memory.themes;
  
 import uim.platform.workzone;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryThemeRepository : TenantRepository!(Theme, ThemeId), ThemeRepository {

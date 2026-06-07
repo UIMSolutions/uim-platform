@@ -7,7 +7,7 @@ module uim.platform.masterdata_governance.presentation.http.controllers.business
 
 import uim.platform.masterdata_governance;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

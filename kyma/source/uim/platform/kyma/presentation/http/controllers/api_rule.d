@@ -12,7 +12,7 @@ module uim.platform.kyma.presentation.http.controllers.api_rule;
 // import uim.platform.kyma.presentation.http
 import uim.platform.kyma;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class ApiRuleController : ManageHttpController {

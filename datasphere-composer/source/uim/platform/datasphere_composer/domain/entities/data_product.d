@@ -7,7 +7,7 @@ module uim.platform.datasphere_composer.domain.entities.data_product;
 
 import uim.platform.datasphere_composer;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

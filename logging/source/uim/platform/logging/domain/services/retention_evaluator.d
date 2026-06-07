@@ -8,7 +8,7 @@ module uim.platform.logging.domain.services.retention_evaluator;
 
 import uim.platform.logging;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 struct RetentionValidation {

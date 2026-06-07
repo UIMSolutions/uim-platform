@@ -1,7 +1,7 @@
 module uim.platform.databricks.infrastructure.persistence.memory.jobs;
 import uim.platform.databricks;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

@@ -10,7 +10,7 @@ module uim.platform.master_data_integration.application.usecases.query_change_lo
 // import uim.platform.master_data_integration.domain.types;
 import uim.platform.master_data_integration;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Application service for querying the change log (delta tracking).

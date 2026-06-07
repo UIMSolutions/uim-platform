@@ -7,7 +7,7 @@ module uim.platform.data.privacy.domain.entities.deletion_request;
 
 import uim.platform.data.privacy;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// A request to erase personal data for a data subject (GDPR Art. 17).

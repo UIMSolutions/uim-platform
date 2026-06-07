@@ -13,7 +13,7 @@ module uim.platform.auditlog.domain.services.retention_enforcer;
 
 import uim.platform.auditlog;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 /// Domain service — enforces retention policies by purging expired entries.
 @safe:
 class RetentionEnforcer {

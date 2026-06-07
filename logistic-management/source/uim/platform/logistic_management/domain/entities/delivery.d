@@ -6,7 +6,7 @@
 module uim.platform.logistic_management.domain.entities.delivery;
 import uim.platform.logistic_management;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Line item within a delivery document.

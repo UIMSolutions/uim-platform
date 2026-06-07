@@ -7,7 +7,7 @@ module uim.platform.datasphere_composer.infrastructure.persistence.memory.attrib
 
 import uim.platform.datasphere_composer;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryAttributeMappingRepository

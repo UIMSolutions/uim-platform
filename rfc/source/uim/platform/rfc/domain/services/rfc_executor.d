@@ -7,7 +7,7 @@ module uim.platform.rfc.domain.services.rfc_executor;
 
 import uim.platform.rfc;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 /// Result of executing an RFC call.

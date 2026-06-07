@@ -11,7 +11,7 @@ module uim.platform.document_ai.presentation.http.controllers.schema;
 
 import uim.platform.document_ai;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

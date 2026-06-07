@@ -8,7 +8,7 @@ module uim.platform.private_link.domain.entities.service_instance;
 module uim.platform.private_link.domain.entities.service_instance;
 import uim.platform.private_link;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Represents a private link service instance that establishes a private

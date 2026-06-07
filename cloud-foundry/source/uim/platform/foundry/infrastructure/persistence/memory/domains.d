@@ -13,7 +13,7 @@ module uim.platform.foundry.infrastructure.persistence.memory.domains;
  
 import uim.platform.foundry;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryDomainRepository : TenantRepository!(CfDomain, CfDomainId), IDomainRepository {

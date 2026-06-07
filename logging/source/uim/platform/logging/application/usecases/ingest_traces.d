@@ -11,7 +11,7 @@ module uim.platform.logging.application.usecases.ingest_traces;
 // import std.format : format;
 import uim.platform.logging;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class IngestTracesUseCase { // TODO: UIMUseCase {

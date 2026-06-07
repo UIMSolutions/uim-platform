@@ -7,7 +7,7 @@ module uim.platform.snowflake.domain.entities.snowflake_role;
 
 import uim.platform.snowflake;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 struct SnowflakeRole {

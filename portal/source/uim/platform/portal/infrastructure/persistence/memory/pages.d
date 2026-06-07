@@ -10,7 +10,7 @@ module uim.platform.portal.infrastructure.persistence.memory.pages;
 
 import uim.platform.portal;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryPageRepository : PageRepository {

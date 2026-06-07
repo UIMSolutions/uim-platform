@@ -7,7 +7,7 @@ module uim.platform.situation_automation.application.usecases.manage.automation_
 
 import uim.platform.situation_automation;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class ManageAutomationRulesUseCase { // TODO: UIMUseCase {

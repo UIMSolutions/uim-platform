@@ -7,7 +7,7 @@ module uim.platform.application_autoscaler.domain.types;
 
 import uim.platform.application_autoscaler;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 // ---------------------------------------------------------------------------

@@ -7,7 +7,7 @@ module uim.platform.data_attribute_recommendation.domain.entities.data_record;
 
 import uim.platform.data_attribute_recommendation;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// An individual record within a dataset, holding attribute key-value pairs

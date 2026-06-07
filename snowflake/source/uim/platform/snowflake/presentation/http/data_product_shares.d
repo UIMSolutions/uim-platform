@@ -3,7 +3,7 @@ import uim.platform.snowflake;
 import vibe.http.server;
 import vibe.http.router;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 class DataProductShareController : ManageHttpController {
   private ManageDataProductSharesUseCase usecase;

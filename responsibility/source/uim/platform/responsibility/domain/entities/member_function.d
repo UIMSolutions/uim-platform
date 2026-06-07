@@ -7,7 +7,7 @@ module uim.platform.responsibility.domain.entities.member_function;
 
 import uim.platform.responsibility;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

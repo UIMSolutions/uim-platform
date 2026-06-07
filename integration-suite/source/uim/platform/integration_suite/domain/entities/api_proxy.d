@@ -1,6 +1,6 @@
 module uim.platform.integration_suite.domain.entities.api_proxy;
 import uim.platform.integration_suite;
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 /// An API proxy exposes a backend service as a managed API endpoint.

@@ -9,7 +9,7 @@ module uim.platform.foundry.domain.ports.repositories.service_binding;
 // import uim.platform.foundry.domain.entities.service_binding;
 import uim.platform.foundry;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Port for persisting and querying service bindings.

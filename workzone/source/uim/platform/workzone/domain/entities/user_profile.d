@@ -7,7 +7,7 @@ module uim.platform.workzone.domain.entities.user_profile;
 // import uim.platform.workzone.domain.types;
 import uim.platform.workzone;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// A user profile — workspace membership and user information.

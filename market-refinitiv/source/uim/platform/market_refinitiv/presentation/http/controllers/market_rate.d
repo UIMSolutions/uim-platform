@@ -7,7 +7,7 @@ module uim.platform.market_refinitiv.presentation.http.controllers.market_rate;
 import uim.platform.market_refinitiv;
 
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

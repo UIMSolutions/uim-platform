@@ -11,7 +11,7 @@ module uim.platform.data.privacy.presentation.http.controllers.legal_ground;
 // import uim.platform.data.privacy.domain.entities.legal_ground;
 import uim.platform.data.privacy;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class LegalGroundController : ManageHttpController {

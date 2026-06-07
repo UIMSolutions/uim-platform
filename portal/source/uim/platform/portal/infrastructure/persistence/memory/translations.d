@@ -9,7 +9,7 @@ module uim.platform.portal.infrastructure.persistence.memory.translations;
 // import uim.platform.portal.domain.ports.repositories.translations;
 import uim.platform.portal;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryTranslationRepository : TenantRepository!(Translation, TranslationId), TranslationRepository {

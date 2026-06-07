@@ -7,7 +7,7 @@ module uim.platform.responsibility.application.dto;
 
 import uim.platform.responsibility;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

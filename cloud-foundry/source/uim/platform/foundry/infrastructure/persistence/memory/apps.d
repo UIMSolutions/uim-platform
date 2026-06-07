@@ -11,7 +11,7 @@ module uim.platform.foundry.infrastructure.persistence.memory.apps;
 
 import uim.platform.foundry;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

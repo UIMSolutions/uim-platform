@@ -1,7 +1,7 @@
 module uim.platform.custom_domain.domain.enumerations;
 import uim.platform.custom_domain;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

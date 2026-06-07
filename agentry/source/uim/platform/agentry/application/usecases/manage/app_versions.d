@@ -7,7 +7,7 @@ module uim.platform.agentry.application.usecases.manage.app_versions;
 
 import uim.platform.agentry;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

@@ -10,7 +10,7 @@ import std.process : environment;
 
 import uim.platform.translation;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

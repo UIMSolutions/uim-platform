@@ -7,7 +7,7 @@ module uim.platform.dms_integration.domain.repositories.document_versions;
 
 import uim.platform.dms_integration;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

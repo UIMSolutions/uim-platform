@@ -18,7 +18,7 @@ module uim.platform.portal.application.usecases.manage.menu_items;
 // import uim.platform.portal.domain.types;
 import uim.platform.portal;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class ManageMenuItemsUseCase { // TODO: UIMUseCase {

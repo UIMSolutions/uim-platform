@@ -14,7 +14,7 @@ module uim.platform.identity.directory.application.usecases.manage.schemas;
 
 import uim.platform.identity.directory;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Application use case: custom schema management.

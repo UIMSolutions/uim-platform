@@ -10,7 +10,7 @@ module uim.platform.destination.presentation.http.controllers.certificate;
 // import uim.platform.destination.domain.types;
 import uim.platform.destination;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class CertificateController : ManageHttpController {

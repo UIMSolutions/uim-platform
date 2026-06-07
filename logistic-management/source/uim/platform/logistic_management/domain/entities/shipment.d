@@ -6,7 +6,7 @@
 module uim.platform.logistic_management.domain.entities.shipment;
 import uim.platform.logistic_management;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// A shipment document representing the physical movement of goods (inbound or outbound).

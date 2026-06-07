@@ -8,7 +8,7 @@ import std.process : environment;
 
 import uim.platform.application_studio;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

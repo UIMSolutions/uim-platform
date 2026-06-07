@@ -8,7 +8,7 @@ module uim.platform.analytics.infrastructure.persistence.memory.repositories.pre
 // import uim.platform.analytics.domain.repositories.prediction;
 import uim.platform.analytics;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 class MemoryPredictionRepository : TenantRepository!(Prediction, PredictionId), PredictionRepository {
 

@@ -7,7 +7,7 @@ module uim.platform.rfc.infrastructure.persistence.memory.function_modules;
 
 import uim.platform.rfc;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 class MemoryFunctionModuleRepository : FunctionModuleRepository {

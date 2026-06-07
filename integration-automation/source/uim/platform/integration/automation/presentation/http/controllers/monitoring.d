@@ -13,7 +13,7 @@ module uim.platform.integration.automation.presentation.http.monitoring;
 // import uim.platform.integration.automation.domain.entities.execution_log;
 import uim.platform.integration.automation;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MonitoringController : HttpController {

@@ -11,7 +11,7 @@ module uim.platform.logging.application.usecases.manage.alert_rules;
 
 import uim.platform.logging;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class ManageAlertRulesUseCase { // TODO: UIMUseCase {

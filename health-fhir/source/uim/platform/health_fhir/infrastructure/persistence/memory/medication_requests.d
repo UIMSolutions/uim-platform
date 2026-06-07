@@ -6,7 +6,7 @@
 module uim.platform.health_fhir.infrastructure.persistence.memory.medication_requests;
 import uim.platform.health_fhir;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

@@ -7,7 +7,7 @@ module uim.platform.rfc.presentation.http.controllers.function_module;
 
 import uim.platform.rfc;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 /// HTTP controller for RFC-enabled Function Modules (SE37 entries).

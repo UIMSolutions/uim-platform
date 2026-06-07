@@ -7,7 +7,7 @@ module uim.platform.usage_data.app.usecases.usage_records;
 
 import uim.platform.usage_data;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 /// Application service: usage record use cases.
 class UsageRecordUseCases {

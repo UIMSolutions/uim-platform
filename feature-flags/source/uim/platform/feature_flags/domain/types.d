@@ -7,7 +7,7 @@ module uim.platform.feature_flags.domain.types;
 
 import uim.platform.feature_flags;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

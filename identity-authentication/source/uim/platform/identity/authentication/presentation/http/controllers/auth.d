@@ -12,7 +12,7 @@ module uim.platform.identity.authentication.presentation.http.controllers.auth;
 // import uim.platform.identity.authentication.application.dto;
 import uim.platform.identity.authentication;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 /// HTTP controller for authentication endpoints.
 class AuthController : HttpController {

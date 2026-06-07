@@ -12,7 +12,7 @@ module uim.platform.document_ai.application.usecases.manage.training_jobs;
 
 import uim.platform.document_ai;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

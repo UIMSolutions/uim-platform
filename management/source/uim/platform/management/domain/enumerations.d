@@ -2,7 +2,7 @@ module uim.platform.management.domain.enumerations;
 
 import uim.platform.management;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Status of a global account.

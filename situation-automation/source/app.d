@@ -7,7 +7,7 @@ module app;
 
 import uim.platform.situation_automation;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 version (unittest) {

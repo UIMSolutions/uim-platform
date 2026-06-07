@@ -7,7 +7,7 @@ module uim.platform.application_studio.domain.entities.project_template;
 
 import uim.platform.application_studio;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

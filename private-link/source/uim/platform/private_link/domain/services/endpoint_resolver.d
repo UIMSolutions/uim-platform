@@ -6,7 +6,7 @@
 module uim.platform.private_link.domain.services.endpoint_resolver;
 import uim.platform.private_link;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Domain service: resolves hostname/IP for a service instance's private endpoint.

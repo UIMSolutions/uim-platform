@@ -7,7 +7,7 @@ module uim.platform.usage_data.domain.enumerations.reporting;
 
 import uim.platform.usage_data;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 /// Status of a generated report.

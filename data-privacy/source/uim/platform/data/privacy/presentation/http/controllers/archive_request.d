@@ -10,7 +10,7 @@ module uim.platform.data.privacy.presentation.http.controllers.archive_request;
 // import uim.platform.data.privacy.domain.entities.archive_request;
 import uim.platform.data.privacy;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class ArchiveRequestController : ManageHttpController {

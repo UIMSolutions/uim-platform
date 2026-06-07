@@ -8,7 +8,7 @@ module uim.platform.feature_flags.domain.entities.feature_flag;
 import uim.platform.feature_flags;
 import std.json : JSONValue;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

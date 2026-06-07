@@ -7,7 +7,7 @@ module uim.platform.workzone.domain.entities.navigation_item;
 
 import uim.platform.workzone;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// A navigation item / menu entry — defines site navigation structure.

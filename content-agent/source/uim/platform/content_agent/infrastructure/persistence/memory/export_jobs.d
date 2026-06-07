@@ -12,7 +12,7 @@ module uim.platform.content_agent.infrastructure.persistence.memory.export_jobs;
  
 import uim.platform.content_agent;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryExportJobRepository : TenantRepository!(ExportJob, ExportJobId), ExportJobRepository {

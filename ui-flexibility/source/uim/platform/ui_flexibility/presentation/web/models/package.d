@@ -6,7 +6,7 @@
 module uim.platform.ui_flexibility.presentation.web.models;
 import uim.platform.ui_flexibility;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

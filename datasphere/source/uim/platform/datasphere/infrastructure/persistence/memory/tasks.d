@@ -12,7 +12,7 @@ module uim.platform.datasphere.infrastructure.persistence.memory.task;
  
 import uim.platform.datasphere;
 
-mixin(ShowModule!()); 
+// mixin(ShowModule!()); 
 
 @safe:
 class MemoryTaskRepository : TenantRepository!(Task, TaskId), TaskRepository {

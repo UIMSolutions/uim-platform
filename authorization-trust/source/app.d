@@ -7,7 +7,7 @@ module app;
 
 import uim.platform.authorization_trust;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

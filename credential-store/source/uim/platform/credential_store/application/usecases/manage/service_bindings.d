@@ -12,7 +12,7 @@ module uim.platform.credential_store.application.usecases.manage.service_binding
 
 import uim.platform.credential_store;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class ManageServiceBindingsUseCase { // TODO: UIMUseCase {

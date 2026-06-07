@@ -6,7 +6,7 @@
 module uim.platform.marketrates.application.usecases.manage.audit_logs;
 import uim.platform.marketrates;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

@@ -10,7 +10,7 @@ module uim.platform.identity.provisioning.infrastructure.persistence.memory.tran
 // import uim.platform.identity.provisioning.domain.ports.repositories.transformations;
 import uim.platform.identity.provisioning;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryTransformationRepository : TenantRepository!(Transformation, TransformationId), TransformationRepository {

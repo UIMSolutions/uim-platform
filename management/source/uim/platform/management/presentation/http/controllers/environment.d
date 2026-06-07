@@ -12,7 +12,7 @@ module uim.platform.management.presentation.http.controllers.environment;
 
 import uim.platform.management;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 class EnvironmentController : ManageHttpController {
   private ManageEnvironmentsUseCase usecase;

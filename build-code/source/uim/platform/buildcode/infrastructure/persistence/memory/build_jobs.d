@@ -7,7 +7,7 @@ module uim.platform.buildcode.infrastructure.persistence.memory.build_jobs;
 
 import uim.platform.buildcode;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

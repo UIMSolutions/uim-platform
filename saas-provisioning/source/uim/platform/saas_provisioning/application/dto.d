@@ -7,7 +7,7 @@ module uim.platform.saas_provisioning.application.dto;
 
 import uim.platform.saas_provisioning;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

@@ -9,7 +9,7 @@ module uim.platform.data.privacy.infrastructure.persistence.memory.legal_grounds
 // import uim.platform.data.privacy.domain.ports.repositories.legal_grounds;
 import uim.platform.data.privacy;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryLegalGroundRepository : TenantRepository!(LegalGround, LegalGroundId), LegalGroundRepository {

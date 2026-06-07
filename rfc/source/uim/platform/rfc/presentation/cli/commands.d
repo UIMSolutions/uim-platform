@@ -7,7 +7,7 @@ module uim.platform.rfc.presentation.cli.commands;
 
 import uim.platform.rfc;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 /// Interactive CLI runner for the RFC Interface service.

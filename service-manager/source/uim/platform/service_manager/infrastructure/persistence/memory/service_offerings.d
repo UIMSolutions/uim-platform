@@ -2,7 +2,7 @@ module uim.platform.service_manager.infrastructure.persistence.memory.service_of
 
 import uim.platform.service_manager;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

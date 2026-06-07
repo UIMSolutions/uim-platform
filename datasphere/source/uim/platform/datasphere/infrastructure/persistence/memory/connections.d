@@ -12,7 +12,7 @@ module uim.platform.datasphere.infrastructure.persistence.memory.connection;
  
 import uim.platform.datasphere;
 
-mixin(ShowModule!()); 
+// mixin(ShowModule!()); 
 
 @safe:
 class MemoryConnectionRepository : TenantRepository!(Connection, ConnectionId), ConnectionRepository {

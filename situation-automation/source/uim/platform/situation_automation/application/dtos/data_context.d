@@ -2,7 +2,7 @@ module uim.platform.situation_automation.application.dtos.data_context;
 
 import uim.platform.situation_automation;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 struct CreateDataContextRequest {

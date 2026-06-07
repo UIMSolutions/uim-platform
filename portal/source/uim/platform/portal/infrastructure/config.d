@@ -8,7 +8,7 @@ import std.process : environment;
 
 import uim.platform.portal;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Service configuration.

@@ -7,7 +7,7 @@ module uim.platform.portal.domain.entities.theme;
 // import uim.platform.portal.domain.types;
 import uim.platform.portal;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Theme definition for portal sites.

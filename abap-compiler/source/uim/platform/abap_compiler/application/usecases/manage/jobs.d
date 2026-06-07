@@ -7,7 +7,7 @@ module uim.platform.abap_compiler.application.usecases.manage.jobs;
 
 import uim.platform.abap_compiler;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 /// Application use case: query / manage compilation jobs.

@@ -7,7 +7,7 @@ module uim.platform.agentry.domain.repositories.app_versions;
 
 import uim.platform.agentry;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

@@ -9,7 +9,7 @@ import uim.platform.integration_delivery;
 import std.process : environment;
 
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

@@ -11,7 +11,7 @@ module uim.platform.data_attribute_recommendation.infrastructure.persistence
 // import uim.platform.data_attribute_recommendation.domain.ports.repositories.inference_results;
 import uim.platform.data_attribute_recommendation;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryInferenceResultRepository : TenantRepository!(InferenceResult, InferenceResultId), InferenceResultRepository {

@@ -12,7 +12,7 @@ module uim.platform.management.presentation.http.controllers.service_plan;
 
 import uim.platform.management;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 class ServicePlanController : ManageHttpController {
   private ManageServicePlansUseCase usecase;

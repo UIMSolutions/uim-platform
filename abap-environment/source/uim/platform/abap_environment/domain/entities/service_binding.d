@@ -8,7 +8,7 @@ module uim.platform.abap_environment.domain.entities.service_binding;
 
 import uim.platform.abap_environment;
 
-// mixin(ShowModule!());
+// // mixin(ShowModule!());
 @safe:
 /// Exposed service endpoint from a binding.
 struct ExposedEndpoint {

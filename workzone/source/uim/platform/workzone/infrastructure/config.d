@@ -8,7 +8,7 @@ module uim.platform.workzone.infrastructure.config;
 import std.process : environment;
 import uim.platform.workzone;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Service configuration.

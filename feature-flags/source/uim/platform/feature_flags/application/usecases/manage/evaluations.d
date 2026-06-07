@@ -7,7 +7,7 @@ module uim.platform.feature_flags.application.usecases.manage.evaluations;
 
 import uim.platform.feature_flags;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

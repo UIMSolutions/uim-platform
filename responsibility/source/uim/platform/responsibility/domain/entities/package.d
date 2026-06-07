@@ -7,7 +7,7 @@ module uim.platform.responsibility.domain.entities;
 
 import uim.platform.responsibility;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 public {
     import uim.platform.responsibility.domain.entities.responsibility_rule;

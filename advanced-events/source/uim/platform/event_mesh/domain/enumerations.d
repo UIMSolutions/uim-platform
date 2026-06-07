@@ -2,7 +2,7 @@ module uim.platform.event_mesh.domain.enumerations;
 
 import uim.platform.event_mesh;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

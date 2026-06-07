@@ -7,7 +7,7 @@ module uim.platform.oauth.domain.entities.oauth_scope;
 
 import uim.platform.oauth;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

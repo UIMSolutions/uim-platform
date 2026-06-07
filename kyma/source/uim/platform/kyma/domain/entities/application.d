@@ -7,7 +7,7 @@ module uim.platform.kyma.domain.entities.application;
 
 import uim.platform.kyma;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// An external application connected to the Kyma environment.

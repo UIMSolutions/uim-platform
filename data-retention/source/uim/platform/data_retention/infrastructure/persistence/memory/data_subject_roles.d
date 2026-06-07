@@ -1,7 +1,7 @@
 module uim.platform.data_retention.infrastructure.persistence.memory.data_subject_roles;
 import uim.platform.data_retention;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

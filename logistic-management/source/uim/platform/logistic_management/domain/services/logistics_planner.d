@@ -6,7 +6,7 @@
 module uim.platform.logistic_management.domain.services.logistics_planner;
 import uim.platform.logistic_management;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /**

@@ -7,7 +7,7 @@ module uim.platform.transport.presentation.http.controllers.transport_node;
 
 import uim.platform.transport;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

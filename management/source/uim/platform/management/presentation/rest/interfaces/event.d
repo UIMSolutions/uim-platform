@@ -2,7 +2,7 @@ module uim.platform.management.presentation.rest.interfaces.event;
 
 import uim.platform.management;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 interface IEnvironmentEventApi {

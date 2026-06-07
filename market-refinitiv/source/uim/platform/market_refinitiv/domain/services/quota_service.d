@@ -6,7 +6,7 @@
 module uim.platform.market_refinitiv.domain.services.quota_service;
 import uim.platform.market_refinitiv;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

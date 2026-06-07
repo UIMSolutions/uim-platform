@@ -7,7 +7,7 @@ module uim.platform.build_apps.application.usecases.manage.data_entities;
 
 import uim.platform.build_apps;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

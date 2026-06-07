@@ -7,7 +7,7 @@ module uim.platform.event_mesh.presentation.odata.controllers.event_schema;
 
 import uim.platform.event_mesh;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

@@ -7,7 +7,7 @@ module uim.platform.personal_data.infrastructure.persistence.memory.personal_dat
 
 import uim.platform.personal_data;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

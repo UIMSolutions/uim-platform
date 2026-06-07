@@ -9,7 +9,7 @@ module uim.platform.keystore.domain.ports.repositories.key_entries;
 
 import uim.platform.keystore;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

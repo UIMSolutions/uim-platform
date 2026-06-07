@@ -15,7 +15,7 @@ module uim.platform.identity.authentication.application.usecases.manage.groups;
 // import std.algorithm : canFind, remove;
 import uim.platform.identity.authentication;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 /// Application use case: group management (CRUD + membership).
 class ManageGroupsUseCase { // TODO: UIMUseCase {

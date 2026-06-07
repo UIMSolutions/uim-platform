@@ -8,7 +8,7 @@ module uim.platform.abap_environment.presentation.web.views.business_user;
 import uim.platform.abap_environment;
 import uim.platform.abap_environment.presentation.web.models.business_user;
 
-// mixin(ShowModule!());
+// // mixin(ShowModule!());
 @safe:
 
 class BusinessUserHtmlView {

@@ -7,7 +7,7 @@ module uim.platform.events.presentation.http.controllers.message_binding;
 
 import uim.platform.events;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

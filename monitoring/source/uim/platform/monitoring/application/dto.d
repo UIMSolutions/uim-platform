@@ -8,7 +8,7 @@ module uim.platform.monitoring.application.dto;
 
 import uim.platform.monitoring;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// --- Monitored Resource DTOs ---

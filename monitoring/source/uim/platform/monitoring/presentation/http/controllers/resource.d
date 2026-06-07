@@ -12,7 +12,7 @@ module uim.platform.monitoring.presentation.http.controllers.resource;
 // import uim.platform.monitoring.presentation.http
 import uim.platform.monitoring;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class ResourceController : ManageHttpController {

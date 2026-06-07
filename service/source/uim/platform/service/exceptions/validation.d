@@ -7,7 +7,7 @@ module uim.platform.service.exceptions.validation;
 
 import uim.platform.service;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class UIMValidationException : UIMException {

@@ -13,7 +13,7 @@ module uim.platform.hana.application.usecases.manage.alerts;
 
 import uim.platform.hana;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class ManageAlertsUseCase { // TODO: UIMUseCase {

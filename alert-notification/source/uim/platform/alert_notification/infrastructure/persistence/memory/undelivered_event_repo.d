@@ -7,7 +7,7 @@ module uim.platform.alert_notification.infrastructure.persistence.memory.undeliv
 
 import uim.platform.alert_notification;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

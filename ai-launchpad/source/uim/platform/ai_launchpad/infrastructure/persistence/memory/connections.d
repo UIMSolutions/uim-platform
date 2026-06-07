@@ -10,7 +10,7 @@ module uim.platform.ai_launchpad.infrastructure.persistence.memory.connections;
 // import uim.platform.ai_launchpad.domain.types;
 import uim.platform.ai_launchpad;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryConnectionRepository : TenantRepository!(Connection, ConnectionId), IConnectionRepository {

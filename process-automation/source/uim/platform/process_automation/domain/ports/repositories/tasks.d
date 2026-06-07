@@ -8,7 +8,7 @@ module uim.platform.process_automation.domain.ports.repositories.tasks;
 // import uim.platform.process_automation.domain.entities.task;
 import uim.platform.process_automation;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 interface TaskRepository : ITenantRepository!(PATask, TaskId) {

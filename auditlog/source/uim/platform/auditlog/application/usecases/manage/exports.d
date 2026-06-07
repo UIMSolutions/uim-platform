@@ -15,7 +15,7 @@ module uim.platform.auditlog.application.usecases.manage.exports;
 
 import uim.platform.auditlog;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 class ManageExportsUseCase { // TODO: UIMUseCase {
   private ExportJobRepository jobs;

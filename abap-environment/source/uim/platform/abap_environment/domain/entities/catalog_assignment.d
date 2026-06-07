@@ -2,7 +2,7 @@ module uim.platform.abap_environment.domain.entities.catalog_assignment;
 
 import uim.platform.abap_environment;
 
-// mixin(ShowModule!());
+// // mixin(ShowModule!());
 
 @safe:
 /// Catalog assignment attached to a role.

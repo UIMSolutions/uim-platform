@@ -8,7 +8,7 @@ module uim.platform.data.privacy.domain.ports.repositories.deletion_requests;
 // import uim.platform.data.privacy.domain.entities.deletion_request;
 import uim.platform.data.privacy;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Port for persisting data deletion requests.

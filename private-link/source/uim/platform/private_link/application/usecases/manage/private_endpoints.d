@@ -6,7 +6,7 @@
 module uim.platform.private_link.application.usecases.manage.private_endpoints;
 import uim.platform.private_link;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Use case: manage private endpoint creation, approval and status transitions.

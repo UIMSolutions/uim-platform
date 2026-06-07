@@ -7,7 +7,7 @@ module uim.platform.kyma.helpers.convert;
 
 import uim.platform.kyma;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

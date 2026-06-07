@@ -1,6 +1,6 @@
 module uim.platform.snowflake.application.usecases.manage.snowflake_warehouses;
 import uim.platform.snowflake;
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 class ManageSnowflakeWarehousesUseCase {
   private SnowflakeWarehouseRepository repo;

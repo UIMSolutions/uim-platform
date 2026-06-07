@@ -8,7 +8,7 @@ module uim.platform.content_agent.domain.ports.repositories.transport_queues;
 
 import uim.platform.content_agent;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing - transport queue persistence.

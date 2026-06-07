@@ -10,7 +10,7 @@ module uim.platform.data_attribute_recommendation.infrastructure.persistence.mem
 // import uim.platform.data_attribute_recommendation.domain.ports.repositories.data_records;
 import uim.platform.data_attribute_recommendation;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryDataRecordRepository : TenantRepository!(DataRecord, DataRecordId), DataRecordRepository {

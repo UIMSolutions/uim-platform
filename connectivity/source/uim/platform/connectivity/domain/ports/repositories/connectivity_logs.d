@@ -8,7 +8,7 @@ module uim.platform.connectivity.domain.ports.repositories.connectivity_logs;
 // import uim.platform.connectivity.domain.types;
 import uim.platform.connectivity;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing - connectivity event log persistence.

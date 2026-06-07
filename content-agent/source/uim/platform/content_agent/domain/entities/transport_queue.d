@@ -7,7 +7,7 @@ module uim.platform.content_agent.domain.entities.transport_queue;
 
 import uim.platform.content_agent;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// A configured transport queue (CTS+, Cloud TMS, or local).

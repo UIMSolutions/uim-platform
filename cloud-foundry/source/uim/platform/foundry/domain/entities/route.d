@@ -9,7 +9,7 @@ module uim.platform.foundry.domain.entities.route;
 
 import uim.platform.foundry;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// A route — maps incoming HTTP/TCP traffic to one or more applications

@@ -8,7 +8,7 @@ module uim.platform.logging.domain.ports.repositories.pipelines;
 
 import uim.platform.logging;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 interface PipelineRepository : ITenantRepository!(Pipeline, PipelineId) {

@@ -13,7 +13,7 @@ module uim.platform.auditlog.infrastructure.persistence.memory.export_;
 
 import uim.platform.auditlog;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryExportJobRepository : TenantRepository!(ExportJob, ExportJobId), ExportJobRepository {

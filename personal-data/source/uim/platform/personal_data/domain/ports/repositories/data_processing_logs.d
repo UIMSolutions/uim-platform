@@ -7,7 +7,7 @@ module uim.platform.personal_data.domain.ports.repositories.data_processing_logs
 
 import uim.platform.personal_data;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

@@ -8,7 +8,7 @@ module uim.platform.object_store.domain.entities.storage_object;
 // import uim.platform.object_store.domain.types;
 import uim.platform.object_store;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 struct StorageObject {

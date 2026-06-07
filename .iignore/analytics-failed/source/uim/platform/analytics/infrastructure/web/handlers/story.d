@@ -10,7 +10,7 @@ module uim.platform.analytics.infrastructure.web.handlers.story;
 
 import uim.platform.analytics;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 class StoryHandler {

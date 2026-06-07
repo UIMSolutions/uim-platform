@@ -16,7 +16,7 @@ module uim.platform.dms.application.domain.services.versioning_service;
 //
 import uim.platform.dms.application;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 /// Domain service for document version management (checkout/checkin model).
 class VersioningService {

@@ -42,7 +42,7 @@ module uim.platform.identity.authentication.infrastructure.container;
 
 import uim.platform.identity.authentication;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 /// Dependency injection container — wires all layers together.
 struct Container {

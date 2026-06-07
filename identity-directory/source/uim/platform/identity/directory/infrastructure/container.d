@@ -31,7 +31,7 @@ module uim.platform.identity.directory.infrastructure.container;
 // import uim.platform.identity.authentication.presentation.http.health;
 import uim.platform.identity.directory;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Dependency injection container — wires all layers together.

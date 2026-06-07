@@ -7,7 +7,7 @@ module uim.platform.buildcode.domain.ports.repositories.ai_requests;
 
 import uim.platform.buildcode;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

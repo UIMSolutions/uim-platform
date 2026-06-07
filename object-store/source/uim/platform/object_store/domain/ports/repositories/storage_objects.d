@@ -9,7 +9,7 @@ module uim.platform.object_store.domain.ports.repositories.storage_objects;
 // import uim.platform.object_store.domain.types;
 import uim.platform.object_store;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing - storage object persistence.

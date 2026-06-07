@@ -2,7 +2,7 @@ module uim.platform.service_manager.domain.entities.service_broker;
 
 import uim.platform.service_manager;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

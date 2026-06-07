@@ -7,7 +7,7 @@ module uim.platform.events.application.usecases.manage.message_bindings;
 
 import uim.platform.events;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

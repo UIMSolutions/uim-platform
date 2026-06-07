@@ -16,7 +16,7 @@ module uim.platform.portal.application.usecases.manage.roles;
 // import uim.platform.portal.domain.types;
 import uim.platform.portal;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class ManageRolesUseCase { // TODO: UIMUseCase {

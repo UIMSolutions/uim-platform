@@ -7,7 +7,7 @@ module uim.platform.custom_domain.presentation.http.controllers.domain_mapping;
 
 import uim.platform.custom_domain;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

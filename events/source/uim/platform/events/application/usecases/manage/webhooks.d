@@ -7,7 +7,7 @@ module uim.platform.events.application.usecases.manage.webhooks;
 
 import uim.platform.events;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

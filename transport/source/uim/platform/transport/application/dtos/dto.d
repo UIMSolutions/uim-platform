@@ -7,7 +7,7 @@ module uim.platform.transport.application.dtos.dto;
 
 import uim.platform.transport;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

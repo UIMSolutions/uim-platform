@@ -8,7 +8,7 @@ module uim.platform.job_scheduling.domain.entities.run_log;
 // import uim.platform.job_scheduling.domain.types;
 import uim.platform.job_scheduling;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 struct RunLog {

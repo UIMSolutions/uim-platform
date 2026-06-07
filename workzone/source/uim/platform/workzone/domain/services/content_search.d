@@ -11,7 +11,7 @@ module uim.platform.workzone.domain.services.content_search;
 // import uim.platform.workzone.domain.entities.content_item;
 import uim.platform.workzone;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Domain service — simple in-memory content search.

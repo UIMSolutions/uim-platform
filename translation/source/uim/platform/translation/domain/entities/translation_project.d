@@ -7,7 +7,7 @@ module uim.platform.translation.domain.entities.translation_project;
 
 import uim.platform.translation;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

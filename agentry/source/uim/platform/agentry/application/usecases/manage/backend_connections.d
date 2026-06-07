@@ -7,7 +7,7 @@ module uim.platform.agentry.application.usecases.manage.backend_connections;
 
 import uim.platform.agentry;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

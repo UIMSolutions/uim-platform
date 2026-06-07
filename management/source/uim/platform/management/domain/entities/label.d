@@ -7,7 +7,7 @@ module uim.platform.management.domain.entities.label;
 
 import uim.platform.management;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// A label is a key-value tag attached to a BTP resource for

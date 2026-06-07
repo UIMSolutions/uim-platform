@@ -9,7 +9,7 @@ import std.process : environment;
 
 import uim.platform.html_repository;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

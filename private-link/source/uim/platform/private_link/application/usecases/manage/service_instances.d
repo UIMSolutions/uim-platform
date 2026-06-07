@@ -6,7 +6,7 @@
 module uim.platform.private_link.application.usecases.manage.service_instances;
 import uim.platform.private_link;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Use case: full lifecycle management of private link service instances.

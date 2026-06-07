@@ -9,7 +9,7 @@ import uim.platform.redis;
 
 import std.format : format;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

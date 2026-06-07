@@ -6,7 +6,7 @@
 module uim.platform.ui_flexibility.presentation.gui.models;
 import uim.platform.ui_flexibility;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

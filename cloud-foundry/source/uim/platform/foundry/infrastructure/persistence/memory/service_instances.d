@@ -13,7 +13,7 @@ module uim.platform.foundry.infrastructure.persistence.memory.service_instances;
  
 import uim.platform.foundry;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryServiceInstanceRepository : TenantRepository!(ServiceInstance, ServiceInstanceId), IServiceInstanceRepository {

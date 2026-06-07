@@ -7,7 +7,7 @@ module uim.platform.monitoring.domain.entities.metric_definition;
 // import uim.platform.monitoring.domain.types;
 import uim.platform.monitoring;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Definition of a metric that can be collected for monitored resources.

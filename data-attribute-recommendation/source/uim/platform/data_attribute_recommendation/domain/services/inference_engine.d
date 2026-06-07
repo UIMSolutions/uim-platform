@@ -16,7 +16,7 @@ module uim.platform.data_attribute_recommendation.domain.services.inference_engi
 // import uim.platform.data_attribute_recommendation.domain.ports.repositories.inference_results;
 import uim.platform.data_attribute_recommendation;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:/// Domain service that processes inference requests against deployed
 /// models. Validates deployment state and generates simulated predictions.

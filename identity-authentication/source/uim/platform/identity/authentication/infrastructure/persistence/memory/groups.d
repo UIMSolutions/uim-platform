@@ -10,7 +10,7 @@ module uim.platform.identity.authentication.infrastructure.persistence.memory.gr
 
 import uim.platform.identity.authentication;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 /// In-memory adapter for group persistence.
 class MemoryGroupRepository : TenantRepository!(IdaGroup, GroupId), GroupRepository {

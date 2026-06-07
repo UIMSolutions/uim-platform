@@ -1,7 +1,7 @@
 module uim.platform.data_retention.presentation.http.controllers.retention_rule;
 import uim.platform.data_retention;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

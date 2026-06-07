@@ -11,7 +11,7 @@ module uim.platform.identity.authentication.domain.services.policy_evaluator;
 
 import uim.platform.identity.authentication;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 /// Domain service: evaluates authorization policies against a user.
 struct PolicyEvaluationContext {

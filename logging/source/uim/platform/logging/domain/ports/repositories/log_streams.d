@@ -8,7 +8,7 @@ module uim.platform.logging.domain.ports.repositories.log_streams;
 
 import uim.platform.logging;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 interface LogStreamRepository : ITenantRepository!(LogStream, LogStreamId) {

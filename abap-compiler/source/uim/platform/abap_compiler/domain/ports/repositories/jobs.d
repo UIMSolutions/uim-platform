@@ -7,7 +7,7 @@ module uim.platform.abap_compiler.domain.ports.repositories.jobs;
 
 import uim.platform.abap_compiler;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 /// Primary port: repository contract for compilation jobs.

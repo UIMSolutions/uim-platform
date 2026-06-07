@@ -11,7 +11,7 @@ module uim.platform.monitoring.presentation.http.controllers.channel;
 // import uim.platform.monitoring.domain.types;
 import uim.platform.monitoring;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class ChannelController : ManageHttpController {

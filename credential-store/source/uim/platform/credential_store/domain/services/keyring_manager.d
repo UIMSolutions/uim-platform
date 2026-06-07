@@ -9,7 +9,7 @@ module uim.platform.credential_store.domain.services.keyring_manager;
 
 import uim.platform.credential_store;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 struct KeyringManager {

@@ -9,7 +9,7 @@ module uim.platform.analytics.app.dto.dataset;
 //import uim.platform.analytics.domain.entities.dataset;
 import uim.platform.analytics;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 struct CreateDatasetRequest {

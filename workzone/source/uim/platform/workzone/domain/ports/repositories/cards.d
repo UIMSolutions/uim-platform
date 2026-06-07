@@ -9,7 +9,7 @@ module uim.platform.workzone.domain.ports.repositories.cards;
 
 import uim.platform.workzone;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 interface CardRepository : ITenantRepository!(Card, CardId) {

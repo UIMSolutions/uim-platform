@@ -12,7 +12,7 @@ module uim.platform.management.infrastructure.persistence.memory.environment_ins
 
 import uim.platform.management;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 class MemoryEnvironmentRepository : TenantRepository!(Environment, EnvironmentId), EnvironmentRepository {

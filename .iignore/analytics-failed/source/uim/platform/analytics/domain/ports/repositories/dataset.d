@@ -8,7 +8,7 @@ module uim.platform.analytics.domain.repositories.dataset;
 
 import uim.platform.analytics;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 interface DatasetRepository : ITenantRepository!(Dataset, DatasetId) {

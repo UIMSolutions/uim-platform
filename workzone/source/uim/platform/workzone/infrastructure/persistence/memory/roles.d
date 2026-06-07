@@ -12,7 +12,7 @@ module uim.platform.workzone.infrastructure.persistence.memory.roles;
  
 import uim.platform.workzone;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryRoleRepository : TenantRepository!(Role, RoleId), RoleRepository {

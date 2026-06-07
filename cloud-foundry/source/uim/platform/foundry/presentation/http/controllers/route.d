@@ -12,7 +12,7 @@ module uim.platform.foundry.presentation.http.controllers.route;
 // import uim.platform.foundry.domain.entities.cf_domain;
 import uim.platform.foundry;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

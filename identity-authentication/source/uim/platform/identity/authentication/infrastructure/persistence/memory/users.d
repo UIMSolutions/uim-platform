@@ -10,7 +10,7 @@ module uim.platform.identity.authentication.infrastructure.persistence.memory.us
 
 import uim.platform.identity.authentication;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 /// In-memory adapter for user persistence (swap for DB adapter in production).
 class MemoryUserRepository : TenantRepository!(User, UserId), UserRepository {

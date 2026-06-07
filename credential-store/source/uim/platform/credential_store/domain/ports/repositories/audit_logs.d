@@ -9,7 +9,7 @@ module uim.platform.credential_store.domain.ports.repositories.audit_logs;
 
 import uim.platform.credential_store;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

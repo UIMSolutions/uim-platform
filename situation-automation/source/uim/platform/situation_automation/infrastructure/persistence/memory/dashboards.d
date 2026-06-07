@@ -7,7 +7,7 @@ module uim.platform.situation_automation.infrastructure.persistence.memory.dashb
 
 import uim.platform.situation_automation;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryDashboardRepository : TenantRepository!(Dashboard, DashboardId), DashboardRepository {

@@ -8,7 +8,7 @@ module uim.platform.workzone.domain.ports.repositories.feeds;
 // import uim.platform.workzone.domain.entities.feed_entry;
 import uim.platform.workzone;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 interface FeedRepository : ITenantRepository!(FeedEntry, FeedEntryId) {

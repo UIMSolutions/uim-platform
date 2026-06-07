@@ -12,7 +12,7 @@ module uim.platform.workzone.application.usecases.manage.notifications;
 // import uim.platform.workzone.application.dto;
 import uim.platform.workzone;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class ManageNotificationsUseCase { // TODO: UIMUseCase {

@@ -6,7 +6,7 @@
 module uim.platform.health_fhir.domain.entities.condition;
 import uim.platform.health_fhir;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

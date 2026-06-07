@@ -6,7 +6,7 @@
 module uim.platform.private_link.infrastructure.container;
 import uim.platform.private_link;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Dependency injection container — wires all layers of the Private Link Service.

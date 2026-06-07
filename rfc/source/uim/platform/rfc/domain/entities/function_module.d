@@ -7,7 +7,7 @@ module uim.platform.rfc.domain.entities.function_module;
 
 import uim.platform.rfc;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 /// A single parameter of an RFC-enabled function module.

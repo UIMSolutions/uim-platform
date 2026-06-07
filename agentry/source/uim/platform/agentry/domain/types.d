@@ -7,7 +7,7 @@ module uim.platform.agentry.domain.types;
 
 import uim.platform.agentry;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

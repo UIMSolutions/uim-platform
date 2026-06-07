@@ -13,7 +13,7 @@ module uim.platform.foundry.infrastructure.persistence.memory.service_bindings;
  
 import uim.platform.foundry;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryServiceBindingRepository : TenantRepository!(ServiceBinding, ServiceBindingId), IServiceBindingRepository {

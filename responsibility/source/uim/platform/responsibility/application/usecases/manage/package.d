@@ -7,7 +7,7 @@ module uim.platform.responsibility.application.usecases.manage;
 
 import uim.platform.responsibility;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 public {
     import uim.platform.responsibility.application.usecases.manage.responsibility_rules;

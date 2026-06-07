@@ -10,7 +10,7 @@ module uim.platform.connectivity.infrastructure.persistence.memory.channels;
 
 import uim.platform.connectivity;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

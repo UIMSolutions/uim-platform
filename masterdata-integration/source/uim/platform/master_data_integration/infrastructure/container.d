@@ -40,7 +40,7 @@ module uim.platform.master_data_integration.infrastructure.container;
 // import uim.platform.master_data_integration.presentation.http.health;
 import uim.platform.master_data_integration;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Dependency injection container — wires all layers together.

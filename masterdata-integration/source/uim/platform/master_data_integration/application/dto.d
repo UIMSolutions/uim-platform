@@ -7,7 +7,7 @@ module uim.platform.master_data_integration.application.dto;
 
 import uim.platform.master_data_integration;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// --- Master Data Object DTOs ---

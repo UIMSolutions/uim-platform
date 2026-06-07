@@ -12,7 +12,7 @@ module uim.platform.ai_core.infrastructure.persistence.memory.metrics;
  
 import uim.platform.ai_core;
 
-mixin(ShowModule!()); 
+// mixin(ShowModule!()); 
 
 @safe:
 class MemoryMetricRepository : TenantRepository!(Metric, MetricId), MetricRepository {

@@ -7,7 +7,7 @@ module uim.platform.workzone.domain.entities.forum_topic;
 
 import uim.platform.workzone;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// A forum topic / discussion thread within a workspace.

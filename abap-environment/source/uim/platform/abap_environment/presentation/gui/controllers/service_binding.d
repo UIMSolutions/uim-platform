@@ -9,7 +9,7 @@ import uim.platform.abap_environment;
 import uim.platform.abap_environment.presentation.gui.views.service_binding;
 import uim.platform.abap_environment.presentation.gui.models.service_binding;
 
-// mixin(ShowModule!());
+// // mixin(ShowModule!());
 
 class ServiceBindingGuiController {
   private ManageServiceBindingsUseCase usecase;

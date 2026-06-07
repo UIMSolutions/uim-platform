@@ -7,7 +7,7 @@ module uim.platform.abap_compiler.presentation.http.controllers.job;
 
 import uim.platform.abap_compiler;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 /// HTTP controller for compilation job query.

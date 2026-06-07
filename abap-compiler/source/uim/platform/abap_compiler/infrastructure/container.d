@@ -7,7 +7,7 @@ module uim.platform.abap_compiler.infrastructure.container;
 
 import uim.platform.abap_compiler;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 /// Dependency-injection container wired at startup.

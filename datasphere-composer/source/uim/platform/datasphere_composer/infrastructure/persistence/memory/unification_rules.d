@@ -7,7 +7,7 @@ module uim.platform.datasphere_composer.infrastructure.persistence.memory.unific
 
 import uim.platform.datasphere_composer;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryUnificationRuleRepository

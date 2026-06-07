@@ -1,7 +1,7 @@
 module uim.platform.databricks.application.usecases.manage_data_products;
 import uim.platform.databricks;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

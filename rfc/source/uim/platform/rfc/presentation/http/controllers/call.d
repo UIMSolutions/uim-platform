@@ -7,7 +7,7 @@ module uim.platform.rfc.presentation.http.controllers.call;
 
 import uim.platform.rfc;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 /// HTTP controller for RFC call execution and history.

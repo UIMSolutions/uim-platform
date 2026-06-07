@@ -7,7 +7,7 @@ module uim.platform.rfc.application.dto;
 
 import uim.platform.rfc;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 // ---------------------------------------------------------------------------

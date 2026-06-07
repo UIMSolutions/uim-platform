@@ -8,7 +8,7 @@ module uim.platform.process_automation.domain.ports.repositories.actions;
 // import uim.platform.process_automation.domain.entities.action;
 import uim.platform.process_automation;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 interface ActionRepository : ITenantRepository!(Action, ActionId) {

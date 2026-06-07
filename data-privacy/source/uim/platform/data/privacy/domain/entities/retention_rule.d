@@ -7,7 +7,7 @@ module uim.platform.data.privacy.domain.entities.retention_rule;
 
 import uim.platform.data.privacy;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Defines how long personal data may be retained for a given purpose.

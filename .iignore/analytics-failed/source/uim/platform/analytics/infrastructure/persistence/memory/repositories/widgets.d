@@ -8,7 +8,7 @@ module uim.platform.analytics.infrastructure.persistence.memory.repositories.wid
 // import uim.platform.analytics.domain.repositories.widget;
 import uim.platform.analytics;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 class MemoryWidgetRepository : TenantRepository!(Widget, WidgetId), WidgetRepository {
 

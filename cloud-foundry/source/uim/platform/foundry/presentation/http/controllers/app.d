@@ -11,7 +11,7 @@ module uim.platform.foundry.presentation.http.controllers.app;
 // import uim.platform.foundry.domain.entities.application;
 import uim.platform.foundry;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class AppController : ManageHttpController {

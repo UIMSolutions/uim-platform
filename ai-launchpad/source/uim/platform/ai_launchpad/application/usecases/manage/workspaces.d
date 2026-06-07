@@ -12,7 +12,7 @@ module uim.platform.ai_launchpad.application.usecases.manage.workspaces;
 
 import uim.platform.ai_launchpad;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class ManageWorkspacesUseCase { // TODO: UIMUseCase {

@@ -7,7 +7,7 @@ module uim.platform.datasphere_composer.application.usecases.manage.attribute_ma
 
 import uim.platform.datasphere_composer;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class ManageAttributeMappingsUseCase {

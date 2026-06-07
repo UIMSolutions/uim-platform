@@ -11,7 +11,7 @@ module uim.platform.portal.infrastructure.persistence.memory.roles;
 
 import uim.platform.portal;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryRoleRepository : TenantRepository!(Role, RoleId), RoleRepository {

@@ -10,7 +10,7 @@ module uim.platform.ai_launchpad.presentation.http.controllers.execution;
 
 import uim.platform.ai_launchpad;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

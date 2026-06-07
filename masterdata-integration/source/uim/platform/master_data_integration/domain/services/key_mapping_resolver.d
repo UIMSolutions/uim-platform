@@ -8,7 +8,7 @@ module uim.platform.master_data_integration.domain.services.key_mapping_resolver
 // import uim.platform.master_data_integration.domain.types;
 import uim.platform.master_data_integration;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Domain service: resolves cross-system key mappings.

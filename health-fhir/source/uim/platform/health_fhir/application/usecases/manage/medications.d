@@ -6,7 +6,7 @@
 module uim.platform.health_fhir.application.usecases.manage.medications;
 import uim.platform.health_fhir;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

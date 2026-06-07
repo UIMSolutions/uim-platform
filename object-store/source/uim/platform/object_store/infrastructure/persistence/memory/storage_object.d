@@ -13,7 +13,7 @@ module uim.platform.object_store.infrastructure.persistence.memory.storage_objec
 
 import uim.platform.object_store;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryStorageObjectRepository : TenantRepository!(StorageObject, StorageObjectId), StorageObjectRepository {

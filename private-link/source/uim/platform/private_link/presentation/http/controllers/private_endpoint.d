@@ -6,7 +6,7 @@
 module uim.platform.private_link.presentation.http.controllers.private_endpoint;
 import uim.platform.private_link;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// HTTP controller for private endpoint management and approval workflow.

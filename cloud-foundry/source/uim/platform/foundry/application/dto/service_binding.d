@@ -1,7 +1,7 @@
 module uim.platform.foundry.application.dto.service_binding;
 import uim.platform.foundry;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

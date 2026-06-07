@@ -13,7 +13,7 @@ module uim.platform.integration.automation.application.usecases.manage.systems;
 // import uim.platform.integration.automation.application.dto;
 import uim.platform.integration.automation;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class ManageSystemsUseCase { // TODO: UIMUseCase {

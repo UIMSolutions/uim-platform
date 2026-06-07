@@ -8,7 +8,7 @@ module uim.platform.analytics.domain.repositories.planning;
 
 import uim.platform.analytics;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 interface PlanningRepository : ITenantRepository!(PlanningModel, PlanningModelId) {

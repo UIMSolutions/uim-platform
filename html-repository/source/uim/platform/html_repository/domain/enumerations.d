@@ -7,7 +7,7 @@ module uim.platform.html_repository.domain.enumerations;
 
 import uim.platform.html_repository;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

@@ -7,7 +7,7 @@ module uim.platform.usage_data.app.usecases.monthly_cost_reports;
 
 import uim.platform.usage_data;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 /// Application service: monthly cost report use cases.
 class MonthlyCostReportUseCases {

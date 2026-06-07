@@ -13,7 +13,7 @@ module uim.platform.integration.automation.domain.services.step_executor;
 
 import uim.platform.integration.automation;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Domain service that handles step execution —

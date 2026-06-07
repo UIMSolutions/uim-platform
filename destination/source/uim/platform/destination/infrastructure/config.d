@@ -7,7 +7,7 @@ module uim.platform.destination.infrastructure.config;
 import std.process : environment;
 import uim.platform.destination;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Service configuration.

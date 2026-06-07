@@ -7,7 +7,7 @@ module uim.platform.rfc.domain.entities.tid;
 
 import uim.platform.rfc;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 /// Transaction ID (TID) for tRFC / qRFC / bgRFC.

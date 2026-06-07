@@ -12,7 +12,7 @@ module uim.platform.object_store.application.usecases.manage.lifecycle_rules;
 
 import uim.platform.object_store;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Application service for lifecycle rule management.

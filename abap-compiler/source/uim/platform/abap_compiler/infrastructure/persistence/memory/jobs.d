@@ -7,7 +7,7 @@ module uim.platform.abap_compiler.infrastructure.persistence.memory.jobs;
 
 import uim.platform.abap_compiler;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 /// In-memory implementation of CompilationJobRepository (driven adapter).

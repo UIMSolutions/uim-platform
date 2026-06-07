@@ -7,7 +7,7 @@ module uim.platform.automation_pilot.domain.entities.command_input;
 
 import uim.platform.automation_pilot;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

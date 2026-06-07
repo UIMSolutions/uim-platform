@@ -18,7 +18,7 @@ module uim.platform.integration.automation.application.usecases.manage.workflows
 // import uim.platform.integration.automation.application.dto;
 import uim.platform.integration.automation;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class ManageWorkflowsUseCase { // TODO: UIMUseCase {

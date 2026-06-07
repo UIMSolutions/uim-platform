@@ -10,7 +10,7 @@ import vibe.http.server;
 import vibe.http.router;
 
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class CompositionRunController : ManageHttpController {

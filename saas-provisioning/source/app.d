@@ -11,7 +11,7 @@ import vibe.http.server : HTTPServerSettings, listenHTTP;
 import vibe.core.core : runApplication;
 import std.stdio : writefln;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

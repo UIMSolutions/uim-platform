@@ -10,7 +10,7 @@ module uim.platform.object_store.presentation.http.controllers.service_binding;
 // import uim.platform.object_store.domain.entities.service_binding;
 import uim.platform.object_store;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class ServiceBindingController : ManageHttpController {

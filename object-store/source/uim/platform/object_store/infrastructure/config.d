@@ -7,7 +7,7 @@ module uim.platform.object_store.infrastructure.config;
 import std.process : environment;
 import uim.platform.object_store;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Service configuration.

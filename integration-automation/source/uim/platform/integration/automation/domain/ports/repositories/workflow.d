@@ -8,7 +8,7 @@ module uim.platform.integration.automation.domain.ports.repositories.workflow;
 // import uim.platform.integration.automation.domain.entities.workflow;
 import uim.platform.integration.automation;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Port for persisting and querying workflow instances.

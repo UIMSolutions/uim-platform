@@ -7,7 +7,7 @@ module uim.platform.application_studio.presentation.http.controllers.extension;
 
 import uim.platform.application_studio;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

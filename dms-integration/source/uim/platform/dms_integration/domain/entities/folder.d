@@ -7,7 +7,7 @@ module uim.platform.dms_integration.domain.entities.folder;
 
 import uim.platform.dms_integration;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

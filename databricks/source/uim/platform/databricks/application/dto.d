@@ -1,7 +1,7 @@
 module uim.platform.databricks.application.dto;
 import uim.platform.databricks;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

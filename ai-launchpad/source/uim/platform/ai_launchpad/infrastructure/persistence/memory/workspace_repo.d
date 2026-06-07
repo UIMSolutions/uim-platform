@@ -9,7 +9,7 @@ module uim.platform.ai_launchpad.infrastructure.persistence.memory.workspaces;
 // import uim.platform.ai_launchpad.domain.types;
 import uim.platform.ai_launchpad;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryWorkspaceRepository : TenantRepository!(Workspace, WorkspaceId), IWorkspaceRepository {

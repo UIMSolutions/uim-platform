@@ -15,7 +15,7 @@ module uim.platform.dms.application.application.usecases.manage.permissions;
 
 import uim.platform.dms.application;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 class ManagePermissionsUseCase { // TODO: UIMUseCase {
   private IPermissionRepository permissions;

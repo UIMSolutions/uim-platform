@@ -10,7 +10,7 @@ module uim.platform.auditlog.infrastructure.persistence.memory.data_access;
 
 import uim.platform.auditlog;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryDataAccessLogRepository : TenantRepository!(DataAccessLog, DataAccessLogId), DataAccessLogRepository {

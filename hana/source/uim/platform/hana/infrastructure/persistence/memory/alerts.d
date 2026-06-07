@@ -12,7 +12,7 @@ module uim.platform.hana.infrastructure.persistence.memory.alerts;
  
 import uim.platform.hana;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryAlertRepository : MemoryTenantRepository!(Alert, AlertId), AlertRepository {

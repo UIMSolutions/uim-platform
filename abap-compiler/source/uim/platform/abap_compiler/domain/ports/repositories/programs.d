@@ -7,7 +7,7 @@ module uim.platform.abap_compiler.domain.ports.repositories.programs;
 
 import uim.platform.abap_compiler;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 /// Primary port: repository contract for ABAP program source artefacts.

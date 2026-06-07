@@ -13,7 +13,7 @@ module uim.platform.monitoring.application.usecases.manage.metrics;
 // 
 import uim.platform.monitoring;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Application service for metric retrieval, push, and custom metric definitions.

@@ -13,7 +13,7 @@ module uim.platform.hana.infrastructure.persistence.memory.configurations;
 
 import uim.platform.hana;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryConfigurationRepository : TenantRepository!(Configuration, ConfigurationId), ConfigurationRepository {

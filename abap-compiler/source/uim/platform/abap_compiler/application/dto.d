@@ -7,7 +7,7 @@ module uim.platform.abap_compiler.application.dto;
 
 import uim.platform.abap_compiler;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 // ---------------------------------------------------------------------------

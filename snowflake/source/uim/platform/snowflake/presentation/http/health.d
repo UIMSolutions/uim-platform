@@ -2,7 +2,7 @@ module uim.platform.snowflake.presentation.http.health;
 import uim.platform.snowflake;
 import vibe.http.server;
 import vibe.http.router;
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 class HealthController : SAPController {
   override void registerRoutes(URLRouter router) {

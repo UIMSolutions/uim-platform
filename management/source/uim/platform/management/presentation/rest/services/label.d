@@ -2,7 +2,7 @@ module uim.platform.management.presentation.rest.services.label;
 
 import uim.platform.management;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class LabelApi : ILabelApi {

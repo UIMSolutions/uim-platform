@@ -8,7 +8,7 @@ module uim.platform.analytics.infrastructure.persistence.memory.repositories.sto
 // import uim.platform.analytics.domain.repositories.story;
 import uim.platform.analytics;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 class MemoryStoryRepository : TenantRepository!(Story, StoryId), StoryRepository {
 

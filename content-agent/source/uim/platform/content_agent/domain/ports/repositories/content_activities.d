@@ -8,7 +8,7 @@ module uim.platform.content_agent.domain.ports.repositories.content_activitys;
 
 import uim.platform.content_agent;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing - content activity (audit log) persistence.

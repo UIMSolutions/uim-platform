@@ -8,7 +8,7 @@ module uim.platform.abap_environment.presentation.web.views.software_component;
 import uim.platform.abap_environment;
 import uim.platform.abap_environment.presentation.web.models.software_component;
 
-// mixin(ShowModule!());
+// // mixin(ShowModule!());
 @safe:
 
 class SoftwareComponentHtmlView {

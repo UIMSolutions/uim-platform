@@ -9,7 +9,7 @@ module uim.platform.identity.directory.infrastructure.persistence.memory.user;
 // import uim.platform.identity.directory.domain.ports.repositories.users;
 import uim.platform.identity.directory;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 // import std.algorithm : canFind;

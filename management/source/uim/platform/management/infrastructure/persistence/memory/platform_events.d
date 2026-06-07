@@ -12,7 +12,7 @@ module uim.platform.management.infrastructure.persistence.memory.platform_events
 
 import uim.platform.management;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 class MemoryEnvironmentEventRepository : TenantRepository!(EnvironmentEvent, EnvironmentEventId), EnvironmentEventRepository {
   // TODO: mixin IdRepositoryTemplate!(MemoryEnvironmentEventRepository, EnvironmentEvent, EnvironmentEventId);

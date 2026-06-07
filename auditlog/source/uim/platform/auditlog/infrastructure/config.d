@@ -9,7 +9,7 @@ import std.process : environment;
 /// Service configuration.
 import uim.platform.auditlog;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 struct SrvConfig {

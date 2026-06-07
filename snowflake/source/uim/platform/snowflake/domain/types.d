@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.snowflake.domain.types;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

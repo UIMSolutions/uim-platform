@@ -13,7 +13,7 @@ module uim.platform.identity.authentication.presentation.http.controllers.policy
 
 import uim.platform.identity.authentication;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 /// HTTP controller for authorization policy management.
 class PolicyController : ManageHttpController {

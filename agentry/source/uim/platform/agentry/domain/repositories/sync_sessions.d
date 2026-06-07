@@ -7,7 +7,7 @@ module uim.platform.agentry.domain.repositories.sync_sessions;
 
 import uim.platform.agentry;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

@@ -7,7 +7,7 @@ module uim.platform.masterdata_governance.domain.types;
 
 import uim.platform.masterdata_governance;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 // --- ID Aliases ---

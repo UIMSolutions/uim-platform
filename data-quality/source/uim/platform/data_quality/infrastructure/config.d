@@ -8,7 +8,7 @@ module uim.platform.data_quality.infrastructure.config;
 import std.process : environment;
 import uim.platform.data_quality;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Service configuration.

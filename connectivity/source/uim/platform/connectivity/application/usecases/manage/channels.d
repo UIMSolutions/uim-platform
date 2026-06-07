@@ -13,7 +13,7 @@ module uim.platform.connectivity.application.usecases.manage.channels;
 // import uim.platform.connectivity.domain.types;
 import uim.platform.connectivity;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Application service for service channel lifecycle.

@@ -8,7 +8,7 @@ module uim.platform.foundry.domain.entities.application;
 // import uim.platform.foundry.domain.types;
 import uim.platform.foundry;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// A Cloud Foundry application — represents a deployed unit with scaling,

@@ -7,7 +7,7 @@ module uim.platform.hana_spatial.domain.ports.repositories.spatial_layers;
 
 import uim.platform.hana_spatial;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 interface SpatialLayerRepository : ITenantRepository!(SpatialLayer, SpatialLayerId) {

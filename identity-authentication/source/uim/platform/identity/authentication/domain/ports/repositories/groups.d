@@ -8,7 +8,7 @@ module uim.platform.identity.authentication.domain.ports.repositories.groups;
 // import uim.platform.identity.authentication.domain.types;
 import uim.platform.identity.authentication;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 /// Port: outgoing — group persistence.
 interface GroupRepository : ITenantRepository!(IdaGroup, GroupId) {

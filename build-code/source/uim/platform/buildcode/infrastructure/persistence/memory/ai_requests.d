@@ -7,7 +7,7 @@ module uim.platform.buildcode.infrastructure.persistence.memory.ai_requests;
 
 import uim.platform.buildcode;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

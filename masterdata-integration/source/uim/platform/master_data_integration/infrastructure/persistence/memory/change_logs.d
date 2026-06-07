@@ -10,7 +10,7 @@ module uim.platform.master_data_integration.infrastructure.persistence.memory.ch
 
 import uim.platform.master_data_integration;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
  

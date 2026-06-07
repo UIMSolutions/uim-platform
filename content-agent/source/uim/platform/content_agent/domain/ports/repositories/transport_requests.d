@@ -7,7 +7,7 @@ module uim.platform.content_agent.domain.ports.repositories.transport_requests;
 
 import uim.platform.content_agent;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing - transport request persistence.

@@ -8,7 +8,7 @@ module uim.platform.ai_core.domain.ports.repositories.configurations;
 // import uim.platform.ai_core.domain.entities.configuration;
 import uim.platform.ai_core;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 interface ConfigurationRepository : ITenantRepository!(Configuration, ConfigurationId) {

@@ -10,7 +10,7 @@ module uim.platform.dms.application.infrastructure.persistence.memory.document_v
 
 import uim.platform.dms.application;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 class MemoryDocumentVersionRepository : TenantRepository!(DocumentVersion, DocumentVersionId), IDocumentVersionRepository {

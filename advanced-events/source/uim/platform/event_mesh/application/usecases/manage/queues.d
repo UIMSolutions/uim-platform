@@ -7,7 +7,7 @@ module uim.platform.event_mesh.application.usecases.manage.queues;
 
 import uim.platform.event_mesh;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

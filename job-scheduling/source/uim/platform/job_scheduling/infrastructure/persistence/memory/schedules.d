@@ -14,7 +14,7 @@ module uim.platform.job_scheduling.infrastructure.persistence.memory.schedule;
 // import std.uni : toLower;
 import uim.platform.job_scheduling;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryScheduleRepository : TenantRepository!(Schedule, ScheduleId), ScheduleRepository {

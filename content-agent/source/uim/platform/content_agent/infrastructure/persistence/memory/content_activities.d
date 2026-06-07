@@ -11,7 +11,7 @@ module uim.platform.content_agent.infrastructure.persistence.memory.content_acti
  
 import uim.platform.content_agent;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryContentActivityRepository : TenantRepository!(ContentActivity, ContentActivityId), ContentActivityRepository {

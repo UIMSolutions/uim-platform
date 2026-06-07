@@ -10,7 +10,7 @@ module uim.platform.analytics.infrastructure.persistence.memory.repositories.dat
 
 import uim.platform.analytics;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 class MemoryDatasetRepository : TenantRepository!(Dataset, DatasetId), DatasetRepository {
 

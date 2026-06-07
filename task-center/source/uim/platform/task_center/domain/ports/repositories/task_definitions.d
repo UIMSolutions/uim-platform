@@ -7,7 +7,7 @@ module uim.platform.task_center.domain.ports.repositories.task_definitions;
 
 import uim.platform.task_center;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

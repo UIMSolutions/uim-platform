@@ -13,7 +13,7 @@ module uim.platform.object_store.presentation.http.controllers.access_policy;
 
 import uim.platform.object_store;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class AccessPolicyController : ManageHttpController {

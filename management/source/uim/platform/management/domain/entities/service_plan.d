@@ -7,7 +7,7 @@ module uim.platform.management.domain.entities.service_plan;
 
 import uim.platform.management;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// A service plan represents an available service offering in the

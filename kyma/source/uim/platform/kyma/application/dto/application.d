@@ -8,7 +8,7 @@ module uim.platform.kyma.application.dto.application;
 import uim.platform.kyma.domain.types; */
 import uim.platform.kyma;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

@@ -10,7 +10,7 @@ module uim.platform.html_repository.presentation.http.controllers.app_file;
 
 import uim.platform.html_repository;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class AppFileController : ManageHttpController {

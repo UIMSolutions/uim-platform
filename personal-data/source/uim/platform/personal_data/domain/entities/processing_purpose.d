@@ -7,7 +7,7 @@ module uim.platform.personal_data.domain.entities.processing_purpose;
 
 import uim.platform.personal_data;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

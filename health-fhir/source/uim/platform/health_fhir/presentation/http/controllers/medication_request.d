@@ -6,7 +6,7 @@
 module uim.platform.health_fhir.presentation.http.controllers.medication_request;
 import uim.platform.health_fhir;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

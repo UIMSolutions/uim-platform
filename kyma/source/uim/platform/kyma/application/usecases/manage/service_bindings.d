@@ -11,7 +11,7 @@ module uim.platform.kyma.application.usecases.manage.service_bindings;
  */
 import uim.platform.kyma;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Application service for service binding management.

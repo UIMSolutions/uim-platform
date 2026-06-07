@@ -8,7 +8,7 @@ module uim.platform.management.infrastructure.config;
 import std.process : environment;
 import uim.platform.management;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 /// Service configuration.
 struct SrvConfig {

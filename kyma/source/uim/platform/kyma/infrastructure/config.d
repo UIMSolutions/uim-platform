@@ -8,7 +8,7 @@ module uim.platform.kyma.infrastructure.config;
 import std.process : environment;
 import uim.platform.kyma;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Service configuration.

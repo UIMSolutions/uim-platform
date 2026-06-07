@@ -12,7 +12,7 @@ module uim.platform.management.infrastructure.persistence.memory.subscriptions;
 
 import uim.platform.management;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 class MemorySubscriptionRepository : TenantRepository!(Subscription, SubscriptionId), SubscriptionRepository {

@@ -13,7 +13,7 @@ module uim.platform.datasphere.application.usecases.manage.views;
 
 import uim.platform.datasphere;
 
-mixin(ShowModule!()); 
+// mixin(ShowModule!()); 
 
 @safe:
 class ManageViewsUseCase { // TODO: UIMUseCase {

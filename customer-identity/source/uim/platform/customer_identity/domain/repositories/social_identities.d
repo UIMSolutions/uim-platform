@@ -7,7 +7,7 @@ module uim.platform.customer_identity.domain.repositories.social_identities;
 
 import uim.platform.customer_identity;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

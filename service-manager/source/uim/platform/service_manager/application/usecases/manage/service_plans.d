@@ -2,7 +2,7 @@ module uim.platform.service_manager.application.usecases.manage.service_plans;
 
 import uim.platform.service_manager;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

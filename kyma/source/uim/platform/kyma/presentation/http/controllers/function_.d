@@ -13,7 +13,7 @@ module uim.platform.kyma.presentation.http.controllers.function_;
 
 import uim.platform.kyma;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class FunctionController : ManageHttpController {

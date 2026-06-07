@@ -7,7 +7,7 @@ module uim.platform.management.domain.entities.directory;
 
 import uim.platform.management;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// A directory is a grouping entity within a global account for

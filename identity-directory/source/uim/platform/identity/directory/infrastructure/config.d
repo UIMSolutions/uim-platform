@@ -8,7 +8,7 @@ import std.process : environment;
 
 import uim.platform.identity.directory;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Service configuration.

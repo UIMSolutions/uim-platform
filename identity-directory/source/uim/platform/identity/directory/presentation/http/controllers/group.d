@@ -10,7 +10,7 @@ module uim.platform.identity.authentication.presentation.http.group;
 // import uim.platform.identity.directory.domain.entities.group;
 import uim.platform.identity.directory;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// HTTP controller for SCIM 2.0 group management.

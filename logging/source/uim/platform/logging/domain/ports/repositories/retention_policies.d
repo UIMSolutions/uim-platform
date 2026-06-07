@@ -8,7 +8,7 @@ module uim.platform.logging.domain.ports.repositories.retention_policies;
 
 import uim.platform.logging;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 interface RetentionPolicyRepository : ITenantRepository!(RetentionPolicy, RetentionPolicyId) {

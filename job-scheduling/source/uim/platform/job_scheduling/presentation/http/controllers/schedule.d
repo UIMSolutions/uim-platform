@@ -10,7 +10,7 @@ module uim.platform.job_scheduling.presentation.http.controllers.schedule;
 
 import uim.platform.job_scheduling;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

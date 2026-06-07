@@ -13,7 +13,7 @@ module uim.platform.hana.application.usecases.manage.database_users;
 
 import uim.platform.hana;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class ManageDatabaseUsersUseCase { // TODO: UIMUseCase {

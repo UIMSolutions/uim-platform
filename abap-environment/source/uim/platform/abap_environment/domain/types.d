@@ -6,7 +6,7 @@
 module uim.platform.abap_environment.domain.types;
 import uim.platform.abap_environment;
 
-// mixin(ShowModule!());
+// // mixin(ShowModule!());
 
 @safe:
 /// Unique identifier type aliases for type safety.

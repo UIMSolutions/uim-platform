@@ -7,7 +7,7 @@ module uim.platform.authorization_trust.domain.entities.oauth_client;
 
 import uim.platform.authorization_trust;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// A registered OAuth 2.0 client application.

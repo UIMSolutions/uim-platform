@@ -7,7 +7,7 @@ module uim.platform.build_apps.domain.entities.ui_component;
 
 import uim.platform.build_apps;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

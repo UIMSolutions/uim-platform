@@ -11,7 +11,7 @@ module uim.platform.management.application.usecases.manage.directories;
 
 import uim.platform.management;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Use case: manage directory hierarchy within global accounts.

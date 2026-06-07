@@ -7,7 +7,7 @@ module uim.platform.workzone.domain.entities.theme;
 // import uim.platform.workzone.domain.types;
 import uim.platform.workzone;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// A theme / branding configuration for a site.

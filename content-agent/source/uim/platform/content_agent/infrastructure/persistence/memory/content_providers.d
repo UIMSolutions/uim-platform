@@ -12,7 +12,7 @@ module uim.platform.content_agent.infrastructure.persistence.memory.content_prov
  
 import uim.platform.content_agent;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryContentProviderRepository : TenantRepository!(ContentProvider, ContentProviderId), ContentProviderRepository {

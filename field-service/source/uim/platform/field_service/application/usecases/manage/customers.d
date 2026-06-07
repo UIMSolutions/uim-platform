@@ -7,7 +7,7 @@ module uim.platform.field_service.application.usecases.manage.customers;
 
 import uim.platform.field_service;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

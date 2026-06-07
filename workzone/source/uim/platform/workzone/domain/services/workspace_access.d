@@ -8,7 +8,7 @@ module uim.platform.workzone.domain.services.workspace_access;
 // import uim.platform.workzone.domain.entities.workspace;
 import uim.platform.workzone;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Domain service — evaluates workspace membership and access rules.

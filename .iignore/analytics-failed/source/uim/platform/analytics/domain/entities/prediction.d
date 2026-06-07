@@ -7,7 +7,7 @@ module uim.platform.analytics.domain.entities.prediction;
 
 import uim.platform.analytics;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 /// A Prediction encapsulates a predictive/ML model run (SAC Smart Predict).
 struct Prediction {

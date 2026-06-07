@@ -39,7 +39,7 @@ module uim.platform.data_quality.infrastructure.container;
 // import uim.platform.data_quality.presentation.http.health;
 import uim.platform.data_quality;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Dependency injection container - wires all layers together.

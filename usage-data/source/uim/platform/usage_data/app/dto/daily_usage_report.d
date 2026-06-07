@@ -7,7 +7,7 @@ module uim.platform.usage_data.app.dto.daily_usage_report;
 
 import uim.platform.usage_data;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 struct CreateDailyUsageReportRequest {

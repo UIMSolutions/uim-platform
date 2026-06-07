@@ -2,7 +2,7 @@ module uim.platform.management.presentation.rest.services.global_account;
 
 import uim.platform.management;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class GlobalAccountApi : IGlobalAccountApi {

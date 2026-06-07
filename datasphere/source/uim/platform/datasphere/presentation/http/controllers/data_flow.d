@@ -9,7 +9,7 @@ module uim.platform.datasphere.presentation.http.controllers.data_flow;
 
 import uim.platform.datasphere;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

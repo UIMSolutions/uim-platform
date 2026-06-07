@@ -10,7 +10,7 @@ module uim.platform.abap_environment.infrastructure.persistence.memory.software_
 
 import uim.platform.abap_environment;
 
-// mixin(ShowModule!());
+// // mixin(ShowModule!());
 @safe:
 class MemorySoftwareComponentRepository : TenantRepository!(SoftwareComponent, SoftwareComponentId), SoftwareComponentRepository {
 

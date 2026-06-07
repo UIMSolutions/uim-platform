@@ -7,7 +7,7 @@ module uim.platform.oauth.domain.repositories.refresh_tokens;
 
 import uim.platform.oauth;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

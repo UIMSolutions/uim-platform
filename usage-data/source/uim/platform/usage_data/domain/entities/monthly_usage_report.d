@@ -7,7 +7,7 @@ module uim.platform.usage_data.domain.entities.monthly_usage_report;
 
 import uim.platform.usage_data;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 /// One line item inside a MonthlyUsageReport — usage for a service/plan/metric combo.

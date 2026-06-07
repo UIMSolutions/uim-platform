@@ -10,7 +10,7 @@ module uim.platform.ai_core.infrastructure.persistence.memory.resource_groups;
 
 import uim.platform.ai_core;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryResourceGroupRepository : TenantRepository!(ResourceGroup, ResourceGroupId), ResourceGroupRepository {

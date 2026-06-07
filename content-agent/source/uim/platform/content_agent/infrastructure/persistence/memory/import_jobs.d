@@ -12,7 +12,7 @@ module uim.platform.content_agent.infrastructure.persistence.memory.import_jobs;
  
 import uim.platform.content_agent;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryImportJobRepository : TenantRepository!(ImportJob, ImportJobId), ImportJobRepository {

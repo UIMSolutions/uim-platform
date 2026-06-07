@@ -8,7 +8,7 @@ module uim.platform.document_ai.domain.ports.repositories.extraction_results;
 // import uim.platform.document_ai.domain.entities.extraction_result;
 import uim.platform.document_ai;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 interface ExtractionResultRepository {

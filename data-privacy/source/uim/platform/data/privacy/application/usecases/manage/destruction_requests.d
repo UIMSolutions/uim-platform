@@ -7,7 +7,7 @@ module uim.platform.data.privacy.application.usecases.manage.destruction_request
 
 import uim.platform.data.privacy;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class ManageDestructionRequestsUseCase { // TODO: UIMUseCase {

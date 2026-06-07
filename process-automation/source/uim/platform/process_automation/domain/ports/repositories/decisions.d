@@ -8,7 +8,7 @@ module uim.platform.process_automation.domain.ports.repositories.decisions;
 // import uim.platform.process_automation.domain.entities.decision;
 import uim.platform.process_automation;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 interface DecisionRepository : ITenantRepository!(Decision, DecisionId) {

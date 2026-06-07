@@ -10,7 +10,7 @@ module uim.platform.keystore.domain.services.keystore_search;
 
 import uim.platform.keystore;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Implements the SAP BTP keystore search-order logic:

@@ -7,7 +7,7 @@ module uim.platform.rfc.presentation.http.controllers.health;
 
 import uim.platform.rfc;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 /// Health-check endpoint for Kubernetes liveness and readiness probes.

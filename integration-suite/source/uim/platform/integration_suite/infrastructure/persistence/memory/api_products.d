@@ -1,7 +1,7 @@
 module uim.platform.integration_suite.infrastructure.persistence.memory.api_products;
 import uim.platform.integration_suite;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

@@ -2,7 +2,7 @@ module uim.platform.databricks.infrastructure.config;
 import std.process : environment;
 import uim.platform.databricks;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

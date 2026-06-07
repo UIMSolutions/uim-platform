@@ -9,7 +9,7 @@ module uim.platform.logging.infrastructure.persistence.memory.dashboards;
 
 import uim.platform.logging;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryDashboardRepository : TenantRepository!(Dashboard, DashboardId), DashboardRepository {

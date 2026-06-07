@@ -7,7 +7,7 @@ module uim.platform.snowflake.domain.entities.snowflake_database;
 
 import uim.platform.snowflake;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 struct SnowflakeDatabase {

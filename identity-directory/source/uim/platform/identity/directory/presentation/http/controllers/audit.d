@@ -9,7 +9,7 @@ module uim.platform.identity.authentication.presentation.http.audit;
 // import uim.platform.identity.directory.domain.entities.audit_event;
 import uim.platform.identity.directory;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// HTTP controller for audit log queries.

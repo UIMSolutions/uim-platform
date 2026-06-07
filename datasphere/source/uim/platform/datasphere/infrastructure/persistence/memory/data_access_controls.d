@@ -11,7 +11,7 @@ module uim.platform.datasphere.infrastructure.persistence.memory.data_access_con
  
 import uim.platform.datasphere;
 
-mixin(ShowModule!()); 
+// mixin(ShowModule!()); 
 
 @safe:
 class MemoryDataAccessControlRepository : TenantRepository!(DataAccessControl, DataAccessControlId), DataAccessControlRepository {

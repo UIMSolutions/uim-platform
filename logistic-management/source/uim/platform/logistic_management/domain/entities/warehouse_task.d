@@ -6,7 +6,7 @@
 module uim.platform.logistic_management.domain.entities.warehouse_task;
 import uim.platform.logistic_management;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// A single executable warehouse task: pick, pack, put-away, transfer, or count.

@@ -13,7 +13,7 @@ module uim.platform.hana.application.usecases.manage.configurations;
 
 import uim.platform.hana;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class ManageConfigurationsUseCase { // TODO: UIMUseCase {

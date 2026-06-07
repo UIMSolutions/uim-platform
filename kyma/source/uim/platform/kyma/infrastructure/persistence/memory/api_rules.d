@@ -12,7 +12,7 @@ module uim.platform.kyma.infrastructure.persistence.memory.api_rules;
  
 import uim.platform.kyma;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryApiRuleRepository : ApiRuleRepository {

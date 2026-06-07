@@ -15,7 +15,7 @@ import uim.platform.monitoring.application.dto;
 // import uim.platform.monitoring.application.usecases.manage.alerts;
 import uim.platform.monitoring;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Application service: evaluates metrics against alert rules and triggers alerts.

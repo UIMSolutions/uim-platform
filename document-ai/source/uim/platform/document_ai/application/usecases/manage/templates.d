@@ -11,7 +11,7 @@ module uim.platform.document_ai.application.usecases.manage.templates;
 
 import uim.platform.document_ai;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

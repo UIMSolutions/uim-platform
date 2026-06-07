@@ -7,7 +7,7 @@ module uim.platform.usage_data.domain.ports.repositories.daily_usage_report;
 
 import uim.platform.usage_data;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 /// Port: outgoing repository interface for DailyUsageReport persistence.
 interface DailyUsageReportRepository

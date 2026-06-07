@@ -7,7 +7,7 @@ module uim.platform.logging.domain.entities.log_stream;
 
 import uim.platform.logging;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 struct LogStream {

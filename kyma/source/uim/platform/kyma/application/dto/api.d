@@ -1,7 +1,7 @@
 module uim.platform.kyma.application.dto.api;
 import uim.platform.kyma;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 struct CreateApiRuleRequest {

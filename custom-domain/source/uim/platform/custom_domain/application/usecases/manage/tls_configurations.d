@@ -7,7 +7,7 @@ module uim.platform.custom_domain.application.usecases.manage.tls_configurations
 
 import uim.platform.custom_domain;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

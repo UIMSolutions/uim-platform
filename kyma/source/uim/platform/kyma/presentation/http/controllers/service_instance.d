@@ -11,7 +11,7 @@ module uim.platform.kyma.presentation.http.controllers.service_instance;
 
 import uim.platform.kyma;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class ServiceInstanceController : ManageHttpController {

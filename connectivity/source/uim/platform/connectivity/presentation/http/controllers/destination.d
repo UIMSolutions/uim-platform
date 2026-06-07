@@ -9,7 +9,7 @@ module uim.platform.connectivity.presentation.http.controllers.destination;
 // import uim.platform.connectivity.domain.entities.destination;
 import uim.platform.connectivity;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class DestinationController : ManageHttpController {

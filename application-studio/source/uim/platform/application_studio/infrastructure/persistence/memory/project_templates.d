@@ -7,7 +7,7 @@ module uim.platform.application_studio.infrastructure.persistence.memory.project
 
 import uim.platform.application_studio;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

@@ -12,7 +12,7 @@ module uim.platform.hana.infrastructure.persistence.memory.hdi_containers;
  
 import uim.platform.hana;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryHDIContainerRepository : TenantRepository!(HDIContainer, HDIContainerId), HDIContainerRepository {

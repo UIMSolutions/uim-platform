@@ -15,7 +15,7 @@ module uim.platform.dms.application.presentation.http.controllers.version_;
 
 import uim.platform.dms.application;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 class VersionController : ManageHttpController {

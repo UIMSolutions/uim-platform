@@ -12,7 +12,7 @@ module uim.platform.credential_store.application.usecases.get.overview;
 // import uim.platform.credential_store.application.dto;
 import uim.platform.credential_store;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class GetOverviewUseCase { // TODO: UIMUseCase {

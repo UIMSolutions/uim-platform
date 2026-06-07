@@ -12,7 +12,7 @@ module uim.platform.management.infrastructure.persistence.memory.labels;
 
 import uim.platform.management;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 class MemoryLabelRepository : TenantRepository!(Label, LabelId), LabelRepository {

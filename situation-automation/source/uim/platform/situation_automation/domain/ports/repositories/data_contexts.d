@@ -9,7 +9,7 @@ module uim.platform.situation_automation.domain.ports.repositories.data_contexts
 
 import uim.platform.situation_automation;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

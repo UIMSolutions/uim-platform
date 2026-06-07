@@ -7,7 +7,7 @@ module uim.platform.oauth.domain.repositories.oauth_scopes;
 
 import uim.platform.oauth;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

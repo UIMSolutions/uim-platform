@@ -7,7 +7,7 @@ module uim.platform.situation_automation.domain.enumerations;
 
 import uim.platform.situation_automation;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

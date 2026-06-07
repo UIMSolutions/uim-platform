@@ -1,7 +1,7 @@
 module uim.platform.analytics.domain.enumerations.widget;
 import uim.platform.analytics;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 enum FilterOperator {
   Equals,

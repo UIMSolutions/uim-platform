@@ -4,7 +4,7 @@ import uim.platform.service;
 import std.file;
 import std.path;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

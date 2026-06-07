@@ -7,7 +7,7 @@ module uim.platform.redis.domain.repositories.service_bindings;
 
 import uim.platform.redis;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

@@ -8,7 +8,7 @@ module uim.platform.auditlog.application.dtos.auditlogentry;
 // import uim.platform.auditlog.domain.entities.audit_log_entry : AuditAttribute;
 import uim.platform.auditlog;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 // ──────────────── Audit Log Entry DTOs ────────────────

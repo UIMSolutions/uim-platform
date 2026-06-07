@@ -7,7 +7,7 @@ module uim.platform.masterdata_governance.application.usecases.manage.change_req
 
 import uim.platform.masterdata_governance;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

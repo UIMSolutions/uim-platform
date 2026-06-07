@@ -7,7 +7,7 @@ module uim.platform.hana_spatial.infrastructure.persistence.memory.spatial_featu
 
 import uim.platform.hana_spatial;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemorySpatialFeatureRepository

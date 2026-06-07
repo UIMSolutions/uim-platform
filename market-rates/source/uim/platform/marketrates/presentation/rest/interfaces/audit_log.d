@@ -7,7 +7,7 @@ module uim.platform.marketrates.presentation.rest.interfaces.audit_log;
 
 import uim.platform.marketrates;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

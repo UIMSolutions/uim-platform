@@ -8,7 +8,7 @@ module uim.platform.hana_spatial.application.usecases.manage.spatial_layers;
 import uim.platform.hana_spatial;
 
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class ManageSpatialLayersUseCase {

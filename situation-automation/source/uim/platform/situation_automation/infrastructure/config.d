@@ -9,7 +9,7 @@ import std.process : environment;
 import std.process;
 import uim.platform.situation_automation;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 struct SrvConfig {

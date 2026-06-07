@@ -7,7 +7,7 @@ module uim.platform.datasphere_composer.application.usecases.manage.data_source_
 
 import uim.platform.datasphere_composer;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class ManageDataSourceConfigsUseCase {

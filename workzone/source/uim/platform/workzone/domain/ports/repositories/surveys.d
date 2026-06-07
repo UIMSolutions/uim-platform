@@ -8,7 +8,7 @@ module uim.platform.workzone.domain.ports.repositories.surveys;
 // import uim.platform.workzone.domain.entities.survey;
 import uim.platform.workzone;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 interface SurveyRepository : ITenantRepository!(Survey, SurveyId) {

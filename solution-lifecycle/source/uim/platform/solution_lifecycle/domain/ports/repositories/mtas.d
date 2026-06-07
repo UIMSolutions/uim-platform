@@ -7,7 +7,7 @@ module uim.platform.solution_lifecycle.domain.ports.repositories.mtas;
 
 import uim.platform.solution_lifecycle;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

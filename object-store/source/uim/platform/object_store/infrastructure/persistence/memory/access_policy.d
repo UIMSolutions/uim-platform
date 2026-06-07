@@ -11,7 +11,7 @@ module uim.platform.object_store.infrastructure.persistence.memory.access_policy
 
 import uim.platform.object_store;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryAccessPolicyRepository : TenantRepository!(AccessPolicy, AccessPolicyId), AccessPolicyRepository {

@@ -8,7 +8,7 @@ module uim.platform.workzone.domain.ports.repositories.external_content_provider
 // import uim.platform.workzone.domain.entities.external_content_provider;
 import uim.platform.workzone;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 interface ExternalContentProviderRepository : ITenantRepository!(ExternalContentProvider, ExternalContentProviderId) {

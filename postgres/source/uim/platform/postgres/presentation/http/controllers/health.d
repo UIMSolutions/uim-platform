@@ -7,7 +7,7 @@ module uim.platform.postgres.presentation.http.controllers.health;
 
 import uim.platform.postgres;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

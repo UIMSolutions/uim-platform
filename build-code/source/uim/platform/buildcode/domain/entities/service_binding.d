@@ -8,7 +8,7 @@ module uim.platform.buildcode.domain.entities.service_binding;
 import uim.platform.buildcode;
 
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

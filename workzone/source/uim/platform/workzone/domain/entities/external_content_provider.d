@@ -7,7 +7,7 @@ module uim.platform.workzone.domain.entities.external_content_provider;
 
 import uim.platform.workzone;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// An external content provider — integration connector for third-party content sources.

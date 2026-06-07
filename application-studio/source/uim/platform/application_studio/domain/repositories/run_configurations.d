@@ -7,7 +7,7 @@ module uim.platform.application_studio.domain.repositories.run_configurations;
 
 import uim.platform.application_studio;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

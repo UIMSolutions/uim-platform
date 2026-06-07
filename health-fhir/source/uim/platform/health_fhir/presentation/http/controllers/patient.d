@@ -6,7 +6,7 @@
 module uim.platform.health_fhir.presentation.http.controllers.patient;
 import uim.platform.health_fhir;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

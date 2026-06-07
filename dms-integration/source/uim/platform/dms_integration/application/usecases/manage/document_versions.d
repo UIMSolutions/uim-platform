@@ -7,7 +7,7 @@ module uim.platform.dms_integration.application.usecases.manage.document_version
 
 import uim.platform.dms_integration;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

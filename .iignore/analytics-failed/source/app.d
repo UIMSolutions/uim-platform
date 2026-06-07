@@ -23,7 +23,7 @@ module app;
 
 import uim.platform.analytics;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

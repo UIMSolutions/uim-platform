@@ -12,7 +12,7 @@ module uim.platform.master_data_integration.application.usecases.manage.master_d
 // import uim.platform.master_data_integration.domain.types;
 import uim.platform.master_data_integration;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Application service for master data object CRUD and lifecycle.

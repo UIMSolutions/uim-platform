@@ -7,7 +7,7 @@ module uim.platform.automation_pilot.presentation.http.controllers.content_conne
 
 import uim.platform.automation_pilot;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

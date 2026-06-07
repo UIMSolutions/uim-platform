@@ -7,7 +7,7 @@ module uim.platform.data_attribute_recommendation.domain.entities.model_configur
 
 import uim.platform.data_attribute_recommendation;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Configuration for a machine-learning model that defines which dataset

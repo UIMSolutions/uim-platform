@@ -2,7 +2,7 @@ module uim.platform.task_center.application.dtos.taskcomment;
 
 import uim.platform.task_center;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 struct CreateTaskCommentRequest {

@@ -7,7 +7,7 @@ module uim.platform.workzone.domain.entities.app_registration;
 // import uim.platform.workzone.domain.types;
 import uim.platform.workzone;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// A registered business application — SAP or third-party app entry.

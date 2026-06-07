@@ -10,7 +10,7 @@ module uim.platform.ai_core.infrastructure.persistence.memory.configurations;
 
 import uim.platform.ai_core;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryConfigurationRepository : TenantRepository!(Configuration, ConfigurationId), ConfigurationRepository {

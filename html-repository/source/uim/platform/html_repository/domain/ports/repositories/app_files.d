@@ -8,7 +8,7 @@ module uim.platform.html_repository.domain.ports.repositories.app_files;
 // import uim.platform.html_repository.domain.types;
 import uim.platform.html_repository;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 interface AppFileRepository : ITenantRepository!(AppFile, AppFileId) {

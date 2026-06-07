@@ -7,7 +7,7 @@ module uim.platform.data.privacy.domain.entities.data_controller_group;
 
 import uim.platform.data.privacy;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// A grouping of data controllers for organizational management.

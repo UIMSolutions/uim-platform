@@ -14,7 +14,7 @@ module uim.platform.datasphere.application.usecases.manage.spaces;
 
 import uim.platform.datasphere;
 
-mixin(ShowModule!()); 
+// mixin(ShowModule!()); 
 
 @safe:
 class ManageSpacesUseCase { // TODO: UIMUseCase {

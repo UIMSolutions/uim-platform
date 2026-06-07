@@ -6,7 +6,7 @@
 module uim.platform.document_ai.domain.entities.client;
 // import uim.platform.docuimport uim.platform.document_ai;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 struct ClientLabel {

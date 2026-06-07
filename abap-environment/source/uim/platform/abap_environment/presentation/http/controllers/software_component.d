@@ -13,7 +13,7 @@ module uim.platform.abap_environment.presentation.http.controllers.software_comp
 
 import uim.platform.abap_environment;
 
-// mixin(ShowModule!());
+// // mixin(ShowModule!());
 @safe:
 class SoftwareComponentController : ManageHttpController {
   private ManageSoftwareComponentsUseCase usecase;

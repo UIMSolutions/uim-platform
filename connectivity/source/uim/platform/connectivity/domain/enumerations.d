@@ -1,7 +1,7 @@
 module uim.platform.connectivity.domain.enumerations;
 import uim.platform.connectivity;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Destination protocol type.

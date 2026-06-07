@@ -2,7 +2,7 @@ module uim.platform.saas_provisioning.domain.enumerations;
 
 import uim.platform.saas_provisioning;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 // ---------------------------------------------------------------------------

@@ -13,7 +13,7 @@ module uim.platform.foundry.infrastructure.persistence.memory.buildpacks;
  
 import uim.platform.foundry;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryBuildpackRepository : TenantRepository!(Buildpack, BuildpackId), IBuildpackRepository {

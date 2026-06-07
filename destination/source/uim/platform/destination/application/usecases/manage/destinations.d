@@ -12,7 +12,7 @@ module uim.platform.destination.application.usecases.manage.destinations;
 // 
 import uim.platform.destination;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Application service for destination CRUD operations.

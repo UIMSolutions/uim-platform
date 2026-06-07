@@ -8,7 +8,7 @@ import std.process : environment;
 
 import uim.platform.alert_notification;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

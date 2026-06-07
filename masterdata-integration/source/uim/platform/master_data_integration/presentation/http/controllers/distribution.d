@@ -11,7 +11,7 @@ module uim.platform.master_data_integration.presentation.http.distribution;
 // import uim.platform.master_data_integration.domain.types;
 import uim.platform.master_data_integration;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class DistributionController : ManageHttpController {

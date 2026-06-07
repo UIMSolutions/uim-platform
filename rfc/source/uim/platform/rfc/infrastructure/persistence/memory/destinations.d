@@ -7,7 +7,7 @@ module uim.platform.rfc.infrastructure.persistence.memory.destinations;
 
 import uim.platform.rfc;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 class MemoryDestinationRepository : DestinationRepository {

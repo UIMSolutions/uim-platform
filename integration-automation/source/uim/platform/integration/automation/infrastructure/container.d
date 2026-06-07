@@ -32,7 +32,7 @@ module uim.platform.integration.automation.infrastructure.container;
 // import uim.platform.integration.automation.presentation.http.health;
 import uim.platform.integration.automation;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Dependency injection container — wires all layers together.

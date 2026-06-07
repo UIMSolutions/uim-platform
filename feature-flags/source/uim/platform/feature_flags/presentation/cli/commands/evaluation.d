@@ -8,7 +8,7 @@ module uim.platform.feature_flags.presentation.cli.commands.evaluation;
 import uim.platform.feature_flags;
 import std.stdio : writeln, writefln;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

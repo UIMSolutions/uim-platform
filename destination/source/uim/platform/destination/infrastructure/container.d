@@ -23,7 +23,7 @@ module uim.platform.destination.infrastructure.container;
 
 import uim.platform.destination;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Dependency injection container - wires all layers together.

@@ -13,7 +13,7 @@ module uim.platform.object_store.infrastructure.persistence.memory.object_versio
  
 import uim.platform.object_store;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryObjectVersionRepository : TenantRepository!(ObjectVersion, ObjectVersionId),  ObjectVersionRepository {

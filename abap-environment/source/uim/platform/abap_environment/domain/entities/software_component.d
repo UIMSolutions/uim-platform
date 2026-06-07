@@ -7,7 +7,7 @@ module uim.platform.abap_environment.domain.entities.software_component;
 
 import uim.platform.abap_environment;
 
-// mixin(ShowModule!());
+// // mixin(ShowModule!());
 
 @safe:
 /// Commit entry in a software component's history.

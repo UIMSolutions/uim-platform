@@ -8,7 +8,7 @@ module uim.platform.analytics.app.dto.prediction;
 // import uim.platform.analytics.domain.entities.prediction;
 import uim.platform.analytics;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 struct CreatePredictionRequest {
   TenantId tenantId;

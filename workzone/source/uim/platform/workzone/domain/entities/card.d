@@ -7,7 +7,7 @@ module uim.platform.workzone.domain.entities.card;
 // import uim.platform.workzone.domain.types;
 import uim.platform.workzone;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Integration card — a modular content unit displaying data from business systems.

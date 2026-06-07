@@ -7,7 +7,7 @@ module uim.platform.data.privacy.application.usecases.manage.business_processes;
 
 import uim.platform.data.privacy;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class ManageBusinessProcessesUseCase { // TODO: UIMUseCase {

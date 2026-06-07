@@ -9,7 +9,7 @@ module uim.platform.html_repository.application.usecases.get_deployment_history;
 // import uim.platform.html_repository.domain.types;
 import uim.platform.html_repository;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class GetDeploymentHistoryUseCase { // TODO: UIMUseCase {

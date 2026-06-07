@@ -1,7 +1,7 @@
 module uim.platform.databricks.domain.entities.ml_model;
 import uim.platform.databricks;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

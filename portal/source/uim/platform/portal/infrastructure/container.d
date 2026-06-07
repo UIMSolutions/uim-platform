@@ -48,7 +48,7 @@ module uim.platform.portal.infrastructure.container;
 
 import uim.platform.portal;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Dependency injection container — wires all layers together.

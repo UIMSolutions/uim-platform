@@ -7,7 +7,7 @@ module uim.platform.hana_spatial.domain.entities.geofence_zone;
 
 import uim.platform.hana_spatial;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

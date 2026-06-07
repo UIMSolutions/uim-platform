@@ -8,7 +8,7 @@ module uim.platform.logistic_management.application.usecases.manage.freight_orde
 module uim.platform.logistic_management.application.usecases.manage.freight_orders;
 import uim.platform.logistic_management;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class ManageFreightOrdersUseCase {

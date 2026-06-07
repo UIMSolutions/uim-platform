@@ -10,7 +10,7 @@ module uim.platform.management.application.usecases.manage.labels;
 
 import uim.platform.management;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Use case: manage labels (tags) on BTP resources.

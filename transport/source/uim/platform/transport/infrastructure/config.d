@@ -8,7 +8,7 @@ import std.process : environment;
 
 import uim.platform.transport;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

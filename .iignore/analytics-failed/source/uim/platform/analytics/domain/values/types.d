@@ -7,7 +7,7 @@ module uim.platform.analytics.domain.values.types;
 
 import uim.platform.analytics;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 /// Strongly-typed identifier for a Dashboard aggregate root.

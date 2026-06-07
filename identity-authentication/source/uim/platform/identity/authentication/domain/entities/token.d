@@ -7,7 +7,7 @@ module uim.platform.identity.authentication.domain.entities.token;
 // import uim.platform.identity.authentication.domain.types;
 import uim.platform.identity.authentication;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 /// Issued security token.
 struct Token {

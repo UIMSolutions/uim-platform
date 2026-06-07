@@ -16,7 +16,7 @@ module uim.platform.identity.authentication.infrastructure.security.jwt_token_se
 // import std.digest.sha : SHA256, toHexString;
 import uim.platform.identity.authentication;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 /// Adapter: JWT-like token generation service.
 /// In production, use proper JWT signing with RS256/ES256.

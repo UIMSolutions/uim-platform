@@ -7,7 +7,7 @@ module uim.platform.rfc.domain.enumerations;
 
 import uim.platform.rfc;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

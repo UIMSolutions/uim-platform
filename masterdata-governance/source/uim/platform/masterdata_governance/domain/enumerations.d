@@ -2,7 +2,7 @@ module uim.platform.masterdata_governance.domain.enumerations;
 // --- Enumerations ---
 import uim.platform.masterdata_governance;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 enum BPCategory {

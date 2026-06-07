@@ -7,7 +7,7 @@ module uim.platform.task_center.domain.entities.substitution_rule;
 
 import uim.platform.task_center;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

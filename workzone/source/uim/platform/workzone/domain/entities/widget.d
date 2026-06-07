@@ -7,7 +7,7 @@ module uim.platform.workzone.domain.entities.widget;
 
 import uim.platform.workzone;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// A widget instance placed on a workspace page.

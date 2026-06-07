@@ -2,7 +2,7 @@ module uim.platform.service.infrastructure.repositories.id;
 
 import uim.platform.service;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

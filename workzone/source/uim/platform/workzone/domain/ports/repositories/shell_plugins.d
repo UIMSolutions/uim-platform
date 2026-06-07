@@ -8,7 +8,7 @@ module uim.platform.workzone.domain.ports.repositories.shell_plugins;
 // import uim.platform.workzone.domain.entities.shell_plugin;
 import uim.platform.workzone;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 interface ShellPluginRepository : ITenantRepository!(ShellPlugin, ShellPluginId) {

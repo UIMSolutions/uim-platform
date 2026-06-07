@@ -7,7 +7,7 @@ module uim.platform.hana_spatial.domain.ports.repositories.geocoding_jobs;
 
 import uim.platform.hana_spatial;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 interface GeocodingJobRepository : ITenantRepository!(GeocodingJob, GeocodingJobId) {

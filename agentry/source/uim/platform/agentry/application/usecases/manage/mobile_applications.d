@@ -7,7 +7,7 @@ module uim.platform.agentry.application.usecases.manage.mobile_applications;
 
 import uim.platform.agentry;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

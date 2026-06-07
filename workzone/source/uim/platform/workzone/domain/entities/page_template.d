@@ -7,7 +7,7 @@ module uim.platform.workzone.domain.entities.page_template;
 // import uim.platform.workzone.domain.types;
 import uim.platform.workzone;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// A page template — reusable layout definition for workpages.

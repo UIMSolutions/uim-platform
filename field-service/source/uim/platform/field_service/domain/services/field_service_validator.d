@@ -7,7 +7,7 @@ module uim.platform.field_service.domain.services.field_service_validator;
 
 import uim.platform.field_service;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

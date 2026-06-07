@@ -9,7 +9,7 @@ import uim.platform.datasphere_composer;
 import vibe.http.server;
 import vibe.http.router;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class DataProviderController : ManageHttpController {

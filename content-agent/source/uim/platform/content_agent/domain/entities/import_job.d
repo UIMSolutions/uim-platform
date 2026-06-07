@@ -7,7 +7,7 @@ module uim.platform.content_agent.domain.entities.import_job;
 
 import uim.platform.content_agent;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// An import operation that deploys a content package into the target landscape.

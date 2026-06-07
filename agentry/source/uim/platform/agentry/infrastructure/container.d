@@ -7,7 +7,7 @@ module uim.platform.agentry.infrastructure.container;
 
 import uim.platform.agentry;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

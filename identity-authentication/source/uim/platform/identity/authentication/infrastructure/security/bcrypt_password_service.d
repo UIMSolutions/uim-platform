@@ -10,7 +10,7 @@ module uim.platform.identity.authentication.infrastructure.security.bcrypt_passw
 // 
 import uim.platform.identity.authentication;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 /// Adapter: SHA-256 based password hashing (use bcrypt/argon2 in production via C bindings).
 class Sha256PasswordService : PasswordService {

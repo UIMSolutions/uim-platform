@@ -9,7 +9,7 @@ import uim.platform.abap_compiler;
 import std.stdio : writeln, writefln, readln;
 import std.string : strip;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 /// Command-line interface commands for the ABAP Compiler.

@@ -12,7 +12,7 @@ module uim.platform.connectivity.application.usecases.manage.connectors;
 // import uim.platform.connectivity.domain.types;
 import uim.platform.connectivity;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Application service for Cloud Connector registration and lifecycle.

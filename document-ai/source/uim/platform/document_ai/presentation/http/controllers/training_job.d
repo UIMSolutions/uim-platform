@@ -11,7 +11,7 @@ module uim.platform.document_ai.presentation.http.controllers.training_job;
 
 import uim.platform.document_ai;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

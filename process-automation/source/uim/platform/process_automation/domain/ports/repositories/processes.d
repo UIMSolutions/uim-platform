@@ -8,7 +8,7 @@ module uim.platform.process_automation.domain.ports.repositories.processes;
 // import uim.platform.process_automation.domain.entities.process;
 import uim.platform.process_automation;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 interface ProcessRepository : ITenantRepository!(Process, ProcessId) {

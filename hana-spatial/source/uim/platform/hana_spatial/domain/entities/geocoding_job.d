@@ -7,7 +7,7 @@ module uim.platform.hana_spatial.domain.entities.geocoding_job;
 
 import uim.platform.hana_spatial;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

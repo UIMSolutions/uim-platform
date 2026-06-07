@@ -7,7 +7,7 @@ module uim.platform.events.domain.services.events_validator;
 
 import uim.platform.events;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

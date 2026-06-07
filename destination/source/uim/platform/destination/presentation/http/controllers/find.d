@@ -10,7 +10,7 @@ module uim.platform.destination.presentation.http.controllers.find;
 // import uim.platform.destination.presentation.http
 import uim.platform.destination;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class FindController : HttpController {

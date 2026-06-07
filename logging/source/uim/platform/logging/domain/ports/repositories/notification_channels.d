@@ -8,7 +8,7 @@ module uim.platform.logging.domain.ports.repositories.notification_channels;
 
 import uim.platform.logging;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 interface NotificationChannelRepository : ITenantRepository!(NotificationChannel, NotificationChannelId) {

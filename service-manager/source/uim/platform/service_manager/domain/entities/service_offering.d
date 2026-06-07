@@ -2,7 +2,7 @@ module uim.platform.service_manager.domain.entities.service_offering;
 
 import uim.platform.service_manager;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

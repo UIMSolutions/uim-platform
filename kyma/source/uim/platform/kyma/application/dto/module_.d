@@ -1,7 +1,7 @@
 module uim.platform.kyma.application.dto.module_;
 import uim.platform.kyma;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 struct EnableModuleRequest {

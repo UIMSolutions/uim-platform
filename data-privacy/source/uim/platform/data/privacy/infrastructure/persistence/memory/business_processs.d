@@ -9,7 +9,7 @@ module uim.platform.data.privacy.infrastructure.persistence.memory.business_proc
 // import uim.platform.data.privacy.domain.ports.business_process_repository;
 import uim.platform.data.privacy;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryBusinessProcessRepository : TenantRepository!(BusinessProcess, BusinessProcessId), BusinessProcessRepository {

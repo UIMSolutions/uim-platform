@@ -2,7 +2,7 @@ module uim.platform.workzone.presentation.http.controllers.tag_;
 
 import uim.platform.workzone;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class TagController : ManageHttpController {

@@ -7,7 +7,7 @@ module uim.platform.events.domain.repositories.messaging_services;
 
 import uim.platform.events;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

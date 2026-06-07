@@ -7,7 +7,7 @@ module uim.platform.rfc.domain.entities.rfc_queue;
 
 import uim.platform.rfc;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 /// A queue entry in the qRFC / bgRFC outbound or inbound queue.

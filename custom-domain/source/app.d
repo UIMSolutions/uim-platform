@@ -7,7 +7,7 @@ module app;
 
 import uim.platform.custom_domain;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 version (unittest) {

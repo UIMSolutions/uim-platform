@@ -13,7 +13,7 @@ module uim.platform.datasphere.application.usecases.manage.catalog_assets;
 
 import uim.platform.datasphere;
 
-mixin(ShowModule!()); 
+// mixin(ShowModule!()); 
 
 @safe:
 class ManageCatalogAssetsUseCase { // TODO: UIMUseCase {

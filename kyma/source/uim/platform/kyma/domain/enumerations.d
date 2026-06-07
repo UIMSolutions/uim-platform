@@ -1,7 +1,7 @@
 module uim.platform.kyma.domain.enumerations;
 import uim.platform.kyma;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Status of a Kyma environment/cluster.

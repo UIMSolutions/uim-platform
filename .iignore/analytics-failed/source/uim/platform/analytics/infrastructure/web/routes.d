@@ -8,7 +8,7 @@ module uim.platform.analytics.infrastructure.web.routes;
 // import uim.platform.analytics.infrastructure.web.middleware;
 import uim.platform.analytics;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 /// Register all REST API routes on the given router.
 void registerRoutes(URLRouter router, DashboardHandler dashboards,

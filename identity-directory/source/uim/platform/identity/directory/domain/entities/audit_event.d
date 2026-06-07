@@ -7,7 +7,7 @@ module uim.platform.identity.directory.domain.entities.audit_event;
 // import uim.platform.identity.directory.domain.types;
 import uim.platform.identity.directory;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Immutable audit log entry.

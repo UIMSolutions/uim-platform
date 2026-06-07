@@ -7,7 +7,7 @@ module uim.platform.process_automation.domain.entities.process_instance;
 
 import uim.platform.process_automation;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

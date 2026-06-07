@@ -6,7 +6,7 @@
 module uim.platform.datasphere.application.dto;
 
 import uim.platform.datasphere;
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 // --- Space ---
 

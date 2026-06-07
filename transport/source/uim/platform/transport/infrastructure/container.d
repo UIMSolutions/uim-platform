@@ -7,7 +7,7 @@ module uim.platform.transport.infrastructure.container;
 
 import uim.platform.transport;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

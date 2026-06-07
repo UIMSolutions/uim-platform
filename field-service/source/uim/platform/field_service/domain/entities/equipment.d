@@ -7,7 +7,7 @@ module uim.platform.field_service.domain.entities.equipment;
 
 import uim.platform.field_service;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

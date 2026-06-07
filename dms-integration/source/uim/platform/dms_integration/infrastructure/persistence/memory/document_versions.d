@@ -7,7 +7,7 @@ module uim.platform.dms_integration.infrastructure.persistence.memory.document_v
 
 import uim.platform.dms_integration;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

@@ -13,7 +13,7 @@ moduleule app;
 // import uim.platform.master_data_integration.infrastructure.container;
 import uim.platform.master_data_integration;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

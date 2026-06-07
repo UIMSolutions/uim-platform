@@ -7,7 +7,7 @@ module uim.platform.rfc.presentation.http.controllers.destination;
 
 import uim.platform.rfc;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 /// HTTP controller for RFC Destinations (SM59 entries).

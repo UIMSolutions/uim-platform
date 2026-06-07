@@ -10,7 +10,7 @@ module uim.platform.analytics.infrastructure.persistence.memory.repositories.das
 
 import uim.platform.analytics;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 /// In-memory adapter implementing DashboardRepository port.
 class MemoryDashboardRepository : TenantRepository!(Dashboard, DashboardId), DashboardRepository {

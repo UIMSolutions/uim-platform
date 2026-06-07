@@ -8,7 +8,7 @@ module uim.platform.responsibility.infrastructure.config;
 import std.process : environment;
 import uim.platform.responsibility;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

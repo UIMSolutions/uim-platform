@@ -7,7 +7,7 @@ module uim.platform.abap_compiler.domain.entities.token;
 
 import uim.platform.abap_compiler;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 /// A single lexical unit produced by the ABAP lexer.

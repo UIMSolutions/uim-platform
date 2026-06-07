@@ -7,7 +7,7 @@ module uim.platform.build_apps.domain.entities.logic_flow;
 
 import uim.platform.build_apps;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

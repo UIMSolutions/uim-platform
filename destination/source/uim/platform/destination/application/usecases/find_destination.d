@@ -17,7 +17,7 @@ module uim.platform.destination.application.usecases.find_destination;
 
 import uim.platform.destination;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Application service for the "Find Destination" API — resolves a destination

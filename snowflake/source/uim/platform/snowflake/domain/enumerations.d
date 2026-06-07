@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.snowflake.domain.enumerations;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

@@ -7,7 +7,7 @@ module uim.platform.transport.application.usecases.manage.transport_actions;
 
 import uim.platform.transport;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

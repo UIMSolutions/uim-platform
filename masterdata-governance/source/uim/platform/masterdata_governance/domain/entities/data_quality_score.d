@@ -7,7 +7,7 @@ module uim.platform.masterdata_governance.domain.entities.data_quality_score;
 
 import uim.platform.masterdata_governance;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

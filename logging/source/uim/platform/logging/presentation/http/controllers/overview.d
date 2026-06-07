@@ -9,7 +9,7 @@ module uim.platform.logging.presentation.http.controllers.overview;
 
 import uim.platform.logging;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

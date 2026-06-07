@@ -11,7 +11,7 @@ module uim.platform.job_scheduling.application.usecases.manage.configurations;
 
 import uim.platform.job_scheduling;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 // alias Configuration = uim.platform.job_scheduling.domain.entities.configuration.Configuration;

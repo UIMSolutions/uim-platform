@@ -7,7 +7,7 @@ module uim.platform.application_studio.domain.entities.dev_space_type;
 
 import uim.platform.application_studio;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

@@ -2,7 +2,7 @@ module uim.platform.workzone.presentation.http.controllers.knowledge_base_articl
 
 import uim.platform.workzone;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class KnowledgeBaseArticleController : ManageHttpController {

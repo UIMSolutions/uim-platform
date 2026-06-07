@@ -13,7 +13,7 @@ module uim.platform.analytics.app.usecases.planning;
 
 import uim.platform.analytics;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 class PlanningUseCases {
   private PlanningRepository repo;

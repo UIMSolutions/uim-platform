@@ -7,7 +7,7 @@ module uim.platform.redis.application.dto;
 
 import uim.platform.redis;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

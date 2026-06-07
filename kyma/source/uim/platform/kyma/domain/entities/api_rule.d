@@ -7,7 +7,7 @@ module uim.platform.kyma.domain.entities.api_rule;
 
 import uim.platform.kyma;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// An API rule — exposes a service or function via the API Gateway.
