@@ -11,7 +11,7 @@ module uim.platform.mobile.presentation.http.controllers.app_version;
 
 import uim.platform.mobile;
 
-mixin(Showmodule!());
+// mixin(Showmodule!());
 
 @safe:
 
@@ -32,147 +32,131 @@ class AppVersionController : ManageHttpController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-              CreateAppVersionRequest r;
-      r.tenantId = tenantId;
-      r.appId = data.getString("appId");
-      r.versionCode = data.getString("versionCode");
-      r.buildNumber = data.getInteger("buildNumber");
-      r.platform = data.getString("platform");
-      r.releaseNotes = data.getString("releaseNotes");
-      r.downloadUrl = data.getString("downloadUrl");
-      r.sizeBytes = data.getLong("sizeBytes");
-      r.createdBy = UserId(data.getString("createdBy"));
-      auto result = usecase.create(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "App version created successfully");
+    auto data = precheck.data;
+    CreateAppVersionRequest r;
+    r.tenantId = tenantId;
+    r.appId = data.getString("appId");
+    r.versionCode = data.getString("versionCode");
+    r.buildNumber = data.getInteger("buildNumber");
+    r.platform = data.getString("platform");
+    r.releaseNotes = data.getString("releaseNotes");
+    r.downloadUrl = data.getString("downloadUrl");
+    r.sizeBytes = data.getLong("sizeBytes");
+    r.createdBy = UserId(data.getString("createdBy"));
+    auto result = usecase.create(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+    auto resp = Json.emptyObject
+      .set("id", result.id);
 
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    return successResponse("App version created successfully", "Created", 201, resp);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto results = usecase.list(tenantId);
-      auto items = Json.emptyArray;
-      foreach (item; results) {
-        items ~= Json.emptyObject
-          .set("id", item.id)
-          .set("appId", item.appId)
-          .set("versionCode", item.versionCode)
-          .set("platform", item.platform)
-          .set("status", item.status);
-      }
-
-      auto resp = Json.emptyObject
-        .set("items", items)
-        .set("totalCount", Json(results.length))
-        .set("message", "App versions retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+    auto tenantId = precheck.tenantId;
+    auto results = usecase.list(tenantId);
+    auto items = Json.emptyArray;
+    foreach (item; results) {
+      items ~= Json.emptyObject
+        .set("id", item.id)
+        .set("appId", item.appId)
+        .set("versionCode", item.versionCode)
+        .set("platform", item.platform)
+        .set("status", item.status);
     }
+
+    auto resp = Json.emptyObject
+      .set("items", items)
+      .set("totalCount", Json(results.length));
+
+    return successResponse("App versions retrieved successfully", "Retrieved", 200, resp);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto result = usecase.get(id);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.data.id)
-          .set("tenantId", result.data.tenantId)
-          .set("appId", result.data.appId)
-          .set("versionCode", result.data.versionCode)
-          .set("buildNumber", result.data.buildNumber)
-          .set("platform", result.data.platform)
-          .set("releaseNotes", result.data.releaseNotes)
-          .set("downloadUrl", result.data.downloadUrl)
-          .set("sizeBytes", result.data.sizeBytes)
-          .set("createdBy", result.data.createdBy)
-          .set("status", result.data.status)
-          .set("message", "App version retrieved successfully");
+    auto tenantId = precheck.tenantId;
+    auto id = AppVersionId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid app version ID", 400);
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+    auto result = usecase.get(id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+    auto resp = Json.emptyObject
+      .set("id", result.data.id)
+      .set("tenantId", result.data.tenantId)
+      .set("appId", result.data.appId)
+      .set("versionCode", result.data.versionCode)
+      .set("buildNumber", result.data.buildNumber)
+      .set("platform", result.data.platform)
+      .set("releaseNotes", result.data.releaseNotes)
+      .set("downloadUrl", result.data.downloadUrl)
+      .set("sizeBytes", result.data.sizeBytes)
+      .set("createdBy", result.data.createdBy)
+      .set("status", result.data.status)
+      .set("message", "App version retrieved successfully");
 
-  override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    
+    return successResponse("App version retrieved successfully", "Retrieved", 200, resp);
+}
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto data = precheck.data;
-      UpdateAppVersionRequest r;
-      r.id = id;
-      r.releaseNotes = data.getString("releaseNotes");
-      r.downloadUrl = data.getString("downloadUrl");
-      r.sizeBytes = data.getLong("sizeBytes");
-      r.status = data.getString("status");
-      r.updatedBy = UserId(data.getString("updatedBy"));
-      auto result = usecase.update(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "App version updated successfully");
+override protected Json updateHandler(HTTPServerRequest req) {
+  auto precheck = super.updateHandler(req);
+  if (precheck.hasError)
+    return precheck;
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  auto tenantId = precheck.tenantId;
+  auto id = AppVersionId(precheck.id);
+  if (id.isNull)
+    return errorResponse("Invalid app version ID", 400);
 
-  override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = AppVersionId(precheck.id);
-      auto result = usecase.deleteAppVersion(id);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        res.writeBody("", 204);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  auto data = precheck.data;
+  UpdateAppVersionRequest r;
+  r.id = id;
+  r.releaseNotes = data.getString("releaseNotes");
+  r.downloadUrl = data.getString("downloadUrl");
+  r.sizeBytes = data.getLong("sizeBytes");
+  r.status = data.getString("status");
+  r.updatedBy = UserId(data.getString("updatedBy"));
+  auto result = usecase.update(r);
+  if (result.hasError)
+    return errorResponse(result.message, 400);
+
+  auto resp = Json.emptyObject
+    .set("id", result.id);
+
+  return successResponse("App version updated successfully", "Updated", 200, resp);
+}
+
+override protected Json deleteHandler(HTTPServerRequest req) {
+  auto precheck = super.deleteHandler(req);
+  if (precheck.hasError)
+    return precheck;
+
+  auto tenantId = precheck.tenantId;
+  auto id = AppVersionId(precheck.id);
+  if (id.isNull)
+    return errorResponse("Invalid app version ID", 400);
+
+  auto result = usecase.deleteAppVersion(tenantId, id);
+  if (result.hasError)
+    return errorResponse(result.message, 400);
+
+  return successResponse("App version deleted successfully", "Deleted", 204, Json.emptyObject);
+
+}
 }

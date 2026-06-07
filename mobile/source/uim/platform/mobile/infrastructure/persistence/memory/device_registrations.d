@@ -3,14 +3,14 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.mobile.infrastructure.persistence.memory.device_registration;
+module uim.platform.mobile.infrastructure.persistence.memory.device_registrations;
 // import uim.platform.mobile.domain.entities.device_registration;
 // import uim.platform.mobile.domain.ports.repositories.device_registrations;
-// import uim.platform.mobile.domain.types;
+
 
 import uim.platform.mobile;
 
-mixin(Showmodule!());
+// mixin(Showmodule!());
 
 @safe:
 

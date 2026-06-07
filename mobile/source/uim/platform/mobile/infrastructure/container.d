@@ -49,7 +49,7 @@ module uim.platform.mobile.infrastructure.container;
 // import uim.platform.mobile.presentation.http.controllers.health;
 import uim.platform.mobile;
 
-mixin(Showmodule!());
+// mixin(Showmodule!());
 
 @safe:
 struct Container {

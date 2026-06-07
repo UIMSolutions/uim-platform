@@ -7,7 +7,7 @@ module uim.platform.mobile.domain.entities.usage_report;
 
 import uim.platform.mobile;
 
-mixin(Showmodule!());
+// mixin(Showmodule!());
 
 @safe:
 

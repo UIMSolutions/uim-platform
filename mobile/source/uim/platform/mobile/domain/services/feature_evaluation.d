@@ -7,7 +7,7 @@ module uim.platform.mobile.domain.services.feature_evaluation;
 
 import uim.platform.mobile;
 
-mixin(Showmodule!());
+// mixin(Showmodule!());
 
 @safe:
 

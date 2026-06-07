@@ -11,7 +11,7 @@ module uim.platform.mobile.presentation.http.controllers.user_session;
 
 import uim.platform.mobile;
 
-mixin(Showmodule!());
+// mixin(Showmodule!());
 
 @safe:
 
@@ -106,41 +106,48 @@ class UserSessionController : ManageHttpController {
     return successResponse("User session retrieved successfully", "Retrieved", 200, resp);
   }
 
-  
+  protected Json terminateHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = precheck.id;
+    auto result = usecase.terminate(id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+    auto resp = Json.emptyObject
+      .set("id", result.id)
+      .set("message", "User session terminated successfully");
+
+    return successResponse("User session terminated successfully", "Terminated", 200, resp);
+  }
+
   protected void handleTerminate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto result = usecase.terminate(id);
-      if (result.hasError)
-        return errorResponse(result.message, 400);
-      auto resp = Json.emptyObject
-        .set("id", result.id);
+      auto response = terminateHandler(req);
+      res.writeJsonBody(response, response.code);
 
-      res.writeJsonBody(resp, 200);
-    } else {
-      writeError(res, 400, result.message);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
     }
-  } catch (Exception e) {
-    writeError(res, 500, "Internal server error");
   }
-}
 
-override protected Json deleteHandler(HTTPServerRequest req) {
-  auto precheck = super.deleteHandler(req);
-  if (precheck.hasError)
-    return precheck;
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-  auto tenantId = precheck.tenantId;
-  auto id = UserSessionId(precheck.id);
-  auto result = usecase.delete(tenantId, id);
-  if (result.hasError)
-    return errorResponse(result.message, 400);
- 
-  auto resp = Json.emptyObject
-    .set("id", result.id)
-    .set("message", "User session deleted successfully");
+    auto tenantId = precheck.tenantId;
+    auto id = UserSessionId(precheck.id);
+    auto result = usecase.delete(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-  return successResponse("User session deleted successfully", "Deleted", 200, resp);
-}
+    auto resp = Json.emptyObject
+      .set("id", result.id)
+      .set("message", "User session deleted successfully");
+
+    return successResponse("User session deleted successfully", "Deleted", 200, resp);
+  }
 }

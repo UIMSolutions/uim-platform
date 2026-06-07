@@ -3,14 +3,14 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.mobile.infrastructure.persistence.memory.mobile_app;
+module uim.platform.mobile.infrastructure.persistence.memory.mobile_apps;
 // import uim.platform.mobile.domain.entities.mobile_app;
 // import uim.platform.mobile.domain.ports.repositories.mobile_apps;
-// import uim.platform.mobile.domain.types;
+
 
 import uim.platform.mobile;
 
-mixin(Showmodule!());
+// mixin(Showmodule!());
 
 @safe:
 
@@ -27,6 +27,12 @@ class MemoryMobileAppRepository : TenantRepository!(MobileApp, MobileAppId), Mob
     }
     return MobileApp.init;
   }
+  void removeByBundleId(TenantId tenantId, string bundleId) {
+    foreach (a; findByTenant(tenantId)) {
+      if (a.bundleId == bundleId)
+        remove(a);
+    }
+  }
 
   size_t countByPlatform(TenantId tenantId, AppPlatform platform) {
     return findByPlatform(tenantId, platform).length;
@@ -36,6 +42,9 @@ class MemoryMobileAppRepository : TenantRepository!(MobileApp, MobileAppId), Mob
   }
   MobileApp[] findByPlatform(TenantId tenantId, AppPlatform platform) {
     return filterByPlatform(findByTenant(tenantId), platform);
+  }
+  void removeByPlatform(TenantId tenantId, AppPlatform platform) {
+    findByPlatform(tenantId, platform).each!(a => remove(a));
   }
 
 }

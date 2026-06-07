@@ -7,7 +7,7 @@ module uim.platform.mobile.domain.ports.repositories.app_versions;
 
 import uim.platform.mobile;
 
-mixin(Showmodule!());
+// mixin(Showmodule!());
 
 @safe:
 

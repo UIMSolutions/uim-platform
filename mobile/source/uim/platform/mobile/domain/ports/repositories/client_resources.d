@@ -7,7 +7,7 @@ module uim.platform.mobile.domain.ports.repositories.client_resources;
 
 import uim.platform.mobile;
 
-mixin(Showmodule!());
+// mixin(Showmodule!());
 
 @safe:
 

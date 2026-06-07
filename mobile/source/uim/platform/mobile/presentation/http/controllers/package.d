@@ -19,5 +19,4 @@ public {
   import uim.platform.mobile.presentation.http.controllers.user_session;
   import uim.platform.mobile.presentation.http.controllers.client_log;
   import uim.platform.mobile.presentation.http.controllers.overview;
-  import uim.platform.mobile.presentation.http.controllers.health;
 }

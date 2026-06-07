@@ -7,7 +7,7 @@ module uim.platform.mobile.domain.enumerations;
 
 import uim.platform.mobile;
 
-mixin(Showmodule!());
+// mixin(Showmodule!());
 
 @safe:
 

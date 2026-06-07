@@ -7,7 +7,7 @@ module uim.platform.mobile.domain.entities.device_registration;
 
 import uim.platform.mobile;
 
-mixin(Showmodule!());
+// mixin(Showmodule!());
 
 @safe:
 

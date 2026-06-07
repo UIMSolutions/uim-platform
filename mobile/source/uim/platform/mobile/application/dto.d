@@ -7,7 +7,7 @@ module uim.platform.mobile.application.dto;
 
 import uim.platform.mobile;
 
-mixin(Showmodule!());
+// mixin(Showmodule!());
 
 @safe:
 // MobileApp DTOs

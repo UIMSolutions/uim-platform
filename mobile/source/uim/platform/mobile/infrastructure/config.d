@@ -9,7 +9,7 @@ import std.process : environment;
 
 import uim.platform.mobile;
 
-mixin(Showmodule!());
+// mixin(Showmodule!());
 
 @safe:
 struct SrvConfig {

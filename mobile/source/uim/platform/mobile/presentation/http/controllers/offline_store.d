@@ -10,7 +10,7 @@ module uim.platform.mobile.presentation.http.controllers.offline_store;
 
 import uim.platform.mobile;
 
-mixin(Showmodule!());
+// mixin(Showmodule!());
 
 @safe:
 
@@ -23,6 +23,7 @@ class OfflineStoreController : ManageHttpController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+    
     router.post("/api/v1/offline-stores", &handleCreate);
     router.get("/api/v1/offline-stores", &handleList);
     router.get("/api/v1/offline-stores/*", &handleGet);
@@ -85,10 +86,14 @@ class OfflineStoreController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
-    auto result = usecase.get(id);
+    auto id = OfflineStoreId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid offline store ID", 400);
+
+    auto result = usecase.get(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
+
     auto resp = Json.emptyObject
       .set("id", Json(result.data.id))
       .set("tenantId", Json(result.data.tenantId))
@@ -112,10 +117,11 @@ class OfflineStoreController : ManageHttpController {
     auto tenantId = precheck.tenantId;
     auto id = OfflineStoreId(precheck.id);
     if (id.isNull)
-      return errorResponse("Invalid offline store ID", 400)
+      return errorResponse("Invalid offline store ID", 400);
 
-      auto data = precheck.data;
+    auto data = precheck.data;
     UpdateOfflineStoreRequest r;
+    r.tenantId = tenantId;
     r.storeId = id;
     r.name = data.getString("name");
     r.description = data.getString("description");
@@ -138,7 +144,7 @@ class OfflineStoreController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto id = OfflineStoreId(precheck.id);
-    auto result = usecase.deleteOfflineStore(id);
+    auto result = usecase.deleteOfflineStore(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
 

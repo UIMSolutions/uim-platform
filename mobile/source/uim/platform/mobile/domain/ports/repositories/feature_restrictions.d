@@ -7,7 +7,7 @@ module uim.platform.mobile.domain.ports.repositories.feature_restrictions;
 
 import uim.platform.mobile;
 
-mixin(Showmodule!());
+// mixin(Showmodule!());
 
 @safe:
 

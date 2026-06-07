@@ -1,7 +1,7 @@
 module uim.platform.mobile.infrastructure.helpers.apps;
 import uim.platform.mobile;
 
-mixin(Showmodule!());
+// mixin(Showmodule!());
 
 @safe:
 

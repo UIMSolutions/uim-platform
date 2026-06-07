@@ -10,7 +10,7 @@ module uim.platform.mobile.presentation.http.controllers.app_configuration;
 
 import uim.platform.mobile;
 
-mixin(Showmodule!());
+// mixin(Showmodule!());
 
 @safe:
 class AppConfigurationController : ManageHttpController {

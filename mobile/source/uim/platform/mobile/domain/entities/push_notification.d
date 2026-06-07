@@ -7,7 +7,7 @@ module uim.platform.mobile.domain.entities.push_notification;
 
 import uim.platform.mobile;
 
-mixin(Showmodule!());
+// mixin(Showmodule!());
 
 @safe:
 

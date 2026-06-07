@@ -7,7 +7,7 @@ module uim.platform.mobile.domain.entities.feature_restriction;
 
 import uim.platform.mobile;
 
-mixin(Showmodule!());
+// mixin(Showmodule!());
 
 @safe:
 

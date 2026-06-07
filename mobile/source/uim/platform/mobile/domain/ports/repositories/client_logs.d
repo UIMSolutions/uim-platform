@@ -7,7 +7,7 @@ module uim.platform.mobile.domain.ports.repositories.client_logs;
 
 import uim.platform.mobile;
 
-mixin(Showmodule!());
+// mixin(Showmodule!());
 
 @safe:
 

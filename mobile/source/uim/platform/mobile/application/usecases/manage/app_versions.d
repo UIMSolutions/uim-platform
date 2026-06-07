@@ -6,13 +6,13 @@
 module uim.platform.mobile.application.usecases.manage.app_versions;
 // import uim.platform.mobile.domain.ports.repositories.app_versions;
 // import uim.platform.mobile.domain.entities.app_version;
-// import uim.platform.mobile.domain.types;
+
 // import uim.platform.mobile.application.dto;
 
 
 import uim.platform.mobile;
 
-mixin(Showmodule!());
+// mixin(Showmodule!());
 
 @safe:
 class ManageAppVersionsUseCase { // TODO: UIMUseCase {
@@ -60,8 +60,8 @@ class ManageAppVersionsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, ver.id.value, "");
     }
 
-    AppVersion getAppVersion(GetAppVersionRequest r) {
-        return repo.findById(r.tenantId, r.id);
+    AppVersion getAppVersion(TenantId tenantId, AppVersionId id) {
+        return repo.findById(tenantId, id);
     }
 
     AppVersion getLatestAppVersion(TenantId tenantId, MobileAppId appId) {

@@ -7,7 +7,7 @@ module uim.platform.mobile.domain.entities.client_resource;
 
 import uim.platform.mobile;
 
-mixin(Showmodule!());
+// mixin(Showmodule!());
 
 @safe:
 struct ClientResource {

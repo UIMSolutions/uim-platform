@@ -7,7 +7,7 @@ module uim.platform.mobile.domain.entities.user_session;
 
 import uim.platform.mobile;
 
-mixin(Showmodule!());
+// mixin(Showmodule!());
 
 @safe:
 

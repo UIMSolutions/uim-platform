@@ -10,7 +10,7 @@ module uim.platform.mobile.presentation.http.controllers.overview;
 
 import uim.platform.mobile;
 
-mixin(Showmodule!());
+// mixin(Showmodule!());
 
 @safe:
 
