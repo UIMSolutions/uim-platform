@@ -4,10 +4,10 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.data_quality.domain.entities.cleansing_rule;
-// import uim.platform.data_quality.domain.types;
+
 import uim.platform.data_quality;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// A data cleansing / transformation rule.

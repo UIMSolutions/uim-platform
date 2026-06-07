@@ -7,11 +7,11 @@ module uim.platform.data_quality.presentation.http.controllers.validation_rule;
 
 // import uim.platform.data_quality.application.usecases.manage.validation_rules;
 // import uim.platform.data_quality.application.dto;
-// import uim.platform.data_quality.domain.types;
+
 // import uim.platform.data_quality.domain.entities.validation_rule;
 import uim.platform.data_quality;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class ValidationRuleController : ManageHttpController {

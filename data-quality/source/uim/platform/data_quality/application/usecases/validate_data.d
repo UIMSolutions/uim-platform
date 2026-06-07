@@ -4,7 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.data_quality.application.usecases.validate_data;
-// import uim.platform.data_quality.domain.types;
+
 // import uim.platform.data_quality.domain.entities.validation_rule;
 // import uim.platform.data_quality.domain.entities.validation_result;
 // import uim.platform.data_quality.domain.ports.repositories.validation_rules;
@@ -13,7 +13,7 @@ module uim.platform.data_quality.application.usecases.validate_data;
 // import uim.platform.data_quality.application.dto;
 import uim.platform.data_quality;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class ValidateDataUseCase { // TODO: UIMUseCase {

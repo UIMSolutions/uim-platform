@@ -4,11 +4,11 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.data_quality.domain.ports.repositories.validation_results;
-// import uim.platform.data_quality.domain.types;
+
 // import uim.platform.data_quality.domain.entities.validation_result;
 import uim.platform.data_quality;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Port for persisting validation results.

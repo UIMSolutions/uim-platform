@@ -4,7 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.data_quality.infrastructure.persistence.memory.addresses;
-// import uim.platform.data_quality.domain.types;
+
 // import uim.platform.data_quality.domain.entities.address_record;
 // import uim.platform.data_quality.domain.ports.repositories.addresses;
 
@@ -12,7 +12,7 @@ module uim.platform.data_quality.infrastructure.persistence.memory.addresses;
  
 import uim.platform.data_quality;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class MemoryAddressRepository : MemoryTenantRepository!(AddressRecord, AddressId), AddressRepository {

@@ -4,14 +4,14 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.data_quality.domain.services.quality_scorer;
-// import uim.platform.data_quality.domain.types;
+
 // import uim.platform.data_quality.domain.entities.quality_dashboard;
 // import uim.platform.data_quality.domain.entities.validation_result;
 // import uim.platform.data_quality.domain.entities.data_profile;
 
 import uim.platform.data_quality;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Domain service - computes quality scores and dashboard metrics.

@@ -7,11 +7,11 @@ module uim.platform.data_quality.presentation.http.controllers.cleansing_rule;
 
 // import uim.platform.data_quality.application.usecases.manage.cleansing_rules;
 // import uim.platform.data_quality.application.dto;
-// import uim.platform.data_quality.domain.types;
+
 // import uim.platform.data_quality.domain.entities.cleansing_rule;
 import uim.platform.data_quality;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class CleansingRuleController : ManageHttpController {

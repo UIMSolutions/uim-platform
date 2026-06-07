@@ -4,7 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.data_quality.application.dto;
-// import uim.platform.data_quality.domain.types;
+
 // import uim.platform.data_quality.domain.entities.validation_result : RuleViolation;
 // import uim.platform.data_quality.domain.entities.match_group : MatchCandidate, FieldMatch;
 // import uim.platform.data_quality.domain.entities.data_profile : ColumnProfile;
@@ -12,7 +12,7 @@ module uim.platform.data_quality.application.dto;
 //   QualityTrendPoint;
 import uim.platform.data_quality;
 
-mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 // ──────────────── Validation Rule DTOs ────────────────
