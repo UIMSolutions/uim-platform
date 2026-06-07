@@ -80,75 +80,81 @@ class CleansingRuleController : ManageHttpController {
       .set("resources", list);
     return successResponse("", 0, responseData);
   }
-}
 
-override protected Json getHandler(HTTPServerRequest req) {
-  auto precheck = super.getHandler(req);
-  if (precheck.hasError)
-    return precheck;
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-  auto tenantId = precheck.tenantId;
-  auto id = CleansingRuleId(precheck.id);
-  if (id.isNull)
-    return errorResponse("Invalid cleansing rule ID", 400);
-  
-  auto rule = usecase.getCleansingRule(tenantId, id);
-  if (rule.isNull)
+    auto tenantId = precheck.tenantId;
+    auto id = CleansingRuleId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid cleansing rule ID", 400);
+
+    auto rule = usecase.getCleansingRule(tenantId, id);
+    if (rule.isNull)
       return errorResponse("Cleansing rule not found", 404);
 
     auto responseData = rule.toJson();
     return successResponse("Cleansing rule retrieved successfully", "Retrieved", 200, responseData);
-}
+  }
 
-override protected Json updateHandler(HTTPServerRequest req) {
-  auto precheck = super.updateHandler(req);
-  if (precheck.hasError)
-    return precheck;
+  override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-  auto tenantId = precheck.tenantId;
-  auto r = UpdateCleansingRuleRequest();
-  r.id = precheck.id;
-  r.tenantId = tenantId;
-  r.name = data.getString("name");
-  r.description = data.getString("description");
-  r.datasetPattern = data.getString("datasetPattern");
-  r.fieldName = data.getString("fieldName");
-  r.action = data.getString("action");
-  r.status = data.getString("status");
-  r.findPattern = data.getString("findPattern");
-  r.replaceWith = data.getString("replaceWith");
-  r.defaultValue = data.getString("defaultValue");
-  r.lookupDataset = data.getString("lookupDataset");
-  r.lookupField = data.getString("lookupField");
-  r.trimWhitespace = data.getBoolean("trimWhitespace");
-  r.normalizeCase = data.getBoolean("normalizeCase");
-  r.caseMode = data.getString("caseMode");
-  r.removeDiacritics = data.getBoolean("removeDiacritics");
-  r.category = data.getString("category");
-  r.priority = data.getInteger("priority");
+    auto tenantId = precheck.tenantId;
+    auto id = CleansingRuleId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid cleansing rule ID", 400);
 
-  auto result = usecase.update(r);
-  if (result.isNull)
-    return errorResponse("Cleansing rule not found", 404);
+    auto data = precheck.data;
+    auto r = UpdateCleansingRuleRequest();
+    r.ruleId = id;
+    r.tenantId = tenantId;
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.datasetPattern = data.getString("datasetPattern");
+    r.fieldName = data.getString("fieldName");
+    r.action = data.getString("action");
+    r.status = data.getString("status");
+    r.findPattern = data.getString("findPattern");
+    r.replaceWith = data.getString("replaceWith");
+    r.defaultValue = data.getString("defaultValue");
+    r.lookupDataset = data.getString("lookupDataset");
+    r.lookupField = data.getString("lookupField");
+    r.trimWhitespace = data.getBoolean("trimWhitespace");
+    r.normalizeCase = data.getBoolean("normalizeCase");
+    r.caseMode = data.getString("caseMode");
+    r.removeDiacritics = data.getBoolean("removeDiacritics");
+    r.category = data.getString("category");
+    r.priority = data.getInteger("priority");
 
-  auto responseData = item.toJson();
-  return successResponse("Cleansing rule updated successfully", 200, responseData);
-}
+    auto result = usecase.update(r);
+    if (result.isNull)
+      return errorResponse("Cleansing rule not found", 404);
 
-override protected Json deleteHandler(HTTPServerRequest req) {
-  auto precheck = super.deleteHandler(req);
-  if (precheck.hasError)
-    return precheck;
+    auto responseData = result.toJson();
+    return successResponse("Cleansing rule updated successfully", 200, responseData);
+  }
 
-  auto tenantId = precheck.tenantId;
-  auto id = precheck.id;
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-  auto result = usecase.deleteCleansingRule(tenantId, id);
-  if (result.isNull)
-    return errorResponse("Cleansing rule not found", 404);
+    auto tenantId = precheck.tenantId;
+    auto id = CleansingRuleId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid cleansing rule ID", 400);
 
-  auto responseData = result.toJson();
-  return successResponse("Cleansing rule deleted successfully", 200, responseData);
-}
+    auto result = usecase.deleteCleansingRule(tenantId, id);
+    if (result.isNull)
+      return errorResponse("Cleansing rule not found", 404);
+
+    auto responseData = result.toJson();
+    return successResponse("Cleansing rule deleted successfully", 200, responseData);
+  }
 
 }

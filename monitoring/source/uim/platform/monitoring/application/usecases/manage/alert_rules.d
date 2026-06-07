@@ -42,7 +42,7 @@ class ManageAlertRulesUseCase { // TODO: UIMUseCase {
     rule.evaluationPeriodSeconds = req.evaluationPeriodSeconds > 0 ? req.evaluationPeriodSeconds
       : 300;
     rule.consecutiveBreaches = req.consecutiveBreaches > 0 ? req.consecutiveBreaches : 1;
-    rule.severity = parseSeverity(req.severity);
+    rule.severity = req.severity.toAlertSeverity;
     rule.isEnabled = true;
     rule.channelIds = req.channelIds;
 
@@ -66,7 +66,7 @@ class ManageAlertRulesUseCase { // TODO: UIMUseCase {
     if (req.consecutiveBreaches > 0)
       rule.consecutiveBreaches = req.consecutiveBreaches;
     if (req.severity.length > 0)
-      rule.severity = parseSeverity(req.severity);
+      rule.severity = req.severity.toAlertSeverity;
     rule.isEnabled = req.isEnabled;
     if (req.channelIds.length > 0)
       rule.channelIds = req.channelIds;
@@ -115,19 +115,6 @@ class ManageAlertRulesUseCase { // TODO: UIMUseCase {
       return ThresholdOperator.notEqual;
     default:
       return ThresholdOperator.greaterThan;
-    }
-  }
-
-  private static AlertSeverity parseSeverity(string severity) {
-    switch (severity) {
-    case "info":
-      return AlertSeverity.info;
-    case "critical":
-      return AlertSeverity.critical;
-    case "fatal":
-      return AlertSeverity.fatal;
-    default:
-      return AlertSeverity.warning;
     }
   }
 }

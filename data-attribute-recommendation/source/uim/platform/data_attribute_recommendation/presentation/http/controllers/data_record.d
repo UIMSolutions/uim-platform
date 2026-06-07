@@ -109,7 +109,9 @@ class DataRecordController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
+    auto id = DataRecordId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid data record ID", 400);
 
     auto result = usecase.validateDataRecord(tenantId, id);
     if (result.hasError)

@@ -83,7 +83,7 @@ class AuditLogController : HttpController {
     if (!precheck.isNull)
       return precheck;
 
-    auto tenantId = tenantId;
+    auto tenantId = precheck.tenantId;
     auto queryReq = AuditLogQueryRequest();
     queryReq.tenantId = tenantId;
 

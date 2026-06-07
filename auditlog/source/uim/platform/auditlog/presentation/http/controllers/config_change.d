@@ -64,12 +64,11 @@ class ConfigChangeController : HttpController {
     }
   }
 
-  private static AuditAttribute[] parseChanges(Json j) {
+  private static AuditAttribute[] parseChanges(Json data) {
     AuditAttribute[] result;
 
-    // if (!j.isArray("changes"))
+    // if (!data.isArray("changes"))
     //   return result;
-
     foreach (item; data.getArray("changes")) {
       if (item.isObject) {
         AuditAttribute change;

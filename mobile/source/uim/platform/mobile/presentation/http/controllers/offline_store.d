@@ -31,141 +31,117 @@ class OfflineStoreController : ManageHttpController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-              CreateOfflineStoreRequest r;
-      r.tenantId = tenantId;
-      r.appId = data.getString("appId");
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.storeType = data.getString("storeType");
-      r.syncPolicy = data.getString("syncPolicy");
-      r.createdBy = UserId(data.getString("createdBy"));
-      auto result = usecase.create(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Offline store created successfully");
+    auto data = precheck.data;
+    CreateOfflineStoreRequest r;
+    r.tenantId = tenantId;
+    r.appId = data.getString("appId");
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.storeType = data.getString("storeType");
+    r.syncPolicy = data.getString("syncPolicy");
+    r.createdBy = UserId(data.getString("createdBy"));
+    auto result = usecase.create(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+    auto resp = Json.emptyObject
+      .set("id", result.id);
 
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    return successResponse("Offline store created successfully", "Created", 201, resp);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto results = usecase.list(tenantId);
-      auto items = Json.emptyArray;
-      foreach (item; results) {
-        items ~= Json.emptyObject
+    auto tenantId = precheck.tenantId;
+    auto results = usecase.list(tenantId);
+    auto items = Json.emptyArray;
+    foreach (item; results) {
+      items ~= Json.emptyObject
         .set("id", item.id)
         .set("appId", item.appId)
         .set("name", item.name)
         .set("storeType", item.storeType)
         .set("status", item.status);
-      }
-
-      auto resp = Json.emptyObject
-        .set("items", items);
-        
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
     }
+
+    auto resp = Json.emptyObject
+      .set("items", items)
+      .set("count", results.length);
+
+    return successResponse("Offline stores retrieved successfully", "Retrieved", 200, resp);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto result = usecase.get(id);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", Json(result.data.id))
-          .set("tenantId", Json(result.data.tenantId))
-          .set("appId", Json(result.data.appId))
-          .set("name", Json(result.data.name))
-          .set("description", Json(result.data.description))
-          .set("storeType", Json(result.data.storeType))
-          .set("syncPolicy", Json(result.data.syncPolicy))
-          .set("status", Json(result.data.status))
-          .set("createdBy", Json(result.data.createdBy))
-          .set("message", "Offline store retrieved successfully");
+    auto tenantId = precheck.tenantId;
+    auto id = precheck.id;
+    auto result = usecase.get(id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+    auto resp = Json.emptyObject
+      .set("id", Json(result.data.id))
+      .set("tenantId", Json(result.data.tenantId))
+      .set("appId", Json(result.data.appId))
+      .set("name", Json(result.data.name))
+      .set("description", Json(result.data.description))
+      .set("storeType", Json(result.data.storeType))
+      .set("syncPolicy", Json(result.data.syncPolicy))
+      .set("status", Json(result.data.status))
+      .set("createdBy", Json(result.data.createdBy))
+      .set("message", "Offline store retrieved successfully");
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    return successResponse("Offline store retrieved successfully", "Retrieved", 200, resp);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
+    auto tenantId = precheck.tenantId;
+    auto id = OfflineStoreId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid offline store ID", 400)
+
       auto data = precheck.data;
-      UpdateOfflineStoreRequest r;
-      r.id = id;
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.syncPolicy = data.getString("syncPolicy");
-      r.status = data.getString("status");
-      r.updatedBy = UserId(data.getString("updatedBy"));
-      auto result = usecase.update(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Offline store updated successfully");
+    UpdateOfflineStoreRequest r;
+    r.storeId = id;
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.syncPolicy = data.getString("syncPolicy");
+    r.status = data.getString("status");
+    r.updatedBy = UserId(data.getString("updatedBy"));
+    auto result = usecase.update(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+    auto resp = Json.emptyObject
+      .set("id", result.id);
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    return successResponse("Offline store updated successfully", "Updated", 200, resp);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = OfflineStoreId(precheck.id);
-      auto result = usecase.deleteOfflineStore(id);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        res.writeBody("", 204);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto tenantId = precheck.tenantId;
+    auto id = OfflineStoreId(precheck.id);
+    auto result = usecase.deleteOfflineStore(id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    return successResponse("Offline store deleted successfully", "Deleted", 204, result);
   }
 }

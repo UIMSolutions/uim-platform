@@ -70,7 +70,7 @@ class ProjectMemberController : ManageHttpController {
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         ProjectMemberDTO dto;
-        dto.id = precheck.id;
+        dto.id = ProjectMemberId(precheck.id);
         dto.tenantId = tenantId;
         dto.applicationId = data.getString("applicationId");
         dto.userId = UserId(data.getString("userId"));
@@ -101,7 +101,7 @@ class ProjectMemberController : ManageHttpController {
         auto data = precheck.data;
         ProjectMemberDTO dto;
         dto.tenantId = tenantId;
-        dto.id = precheck.id;
+        dto.id = ProjectMemberId(precheck.id;
         dto.displayName = data.getString("displayName");
         dto.email = data.getString("email");
         dto.permissions = data.getString("permissions");
@@ -121,15 +121,13 @@ class ProjectMemberController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto path = precheck.path;
         auto id = ProjectMemberId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid project member ID", 400);
 
         auto result = usecase.deleteProjectMember(tenantId, id);
         if (result.hasError)
             return errorResponse(result.message, 400);
-
-        auto resp = Json.emptyObject
-            .set("message", "Project member deleted");
 
         auto responseData = Json.emptyObject.set("id", result.id);
         return successResponse("Project member deleted successfully", "Deleted", 200, responseData);

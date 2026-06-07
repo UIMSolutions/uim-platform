@@ -167,6 +167,7 @@ enum AlertSeverity {
   warning,
   error,
   critical,
+  fatal
 }
 
 AlertSeverity toAlertSeverity(string s) {
@@ -174,7 +175,7 @@ AlertSeverity toAlertSeverity(string s) {
     case "info": return AlertSeverity.info;
     case "warning": return AlertSeverity.warning;
     case "critical": return AlertSeverity.critical;
-    // case "fatal": return AlertSeverity.fatal;
+    case "fatal": return AlertSeverity.fatal;
     default: return AlertSeverity.info; // default
   }
 }

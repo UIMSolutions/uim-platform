@@ -32,129 +32,115 @@ class UserSessionController : ManageHttpController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-              CreateUserSessionRequest r;
-      r.tenantId = tenantId;
-      r.appId = data.getString("appId");
-      r.deviceId = data.getString("deviceId");
-      r.userId = data.getString("userId");
-      r.ipAddress = data.getString("ipAddress");
-      r.userAgent = data.getString("userAgent");
-      r.platform = data.getString("platform");
-      r.appVersion = data.getString("appVersion");
-      auto result = usecase.create(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id);
+    auto data = precheck.data;
+    CreateUserSessionRequest r;
+    r.tenantId = tenantId;
+    r.appId = data.getString("appId");
+    r.deviceId = data.getString("deviceId");
+    r.userId = data.getString("userId");
+    r.ipAddress = data.getString("ipAddress");
+    r.userAgent = data.getString("userAgent");
+    r.platform = data.getString("platform");
+    r.appVersion = data.getString("appVersion");
+    auto result = usecase.create(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+    auto resp = Json.emptyObject
+      .set("id", result.id);
 
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    return successResponse("User session created successfully", "Created", 201, resp);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto results = usecase.list(tenantId);
-      auto items = Json.emptyArray;
-      foreach (item; results) {
-        items ~= Json.emptyObject
+    auto tenantId = precheck.tenantId;
+    auto results = usecase.list(tenantId);
+    auto items = Json.emptyArray;
+    foreach (item; results) {
+      items ~= Json.emptyObject
         .set("id", item.id)
         .set("appId", item.appId)
         .set("userId", item.userId)
         .set("platform", item.platform)
         .set("status", item.status);
-      }
-
-      auto resp = Json.emptyObject
-        .set("items", items);
-        
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
     }
+
+    auto resp = Json.emptyObject
+      .set("items", items)
+      .set("count", results.length);
+
+    return successResponse("User sessions retrieved successfully", "Retrieved", 200, resp);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto result = usecase.get(id);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.data.id)
-          .set("tenantId", result.data.tenantId)
-          .set("appId", result.data.appId)
-          .set("deviceId", result.data.deviceId)
-          .set("userId", result.data.userId)
-          .set("ipAddress", result.data.ipAddress)
-          .set("userAgent", result.data.userAgent)
-          .set("platform", result.data.platform)
-          .set("appVersion", result.data.appVersion)
-          .set("status", result.data.status);
+    auto tenantId = precheck.tenantId;
+    auto id = precheck.id;
+    auto result = usecase.get(id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+    auto resp = Json.emptyObject
+      .set("id", result.data.id)
+      .set("tenantId", result.data.tenantId)
+      .set("appId", result.data.appId)
+      .set("deviceId", result.data.deviceId)
+      .set("userId", result.data.userId)
+      .set("ipAddress", result.data.ipAddress)
+      .set("userAgent", result.data.userAgent)
+      .set("platform", result.data.platform)
+      .set("appVersion", result.data.appVersion)
+      .set("status", result.data.status);
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    return successResponse("User session retrieved successfully", "Retrieved", 200, resp);
   }
 
+  
   protected void handleTerminate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto result = usecase.terminate(id);
       if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id);
+        return errorResponse(result.message, 400);
+      auto resp = Json.emptyObject
+        .set("id", result.id);
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+      res.writeJsonBody(resp, 200);
+    } else {
+      writeError(res, 400, result.message);
     }
+  } catch (Exception e) {
+    writeError(res, 500, "Internal server error");
   }
+}
 
-  override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+override protected Json deleteHandler(HTTPServerRequest req) {
+  auto precheck = super.deleteHandler(req);
+  if (precheck.hasError)
+    return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = UserSessionId(precheck.id);
-      auto result = usecase.delete(id);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        res.writeBody("", 204);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  auto tenantId = precheck.tenantId;
+  auto id = UserSessionId(precheck.id);
+  auto result = usecase.delete(tenantId, id);
+  if (result.hasError)
+    return errorResponse(result.message, 400);
+ 
+  auto resp = Json.emptyObject
+    .set("id", result.id)
+    .set("message", "User session deleted successfully");
+
+  return successResponse("User session deleted successfully", "Deleted", 200, resp);
+}
 }
