@@ -37,11 +37,11 @@ class AlertController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
 
-    auto data = precheck.data;
-        CreateAlertRequest r;
+    auto data = AlertId(precheck.data);
+    CreateAlertRequest r;
     r.tenantId = tenantId;
     r.instanceId = data.getString("instanceId");
-    r.id = precheck.id;
+    r.alertId = AlertId(precheck.id);
     r.name = data.getString("name");
     r.description = data.getString("description");
     r.severity = data.getString("severity");
@@ -94,8 +94,11 @@ class AlertController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto id = AlertId(precheck.id);
+    if (id.isNull) // Defensive check, though super.getHandler should have already validated this
+      return errorResponse("Invalid alert ID", 400);
+
     auto a = usecase.getById(tenantId, id);
-    if (a.isNull)
+    if (a.isNull) // Defensive check, in case the alert was not found
       return errorResponse("Alert not found", 404);
 
     auto responseData = Json.emptyObject
@@ -122,11 +125,14 @@ class AlertController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
+    auto id = AlertId(precheck.id);
+    if (id.isNull) // Defensive check, though super.updateHandler should have already validated this    
+      return errorResponse("Invalid alert ID", 400);
 
     auto data = precheck.data;
     UpdateAlertRequest r;
     r.tenantId = tenantId;
-    r.id = precheck.id;
+    r.id = id;
     r.name = data.getString("name");
     r.description = data.getString("description");
     r.severity = data.getString("severity");

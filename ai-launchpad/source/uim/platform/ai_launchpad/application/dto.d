@@ -12,6 +12,7 @@ mixin(ShowModule!());
 // --- Connection ---
 struct CreateConnectionRequest {
   TenantId tenantId;
+  ConnectionId connectionId; // optional for create, required for patch
   WorkspaceId workspaceId;
 
   string name;
@@ -27,6 +28,7 @@ struct CreateConnectionRequest {
     return Json.emptyObject
       .set("tenantId", tenantId.value)
       .set("workspaceId", workspaceId.value)
+      .set("connectionId", connectionId)
       .set("name", name)
       .set("type", type)
       .set("url", url)
@@ -41,7 +43,7 @@ struct CreateConnectionRequest {
 struct PatchConnectionRequest {
   TenantId tenantId;
   WorkspaceId workspaceId;
-  ConnectionId connectionId;
+  ConnectionId connectionId; // required for patch
 
   string name;
   string description;
@@ -119,8 +121,7 @@ struct CreateConfigurationRequest {
   Json toJson() const {
     return Json.emptyObject
       .set("connectionId", connectionId)
-      .set("scenarioId", scenarioId)
-      // .set("executableId", executableId)
+      .set("scenarioId", scenarioId) // .set("executableId", executableId)
       .set("name", name)
       .set("parameterValues", parameterValues.array.toJson)
       .set("inputArtifacts", inputArtifacts.array.toJson);
@@ -220,7 +221,8 @@ struct BulkPatchDeploymentRequest {
     return Json.emptyObject
       .set("tenantId", tenantId.value)
       .set("connectionId", connectionId.value)
-      .set("deploymentIds", deploymentIds.array.map!(e => e.value).array.toJson)
+      .set("deploymentIds", deploymentIds.array.map!(e => e.value)
+          .array.toJson)
       .set("targetStatus", targetStatus);
   }
 
@@ -357,10 +359,10 @@ struct PatchPromptRequest {
   double temperature;
   int maxTokens;
   double presencePenalty;
-  double frequencyPenalty; 
-  double topP; 
+  double frequencyPenalty;
+  double topP;
   string[] inputParams;
-  
+
   Json toJson() const {
     return Json.emptyObject
       .set("promptId", promptId)

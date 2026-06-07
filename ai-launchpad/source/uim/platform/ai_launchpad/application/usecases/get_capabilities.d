@@ -12,8 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class GetCapabilitiesUseCase { // TODO: UIMUseCase {
-  CapabilitiesResponse getCapabilities() {
+  CapabilitiesResponse getCapabilities(TenantId tenantId) {
     CapabilitiesResponse r;
+    r.tenantId = tenantId;
     r.serviceName = "AI Launchpad Service";
     r.serviceVersion = "1.0.0";
     r.supportedRuntimes = ["ai_core", "custom"];

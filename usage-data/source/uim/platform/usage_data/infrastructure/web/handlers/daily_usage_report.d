@@ -20,17 +20,18 @@ class DailyUsageReportHandler {
   void getAll(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto items = useCases.listReports(TenantId.init);
     Json jArr = Json.emptyArray;
-    foreach (item; items) jArr ~= toJsonValue(item);
+    foreach (item; items)
+      jArr ~= toJsonValue(item);
     res.writeJsonBody(jArr);
   }
 
   void getOne(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = precheck.id;
-    if (id.length == 0) {
+    auto id = DailyUsageReportId(precheck.id);
+    if (id.isNull) {
       res.writeJsonBody(errorJson("Missing report id"), 400);
       return;
     }
-    auto item = useCases.getReport(TenantId.init, DailyUsageReportId(id));
+    auto item = useCases.getReport(TenantId.init, id);
     if (item.isEmpty) {
       res.writeJsonBody(errorJson("Daily usage report not found", 404), 404);
       return;
@@ -53,8 +54,10 @@ class DailyUsageReportHandler {
   }
 
   void markReady(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = precheck.id;
-    auto result = useCases.markReady(TenantId.init, DailyUsageReportId(id));
+    auto id = DailyUsageReportId(precheck.id);
+    if (id.isNull)
+      return res.writeJsonBody(errorJson("Missing report id"), 400);
+    auto result = useCases.markReady(TenantId.init, id);
     if (result.isEmpty) {
       res.writeJsonBody(errorJson("Daily usage report not found", 404), 404);
       return;
@@ -63,8 +66,10 @@ class DailyUsageReportHandler {
   }
 
   void remove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto id = precheck.id;
-    useCases.deleteReport(TenantId.init, DailyUsageReportId(id));
+    auto id = DailyUsageReportId(precheck.id);
+    if (id.isNull)
+      return res.writeJsonBody(errorJson("Missing report id"), 400);
+    useCases.deleteReport(TenantId.init, id);
     res.writeJsonBody(Json.emptyObject, 204);
   }
 }

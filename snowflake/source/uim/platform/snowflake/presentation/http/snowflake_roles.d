@@ -41,7 +41,7 @@ class SnowflakeRoleController : ManageHttpController {
     auto data = precheck.data;
     CreateRoleRequest r;
     r.tenantId = tenantId;
-    r.id = precheck.id;
+    r.roleId = SnowflakeRoleId(precheck.id);
     r.accountId = data.getString("accountId");
     r.name = data.getString("name");
     r.description = data.getString("description");

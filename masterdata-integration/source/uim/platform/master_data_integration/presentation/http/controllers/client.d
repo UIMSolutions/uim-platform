@@ -41,7 +41,7 @@ class ClientController : ManageHttpController {
     auto tenantId = precheck.tenantId;
 
     auto data = precheck.data;
-    
+
     CreateClientRequest r;
     r.tenantId = tenantId;
     r.name = data.getString("name");
@@ -62,167 +62,146 @@ class ClientController : ManageHttpController {
     auto result = usecase.create(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
+      
     auto resp = Json.emptyObject
-      .set("id", result.id)
-      .set("message", "Client created successfully");
+      .set("id", result.id);
 
-    res.writeJsonBody(resp, 201);
-  } else
-    writeError(res, 400, result.message);
-}
- catch (Exception e) {
-  writeError(res, 500, "Internal server error");
-}
-}
+    return successResponse("Client created successfully", 201, resp);
 
-override protected Json listHandler(HTTPServerRequest req) {
-  auto precheck = super.listHandler(req);
-  if (precheck.hasError)
-    return precheck;
-
-  auto tenantId = precheck.tenantId;
-  auto status = req.params.get("status", "");
-  auto type = req.params.get("type", "");
-
-  Client[] clients;
-  if (status.length > 0)
-    clients = usecase.listByStatus(tenantId, status);
-  else if (type.length > 0)
-    clients = usecase.listByType(tenantId, type);
-  else
-    clients = usecase.listByTenant(tenantId);
-
-  auto arr = clients.map!(c => c.toJson).array.toJson;
-
-  auto resp = Json.emptyObject
-    .set("items", arr)
-    .set("totalCount", clients.length)
-    .set("message", "Clients retrieved successfully");
-
-  res.writeJsonBody(resp, 200);
-}
- catch (Exception e) {
-  writeError(res, 500, "Internal server error");
-}
-}
-
-override protected Json getHandler(HTTPServerRequest req) {
-  auto precheck = super.getHandler(req);
-  if (precheck.hasError)
-    return precheck;
-
-  auto tenantId = precheck.tenantId;
-  auto id = precheck.id;
-  auto client = usecase.getClient(id);
-  if (client.isNull) {
-    writeError(res, 404, "Client not found");
-    return;
   }
-  res.writeJsonBody(client.toJson, 200);
-}
- catch (Exception e) {
-  writeError(res, 500, "Internal server error");
-}
-}
 
-override protected Json updateHandler(HTTPServerRequest req) {
-  auto precheck = super.updateHandler(req);
-  if (precheck.hasError)
-    return precheck;
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-  auto tenantId = precheck.tenantId;
-  auto id = precheck.id;
-  auto data = precheck.data;
-  UpdateClientRequest r;
-  r.name = data.getString("name");
-  r.description = data.getString("description");
-  r.status = data.getString("status");
-  r.systemUrl = data.getString("systemUrl");
-  r.destinationName = data.getString("destinationName");
-  r.communicationArrangement = data.getString("communicationArrangement");
-  r.supportedCategories = data.getStrings("supportedCategories");
-  r.authType = data.getString("authType");
-  r.clientIdRef = data.getString("clientIdRef");
-  r.certificateRef = data.getString("certificateRef");
+    auto tenantId = precheck.tenantId;
+    auto status = req.params.get("status", "");
+    auto type = req.params.get("type", "");
 
-  auto result = usecase.updateClient(id, r);
-  if (result.hasError)
-    return errorResponse(result.message, 400);
-  auto resp = Json.emptyObject
-    .set("message", "Client updated successfully");
-  res.writeJsonBody(resp, 200);
-} else
-  writeError(res, 400, result.message);
-  } catch (Exception e) {
-  writeError(res, 500, "Internal server error");
-}
-}
+    Client[] clients;
+    if (status.length > 0)
+      clients = usecase.listByStatus(tenantId, status);
+    else if (type.length > 0)
+      clients = usecase.listByType(tenantId, type);
+    else
+      clients = usecase.listByTenant(tenantId);
 
-override protected Json deleteHandler(HTTPServerRequest req) {
-  auto precheck = super.deleteHandler(req);
-  if (precheck.hasError)
-    return precheck;
+    auto arr = clients.map!(c => c.toJson).array.toJson;
 
-  auto tenantId = precheck.tenantId;
-  auto id = precheck.id;
-  auto result = usecase.deleteClient(id);
-  if (result.hasError)
-    return errorResponse(result.message, 400);
-  auto resp = Json.emptyObject
-    .set("message", "Client deleted successfully");
-  res.writeJsonBody(resp, 204);
-} else
-  writeError(res, 404, result.message);
-  } catch (Exception e) {
-  writeError(res, 500, "Internal server error");
-}
-}
+    auto resp = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", clients.length);
 
-protected Json connectHandler(HTTPServerRequest req) {
-  auto precheck = super.postHandler(req);
-  if (precheck.hasError)
-    return precheck;
-
-  auto tenantId = precheck.tenantId;
-  auto id = ClientId(precheck.id);
-  auto result = usecase.connect(tenantId, id);
-  if (result.hasError)
-    return errorResponse(result.message, 400);
-
-  auto resp = Json.emptyObject.set("id", result.id);
-  return successResponse("Client connected successfully", "Connected", 200, resp);
-}
-
-protected void handleConnect(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-  try {
-    auto response = connectHandler(req);
-    res.writeJsonBody(response, response.code);
-  } catch (Exception e) {
-    writeError(res, 500, "Internal server error");
+    return successResponse("Clients retrieved successfully", 200, resp);
   }
-}
 
-protected Json diconnectHandler(HTTPServerRequest req) {
-  auto precheck = super.postHandler(req);
-  if (precheck.hasError)
-    return precheck;
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-  auto tenantId = precheck.tenantId;
-  auto id = ClientId(precheck.id);
-  auto result = usecase.disconnect(tenantId, id);
-  if (result.hasError)
-    return errorResponse(result.message, 400);
+    auto tenantId = precheck.tenantId;
+    auto id = ClientId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Client not found", 404);
 
-  auto resp = Json.emptyObject.set("id", result.id);
-  return successResponse("Client disconnected successfully", "Disconnected", 200, resp);
-}
+    auto client = usecase.getClient(tenantId, id);
+    if (client.isNull)
+      return errorResponse("Client not found", 404);
 
-protected void handleDisconnect(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-  try {
-    auto response = disconnectHandler(req);
-    res.writeJsonBody(response, response.code);
-  } catch (Exception e) {
-    writeError(res, 500, "Internal server error");
+    auto obj = client.toJson;
+    return successResponse("Client retrieved successfully", 200, obj);
   }
-}
+
+  override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = precheck.id;
+    auto data = precheck.data;
+    UpdateClientRequest r;
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.status = data.getString("status");
+    r.systemUrl = data.getString("systemUrl");
+    r.destinationName = data.getString("destinationName");
+    r.communicationArrangement = data.getString("communicationArrangement");
+    r.supportedCategories = data.getStrings("supportedCategories");
+    r.authType = data.getString("authType");
+    r.clientIdRef = data.getString("clientIdRef");
+    r.certificateRef = data.getString("certificateRef");
+
+    auto result = usecase.updateClient(id, r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    return successResponse("Client updated successfully", "Updated", 200, Json
+        .emptyObject.set("id", id));
+  }
+
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = precheck.id;
+    auto result = usecase.deleteClient(id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    return successResponse("Client deleted successfully", "Deleted", 200, Json
+        .emptyObject.set("id", id));
+  }
+
+  protected Json connectHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = ClientId(precheck.id);
+    auto result = usecase.connect(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto resp = Json.emptyObject.set("id", result.id);
+    return successResponse("Client connected successfully", "Connected", 200, resp);
+  }
+
+  protected void handleConnect(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto response = connectHandler(req);
+      res.writeJsonBody(response, response.code);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  protected Json diconnectHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = ClientId(precheck.id);
+    auto result = usecase.disconnect(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto resp = Json.emptyObject.set("id", result.id);
+    return successResponse("Client disconnected successfully", "Disconnected", 200, resp);
+  }
+
+  protected void handleDisconnect(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto response = disconnectHandler(req);
+      res.writeJsonBody(response, response.code);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
+    }
+  }
 }

@@ -41,7 +41,7 @@ class TaskProviderController : ManageHttpController {
         auto data = precheck.data;
         CreateTaskProviderRequest r;
         r.tenantId = tenantId;
-        r.id = precheck.id;
+        r.id = TaskProviderId(precheck.id);
         r.name = data.getString("name");
         r.description = data.getString("description");
         r.providerType = data.getString("providerType");

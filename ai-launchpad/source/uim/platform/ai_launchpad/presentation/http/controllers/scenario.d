@@ -38,20 +38,19 @@ class ScenarioController : ManageHttpController {
     auto tenantId = precheck.tenantId;
 
     auto data = precheck.data;
-    ScenarioDTO dto;
-    dto.tenantId = tenantId;
-    dto.scenarioId = ScenarioId(data.getString("scenarioId"));
-    dto.name = data.getString("name");
-    dto.description = data.getString("description");
-    dto.labels = data.getStrings("labels");
+    SyncScenarioRequest request;
+    request.tenantId = tenantId;
+    request.scenarioId = ScenarioId(data.getString("scenarioId"));
+    request.name = data.getString("name");
+    request.description = data.getString("description");
+    request.labels = data.getStrings("labels");
 
-    auto result = usecase.syncScenario(dto);
+    auto result = usecase.syncScenario(request);
     if (result.hasError)
       return errorResponse(result.message, 400);
 
     auto resp = Json.emptyObject
       .set("id", result.id);
-
     return successResponse("Scenario synced successfully", "Synced", 201, resp);
   }
 

@@ -33,12 +33,10 @@ class StatisticsController : HttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-
     auto id = ScenarioId(precheck.id);
     if (id.isNull)
          return errorResponse("Invalid scenario ID", 400);
 
-    auto tenantId =precheck.tenantId;
     auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
     auto scenarioId = ScenarioId(req.headers.get("X-Scenario-Id", ""));
     auto period = req.headers.get("X-Period", "").to!StatisticsPeriod;

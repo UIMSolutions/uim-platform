@@ -85,10 +85,7 @@ override protected Json listHandler(HTTPServerRequest req) {
     .set("items", arr)
     .set("totalCount", items.length);
 
-  res.writeJsonBody(resp, 200);
-}
- catch (Exception e)
-  writeError(res, 500, "Internal server error");
+  return successResponse("Versions retrieved successfully", 200, resp);
 }
 
 override protected Json getHandler(HTTPServerRequest req) {
@@ -99,15 +96,13 @@ override protected Json getHandler(HTTPServerRequest req) {
   auto tenantId = precheck.tenantId;
   auto id = precheck.id;
   auto tenantId = precheck.tenantId;
-  if (id.isNull) {
-    writeError(res, 404, "Version not found");
-    return;
-  }
+  if (id.isNull)
+    return errorResponse("Version not found", 404);
+
   auto entry = usecase.getById(tenantId, id);
-  if (entry.isNull) {
-    writeError(res, 404, "Version not found");
-    return;
-  }
+  if (entry.isNull)
+    return errorResponse("Version not found", 404);
+
   auto obj = Json.emptyObject
     .set("id", entry.id)
     .set("appId", entry.appId)
@@ -119,10 +114,7 @@ override protected Json getHandler(HTTPServerRequest req) {
     .set("createdAt", entry.createdAt)
     .set("updatedAt", entry.updatedAt);
 
-  res.writeJsonBody(obj, 200);
-}
- catch (Exception e)
-  writeError(res, 500, "Internal server error");
+  return successResponse("Version retrieved successfully", 200, obj);
 }
 
 override protected Json updateHandler(HTTPServerRequest req) {
@@ -131,11 +123,11 @@ override protected Json updateHandler(HTTPServerRequest req) {
     return precheck;
 
   auto tenantId = precheck.tenantId;
-  auto id = precheck.id;
-  auto tenantId = precheck.tenantId;
+  auto id = AppVersionId(precheck.id);
   if (id.isNull)
     return errorResponse("Version not found", 404);
 
+  auto data = precheck.data;
   UpdateAppVersionRequest r;
   r.description = data.getString("description");
   r.status = data.getString("status");
@@ -154,7 +146,10 @@ override protected Json updateHandler(HTTPServerRequest req) {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
+    auto id = AppVersionId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Version not found", 404);
+
     auto tenantId = precheck.tenantId;
     if (id.isNull)
       return errorResponse("Version not found", 404);

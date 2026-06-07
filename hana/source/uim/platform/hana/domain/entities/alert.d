@@ -26,7 +26,7 @@ struct AlertThreshold {
 }
 
 struct Alert {
-  mixin TenantEntity!(AlertId);
+  mixin TenantEntity!AlertId;
   
   DatabaseInstanceId instanceId;
   string name;

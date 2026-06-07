@@ -40,7 +40,7 @@ class SubstitutionRuleController : ManageHttpController {
         auto data = precheck.data;
         CreateSubstitutionRuleRequest r;
         r.tenantId = tenantId;
-        r.id = precheck.id;
+        r.id = SubstitutionRuleId(precheck.id);
         r.userId = UserId(data.getString("userId"));
         r.substituteId = UserId(data.getString("substituteId"));
         r.taskDefinitionId = data.getString("taskDefinitionId");
@@ -107,8 +107,10 @@ class SubstitutionRuleController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-
         auto id = SubstitutionRuleId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid substitution rule ID", 400);
+
         auto data = precheck.data;
         UpdateSubstitutionRuleRequest r;
         r.tenantId = tenantId;

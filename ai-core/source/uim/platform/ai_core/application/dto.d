@@ -341,6 +341,8 @@ struct PatchExecutionScheduleRequest {
 // --- Meta / Capabilities ---
 
 struct CapabilitiesResponse {
+  TenantId tenantId;
+  
   bool logsExecutions;
   bool logsDeployments;
   bool multitenant;
