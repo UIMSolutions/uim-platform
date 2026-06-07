@@ -27,7 +27,9 @@ class MemoryAppConfigurationRepository : TenantRepository!(AppConfiguration, App
     }
     return AppConfiguration.init;
   }
-
+void removeByKey(TenantId tenantId, MobileAppId appId, string key) {
+    remove(findByKey(tenantId, appId, key));
+  }
   size_t countByApp(TenantId tenantId, MobileAppId appId) {
     return findByApp(tenantId, appId).length;
   }

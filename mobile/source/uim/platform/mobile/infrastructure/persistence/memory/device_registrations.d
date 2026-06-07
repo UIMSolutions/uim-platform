@@ -28,6 +28,13 @@ class MemoryDeviceRegistrationRepository : TenantRepository!(DeviceRegistration,
     return DeviceRegistration.init;
   }
 
+  void removeByDeviceToken(TenantId tenantId, string deviceToken) {
+    foreach (r; findByTenant(tenantId)) {
+      if (r.deviceToken == deviceToken)
+        remove(r);
+    }
+  }
+
   size_t countByApp(TenantId tenantId, MobileAppId appId) {
     return findByApp(tenantId, appId).length;
   }

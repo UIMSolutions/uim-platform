@@ -15,7 +15,7 @@ interface PushRegistrationRepository : ITenantRepository!(PushRegistration, Push
 
   bool existsByDeviceAndApp(TenantId tenantId, DeviceRegistrationId deviceId, MobileAppId appId);
   PushRegistration findByDeviceAndApp(TenantId tenantId, DeviceRegistrationId deviceId, MobileAppId appId);
-  void findByDeviceAndApp(TenantId tenantId, DeviceRegistrationId deviceId, MobileAppId appId);
+  void removeByDeviceAndApp(TenantId tenantId, DeviceRegistrationId deviceId, MobileAppId appId);
 
   size_t countByApp(TenantId tenantId, MobileAppId appId);
   PushRegistration[] findByApp(TenantId tenantId, MobileAppId appId);

@@ -16,32 +16,32 @@ import uim.platform.mobile;
 
 class MemoryPushNotificationRepository : TenantRepository!(PushNotification, PushNotificationId), PushNotificationRepository {
 
-  size_t countByApp(MobileAppId appId) {
-    return findByApp(appId).length;
+  size_t countByApp(TenantId tenantId, MobileAppId appId) {
+    return findByApp(tenantId, appId).length;
   }
 
-  PushNotification[] findByApp(MobileAppId appId) {
+  PushNotification[] findByApp(TenantId tenantId, MobileAppId appId) {
     return filterByApp(findByTenant(tenantId).array, appId);
   }
 
-  void removeByApp(MobileAppId appId) {
-    findByApp(appId).each!(n => remove(n));
+  void removeByApp(TenantId tenantId, MobileAppId appId) {
+    findByApp(tenantId, appId).each!(n => remove(n));
   }
 
-  size_t countByStatus(MobileAppId appId, NotificationStatus status) {
-    return findByStatus(appId, status).length;
+  size_t countByStatus(TenantId tenantId, MobileAppId appId, NotificationStatus status) {
+    return findByStatus(tenantId, appId, status).length;
   }
 
   PushNotification[] filterByStatus(PushNotification[] notifications, NotificationStatus status) {
     return notifications.filter!(n => n.status == status).array;
   }
 
-  PushNotification[] findByStatus(MobileAppId appId, NotificationStatus status) {
-    return filterByStatus(findByApp(appId), status);
+  PushNotification[] findByStatus(TenantId tenantId, MobileAppId appId, NotificationStatus status) {
+    return filterByStatus(findByApp(tenantId, appId), status);
   }
 
-  void removeByStatus(MobileAppId appId, NotificationStatus status) {
-    findByStatus(appId, status).each!(n => remove(n));
+  void removeByStatus(TenantId tenantId, MobileAppId appId, NotificationStatus status) {
+    findByStatus(tenantId, appId, status).each!(n => remove(n));
   }
 
 }

@@ -26,6 +26,9 @@ class MemoryFeatureRestrictionRepository : TenantRepository!(FeatureRestriction,
     }
     return FeatureRestriction.init;
   }
+  void removeByKey(TenantId tenantId, MobileAppId appId, string featureKey) {
+    remove(findByKey(tenantId, appId, featureKey));
+  }
 
   size_t countByApp(TenantId tenantId, MobileAppId appId) {
     return findByApp(tenantId, appId).length;

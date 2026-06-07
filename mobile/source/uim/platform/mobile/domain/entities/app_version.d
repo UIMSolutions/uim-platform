@@ -20,8 +20,12 @@ struct AppVersion {
   VersionStatus status;
   string releaseNotes;
   string downloadUrl;
-  long sizeBytes;
+  size_t sizeBytes;
   long publishedAt;
+  bool mandatory;
+  string minOsVersion;
+  string maxOsVersion;
+
 
   Json toJson() const {
     return entityToJson

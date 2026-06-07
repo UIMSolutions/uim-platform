@@ -16,6 +16,9 @@ import uim.platform.mobile;
 
 class MemoryMobileAppRepository : TenantRepository!(MobileApp, MobileAppId), MobileAppRepository {
 
+  size_t countByBundleId(TenantId tenantId, string bundleId) {
+    return findByBundleId(tenantId, bundleId).length;
+  }
 
   bool existsByBundleId(TenantId tenantId, string bundleId) {
     return findByBundleId(tenantId, bundleId).id != MobileAppId.init;

@@ -25,6 +25,7 @@ struct ClientLogEntry {
   string appVersion;
   long timestamp;
   long uploadedAt;
+  string osVersion;
 
   Json toJson() const {
     return entityToJson
@@ -39,6 +40,7 @@ struct ClientLogEntry {
       .set("platform", platform.toString())
       .set("appVersion", appVersion)
       .set("timestamp", timestamp)
+      .set("osVersion", osVersion)
       .set("uploadedAt", uploadedAt);
 
   }

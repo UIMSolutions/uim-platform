@@ -56,30 +56,6 @@ class DeviceRegistrationController : ManageHttpController {
     return successResponse("Device registered successfully", "Created", 201, resp);
   }
 
-  protected Json registerHandler(HTTPServerRequest req) {
-    auto precheck = super.postHandler(req);
-    if (precheck.hasError)
-      return precheck;
-
-    auto tenantId = precheck.tenantId;
-    auto data = precheck.data;
-    RegisterDeviceRequest r;
-    r.tenantId = tenantId;
-    r.appId = data.getString("appId");
-    r.deviceModel = data.getString("deviceModel");
-    r.osVersion = data.getString("osVersion");
-    r.appVersion = data.getString("appVersion");
-    r.platform = data.getString("platform");
-    r.userId = data.getString("userId");
-    r.deviceToken = data.getString("deviceToken");
-    auto result = usecase.register(r);
-    if (result.hasError)
-      return errorResponse(result.message, 400);
-    auto resp = Json.emptyObject
-      .set("id", result.id);
-
-    return successResponse("Device registered successfully", "Created", 201, resp);
-  }
 
   protected void handleRegister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {

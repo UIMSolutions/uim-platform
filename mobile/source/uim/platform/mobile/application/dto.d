@@ -26,6 +26,7 @@ struct CreateMobileAppRequest {
 }
 
 struct UpdateMobileAppRequest {
+  TenantId tenantId;
   string description;
   string securityConfig;
   string authProvider;
@@ -48,6 +49,7 @@ struct RegisterDeviceRequest {
 }
 
 struct UpdateDeviceRequest {
+  TenantId tenantId;
   string osVersion;
   string appVersion;
   string status;
@@ -79,6 +81,7 @@ struct CreatePushRegistrationRequest {
 }
 
 struct UpdatePushRegistrationRequest {
+  TenantId tenantId;
   string pushToken;
   string[] topics;
   string status;
@@ -96,6 +99,8 @@ struct CreateAppConfigRequest {
 }
 
 struct UpdateAppConfigRequest {
+  TenantId tenantId;
+  AppConfigurationId configId;
   string value;
   string description;
   UserId updatedBy;
@@ -115,6 +120,7 @@ struct CreateFeatureRestrictionRequest {
 }
 
 struct UpdateFeatureRestrictionRequest {
+  TenantId tenantId;
   string description;
   bool enabled;
   int percentage;
@@ -131,13 +137,31 @@ struct CreateClientResourceRequest {
   string type;
   string contentType;
   string data;
+  size_t sizeBytes;
   UserId createdBy;
+  string minOsVersion;
+  bool mandatory;
+  long publishedAt;
+  ulong version_;
+  size_t checksum;
+  string url;
 }
 
 struct UpdateClientResourceRequest {
+  TenantId tenantId;
+  ClientResourceId resourceId; // Required for update
+
   string description;
   string data;
   string contentType;
+  size_t sizeBytes;
+  UserId updatedBy;
+  string minOsVersion;
+  bool mandatory;
+  long publishedAt;
+  string version_;
+  size_t checksum;
+  string url;
 }
 // AppVersion DTOs
 struct CreateAppVersionRequest {
@@ -148,14 +172,22 @@ struct CreateAppVersionRequest {
   string platform;
   string releaseNotes;
   string downloadUrl;
-  long sizeBytes;
+  size_t sizeBytes;
   UserId createdBy;
+  string minOsVersion;
+  bool mandatory;
+  long releasedAt;
 }
 
 struct UpdateAppVersionRequest {
+  TenantId tenantId;
+  AppVersionId versionId;
   string status;
   string releaseNotes;
   string downloadUrl;
+  string minOsVersion;
+  bool mandatory;
+  UserId updatedBy;
 }
 // UsageReport DTOs
 struct ReportUsageRequest {
@@ -183,6 +215,7 @@ struct CreateOfflineStoreRequest {
 }
 
 struct UpdateOfflineStoreRequest {
+  TenantId tenantId;
   string serviceUrl;
   string definingRequests;
   string syncStatus;
@@ -212,6 +245,8 @@ struct UploadClientLogRequest {
   string platform;
   string appVersion;
   long timestamp;
+  string context;
+  string osVersion;
 }
 // Overview
 struct OverviewSummary {

@@ -23,13 +23,12 @@ class ManageClientResourcesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createClientResource(CreateClientResourceRequest r) {
-        ClientResource resource;
-        resource.initEntity(r.tenantId, r.createdBy);
+        auto resource = ClientResource(r.tenantId, r.createdBy);
 
         resource.appId = r.appId;
         resource.name = r.name;
         resource.description = r.description;
-        resource.resourceType = r.resourceType;
+        resource.type = r.resourceType;
         resource.url = r.url;
         resource.checksum = r.checksum;
         resource.sizeBytes = r.sizeBytes;
@@ -40,7 +39,7 @@ class ManageClientResourcesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateClientResource(UpdateClientResourceRequest r) {
-        auto resource = repo.findById(r.tenantId, r.id);
+        auto resource = repo.findById(r.tenantId, r.resourceId);
         if (resource.isNull)
             return CommandResult(false, "", "Client resource not found");
         if (r.description.length > 0)

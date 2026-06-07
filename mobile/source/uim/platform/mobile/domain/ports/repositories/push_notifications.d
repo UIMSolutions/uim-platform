@@ -18,6 +18,6 @@ interface PushNotificationRepository : ITenantRepository!(PushNotification, Push
 
   size_t countByStatus(TenantId tenantId, MobileAppId appId, NotificationStatus status);
   PushNotification[] findByStatus(TenantId tenantId, MobileAppId appId, NotificationStatus status);
-  void removeByStatus(MobileAppId appId, NotificationStatus status);
+  void removeByStatus(TenantId tenantId, MobileAppId appId, NotificationStatus status);
 
 }

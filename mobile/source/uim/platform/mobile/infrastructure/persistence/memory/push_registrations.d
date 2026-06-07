@@ -27,6 +27,12 @@ class MemoryPushRegistrationRepository : TenantRepository!(PushRegistration, Pus
     }
     return PushRegistration.init;
   }
+  void removeByDeviceAndApp(TenantId tenantId, DeviceRegistrationId deviceId, MobileAppId appId) {
+    foreach (r; findByTenant(tenantId)) {
+      if (r.deviceId == deviceId && r.appId == appId)
+        remove(r);
+    }
+  }
 
   size_t countByApp(TenantId tenantId, MobileAppId appId) {
     return findByApp(tenantId, appId).length;
@@ -66,6 +72,9 @@ class MemoryPushRegistrationRepository : TenantRepository!(PushRegistration, Pus
 
   PushRegistration[] findByTopic(TenantId tenantId, MobileAppId appId, string topic) {
     return filterByTopic(findByApp(tenantId, appId), topic);
+  }
+  void removeByTopic(TenantId tenantId, MobileAppId appId, string topic) {
+    findByTopic(tenantId, appId, topic).each!(r => remove(r));
   }
 
 }

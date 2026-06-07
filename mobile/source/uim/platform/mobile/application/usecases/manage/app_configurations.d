@@ -22,7 +22,7 @@ class ManageAppConfigurationsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult createAppConfiguration(CreateAppConfigurationRequest r) {
+    CommandResult createAppConfiguration(CreateAppConfigRequest r) {
         auto existing = repo.findByKey(r.tenantId, r.appId, r.key);
         if (!existing.isNull)
             return CommandResult(false, "", "Configuration with this key already exists");
@@ -40,7 +40,7 @@ class ManageAppConfigurationsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, config.id.value, "");
     }
 
-    CommandResult updateAppConfiguration(UpdateAppConfigurationRequest r) {
+    CommandResult updateAppConfiguration(UpdateAppConfigRequest r) {
         auto config = repo.findById(r.tenantId, r.id);
         if (config.isNull)
             return CommandResult(false, "", "Configuration not found");

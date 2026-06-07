@@ -16,6 +16,11 @@ import uim.platform.mobile;
 
 class MemoryAppVersionRepository : TenantRepository!(AppVersion, AppVersionId), AppVersionRepository {
 
+bool existsLatest(TenantId tenantId, MobileAppId appId, AppPlatform platform) {
+    return findLatest(tenantId, appId, platform).id != AppVersionId.init;
+  }
+ 
+
   AppVersion findLatest(TenantId tenantId, MobileAppId appId, AppPlatform platform) {
     AppVersion latest = AppVersion.init;
     bool found = false;
@@ -28,6 +33,13 @@ class MemoryAppVersionRepository : TenantRepository!(AppVersion, AppVersionId), 
       }
     }
     return latest;
+  }
+
+  void removeLatest(TenantId tenantId, MobileAppId appId, AppPlatform platform) {
+    AppVersion latest = findLatest(tenantId, appId, platform);
+    if (latest.id != AppVersionId.init) {
+      remove(latest);
+    }
   }
 
   // #region ByApp

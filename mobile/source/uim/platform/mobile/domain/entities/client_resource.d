@@ -19,8 +19,8 @@ struct ClientResource {
   ClientResourceType type;
   string contentType;       // MIME type
   string data;              // base64-encoded content
-  long sizeBytes;
-  long version_;
+  size_t sizeBytes;
+  ulong version_;
   
   Json toJson() const {
     return entityToJson

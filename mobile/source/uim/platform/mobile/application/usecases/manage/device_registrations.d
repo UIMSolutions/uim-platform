@@ -23,7 +23,7 @@ class ManageDeviceRegistrationsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult register(RegisterDeviceRequest r) {
-        auto existing = repo.findByDeviceToken(r.deviceToken);
+        auto existing = repo.findByDeviceToken(r.tenantId, r.deviceToken);
         if (!existing.isNull) {
             existing.osVersion = r.osVersion;
             existing.appVersion = r.appVersion;

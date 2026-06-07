@@ -24,7 +24,7 @@ class ManageClientLogsUseCase { // TODO: UIMUseCase {
 
     CommandResult upload(UploadClientLogRequest r) {
         ClientLogEntry entry;
-        entry.initEntity(r.tenantId, r.createdBy);
+        entry.initEntity(r.tenantId);
 
         entry.appId = r.appId;
         entry.deviceId = r.deviceId;
@@ -54,7 +54,7 @@ class ManageClientLogsUseCase { // TODO: UIMUseCase {
     }
 
     ClientLogEntry[] listClientLogs(TenantId tenantId, MobileAppId appId, string level) {
-        return repo.findByLevel(tenantId, appId, parseLogLevel(level));
+        return repo.findByLevel(tenantId, appId, level.toLoggingLevel());
     }
 
     CommandResult deleteClientLog(TenantId tenantId, ClientLogEntryId id) {

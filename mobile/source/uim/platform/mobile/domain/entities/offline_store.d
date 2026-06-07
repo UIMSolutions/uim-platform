@@ -21,7 +21,7 @@ struct OfflineStore {
   OfflineStoreType storeType;
   SyncStatus syncStatus;
   long lastSyncAt;
-  long sizeBytes;
+  size_t sizeBytes;
 
   Json toJson() const {
     return entityToJson

@@ -24,8 +24,7 @@ class ManageFeatureRestrictionsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createFeatureRestriction(CreateFeatureRestrictionRequest r) {
-        FeatureRestriction restriction;
-        restriction.initEntity8(r.tenantId, r.createdBy);
+        auto restriction = FeatureRestriction(r.tenantId);
 
         restriction.appId = r.appId;
         restriction.featureName = r.featureName;
