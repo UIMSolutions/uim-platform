@@ -30,143 +30,132 @@ class ConfigurationController : ManageHttpController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-              CreateConfigurationRequest r;
-      r.tenantId = tenantId;
-      r.instanceId = data.getString("instanceId");
-      r.id = precheck.id;
-      r.section = data.getString("section");
-      r.key = data.getString("key");
-      r.value = data.getString("value");
-      r.scope_ = data.getString("scope");
-      r.dataType = data.getString("dataType");
-      r.description = data.getString("description");
+    auto data = precheck.data;
+    CreateConfigurationRequest r;
+    r.tenantId = tenantId;
+    r.instanceId = data.getString("instanceId");
+    r.id = ConfigurationId(precheck.id);
+    r.section = data.getString("section");
+    r.key = data.getString("key");
+    r.value = data.getString("value");
+    r.scope_ = data.getString("scope");
+    r.dataType = data.getString("dataType");
+    r.description = data.getString("description");
 
-      auto result = usecase.create(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Configuration created");
-        
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto result = usecase.create(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+    auto resp = Json.emptyObject
+      .set("id", result.id);
+
+    return successResponse("Configuration created successfully", 201, resp);
+
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto configs = usecase.list(tenantId);
+    auto tenantId = precheck.tenantId;
 
-      auto jarr = Json.emptyArray;
-      foreach (c; configs) {
-        jarr ~= Json.emptyObject
-          .set("id", c.id)
-          .set("instanceId", c.instanceId)
-          .set("section", c.section)
-          .set("key", c.key)
-          .set("value", c.value)
-          .set("isReadOnly", c.isReadOnly)
-          .set("requiresRestart", c.requiresRestart);
-      }
-
-      auto resp = Json.emptyObject
-        .set("count", configs.length)
-        .set("resources", list);
-        
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
-
-  override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
-
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto c = usecase.getById(tenantId, id);
-      if (c.isNull)
-      return errorResponse("Configuration not found", 404);
-
-      auto resp = Json.emptyObject
+    auto configs = usecase.list(tenantId);
+    auto jarr = Json.emptyArray;
+    foreach (c; configs) {
+      jarr ~= Json.emptyObject
         .set("id", c.id)
         .set("instanceId", c.instanceId)
         .set("section", c.section)
         .set("key", c.key)
         .set("value", c.value)
-        .set("defaultValue", c.defaultValue)
-        .set("description", c.description)
         .set("isReadOnly", c.isReadOnly)
-        .set("requiresRestart", c.requiresRestart)
-        .set("updatedAt", c.updatedAt)
-        .set("updatedBy", c.updatedBy);
+        .set("requiresRestart", c.requiresRestart);
+    }
+
+    auto resp = Json.emptyObject
+      .set("count", configs.length)
+      .set("resources", list);
+
+    return successResponse("Configuration list retrieved successfully", 200, resp);
+  }
+
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = ConfigurationId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid configuration ID", 400);
+
+    auto c = usecase.getById(tenantId, id);
+    if (c.isNull)
+      return errorResponse("Configuration not found", 404);
+
+    auto resp = Json.emptyObject
+      .set("id", c.id)
+      .set("instanceId", c.instanceId)
+      .set("section", c.section)
+      .set("key", c.key)
+      .set("value", c.value)
+      .set("defaultValue", c.defaultValue)
+      .set("description", c.description)
+      .set("isReadOnly", c.isReadOnly)
+      .set("requiresRestart", c.requiresRestart)
+      .set("updatedAt", c.updatedAt)
+      .set("updatedBy", c.updatedBy);
 
     return successResponse("Configuration retrieved successfully", 200, resp);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      
+    auto tenantId = precheck.tenantId;
+    auto id = ConfigurationId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid configuration ID", 400);
 
-      auto data = precheck.data;
-      UpdateConfigurationRequest r;
-      r.tenantId = tenantId;
-      r.id = precheck.id;
-      r.value = data.getString("value");
+    auto data = precheck.data;
+    UpdateConfigurationRequest r;
+    r.tenantId = tenantId;
+    r.configId = id;
+    r.value = data.getString("value");
 
-      auto result = usecase.update(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Configuration updated");
-          
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto result = usecase.update(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto resp = Json.emptyObject
+      .set("id", result.id);
+
+    return successResponse("Configuration updated successfully", 200, resp);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = ConfigurationId(precheck.id);
-      auto result = usecase.deleteConfiguration(id);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        res.writeJsonBody(Json.emptyObject, 204);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto tenantId = precheck.tenantId;
+    auto id = ConfigurationId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid configuration ID", 400);
+
+    auto result = usecase.deleteConfiguration(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    return successResponse("Configuration deleted successfully", 200, Json
+        .emptyObject.set("id", result.id));
   }
 }

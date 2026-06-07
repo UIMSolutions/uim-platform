@@ -13,18 +13,22 @@ mixin(ShowModule!());
 
 /// Represents a data provider that supplies data products (e.g. S/4 HANA Cloud).
 struct DataProvider {
-  mixin TenantEntity!(DataProviderId);
+  mixin TenantEntity!DataProviderId;
 
   string name;
   string description;
   DataProviderStatus status;
-  string systemType;       /// e.g. "S4HANA_CLOUD_PRIVATE"
+  string systemType; /// e.g. "S4HANA_CLOUD_PRIVATE"
   string connectionUrl;
   string region;
-  long   dataProductCount;
+  long dataProductCount;
   string[string] metadata;
 
   Json toJson() const {
+    auto jMeta = Json.emptyObject;
+    foreach (k, v; metadata)
+      jMeta.set(k, v);
+
     return entityToJson()
       .set("name", name)
       .set("description", description)
@@ -32,6 +36,7 @@ struct DataProvider {
       .set("systemType", systemType)
       .set("connectionUrl", connectionUrl)
       .set("region", region)
-      .set("dataProductCount", dataProductCount);
+      .set("dataProductCount", dataProductCount)
+      .set("metadata", jMeta);
   }
 }

@@ -27,7 +27,7 @@ struct ConnectionPoolConfig {
 }
 
 struct DatabaseConnection {
-  mixin TenantEntity!(DatabaseConnectionId);
+  mixin TenantEntity!DatabaseConnectionId;
 
   DatabaseInstanceId instanceId;
   string name;

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 struct Configuration {
-  mixin TenantEntity!(ConfigurationId);
+  mixin TenantEntity!ConfigurationId;
 
   DatabaseInstanceId instanceId;
   string section;

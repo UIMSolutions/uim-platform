@@ -13,6 +13,18 @@ mixin(ShowModule!());
 
 @safe:
 
+/** 
+  * Controller for managing data lakes in the HANA platform. Provides endpoints for creating, retrieving, updating, and deleting data lakes.
+  *
+  * Endpoints:
+  * - GET /api/v1/hana/dataLakes: List all data lakes for the tenant.
+  * - GET /api/v1/hana/dataLakes/{id}: Get details of a specific data lake by ID.
+  * - POST /api/v1/hana/dataLakes: Create a new data lake.
+  * - PUT /api/v1/hana/dataLakes/{id}: Update an existing data lake by ID.
+  * - DELETE /api/v1/hana/dataLakes/{id}: Delete a data lake by ID.
+  * 
+  * Each endpoint requires tenant authentication and appropriate permissions. The controller interacts with the ManageDataLakesUseCase to perform business logic and returns JSON responses with appropriate HTTP status codes.
+  */
 class DataLakeController : ManageHttpController {
   private ManageDataLakesUseCase usecase;
 
@@ -22,6 +34,7 @@ class DataLakeController : ManageHttpController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+
     router.get("/api/v1/hana/dataLakes", &handleList);
     router.get("/api/v1/hana/dataLakes/*", &handleGet);
     router.post("/api/v1/hana/dataLakes", &handleCreate);
@@ -30,49 +43,43 @@ class DataLakeController : ManageHttpController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-              CreateDataLakeRequest r;
-      r.tenantId = tenantId;
-      r.instanceId = data.getString("instanceId");
-      r.id = precheck.id;
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.computeNodes = data.getInteger("computeNodes", 1);
-      r.storage = jsonKeyValuePairs(j, "storage");
+    auto data = precheck.data;
+    CreateDataLakeRequest r;
+    r.tenantId = tenantId;
+    r.instanceId = data.getString("instanceId");
+    r.id = precheck.id;
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.computeNodes = data.getInteger("computeNodes", 1);
+    r.storage = jsonKeyValuePairs(j, "storage");
 
-      auto result = usecase.create(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Data lake created");
-          
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto result = usecase.create(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+    auto resp = Json.emptyObject
+      .set("id", result.id)
+      .set("message", "Data lake created");
+
+    return successResponse("Data lake created successfully", 201, resp);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto lakes = usecase.list(tenantId);
+    auto tenantId = precheck.tenantId;
+    auto lakes = usecase.list(tenantId);
 
-      auto jarr = Json.emptyArray;
-      foreach (d; lakes) {
-        jarr ~= Json.emptyObject
+    auto jarr = Json.emptyArray;
+    foreach (d; lakes) {
+      jarr ~= Json.emptyObject
         .set("id", d.id)
         .set("instanceId", d.instanceId)
         .set("name", d.name)
@@ -81,30 +88,27 @@ class DataLakeController : ManageHttpController {
         .set("computeNodes", d.computeNodes)
         .set("createdAt", d.createdAt)
         .set("updatedAt", d.updatedAt);
-      }
+    }
 
-      auto resp = Json.emptyObject
+    auto resp = Json.emptyObject
       .set("count", Json(lakes.length))
       .set("resources", list);
 
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    return successResponse("Data lake list retrieved successfully", 200, resp);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto d = usecase.getById(tenantId, id);
-      if (d.isNull)
-            return errorResponse("", 0);
+    auto tenantId = precheck.tenantId;
+    auto id = precheck.id;
+    auto d = usecase.getById(tenantId, id);
+    if (d.isNull)
+      return errorResponse("", 0);
 
-      auto resp = Json.emptyObject
+    auto resp = Json.emptyObject
       .set("id", d.id)
       .set("instanceId", d.instanceId)
       .set("name", d.name)
@@ -114,60 +118,51 @@ class DataLakeController : ManageHttpController {
       .set("createdAt", d.createdAt)
       .set("updatedAt", d.updatedAt);
 
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    return successResponse("Data lake retrieved successfully", 200, resp);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      
+    auto tenantId = precheck.tenantId;
+    auto id = DataLakeId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Data lake not found", 404);
 
-      auto data = precheck.data;
-      UpdateDataLakeRequest r;
-      r.tenantId = tenantId;
-      r.id = precheck.id;
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.computeNodes = data.getInteger("computeNodes", 1);
+    auto data = precheck.data;
+    UpdateDataLakeRequest r;
+    r.tenantId = tenantId;
+    r.lakeId = id;
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.computeNodes = data.getInteger("computeNodes", 1);
 
-      auto result = usecase.update(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-        .set("id", result.id)
-        .set("message", "Data lake updated");
+    auto result = usecase.update(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+    auto resp = Json.emptyObject
+      .set("id", result.id);
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    return successResponse("Data lake updated successfully", "Updated", 200, resp);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = DataLakeId(precheck.id);
-      auto result = usecase.deleteDataLake(id);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        res.writeJsonBody(Json.emptyObject, 204);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto tenantId = precheck.tenantId;
+    auto id = DataLakeId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Data lake not found", 404);
+
+    auto result = usecase.deleteDataLake(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    return successResponse("Data lake deleted successfully", "Deleted", 200, Json.emptyObject.set(
+        "id", id));
   }
 }

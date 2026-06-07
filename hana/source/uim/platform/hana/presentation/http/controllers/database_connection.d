@@ -39,7 +39,7 @@ class DatabaseConnectionController : ManageHttpController {
     CreateDatabaseConnectionRequest r;
     r.tenantId = tenantId;
     r.instanceId = data.getString("instanceId");
-    r.id = precheck.id;
+    r.id = DatabaseConnectionId(precheck.id);
     r.name = data.getString("name");
     r.description = data.getString("description");
     r.type = data.getString("type");
@@ -92,13 +92,9 @@ override protected Json listHandler(HTTPServerRequest req) {
 
   auto resp = Json.emptyObject
     .set("count", Json(conns.length))
-    .set("resources", list);
+    .set("resources", jarr);
 
-  res.writeJsonBody(resp, 200);
-}
- catch (Exception e) {
-  writeError(res, 500, "Internal server error");
-}
+  return successResponse("Database connection list retrieved successfully", 200, resp);
 }
 
 override protected Json getHandler(HTTPServerRequest req) {
@@ -107,7 +103,10 @@ override protected Json getHandler(HTTPServerRequest req) {
     return precheck;
 
   auto tenantId = precheck.tenantId;
-  auto id = precheck.id;
+  auto id = DatabaseConnectionId(precheck.id);
+  if (id.isNull)
+    return errorResponse("Invalid database connection ID", 400);
+
   auto c = usecase.getById(tenantId, id);
   if (c.isNull)
     return errorResponse("Database connection not found", 404);
@@ -136,11 +135,15 @@ override protected Json updateHandler(HTTPServerRequest req) {
     return precheck;
 
   auto tenantId = precheck.tenantId;
+  auto id = DatabaseConnectionId(precheck.id);
+  if (id.isNull)
+    return errorResponse("Invalid database connection ID", 400);
 
   auto data = precheck.data;
   UpdateDatabaseConnectionRequest r;
   r.tenantId = tenantId;
-  r.id = precheck.id;
+  r.connectionId = id;
+  r.type = data.getString("type");
   r.name = data.getString("name");
   r.description = data.getString("description");
   r.host = data.getString("host");
@@ -170,7 +173,8 @@ override protected Json deleteHandler(HTTPServerRequest req) {
   auto result = usecase.deleteDatabaseConnection(tenantId, id);
   if (result.hasError)
     return errorResponse(result.message, 400);
-  
-  return successResponse("Database connection deleted successfully", "Deleted", 200, Json.emptyObject.set("id", id));
+
+  return successResponse("Database connection deleted successfully", "Deleted", 200, Json
+      .emptyObject.set("id", id));
 }
 }
