@@ -94,7 +94,7 @@ class SubscriptionEngine {
 
     SubscriptionJob beginUnsubscribe(string providerTenantId,
                                       string subscriptionId,
-                                      string requestedBy) {
+                                      UserId requestedBy) {
         auto sub = subRepo.findById(providerTenantId, AppSubscriptionId(subscriptionId));
         if (sub.isNull) return new SubscriptionJob();
 

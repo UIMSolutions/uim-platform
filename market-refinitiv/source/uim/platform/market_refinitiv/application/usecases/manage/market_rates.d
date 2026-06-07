@@ -173,7 +173,7 @@ class ManageMarketRatesUseCase {
   }
 
   // ---------------------------------------------------------------------------
-  private void logAudit(TenantId tenantId, string requestedBy,
+  private void logAudit(TenantId tenantId, UserId requestedBy,
                          AuditOperation op, string providerCode,
                          MarketDataCategory category, OperationStatus status,
                          string message, int recordCount,

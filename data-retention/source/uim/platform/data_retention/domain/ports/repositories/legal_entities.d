@@ -5,15 +5,8 @@ mixin(ShowModule!());
 
 @safe:
 
-interface LegalEntityRepository { //: ITenantRepository!(LegalEntity, LegalEntityId) {
-    bool existsById(LegalEntityId id);
-    LegalEntity findById(LegalEntityId id);
+interface LegalEntityRepository : ITenantRepository!(LegalEntity, LegalEntityId) {
 
-    LegalEntity[] findAll(TenantId tenantId);
     LegalEntity[] findActive(TenantId tenantId);
 
-    void save(LegalEntity a);
-    void save(TenantId tenantId, LegalEntity a);
-    void update(LegalEntity a);
-    void update(TenantId tenantId, LegalEntity a);
 }

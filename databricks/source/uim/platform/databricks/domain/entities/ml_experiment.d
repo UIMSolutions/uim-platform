@@ -7,7 +7,7 @@ mixin(ShowModule!());
 
 /// An MLflow experiment for tracking machine-learning runs.
 struct MlExperiment {
-  mixin TenantEntity!(MlExperimentId);
+  mixin TenantEntity!MlExperimentId;
 
   WorkspaceId workspaceId;
   string      name;

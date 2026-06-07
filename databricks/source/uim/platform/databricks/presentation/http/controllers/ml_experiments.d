@@ -32,7 +32,7 @@ public:
     auto data = precheck.data;
     CreateMlExperimentRequest r;
     r.tenantId = tenantId;
-    r.id = precheck.id;
+    r.experimentId = MlExperimentId(precheck.id);
     r.workspaceId = data.getString("workspaceId");
     r.name = data.getString("name");
     r.artifactLocation = data.getString("artifactLocation");
@@ -68,7 +68,10 @@ public:
 
     auto tenantId = precheck.tenantId;
 
-    auto id = req.requestPath.to!string.split("/")[$ - 1];
+    auto id = MlExperimentId(req.requestPath.to!string.split("/")[$ - 1]);
+    if (id.isNull)
+      return errorResponse("Invalid ML experiment ID", 400);
+
     auto result = _usecase.get(tenantId, id);
     if (result.isNull)
       return errorResponse("ML experiment not found", 404);
@@ -83,11 +86,15 @@ public:
       return precheck;
 
     auto tenantId = precheck.tenantId;
+    auto id = MlExperimentId(req.requestPath.to!string.split("/")[$ - 1]);
+    if (id.isNull)
+      return errorResponse("Invalid ML experiment ID", 400);
+
 
     auto data = precheck.data;
     UpdateMlExperimentRequest r;
     r.tenantId = tenantId;
-    r.id = req.requestPath.to!string.split("/")[$ - 1];
+    r.experimentId = id;
     r.name = data.getString("name");
     r.tags = data.getString("tags");
     auto result = _usecase.update(r);
@@ -104,8 +111,10 @@ public:
       return precheck;
 
     auto tenantId = precheck.tenantId;
+    auto id = MlExperimentId(req.requestPath.to!string.split("/")[$ - 1]);
+    if (id.isNull)
+      return errorResponse("Invalid ML experiment ID", 400);
 
-    auto id = req.requestPath.to!string.split("/")[$ - 1];
     auto result = _usecase.remove(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);

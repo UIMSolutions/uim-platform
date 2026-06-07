@@ -7,6 +7,16 @@ mixin(ShowModule!());
 
 class MemoryDataSubjectRepository : TenantRepository!(DataSubject, DataSubjectId), DataSubjectRepository {
 
+        size_t countByApplicationGroup(TenantId tenantId, ApplicationGroupId groupId) {
+            return findByApplicationGroup(tenantId, groupId).length;
+        }
+    DataSubject[] findByApplicationGroup(TenantId tenantId, ApplicationGroupId groupId) {
+        return findByTenant(tenantId).filter!(a => a.applicationGroupId == groupId).array;
+    }
+    void removeByApplicationGroup(TenantId tenantId, ApplicationGroupId groupId) {
+        findByApplicationGroup(tenantId, groupId).each!(entity => remove(entity));
+    }
+
     size_t countByLifecycleStatus(TenantId tenantId, DataLifecycleStatus status) {
         return findByLifecycleStatus(tenantId, status).length;
     }

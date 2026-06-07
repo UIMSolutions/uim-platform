@@ -24,3 +24,4 @@ struct RetentionRule {
             .set("actionOnExpiry", actionOnExpiry)
             .set("isActive", isActive);
     }
+}

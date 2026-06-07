@@ -131,7 +131,7 @@ class AppSubscriptionController : ManageHttpController {
         try {
             auto tenantId    = tenantId;
             auto id          = AppSubscriptionId(precheck.id);
-            string requestedBy = "";
+            UserId requestedBy = "";
             try { requestedBy = safeStr(req.json, "requestedBy"); } catch (Exception) {}
             auto result = usecase.unsubscribeConsumer(tenantId, id, requestedBy);
             if (!result.success) { writeError(res, 404, result.message); return; }

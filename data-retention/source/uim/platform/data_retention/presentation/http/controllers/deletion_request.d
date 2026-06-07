@@ -122,31 +122,6 @@ class DeletionRequestController : ManageHttpController {
         return successResponse(response, 200);
     }
 
-    override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
-
-        auto tenantId = precheck.tenantId;
-        auto id = DeletionRequestId(precheck.id);
-        if (id.isNull)
-            return errorResponse("Invalid deletion request ID", 400);
-
-        auto data = precheck.data;
-        UpdateDeletionRequestRequest r;
-        r.tenantId = tenantId;
-        r.dataSubjectId = DataSubjectId(data.getString("dataSubjectId"));
-        r.status = data.getString("status");
-        r.errorMessage = data.getString("errorMessage");
-
-        auto result = usecase.updateDeletionRequest(id, r);
-        if (result.hasError)
-            return errorResponse(result.message, 400);
-
-        auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("Deletion request updated successfully", "Updated", 200, responseData);
-    }
-
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto precheck = super.deleteHandler(req);
         if (precheck.hasError)
@@ -154,6 +129,8 @@ class DeletionRequestController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto id = DeletionRequestId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid deletion request ID", 400);
 
         auto result = usecase.deleteDeletionRequest(tenantId, id);
         if (result.hasError)

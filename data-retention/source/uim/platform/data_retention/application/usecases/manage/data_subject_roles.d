@@ -12,7 +12,6 @@ class ManageDataSubjectRolesUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-
     CommandResult createDataSubjectRole(CreateDataSubjectRoleRequest req) {
         import std.uuid : randomUUID;
 
@@ -32,7 +31,7 @@ class ManageDataSubjectRolesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, dsr.id.value, "");
     }
 
-    CommandResult updateDataSubjectRole(DataSubjectRoleId id, UpdateDataSubjectRoleRequest req) {
+    CommandResult updateDataSubjectRole(TenantId tenantId, DataSubjectRoleId id, UpdateDataSubjectRoleRequest req) {
         auto dsr = repo.findById(tenantId, id);
         if (dsr.isNull)
             return CommandResult(false, "", "Data subject role not found");
@@ -48,11 +47,11 @@ class ManageDataSubjectRolesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, id.value, "");
     }
 
-    bool hasDataSubjectRole(DataSubjectRoleId id) {
+    bool hasDataSubjectRole(TenantId tenantId, DataSubjectRoleId id) {
         return repo.existsById(id);
     }
 
-    DataSubjectRole getDataSubjectRoles(DataSubjectRoleId id) {
+    DataSubjectRole getDataSubjectRoles(TenantId tenantId, DataSubjectRoleId id) {
         return repo.findById(tenantId, id);
     }
 
@@ -60,7 +59,7 @@ class ManageDataSubjectRolesUseCase { // TODO: UIMUseCase {
         return repo.findAll(tenantId);
     }
 
-    CommandResult deleteDataSubjectRole(DataSubjectRoleId id) {
+    CommandResult deleteDataSubjectRole(TenantId tenantId, DataSubjectRoleId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Data subject role not found");

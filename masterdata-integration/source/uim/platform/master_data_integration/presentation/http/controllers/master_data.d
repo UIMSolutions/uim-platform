@@ -109,7 +109,10 @@ override protected Json getHandler(HTTPServerRequest req) {
     return precheck;
 
   auto tenantId = precheck.tenantId;
-  auto id = precheck.id;
+  auto id = MasterDataObjectId(precheck.id);
+  if (id.isNull)
+    return errorResponse("Invalid master data object ID", 400)
+
   auto obj = usecase.getObject(id);
   if (obj.isNull)
     return errorResponse("Master data object not found", 404);
@@ -124,16 +127,20 @@ override protected Json updateHandler(HTTPServerRequest req) {
     return precheck;
 
   auto tenantId = precheck.tenantId;
-  auto id = precheck.id;
+  auto id = MasterDataObjectId(precheck.id);
+  if (id.isNull)
+    return errorResponse("Invalid master data object ID", 400);
+
   auto data = precheck.data;
   UpdateMasterDataObjectRequest r;
+  r.tenantId = tenantId;
   r.displayName = data.getString("displayName");
   r.description = data.getString("description");
   r.status = data.getString("status");
   r.attributes = data.jsonStrMap("attributes");
   r.updatedBy = UserId(req.headers.get("X-User-Id", ""));
 
-  auto result = usecase.updateObject(id, r);
+  auto result = usecase.updateObject(r);
   if (result.hasError)
     return errorResponse(result.message, 400);
 
@@ -147,7 +154,10 @@ override protected Json deleteHandler(HTTPServerRequest req) {
     return precheck;
 
   auto tenantId = precheck.tenantId;
-  auto id = precheck.id;
+  auto id = MasterDataObjectId(precheck.id);
+  if (id.isNull)
+    return errorResponse("Invalid master data object ID", 400);
+
   auto result = usecase.deleteObject(tenantId, id);
   if (result.hasError)
     return errorResponse(result.message, 400);

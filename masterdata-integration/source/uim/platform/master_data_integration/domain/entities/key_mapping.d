@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 /// A key mapping entry — maps IDs across different systems.
 struct KeyMapping {
-  mixin TenantEntity!(KeyMappingId);
+  mixin TenantEntity!KeyMappingId;
   
   MasterDataObjectId masterDataObjectId;
   MasterDataCategory category = MasterDataCategory.businessPartner;

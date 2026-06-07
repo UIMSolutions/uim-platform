@@ -153,7 +153,7 @@ struct UpdateTenantUserRequest {
 struct CreateProvisioningRequest {
   TenantId tenantId;
   string id;
-  string requestedBy;
+  UserId requestedBy;
   string accountName;
   string region;
   string adminEmail;

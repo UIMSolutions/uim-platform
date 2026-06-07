@@ -5,10 +5,10 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryDataSubjectRoleRepository : DataSubjectRoleRepository {
+class MemoryDataSubjectRoleRepository : TenantRepository!(DataSubjectRole, DataSubjectRoleId), DataSubjectRoleRepository {
 
-    site_t countByTenant(TenantId tenantId) {
-        return findByTenant(tenantId).length;
+    size_t countActive(TenantId tenantId) {
+        return findActive(tenantId).length;
     }
 
     DataSubjectRole[] findActive(TenantId tenantId) {

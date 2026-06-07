@@ -46,7 +46,7 @@ class ManageAppSubscriptionsUseCase {
     }
 
     /// Unsubscribe a consumer tenant from an application.
-    CommandResult unsubscribeConsumer(TenantId tenantId, AppSubscriptionId id, string requestedBy) {
+    CommandResult unsubscribeConsumer(TenantId tenantId, AppSubscriptionId id, UserId requestedBy) {
         auto job = engine.beginUnsubscribe(tenantId, id.value, requestedBy);
         if (job.isNull) return CommandResult(false, "", "Subscription not found");
         return CommandResult(true, id.value, "");

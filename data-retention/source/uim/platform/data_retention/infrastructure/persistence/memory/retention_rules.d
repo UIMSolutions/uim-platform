@@ -7,6 +7,16 @@ mixin(ShowModule!());
 
 class MemoryRetentionRuleRepository : TenantRepository!(RetentionRule, RetentionRuleId), RetentionRuleRepository {
 
+    size_t countByBusinessPurpose(TenantId tenantId, BusinessPurposeId purposeId) {
+        return findByBusinessPurpose(tenantId, purposeId).length;
+    }
+    RetentionRule[] findByBusinessPurpose(TenantId tenantId, BusinessPurposeId purposeId) {
+        return findByTenant(tenantId).filter!(a => a.businessPurposeId == purposeId).array;
+    }
+    void removeByBusinessPurpose(TenantId tenantId, BusinessPurposeId purposeId) {
+        findByBusinessPurpose(tenantId, purposeId).each!(entity => remove(entity));
+    }
+
     size_t countByLegalGround(TenantId tenantId, LegalGroundId groundId) {
         return findByLegalGround(tenantId, groundId).length;
     }

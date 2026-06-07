@@ -13,7 +13,7 @@ struct DeletionRequest {
     DeletionActionType actionType = DeletionActionType.delete_;
     DeletionRequestStatus status = DeletionRequestStatus.pending;
     string reason;
-    string requestedBy;
+    UserId requestedBy;
     long requestedAt;
     long completedAt;
     string errorMessage;

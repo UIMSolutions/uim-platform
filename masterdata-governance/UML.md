@@ -14,7 +14,7 @@ classDiagram
     class ChangeRequest {
         +string id
         +string partnerId
-        +string requestedBy
+        +UserId requestedBy
         +string status
         +string changeData
     }

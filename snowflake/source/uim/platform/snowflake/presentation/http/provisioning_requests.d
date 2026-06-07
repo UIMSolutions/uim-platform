@@ -22,12 +22,19 @@ class ProvisioningRequestController : ManageHttpController {
     router.post("/api/v1/snowflake/requests/*/fail", &handleFail);
   }
 
-  void handleList(HTTPServerRequest req, HTTPServerResponse res) {
-    auto items = usecase.list(req.getTenantId);
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto items = usecase.list(tenantId);
     auto arr = Json.emptyArray;
     foreach (item; items)
       arr ~= item.toJson();
-    res.writeJsonBody(arr, cast(int)HTTPStatus.ok);
+
+    return successResponse("Provisioning requests retrieved successfully", 200, Json.emptyObject.set("items", arr).set(
+        "totalCount", items.length));
   }
 
   void handleGet(HTTPServerRequest req, HTTPServerResponse res) {
@@ -39,7 +46,13 @@ class ProvisioningRequestController : ManageHttpController {
     res.writeJsonBody(item.toJson(), cast(int)HTTPStatus.ok);
   }
 
-  void handleCreate(HTTPServerRequest req, HTTPServerResponse res) {
+  override protected Json createHandler(HTTPServerRequest req) {
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+
     auto data = precheck.data;
     CreateProvisioningRequest r;
     r.tenantId = tenantId;
@@ -51,24 +64,46 @@ class ProvisioningRequestController : ManageHttpController {
     r.adminFirstName = data.getString("adminFirstName");
     r.adminLastName = data.getString("adminLastName");
     auto result = usecase.create(r);
-    if (!result.success) {
-      writeError(res, 400, result.message);
-      return;
-    }
-    auto resp = Json.emptyObject;
-    resp["id"] = Json(result.id);
-    res.writeJsonBody(resp, cast(int)HTTPStatus.created);
+
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto resp = Json.emptyObject
+      .set("id", result.id);
+
+    return successResponse("Provisioning request created successfully", 201, resp);
   }
 
-  void handleDelete(HTTPServerRequest req, HTTPServerResponse res) {
-    auto result = usecase.remove(req.getTenantId, extractIdFromPath(req.requestPath.to!string));
-    if (!result.success) {
-      writeError(res, 404, result.message);
-      return;
-    }
-    res.writeJsonBody(Json.emptyObject, cast(int)HTTPStatus.ok);
+  protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = extractIdFromPath(req.requestPath.to!string);
+
+    auto result = usecase.remove(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    return successResponse("Provisioning request deleted successfully", 200, result);
   }
 
+  protected Json processHandler(HTTPServerRequest req) {
+    auto precheck = super.processHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = extractIdFromPath(req.requestPath.to!string);
+
+    auto result = usecase.process(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    return successResponse("Provisioning request processing started", 200, result);
+  }
+  
   void handleProcess(HTTPServerRequest req, HTTPServerResponse res) {
     auto result = usecase.process(req.getTenantId, extractIdFromPath(req.requestPath.to!string));
     if (!result.success) {

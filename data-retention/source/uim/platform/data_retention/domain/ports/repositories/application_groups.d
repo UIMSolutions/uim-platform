@@ -5,19 +5,8 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ApplicationGroupRepository { ///}: ITenantRepository!(ApplicationGroup, ApplicationGroupId) {
-    bool existsById(ApplicationGroupId id);
-    ApplicationGroup findById(ApplicationGroupId id);
+interface ApplicationGroupRepository : ITenantRepository!(ApplicationGroup, ApplicationGroupId) {
 
-    ApplicationGroup[] findAll(TenantId tenantId);
     ApplicationGroup[] findActive(TenantId tenantId);
 
-    void save(ApplicationGroup appGroup);
-    void save(TenantId tenantId, ApplicationGroup appGroup);
-
-    void remove(ApplicationGroupId id);
-    void remove(TenantId tenantId, ApplicationGroupId id);
-
-    void update(ApplicationGroup appGroup);
-    void update(TenantId tenantId, ApplicationGroup appGroup);
 }

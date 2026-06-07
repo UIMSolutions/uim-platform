@@ -5,15 +5,8 @@ mixin(ShowModule!());
 
 @safe:
 
-interface DataSubjectRoleRepository { //: ITenantRepository!(DataSubjectRole, DataSubjectRoleId) {
-    bool existsById(DataSubjectRoleId id);
-    DataSubjectRole findById(DataSubjectRoleId id);
+interface DataSubjectRoleRepository : ITenantRepository!(DataSubjectRole, DataSubjectRoleId) {
 
-    DataSubjectRole[] findAll(TenantId tenantId);
     DataSubjectRole[] findActive(TenantId tenantId);
 
-    void save(DataSubjectRole a);
-    void save(TenantId tenantId, DataSubjectRole a);
-    void update(DataSubjectRole a);
-    void update(TenantId tenantId, DataSubjectRole a);
 }

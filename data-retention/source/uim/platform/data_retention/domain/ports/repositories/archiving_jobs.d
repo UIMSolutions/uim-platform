@@ -5,16 +5,9 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ArchivingJobRepository { // }: ITenantRepository!(ArchivingJob, ArchivingJobId) {
-    bool existsById(ArchivingJobId id);
-    ArchivingJob findById(ArchivingJobId id);
-
-    ArchivingJob[] findAll(TenantId tenantId);
+interface ArchivingJobRepository : ITenantRepository!(ArchivingJob, ArchivingJobId) {
+    
     ArchivingJob[] findByApplicationGroup(TenantId tenantId, ApplicationGroupId groupId);
     ArchivingJob[] findByStatus(TenantId tenantId, ArchivingJobStatus status);
 
-    void save(ArchivingJob a);
-    void save(TenantId tenantId, ArchivingJob a);
-    void update(ArchivingJob a);
-    void update(TenantId tenantId, ArchivingJob a);
 }

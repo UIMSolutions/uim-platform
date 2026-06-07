@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 /// A master data record — the core entity managed by MDI.
 struct MasterDataObject {
-  mixin TenantEntity!(MasterDataObjectId);
+  mixin TenantEntity!MasterDataObjectId;
 
   DataModelId dataModelId;
   MasterDataCategory category = MasterDataCategory.businessPartner;

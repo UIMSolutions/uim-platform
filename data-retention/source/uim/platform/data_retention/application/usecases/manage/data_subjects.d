@@ -29,8 +29,8 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, ds.id.value, "");
     }
 
-    CommandResult updateDataSubject(DataSubjectId id, UpdateDataSubjectRequest req) {
-        auto ds = repo.findById(tenantId, id);
+    CommandResult updateDataSubject(UpdateDataSubjectRequest req) {
+        auto ds = repo.findById(req.tenantId, DataSubjectId(req.id));
         if (ds.isNull)
             return CommandResult(false, "", "Data subject not found");
 
@@ -41,10 +41,10 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
         ds.updatedAt = clockSeconds();
 
         repo.update(ds);
-        return CommandResult(true, id.value, "");
+        return CommandResult(true, ds.id.value, "");
     }
 
-    CommandResult blockDataSubject(DataSubjectId id) {
+    CommandResult blockDataSubject(TenantId tenantId, DataSubjectId id) {
         auto ds = repo.findById(tenantId, id);
         if (ds.isNull)
             return CommandResult(false, "", "Data subject not found");
@@ -56,11 +56,11 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, id.value, "");
     }
 
-    bool hasDataSubjectById(DataSubjectId id) {
-        return repo.existsById(id);
+    bool hasDataSubjectById(TenantId tenantId, DataSubjectId id) {
+        return repo.existsById(tenantId, id);
     }
 
-    DataSubject getDataSubjectById(DataSubjectId id) {
+    DataSubject getDataSubject(TenantId tenantId, DataSubjectId id) {
         return repo.findById(tenantId, id);
     }
 
@@ -72,29 +72,12 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
         return repo.findByLifecycleStatus(tenantId, status);
     }
 
-    CommandResult deleteDataSubject(DataSubjectId id) {
+    CommandResult deleteDataSubject(TenantId tenantId, DataSubjectId id) {
         auto subject = repo.findById(tenantId, id);
         if (subject.isNull)
             return CommandResult(false, "", "Data subject not found");
 
         repo.remove(subject);
         return CommandResult(true, subject.id.value, "");
-    }
-
-    private static DataLifecycleStatus parseLifecycleStatus(string s) {
-        switch (s) {
-        case "active":
-            return DataLifecycleStatus.active;
-        case "blocked":
-            return DataLifecycleStatus.blocked;
-        case "markedForDeletion":
-            return DataLifecycleStatus.markedForDeletion;
-        case "deleted":
-            return DataLifecycleStatus.deleted;
-        case "archived":
-            return DataLifecycleStatus.archived;
-        default:
-            return DataLifecycleStatus.active;
-        }
     }
 }
