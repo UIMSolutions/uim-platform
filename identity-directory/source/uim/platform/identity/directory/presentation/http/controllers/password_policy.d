@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.identity.authentication.presentation.http.password_policy;
 
-
 // import uim.platform.identity.directory.application.usecases.manage.password_policies;
 // import uim.platform.identity.directory.application.dto;
 // import uim.platform.identity.directory.domain.entities.password_policy;
@@ -24,7 +23,7 @@ class PasswordPolicyController : ManageHttpController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/password-policies", &handleCreate);
     router.get("/api/v1/password-policies", &handleList);
     router.get("/api/v1/password-policies/active", &handleGetActive);
@@ -32,100 +31,93 @@ class PasswordPolicyController : ManageHttpController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-      auto createReq = CreatePasswordPolicyRequest(req.headers.get("X-Tenant-Id", ""),
-          data.getString("name"), data.getString("description"), jsonUint(j,
-            "minLength", 8), jsonUint(j, "maxLength", 128), data.getBoolean("requireUppercase",
-            true), data.getBoolean("requireLowercase", true), data.getBoolean("requireDigit",
-            true), data.getBoolean("requireSpecialChar"), jsonUint(j, "minUniqueChars"), jsonUint(j,
-            "maxRepeatedChars"), jsonUint(j, "passwordHistoryCount", 5), jsonUint(j,
-            "maxFailedAttempts", 5), jsonUint(j, "lockoutDurationMinutes", 30),
-          jsonUint(j, "expiryDays"),);
+    auto data = precheck.data;
+    auto request = CreatePasswordPolicyRequest();
+    request.tenantId = tenantId;
+    request.name = data.getString("name");
+    request.description = data.getString("description");
+    request.minLength = jsonUint(j, "minLength", 8);
+    request.maxLength = jsonUint(j, "maxLength", 128);
+    request.requireUppercase = data.getBoolean("requireUppercase", true);
+    request.requireLowercase = data.getBoolean("requireLowercase", true);
+    request.requireDigit = data.getBoolean("requireDigit", true);
+    request.requireSpecialChar = data.getBoolean("requireSpecialChar", true);
+    request.minUniqueChars = jsonUint(j, "minUniqueChars", 1);
+    request.maxRepeatedChars = jsonUint(j, "maxRepeatedChars", 2);
+    request.passwordHistoryCount = jsonUint(j, "passwordHistoryCount", 5);
+    request.maxFailedAttempts = jsonUint(j, "maxFailedAttempts", 5);
+    request.lockoutDurationMinutes = jsonUint(j, "lockoutDurationMinutes", 30);
+    request.expiryDays = jsonUint(j, "expiryDays", 90);
 
-      auto result = useCase.createPolicy(createReq);
-      auto response = Json.emptyObject;
+    auto result = useCase.createPolicy(request);
+    if (result.hasError)
+      return errorResponse(result.errorMessage);
 
-      if (result.isSuccess()) {
-        response["policyId"] = Json(result.policyId);
-        res.writeJsonBody(response, 201);
-      }
-      else
-      {
-        response["error"] = Json(result.message);
-        res.writeJsonBody(response, 400);
-      }
-    }
-    catch (Exception e) {
-      auto errRes = Json.emptyObject;
-      errRes["error"] = Json("Internal server error");
-      res.writeJsonBody(errRes, 500);
-    }
+    auto response = Json.emptyObject;
+    response["policyId"] = Json(result.policyId);
+
+    return successResponse("Password policy created successfully", "", 201, response);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto policies = useCase.listPolicies(tenantId);
-      auto response = Json.emptyObject;
-      response["totalResults"] = Json(policies.length);
-      response["resources"] = toJsonArray(policies);
-      res.writeJsonBody(response, 200);
+    auto tenantId = precheck.tenantId;
+    auto policies = useCase.listPolicies(tenantId);
+    auto list = policies.map!(p => p.toJson).array;
+
+    auto response = Json.emptyObject
+      .set("totalResults", policies.length)
+      .set("resources", list);
+
+    return successResponse("Password policies retrieved successfully", "Retrieved", 200, response);
+  }
+
+  override protected Json getActiveHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto policy = useCase.getActivePolicy(tenantId);
+    if (policy == PasswordPolicy.init) {
+      return errorResponse("No active password policy found", 404);
     }
-    catch (Exception e) {
-      auto errRes = Json.emptyObject;
-      errRes["error"] = Json("Internal server error");
-      res.writeJsonBody(errRes, 500);
-    }
+    return successResponse("Active password policy retrieved successfully", "Retrieved", 200, policy
+        .toJson);
   }
 
   protected void handleActive(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto policy = useCase.getActivePolicy(tenantId);
-      if (policy == PasswordPolicy.init) {
-        auto errRes = Json.emptyObject;
-        errRes["error"] = Json("No active password policy found");
-        res.writeJsonBody(errRes, 404);
-        return;
-      }
-      res.writeJsonBody(toJsonValue(policy), 200);
-    }
-    catch (Exception e) {
-      auto errRes = Json.emptyObject;
+      auto response = super.getActiveHandler(req);
+      res.writeJsonBody(response, response.code);
+    } catch (Exception e) {
+      auto errRes = Json.emptyObject.set("message", "Failed to retrieve active password policy");
       errRes["error"] = Json("Internal server error");
       res.writeJsonBody(errRes, 500);
     }
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto policyId = precheck.id;
-      auto policy = useCase.getPolicy(policyId);
-      if (policy == PasswordPolicy.init) {
-        auto errRes = Json.emptyObject;
-        errRes["error"] = Json("Password policy not found");
-        res.writeJsonBody(errRes, 404);
-        return;
-      }
-      res.writeJsonBody(toJsonValue(policy), 200);
-    }
-    catch (Exception e) {
-      auto errRes = Json.emptyObject;
-      errRes["error"] = Json("Internal server error");
-      res.writeJsonBody(errRes, 500);
-    }
+    auto tenantId = precheck.tenantId;
+    auto policyId = precheck.id;
+    auto policy = useCase.getPolicy(policyId);
+    if (policy.isNull)
+      return errorResponse("Password policy not found", 404);
+
+    return successResponse("Password policy retrieved successfully", "Retrieved", 200, policy
+        .toJson);
   }
 }

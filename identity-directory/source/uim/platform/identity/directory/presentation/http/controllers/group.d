@@ -97,39 +97,41 @@ override protected Json getHandler(HTTPServerRequest req) {
 }
 
 override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+  auto precheck = super.updateHandler(req);
+  if (precheck.hasError)
+    return precheck;
 
-        auto tenantId = precheck.tenantId;
-    auto groupId = precheck.id;
-    auto data = precheck.data;
-    auto updateReq = UpdateGroupRequest(groupId, data.getString("displayName"),
-      data.getString("description"),);
-    auto error = useCase.updateGroup(updateReq);
-    if (error.length > 0) {
-      writeScimError(res, 404, error);
-    } else {
-      auto resp = Json.emptyObject
-        .set("status", "updated");
-      res.writeJsonBody(resp, 200);
-    }
-  } catch (Exception e) {
-    writeScimError(res, 500, "Internal server error");
-  }
+  auto tenantId = precheck.tenantId;
+  auto groupId = GroupId(precheck.id);
+  if (groupId.isNull)
+    return errorResponse("Invalid group ID", 400);
+
+  
+  auto data = precheck.data;
+  auto updateReq = UpdateGroupRequest(groupId, data.getString("displayName"),
+    data.getString("description"),);
+  auto result = useCase.updateGroup(updateReq);
+  if (result.hasError) {
+    writeScimError(res, 404, result.errorMessage);
+
+  return successResponse("Group updated successfully", "Updated", 200, Json.emptyObject.set("id", result.id));
 }
 
-override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-  try {
-    auto groupId = precheck.id;
-    auto error = useCase.deleteGroup(groupId);
-    if (error.length > 0)
-      writeScimError(res, 404, error);
-    else
-      res.writeBody("", 204);
-  } catch (Exception e) {
-    writeScimError(res, 500, "Internal server error");
-  }
+override protected Json deleteHandler(HTTPServerRequest req) {
+  auto precheck = super.deleteHandler(req);
+  if (precheck.hasError)
+    return precheck;
+
+  auto tenantId = precheck.tenantId;
+  auto groupId = GroupId(precheck.id);
+  if (groupId.isNull)
+    return errorResponse("Invalid group ID", 400);
+
+  auto result = useCase.deleteGroup(tenantId, groupId);
+  if (result.hasError)
+    return errorResponse(result.errorMessage, 404);
+
+  return successResponse("Group deleted successfully", "Deleted", 200, Json.emptyObject);
 }
 
 protected void handleAddMember(scope HTTPServerRequest req, scope HTTPServerResponse res) {

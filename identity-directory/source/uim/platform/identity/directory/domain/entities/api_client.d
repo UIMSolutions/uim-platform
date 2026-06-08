@@ -13,7 +13,7 @@ import uim.platform.identity.directory;
 /// API client / technical user for service-to-service access.
 struct ApiClient {
   mixin TenantEntity!(ApiClientId);
-  
+
   string name;
   string description;
   string clientId;
@@ -28,13 +28,13 @@ struct ApiClient {
   }
 
   Json toJson() const {
-      return entityToJson
-          .set("name", name)
-          .set("description", description)
-          .set("clientId", clientId)
-          .set("scopes", scopes.array.toJson)
-          .set("active", active)
-          .set("expiresAt", expiresAt)
-          .set("lastUsedAt", lastUsedAt);
+    return entityToJson
+      .set("name", name)
+      .set("description", description)
+      .set("clientId", clientId)
+      .set("scopes", scopes.array.toJson)
+      .set("active", active)
+      .set("expiresAt", expiresAt)
+      .set("lastUsedAt", lastUsedAt);
   }
 }

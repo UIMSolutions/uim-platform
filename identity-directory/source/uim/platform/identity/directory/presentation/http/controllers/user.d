@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.identity.authentication.presentation.http.user;
 
-
 // import uim.platform.identity.directory.application.usecases.manage.users;
 // import uim.platform.identity.directory.application.dto;
 // import uim.platform.identity.directory.domain.entities.user;
@@ -31,166 +30,170 @@ class UserController : ManageHttpController {
     router.put("/scim/Users/*", &handleUpdate);
     router.delete_("/scim/Users/*", &handleDelete);
     router.post("/scim/Users/change-password", &handleChangePassword);
-    router.get("/scim/Users/.search", &handleSearch);
+    router.get("/scim/Users/search", &handleSearch);
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-      auto createReq = CreateUserRequest(req.headers.get("X-Tenant-Id", ""),
-        data.getString("externalId"), data.getString("userName"), j.parseUserName,
-        data.getString("displayName"), data.getString("userType"),
-        data.getString("preferredLanguage"), data.getString("locale"),
-        data.getString("timezone"), data.getString("password"), parseEmails(j),
-        parsePhoneNumbers(j), j.toAddresses, [], // extendedAttributes
-        data.getStrings("schemas"),);
+    auto data = precheck.data;
+    auto createReq = CreateUserRequest(req.headers.get("X-Tenant-Id", ""),
+      data.getString("externalId"), data.getString("userName"), j.parseUserName,
+      data.getString("displayName"), data.getString("userType"),
+      data.getString("preferredLanguage"), data.getString("locale"),
+      data.getString("timezone"), data.getString("password"), parseEmails(j),
+      parsePhoneNumbers(j), j.toAddresses, [], // extendedAttributes
+      data.getStrings("schemas"),);
 
-      auto result = useCase.createUser(createReq);
-      auto response = Json.emptyObject;
+    auto result = useCase.createUser(createReq);
+    if (result.hasError)
+      return scimErrorResponse(result.message, 409);
 
-      if (result.isSuccess()) {
-        response["id"] = Json(result.userId);
-        response["schemas"] = Json.emptyArray;
-        response["schemas"] ~= Json("urn:ietf:params:scim:schemas:core:2.0:User");
-        res.writeJsonBody(response, 201);
-      } else {
-        response["schemas"] = Json.emptyArray;
-        response["schemas"] ~= Json("urn:ietf:params:scim:api:messages:2.0:Error");
-        response["detail"] = Json(result.message);
-        response["status"] = Json("409");
-        res.writeJsonBody(response, 409);
-      }
-    } catch (Exception e) {
-      writeScimError(res, 500, "Internal server error");
-    }
+    auto response = Json.emptyObject;
+    response["id"] = Json(result.userId);
+    response["schemas"] = Json.emptyArray;
+    response["schemas"] ~= Json("urn:ietf:params:scim:schemas:core:2.0:User");
+    return successResponse("User created successfully", "Created", 201, response);
+    // writeScimError(res, 409, result.message);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto users = useCase.listUsers(tenantId);
-      auto response = Json.emptyObject;
-      response["schemas"] = Json.emptyArray;
-      response["schemas"] ~= Json("urn:ietf:params:scim:api:messages:2.0:ListResponse");
-      response["totalResults"] = Json(users.length);
-      response["startIndex"] = Json(1L);
-      response["itemsPerPage"] = Json(users.length);
-      response["Resources"] = serializeUsers(users);
-      res.writeJsonBody(response, 200);
-    } catch (Exception e) {
-      writeScimError(res, 500, "Internal server error");
-    }
+    auto tenantId = precheck.tenantId;
+    auto users = useCase.listUsers(tenantId);
+    auto response = Json.emptyObject;
+    response["schemas"] = Json.emptyArray;
+    response["schemas"] ~= Json("urn:ietf:params:scim:api:messages:2.0:ListResponse");
+    response["totalResults"] = Json(users.length);
+    response["startIndex"] = Json(1L);
+    response["itemsPerPage"] = Json(users.length);
+    response["Resources"] = serializeUsers(users);
+
+    return successResponse("Users retrieved successfully", "", 200, response);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto userId = precheck.id;
-      auto user = useCase.getUser(userId);
-      if (user == User.init) {
-        writeScimError(res, 404, "User not found");
-        return;
-      }
+    auto tenantId = precheck.tenantId;
+    auto userId = precheck.id;
+    auto user = useCase.getUser(userId);
+    if (user.isNull)
+      return scimErrorResponse("User not found", 404);
 
-      auto response = serializeUser(user);
-      res.writeJsonBody(response, 200);
-    } catch (Exception e) {
-      writeScimError(res, 500, "Internal server error");
-    }
+    auto response = user.toJson;
+    return successResponse("User retrieved successfully", "", 200, response);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto userId = precheck.id;
-      auto data = precheck.data;
-      auto updateReq = UpdateUserRequest(userId, j.parseUserName, data.getString("displayName"),
-        data.getString("userType"), data.getString("preferredLanguage"),
-        data.getString("locale"), data.getString("timezone"),
-        data.getBoolean("active", true), parseEmails(j), parsePhoneNumbers(j),
-        j.toAddresses, [], // extendedAttributes
+    auto tenantId = precheck.tenantId;
+    auto userId = precheck.id;
+    auto data = precheck.data;
+    auto request = UpdateUserRequest();
+    request.userId = userId;
+    request.externalId = data.getString("externalId");
+    request.userName = data.getString("userName");
+    request.displayName = data.getString("displayName");
+    request.userType = data.getString("userType");
+    request.preferredLanguage = data.getString("preferredLanguage");
+    request.locale = data.getString("locale");
+    request.timezone = data.getString("timezone");
+    request.active = data.getBoolean("active", true);
+    request.emails = parseEmails(j);
+    request.phoneNumbers = parsePhoneNumbers(j);
+    request.addresses = j.toAddresses;
+    request.extendedAttributes = []; // extendedAttributes
 
-        
+    auto result = useCase.updateUser(updateReq);
+    if (result.hasError)
+      writeScimError(res, 404, result.errorMessage);
 
-      );
-
-      auto error = useCase.updateUser(updateReq);
-      if (error.length > 0) {
-        writeScimError(res, 404, error);
-      } else {
-        auto resp = Json.emptyObject
-        .set("status", "updated");
-
-        res.writeJsonBody(resp, 200);
-      }
-    } catch (Exception e) {
-      writeScimError(res, 500, "Internal server error");
-    }
+    auto response = Json.emptyObject;
+    response["id"] = Json(userId);
+    response["schemas"] = Json.emptyArray;
+    response["schemas"] ~= Json("urn:ietf:params:scim:schemas:core:2.0:User");
+    return successResponse("User updated successfully", "", 200, response);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto userId = precheck.id;
-      auto error = useCase.deleteUser(userId);
-      if (error.length > 0) {
-        writeScimError(res, 404, error);
-      } else {
-        res.writeBody("", 204);
-      }
+    auto tenantId = precheck.tenantId;
+    auto id = UserId(precheck.id);
+
+    auto result = useCase.deleteUser(tenantId, id);
+    if (result.hasError)
+      writeScimError(res, 404, result.errorMessage);
+
+    return successResponse("User deleted successfully", "", 200, Json.emptyObject);
+  }
+  protected Json changePasswordHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = UserId(precheck.id);
+    
+    auto data = precheck.data;
+    auto result = useCase.changePassword(tenantId, id,
+      data.getString("currentPassword"), data.getString("newPassword"));
+    if (result.hasError)
+      return scimErrorResponse(result.errorMessage, 400);
+
+    auto response = Json.emptyObject
+      .set("status", Json("password_changed"));
+
+     return successResponse("Password changed successfully", "", 200, response);
+  }
+
+  protected void handleChangePassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto response = changePasswordHandler(req);
+        res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeScimError(res, 500, "Internal server error");
     }
   }
 
-  protected void handleChangePassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
-      auto error = useCase.changePassword(data.getString("userId"),
-        data.getString("currentPassword"), data.getString("newPassword"));
-      if (error.length > 0) {
-        writeScimError(res, 400, error);
-      } else {
-        auto resp = Json.emptyObject
-          .set("status", Json("password_changed"));
+  protected Json searchHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        res.writeJsonBody(resp, 200);
-      }
-    } catch (Exception e) {
-      writeScimError(res, 500, "Internal server error");
-    }
+    auto tenantId = precheck.tenantId;
+    auto filter = req.params.get("filter", "");
+    auto users = useCase.searchUsers(tenantId, filter);
+    auto list = users.map!(u => u.toJson).array.toJson;
+
+    auto responseData = Json.emptyObject
+      .set("schemas", Json.emptyArray)
+        .set("schemas", "urn:ietf:params:scim:api:messages:2.0:ListResponse")
+        .set("totalResults", users.length)
+        .set("resources", list);
+
+      return successResponse("User search completed successfully", "", 200, responseData);
   }
 
   protected void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto filter = req.params.get("filter", "");
-      auto users = useCase.searchUsers(tenantId, filter);
-      auto response = Json.emptyObject
-        .set("schemas", Json.emptyArray)
-        .set("schemas", "urn:ietf:params:scim:api:messages:2.0:ListResponse")
-        .set("totalResults", users.length)
-        .set("Resources", serializeUsers(users));
-
-      res.writeJsonBody(response, 200);
+      auto response = searchHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeScimError(res, 500, "Internal server error");
     }
@@ -209,7 +212,8 @@ private Email[] parseEmails(Json j) {
   if (!value.isArray)
     return result;
 
-  return value.toArray.map!(item => Email(item.getString("value"), item.getString("type"), getBoolean(item, "primary")))
+  return value.toArray.map!(item => Email(item.getString("value"), item.getString(
+      "type"), getBoolean(item, "primary")))
     .array.toJson;
 }
 
@@ -225,17 +229,22 @@ private PhoneNumber[] parsePhoneNumbers(Json j) {
   if (!value.isArray)
     return result;
 
-  return value.toArray.map!(item => PhoneNumber(item.getString("value"), item.getString("type"),
+  return value.toArray.map!(item => PhoneNumber(item.getString("value"), item.getString(
+      "type"),
       getBoolean(item, "primary"))).array.toJson;
 }
 
-
-private void writeScimError(scope HTTPServerResponse res, int status, string detail) {
+protected Json scimErrorResponse(string detail, int status) {
   auto errRes = Json.emptyObject
     .set("schemas", Json.emptyArray)
     .set("schemas", Json("urn:ietf:params:scim:api:messages:2.0:Error"))
     .set("detail", Json(detail))
     .set("status", Json(status.to!string));
 
+  return errRes;
+}
+
+private void writeScimError(scope HTTPServerResponse res, int status, string detail) {
+  auto errRes = scimErrorResponse(detail, status);
   res.writeJsonBody(errRes, status);
 }

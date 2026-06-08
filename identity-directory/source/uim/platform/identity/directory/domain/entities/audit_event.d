@@ -12,7 +12,7 @@ import uim.platform.identity.directory;
 @safe:
 /// Immutable audit log entry.
 struct AuditEvent {
-      mixin TenantEntity!AuditEventId;
+  mixin TenantEntity!AuditEventId;
 
   AuditEventType eventType;
   string actorId; // user or client that performed the action

@@ -70,10 +70,10 @@ AttributeType toAttributeType(string s) {
 
 /// Attribute mutability (SCIM 2.0).
 enum Mutability {
-  readWrite,
-  readOnly,
-  writeOnly,
-  immutable_,
+  readWrite, // Attribute can be read and updated by clients
+  readOnly, // Attribute can be read but not updated by clients
+  writeOnly, // Attribute can be updated but not read by clients (e.g. password)
+  immutable_, // Attribute is immutable and cannot be updated after creation (e.g. id)
 }
 Mutability toMutability(string s) {
   const map = [
@@ -87,10 +87,10 @@ Mutability toMutability(string s) {
 
 /// Attribute returned behavior (SCIM 2.0).
 enum Returned {
-  always,
-  never,
-  default_,
-  request,
+  always, // Attribute is always returned in responses
+  never, // Attribute is never returned in responses
+  default_, // Attribute is returned by default but can be excluded with ?excludedAttributes
+  request, // Attribute is returned only if explicitly requested via ?attributes
 }
 Returned toReturned(string s) {
   const map = [
@@ -104,9 +104,9 @@ Returned toReturned(string s) {
 
 /// Attribute uniqueness (SCIM 2.0).
 enum Uniqueness {
-  none,
-  server,
-  global,
+  none, // Attribute values do not need to be unique
+  server, // Attribute values must be unique within the server (e.g. username)
+  global, // Attribute values must be globally unique across all servers (e.g. email)
 }
 Uniqueness toUniqueness(string s) {
   const map = [
@@ -119,10 +119,10 @@ Uniqueness toUniqueness(string s) {
 
 /// Password policy strength level.
 enum PasswordStrength {
-  weak,
-  standard,
-  strong,
-  enterprise,
+  weak, // Password is not strong enough
+  standard, // Password meets standard complexity requirements
+  strong, // Password meets strong complexity requirements
+  enterprise, // Password meets enterprise-grade complexity requirements
 }
 PasswordStrength toPasswordStrength(string s) {
   const map = [
@@ -144,19 +144,19 @@ enum AuditEventType {
   userLocked, // A user account was locked due to too many failed login attempts
   userUnlocked, // A user account was unlocked by an administrator
   passwordChanged, // A user changed their password
-  passwordReset,
-  groupCreated,
-  groupUpdated,
-  groupDeleted,
-  memberAdded,
-  memberRemoved,
-  schemaCreated,
-  schemaUpdated,
-  schemaDeleted,
-  apiClientCreated,
-  apiClientRevoked,
-  loginSuccess,
-  loginFailure,
+  passwordReset, //  A user's password was reset
+  groupCreated, // A group was created
+  groupUpdated, // A group was updated
+  groupDeleted, // A group was deleted
+  memberAdded, // A member was added to a group
+  memberRemoved, // A member was removed from a group
+  schemaCreated, // A schema was created
+  schemaUpdated, // A schema was updated
+  schemaDeleted, // A schema was deleted
+  apiClientCreated, // An API client was created
+  apiClientRevoked, // An API client was revoked
+  loginSuccess, // A user successfully logged in
+  loginFailure, // A user failed to log in due to invalid credentials
 }
 AuditEventType toAuditEventType(string s) {
   const map = [
