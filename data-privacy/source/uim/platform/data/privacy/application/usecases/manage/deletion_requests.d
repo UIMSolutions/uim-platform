@@ -5,8 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.data.privacy.application.usecases.manage.deletion_requests;
 
-
-
 // import uim.platform.data.privacy.domain.entities.deletion_request;
 // import uim.platform.data.privacy.domain.ports.repositories.deletion_requests;
 // import uim.platform.data.privacy.domain.ports.repositories.data_subjects;

@@ -95,8 +95,6 @@ public:
         return successResponse("Notebook updated successfully", 200, responseData);
   }
 
-
-
   override protected Json deleteHandler(HTTPServerRequest req) {
         auto precheck = super.deleteHandler(req);
         if (precheck.hasError)

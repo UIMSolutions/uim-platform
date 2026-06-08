@@ -5,8 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.data.privacy.application.usecases.manage.consent_records;
 
-
-
 // import uim.platform.data.privacy.domain.entities.consent_record;
 // import uim.platform.data.privacy.domain.ports.repositories.consent_records;
 // import uim.platform.data.privacy.domain.ports.repositories.data_subjects;

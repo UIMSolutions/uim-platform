@@ -5,8 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.data.privacy.application.usecases.manage.data_retrievals;
 
-
-
 // import uim.platform.data.privacy.domain.entities.data_retrieval_request;
 // import uim.platform.data.privacy.domain.ports.repositories.data_retrieval_requests;
 // import uim.platform.data.privacy.domain.ports.repositories.data_subjects;

@@ -8,8 +8,6 @@ module uim.platform.data_attribute_recommendation.application.usecases.manage.da
 
 
 
-// import uim.platform.data_attribute_recommendation.domain.ports.repositories.data_records;
-// import uim.platform.data_attribute_recommendation.application.dto;
 import uim.platform.data_attribute_recommendation;
 
 // mixin(ShowModule!());

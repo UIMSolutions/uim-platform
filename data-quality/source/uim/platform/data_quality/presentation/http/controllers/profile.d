@@ -5,10 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.data_quality.presentation.http.controllers.profile;
 
-// import uim.platform.data_quality.application.usecases.profile_data;
-
-
-// import uim.platform.data_quality.domain.entities.data_profile;
+import uim.platform.service;
 import uim.platform.data_quality;
 
 // mixin(ShowModule!());

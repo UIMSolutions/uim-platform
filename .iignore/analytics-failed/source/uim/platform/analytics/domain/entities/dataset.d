@@ -47,8 +47,6 @@ struct Dataset {
 
 }
 
-
-
 struct Column {
   string name;
   ColumnRole role;

@@ -11,29 +11,63 @@ import uim.platform.identity.directory;
 
 @safe:
 
-
 /// SCIM 2.0 user status.
 enum UserStatus {
-  active,
-  inactive,
-  locked,
-  staged,
+  active, // User is active and can authenticate
+  inactive, // User is inactive and cannot authenticate
+  locked, // User is locked due to too many failed login attempts
+  staged, // User is staged for activation but not yet active
+  provisioning, // User is currently being provisioned and not yet active
+  pending // User is pending activation (e.g. awaiting email verification)
 }
+UserStatus toUserStatus(string s) {
+  const map = [
+    "active": UserStatus.active,
+    "inactive": UserStatus.inactive,
+    "locked": UserStatus.locked,
+    "staged": UserStatus.staged
+  ];
+  return map.get(s.toLower, UserStatus.inactive);
+}
+
 /// SCIM 2.0 group type.
 enum GroupType {
-  standard,
-  dynamic,
+  standard, // Standard group with direct members
+  dynamic, // Dynamic group with membership based on rules
+  nested // Nested group that can contain other groups as members
 }
+GroupType toGroupType(string s) {
+  const map = [
+    "standard": GroupType.standard,
+    "dynamic": GroupType.dynamic,
+    "nested": GroupType.nested
+  ];
+  return map.get(s.toLower, GroupType.standard);
+}
+
 /// Attribute data types for custom schemas.
 enum AttributeType {
-  stringType,
-  integerType,
-  booleanType,
-  dateTimeType,
-  referenceType,
-  complexType,
-  binaryType,
+  stringType, // String data type
+  integerType, // Integer data type
+  booleanType, // Boolean data type
+  dateTimeType, // DateTime data type
+  referenceType, // Reference to another resource
+  complexType, // Complex type with sub-attributes
+  binaryType, // Binary data type
 }
+AttributeType toAttributeType(string s) {
+  const map = [
+    "string": AttributeType.stringType,
+    "integer": AttributeType.integerType,
+    "boolean": AttributeType.booleanType,
+    "dateTime": AttributeType.dateTimeType,
+    "reference": AttributeType.referenceType,
+    "complex": AttributeType.complexType,
+    "binary": AttributeType.binaryType
+  ];
+  return map.get(s.toLower, AttributeType.stringType);
+}
+
 /// Attribute mutability (SCIM 2.0).
 enum Mutability {
   readWrite,
@@ -41,6 +75,16 @@ enum Mutability {
   writeOnly,
   immutable_,
 }
+Mutability toMutability(string s) {
+  const map = [
+    "readWrite": Mutability.readWrite,
+    "readOnly": Mutability.readOnly,
+    "writeOnly": Mutability.writeOnly,
+    "immutable": Mutability.immutable_
+  ];
+  return map.get(s.toLower, Mutability.readWrite);
+}
+
 /// Attribute returned behavior (SCIM 2.0).
 enum Returned {
   always,
@@ -48,12 +92,31 @@ enum Returned {
   default_,
   request,
 }
+Returned toReturned(string s) {
+  const map = [
+    "always": Returned.always,
+    "never": Returned.never,
+    "default": Returned.default_,
+    "request": Returned.request
+  ];
+  return map.get(s.toLower, Returned.default_);
+}
+
 /// Attribute uniqueness (SCIM 2.0).
 enum Uniqueness {
   none,
   server,
   global,
 }
+Uniqueness toUniqueness(string s) {
+  const map = [
+    "none": Uniqueness.none,
+    "server": Uniqueness.server,
+    "global": Uniqueness.global
+  ];
+  return map.get(s.toLower, Uniqueness.none);
+}
+
 /// Password policy strength level.
 enum PasswordStrength {
   weak,
@@ -61,16 +124,26 @@ enum PasswordStrength {
   strong,
   enterprise,
 }
+PasswordStrength toPasswordStrength(string s) {
+  const map = [
+    "weak": PasswordStrength.weak,
+    "standard": PasswordStrength.standard,
+    "strong": PasswordStrength.strong,
+    "enterprise": PasswordStrength.enterprise
+  ];
+  return map.get(s.toLower, PasswordStrength.standard);
+}
+
 /// Audit event type.
 enum AuditEventType {
-  userCreated,
-  userUpdated,
-  userDeleted,
-  userActivated,
-  userDeactivated,
-  userLocked,
-  userUnlocked,
-  passwordChanged,
+  userCreated, // A user account was created
+  userUpdated, // A user account was updated
+  userDeleted, // A user account was deleted
+  userActivated, // A user account was activated
+  userDeactivated, // A user account was deactivated
+  userLocked, // A user account was locked due to too many failed login attempts
+  userUnlocked, // A user account was unlocked by an administrator
+  passwordChanged, // A user changed their password
   passwordReset,
   groupCreated,
   groupUpdated,
@@ -85,8 +158,41 @@ enum AuditEventType {
   loginSuccess,
   loginFailure,
 }
+AuditEventType toAuditEventType(string s) {
+  const map = [
+    "usercreated": AuditEventType.userCreated,
+    "userupdated": AuditEventType.userUpdated,
+    "userdeleted": AuditEventType.userDeleted,
+    "useractivated": AuditEventType.userActivated,
+    "userdeactivated": AuditEventType.userDeactivated,
+    "userlocked": AuditEventType.userLocked,
+    "userunlocked": AuditEventType.userUnlocked,
+    "passwordchanged": AuditEventType.passwordChanged,
+    "passwordreset": AuditEventType.passwordReset,
+    "groupcreated": AuditEventType.groupCreated,
+    "groupupdated": AuditEventType.groupUpdated,
+    "groupdeleted": AuditEventType.groupDeleted,
+    "memberadded": AuditEventType.memberAdded,
+    "memberremoved": AuditEventType.memberRemoved,
+    "schemacreated": AuditEventType.schemaCreated,
+    "schemaupdated": AuditEventType.schemaUpdated,
+    "schemadeleted": AuditEventType.schemaDeleted,
+    "apiclientcreated": AuditEventType.apiClientCreated,
+    "apiclientrevoked": AuditEventType.apiClientRevoked,
+    "loginsuccess": AuditEventType.loginSuccess,
+    "loginfailure": AuditEventType.loginFailure
+  ];
+  return map.get(s.toLower, AuditEventType.loginFailure);
+}
 /// Sort order.
 enum SortOrder {
-  ascending,
-  descending,
+  ascending, // Sort in ascending order (A-Z, 0-9)
+  descending, // Sort in descending order (Z-A, 9-0)
+}
+SortOrder toSortOrder(string s) {
+  const map = [
+    "ascending": SortOrder.ascending, 
+    "descending": SortOrder.descending
+  ];
+  return map.get(s.toLower, SortOrder.ascending);
 }

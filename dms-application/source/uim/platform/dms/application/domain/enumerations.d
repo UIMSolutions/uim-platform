@@ -28,8 +28,6 @@ enum PermissionLevel {
   owner,
 }
 
-
-
 enum ShareType {
   internal,
   external,

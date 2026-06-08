@@ -7,8 +7,6 @@ module uim.platform.logging.application.usecases.manage.pipelines;
 // import uim.platform.logging.domain.entities.pipeline;
 // import uim.platform.logging.domain.ports.repositories.pipelines;
 
-
-
 import std.conv : ConvException, to;
 import std.string : toLower;
 import uim.platform.logging;

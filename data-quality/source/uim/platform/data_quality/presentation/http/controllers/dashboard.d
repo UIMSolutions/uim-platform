@@ -5,14 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.data_quality.presentation.http.controllers.dashboard;
 
-
-
-
-
-// import uim.platform.data_quality.application.usecases.compute_dashboard;
-
-
-// import uim.platform.data_quality.domain.entities.quality_dashboard;
+import uim.platform.service;
 import uim.platform.data_quality;
 
 // mixin(ShowModule!());

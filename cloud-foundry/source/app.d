@@ -5,10 +5,6 @@
 *****************************************************************************************************************/
 module app;
 
-
-
-
-
 // import uim.platform.foundry.infrastructure.config;
 // import uim.platform.foundry.infrastructure.container;
 

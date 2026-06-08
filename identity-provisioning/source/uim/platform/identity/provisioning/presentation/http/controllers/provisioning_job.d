@@ -52,112 +52,145 @@ class ProvisioningJobController : HttpController {
     auto result = usecase.createJob(r);
     if (result.isSuccess) {
       auto resp = Json.emptyObject
-        .set("id", result.id)
-        .set("status", "scheduled");
+        .set("id", result.id);
 
-      res.writeJsonBody(resp, 201);
-    } else
-      writeError(res, 400, result.message);
-  }
- catch (Exception e) {
-    writeError(res, 500, "Internal server error");
-  }
-}
+      return successResponse("Provisioning job created successfully", 201, resp);
+    }
 
-override protected Json listHandler(HTTPServerRequest req) {
-  auto precheck = super.listHandler(req);
-  if (precheck.hasError)
-    return precheck;
+    override protected Json listHandler(HTTPServerRequest req) {
+      auto precheck = super.listHandler(req);
+      if (precheck.hasError)
+        return precheck;
 
-  auto tenantId = precheck.tenantId;
+      auto tenantId = precheck.tenantId;
 
-  auto items = usecase.listJobs(tenantId);
-  auto arr = items.map!(j => j.toJson).array.toJson;
+      auto items = usecase.listJobs(tenantId);
+      auto arr = items.map!(j => j.toJson).array.toJson;
 
-  auto resp = Json.emptyObject
-    .set("items", arr)
-    .set("totalCount", items.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", items.length);
 
-  res.writeJsonBody(resp, 200);
-}
- catch (Exception e) {
-  writeError(res, 500, "Internal server error");
-}
-}
+      return successResponse("Provisioning jobs retrieved successfully", 200, resp);
+    }
 
-override protected Json getHandler(HTTPServerRequest req) {
-  auto precheck = super.getHandler(req);
-  if (precheck.hasError)
-    return precheck;
+    override protected Json getHandler(HTTPServerRequest req) {
+      auto precheck = super.getHandler(req);
+      if (precheck.hasError)
+        return precheck;
 
-  auto tenantId = precheck.tenantId;
-  auto id = precheck.id;
-  auto tenantId = precheck.tenantId;
-  auto job = usecase.getJob(tenantId, id);
-  if (job.isNull)
-    return errorResponse("Provisioning job not found", 404);
+      auto tenantId = precheck.tenantId;
+      auto id = ProvisioningJobId(precheck.id);
+      if (id.isNull)
+        return errorResponse("Invalid provisioning job ID", 400);
 
-  auto resp = job.toJson;
-  return successResponse("Provisioning job retrieved successfully", 200, resp);
-}
+      auto job = usecase.getJob(tenantId, id);
+      if (job.isNull)
+        return errorResponse("Provisioning job not found", 404);
 
-protected void handleRun(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-  try {
-    auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
-    auto tenantId = precheck.tenantId;
+      auto resp = job.toJson;
+      return successResponse("Provisioning job retrieved successfully", 200, resp);
+    }
 
-    auto result = usecase.runJob(tenantId, id);
-    if (result.isSuccess) {
+    protected Json runHandler(HTTPServerRequest req) {
+      auto precheck = super.postHandler(req);
+      if (precheck.hasError)
+        return precheck;
+
+      auto tenantId = precheck.tenantId;
+      auto id = ProvisioningJobId(precheck.id);
+      if (id.isNull)
+        return errorResponse("Invalid provisioning job ID", 400);
+
+      auto result = usecase.runJob(tenantId, id);
+      if (result.hasError)
+        return errorResponse(result.message, 400);
+
       auto resp = Json.emptyObject
         .set("id", result.id)
-        .set("status", "completed");
+        .set("status", "running");
+      return successResponse("Provisioning job started successfully", 200, resp);
+    }
 
-      res.writeJsonBody(resp, 200);
-    } else
-      writeError(res, 400, result.message);
-  } catch (Exception e) {
-    writeError(res, 500, "Internal server error");
+    protected void handleRun(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+      try {
+        auto response = runHandler(req);
+        res.writeJsonBody(response, response.code);
+      } catch (Exception e) {
+        writeError(res, 500, "Internal server error");
+      }
+    }
+
+    protected Json createAndRunHandler(HTTPServerRequest req) {
+      auto createResponse = super.postHandler(req);
+      if (createResponse.hasError)
+        return createResponse;
+
+      auto id = createResponse.data.getString("id");
+      if (id is null)
+        return errorResponse("Failed to retrieve created job ID", 500);
+
+      auto runResponse = runHandler(req);
+      if (runResponse.hasError)
+        return runResponse;
+
+      auto resp = Json.emptyObject
+        .set("id", id)
+        .set("status", "running");
+      return successResponse("Provisioning job created and started successfully", 201, resp);
+    }
+
+    protected void handleCreateAndRun(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+      try {
+        auto response = createAndRunHandler(req);
+        res.writeJsonBody(response, response.code);
+      } catch (Exception e) {
+        writeError(res, 500, "Internal server error");
+      }
+    }
+
+    protected Json cancelHandler(HTTPServerRequest req) {
+      auto precheck = super.postHandler(req);
+      if (precheck.hasError)
+        return precheck;
+
+      auto tenantId = precheck.tenantId;
+      auto id = ProvisioningJobId(precheck.id);
+      if (id.isNull)
+        return errorResponse("Invalid provisioning job ID", 400);
+
+      auto result = usecase.cancelJob(tenantId, id);
+      if (result.hasError)
+        return errorResponse(result.message, 400);
+
+      auto resp = Json.emptyObject
+        .set("id", result.id);
+      return successResponse("Provisioning job cancelled successfully", 200, resp);
+    }
+
+    protected void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+      try {
+        auto response = cancelHandler(req);
+        res.writeJsonBody(response, response.code);
+      } catch (Exception e) {
+        writeError(res, 500, "Internal server error");
+      }
+    }
+
+    override protected Json deleteHandler(HTTPServerRequest req) {
+      auto precheck = super.deleteHandler(req);
+      if (precheck.hasError)
+        return precheck;
+
+      auto tenantId = precheck.tenantId;
+      auto id = ProvisioningJobId(precheck.id);
+      if (id.isNull) // This should ideally never happen since the route requires an ID, but we check just in case
+        return errorResponse("Invalid provisioning job ID", 400);
+
+      auto result = usecase.deleteJob(tenantId, id);
+      if (result.hasError)
+
+        auto resp = Json.emptyObject.set("id", result.id);
+      return successResponse("Provisioning job deleted successfully", 200, resp);
+    }
   }
-}
-
-override protected void handleCreate(AndRun(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-  try {
-    auto tenantId = precheck.tenantId; auto data = precheck.data; auto r = CreateProvisioningJobRequest();
-      r.tenantId = tenantId; r.sourceSystemId = data.getString("sourceSystemId"); r.targetSystemId = data.getString(
-        "targetSystemId"); r.jobType = parseJobType(data.getString("jobType")); r.schedule = data.getString(
-        "schedule"); r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
-
-      auto result = usecase.createAndRunJob(r); if (result.isSuccess) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("status", "completed"); res.writeJsonBody(resp, 201);} else
-            writeError(res, 400, result.message);} catch (Exception e) {
-              writeError(res, 500, "Internal server error");}
-            }
-
-        protected void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-          try {
-            auto tenantId = precheck.tenantId; auto id = precheck.id; auto tenantId = precheck
-              .tenantId; auto result = usecase.cancelJob(tenantId, id); if (result.isSuccess) {
-                auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("status", "cancelled"); res.writeJsonBody(resp, 200);} else
-                    writeError(res, 400, result.message);} catch (Exception e) {
-                      writeError(res, 500, "Internal server error");}
-                    }
-
-                override protected Json deleteHandler(HTTPServerRequest req) {
-                  auto precheck = super.deleteHandler(req); if (precheck.hasError)
-                    return precheck; auto tenantId = precheck.tenantId; auto id = precheck.id;
-                      auto tenantId = precheck.tenantId; auto result = usecase.deleteJob(
-                        tenantId, id); if (result.isSuccess) {
-                        auto resp = Json.emptyObject
-                          .set("deleted", true); res.writeJsonBody(resp, 200);} else {
-                            auto status = result.message == "Provisioning job not found" ? 404 : 400;
-                              writeError(res, status, result.message);}
-                          }
- catch (Exception e) {
-                          writeError(res, 500, "Internal server error");}
-                        }
-                      }

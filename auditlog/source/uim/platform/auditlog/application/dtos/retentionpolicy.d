@@ -13,8 +13,6 @@ struct CreateRetentionPolicyRequest {
   bool isDefault;
 }
 
-
-
 struct UpdateRetentionPolicyRequest {
   TenantId tenantId;
   RetentionPolicyId retentionPolicyId;

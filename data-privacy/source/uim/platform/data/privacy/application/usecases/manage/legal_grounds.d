@@ -5,8 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.data.privacy.application.usecases.manage.legal_grounds;
 
-
-
 // import uim.platform.data.privacy.domain.entities.legal_ground;
 // import uim.platform.data.privacy.domain.ports.repositories.legal_grounds;
 // import uim.platform.data.privacy.application.dto;

@@ -4,11 +4,8 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.data_quality.presentation.http.controllers.duplicate;
-// import uim.platform.data_quality.application.usecases.detect_duplicates;
 
-
-// import uim.platform.data_quality.domain.entities.match_group;
-// import uim.platform.data_quality.domain.services.duplicate_detector : RecordEntry;
+import uim.platform.service;
 import uim.platform.data_quality;
 
 // mixin(ShowModule!());
@@ -89,8 +86,8 @@ class DuplicateController : HttpController {
     }
   }
 
-  override protected Json listHandler(HTTPServerRequest req) {
-    auto precheck = super.listHandler(req);
+  protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
     if (precheck.hasError)
       return precheck;
 
@@ -99,8 +96,8 @@ class DuplicateController : HttpController {
     auto arr = groups.map!(g => g.toJson).array.toJson;
 
     auto responseData = Json.emptyObject
-      .set("count", list.length)
-      .set("resources", list);
+      .set("count", groups.length)
+      .set("resources", arr);
     return successResponse("Duplicate groups retrieved successfully", "Retrieved", 200, responseData);
   }
 
@@ -111,7 +108,6 @@ class DuplicateController : HttpController {
 
     auto tenantId = precheck.tenantId;
     auto id = precheck.id;
-    auto tenantId = precheck.tenantId;
     auto group = usecase.getById(tenantId, id);
     if (group.isNull)
       return errorResponse("Scan job not found", 404);

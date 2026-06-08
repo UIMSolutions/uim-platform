@@ -5,8 +5,6 @@
 *****************************************************************************************************************/
 module app;
 
-
-
 // import uim.platform.data_attribute_recommendation.infrastructure.config;
 // import uim.platform.data_attribute_recommendation.infrastructure.container;
 

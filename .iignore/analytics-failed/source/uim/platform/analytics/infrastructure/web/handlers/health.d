@@ -5,8 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.analytics.infrastructure.web.handlers.health;
 
-
-
 import uim.platform.analytics;
 
 // mixin(ShowModule!());

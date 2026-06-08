@@ -5,7 +5,10 @@
 *****************************************************************************************************************/
 module uim.platform.data_quality.infrastructure.persistence.memory.validation_rules;
 
+import uim.platform.data_quality.domain.ports.repositories.validation_rules;
 import uim.platform.data_quality;
+import uim.platform.service;
+import uim.platform.data_quality.domain.entities.validation_rule;
 
 // mixin(ShowModule!());
 

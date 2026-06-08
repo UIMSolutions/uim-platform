@@ -11,8 +11,6 @@ import uim.platform.personal_data;
 
 @safe:
 
-
-
 // --- Data Subject ---
 struct CreateDataSubjectRequest {
     TenantId tenantId;

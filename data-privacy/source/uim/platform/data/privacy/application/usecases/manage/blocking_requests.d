@@ -5,8 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.data.privacy.application.usecases.manage.blocking_requests;
 
-
-
 // import uim.platform.data.privacy.domain.entities.blocking_request;
 // import uim.platform.data.privacy.domain.ports.repositories.blocking_requests;
 // import uim.platform.data.privacy.domain.ports.repositories.data_subjects;

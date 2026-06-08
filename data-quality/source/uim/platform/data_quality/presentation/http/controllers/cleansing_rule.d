@@ -9,6 +9,7 @@ module uim.platform.data_quality.presentation.http.controllers.cleansing_rule;
 
 
 // import uim.platform.data_quality.domain.entities.cleansing_rule;
+import uim.platform.service;
 import uim.platform.data_quality;
 
 // mixin(ShowModule!());

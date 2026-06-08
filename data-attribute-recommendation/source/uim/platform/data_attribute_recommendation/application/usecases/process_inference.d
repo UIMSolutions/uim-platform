@@ -6,14 +6,12 @@
 module uim.platform.data_attribute_recommendation.application.usecases.process_inference;
 
 
-
-
 // import uim.platform.data_attribute_recommendation.domain.entities.inference_request;
 // import uim.platform.data_attribute_recommendation.domain.entities.inference_result;
 // import uim.platform.data_attribute_recommendation.domain.ports.repositories.inference_requests;
 // import uim.platform.data_attribute_recommendation.domain.ports.repositories.inference_results;
 // import uim.platform.data_attribute_recommendation.domain.services.inference_engine;
-// import uim.platform.data_attribute_recommendation.application.dto;
+
 import uim.platform.data_attribute_recommendation;
 
 // mixin(ShowModule!());

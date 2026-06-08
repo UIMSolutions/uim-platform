@@ -5,8 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.identity.authentication.presentation.http.controllers.policy;
 
-
-
 // import uim.platform.identity.authentication.application.usecases.manage.policies;
 // import uim.platform.identity.authentication.application.dto;
 // import uim.platform.identity.authentication.domain.entities.policy;

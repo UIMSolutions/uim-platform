@@ -5,11 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.data_quality.application.dto;
 
-// import uim.platform.data_quality.domain.entities.validation_result : RuleViolation;
-// import uim.platform.data_quality.domain.entities.match_group : MatchCandidate, FieldMatch;
-// import uim.platform.data_quality.domain.entities.data_profile : ColumnProfile;
-// import uim.platform.data_quality.domain.entities.quality_dashboard : RuleSeverityCount,
-//   QualityTrendPoint;
 import uim.platform.data_quality;
 
 // mixin(ShowModule!());

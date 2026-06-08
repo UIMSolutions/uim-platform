@@ -50,8 +50,6 @@ struct DataSource {
   }
 }
 
-
-
 struct ConnectionInfo {
   string host;
   int port;

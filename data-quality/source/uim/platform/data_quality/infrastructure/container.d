@@ -6,37 +6,38 @@
 module uim.platform.data_quality.infrastructure.container;
 // import uim.platform.data_quality.infrastructure.config;
 // Repositories
-// import uim.platform.data_quality.infrastructure.persistence.memory.validation_rule;
-// import uim.platform.data_quality.infrastructure.persistence.memory.validation_result;
-// import uim.platform.data_quality.infrastructure.persistence.memory.address;
-// import uim.platform.data_quality.infrastructure.persistence.memory.match_group;
-// import uim.platform.data_quality.infrastructure.persistence.memory.data_profile;
-// import uim.platform.data_quality.infrastructure.persistence.memory.cleansing_rule;
-// import uim.platform.data_quality.infrastructure.persistence.memory.cleansing_job;
+import uim.platform.data_quality.infrastructure.persistence.memory.validation_rules;
+import uim.platform.data_quality.infrastructure.persistence.memory.validation_results;
+import uim.platform.data_quality.infrastructure.persistence.memory.addresses;
+import uim.platform.data_quality.infrastructure.persistence.memory.match_groups;
+import uim.platform.data_quality.infrastructure.persistence.memory.data_profiles;
+import uim.platform.data_quality.infrastructure.persistence.memory.cleansing_rules;
+import uim.platform.data_quality.infrastructure.persistence.memory.cleansing_jobs;
 // Domain services
 
-// import uim.platform.data_quality.domain.services.address_cleanser;
-// import uim.platform.data_quality.domain.services.duplicate_detector;
-// import uim.platform.data_quality.domain.services.quality_scorer;
+import uim.platform.data_quality.domain.services.address_cleanser;
+import uim.platform.data_quality.domain.services.duplicate_detector;
+import uim.platform.data_quality.domain.services.quality_scorer;
 // Use cases
-// import uim.platform.data_quality.application.usecases.manage.validation_rules;
-// import uim.platform.data_quality.application.usecases.validate_data;
-// import uim.platform.data_quality.application.usecases.cleanse_addresses;
-// import uim.platform.data_quality.application.usecases.detect_duplicates;
-// import uim.platform.data_quality.application.usecases.profile_data;
-// import uim.platform.data_quality.application.usecases.manage.cleansing_rules;
-// import uim.platform.data_quality.application.usecases.manage.cleansing_jobs;
-// import uim.platform.data_quality.application.usecases.compute_dashboard;
+import uim.platform.data_quality.application.usecases.manage.validation_rules;
+import uim.platform.data_quality.application.usecases.validate_data;
+import uim.platform.data_quality.application.usecases.cleanse_addresses;
+import uim.platform.data_quality.application.usecases.detect_duplicates;
+import uim.platform.data_quality.application.usecases.profile_data;
+import uim.platform.data_quality.application.usecases.manage.cleansing_rules;
+import uim.platform.data_quality.application.usecases.manage.cleansing_jobs;
+import uim.platform.data_quality.application.usecases.compute_dashboard;
 // Controllers
-// import uim.platform.data_quality.presentation.http.validation_rule;
-// import uim.platform.data_quality.presentation.http.validate;
-// import uim.platform.data_quality.presentation.http.address;
-// import uim.platform.data_quality.presentation.http.duplicate;
-// import uim.platform.data_quality.presentation.http.profile;
-// import uim.platform.data_quality.presentation.http.cleansing_rule;
-// import uim.platform.data_quality.presentation.http.cleansing_job;
-// import uim.platform.data_quality.presentation.http.dashboard;
-// import uim.platform.data_quality.presentation.http.health;
+import uim.platform.data_quality.presentation.http.controllers.validation_rule;
+import uim.platform.data_quality.presentation.http.controllers.validate;
+import uim.platform.data_quality.presentation.http.controllers.address;
+import uim.platform.data_quality.presentation.http.controllers.duplicate;
+import uim.platform.data_quality.presentation.http.controllers.profile;
+import uim.platform.data_quality.presentation.http.controllers.cleansing_rule;
+import uim.platform.data_quality.presentation.http.controllers.cleansing_job;
+import uim.platform.data_quality.presentation.http.controllers.dashboard;
+
+import uim.platform.service;
 import uim.platform.data_quality;
 
 // mixin(ShowModule!());

@@ -55,8 +55,6 @@ struct WidgetBinding {
   AggregationType aggregation;
 }
 
-
-
 struct FilterSpec {
   string column;
   FilterOperator operator;

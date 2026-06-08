@@ -5,11 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.data_quality.presentation.http.controllers.address;
 
-// import uim.platform.data_quality.application.usecases.cleanse_addresses;
-
-
-// import uim.platform.data_quality.domain.entities.address_record;
+import uim.platform.service;
 import uim.platform.data_quality;
+import uim.platform.data_quality.application;
+import uim.platform.data_quality.domain;
+import uim.platform.data_quality.helpers;
+import uim.platform.data_quality.infrastructure;
+import uim.platform.data_quality.presentation;
 
 // mixin(ShowModule!());
 
@@ -104,8 +106,8 @@ class AddressController : HttpController {
     }
   }
 
-  override protected Json listHandler(HTTPServerRequest req) {
-    auto precheck = super.listHandler(req);
+  protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
     if (precheck.hasError)
       return precheck;
 

@@ -7,8 +7,6 @@ module uim.platform.logging.infrastructure.persistence.memory.log_entries;
 // import uim.platform.logging.domain.entities.log_entry;
 // import uim.platform.logging.domain.ports.repositories.log_entrys;
 
-
-
  
 // import std.string : indexOf;
 import uim.platform.logging;

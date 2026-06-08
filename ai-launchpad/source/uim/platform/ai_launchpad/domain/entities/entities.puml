@@ -39,8 +39,6 @@ entity Connection {
     description : string
 }
 
-
-
 Tenant "1" -- "0..1" AuditConfig : configuration
 Tenant "1" -- "0..*" Connection : connections
 

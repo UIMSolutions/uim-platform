@@ -5,8 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.identity.authentication.presentation.http.controllers.tenant;
 
-
-
 // import uim.platform.identity.authentication.application.usecases.manage.tenants;
 // import uim.platform.identity.authentication.application.dto;
 // import uim.platform.identity.authentication.domain.entities.tenant;

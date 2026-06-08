@@ -5,8 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.kyma.presentation.http.controllers.function_;
 
-
-
 // import uim.platform.kyma.application.usecases.manage.functions;
 // import uim.platform.kyma.application.dto;
 // import uim.platform.kyma.domain.entities.serverless_function;

@@ -5,14 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.data_attribute_recommendation.domain.services.model_trainer;
 
-
-
 // import uim.platform.data_attribute_recommendation.domain.entities.model_configuration;
 // import uim.platform.data_attribute_recommendation.domain.entities.training_job;
 
 // import uim.platform.data_attribute_recommendation.domain.ports.repositories.model_configs;
 // import uim.platform.data_attribute_recommendation.domain.ports.repositories.training_jobs;
-// import uim.platform.data_attribute_recommendation.domain.ports.repositories.data_records;
+
 import uim.platform.data_attribute_recommendation;
 
 // mixin(ShowModule!());

@@ -197,8 +197,6 @@ class UserController : ManageHttpController {
   }
 }
 
-
-
 private Email[] parseEmails(Json j) {
   Email[] result;
   if (!j.isObject)

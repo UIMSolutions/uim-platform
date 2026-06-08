@@ -5,8 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.data_quality.application.usecases.profile_data;
 
-
-
 // import uim.platform.data_quality.domain.entities.data_profile;
 // import uim.platform.data_quality.domain.ports.repositories.data_profiles;
 

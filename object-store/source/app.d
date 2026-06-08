@@ -5,10 +5,6 @@
 *****************************************************************************************************************/
 module app;
 
-
-
-
-
 // import uim.platform.object_store.infrastructure.config;
 // import uim.platform.object_store.infrastructure.container;
 
