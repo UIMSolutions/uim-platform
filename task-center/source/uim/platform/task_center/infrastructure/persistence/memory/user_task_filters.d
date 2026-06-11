@@ -13,31 +13,31 @@ import uim.platform.task_center;
 
 class MemoryUserTaskFilterRepository : TenantRepository!(UserTaskFilter, UserTaskFilterId), UserTaskFilterRepository {
 
+    bool existsDefault(TenantId tenantId, UserId userId) {
+        return findDefault(tenantId, userId).id != UserTaskFilterId.init;
+    }
+    UserTaskFilter findDefault(TenantId tenantId, UserId userId) {
+        foreach (f; findByUser(tenantId, userId))
+            if (f.isDefault) return f;
+        return UserTaskFilter.init;
+    }
+    void removeDefault(TenantId tenantId, UserId userId) {
+        auto filter = findDefault(tenantId, userId);
+        if (filter.id != UserTaskFilterId.init) {
+            remove(filter);
+            return true;
+        }
+        return false;
+    }
 
     size_t countByUser(TenantId tenantId, UserId userId) {
         return findByUser(tenantId, userId).length;
     }
     UserTaskFilter[] findByUser(TenantId tenantId, UserId userId) {
-        UserTaskFilter[] result;
-        if (auto arr = tenantId in store)
-            foreach (f; *arr)
-                if (f.userId == userId) result ~= f;
-        return result;
+        return findByTenant(tenantId).filter!(f => f.userId == userId).array;
     }
     void removeByUser(TenantId tenantId, UserId userId) {
-        if (auto arr = tenantId in store) {
-            UserTaskFilter[] filtered;
-            foreach (f; *arr)
-                if (f.userId != userId) filtered ~= f;
-            store[tenantId] = filtered;
-        }
+        foreach (f; findByUser(tenantId, userId))
+            remove(f);
     }
-
-    UserTaskFilter findDefault(TenantId tenantId, UserId userId) {
-        if (auto arr = tenantId in store)
-            foreach (f; *arr)
-                if (f.userId == userId && f.isDefault) return f;
-        return UserTaskFilter.init;
-    }
-
 }

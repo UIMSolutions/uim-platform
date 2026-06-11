@@ -13,14 +13,17 @@ import uim.platform.task_center;
 
 class MemoryTaskProviderRepository : TenantRepository!(TaskProvider, TaskProviderId), TaskProviderRepository {
 
-    size_t countByName(TenantId tenantId, string name) {
-        return findByName(tenantId, name).length;
+    bool existsByName(TenantId tenantId, string name) {
+        return findByName(tenantId, name).id != TaskProviderId.init;
     }
-    TaskProvider[] findByName(TenantId tenantId, string name) {
-        return findByTenant(tenantId).filter!(p => p.name == name).array;
+    TaskProvider findByName(TenantId tenantId, string name) {
+        foreach (p; findByTenant(tenantId))
+            if (p.name == name) return p;
+        return TaskProvider.init;
     }
     void removeByName(TenantId tenantId, string name) {
-        findByName(tenantId, name).each!(p => remove(p));
+        auto provider = findByName(tenantId, name);
+        if (provider.id != TaskProviderId.init) remove(provider);
     }
 
     size_t countByStatus(TenantId tenantId, ProviderStatus status) {
@@ -35,6 +38,9 @@ class MemoryTaskProviderRepository : TenantRepository!(TaskProvider, TaskProvide
         findByStatus(tenantId, status).each!(p => remove(p));
     }
 
+    size_t countByType(TenantId tenantId, ProviderType ptype) {
+        return findByType(tenantId, ptype).length;
+    }
     TaskProvider[] findByType(TenantId tenantId, ProviderType ptype) {
         return findByTenant(tenantId).filter!(p => p.providerType == ptype).array;
     }

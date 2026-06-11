@@ -26,7 +26,7 @@ class ManageTaskActionsUseCase { // TODO: UIMUseCase {
         return repo.findByTask(tenantId, taskId);
     }
 
-    TaskAction[] listTaskActions(TenantId tenantId, PerformerId performerId) {
+    TaskAction[] listTaskActions(TenantId tenantId, UserId performerId) {
         return repo.findByPerformer(tenantId, performerId);
     }
 
@@ -34,14 +34,14 @@ class ManageTaskActionsUseCase { // TODO: UIMUseCase {
         TaskAction action;
         action.initEntity(req.tenantId);
 
-        action.id = req.id;
+        action.id = req.actionId;
         action.taskId = req.taskId;
         action.performedBy = req.performedBy;
         action.forwardTo = req.forwardTo;
         action.comment = req.comment;
 
         repo.save(action);
-        return CommandResult(true, req.id.value, "");
+        return CommandResult(true, action.id.value, "");
     }
 
     CommandResult deleteTaskAction(TenantId tenantId, TaskActionId id) {

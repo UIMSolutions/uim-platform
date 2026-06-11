@@ -47,23 +47,25 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createTask(CreateTaskRequest req) {
-        if (!TaskValidator.validate(req.id, req.title))
+        if (!TaskValidator.validate(req.taskId, req.title))
             return CommandResult(false, "", "Invalid task data");
-        Task t;
-        t.id = req.id;
-        t.tenantId = req.tenantId;
-        t.taskDefinitionId = req.taskDefinitionId;
-        t.providerId = req.providerId;
-        t.externalTaskId = req.externalTaskId;
-        t.title = req.title;
-        t.description = req.description;
-        t.assignee = req.assignee;
-        t.creator = req.creator;
-        t.sourceApplication = req.sourceApplication;
-        t.dueDate = req.dueDate;
-        t.createdBy = req.createdBy;
-        repo.save(req.tenantId, t);
-        return CommandResult(true, req.id.value, "");
+        
+        auto task = UIMTask(req.tenantId);
+        task.id = req.taskId;
+
+        task.definitionId = req.definitionId;
+        task.providerId = req.providerId;
+        task.externalTaskId = req.externalTaskId;
+        task.title = req.title;
+        task.description = req.description;
+        task.assignee = req.assignee;
+        task.creator = req.creator;
+        task.sourceApplication = req.sourceApplication;
+        task.dueDate = req.dueDate;
+        task.createdBy = req.createdBy;
+
+        repo.save(req.tenantId, task);
+        return CommandResult(true, task.id.value, "");
     }
 
     CommandResult updateTask(UpdateTaskRequest req) {

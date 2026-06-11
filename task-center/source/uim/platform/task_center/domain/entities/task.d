@@ -11,12 +11,12 @@ import uim.platform.task_center;
 
 @safe:
 
-struct Task {
-    mixin TenantEntity!(TaskId);
+struct UIMTask {
+    mixin TenantEntity!TaskId;
 
-    TaskDefinitionId taskDefinitionId;
+    TaskDefinitionId definitionId;
     TaskProviderId providerId;
-    string externalTaskId;
+    TaskId externalTaskId;
 
     string title;
     string description;
@@ -42,7 +42,7 @@ struct Task {
         return entityToJson
             .set("taskDefinitionId", taskDefinitionId.value)
             .set("providerId", providerId.value)
-            .set("externalTaskId", externalTaskId)
+            .set("externalTaskId", externalTaskId.value)
             .set("title", title)
             .set("description", description)
             .set("status", status.toString)

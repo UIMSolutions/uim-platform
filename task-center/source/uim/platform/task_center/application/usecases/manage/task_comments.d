@@ -30,9 +30,9 @@ class ManageTaskCommentsUseCase { // TODO: UIMUseCase {
         TaskComment comment;
         comment.initEntity(req.tenantId);
 
-        comment.id = req.id;
+        comment.id = req.commentId;
         comment.taskId = req.taskId;
-        comment.author = req.author;
+        // TODO: comment.author = req.author;
         comment.content = req.content;
 
         repo.save(comment);
@@ -40,12 +40,12 @@ class ManageTaskCommentsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateTaskComment(UpdateTaskCommentRequest req) {
-        auto existing = repo.findById(req.tenantId, req.id);
+        auto existing = repo.findById(req.tenantId, req.commentId);
         if (existing.isNull)
             return CommandResult(false, "", "Comment not found");
         if (req.content.length > 0) existing.content = req.content;
  
-        repo.update(req.tenantId, existing);
+        repo.update(existing);
         return CommandResult(true, existing.id.value, "");
     }
 

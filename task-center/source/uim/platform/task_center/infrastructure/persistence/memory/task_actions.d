@@ -13,23 +13,23 @@ import uim.platform.task_center;
 
 class MemoryTaskActionRepository : TenantRepository!(TaskAction, TaskActionId), TaskActionRepository {
 
-    size_t countByTask(TenantId tenantId, string taskId) {
+    size_t countByTask(TenantId tenantId, TaskId taskId) {
         return findByTask(tenantId, taskId).length;
     }
-    TaskAction[] findByTask(TenantId tenantId, string taskId) {
+    TaskAction[] findByTask(TenantId tenantId, TaskId taskId) {
         return findByTenant(tenantId).filter!(a => a.taskId == taskId).array;
     }
-    void removeByTask(TenantId tenantId, string taskId) {
+    void removeByTask(TenantId tenantId, TaskId taskId) {
         findByTask(tenantId, taskId).each!(a => remove(a));
     }
 
-    size_t countByPerformer(TenantId tenantId, string performerId) {
+    size_t countByPerformer(TenantId tenantId, UserId performerId) {
         return findByPerformer(tenantId, performerId).length;
     }
-    TaskAction[] findByPerformer(TenantId tenantId, string performerId) {
+    TaskAction[] findByPerformer(TenantId tenantId, UserId performerId) {
         return findByTenant(tenantId).filter!(a => a.performedBy == performerId).array;
     }
-    void removeByPerformer(TenantId tenantId, string performerId) {
+    void removeByPerformer(TenantId tenantId, UserId performerId) {
         findByPerformer(tenantId, performerId).each!(a => remove(a));
     }
 }

@@ -13,13 +13,13 @@ import uim.platform.task_center;
 
 class MemoryTaskCommentRepository : TenantRepository!(TaskComment, TaskCommentId), TaskCommentRepository {
 
-    size_t countByTask(TenantId tenantId, string taskId) {
+    size_t countByTask(TenantId tenantId, TaskId taskId) {
         return findByTask(tenantId, taskId).length;
     }
-    TaskComment[] findByTask(TenantId tenantId, string taskId) {
+    TaskComment[] findByTask(TenantId tenantId, TaskId taskId) {
         return findByTenant(tenantId).filter!(c => c.taskId == taskId).array;
     }
-    void removeByTask(TenantId tenantId, string taskId) {
+    void removeByTask(TenantId tenantId, TaskId taskId) {
         findByTask(tenantId, taskId).each!(c => remove(c));
     }
     

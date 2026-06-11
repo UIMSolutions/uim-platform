@@ -13,16 +13,16 @@ import uim.platform.task_center;
 
 interface SubstitutionRuleRepository : ITenantRepository!(SubstitutionRule, SubstitutionRuleId) {
 
-    size_t countByUser(UserId userId);
-    SubstitutionRule[] findByUser(UserId userId);
-    void removeByUser(UserId userId);
+    size_t countByUser(TenantId tenantId, UserId userId);
+    SubstitutionRule[] findByUser(TenantId tenantId, UserId userId);
+    void removeByUser(TenantId tenantId, UserId userId);
 
-    size_t countBySubstitute(UserId substituteId);
-    SubstitutionRule[] findBySubstitute(UserId substituteId);
-    void removeBySubstitute(UserId substituteId);
+    size_t countBySubstitute(TenantId tenantId, UserId substituteId);
+    SubstitutionRule[] findBySubstitute(TenantId tenantId, UserId substituteId);
+    void removeBySubstitute(TenantId tenantId, UserId substituteId);
 
-    size_t countByStatus(SubstitutionStatus status);
-    SubstitutionRule[] findByStatus(SubstitutionStatus status);
-    void removeByStatus(SubstitutionStatus status);
+    size_t countByStatus(TenantId tenantId, SubstitutionStatus status);
+    SubstitutionRule[] findByStatus(TenantId tenantId, SubstitutionStatus status);
+    void removeByStatus(TenantId tenantId, SubstitutionStatus status);
 
 }

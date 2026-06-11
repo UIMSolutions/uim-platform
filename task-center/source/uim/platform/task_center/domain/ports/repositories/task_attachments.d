@@ -13,8 +13,8 @@ import uim.platform.task_center;
 
 interface TaskAttachmentRepository : ITenantRepository!(TaskAttachment, TaskAttachmentId) {
 
-    size_t countByTask(TaskId taskId);
-    TaskAttachment[] findByTask(TaskId taskId);
-    void removeByTask(TaskId taskId);
+    size_t countByTask(TenantId tenantId, TaskId taskId);
+    TaskAttachment[] findByTask(TenantId tenantId, TaskId taskId);
+    void removeByTask(TenantId tenantId, TaskId taskId);
 
 }

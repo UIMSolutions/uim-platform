@@ -28,15 +28,15 @@ class MemorySubstitutionRuleRepository : TenantRepository!(SubstitutionRule, Sub
         findByUser(tenantId, userId).each!(r => remove(r));
     }
 
-    size_t countBySubstitute(TenantId tenantId, string substituteId) {
+    size_t countBySubstitute(TenantId tenantId, UserId substituteId) {
         return findBySubstitute(tenantId, substituteId).length;
     }
 
-    SubstitutionRule[] findBySubstitute(TenantId tenantId, string substituteId) {
+    SubstitutionRule[] findBySubstitute(TenantId tenantId, UserId substituteId) {
         return findByTenant(tenantId).filter!(r => r.substituteId == substituteId).array;
     }
 
-    void removeBySubstitute(TenantId tenantId, string substituteId) {
+    void removeBySubstitute(TenantId tenantId, UserId substituteId) {
         findBySubstitute(tenantId, substituteId).each!(r => remove(r));
     }
 

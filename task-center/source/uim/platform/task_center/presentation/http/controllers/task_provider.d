@@ -100,7 +100,7 @@ class TaskProviderController : ManageHttpController {
         return successResponse("Provider retrieved successfully", "Retrieved", 200, responseData);
     }
 
-    protected Json UpdateHandler(HTTPServerRequest req) {
+    override protected Json updateHandler(HTTPServerRequest req) {
         auto precheck = super.putHandler(req);
         if (precheck.hasError)
             return precheck;
@@ -128,15 +128,6 @@ class TaskProviderController : ManageHttpController {
 
         auto resp = Json.emptyObject.set("id", result.id);
         return successResponse("Provider updated successfully", "Updated", 200, resp);
-    }
-
-    protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto response = updateHandler(req);
-            res.writeJsonBody(response, response.code);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
     }
 
     protected Json activateHandler(HTTPServerRequest req) {

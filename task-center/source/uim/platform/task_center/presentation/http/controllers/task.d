@@ -79,7 +79,7 @@ class TaskController : ManageHttpController {
         auto status = params.get("status", "");
         auto providerId = params.get("providerId", "");
 
-        Task[] tasks;
+        UIMTask[] tasks;
         if (!assignee.isEmpty) {
             tasks = usecase.listTasks(tenantId, assignee);
         } else if (!status.isEmpty) {

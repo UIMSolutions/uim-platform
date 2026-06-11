@@ -13,16 +13,16 @@ import uim.platform.task_center;
 
 interface TaskDefinitionRepository : ITenantRepository!(TaskDefinition, TaskDefinitionId) {
 
-    bool existsByName(string name);
-    TaskDefinition findByName(string name);
-    void removeByName(string name);
+    bool existsByName(TenantId tenantId, string name);
+    TaskDefinition findByName(TenantId tenantId, string name);
+    void removeByName(TenantId tenantId, string name);
 
-    size_t countByProvider(TaskProviderId providerId);
-    TaskDefinition[] findByProvider(TaskProviderId providerId);
-    void removeByProvider(TaskProviderId providerId);
+    size_t countByProvider(TenantId tenantId, TaskProviderId providerId);
+    TaskDefinition[] findByProvider(TenantId tenantId, TaskProviderId providerId);
+    void removeByProvider(TenantId tenantId, TaskProviderId providerId);
 
-    size_t countByCategory(TaskCategory category);
-    TaskDefinition[] findByCategory(TaskCategory category);
-    void removeByCategory(TaskCategory category);
+    size_t countByCategory(TenantId tenantId, TaskCategory category);
+    TaskDefinition[] findByCategory(TenantId tenantId, TaskCategory category);
+    void removeByCategory(TenantId tenantId, TaskCategory category);
 
 }

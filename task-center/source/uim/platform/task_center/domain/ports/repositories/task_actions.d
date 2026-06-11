@@ -13,12 +13,12 @@ import uim.platform.task_center;
 
 interface TaskActionRepository : ITenantRepository!(TaskAction, TaskActionId) {
 
-    size_t countByTask(TaskId taskId);
-    TaskAction[] findByTask(TaskId taskId);
-    void removeByTask(TaskId taskId);
+    size_t countByTask(TenantId tenantId, TaskId taskId);
+    TaskAction[] findByTask(TenantId tenantId, TaskId taskId);
+    void removeByTask(TenantId tenantId, TaskId taskId);
 
-    size_t countByPerformer(string performedBy);
-    TaskAction[] findByPerformer(string performedBy);
-    void removeByPerformer(string performedBy);
+    size_t countByPerformer(TenantId tenantId, UserId performedBy);
+    TaskAction[] findByPerformer(TenantId tenantId, UserId performedBy);
+    void removeByPerformer(TenantId tenantId, UserId performedBy);
 
 }

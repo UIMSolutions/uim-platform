@@ -11,26 +11,26 @@ import uim.platform.task_center;
 
 @safe:
 
-interface TaskRepository : ITenantRepository!(Task, TaskId) {
+interface TaskRepository : ITenantRepository!(UIMTask, TaskId) {
 
-    size_t countByAssignee(string assignee);
-    Task[] findByAssignee(string assignee);
-    void removeByAssignee(string assignee);
+    size_t countByAssignee(TenantId tenantId, string assignee);
+    UIMTask[] findByAssignee(TenantId tenantId, string assignee);
+    void removeByAssignee(TenantId tenantId, string assignee);
 
-    size_t countByStatus(TaskStatus status);
-    Task[] findByStatus(TaskStatus status);
-    void removeByStatus(TaskStatus status);
+    size_t countByStatus(TenantId tenantId, TaskStatus status);
+    UIMTask[] findByStatus(TenantId tenantId, TaskStatus status);
+    void removeByStatus(TenantId tenantId, TaskStatus status);
 
-    size_t countByProvider(TaskProviderId providerId);    
-    Task[] findByProvider(TaskProviderId providerId);
-    void removeByProvider(TaskProviderId providerId);
+    size_t countByProvider(TenantId tenantId, TaskProviderId providerId);    
+    UIMTask[] findByProvider(TenantId tenantId, TaskProviderId providerId);
+    void removeByProvider(TenantId tenantId, TaskProviderId providerId);
 
-    size_t countByCategory(TaskCategory category);
-    Task[] findByCategory(TaskCategory category);
-    void removeByCategory(TaskCategory category);
+    size_t countByCategory(TenantId tenantId, TaskCategory category);
+    UIMTask[] findByCategory(TenantId tenantId, TaskCategory category);
+    void removeByCategory(TenantId tenantId, TaskCategory category);
 
-    size_t countByPriority(TaskPriority priority);
-    Task[] findByPriority(TaskPriority priority);
-    void removeByPriority(TaskPriority priority);
+    size_t countByPriority(TenantId tenantId, TaskPriority priority);
+    UIMTask[] findByPriority(TenantId tenantId, TaskPriority priority);
+    void removeByPriority(TenantId tenantId, TaskPriority priority);
 
 }

@@ -18,7 +18,7 @@ class ManageTaskProvidersUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    TaskProvider getById(TenantId tenantId, string id) {
+    TaskProvider getById(TenantId tenantId, TaskProviderId id) {
         return repo.findById(tenantId, id);
     }
 
@@ -36,9 +36,9 @@ class ManageTaskProvidersUseCase { // TODO: UIMUseCase {
 
     CommandResult createTaskProvider(CreateTaskProviderRequest req) {
         TaskProvider p;
-        p.iniEntity(req.tenantId, req.createdBy);
+        p.initEntity(req.tenantId, req.createdBy);
 
-        p.id = req.id;
+        p.id = req.providerId;
         p.name = req.name;
         p.description = req.description;
         p.endpointUrl = req.endpointUrl;
@@ -46,11 +46,11 @@ class ManageTaskProvidersUseCase { // TODO: UIMUseCase {
         p.clientId = req.clientId;
         
         repo.save(p);
-        return CommandResult(true, req.id.value, "");
+        return CommandResult(true, p.id.value, "");
     }
 
     CommandResult updateTaskProvider(UpdateTaskProviderRequest req) {
-        auto existing = repo.findById(req.tenantId, req.id);
+        auto existing = repo.findById(req.tenantId, req.providerId);
         if (existing == TaskProvider.init)
             return CommandResult(false, "", "Provider not found");
         if (req.name.length > 0) existing.name = req.name;
@@ -61,7 +61,7 @@ class ManageTaskProvidersUseCase { // TODO: UIMUseCase {
         existing.updatedBy = req.updatedBy;
         
         repo.update(existing);
-        return CommandResult(true, req.id.value, "");
+        return CommandResult(true, existing.id.value, "");
     }
 
     CommandResult activate(TenantId tenantId, TaskProviderId id) {
