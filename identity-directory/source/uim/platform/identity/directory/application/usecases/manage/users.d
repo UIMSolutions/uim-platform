@@ -6,7 +6,7 @@
 module uim.platform.identity.directory.application.usecases.manage.users;
 // import uim.platform.identity.directory.domain.entities.user;
 // import uim.platform.identity.directory.domain.entities.audit_event;
-// import uim.platform.identity.directory.domain.types;
+
 // import uim.platform.identity.directory.domain.ports.repositories.users;
 // import uim.platform.identity.directory.domain.ports.repositories.password_service;
 // import uim.platform.identity.directory.domain.ports.repositories.password_policys;

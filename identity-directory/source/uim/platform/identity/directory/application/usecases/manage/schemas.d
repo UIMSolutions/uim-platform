@@ -6,7 +6,7 @@
 module uim.platform.identity.directory.application.usecases.manage.schemas;
 // import uim.platform.identity.directory.domain.entities.schema;
 // import uim.platform.identity.directory.domain.entities.audit_event;
-// import uim.platform.identity.directory.domain.types;
+
 // import uim.platform.identity.directory.domain.ports.repositories.schemas;
 // import uim.platform.identity.directory.domain.ports.repositories.audits;
 // import uim.platform.identity.directory.application.dto;

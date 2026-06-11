@@ -4,7 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.identity.directory.domain.entities.group;
-// import uim.platform.identity.directory.domain.types;
+
 import uim.platform.identity.directory;
 
 // mixin(ShowModule!());
@@ -37,17 +37,13 @@ struct Group {
   long updatedAt;
 
   /// Number of members.
-  ulong memberCount() const {
+  size_t memberCount() const {
     return members.length;
   }
 
   /// Check if a user is a member.
   bool hasMember(UserId userId) const {
-    foreach (m; members) {
-      if (m.value == userId)
-        return true;
-    }
-    return false;
+    return any!(m => m.value == userId)(members);
   }
 
   Json toJson() const {

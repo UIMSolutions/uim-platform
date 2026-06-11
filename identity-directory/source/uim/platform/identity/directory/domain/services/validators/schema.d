@@ -6,7 +6,7 @@
 module uim.platform.identity.directory.domain.services.schema_validator;
 // import uim.platform.identity.directory.domain.entities.schema;
 // import uim.platform.identity.directory.domain.entities.user : ExtendedAttribute;
-// import uim.platform.identity.directory.domain.types;
+
 
 import uim.platform.identity.directory;
 
