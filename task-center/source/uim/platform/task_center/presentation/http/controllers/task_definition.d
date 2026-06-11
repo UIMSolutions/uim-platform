@@ -20,7 +20,7 @@ class TaskDefinitionController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        
+
         router.get("/api/v1/task-center/definitions", &handleList);
         router.get("/api/v1/task-center/definitions/*", &handleGet);
         router.post("/api/v1/task-center/definitions", &handleCreate);
@@ -38,18 +38,18 @@ class TaskDefinitionController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-            CreateTaskDefinitionRequest r;
-            r.tenantId = tenantId;
-            r.id = precheck.id;
-            r.providerId = data.getString("providerId");
-            r.name = data.getString("name");
-            r.description = data.getString("description");
-            r.category = data.getString("category");
-            r.taskSchema = data.getString("taskSchema");
-            r.createdBy = UserId(data.getString("createdBy"));
+        CreateTaskDefinitionRequest r;
+        r.tenantId = tenantId;
+        r.id = precheck.id;
+        r.providerId = data.getString("providerId");
+        r.name = data.getString("name");
+        r.description = data.getString("description");
+        r.category = data.getString("category");
+        r.taskSchema = data.getString("taskSchema");
+        r.createdBy = UserId(data.getString("createdBy"));
 
-            auto result = usecase.createTaskDefinition(r);
-            if (result.hasError)
+        auto result = usecase.createTaskDefinition(r);
+        if (result.hasError)
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
@@ -63,12 +63,13 @@ class TaskDefinitionController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-            auto params = req.queryParams();
-            auto providerId = params.get("providerId", "");
+        auto params = req.queryParams();
+        auto providerId = params.get("providerId", "");
 
-            TaskDefinition[] defs = !providerId.isEmpty 
-                ? usecase.listTaskDefinitions(tenantId, providerId) : usecase.listTaskDefinitions(tenantId);
-            auto list = defs.map!(item => item.toJson()).array.toJson;
+        TaskDefinition[] defs = !providerId.isEmpty
+            ? usecase.listTaskDefinitions(tenantId, providerId) : usecase.listTaskDefinitions(
+                tenantId);
+        auto list = defs.map!(item => item.toJson()).array.toJson;
 
         auto responseData = Json.emptyObject
             .set("count", list.length)
@@ -82,21 +83,23 @@ class TaskDefinitionController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            import std.algorithm : endsWith;
-            auto path = precheck.path;
-            if (path.endsWith("/activate") || path.endsWith("/deactivate")) return;
+        import std.algorithm : endsWith;
 
-            auto tenantId = precheck.tenantId;
-            auto id = TaskDefinitionId(precheck.id);
-            auto d = usecase.getTaskDefinition(tenantId, id);
-            if (d.isNull) {
-                writeError(res, 404, "Task definition not found");
-                return;
-            }
-            res.writeJsonBody(toJson(d), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto path = precheck.path;
+        if (path.endsWith("/activate") || path.endsWith("/deactivate"))
+            return;
+
+        auto tenantId = precheck.tenantId;
+        auto id = TaskDefinitionId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid task definition ID", 400);
+
+        auto d = usecase.getTaskDefinition(tenantId, id);
+        if (d.isNull)
+            return errorResponse("Task definition not found", 404);
+
+        auto response = defToJson(d);
+        return successResponse("Task definition retrieved successfully", 200, response);
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -105,76 +108,90 @@ class TaskDefinitionController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto id = TaskDefinitionId(precheck.id);
-            auto data = precheck.data;
-            UpdateTaskDefinitionRequest r;
-            r.tenantId = tenantId;
-            r.id = id;
-            r.name = data.getString("name");
-            r.description = data.getString("description");
-            r.category = data.getString("category");
-            r.taskSchema = data.getString("taskSchema");
-            r.updatedBy = UserId(data.getString("updatedBy"));
+        auto id = TaskDefinitionId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid task definition ID", 400);
 
-            auto result = usecase.updateTaskDefinition(r);
-            if (result.hasError)
+        auto data = precheck.data;
+        UpdateTaskDefinitionRequest r;
+        r.tenantId = tenantId;
+        r.definitionId = id;
+        r.name = data.getString("name");
+        r.description = data.getString("description");
+        r.category = data.getString("category");
+        r.taskSchema = data.getString("taskSchema");
+        r.updatedBy = UserId(data.getString("updatedBy"));
+
+        auto result = usecase.updateTaskDefinition(r);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Task definition updated");
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Task definition updated");
+
+        return successResponse("Task definition updated successfully", "Updated", 200, resp);
+    }
+
+    protected Json activateJHandler(HTTPServerRequest req) {
+        auto precheck = super.postHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+
+        auto path = precheck.path;
+        auto stripped = path[0 .. $ - 9]; // remove "/activate"
+        auto id = TaskDefinitionId(extractIdFromPath(stripped));
+        if (id.isNull)
+            return errorResponse("Invalid task definition ID", 400);
+
+        auto result = usecase.activateTaskDefinition(tenantId, id);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Task definition activated");
+
+        return successResponse("Task definition activated successfully", "Activated", 200, resp);
     }
 
     protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = precheck.tenantId;
-            
-            auto path = precheck.path;
-            auto stripped = path[0 .. $ - 9]; // remove "/activate"
-            auto id = TaskDefinitionId(extractIdFromPath(stripped));
-
-            auto result = usecase.activateTaskDefinition(tenantId, id);
-            if (result.hasError)
-            return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Task definition activated");
-
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
+            auto response = activateJHandler(req);
+            res.writeJsonBody(response, response.code);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
+    protected Json deactivateJHandler(HTTPServerRequest req) {
+        auto precheck = super.postHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+
+        auto path = precheck.path;
+        auto stripped = path[0 .. $ - 11]; // remove "/deactivate"
+        auto id = TaskDefinitionId(extractIdFromPath(stripped));
+        if (id.isNull)
+            return errorResponse("Invalid task definition ID", 400);
+
+        auto result = usecase.deactivateTaskDefinition(tenantId, id);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Task definition deactivated");
+
+        return successResponse("Task definition deactivated successfully", "Deactivated", 200, resp);
+    }
+
     protected void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = precheck.tenantId;
-            
-            auto path = precheck.path;
-            auto stripped = path[0 .. $ - 11]; // remove "/deactivate"
-            auto id = TaskDefinitionId(extractIdFromPath(stripped));
-
-            auto result = usecase.deactivateTaskDefinition(tenantId, id);
-            if (result.hasError)
-            return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Task definition deactivated");
-
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
+            auto response = deactivateJHandler(req);
+            res.writeJsonBody(response, response.code);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
@@ -186,37 +203,17 @@ class TaskDefinitionController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            
-            auto id = precheck.id;
-            auto tenantId = precheck.tenantId;
-            auto result = usecase.deleteTaskDefinition(tenantId, TaskDefinitionId(id));
-            if (result.hasError)
+        auto id = TaskDefinitionId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid task definition ID", 400);
+
+        auto tenantId = precheck.tenantId;
+        auto result = usecase.deleteTaskDefinition(tenantId, TaskDefinitionId(id));
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Task definition deleted");
+        auto resp = Json.emptyObject
+            .set("id", result.id);
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
-
-    private Json defToJson(TaskDefinition d) {
-        return Json.emptyObject
-        .set("id", d.id)
-        .set("tenantId", d.tenantId)
-        .set("providerId", d.providerId)
-        .set("name", d.name)
-        .set("description", d.description)
-        .set("category", d.category.to!string)
-        .set("taskSchema", d.taskSchema)
-        .set("isActive", d.isActive)
-        .set("requiresClaim", d.requiresClaim)
-        .set("createdBy", d.createdBy)
-        .set("createdAt", d.createdAt);
+        return successResponse("Task definition deleted successfully", "Deleted", 200, resp);
     }
 }

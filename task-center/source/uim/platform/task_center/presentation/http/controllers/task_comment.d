@@ -36,27 +36,20 @@ class TaskCommentController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-            CreateTaskCommentRequest r;
-            r.tenantId = tenantId;
-            r.taskCommentId = TaskCommentId(precheck.id);
-            r.taskId = TaskId(data.getString("taskId"));
-            r.author = data.getString("author");
-            r.content = data.getString("content");
+        CreateTaskCommentRequest r;
+        r.tenantId = tenantId;
+        r.taskCommentId = TaskCommentId(precheck.id);
+        r.taskId = TaskId(data.getString("taskId"));
+        r.author = data.getString("author");
+        r.content = data.getString("content");
 
-            auto result = usecase.create(r);
-            if (result.hasError)
+        auto result = usecase.create(r);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Comment created");
+        auto resp = Json.emptyObject
+            .set("id", result.id);
 
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        return successResponse("Comment created successfully", "Created", 201, resp);
     }
 
     override protected Json listHandler(HTTPServerRequest req) {
@@ -66,23 +59,19 @@ class TaskCommentController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-            auto params = req.queryParams();
-            auto taskId = TaskId(params.get("taskId", ""));
+        auto params = req.queryParams();
+        auto taskId = TaskId(params.get("taskId", ""));
 
-            TaskComment[] comments = !taskId.isEmpty
-                ? usecase.listCommentsByTask(tenantId, taskId) : [];    
+        TaskComment[] comments = !taskId.isEmpty
+            ? usecase.listCommentsByTask(tenantId, taskId) : [];
 
-            auto jarr = comments.map!(c => c.toJson).array.toJson;
+        auto jarr = comments.map!(c => c.toJson).array.toJson;
 
-            auto resp = Json.emptyObject
-                .set("count", comments.length)
-                .set("resources", jarr)
-                .set("message", "Comment list retrieved successfully");
+        auto resp = Json.emptyObject
+            .set("count", comments.length)
+            .set("resources", jarr);
 
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        return successResponse("Comment list retrieved successfully", "Retrieved", 200, resp);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -91,16 +80,12 @@ class TaskCommentController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto id = TaskCommentId(precheck.id);
-            auto c = usecase.getById(tenantId, id);
-            if (c.isNull) {
-                writeError(res, 404, "Comment not found");
-                return;
-            }
-            res.writeJsonBody(commentToJson(c), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto id = TaskCommentId(precheck.id);
+        auto c = usecase.getById(tenantId, id);
+        if (c.isNull)
+            return errorResponse("Comment not found", 404);
+
+        return successResponse("Comment retrieved successfully", "Retrieved", 200, commentToJson(c));
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -109,27 +94,23 @@ class TaskCommentController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto id = TaskCommentId(precheck.id);
-            auto data = precheck.data;
-            UpdateTaskCommentRequest r;
-            r.tenantId = tenantId;
-            r.taskCommentId = id;
-            r.content = data.getString("content");
+        auto id = TaskCommentId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid comment ID", 400);
 
-            auto result = usecase.update(r);
-            if (result.hasError)
+        auto data = precheck.data;
+        UpdateTaskCommentRequest r;
+        r.tenantId = tenantId;
+        r.taskCommentId = id;
+        r.content = data.getString("content");
+
+        auto result = usecase.update(r);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Comment updated");
+        auto resp = Json.emptyObject
+            .set("id", result.id);
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        return successResponse("Comment updated successfully", "Updated", 200, resp);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -138,21 +119,17 @@ class TaskCommentController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto id = TaskCommentId(precheck.id);
-            auto result = usecase.deleteTaskComment(tenantId, id);
-            if (result.hasError)
+        auto id = TaskCommentId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid comment ID", 400);
+
+        auto result = usecase.deleteTaskComment(tenantId, id);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Comment deleted");
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Comment deleted");
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        return successResponse("Comment deleted successfully", "Deleted", 200, resp);
     }
-
 }

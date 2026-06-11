@@ -35,29 +35,24 @@ class TaskActionController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-            PerformTaskActionRequest r;
-            r.tenantId = tenantId;
-            r.taskActionId = TaskActionId(precheck.id);
-            r.taskId = TaskId(data.getString("taskId"));
-            r.actionType = data.getString("actionType");
-            r.performedBy = UserId(data.getString("performedBy"));
-            r.forwardTo = UserId(data.getString("forwardTo"));
-            r.comment = data.getString("comment");
+        PerformTaskActionRequest r;
+        r.tenantId = tenantId;
+        r.taskActionId = TaskActionId(precheck.id);
+        r.taskId = TaskId(data.getString("taskId"));
+        r.actionType = data.getString("actionType");
+        r.performedBy = UserId(data.getString("performedBy"));
+        r.forwardTo = UserId(data.getString("forwardTo"));
+        r.comment = data.getString("comment");
 
-            auto result = usecase.create(r);
-            if (result.hasError)
+        auto result = usecase.create(r);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Action recorded");
 
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Action performed");
+
+        return successResponse("Action performed successfully", "Created", 201, resp);
     }
 
     override protected Json listHandler(HTTPServerRequest req) {
@@ -67,24 +62,19 @@ class TaskActionController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-            auto params = req.queryParams();
-            auto taskId = TaskId(params.get("taskId", ""));
+        auto params = req.queryParams();
+        auto taskId = TaskId(params.get("taskId", ""));
 
-            TaskAction[] actions = !taskId.isEmpty
-                ? usecase.listTaskActions(tenantId, taskId)
-                : null;
+        TaskAction[] actions = !taskId.isEmpty
+            ? usecase.listTaskActions(tenantId, taskId) : null;
 
-            auto jarr = actions.map!(a => a.toJson()).array.toJson;
+        auto jarr = actions.map!(a => a.toJson()).array.toJson;
 
-            auto resp = Json.emptyObject
-                .set("count", actions.length)
-                .set("resources", jarr)
-                .set("message", "Action list retrieved successfully");
+        auto resp = Json.emptyObject
+            .set("count", actions.length)
+            .set("resources", jarr);
 
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        return successResponse("Actions retrieved successfully", "Retrieved", 200, resp);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -93,16 +83,16 @@ class TaskActionController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto id = TaskActionId(precheck.id);
-            auto a = usecase.getById(tenantId, id);
-            if (a.isNull) {
-                writeError(res, 404, "Action not found");
-                return;
-            }
-            res.writeJsonBody(toJson(a), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto id = TaskActionId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid action ID", 400);
+
+        auto a = usecase.getById(tenantId, id);
+        if (a.isNull)
+            return errorResponse("Action not found", 404);
+
+        auto response = a.toJson();
+        return successResponse("Action retrieved successfully", 200, response);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -111,21 +101,17 @@ class TaskActionController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto id = TaskActionId(precheck.id);
-            auto result = usecase.deleteTaskAction(tenantId, id);
-            if (result.hasError)
+        auto id = TaskActionId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid action ID", 400);
+
+        auto result = usecase.deleteTaskAction(tenantId, id);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Action deleted");
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto resp = Json.emptyObject
+            .set("id", result.id);
+
+        return successResponse("Action deleted successfully", "Deleted", 200, resp);
     }
-
 }
