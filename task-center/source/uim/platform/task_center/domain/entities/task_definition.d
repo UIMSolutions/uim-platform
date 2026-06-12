@@ -32,7 +32,7 @@ struct TaskDefinition {
             .set("name", name)
             .set("description", description)
             .set("category", category.to!string)
-            .set("allowedActions", allowedActions)
+            .set("allowedActions", allowedActions.toJson)
             .set("taskSchema", taskSchema)
             .set("isActive", isActive)
             .set("requiresClaim", requiresClaim);

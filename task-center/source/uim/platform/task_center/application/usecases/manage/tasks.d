@@ -18,31 +18,31 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    Task getTaskById(TenantId tenantId, string id) {
+    UIMTask getTaskById(TenantId tenantId, TaskId id) {
         return repo.findById(tenantId, id);
     }
 
-    Task[] listTasks(TenantId tenantId) {
+    UIMTask[] listTasks(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    Task[] listTasksByAssignee(TenantId tenantId, string assignee) {
+    UIMTask[] listTasksByAssignee(TenantId tenantId, string assignee) {
         return repo.findByAssignee(tenantId, assignee);
     }
 
-    Task[] listTasksByStatus(TenantId tenantId, TaskStatus status) {
+    UIMTask[] listTasksByStatus(TenantId tenantId, TaskStatus status) {
         return repo.findByStatus(tenantId, status);
     }
 
-    Task[] listTasksByProvider(TenantId tenantId, string providerId) {
+    UIMTask[] listTasksByProvider(TenantId tenantId, TaskProviderId providerId) {
         return repo.findByProvider(tenantId, providerId);
     }
 
-    Task[] listTasksByCategory(TenantId tenantId, TaskCategory category) {
+    UIMTask[] listTasksByCategory(TenantId tenantId, TaskCategory category) {
         return repo.findByCategory(tenantId, category);
     }
 
-    Task[] listTasksByPriority(TenantId tenantId, TaskPriority priority) {
+    UIMTask[] listTasksByPriority(TenantId tenantId, TaskPriority priority) {
         return repo.findByPriority(tenantId, priority);
     }
 
@@ -64,73 +64,85 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
         task.dueDate = req.dueDate;
         task.createdBy = req.createdBy;
 
-        repo.save(req.tenantId, task);
+        repo.save(task);
         return CommandResult(true, task.id.value, "");
     }
 
     CommandResult updateTask(UpdateTaskRequest req) {
-        auto existing = repo.findById(req.tenantId, req.id);
+        auto existing = repo.findById(req.tenantId, req.taskId);
         if (existing.isNull)
             return CommandResult(false, "", "Task not found");
+            
         if (req.title.length > 0) existing.title = req.title;
         if (req.description.length > 0) existing.description = req.description;
         if (req.assignee.length > 0) existing.assignee = req.assignee;
         if (req.dueDate.length > 0) existing.dueDate = req.dueDate;
         existing.updatedBy = req.updatedBy;
-        repo.update(req.tenantId, existing);
-        return CommandResult(true, req.id.value, "");
+
+        repo.update(existing);
+        return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult claim(TenantId tenantId, string id, UserId userId) {
+    CommandResult claim(TenantId tenantId, TaskId id, UserId userId) {
         auto t = repo.findById(tenantId, id);
         if (t.isNull)
             return CommandResult(false, "", "Task not found");
+
         t.isClaimed = true;
         t.claimedBy = userId;
         t.status = TaskStatus.inProgress;
         t.processor = userId;
+
         repo.update(tenantId, t);
         return CommandResult(true, id.value, "");
     }
 
-    CommandResult releaseTask(TenantId tenantId, string id) {
-        auto t = repo.findById(tenantId, id);
-        if (t.isNull)
+    CommandResult releaseTask(TenantId tenantId, TaskId id) {
+        auto task = repo.findById(tenantId, id);
+        if (task.isNull)
             return CommandResult(false, "", "Task not found");
-        t.isClaimed = false;
-        t.claimedBy = "";
-        t.status = TaskStatus.open;
-        t.processor = "";
-        repo.update(tenantId, t);
-        return CommandResult(true, id.value, "");
+
+        task.isClaimed = false;
+        task.claimedBy = UserId.init;
+        task.status = TaskStatus.open;
+        task.processor = UserId.init;
+
+        repo.update(task);
+        return CommandResult(true, task.id.value, "");
     }
 
-    CommandResult forwardTask(TenantId tenantId, string id, string toUser, string comment) {
-        auto t = repo.findById(tenantId, id);
-        if (t.isNull)
+    CommandResult forwardTask(TenantId tenantId, TaskId id, UserId toUser, string comment) {
+        auto task = repo.findById(tenantId, id);
+        if (task.isNull)
             return CommandResult(false, "", "Task not found");
-        t.assignee = toUser;
-        t.status = TaskStatus.forwarded;
-        repo.update(tenantId, t);
-        return CommandResult(true, id.value, "");
+
+        task.assignee = toUser;
+        task.status = TaskStatus.forwarded;
+
+        repo.update(task);
+        return CommandResult(true, task.id.value, "");
     }
 
-    CommandResult completeTask(TenantId tenantId, string id) {
-        auto t = repo.findById(tenantId, id);
-        if (t.isNull)
+    CommandResult completeTask(TenantId tenantId, TaskId id) {
+        auto task = repo.findById(tenantId, id);
+        if (task.isNull)
             return CommandResult(false, "", "Task not found");
-        t.status = TaskStatus.completed;
-        repo.update(tenantId, t);
-        return CommandResult(true, id.value, "");
+
+        task.status = TaskStatus.completed;
+        
+        repo.update(task);
+        return CommandResult(true, task.id.value, "");
     }
 
-    CommandResult cancelTask(TenantId tenantId, string id) {
-        auto t = repo.findById(tenantId, id);
-        if (t.isNull)
+    CommandResult cancelTask(TenantId tenantId, TaskId id) {
+        auto task = repo.findById(tenantId, id);
+        if (task.isNull)
             return CommandResult(false, "", "Task not found");
-        t.status = TaskStatus.cancelled;
-        repo.update(tenantId, t);
-        return CommandResult(true, id.value, "");
+
+        task.status = TaskStatus.cancelled;
+
+        repo.update(task);
+        return CommandResult(true, task.id.value, "");
     }
 
     CommandResult deleteTask(TenantId tenantId, TaskId id) {

@@ -14,8 +14,8 @@ import uim.platform.application_autoscaler;
 /// A one-time specific-date schedule entry.
 struct SpecificDateScheduleEntity {
   SpecificDateScheduleId id;
-  string startDateTime;        // YYYY-MM-DDTHH:MM
-  string endDateTime;          // YYYY-MM-DDTHH:MM
+  long startDateTime;        // YYYY-MM-DDTHH:MM
+  long endDateTime;          // YYYY-MM-DDTHH:MM
   int    instanceMinCount;
   int    instanceMaxCount;
   int    initialMinInstanceCount;

@@ -28,7 +28,7 @@ struct TaskAttachment {
             .set("fileName", fileName)
             .set("fileSize", fileSize)
             .set("mimeType", mimeType)
-            .set("status", status.toString())
+            .set("status", status.to!string)
             .set("uploadedBy", uploadedBy)
             .set("uploadedAt", uploadedAt);
     }

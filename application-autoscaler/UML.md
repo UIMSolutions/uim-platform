@@ -15,8 +15,8 @@ classDiagram
     class SpecificDateSchedule {
         +string id
         +string policyId
-        +string startDateTime
-        +string endDateTime
+        +long startDateTime
+        +long endDateTime
         +int instanceCount
     }
     class RecurringSchedule {

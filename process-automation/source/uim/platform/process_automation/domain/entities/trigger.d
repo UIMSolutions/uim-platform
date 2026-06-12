@@ -14,8 +14,8 @@ import uim.platform.process_automation;
 struct ScheduleConfig {
     ScheduleFrequency frequency;
     string cronExpression;
-    string startDate;
-    string endDate;
+    long startDate;
+    long endDate;
     string timezone;
     int repeatCount;
 

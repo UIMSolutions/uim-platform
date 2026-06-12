@@ -51,8 +51,9 @@ class ManageTaskProvidersUseCase { // TODO: UIMUseCase {
 
     CommandResult updateTaskProvider(UpdateTaskProviderRequest req) {
         auto existing = repo.findById(req.tenantId, req.providerId);
-        if (existing == TaskProvider.init)
+        if (existing.isNull)
             return CommandResult(false, "", "Provider not found");
+
         if (req.name.length > 0) existing.name = req.name;
         if (req.description.length > 0) existing.description = req.description;
         if (req.endpointUrl.length > 0) existing.endpointUrl = req.endpointUrl;
@@ -66,7 +67,7 @@ class ManageTaskProvidersUseCase { // TODO: UIMUseCase {
 
     CommandResult activate(TenantId tenantId, TaskProviderId id) {
         auto provider = repo.findById(tenantId, id);
-        if (provider == TaskProvider.init)
+        if (provider.isNull)
             return CommandResult(false, "", "Provider not found");
         provider.status = ProviderStatus.active;
         
@@ -76,8 +77,9 @@ class ManageTaskProvidersUseCase { // TODO: UIMUseCase {
 
     CommandResult deactivate(TenantId tenantId, TaskProviderId id) {
         auto provider = repo.findById(tenantId, id);
-        if (provider == TaskProvider.init)
+        if (provider.isNull)
             return CommandResult(false, "", "Provider not found");
+
         provider.status = ProviderStatus.inactive;
         repo.update(tenantId, provider);
         return CommandResult(true, id.value, "");
@@ -85,8 +87,9 @@ class ManageTaskProvidersUseCase { // TODO: UIMUseCase {
 
     CommandResult sync(TenantId tenantId, TaskProviderId id) {
         auto provider = repo.findById(tenantId, id);
-        if (provider == TaskProvider.init)
+        if (provider.isNull)
             return CommandResult(false, "", "Provider not found");
+
         provider.status = ProviderStatus.syncing;
         repo.update(tenantId, provider);
         return CommandResult(true, id.value, "");

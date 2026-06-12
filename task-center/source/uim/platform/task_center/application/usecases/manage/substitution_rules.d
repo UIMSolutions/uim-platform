@@ -44,19 +44,18 @@ class ManageSubstitutionRulesUseCase { // TODO: UIMUseCase {
         * This method creates a new substitution rule based on the provided request. It initializes the rule with the request data and saves it to the repository.
         */
     CommandResult createSubstitutionRule(CreateSubstitutionRuleRequest req) {
-        SubstitutionRule r;
-        r.tenantId = req.tenantId;
-        r.id = req.substitutionRuleId;
-        r.userId = req.userId;
-        r.substituteId = req.substituteId;
-        r.taskDefinitionId = req.taskDefinitionId;
-        // TODO: r.startDate = req.startDate;
-        // TODO: r.endDate = req.endDate;
-        r.isAutoForward = req.isAutoForward;
-        r.createdBy = req.createdBy;
+        auto rule = SubstitutionRule(req.tenantId);
+        rule.id = req.ruleId;
+        rule.userId = req.userId;
+        rule.substituteId = req.substituteId;
+        rule.definitionId = req.definitionId;
+        // TODO: rule.startDate = req.startDate;
+        // TODO: rule.endDate = req.endDate;
+        rule.isAutoForward = req.isAutoForward;
+        rule.createdBy = req.createdBy;
 
-        repo.save(req.tenantId, r);
-        return CommandResult(true, r.id.value, "");
+        repo.save(rule);
+        return CommandResult(true, rule.id.value, "");
     }
 
     /** 
@@ -64,16 +63,18 @@ class ManageSubstitutionRulesUseCase { // TODO: UIMUseCase {
         * This method updates an existing substitution rule based on the provided request. It modifies the rule with the request data and saves the changes to the repository.
         */
     CommandResult updateSubstitutionRule(UpdateSubstitutionRuleRequest req) {
-        auto existing = repo.findById(req.tenantId, req.substitutionRuleId);
-        if (existing == SubstitutionRule.init)
+        auto existing = repo.findById(req.tenantId, req.ruleId);
+        if (existing.isNull)
             return CommandResult(false, "", "Substitution rule not found");
+
         if (!req.substituteId.isEmpty) existing.substituteId = req.substituteId;
-        if (!req.definitionId.isEmpty) existing.taskDefinitionId = req.taskDefinitionId;
-        // TODO: if (req.startDate.length > 0) existing.startDate = req.startDate;
-        // TODO: if (req.endDate.length > 0) existing.endDate = req.endDate;
+        if (!req.definitionId.isEmpty) existing.definitionId = req.definitionId;
+        if (req.startDate.length > 0) existing.startDate = req.startDate;
+        if (req.endDate.length > 0) existing.endDate = req.endDate;
         existing.isAutoForward = req.isAutoForward;
         existing.updatedBy = req.updatedBy;
-        repo.update(req.tenantId, existing);
+
+        repo.update(existing);
         return CommandResult(true, existing.id.value, "");
     }
 
@@ -82,12 +83,14 @@ class ManageSubstitutionRulesUseCase { // TODO: UIMUseCase {
         * This method activates an existing substitution rule by setting its status to active. It updates the rule in the repository.
         */
     CommandResult activateSubstitutionRule(TenantId tenantId, SubstitutionRuleId id) {
-        auto r = repo.findById(tenantId, id);
-        if (r.isNull)
+        auto rule = repo.findById(tenantId, id);
+        if (rule.isNull)
             return CommandResult(false, "", "Substitution rule not found");
-        r.status = SubstitutionStatus.active;
-        repo.update(tenantId, r);
-        return CommandResult(true, r.id.value, "");
+
+        rule.status = SubstitutionStatus.active;
+        
+        repo.update(rule);
+        return CommandResult(true, rule.id.value, "");
     }
 
     /** 
@@ -95,12 +98,14 @@ class ManageSubstitutionRulesUseCase { // TODO: UIMUseCase {
         * This method deactivates an existing substitution rule by setting its status to inactive. It updates the rule in the repository.
         */
     CommandResult deactivateSubstitutionRule(TenantId tenantId, SubstitutionRuleId id) {
-        auto r = repo.findById(tenantId, id);
-        if (r.isNull)
+        auto rule = repo.findById(tenantId, id);
+        if (rule.isNull)
             return CommandResult(false, "", "Substitution rule not found");
-        r.status = SubstitutionStatus.inactive;
-        repo.update(r);
-        return CommandResult(true, r.id.value, "");
+            
+        rule.status = SubstitutionStatus.inactive;
+
+        repo.update(rule);
+        return CommandResult(true, rule.id.value, "");
     }
 
     /** 

@@ -24,7 +24,7 @@ struct UIMTask {
     TaskPriority priority = TaskPriority.medium;
     TaskCategory category = TaskCategory.approval;
 
-    string assignee;
+    UserId assignee;
     string creator;
     string processor;
     string sourceApplication;
@@ -33,21 +33,21 @@ struct UIMTask {
     string[string] customAttributes;
 
     bool isClaimed;
-    string claimedBy;
+    UserId claimedBy;
 
     string dueDate;
     long completedAt;
 
     Json toJson() const {
         return entityToJson
-            .set("taskDefinitionId", taskDefinitionId.value)
+            .set("taskDefinitionId", definitionId.value)
             .set("providerId", providerId.value)
             .set("externalTaskId", externalTaskId.value)
             .set("title", title)
             .set("description", description)
-            .set("status", status.toString)
-            .set("priority", priority.toString)
-            .set("category", category.toString)
+            .set("status", status.to!string)
+            .set("priority", priority.to!string)
+            .set("category", category.to!string)
             .set("assignee", assignee)
             .set("creator", creator)
             .set("processor", processor)

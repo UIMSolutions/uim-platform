@@ -26,7 +26,7 @@ class ManageTaskDefinitionsUseCase { // TODO: UIMUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    TaskDefinition[] listTaskDefinitions(TenantId tenantId, string providerId) {
+    TaskDefinition[] listTaskDefinitions(TenantId tenantId, TaskProviderId providerId) {
         return repo.findByProvider(tenantId, providerId);
     }
 

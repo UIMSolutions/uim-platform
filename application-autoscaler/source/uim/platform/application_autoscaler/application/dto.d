@@ -28,10 +28,10 @@ struct ScalingRuleRequest {
 // Recurring Schedule DTOs
 // ---------------------------------------------------------------------------
 struct RecurringScheduleRequest {
-  string startTime;
-  string endTime;
-  string startDate;
-  string endDate;
+  long startTime;
+  long endTime;
+  long startDate;
+  long endDate;
   int[]  daysOfWeek;
   int[]  daysOfMonth;
   int    instanceMinCount;
@@ -43,8 +43,8 @@ struct RecurringScheduleRequest {
 // Specific Date Schedule DTOs
 // ---------------------------------------------------------------------------
 struct SpecificDateScheduleRequest {
-  string startDateTime;
-  string endDateTime;
+  long startDateTime;
+  long endDateTime;
   int    instanceMinCount;
   int    instanceMaxCount;
   int    initialMinInstanceCount;

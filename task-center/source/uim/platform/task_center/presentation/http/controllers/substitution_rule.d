@@ -43,7 +43,7 @@ class SubstitutionRuleController : ManageHttpController {
         r.id = SubstitutionRuleId(precheck.id);
         r.userId = UserId(data.getString("userId"));
         r.substituteId = UserId(data.getString("substituteId"));
-        r.taskDefinitionId = data.getString("taskDefinitionId");
+        r.definitionId = data.getString("definitionId");
         r.startDate = data.getString("startDate");
         r.endDate = data.getString("endDate");
         r.createdBy = UserId(data.getString("createdBy"));
@@ -68,7 +68,7 @@ class SubstitutionRuleController : ManageHttpController {
 
         SubstitutionRule[] rules;
         if (!userId.isEmpty)
-            rules = usecase.listByUser(tenantId, userId);
+            rules = usecase.listRulesByUser(tenantId, userId);
 
         auto list = rules.map!(item => item.toJson()).array.toJson;
 
@@ -93,11 +93,11 @@ class SubstitutionRuleController : ManageHttpController {
         if (id.isNull)
             return errorResponse("Invalid substitution rule ID", 400);
 
-        auto r = usecase.getById(tenantId, id);
-        if (item.isNull)
-            return errorResponse("Scan job not found", 404);
+        auto rule = usecase.getRule(tenantId, id);
+        if (rule.isNull)
+            return errorResponse("Substitution rule not found", 404);
 
-        auto responseData = item.toJson();
+        auto responseData = rule.toJson();
         return successResponse("Substitution rule retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -116,7 +116,7 @@ class SubstitutionRuleController : ManageHttpController {
         r.tenantId = tenantId;
         r.ruleId = id;
         r.substituteId = UserId(data.getString("substituteId"));
-        r.taskDefinitionId = data.getString("taskDefinitionId");
+        r.definitionId = data.getString("definitionId");
         r.startDate = data.getString("startDate");
         r.endDate = data.getString("endDate");
         r.updatedBy = UserId(data.getString("updatedBy"));

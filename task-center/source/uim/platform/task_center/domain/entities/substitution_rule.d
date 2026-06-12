@@ -14,21 +14,22 @@ import uim.platform.task_center;
 struct SubstitutionRule {
     mixin TenantEntity!(SubstitutionRuleId);
 
-    UserId userId;
-    UserId substituteId;
-    TaskDefinitionId taskDefinitionId;
+    UserId userId; // The user for whom the substitution rule applies
+    UserId substituteId; // The user who will act as a substitute
+    TaskDefinitionId definitionId; // The task definition for which the substitution rule applies
 
-    SubstitutionStatus status = SubstitutionStatus.pending;
+    SubstitutionStatus status = SubstitutionStatus.pending; // pending, active, expired
 
-    string startDate;
-    string endDate;
-    bool isAutoForward;
+    long startDate; // ISO 8601 format
+    long endDate; // ISO 8601 format
+    bool isAutoForward; // Whether tasks should be automatically forwarded to the substitute user
+
 
     Json toJson() const {
         return entityToJson()
             .set("userId", userId.value)
             .set("substituteId", substituteId.value)
-            .set("taskDefinitionId", taskDefinitionId.value)
+            .set("definitionId", definitionId.value)
             .set("status", status)
             .set("startDate", startDate)
             .set("endDate", endDate)

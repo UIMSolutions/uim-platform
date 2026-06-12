@@ -30,7 +30,7 @@ class ManageTaskAttachmentsUseCase { // TODO: UIMUseCase {
         TaskAttachment attachment;
         attachment.initEntity(req.tenantId);
 
-        attachment.id = req.taskAttachmentId;
+        attachment.id = req.attachmentId;
         attachment.taskId = req.taskId;
         attachment.fileName = req.fileName;
         attachment.fileSize = req.fileSize;
