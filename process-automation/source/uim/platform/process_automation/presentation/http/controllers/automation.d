@@ -36,7 +36,6 @@ class AutomationController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
         CreateAutomationRequest r;
@@ -69,9 +68,9 @@ class AutomationController : ManageHttpController {
 
         auto automations = automationUsecase.listAutomations(tenantId);
 
-        auto jarr = Json.emptyArray;
+        auto list = Json.emptyArray;
         foreach (a; automations) {
-            jarr ~= Json.emptyObject
+            list ~= Json.emptyObject
                 .set("id", a.id)
                 .set("name", a.name)
                 .set("description", a.description)

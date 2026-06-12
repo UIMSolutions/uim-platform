@@ -69,10 +69,9 @@ class ActionController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto actions = actionUsecase.listActions(tenantId);
-
-        auto jarr = Json.emptyArray;
+        auto list = Json.emptyArray;
         foreach (a; actions) {
-            jarr ~= Json.emptyObject
+            list ~= Json.emptyObject
                 .set("id", a.id)
                 .set("name", a.name)
                 .set("description", a.description)
@@ -98,6 +97,8 @@ class ActionController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto id = ActionId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Action ID is required", 400);
 
         auto a = actionUsecase.getAction(tenantId, id);
         if (a.isNull)
@@ -128,11 +129,14 @@ class ActionController : ManageHttpController {
         if (precheck.hasError)
             return precheck;
 
-        auto tenantId = precheck.tenantId;
+        auto tenantId = precheck.tenantId;auto id = ActionId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Action ID is required", 400);
+
         auto data = precheck.data;
         UpdateActionRequest r;
         r.tenantId = tenantId;
-        r.actionId = ActionId(precheck.id);
+        r.actionId = id;
         r.name = data.getString("name");
         r.description = data.getString("description");
         r.baseUrl = data.getString("baseUrl");
@@ -159,7 +163,7 @@ class ActionController : ManageHttpController {
 
         auto id = ActionId(precheck.id);
         if (id.isNull)
-            return errorResponse("Invalid action ID", 400);
+            return errorResponse("Action ID is required", 400);
 
         auto result = actionUsecase.deleteAction(tenantId, id);
         if (result.hasError)

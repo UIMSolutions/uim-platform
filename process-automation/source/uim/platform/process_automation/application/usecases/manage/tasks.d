@@ -47,7 +47,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    PATask[] listTasksByAssignee(TenantId tenantId, UserId assignee) {
+    PATask[] listTasksByAssignee(TenantId tenantId, string assignee) {
         return repo.findByAssignee(tenantId, assignee);
     }
 
@@ -63,7 +63,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
         if (existing.status != TaskStatus.ready)
             return CommandResult(false, "", "Task cannot be claimed in current state");
 
-        existing.assignee = r.userId;
+        existing.assignee = r.userId.value;
         existing.status = TaskStatus.reserved;
 
         repo.update(existing);

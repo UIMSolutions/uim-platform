@@ -37,7 +37,6 @@ class ProcessController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
         CreateProcessRequest r;

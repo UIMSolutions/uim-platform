@@ -43,8 +43,8 @@ class ProcessInstanceController : ManageHttpController {
         r.processInstanceId = ProcessInstanceId(precheck.id);
         r.startedBy = UserId(data.getString("startedBy"));
         r.priority = data.getString("priority");
-        r.dueDate = data.getLong("dueDate");
-        r.context = jsonKeyValuePairs(j, "context");
+        r.dueDate = data.getString("dueDate");
+        r.context = jsonKeyValuePairs(data, "context");
 
         auto result = processInstanceUsecase.startProcessInstance(r);
         if (result.hasError)

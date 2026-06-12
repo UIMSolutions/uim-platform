@@ -13,9 +13,9 @@ import uim.platform.process_automation;
 @safe:
 interface TaskRepository : ITenantRepository!(PATask, TaskId) {
 
-    size_t countByAssignee(TenantId tenantId, UserId assignee);
-    PATask[] findByAssignee(TenantId tenantId, UserId assignee);
-    void removeByAssignee(TenantId tenantId, UserId assignee);
+    size_t countByAssignee(TenantId tenantId, string assignee);
+    PATask[] findByAssignee(TenantId tenantId, string assignee);
+    void removeByAssignee(TenantId tenantId, string assignee);
 
     size_t countByProcessInstance(TenantId tenantId, ProcessInstanceId instanceId);
     PATask[] findByProcessInstance(TenantId tenantId, ProcessInstanceId instanceId);

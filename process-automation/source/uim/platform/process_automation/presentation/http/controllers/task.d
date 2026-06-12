@@ -52,7 +52,7 @@ class TaskController : ManageHttpController {
     r.candidateUsers = data.getStrings("candidateUsers");
     r.candidateGroups = data.getStrings("candidateGroups");
     r.formId = data.getString("formId");
-    r.dueDate = data.getLong("dueDate");
+    r.dueDate = data.getString("dueDate");
 
     auto result = taskUsecase.createTask(r);
     if (result.hasError)
@@ -142,7 +142,7 @@ class TaskController : ManageHttpController {
     r.description = data.getString("description");
     r.priority = data.getString("priority");
     r.assignee = data.getString("assignee");
-    r.dueDate = data.getLong("dueDate");
+    r.dueDate = data.getString("dueDate");
 
     auto result = taskUsecase.updateTask(r);
     if (result.hasError)

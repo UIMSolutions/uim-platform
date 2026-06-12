@@ -57,7 +57,7 @@ struct PATask {
     string assignee;
     UserId[] candidateUsers;
     string[] candidateGroups;
-    string formId;
+    FormId formId;
     string formData;
     TaskComment[] comments;
     TaskAttachment[] attachments;
@@ -74,7 +74,7 @@ struct PATask {
             .set("type", type.to!string())
             .set("status", status.to!string())
             .set("priority", priority.to!string())
-            .set("assignee", assignee.value)
+            .set("assignee", assignee)
             .set("candidateUsers", candidateUsers.map!(u => u.value).array.toJson)
             .set("candidateGroups", candidateGroups.toJson)
             .set("formId", formId)

@@ -89,6 +89,9 @@ class VisibilityController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto id = VisibilityId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid visibility dashboard ID", 400);
+            
         auto v = visibilityUsecase.getVisibility(tenantId, id);
         if (v.isNull)
             return errorResponse("Visibility dashboard not found", 404);
@@ -141,9 +144,10 @@ class VisibilityController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-        auto tenantId = precheck.tenantId;
-
         auto id = VisibilityId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid visibility dashboard ID", 400);
+
         auto result = visibilityUsecase.deleteVisibility(tenantId, id);
         if (result.hasError)
             return errorResponse(result.message, 400);

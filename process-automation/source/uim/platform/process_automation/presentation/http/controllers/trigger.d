@@ -81,7 +81,7 @@ class TriggerController : ManageHttpController {
                 .set("fireCount", t.fireCount);
         }
 
-        auto resp = Json.emptyObject
+        auto responseData = Json.emptyObject
             .set("count", Json(triggers.length))
             .set("resources", jarr);
 

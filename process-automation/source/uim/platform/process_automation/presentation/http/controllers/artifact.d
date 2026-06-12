@@ -36,7 +36,6 @@ class ArtifactController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
         CreateArtifactRequest r;
@@ -66,7 +65,6 @@ class ArtifactController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-
         auto artifacts = artifactUsecase.listArtifacts(tenantId);
 
         auto jarr = Json.emptyArray;
@@ -97,8 +95,10 @@ class ArtifactController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-
         auto id = ArtifactId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Artifact ID is required", 400);
+
         auto a = artifactUsecase.getArtifact(tenantId, id);
         if (a.isNull)
             return errorResponse("Artifact not found", 404);
@@ -129,8 +129,6 @@ class ArtifactController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-        auto tenantId = precheck.tenantId;
-
         auto data = precheck.data;
         UpdateArtifactRequest r;
         r.tenantId = tenantId;
@@ -155,7 +153,9 @@ class ArtifactController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto id = ArtifactId(precheck.id);
-
+        if (id.isNull)
+            return errorResponse("Artifact ID is required", 400);
+            
         auto result = artifactUsecase.deleteArtifact(tenantId, id);
         if (result.hasError)
             return errorResponse(result.message, 400);

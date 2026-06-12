@@ -65,7 +65,6 @@ class DecisionController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-
         auto decisions = decisionUsecase.listDecisions(tenantId);
 
         auto jarr = Json.emptyArray;
@@ -94,8 +93,10 @@ class DecisionController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-
         auto id = DecisionId(precheck.id);
+        if (id.isNull) 
+            return errorResponse("Decision ID is required", 400);
+
         auto d = decisionUsecase.getDecision(tenantId, id);
         if (d.isNull)
             return errorResponse("Decision not found", 404);
@@ -150,15 +151,15 @@ class DecisionController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-
         auto id = DecisionId(precheck.id);
+        if (id.isNull) 
+            return errorResponse("Decision ID is required", 400);
+
         auto result = decisionUsecase.deleteDecision(tenantId, id);
         if (result.hasError)
             return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Decision deleted");
 
+        auto resp = Json.emptyObject.set("id", result.id);
         return successResponse("Decision deleted successfully", "Deleted", 200, resp);
     }
 }

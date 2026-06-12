@@ -27,19 +27,19 @@ struct ProcessValidator {
             return "Tenant ID is required";
         if (processId.isEmpty)
             return "Process ID is required";
-        if (startedBy.value.length == 0)
+        if (startedBy.isEmpty)
             return "StartedBy user is required";
         return "";
     }
 
-    static string validateTask(TenantId tenantId, TaskId taskId, string name, UserId assignee) {
+    static string validateTask(TenantId tenantId, TaskId taskId, string name, string assignee) {
         if (tenantId.isEmpty)
             return "Tenant ID is required";
         if (taskId.isEmpty)
             return "Task ID is required";
         if (name.length == 0)
             return "Task name is required";
-        if (assignee.value.length == 0)
+        if (assignee.length == 0)
             return "Assignee is required";
         return "";
     }

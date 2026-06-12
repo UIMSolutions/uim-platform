@@ -36,7 +36,6 @@ class FormController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
         CreateFormRequest r;
@@ -92,8 +91,10 @@ class FormController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-
         auto id = FormId(precheck.id);
+        if (id.isNull) 
+            return errorResponse("Form ID is required", 400);
+        
         auto f = formUsecase.getForm(tenantId, id);
         if (f.isNull) {
             return errorResponse("Form not found", 404);
@@ -147,8 +148,10 @@ class FormController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-
         auto id = FormId(precheck.id);
+        if (id.isNull) 
+            return errorResponse("Form ID is required", 400);
+
         auto result = formUsecase.deleteForm(tenantId, id);
         if (result.hasError)
             return errorResponse(result.message, 400);
