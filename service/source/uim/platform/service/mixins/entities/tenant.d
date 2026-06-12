@@ -116,13 +116,13 @@ mixin template TenantEntity(TId) {
     return src;
   }
 
-// bool opEquals(ref const TId) const {
-//   return this.id == id;
-// }
+  // bool opEquals(ref const TId) const {
+  //   return this.id == id;
+  // }
 
-//    bool opEquals(string anId) const {
-//        return this.id.value == anId;
-//    }
+  //    bool opEquals(string anId) const {
+  //        return this.id.value == anId;
+  //    }
 }
 ///
 unittest {
@@ -149,28 +149,27 @@ unittest {
     // }
   }
 
-    auto tenantId = TenantId("tenant1");
-    TestEntity entity;
-    entity.initEntity(tenantId);
-    entity.id = TestId("entity1");
-    entity.tenantId = precheck.tenantId;
-    entity.createdBy = UserId("user1");
-    entity.updatedBy = UserId("user1");
-    entity.name = "Test Entity";
-    entity.description = "This is a test entity.";
+  auto tenantId = TenantId("tenant1");
+  TestEntity entity;
+  entity.initEntity(tenantId);
+  entity.id = TestId("entity1");
+  entity.createdBy = UserId("user1");
+  entity.updatedBy = UserId("user1");
+  entity.name = "Test Entity";
+  entity.description = "This is a test entity.";
 
-    assert(entity.id.value == "entity1");
-    assert(entity.tenantId == tenantId);
-    assert(entity.createdBy.value == "user1");
-    assert(entity.updatedBy.value == "user1");
-    assert(entity.name == "Test Entity");
-    assert(entity.description == "This is a test entity.");
+  assert(entity.id.value == "entity1");
+  assert(entity.tenantId == tenantId);
+  assert(entity.createdBy.value == "user1");
+  assert(entity.updatedBy.value == "user1");
+  assert(entity.name == "Test Entity");
+  assert(entity.description == "This is a test entity.");
 
-    auto json = entity.entityToJson();
-    assert(json.getString("id") == "entity1");
-    assert(json.getString("tenantId") == "tenant1");
-    assert(json.getString("createdBy") == "user1");
-    assert(json.getLong("createdAt") > 0);
-    assert(json.getString("updatedBy") == "user1");
-    assert(json.getLong("updatedAt") > 0);
+  auto json = entity.entityToJson();
+  assert(json.getString("id") == "entity1");
+  assert(json.getString("tenantId") == "tenant1");
+  assert(json.getString("createdBy") == "user1");
+  assert(json.getLong("createdAt") > 0);
+  assert(json.getString("updatedBy") == "user1");
+  assert(json.getLong("updatedAt") > 0);
 }
