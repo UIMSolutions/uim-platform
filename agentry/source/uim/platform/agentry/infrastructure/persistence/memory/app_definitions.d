@@ -7,7 +7,7 @@ module uim.platform.agentry.infrastructure.persistence.memory.app_definitions;
 
 import uim.platform.agentry;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

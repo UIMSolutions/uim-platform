@@ -7,7 +7,7 @@ module uim.platform.agentry.infrastructure.persistence.memory.sync_sessions;
 
 import uim.platform.agentry;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

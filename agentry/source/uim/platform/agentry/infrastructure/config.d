@@ -8,7 +8,7 @@ import std.process : environment;
 
 import uim.platform.agentry;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

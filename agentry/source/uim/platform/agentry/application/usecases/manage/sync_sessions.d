@@ -7,7 +7,7 @@ module uim.platform.agentry.application.usecases.manage.sync_sessions;
 
 import uim.platform.agentry;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

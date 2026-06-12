@@ -7,7 +7,7 @@ module uim.platform.agentry.presentation.http.controllers.app_version;
 
 import uim.platform.agentry;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

@@ -6,7 +6,7 @@
 module uim.platform.agentry.domain.enumerations;
 import uim.platform.agentry;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 
 /// Mobile application target platform

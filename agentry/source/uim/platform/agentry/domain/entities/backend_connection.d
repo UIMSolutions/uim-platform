@@ -7,7 +7,7 @@ module uim.platform.agentry.domain.entities.backend_connection;
 
 import uim.platform.agentry;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

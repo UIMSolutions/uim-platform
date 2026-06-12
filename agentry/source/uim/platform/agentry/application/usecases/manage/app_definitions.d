@@ -7,7 +7,7 @@ module uim.platform.agentry.application.usecases.manage.app_definitions;
 
 import uim.platform.agentry;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 
