@@ -64,7 +64,7 @@ struct TeamMemberDTO {
     TeamMemberId memberId;
     TenantId tenantId;
     string teamId;
-    string userId;
+    UserId userId;
     string email;
     string displayName;
     string functionId;

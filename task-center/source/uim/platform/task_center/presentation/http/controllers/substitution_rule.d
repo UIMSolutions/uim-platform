@@ -40,10 +40,10 @@ class SubstitutionRuleController : ManageHttpController {
         auto data = precheck.data;
         CreateSubstitutionRuleRequest r;
         r.tenantId = tenantId;
-        r.id = SubstitutionRuleId(precheck.id);
+        r.ruleId = SubstitutionRuleId(precheck.id);
         r.userId = UserId(data.getString("userId"));
         r.substituteId = UserId(data.getString("substituteId"));
-        r.definitionId = data.getString("definitionId");
+        r.definitionId = TaskDefinitionId(data.getString("definitionId"));
         r.startDate = data.getString("startDate");
         r.endDate = data.getString("endDate");
         r.createdBy = UserId(data.getString("createdBy"));
@@ -63,8 +63,8 @@ class SubstitutionRuleController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-        auto params = req.queryParams();
-        auto userId = UserId(params.get("userId", ""));
+        // auto params = req.queryParams();
+        auto userId = UserId(req.get("userId", ""));
 
         SubstitutionRule[] rules;
         if (!userId.isEmpty)
@@ -88,7 +88,6 @@ class SubstitutionRuleController : ManageHttpController {
         if (path.endsWith("/activate") || path.endsWith("/deactivate"))
             return errorResponse("Not found", 404);
 
-        auto tenantId = precheck.tenantId;
         auto id = SubstitutionRuleId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid substitution rule ID", 400);
@@ -116,7 +115,7 @@ class SubstitutionRuleController : ManageHttpController {
         r.tenantId = tenantId;
         r.ruleId = id;
         r.substituteId = UserId(data.getString("substituteId"));
-        r.definitionId = data.getString("definitionId");
+        r.definitionId = TaskDefinitionId(data.getString("definitionId"));
         r.startDate = data.getString("startDate");
         r.endDate = data.getString("endDate");
         r.updatedBy = UserId(data.getString("updatedBy"));

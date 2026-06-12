@@ -25,17 +25,17 @@ class MemoryUserTaskFilterRepository : TenantRepository!(UserTaskFilter, UserTas
         auto filter = findDefault(tenantId, userId);
         if (filter.id != UserTaskFilterId.init) {
             remove(filter);
-            return true;
         }
-        return false;
     }
 
     size_t countByUser(TenantId tenantId, UserId userId) {
         return findByUser(tenantId, userId).length;
     }
+
     UserTaskFilter[] findByUser(TenantId tenantId, UserId userId) {
         return findByTenant(tenantId).filter!(f => f.userId == userId).array;
     }
+    
     void removeByUser(TenantId tenantId, UserId userId) {
         foreach (f; findByUser(tenantId, userId))
             remove(f);

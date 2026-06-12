@@ -14,17 +14,17 @@ import uim.platform.task_center;
 struct TaskDefinition {
     mixin TenantEntity!(TaskDefinitionId);
     
-    TaskProviderId providerId;
+    TaskProviderId providerId; // The provider that offers this task definition
 
-    string name;
-    string description;
-    TaskCategory category = TaskCategory.approval;
+    string name; // Unique name for the task definition within the tenant
+    string description; // Description of the task definition
+    TaskCategory category = TaskCategory.approval; // Default category is 'approval'
 
-    string[] allowedActions;
-    string taskSchema;
+    string[] allowedActions; // List of allowed actions for tasks created from this definition (e.g., "approve", "reject", "requestChanges")
+    string taskSchema; // JSON schema defining the structure of the task's data payload
 
-    bool isActive = true;
-    bool requiresClaim;
+    bool isActive = true; // Indicates whether this task definition is active and can be used to create tasks
+    bool requiresClaim; // Indicates whether tasks created from this definition require claiming before actions can be taken
 
     Json toJson() const {
         return entityToJson

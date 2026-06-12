@@ -73,34 +73,37 @@ struct PatchFeatureFlagRequest {
 // ---------------------------------------------------------------------------
 
 struct CreateServiceInstanceRequest {
+    TenantId tenantId;
     string name;
     string description;
     string bindingGuid;
     string[string] labels;
-    string createdBy;
+    UserId createdBy;
 }
 
 struct UpdateServiceInstanceRequest {
+    TenantId tenantId;
     string description;
     string[string] labels;
-    string updatedBy;
+    UserId updatedBy;
 }
 
 // ---------------------------------------------------------------------------
 // Evaluation DTOs
 // ---------------------------------------------------------------------------
+// Note: For simplicity, we are using string[string] for attributes, but in a real implementation, you might want a more structured approach.
 
 struct EvaluationRequest {
+    TenantId tenantId;
     string   flagName;
     string   instanceId;
-    string   tenantId;
-    string   userId;
+    UserId   userId;
     string[string] attributes;
 }
 
 struct BulkEvaluationRequest {
     string   instanceId;
-    string   tenantId;
-    string   userId;
+    TenantId tenantId;
+    UserId   userId;
     string[string] attributes;
 }

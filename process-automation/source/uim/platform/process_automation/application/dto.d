@@ -48,7 +48,7 @@ struct StartProcessInstanceRequest {
     UserId startedBy;
     string priority;
     string[][] context;
-    long dueDate;
+    string dueDate;
 }
 
 struct UpdateProcessInstanceRequest {
@@ -73,11 +73,11 @@ struct CreateTaskRequest {
     string description;
     string type;
     string priority;
-    UserId assignee;
+    string assignee;
     string[] candidateUsers;
     string[] candidateGroups;
     string formId;
-    long dueDate;
+    string dueDate;
 }
 
 struct UpdateTaskRequest {
@@ -86,8 +86,8 @@ struct UpdateTaskRequest {
     string name;
     string description;
     string priority;
-    UserId assignee;
-    long dueDate;
+    string assignee;
+    string dueDate;
 }
 
 struct CompleteTaskRequest {

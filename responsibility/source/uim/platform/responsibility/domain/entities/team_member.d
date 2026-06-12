@@ -17,7 +17,7 @@ struct TeamMember {
     mixin TenantEntity!(TeamMemberId);
 
     string teamId;          // linked TeamId value
-    string userId;          // identity user ID (from Identity Authentication)
+    UserId userId;          // identity user ID (from Identity Authentication)
     string email;
     string displayName;
     string functionId;      // linked MemberFunctionId value

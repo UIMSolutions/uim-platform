@@ -45,7 +45,7 @@ struct AppDefinitionDTO {
     string definitionContent;
     string definitionFormat;
     string schemaVersion;
-    string authoredBy;
+    UserId authoredBy;
     string targetPlatform;
     string businessObjectModel;
     UserId createdBy;
@@ -87,7 +87,7 @@ struct DeviceDTO {
     string appVersionInstalled;
     string status;
     string pushToken;
-    string userId;
+    UserId userId;
     string userEmail;
     string groupName;
     bool isManaged;
@@ -107,7 +107,7 @@ struct SyncSessionDTO {
 
     string status;
     string direction;
-    string triggeredBy;
+    UserId triggeredBy;
     string clientAppVersion;
     UserId createdBy;
     UserId updatedBy;
@@ -150,7 +150,7 @@ struct DeploymentDTO {
     string targetDeviceId;
     string targetGroupName;
     long scheduledAt;
-    string deployedBy;
+    UserId deployedBy;
     string notes;
     UserId createdBy;
     UserId updatedBy;

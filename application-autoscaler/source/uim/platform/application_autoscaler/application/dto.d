@@ -30,8 +30,8 @@ struct ScalingRuleRequest {
 struct RecurringScheduleRequest {
   long startTime;
   long endTime;
-  long startDate;
-  long endDate;
+  string startDate;
+  string endDate;
   int[]  daysOfWeek;
   int[]  daysOfMonth;
   int    instanceMinCount;

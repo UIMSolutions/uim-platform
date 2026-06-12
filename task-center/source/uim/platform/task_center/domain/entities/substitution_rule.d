@@ -20,8 +20,8 @@ struct SubstitutionRule {
 
     SubstitutionStatus status = SubstitutionStatus.pending; // pending, active, expired
 
-    long startDate; // ISO 8601 format
-    long endDate; // ISO 8601 format
+    string startDate; // ISO 8601 format
+    string endDate; // ISO 8601 format
     bool isAutoForward; // Whether tasks should be automatically forwarded to the substitute user
 
 

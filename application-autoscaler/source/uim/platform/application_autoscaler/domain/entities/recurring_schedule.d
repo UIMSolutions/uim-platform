@@ -16,8 +16,8 @@ struct RecurringScheduleEntity {
   RecurringScheduleId id;
   long startTime; // 
   long endTime; // HH:MM 24hr
-  long startDate; // YYYY-MM-DD (optional)
-  long endDate; // YYYY-MM-DD (optional)
+  string startDate; // YYYY-MM-DD (optional)
+  string endDate; // YYYY-MM-DD (optional)
   int[] daysOfWeek; // 1=Mon..7=Sun (mutually exclusive with daysOfMonth)
   int[] daysOfMonth; // 1..31
   int instanceMinCount;

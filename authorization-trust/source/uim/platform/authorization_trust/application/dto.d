@@ -96,7 +96,7 @@ struct UpdateRoleCollectionRequest {
 struct CreateUserAssignmentRequest {
   TenantId tenantId;
 
-  string           userId;
+  UserId           userId;
   string           userEmail;
   RoleCollectionId roleCollectionId;
   string           origin;

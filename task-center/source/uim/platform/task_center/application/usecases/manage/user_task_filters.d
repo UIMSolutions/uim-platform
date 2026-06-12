@@ -43,10 +43,10 @@ class ManageUserTaskFiltersUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateFilter(UpdateUserTaskFilterRequest req) {
-        auto taskFilter = repo.findById(req.tenantId, req.id);
+        auto taskFilter = repo.findById(req.tenantId, req.filterId);
         if (taskFilter.isNull)
             return CommandResult(false, "", "Filter not found");
-            
+
         if (req.name.length > 0) taskFilter.name = req.name;
         if (req.description.length > 0) taskFilter.description = req.description;
         taskFilter.isDefault = req.isDefault;

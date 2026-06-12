@@ -32,7 +32,7 @@ struct TaskProvider {
         return entityToJson
             .set("name", name)
             .set("description", description)
-            .set("providerType", providerType.toString())
+            .set("providerType", providerType.to!string())
             .set("status", status.toString())
             .set("authType", authType.toString())
             .set("endpointUrl", endpointUrl)

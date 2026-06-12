@@ -158,7 +158,7 @@ struct CreateTaskRequest {
   string actionUrl;
   string category;
   string[] tags;
-  long dueDate;
+  string dueDate;
 }
 
 struct UpdateTaskRequest {
@@ -168,7 +168,7 @@ struct UpdateTaskRequest {
   TaskPriority priority;
   string title;
   string description;
-  long dueDate;
+  string dueDate;
 }
 // ──────────────── Channel DTOs ────────────────
 

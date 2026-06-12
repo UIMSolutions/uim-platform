@@ -58,7 +58,7 @@ struct ProcessInstance {
     int retryCount;
     long startedAt;
     long completedAt;
-    long dueDate;
+    string dueDate;
 
     Json toJson() const {
         auto j = entityToJson

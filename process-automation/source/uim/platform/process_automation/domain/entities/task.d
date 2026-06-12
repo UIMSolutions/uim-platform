@@ -54,7 +54,7 @@ struct PATask {
     TaskType type;
     TaskStatus status;
     TaskPriority priority;
-    UserId assignee;
+    string assignee;
     UserId[] candidateUsers;
     string[] candidateGroups;
     string formId;
@@ -63,7 +63,7 @@ struct PATask {
     TaskAttachment[] attachments;
     UserId completedBy;
     string outcome;
-    long dueDate;
+    string dueDate;
     long completedAt;
 
     Json toJson() const {

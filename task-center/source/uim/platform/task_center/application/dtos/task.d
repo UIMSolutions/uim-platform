@@ -15,7 +15,7 @@ struct CreateTaskRequest {
     string description; // The description of the task. This is an optional field, but it can provide additional details and context about the task, which can be helpful for the assignee and other stakeholders.
     string priority; // The priority of the task. This is an optional field, but it can be used to indicate the urgency or importance of the task, which can help the assignee prioritize their work and ensure that critical tasks are addressed in a timely manner.
     string category; // The category of the task. This is an optional field, but it can be used to classify tasks and make it easier to filter and organize them.
-    UserId assignee; // The assignee of the task. This is an optional field, but it can be used to assign the task to a specific user or group, which can help ensure that the task is completed by the right person.
+    string assignee; // The assignee of the task. This is an optional field, but it can be used to assign the task to a specific user or group, which can help ensure that the task is completed by the right person.
     string creator; // The creator of the task. This is an optional field, but it can be used to track who created the task, which can be important for auditing and accountability purposes.
     string sourceApplication; // The source application of the task. This is an optional field, but it can be used to identify which application or system originated the task, which can be important for integration and tracking purposes.
     string dueDate; // The due date of the task. This is an optional field, but it can be used to indicate when the task is expected to be completed, which can help the assignee prioritize their work and ensure timely completion.
@@ -30,7 +30,7 @@ struct UpdateTaskRequest {
     string title; // The new title of the task. This field is optional; if the client does not want to update the title, it can be left empty or null.
     string description; // The new description of the task. This field is optional; if the client does not want to update the description, it can be left empty or null.
     string priority; // The new priority of the task. This field is optional; if the client does not want to update the priority, it can be left empty or null.
-    UserId assignee; // The new assignee of the task. This field is optional; if the client does not
+    string assignee; // The new assignee of the task. This field is optional; if the client does not
     string dueDate; // The new due date of the task. This field is optional; if the client does not want to update the due date, it can be left empty or null.
     UserId updatedBy; // The user who is performing the update operation. This is important for auditing purposes, as it allows the system to track who made changes to the task.
     string[] allowedActions; // The new allowed actions for the task. This field is optional; if the client does not want to update the allowed actions, it can be left empty or null.

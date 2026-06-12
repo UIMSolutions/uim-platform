@@ -25,12 +25,12 @@ struct Device {
     long enrolledAt;
     long lastSeenAt;
     string pushToken;
-    string userId;
+    UserId userId;
     string userEmail;
     string groupName;
     bool isManaged;
     string mdmDeviceId;
-
+    
     Json toJson() const {
         auto j = entityToJson
             .set("mobileApplicationId", mobileApplicationId.value)

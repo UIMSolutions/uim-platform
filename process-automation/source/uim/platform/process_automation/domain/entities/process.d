@@ -16,7 +16,7 @@ struct ProcessStep {
     string name;
     StepType type;
     string description;
-    UserId assignee;
+    string assignee;
     string formId;
     string decisionId;
     string automationId;
