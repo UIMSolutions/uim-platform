@@ -11,22 +11,53 @@ import uim.platform.agentry;
 
 @safe:
 
-class MemoryAppVersionRepository
-    : TenantRepository!(AppVersion, AppVersionId), AppVersionRepository {
+class MemoryAppVersionRepository : TenantRepository!(AppVersion, AppVersionId), AppVersionRepository {
+
+    size_t countByMobileApplication(TenantId tenantId, MobileApplicationId appId) {
+        return findByMobileApplication(tenantId, appId).length;
+    }
+
+    AppVersion[] filterByMobileApplication(AppVersion[] versions, MobileApplicationId appId) {
+        return versions.filter!(v => v.mobileApplicationId == appId).array;
+    }
 
     AppVersion[] findByMobileApplication(TenantId tenantId, MobileApplicationId appId) {
-        return findByTenant(tenantId).filter!(v => v.mobileApplicationId == appId).array;
-    }
-
-    AppVersion[] findByStatus(TenantId tenantId, AppVersionStatus status) {
-        return findByTenant(tenantId).filter!(v => v.status == status).array;
-    }
-
-    AppVersion[] findByDefinition(TenantId tenantId, AppDefinitionId definitionId) {
-        return findByTenant(tenantId).filter!(v => v.definitionId == definitionId).array;
+        return filterByMobileApplication(findByTenant(tenantId), appId);
     }
 
     void removeByMobileApplication(TenantId tenantId, MobileApplicationId appId) {
         findByMobileApplication(tenantId, appId).each!(e => remove(e));
+    }
+
+    size_t countByStatus(TenantId tenantId, AppVersionStatus status) {
+        return findByStatus(tenantId, status).length;
+    }
+
+    AppVersion[] filterByStatus(AppVersion[] versions, AppVersionStatus status) {
+        return versions.filter!(v => v.status == status).array;
+    }
+
+    AppVersion[] findByStatus(TenantId tenantId, AppVersionStatus status) {
+        return filterByStatus(findByTenant(tenantId), status);
+    }
+
+    void removeByStatus(TenantId tenantId, AppVersionStatus status) {
+        findByStatus(tenantId, status).each!(e => remove(e));
+    }
+
+    size_t countByDefinition(TenantId tenantId, AppDefinitionId definitionId) {
+        return findByDefinition(tenantId, definitionId).length;
+    }
+
+    AppVersion[] filterByDefinition(AppVersion[] versions, AppDefinitionId definitionId) {
+        return versions.filter!(v => v.definitionId == definitionId).array;
+    }
+
+    AppVersion[] findByDefinition(TenantId tenantId, AppDefinitionId definitionId) {
+        return filterByDefinition(findByTenant(tenantId), definitionId);
+    }
+
+    void removeByDefinition(TenantId tenantId, AppDefinitionId definitionId) {
+        findByDefinition(tenantId, definitionId).each!(e => remove(e));
     }
 }

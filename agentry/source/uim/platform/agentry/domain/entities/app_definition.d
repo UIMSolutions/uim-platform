@@ -14,31 +14,31 @@ import uim.platform.agentry;
 /// Metadata-driven application definition — the core Agentry concept describing
 /// screens, fields, actions, transmissions, and business rules in a structured format.
 struct AppDefinition {
-    mixin TenantEntity!(AppDefinitionId);
+    mixin TenantEntity!AppDefinitionId;
 
-    MobileApplicationId mobileApplicationId;
+    MobileApplicationId applicationId;
     string name;
     string description;
     DefinitionStatus status = DefinitionStatus.draft;
-    string definitionContent;    // XML/JSON metadata payload
-    string definitionFormat;     // xml, json
+    string definitionContent; // XML/JSON metadata payload
+    string definitionFormat; // xml, json
     string schemaVersion;
-    string authoredBy;
+    UserId authoredBy;
     string targetPlatform;
-    string businessObjectModel;  // linked backend BOM
+    string businessObjectModel; // linked backend BOM
     bool validationPassed;
     string validationErrors;
     long publishedAt;
 
     Json toJson() const {
         auto j = entityToJson
-            .set("mobileApplicationId", mobileApplicationId.value)
+            .set("applicationId", applicationId.value)
             .set("name", name)
             .set("description", description)
             .set("status", status.to!string)
             .set("definitionFormat", definitionFormat)
             .set("schemaVersion", schemaVersion)
-            .set("authoredBy", authoredBy)
+            .set("authoredBy", authoredBy.value)
             .set("targetPlatform", targetPlatform)
             .set("businessObjectModel", businessObjectModel)
             .set("validationPassed", validationPassed)

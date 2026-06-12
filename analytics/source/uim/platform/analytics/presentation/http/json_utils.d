@@ -4,7 +4,11 @@ import std.conv : to;
 import std.string : indexOf;
 import vibe.data.json : Json;
 import vibe.http.server : HTTPServerRequest, HTTPServerResponse;
+import uim.platform.analytics;
 
+// mixin(ShowModule!());
+
+@safe:
 string tenantFromQuery(scope HTTPServerRequest req) {
   auto tenant = req.query.get("tenantId", "");
   if (tenant.length == 0) return "default";

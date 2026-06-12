@@ -14,19 +14,45 @@ import uim.platform.agentry;
 class MemoryDeploymentRepository
     : TenantRepository!(Deployment, DeploymentId), DeploymentRepository {
 
+    size_t countByMobileApplication(TenantId tenantId, MobileApplicationId appId) {
+        return findByMobileApplication(tenantId, appId).length;
+    }
+    Deployment[] filterByMobileApplication(Deployment[] deployments, MobileApplicationId appId) {
+        return deployments.filter!(d => d.mobileApplicationId == appId).array;
+    }
     Deployment[] findByMobileApplication(TenantId tenantId, MobileApplicationId appId) {
-        return findByTenant(tenantId).filter!(d => d.mobileApplicationId == appId).array;
+        return filterByMobileApplication(findByTenant(tenantId), appId);
     }
-
-    Deployment[] findByStatus(TenantId tenantId, DeploymentStatus status) {
-        return findByTenant(tenantId).filter!(d => d.status == status).array;
-    }
-
-    Deployment[] findByAppVersion(TenantId tenantId, AppVersionId versionId) {
-        return findByTenant(tenantId).filter!(d => d.appVersionId == versionId).array;
+    void removeByMobileApplication(TenantId tenantId, MobileApplicationId appId) {
+        findByMobileApplication(tenantId, appId).each!(e => remove(e));
     }
 
     size_t countByStatus(TenantId tenantId, DeploymentStatus status) {
         return findByStatus(tenantId, status).length;
     }
+
+    Deployment[] filterByStatus(Deployment[] deployments, DeploymentStatus status) {
+        return deployments.filter!(d => d.status == status).array;
+    }
+
+    Deployment[] findByStatus(TenantId tenantId, DeploymentStatus status) {
+        return filterByStatus(findByTenant(tenantId), status);
+    }
+    void removeByStatus(TenantId tenantId, DeploymentStatus status) {
+        findByStatus(tenantId, status).each!(e => remove(e));
+    }
+
+    size_t countByAppVersion(TenantId tenantId, AppVersionId versionId) {
+        return findByAppVersion(tenantId, versionId).length;
+    }
+    Deployment[] filterByAppVersion(Deployment[] deployments, AppVersionId versionId) {
+        return deployments.filter!(d => d.appVersionId == versionId).array;
+    }
+    Deployment[] findByAppVersion(TenantId tenantId, AppVersionId versionId) {
+        return filterByAppVersion(findByTenant(tenantId), versionId);
+    }
+    void removeByAppVersion(TenantId tenantId, AppVersionId versionId) {
+        findByAppVersion(tenantId, versionId).each!(e => remove(e));
+    }
+
 }

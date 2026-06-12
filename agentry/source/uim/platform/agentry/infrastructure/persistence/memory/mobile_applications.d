@@ -18,8 +18,12 @@ class MemoryMobileApplicationRepository
         return findByStatus(tenantId, status).length;
     }
 
+    MobileApplication[] filterByStatus(MobileApplication[] apps, AppStatus status) {
+        return apps.filter!(a => a.status == status).array;
+    }
+
     MobileApplication[] findByStatus(TenantId tenantId, AppStatus status) {
-        return findByTenant(tenantId).filter!(a => a.status == status).array;
+        return filterByStatus(findByTenant(tenantId), status);
     }
 
     void removeByStatus(TenantId tenantId, AppStatus status) {
@@ -30,7 +34,14 @@ class MemoryMobileApplicationRepository
         return findByPlatform(tenantId, platform).length;
     }
 
+    MobileApplication[] filterByPlatform(MobileApplication[] apps, AppPlatform platform) {
+        return apps.filter!(a => a.platform == platform).array;
+    }
+
     MobileApplication[] findByPlatform(TenantId tenantId, AppPlatform platform) {
-        return findByTenant(tenantId).filter!(a => a.platform == platform).array;
+        return filterByPlatform(findByTenant(tenantId), platform);
+    }
+    void removeByPlatform(TenantId tenantId, AppPlatform platform) {
+        findByPlatform(tenantId, platform).each!(e => remove(e));
     }
 }

@@ -14,12 +14,28 @@ import uim.platform.agentry;
 class MemoryAppDefinitionRepository
     : TenantRepository!(AppDefinition, AppDefinitionId), AppDefinitionRepository {
 
-    AppDefinition[] findByMobileApplication(TenantId tenantId, MobileApplicationId appId) {
-        return findByTenant(tenantId).filter!(d => d.mobileApplicationId == appId).array;
+    size_t countByStatus(TenantId tenantId, DefinitionStatus status) {
+        return findByStatus(tenantId, status).length;
+    }
+    AppDefinition[] filterByStatus(AppDefinition[] defs, DefinitionStatus status) {
+        return defs.filter!(d => d.status == status).array;
+    }
+    AppDefinition[] findByStatus(TenantId tenantId, DefinitionStatus status) {
+        return filterByStatus(findByTenant(tenantId), status);
+    }
+    void removeByStatus(TenantId tenantId, DefinitionStatus status) {
+        findByStatus(tenantId, status).each!(e => remove(e));
     }
 
-    AppDefinition[] findByStatus(TenantId tenantId, DefinitionStatus status) {
-        return findByTenant(tenantId).filter!(d => d.status == status).array;
+    size_t countByMobileApplication(TenantId tenantId, MobileApplicationId appId) {
+        return findByMobileApplication(tenantId, appId).length;
+    }
+    AppDefinition[] filterByMobileApplication(AppDefinition[] defs, MobileApplicationId appId) {
+        return defs.filter!(d => d.applicationId == appId).array;
+    }
+
+    AppDefinition[] findByMobileApplication(TenantId tenantId, MobileApplicationId appId) {
+        return filterByMobileApplication(findByTenant(tenantId), appId);
     }
 
     void removeByMobileApplication(TenantId tenantId, MobileApplicationId appId) {

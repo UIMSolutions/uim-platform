@@ -10,7 +10,11 @@ import uim.platform.analytics.application.usecases.manage_assets;
 import uim.platform.analytics.presentation.http.json_utils : extractAssetId;
 import uim.platform.service.helpers.read : readStringArray;
 import uim.platform.service.presentation.http.controllers.manage : ManageHttpController;
+import uim.platform.analytics;
 
+// mixin(ShowModule!());
+
+@safe:
 class AnalyticsAssetsController : ManageHttpController {
   private ManageAssetsUseCase useCase;
 
@@ -37,8 +41,7 @@ class AnalyticsAssetsController : ManageHttpController {
     auto tenantId = precheck.tenantId.value;
     auto items = (() @trusted => useCase.listAssets(tenantId))();
 
-    auto jsonItems = Json.emptyArray;
-    foreach (item; items) jsonItems ~= item.toJson();
+    auto jsonItems = items.map!(item => item.toJson()).array.toJson;
 
     auto responseData = Json.emptyObject
       .set("count", jsonItems.length)

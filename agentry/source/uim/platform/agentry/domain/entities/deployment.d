@@ -24,7 +24,7 @@ struct Deployment {
     long startedAt;
     long completedAt;
     string rollbackVersionId;
-    string deployedBy;
+    UserId deployedBy;
     string notes;
     long devicesTotal;
     long devicesSucceeded;
@@ -42,7 +42,7 @@ struct Deployment {
             .set("startedAt", startedAt)
             .set("completedAt", completedAt)
             .set("rollbackVersionId", rollbackVersionId)
-            .set("deployedBy", deployedBy)
+            .set("deployedBy", deployedBy.value)
             .set("notes", notes)
             .set("devicesTotal", devicesTotal)
             .set("devicesSucceeded", devicesSucceeded)

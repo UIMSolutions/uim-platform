@@ -34,13 +34,12 @@ class AppDefinitionController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-        auto items = usecase.listAppDefinitions(tenantId);
+        auto items = usecase.listDefinitions(tenantId);
         auto list = items.map!(e => e.toJson()).array.toJson;
 
         auto resp = Json.emptyObject
             .set("count", items.length)
             .set("resources", list);
-
         return successResponse("App definition list retrieved successfully", "Retrieved", 200, resp);
     }
 
@@ -64,7 +63,7 @@ class AppDefinitionController : ManageHttpController {
         dto.targetPlatform = data.getString("targetPlatform");
         dto.businessObjectModel = data.getString("businessObjectModel");
 
-        auto result = usecase.createAppDefinition(dto);
+        auto result = usecase.createDefinition(dto);
         if (result.hasError)
             return errorResponse(result.message, 400);
 
@@ -84,7 +83,7 @@ class AppDefinitionController : ManageHttpController {
         if (id.isNull)
             return errorResponse("Invalid app definition ID", 400);
 
-        auto definition = usecase.getAppDefinition(tenantId, id);
+        auto definition = usecase.getDefinition(tenantId, id);
         if (definition.isNull)
             return errorResponse("App definition not found", 404);
 
@@ -112,7 +111,7 @@ class AppDefinitionController : ManageHttpController {
         dto.definitionContent = data.getString("definitionContent");
         dto.schemaVersion = data.getString("schemaVersion");
 
-        auto result = usecase.updateAppDefinition(dto);
+        auto result = usecase.updateDefinition(dto);
         if (result.hasError)
             return errorResponse(result.message, 400);
 
@@ -132,13 +131,11 @@ class AppDefinitionController : ManageHttpController {
         if (id.isNull)
             return errorResponse("Invalid app definition ID", 400);
 
-        auto result = usecase.deleteAppDefinition(tenantId, id);
+        auto result = usecase.deleteDefinition(tenantId, id);
         if (result.hasError)
             return errorResponse(result.message, 400);
 
-        auto responseData = Json.emptyObject
-            .set("id", id);
-
+        auto responseData = Json.emptyObject.set("id", result.id);
         return successResponse("App definition deleted successfully", "Deleted", 200, responseData);
     }
 }

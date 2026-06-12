@@ -41,7 +41,7 @@ class ManageSyncSessionsUseCase {
         session.deviceId = dto.deviceId;
         session.applicationId = dto.applicationId;
         session.connectionId = dto.connectionId;
-        session.triggeredBy = UserId(dto.triggeredBy);
+        session.triggeredBy = dto.triggeredBy;
         session.clientAppVersion = dto.clientAppVersion;
 
         if (!AgentryValidator.isValidSyncSession(session))

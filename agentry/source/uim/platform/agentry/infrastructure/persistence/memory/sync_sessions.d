@@ -13,19 +13,45 @@ import uim.platform.agentry;
 
 class MemorySyncSessionRepository : TenantRepository!(SyncSession, SyncSessionId), SyncSessionRepository {
 
+    size_t countByDevice(TenantId tenantId, DeviceId deviceId) {
+        return findByDevice(tenantId, deviceId).length;
+    }
+
+    SyncSession[] filterByDevice(SyncSession[] sessions, DeviceId deviceId) {
+        return sessions.filter!(s => s.deviceId == deviceId).array;
+    }
+
     SyncSession[] findByDevice(TenantId tenantId, DeviceId deviceId) {
-        return findByTenant(tenantId).filter!(s => s.deviceId == deviceId).array;
+        return filterByDevice(findByTenant(tenantId), deviceId);
+    }
+    void removeByDevice(TenantId tenantId, DeviceId deviceId) {
+        findByDevice(tenantId, deviceId).each!(e => remove(e));
     }
 
-    SyncSession[] findByStatus(TenantId tenantId, SyncStatus status) {
-        return findByTenant(tenantId).filter!(s => s.status == status).array;
+    size_t countByMobileApplication(TenantId tenantId, MobileApplicationId appId) {
+        return findByMobileApplication(tenantId, appId).length;
     }
-
+    SyncSession[] filterByMobileApplication(SyncSession[] sessions, MobileApplicationId appId) {
+        return sessions.filter!(s => s.applicationId == appId).array;
+    }
     SyncSession[] findByMobileApplication(TenantId tenantId, MobileApplicationId appId) {
-        return findByTenant(tenantId).filter!(s => s.applicationId == appId).array;
+        return filterByMobileApplication(findByTenant(tenantId), appId);
+    }
+    void removeByMobileApplication(TenantId tenantId, MobileApplicationId appId) {
+        findByMobileApplication(tenantId, appId).each!(e => remove(e));
     }
 
     size_t countByStatus(TenantId tenantId, SyncStatus status) {
         return findByStatus(tenantId, status).length;
     }
+    SyncSession[] filterByStatus(SyncSession[] sessions, SyncStatus status) {
+        return sessions.filter!(s => s.status == status).array;
+    }
+    SyncSession[] findByStatus(TenantId tenantId, SyncStatus status) {
+        return filterByStatus(findByTenant(tenantId), status);
+    }
+    void removeByStatus(TenantId tenantId, SyncStatus status) {
+        findByStatus(tenantId, status).each!(e => remove(e));
+    }
+
 }

@@ -27,10 +27,10 @@ struct SyncSession {
     long recordsReceived;
     string errorMessage;
     string clientAppVersion;
-    string triggeredBy;   // manual, scheduled, push
+    UserId triggeredBy;  // TODO: ?? manual, scheduled, push
 
     Json toJson() const {
-        auto j = entityToJson
+        return entityToJson
             .set("deviceId", deviceId.value)
             .set("applicationId", applicationId.value)
             .set("connectionId", connectionId.value)
@@ -44,7 +44,6 @@ struct SyncSession {
             .set("recordsReceived", recordsReceived)
             .set("errorMessage", errorMessage)
             .set("clientAppVersion", clientAppVersion)
-            .set("triggeredBy", triggeredBy);
-        return j;
+            .set("triggeredBy", triggeredBy.value);
     }
 }

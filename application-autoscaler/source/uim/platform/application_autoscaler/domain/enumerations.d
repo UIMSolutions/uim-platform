@@ -24,34 +24,18 @@ enum MetricType {
   responsetime,
   custom_,
 }
-
-string toString(MetricType m) {
-  final switch (m) {
-    case MetricType.memoryused:    return "memoryused";
-    case MetricType.memoryutil:    return "memoryutil";
-    case MetricType.cpu:           return "cpu";
-    case MetricType.cpuutil:       return "cpuutil";
-    case MetricType.disk:          return "disk";
-    case MetricType.diskutil:      return "diskutil";
-    case MetricType.throughput:    return "throughput";
-    case MetricType.responsetime:  return "responsetime";
-    case MetricType.custom_:       return "custom";
-  }
-}
-
 MetricType toMetricType(string s) {
-  import std.uni : toLower;
-  switch (s.toLower) {
-    case "memoryused":   return MetricType.memoryused;
-    case "memoryutil":   return MetricType.memoryutil;
-    case "cpu":          return MetricType.cpu;
-    case "cpuutil":      return MetricType.cpuutil;
-    case "disk":         return MetricType.disk;
-    case "diskutil":     return MetricType.diskutil;
-    case "throughput":   return MetricType.throughput;
-    case "responsetime": return MetricType.responsetime;
-    default:             return MetricType.custom_;
-  }
+  const map = [
+    "memoryused": MetricType.memoryused,
+    "memoryutil": MetricType.memoryutil,
+    "cpu": MetricType.cpu,
+    "cpuutil": MetricType.cpuutil,
+    "disk": MetricType.disk,
+    "diskutil": MetricType.diskutil,
+    "throughput": MetricType.throughput,
+    "responsetime": MetricType.responsetime,
+    "custom": MetricType.custom_
+  ];
 }
 
 // ---------------------------------------------------------------------------
@@ -63,127 +47,93 @@ enum ScalingOperator {
   lte,
   gte,
 }
-
-string toString(ScalingOperator op) {
-  final switch (op) {
-    case ScalingOperator.lt:  return "<";
-    case ScalingOperator.gt:  return ">";
-    case ScalingOperator.lte: return "<=";
-    case ScalingOperator.gte: return ">=";
-  }
-}
-
 ScalingOperator toScalingOperator(string s) {
-  switch (s) {
-    case "<":  return ScalingOperator.lt;
-    case ">":  return ScalingOperator.gt;
-    case "<=": return ScalingOperator.lte;
-    case ">=": return ScalingOperator.gte;
-    default:   return ScalingOperator.gte;
-  }
-}
+  const map = [
+    "<":  ScalingOperator.lt,
+    ">":  ScalingOperator.gt,
+    "<=": ScalingOperator.lte,
+    ">=": ScalingOperator.gte,
+    "lt": ScalingOperator.lt,
+    "gt": ScalingOperator.gt,
+    "lte": ScalingOperator.lte,
+    "gte": ScalingOperator.gte
+  ];
+  return map.get(s, ScalingOperator.gte);
+} 
 
 // ---------------------------------------------------------------------------
 // Scaling direction result
 // ---------------------------------------------------------------------------
 enum ScalingDirection {
+  // Scale out (add instances)
   scaleOut,
+  // Scale in (remove instances)
   scaleIn,
+  // No scaling action
   none,
 }
-
-string toString(ScalingDirection d) {
-  final switch (d) {
-    case ScalingDirection.scaleOut: return "scale_out";
-    case ScalingDirection.scaleIn:  return "scale_in";
-    case ScalingDirection.none:     return "none";
-  }
-}
-
 ScalingDirection toScalingDirection(string s) {
-  import std.uni : toLower;
-  switch (s.toLower) {
-    case "scale_out": return ScalingDirection.scaleOut;
-    case "scale_in":  return ScalingDirection.scaleIn;
-    default:          return ScalingDirection.none;
-  }
+  const map = [
+    "scale_out": ScalingDirection.scaleOut,
+    "scale_in": ScalingDirection.scaleIn,
+    "none": ScalingDirection.none
+  ];
+  return map.get(s.toLower, ScalingDirection.none)  ;
 }
-
 
 // ---------------------------------------------------------------------------
 // Scaling event status
 // ---------------------------------------------------------------------------
 enum ScalingStatus {
+  // Scaling action succeeded
   succeeded,
+  // Scaling action failed
   failed,
+  // Scaling action was ignored due to cooldown or other constraints
   ignored,
 }
-
-string toString(ScalingStatus s) {
-  final switch (s) {
-    case ScalingStatus.succeeded: return "succeeded";
-    case ScalingStatus.failed:    return "failed";
-    case ScalingStatus.ignored:   return "ignored";
-  }
-}
-
 ScalingStatus toScalingStatus(string s) {
-  import std.uni : toLower;
-  switch (s.toLower()) {
-    case "succeeded": return ScalingStatus.succeeded;
-    case "failed":    return ScalingStatus.failed;
-    case "ignored":   return ScalingStatus.ignored;
-    default:          return ScalingStatus.ignored;
-  }
+  const map = [
+    "succeeded": ScalingStatus.succeeded,
+    "failed":    ScalingStatus.failed,
+    "ignored":   ScalingStatus.ignored
+  ];
+  return map.get(s.toLower, ScalingStatus.ignored);
 }
 
 // ---------------------------------------------------------------------------
 // Policy status
 // ---------------------------------------------------------------------------
 enum PolicyStatus {
+  // Active and being evaluated
   active,
+  // Inactive and not being evaluated
   inactive,
+  // Deleted but not yet removed from the system
   deleted_,
 }
-
-string toString(PolicyStatus s) {
-  final switch (s) {
-    case PolicyStatus.active:   return "active";
-    case PolicyStatus.inactive: return "inactive";
-    case PolicyStatus.deleted_: return "deleted";
-  }
-}
-
 PolicyStatus toPolicyStatus(string s) {
-  import std.uni : toLower;
-  switch (s.toLower()) {
-    case "active":   return PolicyStatus.active;
-    case "inactive": return PolicyStatus.inactive;
-    case "deleted":  return PolicyStatus.deleted_;
-    default:         return PolicyStatus.active;
-  }
+  const map = [
+    "active": PolicyStatus.active,
+    "inactive": PolicyStatus.inactive,
+    "deleted": PolicyStatus.deleted_
+  ];
+  return map.get(s.toLower, PolicyStatus.inactive);
 }
 
 // ---------------------------------------------------------------------------
 // Custom metric allow-from strategy
 // ---------------------------------------------------------------------------
 enum MetricAllowFrom {
+  // Allow metric from the same application only
   sameApp,
+  // Allow metric from any application bound to the same service instance
   boundApp,
 }
-
-string toString(MetricAllowFrom m) {
-  final switch (m) {
-    case MetricAllowFrom.sameApp:  return "same_app";
-    case MetricAllowFrom.boundApp: return "bound_app";
-  }
-}
-
 MetricAllowFrom toMetricAllowFrom(string s) {
-  import std.uni : toLower;
-  switch (s.toLower) {
-    case "same_app":  return MetricAllowFrom.sameApp;
-    case "bound_app": return MetricAllowFrom.boundApp;
-    default:          return MetricAllowFrom.sameApp;
-  }
+  const map = [
+    "same_app": MetricAllowFrom.sameApp,
+    "bound_app": MetricAllowFrom.boundApp
+  ];
+  return map.get(s.toLower, MetricAllowFrom.sameApp);
 }

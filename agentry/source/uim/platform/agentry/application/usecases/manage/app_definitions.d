@@ -18,15 +18,15 @@ class ManageAppDefinitionsUseCase {
         this.repo = repo;
     }
 
-    AppDefinition getAppDefinition(TenantId tenantId, AppDefinitionId id) {
+    AppDefinition getDefinition(TenantId tenantId, AppDefinitionId id) {
         return repo.findById(tenantId, id);
     }
 
-    AppDefinition[] listAppDefinitions(TenantId tenantId) {
+    AppDefinition[] listDefinitions(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    AppDefinition[] listByMobileApplication(TenantId tenantId, MobileApplicationId appId) {
+    AppDefinition[] listDefinitions(TenantId tenantId, MobileApplicationId appId) {
         return repo.findByMobileApplication(tenantId, appId);
     }
 
@@ -34,11 +34,11 @@ class ManageAppDefinitionsUseCase {
         return repo.findByStatus(tenantId, status);
     }
 
-    CommandResult createAppDefinition(AppDefinitionDTO dto) {
+    CommandResult createDefinition(AppDefinitionDTO dto) {
         AppDefinition def;
         def.initEntity(dto.tenantId, dto.createdBy);
         def.id = dto.definitionId;
-        def.mobileApplicationId = dto.applicationId;
+        def.applicationId = dto.applicationId;
         def.name = dto.name;
         def.description = dto.description;
         def.definitionContent = dto.definitionContent;
@@ -55,7 +55,7 @@ class ManageAppDefinitionsUseCase {
         return CommandResult(true, def.id.value, "");
     }
 
-    CommandResult updateAppDefinition(AppDefinitionDTO dto) {
+    CommandResult updateDefinition(AppDefinitionDTO dto) {
         auto existing = repo.findById(dto.tenantId, dto.definitionId);
         if (existing.isNull)
             return CommandResult(false, "", "App definition not found");
@@ -71,7 +71,7 @@ class ManageAppDefinitionsUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteAppDefinition(TenantId tenantId, AppDefinitionId id) {
+    CommandResult deleteDefinition(TenantId tenantId, AppDefinitionId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "App definition not found");

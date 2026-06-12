@@ -3,7 +3,11 @@ module uim.platform.analytics.presentation.http.controllers.health;
 import vibe.data.json : Json;
 import vibe.http.router : URLRouter;
 import vibe.http.server : HTTPServerRequest, HTTPServerResponse;
+import uim.platform.analytics;
 
+// mixin(ShowModule!());
+
+@safe:
 class AnalyticsHealthController {
   void registerRoutes(URLRouter router) {
     router.get("/api/v1/health", &handleHealth);
