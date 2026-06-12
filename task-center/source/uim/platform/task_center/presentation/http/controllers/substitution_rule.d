@@ -48,7 +48,7 @@ class SubstitutionRuleController : ManageHttpController {
         r.endDate = data.getString("endDate");
         r.createdBy = UserId(data.getString("createdBy"));
 
-        auto result = usecase.createSubstitutionRule(r);
+        auto result = usecase.createRule(r);
         if (result.hasError)
             return errorResponse(result.message, 400);
 
@@ -64,7 +64,7 @@ class SubstitutionRuleController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         // auto params = req.queryParams();
-        auto userId = UserId(req.get("userId", ""));
+        auto userId = UserId(precheck.data.getString("userId", ""));
 
         SubstitutionRule[] rules;
         if (!userId.isEmpty)
@@ -120,7 +120,7 @@ class SubstitutionRuleController : ManageHttpController {
         r.endDate = data.getString("endDate");
         r.updatedBy = UserId(data.getString("updatedBy"));
 
-        auto result = usecase.updateSubstitutionRule(r);
+        auto result = usecase.updateRule(r);
         if (result.hasError)
             return errorResponse(result.message, 400);
 
@@ -140,7 +140,7 @@ class SubstitutionRuleController : ManageHttpController {
         if (id.isNull)
             return errorResponse("Invalid substitution rule ID", 400);
 
-        auto result = usecase.activateSubstitutionRule(tenantId, id);
+        auto result = usecase.activateRule(tenantId, id);
         if (result.hasError)
             return errorResponse(result.message, 400);
         auto responseData = Json.emptyObject.set("id", result.id);
@@ -168,7 +168,7 @@ class SubstitutionRuleController : ManageHttpController {
         if (id.isNull)
             return errorResponse("Invalid substitution rule ID", 400);
 
-        auto result = usecase.deactivateSubstitutionRule(tenantId, id);
+        auto result = usecase.deactivateRule(tenantId, id);
         if (result.hasError)
             return errorResponse(result.message, 400);
 
@@ -195,7 +195,7 @@ class SubstitutionRuleController : ManageHttpController {
         if (id.isNull)
             return errorResponse("Invalid substitution rule ID", 400);
 
-        auto result = usecase.deleteSubstitutionRule(tenantId, id);
+        auto result = usecase.deleteRule(tenantId, id);
         if (result.hasError)
             return errorResponse(result.message, 400);
 

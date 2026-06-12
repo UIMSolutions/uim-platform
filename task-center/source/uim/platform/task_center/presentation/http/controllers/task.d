@@ -41,29 +41,27 @@ class TaskController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-        CreateTaskRequest r;
-        r.tenantId = tenantId;
-        r.id = precheck.id;
-        r.taskDefinitionId = data.getString("taskDefinitionId");
-        r.providerId = data.getString("providerId");
-        r.externalTaskId = data.getString("externalTaskId");
-        r.title = data.getString("title");
-        r.description = data.getString("description");
-        r.priority = data.getString("priority");
-        r.category = data.getString("category");
-        r.assignee = data.getString("assignee");
-        r.creator = data.getString("creator");
-        r.sourceApplication = data.getString("sourceApplication");
-        r.dueDate = data.getString("dueDate");
-        r.createdBy = UserId(data.getString("createdBy"));
+        CreateTaskRequest request;
+        request.tenantId = tenantId;
+        request.taskId = precheck.id;
+        request.definitionId = data.getString("taskDefinitionId");
+        request.providerId = data.getString("providerId");
+        request.externalTaskId = data.getString("externalTaskId");
+        request.title = data.getString("title");
+        request.description = data.getString("description");
+        request.priority = data.getString("priority");
+        request.category = data.getString("category");
+        request.assignee = data.getString("assignee");
+        request.creator = data.getString("creator");
+        request.sourceApplication = data.getString("sourceApplication");
+        request.dueDate = data.getString("dueDate");
+        request.createdBy = UserId(data.getString("createdBy"));
 
-        auto result = usecase.create(r);
+        auto result = usecase.createTask(request);
         if (result.hasError)
             return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Task created");
 
+        auto resp = Json.emptyObject.set("id", result.id);
         return successResponse("Task created successfully", "Created", 201, resp);
     }
 
@@ -74,10 +72,10 @@ class TaskController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-        auto params = req.queryParams();
-        auto assignee = params.get("assignee", "");
-        auto status = params.get("status", "");
-        auto providerId = params.get("providerId", "");
+        auto query = precheck.query;
+        auto assignee = query.get("assignee", "");
+        auto status = query.get("status", "");
+        auto providerId = query.get("providerId", "");
 
         UIMTask[] tasks;
         if (!assignee.isEmpty) {
@@ -90,7 +88,7 @@ class TaskController : ManageHttpController {
             tasks = usecase.listTasks(tenantId);
         }
 
-        auto jarr = tasks.map!(t => toJson(t)).array.toJson;
+        auto jarr = tasks.map!(t => t.toJson).array.toJson;
 
         auto resp = Json.emptyObject
             .set("count", tasks.length)
@@ -113,7 +111,7 @@ class TaskController : ManageHttpController {
         if (pathEndsWithAction(path))
             return errorResponse("Not found", 404);
 
-        auto t = usecase.getById(tenantId, id);
+        auto t = usecase.getTask(tenantId, id);
         if (t.isNull)
             return errorResponse("Task not found", 404);
 
@@ -132,17 +130,17 @@ class TaskController : ManageHttpController {
             return errorResponse("Invalid task ID", 400);
 
         auto data = precheck.data;
-        UpdateTaskRequest r;
-        r.tenantId = tenantId;
-        r.taskId = id;
-        r.title = data.getString("title");
-        r.description = data.getString("description");
-        r.priority = data.getString("priority");
-        r.assignee = data.getString("assignee");
-        r.dueDate = data.getString("dueDate");
-        r.updatedBy = UserId(data.getString("updatedBy"));
+        UpdateTaskRequest request;
+        request.tenantId = tenantId;
+        request.taskId = id;
+        request.title = data.getString("title");
+        request.description = data.getString("description");
+        request.priority = data.getString("priority");
+        request.assignee = data.getString("assignee");
+        request.dueDate = data.getString("dueDate");
+        request.updatedBy = UserId(data.getString("updatedBy"));
 
-        auto result = usecase.updateTask(r);
+        auto result = usecase.updateTask(request);
         if (result.hasError)
             return errorResponse(result.message, 400);
 
@@ -163,9 +161,9 @@ class TaskController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-        auto userId = data.getString("userId");
+        auto userId = UserId(data.getString("userId"));
 
-        auto result = usecase.claim(tenantId, id, userId);
+        auto result = usecase.claimTask(tenantId, id, userId);
         if (result.hasError)
             return errorResponse(result.message, 400);
 
@@ -225,10 +223,10 @@ class TaskController : ManageHttpController {
             return errorResponse("Invalid task ID", 400);
 
         auto data = precheck.data;
-        auto toUser = data.getString("toUser");
+        auto toUser = UserId(data.getString("toUser"));
         auto comment = data.getString("comment");
 
-        auto result = usecase.forward(tenantId, id, toUser, comment);
+        auto result = usecase.forwardTask(tenantId, id, toUser, comment);
         if (result.hasError)
             return errorResponse(result.message, 400);
 
@@ -297,8 +295,7 @@ class TaskController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
 
-        auto resp = Json.emptyObject
-            .set("id", result.id);
+        auto resp = Json.emptyObject.set("id", result.id);
 
         return successResponse("Task cancelled successfully", "Cancelled", 200, resp);
     }
@@ -319,7 +316,9 @@ class TaskController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto id = TaskId(precheck.id);
-        auto tenantId = precheck.tenantId;
+        if (id.isNull)
+            return errorResponse("Invalid task ID", 400);
+
         auto result = usecase.deleteTask(tenantId, id);
         if (result.hasError)
             return errorResponse(result.message, 400);

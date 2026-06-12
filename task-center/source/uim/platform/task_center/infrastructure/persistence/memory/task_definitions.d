@@ -67,21 +67,21 @@ class MemoryTaskDefinitionRepository : TenantRepository!(TaskDefinition, TaskDef
     // #endregion ByCategory
 
     // #region ByPriority
-    size_t countByPriority(TenantId tenantId, TaskPriority priority) {
-        return findByPriority(tenantId, priority).length;
-    }
+    // size_t countByPriority(TenantId tenantId, TaskPriority priority) {
+    //     return findByPriority(tenantId, priority).length;
+    // }
 
-    TaskDefinition[] filterByPriority(TaskDefinition[] definitions, TaskPriority priority) {
-        return definitions.filter!(d => d.priority == priority).array;
-    }
+    // TaskDefinition[] filterByPriority(TaskDefinition[] definitions, TaskPriority priority) {
+    //     return definitions.filter!(d => d.priority == priority).array;
+    // }
 
-    TaskDefinition[] findByPriority(TenantId tenantId, TaskPriority priority) {
-        return filterByPriority(findByTenant(tenantId), priority);
-    }
+    // TaskDefinition[] findByPriority(TenantId tenantId, TaskPriority priority) {
+    //     return filterByPriority(findByTenant(tenantId), priority);
+    // }
 
-    void removeByPriority(TenantId tenantId, TaskPriority priority) {
-        findByPriority(tenantId, priority).each!(d => remove(d));
-    }
+    // void removeByPriority(TenantId tenantId, TaskPriority priority) {
+    //     findByPriority(tenantId, priority).each!(d => remove(d));
+    // }
     // #endregion ByPriority
 
 }

@@ -63,13 +63,23 @@ class HttpController {
       precheck["tenantId"] = tenantId.value;
     }
 
+    Json params = Json.emptyObject;
+    req.params.byKeyValue.each!(kv => params[kv.key] = kv.value);
+
+    Json query = Json.emptyObject;
+    req.query.byKeyValue.each!(kv => query[kv.key] = kv.value);
+
     return precheck
       .set("path", req.requestPath.to!string)
       .set("method", req.method.to!string) // .set("headers", req.headers.toMap)
-      // .set("params", req.params.toMap)
-      // .set("query", req.query.toMap)
+      .set("params", params)
+      .set("query", query)
       .set("data", req.json)
       .set("status", "ok")
+      .set("rootDir", req.rootDir)
+      .set("host", req.host)
+      .set("method", req.method.to!string)
+      .set("peer", req.peer)
       .set("message", "Precheck passed")
       .set("code", 200);
   }

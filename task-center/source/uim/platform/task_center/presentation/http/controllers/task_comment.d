@@ -38,16 +38,15 @@ class TaskCommentController : ManageHttpController {
         auto data = precheck.data;
         CreateTaskCommentRequest r;
         r.tenantId = tenantId;
-        r.taskCommentId = TaskCommentId(precheck.id);
+        r.commentId = TaskCommentId(precheck.id);
         r.taskId = TaskId(data.getString("taskId"));
         r.author = data.getString("author");
         r.content = data.getString("content");
 
-        auto result = usecase.create(r);
+        auto result = usecase.createComment(r);
         if (result.hasError)
             return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-            .set("id", result.id);
+        auto resp = Json.emptyObject.set("id", result.id);
 
         return successResponse("Comment created successfully", "Created", 201, resp);
     }
@@ -59,11 +58,11 @@ class TaskCommentController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-        auto params = req.queryParams();
-        auto taskId = TaskId(params.get("taskId", ""));
+        auto query = precheck.query;
+        auto taskId = TaskId(query.get("taskId", ""));
 
         TaskComment[] comments = !taskId.isEmpty
-            ? usecase.listCommentsByTask(tenantId, taskId) : [];
+            ? usecase.listComments(tenantId, taskId) : [];
 
         auto jarr = comments.map!(c => c.toJson).array.toJson;
 
@@ -81,11 +80,11 @@ class TaskCommentController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto id = TaskCommentId(precheck.id);
-        auto c = usecase.getById(tenantId, id);
+        auto c = usecase.getComment(tenantId, id);
         if (c.isNull)
             return errorResponse("Comment not found", 404);
 
-        return successResponse("Comment retrieved successfully", "Retrieved", 200, commentToJson(c));
+        return successResponse("Comment retrieved successfully", "Retrieved", 200, c.toJson);
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -101,14 +100,13 @@ class TaskCommentController : ManageHttpController {
         auto data = precheck.data;
         UpdateTaskCommentRequest r;
         r.tenantId = tenantId;
-        r.taskCommentId = id;
+        r.commentId = id;
         r.content = data.getString("content");
 
-        auto result = usecase.update(r);
+        auto result = usecase.updateComment(r);
         if (result.hasError)
             return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-            .set("id", result.id);
+        auto resp = Json.emptyObject.set("id", result.id);
 
         return successResponse("Comment updated successfully", "Updated", 200, resp);
     }
@@ -123,13 +121,12 @@ class TaskCommentController : ManageHttpController {
         if (id.isNull)
             return errorResponse("Invalid comment ID", 400);
 
-        auto result = usecase.deleteTaskComment(tenantId, id);
+        auto result = usecase.deleteComment(tenantId, id);
         if (result.hasError)
             return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Comment deleted");
 
+        auto resp = Json.emptyObject
+            .set("id", result.id);
         return successResponse("Comment deleted successfully", "Deleted", 200, resp);
     }
 }

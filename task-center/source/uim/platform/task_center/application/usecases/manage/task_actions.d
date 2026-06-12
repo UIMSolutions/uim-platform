@@ -18,19 +18,19 @@ class ManageTaskActionsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    TaskAction getTaskAction(TenantId tenantId, TaskActionId id) {
-        return repo.findById(tenantId, id);
+    TaskAction getAction(TenantId tenantId, TaskActionId actionId) {
+        return repo.findById(tenantId, actionId);
     }
 
-    TaskAction[] listTaskActions(TenantId tenantId, TaskId taskId) {
-        return repo.findByTask(tenantId, taskId);
+    TaskAction[] listActions(TenantId tenantId, TaskId byTaskId) {
+        return repo.findByTask(tenantId, byTaskId);
     }
 
-    TaskAction[] listTaskActions(TenantId tenantId, UserId performerId) {
-        return repo.findByPerformer(tenantId, performerId);
+    TaskAction[] listActions(TenantId tenantId, UserId byPerformerId) {
+        return repo.findByPerformer(tenantId, byPerformerId);
     }
 
-    CommandResult createTaskAction(PerformTaskActionRequest req) {
+    CommandResult createAction(PerformTaskActionRequest req) {
         TaskAction action;
         action.initEntity(req.tenantId);
 
@@ -44,7 +44,7 @@ class ManageTaskActionsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, action.id.value, "");
     }
 
-    CommandResult deleteTaskAction(TenantId tenantId, TaskActionId id) {
+    CommandResult deleteAction(TenantId tenantId, TaskActionId id) {
         auto action = repo.findById(tenantId, id);
         if (action.isNull)
             return CommandResult(false, "", "Task action not found");

@@ -49,7 +49,32 @@ string id(Json data) {
     return data.getString("id");
 }
 
+UserId userId(Json data, string key = "userId") {
+    return UserId(data.getString(key));
+}
+
 Json data(Json data) {
   return "data" in data && data["data"].isObject 
     ? data["data"] : Json.emptyObject;
 }
+
+string[string] params(Json data) {
+  if ("params" !in data || !data["params"].isObject) return null;
+
+  string[string] result;
+  foreach (key, value; data["params"].byKeyValue) {
+    result[key] = value.toString;
+  }
+  return result;
+}
+
+string[string] query(Json data) {
+  if ("params" !in data || !data["params"].isObject) return null;
+
+  string[string] result;
+  foreach (key, value; data["query"].byKeyValue) {
+    result[key] = value.toString;
+  }
+  return result;
+}
+

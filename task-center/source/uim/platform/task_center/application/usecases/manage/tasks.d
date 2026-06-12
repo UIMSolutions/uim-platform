@@ -18,7 +18,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    UIMTask getTaskById(TenantId tenantId, TaskId id) {
+    UIMTask getTask(TenantId tenantId, TaskId id) {
         return repo.findById(tenantId, id);
     }
 
@@ -26,28 +26,28 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    UIMTask[] listTasksByAssignee(TenantId tenantId, string assignee) {
-        return repo.findByAssignee(tenantId, assignee);
+    UIMTask[] listTasks(TenantId tenantId, string byAssignee) {
+        return repo.findByAssignee(tenantId, byAssignee);
     }
 
-    UIMTask[] listTasksByStatus(TenantId tenantId, TaskStatus status) {
-        return repo.findByStatus(tenantId, status);
+    UIMTask[] listTasks(TenantId tenantId, TaskStatus byStatus) {
+        return repo.findByStatus(tenantId, byStatus);
     }
 
-    UIMTask[] listTasksByProvider(TenantId tenantId, TaskProviderId providerId) {
-        return repo.findByProvider(tenantId, providerId);
+    UIMTask[] listTasks(TenantId tenantId, TaskProviderId byProviderId) {
+        return repo.findByProvider(tenantId, byProviderId);
     }
 
-    UIMTask[] listTasksByCategory(TenantId tenantId, TaskCategory category) {
-        return repo.findByCategory(tenantId, category);
+    UIMTask[] listTasks(TenantId tenantId, TaskCategory byCategory) {
+        return repo.findByCategory(tenantId, byCategory);
     }
 
-    UIMTask[] listTasksByPriority(TenantId tenantId, TaskPriority priority) {
-        return repo.findByPriority(tenantId, priority);
+    UIMTask[] listTasks(TenantId tenantId, TaskPriority byPriority) {
+        return repo.findByPriority(tenantId, byPriority);
     }
 
     CommandResult createTask(CreateTaskRequest req) {
-        if (!TaskValidator.validate(req.taskId, req.title))
+        if (!TaskValidator.validate(req.taskId.value, req.title))
             return CommandResult(false, "", "Invalid task data");
         
         auto task = UIMTask(req.tenantId);
@@ -69,31 +69,31 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateTask(UpdateTaskRequest req) {
-        auto existing = repo.findById(req.tenantId, req.taskId);
-        if (existing.isNull)
+        auto task = repo.findById(req.tenantId, req.taskId);
+        if (task.isNull)
             return CommandResult(false, "", "Task not found");
             
-        if (req.title.length > 0) existing.title = req.title;
-        if (req.description.length > 0) existing.description = req.description;
-        if (req.assignee.length > 0) existing.assignee = req.assignee;
-        if (req.dueDate.length > 0) existing.dueDate = req.dueDate;
-        existing.updatedBy = req.updatedBy;
+        if (req.title.length > 0) task.title = req.title;
+        if (req.description.length > 0) task.description = req.description;
+        if (req.assignee.length > 0) task.assignee = req.assignee;
+        if (req.dueDate.length > 0) task.dueDate = req.dueDate;
+        task.updatedBy = req.updatedBy;
 
-        repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        repo.update(task);
+        return CommandResult(true, task.id.value, "");
     }
 
-    CommandResult claim(TenantId tenantId, TaskId id, UserId userId) {
-        auto t = repo.findById(tenantId, id);
-        if (t.isNull)
+    CommandResult claimTask(TenantId tenantId, TaskId id, UserId userId) {
+        auto task = repo.findById(tenantId, id);
+        if (task.isNull)
             return CommandResult(false, "", "Task not found");
 
-        t.isClaimed = true;
-        t.claimedBy = userId;
-        t.status = TaskStatus.inProgress;
-        t.processor = userId;
+        task.isClaimed = true;
+        task.claimedBy = userId;
+        task.status = TaskStatus.inProgress;
+        task.processor = userId.value;
 
-        repo.update(tenantId, t);
+        repo.update(task);
         return CommandResult(true, id.value, "");
     }
 
@@ -105,7 +105,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
         task.isClaimed = false;
         task.claimedBy = UserId.init;
         task.status = TaskStatus.open;
-        task.processor = UserId.init;
+        task.processor = "";
 
         repo.update(task);
         return CommandResult(true, task.id.value, "");
@@ -116,7 +116,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
         if (task.isNull)
             return CommandResult(false, "", "Task not found");
 
-        task.assignee = toUser;
+        task.assignee = toUser.value;
         task.status = TaskStatus.forwarded;
 
         repo.update(task);

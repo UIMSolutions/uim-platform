@@ -18,23 +18,23 @@ class ManageTaskDefinitionsUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    TaskDefinition getTaskDefinition(TenantId tenantId, TaskDefinitionId id) {
+    TaskDefinition getDefinition(TenantId tenantId, TaskDefinitionId id) {
         return repo.findById(tenantId, id);
     }
 
-    TaskDefinition[] listTaskDefinitions(TenantId tenantId) {
+    TaskDefinition[] listDefinitions(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    TaskDefinition[] listTaskDefinitions(TenantId tenantId, TaskProviderId providerId) {
-        return repo.findByProvider(tenantId, providerId);
+    TaskDefinition[] listDefinitions(TenantId tenantId, TaskProviderId byProviderId) {
+        return repo.findByProvider(tenantId, byProviderId);
     }
 
-    TaskDefinition[] listTaskDefinitions(TenantId tenantId, TaskCategory category) {
-        return repo.findByCategory(tenantId, category);
+    TaskDefinition[] listDefinitions(TenantId tenantId, TaskCategory byCategory) {
+        return repo.findByCategory(tenantId, byCategory);
     }
 
-    CommandResult createTaskDefinition(CreateTaskDefinitionRequest req) {
+    CommandResult createDefinition(CreateTaskDefinitionRequest req) {
         TaskDefinition definition;
         definition.initEntity(req.tenantId);
 
@@ -49,7 +49,7 @@ class ManageTaskDefinitionsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, definition.id.value, "");
     }
 
-    CommandResult updateTaskDefinition(UpdateTaskDefinitionRequest req) {
+    CommandResult updateDefinition(UpdateTaskDefinitionRequest req) {
         auto existing = repo.findById(req.tenantId, req.definitionId);
         if (existing.isNull)
             return CommandResult(false, "", "Task definition not found");
@@ -67,7 +67,7 @@ class ManageTaskDefinitionsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult activateTaskDefinition(TenantId tenantId, TaskDefinitionId id) {
+    CommandResult activateDefinition(TenantId tenantId, TaskDefinitionId id) {
         auto definition = repo.findById(tenantId, id);
         if (definition.isNull)
             return CommandResult(false, "", "Task definition not found");
@@ -78,7 +78,7 @@ class ManageTaskDefinitionsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, definition.id.value, "");
     }
 
-    CommandResult deactivateTaskDefinition(TenantId tenantId, TaskDefinitionId id) {
+    CommandResult deactivateDefinition(TenantId tenantId, TaskDefinitionId id) {
         auto definition = repo.findById(tenantId, id);
         if (definition.isNull)
             return CommandResult(false, "", "Task definition not found");
@@ -86,10 +86,10 @@ class ManageTaskDefinitionsUseCase { // TODO: UIMUseCase {
         definition.isActive = false;
 
         repo.update(definition);
-        return CommandResult(true, id.value, "");
+        return CommandResult(true, definition.id.value, "");
     }
 
-    CommandResult deleteTaskDefinition(TenantId tenantId, TaskDefinitionId id) {
+    CommandResult deleteDefinition(TenantId tenantId, TaskDefinitionId id) {
         auto definition = repo.findById(tenantId, id);
         if (definition.isNull)
             return CommandResult(false, "", "Task definition not found");

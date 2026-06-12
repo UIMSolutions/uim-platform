@@ -13,9 +13,9 @@ import uim.platform.task_center;
 
 interface UserTaskFilterRepository : ITenantRepository!(UserTaskFilter, UserTaskFilterId) {
 
-    bool existsDefault(TenantId tenantId, UserId userId);
-    UserTaskFilter findDefault(TenantId tenantId, UserId userId);
-    void removeDefault(TenantId tenantId, UserId userId);
+    // bool existsDefault(TenantId tenantId, UserId userId);
+    // UserTaskFilter findDefault(TenantId tenantId, UserId userId);
+    // void removeDefault(TenantId tenantId, UserId userId);
 
     size_t countByUser(TenantId tenantId, UserId userId);
     UserTaskFilter[] findByUser(TenantId tenantId, UserId userId);

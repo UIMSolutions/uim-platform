@@ -37,14 +37,14 @@ class TaskAttachmentController : ManageHttpController {
         auto data = precheck.data;
         CreateTaskAttachmentRequest r;
         r.tenantId = tenantId;
-        r.taskAttachmentId = TaskAttachmentId(precheck.id);
+        r.attachmentId = TaskAttachmentId(precheck.id);
         r.taskId = TaskId(data.getString("taskId"));
         r.fileName = data.getString("fileName");
         r.fileSize = data.getString("fileSize");
         r.mimeType = data.getString("mimeType");
         r.uploadedBy = UserId(data.getString("uploadedBy"));
 
-        auto result = usecase.create(r);
+        auto result = usecase.createAttachment(r);
         if (result.hasError)
             return errorResponse(result.message, 400);
 
@@ -59,12 +59,12 @@ class TaskAttachmentController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-        auto params = req.queryParams();
+        auto params = precheck.params;
         auto taskId = TaskId(params.get("taskId", ""));
+        if (taskId.isEmpty)
+            return errorResponse("Missing taskId query parameter", 400);
 
-        TaskAttachment[] attachments = !taskId.isEmpty
-            ? usecase.listTaskAttachments(tenantId, taskId) : [];
-
+        TaskAttachment[] attachments = usecase.listAttachments(tenantId, taskId);
         auto list = attachments.map!(item => item.toJson()).array.toJson;
 
         auto responseData = Json.emptyObject
@@ -80,8 +80,10 @@ class TaskAttachmentController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto id = TaskAttachmentId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid attachment ID", 400);
 
-        auto a = usecase.getById(tenantId, id);
+        auto a = usecase.getAttachment(tenantId, id);
         if (a.isNull)
             return errorResponse("Scan job not found", 404);
 
@@ -97,7 +99,7 @@ class TaskAttachmentController : ManageHttpController {
         auto tenantId = precheck.tenantId;
         auto id = TaskAttachmentId(precheck.id);
 
-        auto result = usecase.deleteTaskAttachment(tenantId, id);
+        auto result = usecase.deleteAttachment(tenantId, id);
         if (result.hasError)
             return errorResponse(result.message, 400);
 

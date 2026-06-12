@@ -65,6 +65,7 @@ class ManageAppDefinitionsUseCase {
         if (dto.definitionContent.length > 0) existing.definitionContent = dto.definitionContent;
         if (dto.schemaVersion.length > 0) existing.schemaVersion = dto.schemaVersion;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
+        if (dto.targetPlatform.length > 0) existing.targetPlatform = dto.targetPlatform;
 
         repo.update(existing);
         return CommandResult(true, existing.id.value, "");

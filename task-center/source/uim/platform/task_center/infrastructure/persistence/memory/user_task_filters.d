@@ -13,20 +13,20 @@ import uim.platform.task_center;
 
 class MemoryUserTaskFilterRepository : TenantRepository!(UserTaskFilter, UserTaskFilterId), UserTaskFilterRepository {
 
-    bool existsDefault(TenantId tenantId, UserId userId) {
-        return findDefault(tenantId, userId).id != UserTaskFilterId.init;
-    }
-    UserTaskFilter findDefault(TenantId tenantId, UserId userId) {
-        foreach (f; findByUser(tenantId, userId))
-            if (f.isDefault) return f;
-        return UserTaskFilter.init;
-    }
-    void removeDefault(TenantId tenantId, UserId userId) {
-        auto filter = findDefault(tenantId, userId);
-        if (filter.id != UserTaskFilterId.init) {
-            remove(filter);
-        }
-    }
+    // bool existsDefault(TenantId tenantId, UserId userId) {
+    //     return findDefault(tenantId, userId).id != UserTaskFilterId.init;
+    // }
+    // UserTaskFilter findDefault(TenantId tenantId, UserId userId) {
+    //     foreach (f; findByTenant(tenantId))
+    //         if (f.isDefault) return f;
+    //     return UserTaskFilter.init;
+    // }
+    // void removeDefault(TenantId tenantId, UserId userId) {
+    //     auto filter = findDefault(tenantId, userId);
+    //     if (filter.id != UserTaskFilterId.init) {
+    //         remove(filter);
+    //     }
+    // }
 
     size_t countByUser(TenantId tenantId, UserId userId) {
         return findByUser(tenantId, userId).length;

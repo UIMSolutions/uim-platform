@@ -18,22 +18,22 @@ class ManageUserTaskFiltersUseCase { // TODO: UIMUseCase {
         this.repo = repo;
     }
 
-    UserTaskFilter getFilterById(TenantId tenantId, UserTaskFilterId id) {
+    UserTaskFilter getFilter(TenantId tenantId, UserTaskFilterId id) {
         return repo.findById(tenantId, id);
     }
 
-    UserTaskFilter[] listFiltersByUser(TenantId tenantId, UserId userId) {
+    UserTaskFilter[] listFilters(TenantId tenantId, UserId userId) {
         return repo.findByUser(tenantId, userId);
     }
 
-    UserTaskFilter getDefaultFilter(TenantId tenantId, UserId userId) {
-        return repo.findDefault(tenantId, userId);
-    }
+    // UserTaskFilter getDefaultFilter(TenantId tenantId, UserId userId) {
+    //     return repo.findDefault(tenantId, userId);
+    // }
 
     CommandResult createFilter(CreateUserTaskFilterRequest req) {
         auto taskFilter = UserTaskFilter(req.tenantId);
         taskFilter.id = req.filterId;
-        taskFilter.userId = req.userId;
+        // taskFilter.userId = req.userId;
         taskFilter.name = req.name;
         taskFilter.description = req.description;
         taskFilter.isDefault = req.isDefault;

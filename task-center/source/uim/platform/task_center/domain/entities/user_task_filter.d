@@ -12,8 +12,8 @@ import uim.platform.task_center;
 @safe:
 
 struct FilterCriterion {
-    FilterCriterionType criterionType;
-    string value;
+    FilterCriterionType criterionType; // Type of criterion (e.g., Status, Priority, Assignee)
+    string value; // Value for the criterion (e.g., "pending", "high", "currentUser")
 
     Json toJson() const {
         return Json.emptyObject
@@ -25,16 +25,18 @@ struct FilterCriterion {
 struct UserTaskFilter {
     mixin TenantEntity!(UserTaskFilterId);
 
-    string name;
-    string description;
-    FilterCriterion[] criteria;
-    bool isDefault;
+    string name; // Name of the filter (e.g., "My Tasks", "High Priority", "Pending Approvals")
+    string description; // Optional description of the filter's purpose or criteria
+    FilterCriterion[] criteria; // List of criteria that define the filter (e.g., status = "pending", priority = "high", assignee = "currentUser")
+    bool isDefault; // Indicates whether this filter is the default filter for the user (only one default filter per user)
+    UserId userId; // The user to whom this filter belongs
 
     Json toJson() const {
         return entityToJson
             .set("name", name)
             .set("description", description)
             .set("criteria", criteria.map!(c => c.toJson()).array.toJson)
-            .set("isDefault", isDefault);
+            .set("isDefault", isDefault)
+            .set("userId", userId.value);
     }
 }

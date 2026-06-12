@@ -4,9 +4,9 @@ import uim.platform.analytics;
 // mixin(ShowModule!());
 @safe:
 enum ColumnRole {
-  Dimension,
-  Measure,
-  Attribute,
+  Dimension, // Used for grouping and filtering data
+  Measure, // Used for aggregation and calculations
+  Attribute, // Used for descriptive information that doesn't fit into dimension or measure
 }
 
 ColumnRole toColumnRole(string role) {
@@ -19,12 +19,12 @@ ColumnRole toColumnRole(string role) {
 }
 
 enum ColumnDataType {
-  String,
-  Integer,
-  Decimal,
-  Date,
-  DateTime,
-  Boolean,
+  String, // Used for textual data
+  Integer,  // Used for whole numbers
+  Decimal, // Used for numbers with fractional parts
+  Date, // Used for calendar dates
+  DateTime, // Used for timestamps with date and time
+  Boolean, // Used for true/false values
 }
 
 ColumnDataType toColumnDataType(string type) {

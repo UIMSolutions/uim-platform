@@ -41,7 +41,7 @@ class TaskProviderController : ManageHttpController {
         auto data = precheck.data;
         CreateTaskProviderRequest r;
         r.tenantId = tenantId;
-        r.id = TaskProviderId(precheck.id);
+        r.providerId = TaskProviderId(precheck.id);
         r.name = data.getString("name");
         r.description = data.getString("description");
         r.providerType = data.getString("providerType");
@@ -51,7 +51,7 @@ class TaskProviderController : ManageHttpController {
         r.clientId = data.getString("clientId");
         r.createdBy = UserId(data.getString("createdBy"));
 
-        auto result = usecase.create(r);
+        auto result = usecase.createProvider(r);
         if (result.hasError)
             return errorResponse(result.message, 400);
 
@@ -66,7 +66,7 @@ class TaskProviderController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-        auto providers = usecase.list(tenantId);
+        auto providers = usecase.listProviders(tenantId);
         auto list = providers.map!(item => item.toJson()).array.toJson;
 
         auto responseData = Json.emptyObject
@@ -83,16 +83,14 @@ class TaskProviderController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto path = precheck.path;
-        if (path.endsWith("/activate") || path.endsWith("/deactivate") || path.endsWith(
-                "/sync"))
+        if (path.endsWith("/activate") || path.endsWith("/deactivate") || path.endsWith("/sync"))
             return errorResponse("Invalid path for get operation", 400);
 
-        auto tenantId = precheck.tenantId;
         auto id = TaskProviderId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid provider ID", 400);
 
-        auto provider = usecase.getById(tenantId, id);
+        auto provider = usecase.getProvider(tenantId, id);
         if (provider.isNull)
             return errorResponse("Provider not found", 404);
 
@@ -111,18 +109,18 @@ class TaskProviderController : ManageHttpController {
             return errorResponse("Invalid provider ID", 400);
 
         auto data = precheck.data;
-        UpdateTaskProviderRequest r;
-        r.tenantId = tenantId;
-        r.id = id;
-        r.name = data.getString("name");
-        r.description = data.getString("description");
-        r.endpointUrl = data.getString("endpointUrl");
-        r.authEndpointUrl = data.getString("authEndpointUrl");
-        r.clientId = data.getString("clientId");
+        UpdateTaskProviderRequest request;
+        request.tenantId = tenantId;
+        request.providerId = id;
+        request.name = data.getString("name");
+        request.description = data.getString("description");
+        request.endpointUrl = data.getString("endpointUrl");
+        request.authEndpointUrl = data.getString("authEndpointUrl");
+        request.clientId = data.getString("clientId");
 
-        r.updatedBy = UserId(data.getString("updatedBy"));
+        request.updatedBy = UserId(data.getString("updatedBy"));
 
-        auto result = usecase.update(r);
+        auto result = usecase.updateProvider(request);
         if (result.hasError)
             return errorResponse(result.message, 400);
 
@@ -143,7 +141,7 @@ class TaskProviderController : ManageHttpController {
         if (id.isNull)
             return errorResponse("Invalid provider ID", 400);
 
-        auto result = usecase.activate(tenantId, id);
+        auto result = usecase.activateProvider(tenantId, id);
         if (result.hasError)
             return errorResponse(result.message, 400);
 
@@ -173,7 +171,7 @@ class TaskProviderController : ManageHttpController {
         if (id.isNull)
             return errorResponse("Invalid provider ID", 400);
 
-        auto result = usecase.deactivate(tenantId, id);
+        auto result = usecase.deactivateProvider(tenantId, id);
         if (result.hasError)
             return errorResponse(result.message, 400);
 
@@ -203,7 +201,7 @@ class TaskProviderController : ManageHttpController {
         if (id.isNull)
             return errorResponse("Invalid provider ID", 400);
 
-        auto result = usecase.sync(tenantId, id);
+        auto result = usecase.syncProvider(tenantId, id);
         if (result.hasError)
             return errorResponse(result.message, 400);
 
@@ -227,7 +225,7 @@ class TaskProviderController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto id = TaskProviderId(precheck.id);
-        auto result = usecase.deleteTaskProvider(tenantId, id);
+        auto result = usecase.deleteProvider(tenantId, id);
         if (result.hasError)
             return errorResponse(result.message, 400);
 

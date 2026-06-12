@@ -26,7 +26,7 @@ struct TaskAction {
     Json toJson() const {
         return entityToJson()
             .set("taskId", taskId.value)
-            .set("actionType", actionType)
+            .set("actionType", actionType.to!string)
             .set("performedBy", performedBy)
             .set("forwardTo", forwardTo)
             .set("comment", comment)

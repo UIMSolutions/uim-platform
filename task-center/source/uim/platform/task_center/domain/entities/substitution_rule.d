@@ -30,7 +30,7 @@ struct SubstitutionRule {
             .set("userId", userId.value)
             .set("substituteId", substituteId.value)
             .set("definitionId", definitionId.value)
-            .set("status", status)
+            .set("status", status.to!string)
             .set("startDate", startDate)
             .set("endDate", endDate)
             .set("isAutoForward", isAutoForward);

@@ -39,12 +39,12 @@ class UserTaskFilterController : ManageHttpController {
         auto data = precheck.data;
         CreateUserTaskFilterRequest r;
         r.tenantId = tenantId;
-        r.id = precheck.id;
+        r.filterId = UserTaskFilterId(precheck.id);
         r.userId = data.getString("userId");
         r.name = data.getString("name");
         r.description = data.getString("description");
 
-        auto result = usecase.create(r);
+        auto result = usecase.createFilter(r);
         if (result.hasError)
             return errorResponse(result.message, 400);
 
@@ -58,14 +58,12 @@ class UserTaskFilterController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
+        auto userId = precheck.userId;
+        if (userId.isEmpty)
+            return errorResponse("Missing userId query parameter", 400);
 
-        auto params = req.queryParams();
-        auto userId = params.get("userId", "");
-
-        UserTaskFilter[] filters = !userId.isEmpty
-            ? usecase.listUserTaskFilters(tenantId, userId) : [];
-
-        auto list = items.map!(item => item.toJson()).array.toJson;
+        UserTaskFilter[] filters = usecase.listFilters(tenantId, userId);
+        auto list = filters.map!(item => item.toJson()).array.toJson;
 
         auto responseData = Json.emptyObject
             .set("count", list.length)
@@ -87,9 +85,9 @@ class UserTaskFilterController : ManageHttpController {
         if (id.isNull)
             return errorResponse("Invalid filter ID", 400);
 
-        auto f = usecase.getUserTaskFilter(tenantId, id);
+        auto f = usecase.getFilter(tenantId, id);
         if (f.isNull)
-            return errorResponse("Scan job not found", 404);
+            return errorResponse("Filter not found", 404);
 
         auto responseData = f.toJson();
         return successResponse("Filter retrieved successfully", "Retrieved", 200, responseData);
@@ -106,13 +104,13 @@ class UserTaskFilterController : ManageHttpController {
             return errorResponse("Invalid filter ID", 400);
 
         auto data = precheck.data;
-        UpdateUserTaskFilterRequest r;
-        r.tenantId = tenantId;
-        r.userTaskFilterId = id;
-        r.name = data.getString("name");
-        r.description = data.getString("description");
+        UpdateUserTaskFilterRequest request;
+        request.tenantId = tenantId;
+        request.filterId = id;
+        request.name = data.getString("name");
+        request.description = data.getString("description");
 
-        auto result = usecase.update(r);
+        auto result = usecase.updateFilter(request);
         if (result.hasError)
             return errorResponse(result.message, 400);
         auto responseData = Json.emptyObject.set("id", result.id);
@@ -120,7 +118,7 @@ class UserTaskFilterController : ManageHttpController {
     }
 
     protected Json setDefaultHandler(HTTPServerRequest req) {
-        auto precheck = super.ostHandler(req);
+        auto precheck = super.postHandler(req);
         if (precheck.hasError)
             return precheck;
 
@@ -131,7 +129,7 @@ class UserTaskFilterController : ManageHttpController {
         if (id.isNull)
             return errorResponse("Invalid filter ID", 400);
 
-        auto result = usecase.setDefaultUserTaskFilter(tenantId, id);
+        auto result = usecase.setDefaultFilter(tenantId, id);
         if (result.hasError)
             return errorResponse(result.message, 400);
         auto responseData = Json.emptyObject.set("id", result.id);
@@ -154,7 +152,7 @@ class UserTaskFilterController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto id = UserTaskFilterId(precheck.id);
-        auto result = usecase.deleteUserTaskFilter(tenantId, id);
+        auto result = usecase.deleteFilter(tenantId, id);
         if (result.hasError)
             return errorResponse(result.message, 400);
 

@@ -37,14 +37,14 @@ class TaskActionController : ManageHttpController {
         auto data = precheck.data;
         PerformTaskActionRequest r;
         r.tenantId = tenantId;
-        r.taskActionId = TaskActionId(precheck.id);
+        r.actionId = TaskActionId(precheck.id);
         r.taskId = TaskId(data.getString("taskId"));
         r.actionType = data.getString("actionType");
-        r.performedBy = UserId(data.getString("performedBy"));
-        r.forwardTo = UserId(data.getString("forwardTo"));
+        r.performedBy = data.userId("performedBy");
+        r.forwardTo = data.getString("forwardTo");
         r.comment = data.getString("comment");
 
-        auto result = usecase.create(r);
+        auto result = usecase.createAction(r);
         if (result.hasError)
             return errorResponse(result.message, 400);
 
@@ -61,13 +61,11 @@ class TaskActionController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
+        auto id = TaskId(precheck.query.get("taskId", ""));
+        if (id.isNull)
+            return errorResponse("Invalid task ID", 400);
 
-        auto params = req.queryParams();
-        auto taskId = TaskId(params.get("taskId", ""));
-
-        TaskAction[] actions = !taskId.isEmpty
-            ? usecase.listTaskActions(tenantId, taskId) : null;
-
+        TaskAction[] actions = usecase.listActions(tenantId, id);
         auto jarr = actions.map!(a => a.toJson()).array.toJson;
 
         auto resp = Json.emptyObject
@@ -87,7 +85,7 @@ class TaskActionController : ManageHttpController {
         if (id.isNull)
             return errorResponse("Invalid action ID", 400);
 
-        auto a = usecase.getById(tenantId, id);
+        auto a = usecase.getAction(tenantId, id);
         if (a.isNull)
             return errorResponse("Action not found", 404);
 
@@ -101,17 +99,15 @@ class TaskActionController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto id = TaskActionId(precheck.id);
-        if (id.isNull)
+        auto actionId = TaskActionId(precheck.id);
+        if (actionId.isNull)
             return errorResponse("Invalid action ID", 400);
 
-        auto result = usecase.deleteTaskAction(tenantId, id);
+        auto result = usecase.deleteAction(tenantId, actionId);
         if (result.hasError)
             return errorResponse(result.message, 400);
 
-        auto resp = Json.emptyObject
-            .set("id", result.id);
-
+        auto resp = Json.emptyObject.set("id", result.id);
         return successResponse("Action deleted successfully", "Deleted", 200, resp);
     }
 }
