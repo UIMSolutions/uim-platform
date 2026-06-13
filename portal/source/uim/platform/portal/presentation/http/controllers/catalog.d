@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.portal.presentation.http.controllers.catalog;
 
-
 // import uim.platform.portal.application.usecases.manage.catalogs;
 // import uim.platform.portal.application.dto;
 // import uim.platform.portal.domain.entities.catalog;
@@ -35,103 +34,102 @@ class CatalogController : ManageHttpController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-      auto createReq = CreateCatalogRequest(req.headers.get("X-Tenant-Id", ""),
-        data.getString("title"), data.getString("description"), data.getString("providerId"),
-        data.getStrings("allowedRoleIds"), data.getBoolean("active", true),);
+    auto data = precheck.data;
+    auto request = CreateCatalogRequest();
+    request.tenantId = tenantId;
+    request.title = data.getString("title");
+    request.description = data.getString("description");
+    request.providerId = data.getString("providerId");
+    request.allowedRoleIds = data.getStrings("allowedRoleIds");
+    request.active = data.getBoolean("active", true);
 
-      auto result = useCase.createCatalog(createReq);
-      if (result.isSuccess()) {
-        auto response = Json.emptyObject
-          .set("id", result.catalogId);
+    auto result = useCase.createCatalog(request);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-        res.writeJsonBody(response, 201);
-      } else {
-        writeApiError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeApiError(res, 500, "Internal server error");
-    }
+    auto response = Json.emptyObject
+      .set("id", result.catalogId);
+
+    return successResponse("Catalog created successfully", "Created", 201, response);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto catalogs = useCase.listCatalogs(tenantId);
-      auto response = Json.emptyObject
-        .set("totalResults", catalogs.length)
-        .set("resources", catalogs);
+    auto tenantId = precheck.tenantId;
+    auto catalogs = useCase.listCatalogs(tenantId);
+    auto response = Json.emptyObject
+      .set("totalResults", catalogs.length)
+      .set("resources", catalogs);
 
-      res.writeJsonBody(response, 200);
-    } catch (Exception e) {
-      writeApiError(res, 500, "Internal server error");
-    }
+    return successResponse("Catalog list retrieved successfully", "OK", 200, response);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto catalogId = precheck.id;
-      if (!useCase.existsCatalog(catalogId)) {
-        writeApiError(res, 404, "Catalog not found");
-        return;
-      }
+    auto tenantId = precheck.tenantId;
+    auto id = CatalogId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid catalog ID", 400);
 
-      auto catalog = useCase.getCatalog(catalogId).toJson;
-      res.writeJsonBody(catalog, 200);
-    } catch (Exception e) {
-      writeApiError(res, 500, "Internal server error");
-    }
+    auto catalog = useCase.getCatalog(tenantId, id).toJson;
+    if (catalog.isNull)
+
+      return errorResponse("Catalog not found", 404);
+
+    return successResponse("Catalog retrieved successfully", "OK", 200, catalog);
+
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto catalogId = precheck.id;
-      auto data = precheck.data;
-      auto updateReq = UpdateCatalogRequest(catalogId, data.getString("title"),
-        data.getString("description"), data.getStrings("allowedRoleIds"),
-        data.getBoolean("active", true),);
+    auto tenantId = precheck.tenantId;
+    auto id = CatalogId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid catalog ID", 400);
 
-      auto error = useCase.updateCatalog(updateReq);
-      if (error.length > 0)
-        writeApiError(res, 404, error);
-      else
-        res.writeJsonBody(Json.emptyObject, 200);
-    } catch (Exception e) {
-      writeApiError(res, 500, "Internal server error");
-    }
+    auto data = precheck.data;
+    auto request = UpdateCatalogRequest;
+    request.tenantId = tenantId;
+    request.catalogId = id;
+    request.title = data.getString("title");
+    request.description = data.getString("description");
+    request.allowedRoleIds = data.getStrings("allowedRoleIds");
+    request.active = data.getBoolean("active", true);
+
+    auto result = useCase.updateCatalog(request);
+    if (result.hasError)
+      return errorResponse(result.message, 404);
+
+    return successResponse("Catalog updated successfully", "OK", 200, Json.emptyObject);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto catalogId = precheck.id;
-      auto error = useCase.deleteCatalog(catalogId);
-      if (error.length > 0)
-        writeApiError(res, 404, error);
-      else
-        res.writeJsonBody(Json.emptyObject, 204);
-    } catch (Exception e) {
-      writeApiError(res, 500, "Internal server error");
-    }
+    auto tenantId = precheck.tenantId;
+    auto catalogId = precheck.id;
+    auto result = useCase.deleteCatalog(catalogId);
+    if (result.hasError)
+      return errorResponse(result.message, 404);
+
+    return successResponse("Catalog deleted successfully", "OK", 200, Json.emptyObject);
   }
 }
+

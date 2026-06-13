@@ -32,111 +32,100 @@ class TenantController : ManageHttpController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-      auto createReq = CreateTenantRequest(data.getString("name"),
-        data.getString("subdomain"), SsoProtocol.oidc, [AuthMethod.form], false);
+    auto data = precheck.data;
+    auto createReq = CreateTenantRequest(data.getString("name"),
+      data.getString("subdomain"), SsoProtocol.oidc, [AuthMethod.form], false);
 
-      auto result = useCase.createTenant(createReq);
-      auto response = Json.emptyObject;
+    auto result = useCase.createTenant(createReq);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-      if (result.isSuccess()) {
-        response["tenantId"] = Json(result.tenantId);
-        res.writeJsonBody(response, 201);
-      } else {
-        response["error"] = Json(result.message);
-        res.writeJsonBody(response, 409);
-      }
-    } catch (Exception e) {
-      auto errRes = Json.emptyObject;
-      errRes["error"] = Json("Internal server error");
-      res.writeJsonBody(errRes, 500);
-    }
+    auto response = Json.emptyObject.set("id", result.id);
+    return successResponse("Tenant created successfully", "Created", 201, response);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto tenants = useCase.listTenants();
-      auto response = Json.emptyObject;
-      response["totalResults"] = Json(tenants.length);
-      response["resources"] = toJsonArray(tenants);
-      res.writeJsonBody(response, 200);
-    } catch (Exception e) {
-      auto errRes = Json.emptyObject;
-      errRes["error"] = Json("Internal server error");
-      res.writeJsonBody(errRes, 500);
-    }
+    auto tenantId = precheck.tenantId;
+    auto tenants = useCase.listTenants();
+    auto response = Json.emptyObject;
+    response["totalResults"] = Json(tenants.length);
+    response["resources"] = toJsonArray(tenants);
+
+    return successResponse("Tenants retrieved successfully", "OK", 200, response);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      // import std.string : lastIndexOf;
+    auto tenantId = precheck.tenantId;
+    // import std.string : lastIndexOf;
 
-      auto path = req.requestURI;
-      auto idx = path.lastIndexOf('/');
-      TenantId tenantId = idx >= 0 ? path[idx + 1 .. $] : "";
+    auto path = req.requestURI;
+    auto idx = path.lastIndexOf('/');
+    TenantId tenantId = idx >= 0 ? path[idx + 1 .. $] : "";
 
-      auto tenant = useCase.getTenant(tenantId);
-      if (tenant == Tenant.init) {
-        auto errRes = Json.emptyObject;
-        errRes["error"] = Json("Tenant not found");
-        res.writeJsonBody(errRes, 404);
-        return;
-      }
-
-      res.writeJsonBody(toJsonValue(tenant), 200);
-    } catch (Exception e) {
+    auto tenant = useCase.getTenant(tenantId);
+    if (tenant == Tenant.init) {
       auto errRes = Json.emptyObject;
-      errRes["error"] = Json("Internal server error");
-      res.writeJsonBody(errRes, 500);
+      errRes["error"] = Json("Tenant not found");
+      res.writeJsonBody(errRes, 404);
+      return;
     }
+
+    res.writeJsonBody(toJsonValue(tenant), 200);
   }
-
-  override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
-
-        auto tenantId = precheck.tenantId;
-      // import std.string : lastIndexOf;
-
-      auto path = req.requestURI;
-      auto idx = path.lastIndexOf('/');
-      TenantId tenantId = idx >= 0 ? path[idx + 1 .. $] : "";
-
-      auto data = precheck.data;
-      auto updateReq = UpdateTenantRequest(tenantId, data.getString("name"), []);
-
-      auto error = useCase.updateTenant(updateReq);
-      if (error.length > 0) {
-        auto errRes = Json.emptyObject
-          .set("error", error);
-
-        res.writeJsonBody(errRes, 404);
-      } else {
-        auto resp = Json.emptyObject
-          .set("status", "updated");
-
-        res.writeJsonBody(resp, 200);
-      }
-    } catch (Exception e) {
-      auto errRes = Json.emptyObject
-        .set("error", "Internal server error");
-
-      res.writeJsonBody(errRes, 500);
-    }
+ catch (Exception e) {
+    auto errRes = Json.emptyObject;
+    errRes["error"] = Json("Internal server error");
+    res.writeJsonBody(errRes, 500);
   }
+}
+
+override protected Json updateHandler(HTTPServerRequest req) {
+  auto precheck = super.updateHandler(req);
+  if (precheck.hasError)
+    return precheck;
+
+  auto tenantId = precheck.tenantId;
+  // import std.string : lastIndexOf;
+
+  auto path = req.requestURI;
+  auto idx = path.lastIndexOf('/');
+  TenantId tenantId = idx >= 0 ? path[idx + 1 .. $] : "";
+
+  auto data = precheck.data;
+  auto updateReq = UpdateTenantRequest(tenantId, data.getString("name"), []);
+
+  auto error = useCase.updateTenant(updateReq);
+  if (error.length > 0) {
+    auto errRes = Json.emptyObject
+      .set("error", error);
+
+    res.writeJsonBody(errRes, 404);
+  } else {
+    auto resp = Json.emptyObject
+      .set("status", "updated");
+
+    res.writeJsonBody(resp, 200);
+  }
+}
+ catch (Exception e) {
+  auto errRes = Json.emptyObject
+    .set("error", "Internal server error");
+
+  res.writeJsonBody(errRes, 500);
+}
+}
 }

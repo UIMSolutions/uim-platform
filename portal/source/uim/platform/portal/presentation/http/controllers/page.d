@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.portal.presentation.http.controllers.page;
 
-
 // import uim.platform.portal.application.usecases.manage.pages;
 // import uim.platform.portal.application.dto;
 // import uim.platform.portal.domain.entities.page;
@@ -37,111 +36,93 @@ class PageController : ManageHttpController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-      auto createReq = CreatePageRequest(data.getString("siteId"),
-        req.headers.get("X-Tenant-Id", ""), data.getString("title"),
-        data.getString("description"), data.getString("alias"), jsonEnum!PageLayout(j,
-          "layout", PageLayout.freeform), data.getStrings("allowedRoleIds"),
-        data.getInteger("sortOrder"), data.getBoolean("visible", true),);
+    auto data = precheck.data;
+    auto createReq = CreatePageRequest(data.getString("siteId"),
+      req.headers.get("X-Tenant-Id", ""), data.getString("title"),
+      data.getString("description"), data.getString("alias"), jsonEnum!PageLayout(j,
+        "layout", PageLayout.freeform), data.getStrings("allowedRoleIds"),
+      data.getInteger("sortOrder"), data.getBoolean("visible", true),);
 
-      auto result = useCase.createPage(createReq);
-      if (result.isSuccess()) {
-        auto response = Json.emptyObject
-          .set("id", result.pageId);
+    auto result = useCase.createPage(createReq);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-        res.writeJsonBody(response, 201);
-      } else {
-        writeApiError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeApiError(res, 500, "Internal server error");
-    }
+    auto response = Json.emptyObject
+      .set("id", result.pageId);
+
+    return successResponse("Page created successfully", "Created", 201, response);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto siteId = getString(Json(req.headers.get("X-Site-Id", "")), "");
-      // Use query param for site filter
-      auto siteIdParam = req.headers.get("X-Site-Id", "");
-      auto pages = useCase.listPages(siteIdParam);
-      auto response = Json.emptyObject
-        .set("totalResults", pages.length)
-        .set("resources", pages);
+    auto tenantId = precheck.tenantId;
+    auto siteId = getString(Json(req.headers.get("X-Site-Id", "")), "");
+    // Use query param for site filter
+    auto siteIdParam = req.headers.get("X-Site-Id", "");
+    auto pages = useCase.listPages(siteIdParam);
+    auto response = Json.emptyObject
+      .set("totalResults", pages.length)
+      .set("resources", pages);
 
-      res.writeJsonBody(response, 200);
-    } catch (Exception e) {
-      writeApiError(res, 500, "Internal server error");
-    }
+    return successResponse("Page list retrieved successfully", "OK", 200, response);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto pageId = precheck.id;
-      if (useCase.existsPage(pageId)) {
-        writeApiError(res, 404, "Page not found");
-        return;
-      }
+    auto tenantId = precheck.tenantId;
+    auto pageId = precheck.id;
+    auto page = useCase.getPage(pageId);
+    if (page.isNull)
+      return errorResponse("Page not found", 404);
 
-      auto page = useCase.getPage(pageId);
-      res.writeJsonBody(toJsonValue(page), 200);
-    } catch (Exception e) {
-      writeApiError(res, 500, "Internal server error");
-    }
+    return successResponse("Page retrieved successfully", "OK", 200, page.toJson);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto pageId = precheck.id;
-      auto data = precheck.data;
-      auto updateReq = UpdatePageRequest(pageId, data.getString("title"),
-        data.getString("description"), data.getString("alias"), jsonEnum!PageLayout(j,
-          "layout", PageLayout.freeform), data.getStrings("allowedRoleIds"),
-        data.getInteger("sortOrder"), data.getBoolean("visible", true),);
+    auto tenantId = precheck.tenantId;
+    auto pageId = precheck.id;
+    auto data = precheck.data;
+    auto updateReq = UpdatePageRequest(pageId, data.getString("title"),
+      data.getString("description"), data.getString("alias"), jsonEnum!PageLayout(j,
+        "layout", PageLayout.freeform), data.getStrings("allowedRoleIds"),
+      data.getInteger("sortOrder"), data.getBoolean("visible", true),);
 
-      auto error = useCase.updatePage(updateReq);
-      if (error.length > 0)
-        writeApiError(res, 404, error);
-      else
-        res.writeJsonBody(Json.emptyObject, 200);
-    } catch (Exception e) {
-      writeApiError(res, 500, "Internal server error");
-    }
+    auto result = useCase.updatePage(updateReq);
+    if (result.hasError)
+      return errorResponse(result.message, 404);
+
+    return successResponse("Page updated successfully", "OK", 200, Json.emptyObject);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto pageId = precheck.id;
-      auto data = precheck.data;
-      auto siteId = data.getString("siteId");
-      auto error = useCase.deletePage(pageId, siteId);
-      if (error.length > 0)
-        writeApiError(res, 404, error);
-      else
-        res.writeJsonBody(Json.emptyObject, 204);
-    } catch (Exception e) {
-      writeApiError(res, 500, "Internal server error");
-    }
+    auto tenantId = precheck.tenantId;
+    auto pageId = precheck.id;
+    auto data = precheck.data;
+    auto siteId = data.getString("siteId");
+    auto result = useCase.deletePage(pageId, siteId);
+    if (result.hasError)
+      return errorResponse(result.message, 404);
+
+    return successResponse("Page deleted successfully", "OK", 200, Json.emptyObject);
   }
 }

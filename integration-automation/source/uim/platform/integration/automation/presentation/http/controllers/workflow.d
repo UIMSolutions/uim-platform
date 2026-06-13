@@ -100,17 +100,17 @@ class WorkflowController : ManageHttpController {
     if (precheck.hasError)
       return precheck;
 
-      auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto tenantId = precheck.tenantId;
-      auto result = useCase.startWorkflow(tenantId, id);
-      if (result.hasError)
-        return errorResponse(result.message, 400);
+    auto tenantId = precheck.tenantId;
+    auto id = precheck.id;
+    auto tenantId = precheck.tenantId;
+    auto result = useCase.startWorkflow(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-        auto responseData = Json.emptyObject
-          .set("id", result.id)
-          .set("status", "inProgress");
-          return successResponse("Workflow started successfully", "OK", 200, responseData);
+    auto responseData = Json.emptyObject
+      .set("id", result.id)
+      .set("status", "inProgress");
+    return successResponse("Workflow started successfully", "OK", 200, responseData);
 
   }
 
@@ -123,61 +123,85 @@ class WorkflowController : ManageHttpController {
     }
   }
 
+  protected Json suspendHandler(HTTPServerRequest req) {
+    auto precheck = super.posttHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = precheck.id;
+    auto tenantId = precheck.tenantId;
+    auto result = useCase.suspendWorkflow(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject
+      .set("id", result.id)
+      .set("status", "suspended");
+    return successResponse("Workflow suspended successfully", "OK", 200, responseData);
+
+  }
+
   protected void handleSuspend(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto tenantId = precheck.tenantId;
-      auto result = useCase.suspendWorkflow(tenantId, id);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("status", "suspended");
-
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 400, result.message);
-      }
+      auto response = suspendHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
+  }
+
+  protected Json resumeHandler(HTTPServerRequest req) {
+    auto precheck = super.posttHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = precheck.id;
+    auto tenantId = precheck.tenantId;
+    auto result = useCase.resumeWorkflow(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject
+      .set("id", result.id)
+      .set("status", "inProgress");
+    return successResponse("Workflow resumed successfully", "OK", 200, responseData);
+
   }
 
   protected void handleResume(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto tenantId = precheck.tenantId;
-      auto result = useCase.resumeWorkflow(tenantId, id);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("status", "inProgress");
-
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 400, result.message);
-      }
+      auto response = resumeHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
+  protected Json terminateHandler(HTTPServerRequest req) {
+    auto precheck = super.posttHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = precheck.id;
+    auto tenantId = precheck.tenantId;
+    auto result = useCase.terminateWorkflow(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject
+      .set("id", result.id)
+      .set("status", "terminated");
+    return successResponse("Workflow terminated successfully", "OK", 200, responseData);
+
+  }
+
   protected void handleTerminate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto tenantId = precheck.tenantId;
-      auto result = useCase.terminateWorkflow(tenantId, id);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("status", "terminated");
-
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 400, result.message);
-      }
+      auto response = terminateHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -195,9 +219,9 @@ class WorkflowController : ManageHttpController {
     if (result.hasError)
       return errorResponse(result.message, 400);
 
-      auto resp = Json.emptyObject
-        .set("id", result.id);
+    auto resp = Json.emptyObject
+      .set("id", result.id);
 
-return successResponse("Workflow deleted successfully", 200, resp);
-}
+    return successResponse("Workflow deleted successfully", 200, resp);
+  }
 }

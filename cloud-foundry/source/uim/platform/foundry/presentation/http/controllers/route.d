@@ -187,11 +187,14 @@ class RouteController : ManageHttpController {
     r.appId = data.getString("appId");
 
     auto result = useCase.unmapRoute(r);
-    if (result.isSuccess()) {
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
       auto resp = Json.emptyObject.set("id", result.id);
 
       return successResponse("Route unmapped from app successfully", 200, resp);
     }
+
     protected void handleUnmapRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
       try {
         auto response = unmapRouteHandler(req);
