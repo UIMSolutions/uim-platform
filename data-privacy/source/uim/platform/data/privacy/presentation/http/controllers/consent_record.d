@@ -50,13 +50,13 @@ class ConsentController : ManageHttpController {
     r.expiresAt = data.getLong("expiresAt");
 
     auto result = usecase.grantConsent(r);
-    if (result.isSuccess()) {
+    if (result.hasError)
+      return errorResponse("", 0);
+
       auto responseData = Json.emptyObject
         .set("id", result.id)
         .set("message", "Consent granted successfully");
       return successResponse("Consent granted successfully", "Created", 201, responseData);
-    } else
-      return errorResponse(result.message, 400);
   }
 
   protected void handleGrant(scope HTTPServerRequest req, scope HTTPServerResponse res) {

@@ -45,64 +45,74 @@ class ProviderController : ManageHttpController {
       data.getString("contentEndpointUrl"), data.getString("authToken"),);
 
     auto result = useCase.createProvider(createReq);
-    if (result.isSuccess()) {
-      auto response = Json.emptyObject
-        .set("id", result.providerId);
+    if (result.hasError)
+      return errorResponse("", 0);
 
-      return successResponse("Content provider created successfully", "Created", 201, response);
-    }
+    auto response = Json.emptyObject
+      .set("id", result.providerId);
+    return successResponse("Content provider created successfully", "Created", 201, response);
+  }
 
-    override protected Json listHandler(HTTPServerRequest req) {
-      auto precheck = super.listHandler(req);
-      if (precheck.hasError)
-        return precheck;
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto tenantId = precheck.tenantId;
-      auto providers = useCase.listProviders(tenantId);
-      auto response = Json.emptyObject
-        .set("totalResults", providers.length)
-        .set("resources", providers);
+    auto tenantId = precheck.tenantId;
+    auto providers = useCase.listProviders(tenantId);
+    auto response = Json.emptyObject
+      .set("totalResults", providers.length)
+      .set("resources", providers);
 
-      return successResponse("Content providers retrieved successfully", "OK", 200, response);
-    }
+    return successResponse("Content providers retrieved successfully", "OK", 200, response);
+  }
 
-    override protected Json getHandler(HTTPServerRequest req) {
-      auto precheck = super.getHandler(req);
-      if (precheck.hasError)
-        return precheck;
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto tenantId = precheck.tenantId;
-      auto providerId = precheck.id;
-      auto provider = useCase.getProvider(providerId);
-      if (provider.isNull)
-        return errorResponse("Content provider not found", 404);
+    auto tenantId = precheck.tenantId;
+    auto providerId = precheck.id;
+    auto provider = useCase.getProvider(providerId);
+    if (provider.isNull)
+      return errorResponse("Content provider not found", 404);
 
-      return successResponse("Content provider retrieved successfully", "OK", 200, provider);
-    }
+    return successResponse("Content provider retrieved successfully", "OK", 200, provider);
+  }
 
-    override protected Json updateHandler(HTTPServerRequest req) {
-      auto precheck = super.updateHandler(req);
-      if (precheck.hasError)
-        return precheck;
+  override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto tenantId = precheck.tenantId;
-      auto providerId = precheck.id;
-      auto data = precheck.data;
-      auto updateReq = UpdateProviderRequest(providerId, data.getString("name"),
-        data.getString("description"), data.getString("contentEndpointUrl"),
-        data.getString("authToken"), data.getBoolean("active", true),);
+    auto tenantId = precheck.tenantId;
+    auto providerId = precheck.id;
+    auto data = precheck.data;
+    auto updateReq = UpdateProviderRequest(providerId, data.getString("name"),
+      data.getString("description"), data.getString("contentEndpointUrl"),
+      data.getString("authToken"), data.getBoolean("active", true),);
 
-      auto result = useCase.updateProvider(updateReq);
-      if (result.hasError)
-        return errorResponse(result.message, 404return successResponse(
-            "Content provider updated successfully", "OK", 200, Json.emptyObject);
-    }
+    auto result = useCase.updateProvider(updateReq);
+    if (result.hasError)
+      return errorResponse(result.message, 404);
+    return successResponse(
+      "Content provider updated successfully", "OK", 200, Json.emptyObject);
+  }
 
-    override protected Json deleteHandler(HTTPServerRequest req) {
-      auto precheck = super.deleteHandler(req); if (precheck.hasError)
-        return precheck; auto tenantId = precheck.tenantId; auto providerId = precheck.id;
-          auto result = useCase.deleteProvider(providerId); if (result.hasError) return errorResponse(result.message, 404);
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-          return successResponse("Content provider deleted successfully", "No Content", 204, Json
-              .emptyObject);}
-    }
+    auto tenantId = precheck.tenantId;
+    auto providerId = ProviderId(precheck.id);
+
+    auto result = useCase.deleteProvider(tenantId, providerId);
+    if (result.hasError)
+      return errorResponse(result.message, 404);
+
+    return successResponse("Content provider deleted successfully", "No Content", 204, Json
+        .emptyObject.set("id", result.id));
+  }
+}

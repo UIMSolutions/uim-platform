@@ -46,16 +46,13 @@ class RoleController : ManageHttpController {
         jsonEnum!RoleScope(j, "scope", RoleScope.site),);
 
       auto result = useCase.createRole(createReq);
-      if (result.isSuccess()) {
+      if (result.hasError())
+        return errorResponse("", 0);
+
         auto response = Json.emptyObject;
         response["id"] = Json(result.roleId);
-        res.writeJsonBody(response, 201);
-      } else {
-        writeApiError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeApiError(res, 500, "Internal server error");
-    }
+
+        return successResponse("", "", 0, response);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
@@ -65,13 +62,11 @@ class RoleController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
       auto roles = useCase.listRoles(tenantId);
-      auto response = Json.emptyObject;
-      response["totalResults"] = Json(roles.length);
-      response["resources"] = toJsonArray(roles);
-      res.writeJsonBody(response, 200);
-    } catch (Exception e) {
-      writeApiError(res, 500, "Internal server error");
-    }
+      auto response = Json.emptyObject
+      .set("totalResults", Json(roles.length))
+      .set("resources", roles.map!(role => role.toJson).array.toJson);
+
+      return successResponse("", "", 0, response);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
@@ -82,14 +77,10 @@ class RoleController : ManageHttpController {
         auto tenantId = precheck.tenantId;
       auto roleId = precheck.id;
       auto role = useCase.getRole(roleId);
-      if (role == Role.init) {
-        writeApiError(res, 404, "Role not found");
-        return;
-      }
-      res.writeJsonBody(toJsonValue(role), 200);
-    } catch (Exception e) {
-      writeApiError(res, 500, "Internal server error");
-    }
+      if (role.isNull)
+        return errorResponse("", 0);
+
+    return successResponse("", "", 0, role.toJson);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
@@ -103,14 +94,12 @@ class RoleController : ManageHttpController {
       auto updateReq = UpdateRoleRequest(roleId, data.getString("name"),
         data.getString("description"),);
 
-      auto error = useCase.updateRole(updateReq);
-      if (error.length > 0)
-        writeApiError(res, 404, error);
-      else
-        res.writeJsonBody(Json.emptyObject, 200);
-    } catch (Exception e) {
-      writeApiError(res, 500, "Internal server error");
-    }
+      auto result = useCase.updateRole(updateReq);
+      if (result.isNull) 
+      return errorResponse("", 0);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("", "", 0, responseData);
   }
 
   protected void handleAssign(scope HTTPServerRequest req, scope HTTPServerResponse res) {

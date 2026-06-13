@@ -31,75 +31,64 @@ class AuthController : HttpController {
   }
 
   protected void handleLogin(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
       auto authReq = AuthRequest(data.getString("tenantId"), data.getString("applicationId"),
-          data.getString("email"), data.getString("password"),
-          data.getString("mfaCode"), req.peer, req.headers.get("User-Agent", ""));
+        data.getString("email"), data.getString("password"),
+        data.getString("mfaCode"), req.peer, req.headers.get("User-Agent", ""));
 
       auto result = authUseCase.execute(authReq);
-      auto response = Json.emptyObject;
-      response["success"] = Json(result.success);
-      response["message"] = Json(result.message);
+      if (result.hasError)
+        return errorResponse(result.message, 400);
+
+      auto response = Json.emptyObject
+        .set("success", result.success)
+        .set("message", result.message);
 
       if (result.mfaRequired) {
-        
-
         response["mfaRequired"] = Json(true);
         response["mfaType"] = Json(result.mfaType.to!string);
       }
 
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        response["sessionId"] = Json(result.sessionId);
-        response["userId"] = Json(result.userId);
-      }
+      response["sessionId"] = Json(result.sessionId);
+      response["userId"] = Json(result.userId);
 
-      res.writeJsonBody(response, result.success ? 200 : 401);
-    }
-    catch (Exception e) {
-      auto errRes = Json.emptyObject;
-      errRes["error"] = Json("Internal server error");
-      res.writeJsonBody(errRes, 500);
-    }
-  }
+      return successResponse("", "", 0, response);
 
-  protected void handleen(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    }
+
+    protected Json tokenHandler(HTTPServerRequest req) {
+      auto precheck = super.postHandler(req);
+      if (precheck.hasError)
+        return precheck;
+
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
       auto tokenReq = TokenRequest(data.getString("sessionId"), data.getString("clientId"),
-          data.getString("clientSecret"), data.getStrings("scopes"));
+        data.getString("clientSecret"), data.getStrings("scopes"));
 
       auto result = tokenUseCase.execute(tokenReq);
-      auto response = Json.emptyObject;
+      if (result.hasError())
+        return errorResponse("", 0);
 
-      if (result.isSuccess()) {
-        response["access_token"] = Json(result.accessToken);
-        response["refresh_token"] = Json(result.refreshToken);
-        response["id_token"] = Json(result.idToken);
-        response["token_type"] = Json("Bearer");
-        response["expires_in"] = Json(3600L);
-        res.writeJsonBody(response, 200);
-      }
-      else
-      {
-        response["error"] = Json(result.message);
-        res.writeJsonBody(response, 400);
-      }
-    }
-    catch (Exception e) {
-      auto errRes = Json.emptyObject;
-      errRes["error"] = Json("Internal server error");
-      res.writeJsonBody(errRes, 500);
+      auto response = Json.emptyObject
+        .set("access_token", result.accessToken)
+        .set("refresh_token", result.refreshToken)
+        .set("id_token", result.idToken)
+        .set("token_type", "Bearer")
+        .set("expires_in", 3600L);
+
+      return successResponse("", "", 0, response);
     }
   }
 
-  protected void handleHealth(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto response = Json.emptyObject;
-    response["status"] = Json("healthy");
-    response["service"] = Json("identity-authentication");
-    res.writeJsonBody(response, 200);
+  protected void handleToken(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto response = tokenHandler(req);
+      res.writeJsonBody(response, response.code);
+
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
+    }
   }
-}

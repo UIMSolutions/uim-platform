@@ -71,19 +71,14 @@ class DuplicateController : HttpController {
       r.survivorRecordId = data.getString("survivorRecordId");
 
       auto result = usecase.resolve(r);
-      if (result.isSuccess()) {
+      if (result.hasError)
+        return errorResponse("", 0);
+
         auto resp = Json.emptyObject
           .set("id", result.id)
-          .set("resolved", true)
-          .set("message", "Duplicate group resolved successfully");
+          .set("resolved", true);
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+          return successResponse("", "", 0, resp);
   }
 
   protected Json listHandler(HTTPServerRequest req) {
@@ -98,6 +93,7 @@ class DuplicateController : HttpController {
     auto responseData = Json.emptyObject
       .set("count", groups.length)
       .set("resources", arr);
+      
     return successResponse("Duplicate groups retrieved successfully", "Retrieved", 200, responseData);
   }
 
