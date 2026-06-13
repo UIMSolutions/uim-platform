@@ -16,15 +16,10 @@ struct SrvConfig {
 
 SrvConfig loadConfig() {
   SrvConfig config;
-  auto hostEnv = environment.get("APPLICATION_AUTOSCALER_HOST", "");
+  auto hostEnv = environment.get("APPLICATION_AUTOSCALER_HOST", "0.0.0.0");
   if (hostEnv.length > 0)
     config.host = hostEnv;
-  auto portEnv = environment.get("APPLICATION_AUTOSCALER_PORT", "");
-  if (portEnv.length > 0) {
-    try
-      config.port = portEnv.to!ushort;
-    catch (Exception) {
-    }
-  }
+  auto portEnv = environment.get("APPLICATION_AUTOSCALER_PORT", "8097");
+  config.port = portEnv.to!ushort;
   return config;
 }

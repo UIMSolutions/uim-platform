@@ -79,6 +79,6 @@ class ManageAppBindingsUseCase {
   }
 
   AppBinding[] listBindings(TenantId tenantId) {
-    return repo.findByTenantId(tenantId);
+    return repo.findByTenant(tenantId);
   }
 }

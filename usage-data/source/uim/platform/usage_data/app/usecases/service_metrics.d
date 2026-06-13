@@ -35,7 +35,7 @@ class ServiceMetricUseCases {
 
   ServiceMetricResponse[] listMetrics(TenantId tenantId) {
     ServiceMetricResponse[] result;
-    foreach (m; repo.findByTenantId(tenantId))
+    foreach (m; repo.findByTenant(tenantId))
       result ~= ServiceMetricResponse.fromEntity(m);
     return result;
   }

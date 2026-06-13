@@ -38,7 +38,7 @@ class AppBindingController : ManageHttpController {
     auto bindings = usecase.listBindings(tenantId);
     auto arr = bindings.map!(b => b.toJson()).array.toJson;
 
-    auto response = json.emptyObject
+    auto response = Json.emptyObject
       .set("items", arr)
       .set("totalCount", bindings.length);
 

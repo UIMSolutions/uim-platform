@@ -13,21 +13,20 @@ import uim.platform.application_autoscaler;
 
 /// A custom metric value submitted by an application or metric producer.
 struct CustomMetricEntity {
-  CustomMetricId id;
-  AppBindingId   appId;
-  string         metricName;
-  double         value;
-  string         unit;        // e.g. "queue_depth", "jobs", ""
-  long           timestamp;   // Unix millis
+  mixin TenantEntity!CustomMetricId;
+
+  AppBindingId appId;
+  string metricName;
+  double value;
+  string unit; // e.g. "queue_depth", "jobs", ""
+  long timestamp; // Unix millis
 
   Json toJson() const @safe {
-    auto j = Json.emptyObject;
-    j["id"]          = Json(id);
-    j["app_id"]      = Json(appId);
-    j["metric_name"] = Json(metricName);
-    j["value"]       = Json(value);
-    j["unit"]        = Json(unit);
-    j["timestamp"]   = Json(timestamp);
-    return j;
+    return entityToJson
+      .set("app_id", appId)
+      .set("metric_name", metricName)
+      .set("value", value)
+      .set("unit", unit)
+      .set("timestamp", timestamp);
   }
 }

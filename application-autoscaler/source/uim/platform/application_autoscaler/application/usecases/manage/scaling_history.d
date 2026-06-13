@@ -18,15 +18,15 @@ class ManageScalingHistoryUseCase {
     this.repo = repo;
   }
 
-  ScalingHistory[] getHistory(AppBindingId appId) {
-    return repo.findByApp(appId);
+  ScalingHistory[] getHistory(TenantId tenantId, AppBindingId appId) {
+    return repo.findByApp(tenantId, appId);
   }
 
-  ScalingHistory[] getHistorySince(AppBindingId appId, long sinceTimestamp) {
-    return repo.findByAppIdSince(appId, sinceTimestamp);
+  ScalingHistory[] getHistorySince(TenantId tenantId, AppBindingId appId, long sinceTimestamp) {
+    return repo.findByAppIdSince(tenantId, appId, sinceTimestamp);
   }
 
-  ScalingHistory getEvent(ScalingHistoryId id) {
-    return repo.findById(id);
+  ScalingHistory getEvent(TenantId tenantId, ScalingHistoryId id) {
+    return repo.findById(tenantId, id);
   }
 }

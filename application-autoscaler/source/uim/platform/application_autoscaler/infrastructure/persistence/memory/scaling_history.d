@@ -17,20 +17,24 @@ class MemoryScalingHistoryRepository : TenantRepository!(ScalingHistory, Scaling
     return findByApp(tenantId, appId).length;
   }
 
+  ScalingHistory[] filterByApp(ScalingHistory[] history, AppBindingId appId) {
+    return history.filter!(e => e.appId == appId).array;
+  }
+
   ScalingHistory[] findByApp(TenantId tenantId, AppBindingId appId) {
-    return findByTenant(tenantId).filter(e => e.appId == appId).array;
+    return findByTenant(tenantId).filter!(e => e.appId == appId).array;
   }
 
   void removeByApp(TenantId tenantId, AppBindingId appId) {
     findByApp(tenantId, appId).each!(e => remove(e));
   }
 
-   size_t countByAppIdSince(TenantId tenantId, AppBindingId appId, long sinceTimestamp) {
+  size_t countByAppIdSince(TenantId tenantId, AppBindingId appId, long sinceTimestamp) {
     return findByAppIdSince(tenantId, appId, sinceTimestamp).length;
   }
 
   ScalingHistory[] findByAppIdSince(TenantId tenantId, AppBindingId appId, long sinceTimestamp) {
-    return findByApp(tenantId, appId).filter(e => e.timestamp >= sinceTimestamp).array;
+    return findByApp(tenantId, appId).filter!(e => e.timestamp >= sinceTimestamp).array;
   }
 
   void removeByAppIdSince(TenantId tenantId, AppBindingId appId, long sinceTimestamp) {

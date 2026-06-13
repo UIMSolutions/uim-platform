@@ -31,7 +31,7 @@ class DailyUsageReportUseCases {
 
   DailyUsageReportResponse[] listReports(TenantId tenantId) {
     DailyUsageReportResponse[] result;
-    foreach (r; repo.findByTenantId(tenantId))
+    foreach (r; repo.findByTenant(tenantId))
       result ~= DailyUsageReportResponse.fromEntity(r);
     return result;
   }

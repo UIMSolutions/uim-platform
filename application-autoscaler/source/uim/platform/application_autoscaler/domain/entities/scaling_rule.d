@@ -14,7 +14,8 @@ import uim.platform.application_autoscaler;
 /// A single dynamic scaling rule within a policy.
 /// Based on SAP Application Autoscaler rule parameters.
 struct ScalingRuleEntity {
-  ScalingRuleId id;
+  mixin TenantEntity!ScalingRuleId;
+
   MetricType    metricType;
   string        customMetricName;   // only when metricType == custom_
   int           threshold;
@@ -24,16 +25,13 @@ struct ScalingRuleEntity {
   string        adjustment;         // e.g. "+1", "-2", "+100%"
 
   Json toJson() const @safe {
-    
-    auto j = Json.emptyObject;
-    j["id"]                  = Json(id);
-    j["metric_type"]         = Json(metricTypeToString(metricType));
-    j["custom_metric_name"]  = Json(customMetricName);
-    j["threshold"]           = Json(threshold);
-    j["operator"]            = Json(scalingOperatorToString(operator));
-    j["breach_duration_secs"]= Json(breachDurationSecs);
-    j["cool_down_secs"]      = Json(coolDownSecs);
-    j["adjustment"]          = Json(adjustment);
-    return j;
+    return entityToJson  
+    .set("metric_type", metricType.to!string)
+    .set("custom_metric_name", customMetricName)
+    .set("threshold", threshold)
+    .set("operator", operator.to!string)
+    .set("breach_duration_secs", breachDurationSecs)
+    .set("cool_down_secs", coolDownSecs)
+    .set("adjustment", adjustment);
   }
 }

@@ -36,6 +36,7 @@ MetricType toMetricType(string s) {
     "responsetime": MetricType.responsetime,
     "custom": MetricType.custom_
   ];
+  return map.get(s.toLower, MetricType.custom_);
 }
 
 // ---------------------------------------------------------------------------
@@ -58,7 +59,7 @@ ScalingOperator toScalingOperator(string s) {
     "lte": ScalingOperator.lte,
     "gte": ScalingOperator.gte
   ];
-  return map.get(s, ScalingOperator.gte);
+  return map.get(s.toLower, ScalingOperator.gte);
 } 
 
 // ---------------------------------------------------------------------------

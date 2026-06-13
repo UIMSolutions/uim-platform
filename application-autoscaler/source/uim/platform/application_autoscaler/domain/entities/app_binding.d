@@ -13,8 +13,8 @@ import uim.platform.application_autoscaler;
 
 /// Represents an application bound to the autoscaler service instance.
 struct AppBinding {
-  AppBindingId id;
-  TenantId     tenantId;
+  mixin TenantEntity!AppBindingId;
+
   string       appGuid;     // CF app GUID or K8s workload ref
   string       appName;
   string       serviceInstanceId;
@@ -24,16 +24,13 @@ struct AppBinding {
   long         updatedAt;
 
   Json toJson() const @safe {
-    auto j = Json.emptyObject;
-    j["id"]                  = Json(id);
-    j["tenant_id"]           = Json(tenantId);
-    j["app_guid"]            = Json(appGuid);
-    j["app_name"]            = Json(appName);
-    j["service_instance_id"] = Json(serviceInstanceId);
-    j["policy_id"]           = Json(policyId);
-    j["current_instances"]   = Json(currentInstances);
-    j["bound_at"]            = Json(boundAt);
-    j["updated_at"]          = Json(updatedAt);
-    return j;
+    return entityToJson
+    .set("app_guid", appGuid)
+    .set("app_name", appName)
+    .set("service_instance_id", serviceInstanceId)
+    .set("policy_id", policyId)
+    .set("current_instances", currentInstances)
+    .set("bound_at", boundAt)
+    .set("updated_at", updatedAt);
   }
 }

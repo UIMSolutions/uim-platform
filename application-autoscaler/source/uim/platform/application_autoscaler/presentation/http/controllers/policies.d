@@ -44,9 +44,9 @@ class ScalingPolicyController : ManageHttpController {
     r.timezone = data.getString("timezone");
     r.customMetricAllowFrom = data.getString("custom_metric_allow_from");
 
-    auto rulesJ = j["scaling_rules"];
+    auto rulesJ = data["scaling_rules"];
     if (rulesJ.isArray)
-      foreach (rj; rulesJ.toArray) {
+      foreach (rdata; rulesJ.toArray) {
         ScalingRuleRequest rr;
         rr.metricType = rdata.getString("metric_type");
         rr.customMetricName = rdata.getString("custom_metric_name");
@@ -58,9 +58,9 @@ class ScalingPolicyController : ManageHttpController {
         r.scalingRules ~= rr;
       }
 
-    auto recurJ = j["recurring_schedules"];
+    auto recurJ = data["recurring_schedules"];
     if (recurJ.isArray)
-      foreach (sj; recurJ.byValue) {
+      foreach (sdata; recurJ.byValue) {
         RecurringScheduleRequest rs;
         rs.startTime = sdata.getString("start_time");
         rs.endTime = sdata.getString("end_time");
@@ -80,9 +80,9 @@ class ScalingPolicyController : ManageHttpController {
         r.recurringSchedules ~= rs;
       }
 
-    auto sdJ = j["specific_date_schedules"];
+    auto sdJ = data["specific_date_schedules"];
     if (sdJ.isArray)
-      foreach (sj; sdJ.byValue) {
+      foreach (sdata; sdJ.byValue) {
         SpecificDateScheduleRequest sd;
         sd.startDateTime = sdata.getString("start_date_time");
         sd.endDateTime = sdata.getString("end_date_time");

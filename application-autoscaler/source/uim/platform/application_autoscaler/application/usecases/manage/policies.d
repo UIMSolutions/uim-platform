@@ -131,7 +131,7 @@ class ManageScalingPoliciesUseCase {
   }
 
   ScalingPolicyEntity[] listPolicies(TenantId tenantId) {
-    return repo.findByTenantId(tenantId);
+    return repo.findByTenant(tenantId);
   }
 
   private string generateId() @safe {

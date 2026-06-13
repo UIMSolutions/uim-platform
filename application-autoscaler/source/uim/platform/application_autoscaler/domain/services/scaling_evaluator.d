@@ -23,9 +23,7 @@ class ScalingEvaluatorService {
     double              currentValue,
     int                 currentInstances
   ) @safe {
-    foreach (rule; policy.scalingRules) {
-      if (metricTypeToString(rule.metricType) != metricType)
-        continue;
+    foreach (rule; policy.scalingRules.filter!(r => r.metricType.to!string == metricType)) {
       bool breached = false;
       final switch (rule.operator) {
         case ScalingOperator.lt:  breached = currentValue <  rule.threshold; break;

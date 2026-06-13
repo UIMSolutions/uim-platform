@@ -14,46 +14,41 @@ import uim.platform.application_autoscaler;
 /// The top-level scaling policy bound to an application.
 /// Mirrors SAP Application Autoscaler policy structure.
 struct ScalingPolicyEntity {
-  ScalingPolicyId              id;
-  AppBindingId          appId;          // CF application GUID or internal binding id
-  TenantId              tenantId;
-  int                   instanceMinCount;  // >= 1
-  int                   instanceMaxCount;  // >= instanceMinCount
-  PolicyStatus          status;
-  string                timezone;          // IANA tz, e.g. "Europe/Berlin"
-  MetricAllowFrom       customMetricAllowFrom;
+  mixin TenantEntity!ScalingPolicyId;
 
-  ScalingRuleEntity[]          scalingRules;
-  RecurringScheduleEntity[]    recurringSchedules;
+  AppBindingId appId; // CF application GUID or internal binding id
+  int instanceMinCount; // >= 1
+  int instanceMaxCount; // >= instanceMinCount
+  PolicyStatus status;
+  string timezone; // IANA tz, e.g. "Europe/Berlin"
+  MetricAllowFrom customMetricAllowFrom;
+
+  ScalingRuleEntity[] scalingRules;
+  RecurringScheduleEntity[] recurringSchedules;
   SpecificDateScheduleEntity[] specificDateSchedules;
 
-  long createdAt;
-  long updatedAt;
-
   Json toJson() const @safe {
-    
     auto j = Json.emptyObject;
-    j["id"]                   = Json(id);
-    j["app_id"]               = Json(appId);
-    j["tenant_id"]            = Json(tenantId);
-    j["instance_min_count"]   = Json(instanceMinCount);
-    j["instance_max_count"]   = Json(instanceMaxCount);
-    j["status"]               = Json(status.to!string);
-    j["timezone"]             = Json(timezone);
-    j["custom_metric_allow_from"] = Json(metricAllowFromToString(customMetricAllowFrom));
-    j["created_at"]           = Json(createdAt);
-    j["updated_at"]           = Json(updatedAt);
+    .set("app_id", appId)
+    .set("instance_min_count", instanceMinCount)
+    .set("instance_max_count", instanceMaxCount)
+    .set("status", status.to!string)
+    .set("timezone", timezone)
+    .set("custom_metric_allow_from", customMetricAllowFrom.to!string);
 
     auto rulesArr = Json.emptyArray;
-    foreach (r; scalingRules)       rulesArr ~= r.toJson();
+    foreach (r; scalingRules)
+      rulesArr ~= r.toJson();
     j["scaling_rules"] = rulesArr;
 
     auto recArr = Json.emptyArray;
-    foreach (r; recurringSchedules) recArr ~= r.toJson();
+    foreach (r; recurringSchedules)
+      recArr ~= r.toJson();
     j["recurring_schedules"] = recArr;
 
     auto sdArr = Json.emptyArray;
-    foreach (s; specificDateSchedules) sdArr ~= s.toJson();
+    foreach (s; specificDateSchedules)
+      sdArr ~= s.toJson();
     j["specific_date_schedules"] = sdArr;
 
     return j;

@@ -38,7 +38,7 @@ class ScalingEngineUseCase {
     // Resolve binding
     auto binding = bindingRepo.findByAppGuid(r.tenantId, r.appId);
     if (binding.isNull)
-      return CommandResult(false, "", "No binding found for appId " ~ r.appId);
+      return CommandResult(false, "", "No binding found for appId " ~ r.appId.value);
 
     if (binding.policyId.length == 0)
       return CommandResult(false, "", "No policy attached to app binding");

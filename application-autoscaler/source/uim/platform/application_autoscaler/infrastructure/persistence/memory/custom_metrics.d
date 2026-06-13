@@ -18,7 +18,7 @@ class MemoryCustomMetricRepository : TenantRepository!(CustomMetricEntity, Custo
   }
 
   CustomMetricEntity[] findByApp(TenantId tenantId, AppBindingId appId) {
-    return findByTenant(tenantId).filter(m => m.appId == appId).array;
+    return findByTenant(tenantId).filter!(m => m.appId == appId).array;
   }
 
   void removeByApp(TenantId tenantId, AppBindingId appId) {
@@ -26,18 +26,18 @@ class MemoryCustomMetricRepository : TenantRepository!(CustomMetricEntity, Custo
   }
 
   size_t countByAppIdAndName(TenantId tenantId, AppBindingId appId, string metricName) {
-    return findByApp(tenantId, appId).filter(m => m.metricName == metricName).length;
+    return findByAppIdAndName(tenantId, appId, metricName).length;
   }
   CustomMetricEntity[] findByAppIdAndName(TenantId tenantId, AppBindingId appId, string metricName) {
-    return findByApp(tenantId, appId).filter(m => m.metricName == metricName).array;
+    return findByApp(tenantId, appId).filter!(m => m.metricName == metricName).array;
   }
 
   void removeByAppIdAndName(TenantId tenantId, AppBindingId appId, string metricName) {
-    findByApp(tenantId, appId).filter(m => m.metricName == metricName).each!(m => remove(m));
+    findByAppIdAndName(tenantId, appId, metricName).each!(m => remove(m));
   }
 
   void removeOlderThan(TenantId tenantId, AppBindingId appId, long cutoffTimestamp) {
-    findByApp(tenantId, appId).filter(m => m.timestamp < cutoffTimestamp).each!(m => remove(m));
+    findByApp(tenantId, appId).filter!(m => m.timestamp < cutoffTimestamp).each!(m => remove(m));
   }
 
 }

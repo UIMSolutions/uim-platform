@@ -26,19 +26,19 @@ class DatasetUseCases {
   }
 
   DatasetResponse getDataset(TenantId tenantId, DatasetId id) {
-    auto found = repo.findByTenantId(tenantId).filter!(e => e.id == id).array;
+    auto found = repo.findByTenant(tenantId).filter!(e => e.id == id).array;
     return DatasetResponse.fromEntity(found.empty ? Dataset.init : found[0]);
   }
 
   DatasetResponse[] listDatasets(TenantId tenantId) {
     DatasetResponse[] result;
-    foreach (d; repo.findByTenantId(tenantId))
+    foreach (d; repo.findByTenant(tenantId))
       result ~= DatasetResponse.fromEntity(d);
     return result;
   }
 
   CommandResult deleteDataset(TenantId tenantId, DatasetId datasetId) {
-    auto found = repo.findByTenantId(tenantId).filter!(e => e.id == datasetId).array;
+    auto found = repo.findByTenant(tenantId).filter!(e => e.id == datasetId).array;
     if (found.empty)
       return CommandResult(false, "", "Dataset not found");
     auto ds = found[0];
