@@ -11,50 +11,19 @@ import uim.platform.application_autoscaler;
 
 @safe:
 
-class MemoryScalingPolicyRepository : ScalingPolicyRepository {
-  private ScalingPolicyEntity[string] store;
+class MemoryScalingPolicyRepository : TenantRepository!(ScalingPolicyEntity, ScalingPolicyId), ScalingPolicyRepository {
 
-  override bool existsById(PolicyId id) {
-    return (id in store) !is null;
+  bool existsByApp(TenantId tenantId, AppBindingId appId) {
+    return findByApp(tenantId, appId).isNull ? false : true;
   }
 
-  override ScalingPolicyEntity findById(PolicyId id) {
-    auto p = id in store;
-    return p ? *p : ScalingPolicyEntity.init;
-  }
-
-  override ScalingPolicyEntity findByApp(AppBindingId appId) {
-    foreach (p; store.byValue)
+  ScalingPolicyEntity findByApp(TenantId tenantId, AppBindingId appId) {
+    foreach (p; findByTenant(tenantId))
       if (p.appId == appId && p.status == PolicyStatus.active) return p;
     return ScalingPolicyEntity.init;
   }
 
-  override ScalingPolicyEntity[] findByTenant(tenantId) {
-    ScalingPolicyEntity[] result;
-    foreach (p; store.byValue) result ~= p;
-    return result;
-  }
-
-  override ScalingPolicyEntity[] findByTenantId(TenantId tenantId) {
-    ScalingPolicyEntity[] result;
-    foreach (p; store.byValue)
-      if (p.tenantId == tenantId) result ~= p;
-    return result;
-  }
-
-  override void save(ScalingPolicyEntity policy) {
-    store[policy.id] = policy;
-  }
-
-  override void update(ScalingPolicyEntity policy) {
-    store[policy.id] = policy;
-  }
-
-  override void remove(PolicyId id) {
-    store.remove(id);
-  }
-
-  override size_t count() {
-    return store.length;
+  void removeByApp(TenantId tenantId, AppBindingId appId) {
+    remove(findByApp(tenantId, appId));
   }
 }

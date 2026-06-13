@@ -1,9 +1,14 @@
 module uim.platform.analytics.presentation.cli.controller;
 
-import uim.platform.analytics.application.usecases.manage_assets;
-import uim.platform.analytics.presentation.cli.model;
-import uim.platform.analytics.presentation.cli.view;
+// import uim.platform.analytics.application.usecases.manage_assets;
+// import uim.platform.analytics.presentation.cli.model;
+// import uim.platform.analytics.presentation.cli.view;
 
+import uim.platform.analytics;
+
+// mixin(ShowModule!());
+
+@safe:  
 class CliController {
   private ManageAssetsUseCase useCase;
   private CliView view;

@@ -35,13 +35,11 @@ void writeError(scope HTTPServerResponse res, int status, string message) {
 
 string[] readStringArray(Json obj, string key) {
   string[] values;
-  if (!(key in obj)) return values;
-  foreach (item; obj[key]) {
-    try {
+  if (!obj.isArray(key)) return values;
+  
+  foreach (item; obj.getArray(key)) {
+    if (item.isString)
       values ~= item.get!string;
-    } catch (Exception) {
-      // Skip non-string values.
-    }
   }
   return values;
 }

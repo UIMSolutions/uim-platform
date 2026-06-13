@@ -1,7 +1,19 @@
 module uim.platform.analytics.domain.types;
+import uim.platform.analytics;
 
-alias TenantId = string;
-alias AssetId = string;
+// mixin(ShowModule!());
+
+@safe:  
+
+struct AssetId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
 
 enum StorageBackend {
   memory_,

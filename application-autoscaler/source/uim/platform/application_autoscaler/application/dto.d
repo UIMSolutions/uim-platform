@@ -66,7 +66,7 @@ struct CreateScalingPolicyRequest {
 }
 
 struct UpdateScalingPolicyRequest {
-  PolicyId                  id;
+  ScalingPolicyId                  id;
   int                       instanceMinCount;
   int                       instanceMaxCount;
   string                    timezone;

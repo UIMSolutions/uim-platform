@@ -1,6 +1,10 @@
 module uim.platform.analytics.application.dto;
 
-import uim.platform.analytics.domain.types;
+import uim.platform.analytics;
+
+// mixin(ShowModule!());
+
+@safe:  
 
 struct CreateAssetRequest {
   TenantId tenantId;
@@ -13,7 +17,7 @@ struct CreateAssetRequest {
 
 struct UpdateAssetRequest {
   TenantId tenantId;
-  AssetId id;
+  AssetId assetId;
   string name;
   string kind;
   string sourceSystem;
@@ -21,12 +25,12 @@ struct UpdateAssetRequest {
   string[] measures;
 }
 
-struct CommandResult {
-  bool success;
-  string id;
-  string message;
+// struct CommandResult {
+//   bool success;
+//   AssetId assetId;
+//   string message;
 
-  @property bool hasError() const {
-    return !success;
-  }
-}
+//   @property bool hasError() const {
+//     return !success;
+//   }
+// }

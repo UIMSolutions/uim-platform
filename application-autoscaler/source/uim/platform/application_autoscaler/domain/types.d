@@ -13,7 +13,7 @@ import uim.platform.application_autoscaler;
 // ---------------------------------------------------------------------------
 // ID type aliases
 // ---------------------------------------------------------------------------
-struct PolicyId {
+struct ScalingPolicyId {
     mixin DomainId;
 
     string value;

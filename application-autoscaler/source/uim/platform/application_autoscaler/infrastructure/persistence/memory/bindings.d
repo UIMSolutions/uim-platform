@@ -11,50 +11,19 @@ import uim.platform.application_autoscaler;
 
 @safe:
 
-class MemoryAppBindingRepository : AppBindingRepository {
-  private AppBindingEntity[string] store;
-
-  override bool existsById(AppBindingId id) {
-    return (id in store) !is null;
+class MemoryAppBindingRepository : TenantRepository!(AppBinding, AppBindingId), AppBindingRepository {
+  bool existsByAppGuid(TenantId tenantId, string appGuid) {
+    return findByAppGuid(tenantId, appGuid).isNull ? false : true;
   }
 
-  override AppBindingEntity findById(AppBindingId id) {
-    auto p = id in store;
-    return p ? *p : AppBindingEntity.init;
-  }
-
-  override AppBindingEntity findByAppGuid(string appGuid) {
+  AppBinding findByAppGuid(TenantId tenantId, string appGuid) {
     foreach (b; store.byValue)
       if (b.appGuid == appGuid) return b;
-    return AppBindingEntity.init;
+    return AppBinding.init;
   }
 
-  override AppBindingEntity[] findByTenant(tenantId) {
-    AppBindingEntity[] result;
-    foreach (b; store.byValue) result ~= b;
-    return result;
+  void removeByAppGuid(TenantId tenantId, string appGuid) {
+    remove(findByAppGuid(tenantId, appGuid));
   }
 
-  override AppBindingEntity[] findByTenantId(TenantId tenantId) {
-    AppBindingEntity[] result;
-    foreach (b; store.byValue)
-      if (b.tenantId == tenantId) result ~= b;
-    return result;
-  }
-
-  override void save(AppBindingEntity binding) {
-    store[binding.id] = binding;
-  }
-
-  override void update(AppBindingEntity binding) {
-    store[binding.id] = binding;
-  }
-
-  override void remove(AppBindingId id) {
-    store.remove(id);
-  }
-
-  override size_t count() {
-    return store.length;
-  }
 }

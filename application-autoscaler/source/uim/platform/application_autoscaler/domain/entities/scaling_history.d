@@ -12,31 +12,27 @@ import uim.platform.application_autoscaler;
 @safe:
 
 /// An immutable record of a scaling event triggered by the autoscaler.
-struct ScalingHistoryEntity {
-  ScalingHistoryId id;
-  AppBindingId     appId;
-  TenantId         tenantId;
+struct ScalingHistory {
+  mixin TenantEntity!ScalingHistoryId;
+
+  AppBindingId appId;
   ScalingDirection direction;
-  ScalingStatus    status;
-  string           reason;         // human-readable reason
-  string           message;        // optional detail / error
-  int              oldInstances;
-  int              newInstances;
-  long             timestamp;
+  ScalingStatus status;
+  string reason; // human-readable reason
+  string message; // optional detail / error
+  int oldInstances;
+  int newInstances;
+  long timestamp;
 
   Json toJson() const @safe {
-    
-    auto j = Json.emptyObject;
-    j["id"]            = Json(id);
-    j["app_id"]        = Json(appId);
-    j["tenant_id"]     = Json(tenantId);
-    j["direction"]     = Json(direction.to!string);
-    j["status"]        = Json(status.to!string);
-    j["reason"]        = Json(reason);
-    j["message"]       = Json(message);
-    j["old_instances"] = Json(oldInstances);
-    j["new_instances"] = Json(newInstances);
-    j["timestamp"]     = Json(timestamp);
-    return j;
+    return entityToJson
+    .set("app_id", appId)
+    .set("direction", direction.to!string)
+    .set("status", status.to!string)
+    .set("reason", reason)
+    .set("message", message)
+    .set("old_instances", oldInstances)
+    .set("new_instances", newInstances)
+    .set("timestamp", timestamp);
   }
 }

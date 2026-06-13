@@ -1,9 +1,13 @@
 module uim.platform.analytics.infrastructure.config;
 
-import std.conv : to;
-import std.process : environment;
-import uim.platform.analytics.domain.types;
+// import std.conv : to;
+// import std.process : environment;
+// import uim.platform.analytics.domain.types;
+import uim.platform.analytics;
 
+// mixin(ShowModule!());
+
+@safe:  
 struct AppConfig {
   string host = "0.0.0.0";
   ushort port = 8112;

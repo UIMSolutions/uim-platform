@@ -1,7 +1,10 @@
 module uim.platform.analytics.domain.entities.insight_asset;
 
-import uim.platform.analytics.domain.types;
-import vibe.data.json : Json;
+import uim.platform.analytics;
+
+// mixin(ShowModule!());
+
+@safe:  
 
 struct InsightAsset {
   AssetId id;

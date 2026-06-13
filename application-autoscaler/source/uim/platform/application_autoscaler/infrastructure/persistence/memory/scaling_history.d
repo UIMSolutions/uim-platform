@@ -11,40 +11,30 @@ import uim.platform.application_autoscaler;
 
 @safe:
 
-class MemoryScalingHistoryRepository : ScalingHistoryRepository {
-  private ScalingHistoryEntity[string] store;
+class MemoryScalingHistoryRepository : TenantRepository!(ScalingHistory, ScalingHistoryId), ScalingHistoryRepository {
 
-  override bool existsById(ScalingHistoryId id) {
-    return (id in store) !is null;
+  size_t countByApp(TenantId tenantId, AppBindingId appId) {
+    return findByApp(tenantId, appId).length;
   }
 
-  override ScalingHistoryEntity findById(ScalingHistoryId id) {
-    auto p = id in store;
-    return p ? *p : ScalingHistoryEntity.init;
+  ScalingHistory[] findByApp(TenantId tenantId, AppBindingId appId) {
+    return findByTenant(tenantId).filter(e => e.appId == appId).array;
   }
 
-  override ScalingHistoryEntity[] findByApp(AppBindingId appId) {
-    ScalingHistoryEntity[] result;
-    foreach (e; store.byValue)
-      if (e.appId == appId) result ~= e;
-    return result;
+  void removeByApp(TenantId tenantId, AppBindingId appId) {
+    findByApp(tenantId, appId).each!(e => remove(e));
   }
 
-  override ScalingHistoryEntity[] findByAppIdSince(AppBindingId appId, long sinceTimestamp) {
-    ScalingHistoryEntity[] result;
-    foreach (e; store.byValue)
-      if (e.appId == appId && e.timestamp >= sinceTimestamp) result ~= e;
-    return result;
+   size_t countByAppIdSince(TenantId tenantId, AppBindingId appId, long sinceTimestamp) {
+    return findByAppIdSince(tenantId, appId, sinceTimestamp).length;
   }
 
-  override void save(ScalingHistoryEntity event) {
-    store[event.id] = event;
+  ScalingHistory[] findByAppIdSince(TenantId tenantId, AppBindingId appId, long sinceTimestamp) {
+    return findByApp(tenantId, appId).filter(e => e.timestamp >= sinceTimestamp).array;
   }
 
-  override size_t countByApp(AppBindingId appId) {
-    size_t n;
-    foreach (e; store.byValue)
-      if (e.appId == appId) n++;
-    return n;
+  void removeByAppIdSince(TenantId tenantId, AppBindingId appId, long sinceTimestamp) {
+    findByAppIdSince(tenantId, appId, sinceTimestamp).each!(e => remove(e));
   }
+
 }

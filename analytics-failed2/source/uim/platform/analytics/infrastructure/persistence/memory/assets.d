@@ -1,7 +1,11 @@
 module uim.platform.analytics.infrastructure.persistence.memory.assets;
 
-import uim.platform.analytics.domain;
+// import uim.platform.analytics.domain;
+import uim.platform.analytics;
 
+// mixin(ShowModule!());
+
+@safe:  
 class MemoryAssetRepository : AssetRepository {
   private InsightAsset[][TenantId] byTenant;
 

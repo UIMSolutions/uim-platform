@@ -14,11 +14,11 @@ import uim.platform.application_autoscaler;
 interface CustomMetricRepository : ITenantRepository!(CustomMetricEntity, CustomMetricId) {
 
   size_t countByApp(TenantId tenantId, AppBindingId appId);
-  CustomMetricEntity[] findByApp(AppBindingId appId);
+  CustomMetricEntity[] findByApp(TenantId tenantId, AppBindingId appId);
   void removeByApp(TenantId tenantId, AppBindingId appId);
 
   size_t countByAppIdAndName(TenantId tenantId, AppBindingId appId, string metricName);
-  CustomMetricEntity[] findByAppIdAndName(AppBindingId appId, string metricName);
+  CustomMetricEntity[] findByAppIdAndName(TenantId tenantId, AppBindingId appId, string metricName);
   void removeByAppIdAndName(TenantId tenantId, AppBindingId appId, string metricName);
   
 }

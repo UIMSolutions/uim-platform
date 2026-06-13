@@ -18,15 +18,15 @@ class ManageScalingHistoryUseCase {
     this.repo = repo;
   }
 
-  ScalingHistoryEntity[] getHistory(AppBindingId appId) {
+  ScalingHistory[] getHistory(AppBindingId appId) {
     return repo.findByApp(appId);
   }
 
-  ScalingHistoryEntity[] getHistorySince(AppBindingId appId, long sinceTimestamp) {
+  ScalingHistory[] getHistorySince(AppBindingId appId, long sinceTimestamp) {
     return repo.findByAppIdSince(appId, sinceTimestamp);
   }
 
-  ScalingHistoryEntity getEvent(ScalingHistoryId id) {
+  ScalingHistory getEvent(ScalingHistoryId id) {
     return repo.findById(id);
   }
 }

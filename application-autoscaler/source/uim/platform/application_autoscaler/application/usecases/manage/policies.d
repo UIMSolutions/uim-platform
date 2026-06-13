@@ -113,7 +113,7 @@ class ManageScalingPoliciesUseCase {
     return CommandResult(true, existing.id.value, "");
   }
 
-  CommandResult deletePolicy(TenantId tenantId, PolicyId id) {
+  CommandResult deletePolicy(TenantId tenantId, ScalingPolicyId id) {
     auto existing = repo.findById(tenantId, id);
     if (existing.isNull)
       return CommandResult(false, "", "Policy not found");
@@ -122,7 +122,7 @@ class ManageScalingPoliciesUseCase {
     return CommandResult(true, existing.id.value, "");
   }
 
-  ScalingPolicyEntity getPolicy(TenantId tenantId, PolicyId id) {
+  ScalingPolicyEntity getPolicy(TenantId tenantId, ScalingPolicyId id) {
     return repo.findById(tenantId, id);
   }
 

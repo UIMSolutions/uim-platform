@@ -25,7 +25,7 @@ class ManageAppBindingsUseCase {
 
     auto id  = "bind-" ~ currentTimestamp.to!string ~ "-" ~ uniform(1000, 9999).to!string;
 
-    AppBindingEntity binding;
+    AppBinding binding;
     binding.initEntity(r.tenantId);
     binding.id                = id;
     binding.appGuid           = r.appGuid;
@@ -61,7 +61,7 @@ class ManageAppBindingsUseCase {
     return CommandResult(true, existing.id.value, "");
   }
 
-  CommandResult attachPolicy(TenantId tenantId, AppBindingId bindingId, PolicyId policyId) {
+  CommandResult attachPolicy(TenantId tenantId, AppBindingId bindingId, ScalingPolicyId policyId) {
     auto existing = repo.findById(tenantId, bindingId);
     if (existing.isNull)
       return CommandResult(false, "", "Binding not found");
@@ -74,11 +74,11 @@ class ManageAppBindingsUseCase {
     return CommandResult(true, existing.id.value, "");
   }
 
-  AppBindingEntity getBinding(TenantId tenantId, AppBindingId id) {
+  AppBinding getBinding(TenantId tenantId, AppBindingId id) {
     return repo.findById(tenantId, id);
   }
 
-  AppBindingEntity[] listBindings(TenantId tenantId) {
+  AppBinding[] listBindings(TenantId tenantId) {
     return repo.findByTenantId(tenantId);
   }
 }

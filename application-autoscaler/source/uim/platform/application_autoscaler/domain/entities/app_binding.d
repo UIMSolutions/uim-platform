@@ -12,13 +12,13 @@ import uim.platform.application_autoscaler;
 @safe:
 
 /// Represents an application bound to the autoscaler service instance.
-struct AppBindingEntity {
+struct AppBinding {
   AppBindingId id;
   TenantId     tenantId;
   string       appGuid;     // CF app GUID or K8s workload ref
   string       appName;
   string       serviceInstanceId;
-  PolicyId     policyId;    // active policy (empty = no policy)
+  ScalingPolicyId     policyId;    // active policy (empty = no policy)
   int          currentInstances;
   long         boundAt;
   long         updatedAt;

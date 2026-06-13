@@ -11,10 +11,10 @@ import uim.platform.application_autoscaler;
 
 @safe:
 
-interface AppBindingRepository : ITenantRepository!(AppBindingEntity, AppBindingId) {
+interface AppBindingRepository : ITenantRepository!(AppBinding, AppBindingId) {
 
-  bool existsByAppGuid(string appGuid);
-  AppBindingEntity findByAppGuid(string appGuid);
-  void removeByAppGuid(string appGuid);
+  bool existsByAppGuid(TenantId tenantId, string appGuid);
+  AppBinding findByAppGuid(TenantId tenantId, string appGuid);
+  void removeByAppGuid(TenantId tenantId, string appGuid);
   
 }

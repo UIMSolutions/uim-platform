@@ -59,7 +59,7 @@ class ScalingEngineUseCase {
 
     auto histId = "hist-" ~ currentTimestamp.to!string ~ "-" ~ uniform(1000, 9999).to!string;
 
-    ScalingHistoryEntity evt;
+    ScalingHistory evt;
     evt.id           = histId;
     evt.appId        = binding.id;
     evt.tenantId     = binding.tenantId;

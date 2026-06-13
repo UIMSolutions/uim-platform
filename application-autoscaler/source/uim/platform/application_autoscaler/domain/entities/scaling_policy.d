@@ -14,7 +14,7 @@ import uim.platform.application_autoscaler;
 /// The top-level scaling policy bound to an application.
 /// Mirrors SAP Application Autoscaler policy structure.
 struct ScalingPolicyEntity {
-  PolicyId              id;
+  ScalingPolicyId              id;
   AppBindingId          appId;          // CF application GUID or internal binding id
   TenantId              tenantId;
   int                   instanceMinCount;  // >= 1

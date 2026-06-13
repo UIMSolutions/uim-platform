@@ -11,14 +11,14 @@ import uim.platform.application_autoscaler;
 
 @safe:
 
-interface ScalingHistoryRepository : ITenantRepository!(ScalingHistoryEntity, ScalingHistoryId) {
+interface ScalingHistoryRepository : ITenantRepository!(ScalingHistory, ScalingHistoryId) {
 
   size_t countByApp(TenantId tenantId, AppBindingId appId);
-  ScalingHistoryEntity[] findByApp(TenantId tenantId, AppBindingId appId);
+  ScalingHistory[] findByApp(TenantId tenantId, AppBindingId appId);
   void removeByApp(TenantId tenantId, AppBindingId appId);
 
   size_t countByAppIdSince(TenantId tenantId, AppBindingId appId, long sinceTimestamp);
-  ScalingHistoryEntity[] findByAppIdSince(TenantId tenantId, AppBindingId appId, long sinceTimestamp);
+  ScalingHistory[] findByAppIdSince(TenantId tenantId, AppBindingId appId, long sinceTimestamp);
   void removeByAppIdSince(TenantId tenantId, AppBindingId appId, long sinceTimestamp);
   
 }

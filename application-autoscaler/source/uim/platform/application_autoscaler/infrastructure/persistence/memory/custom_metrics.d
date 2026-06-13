@@ -11,47 +11,33 @@ import uim.platform.application_autoscaler;
 
 @safe:
 
-class MemoryCustomMetricRepository : CustomMetricRepository {
-  private CustomMetricEntity[string] store;
+class MemoryCustomMetricRepository : TenantRepository!(CustomMetricEntity, CustomMetricId), CustomMetricRepository {
 
-  override bool existsById(CustomMetricId id) {
-    return (id in store) !is null;
+  size_t countByApp(TenantId tenantId, AppBindingId appId) {
+    return findByApp(tenantId, appId).length;
   }
 
-  override CustomMetricEntity findById(CustomMetricId id) {
-    auto p = id in store;
-    return p ? *p : CustomMetricEntity.init;
+  CustomMetricEntity[] findByApp(TenantId tenantId, AppBindingId appId) {
+    return findByTenant(tenantId).filter(m => m.appId == appId).array;
   }
 
-  override CustomMetricEntity[] findByApp(AppBindingId appId) {
-    CustomMetricEntity[] result;
-    foreach (m; store.byValue)
-      if (m.appId == appId) result ~= m;
-    return result;
+  void removeByApp(TenantId tenantId, AppBindingId appId) {
+    findByApp(tenantId, appId).each!(m => remove(m));
   }
 
-  override CustomMetricEntity[] findByAppIdAndName(AppBindingId appId, string metricName) {
-    CustomMetricEntity[] result;
-    foreach (m; store.byValue)
-      if (m.appId == appId && m.metricName == metricName) result ~= m;
-    return result;
+  size_t countByAppIdAndName(TenantId tenantId, AppBindingId appId, string metricName) {
+    return findByApp(tenantId, appId).filter(m => m.metricName == metricName).length;
+  }
+  CustomMetricEntity[] findByAppIdAndName(TenantId tenantId, AppBindingId appId, string metricName) {
+    return findByApp(tenantId, appId).filter(m => m.metricName == metricName).array;
   }
 
-  override void save(CustomMetricEntity metric) {
-    store[metric.id] = metric;
+  void removeByAppIdAndName(TenantId tenantId, AppBindingId appId, string metricName) {
+    findByApp(tenantId, appId).filter(m => m.metricName == metricName).each!(m => remove(m));
   }
 
-  override void removeOlderThan(AppBindingId appId, long cutoffTimestamp) {
-    string[] toRemove;
-    foreach (k, m; store)
-      if (m.appId == appId && m.timestamp < cutoffTimestamp) toRemove ~= k;
-    foreach (k; toRemove) store.remove(k);
+  void removeOlderThan(TenantId tenantId, AppBindingId appId, long cutoffTimestamp) {
+    findByApp(tenantId, appId).filter(m => m.timestamp < cutoffTimestamp).each!(m => remove(m));
   }
 
-  override size_t countByApp(AppBindingId appId) {
-    size_t n;
-    foreach (m; store.byValue)
-      if (m.appId == appId) n++;
-    return n;
-  }
 }
