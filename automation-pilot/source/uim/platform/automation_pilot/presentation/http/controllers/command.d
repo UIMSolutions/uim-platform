@@ -88,7 +88,7 @@ class CommandController : ManageHttpController {
             return errorResponse("Invalid command ID", 400);
 
         auto e = commands.getCommand(tenantId, id);
-        if (job.isNull)
+        if (e.isNull)
             return errorResponse("Command not found", 404);
 
         auto responseData = e.toJson();

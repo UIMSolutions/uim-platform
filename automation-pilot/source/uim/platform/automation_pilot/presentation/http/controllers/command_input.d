@@ -41,7 +41,7 @@ class CommandInputController : ManageHttpController {
 
         return Json.emptyObject
             .set("count", items.length)
-            .set("resources", jarr)
+            .set("resources", list)
             .set("message", "Command inputs retrieved successfully")
             .set("status", "success")
             .set("statusCode", 200);
@@ -49,14 +49,14 @@ class CommandInputController : ManageHttpController {
 
     override protected Json createHandler(HTTPServerRequest req) {
         auto precheck = super.createHandler(req);
-        if (precheck.hasError) {
+        if (precheck.hasError) 
             return precheck;
-        }
+        
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         CommandInputDTO dto;
-        dto.commandInputId = CommandInputId(precheck.id);
+        dto.inputId = CommandInputId(precheck.id);
         dto.tenantId = tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
@@ -69,66 +69,49 @@ class CommandInputController : ManageHttpController {
         auto result = commandInputs.createCommandInput(dto);
         if (result.hasError)
             return errorResponse(result.message, 400);
-            auto resp = Json.emptyObject
-                .set("id", result.id)
-                .set("message", "Command Input created");
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Command Input created");
 
-            return resp.set("status", "success").set("statusCode", 201);
-        } else {
-            return Json.emptyObject.set("error", result.message).set("status", "error").set("statusCode", 400);
-        }
+        return successResponse("Command Input created successfully", "Created", 201, resp);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
         auto precheck = super.getHandler(req);
-        if (precheck.hasError) {
+        if (precheck.hasError) 
             return precheck;
-        }
+        
 
         auto tenantId = precheck.tenantId;
         auto path = precheck.path;
         auto id = CommandInputId(precheck.id);
-        if (id.isNull) {
-            return Json.emptyObject
-                .set("error", "Invalid Command Input ID")
-                .set("status", "error")
-                .set("statusCode", 400);
-        }
+        if (id.isNull) 
+            return errorResponse("Invalid Command Input ID", 400);
 
         auto e = commandInputs.getCommandInput(tenantId, id);
-        if (e.isNull) {
-            return Json.emptyObject
-                .set("error", "Command Input not found")
-                .set("status", "error")
-                .set("statusCode", 404);
-        }
+        if (e.isNull) 
+            return errorResponse("Command Input not found", 404);
 
-        return e.toJson()
-            .set("message", "Command Input retrieved successfully")
-            .set("status", "success")
-            .set("statusCode", 200);
+        return successResponse("Command Input retrieved successfully", "Retrieved", 200, e.toJson());
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
         auto precheck = super.getHandler(req);
-        if (precheck.hasError) {
+        if (precheck.hasError) 
             return precheck;
-        }
+        
 
         auto tenantId = precheck.tenantId;
         auto path = precheck.path;
         auto id = CommandInputId(precheck.id);
-        if (id.isNull) {
-            return Json.emptyObject
-                .set("error", "Invalid Command Input ID")
-                .set("status", "error")
-                .set("statusCode", 400);
-        }
+        if (id.isNull) 
+            return errorResponse("Invalid Command Input ID", 400);
+        
 
         auto data = precheck.data;
         CommandInputDTO dto;
         dto.tenantId = tenantId;
-        dto.commandInputId = CommandInputId(precheck.id);
+        dto.inputId = CommandInputId(precheck.id);
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.keys = data.getString("keys");
@@ -136,47 +119,28 @@ class CommandInputController : ManageHttpController {
         dto.updatedBy = UserId(data.getString("updatedBy"));
 
         auto result = commandInputs.updateCommandInput(dto);
-        if (result.hasError) {
-            return Json.emptyObject
-                .set("error", result.message)
-                .set("status", "error")
-                .set("statusCode", 400);
-        }
-        return Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Command Input updated")
-            .set("status", "success")
-            .set("statusCode", 200);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+        return successResponse("Command Input updated successfully", "Updated", 200, Json.emptyObject.set("id", result.id));
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto precheck = super.deleteHandler(req);
-        if (precheck.hasError) {
+        if (precheck.hasError) 
             return precheck;
-        }
+        
 
         auto tenantId = precheck.tenantId;
-        auto path = precheck.path;
         auto id = CommandInputId(precheck.id);
         if (id.isNull) {
-            return Json.emptyObject
-                .set("error", "Invalid Command Input ID")
-                .set("status", "error")
-                .set("statusCode", 400);
+            return errorResponse("Invalid Command Input ID", 400);
         }
 
         auto result = commandInputs.deleteCommandInput(tenantId, id);
         if (result.hasError) {
-            return Json.emptyObject
-                .set("error", result.message)
-                .set("status", "error")
-                .set("statusCode", 404);
+            return errorResponse(result.message, 404);
         }
 
-        return Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Command Input deleted")
-            .set("status", "success")
-            .set("statusCode", 200);
+        return successResponse("Command Input deleted successfully", "Deleted", 200, Json.emptyObject.set("id", result.id));
     }
 }

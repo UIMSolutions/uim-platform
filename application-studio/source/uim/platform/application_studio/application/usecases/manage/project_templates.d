@@ -28,7 +28,7 @@ class ManageProjectTemplatesUseCase { // TODO: UIMUseCase {
 
     CommandResult createProjectTemplate(ProjectTemplateDTO dto) {
         ProjectTemplate e;
-        e.id = ProjectTemplateId(dto.id);
+        e.id = dto.templateId;
         e.tenantId = dto.tenantId;
         e.name = dto.name;
         e.description = dto.description;
@@ -45,7 +45,7 @@ class ManageProjectTemplatesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateProjectTemplate(ProjectTemplateDTO dto) {
-        auto existing = repo.findById(TenantId(dto.tenantId), ProjectTemplateId(dto.id));
+        auto existing = repo.findById(dto.tenantId, dto.templateId);
         if (existing.isNull)
             return CommandResult(false, "", "Project template not found");
 

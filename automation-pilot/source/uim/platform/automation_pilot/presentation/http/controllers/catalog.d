@@ -38,12 +38,11 @@ class CatalogController : ManageHttpController {
         auto items = catalogs.listCatalogs(tenantId);
         auto list = items.map!(e => e.toJson()).array.toJson;
 
-        return Json.emptyObject
+        auto responseData = Json.emptyObject
             .set("count", items.length)
-            .set("resources", jarr)
-            .set("message", "Catalogs retrieved successfully")
-            .set("status", "success")
-            .set("statusCode", 200);
+            .set("resources", list);
+
+            return successResponse("Catalog list retrieved successfully", 200, responseData);
     }
 
     override protected Json createHandler(HTTPServerRequest req) {

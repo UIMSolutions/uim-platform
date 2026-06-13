@@ -30,7 +30,7 @@ class ManageExtensionsUseCase { // TODO: UIMUseCase {
         Extension e;
         e.initEntity(dto.tenantId, dto.createdBy);
         
-        e.id = ExtensionId(dto.id);
+        e.id = dto.extensionId;
         e.name = dto.name;
         e.description = dto.description;
         e.version_ = dto.version_;
@@ -47,7 +47,7 @@ class ManageExtensionsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateExtension(ExtensionDTO dto) {
-        auto existing = extensions.findById(dto.tenantId, ExtensionId(dto.id));
+        auto existing = extensions.findById(dto.tenantId, dto.extensionId);
         if (existing.isNull)
             return CommandResult(false, "", "Extension not found");
 

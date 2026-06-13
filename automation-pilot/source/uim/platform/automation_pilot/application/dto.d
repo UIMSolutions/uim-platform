@@ -44,7 +44,7 @@ struct CommandDTO {
 }
 
 struct CommandInputDTO {
-    CommandInputId commandInputId;
+    CommandInputId inputId;
     TenantId tenantId;
     string name;
     string description;
@@ -70,7 +70,7 @@ struct ExecutionDTO {
 }
 
 struct ScheduledExecutionDTO {
-    ScheduledExecutionId scheduledExecutionId;
+    ScheduledExecutionId executionId;
     TenantId tenantId;
     CommandId commandId;
     string scheduleType;
@@ -102,7 +102,7 @@ struct TriggerDTO {
 }
 
 struct ServiceAccountDTO {
-    ServiceAccountId serviceAccountId;
+    ServiceAccountId accountId;
     TenantId tenantId;
     string name;
     string description;
@@ -115,7 +115,7 @@ struct ServiceAccountDTO {
 }
 
 struct ContentConnectorDTO {
-    ContentConnectorId contentConnectorId;
+    ContentConnectorId connectorId;
     TenantId tenantId;
     string name;
     string description;

@@ -72,7 +72,7 @@ class ContentConnectorController : ManageHttpController {
 
         auto data = precheck.data;
         ContentConnectorDTO dto;
-        dto.contentConnectorId = ContentConnectorId(precheck.id);
+        dto.connectorId = ContentConnectorId(precheck.id);
         dto.tenantId = tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
@@ -128,7 +128,7 @@ class ContentConnectorController : ManageHttpController {
         if (id.isNull)
             return errorResponse("Invalid content connector ID", 400);
 
-        auto result = usecase.deleteContentConnector(tenantId, contentConnectorId);
+        auto result = usecase.deleteContentConnector(tenantId, id);
         if (result.hasError)
             return errorResponse(result.message, 400);
 

@@ -12,9 +12,9 @@ import uim.platform.application_studio;
 @safe:
 
 class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
-    private ServiceBindingserviceBindingssitory serviceBindings;
+    private ServiceBindingRepository serviceBindings;
 
-    this(ServiceBindingserviceBindingssitory serviceBindings) {
+    this(ServiceBindingRepository serviceBindings) {
         this.serviceBindings = serviceBindings;
     }
 
@@ -32,9 +32,9 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
 
     CommandResult createServiceBinding(ServiceBindingDTO dto) {
         ServiceBinding e;
-        e.id = ServiceBindingId(dto.id);
+        e.id = dto.bindingId;
         e.tenantId = dto.tenantId;
-        e.devSpaceId = DevSpaceId(dto.devSpaceId);
+        e.devSpaceId = dto.spaceId;
         e.name = dto.name;
         e.description = dto.description;
         e.serviceUrl = dto.serviceUrl;
@@ -46,11 +46,11 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
         if (!StudioValidator.isValidServiceBinding(e))
             return CommandResult(false, "", "Invalid service binding data");
         serviceBindings.save(e);
-        return CommandResult(true, dto.id.value, "");
+        return CommandResult(true, dto.bindingId.value, "");
     }
 
     CommandResult updateServiceBinding(ServiceBindingDTO dto) {
-        auto existing = serviceBindings.findById(TenantId(dto.tenantId), ServiceBindingId(dto.id));
+        auto existing = serviceBindings.findById(dto.tenantId, dto.bindingId);
         if (existing.isNull)
             return CommandResult(false, "", "Service binding not found");
 
@@ -62,9 +62,9 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
             existing.serviceUrl = dto.serviceUrl;
         if (!dto.updatedBy.isNull)
             existing.updatedBy = dto.updatedBy;
-            
+
         serviceBindings.update(existing);
-        return CommandResult(true, dto.id.value, "");
+        return CommandResult(true, dto.bindingId.value, "");
     }
 
     CommandResult deleteServiceBinding(TenantId tenantId, ServiceBindingId id) {

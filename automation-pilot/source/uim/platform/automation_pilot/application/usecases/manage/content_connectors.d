@@ -28,7 +28,7 @@ class ManageContentConnectorsUseCase { // TODO: UIMUseCase {
 
     CommandResult createContentConnector(ContentConnectorDTO dto) {
         ContentConnector cc;
-        cc.id = dto.contentConnectorId;
+        cc.id = dto.connectorId;
         cc.tenantId = dto.tenantId;
         cc.name = dto.name;
         cc.description = dto.description;
@@ -43,7 +43,7 @@ class ManageContentConnectorsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateContentConnector(ContentConnectorDTO dto) {
-        auto existing = repo.findById(dto.tenantId, dto.contentConnectorId);
+        auto existing = repo.findById(dto.tenantId, dto.connectorId);
         if (existing.isNull)
             return CommandResult(false, "", "Content connector not found");
 

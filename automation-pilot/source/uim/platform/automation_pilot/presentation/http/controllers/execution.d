@@ -28,7 +28,7 @@ class ExecutionController : ManageHttpController {
         router.delete_("/api/v1/automation-pilot/executions/*", &handleDelete);
     }
 
-    verride protected Json listHandler(HTTPServerRequest req) {
+    override protected Json listHandler(HTTPServerRequest req) {
         auto precheck = super.listHandler(req);
         if (precheck.hasError)
             return precheck;

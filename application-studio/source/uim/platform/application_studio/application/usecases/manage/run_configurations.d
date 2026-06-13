@@ -12,13 +12,13 @@ import uim.platform.application_studio;
 @safe:
 
 class ManageRunConfigurationsUseCase { // TODO: UIMUseCase {
-    private RunConfigurationconfigurationssitory configurations;
+    private RunConfigurationRepository configurations;
 
-    this(RunConfigurationconfigurationssitory configurations) {
+    this(RunConfigurationRepository configurations) {
         this.configurations = configurations;
     }
 
-    RunConfiguration getRunConfiguration(RunConfigurationId id) {
+    RunConfiguration getRunConfiguration(TenantId tenantId, RunConfigurationId id) {
         return configurations.findById(tenantId, id);
     }
 
@@ -34,8 +34,8 @@ class ManageRunConfigurationsUseCase { // TODO: UIMUseCase {
         RunConfiguration e;
         e.initEntity(dto.tenantId, dto.createdBy);
 
-        e.id = RunConfigurationId(dto.id);
-        e.projectId = ProjectId(dto.projectId);
+        e.id = dto.configId;
+        e.projectId = dto.projectId;
         e.name = dto.name;
         e.description = dto.description;
         e.entryPoint = dto.entryPoint;
@@ -47,11 +47,11 @@ class ManageRunConfigurationsUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Invalid run configuration data");
 
         configurations.save(e);
-        return CommandResult(true, dto.id.value, "");
+        return CommandResult(true, dto.configId.value, "");
     }
 
     CommandResult updateRunConfiguration(RunConfigurationDTO dto) {
-        auto existing = configurations.findById(RunConfigurationId(dto.id));
+        auto existing = configurations.findById(dto.tenantId, dto.configId);
         if (existing.isNull)
             return CommandResult(false, "", "Run configuration not found");
 
@@ -61,10 +61,10 @@ class ManageRunConfigurationsUseCase { // TODO: UIMUseCase {
         if (dto.arguments.length > 0) existing.arguments = dto.arguments;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
         configurations.update(existing);
-        return CommandResult(true, dto.id.value, "");
+        return CommandResult(true, dto.configId.value, "");
     }
 
-    CommandResult deleteRunConfiguration(RunConfigurationId id) {
+    CommandResult deleteRunConfiguration(TenantId tenantId, RunConfigurationId id) {
         auto config = configurations.findById(tenantId, id);
         if (config.isNull)
             return CommandResult(false, "", "Run configuration not found");

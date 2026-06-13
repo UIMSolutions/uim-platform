@@ -32,11 +32,11 @@ class ManageDevSpacesUseCase { // TODO: UIMUseCase {
 
     CommandResult createDevSpace(DevSpaceDTO dto) {
         DevSpace e;
-        e.id = dto.devSpaceId;
+        e.id = dto.spaceId;
         e.tenantId = dto.tenantId;
         e.name = dto.name;
         e.description = dto.description;
-        e.devSpaceTypeId = DevSpaceTypeId(dto.devSpaceTypeId);
+        e.devSpaceTypeId = dto.typeId;
         e.extensions = dto.extensions;
         e.owner = dto.owner;
         e.region = dto.region;
@@ -47,11 +47,11 @@ class ManageDevSpacesUseCase { // TODO: UIMUseCase {
         if (!StudioValidator.isValidDevSpace(e))
             return CommandResult(false, "", "Invalid dev space data");
         repo.save(e);
-        return CommandResult(true, dto.devSpaceId.value, "");
+        return CommandResult(true, dto.spaceId.value, "");
     }
 
     CommandResult updateDevSpace(DevSpaceDTO dto) {
-        auto existing = repo.findById(dto.tenantId, dto.devSpaceId);
+        auto existing = repo.findById(dto.tenantId, dto.spaceId);
         if (existing.isNull)
             return CommandResult(false, "", "Dev space not found");
 
@@ -61,7 +61,7 @@ class ManageDevSpacesUseCase { // TODO: UIMUseCase {
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
 
         repo.update(existing);
-        return CommandResult(true, dto.devSpaceId.value, "");
+        return CommandResult(true, dto.spaceId.value, "");
     }
 
     CommandResult deleteDevSpace(TenantId tenantId, DevSpaceId id) {

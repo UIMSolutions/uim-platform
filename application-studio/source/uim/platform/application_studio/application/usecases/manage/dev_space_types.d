@@ -18,7 +18,7 @@ class ManageDevSpaceTypesUseCase { // TODO: UIMUseCase {
         this.spaceTypes = spaceTypes;
     }
 
-    DevSpaceType getDevSpaceType(DevSpaceTypeId id) {
+    DevSpaceType getDevSpaceType(TenantId tenantId, DevSpaceTypeId id) {
         return spaceTypes.findById(tenantId, id);
     }
 
@@ -28,7 +28,7 @@ class ManageDevSpaceTypesUseCase { // TODO: UIMUseCase {
 
     CommandResult createDevSpaceType(DevSpaceTypeDTO dto) {
         DevSpaceType e;
-        e.id = DevSpaceTypeId(dto.id);
+        e.id = dto.typeId;
         e.tenantId = dto.tenantId;
         e.name = dto.name;
         e.description = dto.description;
@@ -40,12 +40,12 @@ class ManageDevSpaceTypesUseCase { // TODO: UIMUseCase {
         if (!StudioValidator.isValidDevSpaceType(e))
             return CommandResult(false, "", "Invalid dev space type data");
         spaceTypes.save(e);
-        return CommandResult(true, dto.id.value, "");
+        return CommandResult(true, dto.typeId.value, "");
     }
 
     CommandResult updateDevSpaceType(DevSpaceTypeDTO dto) {
-        auto existing = spaceTypes.findById(DevSpaceTypeId(dto.id));
-        if (existing.isNull) 
+        auto existing = spaceTypes.findById(dto.tenantId, dto.typeId);
+        if (existing.isNull)
             return CommandResult(false, "", "Dev space type not found");
 
         if (dto.name.length > 0) existing.name = dto.name;
@@ -54,10 +54,10 @@ class ManageDevSpaceTypesUseCase { // TODO: UIMUseCase {
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
 
         spaceTypes.update(existing);
-        return CommandResult(true, dto.id.value, "");
+        return CommandResult(true, dto.typeId.value, "");
     }
 
-    CommandResult deleteDevSpaceType(DevSpaceTypeId id) {
+    CommandResult deleteDevSpaceType(TenantId tenantId, DevSpaceTypeId id) {
         auto type = spaceTypes.findById(tenantId, id);
         if (type.isNull)
             return CommandResult(false, "", "Dev space type not found");

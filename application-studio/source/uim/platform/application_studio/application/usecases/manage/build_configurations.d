@@ -12,9 +12,9 @@ import uim.platform.application_studio;
 @safe:
 
 class ManageBuildConfigurationsUseCase { // TODO: UIMUseCase {
-    private BuildConfigurationconfigurationssitory configurations;
+    private BuildConfigurationRepository configurations;
 
-    this(BuildConfigurationconfigurationssitory configurations) {
+    this(BuildConfigurationRepository configurations) {
         this.configurations = configurations;
     }
 
@@ -33,8 +33,8 @@ class ManageBuildConfigurationsUseCase { // TODO: UIMUseCase {
     CommandResult createBuildConfiguration(BuildConfigurationDTO dto) {
         BuildConfiguration e;
         e.initEntity(dto.tenantId, dto.createdBy);
-        e.id = BuildConfigurationId(dto.id);
-        e.projectId = ProjectId(dto.projectId);
+        e.id = dto.configId;
+        e.projectId = dto.projectId;
         e.name = dto.name;
         e.description = dto.description;
         e.buildCommand = dto.buildCommand;
@@ -45,11 +45,11 @@ class ManageBuildConfigurationsUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Invalid build configuration data");
 
         configurations.save(e);
-        return CommandResult(true, dto.id.value, "");
+        return CommandResult(true, dto.configId.value, "");
     }
 
     CommandResult updateBuildConfiguration(BuildConfigurationDTO dto) {
-        auto existing = configurations.findById(dto.tenantId, BuildConfigurationId(dto.id));
+        auto existing = configurations.findById(dto.tenantId, dto.configId);
         if (existing.isNull)
             return CommandResult(false, "", "Build configuration not found");
 
@@ -60,7 +60,7 @@ class ManageBuildConfigurationsUseCase { // TODO: UIMUseCase {
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
 
         configurations.update(existing);
-        return CommandResult(true, dto.id.value, "");
+        return CommandResult(true, dto.configId.value, "");
     }
 
     CommandResult deleteBuildConfiguration(TenantId tenantId, BuildConfigurationId id) {

@@ -36,7 +36,7 @@ class ScheduledExecutionController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto items = scheduledExecutions.listScheduledExecutions(tenantId);
-        aauto list = items.map!(item => item.toJson()).array.toJson;
+        auto list = items.map!(item => item.toJson()).array.toJson;
 
         auto responseData = Json.emptyObject
             .set("count", list.length)
@@ -73,7 +73,7 @@ class ScheduledExecutionController : ManageHttpController {
         auto data = precheck.data;
         ScheduledExecutionDTO dto;
         dto.tenantId = tenantId;
-        dto.scheduledExecutionId = ScheduledExecutionId(precheck.id);
+        dto.executionId = ScheduledExecutionId(precheck.id);
         dto.commandId = CommandId(data.getString("commandId"));
         dto.cronExpression = data.getString("cronExpression");
         dto.scheduledAt = data.getLong("scheduledAt");
@@ -101,7 +101,7 @@ class ScheduledExecutionController : ManageHttpController {
         auto data = precheck.data;
         ScheduledExecutionDTO dto;
         dto.tenantId = tenantId;
-        dto.scheduledExecutionId = ScheduledExecutionId(precheck.id);
+        dto.executionId = ScheduledExecutionId(precheck.id);
         dto.cronExpression = data.getString("cronExpression");
         dto.scheduledAt = data.getLong("scheduledAt");
         dto.description = data.getString("description");

@@ -12,13 +12,13 @@ import uim.platform.application_studio;
 @safe:
 
 class ManageProjectsUseCase { // TODO: UIMUseCase {
-    private Projectprojectssitory projects;
+    private ProjectRepository projects;
 
-    this(Projectprojectssitory projects) {
+    this(ProjectRepository projects) {
         this.projects = projects;
     }
 
-    Project getById(ProjectId id) {
+    Project getById(TenantId tenantId, ProjectId id) {
         return projects.findById(tenantId, id);
     }
 
@@ -26,21 +26,21 @@ class ManageProjectsUseCase { // TODO: UIMUseCase {
         return projects.findByTenant(tenantId);
     }
 
-    Project[] listProjects(DevSpaceId devSpaceId) {
-        return projects.findByDevSpace(devSpaceId);
+    Project[] listProjects(TenantId tenantId, DevSpaceId devSpaceId) {
+        return projects.findByDevSpace(tenantId, devSpaceId);
     }
 
     CommandResult createProject(ProjectDTO dto) {
         Project e;
-        
-        e.id = ProjectId(dto.id);
+
+        e.id = dto.projectId;
         e.tenantId = dto.tenantId;
-        e.devSpaceId = DevSpaceId(dto.devSpaceId);
+        e.devSpaceId = dto.spaceId;
         e.name = dto.name;
         e.description = dto.description;
-        e.templateId = ProjectTemplateId(dto.templateId);
+        e.templateId = dto.templateId;
         e.rootPath = dto.rootPath;
-        e.gitprojectssitoryUrl = dto.gitprojectssitoryUrl;
+        e.gitRepositoryUrl = dto.gitRepositoryUrl;
         e.gitBranch = dto.gitBranch;
         e.namespace_ = dto.namespace_;
         e.createdBy = dto.createdBy;
@@ -52,13 +52,13 @@ class ManageProjectsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateProject(ProjectDTO dto) {
-        auto existing = projects.findById(ProjectId(dto.id));
+        auto existing = projects.findById(dto.tenantId, dto.projectId);
         if (existing.isNull)
             return CommandResult(false, "", "Project not found");
 
         if (dto.name.length > 0) existing.name = dto.name;
         if (dto.description.length > 0) existing.description = dto.description;
-        if (dto.gitprojectssitoryUrl.length > 0) existing.gitprojectssitoryUrl = dto.gitprojectssitoryUrl;
+        if (dto.gitRepositoryUrl.length > 0) existing.gitRepositoryUrl = dto.gitRepositoryUrl;
         if (dto.gitBranch.length > 0) existing.gitBranch = dto.gitBranch;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
 
