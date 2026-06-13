@@ -13,28 +13,28 @@ import uim.platform.application_studio;
 
 class MemoryServiceBindingRepository : TenantRepository!(ServiceBinding, ServiceBindingId), ServiceBindingRepository {
 
-    size_t countByDevSpace(DevSpaceId devSpaceId) {
-        return findByDevSpace(devSpaceId).length;
+    size_t countByDevSpace(TenantId tenantId, DevSpaceId devSpaceId) {
+        return findByDevSpace(tenantId, devSpaceId).length;
     }
 
-    ServiceBinding[] findByDevSpace(DevSpaceId devSpaceId) {
+    ServiceBinding[] findByDevSpace(TenantId tenantId, DevSpaceId devSpaceId) {
         return findByTenant(tenantId).filter!(e => e.devSpaceId == devSpaceId).array;
     }
     
-    void removeByDevSpace(DevSpaceId devSpaceId) {
-        findByDevSpace(devSpaceId).each!(e => remove(e));
+    void removeByDevSpace(TenantId tenantId, DevSpaceId devSpaceId) {
+        findByDevSpace(tenantId, devSpaceId).each!(e => remove(e));
     }
 
-    size_t countByStatus(BindingStatus status) {
-        return findByStatus(status).length;
+    size_t countByStatus(TenantId tenantId, BindingStatus status) {
+        return findByStatus(tenantId, status).length;
     }
 
-    ServiceBinding[] findByStatus(BindingStatus status) {
+    ServiceBinding[] findByStatus(TenantId tenantId, BindingStatus status) {
         return findByTenant(tenantId).filter!(e => e.status == status).array;
     }
 
-    void removeByStatus(BindingStatus status) {
-        findByStatus(status).each!(e => remove(e));
+    void removeByStatus(TenantId tenantId, BindingStatus status) {
+        findByStatus(tenantId, status).each!(e => remove(e));
     }
 
 }

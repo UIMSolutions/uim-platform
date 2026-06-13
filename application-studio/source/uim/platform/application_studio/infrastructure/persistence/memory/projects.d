@@ -13,16 +13,37 @@ import uim.platform.application_studio;
 
 class MemoryProjectRepository : TenantRepository!(Project, ProjectId), ProjectRepository {
 
-    size_t countByDevSpace(DevSpaceId devSpaceId) {
-        return findByDevSpace(devSpaceId).length;
+    size_t countByType(TenantId tenantId, ProjectType projectType) {
+        return findByType(tenantId, projectType).length;
     }
 
-    Project[] findByDevSpace(DevSpaceId devSpaceId) {
-        return findByTenant(tenantId).filter!(e => e.devSpaceId == devSpaceId).array;
+Project[] filterByType(Project[] projects, ProjectType projectType) {
+        return projects.filter!(p => p.type == projectType).array;
     }
 
-    void removeByDevSpace(DevSpaceId devSpaceId) {
-        findByDevSpace(devSpaceId).each!(e => remove(e));
+    Project[] findByType(TenantId tenantId, ProjectType projectType) {
+        return filterByType(findByTenant(tenantId), projectType);
+    }
+
+    void removeByType(TenantId tenantId, ProjectType projectType) {
+        findByType(tenantId, projectType).each!(e => remove(e));
+    }
+
+
+    size_t countByDevSpace(TenantId tenantId, DevSpaceId devSpaceId) {
+        return findByDevSpace(tenantId, devSpaceId).length;
+    }
+
+    Project[] filterByDevSpace(Project[] projects, DevSpaceId devSpaceId) {
+        return projects.filter!(p => p.devSpaceId == devSpaceId).array;
+    }
+
+    Project[] findByDevSpace(TenantId tenantId, DevSpaceId devSpaceId) {
+        return filterByDevSpace(findByTenant(tenantId), devSpaceId);
+    }
+
+    void removeByDevSpace(TenantId tenantId, DevSpaceId devSpaceId) {
+        findByDevSpace(tenantId, devSpaceId).each!(e => remove(e));
     }
 
 }

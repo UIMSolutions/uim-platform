@@ -80,6 +80,7 @@ class CustomMetricController : ManageHttpController {
     if (precheck.hasError)
       return precheck;
 
+    auto tenantId = precheck.tenantId;
     auto appId = precheck.id;
     string metricName;
     foreach (kv; req.query.byKeyValue()) {
@@ -88,7 +89,7 @@ class CustomMetricController : ManageHttpController {
         break;
       }
     }
-    auto metrics = usecase.getMetrics(appId, metricName);
+    auto metrics = usecase.getMetrics(tenantId, ppId, metricName);
     auto arr = Json.emptyArray;
     foreach (m; metrics)
       arr ~= m.toJson();

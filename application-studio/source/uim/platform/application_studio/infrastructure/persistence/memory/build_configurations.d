@@ -13,27 +13,27 @@ import uim.platform.application_studio;
 
 class MemoryBuildConfigurationRepository : TenantRepository!(BuildConfiguration, BuildConfigurationId), BuildConfigurationRepository {
 
-    size_t countByProject(ProjectId projectId) {
-        return findByProject(projectId).length;
+    size_t countByProject(TenantId tenantId, ProjectId projectId) {
+        return findByProject(tenantId, projectId).length;
     }   
 
-    BuildConfiguration[] findByProject(ProjectId projectId) {
+    BuildConfiguration[] findByProject(TenantId tenantId, ProjectId projectId) {
         return findByTenant(tenantId).filter!(e => e.projectId == projectId).array;
     }
 
-    void removeByProject(ProjectId projectId) {
-        findByProject(projectId).each!(e => remove(e));
+    void removeByProject(TenantId tenantId, ProjectId projectId) {
+        findByProject(tenantId, projectId).each!(e => remove(e));
     }
 
-    size_t countByStatus(BuildStatus status) {
-        return findByStatus(status).length;
+    size_t countByStatus(TenantId tenantId, BuildStatus status) {
+        return findByStatus(tenantId, status).length;
     }
 
-    BuildConfiguration[] findByStatus(BuildStatus status) {
+    BuildConfiguration[] findByStatus(TenantId tenantId, BuildStatus status) {
         return findByTenant(tenantId).filter!(e => e.status == status).array;
     }
 
-    void removeByStatus(BuildStatus status) {
-        findByStatus(status).each!(e => remove(e));
+    void removeByStatus(TenantId tenantId, BuildStatus status) {
+        findByStatus(tenantId, status).each!(e => remove(e));
     }
 }

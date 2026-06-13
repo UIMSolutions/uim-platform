@@ -13,28 +13,28 @@ import uim.platform.application_studio;
 
 class MemoryExtensionRepository : TenantRepository!(Extension, ExtensionId), ExtensionRepository {
 
-    size_t countByScope(ExtensionScope scope_) {
-        return findByScope(scope_).length;
+    size_t countByScope(TenantId tenantId, ExtensionScope scope_) {
+        return findByScope(tenantId, scope_).length;
     }
 
-    Extension[] findByScope(ExtensionScope scope_) {
+    Extension[] findByScope(TenantId tenantId, ExtensionScope scope_) {
         return findByTenant(tenantId).filter!(e => e.scope_ == scope_).array;
     }
 
-    void removeByScope(ExtensionScope scope_) {
-        findByScope(scope_).each!(e => remove(e));
+    void removeByScope(TenantId tenantId, ExtensionScope scope_) {
+        findByScope(tenantId, scope_).each!(e => remove(e));
     }
 
-    size_t countByStatus(ExtensionStatus status) {
-        return findByStatus(status).length;
+    size_t countByStatus(TenantId tenantId, ExtensionStatus status) {
+        return findByStatus(tenantId, status).length;
     }
 
-    Extension[] findByStatus(ExtensionStatus status) {
+    Extension[] findByStatus(TenantId tenantId, ExtensionStatus status) {
         return findByTenant(tenantId).filter!(e => e.status == status).array;
     }
 
-    void removeByStatus(ExtensionStatus status) {
-        findByStatus(status).each!(e => remove(e));
+    void removeByStatus(TenantId tenantId, ExtensionStatus status) {
+        findByStatus(tenantId, status).each!(e => remove(e));
     }
 
 }

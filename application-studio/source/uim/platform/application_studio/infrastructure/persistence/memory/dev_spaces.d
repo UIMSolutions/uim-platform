@@ -13,28 +13,28 @@ import uim.platform.application_studio;
 
 class MemoryDevSpaceRepository : TenantRepository!(DevSpace, DevSpaceId), DevSpaceRepository {
 
-    size_t countByOwner(string owner) {
-        return findByOwner(owner).length;
+    size_t countByOwner(TenantId tenantId, string owner) {
+        return findByOwner(tenantId, owner).length;
     }
 
-    DevSpace[] findByOwner(string owner) {
+    DevSpace[] findByOwner(TenantId tenantId, string owner) {
         return findByTenant(tenantId).filter!(e => e.owner == owner).array;
     }
 
-    void removeByOwner(string owner) {
-        findByOwner(owner).each!(e => remove(e));
+    void removeByOwner(TenantId tenantId, string owner) {
+        findByOwner(tenantId, owner).each!(e => remove(e));
     }
 
-    size_t countByStatus(DevSpaceStatus status) {
-        return findByStatus(status).length;
+    size_t countByStatus(TenantId tenantId, DevSpaceStatus status) {
+        return findByStatus(tenantId, status).length;
     }
 
-    DevSpace[] findByStatus(DevSpaceStatus status) {
+    DevSpace[] findByStatus(TenantId tenantId, DevSpaceStatus status) {
         return findByTenant(tenantId).filter!(e => e.status == status).array;
     }
 
-    void removeByStatus(DevSpaceStatus status) {
-        findByStatus(status).each!(e => remove(e));
+    void removeByStatus(TenantId tenantId, DevSpaceStatus status) {
+        findByStatus(tenantId, status).each!(e => remove(e));
     }
 
 }

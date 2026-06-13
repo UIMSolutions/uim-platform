@@ -13,16 +13,16 @@ import uim.platform.application_studio;
 
 class MemoryDevSpaceTypeRepository : TenantRepository!(DevSpaceType, DevSpaceTypeId), DevSpaceTypeRepository {
 
-    size_t countByCategory(DevSpaceTypeCategory category) {
-        return findByCategory(category).length;
+    size_t countByCategory(TenantId tenantId, DevSpaceTypeCategory category) {
+        return findByCategory(tenantId, category).length;
     }
 
-    DevSpaceType[] findByCategory(DevSpaceTypeCategory category) {
+    DevSpaceType[] findByCategory(TenantId tenantId, DevSpaceTypeCategory category) {
         return findByTenant(tenantId).filter!(e => e.category == category).array;
     }
 
-    void removeByCategory(DevSpaceTypeCategory category) {
-        findByCategory(category).each!(e => remove(e));
+    void removeByCategory(TenantId tenantId, DevSpaceTypeCategory category) {
+        findByCategory(tenantId, category).each!(e => remove(e));
     }
 
 }

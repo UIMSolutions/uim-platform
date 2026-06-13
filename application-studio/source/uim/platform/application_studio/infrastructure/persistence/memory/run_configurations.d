@@ -13,19 +13,19 @@ import uim.platform.application_studio;
 
 class MemoryRunConfigurationRepository : TenantRepository!(RunConfiguration, RunConfigurationId), RunConfigurationRepository {
 
-    size_t countByProject(ProjectId projectId) {
-        return findByProject(projectId).length;
+    size_t countByProject(TenantId tenantId, ProjectId projectId) {
+        return findByProject(tenantId, projectId).length;
     }
 
     RunConfiguration[] filterByProject(RunConfiguration[] configs, ProjectId projectId) {
         return configs.filter!(c => c.projectId == projectId).array;
     }
 
-    RunConfiguration[] findByProject(ProjectId projectId) {
+    RunConfiguration[] findByProject(TenantId tenantId, ProjectId projectId) {
         return filterByProject(findByTenant(tenantId), projectId);
     }
 
-    void removeByProject(ProjectId projectId) {
-        findByProject(projectId).each!(c => remove(c));
+    void removeByProject(TenantId tenantId, ProjectId projectId) {
+        findByProject(tenantId, projectId).each!(c => remove(c));
     }
 }
