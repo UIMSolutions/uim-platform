@@ -82,12 +82,12 @@ struct ContentCacheId {
 }
 
 
-struct SpaceId {
-  string value;
+// struct SpaceId {
+//   string value;
 
-  this(string value) {
-    this.value = value;
-  }
+//   this(string value) {
+//     this.value = value;
+//   }
 
-  mixin DomainId;
-}
+//   mixin DomainId;
+// }

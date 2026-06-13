@@ -22,7 +22,7 @@ class HtmlAppController : ManageHttpController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/apps", &handleCreate);
     router.get("/api/v1/apps", &handleList);
     router.get("/api/v1/apps/*", &handleGet);
@@ -49,103 +49,93 @@ class HtmlAppController : ManageHttpController {
     r.createdBy = UserId(data.getString("createdBy"));
 
     auto result = usecase.create(r);
-    if (result.isSuccess()) {
-      auto resp = Json.emptyObject.set("id", result.id);
+    if (result.hasError())
+      return errorResponse(result.message, 400);
 
-      res.writeJsonBody(resp, 201);
-    } else
-      writeError(res, 400, result.message);
-  }
- catch (Exception e)
-    writeError(res, 500, "Internal server error");
-}
-
-override protected Json listHandler(HTTPServerRequest req) {
-  auto precheck = super.listHandler(req);
-  if (precheck.hasError)
-    return precheck;
-
-  auto tenantId = precheck.tenantId;
-  auto items = usecase.listByTenant(tenantId);
-
-  auto arr = Json.emptyArray;
-  foreach (e; items) {
-    arr ~= Json.emptyObject
-      .set("id", e.id)
-      .set("name", e.name)
-      .set("namespace", e.namespace_)
-      .set("visibility", e.visibility)
-      .set("status", e.status);
+    auto resp = Json.emptyObject.set("id", result.id);
+    return successResponse("App created successfully", "Created", 201, resp);
   }
 
-  auto resp = Json.emptyObject
-    .set("items", arr)
-    .set("totalCount", items.length);
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-  res.writeJsonBody(resp, 200);
-}
- catch (Exception e)
-  writeError(res, 500, "Internal server error");
-}
+    auto tenantId = precheck.tenantId;
+    auto items = usecase.listByTenant(tenantId);
 
-override protected Json getHandler(HTTPServerRequest req) {
-  auto precheck = super.getHandler(req);
-  if (precheck.hasError)
-    return precheck;
+    auto arr = Json.emptyArray;
+    foreach (e; items) {
+      arr ~= Json.emptyObject
+        .set("id", e.id)
+        .set("name", e.name)
+        .set("namespace", e.namespace_)
+        .set("visibility", e.visibility)
+        .set("status", e.status);
+    }
 
-  auto tenantId = precheck.tenantId;
-  auto id = precheck.id;
-  auto tenantId = precheck.tenantId;
-  if (id.isNull) {
-    writeError(res, 404, "App not found");
-    return;
+    auto resp = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", items.length);
+
+    return successResponse("Apps retrieved successfully", "OK", 200, resp);
   }
-  auto entry = usecase.getById(tenantId, id);
-  if (entry.isNull) {
-    writeError(res, 404, "App not found");
-    return;
+
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = precheck.id;
+    auto tenantId = precheck.tenantId;
+    if (id.isNull)
+      return errorResponse("App not found", 404);
+
+    auto entry = usecase.getById(tenantId, id);
+    if (entry.isNull)
+      return errorResponse("App not found", 404);
+
+    auto response = Json.emptyObject
+      .set("id", entry.id)
+      .set("name", entry.name)
+      .set("namespace", entry.namespace_)
+      .set("description", entry.description)
+      .set("spaceId", entry.spaceId)
+      .set("serviceInstanceId", entry.serviceInstanceId)
+      .set("visibility", entry.visibility)
+      .set("status", entry.status)
+      .set("createdBy", entry.createdBy)
+      .set("createdAt", entry.createdAt)
+      .set("updatedBy", entry.updatedBy)
+      .set("updatedAt", entry.updatedAt);
+
+    return successResponse("App retrieved successfully", "OK", 200, response);
   }
-  auto response = Json.emptyObject
-    .set("id", entry.id)
-    .set("name", entry.name)
-    .set("namespace", entry.namespace_)
-    .set("description", entry.description)
-    .set("spaceId", entry.spaceId)
-    .set("serviceInstanceId", entry.serviceInstanceId)
-    .set("visibility", entry.visibility)
-    .set("status", entry.status)
-    .set("createdBy", entry.createdBy)
-    .set("createdAt", entry.createdAt)
-    .set("updatedBy", entry.updatedBy)
-    .set("updatedAt", entry.updatedAt);
 
-  res.writeJsonBody(response, 200);
-}
- catch (Exception e)
-  writeError(res, 500, "Internal server error");
-}
+  override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-override protected Json updateHandler(HTTPServerRequest req) {
-  auto precheck = super.updateHandler(req);
-  if (precheck.hasError)
-    return precheck;
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
+    auto id = precheck.id;
+    auto tenantId = precheck.tenantId;
+    if (id.isNull)
+      return errorResponse("App not found", 404);
 
-  auto tenantId = precheck.tenantId;
-  auto data = precheck.data;
-  auto id = precheck.id;
-  auto tenantId = precheck.tenantId;
-  if (id.isNull)
-    return errorResponse("App not found", 404);
+    UpdateHtmlAppRequest r;
+    r.id = id;
+    r.tenantId = tenantId;
+    r.description = data.getString("description");
+    r.visibility = data.getString("visibility");
+    r.updatedBy = UserId(data.getString("updatedBy"));
 
-  UpdateHtmlAppRequest r;
-  r.id = id;
-  r.tenantId = tenantId;
-  r.description = data.getString("description");
-  r.visibility = data.getString("visibility");
-  r.updatedBy = UserId(data.getString("updatedBy"));
+    auto result = usecase.update(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-  auto result = usecase.update(r);
-  if (result.isSuccess()) {
     auto resp = Json.emptyObject
       .set("id", id);
 
@@ -164,11 +154,12 @@ override protected Json updateHandler(HTTPServerRequest req) {
       return errorResponse("App not found", 404);
 
     auto result = usecase.deleteHtmlApp(tenantId, HtmlAppId(id));
-    if (result.isSuccess()) {
-      auto resp = Json.emptyObject
-        .set("id", id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-      return successResponse("App deleted successfully", "Deleted", 200, resp);
-    }
+    auto resp = Json.emptyObject
+      .set("id", id);
+
+    return successResponse("App deleted successfully", "Deleted", 200, resp);
   }
 }

@@ -48,104 +48,104 @@ class ContentCacheController : ManageHttpController {
     r.ttlSeconds = data.getLong("ttlSeconds");
 
     auto result = usecase.create(r);
-    if (result.isSuccess()) {
+    if (result.hasError)
+
       auto resp = Json.emptyObject.set("id", result.id);
-
-      res.writeJsonBody(resp, 201);
-    } else
-      writeError(res, 400, result.message);
-  }
- catch (Exception e)
-    writeError(res, 500, "Internal server error");
-}
-
-override protected Json listHandler(HTTPServerRequest req) {
-  auto precheck = super.listHandler(req);
-  if (precheck.hasError)
-    return precheck;
-
-  auto tenantId = precheck.tenantId;
-  auto items = usecase.listByTenant(tenantId);
-
-  auto arr = Json.emptyArray;
-  foreach (e; items) {
-    arr ~= Json.emptyObject
-      .set("id", e.id)
-      .set("fileId", e.fileId)
-      .set("filePath", e.filePath)
-      .set("status", e.status)
-      .set("hitCount", e.hitCount);
+    return successResponse("Cache entry created successfully", "Created", 201, resp);
   }
 
-  auto resp = Json.emptyObject
-    .set("items", arr)
-    .set("totalCount", items.length);
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-  res.writeJsonBody(resp, 200);
-}
- catch (Exception e)
-  writeError(res, 500, "Internal server error");
-}
+    auto tenantId = precheck.tenantId;
+    auto items = usecase.listByTenant(tenantId);
 
-override protected Json getHandler(HTTPServerRequest req) {
-  auto precheck = super.getHandler(req);
-  if (precheck.hasError)
-    return precheck;
+    auto arr = Json.emptyArray;
+    foreach (e; items) {
+      arr ~= Json.emptyObject
+        .set("id", e.id)
+        .set("fileId", e.fileId)
+        .set("filePath", e.filePath)
+        .set("status", e.status)
+        .set("hitCount", e.hitCount);
+    }
 
-  auto tenantId = precheck.tenantId;
-  auto id = precheck.id;
-  auto tenantId = precheck.tenantId;
-  if (id.isNull)
-    return errorResponse("Cache entry not found", 404);
+    auto resp = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", items.length);
+    return successResponse("Cache entries retrieved successfully", "Retrieved", 200, resp);
+  }
 
-  auto entry = usecase.getById(tenantId, id);
-  if (entry.isNull)
-    return errorResponse("Cache entry not found", 404);
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-  auto response = Json.emptyObject
-    .set("id", entry.id)
-    .set("fileId", entry.fileId)
-    .set("filePath", entry.filePath)
-    .set("contentType", entry.contentType)
-    .set("data", entry.data)
-    .set("etag", entry.etag)
-    .set("ttlSeconds", entry.ttlSeconds)
-    .set("status", entry.status)
-    .set("hitCount", entry.hitCount)
-    .set("createdAt", entry.createdAt)
-    .set("expiresAt", entry.expiresAt);
+    auto tenantId = precheck.tenantId;
+    auto id = precheck.id;
+    auto tenantId = precheck.tenantId;
+    if (id.isNull)
+      return errorResponse("Cache entry not found", 404);
 
-  return successResponse("Cache entry retrieved successfully", "Retrieved", 200, response);
-}
+    auto entry = usecase.getById(tenantId, id);
+    if (entry.isNull)
+      return errorResponse("Cache entry not found", 404);
 
-override protected Json deleteHandler(HTTPServerRequest req) {
-  auto precheck = super.deleteHandler(req);
-  if (precheck.hasError)
-    return precheck;
+    auto response = Json.emptyObject
+      .set("id", entry.id)
+      .set("fileId", entry.fileId)
+      .set("filePath", entry.filePath)
+      .set("contentType", entry.contentType)
+      .set("data", entry.data)
+      .set("etag", entry.etag)
+      .set("ttlSeconds", entry.ttlSeconds)
+      .set("status", entry.status)
+      .set("hitCount", entry.hitCount)
+      .set("createdAt", entry.createdAt)
+      .set("expiresAt", entry.expiresAt);
 
-  auto tenantId = precheck.tenantId;
-  auto id = precheck.id;
-  auto tenantId = precheck.tenantId;
-  if (id.isNull)
-    return errorResponse("Cache entry not found", 404);
+    return successResponse("Cache entry retrieved successfully", "Retrieved", 200, response);
+  }
 
-  auto result = usecase.invalidate(tenantId, id);
-  if (result.hasError)
-    return errorResponse(result.message, 400);
-}
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-protected void handlePurge(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-  try {
+    auto tenantId = precheck.tenantId;
+    auto id = precheck.id;
+    auto tenantId = precheck.tenantId;
+    if (id.isNull)
+      return errorResponse("Cache entry not found", 404);
+
+    auto result = usecase.invalidate(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+  }
+
+  protected Json purgehandler(HTTPServerRequest req) {
+    auto precheck = super.purgehandler(req);
+    if (precheck.hasError)
+      return precheck;
+
     auto tenantId = precheck.tenantId;
     auto result = usecase.purgeExpired(tenantId);
-    if (result.isSuccess()) {
-      auto resp = Json.emptyObject
-        .set("status", "purged");
+    if (result.hasError())
+      return errorResponse(result.message, 400);
 
-      res.writeJsonBody(resp, 200);
-    } else
-      writeError(res, 400, result.message);
-  } catch (Exception e)
-    writeError(res, 500, "Internal server error");
-}
+    auto resp = Json.emptyObject
+      .set("status", "purged");
+
+    return successResponse("Expired cache entries purged successfully", "Purged", 200, resp);
+  }
+
+  protected void handlePurge(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto response = purgehandler(req);
+      res.writeJsonBody(response, response.code);
+    } catch (Exception e)
+      writeError(res, 500, "Internal server error");
+  }
 }

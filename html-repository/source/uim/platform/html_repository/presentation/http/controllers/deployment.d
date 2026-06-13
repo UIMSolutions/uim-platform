@@ -57,60 +57,61 @@ class DeploymentController : HttpController {
       .set("id", result.id);
 
     return successResponse("Deployment created successfully", 201, response);
-}
-
-override protected Json listHandler(HTTPServerRequest req) {
-  auto precheck = super.listHandler(req);
-  if (precheck.hasError)
-    return precheck;
-
-  auto tenantId = precheck.tenantId;
-  auto items = getHistory.getByTenant(tenantId);
-
-  auto arr = Json.emptyArray;
-  foreach (e; items) {
-    arr ~= Json.emptyObject
-      .set("id", e.id)
-      .set("appId", e.appId)
-      .set("versionId", e.versionId)
-      .set("operation", e.operation)
-      .set("status", e.status);
   }
 
-  auto list = items.map!(item => item.toJson()).array.toJson;
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-  auto responseData = Json.emptyObject
-    .set("count", list.length)
-    .set("resources", list);
-  return successResponse("", 0, responseData);
-}
+    auto tenantId = precheck.tenantId;
+    auto items = getHistory.getByTenant(tenantId);
 
-override protected Json getHandler(HTTPServerRequest req) {
-  auto precheck = super.getHandler(req);
-  if (precheck.hasError)
-    return precheck;
+    auto arr = Json.emptyArray;
+    foreach (e; items) {
+      arr ~= Json.emptyObject
+        .set("id", e.id)
+        .set("appId", e.appId)
+        .set("versionId", e.versionId)
+        .set("operation", e.operation)
+        .set("status", e.status);
+    }
 
-  auto tenantId = precheck.tenantId;
-  auto id = precheck.id;
-  auto tenantId = precheck.tenantId;
-  if (id.isNull)
-    return errorResponse("Invalid deployment ID", 400);
+    auto list = items.map!(item => item.toJson()).array.toJson;
 
-  auto entry = getHistory.getById(tenantId, id);
-  if (entry.isNull)
-    return errorResponse("Deployment not found", 404);
+    auto responseData = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+    return successResponse("", 0, responseData);
+  }
 
-  auto response = Json.emptyObject
-    .set("id", entry.id)
-    .set("appId", entry.appId)
-    .set("versionId", entry.versionId)
-    .set("serviceInstanceId", entry.serviceInstanceId)
-    .set("operation", entry.operation)
-    .set("status", entry.status)
-    .set("deployedBy", entry.deployedBy)
-    .set("deployedAt", entry.deployedAt)
-    .set("completedAt", entry.completedAt)
-    .set("errorMessage", entry.errorMessage);
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-  return successResponse("Deployment retrieved successfully", 200, response);
+    auto tenantId = precheck.tenantId;
+    auto id = precheck.id;
+    auto tenantId = precheck.tenantId;
+    if (id.isNull)
+      return errorResponse("Invalid deployment ID", 400);
+
+    auto entry = getHistory.getById(tenantId, id);
+    if (entry.isNull)
+      return errorResponse("Deployment not found", 404);
+
+    auto response = Json.emptyObject
+      .set("id", entry.id)
+      .set("appId", entry.appId)
+      .set("versionId", entry.versionId)
+      .set("serviceInstanceId", entry.serviceInstanceId)
+      .set("operation", entry.operation)
+      .set("status", entry.status)
+      .set("deployedBy", entry.deployedBy)
+      .set("deployedAt", entry.deployedAt)
+      .set("completedAt", entry.completedAt)
+      .set("errorMessage", entry.errorMessage);
+
+    return successResponse("Deployment retrieved successfully", 200, response);
+  }
 }

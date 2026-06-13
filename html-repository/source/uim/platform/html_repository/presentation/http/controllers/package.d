@@ -15,5 +15,4 @@ public {
   import uim.platform.html_repository.presentation.http.controllers.content_cache;
   import uim.platform.html_repository.presentation.http.controllers.content;
   import uim.platform.html_repository.presentation.http.controllers.overview;
-  import uim.platform.html_repository.presentation.http.controllers.health;
 }

@@ -5,10 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.html_repository.infrastructure.persistence.memory.service_instances;
 
-import uim.platform.html_repository.domain.ports.repositories.service_instances;
-import uim.platform.html_repository.domain.entities.service_instance;
-import uim.platform.html_repository.domain.types;
+// import uim.platform.html_repository.domain.ports.repositories.service_instances;
+// import uim.platform.html_repository.domain.entities.service_instance;
+// import uim.platform.html_repository.domain.types;
+import uim.platform.html_repository;
 
+// mixin(ShowModule!());
+
+@safe:
 class ServiceInstanceMemoryRepository : TenantRepository!(ServiceInstance, ServiceInstanceId), ServiceInstanceRepository {
 
   bool existsByName(TenantId tenantId, string name) {

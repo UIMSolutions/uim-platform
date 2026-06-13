@@ -58,87 +58,81 @@ class DestinationController : ManageHttpController {
     r.createdBy = UserId(data.getString("createdBy"));
 
     auto result = useCase.createDestination(r);
-    if (result.isSuccess()) {
-      auto resp = Json.emptyObject.set("id", result.id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-      res.writeJsonBody(resp, 201);
-    } else {
-      writeError(res, 400, result.message);
-    }
+    return successResponse("Destination created successfully", "Created", 201, Json.emptyObject.set("id", result
+        .id));
   }
- catch (Exception e) {
-    writeError(res, 500, "Internal server error");
+
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto destinations = useCase.listDestinations(tenantId);
+
+    auto arr = destinations.map!(d => d.toJson).array.toJson;
+
+    auto resp = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", destinations.length);
+
+    return successResponse("Destinations retrieved successfully", "OK", 200, resp);
   }
-}
 
-override protected Json listHandler(HTTPServerRequest req) {
-  auto precheck = super.listHandler(req);
-  if (precheck.hasError)
-    return precheck;
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-  auto tenantId = precheck.tenantId;
-  auto destinations = useCase.listDestinations(tenantId);
+    auto tenantId = precheck.tenantId;
+    auto id = precheck.id;
+    auto tenantId = precheck.tenantId;
+    auto dest = useCase.getDestination(tenantId, id);
+    if (dest.isNull)
+      return errorResponse("Destination not found", 404);
 
-  auto arr = destinations.map!(d => d.toJson).array.toJson;
+    auto responseData = dest.toJson;
+    return successResponse("Destination retrieved successfully", 200, responseData);
+  }
 
-  auto resp = Json.emptyObject
-    .set("items", arr)
-    .set("totalCount", destinations.length);
+  override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-  res.writeJsonBody(resp, 200);
-}
- catch (Exception e) {
-  writeError(res, 500, "Internal server error");
-}
-}
+    auto tenantId = precheck.tenantId;
+    auto id = DestinationId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Destination not found", 404);
 
-override protected Json getHandler(HTTPServerRequest req) {
-  auto precheck = super.getHandler(req);
-  if (precheck.hasError)
-    return precheck;
+    auto data = precheck.data;
+    auto r = UpdateDestinationRequest();
+    r.id = id;
+    r.tenantId = tenantId;
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.systemId = data.getString("systemId");
+    r.destinationType = parseDestinationType(data.getString("destinationType"));
+    r.url = data.getString("url");
+    r.authenticationType = parseAuthenticationType(data.getString("authenticationType"));
+    r.proxyType = parseProxyType(data.getString("proxyType"));
+    r.cloudConnectorLocationId = data.getString("cloudConnectorLocationId");
+    r.user = data.getString("user");
+    r.tokenServiceUrl = data.getString("tokenServiceUrl");
+    r.tokenServiceUser = data.getString("tokenServiceUser");
+    r.audience = data.getString("audience");
+    r.scope_ = data.getString("scope");
+    r.isEnabled = data.getBoolean("isEnabled", true);
 
-  auto tenantId = precheck.tenantId;
-  auto id = precheck.id;
-  auto tenantId = precheck.tenantId;
-  auto dest = useCase.getDestination(tenantId, id);
-  if (dest.isNull)
-    return errorResponse("Destination not found", 404);
+    auto result = useCase.updateDestination(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-  auto responseData = dest.toJson;
-  return successResponse("Destination retrieved successfully", 200, responseData);
-}
-
-override protected Json updateHandler(HTTPServerRequest req) {
-  auto precheck = super.updateHandler(req);
-  if (precheck.hasError)
-    return precheck;
-
-  auto tenantId = precheck.tenantId;
-  auto id = precheck.id;
-  auto data = precheck.data;
-  auto r = UpdateDestinationRequest();
-  r.id = id;
-  r.tenantId = tenantId;
-  r.name = data.getString("name");
-  r.description = data.getString("description");
-  r.systemId = data.getString("systemId");
-  r.destinationType = parseDestinationType(data.getString("destinationType"));
-  r.url = data.getString("url");
-  r.authenticationType = parseAuthenticationType(data.getString("authenticationType"));
-  r.proxyType = parseProxyType(data.getString("proxyType"));
-  r.cloudConnectorLocationId = data.getString("cloudConnectorLocationId");
-  r.user = data.getString("user");
-  r.tokenServiceUrl = data.getString("tokenServiceUrl");
-  r.tokenServiceUser = data.getString("tokenServiceUser");
-  r.audience = data.getString("audience");
-  r.scope_ = data.getString("scope");
-  r.isEnabled = data.getBoolean("isEnabled", true);
-
-  auto result = useCase.updateDestination(r);
-  if (result.isSuccess()) {
     auto resp = Json.emptyObject
       .set("id", result.id);
-
     return successResponse("Destination updated successfully", 200, resp);
   }
 
@@ -151,9 +145,10 @@ override protected Json updateHandler(HTTPServerRequest req) {
     auto id = precheck.id;
     auto tenantId = precheck.tenantId;
     auto result = useCase.deleteDestination(tenantId, id);
-    if (result.isSuccess()) {
-      auto resp = Json.emptyObject.set("id", result.id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-      return successResponse("Destination deleted successfully", 200, resp);
-    }
+    auto resp = Json.emptyObject.set("id", result.id);
+    return successResponse("Destination deleted successfully", 200, resp);
   }
+}

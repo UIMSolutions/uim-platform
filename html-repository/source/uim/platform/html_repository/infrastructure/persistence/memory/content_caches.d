@@ -3,12 +3,16 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.html_repository.infrastructure.persistence.memory.content_cache_repository;
+module uim.platform.html_repository.infrastructure.persistence.memory.content_caches;
 
-import uim.platform.html_repository.domain.ports.repositories.content_caches;
-import uim.platform.html_repository.domain.entities.content_cache;
-import uim.platform.html_repository.domain.types;
+// import uim.platform.html_repository.domain.ports.repositories.content_caches;
+// import uim.platform.html_repository.domain.entities.content_cache;
+// import uim.platform.html_repository.domain.types;
+import uim.platform.html_repository;
 
+// mixin(ShowModule!());
+
+@safe:
 class ContentCacheMemoryRepository : TenantRepository!(ContentCache, ContentCacheId), ContentCacheRepository {
 
   bool existsByFileId(AppFileId fileId) {

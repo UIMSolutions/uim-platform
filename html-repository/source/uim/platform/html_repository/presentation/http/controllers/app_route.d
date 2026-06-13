@@ -50,112 +50,108 @@ class AppRouteController : ManageHttpController {
     }
 
     auto result = usecase.createAppRoute(request);
-    if (result.isSuccess()) {
-      auto resp = Json.emptyObject
-        .set("id", result.id)
-        .set("message", "Route created successfully");
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-      res.writeJsonBody(resp, 201);
-    } else
-      writeError(res, 400, result.message);
-  }
- catch (Exception e)
-    writeError(res, 500, "Internal server error");
-}
-
-override protected Json listHandler(HTTPServerRequest req) {
-  auto precheck = super.listHandler(req);
-  if (precheck.hasError)
-    return precheck;
-
-  auto tenantId = precheck.tenantId;
-
-  auto items = usecase.listAppRoutes(tenantId);
-  auto arr = Json.emptyArray;
-  foreach (e; items) {
-    arr ~= Json.emptyObject
-      .set("id", Json(e.id))
-      .set("appId", Json(e.appId))
-      .set("pathPrefix", Json(e.pathPrefix))
-      .set("status", Json(e.status));
+    auto resp = Json.emptyObject.set("id", result.id);
+    return successResponse("Route created successfully", "Created", 201, resp);
   }
 
-  auto resp = Json.emptyObject
-    .set("items", arr)
-    .set("totalCount", items.length);
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-  return successResponse("Routes retrieved successfully", "Retrieved", 200, resp);
-}
+    auto tenantId = precheck.tenantId;
 
-override protected Json getHandler(HTTPServerRequest req) {
-  auto precheck = super.getHandler(req);
-  if (precheck.hasError)
-    return precheck;
+    auto items = usecase.listAppRoutes(tenantId);
+    auto arr = Json.emptyArray;
+    foreach (e; items) {
+      arr ~= Json.emptyObject
+        .set("id", Json(e.id))
+        .set("appId", Json(e.appId))
+        .set("pathPrefix", Json(e.pathPrefix))
+        .set("status", Json(e.status));
+    }
 
-  auto tenantId = precheck.tenantId;
+    auto resp = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", items.length);
 
-  auto id = precheck.id;
-  if (id.isNull)
-    return errorResponse("Route not found", 404);
+    return successResponse("Routes retrieved successfully", "Retrieved", 200, resp);
+  }
 
-  auto entry = usecase.getAppRoute(tenantId, id);
-  if (entry.isNull)
-    return errorResponse("Route not found", 404);
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-  auto response = Json.emptyObject
-    .set("id", entry.id)
-    .set("appId", entry.appId)
-    .set("pathPrefix", entry.pathPrefix)
-    .set("targetUrl", entry.targetUrl)
-    .set("description", entry.description)
-    .set("status", entry.status)
-    .set("createdBy", entry.createdBy)
-    .set("createdAt", entry.createdAt)
-    .set("updatedBy", entry.updatedBy)
-    .set("updatedAt", entry.updatedAt);
+    auto tenantId = precheck.tenantId;
 
-  return successResponse("Route retrieved successfully", "Retrieved", 200, response);
-}
+    auto id = precheck.id;
+    if (id.isNull)
+      return errorResponse("Route not found", 404);
 
-override protected Json updateHandler(HTTPServerRequest req) {
-  auto precheck = super.updateHandler(req);
-  if (precheck.hasError)
-    return precheck;
+    auto entry = usecase.getAppRoute(tenantId, id);
+    if (entry.isNull)
+      return errorResponse("Route not found", 404);
 
-  auto tenantId = precheck.tenantId;
+    auto response = Json.emptyObject
+      .set("id", entry.id)
+      .set("appId", entry.appId)
+      .set("pathPrefix", entry.pathPrefix)
+      .set("targetUrl", entry.targetUrl)
+      .set("description", entry.description)
+      .set("status", entry.status)
+      .set("createdBy", entry.createdBy)
+      .set("createdAt", entry.createdAt)
+      .set("updatedBy", entry.updatedBy)
+      .set("updatedAt", entry.updatedAt);
 
-  auto data = precheck.data;
-  auto id = precheck.id;
-  if (id.isNull)
-    return errorResponse("Route not found", 404);
+    return successResponse("Route retrieved successfully", "Retrieved", 200, response);
+  }
 
-  UpdateAppRouteRequest r;
-  r.id = id;
-  r.tenantId = tenantId;
-  r.description = data.getString("description");
-  r.targetUrl = data.getString("targetUrl");
-  r.updatedBy = UserId(data.getString("updatedBy"));
+  override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-  auto result = usecase.updateAppRoute(r);
-  if (result.hasError)
-    return errorResponse(result.message, 400);
+    auto tenantId = precheck.tenantId;
 
-  auto resp = Json.emptyObject.set("id", id);
-  return successResponse("Route updated successfully", "Updated", 200, resp);
-}
+    auto data = precheck.data;
+    auto id = precheck.id;
+    if (id.isNull)
+      return errorResponse("Route not found", 404);
 
-override protected Json deleteHandler(HTTPServerRequest req) {
-  auto precheck = super.deleteHandler(req);
-  if (precheck.hasError)
-    return precheck;
+    UpdateAppRouteRequest r;
+    r.id = id;
+    r.tenantId = tenantId;
+    r.description = data.getString("description");
+    r.targetUrl = data.getString("targetUrl");
+    r.updatedBy = UserId(data.getString("updatedBy"));
 
-  auto tenantId = precheck.tenantId;
-  auto id = precheck.id;
-  if (id.isNull)
-    return errorResponse("Route not found", 404);
+    auto result = usecase.updateAppRoute(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-  auto result = usecase.deleteAppRoute(tenantId, id);
-  if (result.isSuccess()) {
+    auto resp = Json.emptyObject.set("id", id);
+    return successResponse("Route updated successfully", "Updated", 200, resp);
+  }
+
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = precheck.id;
+    if (id.isNull)
+      return errorResponse("Route not found", 404);
+
+    auto result = usecase.deleteAppRoute(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
     auto resp = Json.emptyObject
       .set("id", id);
 

@@ -5,10 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.html_repository.infrastructure.persistence.memory.app_versions;
 
-import uim.platform.html_repository.domain.ports.repositories.app_versions;
-import uim.platform.html_repository.domain.entities.app_version;
-import uim.platform.html_repository.domain.types;
+// import uim.platform.html_repository.domain.ports.repositories.app_versions;
+// import uim.platform.html_repository.domain.entities.app_version;
+// import uim.platform.html_repository.domain.types;
+import uim.platform.html_repository;
 
+// mixin(ShowModule!());
+
+@safe:
 class AppVersionMemoryRepository : TenantRepository!(AppVersion, AppVersionId), AppVersionRepository {
 
   AppVersion findLatest(HtmlAppId appId) {

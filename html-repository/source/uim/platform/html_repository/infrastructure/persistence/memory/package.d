@@ -6,11 +6,11 @@
 module uim.platform.html_repository.infrastructure.persistence.memory;
 
 public {
-  import uim.platform.html_repository.infrastructure.persistence.memory.html_app_repository;
-  import uim.platform.html_repository.infrastructure.persistence.memory.app_version_repository;
-  import uim.platform.html_repository.infrastructure.persistence.memory.app_file_repository;
-  import uim.platform.html_repository.infrastructure.persistence.memory.service_instance_repository;
-  import uim.platform.html_repository.infrastructure.persistence.memory.deployment_record_repository;
-  import uim.platform.html_repository.infrastructure.persistence.memory.app_route_repository;
-  import uim.platform.html_repository.infrastructure.persistence.memory.content_cache_repository;
+  import uim.platform.html_repository.infrastructure.persistence.memory.html_apps;
+  import uim.platform.html_repository.infrastructure.persistence.memory.app_versions;
+  import uim.platform.html_repository.infrastructure.persistence.memory.app_files;
+  import uim.platform.html_repository.infrastructure.persistence.memory.service_instances;
+  import uim.platform.html_repository.infrastructure.persistence.memory.deployment_records;
+  import uim.platform.html_repository.infrastructure.persistence.memory.app_routes;
+  import uim.platform.html_repository.infrastructure.persistence.memory.content_caches;
 }

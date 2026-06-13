@@ -36,18 +36,22 @@ class ContentController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-      auto path = AppFileId(precheck.id);
-      if (path.length == 0) {
-        writeError(res, 404, "Content not found");
-        return;
-      }
-      auto entry = fileUc.getAppFile(path, tenantId);
+      auto id = AppFileId(precheck.id);
+      if (id.isNull)
+        return errorResponse("File ID is required", 400);
+
+      auto entry = fileUc.getAppFile(tenantId, id);
       if (entry.isNull) 
       return errorResponse("Content not found", 404);
       
-      res.headers["Content-Type"] = entry.contentType;
-      res.writeBody(entry.data, 200);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
+      // res.headers["Content-Type"] = entry.contentType;
+      // res.writeBody(entry.data, 200);
+
+      auto response = Json.emptyObject
+        .set("id", entry.id)
+        .set("contentType", entry.contentType)
+        .set("data", entry.data);
+
+        return successResponse("Content retrieved successfully", 200, response);
   }
 }

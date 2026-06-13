@@ -46,94 +46,91 @@ class AppVersionController : ManageHttpController {
     r.createdBy = UserId(data.getString("createdBy"));
 
     auto result = usecase.createAppVersion(r);
-    if (result.isSuccess()) {
-      auto resp = Json.emptyObject
-        .set("id", result.id)
-        .set("message", "Version created");
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-      res.writeJsonBody(resp, 201);
-    } else
-      writeError(res, 400, result.message);
-  }
- catch (Exception e)
-    writeError(res, 500, "Internal server error");
-}
+    auto resp = Json.emptyObject
+      .set("id", result.id);
 
-override protected Json listHandler(HTTPServerRequest req) {
-  auto precheck = super.listHandler(req);
-  if (precheck.hasError)
-    return precheck;
-
-  auto tenantId = precheck.tenantId;
-  auto appId = getString(req.json, "appId");
-  if (appId.isEmpty)
-    appId = req.headers.get("X-App-Id", "");
-  auto items = usecase.listByApp(appId);
-
-  auto arr = Json.emptyArray;
-  foreach (e; items) {
-    auto obj = Json.emptyObject;
-    obj["id"] = Json(e.id);
-    obj["appId"] = Json(e.appId);
-    obj["versionCode"] = Json(e.versionCode);
-    obj["status"] = Json(e.status);
-    obj["fileCount"] = Json(e.fileCount);
-    arr ~= obj;
+    return successResponse("Version created successfully", "Created", 201, resp);
   }
 
-  auto resp = Json.emptyObject
-    .set("items", arr)
-    .set("totalCount", items.length);
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-  return successResponse("Versions retrieved successfully", 200, resp);
-}
+    auto tenantId = precheck.tenantId;
+    auto appId = getString(req.json, "appId");
+    if (appId.isEmpty)
+      appId = req.headers.get("X-App-Id", "");
+    auto items = usecase.listByApp(appId);
 
-override protected Json getHandler(HTTPServerRequest req) {
-  auto precheck = super.getHandler(req);
-  if (precheck.hasError)
-    return precheck;
+    auto arr = Json.emptyArray;
+    foreach (e; items) {
+      arr ~= Json.emptyObject
+        .set("id", Json(e.id))
+        .set("appId", Json(e.appId))
+        .set("versionCode", Json(e.versionCode))
+        .set("status", Json(e.status))
+        .set("fileCount", Json(e.fileCount));
+    }
 
-  auto tenantId = precheck.tenantId;
-  auto id = precheck.id;
-  auto tenantId = precheck.tenantId;
-  if (id.isNull)
-    return errorResponse("Version not found", 404);
+    auto resp = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", items.length);
 
-  auto entry = usecase.getById(tenantId, id);
-  if (entry.isNull)
-    return errorResponse("Version not found", 404);
+    return successResponse("Versions retrieved successfully", 200, resp);
+  }
 
-  auto obj = Json.emptyObject
-    .set("id", entry.id)
-    .set("appId", entry.appId)
-    .set("versionCode", entry.versionCode)
-    .set("description", entry.description)
-    .set("status", entry.status)
-    .set("fileCount", entry.fileCount)
-    .set("createdBy", entry.createdBy)
-    .set("createdAt", entry.createdAt)
-    .set("updatedAt", entry.updatedAt);
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-  return successResponse("Version retrieved successfully", 200, obj);
-}
+    auto tenantId = precheck.tenantId;
+    auto id = precheck.id;
+    auto tenantId = precheck.tenantId;
+    if (id.isNull)
+      return errorResponse("Version not found", 404);
 
-override protected Json updateHandler(HTTPServerRequest req) {
-  auto precheck = super.updateHandler(req);
-  if (precheck.hasError)
-    return precheck;
+    auto entry = usecase.getById(tenantId, id);
+    if (entry.isNull)
+      return errorResponse("Version not found", 404);
 
-  auto tenantId = precheck.tenantId;
-  auto id = AppVersionId(precheck.id);
-  if (id.isNull)
-    return errorResponse("Version not found", 404);
+    auto obj = Json.emptyObject
+      .set("id", entry.id)
+      .set("appId", entry.appId)
+      .set("versionCode", entry.versionCode)
+      .set("description", entry.description)
+      .set("status", entry.status)
+      .set("fileCount", entry.fileCount)
+      .set("createdBy", entry.createdBy)
+      .set("createdAt", entry.createdAt)
+      .set("updatedAt", entry.updatedAt);
 
-  auto data = precheck.data;
-  UpdateAppVersionRequest r;
-  r.description = data.getString("description");
-  r.status = data.getString("status");
+    return successResponse("Version retrieved successfully", 200, obj);
+  }
 
-  auto result = usecase.update(r);
-  if (result.isSuccess()) {
+  override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = AppVersionId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Version not found", 404);
+
+    auto data = precheck.data;
+    UpdateAppVersionRequest r;
+    r.description = data.getString("description");
+    r.status = data.getString("status");
+
+    auto result = usecase.update(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
     auto resp = Json.emptyObject
       .set("id", id);
 

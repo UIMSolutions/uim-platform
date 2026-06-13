@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.integration.automation.presentation.http.workflow;
 
-
 // import uim.platform.integration.automation.application.usecases.manage.workflows;
 // import uim.platform.integration.automation.application.dto;
 // import uim.platform.integration.automation.domain.types;
@@ -36,95 +35,96 @@ class WorkflowController : ManageHttpController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-      auto r = CreateWorkflowRequest();
-      r.tenantId = tenantId;
-      r.scenarioId = data.getString("scenarioId");
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.sourceSystemConnectionId = data.getString("sourceSystemConnectionId");
-      r.targetSystemConnectionId = data.getString("targetSystemConnectionId");
-      r.createdBy = UserId(data.getString("createdBy"));
+    auto data = precheck.data;
+    auto r = CreateWorkflowRequest();
+    r.tenantId = tenantId;
+    r.scenarioId = data.getString("scenarioId");
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.sourceSystemConnectionId = data.getString("sourceSystemConnectionId");
+    r.targetSystemConnectionId = data.getString("targetSystemConnectionId");
+    r.createdBy = UserId(data.getString("createdBy"));
 
-      auto result = useCase.createWorkflow(r);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("id", result.id);
+    auto result = useCase.createWorkflow(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto resp = Json.emptyObject
+      .set("id", result.id);
+
+    return successResponse("Workflow created successfully", "Created", 201, resp);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-      auto items = useCase.listWorkflows(tenantId);
-      auto arr = items.map!(w => w.toJson).array.toJson;
+    auto items = useCase.listWorkflows(tenantId);
+    auto arr = items.map!(w => w.toJson).array.toJson;
 
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", items.length)
-        .set("message", "Workflows retrieved successfully");
+    auto resp = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", items.length);
 
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    return successResponse("Workflows retrieved successfully", "OK", 200, resp);
+
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto tenantId = precheck.tenantId;
-      auto wf = useCase.getWorkflow(tenantId, id);
-      if (wf.isNull) 
+    auto tenantId = precheck.tenantId;
+    auto id = precheck.id;
+    auto tenantId = precheck.tenantId;
+    auto wf = useCase.getWorkflow(tenantId, id);
+    if (wf.isNull)
       return errorResponse("Workflow not found", 404);
-      
-      auto response = wf.toJson();
-      return successResponse("Workflow retrieved successfully", 200, response);
+
+    auto response = wf.toJson();
+    return successResponse("Workflow retrieved successfully", 200, response);
   }
 
-  protected void handleStart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+  protected Json startHandler(HTTPServerRequest req) {
+    auto precheck = super.posttHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
       auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto tenantId = precheck.tenantId;
       auto result = useCase.startWorkflow(tenantId, id);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
+      if (result.hasError)
+        return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject
           .set("id", result.id)
           .set("status", "inProgress");
+          return successResponse("Workflow started successfully", "OK", 200, responseData);
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 400, result.message);
-      }
+  }
+
+  protected void handleStart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto response = startHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  protected void handlepend(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+  protected void handleSuspend(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto tenantId = precheck.tenantId;
@@ -144,7 +144,7 @@ class WorkflowController : ManageHttpController {
   }
 
   protected void handleResume(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto tenantId = precheck.tenantId;
@@ -164,7 +164,7 @@ class WorkflowController : ManageHttpController {
   }
 
   protected void handleTerminate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto tenantId = precheck.tenantId;
@@ -184,24 +184,20 @@ class WorkflowController : ManageHttpController {
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto tenantId = precheck.tenantId;
-      auto result = useCase.deleteWorkflow(tenantId, id);
-      if (result.isSuccess()) {
-        auto resp = Json.emptyObject
-          .set("id", result.id);
-          
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+    auto tenantId = precheck.tenantId;
+    auto id = precheck.id;
+    auto tenantId = precheck.tenantId;
+    auto result = useCase.deleteWorkflow(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+      auto resp = Json.emptyObject
+        .set("id", result.id);
+
+return successResponse("Workflow deleted successfully", 200, resp);
+}
 }
