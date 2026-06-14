@@ -13,7 +13,7 @@ import uim.platform.content_agent;
 // mixin(ShowModule!());
 
 @safe:
-class ActivityController : HttpController {
+class ActivityController : ManageHttpController {
   private MonitorActivitiesUseCase usecase;
 
   this(MonitorActivitiesUseCase usecase) {

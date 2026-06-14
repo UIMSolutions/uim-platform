@@ -6,7 +6,7 @@
 module uim.platform.content_agent.presentation.http.controllers.import_;
 
 // import uim.platform.content_agent.application.usecases.import_content;
-// import uim.platform.content_agent.application.dto;
+
 // import uim.platform.content_agent.domain.entities.import_job;
 
 import uim.platform.content_agent;
@@ -30,35 +30,36 @@ class ImportController : HttpController {
   }
 
   protected Json startImportHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+
+    auto data = precheck.data;
+    auto r = StartImportRequest();
+    r.tenantId = tenantId;
+    r.packageId = ContentPackageId(data.getString("packageId"));
+    r.transportRequestId = TransportRequestId(data.getString("transportRequestId"));
+    r.sourceFilePath = data.getString("sourceFilePath");
+    r.startedBy = UserId(req.headers.get("X-User-Id", ""));
+
+    auto result = usecase.startImport(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto resp = Json.emptyObject
+      .set("id", result.id)
+      .set("status", "completed");
+
+    return successResponse("Import started successfully", "Started", 201, resp);
+  }
+
+  protected void handleStartImport(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto precheck = super.createHandler(req);
-      if (precheck.hasError)
-        return precheck;
-
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
-      auto r = StartImportRequest();
-      r.tenantId = tenantId;
-      r.packageId = ContentPackageId(data.getString("packageId"));
-      r.transportRequestId = TransportRequestId(data.getString("transportRequestId"));
-      r.sourceFilePath = data.getString("sourceFilePath");
-      r.startedBy = UserId(req.headers.get("X-User-Id", ""));
-
-      auto result = usecase.startImport(r);
-      if (result.hasError)
-        return errorResponse(result.message, 400);
-      auto resp = Json.emptyObject
-        .set("id", result.id)
-        .set("status", "completed");
-
-      return successResponse("Import started successfully", "Started", 201, resp);
-    }
-    protected void handleStartImport(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-      try {
-auto response = startImportHandler(req);
-        res.writeJsonBody(response, response.code);
-    }
- catch (Exception e) {
+      auto response = startImportHandler(req);
+      res.writeJsonBody(response, response.code);
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -70,15 +71,12 @@ auto response = startImportHandler(req);
 
     auto tenantId = precheck.tenantId;
     auto jobs = usecase.listImportJobs(tenantId);
-
-    auto arr = jobs.map!(j => j.toJson).array.toJson;
-
-    auto list = items.map!(item => item.toJson()).array.toJson;
+    auto list = jobs.map!(item => item.toJson()).array.toJson;
 
     auto responseData = Json.emptyObject
       .set("count", list.length)
       .set("resources", list);
-    return successResponse("", 0, responseData);
+    return successResponse("Import jobs retrieved successfully", "Retrieved", 200, responseData);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
@@ -88,6 +86,9 @@ auto response = startImportHandler(req);
 
     auto tenantId = precheck.tenantId;
     auto id = ImportJobId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid import job ID", 400);
+
     auto job = usecase.getImportJob(tenantId, id);
     if (job.isNull)
       return errorResponse("Import job not found", 404);

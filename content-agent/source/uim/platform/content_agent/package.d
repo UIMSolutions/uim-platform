@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.content_agent;
 
-public {
+public:
     import uim.platform.service;
 
     import uim.platform.content_agent.application;
@@ -13,4 +13,3 @@ public {
     import uim.platform.content_agent.helpers;
     import uim.platform.content_agent.infrastructure;
     import uim.platform.content_agent.presentation;
-}

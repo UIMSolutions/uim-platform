@@ -4,3 +4,10 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.content_agent.presentation;
+
+public:
+    import uim.platform.content_agent.presentation.cli;
+    import uim.platform.content_agent.presentation.gui;
+    import uim.platform.content_agent.presentation.http;
+    import uim.platform.content_agent.presentation.rest;
+    import uim.platform.content_agent.presentation.web;
