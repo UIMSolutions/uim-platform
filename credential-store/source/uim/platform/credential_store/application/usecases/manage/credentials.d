@@ -25,7 +25,7 @@ class ManageCredentialsUseCase { // TODO: UIMUseCase {
 
   // Create or create-or-update based on ifNoneMatch header
   CommandResult createCredential(CreateCredentialRequest r) {
-    auto credType = parseCredentialType(r.type);
+    auto credType = toCredentialType(r.type);
 
     auto validationError = CredentialValidator.validate(r.name, r.value, credType, r.metadata, r.format, r.username);
     if (validationError.length > 0)

@@ -23,7 +23,7 @@ class ManageDeletionRequestsUseCase { // TODO: UIMUseCase {
         dr.tenantId = req.tenantId;
         dr.dataSubjectId = DataSubjectId(req.dataSubjectId);
         dr.applicationGroupId = ApplicationGroupId(req.applicationGroupId);
-        dr.actionType = parseDeletionActionType(req.actionType);
+        dr.actionType = toDeletionActionType(req.actionType);
         dr.status = DeletionRequestStatus.pending;
         dr.reason = req.reason;
         dr.requestedBy = req.requestedBy;

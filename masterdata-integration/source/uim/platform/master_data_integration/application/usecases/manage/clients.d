@@ -31,7 +31,7 @@ class ManageClientsUseCase { // TODO: UIMUseCase {
 
     client.name = req.name;
     client.description = req.description;
-    client.clientType = parseClientType(req.clientType);
+    client.clientType = toClientType(req.clientType);
     client.status = ClientStatus.disconnected;
     client.systemUrl = req.systemUrl;
     client.destinationName = req.destinationName;

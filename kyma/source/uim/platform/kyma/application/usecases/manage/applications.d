@@ -38,7 +38,7 @@ class ManageApplicationsUseCase { // TODO: UIMUseCase {
       name = req.name;
       description = req.description;
       status = AppConnectivityStatus.pairing;
-      registrationType = parseRegistrationType(req.registrationType);
+      registrationType = toRegistrationType(req.registrationType);
       connectorUrl = req.connectorUrl;
       boundNamespaces = req.boundNamespaces;
       labels = req.labels;

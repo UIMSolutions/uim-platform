@@ -45,10 +45,10 @@ class DestinationController : ManageHttpController {
     r.name = data.getString("name");
     r.description = data.getString("description");
     r.systemId = data.getString("systemId");
-    r.destinationType = parseDestinationType(data.getString("destinationType"));
+    r.destinationType = toDestinationType(data.getString("destinationType"));
     r.url = data.getString("url");
-    r.authenticationType = parseAuthenticationType(data.getString("authenticationType"));
-    r.proxyType = parseProxyType(data.getString("proxyType"));
+    r.authenticationType = toAuthenticationType(data.getString("authenticationType"));
+    r.proxyType = toProxyType(data.getString("proxyType"));
     r.cloudConnectorLocationId = data.getString("cloudConnectorLocationId");
     r.user = data.getString("user");
     r.tokenServiceUrl = data.getString("tokenServiceUrl");
@@ -115,10 +115,10 @@ class DestinationController : ManageHttpController {
     r.name = data.getString("name");
     r.description = data.getString("description");
     r.systemId = data.getString("systemId");
-    r.destinationType = parseDestinationType(data.getString("destinationType"));
+    r.destinationType = toDestinationType(data.getString("destinationType"));
     r.url = data.getString("url");
-    r.authenticationType = parseAuthenticationType(data.getString("authenticationType"));
-    r.proxyType = parseProxyType(data.getString("proxyType"));
+    r.authenticationType = toAuthenticationType(data.getString("authenticationType"));
+    r.proxyType = toProxyType(data.getString("proxyType"));
     r.cloudConnectorLocationId = data.getString("cloudConnectorLocationId");
     r.user = data.getString("user");
     r.tokenServiceUrl = data.getString("tokenServiceUrl");

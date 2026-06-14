@@ -40,7 +40,7 @@ class ManageTransportQueuesUseCase { // TODO: UIMUseCase {
 
     queue.name = req.name;
     queue.description = req.description;
-    queue.queueType = parseQueueType(req.queueType);
+    queue.queueType = toQueueType(req.queueType);
     queue.endpoint = req.endpoint;
     queue.authToken = req.authToken;
     queue.isDefault = req.isDefault;

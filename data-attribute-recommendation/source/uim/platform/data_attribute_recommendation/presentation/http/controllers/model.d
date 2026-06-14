@@ -46,7 +46,7 @@ class ModelController : ManageHttpController {
     r.datasetId = data.getString("datasetId");
     r.name = data.getString("name");
     r.description = data.getString("description");
-    r.modelType = parseModelType(data.getString("modelType"));
+    r.modelType = toModelType(data.getString("modelType"));
     r.targetColumns = data.getString("targetColumns");
     r.featureColumns = data.getString("featureColumns");
     r.hyperparameters = data.getString("hyperparameters");
@@ -107,7 +107,7 @@ class ModelController : ManageHttpController {
     r.tenantId = tenantId;
     r.name = data.getString("name");
     r.description = data.getString("description");
-    r.modelType = parseModelType(data.getString("modelType"));
+    r.modelType = toModelType(data.getString("modelType"));
     r.targetColumns = data.getString("targetColumns");
     r.featureColumns = data.getString("featureColumns");
     r.hyperparameters = data.getString("hyperparameters");

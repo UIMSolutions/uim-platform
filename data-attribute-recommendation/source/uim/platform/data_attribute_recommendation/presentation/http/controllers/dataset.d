@@ -46,7 +46,7 @@ class DatasetController : ManageHttpController {
     r.tenantId = tenantId;
     r.name = data.getString("name");
     r.description = data.getString("description");
-    r.dataType = parseDataType(data.getString("dataType"));
+    r.dataType = toDataType(data.getString("dataType"));
     r.columnDefinitions = data.getString("columnDefinitions");
     r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 

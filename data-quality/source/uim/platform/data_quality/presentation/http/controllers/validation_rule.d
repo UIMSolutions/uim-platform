@@ -46,7 +46,7 @@ class ValidationRuleController : ManageHttpController {
     r.description = data.getString("description");
     r.datasetPattern = data.getString("datasetPattern");
     r.fieldName = data.getString("fieldName");
-    r.ruleType = parseRuleType(data.getString("ruleType"));
+    r.ruleType = toRuleType(data.getString("ruleType"));
     r.severity = data.getString("severity").to;
     r.pattern = data.getString("pattern");
     r.minValue = data.getString("minValue");
@@ -110,7 +110,7 @@ class ValidationRuleController : ManageHttpController {
     r.description = data.getString("description");
     r.datasetPattern = data.getString("datasetPattern");
     r.fieldName = data.getString("fieldName");
-    r.ruleType = parseRuleType(data.getString("ruleType"));
+    r.ruleType = toRuleType(data.getString("ruleType"));
     r.severity = data.getString("severity").toRuleSeverity;
     r.status = parseRuleStatus(data.getString("status"));
     r.pattern = data.getString("pattern");

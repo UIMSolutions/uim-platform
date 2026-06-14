@@ -45,7 +45,7 @@ class ProvisioningJobController : HttpController {
     r.tenantId = tenantId;
     r.sourceSystemId = data.getString("sourceSystemId");
     r.targetSystemId = data.getString("targetSystemId");
-    r.jobType = parseJobType(data.getString("jobType"));
+    r.jobType = toJobType(data.getString("jobType"));
     r.schedule = data.getString("schedule");
     r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 

@@ -45,8 +45,8 @@ class ScenarioController : ManageHttpController {
     r.description = data.getString("description");
     r.category = parseScenarioCategory(data.getString("category"));
     r.version_ = data.getString("version");
-    r.sourceSystemType = parseSystemType(data.getString("sourceSystemType"));
-    r.targetSystemType = parseSystemType(data.getString("targetSystemType"));
+    r.sourceSystemType = toSystemType(data.getString("sourceSystemType"));
+    r.targetSystemType = toSystemType(data.getString("targetSystemType"));
     r.prerequisites = data.getStrings("prerequisites");
     r.stepTemplates = parseStepTemplates(j);
     r.createdBy = UserId(data.getString("createdBy"));
@@ -115,8 +115,8 @@ class ScenarioController : ManageHttpController {
     r.category = parseScenarioCategory(data.getString("category"));
     r.version_ = data.getString("version");
     r.status = parseScenarioStatus(data.getString("status"));
-    r.sourceSystemType = parseSystemType(data.getString("sourceSystemType"));
-    r.targetSystemType = parseSystemType(data.getString("targetSystemType"));
+    r.sourceSystemType = toSystemType(data.getString("sourceSystemType"));
+    r.targetSystemType = toSystemType(data.getString("targetSystemType"));
     r.prerequisites = data.getStrings("prerequisites");
     r.stepTemplates = parseStepTemplates(j);
 

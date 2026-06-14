@@ -45,7 +45,7 @@ class ProxySystemController : ManageHttpController {
     r.tenantId = tenantId;
     r.name = data.getString("name");
     r.description = data.getString("description");
-    r.systemType = parseSystemType(data.getString("systemType"));
+    r.systemType = toSystemType(data.getString("systemType"));
     r.connectionConfig = data.getString("connectionConfig");
     r.sourceSystemId = data.getString("sourceSystemId");
     r.targetSystemId = data.getString("targetSystemId");
