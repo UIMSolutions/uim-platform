@@ -14,19 +14,21 @@ import uim.platform.content_agent;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryContentActivityRepository : TenantRepository!(ContentActivity, ContentActivityId), ContentActivityRepository {
+class MemoryContentActivityRepository :
+    TenantRepository!(ContentActivity, ContentActivityId),
+    ContentActivityRepository {
 
   // #region byEntity
-  size_t countByEntity(string entityId) {
-    return findByEntity(entityId).length;
+  size_t countByEntity(TenantId tenantId, string entityId) {
+    return findByEntity(tenantId, entityId).length;
   }  
 
-  ContentActivity[] findByEntity(string entityId) {
-    return findAll.filter!(e => e.entityId == entityId).array;
+  ContentActivity[] findByEntity(TenantId tenantId, string entityId) {
+    return findByTenant(tenantId).filter!(e => e.entityId == entityId).array;
   }
 
-  void removeByEntity(string entityId) {
-    findByEntity(entityId).each!(e => remove(e));
+  void removeByEntity(TenantId tenantId, string entityId) {
+    findByEntity(tenantId, entityId).each!(e => remove(e));
   }
   // #endregion byEntity
 

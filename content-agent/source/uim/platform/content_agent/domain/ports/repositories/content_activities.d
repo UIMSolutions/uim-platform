@@ -14,9 +14,9 @@ import uim.platform.content_agent;
 /// Port: outgoing - content activity (audit log) persistence.
 interface ContentActivityRepository : ITenantRepository!(ContentActivity, ContentActivityId) {
   
-  size_t countByEntity(string entityId);
-  ContentActivity[] findByEntity(string entityId);
-  void removeByEntity(string entityId);
+  size_t countByEntity(TenantId tenantId, string entityId);
+  ContentActivity[] findByEntity(TenantId tenantId, string entityId);
+  void removeByEntity(TenantId tenantId, string entityId);
 
   size_t countByType(TenantId tenantId, ActivityType activityType);
   ContentActivity[] findByType(TenantId tenantId, ActivityType activityType);

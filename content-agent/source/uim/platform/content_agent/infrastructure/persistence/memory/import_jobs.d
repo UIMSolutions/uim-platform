@@ -17,16 +17,16 @@ import uim.platform.content_agent;
 @safe:
 class MemoryImportJobRepository : TenantRepository!(ImportJob, ImportJobId), ImportJobRepository {
 
-  size_t countByPackage(ContentPackageId packageId) {
-    return findByPackage(packageId).length;
+  size_t countByPackage(TenantId tenantId, ContentPackageId packageId) {
+    return findByPackage(tenantId, packageId).length;
   }
 
-  ImportJob[] findByPackage(ContentPackageId packageId) {
+  ImportJob[] findByPackage(TenantId tenantId, ContentPackageId packageId) {
     return findByTenant(tenantId).filter!(e => e.packageId == packageId).array;
   }
 
-  void removeByPackage(ContentPackageId packageId) {
-    findByPackage(packageId).each!(e => remove(e));
+  void removeByPackage(TenantId tenantId, ContentPackageId packageId) {
+    findByPackage(tenantId, packageId).each!(e => remove(e));
   }
 
   size_t countByStatus(TenantId tenantId, ImportStatus status) {

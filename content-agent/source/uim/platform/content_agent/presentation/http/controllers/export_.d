@@ -38,8 +38,8 @@ class ExportController : HttpController {
     auto data = precheck.data;
     auto r = StartExportRequest();
     r.tenantId = tenantId;
-    r.packageId = data.getString("packageId");
-    r.transportRequestId = data.getString("transportRequestId");
+    r.packageId = ContentPackageId(data.getString("packageId"));
+    r.transportRequestId = TransportRequestId(data.getString("transportRequestId"));
     r.queueId = data.getString("queueId");
     r.startedBy = UserId(req.headers.get("X-User-Id", ""));
 

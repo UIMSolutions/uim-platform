@@ -15,7 +15,9 @@ import uim.platform.content_agent;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryContentProviderRepository : TenantRepository!(ContentProvider, ContentProviderId), ContentProviderRepository {
+class MemoryContentProviderRepository :
+    TenantRepository!(ContentProvider, ContentProviderId),
+    ContentProviderRepository {
 
   // #region byName
   bool existsByName(TenantId tenantId, string name) {

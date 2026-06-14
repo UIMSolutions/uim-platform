@@ -12,18 +12,13 @@ enum AuditCategory {
 }
 
 AuditCategory toAuditCategory(string s) {
-  switch (s) {
-  case "audit.security-events", "securityEvents":
-    return AuditCategory.securityEvents;
-  case "audit.configuration", "configuration":
-    return AuditCategory.configuration;
-  case "audit.data-access", "dataAccess":
-    return AuditCategory.dataAccess;
-  case "audit.data-modification", "dataModification":
-    return AuditCategory.dataModification;
-  default:
-    return AuditCategory.securityEvents;
-  }
+  const map = [
+    "audit.security-events": AuditCategory.securityEvents,
+    "audit.configuration": AuditCategory.configuration,
+    "audit.data-access": AuditCategory.dataAccess,
+    "audit.data-modification": AuditCategory.dataModification
+  ];
+  return map.get(s.toLower, AuditCategory.securityEvents);
 }
 
 private static string categoryToString(AuditCategory c) {
@@ -45,6 +40,16 @@ enum AuditSeverity {
   error,
   critical,
 }
+AuditSeverity toAuditSeverity(string s) {
+  const map = [
+    "info": AuditSeverity.info,
+    "warning": AuditSeverity.warning,
+    "error": AuditSeverity.error,
+    "critical": AuditSeverity.critical
+  ];
+  return map.get(s.toLower, AuditSeverity.info);
+}
+
 /// Concrete action that triggered the audit entry.
 enum AuditAction {
   create,
@@ -67,6 +72,31 @@ enum AuditAction {
   mfaEnroll,
   mfaVerify,
 }
+AuditAction toAuditAction(string s) {
+  const map = [
+    "create": AuditAction.create,
+    "read": AuditAction.read_,
+    "update": AuditAction.update,
+    "delete": AuditAction.delete_,
+    "login": AuditAction.login,
+    "logout": AuditAction.logout,
+    "loginfailed": AuditAction.loginFailed,
+    "passwordchange": AuditAction.passwordChange,
+    "roleassign": AuditAction.roleAssign,
+    "rolerevoke": AuditAction.roleRevoke,
+    "policychange": AuditAction.policyChange,
+    "configchange": AuditAction.configChange,
+    "export": AuditAction.export_,
+    "dataaccess": AuditAction.dataAccess,
+    "consentchange": AuditAction.consentChange,
+    "tokenissue": AuditAction.tokenIssue,
+    "tokenrevoke": AuditAction.tokenRevoke,
+    "mfaenroll": AuditAction.mfaEnroll,
+    "mfaverify": AuditAction.mfaVerify
+  ];
+  return map.get(s.toLower, AuditAction.read_);
+} 
+
 /// Outcome of the audited operation.
 enum AuditOutcome {
   success,
@@ -74,12 +104,31 @@ enum AuditOutcome {
   denied,
   error,
 }
+AuditOutcome toAuditOutcome(string s) {
+  const map = [
+    "success": AuditOutcome.success,
+    "failure": AuditOutcome.failure,
+    "denied": AuditOutcome.denied,
+    "error": AuditOutcome.error
+  ];
+  return map.get(s.toLower, AuditOutcome.success);
+}
+
 /// Retention policy status.
 enum RetentionStatus {
   active,
   inactive,
   expired,
 }
+RetentionStatus toRetentionStatus(string s) {
+  const map = [
+    "active": RetentionStatus.active,
+    "inactive": RetentionStatus.inactive,
+    "expired": RetentionStatus.expired
+  ];
+  return map.get(s.toLower, RetentionStatus.active);
+}
+
 /// Export job status.
 enum ExportStatus {
   pending,
@@ -87,13 +136,38 @@ enum ExportStatus {
   completed,
   failed,
 }
+ExportStatus toExportStatus(string s) {
+  const map = [
+    "pending": ExportStatus.pending,
+    "inprogress": ExportStatus.inProgress,
+    "completed": ExportStatus.completed,
+    "failed": ExportStatus.failed
+  ];
+  return map.get(s.toLower, ExportStatus.pending);
+}
+
 /// Export output format.
 enum ExportFormat {
   json,
   csv,
 }
+ExportFormat toExportFormat(string s) {
+  const map = [
+    "json": ExportFormat.json,
+    "csv": ExportFormat.csv
+  ];
+  return map.get(s.toLower, ExportFormat.json);
+}
+
 /// Audit log configuration status.
 enum ConfigStatus {
   enabled,
   disabled,
+}
+ConfigStatus toConfigStatus(string s) {
+  const map = [
+    "enabled": ConfigStatus.enabled,
+    "disabled": ConfigStatus.disabled
+  ];
+  return map.get(s.toLower, ConfigStatus.enabled);
 }

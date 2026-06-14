@@ -5,6 +5,5 @@
 *****************************************************************************************************************/
 module uim.platform.content_agent.domain.ports;
 
-public {
+public:
     import uim.platform.content_agent.domain.ports.repositories;
-}

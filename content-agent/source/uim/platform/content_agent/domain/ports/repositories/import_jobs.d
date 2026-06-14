@@ -14,9 +14,9 @@ import uim.platform.content_agent;
 @safe:
 /// Port: outgoing - import job persistence.
 interface ImportJobRepository : ITenantRepository!(ImportJob, ImportJobId) {
-  size_t countByPackage(ContentPackageId packageId);
-  ImportJob[] findByPackage(ContentPackageId packageId);
-  void removeByPackage(ContentPackageId packageId);
+  size_t countByPackage(TenantId tenantId, ContentPackageId packageId);
+  ImportJob[] findByPackage(TenantId tenantId, ContentPackageId packageId);
+  void removeByPackage(TenantId tenantId, ContentPackageId packageId);
 
   size_t countByStatus(TenantId tenantId, ImportStatus status);
   ImportJob[] findByStatus(TenantId tenantId, ImportStatus status);

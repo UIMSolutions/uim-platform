@@ -81,7 +81,7 @@ class PackageController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = PackageId(precheck.id);
+    auto id = ContentPackageId(precheck.id);
     auto pkg = usecase.getPackage(tenantId, id);
     if (pkg.isNull)
       return errorResponse("Package not found", 404);
@@ -96,7 +96,7 @@ class PackageController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = PackageId(precheck.id);
+    auto id = ContentPackageId(precheck.id);
     auto data = precheck.data;
     auto r = UpdatePackageRequest();
     r.tenantId = tenantId;
@@ -119,7 +119,7 @@ class PackageController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = PackageId(precheck.id);
+    auto id = ContentPackageId(precheck.id);
     auto result = usecase.deletePackage(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);

@@ -7,6 +7,7 @@ module uim.platform.content_agent.domain.ports.repositories.repositories;
 
 public {
     import uim.platform.content_agent.domain.ports.repositories.content_activitys;
+    import uim.platform.content_agent.domain.ports.repositories.content_packages;
     import uim.platform.content_agent.domain.ports.repositories.content_providers;
     import uim.platform.content_agent.domain.ports.repositories.export_jobs;
     import uim.platform.content_agent.domain.ports.repositories.import_jobs;
