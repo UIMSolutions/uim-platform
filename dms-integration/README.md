@@ -130,4 +130,4 @@ kubectl apply -f k8s/service.yaml
 - **D / LDC2** compiler
 - **vibe.d 0.10.3** — async HTTP server
 - **vibe-http 1.5.1** — HTTP primitives
-- **uim-platform:service** — shared platform primitives (TenantRepository, HealthController, DomainId, etc.)
+- **uim-platform:service** — shared platform primitives (TenantRepository, HealthController, IdTemplate, etc.)

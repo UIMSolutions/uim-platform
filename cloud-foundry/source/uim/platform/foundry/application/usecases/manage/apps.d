@@ -50,7 +50,7 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
     app.buildpackId = req.buildpackId;
     app.stack = req.stack.length > 0 ? req.stack : "cflinuxfs4";
     app.command = req.command;
-    app.healthCheckType = req.healthCheckType;
+    app.healthCheckType = toHealthCheckType(req.healthCheckType);
     app.healthCheckEndpoint = req.healthCheckEndpoint.length > 0 ? req.healthCheckEndpoint : "/";
     app.healthCheckTimeoutSec = req.healthCheckTimeoutSec > 0 ? req.healthCheckTimeoutSec : 60;
     app.environmentVariables = req.environmentVariables;
@@ -73,12 +73,12 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateApp(UpdateAppRequest req) {
-    if (req.isNull)
+    if (req.appId.isNull)
       return CommandResult(false, "", "Application ID is required");
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
 
-    auto existing = apps.findById(req.tenantId, req.id);
+    auto existing = apps.findById(req.tenantId, req.appId);
     if (existing.isNull)
       return CommandResult(false, "", "Application not found");
 
@@ -117,6 +117,7 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
     auto app = apps.findById(tenantId, id);
     if (app.isNull)
       return CommandResult(false, "", "Application not found");
+      
     if (app.state == AppState.started)
       return CommandResult(false, "", "Application is already started");
 
@@ -136,12 +137,14 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
 
     if (!lifecycle.stopApp(tenantId, id))
       return CommandResult(false, "", "Cannot stop application");
+
     return CommandResult(true, id.value, "");
   }
 
   CommandResult restartApp(TenantId tenantId, AppId id) {
     if (!lifecycle.restartApp(tenantId, id))
       return CommandResult(false, "", "Cannot restart application");
+
     return CommandResult(true, id.value, "");
   }
 
@@ -149,9 +152,10 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
     if (req.appId.isNull)
       return CommandResult(false, "", "Application ID is required");
 
-    if (!lifecycle.scaleApp(req.tenantId, req.id, req.instances, req.memoryMb, req.diskMb))
+    if (!lifecycle.scaleApp(req.tenantId, req.appId, req.instances, req.memoryMb, req.diskMb))
       return CommandResult(false, "", "Cannot scale application — check quota limits");
-    return CommandResult(true, req.id.value, "");
+
+    return CommandResult(true, req.appId.value, "");
   }
 
   /// Get environment variables for an application.

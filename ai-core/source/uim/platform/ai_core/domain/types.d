@@ -18,7 +18,7 @@ struct ScenarioId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ExecutableId {
@@ -28,7 +28,7 @@ struct ExecutableId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ConfigurationId {
@@ -38,7 +38,7 @@ struct ConfigurationId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ExecutionId {
@@ -48,7 +48,7 @@ struct ExecutionId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct DeploymentId {
@@ -58,7 +58,7 @@ struct DeploymentId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ArtifactId {
@@ -68,7 +68,7 @@ struct ArtifactId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ResourceGroupId  {
@@ -78,7 +78,7 @@ struct ResourceGroupId  {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 struct MetricId  {
   string value;
@@ -87,7 +87,7 @@ struct MetricId  {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct DockerRegistrySecretId  {
@@ -97,7 +97,7 @@ struct DockerRegistrySecretId  {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 struct ObjectStoreSecretId  {
   string value;
@@ -106,7 +106,7 @@ struct ObjectStoreSecretId  {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ScheduleId {
@@ -116,5 +116,5 @@ struct ScheduleId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }

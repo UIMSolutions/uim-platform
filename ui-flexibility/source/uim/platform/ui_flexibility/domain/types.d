@@ -14,7 +14,7 @@ import uim.platform.ui_flexibility;
 // ─── Domain ID types ─────────────────────────────────────────────────────────
 
 struct FlexChangeId {
-  mixin DomainId;
+  mixin IdTemplate;
 
   this(string value) {
     this.value = value;
@@ -24,7 +24,7 @@ struct FlexChangeId {
 }
 
 struct FlexVariantId {
-  mixin DomainId;
+  mixin IdTemplate;
   this(string value) {
     this.value = value;
   }
@@ -33,7 +33,7 @@ struct FlexVariantId {
 }
 
 struct FlexVersionId {
-  mixin DomainId;
+  mixin IdTemplate;
   this(string value) {
     this.value = value;
   }
@@ -42,7 +42,7 @@ struct FlexVersionId {
 }
 
 struct FlexDraftId {
-  mixin DomainId;
+  mixin IdTemplate;
   this(string value) {
     this.value = value;
   }
@@ -51,7 +51,7 @@ struct FlexDraftId {
 }
 
 struct FlexPersonalizationId {
-  mixin DomainId;
+  mixin IdTemplate;
   this(string value) {
     this.value = value;
   }
@@ -60,7 +60,7 @@ struct FlexPersonalizationId {
 }
 
 struct FlexApplicationId {
-  mixin DomainId;
+  mixin IdTemplate;
   this(string value) {
     this.value = value;
   }

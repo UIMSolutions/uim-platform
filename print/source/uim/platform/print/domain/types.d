@@ -14,29 +14,29 @@ import uim.platform.print;
 struct PrintQueueId {
     string value;
     this(string value) { this.value = value; }
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct PrintTaskId {
     string value;
     this(string value) { this.value = value; }
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct PrinterId {
     string value;
     this(string value) { this.value = value; }
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct PrintDocumentId {
     string value;
     this(string value) { this.value = value; }
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct PrintClientId {
     string value;
     this(string value) { this.value = value; }
-    mixin DomainId;
+    mixin IdTemplate;
 }

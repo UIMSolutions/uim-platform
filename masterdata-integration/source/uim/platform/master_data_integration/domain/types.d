@@ -18,7 +18,7 @@ struct MasterDataObjectId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct DataModelId {
@@ -28,7 +28,7 @@ struct DataModelId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct DistributionModelId {
@@ -38,7 +38,7 @@ struct DistributionModelId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct KeyMappingId {
@@ -48,7 +48,7 @@ struct KeyMappingId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ChangeLogEntryId {
@@ -58,7 +58,7 @@ struct ChangeLogEntryId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ClientId {
@@ -68,7 +68,7 @@ struct ClientId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ReplicationJobId {
@@ -78,7 +78,7 @@ struct ReplicationJobId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct FilterRuleId {
@@ -88,7 +88,7 @@ struct FilterRuleId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct VersionId {
@@ -98,5 +98,5 @@ struct VersionId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }

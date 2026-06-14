@@ -18,7 +18,7 @@ struct RemoteTableId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct DataFlowId {
@@ -28,7 +28,7 @@ struct DataFlowId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ViewId {
@@ -38,7 +38,7 @@ struct ViewId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct TaskId {
@@ -48,7 +48,7 @@ struct TaskId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct TaskChainId {
@@ -58,7 +58,7 @@ struct TaskChainId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct DataAccessControlId {
@@ -68,7 +68,7 @@ struct DataAccessControlId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct CatalogAssetId {
@@ -78,5 +78,5 @@ struct CatalogAssetId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }

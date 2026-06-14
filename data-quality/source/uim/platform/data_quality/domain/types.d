@@ -13,7 +13,7 @@ struct RecordId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ValidationRuleId {
@@ -23,7 +23,7 @@ struct ValidationRuleId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ValidationResultId {
@@ -33,7 +33,7 @@ struct ValidationResultId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct CleansingRuleId {
@@ -43,7 +43,7 @@ struct CleansingRuleId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct DataProfileId {
@@ -53,7 +53,7 @@ struct DataProfileId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct DatasetId {
@@ -63,7 +63,7 @@ struct DatasetId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct AddressId {
@@ -73,7 +73,7 @@ struct AddressId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct MatchGroupId {
@@ -83,7 +83,7 @@ struct MatchGroupId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct CleansingJobId {
@@ -93,7 +93,7 @@ struct CleansingJobId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ProfileJobId {
@@ -103,7 +103,7 @@ struct ProfileJobId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct QualityDashboardId {
@@ -113,7 +113,7 @@ struct QualityDashboardId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 

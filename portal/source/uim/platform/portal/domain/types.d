@@ -18,7 +18,7 @@ struct SiteId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct PageId {
@@ -28,7 +28,7 @@ struct PageId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct SectionId {
@@ -38,7 +38,7 @@ struct SectionId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct TileId {
@@ -48,7 +48,7 @@ struct TileId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct CatalogId {
@@ -58,7 +58,7 @@ struct CatalogId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct GroupId {
@@ -68,7 +68,7 @@ struct GroupId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct RoleId {
@@ -78,7 +78,7 @@ struct RoleId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ProviderId {
@@ -88,7 +88,7 @@ struct ProviderId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ThemeId {
@@ -98,7 +98,7 @@ struct ThemeId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct MenuItemId {
@@ -108,7 +108,7 @@ struct MenuItemId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct TranslationId {
@@ -118,5 +118,5 @@ struct TranslationId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }

@@ -18,7 +18,7 @@ struct CustomerId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct CustomerSessionId {
@@ -28,7 +28,7 @@ struct CustomerSessionId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct SocialIdentityId {
@@ -38,7 +38,7 @@ struct SocialIdentityId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct ConsentRecordId {
@@ -48,7 +48,7 @@ struct ConsentRecordId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct AuditLogId {
@@ -58,7 +58,7 @@ struct AuditLogId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct IdentityProviderId {
@@ -68,7 +68,7 @@ struct IdentityProviderId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct ScreenSetId {
@@ -78,7 +78,7 @@ struct ScreenSetId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct SitePolicyId {
@@ -88,5 +88,5 @@ struct SitePolicyId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }

@@ -13,7 +13,7 @@ struct CustomDomainId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct OrgId {
@@ -23,7 +23,7 @@ struct OrgId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct PrivateKeyId {
@@ -33,7 +33,7 @@ struct PrivateKeyId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct CertificateId {
@@ -43,7 +43,7 @@ struct CertificateId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct TlsConfigurationId {
@@ -53,7 +53,7 @@ struct TlsConfigurationId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct DomainMappingId {
@@ -63,7 +63,7 @@ struct DomainMappingId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct TrustedCertificateId {
@@ -73,7 +73,7 @@ struct TrustedCertificateId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct DnsRecordId  {
@@ -83,7 +83,7 @@ struct DnsRecordId  {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 struct DomainDashboardId  {
   string value;
@@ -92,6 +92,6 @@ struct DomainDashboardId  {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 

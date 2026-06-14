@@ -18,7 +18,7 @@ struct DocumentId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct SchemaId {
@@ -28,7 +28,7 @@ struct SchemaId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct TemplateId {
@@ -38,7 +38,7 @@ struct TemplateId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct DocumentTypeId {
@@ -48,7 +48,7 @@ struct DocumentTypeId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ExtractionResultId {
@@ -58,7 +58,7 @@ struct ExtractionResultId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct EnrichmentDataId {
@@ -68,7 +68,7 @@ struct EnrichmentDataId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct TrainingJobId {
@@ -78,7 +78,7 @@ struct TrainingJobId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ClientId {
@@ -88,7 +88,7 @@ struct ClientId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ResourceGroupId {
@@ -98,5 +98,5 @@ struct ResourceGroupId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }

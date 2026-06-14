@@ -14,53 +14,53 @@ import uim.platform.responsibility;
 struct ResponsibilityRuleId {
     string value;
     this(string v) { value = v; }
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct TeamCategoryId {
     string value;
     this(string v) { value = v; }
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct TeamTypeId {
     string value;
     this(string v) { value = v; }
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct TeamId {
     string value;
     this(string v) { value = v; }
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct TeamMemberId {
     string value;
     this(string v) { value = v; }
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct MemberFunctionId {
     string value;
     this(string v) { value = v; }
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct ResponsibilityContextId {
     string value;
     this(string v) { value = v; }
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct ResponsibilityDefinitionId {
     string value;
     this(string v) { value = v; }
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct DeterminationLogId {
     string value;
     this(string v) { value = v; }
-    mixin DomainId;
+    mixin IdTemplate;
 }

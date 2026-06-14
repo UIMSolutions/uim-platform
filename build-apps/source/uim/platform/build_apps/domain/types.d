@@ -18,7 +18,7 @@ struct ApplicationId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct PageId {
@@ -28,7 +28,7 @@ struct PageId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct UIComponentId {
@@ -38,7 +38,7 @@ struct UIComponentId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct DataEntityId {
@@ -48,7 +48,7 @@ struct DataEntityId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct DataConnectionId {
@@ -58,7 +58,7 @@ struct DataConnectionId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct LogicFlowId {
@@ -68,7 +68,7 @@ struct LogicFlowId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct AppBuildId {
@@ -78,7 +78,7 @@ struct AppBuildId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct ProjectMemberId {
@@ -88,5 +88,5 @@ struct ProjectMemberId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }

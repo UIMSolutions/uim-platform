@@ -18,7 +18,7 @@ struct ContentPackageId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ContentTypeId {
@@ -28,7 +28,7 @@ struct ContentTypeId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ContentProviderId {
@@ -38,7 +38,7 @@ struct ContentProviderId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct TransportRequestId {
@@ -48,7 +48,7 @@ struct TransportRequestId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ExportJobId {
@@ -58,7 +58,7 @@ struct ExportJobId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ImportJobId {
@@ -68,7 +68,7 @@ struct ImportJobId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct TransportQueueId {
@@ -78,7 +78,7 @@ struct TransportQueueId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ContentActivityId {
@@ -88,5 +88,5 @@ struct ContentActivityId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }

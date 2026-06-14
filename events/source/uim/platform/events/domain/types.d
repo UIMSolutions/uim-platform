@@ -11,10 +11,10 @@ import uim.platform.events;
 
 @safe:
 
-struct MessagingServiceId  { string value; this(string v) { value = v; } mixin DomainId; }
-struct MessageClientId     { string value; this(string v) { value = v; } mixin DomainId; }
-struct QueueId             { string value; this(string v) { value = v; } mixin DomainId; }
-struct QueueSubscriptionId { string value; this(string v) { value = v; } mixin DomainId; }
-struct WebhookId           { string value; this(string v) { value = v; } mixin DomainId; }
-struct EventChannelId      { string value; this(string v) { value = v; } mixin DomainId; }
-struct MessageBindingId    { string value; this(string v) { value = v; } mixin DomainId; }
+struct MessagingServiceId  { string value; this(string v) { value = v; } mixin IdTemplate; }
+struct MessageClientId     { string value; this(string v) { value = v; } mixin IdTemplate; }
+struct QueueId             { string value; this(string v) { value = v; } mixin IdTemplate; }
+struct QueueSubscriptionId { string value; this(string v) { value = v; } mixin IdTemplate; }
+struct WebhookId           { string value; this(string v) { value = v; } mixin IdTemplate; }
+struct EventChannelId      { string value; this(string v) { value = v; } mixin IdTemplate; }
+struct MessageBindingId    { string value; this(string v) { value = v; } mixin IdTemplate; }

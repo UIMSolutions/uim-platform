@@ -17,7 +17,7 @@ struct AuditLogId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct DataAccessLogId {
@@ -27,7 +27,7 @@ struct DataAccessLogId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 struct RetentionPolicyId {
   string value;
@@ -36,7 +36,7 @@ struct RetentionPolicyId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct AuditConfigId {
@@ -46,7 +46,7 @@ struct AuditConfigId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ConfigChangeLogId {
@@ -56,7 +56,7 @@ struct ConfigChangeLogId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ExportJobId {
@@ -66,7 +66,7 @@ struct ExportJobId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 
@@ -77,7 +77,7 @@ struct ServiceId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct SecurityEventId {
@@ -87,5 +87,5 @@ struct SecurityEventId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }

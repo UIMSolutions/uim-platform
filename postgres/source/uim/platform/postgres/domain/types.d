@@ -11,11 +11,11 @@ import uim.platform.postgres;
 
 @safe:
 
-struct ServiceInstanceId   { string value; mixin DomainId; }
-struct ServiceBindingId    { string value; mixin DomainId; }
-struct ServicePlanId       { string value; mixin DomainId; }
-struct ConfigurationId     { string value; mixin DomainId; }
-struct BackupPolicyId      { string value; mixin DomainId; }
-struct DatabaseUserId      { string value; mixin DomainId; }
-struct DatabaseExtensionId { string value; mixin DomainId; }
-struct MaintenanceWindowId { string value; mixin DomainId; }
+struct ServiceInstanceId   { string value; mixin IdTemplate; }
+struct ServiceBindingId    { string value; mixin IdTemplate; }
+struct ServicePlanId       { string value; mixin IdTemplate; }
+struct ConfigurationId     { string value; mixin IdTemplate; }
+struct BackupPolicyId      { string value; mixin IdTemplate; }
+struct DatabaseUserId      { string value; mixin IdTemplate; }
+struct DatabaseExtensionId { string value; mixin IdTemplate; }
+struct MaintenanceWindowId { string value; mixin IdTemplate; }

@@ -22,7 +22,7 @@ struct ConditionId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct ActionId {
@@ -32,7 +32,7 @@ struct ActionId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct SubscriptionId {
@@ -42,7 +42,7 @@ struct SubscriptionId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct AlertEventId {
@@ -52,7 +52,7 @@ struct AlertEventId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct MatchedEventId {
@@ -62,7 +62,7 @@ struct MatchedEventId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct UndeliveredEventId {
@@ -72,5 +72,5 @@ struct UndeliveredEventId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }

@@ -14,29 +14,29 @@ import uim.platform.transport;
 struct TransportNodeId {
     string value;
     this(string value) { this.value = value; }
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct TransportRouteId {
     string value;
     this(string value) { this.value = value; }
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct TransportRequestId {
     string value;
     this(string value) { this.value = value; }
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct ImportQueueEntryId {
     string value;
     this(string value) { this.value = value; }
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct TransportActionId {
     string value;
     this(string value) { this.value = value; }
-    mixin DomainId;
+    mixin IdTemplate;
 }

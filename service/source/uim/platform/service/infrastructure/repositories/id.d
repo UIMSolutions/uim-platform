@@ -111,7 +111,7 @@ struct TestEntityId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct TestEntity {

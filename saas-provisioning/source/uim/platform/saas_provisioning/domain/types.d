@@ -16,7 +16,7 @@ import uim.platform.saas_provisioning;
 // ---------------------------------------------------------------------------
 
 struct SaasApplicationId {
-    mixin DomainId;
+    mixin IdTemplate;
 
     this(string value) {
         this.value = value;
@@ -26,7 +26,7 @@ struct SaasApplicationId {
 }
 
 struct AppSubscriptionId {
-    mixin DomainId;
+    mixin IdTemplate;
 
     this(string value) {
         this.value = value;
@@ -36,7 +36,7 @@ struct AppSubscriptionId {
 }
 
 struct SubscriptionJobId {
-    mixin DomainId;
+    mixin IdTemplate;
 
     this(string value) {
         this.value = value;

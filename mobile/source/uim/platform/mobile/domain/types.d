@@ -18,7 +18,7 @@ struct MobileAppId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct DeviceRegistrationId  {
     string value;
@@ -27,7 +27,7 @@ struct DeviceRegistrationId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct PushNotificationId  {
     string value;
@@ -36,7 +36,7 @@ struct PushNotificationId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct PushRegistrationId  {
     string value;
@@ -45,7 +45,7 @@ struct PushRegistrationId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct AppConfigurationId  {
     string value;
@@ -54,7 +54,7 @@ struct AppConfigurationId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct FeatureRestrictionId  {
     string value;
@@ -63,7 +63,7 @@ struct FeatureRestrictionId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct ClientResourceId  {
     string value;
@@ -72,7 +72,7 @@ struct ClientResourceId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct AppVersionId  {
     string value;
@@ -81,7 +81,7 @@ struct AppVersionId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct UsageReportId  {
     string value;
@@ -90,7 +90,7 @@ struct UsageReportId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct OfflineStoreId  {
     string value;
@@ -99,7 +99,7 @@ struct OfflineStoreId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct UserSessionId  {
     string value;
@@ -108,7 +108,7 @@ struct UserSessionId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct ClientLogEntryId  {
     string value;
@@ -117,5 +117,5 @@ struct ClientLogEntryId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }

@@ -81,7 +81,7 @@ class FileTenantStore(TEntity, TId) : TenantStore!(TEntity, TId) {
 unittest {
     // Setup mock types for testing
     struct MockId {
-        mixin DomainId;
+        mixin IdTemplate;
 
         string value;
         this(string value) {

@@ -11,11 +11,11 @@ import uim.platform.redis;
 
 @safe:
 
-struct ServiceInstanceId { string value; mixin DomainId; }
-struct ServiceBindingId  { string value; mixin DomainId; }
-struct ServicePlanId     { string value; mixin DomainId; }
-struct ConfigurationId   { string value; mixin DomainId; }
-struct CacheEntryId      { string value; mixin DomainId; }
-struct MetricId          { string value; mixin DomainId; }
-struct BackupPolicyId    { string value; mixin DomainId; }
-struct AccessControlId   { string value; mixin DomainId; }
+struct ServiceInstanceId { string value; mixin IdTemplate; }
+struct ServiceBindingId  { string value; mixin IdTemplate; }
+struct ServicePlanId     { string value; mixin IdTemplate; }
+struct ConfigurationId   { string value; mixin IdTemplate; }
+struct CacheEntryId      { string value; mixin IdTemplate; }
+struct MetricId          { string value; mixin IdTemplate; }
+struct BackupPolicyId    { string value; mixin IdTemplate; }
+struct AccessControlId   { string value; mixin IdTemplate; }

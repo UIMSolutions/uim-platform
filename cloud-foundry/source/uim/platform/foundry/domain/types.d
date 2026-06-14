@@ -18,7 +18,7 @@ import uim.platform.foundry;
 //     this.value = value;
 //   }
 
-//   mixin DomainId;
+//   mixin IdTemplate;
 // }
 
 // struct SpaceId {
@@ -28,7 +28,7 @@ import uim.platform.foundry;
 //     this.value = value;
 //   }
 
-//   mixin DomainId;
+//   mixin IdTemplate;
 // }
 
 struct AppId {
@@ -38,7 +38,7 @@ struct AppId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ServiceInstanceId {
@@ -48,7 +48,7 @@ struct ServiceInstanceId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ServiceBindingId {
@@ -58,7 +58,7 @@ struct ServiceBindingId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct RouteId {
@@ -68,7 +68,7 @@ struct RouteId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct CfDomainId {
@@ -78,7 +78,7 @@ struct CfDomainId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct BuildpackId {
@@ -88,5 +88,5 @@ struct BuildpackId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }

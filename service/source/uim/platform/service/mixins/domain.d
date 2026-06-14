@@ -6,7 +6,7 @@ import uim.platform.service;
 
 @safe:
 
-mixin template DomainId() {
+mixin template IdTemplate() {
   // this(string newValue) {
   //     this.value = newValue;
   // }
@@ -71,7 +71,7 @@ mixin template DomainId() {
 ///
 unittest {
   struct TestId {
-    mixin DomainId;
+    mixin IdTemplate;
 
     string value;
 

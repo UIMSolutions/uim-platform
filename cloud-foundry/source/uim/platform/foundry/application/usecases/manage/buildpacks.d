@@ -62,12 +62,12 @@ class ManageBuildpacksUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateBuildpack(UpdateBuildpackRequest req) {
-    if (req.isNull)
+    if (req.packId.isNull)
       return CommandResult(false, "", "Buildpack ID is required");
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
 
-    auto buildpack = buildpacks.findById(req.tenantId, req.id);
+    auto buildpack = buildpacks.findById(req.tenantId, req.packId);
     if (buildpack.isNull)
       return CommandResult(false, "", "Buildpack not found");
 

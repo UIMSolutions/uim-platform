@@ -18,7 +18,7 @@ struct ProjectId {
     value = v;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct DevSpaceId {
@@ -27,7 +27,7 @@ struct DevSpaceId {
     value = v;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct TemplateId {
@@ -36,7 +36,7 @@ struct TemplateId {
     value = v;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct PipelineId {
@@ -45,7 +45,7 @@ struct PipelineId {
     value = v;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct BuildJobId {
@@ -54,7 +54,7 @@ struct BuildJobId {
     value = v;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct DeploymentId {
@@ -63,7 +63,7 @@ struct DeploymentId {
     value = v;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct AIRequestId {
@@ -72,7 +72,7 @@ struct AIRequestId {
     value = v;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ServiceBindingId {
@@ -81,5 +81,5 @@ struct ServiceBindingId {
     value = v;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }

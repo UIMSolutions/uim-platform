@@ -117,7 +117,7 @@ class RouteController : ManageHttpController {
     return successResponse("Route retrieved successfully", 200, responseData);
   }
 
-  protected void handleRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto response = getRouteHandler(req);
       res.writeJsonBody(response, response.code);
@@ -227,7 +227,7 @@ class RouteController : ManageHttpController {
     r.tenantId = tenantId;
     r.ownerOrgId = data.getString("ownerOrgId");
     r.name = data.getString("name");
-    r.scope_ = parseDomainScope(data.getString("scope"));
+    r.scope_ = data.getString("scope");
     r.isInternal = data.getBoolean("isInternal");
     r.createdBy = UserId(data.getString("createdBy"));
 
@@ -279,7 +279,7 @@ class RouteController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = DomainId(precheck.id);
+    auto id = IdTemplate(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid domain ID", 400);
 

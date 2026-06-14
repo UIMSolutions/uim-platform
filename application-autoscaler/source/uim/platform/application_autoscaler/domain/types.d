@@ -14,7 +14,7 @@ import uim.platform.application_autoscaler;
 // ID type aliases
 // ---------------------------------------------------------------------------
 struct ScalingPolicyId {
-    mixin DomainId;
+    mixin IdTemplate;
 
     string value;
     this(string value) {
@@ -22,7 +22,7 @@ struct ScalingPolicyId {
     }
 }
 struct ScalingRuleId {
-    mixin DomainId;
+    mixin IdTemplate;
 
     string value;
     this(string value) {
@@ -30,7 +30,7 @@ struct ScalingRuleId {
     }
 }
 struct ScheduleId {
-    mixin DomainId;
+    mixin IdTemplate;
 
     string value;
     this(string value) {
@@ -38,7 +38,7 @@ struct ScheduleId {
     }
 }
 struct RecurringScheduleId {
-    mixin DomainId;
+    mixin IdTemplate;
 
     string value;
     this(string value) {
@@ -46,7 +46,7 @@ struct RecurringScheduleId {
     }
 }
 struct SpecificDateScheduleId {
-    mixin DomainId;
+    mixin IdTemplate;
 
     string value;
     this(string value) {
@@ -54,7 +54,7 @@ struct SpecificDateScheduleId {
     }
 }
 struct CustomMetricId {
-    mixin DomainId;
+    mixin IdTemplate;
 
     string value;
     this(string value) {
@@ -62,7 +62,7 @@ struct CustomMetricId {
     }
 }
 struct ScalingHistoryId {
-    mixin DomainId;
+    mixin IdTemplate;
 
     string value;
     this(string value) {
@@ -70,7 +70,7 @@ struct ScalingHistoryId {
     }
 }
 struct AppBindingId {
-    mixin DomainId;
+    mixin IdTemplate;
 
     string value;
     this(string value) {

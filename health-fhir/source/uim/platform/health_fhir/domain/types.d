@@ -15,49 +15,49 @@ import uim.platform.health_fhir;
 struct PatientId {
   string value;
   this(string value) { this.value = value; }
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct PractitionerId {
   string value;
   this(string value) { this.value = value; }
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ObservationId {
   string value;
   this(string value) { this.value = value; }
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ConditionId {
   string value;
   this(string value) { this.value = value; }
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct OrganizationId {
   string value;
   this(string value) { this.value = value; }
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct EncounterId {
   string value;
   this(string value) { this.value = value; }
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct MedicationId {
   string value;
   this(string value) { this.value = value; }
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct MedicationRequestId {
   string value;
   this(string value) { this.value = value; }
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 

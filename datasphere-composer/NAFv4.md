@@ -104,7 +104,7 @@ The service exposes the following operational capabilities:
 ### 2.5 Data Architecture View (NDAV)
 
 All entities are multi-tenant. Every entity has:
-- A typed ID struct (`mixin DomainId`)
+- A typed ID struct (`mixin IdTemplate`)
 - `TenantId tenantId` field
 - `string createdAt`, `string updatedAt` timestamps (via `initEntity`)
 - `bool deleted` soft-delete flag

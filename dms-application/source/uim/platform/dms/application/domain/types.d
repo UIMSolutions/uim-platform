@@ -17,7 +17,7 @@ struct RepositoryId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct FolderId {
@@ -27,7 +27,7 @@ struct FolderId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct DocumentId {
@@ -37,7 +37,7 @@ struct DocumentId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct DocumentVersionId {
@@ -47,7 +47,7 @@ struct DocumentVersionId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ShareId {
@@ -57,7 +57,7 @@ struct ShareId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct PermissionId {
@@ -67,7 +67,7 @@ struct PermissionId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 struct FavoriteId  {
   string value;
@@ -76,6 +76,6 @@ struct FavoriteId  {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 

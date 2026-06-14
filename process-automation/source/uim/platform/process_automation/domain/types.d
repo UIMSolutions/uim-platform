@@ -18,7 +18,7 @@ struct ArtifactId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct ProcessId  {
     string value;
@@ -27,7 +27,7 @@ struct ProcessId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct ProcessStepId  {
@@ -37,7 +37,7 @@ struct ProcessStepId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct ProcessInstanceId  {
     string value;
@@ -46,7 +46,7 @@ struct ProcessInstanceId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct TaskId  {
     string value;
@@ -55,7 +55,7 @@ struct TaskId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct TaskAttachmentId  {
@@ -65,7 +65,7 @@ struct TaskAttachmentId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct TaskCommentId  {
@@ -75,7 +75,7 @@ struct TaskCommentId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct DecisionId  {
     string value;
@@ -84,7 +84,7 @@ struct DecisionId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct DecisionRowId  {
@@ -94,7 +94,7 @@ struct DecisionRowId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct DecisionColumnId  {
@@ -104,7 +104,7 @@ struct DecisionColumnId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct FormId  {
     string value;
@@ -113,7 +113,7 @@ struct FormId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct FormFieldId  {
     string value;
@@ -122,7 +122,7 @@ struct FormFieldId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct FormSectionId  {
     string value;
@@ -131,7 +131,7 @@ struct FormSectionId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct AutomationId  {
     string value;
@@ -140,7 +140,7 @@ struct AutomationId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct AutomationStepId  {
@@ -150,7 +150,7 @@ struct AutomationStepId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct AutomationRunId  {
@@ -160,7 +160,7 @@ struct AutomationRunId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct TriggerId  {
     string value;
@@ -169,7 +169,7 @@ struct TriggerId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct ActionId  {
     string value;
@@ -178,7 +178,7 @@ struct ActionId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct VisibilityId  {
     string value;
@@ -187,7 +187,7 @@ struct VisibilityId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct VisibilityMetricId  {
@@ -197,7 +197,7 @@ struct VisibilityMetricId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct ProjectId  {
     string value;
@@ -206,7 +206,7 @@ struct ProjectId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct VersionId  {
     string value;
@@ -215,5 +215,5 @@ struct VersionId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }

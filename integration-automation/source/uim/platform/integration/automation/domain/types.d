@@ -17,7 +17,7 @@ struct ScenarioId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct WorkflowId {
@@ -27,7 +27,7 @@ struct WorkflowId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct StepId {
@@ -37,7 +37,7 @@ struct StepId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct SystemConnectionId {
@@ -47,7 +47,7 @@ struct SystemConnectionId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct DestinationId {
@@ -57,7 +57,7 @@ struct DestinationId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct TaskAssignmentId {
@@ -67,7 +67,7 @@ struct TaskAssignmentId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ExecutionLogId {
@@ -77,5 +77,5 @@ struct ExecutionLogId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }

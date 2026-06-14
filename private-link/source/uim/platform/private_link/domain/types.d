@@ -17,7 +17,7 @@ struct ServiceInstanceId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 /// Unique identifier for a private endpoint.
@@ -28,7 +28,7 @@ struct PrivateEndpointId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 /// Unique identifier for a service binding.
@@ -39,5 +39,5 @@ struct ServiceBindingId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }

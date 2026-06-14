@@ -14,47 +14,47 @@ import uim.platform.integration_delivery;
 struct CicdRepositoryId {
     string value;
     this(string value) { this.value = value; }
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct CredentialId {
     string value;
     this(string value) { this.value = value; }
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct PipelineId {
     string value;
     this(string value) { this.value = value; }
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct JobId {
     string value;
     this(string value) { this.value = value; }
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct BuildId {
     string value;
     this(string value) { this.value = value; }
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct StageId {
     string value;
     this(string value) { this.value = value; }
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct WebhookId {
     string value;
     this(string value) { this.value = value; }
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct DeploymentTargetId {
     string value;
     this(string value) { this.value = value; }
-    mixin DomainId;
+    mixin IdTemplate;
 }

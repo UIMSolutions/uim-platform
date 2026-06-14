@@ -18,7 +18,7 @@ struct SituationTemplateId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct SituationInstanceId  {
     string value;
@@ -27,7 +27,7 @@ struct SituationInstanceId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct SituationActionId  {
     string value;
@@ -36,7 +36,7 @@ struct SituationActionId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct AutomationRuleId  {
     string value;
@@ -45,7 +45,7 @@ struct AutomationRuleId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct EntityTypeId  {
     string value;
@@ -54,7 +54,7 @@ struct EntityTypeId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct DataContextId  {
     string value;
@@ -63,7 +63,7 @@ struct DataContextId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct NotificationId  {
     string value;
@@ -72,7 +72,7 @@ struct NotificationId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct DashboardId  {
     string value;
@@ -81,5 +81,5 @@ struct DashboardId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }

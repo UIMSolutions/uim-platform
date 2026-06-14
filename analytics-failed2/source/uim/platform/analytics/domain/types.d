@@ -12,7 +12,7 @@ struct AssetId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 enum StorageBackend {

@@ -18,7 +18,7 @@ struct GroupId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct SchemaId {
@@ -28,7 +28,7 @@ struct SchemaId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct AttributeId {
@@ -38,7 +38,7 @@ struct AttributeId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ApiClientId {
@@ -48,5 +48,5 @@ struct ApiClientId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }

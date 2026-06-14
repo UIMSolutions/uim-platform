@@ -16,55 +16,55 @@ import uim.platform.hana_spatial;
 struct GeocodingResultId {
   string value;
   this(string value) { this.value = value; }
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct RouteId {
   string value;
   this(string value) { this.value = value; }
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct PointOfInterestId {
   string value;
   this(string value) { this.value = value; }
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct IsolineId {
   string value;
   this(string value) { this.value = value; }
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct GeofenceZoneId {
   string value;
   this(string value) { this.value = value; }
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct SpatialLayerId {
   string value;
   this(string value) { this.value = value; }
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct SpatialFeatureId {
   string value;
   this(string value) { this.value = value; }
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ProviderId {
   string value;
   this(string value) { this.value = value; }
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct GeocodingJobId {
   string value;
   this(string value) { this.value = value; }
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 // --- Value types ---

@@ -16,23 +16,23 @@ import uim.platform.translation;
 struct TranslationProjectId {
     string value;
     this(string value) { this.value = value; }
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct GlossaryEntryId {
     string value;
     this(string value) { this.value = value; }
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct TranslationJobId {
     string value;
     this(string value) { this.value = value; }
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct TranslationResultId {
     string value;
     this(string value) { this.value = value; }
-    mixin DomainId;
+    mixin IdTemplate;
 }

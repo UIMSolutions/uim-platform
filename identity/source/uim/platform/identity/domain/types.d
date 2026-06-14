@@ -15,29 +15,29 @@ import uim.platform.identity;
 struct UserId {
     string value;
     this(string value) { this.value = value; }
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct GroupId {
     string value;
     this(string value) { this.value = value; }
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct ApplicationId {
     string value;
     this(string value) { this.value = value; }
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct IdentityProviderId {
     string value;
     this(string value) { this.value = value; }
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct ProvisioningJobId {
     string value;
     this(string value) { this.value = value; }
-    mixin DomainId;
+    mixin IdTemplate;
 }

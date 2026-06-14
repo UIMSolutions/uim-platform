@@ -17,7 +17,7 @@ struct SystemInstanceId  {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 struct SoftwareComponentId  {
   string value;
@@ -26,7 +26,7 @@ struct SoftwareComponentId  {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct CatalogAssignmentId  {
@@ -36,7 +36,7 @@ struct CatalogAssignmentId  {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 struct CommunicationArrangementId  {
   string value;
@@ -45,7 +45,7 @@ struct CommunicationArrangementId  {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 struct ServiceBindingId  {
   string value;
@@ -54,7 +54,7 @@ struct ServiceBindingId  {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 struct BusinessUserId  {
   string value;
@@ -63,7 +63,7 @@ struct BusinessUserId  {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 struct BusinessRoleId  {
   string value;
@@ -72,7 +72,7 @@ struct BusinessRoleId  {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 struct TransportRequestId  {
   string value;
@@ -81,7 +81,7 @@ struct TransportRequestId  {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 struct TransportTaskId  {
   string value;
@@ -90,7 +90,7 @@ struct TransportTaskId  {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 struct ApplicationJobId  {
   string value;
@@ -99,7 +99,7 @@ struct ApplicationJobId  {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ServiceDefinitionId  {
@@ -109,7 +109,7 @@ struct ServiceDefinitionId  {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 struct CommunicationScenarioId  {
   string value;
@@ -118,5 +118,5 @@ struct CommunicationScenarioId  {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }

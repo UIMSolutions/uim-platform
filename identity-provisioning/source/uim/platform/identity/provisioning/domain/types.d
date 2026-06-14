@@ -18,7 +18,7 @@ struct SourceSystemId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct TargetSystemId {
@@ -28,7 +28,7 @@ struct TargetSystemId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ProxySystemId {
@@ -38,7 +38,7 @@ struct ProxySystemId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct TransformationId {
@@ -48,7 +48,7 @@ struct TransformationId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ProvisioningJobId {
@@ -58,7 +58,7 @@ struct ProvisioningJobId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ProvisioningLogId {
@@ -68,7 +68,7 @@ struct ProvisioningLogId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ProvisionedEntityId {
@@ -78,5 +78,5 @@ struct ProvisionedEntityId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }

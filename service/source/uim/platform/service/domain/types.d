@@ -13,7 +13,7 @@ struct TenantId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct UserId {
@@ -23,7 +23,7 @@ struct UserId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct GlobalAccountId {
@@ -33,7 +33,7 @@ struct GlobalAccountId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct SubaccountId {
@@ -43,7 +43,7 @@ struct SubaccountId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 struct ConnectionId {
   string value;
@@ -52,7 +52,7 @@ struct ConnectionId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct OrganizationId {
@@ -62,7 +62,7 @@ struct OrganizationId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct SpaceId {
@@ -72,7 +72,7 @@ struct SpaceId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct OrgId {
@@ -82,5 +82,5 @@ struct OrgId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }

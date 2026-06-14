@@ -18,7 +18,7 @@ struct DevSpaceId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct DevSpaceTypeId {
@@ -28,7 +28,7 @@ struct DevSpaceTypeId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct ExtensionId {
@@ -38,7 +38,7 @@ struct ExtensionId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct ProjectId {
@@ -48,7 +48,7 @@ struct ProjectId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct ProjectTemplateId {
@@ -58,7 +58,7 @@ struct ProjectTemplateId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct ServiceBindingId {
@@ -68,7 +68,7 @@ struct ServiceBindingId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct RunConfigurationId {
@@ -78,7 +78,7 @@ struct RunConfigurationId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct BuildConfigurationId {
@@ -88,5 +88,5 @@ struct BuildConfigurationId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }

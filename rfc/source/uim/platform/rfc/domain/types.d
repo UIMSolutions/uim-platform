@@ -15,7 +15,7 @@ import uim.platform.rfc;
 // Strong-typed IDs
 // ---------------------------------------------------------------------------
 struct DestinationId {
-    mixin DomainId;
+    mixin IdTemplate;
 
     string value;
 
@@ -24,7 +24,7 @@ struct DestinationId {
     }
 } /// RFC Destination name (SM59) — up to 32 chars
 struct FunctionModuleId {
-    mixin DomainId;
+    mixin IdTemplate;
 
     string value;
 
@@ -33,7 +33,7 @@ struct FunctionModuleId {
     }
 } /// Function module name — up to 30 chars
 struct RfcCallId {
-    mixin DomainId;
+    mixin IdTemplate;
 
     string value;
 
@@ -42,7 +42,7 @@ struct RfcCallId {
     }
 } /// UUID of an RFC call record
 struct TidValue {
-    mixin DomainId;
+    mixin IdTemplate;
 
     string value;
 
@@ -51,7 +51,7 @@ struct TidValue {
     }
 } /// Transaction ID for tRFC/qRFC/bgRFC (24-char GUID)
 struct QueueName {
-    mixin DomainId;
+    mixin IdTemplate;
 
     string value;
 
@@ -60,7 +60,7 @@ struct QueueName {
     }
 } /// Queue name for qRFC/bgRFC — up to 24 chars
 struct SystemId {
-    mixin DomainId;
+    mixin IdTemplate;
 
     string value;
 

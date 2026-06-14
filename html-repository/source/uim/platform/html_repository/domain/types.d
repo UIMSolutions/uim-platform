@@ -18,7 +18,7 @@ struct HtmlAppId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct AppVersionId {
@@ -28,7 +28,7 @@ struct AppVersionId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct AppFileId {
@@ -38,7 +38,7 @@ struct AppFileId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ServiceInstanceId {
@@ -48,7 +48,7 @@ struct ServiceInstanceId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct DeploymentRecordId {
@@ -58,7 +58,7 @@ struct DeploymentRecordId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct AppRouteId {
@@ -68,7 +68,7 @@ struct AppRouteId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ContentCacheId {
@@ -78,7 +78,7 @@ struct ContentCacheId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 
@@ -89,5 +89,5 @@ struct ContentCacheId {
 //     this.value = value;
 //   }
 
-//   mixin DomainId;
+//   mixin IdTemplate;
 // }

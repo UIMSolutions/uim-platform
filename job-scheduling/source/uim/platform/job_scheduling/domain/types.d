@@ -18,7 +18,7 @@ struct JobId {
         this.value = value;
     }
     
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct ScheduleId {
     string value;
@@ -27,7 +27,7 @@ struct ScheduleId {
         this.value = value;
     }
     
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct RunLogId {
     string value;
@@ -36,7 +36,7 @@ struct RunLogId {
         this.value = value;
     }
     
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct ConfigurationId {
@@ -46,6 +46,6 @@ struct ConfigurationId {
         this.value = value;
     }
     
-    mixin DomainId;
+    mixin IdTemplate;
 }
 

@@ -17,7 +17,7 @@ struct AuthTokenId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 struct DestinationId {
   string value;
@@ -26,7 +26,7 @@ struct DestinationId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 struct CertificateId {
   string value;
@@ -35,7 +35,7 @@ struct CertificateId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 struct DestinationFragmentId {
   string value;
@@ -44,7 +44,7 @@ struct DestinationFragmentId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ServiceInstanceId {
@@ -54,7 +54,7 @@ struct ServiceInstanceId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 struct DestinationLookupId {
   string value;
@@ -63,5 +63,5 @@ struct DestinationLookupId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }

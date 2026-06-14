@@ -17,7 +17,7 @@ struct MetricId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 ///
 unittest {
@@ -35,7 +35,7 @@ struct MetricDefinitionId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 struct HealthCheckId {
   string value;
@@ -44,7 +44,7 @@ struct HealthCheckId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 struct HealthCheckResultId {
   string value;
@@ -53,7 +53,7 @@ struct HealthCheckResultId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 struct AlertRuleId {
   string value;
@@ -62,7 +62,7 @@ struct AlertRuleId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 struct AlertId {
   string value;
@@ -71,7 +71,7 @@ struct AlertId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 struct NotificationChannelId {
   string value;
@@ -80,7 +80,7 @@ struct NotificationChannelId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 struct MonitoredResourceId {
   string value;
@@ -89,6 +89,6 @@ struct MonitoredResourceId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 

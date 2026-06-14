@@ -16,7 +16,7 @@ import uim.platform.solution_lifecycle;
 // ---------------------------------------------------------------------------
 
 struct MtaArchiveId {
-    mixin DomainId;
+    mixin IdTemplate;
 
 
     this(string value) {
@@ -27,7 +27,7 @@ struct MtaArchiveId {
 }
 
 struct MtaId {
-    mixin DomainId;
+    mixin IdTemplate;
     this(string value) {
         this.value = value;
     }
@@ -36,7 +36,7 @@ struct MtaId {
 }
 
 struct MtaOperationId {
-    mixin DomainId;
+    mixin IdTemplate;
     this(string value) {
         this.value = value;
     }
@@ -45,7 +45,7 @@ struct MtaOperationId {
 }
 
 struct MtaSubscriptionId {
-    mixin DomainId;
+    mixin IdTemplate;
     this(string value) {
         this.value = value;
     }

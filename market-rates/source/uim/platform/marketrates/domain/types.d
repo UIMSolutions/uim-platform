@@ -18,17 +18,17 @@ import uim.platform.marketrates;
 struct MarketRateId {
   string value;
   this(string v) { value = v; }
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ProviderId {
   string value;
   this(string v) { value = v; }
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct AuditLogId {
   string value;
   this(string v) { value = v; }
-  mixin DomainId;
+  mixin IdTemplate;
 }

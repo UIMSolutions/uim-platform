@@ -18,7 +18,7 @@ struct DataSubjectId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct PersonalDataModelId {
@@ -28,7 +28,7 @@ struct PersonalDataModelId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct DeletionRequestId {
@@ -38,7 +38,7 @@ struct DeletionRequestId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct BlockingRequestId {
@@ -48,7 +48,7 @@ struct BlockingRequestId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct LegalGroundId {
@@ -58,7 +58,7 @@ struct LegalGroundId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct RetentionRuleId {
@@ -68,7 +68,7 @@ struct RetentionRuleId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ConsentRecordId {
@@ -78,7 +78,7 @@ struct ConsentRecordId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct DataRetrievalRequestId {
@@ -88,7 +88,7 @@ struct DataRetrievalRequestId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct DataControllerId {
@@ -98,7 +98,7 @@ struct DataControllerId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct DataControllerGroupId {
@@ -108,7 +108,7 @@ struct DataControllerGroupId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct BusinessContextId {
@@ -118,7 +118,7 @@ struct BusinessContextId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct BusinessProcessId {
@@ -128,7 +128,7 @@ struct BusinessProcessId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct BusinessSubprocessId {
@@ -138,7 +138,7 @@ struct BusinessSubprocessId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct CorrectionRequestId {
@@ -148,7 +148,7 @@ struct CorrectionRequestId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ArchiveRequestId {
@@ -158,7 +158,7 @@ struct ArchiveRequestId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct DestructionRequestId {
@@ -168,7 +168,7 @@ struct DestructionRequestId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct PurposeRecordId {
@@ -178,7 +178,7 @@ struct PurposeRecordId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ConsentPurposeId {
@@ -188,7 +188,7 @@ struct ConsentPurposeId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct RuleSetId {
@@ -198,7 +198,7 @@ struct RuleSetId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct InformationReportId {
@@ -208,7 +208,7 @@ struct InformationReportId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct AnonymizationConfigId {
@@ -218,5 +218,5 @@ struct AnonymizationConfigId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }

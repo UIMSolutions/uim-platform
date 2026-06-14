@@ -18,7 +18,7 @@ struct DatabaseInstanceId  {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 struct DataLakeId  {
   string value;
@@ -27,7 +27,7 @@ struct DataLakeId  {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 struct SchemaId  {
   string value;
@@ -36,7 +36,7 @@ struct SchemaId  {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 struct DatabaseUserId  {
   string value;
@@ -45,7 +45,7 @@ struct DatabaseUserId  {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 struct BackupId  {
   string value;
@@ -54,7 +54,7 @@ struct BackupId  {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 struct AlertId  {
   string value;
@@ -63,7 +63,7 @@ struct AlertId  {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 struct HDIContainerId  {
   string value;
@@ -72,7 +72,7 @@ struct HDIContainerId  {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 struct ReplicationTaskId  {
   string value;
@@ -81,7 +81,7 @@ struct ReplicationTaskId  {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 struct ConfigurationId  {
   string value;
@@ -90,7 +90,7 @@ struct ConfigurationId  {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 struct DatabaseConnectionId  {
   string value;
@@ -99,5 +99,5 @@ struct DatabaseConnectionId  {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }

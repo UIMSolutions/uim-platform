@@ -13,7 +13,7 @@ struct CatalogId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct CommandId {
@@ -23,7 +23,7 @@ struct CommandId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct CommandInputId {
@@ -33,7 +33,7 @@ struct CommandInputId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct ExecutionId {
@@ -43,7 +43,7 @@ struct ExecutionId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct ScheduledExecutionId {
@@ -53,7 +53,7 @@ struct ScheduledExecutionId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct TriggerId {
@@ -63,7 +63,7 @@ struct TriggerId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct ServiceAccountId {
@@ -73,7 +73,7 @@ struct ServiceAccountId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct ContentConnectorId {
@@ -83,5 +83,5 @@ struct ContentConnectorId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }

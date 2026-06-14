@@ -17,7 +17,7 @@ struct KymaEnvironmentId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct NamespaceId {
@@ -27,7 +27,7 @@ struct NamespaceId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ServerlessFunctionId {
@@ -37,7 +37,7 @@ struct ServerlessFunctionId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ApiRuleId {
@@ -47,7 +47,7 @@ struct ApiRuleId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ServiceInstanceId {
@@ -57,7 +57,7 @@ struct ServiceInstanceId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ServiceBindingId {
@@ -67,7 +67,7 @@ struct ServiceBindingId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct EventSubscriptionId {
@@ -77,7 +77,7 @@ struct EventSubscriptionId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct KymaModuleId {
@@ -87,7 +87,7 @@ struct KymaModuleId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ApplicationId {
@@ -97,7 +97,7 @@ struct ApplicationId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ClusterId {
@@ -107,6 +107,6 @@ struct ClusterId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 

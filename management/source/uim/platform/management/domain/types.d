@@ -20,7 +20,7 @@ struct DirectoryId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 
@@ -31,7 +31,7 @@ struct EntitlementId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct EnvironmentId {
@@ -41,7 +41,7 @@ struct EnvironmentId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct SubscriptionId {
@@ -51,7 +51,7 @@ struct SubscriptionId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ServicePlanId {
@@ -61,7 +61,7 @@ struct ServicePlanId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct EnvironmentEventId {
@@ -71,7 +71,7 @@ struct EnvironmentEventId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct LabelId {
@@ -81,6 +81,6 @@ struct LabelId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 

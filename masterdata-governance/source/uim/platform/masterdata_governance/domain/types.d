@@ -18,7 +18,7 @@ struct BusinessPartnerId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct ChangeRequestId {
@@ -28,7 +28,7 @@ struct ChangeRequestId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct DataQualityRuleId {
@@ -38,7 +38,7 @@ struct DataQualityRuleId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct DataQualityScoreId {
@@ -48,7 +48,7 @@ struct DataQualityScoreId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct ReplicationId {
@@ -58,5 +58,5 @@ struct ReplicationId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }

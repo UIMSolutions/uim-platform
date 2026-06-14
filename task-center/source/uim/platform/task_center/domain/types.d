@@ -19,7 +19,7 @@ struct TaskId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct TaskDefinitionId  {
     string value;
@@ -28,7 +28,7 @@ struct TaskDefinitionId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct TaskCommentId  {
     string value;
@@ -37,7 +37,7 @@ struct TaskCommentId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct TaskAttachmentId  {
     string value;
@@ -46,7 +46,7 @@ struct TaskAttachmentId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct TaskProviderId  {
     string value;
@@ -55,7 +55,7 @@ struct TaskProviderId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct SubstitutionRuleId  {
     string value;
@@ -64,7 +64,7 @@ struct SubstitutionRuleId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct TaskActionId  {
     string value;
@@ -73,7 +73,7 @@ struct TaskActionId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct UserTaskFilterId  {
     string value;
@@ -82,7 +82,7 @@ struct UserTaskFilterId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 

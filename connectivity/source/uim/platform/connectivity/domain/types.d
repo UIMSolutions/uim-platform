@@ -17,7 +17,7 @@ struct DestinationId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ConnectorId {
@@ -27,7 +27,7 @@ struct ConnectorId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ChannelId {
@@ -37,7 +37,7 @@ struct ChannelId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct RuleId {
@@ -47,7 +47,7 @@ struct RuleId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct CertificateId {
@@ -57,7 +57,7 @@ struct CertificateId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ConnectivityLogId {
@@ -67,7 +67,7 @@ struct ConnectivityLogId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 
@@ -78,5 +78,5 @@ struct SourceId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }

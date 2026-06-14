@@ -12,41 +12,41 @@ import uim.platform.logistic_management;
 struct FreightOrderId {
   string value;
   this(string value) { this.value = value; }
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ShipmentId {
   string value;
   this(string value) { this.value = value; }
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct DeliveryId {
   string value;
   this(string value) { this.value = value; }
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct WarehouseTaskId {
   string value;
   this(string value) { this.value = value; }
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct WarehouseOrderId {
   string value;
   this(string value) { this.value = value; }
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct CarrierId {
   string value;
   this(string value) { this.value = value; }
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct HandlingUnitId {
   string value;
   this(string value) { this.value = value; }
-  mixin DomainId;
+  mixin IdTemplate;
 }

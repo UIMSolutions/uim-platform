@@ -16,7 +16,7 @@ struct LogEntryId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct LogStreamId {
@@ -26,7 +26,7 @@ struct LogStreamId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct TraceId {
@@ -36,7 +36,7 @@ struct TraceId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct SpanId {
@@ -46,7 +46,7 @@ struct SpanId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct DashboardId {
@@ -56,7 +56,7 @@ struct DashboardId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct PanelId {
@@ -66,7 +66,7 @@ struct PanelId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct RetentionPolicyId {
@@ -76,7 +76,7 @@ struct RetentionPolicyId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct AlertRuleId {
@@ -86,7 +86,7 @@ struct AlertRuleId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct AlertId {
@@ -96,7 +96,7 @@ struct AlertId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct NotificationChannelId {
@@ -106,7 +106,7 @@ struct NotificationChannelId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct PipelineId {
@@ -116,7 +116,7 @@ struct PipelineId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 struct IngestionTokenId {
     string value;
@@ -125,20 +125,20 @@ struct IngestionTokenId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 // struct  {
 //     string value;
 //     this(string value) {
 //         this.value = value;
 //     }
-//     mixin DomainId;
+//     mixin IdTemplate;
 // }
 // struct  {
 //     string value;
 //     this(string value) {
 //         this.value = value;
 //     }
-//     mixin DomainId;
+//     mixin IdTemplate;
 // }
 

@@ -18,7 +18,7 @@ struct DatasetId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct DataRecordId {
@@ -28,7 +28,7 @@ struct DataRecordId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ModelConfigId {
@@ -38,7 +38,7 @@ struct ModelConfigId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct TrainingJobId {
@@ -48,7 +48,7 @@ struct TrainingJobId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct DeploymentId {
@@ -58,7 +58,7 @@ struct DeploymentId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct InferenceRequestId {
@@ -68,7 +68,7 @@ struct InferenceRequestId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct InferenceResultId {
@@ -78,5 +78,5 @@ struct InferenceResultId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }

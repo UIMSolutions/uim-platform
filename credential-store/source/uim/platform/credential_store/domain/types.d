@@ -17,7 +17,7 @@ struct NamespaceId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct CredentialId {
@@ -27,7 +27,7 @@ struct CredentialId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct KeyringVersionId {
@@ -37,7 +37,7 @@ struct KeyringVersionId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ServiceBindingId {
@@ -47,7 +47,7 @@ struct ServiceBindingId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct AuditLogEntryId {
@@ -57,5 +57,5 @@ struct AuditLogEntryId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }

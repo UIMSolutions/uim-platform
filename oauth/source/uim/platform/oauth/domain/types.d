@@ -18,7 +18,7 @@ struct OAuthClientId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct OAuthScopeId {
@@ -28,7 +28,7 @@ struct OAuthScopeId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct AccessTokenId {
@@ -38,7 +38,7 @@ struct AccessTokenId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct RefreshTokenId {
@@ -48,7 +48,7 @@ struct RefreshTokenId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct AuthorizationCodeId {
@@ -58,7 +58,7 @@ struct AuthorizationCodeId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct BrandingConfigId {
@@ -68,5 +68,5 @@ struct BrandingConfigId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }

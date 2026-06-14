@@ -15,7 +15,7 @@ import uim.platform.abap_compiler;
 // Strong-typed IDs
 // ---------------------------------------------------------------------------
 struct AbapProgramId {
-    mixin DomainId;
+    mixin IdTemplate;
 
     string value;
     this(string value) {
@@ -23,7 +23,7 @@ struct AbapProgramId {
     }
 }  /// ABAP program / report name (up to 40 chars, SAP convention)
 struct AbapClassId {
-    mixin DomainId;
+    mixin IdTemplate;
 
     string value;
     this(string value) {
@@ -31,7 +31,7 @@ struct AbapClassId {
     }
 }  /// ABAP class name (up to 30 chars)
 struct AbapInterfaceId {
-    mixin DomainId;
+    mixin IdTemplate;
 
     string value;
     this(string value) {
@@ -39,7 +39,7 @@ struct AbapInterfaceId {
     }
 }  /// ABAP interface name
 struct AbapFunctionGroupId {
-    mixin DomainId;
+    mixin IdTemplate;
 
     string value;
     this(string value) {
@@ -47,7 +47,7 @@ struct AbapFunctionGroupId {
     }
 }  /// Function-group (fugr) name
 struct AbapFunctionModuleId {
-    mixin DomainId;
+    mixin IdTemplate;
 
     string value;
     this(string value) {
@@ -55,7 +55,7 @@ struct AbapFunctionModuleId {
     }
 } /// Function-module name
 struct AbapDataTypeId {
-    mixin DomainId;
+    mixin IdTemplate;
 
     string value;
     this(string value) {
@@ -63,7 +63,7 @@ struct AbapDataTypeId {
     }
 }  /// ABAP Dictionary data type name
 struct CompilationJobId {
-    mixin DomainId;
+    mixin IdTemplate;
 
     string value;
     this(string value) {
@@ -71,7 +71,7 @@ struct CompilationJobId {
     }
 } /// Internal job UUID for a compilation run
 struct TokenId {
-    mixin DomainId;
+    mixin IdTemplate;
 
     string value;
     this(string value) {

@@ -18,7 +18,7 @@ struct KeystoreId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 struct KeyEntryId {
   string value;
@@ -27,7 +27,7 @@ struct KeyEntryId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 struct KeyPasswordId {
   string value;
@@ -36,6 +36,6 @@ struct KeyPasswordId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 

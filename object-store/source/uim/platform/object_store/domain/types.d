@@ -17,7 +17,7 @@ struct BucketId {
         this.value = value;
     }
   
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct StorageObjectId {
     string value;
@@ -26,7 +26,7 @@ struct StorageObjectId {
         this.value = value;
     }
   
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct ObjectVersionId {
     string value;
@@ -35,7 +35,7 @@ struct ObjectVersionId {
         this.value = value;
     }
   
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct AccessPolicyId {
     string value;
@@ -44,7 +44,7 @@ struct AccessPolicyId {
         this.value = value;
     }
   
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct LifecycleRuleId {
     string value;
@@ -53,7 +53,7 @@ struct LifecycleRuleId {
         this.value = value;
     }
   
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct CorsRuleId {
     string value;
@@ -62,7 +62,7 @@ struct CorsRuleId {
         this.value = value;
     }
   
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct ServiceBindingId {
     string value;
@@ -71,6 +71,6 @@ struct ServiceBindingId {
         this.value = value;
     }
   
-    mixin DomainId;
+    mixin IdTemplate;
 }
 

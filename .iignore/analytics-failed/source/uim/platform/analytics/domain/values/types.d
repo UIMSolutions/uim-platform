@@ -14,68 +14,68 @@ import uim.platform.analytics;
 struct DashboardId {
   string value;
   this(string v) { value = v; }
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 /// Strongly-typed identifier for a Page within a Dashboard.
 struct PageId {
   string value;
   this(string v) { value = v; }
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 /// Strongly-typed identifier for a Story aggregate root.
 struct StoryId {
   string value;
   this(string v) { value = v; }
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 /// Strongly-typed identifier for a Section within a Story.
 struct SectionId {
   string value;
   this(string v) { value = v; }
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 /// Strongly-typed identifier for a Widget aggregate root.
 struct WidgetId {
   string value;
   this(string v) { value = v; }
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 /// Strongly-typed identifier for a DataSource aggregate root.
 struct DataSourceId {
   string value;
   this(string v) { value = v; }
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 /// Strongly-typed identifier for a Dataset aggregate root.
 struct DatasetId {
   string value;
   this(string v) { value = v; }
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 /// Strongly-typed identifier for a PlanningModel aggregate root.
 struct PlanningModelId {
   string value;
   this(string v) { value = v; }
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 /// Strongly-typed identifier for a Prediction aggregate root.
 struct PredictionId {
   string value;
   this(string v) { value = v; }
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 /// Strongly-typed identifier for a resource group (SAP BTP resource group concept).
 struct ResourceGroupId {
   string value;
   this(string v) { value = v; }
-  mixin DomainId;
+  mixin IdTemplate;
 }

@@ -127,7 +127,7 @@ mixin template TenantEntity(TId) {
 ///
 unittest {
   struct TestId {
-    mixin DomainId;
+    mixin IdTemplate;
 
     string value;
 

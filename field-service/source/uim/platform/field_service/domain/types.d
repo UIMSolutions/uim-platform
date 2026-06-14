@@ -18,7 +18,7 @@ struct ServiceCallId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ActivityId {
@@ -28,7 +28,7 @@ struct ActivityId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct AssignmentId {
@@ -38,7 +38,7 @@ struct AssignmentId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct EquipmentId {
@@ -48,7 +48,7 @@ struct EquipmentId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct TechnicianId {
@@ -58,7 +58,7 @@ struct TechnicianId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct CustomerId {
@@ -68,7 +68,7 @@ struct CustomerId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct SkillId {
@@ -78,7 +78,7 @@ struct SkillId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct SmartformId {
@@ -88,5 +88,5 @@ struct SmartformId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }

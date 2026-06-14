@@ -18,7 +18,7 @@ struct WorkspaceId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct WorkpageId  {
     string value;
@@ -27,7 +27,7 @@ struct WorkpageId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct CardId  {
     string value;
@@ -36,7 +36,7 @@ struct CardId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct ContentId  {
     string value;
@@ -45,7 +45,7 @@ struct ContentId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct FeedEntryId  {
     string value;
@@ -54,7 +54,7 @@ struct FeedEntryId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct NotificationId  {
     string value;
@@ -63,7 +63,7 @@ struct NotificationId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct TaskId  {
     string value;
@@ -72,7 +72,7 @@ struct TaskId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct ChannelId  {
     string value;
@@ -81,7 +81,7 @@ struct ChannelId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct AppId  {
     string value;
@@ -90,7 +90,7 @@ struct AppId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct WidgetId  {
     string value;
@@ -99,7 +99,7 @@ struct WidgetId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct RoleId  {
@@ -109,7 +109,7 @@ struct RoleId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct SiteId  {
     string value;
@@ -118,7 +118,7 @@ struct SiteId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct EventId  {
     string value;
@@ -127,7 +127,7 @@ struct EventId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct SurveyId  {
     string value;
@@ -136,7 +136,7 @@ struct SurveyId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct ForumTopicId  {
     string value;
@@ -145,7 +145,7 @@ struct ForumTopicId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct KBArticleId  {
     string value;
@@ -154,7 +154,7 @@ struct KBArticleId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct GroupId  {
     string value;
@@ -163,7 +163,7 @@ struct GroupId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct TagId  {
     string value;
@@ -172,7 +172,7 @@ struct TagId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct ThemeId  {
     string value;
@@ -181,7 +181,7 @@ struct ThemeId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct NavigationItemId  {
     string value;
@@ -190,7 +190,7 @@ struct NavigationItemId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct PageTemplateId  {
     string value;
@@ -199,7 +199,7 @@ struct PageTemplateId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct ExternalContentProviderId  {
     string value;
@@ -208,7 +208,7 @@ struct ExternalContentProviderId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct ShellPluginId  {
     string value;
@@ -217,7 +217,7 @@ struct ShellPluginId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct UserProfileId  {
     string value;
@@ -226,7 +226,7 @@ struct UserProfileId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 struct MemberId  {
     string value;
@@ -235,5 +235,5 @@ struct MemberId  {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }

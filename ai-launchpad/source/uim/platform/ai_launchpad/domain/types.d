@@ -20,7 +20,7 @@ struct ArtifactId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 struct WorkspaceId {
   string value;
@@ -29,7 +29,7 @@ struct WorkspaceId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ScenarioId {
@@ -39,7 +39,7 @@ struct ScenarioId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ConfigurationId {
@@ -49,7 +49,7 @@ struct ConfigurationId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ExecutionId {
@@ -59,7 +59,7 @@ struct ExecutionId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct DeploymentId {
@@ -69,7 +69,7 @@ struct DeploymentId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ModelId {
@@ -79,7 +79,7 @@ struct ModelId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct DatasetId {
@@ -89,7 +89,7 @@ struct DatasetId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct PromptId {
@@ -99,7 +99,7 @@ struct PromptId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct PromptCollectionId {
@@ -109,7 +109,7 @@ struct PromptCollectionId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct ResourceGroupId {
@@ -119,7 +119,7 @@ struct ResourceGroupId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }
 
 struct UsageStatisticId {
@@ -129,5 +129,5 @@ struct UsageStatisticId {
     this.value = value;
   }
 
-  mixin DomainId;
+  mixin IdTemplate;
 }

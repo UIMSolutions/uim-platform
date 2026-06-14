@@ -13,7 +13,7 @@ struct BrokerServiceId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct QueueId {
@@ -23,7 +23,7 @@ struct QueueId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct TopicId {
@@ -33,7 +33,7 @@ struct TopicId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct EventSubscriptionId {
@@ -43,7 +43,7 @@ struct EventSubscriptionId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct EventMessageId {
@@ -53,7 +53,7 @@ struct EventMessageId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct EventSchemaId {
@@ -63,7 +63,7 @@ struct EventSchemaId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct EventApplicationId {
@@ -73,7 +73,7 @@ struct EventApplicationId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
 
 struct MeshBridgeId {
@@ -83,5 +83,5 @@ struct MeshBridgeId {
         this.value = value;
     }
 
-    mixin DomainId;
+    mixin IdTemplate;
 }
