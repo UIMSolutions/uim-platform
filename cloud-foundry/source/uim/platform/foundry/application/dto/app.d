@@ -42,7 +42,7 @@ struct UpdateAppRequest {
 }
 
 struct ScaleAppRequest {
-  AppId id;
+  AppId appId;
   TenantId tenantId;
   
   int instances;

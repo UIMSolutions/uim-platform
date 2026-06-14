@@ -80,7 +80,7 @@ class AppController : ManageHttpController {
     auto tenantId = precheck.tenantId;
 
     auto apps = useCase.listApps(tenantId);
-    auto list = items.map!(item => item.toJson()).array.toJson;
+    auto list = apps.map!(item => item.toJson()).array.toJson;
 
     auto responseData = Json.emptyObject
       .set("count", list.length)
@@ -98,11 +98,11 @@ class AppController : ManageHttpController {
     if (id.isNull)
       return errorResponse("Invalid application ID", 400);
 
-    auto app = useCase.getApp(tenantId, appId);
+    auto app = useCase.getApp(tenantId, id);
     if (app.isNull)
       return errorResponse("Application not found", 404);
 
-    auto responseData = jappob.toJson();
+    auto responseData = app.toJson();
     return successResponse("Application retrieved successfully", "Retrieved", 200, responseData);
   }
 
@@ -113,10 +113,12 @@ class AppController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto id = AppId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid application ID", 400);
 
     auto data = precheck.data;
     auto r = UpdateAppRequest();
-    r.appId = appId;
+    r.appId = id;
     r.tenantId = tenantId;
     r.name = data.getString("name");
     r.instances = data.getInteger("instances", 0);
@@ -145,9 +147,11 @@ class AppController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto appId = AppId(precheck.id);
+    auto id = AppId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid application ID", 400);
 
-    auto result = useCase.startApp(tenantId, appId);
+    auto result = useCase.startApp(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
 
@@ -170,9 +174,11 @@ class AppController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto appId = AppId(precheck.id);
+    auto id = AppId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid application ID", 400);
 
-    auto result = useCase.stopApp(tenantId, appId);
+    auto result = useCase.stopApp(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
 
@@ -195,9 +201,11 @@ class AppController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto appId = AppId(precheck.id);
+    auto id = AppId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid application ID", 400);
 
-    auto result = useCase.restartApp(tenantId, appId);
+    auto result = useCase.restartApp(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
 
@@ -220,11 +228,13 @@ class AppController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto appId = AppId(precheck.id);
+    auto id = AppId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid application ID", 400);
 
     auto data = precheck.data;
     auto r = ScaleAppRequest();
-    r.appId = appId;
+    r.appId = id;
     r.tenantId = tenantId;
     r.instances = data.getInteger("instances", 0);
     r.memoryMb = data.getInteger("memoryMb", 0);
@@ -253,11 +263,14 @@ class AppController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto appId = AppId(precheck.id);
+    auto id = AppId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid application ID", 400);
 
-    auto env = useCase.getEnvironment(tenantId, appId);
+    auto env = useCase.getEnvironment(tenantId, id);
+
     auto responseData = Json.emptyObject
-      .set("appId", appId)
+      .set("appId", id)
       .set("environmentVariables", env);
 
     return successResponse("Application environment variables retrieved successfully", "Retrieved", 200, responseData);
@@ -278,12 +291,14 @@ class AppController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto appId = AppId(precheck.id);
+    auto id = AppId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid application ID", 400);
 
     auto data = precheck.data;
     auto envJson = data.getString("environmentVariables");
 
-    auto result = useCase.setEnvironment(tenantId, appId, envJson);
+    auto result = useCase.setEnvironment(tenantId, id, envJson);
     if (result.hasError)
       return errorResponse(result.message, 400);
 

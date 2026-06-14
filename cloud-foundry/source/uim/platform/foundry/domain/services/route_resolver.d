@@ -55,10 +55,10 @@ class RouteResolver {
       return false;
 
     // Already mapped?
-    if (route.mappedAppIds.canFind(appId))
+    if (route.mappedAppIds.canFind(appId.value))
       return true;
 
-    route.mappedAppIds ~= appId;
+    route.mappedAppIds ~= appId.value;
     routes.update(route);
     return true;
   }
@@ -71,7 +71,7 @@ class RouteResolver {
 
     string[] updated;
     foreach (id; route.mappedAppIds)
-      if (id != appId)
+      if (id != appId.value)
         updated ~= id;
 
     if (updated.length == route.mappedAppIds.length)

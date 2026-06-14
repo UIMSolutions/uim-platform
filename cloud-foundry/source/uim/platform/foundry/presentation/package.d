@@ -6,5 +6,9 @@
 module uim.platform.foundry.presentation;
 
 public {
+  import uim.platform.foundry.presentation.cli;
+  import uim.platform.foundry.presentation.gui;
   import uim.platform.foundry.presentation.http;
+  import uim.platform.foundry.presentation.rest;
+  import uim.platform.foundry.presentation.web;
 }

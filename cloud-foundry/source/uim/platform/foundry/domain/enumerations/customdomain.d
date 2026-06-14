@@ -62,7 +62,31 @@ enum DomainStatus {
 DomainStatus toDomainStatus(string status) {
     const map = [
         "pending": DomainStatus.pending,
+        "active": DomainStatus.active,
+        "inactive": DomainStatus.inactive,
+        "error": DomainStatus.error,
+        "deactivated": DomainStatus.deactivated,
+        "revoked": DomainStatus.revoked,
+        "expired": DomainStatus.expired,
+        "renewing": DomainStatus.renewing,
+        "suspended": DomainStatus.suspended,
+        "transferring": DomainStatus.transferring,
+        "locked": DomainStatus.locked,
+        "unlocking": DomainStatus.unlocking,
+        "archived": DomainStatus.archived,
+        "suspended_nonpayment": DomainStatus.suspended_nonpayment,
+        "suspended_abuse": DomainStatus.suspended_abuse,
+        "suspended_legal": DomainStatus.suspended_legal,
+        "suspended_security": DomainStatus.suspended_security,
+        "suspended_policy": DomainStatus.suspended_policy,
+        "suspended_other": DomainStatus.suspended_other,
+        "deleting": DomainStatus.deleting,
+        "deleted_redemption": DomainStatus.deleted_redemption,
+        "deleted_expired": DomainStatus.deleted_expired,
+        "restoring": DomainStatus.restoring,
+        "restored": DomainStatus.restored,  
     ];
+    return map.get(status.toLower, DomainStatus.pending);
 }
 
 enum DomainEnvironment {

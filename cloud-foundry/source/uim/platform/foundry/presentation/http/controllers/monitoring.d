@@ -9,6 +9,10 @@ module uim.platform.foundry.presentation.http.controllers.monitoring;
 // import uim.platform.foundry.domain.types;
 import uim.platform.foundry;
 
+// mixin(ShowModule!());
+
+@safe:
+
 class MonitoringController : HttpController {
   private MonitorAppsUseCase useCase;
 

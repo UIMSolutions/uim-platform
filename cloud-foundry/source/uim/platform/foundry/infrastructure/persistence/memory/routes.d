@@ -59,7 +59,7 @@ class MemoryRouteRepository : TenantRepository!(Route, RouteId), IRouteRepositor
   }
 
   Route[] filterByApp(Route[] routes, AppId appId) {
-    return routes.filter!(e => e.mappedAppIds.any!(id => id == appId)).array;
+    return routes.filter!(e => e.mappedAppIds.any!(id => id == appId.value)).array;
   }
 
   Route[] findByApp(TenantId tenantId, AppId appId) {
@@ -78,7 +78,7 @@ class MemoryRouteRepository : TenantRepository!(Route, RouteId), IRouteRepositor
   }
 
   Route[] filterBySpace(Route[] routes, SpaceId spaceId) {
-    return routes.filter!(e => e.mappedSpaceIds.canFind(spaceId)).array;
+    return routes.filter!(e => e.spaceId == spaceId).array;
   }
 
   Route[] findBySpace(TenantId tenantId, SpaceId spaceId) {

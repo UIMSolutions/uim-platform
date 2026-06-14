@@ -146,7 +146,7 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult scaleApp(ScaleAppRequest req) {
-    if (req.isNull)
+    if (req.appId.isNull)
       return CommandResult(false, "", "Application ID is required");
 
     if (!lifecycle.scaleApp(req.tenantId, req.id, req.instances, req.memoryMb, req.diskMb))
