@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.kyma.presentation.http.controllers.event_subscription;
 
-
 // import uim.platform.kyma.application.usecases.manage.event_subscriptions;
 // import uim.platform.kyma.application.dto;
 // import uim.platform.kyma.domain.entities.event_subscription;
@@ -35,114 +34,110 @@ class EventSubscriptionController : ManageHttpController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-              CreateEventSubscriptionRequest r;
-      r.namespaceId = data.getString("namespaceId");
-      r.environmentId = data.getString("environmentId");
-      r.tenantId = tenantId;
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.source = data.getString("source");
-      r.eventTypes = data.getStrings("eventTypes");
-      r.typeEncoding = data.getString("typeEncoding");
-      r.sinkUrl = data.getString("sinkUrl");
-      r.sinkServiceName = data.getString("sinkServiceName");
-      r.sinkServicePort = data.getInteger("sinkServicePort");
-      r.maxInFlightMessages = data.getInteger("maxInFlightMessages");
-      r.exactTypeMatching = data.getBoolean("exactTypeMatching", true);
-      r.filterAttributes = data.jsonStrMap("filterAttributes");
-      r.labels = data.jsonStrMap("labels");
-      r.createdBy = UserId(req.headers.get("X-User-Id", ""));
+    auto data = precheck.data;
+    CreateEventSubscriptionRequest r;
+    r.namespaceId = data.getString("namespaceId");
+    r.environmentId = data.getString("environmentId");
+    r.tenantId = tenantId;
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.source = data.getString("source");
+    r.eventTypes = data.getStrings("eventTypes");
+    r.typeEncoding = data.getString("typeEncoding");
+    r.sinkUrl = data.getString("sinkUrl");
+    r.sinkServiceName = data.getString("sinkServiceName");
+    r.sinkServicePort = data.getInteger("sinkServicePort");
+    r.maxInFlightMessages = data.getInteger("maxInFlightMessages");
+    r.exactTypeMatching = data.getBoolean("exactTypeMatching", true);
+    r.filterAttributes = data.jsonStrMap("filterAttributes");
+    r.labels = data.jsonStrMap("labels");
+    r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
-      auto result = usecase.create(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
+    auto result = usecase.create(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-        auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("Subscription created successfully", "Created", 201, responseData);
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Subscription created successfully", "Created", 201, responseData);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto nsId = req.params.get("namespaceId");
-      auto envId = req.params.get("environmentId");
-      auto source = req.params.get("source");
+    auto tenantId = precheck.tenantId;
+    auto nsId = req.params.get("namespaceId");
+    auto envId = req.params.get("environmentId");
+    auto source = req.params.get("source");
 
-      EventSubscription[] items;
-      if (!source.isEmpty)
-        items = usecase.listBySource(source);
-      else if (!nsId.isEmpty)
-        items = usecase.listByNamespace(nsId);
-      else if (!envId.isEmpty)
-        items = usecase.listByEnvironment(envId);
+    EventSubscription[] items;
+    if (!source.isEmpty)
+      items = usecase.listBySource(source);
+    else if (!nsId.isEmpty)
+      items = usecase.listByNamespace(nsId);
+    else if (!envId.isEmpty)
+      items = usecase.listByEnvironment(envId);
 
-      auto arr = items.map!(sub => sub.toJson).array.toJson;
+    auto arr = items.map!(sub => sub.toJson).array.toJson;
 
-      auto resp = Json.emptyObject
-          .set("items", arr)
-          .set("totalCount", items.length);
-          
-      res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto resp = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", items.length);
+
+    return successResponse("Subscriptions retrieved successfully", 200, resp);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto sub = usecase.getSubscription(tenantId, id);
-      if (sub.isNull) 
-        return errorResponse("Subscription not found", 404);
+    auto tenantId = precheck.tenantId;
+    auto id = precheck.id;
+    auto sub = usecase.getSubscription(tenantId, id);
+    if (sub.isNull)
+      return errorResponse("Subscription not found", 404);
 
-      auto response = sub.toJson();
-      return successResponse("Subscription retrieved successfully", 200, response);
+    auto response = sub.toJson();
+    return successResponse("Subscription retrieved successfully", 200, response);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto data = precheck.data;
-      UpdateEventSubscriptionRequest r;
-      r.description = data.getString("description");
-      r.eventTypes = data.getStrings("eventTypes");
-      r.sinkUrl = data.getString("sinkUrl");
-      r.sinkServiceName = data.getString("sinkServiceName");
-      r.sinkServicePort = data.getInteger("sinkServicePort");
-      r.maxInFlightMessages = data.getInteger("maxInFlightMessages");
-      r.exactTypeMatching = data.getBoolean("exactTypeMatching", true);
-      r.filterAttributes = data.jsonStrMap("filterAttributes");
-      r.labels = data.jsonStrMap("labels");
+    auto tenantId = precheck.tenantId;
+    auto id = precheck.id;
+    auto data = precheck.data;
+    UpdateEventSubscriptionRequest r;
+    r.description = data.getString("description");
+    r.eventTypes = data.getStrings("eventTypes");
+    r.sinkUrl = data.getString("sinkUrl");
+    r.sinkServiceName = data.getString("sinkServiceName");
+    r.sinkServicePort = data.getInteger("sinkServicePort");
+    r.maxInFlightMessages = data.getInteger("maxInFlightMessages");
+    r.exactTypeMatching = data.getBoolean("exactTypeMatching", true);
+    r.filterAttributes = data.jsonStrMap("filterAttributes");
+    r.labels = data.jsonStrMap("labels");
 
-      auto result = usecase.updateSubscription(tenantId, id, r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
+    auto result = usecase.updateSubscription(tenantId, id, r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-        auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("Subscription updated successfully", "Updated", 200, responseData);
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Subscription updated successfully", "Updated", 200, responseData);
   }
 
   protected void handlePause(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto result = usecase.pauseSubscription(tenantId, id);
@@ -150,14 +145,13 @@ class EventSubscriptionController : ManageHttpController {
         res.writeJsonBody(Json.emptyObject, 200);
       else
         writeError(res, 400, result.message);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   protected void handleResume(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = precheck.tenantId;
       auto id = precheck.id;
       auto result = usecase.resumeSubscription(tenantId, id);
@@ -165,25 +159,24 @@ class EventSubscriptionController : ManageHttpController {
         res.writeJsonBody(Json.emptyObject, 200);
       else
         writeError(res, 400, result.message);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto result = usecase.deleteSubscription(tenantId, id);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
+    auto tenantId = precheck.tenantId;
+    auto id = precheck.id;
+    auto result = usecase.deleteSubscription(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-        auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("Subscription deleted successfully", "Deleted", 200, responseData);
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Subscription deleted successfully", "Deleted", 200, responseData);
   }
 
 }

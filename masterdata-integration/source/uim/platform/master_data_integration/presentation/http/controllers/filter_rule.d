@@ -89,10 +89,7 @@ class FilterRuleController : ManageHttpController {
         .set("totalCount", rules.length)
         .set("message", "Filter rules retrieved successfully");
         
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+      return successResponse("Filter rules retrieved successfully", 200, resp);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {

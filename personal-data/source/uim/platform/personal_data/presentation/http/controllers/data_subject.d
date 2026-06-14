@@ -159,13 +159,7 @@ class DataSubjectController : ManageHttpController {
             .set("id", result.id)
             .set("message", "Data subject updated");
 
-        res.writeJsonBody(resp, 200);
-    } else {
-        writeError(res, 404, result.message);
-    }
-} catch (Exception e) {
-    writeError(res, 500, "Internal server error");
-}
+        return successResponse("Data subject updated successfully", 200, resp);
 }
 
 protected void handleBlock(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -221,19 +215,17 @@ override protected Json deleteHandler(HTTPServerRequest req) {
 
     auto tenantId = precheck.tenantId;
     auto id = DataSubjectId(precheck.id);
+    if (id.isNull)
+        return errorResponse("Invalid data subject ID", 400);
+
     auto result = usecase.deleteDataSubject(tenantId, id);
     if (result.hasError)
         return errorResponse(result.message, 400);
+        
     auto resp = Json.emptyObject
         .set("id", result.id)
         .set("message", "Data subject deleted");
 
-    res.writeJsonBody(resp, 200);
-} else {
-    writeError(res, 404, result.message);
-}
-} catch (Exception e) {
-    writeError(res, 500, "Internal server error");
-}
+    return successResponse("Data subject deleted successfully", 200, resp);
 }
 }

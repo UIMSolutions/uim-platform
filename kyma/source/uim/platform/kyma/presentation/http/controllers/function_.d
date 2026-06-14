@@ -32,140 +32,136 @@ class FunctionController : ManageHttpController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-              CreateFunctionRequest r;
-      r.namespaceId = data.getString("namespaceId");
-      r.environmentId = data.getString("environmentId");
-      r.tenantId = tenantId;
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.runtime = data.getString("runtime");
-      r.sourceCode = data.getString("sourceCode");
-      r.handler = data.getString("handler");
-      r.dependencies = data.getString("dependencies");
-      r.scalingType = data.getString("scalingType");
-      r.minReplicas = data.getInteger("minReplicas");
-      r.maxReplicas = data.getInteger("maxReplicas");
-      r.cpuRequest = data.getString("cpuRequest");
-      r.cpuLimit = data.getString("cpuLimit");
-      r.memoryRequest = data.getString("memoryRequest");
-      r.memoryLimit = data.getString("memoryLimit");
-      r.envVars = data.jsonStrMap("envVars");
-      r.labels = data.jsonStrMap("labels");
-      r.timeoutSeconds = data.getInteger("timeoutSeconds");
-      r.createdBy = UserId(req.headers.get("X-User-Id", ""));
+    auto data = precheck.data;
+    CreateFunctionRequest r;
+    r.namespaceId = data.getString("namespaceId");
+    r.environmentId = data.getString("environmentId");
+    r.tenantId = tenantId;
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.runtime = data.getString("runtime");
+    r.sourceCode = data.getString("sourceCode");
+    r.handler = data.getString("handler");
+    r.dependencies = data.getString("dependencies");
+    r.scalingType = data.getString("scalingType");
+    r.minReplicas = data.getInteger("minReplicas");
+    r.maxReplicas = data.getInteger("maxReplicas");
+    r.cpuRequest = data.getString("cpuRequest");
+    r.cpuLimit = data.getString("cpuLimit");
+    r.memoryRequest = data.getString("memoryRequest");
+    r.memoryLimit = data.getString("memoryLimit");
+    r.envVars = data.jsonStrMap("envVars");
+    r.labels = data.jsonStrMap("labels");
+    r.timeoutSeconds = data.getInteger("timeoutSeconds");
+    r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
-      auto result = usecase.create(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id);
+    auto result = usecase.create(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+    auto resp = Json.emptyObject
+      .set("id", result.id);
 
-        res.writeJsonBody(resp, 201);
-      } else
-        writeError(res, 400, result.message);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    return successResponse("Function created successfully", "Created", 201, resp);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto nsId = req.params.get("namespaceId");
-      auto envId = req.params.get("environmentId");
+    auto tenantId = precheck.tenantId;
+    auto nsId = req.params.get("namespaceId");
+    auto envId = req.params.get("environmentId");
 
-      ServerlessFunction[] items;
-      if (!nsId.isEmpty)
-        items = usecase.listByNamespace(NamespaceId(nsId));
-      else if (!envId.isEmpty)
-        items = usecase.listByEnvironment(KymaEnvironmentId(envId));
+    ServerlessFunction[] items;
+    if (!nsId.isEmpty)
+      items = usecase.listByNamespace(NamespaceId(nsId));
+    else if (!envId.isEmpty)
+      items = usecase.listByEnvironment(KymaEnvironmentId(envId));
 
-      auto arr = items.map!(fn => fn.toJson).array.toJson;
+    auto arr = items.map!(fn => fn.toJson).array.toJson;
 
-      auto list = items.map!(item => item.toJson()).array.toJson;
+    auto list = items.map!(item => item.toJson()).array.toJson;
 
-        auto responseData = Json.emptyObject
-            .set("count", list.length)
-            .set("resources", list);
-        return successResponse("", 0, responseData);
+    auto responseData = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+    return successResponse("Functions retrieved successfully", "Retrieved", 200, responseData);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      if (!usecase.hasFunction(ServerlessFunctionId(tenantId, id))) {
-        writeError(res, 404, "Function not found");
-        return;
-      }
-      auto fn = usecase.getFunction(ServerlessFunctionId(tenantId, id));
-      res.writeJsonBody(fn.toJson, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+    auto tenantId = precheck.tenantId;
+    auto id = precheck.id;
+    if (!usecase.hasFunction(ServerlessFunctionId(tenantId, id))) {
+      writeError(res, 404, "Function not found");
+      return;
     }
+    auto fn = usecase.getFunction(ServerlessFunctionId(tenantId, id));
+    if (fn.isNull)
+      return errorResponse("Function not found", 404);
+
+    auto responseData = fn.toJson;
+    return successResponse("Function retrieved successfully", "Retrieved", 200, responseData);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto data = precheck.data;
-      UpdateFunctionRequest r;
-      r.description = data.getString("description");
-      r.sourceCode = data.getString("sourceCode");
-      r.handler = data.getString("handler");
-      r.dependencies = data.getString("dependencies");
-      r.scalingType = data.getString("scalingType");
-      r.minReplicas = data.getInteger("minReplicas");
-      r.maxReplicas = data.getInteger("maxReplicas");
-      r.cpuRequest = data.getString("cpuRequest");
-      r.cpuLimit = data.getString("cpuLimit");
-      r.memoryRequest = data.getString("memoryRequest");
-      r.memoryLimit = data.getString("memoryLimit");
-      r.envVars = data.jsonStrMap("envVars");
-      r.labels = data.jsonStrMap("labels");
-      r.timeoutSeconds = data.getInteger("timeoutSeconds");
+    auto tenantId = precheck.tenantId;
+    auto id = precheck.id;
+    auto data = precheck.data;
+    UpdateFunctionRequest r;
+    r.description = data.getString("description");
+    r.sourceCode = data.getString("sourceCode");
+    r.handler = data.getString("handler");
+    r.dependencies = data.getString("dependencies");
+    r.scalingType = data.getString("scalingType");
+    r.minReplicas = data.getInteger("minReplicas");
+    r.maxReplicas = data.getInteger("maxReplicas");
+    r.cpuRequest = data.getString("cpuRequest");
+    r.cpuLimit = data.getString("cpuLimit");
+    r.memoryRequest = data.getString("memoryRequest");
+    r.memoryLimit = data.getString("memoryLimit");
+    r.envVars = data.jsonStrMap("envVars");
+    r.labels = data.jsonStrMap("labels");
+    r.timeoutSeconds = data.getInteger("timeoutSeconds");
 
-      auto result = usecase.updateFunction(ServerlessFunctionId(tenantId, id), r);
-      if (result.success)
-        res.writeJsonBody(Json.emptyObject, 200);
-      else
-        writeError(res, 400, result.message);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto result = usecase.updateFunction(ServerlessFunctionId(tenantId, id), r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto resp = Json.emptyObject
+      .set("id", result.id);
+
+    return successResponse("Function updated successfully", "Updated", 200, resp);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto result = usecase.deleteFunction(ServerlessFunctionId(tenantId, id));
-      if (result.success)
-        res.writeBody("", 204);
-      else
-        writeError(res, 404, result.message);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto tenantId = precheck.tenantId;
+    auto id = precheck.id;
+    auto result = usecase.deleteFunction(ServerlessFunctionId(tenantId, id));
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto resp = Json.emptyObject
+      .set("id", result.id);
+
+    return successResponse("Function deleted successfully", "Deleted", 200, resp);
   }
 }

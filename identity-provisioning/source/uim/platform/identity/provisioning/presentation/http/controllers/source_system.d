@@ -50,16 +50,11 @@ class SourceSystemController : ManageHttpController {
     r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
     auto result = usecase.createSourceSystem(r);
-    if (result.isSuccess) {
-      auto resp = Json.emptyObject.set("id", result.id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-      res.writeJsonBody(resp, 201);
-    } else
-      writeError(res, 400, result.message);
-  }
- catch (Exception e) {
-    writeError(res, 500, "Internal server error");
-  }
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Source system created successfully", 201, responseData);
 }
 
 override protected Json listHandler(HTTPServerRequest req) {
@@ -78,11 +73,7 @@ override protected Json listHandler(HTTPServerRequest req) {
     .set("items", arr)
     .set("totalCount", items.length);
 
-  res.writeJsonBody(resp, 200);
-}
- catch (Exception e) {
-  writeError(res, 500, "Internal server error");
-}
+  return successResponse("Source system list retrieved successfully", 200, resp);
 }
 
 override protected Json getHandler(HTTPServerRequest req) {
@@ -117,19 +108,11 @@ override protected Json updateHandler(HTTPServerRequest req) {
   r.connectionConfig = data.getString("connectionConfig");
 
   auto result = usecase.updateSourceSystem(r);
-  if (result.isSuccess) {
-    auto resp = Json.emptyObject
-      .set("id", result.id);
+  if (result.hasError)
+    return errorResponse(result.message, 400);
 
-    res.writeJsonBody(resp, 200);
-  } else {
-    auto status = result.message == "Source system not found" ? 404 : 400;
-    writeError(res, status, result.message);
-  }
-}
- catch (Exception e) {
-  writeError(res, 500, "Internal server error");
-}
+  auto responseData = Json.emptyObject.set("id", result.id);
+  return successResponse("Source system updated successfully", 200, responseData);
 }
 
 protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -181,17 +164,11 @@ override protected Json deleteHandler(HTTPServerRequest req) {
   auto id = precheck.id;
   auto tenantId = precheck.tenantId;
   auto result = usecase.deleteSourceSystem(tenantId, id);
-  if (result.isSuccess) {
-    auto resp = Json.emptyObject
-      .set("deleted", true);
+  if (result.hasError)
+    return errorResponse(result.message, 400);
 
-    res.writeJsonBody(resp, 200);
-  } else
-    writeError(res, 404, result.message);
-}
- catch (Exception e) {
-  writeError(res, 500, "Internal server error");
-}
+  auto responseData = Json.emptyObject.set("id", result.id);
+  return successResponse("Source system deleted successfully", 200, responseData);
 }
 
 }

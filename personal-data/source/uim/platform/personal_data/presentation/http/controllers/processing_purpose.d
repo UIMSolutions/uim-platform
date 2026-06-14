@@ -20,7 +20,7 @@ class ProcessingPurposeController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        
+
         router.get("/api/v1/personal-data/purposes", &handleList);
         router.get("/api/v1/personal-data/purposes/*", &handleGet);
         router.post("/api/v1/personal-data/purposes", &handleCreate);
@@ -36,31 +36,25 @@ class ProcessingPurposeController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-            CreateProcessingPurposeRequest r;
-            r.tenantId = tenantId;
-            r.id = precheck.id;
-            r.name = data.getString("name");
-            r.description = data.getString("description");
-            r.legalBasis = data.getString("legalBasis");
-            r.retentionPeriod = data.getString("retentionPeriod");
-            r.dataProtectionOfficer = data.getString("dataProtectionOfficer");
-            r.requiresConsent = data.getBoolean("requiresConsent");
-            r.createdBy = UserId(data.getString("createdBy"));
+        CreateProcessingPurposeRequest r;
+        r.tenantId = tenantId;
+        r.id = precheck.id;
+        r.name = data.getString("name");
+        r.description = data.getString("description");
+        r.legalBasis = data.getString("legalBasis");
+        r.retentionPeriod = data.getString("retentionPeriod");
+        r.dataProtectionOfficer = data.getString("dataProtectionOfficer");
+        r.requiresConsent = data.getBoolean("requiresConsent");
+        r.createdBy = UserId(data.getString("createdBy"));
 
-            auto result = usecase.create(r);
-            if (result.hasError)
+        auto result = usecase.create(r);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Processing purpose created");
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Processing purpose created");
 
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        return successResponse("Processing purpose created successfully", 201, resp);
     }
 
     override protected Json listHandler(HTTPServerRequest req) {
@@ -70,19 +64,16 @@ class ProcessingPurposeController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-            auto purposes = usecase.list(tenantId);
+        auto purposes = usecase.list(tenantId);
 
-            auto jarr = purposes.map!(p => toJson(p)).array.toJson;
+        auto jarr = purposes.map!(p => toJson(p)).array.toJson;
 
-            auto resp = Json.emptyObject
-              .set("count", purposes.length)
-              .set("resources", jarr)
-              .set("message", "Processing purpose list retrieved successfully");
+        auto resp = Json.emptyObject
+            .set("count", purposes.length)
+            .set("resources", jarr)
+            .set("message", "Processing purpose list retrieved successfully");
 
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        return successResponse("Processing purpose list retrieved successfully", 200, resp);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -91,18 +82,14 @@ class ProcessingPurposeController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            
 
-            auto id = precheck.id;
-            auto p = usecase.getById(tenantId, id);
-            if (p.isNull) {
-                writeError(res, 404, "Processing purpose not found");
-                return;
-            }
-            res.writeJsonBody(toJson(p), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto id = precheck.id;
+        auto p = usecase.getById(tenantId, id);
+        if (p.isNull)
+            return errorResponse("Processing purpose not found", 404);
+
+        auto resp = p.toJson;
+        return successResponse("Processing purpose retrieved successfully", 200, resp);
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -111,34 +98,27 @@ class ProcessingPurposeController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            
 
-            auto data = precheck.data;
-            UpdateProcessingPurposeRequest r;
-            r.tenantId = tenantId;
-            r.id = precheck.id;
-            r.name = data.getString("name");
-            r.description = data.getString("description");
-            r.legalBasis = data.getString("legalBasis");
-            r.retentionPeriod = data.getString("retentionPeriod");
-            r.dataProtectionOfficer = data.getString("dataProtectionOfficer");
-            r.requiresConsent = data.getBoolean("requiresConsent");
-            r.updatedBy = UserId(data.getString("updatedBy"));
+        auto data = precheck.data;
+        UpdateProcessingPurposeRequest r;
+        r.tenantId = tenantId;
+        r.id = precheck.id;
+        r.name = data.getString("name");
+        r.description = data.getString("description");
+        r.legalBasis = data.getString("legalBasis");
+        r.retentionPeriod = data.getString("retentionPeriod");
+        r.dataProtectionOfficer = data.getString("dataProtectionOfficer");
+        r.requiresConsent = data.getBoolean("requiresConsent");
+        r.updatedBy = UserId(data.getString("updatedBy"));
 
-            auto result = usecase.update(r);
-            if (result.hasError)
+        auto result = usecase.update(r);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Processing purpose updated");
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Processing purpose updated");
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        return successResponse("Processing purpose updated successfully", 200, resp);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -147,36 +127,15 @@ class ProcessingPurposeController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            
-
-            auto id = precheck.id;
-            auto result = usecase.deleteProcessingPurpose(id);
-            if (result.hasError)
+        auto id = precheck.id;
+        auto result = usecase.deleteProcessingPurpose(id);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                  .set("id", result.id)
-                  .set("message", "Processing purpose deleted");
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Processing purpose deleted");
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        return successResponse("Processing purpose deleted successfully", 200, resp);
     }
 
-    private Json purposeToJson(ProcessingPurpose p) {
-        return Json.emptyObject
-            .set("id", p.id)
-            .set("name", p.name)
-            .set("description", p.description)
-            .set("status", p.status.to!string)
-            .set("legalBasis", p.legalBasis.to!string)
-            .set("retentionPeriod", p.retentionPeriod)
-            .set("dataProtectionOfficer", p.dataProtectionOfficer)
-            .set("requiresConsent", p.requiresConsent)
-            .set("createdBy", p.createdBy)
-            .set("createdAt", p.createdAt);
-    }
 }

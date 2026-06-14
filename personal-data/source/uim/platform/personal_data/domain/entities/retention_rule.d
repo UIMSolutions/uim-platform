@@ -12,7 +12,7 @@ import uim.platform.personal_data;
 @safe:
 
 struct RetentionRule {
-    mixin TenantEntity!(RetentionRuleId);
+    mixin TenantEntity!RetentionRuleId;
 
     string name;
     string description;
@@ -27,7 +27,7 @@ struct RetentionRule {
     int notifyDaysBefore;
 
     Json toJson() const {
-        auto j = entityToJson
+        return entityToJson
             .set("name", name)
             .set("description", description)
             .set("status", status)
@@ -39,7 +39,5 @@ struct RetentionRule {
             .set("autoDelete", autoDelete)
             .set("notifyBeforeExpiry", notifyBeforeExpiry)
             .set("notifyDaysBefore", notifyDaysBefore);
-
-        return j;
     }
 }

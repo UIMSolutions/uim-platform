@@ -122,24 +122,11 @@ override protected Json updateHandler(HTTPServerRequest req) {
   request.redirectUris = data.getStrings("redirectUris");
   request.allowedScopes = data.getStrings("allowedScopes");
 
-  auto error = useCase.updateApplication(request);
-  if (error.length > 0) {
-    auto errRes = Json.emptyObject
-      .set("error", error);
+  auto result = useCase.updateApplication(request);
+  if (result.hasError)
+    return errorResponse(result.message, 400);
 
-    res.writeJsonBody(errRes, 404);
-  } else {
-    auto resp = Json.emptyObject
-      .set("status", "updated");
-
-    res.writeJsonBody(resp, 200);
-  }
-}
- catch (Exception e) {
-  auto errRes = Json.emptyObject
-    .set("error", "Internal server error");
-
-  res.writeJsonBody(errRes, 500);
-}
-}
+  auto responseData = Json.emptyObject
+    .set("applicationId", result.applicationId);
+  return successResponse("Application updated successfully", "Updated", 200, responseData);
 }

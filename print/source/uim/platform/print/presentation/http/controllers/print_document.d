@@ -33,16 +33,14 @@ class PrintDocumentController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-            auto items = usecase.listPrintDocuments(tenantId);
-            auto list = items.map!(e => e.toJson()).array.toJson;
-            auto resp = Json.emptyObject
-                .set("count", items.length)
-                .set("resources", jarr)
-                .set("message", "Document list retrieved successfully");
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto items = usecase.listPrintDocuments(tenantId);
+        auto list = items.map!(e => e.toJson()).array.toJson;
+        auto resp = Json.emptyObject
+            .set("count", items.length)
+            .set("resources", jarr)
+            .set("message", "Document list retrieved successfully");
+
+        return successResponse("Document list retrieved successfully", 200, resp);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -51,14 +49,15 @@ class PrintDocumentController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = precheck.path;
-            auto id = PrintDocumentId(precheck.id);
-            auto e = usecase.getPrintDocument(tenantId, id);
-            if (e.isNull) { writeError(res, 404, "Document not found"); return; }
-            res.writeJsonBody(e.toJson(), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto id = PrintDocumentId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid document ID", 400);
+
+        auto e = usecase.getPrintDocument(tenantId, id);
+        if (e.isNull)
+            return errorResponse("Document not found", 404);
+
+        return successResponse("Document retrieved successfully", 200, e.toJson());
     }
 
     override protected Json createHandler(HTTPServerRequest req) {
@@ -69,32 +68,28 @@ class PrintDocumentController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-            PrintDocumentDTO dto;
-            dto.documentId = PrintDocumentId(precheck.id);
-            dto.tenantId = tenantId;
-            dto.fileName = data.getString("fileName");
-            dto.mimeType = data.getString("mimeType");
-            dto.format = data.getString("format");
-            dto.sizeBytes = j.getInt("sizeBytes");
-            dto.storageUri = data.getString("storageUri");
-            dto.checksum = data.getString("checksum");
-            dto.description = data.getString("description");
-            dto.expiresAt = j.getInt("expiresAt");
+        PrintDocumentDTO dto;
+        dto.documentId = PrintDocumentId(precheck.id);
+        dto.tenantId = tenantId;
+        dto.fileName = data.getString("fileName");
+        dto.mimeType = data.getString("mimeType");
+        dto.format = data.getString("format");
+        dto.sizeBytes = j.getInt("sizeBytes");
+        dto.storageUri = data.getString("storageUri");
+        dto.checksum = data.getString("checksum");
+        dto.description = data.getString("description");
+        dto.expiresAt = j.getInt("expiresAt");
 
-            auto result = usecase.createPrintDocument(dto);
-            if (!result.success) { writeError(res, 400, result.message); return; }
-
-            auto resp = Json.emptyObject
-                .set("id", result.id)
-                .set("message", "Document registered successfully");
-            res.writeJsonBody(resp, 201);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
+        auto result = usecase.createPrintDocument(dto);
+        if (!result.success) {
+            writeError(res, 400, result.message);
+            return;
         }
-    }
 
-    override protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        writeError(res, 405, "Method not allowed — use POST to upload a new document");
+        auto resp = Json.emptyObject
+            .set("id", result.id);
+
+        return successResponse("Document created successfully", 201, resp);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -103,13 +98,15 @@ class PrintDocumentController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = precheck.path;
-            auto id = PrintDocumentId(precheck.id);
-            auto result = usecase.deletePrintDocument(tenantId, id);
-            if (!result.success) { writeError(res, 404, result.message); return; }
-            res.writeJsonBody(Json.emptyObject.set("message", "Document deleted successfully"), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto path = precheck.path;
+        auto id = PrintDocumentId(precheck.id);
+        auto result = usecase.deletePrintDocument(tenantId, id);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto resp = Json.emptyObject
+            .set("id", result.id);
+
+        return successResponse("Document deleted successfully", 200, resp);
     }
 }

@@ -119,16 +119,11 @@ class JobController : ManageHttpController {
             auto id = JobId(precheck.id);
 
             auto job = usecase.getJob(tenantId, id);
-            if (job.isNull) {
-                writeError(res, 404, "Job not found");
-                return;
-            }
+            if (job.isNull)
+                return errorResponse("Job not found", 404);
 
-            auto resp = job.toJson();
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+            auto resp = job.toJson;
+            return successResponse("Job retrieved successfully", 200, resp);
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {

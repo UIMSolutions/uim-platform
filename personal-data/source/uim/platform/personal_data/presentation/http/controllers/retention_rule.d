@@ -20,7 +20,7 @@ class RetentionRuleController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        
+
         router.get("/api/v1/personal-data/retention-rules", &handleList);
         router.get("/api/v1/personal-data/retention-rules/*", &handleGet);
         router.post("/api/v1/personal-data/retention-rules", &handleCreate);
@@ -36,150 +36,112 @@ class RetentionRuleController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-            CreateRetentionRuleRequest r;
-            r.tenantId = tenantId;
-            r.id = precheck.id;
-            r.name = data.getString("name");
-            r.description = data.getString("description");
-            r.retentionPeriod = data.getString("retentionPeriod");
-            r.periodUnit = data.getString("periodUnit");
-            r.autoDelete = data.getBoolean("autoDelete");
-            r.notifyBeforeExpiry = data.getBoolean("notifyBeforeExpiry");
-            r.notifyDaysBefore = data.getString("notifyDaysBefore");
-            r.createdBy = UserId(data.getString("createdBy"));
+        CreateRetentionRuleRequest r;
+        r.tenantId = tenantId;
+        r.id = precheck.id;
+        r.name = data.getString("name");
+        r.description = data.getString("description");
+        r.retentionPeriod = data.getString("retentionPeriod");
+        r.periodUnit = data.getString("periodUnit");
+        r.autoDelete = data.getBoolean("autoDelete");
+        r.notifyBeforeExpiry = data.getBoolean("notifyBeforeExpiry");
+        r.notifyDaysBefore = data.getString("notifyDaysBefore");
+        r.createdBy = UserId(data.getString("createdBy"));
 
-            auto result = usecase.create(r);
-            if (result.hasError)
+        auto result = usecase.create(r);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Retention rule created");
 
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Retention rule created");
+
+        return successResponse("Retention rule created successfully", 201, resp);
+}
+
+override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+        return precheck;
+
+    auto tenantId = precheck.tenantId;
+
+    auto rules = usecase.list(tenantId);
+
+    auto jarr = rules.map!(r => toJson(r)).array.toJson;
+
+    auto resp = Json.emptyObject
+        .set("count", rules.length)
+        .set("resources", jarr)
+        .set("message", "Retention rule list retrieved successfully");
+
+    return successResponse("Retention rule list retrieved successfully", 200, resp);
+}
+
+override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+        return precheck;
+
+    auto tenantId = precheck.tenantId;
+
+    auto id = precheck.id;
+    auto r = usecase.getById(tenantId, id);
+    if (r.isNull) {
+        writeError(res, 404, "Retention rule not found");
+        return;
     }
+    res.writeJsonBody(toJson(r), 200);
+}
+ catch (Exception e) {
+    writeError(res, 500, "Internal server error");
+}
+}
 
-    override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+        return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-            auto rules = usecase.list(tenantId);
+    auto data = precheck.data;
+    UpdateRetentionRuleRequest r;
+    r.tenantId = tenantId;
+    r.id = precheck.id;
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.retentionPeriod = data.getString("retentionPeriod");
+    r.periodUnit = data.getString("periodUnit");
+    r.autoDelete = data.getBoolean("autoDelete");
+    r.notifyBeforeExpiry = data.getBoolean("notifyBeforeExpiry");
+    r.notifyDaysBefore = data.getString("notifyDaysBefore");
+    r.updatedBy = UserId(data.getString("updatedBy"));
 
-            auto jarr = rules.map!(r => toJson(r)).array.toJson;
+    auto result = usecase.update(r);
+    if (result.hasError)
+        return errorResponse(result.message, 400);
+    auto resp = Json.emptyObject
+        .set("id", result.id)
+        .set("message", "Retention rule updated");
 
-            auto resp = Json.emptyObject
-                .set("count", rules.length)
-                .set("resources", jarr)
-                .set("message", "Retention rule list retrieved successfully");
+    return successResponse("Retention rule updated successfully", 200, resp);
+}
 
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+        return precheck;
 
-    override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto tenantId = precheck.tenantId;
+    auto id = precheck.id;
 
-        auto tenantId = precheck.tenantId;
-            
+    auto result = usecase.deleteRetentionRule(id);
+    if (result.hasError)
+        return errorResponse(result.message, 400);
+    auto resp = Json.emptyObject
+        .set("id", result.id);
 
-            auto id = precheck.id;
-            auto r = usecase.getById(tenantId, id);
-            if (r.isNull) {
-                writeError(res, 404, "Retention rule not found");
-                return;
-            }
-            res.writeJsonBody(toJson(r), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
-
-    override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
-
-        auto tenantId = precheck.tenantId;
-            
-
-            auto data = precheck.data;
-            UpdateRetentionRuleRequest r;
-            r.tenantId = tenantId;
-            r.id = precheck.id;
-            r.name = data.getString("name");
-            r.description = data.getString("description");
-            r.retentionPeriod = data.getString("retentionPeriod");
-            r.periodUnit = data.getString("periodUnit");
-            r.autoDelete = data.getBoolean("autoDelete");
-            r.notifyBeforeExpiry = data.getBoolean("notifyBeforeExpiry");
-            r.notifyDaysBefore = data.getString("notifyDaysBefore");
-            r.updatedBy = UserId(data.getString("updatedBy"));
-
-            auto result = usecase.update(r);
-            if (result.hasError)
-            return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Retention rule updated");
-
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
-
-    override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
-
-        auto tenantId = precheck.tenantId;
-            
-
-            auto id = precheck.id;
-            auto result = usecase.deleteRetentionRule(id);
-            if (result.hasError)
-            return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Retention rule deleted");
-
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
-
-    private Json ruleToJson(RetentionRule r) {
-        return Json.emptyObject
-            .set("id", r.id)
-            .set("name", r.name)
-            .set("description", r.description)
-            .set("status", r.status.to!string)
-            .set("retentionPeriod", r.retentionPeriod)
-            .set("periodUnit", r.periodUnit.to!string)
-            .set("autoDelete", r.autoDelete)
-            .set("notifyBeforeExpiry", r.notifyBeforeExpiry)
-            .set("notifyDaysBefore", r.notifyDaysBefore)
-            .set("createdBy", r.createdBy)
-            .set("createdAt", r.createdAt);
-    }
+    return successResponse("Retention rule deleted successfully", 200, resp);
+}
 }

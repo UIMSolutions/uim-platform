@@ -69,13 +69,7 @@ class ApiRuleController : ManageHttpController {
     auto resp = Json.emptyObject
       .set("id", result.id);
 
-    res.writeJsonBody(resp, 201);
-  } else
-    writeError(res, 400, result.message);
-}
- catch (Exception e) {
-  writeError(res, 500, "Internal server error");
-}
+    return successResponse("API rule created successfully", 201, resp);
 }
 
 override protected Json listHandler(HTTPServerRequest req) {

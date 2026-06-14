@@ -34,104 +34,116 @@ class PrintTaskController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-            auto items = usecase.listPrintTasks(tenantId);
-            auto list = items.map!(e => e.toJson()).array.toJson;
-            auto resp = Json.emptyObject
-                .set("count", items.length)
-                .set("resources", jarr)
-                .set("message", "Print task list retrieved successfully");
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto items = usecase.listPrintTasks(tenantId);
+        auto list = items.map!(e => e.toJson()).array.toJson;
+        auto resp = Json.emptyObject
+            .set("count", items.length)
+            .set("resources", jarr)
+            .set("message", "Print task list retrieved successfully");
+        res.writeJsonBody(resp, 200);
+    }
+ catch (Exception e) {
+        writeError(res, 500, "Internal server error");
+    }
+}
+
+override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+        return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto path = precheck.path;
+    auto id = PrintTaskId(precheck.id);
+    auto e = usecase.getPrintTask(tenantId, id);
+    if (e.isNull) {
+        writeError(res, 404, "Print task not found");
+        return;
+    }
+    res.writeJsonBody(e.toJson(), 200);
+}
+ catch (Exception e) {
+    writeError(res, 500, "Internal server error");
+}
+}
+
+override protected Json createHandler(HTTPServerRequest req) {
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+        return precheck;
+
+    auto tenantId = precheck.tenantId;
+
+    auto data = precheck.data;
+    PrintTaskDTO dto;
+    dto.taskId = PrintTaskId(precheck.id);
+    dto.tenantId = tenantId;
+    dto.queueId = data.getString("queueId");
+    dto.documentId = data.getString("documentId");
+    dto.applicationId = data.getString("applicationId");
+    dto.senderApplication = data.getString("senderApplication");
+    dto.copies = cast(int)j.getInt("copies");
+    if (dto.copies < 1)
+        dto.copies = 1;
+    dto.paperFormat = data.getString("paperFormat");
+    dto.colorPrint = data.getBoolean("colorPrint");
+    dto.duplexPrint = data.getBoolean("duplexPrint");
+    dto.tray = data.getString("tray");
+
+    auto result = usecase.createPrintTask(dto);
+    if (!result.success) {
+        writeError(res, 400, result.message);
+        return;
     }
 
-    override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto resp = Json.emptyObject
+        .set("id", result.id);
 
-        auto tenantId = precheck.tenantId;
-            auto path = precheck.path;
-            auto id = PrintTaskId(precheck.id);
-            auto e = usecase.getPrintTask(tenantId, id);
-            if (e.isNull) { writeError(res, 404, "Print task not found"); return; }
-            res.writeJsonBody(e.toJson(), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+    return successResponse("Print task created successfully", 201, resp);
+}
+
+override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+        return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto path = precheck.path;
+    auto id = PrintTaskId(precheck.id);
+    auto data = precheck.data;
+    auto status = data.getString("status");
+    auto errorMessage = data.getString("errorMessage");
+
+    auto result = usecase.updatePrintTask(tenantId, id, status, errorMessage);
+    if (!result.success) {
+        writeError(res, 404, result.message);
+        return;
     }
 
-    override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto resp = Json.emptyObject
+        .set("id", result.id)
+        .set("message", "Print task updated successfully");
 
-        auto tenantId = precheck.tenantId;
+    return successResponse("Print task updated successfully", 200, resp);
+}
 
-        auto data = precheck.data;
-            PrintTaskDTO dto;
-            dto.taskId = PrintTaskId(precheck.id);
-            dto.tenantId = tenantId;
-            dto.queueId = data.getString("queueId");
-            dto.documentId = data.getString("documentId");
-            dto.applicationId = data.getString("applicationId");
-            dto.senderApplication = data.getString("senderApplication");
-            dto.copies = cast(int) j.getInt("copies");
-            if (dto.copies < 1) dto.copies = 1;
-            dto.paperFormat = data.getString("paperFormat");
-            dto.colorPrint = data.getBoolean("colorPrint");
-            dto.duplexPrint = data.getBoolean("duplexPrint");
-            dto.tray = data.getString("tray");
+override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+        return precheck;
 
-            auto result = usecase.createPrintTask(dto);
-            if (!result.success) { writeError(res, 400, result.message); return; }
+    auto tenantId = precheck.tenantId;
+    auto id = PrintTaskId(precheck.id);
+    if (id.isNull)
+        return errorResponse("Invalid print task ID", 400);
 
-            auto resp = Json.emptyObject
-                .set("id", result.id);
-                
-                return successResponse("Print task created successfully", 201, resp);
-    }
+    auto result = usecase.deletePrintTask(tenantId, id);
+    if (result.hasError)
+        return errorResponse(result.message, 400);
 
-    override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
-
-        auto tenantId = precheck.tenantId;
-            auto path = precheck.path;
-            auto id = PrintTaskId(precheck.id);
-            auto data = precheck.data;
-            auto status = data.getString("status");
-            auto errorMessage = data.getString("errorMessage");
-
-            auto result = usecase.updatePrintTask(tenantId, id, status, errorMessage);
-            if (!result.success) { writeError(res, 404, result.message); return; }
-
-            auto resp = Json.emptyObject
-                .set("id", result.id)
-                .set("message", "Print task updated successfully");
-            
-            return successResponse("Print task updated successfully", 200, resp);
-    }
-
-    override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
-
-        auto tenantId = precheck.tenantId;
-            auto id = PrintTaskId(precheck.id);
-            if (id.isNull)
-                return errorResponse("Invalid print task ID", 400);
-                
-            auto result = usecase.deletePrintTask(tenantId, id);
-            if (result.hasError)
-                return errorResponse(result.message, 400);
-
-            auto resp = Json.emptyObject
-                .set("id", result.id)
-                .set("message", "Print task deleted successfully");
-            return successResponse("Print task deleted successfully", 200, resp);
-    }
+    auto resp = Json.emptyObject
+        .set("id", result.id)
+        .set("message", "Print task deleted successfully");
+    return successResponse("Print task deleted successfully", 200, resp);
+}
 }
