@@ -41,7 +41,7 @@ class RouteController : ManageHttpController {
 
   // --- Routes ---
 
-  override protected Json createHandler(HTTPServerRequest req) {
+  protected Json createRouteHandler(HTTPServerRequest req) {
     auto precheck = super.createHandler(req);
     if (precheck.hasError)
       return precheck;
@@ -67,6 +67,15 @@ class RouteController : ManageHttpController {
     return successResponse("Route created successfully", 201, responseData);
   }
 
+    protected void handleCreateRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto response = createRouteHandler(req);
+      res.writeJsonBody(response, response.code);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
   protected Json listRoutesHandler(HTTPServerRequest req) {
     auto precheck = super.listHandler(req);
     if (precheck.hasError)
@@ -83,7 +92,7 @@ class RouteController : ManageHttpController {
     return successResponse("Route list retrieved successfully", 200, responseData);
   }
 
-  override protected void handleListRoutes(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleListRoutes(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto response = listRoutesHandler(req);
       res.writeJsonBody(response, response.code);
@@ -133,7 +142,7 @@ class RouteController : ManageHttpController {
     return successResponse("Route deleted successfully", 200, responseData);
   }
 
-  override protected void handleDeleteRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleDeleteRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto response = deleteRouteHandler(req);
       res.writeJsonBody(response, response.code);
@@ -190,94 +199,104 @@ class RouteController : ManageHttpController {
     if (result.hasError)
       return errorResponse(result.message, 400);
 
-      auto resp = Json.emptyObject.set("id", result.id);
+    auto resp = Json.emptyObject.set("id", result.id);
 
-      return successResponse("Route unmapped from app successfully", 200, resp);
+    return successResponse("Route unmapped from app successfully", 200, resp);
+  }
+
+  protected void handleUnmapRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto response = unmapRouteHandler(req);
+      res.writeJsonBody(response, response.code);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
     }
+  }
 
-    protected void handleUnmapRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-      try {
-        auto response = unmapRouteHandler(req);
-        res.writeJsonBody(response, response.code);
-      } catch (Exception e) {
-        writeError(res, 500, "Internal server error");
-      }
+  // --- Domains ---
+
+  protected Json createDomainHandler(HTTPServerRequest req) {
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+
+    auto data = precheck.data;
+    auto r = CreateDomainRequest();
+    r.tenantId = tenantId;
+    r.ownerOrgId = data.getString("ownerOrgId");
+    r.name = data.getString("name");
+    r.scope_ = parseDomainScope(data.getString("scope"));
+    r.isInternal = data.getBoolean("isInternal");
+    r.createdBy = UserId(data.getString("createdBy"));
+
+    auto result = useCase.createDomain(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Domain created successfully", 201, responseData);
+  }
+
+    protected void handleCreateDomain(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto response = createDomainHandler(req);
+      res.writeJsonBody(response, response.code);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
     }
+  }
 
-    // --- Domains ---
+  protected Json listDomainsHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-    override protected Json createHandler(HTTPServerRequest req) {
-      auto precheck = super.createHandler(req);
-      if (precheck.hasError)
-        return precheck;
+    auto tenantId = precheck.tenantId;
 
-      auto tenantId = precheck.tenantId;
+    auto items = useCase.listDomains(tenantId);
+    auto list = items.map!(item => item.toJson()).array.toJson;
 
-      auto data = precheck.data;
-      auto r = CreateDomainRequest();
-      r.tenantId = tenantId;
-      r.ownerOrgId = data.getString("ownerOrgId");
-      r.name = data.getString("name");
-      r.scope_ = parseDomainScope(data.getString("scope"));
-      r.isInternal = data.getBoolean("isInternal");
-      r.createdBy = UserId(data.getString("createdBy"));
+    auto responseData = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+    return successResponse("Domain list retrieved successfully", 200, responseData);
+  }
 
-      auto result = useCase.createDomain(r);
-      if (result.hasError)
-        return errorResponse(result.message, 400);
-
-      auto responseData = Json.emptyObject.set("id", result.id);
-      return successResponse("Domain created successfully", 201, responseData);
+  protected void handleListDomains(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto response = listDomainsHandler(req);
+      res.writeJsonBody(response, response.code);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
     }
+  }
 
-    protected Json listDomainsHandler(HTTPServerRequest req) {
-      auto precheck = super.listHandler(req);
-      if (precheck.hasError)
-        return precheck;
+  protected Json deleteDomainHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
+    auto id = DomainId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid domain ID", 400);
 
-      auto items = useCase.listDomains(tenantId);
-      auto list = items.map!(item => item.toJson()).array.toJson;
+    auto result = useCase.deleteDomain(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-      auto responseData = Json.emptyObject
-        .set("count", list.length)
-        .set("resources", list);
-      return successResponse("Domain list retrieved successfully", 200, responseData);
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Domain deleted successfully", 200, responseData);
+  }
+
+  protected void handleDeleteDomain(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto response = deleteDomainHandler(req);
+      res.writeJsonBody(response, response.code);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
     }
-    protected void handleListDomains(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-      try {
-        auto response = listDomainsHandler(req);
-        res.writeJsonBody(response, response.code);
-      } catch (Exception e) {
-        writeError(res, 500, "Internal server error");
-      }
-    }
-
-    protected Json deleteDomainHandler(HTTPServerRequest req) {
-      auto precheck = super.deleteHandler(req);
-      if (precheck.hasError)
-        return precheck;
-
-      auto tenantId = precheck.tenantId;
-      auto id = DomainId(precheck.id);
-      if (id.isNull)
-        return errorResponse("Invalid domain ID", 400);
-
-      auto result = useCase.deleteDomain(tenantId, id);
-      if (result.hasError)
-        return errorResponse(result.message, 400);
-
-      auto responseData = Json.emptyObject.set("id", result.id);
-      return successResponse("Domain deleted successfully", 200, responseData);
-    }
-
-    protected void handleDeleteDomain(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-      try {
-        auto response = deleteDomainHandler(req);
-        res.writeJsonBody(response, response.code);
-      } catch (Exception e) {
-        writeError(res, 500, "Internal server error");
-      }
-
-    }
+  }
+}

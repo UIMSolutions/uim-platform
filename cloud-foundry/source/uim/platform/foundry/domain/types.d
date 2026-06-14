@@ -11,25 +11,25 @@ import uim.platform.foundry;
 
 @safe:
 /// Unique identifier type aliases for type safety.
-struct OrgId {
-  string value;
+// struct OrgId {
+//   string value;
 
-  this(string value) {
-    this.value = value;
-  }
+//   this(string value) {
+//     this.value = value;
+//   }
 
-  mixin DomainId;
-}
+//   mixin DomainId;
+// }
 
-struct SpaceId {
-  string value;
+// struct SpaceId {
+//   string value;
 
-  this(string value) {
-    this.value = value;
-  }
+//   this(string value) {
+//     this.value = value;
+//   }
 
-  mixin DomainId;
-}
+//   mixin DomainId;
+// }
 
 struct AppId {
   string value;

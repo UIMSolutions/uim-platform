@@ -154,8 +154,10 @@ protected void handleAddMember(scope HTTPServerRequest req, scope HTTPServerResp
   }
 }
 
-override protected void handleDeleteMember(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+protected void handleDeleteMember(scope HTTPServerRequest req, scope HTTPServerResponse res) {
   try {
+    auto precheck = super.deleteHandler(req);
+
     auto tenantId = precheck.tenantId;
     auto data = precheck.data;
     auto removeReq = RemoveMemberRequest(tenantId, data.getString("groupId"), data.getString("memberId"),);

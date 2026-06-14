@@ -43,8 +43,9 @@ class ActivityController : HttpController {
     return successResponse("Activity list retrieved successfully", "Retrieved", 200, responseData);
   }
 
-  override protected void handleGetSummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetSummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
+      auto precheck = super.getHandler(req);
       auto tenantId = precheck.tenantId;
       auto summary = usecase.getSummary(tenantId);
 

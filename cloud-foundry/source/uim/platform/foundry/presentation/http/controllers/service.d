@@ -65,7 +65,7 @@ class ServiceController : ManageHttpController {
     return successResponse("Service instance created successfully", 201, responseData);
   }
 
-  override protected void handleCreateInstance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleCreateInstance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto response = createInstanceHandler(req);
       res.writeJsonBody(response, response.code);
@@ -176,7 +176,7 @@ class ServiceController : ManageHttpController {
     return successResponse("Service instance deleted successfully", 200, responseData);
   }
 
-  override protected void handleDeleteInstance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleDeleteInstance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto response = deleteInstanceHandler(req);
       res.writeJsonBody(response, response.code);

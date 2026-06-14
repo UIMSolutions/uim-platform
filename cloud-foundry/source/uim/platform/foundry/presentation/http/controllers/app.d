@@ -65,7 +65,7 @@ class AppController : ManageHttpController {
     r.createdBy = UserId(data.getString("createdBy"));
 
     auto result = useCase.createApp(r);
-    iif(result.hasError)
+    if(result.hasError)
     return errorResponse(result.message, 400);
 
     auto responseData = Json.emptyObject.set("id", result.id);

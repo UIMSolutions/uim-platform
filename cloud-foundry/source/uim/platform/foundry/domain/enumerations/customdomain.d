@@ -1,3 +1,8 @@
+/****************************************************************************************************************
+* Copyright: (c) 2018-2026 Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
+* Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module uim.platform.foundry.domain.enumerations.customdomain;
 import uim.platform.foundry;
 
@@ -36,7 +41,11 @@ enum DomainStatus {
     suspended_abuse,
     // Used for domains that have been suspended due to legal issues, which may indicate that they are temporarily inactive until the legal issue is resolved and the domain can be reactivated
     suspended_legal,
-    // Used for domains that have been suspended due to other reasons, which may indicate that they are temporarily inactive
+    // Used for domains that have been suspended due to security issues, which may indicate that they are temporarily inactive until the security issue is resolved and the domain can be reactivated
+    suspended_security,
+    // Used for domains that have been suspended due to policy violations, which may indicate that they are temporarily inactive until the policy violation is resolved and the domain can be reactivated
+    suspended_policy,
+    // Used for domains that have been suspended due to other reasons, which may indicate that they are temporarily inactive until the underlying issue is resolved and the domain can be reactivated
     suspended_other,
     // Used for domains that are in the process of being deleted, which may indicate that they are still active but may require additional steps to complete the deletion process and remove them from the system
     deleting,
@@ -48,12 +57,7 @@ enum DomainStatus {
     restoring,
     // Used for domains that have been restored from deletion, which may indicate that they are now active again after being deleted and can be used as before
     restored,
-    // Used for domains that have been suspended due to security issues, which may indicate that they are temporarily inactive until the security issue is resolved and the domain can be reactivated
-    suspended_security,
-    // Used for domains that have been suspended due to policy violations, which may indicate that they are temporarily inactive until the policy violation is resolved and the domain can be reactivated
-    suspended_policy,
-    // Used for domains that have been suspended due to other reasons, which may indicate that they are temporarily inactive until the underlying issue is resolved and the domain can be reactivated
-    suspended_other,
+   
 }
 DomainStatus toDomainStatus(string status) {
     const map = [
@@ -65,5 +69,13 @@ enum DomainEnvironment {
     cloudFoundry,
     kyma,
     neo,
+}
+DomainEnvironment toDomainEnvironment(string env) {
+    const map = [
+        "cloudfoundry": DomainEnvironment.cloudFoundry,
+        "kyma": DomainEnvironment.kyma,
+        "neo": DomainEnvironment.neo
+    ];
+    return map.get(env.toLower, DomainEnvironment.cloudFoundry);
 }
 

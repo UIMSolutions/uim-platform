@@ -24,8 +24,10 @@ class DashboardController : HttpController {
     router.post("/api/v1/dashboard", &handleCompute);
   }
 
-  override protected void handleGetCompute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+  protected void handleGetCompute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto precheck = super.postHandler(req);
+
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
       auto r = ComputeDashboardRequest();
