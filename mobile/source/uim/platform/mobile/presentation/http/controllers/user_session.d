@@ -51,8 +51,7 @@ class UserSessionController : ManageHttpController {
     auto result = usecase.create(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
-    auto resp = Json.emptyObject
-      .set("id", result.id);
+    auto resp = Json.emptyObject.set("id", result.id);
 
     return successResponse("User session created successfully", "Created", 201, resp);
   }

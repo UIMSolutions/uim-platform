@@ -68,8 +68,7 @@ class AccessRuleController : ManageHttpController {
     if (result.hasError)
       return errorResponse(result.message);
 
-    auto responseData = Json.emptyObject
-      .set("id", result.id);
+    auto responseData = Json.emptyObject.set("id", result.id);
 
     return successResponse("Access rule created successfully", 201, responseData);
   }
@@ -117,8 +116,7 @@ class AccessRuleController : ManageHttpController {
     if (result.hasError)
       return errorResponse(result.message, result.message == "Access rule not found" ? 404 : 400);
 
-    auto responseData = Json.emptyObject
-      .set("id", result.id);
+    auto responseData = Json.emptyObject.set("id", result.id);
 
     return successResponse("Access rule updated successfully", 200, responseData);
   }
@@ -137,8 +135,7 @@ class AccessRuleController : ManageHttpController {
     if (result.hasError)
       return errorResponse(result.message, result.message == "Access rule not found" ? 404 : 400);
 
-    auto responseData = Json.emptyObject
-      .set("id", result.id);
+    auto responseData = Json.emptyObject.set("id", result.id);
 
     return successResponse("Access rule deleted successfully", 200, responseData);
   }

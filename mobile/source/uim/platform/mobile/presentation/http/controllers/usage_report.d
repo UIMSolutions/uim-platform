@@ -50,8 +50,7 @@ class UsageReportController : ManageHttpController {
     auto result = usecase.report(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
-    auto resp = Json.emptyObject
-      .set("id", result.id);
+    auto resp = Json.emptyObject.set("id", result.id);
 
     return successResponse("Usage report created successfully", "Created", 201, resp);
   }

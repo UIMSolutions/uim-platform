@@ -51,8 +51,7 @@ class ClientLogController : ManageHttpController {
     auto result = usecase.upload(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
-    auto resp = Json.emptyObject
-      .set("id", result.id);
+    auto resp = Json.emptyObject.set("id", result.id);
   }
 
   protected void handleUpload(scope HTTPServerRequest req, scope HTTPServerResponse res) {

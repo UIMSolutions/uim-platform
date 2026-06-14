@@ -51,8 +51,7 @@ class ProviderController : ManageHttpController {
     if (result.hasError)
       return errorResponse(result.message, 400);
 
-    auto responseData = Json.emptyObject
-      .set("id", result.id);
+    auto responseData = Json.emptyObject.set("id", result.id);
     return successResponse("Provider registered successfully", 201, responseData);
   }
 

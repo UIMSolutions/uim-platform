@@ -53,8 +53,7 @@ class DeploymentController : HttpController {
     if (result.hasError)
       return errorResponse(result.message, 400);
 
-    auto response = Json.emptyObject
-      .set("id", result.id);
+    auto response = Json.emptyObject.set("id", result.id);
 
     return successResponse("Deployment created successfully", 201, response);
   }

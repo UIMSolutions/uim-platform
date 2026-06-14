@@ -55,8 +55,7 @@ class ScenarioController : ManageHttpController {
     if (result.hasError)
       return errorResponse(result.message, 400);
 
-    auto resp = Json.emptyObject
-      .set("id", result.id);
+    auto resp = Json.emptyObject.set("id", result.id);
     return successResponse("Scenario created successfully", 201, resp);
   }
 
@@ -124,8 +123,7 @@ class ScenarioController : ManageHttpController {
     if (result.hasError)
       return errorResponse(result.message, 400);
 
-    auto resp = Json.emptyObject
-      .set("id", result.id);
+    auto resp = Json.emptyObject.set("id", result.id);
     return successResponse("Scenario updated successfully", 200, resp);
   }
 

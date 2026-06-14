@@ -47,8 +47,7 @@ class PushRegistrationController : ManageHttpController {
     auto result = usecase.register(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
-    auto resp = Json.emptyObject
-      .set("id", result.id);
+    auto resp = Json.emptyObject.set("id", result.id);
 
     return successResponse("Push registration successful", "Created", 201, resp);
   }

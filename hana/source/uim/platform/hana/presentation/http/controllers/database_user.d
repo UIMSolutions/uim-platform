@@ -31,151 +31,129 @@ class DatabaseUserController : ManageHttpController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-              CreateDatabaseUserRequest r;
-      r.tenantId = tenantId;
-      r.instanceId = data.getString("instanceId");
-      r.id = precheck.id;
-      r.userName = data.getString("userName");
-      r.password = data.getString("password");
-      r.authType = data.getString("authType");
-      r.defaultSchema = data.getString("defaultSchema");
-      r.isRestricted = data.getBoolean("isRestricted");
-      r.forcePasswordChange = data.getBoolean("forcePasswordChange", true);
-      r.roles = data.getStrings("roles");
+    auto data = precheck.data;
+    CreateDatabaseUserRequest r;
+    r.tenantId = tenantId;
+    r.instanceId = data.getString("instanceId");
+    r.id = precheck.id;
+    r.userName = data.getString("userName");
+    r.password = data.getString("password");
+    r.authType = data.getString("authType");
+    r.defaultSchema = data.getString("defaultSchema");
+    r.isRestricted = data.getBoolean("isRestricted");
+    r.forcePasswordChange = data.getBoolean("forcePasswordChange", true);
+    r.roles = data.getStrings("roles");
 
-      auto result = usecase.createDatabaseUser(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Database user created");
+    auto result = usecase.createDatabaseUser(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+    auto resp = Json.emptyObject
+      .set("id", result.id)
+      .set("message", "Database user created");
 
-        res.writeJsonBody(resp, 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    return successResponse("Database user created successfully", 201, resp);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto users = usecase.listDatabaseUsers(tenantId);
+    auto tenantId = precheck.tenantId;
+    auto users = usecase.listDatabaseUsers(tenantId);
 
-      auto jarr = Json.emptyArray;
-      foreach (u; users) {
-        jarr ~= Json.emptyObject
-          .set("id", u.id)
-          .set("userName", u.userName)
-          .set("status", u.status.to!string)
-          .set("defaultSchema", u.defaultSchema)
-          .set("isRestricted", u.isRestricted)
-          .set("createdAt", u.createdAt);
-      }
-
-      auto resp = Json.emptyObject
-        .set("count", users.length)
-        .set("resources", list);
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
-
-  override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
-
-        auto tenantId = precheck.tenantId;
-      auto id = DatabaseUserId(precheck.id);
-
-      auto u = usecase.getDatabaseUser(tenantId, id);
-      if (u.isNull)
-            
-            return errorResponse("", 0);
-
-      auto resp = Json.emptyObject
+    auto jarr = Json.emptyArray;
+    foreach (u; users) {
+      jarr ~= Json.emptyObject
         .set("id", u.id)
         .set("userName", u.userName)
         .set("status", u.status.to!string)
         .set("defaultSchema", u.defaultSchema)
         .set("isRestricted", u.isRestricted)
-        .set("forcePasswordChange", u.forcePasswordChange)
-        .set("failedLoginAttempts", u.failedLoginAttempts)
-        .set("lastLoginAt", u.lastLoginAt)
-        .set("createdAt", u.createdAt)
-        .set("updatedAt", u.updatedAt);
-
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+        .set("createdAt", u.createdAt);
     }
+
+    auto resp = Json.emptyObject
+      .set("count", users.length)
+      .set("resources", list);
+
+    return successResponse("Database users retrieved successfully", "Retrieved", 200, resp);
+  }
+
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = DatabaseUserId(precheck.id);
+
+    auto u = usecase.getDatabaseUser(tenantId, id);
+    if (u.isNull)
+      return errorResponse("Database user not found", 404);
+
+    auto resp = Json.emptyObject
+      .set("id", u.id)
+      .set("userName", u.userName)
+      .set("status", u.status.to!string)
+      .set("defaultSchema", u.defaultSchema)
+      .set("isRestricted", u.isRestricted)
+      .set("forcePasswordChange", u.forcePasswordChange)
+      .set("failedLoginAttempts", u.failedLoginAttempts)
+      .set("lastLoginAt", u.lastLoginAt)
+      .set("createdAt", u.createdAt)
+      .set("updatedAt", u.updatedAt);
+
+    return successResponse("Database user retrieved successfully", 200, resp);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-      auto data = precheck.data;
-      UpdateDatabaseUserRequest r;
-      r.tenantId = tenantId;
-      r.id = DatabaseUserId(precheck.id);
-      r.password = data.getString("password");
-      r.defaultSchema = data.getString("defaultSchema");
-      r.isRestricted = data.getBoolean("isRestricted");
-      r.forcePasswordChange = data.getBoolean("forcePasswordChange");
-      r.roles = data.getStrings("roles");
+    auto data = precheck.data;
+    UpdateDatabaseUserRequest r;
+    r.tenantId = tenantId;
+    r.id = DatabaseUserId(precheck.id);
+    r.password = data.getString("password");
+    r.defaultSchema = data.getString("defaultSchema");
+    r.isRestricted = data.getBoolean("isRestricted");
+    r.forcePasswordChange = data.getBoolean("forcePasswordChange");
+    r.roles = data.getStrings("roles");
 
-      auto result = usecase.updateDatabaseUser(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Database user updated");
+    auto result = usecase.updateDatabaseUser(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+    auto resp = Json.emptyObject.set("id", result.id);
 
-        res.writeJsonBody(resp, 200);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    return successResponse("Database user updated successfully", 200, resp);
+
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = DatabaseUserId(precheck.id);
+    auto tenantId = precheck.tenantId;
+    auto id = DatabaseUserId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid database user ID", 400);
 
-      auto result = usecase.deleteDatabaseUser(tenantId, id);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        res.writeJsonBody(Json.emptyObject, 204);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto result = usecase.deleteDatabaseUser(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto resp = Json.emptyObject.set("id", result.id);
+    return successResponse("Database user deleted successfully", 200, resp);
   }
 }

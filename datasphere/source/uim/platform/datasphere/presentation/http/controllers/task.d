@@ -55,8 +55,7 @@ class TaskController : ManageHttpController {
     auto result = usecase.createTask(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
-    auto resp = Json.emptyObject
-      .set("id", result.id);
+    auto resp = Json.emptyObject.set("id", result.id);
 
     return successResponse("Task created successfully", "Created", 201, resp);
   }
@@ -134,8 +133,7 @@ class TaskController : ManageHttpController {
     auto result = usecase.deleteTask(tenantId, spaceId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
-    auto response = Json.emptyObject
-      .set("id", result.id);
+    auto response = Json.emptyObject.set("id", result.id);
     return successResponse("Task deleted successfully", "Deleted", 200, response);
 
   }

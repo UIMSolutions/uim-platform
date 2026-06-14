@@ -129,8 +129,7 @@ class PipelineController : ManageHttpController {
     auto result = usecase.updatePipeline(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
-    auto response = Json.emptyObject
-      .set("id", result.id);
+    auto response = Json.emptyObject.set("id", result.id);
 
     return successResponse("Pipeline updated successfully", 200, response);
   }

@@ -63,8 +63,7 @@ class CheckController : ManageHttpController {
     if (result.hasError)
       return errorResponse(result.message, 400);
 
-    auto resp = Json.emptyObject
-      .set("id", result.id);
+    auto resp = Json.emptyObject.set("id", result.id);
 
     return successResponse("Health check created successfully", "Created", 201, resp);
   }
@@ -164,8 +163,7 @@ class CheckController : ManageHttpController {
     auto result = usecase.recordResult(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
-    auto resp = Json.emptyObject
-      .set("id", result.id);
+    auto resp = Json.emptyObject.set("id", result.id);
 
     return successResponse("Health check result recorded successfully", "Recorded", 201, resp);
   }

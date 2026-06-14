@@ -153,8 +153,7 @@ override protected Json deleteHandler(HTTPServerRequest req) {
 
   auto result = useCase.deleteSystem(tenantId, id);
   if (result.isSuccess()) {
-    auto resp = Json.emptyObject
-      .set("id", result.id);
+    auto resp = Json.emptyObject.set("id", result.id);
 
     return successResponse("System deleted successfully", 200, resp);
   }

@@ -96,8 +96,7 @@ class ScalingPolicyController : ManageHttpController {
     if (result.hasError)
       return errorResponse(result.message, 400);
 
-    Json.emptyObject
-      .set("id", result.id);
+    Json.emptyObject.set("id", result.id);
     return successResponse(Json.emptyObject.set("id", result.id), 201);
   }
 

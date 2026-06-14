@@ -53,8 +53,7 @@ class FeatureRestrictionController : ManageHttpController {
     auto result = usecase.create(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
-    auto resp = Json.emptyObject
-      .set("id", result.id);
+    auto resp = Json.emptyObject.set("id", result.id);
 
     return successResponse("Feature restriction created successfully", "Created", 201, resp);
   }
@@ -131,8 +130,7 @@ class FeatureRestrictionController : ManageHttpController {
     if (result.hasError)
       return errorResponse(result.message, 400);
 
-    auto resp = Json.emptyObject
-      .set("id", result.id);
+    auto resp = Json.emptyObject.set("id", result.id);
 
     return successResponse("Feature restriction updated successfully", "Updated", 200, resp);
   }

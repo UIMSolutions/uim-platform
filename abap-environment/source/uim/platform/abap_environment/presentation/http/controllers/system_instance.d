@@ -59,8 +59,7 @@ class SystemInstanceController : ManageHttpController {
     if (result.hasError())
       return errorResponse(result.message);
 
-    auto responseData = Json.emptyObject
-      .set("id", result.id);
+    auto responseData = Json.emptyObject.set("id", result.id);
 
     return successResponse("System instance created", "Created", 201, responseData);
   }

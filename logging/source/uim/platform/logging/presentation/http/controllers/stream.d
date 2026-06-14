@@ -51,8 +51,7 @@ class StreamController : ManageHttpController {
     auto result = usecase.createStream(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
-    auto resp = Json.emptyObject
-      .set("id", result.id);
+    auto resp = Json.emptyObject.set("id", result.id);
 
     return successResponse("Log stream created successfully", "Created", 201, resp);
   }
@@ -127,8 +126,7 @@ class StreamController : ManageHttpController {
     auto result = usecase.updateStream(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
-    auto resp = Json.emptyObject
-      .set("id", result.id);
+    auto resp = Json.emptyObject.set("id", result.id);
     return successResponse("Log stream updated successfully", "Updated", 200, resp);
   }
 

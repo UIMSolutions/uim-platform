@@ -50,8 +50,7 @@ class DeviceRegistrationController : ManageHttpController {
     auto result = usecase.register(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
-    auto resp = Json.emptyObject
-      .set("id", result.id);
+    auto resp = Json.emptyObject.set("id", result.id);
 
     return successResponse("Device registered successfully", "Created", 201, resp);
   }
@@ -134,8 +133,7 @@ class DeviceRegistrationController : ManageHttpController {
     if (result.hasError)
       return errorResponse(result.message, 400);
 
-    auto resp = Json.emptyObject
-      .set("id", result.id);
+    auto resp = Json.emptyObject.set("id", result.id);
 
     return successResponse("Device registration status updated successfully", "Updated", 200, resp);
   }
