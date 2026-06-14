@@ -25,7 +25,7 @@ struct CreateAppRequest {
 }
 
 struct UpdateAppRequest {
-  AppId id;
+  AppId appId;
   TenantId tenantId;
   string name;
   int instances;

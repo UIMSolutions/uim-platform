@@ -22,9 +22,9 @@ struct DestinationResolver {
       if (frag.url.length > 0)
         result.url = frag.url;
       if (frag.authenticationType.length > 0)
-        result.authenticationType = parseAuthType(frag.authenticationType);
+        result.authenticationType = toAuthType(frag.authenticationType);
       if (frag.proxyType.length > 0)
-        result.proxyType = parseProxyType(frag.proxyType);
+        result.proxyType = toProxyType(frag.proxyType);
       if (frag.user.length > 0)
         result.user = frag.user;
       if (frag.password.length > 0)
@@ -120,7 +120,7 @@ struct DestinationResolver {
     return "mock-saml-" ~ randomUUID().toString();
   }
 
-  static AuthenticationType parseAuthType(string s) {
+  static AuthenticationType toAuthType(string s) {
     switch (s) {
     case "BasicAuthentication":
       return AuthenticationType.basicAuthentication;
@@ -151,7 +151,7 @@ struct DestinationResolver {
     }
   }
 
-  static ProxyType parseProxyType(string s) {
+  static ProxyType toProxyType(string s) {
     switch (s) {
     case "OnPremise":
       return ProxyType.onPremise;

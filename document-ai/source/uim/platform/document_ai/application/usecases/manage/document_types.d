@@ -53,7 +53,7 @@ class ManageDocumentTypesUseCase { // TODO: UIMUseCase {
     if (r.name.length > 0) existing.name = r.name;
     if (r.description.length > 0) existing.description = r.description;
     if (r.defaultSchemaId.length > 0) existing.defaultSchemaId = r.defaultSchemaId;
-    if (r.category.length > 0) existing.category = parseCategory(r.category);
+    if (r.category.length > 0) existing.category = toCategory(r.category);
 
     import core.time : MonoTime;
     existing.updatedAt = currentTimestamp;
@@ -88,7 +88,7 @@ class ManageDocumentTypesUseCase { // TODO: UIMUseCase {
   }
 }
 
-private DocumentCategory parseCategory(string c) {
+private DocumentCategory toCategory(string c) {
   switch (c) {
     case "invoice": return DocumentCategory.invoice;
     case "purchase_order": return DocumentCategory.purchase_order;

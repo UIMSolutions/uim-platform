@@ -11,6 +11,7 @@ import uim.platform.foundry;
 
 struct CreateBuildpackRequest {
   TenantId tenantId;
+  
   string name;
   BuildpackType type_;
   int position;
@@ -20,8 +21,8 @@ struct CreateBuildpackRequest {
 }
 
 struct UpdateBuildpackRequest {
-  BuildpackId id;
   TenantId tenantId;
+  BuildpackId packId;
   string name;
   int position;
   string stack;

@@ -42,9 +42,9 @@ class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
         if (req.duration > 0)
             rule.duration = req.duration;
         if (req.periodUnit.length > 0)
-            rule.periodUnit = parsePeriodUnit(req.periodUnit);
+            rule.periodUnit = toPeriodUnit(req.periodUnit);
         if (req.actionOnExpiry.length > 0)
-            rule.actionOnExpiry = parseDeletionActionType(req.actionOnExpiry);
+            rule.actionOnExpiry = toDeletionActionType(req.actionOnExpiry);
         rule.isActive = req.isActive;
         rule.updatedAt = clockSeconds();
 
@@ -77,7 +77,7 @@ class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, rule.id.value, "");
     }
 
-    private static PeriodUnit parsePeriodUnit(string s) {
+    private static PeriodUnit toPeriodUnit(string s) {
         switch (s) {
         case "days":
             return PeriodUnit.days;
@@ -92,7 +92,7 @@ class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
         }
     }
 
-    private static DeletionActionType parseDeletionActionType(string s) {
+    private static DeletionActionType toDeletionActionType(string s) {
         switch (s) {
         case "block":
             return DeletionActionType.block;

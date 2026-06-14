@@ -96,7 +96,7 @@ class ManageRoutesUseCase { // TODO: UIMUseCase {
     if (!resolver.mapApp(req.tenantId, req.routeId, req.appId))
       return CommandResult(false, "", "Cannot map application to route");
 
-    return CommandResult(true, req.routeid.value, "");
+    return CommandResult(true, req.routeId.value, "");
   }
 
   /// Unmap an application from a route.
@@ -109,7 +109,7 @@ class ManageRoutesUseCase { // TODO: UIMUseCase {
     if (!resolver.unmapApp(req.tenantId, req.routeId, req.appId))
       return CommandResult(false, "", "Cannot unmap application from route");
 
-    return CommandResult(true, req.routeid.value, "");
+    return CommandResult(true, req.routeId.value, "");
   }
 
   // --- Domains ---

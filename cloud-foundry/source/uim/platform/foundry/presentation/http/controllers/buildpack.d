@@ -43,7 +43,7 @@ class BuildpackController : ManageHttpController {
     auto r = CreateBuildpackRequest();
     r.tenantId = tenantId;
     r.name = data.getString("name");
-    r.type_ = parseBuildpackType(data.getString("type"));
+    r.type_ = toBuildpackType(data.getString("type"));
     r.position = data.getInteger("position");
     r.stack = data.getString("stack");
     r.filename = data.getString("filename");
@@ -83,11 +83,11 @@ class BuildpackController : ManageHttpController {
     if (id.isNull)
       return errorResponse("Invalid buildpack ID", 400);
 
-    auto bp = useCase.getBuildpack(tenantId, buildpackId);
-    if (job.isNull)
-      return errorResponse("Scan job not found", 404);
+    auto bp = useCase.getBuildpack(tenantId, id);
+    if (bp.isNull)
+      return errorResponse("Buildpack not found", 404);
 
-    auto responseData = job.toJson();
+    auto responseData = bp.toJson();
     return successResponse("Buildpack retrieved successfully", "Retrieved", 200, responseData);
   }
 
@@ -103,7 +103,7 @@ class BuildpackController : ManageHttpController {
 
     auto data = precheck.data;
     auto r = UpdateBuildpackRequest();
-    r.id = buildpackId;
+    r.packId = id;
     r.tenantId = tenantId;
     r.name = data.getString("name");
     r.position = data.getInteger("position");
@@ -128,8 +128,10 @@ class BuildpackController : ManageHttpController {
     auto tenantId = precheck.tenantId;
 
     auto id = BuildpackId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid buildpack ID", 400);
 
-    auto result = useCase.deleteBuildpack(tenantId, buildpackId);
+    auto result = useCase.deleteBuildpack(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
 
