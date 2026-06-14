@@ -84,7 +84,7 @@ class ExtensionController : ManageHttpController {
         dto.iconUrl = data.getString("iconUrl");
         dto.createdBy = UserId(data.getString("createdBy"));
 
-        auto result = usecase.createExtension(tenantId, dto);
+        auto result = usecase.createExtension(dto);
         if (result.hasError)
             return errorResponse(result.message, 400);
 
@@ -106,12 +106,13 @@ class ExtensionController : ManageHttpController {
         auto data = precheck.data;
         ExtensionDTO dto;
         dto.extensionId = id;
+        dto.tenantId = tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.version_ = data.getString("version");
         dto.updatedBy = UserId(data.getString("updatedBy"));
 
-        auto result = usecase.updateExtension(tenantId, dto);
+        auto result = usecase.updateExtension(dto);
         if (result.hasError)
             return errorResponse(result.message, 400);
 

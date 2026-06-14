@@ -31,25 +31,25 @@ class ManageProjectMembersUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createProjectMember(ProjectMemberDTO dto) {
-        ProjectMember e;
-        e.id = ProjectMemberId(dto.id);
+        auto member = ProjectMember(dto.tenantId);
+        member.id = dto.memberId;
+        member.applicationId = dto.applicationId;
+        member.userId = dto.userId;
+        member.displayName = dto.displayName;
+        member.email = dto.email;
+        member.role = dto.role;
+        member.permissions = dto.permissions;
+        member.createdBy = dto.createdBy;
 
-        e.tenantId = dto.tenantId;
-        e.applicationId = ApplicationId(dto.applicationId);
-        e.userId = dto.userId;
-        e.displayName = dto.displayName;
-        e.email = dto.email;
-        e.permissions = dto.permissions;
-        e.createdBy = dto.createdBy;
-        if (!BuildAppsValidator.isValidProjectMember(e))
+        if (!BuildAppsValidator.isValidProjectMember(member))
             return CommandResult(false, "", "Invalid project member data");
 
-        repo.save(e);
-        return CommandResult(true, e.id.value, "");
+        repo.save(member);
+        return CommandResult(true, member.id.value, "");
     }
 
     CommandResult updateProjectMember(ProjectMemberDTO dto) {
-        auto existing = repo.findById(dto.tenantId, ProjectMemberId(dto.id));
+        auto existing = repo.findById(dto.tenantId, ProjectMemberId(dto.memberId));
         if (existing.isNull)
             return CommandResult(false, "", "Project member not found");
 

@@ -40,7 +40,7 @@ class DevSpaceTypeController : ManageHttpController {
 
         auto resp = Json.emptyObject
             .set("count", items.length)
-            .set("resources", jarr)
+            .set("resources", list)
             .set("message", "Dev space types retrieved");
 
         return successResponse("Dev space type list retrieved successfully", "Retrieved", 200, resp);
@@ -54,7 +54,7 @@ class DevSpaceTypeController : ManageHttpController {
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         DevSpaceTypeDTO dto;
-        dto.typeId = precheck.id;
+        dto.typeId = DevSpaceTypeId(precheck.id);
         dto.tenantId = tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
@@ -64,12 +64,12 @@ class DevSpaceTypeController : ManageHttpController {
         dto.iconUrl = data.getString("iconUrl");
         dto.createdBy = UserId(data.getString("createdBy"));
 
-        auto result = usecase.create(dto);
+        auto result = usecase.createDevSpaceType(dto);
         if (result.hasError)
             return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject
-            .set("id", result.typeId);
+            .set("id", result.id);
 
         return successResponse("Dev space type created successfully", "Created", 201, resp);
     }
@@ -89,7 +89,7 @@ class DevSpaceTypeController : ManageHttpController {
         if (e.isNull)
             return errorResponse("Dev space type not found", 404);
 
-        return successResponse("Dev space type retrieved successfully", 200, e.toJson);
+        return successResponse("Dev space type retrieved successfully", "Retrieved", 200, e.toJson());
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -112,7 +112,7 @@ class DevSpaceTypeController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject
-            .set("id", result.typeId);
+            .set("id", result.id);
 
         return successResponse("Dev space type updated successfully", "Updated", 200, resp);
     }
@@ -133,10 +133,7 @@ class DevSpaceTypeController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject
-            .set("message", "Dev space type deleted");
-
-        auto resp = Json.emptyObject
-            .set("id", id);
+            .set("id", result.id);
 
         return successResponse("Dev space type deleted successfully", "Deleted", 200, resp);
     }

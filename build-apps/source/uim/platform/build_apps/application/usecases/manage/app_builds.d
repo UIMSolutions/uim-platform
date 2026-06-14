@@ -35,8 +35,8 @@ class ManageAppBuildsUseCase { // TODO: UIMUseCase {
     CommandResult createAppBuild(AppBuildDTO dto) {
         AppBuild e;
         e.initEntity(dto.tenantId, dto.createdBy);
-        if (!dto.appBuildId.isNull)
-            e.id = dto.appBuildId;
+        if (!dto.buildId.isNull)
+            e.id = dto.buildId;
         e.applicationId = dto.applicationId;
         e.name = dto.name;
         e.description = dto.description;
@@ -52,7 +52,7 @@ class ManageAppBuildsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateAppBuild(AppBuildDTO dto) {
-        auto existing = repo.findById(dto.tenantId, dto.appBuildId);
+        auto existing = repo.findById(dto.tenantId, dto.buildId);
         if (existing.isNull)
             return CommandResult(false, "", "App build not found");
             

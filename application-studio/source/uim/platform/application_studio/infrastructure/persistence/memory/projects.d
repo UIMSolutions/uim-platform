@@ -18,7 +18,7 @@ class MemoryProjectRepository : TenantRepository!(Project, ProjectId), ProjectRe
     }
 
 Project[] filterByType(Project[] projects, ProjectType projectType) {
-        return projects.filter!(p => p.type == projectType).array;
+        return projects.filter!(p => p.projectType == projectType).array;
     }
 
     Project[] findByType(TenantId tenantId, ProjectType projectType) {

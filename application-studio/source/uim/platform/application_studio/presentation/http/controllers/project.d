@@ -55,10 +55,10 @@ class ProjectController : ManageHttpController {
         ProjectDTO dto;
         dto.projectId = ProjectId(precheck.id);
         dto.tenantId = tenantId;
-        dto.devSpaceId = data.getString("devSpaceId");
+        dto.spaceId = DevSpaceId(data.getString("devSpaceId"));
         dto.name = data.getString("name");
         dto.description = data.getString("description");
-        dto.templateId = data.getString("templateId");
+        dto.templateId = ProjectTemplateId(data.getString("templateId"));
         dto.rootPath = data.getString("rootPath");
         dto.gitRepositoryUrl = data.getString("gitRepositoryUrl");
         dto.gitBranch = data.getString("gitBranch");
@@ -84,7 +84,7 @@ class ProjectController : ManageHttpController {
         if (id.isNull)
             return errorResponse("Invalid project ID", 400);
 
-        auto e = usecase.getProject(tenantId, id);
+        auto e = usecase.getById(tenantId, id);
         if (e.isNull)
             return errorResponse("Project not found", 404);
 
@@ -99,6 +99,7 @@ class ProjectController : ManageHttpController {
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         ProjectDTO dto;
+        dto.projectId = ProjectId(precheck.id);
         dto.tenantId = tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
@@ -106,7 +107,7 @@ class ProjectController : ManageHttpController {
         dto.gitBranch = data.getString("gitBranch");
         dto.updatedBy = UserId(data.getString("updatedBy"));
 
-        auto result = usecase.updateProject(tenantId, dto);
+        auto result = usecase.updateProject(dto);
         if (result.hasError)
             return errorResponse(result.message, 400);
 

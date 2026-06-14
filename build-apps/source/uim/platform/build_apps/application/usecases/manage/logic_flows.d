@@ -40,7 +40,7 @@ class ManageLogicFlowsUseCase { // TODO: UIMUseCase {
         LogicFlow e;
         e.initEntity(dto.tenantId, dto.createdBy);
 
-        e.id = dto.logicFlowId;
+        e.id = dto.flowId;
         e.applicationId = dto.applicationId;
         e.pageId = dto.pageId;
         e.name = dto.name;

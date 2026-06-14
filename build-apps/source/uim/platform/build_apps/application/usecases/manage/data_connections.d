@@ -40,7 +40,7 @@ class ManageDataConnectionsUseCase { // TODO: UIMUseCase {
         DataConnection e;
         e.initEntity(dto.tenantId, dto.createdBy);
 
-        e.id = dto.dataConnectionId;
+        e.id = dto.connectionId;
         e.applicationId = dto.applicationId;
         e.name = dto.name;
         e.description = dto.description;
@@ -59,7 +59,7 @@ class ManageDataConnectionsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateDataConnection(DataConnectionDTO dto) {
-        auto existing = repo.findById(dto.tenantId, dto.dataConnectionId);
+        auto existing = repo.findById(dto.tenantId, dto.connectionId);
         if (existing.isNull)
             return CommandResult(false, "", "Data connection not found");
             

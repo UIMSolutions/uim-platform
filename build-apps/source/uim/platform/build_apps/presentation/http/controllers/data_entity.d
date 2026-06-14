@@ -71,7 +71,7 @@ class DataEntityController : ManageHttpController {
 
         auto data = precheck.data;
         DataEntityDTO dto;
-        dto.dataEntityId = DataEntityId(precheck.id);
+        dto.entityId = DataEntityId(precheck.id);
         dto.tenantId = tenantId;
         dto.applicationId = ApplicationId(data.getString("applicationId"));
         dto.name = data.getString("name");
@@ -99,11 +99,13 @@ class DataEntityController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto id = DataEntityId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid data entity ID", 400);
 
         auto data = precheck.data;
         DataEntityDTO dto;
         dto.tenantId = tenantId;
-        dto.dataEntityId = id;
+        dto.entityId = id;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.fields = data.getString("fields");

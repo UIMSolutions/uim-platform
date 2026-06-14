@@ -16,6 +16,14 @@ enum ApplicationType {
     mobile,
     webAndMobile
 }
+ApplicationType toApplicationType(string s) {
+    const map = [
+        "web": ApplicationType.web,
+        "mobile": ApplicationType.mobile,
+        "webAndMobile": ApplicationType.webAndMobile
+    ];
+    return map.get(s, ApplicationType.web);
+}
 
 enum ApplicationStatus {
     draft,
@@ -23,6 +31,16 @@ enum ApplicationStatus {
     published,
     archived,
     error
+}
+ApplicationStatus toApplicationStatus(string s) {
+    const map = [
+        "draft": ApplicationStatus.draft,
+        "active": ApplicationStatus.active,
+        "published": ApplicationStatus.published,
+        "archived": ApplicationStatus.archived,
+        "error": ApplicationStatus.error
+    ];
+    return map.get(s, ApplicationStatus.draft);
 }
 
 enum PageType {
@@ -34,6 +52,37 @@ enum PageType {
     login,
     settings,
     custom
+}
+PageType toPageType(string s) {
+    const map = [
+        "blank": PageType.blank,
+        "list": PageType.list,
+        "detail": PageType.detail,
+        "form": PageType.form,
+        "dashboard": PageType.dashboard,
+        "login": PageType.login,
+        "settings": PageType.settings,
+        "custom": PageType.custom
+    ];
+    return map.get(s, PageType.blank);
+}
+
+enum PageStatus {
+    draft,
+    active,
+    published,
+    archived,
+    error
+}
+PageStatus toPageStatus(string s) {
+    const map = [
+        "draft": PageStatus.draft,
+        "active": PageStatus.active,
+        "published": PageStatus.published,
+        "archived": PageStatus.archived,
+        "error": PageStatus.error
+    ];
+    return map.get(s, PageStatus.draft);
 }
 
 enum ComponentCategory {

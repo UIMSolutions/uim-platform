@@ -73,7 +73,7 @@ class DataConnectionController : ManageHttpController {
         auto data = precheck.data;
         DataConnectionDTO dto;
         dto.tenantId = tenantId;
-        dto.dataConnectionId = id;
+        dto.connectionId = id;
         dto.applicationId = ApplicationId(data.getString("applicationId"));
         dto.name = data.getString("name");
         dto.description = data.getString("description");
@@ -101,10 +101,13 @@ class DataConnectionController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
+        auto id = DataConnectionId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid data connection ID", 400);
 
         auto data = precheck.data;
         DataConnectionDTO dto;
-        dto.dataConnectionId = DataConnectionId(precheck.id);
+        dto.connectionId = id;
         dto.tenantId = tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");

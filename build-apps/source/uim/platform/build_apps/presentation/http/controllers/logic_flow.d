@@ -71,7 +71,7 @@ class LogicFlowController : ManageHttpController {
 
         auto data = precheck.data;
         LogicFlowDTO dto;
-        dto.logicFlowId = LogicFlowId(precheck.id);
+        dto.flowId = LogicFlowId(precheck.id);
         dto.tenantId = tenantId;
         dto.applicationId = ApplicationId(data.getString("applicationId"));
         dto.pageId = PageId(data.getString("pageId"));
@@ -103,7 +103,7 @@ class LogicFlowController : ManageHttpController {
         auto data = precheck.data;
         LogicFlowDTO dto;
         dto.tenantId = tenantId;
-        dto.logicFlowId = LogicFlowId(precheck.id);
+        dto.flowId = LogicFlowId(precheck.id);
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.nodes = data.getString("nodes");

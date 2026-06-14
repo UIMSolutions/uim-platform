@@ -71,7 +71,7 @@ class UIComponentController : ManageHttpController {
 
         auto data = precheck.data;
         UIComponentDTO dto;
-        dto.uiComponentId = UIComponentId(precheck.id);
+        dto.componentId = UIComponentId(precheck.id);
         dto.tenantId = tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
@@ -103,7 +103,7 @@ class UIComponentController : ManageHttpController {
         auto data = precheck.data;
         UIComponentDTO dto;
         dto.tenantId = tenantId;
-        dto.uiComponentId = UIComponentId(precheck.id);
+        dto.componentId = UIComponentId(precheck.id);
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.version_ = data.getString(

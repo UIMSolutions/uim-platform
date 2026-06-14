@@ -48,7 +48,7 @@ struct PageDTO {
 }
 
 struct UIComponentDTO {
-    UIComponentId uiComponentId;
+    UIComponentId componentId;
     TenantId tenantId;
     ApplicationId applicationId;
     string name;
@@ -67,7 +67,7 @@ struct UIComponentDTO {
 }
 
 struct DataEntityDTO {
-    DataEntityId dataEntityId;
+    DataEntityId entityId;
     TenantId tenantId;
     ApplicationId applicationId;
     string name;
@@ -83,7 +83,7 @@ struct DataEntityDTO {
 }
 
 struct DataConnectionDTO {
-    DataConnectionId dataConnectionId;
+    DataConnectionId connectionId;
     TenantId tenantId;
     ApplicationId applicationId;
     string name;
@@ -102,7 +102,7 @@ struct DataConnectionDTO {
 }
 
 struct LogicFlowDTO {
-    LogicFlowId logicFlowId;
+    LogicFlowId flowId;
     TenantId tenantId;
     ApplicationId applicationId;
     PageId pageId;
@@ -119,7 +119,7 @@ struct LogicFlowDTO {
 }
 
 struct AppBuildDTO {
-    AppBuildId appBuildId;
+    AppBuildId buildId;
     TenantId tenantId;
     ApplicationId applicationId;
     string name;
@@ -133,7 +133,7 @@ struct AppBuildDTO {
 }
 
 struct ProjectMemberDTO {
-    string id;
+    ProjectMemberId memberId;
     TenantId tenantId;
     string applicationId;
     UserId userId;

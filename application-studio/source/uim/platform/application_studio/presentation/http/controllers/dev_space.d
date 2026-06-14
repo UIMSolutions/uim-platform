@@ -35,11 +35,11 @@ class DevSpaceController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-        auto items = usecase.listDevSpaces();
-        uto list = items.map!(item => item.toJson()).array.toJson;
+        auto items = usecase.listDevSpaces(tenantId);
+        auto list = items.map!(item => item.toJson()).array.toJson;
 
         auto responseData = Json.emptyObject
-            .set("count", list.length)
+            .set("count", items.length)
             .set("resources", list);
         return successResponse("Dev space list retrieved successfully", "Retrieved", 200, responseData);
     }
@@ -77,16 +77,16 @@ class DevSpaceController : ManageHttpController {
         dto.tenantId = tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
-        dto.devSpaceTypeId = DevSpaceTypeId(data.getString("devSpaceTypeId"));
+        dto.typeId = DevSpaceTypeId(data.getString("devSpaceTypeId"));
         dto.extensions = data.getString("extensions");
-        dto.owner = UserId(data.getString("owner"));
+        dto.owner = data.getString("owner");
         dto.region = data.getString("region");
         dto.hibernateAfterDays = data.getString("hibernateAfterDays");
         dto.memoryLimit = data.getString("memoryLimit");
         dto.diskLimit = data.getString("diskLimit");
         dto.createdBy = UserId(data.getString("createdBy"));
 
-        auto result = usecase.createDevSpace(tenantId, dto);
+        auto result = usecase.createDevSpace(dto);
         if (result.hasError)
             return errorResponse(result.message, 400);
 
@@ -107,12 +107,13 @@ class DevSpaceController : ManageHttpController {
         auto data = precheck.data;
         DevSpaceDTO dto;
         dto.spaceId = id;
+        dto.tenantId = tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.extensions = data.getString("extensions");
         dto.updatedBy = UserId(data.getString("updatedBy"));
 
-        auto result = usecase.updateDevSpace(tenantId, dto);
+        auto result = usecase.updateDevSpace(dto);
         if (result.hasError)
             return errorResponse(result.message, 400);
 

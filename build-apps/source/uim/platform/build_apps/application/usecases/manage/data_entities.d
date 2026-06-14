@@ -36,7 +36,7 @@ class ManageDataEntitiesUseCase { // TODO: UIMUseCase {
         DataEntity e;
         e.initEntity(dto.tenantId, dto.createdBy);
 
-        e.id = dto.dataEntityId;
+        e.id = dto.entityId;
         e.applicationId = dto.applicationId;
         e.name = dto.name;
         e.description = dto.description;
@@ -54,7 +54,7 @@ class ManageDataEntitiesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateDataEntity(DataEntityDTO dto) {
-        auto existing = repo.findById(dto.tenantId, dto.dataEntityId);
+        auto existing = repo.findById(dto.tenantId, dto.entityId);
         if (existing.isNull)
             return CommandResult(false, "", "Data entity not found");
 
