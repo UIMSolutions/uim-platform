@@ -88,12 +88,9 @@ class PrintTaskController : ManageHttpController {
             if (!result.success) { writeError(res, 400, result.message); return; }
 
             auto resp = Json.emptyObject
-                .set("id", result.id)
-                .set("message", "Print task created successfully");
-            res.writeJsonBody(resp, 201);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+                .set("id", result.id);
+                
+                return successResponse("Print task created successfully", 201, resp);
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -114,10 +111,8 @@ class PrintTaskController : ManageHttpController {
             auto resp = Json.emptyObject
                 .set("id", result.id)
                 .set("message", "Print task updated successfully");
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+            
+            return successResponse("Print task updated successfully", 200, resp);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -126,13 +121,17 @@ class PrintTaskController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = precheck.path;
             auto id = PrintTaskId(precheck.id);
+            if (id.isNull)
+                return errorResponse("Invalid print task ID", 400);
+                
             auto result = usecase.deletePrintTask(tenantId, id);
-            if (!result.success) { writeError(res, 404, result.message); return; }
-            res.writeJsonBody(Json.emptyObject.set("message", "Print task deleted successfully"), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+            if (result.hasError)
+                return errorResponse(result.message, 400);
+
+            auto resp = Json.emptyObject
+                .set("id", result.id)
+                .set("message", "Print task deleted successfully");
+            return successResponse("Print task deleted successfully", 200, resp);
     }
 }

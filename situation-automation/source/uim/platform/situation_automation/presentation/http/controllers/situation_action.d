@@ -59,16 +59,8 @@ class SituationActionController : ManageHttpController {
             if (result.hasError)
             return errorResponse(result.message, 400);
                 auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Situation action created");
-
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+                    .set("id", result.id);
+           return successResponse("Situation action created successfully", 201, resp); 
     }
 
     override protected Json listHandler(HTTPServerRequest req) {
@@ -97,10 +89,7 @@ class SituationActionController : ManageHttpController {
                 .set("count", actions.length)
                 .set("resources", list);
                 
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+            return successResponse("Situation actions retrieved successfully", 200, resp);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -139,10 +128,7 @@ class SituationActionController : ManageHttpController {
                 .set("executionCount", a.executionCount)
                 .set("apiConfig", apiCfg);
 
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+            return successResponse("Situation action retrieved successfully", 200, resp);
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {

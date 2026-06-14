@@ -40,7 +40,7 @@ class ApiRuleController : ManageHttpController {
     auto tenantId = precheck.tenantId;
 
     auto data = precheck.data;
-    
+
     CreateApiRuleRequest r;
     r.namespaceId = data.getString("namespaceId");
     r.environmentId = data.getString("environmentId");
@@ -79,31 +79,28 @@ class ApiRuleController : ManageHttpController {
 }
 
 override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+  auto precheck = super.listHandler(req);
+  if (precheck.hasError)
+    return precheck;
 
-        auto tenantId = precheck.tenantId;
-    auto nsId = req.params.get("namespaceId");
-    auto envId = req.params.get("environmentId");
+  auto tenantId = precheck.tenantId;
+  auto nsId = req.params.get("namespaceId");
+  auto envId = req.params.get("environmentId");
 
-    ApiRule[] items;
-    if (!nsId.isEmpty)
-      items = usecase.listByNamespace(nsId);
-    else if (!envId.isEmpty)
-      items = usecase.listByEnvironment(envId);
+  ApiRule[] items;
+  if (!nsId.isEmpty)
+    items = usecase.listByNamespace(nsId);
+  else if (!envId.isEmpty)
+    items = usecase.listByEnvironment(envId);
 
-    auto arr = items.map!(rule => rule.toJson).array.toJson;
+  auto arr = items.map!(rule => rule.toJson).array.toJson;
 
-    auto resp = Json.emptyObject
-      .set("items", arr)
-      .set("totalCount", items.length)
-      .set("message", "API rules retrieved successfully");
+  auto resp = Json.emptyObject
+    .set("items", arr)
+    .set("totalCount", items.length)
+    .set("message", "API rules retrieved successfully");
 
-    res.writeJsonBody(resp, 200);
-  } catch (Exception e) {
-    writeError(res, 500, "Internal server error");
-  }
+  return successResponse("API rules retrieved successfully", "Retrieved", 200, resp);
 }
 
 override protected Json getHandler(HTTPServerRequest req) {
@@ -114,15 +111,10 @@ override protected Json getHandler(HTTPServerRequest req) {
   auto tenantId = precheck.tenantId;
   auto id = precheck.id;
   auto rule = usecase.getApiRule(tenantId, id);
-  if (rule.isNull) {
-    writeError(res, 404, "API rule not found");
-    return;
-  }
-  res.writeJsonBody(rule.toJson, 200);
-}
- catch (Exception e) {
-  writeError(res, 500, "Internal server error");
-}
+  if (rule.isNull) 
+    return errorResponse("API rule not found", 404);
+  
+  return successResponse("API rule retrieved successfully", "Retrieved", 200, rule.toJson);
 }
 
 override protected Json updateHandler(HTTPServerRequest req) {

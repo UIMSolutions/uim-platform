@@ -158,7 +158,7 @@ override protected Json updateHandler(HTTPServerRequest req) {
   if (result.hasError)
     return errorResponse(result.message, 400);
 
-    return successResponse("Key mapping updated successfully", 200);
+  return successResponse("Key mapping updated successfully", 200);
 }
 
 override protected Json deleteHandler(HTTPServerRequest req) {
@@ -172,7 +172,7 @@ override protected Json deleteHandler(HTTPServerRequest req) {
     return errorResponse("Invalid key mapping ID", 400);
 
   auto result = usecase.deleteMapping(id);
- if (result.hasError)
+  if (result.hasError)
     return errorResponse(result.message, 400);
 
   auto resp = Json.emptyObject

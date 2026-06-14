@@ -38,31 +38,23 @@ class NotificationController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-            CreateNotificationRequest r;
-            r.tenantId = tenantId;
-            r.situationInstanceId = SituationInstanceId(data.getString("instanceId"));
-            r.notificationId = NotificationId(precheck.id);
-            r.recipientId = data.getString("recipientId");
-            r.title = data.getString("title");
-            r.message = data.getString("message");
-            r.channel = data.getString("channel");
-            r.priority = data.getString("priority");
-            r.actionUrl = data.getString("actionUrl");
+        CreateNotificationRequest r;
+        r.tenantId = tenantId;
+        r.situationInstanceId = SituationInstanceId(data.getString("instanceId"));
+        r.notificationId = NotificationId(precheck.id);
+        r.recipientId = data.getString("recipientId");
+        r.title = data.getString("title");
+        r.message = data.getString("message");
+        r.channel = data.getString("channel");
+        r.priority = data.getString("priority");
+        r.actionUrl = data.getString("actionUrl");
 
-            auto result = usecase.createNotification(r);
-            if (result.hasError)
+        auto result = usecase.createNotification(r);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Notification created");
-
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto resp = Json.emptyObject
+            .set("id", result.id);
+        return successResponse("Notification created successfully", 201, resp);
     }
 
     override protected Json listHandler(HTTPServerRequest req) {
@@ -72,30 +64,27 @@ class NotificationController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-            auto notifications = usecase.listNotifications(tenantId);
+        auto notifications = usecase.listNotifications(tenantId);
 
-            auto jarr = Json.emptyArray;
-            foreach (n; notifications) {
-                jarr ~= Json.emptyObject
-                    .set("id", n.id)
-                    .set("instanceId", n.situationInstanceId.value)
-                    .set("recipientId", n.recipientId)
-                    .set("title", n.title)
-                    .set("channel", n.channel.to!string)
-                    .set("status", n.status.to!string)
-                    .set("priority", n.priority.to!string)
-                    .set("createdAt", n.createdAt)
-                    .set("sentAt", n.sentAt);
-            }
-
-            auto resp = Json.emptyObject
-                .set("count", notifications.length)
-                .set("resources", list);
-
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
+        auto jarr = Json.emptyArray;
+        foreach (n; notifications) {
+            jarr ~= Json.emptyObject
+                .set("id", n.id)
+                .set("instanceId", n.situationInstanceId.value)
+                .set("recipientId", n.recipientId)
+                .set("title", n.title)
+                .set("channel", n.channel.to!string)
+                .set("status", n.status.to!string)
+                .set("priority", n.priority.to!string)
+                .set("createdAt", n.createdAt)
+                .set("sentAt", n.sentAt);
         }
+
+        auto resp = Json.emptyObject
+            .set("count", notifications.length)
+            .set("resources", list);
+
+        return successResponse("Notifications retrieved successfully", 200, resp);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -105,32 +94,27 @@ class NotificationController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-            auto notificationId = NotificationId(precheck.id);
-            auto n = usecase.getNotification(tenantId, notificationId);
-            if (n.isNull) {
-                writeError(res, 404, "Notification not found");
-                return;
-            }
+        auto notificationId = NotificationId(precheck.id);
+        auto n = usecase.getNotification(tenantId, notificationId);
+        if (n.isNull)
+            return errorResponse("Notification not found", 404);
 
-            auto resp = Json.emptyObject
-                .set("id", n.id)
-                .set("instanceId", n.situationInstanceId.value)
-                .set("recipientId", n.recipientId)
-                .set("title", n.title)
-                .set("message", n.message)
-                .set("channel", n.channel.to!string)
-                .set("status", n.status.to!string)
-                .set("priority", n.priority.to!string)
-                .set("actionUrl", n.actionUrl)
-                .set("createdAt", n.createdAt)
-                .set("sentAt", n.sentAt)
-                .set("readAt", n.readAt)
-                .set("message", "Notification retrieved");
+        auto resp = Json.emptyObject
+            .set("id", n.id)
+            .set("instanceId", n.situationInstanceId.value)
+            .set("recipientId", n.recipientId)
+            .set("title", n.title)
+            .set("message", n.message)
+            .set("channel", n.channel.to!string)
+            .set("status", n.status.to!string)
+            .set("priority", n.priority.to!string)
+            .set("actionUrl", n.actionUrl)
+            .set("createdAt", n.createdAt)
+            .set("sentAt", n.sentAt)
+            .set("readAt", n.readAt)
+            .set("message", "Notification retrieved");
 
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        return successResponse("Notification retrieved successfully", 200, resp);
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -140,28 +124,22 @@ class NotificationController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-            auto tenantId = precheck.tenantId;
-            auto data = precheck.data;
-            
-            UpdateNotificationRequest r;
-            r.tenantId = tenantId;
-            r.notificationId = NotificationId(precheck.id);
-            r.status = data.getString("status");
+        auto tenantId = precheck.tenantId;
+        auto data = precheck.data;
 
-            auto result = usecase.updateNotification(r);
-            if (result.hasError)
+        UpdateNotificationRequest r;
+        r.tenantId = tenantId;
+        r.notificationId = NotificationId(precheck.id);
+        r.status = data.getString("status");
+
+        auto result = usecase.updateNotification(r);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Notification updated");
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Notification updated");
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        return successResponse("Notification updated successfully", 200, resp);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -170,14 +148,14 @@ class NotificationController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto notificationId = NotificationId(precheck.id);
+        auto notificationId = NotificationId(precheck.id);
 
-            auto result = usecase.deleteNotification(tenantId, notificationId);
-            if (result.hasError)
+        auto result = usecase.deleteNotification(tenantId, notificationId);
+        if (result.hasError)
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
         return successResponse("Notification deleted successfully", 200, responseData);
-            
+
     }
 }

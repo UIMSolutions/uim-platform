@@ -22,7 +22,7 @@ class DashboardController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        
+
         router.get("/api/v1/situation-automation/dashboards", &handleList);
         router.get("/api/v1/situation-automation/dashboards/*", &handleGet);
         router.post("/api/v1/situation-automation/dashboards", &handleCreate);
@@ -38,29 +38,23 @@ class DashboardController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-            CreateDashboardRequest r;
-            r.tenantId = tenantId;
-            r.dashboardId = DashboardId(precheck.id);
-            r.name = data.getString("name");
-            r.description = data.getString("description");
-            r.type = data.getString("type");
-            r.refreshIntervalSeconds = data.getInteger("refreshIntervalSeconds");
-            r.createdBy = UserId(data.getString("createdBy"));
+        CreateDashboardRequest r;
+        r.tenantId = tenantId;
+        r.dashboardId = DashboardId(precheck.id);
+        r.name = data.getString("name");
+        r.description = data.getString("description");
+        r.type = data.getString("type");
+        r.refreshIntervalSeconds = data.getInteger("refreshIntervalSeconds");
+        r.createdBy = UserId(data.getString("createdBy"));
 
-            auto result = usecase.createDashboard(r);
-            if (result.hasError)
+        auto result = usecase.createDashboard(r);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Dashboard created");
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Dashboard created");
 
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        return successResponse("Dashboard created successfully", "Created", 201, resp);
     }
 
     override protected Json listHandler(HTTPServerRequest req) {
@@ -70,28 +64,25 @@ class DashboardController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-            auto dashboards = usecase.listDashboards(tenantId);
+        auto dashboards = usecase.listDashboards(tenantId);
 
-            auto jarr = Json.emptyArray;
-            foreach (d; dashboards) {
-                jarr ~= Json.emptyObject
+        auto jarr = Json.emptyArray;
+        foreach (d; dashboards) {
+            jarr ~= Json.emptyObject
                 .set("id", d.id)
                 .set("name", d.name)
                 .set("description", d.description)
                 .set("type", d.type.to!string)
                 .set("refreshIntervalSeconds", d.refreshIntervalSeconds)
                 .set("createdAt", d.createdAt);
-            }
-
-            auto resp = Json.emptyObject
-                .set("count", Json(dashboards.length))
-                .set("resources", jarr)
-                .set("message", "Dashboards retrieved");
-
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
         }
+
+        auto resp = Json.emptyObject
+            .set("count", Json(dashboards.length))
+            .set("resources", jarr)
+            .set("message", "Dashboards retrieved");
+
+        return successResponse("Dashboards retrieved successfully", "Retrieved", 200, resp);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -100,28 +91,25 @@ class DashboardController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto id = DashboardId(precheck.id);
-            auto d = usecase.getDashboard(tenantId, id);
-            if (d.isNull) {
-                writeError(res, 404, "Dashboard not found");
-                return;
-            }
-
-            auto resp = Json.emptyObject
-                .set("id", d.id)
-                .set("name", d.name)
-                .set("description", d.description)
-                .set("type", d.type.to!string)
-                .set("refreshIntervalSeconds", d.refreshIntervalSeconds)
-                .set("createdBy", d.createdBy)
-                .set("updatedBy", d.updatedBy)
-                .set("createdAt", d.createdAt)
-                .set("updatedAt", d.updatedAt);
-
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
+        auto id = DashboardId(precheck.id);
+        auto d = usecase.getDashboard(tenantId, id);
+        if (d.isNull) {
+            writeError(res, 404, "Dashboard not found");
+            return;
         }
+
+        auto resp = Json.emptyObject
+            .set("id", d.id)
+            .set("name", d.name)
+            .set("description", d.description)
+            .set("type", d.type.to!string)
+            .set("refreshIntervalSeconds", d.refreshIntervalSeconds)
+            .set("createdBy", d.createdBy)
+            .set("updatedBy", d.updatedBy)
+            .set("createdAt", d.createdAt)
+            .set("updatedAt", d.updatedAt);
+
+        return successResponse("Dashboard retrieved successfully", "Retrieved", 200, resp);
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -130,52 +118,48 @@ class DashboardController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto data = precheck.data;
-            UpdateDashboardRequest r;
-            r.tenantId = tenantId;
-            r.dashboardId = DashboardId(precheck.id);
-            r.name = data.getString("name");
-            r.description = data.getString("description");
-            r.refreshIntervalSeconds = data.getInteger("refreshIntervalSeconds");
-            r.updatedBy = UserId(data.getString("updatedBy"));
+        auto id = DashboardId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid dashboard ID", 400);
 
-            auto result = usecase.updateDashboard(r);
-            if (result.hasError)
+        auto data = precheck.data;
+        UpdateDashboardRequest r;
+        r.tenantId = tenantId;
+        r.dashboardId = id;
+        r.name = data.getString("name");
+        r.description = data.getString("description");
+        r.refreshIntervalSeconds = data.getInteger("refreshIntervalSeconds");
+        r.updatedBy = UserId(data.getString("updatedBy"));
+
+        auto result = usecase.updateDashboard(r);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Dashboard updated");
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto resp = Json.emptyObject
+            .set("id", result.id);
+
+        return successResponse("Dashboard updated successfully", "Updated", 200, resp);
     }
+}
 
-    override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+        return precheck;
 
-        auto tenantId = precheck.tenantId;
-            auto id = DashboardId(precheck.id);
-            
-            auto result = usecase.deleteDashboard(tenantId, id);
-            if (result.hasError)
-            return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Dashboard deleted");
-                    
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+    auto tenantId = precheck.tenantId;
+    auto id = DashboardId(precheck.id);
+    if (id.isNull)
+        return errorResponse("Invalid dashboard ID", 400);
+
+    auto result = usecase.deleteDashboard(tenantId, id);
+    if (result.hasError)
+        return errorResponse(result.message, 400);
+
+    auto resp = Json.emptyObject
+        .set("id", result.id)
+        .set("message", "Dashboard deleted");
+
+    return successResponse("Dashboard deleted successfully", "Deleted", 200, resp);
+}
 }

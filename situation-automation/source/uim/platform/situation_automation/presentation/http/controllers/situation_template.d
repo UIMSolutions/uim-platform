@@ -22,7 +22,7 @@ class SituationTemplateController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        
+
         router.get("/api/v1/situation-automation/templates", &handleList);
         router.get("/api/v1/situation-automation/templates/*", &handleGet);
         router.post("/api/v1/situation-automation/templates", &handleCreate);
@@ -38,35 +38,29 @@ class SituationTemplateController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-            CreateSituationTemplateRequest r;
-            r.tenantId = tenantId;
-            r.situationTemplateId = precheck.id;
-            r.name = data.getString("name");
-            r.description = data.getString("description");
-            r.situationCategory = data.getString("situationCategory").to!SituationCategory;
-            r.defaultSeverity = data.getString("defaultSeverity").to!SituationSeverity;
-            r.entityTypeId = EntityTypeId(data.getString("entityTypeId"));
-            r.sourceSystem = data.getString("sourceSystem");
-            r.sourceTemplateId = data.getString("sourceTemplateId");
-            r.autoResolveTimeoutMinutes = data.getInteger("autoResolveTimeoutMinutes");
-            r.escalationEnabled = data.getBoolean("escalationEnabled");
-            r.escalationTargetUserId = data.getString("escalationTargetUserId");
-            r.createdBy = UserId(data.getString("createdBy"));
+        CreateSituationTemplateRequest r;
+        r.tenantId = tenantId;
+        r.situationTemplateId = precheck.id;
+        r.name = data.getString("name");
+        r.description = data.getString("description");
+        r.situationCategory = data.getString("situationCategory").to!SituationCategory;
+        r.defaultSeverity = data.getString("defaultSeverity").to!SituationSeverity;
+        r.entityTypeId = EntityTypeId(data.getString("entityTypeId"));
+        r.sourceSystem = data.getString("sourceSystem");
+        r.sourceTemplateId = data.getString("sourceTemplateId");
+        r.autoResolveTimeoutMinutes = data.getInteger("autoResolveTimeoutMinutes");
+        r.escalationEnabled = data.getBoolean("escalationEnabled");
+        r.escalationTargetUserId = data.getString("escalationTargetUserId");
+        r.createdBy = UserId(data.getString("createdBy"));
 
-            auto result = usecase.createSituationTemplate(r);
-            if (result.hasError)
+        auto result = usecase.createSituationTemplate(r);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Situation template created");
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Situation template created");
 
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        return successResponse("Situation template created successfully", "Created", 201, resp);
     }
 
     override protected Json listHandler(HTTPServerRequest req) {
@@ -76,49 +70,11 @@ class SituationTemplateController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-            auto templates = usecase.listSituationTemplates(tenantId);
+        auto templates = usecase.listSituationTemplates(tenantId);
 
-            auto jarr = Json.emptyArray;
-            foreach (t; templates) {
-                jarr ~= Json.emptyObject
-                    .set("id", t.id)
-                    .set("name", t.name)
-                    .set("description", t.description)
-                    .set("category", t.category.to!string)
-                    .set("defaultSeverity", t.defaultSeverity.to!string)
-                    .set("status", t.status.to!string)
-                    .set("entityTypeId", t.entityTypeId)
-                    .set("sourceSystem", t.sourceSystem)
-                    .set("createdBy", t.createdBy)
-                    .set("createdAt", t.createdAt)
-                    .set("updatedAt", t.updatedAt);
-            }
-
-            auto resp = Json.emptyObject
-                .set("count", templates.length)
-                .set("resources", list);
-
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
-
-    override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
-
-        auto tenantId = precheck.tenantId;
-            auto id = SituationTemplateId(precheck.id);
-
-            auto t = usecase.getSituationTemplate(tenantId, id);
-            if (t.isNull) {
-                writeError(res, 404, "Situation template not found");
-                return;
-            }
-
-            auto resp = Json.emptyObject
+        auto jarr = Json.emptyArray;
+        foreach (t; templates) {
+            jarr ~= Json.emptyObject
                 .set("id", t.id)
                 .set("name", t.name)
                 .set("description", t.description)
@@ -127,19 +83,52 @@ class SituationTemplateController : ManageHttpController {
                 .set("status", t.status.to!string)
                 .set("entityTypeId", t.entityTypeId)
                 .set("sourceSystem", t.sourceSystem)
-                .set("sourceTemplateId", t.sourceTemplateId)
-                .set("autoResolveTimeoutMinutes", t.autoResolveTimeoutMinutes)
-                .set("escalationEnabled", t.escalationEnabled)
-                .set("escalationTargetUserId", t.escalationTargetUserId)
                 .set("createdBy", t.createdBy)
-                .set("updatedBy", t.updatedBy)
                 .set("createdAt", t.createdAt)
                 .set("updatedAt", t.updatedAt);
-
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
         }
+
+        auto resp = Json.emptyObject
+            .set("count", templates.length)
+            .set("resources", jarr);
+
+        return successResponse("Situation templates retrieved successfully", "Retrieved", 200, resp);
+    }
+
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+        auto id = SituationTemplateId(precheck.id);
+
+        auto t = usecase.getSituationTemplate(tenantId, id);
+        if (t.isNull) {
+            writeError(res, 404, "Situation template not found");
+            return;
+        }
+
+        auto resp = Json.emptyObject
+            .set("id", t.id)
+            .set("name", t.name)
+            .set("description", t.description)
+            .set("category", t.category.to!string)
+            .set("defaultSeverity", t.defaultSeverity.to!string)
+            .set("status", t.status.to!string)
+            .set("entityTypeId", t.entityTypeId)
+            .set("sourceSystem", t.sourceSystem)
+            .set("sourceTemplateId", t.sourceTemplateId)
+            .set("autoResolveTimeoutMinutes", t.autoResolveTimeoutMinutes)
+            .set("escalationEnabled", t.escalationEnabled)
+            .set("escalationTargetUserId", t.escalationTargetUserId)
+            .set("createdBy", t.createdBy)
+            .set("updatedBy", t.updatedBy)
+            .set("createdAt", t.createdAt)
+            .set("updatedAt", t.updatedAt);
+
+        return successResponse("Situation template retrieved successfully", "Retrieved", 200, resp);
+
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -148,36 +137,30 @@ class SituationTemplateController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto id = SituationTemplateId(precheck.id);
+        auto id = SituationTemplateId(precheck.id);
 
-            auto data = precheck.data;
-            UpdateSituationTemplateRequest r;
-            r.tenantId = tenantId;
-            r.situationTemplateId = id;
-            r.name = data.getString("name");
-            r.description = data.getString("description");
-            r.situationCategory = data.getString("situationCategory").to!SituationCategory;
-            r.defaultSeverity = data.getString("defaultSeverity").to!SituationSeverity;
-            r.entityTypeId = EntityTypeId(data.getString("entityTypeId"));
-            r.autoResolveTimeoutMinutes = data.getInteger("autoResolveTimeoutMinutes");
-            r.escalationEnabled = data.getBoolean("escalationEnabled");
-            r.escalationTargetUserId = data.getString("escalationTargetUserId");
-            r.updatedBy = UserId(data.getString("updatedBy"));
+        auto data = precheck.data;
+        UpdateSituationTemplateRequest r;
+        r.tenantId = tenantId;
+        r.situationTemplateId = id;
+        r.name = data.getString("name");
+        r.description = data.getString("description");
+        r.situationCategory = data.getString("situationCategory").to!SituationCategory;
+        r.defaultSeverity = data.getString("defaultSeverity").to!SituationSeverity;
+        r.entityTypeId = EntityTypeId(data.getString("entityTypeId"));
+        r.autoResolveTimeoutMinutes = data.getInteger("autoResolveTimeoutMinutes");
+        r.escalationEnabled = data.getBoolean("escalationEnabled");
+        r.escalationTargetUserId = data.getString("escalationTargetUserId");
+        r.updatedBy = UserId(data.getString("updatedBy"));
 
-            auto result = usecase.updateSituationTemplate(r);
-            if (result.hasError)
+        auto result = usecase.updateSituationTemplate(r);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Situation template updated");
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Situation template updated");
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        return successResponse("Situation template updated successfully", "Updated", 200, resp);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -187,20 +170,14 @@ class SituationTemplateController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-            auto id = SituationTemplateId(precheck.id);
-            auto result = usecase.deleteSituationTemplate(tenantId, id);
-            if (result.hasError)
+        auto id = SituationTemplateId(precheck.id);
+        auto result = usecase.deleteSituationTemplate(tenantId, id);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Situation template deleted");
-                    
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Situation template deleted");
+
+        return successResponse("Situation template deleted successfully", "Deleted", 200, resp);
     }
 }

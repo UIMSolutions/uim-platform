@@ -56,13 +56,7 @@ class DataContextController : ManageHttpController {
                     .set("id", result.id)
                     .set("message", "Data context created");
 
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+                return successResponse("Data context created successfully", 201, resp);
     }
 
     override protected Json listHandler(HTTPServerRequest req) {
@@ -89,13 +83,9 @@ class DataContextController : ManageHttpController {
 
             auto resp = Json.emptyObject
                 .set("count", Json(contexts.length))
-                .set("resources", jarr)
-                .set("message", "Data contexts retrieved");
-
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+                .set("resources", jarr);
+        
+            return successResponse("Data contexts retrieved successfully", 200, resp);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -121,10 +111,7 @@ class DataContextController : ManageHttpController {
                 .set("capturedAt", d.capturedAt)
                 .set("expiresAt", d.expiresAt);
 
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+            return successResponse("Data context retrieved successfully", 200, resp);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -142,13 +129,8 @@ class DataContextController : ManageHttpController {
                     .set("id", result.id)
                     .set("message", "Data context deleted");
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+            return successResponse("Data context deleted successfully", 200, resp);
+            
     }
 
     override protected void handleDeletePersonalData(scope HTTPServerRequest req, scope HTTPServerResponse res) {

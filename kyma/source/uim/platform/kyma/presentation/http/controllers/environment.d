@@ -84,10 +84,7 @@ class PlatformController : ManageHttpController {
           .set("items", arr)
           .set("totalCount", envs.length);
           
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+      return successResponse("Environment list retrieved successfully", "Retrieved", 200, resp);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
@@ -98,15 +95,11 @@ class PlatformController : ManageHttpController {
         auto tenantId = precheck.tenantId;
       auto id = KymaEnvironmentId(precheck.id);
       if (!usecase.hasEnvironment(tenantId, id)) {
-        writeError(res, 404, "Environment not found");
-        return;
+        return errorResponse("Environment not found", 404);
       }
 
       auto env = usecase.getEnvironment(tenantId, id);
-      res.writeJsonBody(env.toJson, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+      return successResponse("Environment retrieved successfully", "Retrieved", 200, env.toJson);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
