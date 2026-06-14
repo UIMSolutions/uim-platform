@@ -99,23 +99,22 @@ class ShareController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto id = ShareId(precheck.id);
+    if (id.isNull) 
+      return errorResponse("Invalid share ID", 400);
+
+    auto result = usecase.revokeShare(tenantId, id);  
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+    auto responseData = Json.emptyObject
+      .set("id", result.id)
+      .set("status", "revoked");
+    return successResponse("Share revoked successfully", "Revoked", 200, responseData);
+  }
 
   protected void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto id = ShareId(precheck.id);
-      if (id.isNull) 
-        return writeError(res, 400, "Invalid share ID");
-
-      auto result = usecase.revokeShare(tenantId, id);
-      if (result.isSuccess) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("status", "revoked");
-
-        res.writeJsonBody(resp, 200);
-      } else
-        writeError(res, 404, result.message);
+      auto response = revokeHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

@@ -30,8 +30,8 @@ class VersionController : ManageHttpController {
     router.post("/api/v1/versions/checkout/*", &handleCheckOut);
     router.post("/api/v1/versions/checkin", &handleCheckIn);
     router.post("/api/v1/versions/cancel-checkout/*", &handleCancelCheckOut);
-    router.get("/api/v1/versions/document/*", &handleGetAllVersions);
-    router.get("/api/v1/versions/current/*", &handleGetCurrentVersion);
+    router.get("/api/v1/versions/document/*", &handleAllVersions);
+    router.get("/api/v1/versions/current/*", &handleCurrentVersion);
   }
 
   protected Json checkOutHandler(HTTPServerRequest req) {
@@ -103,54 +103,84 @@ protected Json checkInHandler(HTTPServerRequest req) {
     }
   }
 
+  protected Json cancelCheckOutHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto docId = DocumentId(precheck.id);
+    auto tenantId = precheck.tenantId;
+
+    auto result = usecase.cancelCheckOut(tenantId, docId);
+    if (result.hasError) 
+      return errorResponse(result.message, 400);
+
+      auto resp = Json.emptyObject
+        .set("documentId", docId.value)
+        .set("status", Json("active"))
+        .set("message", "Document checkout cancelled successfully");
+
+      return successResponse("Document checkout cancelled successfully", "Cancelled", 200, resp);
+  }
 
   protected void handleCancelCheckOut(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto docId = DocumentId(precheck.id);
-      auto tenantId = precheck.tenantId;
-
-      auto result = usecase.cancelCheckOut(tenantId, docId);
-      if (result.isSuccess) {
-        auto resp = Json.emptyObject
-          .set("documentId", docId.value)
-          .set("status", Json("active"))
-          .set("message", "Document checkout cancelled successfully");
-
-        res.writeJsonBody(resp, 200);
-      } else
-        writeError(res, 400, result.message);
+      auto response = cancelCheckOutHandler(req);
+        res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
+  }
+
+  protected Json allVersionsHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = DocumentId(precheck.id);
+      if (id.isNull)
+        return errorResponse("Invalid document ID", 400);
+
+    auto versions = usecase.getAllVersions(tenantId, id);
+    auto arr = versions.map!(v => v.toJson).array.toJson;
+
+    auto resp = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", Json(versions.length))
+      .set("message", "Document versions retrieved successfully");
+
+    return successResponse("Document versions retrieved successfully", "Retrieved", 200, resp);
   }
 
   protected void handleAllVersions(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto docId = DocumentId(precheck.id);
-      auto tenantId = precheck.tenantId;
-      auto versions = usecase.getAllVersions(tenantId, docId);
-      auto arr = versions.map!(v => v.toJson).array.toJson;
-
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", Json(versions.length))
-        .set("message", "Document versions retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
+      auto response = allVersionsHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  protected void handleGetCurrentVersion(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto docId = DocumentId(precheck.id);
-      auto tenantId = precheck.tenantId;
-      auto ver = usecase.getCurrentVersion(tenantId, docId);
-      if (ver.isNull)
-        return errorResponse("Document not found", 404);
+  protected Json getCurrentVersionHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
 
-      res.writeJsonBody(ver.toJson, 200);
+    auto tenantId = precheck.tenantId;
+    auto id = DocumentId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid document ID", 400);
+
+    auto ver = usecase.getCurrentVersion(tenantId, id);
+    if (ver.isNull)
+      return errorResponse("Document not found", 404);
+
+    return successResponse("Current document version retrieved successfully", "Retrieved", 200, ver.toJson);
+  }
+
+  protected void handleCurrentVersion(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto response = getCurrentVersionHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

@@ -60,7 +60,7 @@ class BrowseController : HttpController {
 
   protected void handleBrowseFolder(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto result = getBrowseFolderHandler(req);
+      auto result = browseFolderHandler(req);
       res.writeJsonBody(result, result.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

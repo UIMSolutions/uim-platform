@@ -58,7 +58,7 @@ class ManageLogicFlowsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateLogicFlow(LogicFlowDTO dto) {
-        auto existing = repo.findById(dto.tenantId, dto.logicFlowId);
+        auto existing = repo.findById(dto.tenantId, dto.flowId);
         if (existing.isNull)
             return CommandResult(false, "", "Logic flow not found");
             
