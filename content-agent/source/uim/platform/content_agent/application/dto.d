@@ -26,6 +26,8 @@ struct CreatePackageRequest {
 }
 
 struct UpdatePackageRequest {
+  ContentPackageId packageId;
+  TenantId tenantId;
   string description;
   string version_;
   ContentItem[] items;
@@ -49,6 +51,9 @@ struct RegisterProviderRequest {
 }
 
 struct UpdateProviderRequest {
+  TenantId tenantId;
+  ContentProviderId providerId;
+
   string description;
   string endpoint;
   string authToken;
@@ -76,7 +81,7 @@ struct ReleaseTransportRequest {
 struct StartExportRequest {
   TenantId tenantId;
   ContentPackageId packageId;
-  TransportRequestId transportRequestId;
+  TransportRequestId requestId;
   TransportQueueId queueId;
   UserId startedBy;
 }
@@ -85,7 +90,7 @@ struct StartExportRequest {
 struct StartImportRequest {
   TenantId tenantId;
   ContentPackageId packageId;
-  TransportRequestId transportRequestId;
+  TransportRequestId requestId;
   string sourceFilePath;
   UserId startedBy;
 }

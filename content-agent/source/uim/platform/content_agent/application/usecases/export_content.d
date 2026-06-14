@@ -71,11 +71,7 @@ class ExportContentUseCase { // TODO: UIMUseCase {
     return CommandResult(true, id.value, "");
   }
 
-  ExportJob getExportJob(string id) {
-    return getExport;
-  }
-
-  ExportJob getExportJob(ExportJobId id) {
+  ExportJob getExportJob(TenantId tenantId, ExportJobId id) {
     return exportRepo.findById(tenantId, id);
   }
 
@@ -83,8 +79,8 @@ class ExportContentUseCase { // TODO: UIMUseCase {
     return exportRepo.findByTenant(tenantId);
   }
 
-  ExportJob[] listByPackage(ContentPackageId packageId) {
-    return exportRepo.findByPackage(packageId);
+  ExportJob[] listByPackage(TenantId tenantId, ContentPackageId packageId) {
+    return exportRepo.findByPackage(tenantId, packageId);
   }
 
   private void recordActivity(TenantId tenantId, ActivityType actType,

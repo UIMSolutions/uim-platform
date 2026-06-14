@@ -14,12 +14,12 @@ import uim.platform.content_agent;
 /// Port: outgoing - export job persistence.
 interface ExportJobRepository : ITenantRepository!(ExportJob, ExportJobId) {
 
-  size_t countByFormat(TenantId tenantId, ExportFormat format);
-  ExportJob[] findByFormat(TenantId tenantId, ExportFormat format);
-  void removeByFormat(TenantId tenantId, ExportFormat format);
+  // size_t countByFormat(TenantId tenantId, ExportFormat format);
+  // ExportJob[] findByFormat(TenantId tenantId, ExportFormat format);
+  // void removeByFormat(TenantId tenantId, ExportFormat format);
 
   size_t countByStatus(TenantId tenantId, ExportStatus status);
   ExportJob[] findByStatus(TenantId tenantId, ExportStatus status);
-  void removeByStatus(ExportStatus status);
+  void removeByStatus(TenantId tenantId, ExportStatus status);
 
 }

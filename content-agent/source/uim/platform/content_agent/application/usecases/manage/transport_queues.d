@@ -46,14 +46,14 @@ class ManageTransportQueuesUseCase { // TODO: UIMUseCase {
     queue.isDefault = req.isDefault;
 
     queueRepo.save(queue);
-    recordActivity(req.tenantId, ActivityType.queueConfigured, id, req.name,
+    recordActivity(req.tenantId, ActivityType.queueConfigured, queue.id.value, req.name,
         "Transport queue configured", req.createdBy);
 
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, queue.id.value, "");
   }
 
-  CommandResult updateQueue(TransportQueueId id, UpdateQueueRequest req) {
-    auto queue = queueRepo.findById(tenantId, id);
+  CommandResult updateQueue(UpdateQueueRequest req) {
+    auto queue = queueRepo.findById(req.tenantId, req.queueId);
     if (queue.isNull)
       return CommandResult(false, "", "Queue not found");
 
@@ -67,16 +67,16 @@ class ManageTransportQueuesUseCase { // TODO: UIMUseCase {
     queue.updatedAt = clockSeconds();
 
     queueRepo.update(queue);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, queue.id.value, "");
   }
 
-  CommandResult deleteQueue(TransportQueueId id) {
+  CommandResult deleteQueue(TenantId tenantId, TransportQueueId id) {
     auto queue = queueRepo.findById(tenantId, id);
     if (queue.isNull)
       return CommandResult(false, "", "Queue not found");
 
     queueRepo.remove(queue);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, queue.id.value, "");
   }
 
   TransportQueue getQueue(TransportQueueId id) {
@@ -106,18 +106,5 @@ class ManageTransportQueuesUseCase { // TODO: UIMUseCase {
     activity.timestamp = clockSeconds();
     
     activityRepo.save(activity);
-  }
-
-  
-
-  private static QueueType parseQueueType(string s) {
-    switch (s) {
-    case "ctsPlus":
-      return QueueType.ctsPlus;
-    case "local":
-      return QueueType.local;
-    default:
-      return QueueType.cloudTMS;
-    }
   }
 }

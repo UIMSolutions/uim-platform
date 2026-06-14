@@ -125,6 +125,21 @@ enum TransportStatus {
   failed,
   cancelled,
 }
+TransportStatus toTransportStatus(string status) {
+  const map = [
+    "created": TransportStatus.created,
+    "readyforexport": TransportStatus.readyForExport,
+    "exporting": TransportStatus.exporting,
+    "exported": TransportStatus.exported,
+    "inqueue": TransportStatus.inQueue,
+    "importing": TransportStatus.importing,
+    "imported": TransportStatus.imported,
+    "released": TransportStatus.released,
+    "failed": TransportStatus.failed,
+    "cancelled": TransportStatus.cancelled
+  ];
+  return map.get(status.toLower, TransportStatus.created);
+}
 /// Status of an export job.
 enum ExportStatus {
   pending,
@@ -134,6 +149,18 @@ enum ExportStatus {
   completed,
   failed,
   cancelled,
+}
+ExportStatus toExportStatus(string status) {
+  const map = [
+    "pending": ExportStatus.pending,
+    "assembling": ExportStatus.assembling,
+    "packaging": ExportStatus.packaging,
+    "uploading": ExportStatus.uploading,
+    "completed": ExportStatus.completed,
+    "failed": ExportStatus.failed,
+    "cancelled": ExportStatus.cancelled
+  ];
+  return map.get(status.toLower, ExportStatus.pending);
 }
 /// Status of an import job.
 enum ImportStatus {
@@ -145,6 +172,18 @@ enum ImportStatus {
   failed,
   cancelled,
 }
+ImportStatus toImportStatus(string status) {
+  const map = [
+    "pending": ImportStatus.pending,
+    "downloading": ImportStatus.downloading,
+    "validating": ImportStatus.validating,
+    "deploying": ImportStatus.deploying,
+    "completed": ImportStatus.completed,
+    "failed": ImportStatus.failed,
+    "cancelled": ImportStatus.cancelled
+  ];
+  return map.get(status.toLower, ImportStatus.pending);
+}
 /// Transport mode.
 enum TransportMode {
   cloudTransportManagement,
@@ -152,11 +191,28 @@ enum TransportMode {
   directExport,
   fileDownload,
 }
+TransportMode toTransportMode(string s) {
+  const map = [
+    "cloudtransportmanagement": TransportMode.cloudTransportManagement,
+    "ctsplus": TransportMode.ctsPlus,
+    "direxport": TransportMode.directExport,
+    "filedownload": TransportMode.fileDownload
+  ];
+  return map.get(s.toLower, TransportMode.cloudTransportManagement);
+}
 /// Type of transport queue.
 enum QueueType {
   cloudTMS,
   ctsPlus,
   local,
+}
+QueueType toQueueType(string s) {
+  const map = [
+    "cloudtms": QueueType.cloudTMS,
+    "ctsplus": QueueType.ctsPlus,
+    "local": QueueType.local
+  ];
+  return map.get(s.toLower, QueueType.cloudTMS);
 }
 /// Type of recorded activity.
 enum ActivityType {
@@ -178,28 +234,27 @@ enum ActivityType {
   importFailed,
   queueConfigured,
 }
-
 ActivityType toActivityType(string s) {
-  switch (s.toLower) {
-    case "packagecreated": return ActivityType.packageCreated;
-    case "packageassembled": return ActivityType.packageAssembled;
-    case "packageexported": return ActivityType.packageExported;
-    case "packageimported": return ActivityType.packageImported;
-    case "packagedeleted": return ActivityType.packageDeleted;
-    case "providerregistered": return ActivityType.providerRegistered;
-    case "providerderegistered": return ActivityType.providerDeregistered;
-    case "transportcreated": return ActivityType.transportCreated;
-    case "transportreleased": return ActivityType.transportReleased;
-    case "transportfailed": return ActivityType.transportFailed;
-    case "exportstarted": return ActivityType.exportStarted;
-    case "exportcompleted": return ActivityType.exportCompleted;
-    case "exportfailed": return ActivityType.exportFailed;
-    case "importstarted": return ActivityType.importStarted;
-    case "importcompleted": return ActivityType.importCompleted;
-    case "importfailed": return ActivityType.importFailed;
-    case "queueconfigured": return ActivityType.queueConfigured;
-    default: return ActivityType.packageCreated; // default
-  }
+  const map = [
+    "packagecreated": ActivityType.packageCreated,
+    "packageassembled": ActivityType.packageAssembled,
+    "packageexported": ActivityType.packageExported,
+    "packageimported": ActivityType.packageImported,
+    "packagedeleted": ActivityType.packageDeleted,
+    "providerregistered": ActivityType.providerRegistered,
+    "providerderegistered": ActivityType.providerDeregistered,
+    "transportcreated": ActivityType.transportCreated,
+    "transportreleased": ActivityType.transportReleased,
+    "transportfailed": ActivityType.transportFailed,
+    "exportstarted": ActivityType.exportStarted,
+    "exportcompleted": ActivityType.exportCompleted,
+    "exportfailed": ActivityType.exportFailed,
+    "importstarted": ActivityType.importStarted,
+    "importcompleted": ActivityType.importCompleted,
+    "importfailed": ActivityType.importFailed,
+    "queueconfigured": ActivityType.queueConfigured
+  ];
+  return map.get(s.toLower, ActivityType.packageCreated);
 }
 
 /// Severity level for activities.
@@ -207,4 +262,12 @@ enum ActivitySeverity {
   info,
   warning,
   error,
+}
+ActivitySeverity toActivitySeverity(string s) {
+  const map = [
+    "info": ActivitySeverity.info,
+    "warning": ActivitySeverity.warning,
+    "error": ActivitySeverity.error
+  ];
+  return map.get(s.toLower, ActivitySeverity.info);
 }

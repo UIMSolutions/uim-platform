@@ -14,7 +14,7 @@ import uim.platform.content_agent;
 // mixin(ShowModule!());
 
 @safe:
-class ExportController : HttpController {
+class ExportController : ManageHttpController {
   private ExportContentUseCase usecase;
 
   this(ExportContentUseCase usecase) {
@@ -40,7 +40,7 @@ class ExportController : HttpController {
     r.tenantId = tenantId;
     r.packageId = ContentPackageId(data.getString("packageId"));
     r.transportRequestId = TransportRequestId(data.getString("transportRequestId"));
-    r.queueId = data.getString("queueId");
+    r.queueId = TransportQueueId(data.getString("queueId"));
     r.startedBy = UserId(req.headers.get("X-User-Id", ""));
 
     auto result = usecase.startExport(r);
@@ -73,6 +73,7 @@ class ExportController : HttpController {
     auto responseData = Json.emptyObject
       .set("count", list.length)
       .set("resources", list);
+
     return successResponse("Export jobs retrieved successfully", "Retrieved", 200, responseData);
   }
 

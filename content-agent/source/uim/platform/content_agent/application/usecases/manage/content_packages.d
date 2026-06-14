@@ -114,7 +114,7 @@ class ManageContentPackagesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, pkg.id.value, "");
   }
 
-  ContentPackage getPackage(ContentPackageId id) {
+  ContentPackage getPackage(TenantId tenantId, ContentPackageId id) {
     return packages.findById(tenantId, id);
   }
 
@@ -127,7 +127,7 @@ class ManageContentPackagesUseCase { // TODO: UIMUseCase {
     return packages.findByStatus(tenantId, status);
   }
 
-  CommandResult deletePackage(ContentPackageId id) {
+  CommandResult deletePackage(TenantId tenantId, ContentPackageId id) {
     auto pkg = packages.findById(tenantId, id);
     if (pkg.isNull)
       return CommandResult(false, "", "Package not found");

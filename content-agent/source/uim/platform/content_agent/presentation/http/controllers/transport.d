@@ -132,7 +132,7 @@ class TransportController : ManageHttpController {
     auto tenantId = precheck.tenantId;
 
     auto data = precheck.data;
-    auto requestId = data.getString("requestId");
+    auto requestId = TransportRequestId(data.getString("requestId"));
 
     auto result = usecase.cancelTransport(tenantId, requestId);
     if (result.hasError)

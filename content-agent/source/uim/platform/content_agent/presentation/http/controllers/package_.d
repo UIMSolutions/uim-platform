@@ -136,7 +136,7 @@ class PackageController : ManageHttpController {
     auto tenantId = precheck.tenantId;
     auto data = precheck.data;
     auto r = AssemblePackageRequest();
-    r.packageId = data.getString("packageId");
+    r.packageId = ContentPackageId(data.getString("packageId"));
     r.tenantId = tenantId;
     r.assembledBy = UserId(req.headers.get("X-User-Id", ""));
 

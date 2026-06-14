@@ -47,14 +47,14 @@ class ManageContentProvidersUseCase { // TODO: UIMUseCase {
     provider.registeredAt = clockSeconds();
 
     providerRepo.save(provider);
-    recordActivity(req.tenantId, ActivityType.providerRegistered, id, req.name,
+    recordActivity(req.tenantId, ActivityType.providerRegistered, provider.id.value, req.name,
       "Provider registered", req.registeredBy);
 
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, provider.id.value, "");
   }
 
-  CommandResult updateProvider(ContentProviderId id, UpdateProviderRequest req) {
-    auto provider = providerRepo.findById(tenantId, id);
+  CommandResult updateProvider(UpdateProviderRequest req) {
+    auto provider = providerRepo.findById(req.tenantId, req.providerId);
     if (provider.isNull)
       return CommandResult(false, "", "Provider not found");
 
@@ -66,10 +66,10 @@ class ManageContentProvidersUseCase { // TODO: UIMUseCase {
       provider.authToken = req.authToken;
 
     providerRepo.update(provider);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, provider.id.value, "");
   }
 
-  CommandResult deregisterProvider(ContentProviderId id) {
+  CommandResult deregisterProvider(TenantId tenantId, ContentProviderId id) {
     auto provider = providerRepo.findById(tenantId, id);
     if (provider.isNull)
       return CommandResult(false, "", "Provider not found");
@@ -77,13 +77,13 @@ class ManageContentProvidersUseCase { // TODO: UIMUseCase {
     provider.status = ProviderStatus.deregistered;
     providerRepo.update(provider);
 
-    recordActivity(provider.tenantId, ActivityType.providerDeregistered, id,
+    recordActivity(provider.tenantId, ActivityType.providerDeregistered, provider.id.value,
       provider.name, "Provider deregistered", "");
 
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, provider.id.value, "");
   }
 
-  CommandResult syncProvider(ContentProviderId id) {
+  CommandResult syncProvider(TenantId tenantId, ContentProviderId id) {
     auto provider = providerRepo.findById(tenantId, id);
     if (provider.isNull)
       return CommandResult(false, "", "Provider not found");
@@ -96,10 +96,10 @@ class ManageContentProvidersUseCase { // TODO: UIMUseCase {
     provider.lastSyncAt = clockSeconds();
     providerRepo.update(provider);
 
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, provider.id.value, "");
   }
 
-  ContentProvider getProvider(ContentProviderId id) {
+  ContentProvider getProvider(TenantId tenantId, ContentProviderId id) {
     return providerRepo.findById(tenantId, id);
   }
 
