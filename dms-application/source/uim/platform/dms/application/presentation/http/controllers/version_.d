@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.dms.application.presentation.http.controllers.version_;
 
-
 // 
 // 
 // import uim.platform.dms.application.application.usecases.manage.versions;
@@ -45,73 +44,65 @@ class VersionController : ManageHttpController {
     auto userId = UserId(req.headers.get("X-User-Id", "system"));
 
     auto result = usecase.checkOut(tenantId, docId, userId);
-    if (result.isSuccess) {
+    if (result.hasError) 
+      return errorResponse(result.message, 400);
+
       auto resp = Json.emptyObject
         .set("documentId", docId.value)
-        .set("status", Json("locked"))
-        .set("message", "Document checked out successfully");
+        .set("status", Json("locked"));
 
       return successResponse("Document checked out successfully", "CheckedOut", 200, resp);
-    }
-    else
-      return errorResponse(result.message, 400);
   }
 
   protected void handleCheckOut(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto docId = DocumentId(precheck.id);
-      auto tenantId = precheck.tenantId;
-      auto userId = UserId(req.headers.get("X-User-Id", "system"));
-
-      auto result = usecase.checkOut(tenantId, docId, userId);
-      if (result.isSuccess) {
-        auto resp = Json.emptyObject
-          .set("documentId", docId.value)
-          .set("status", Json("locked"))
-          .set("message", "Document checked out successfully");
-
-        res.writeJsonBody(resp, 200);
-      }
-      else
-        writeError(res, 400, result.message);
-    }
-    catch (Exception e) {
+      auto response = checkOutHandler(req);
+      res.writeJsonBody(response, response.code);
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  protected void handleckIn(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
-      auto r = CheckInRequest();
-      r.documentId = DocumentId(data.getString("documentId"));
-      r.tenantId = tenantId;
-      r.userId = UserId(req.headers.get("X-User-Id", "system"));
-      r.isMajor = data.getBoolean("isMajor", true);
-      r.comment = data.getString("comment");
-      r.fileName = data.getString("fileName");
-      r.mimeType = data.getString("mimeType");
-      r.fileSize = data.getLong("fileSize");
-      r.checksum = data.getString("checksum");
+protected Json checkInHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto result = usecase.checkIn(r);
-      if (result.isSuccess) {
-        auto resp = Json.emptyObject
-          .set("versionId", result.id)
-          .set("documentId", r.documentId.value)
-          .set("status", Json("active"))
-          .set("message", "Document checked in successfully");
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
+    auto r = CheckInRequest();
+    r.documentId = DocumentId(data.getString("documentId"));
+    r.tenantId = tenantId;
+    r.userId = UserId(req.headers.get("X-User-Id", "system"));
+    r.isMajor = data.getBoolean("isMajor", true);
+    r.comment = data.getString("comment");
+    r.fileName = data.getString("fileName");
+    r.mimeType = data.getString("mimeType");
+    r.fileSize = data.getLong("fileSize");
+    r.checksum = data.getString("checksum");
 
-        res.writeJsonBody(resp, 201);
-      }
-      else
-        writeError(res, 400, result.message);
-    }
-    catch (Exception e) {
+    auto result = usecase.checkIn(r);
+    if (result.hasError) 
+      return errorResponse(result.message, 400);
+
+      auto resp = Json.emptyObject
+        .set("versionId", result.id)
+        .set("documentId", r.documentId.value)
+        .set("status", Json("active"))
+        .set("message", "Document checked in successfully");
+
+      return successResponse("Document checked in successfully", "CheckedIn", 201, resp);
+  }
+
+  protected void handleCheckIn(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto response = checkInHandler(req);
+      res.writeJsonBody(response, response.code);
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
+
 
   protected void handleCancelCheckOut(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
@@ -126,11 +117,9 @@ class VersionController : ManageHttpController {
           .set("message", "Document checkout cancelled successfully");
 
         res.writeJsonBody(resp, 200);
-      }
-      else
+      } else
         writeError(res, 400, result.message);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -146,25 +135,23 @@ class VersionController : ManageHttpController {
         .set("items", arr)
         .set("totalCount", Json(versions.length))
         .set("message", "Document versions retrieved successfully");
-        
+
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  override protected void handleGetCurrentVersion(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetCurrentVersion(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto docId = DocumentId(precheck.id);
       auto tenantId = precheck.tenantId;
       auto ver = usecase.getCurrentVersion(tenantId, docId);
       if (ver.isNull)
-      return errorResponse("Document not found", 404);
-      
+        return errorResponse("Document not found", 404);
+
       res.writeJsonBody(ver.toJson, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

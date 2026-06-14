@@ -74,7 +74,7 @@ class CleansingRuleController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto rules = usecase.listCleansingRules(tenantId);
-    auto list = rules.map!(item => item.toJson()).array.toJson;
+    auto list = rules.map!(item => item.toJson()).array.toJson();
 
     auto responseData = Json.emptyObject
       .set("count", list.length)
@@ -97,7 +97,7 @@ class CleansingRuleController : ManageHttpController {
       return errorResponse("Cleansing rule not found", 404);
 
     auto responseData = rule.toJson();
-    return successResponse("Cleansing rule retrieved successfully", "Retrieved", 200, responseData);
+    return successResponse("Cleansing rule retrieved successfully", 200, responseData);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
@@ -132,7 +132,7 @@ class CleansingRuleController : ManageHttpController {
     r.category = data.getString("category");
     r.priority = data.getInteger("priority");
 
-    auto result = usecase.update(r);
+    auto result = usecase.updateCleansingRule(r);
     if (result.isNull)
       return errorResponse("Cleansing rule not found", 404);
 

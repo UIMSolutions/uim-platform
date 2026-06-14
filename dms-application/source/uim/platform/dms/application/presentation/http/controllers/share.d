@@ -56,7 +56,7 @@ class ShareController : ManageHttpController {
       return errorResponse(result.message, 400);
 
     auto responseData = Json.emptyObject.set("id", result.id);
-    return successResponse("", 0, responseData);
+    return successResponse("Share created successfully", "Created", 201, responseData);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
@@ -67,14 +67,12 @@ class ShareController : ManageHttpController {
     auto tenantId = precheck.tenantId;
     auto shares = usecase.listShares(tenantId);
 
-    auto arr = shares.map!(share => share.toJson).array.toJson;
-
-    auto list = items.map!(item => item.toJson()).array.toJson;
+    auto list = shares.map!(item => item.toJson()).array.toJson;
 
     auto responseData = Json.emptyObject
       .set("count", list.length)
       .set("resources", list);
-    return successResponse("", 0, responseData);
+    return successResponse("Shares retrieved successfully", "Retrieved", 200, responseData);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
@@ -93,17 +91,27 @@ class ShareController : ManageHttpController {
     return successResponse("Share retrieved successfully", "Retrieved", 200, responseData);
   }
 
+
+  protected Json revokeHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = ShareId(precheck.id);
+
   protected void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
       auto id = ShareId(precheck.id);
+      if (id.isNull) 
+        return writeError(res, 400, "Invalid share ID");
 
       auto result = usecase.revokeShare(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject
           .set("id", result.id)
-          .set("status", Json("revoked"))
-          .set("message", "Share revoked");
+          .set("status", "revoked");
 
         res.writeJsonBody(resp, 200);
       } else
@@ -126,6 +134,6 @@ class ShareController : ManageHttpController {
       return errorResponse(result.message, 400);
 
     auto responseData = Json.emptyObject.set("id", result.id);
-    return successResponse("Share deleted successfully", 200, responseData);
+    return successResponse("Share deleted successfully", "Deleted", 200, responseData);
   }
 }

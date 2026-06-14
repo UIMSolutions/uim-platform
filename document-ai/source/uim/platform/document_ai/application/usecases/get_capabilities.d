@@ -11,7 +11,7 @@ import uim.platform.document_ai;
 
 @safe:
 class GetCapabilitiesUseCase { // TODO: UIMUseCase {
-  CapabilitiesResponse getCapabilities() {
+  CapabilitiesResponse getCapabilities(TenantId tenantId) {
     CapabilitiesResponse r;
     r.extraction = true;
     r.classification = true;

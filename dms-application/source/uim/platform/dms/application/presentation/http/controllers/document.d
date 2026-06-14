@@ -161,10 +161,14 @@ class DocumentController : ManageHttpController {
     return successResponse("Document updated successfully", 200, responseData);
   }
 
-  protected void handleMove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  protected Json moveHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
       auto tenantId = precheck.tenantId;
       auto id = DocumentId(precheck.id);
+
       auto data = precheck.data;
       auto r = MoveDocumentRequest();
       r.documentId = id;
@@ -179,20 +183,38 @@ class DocumentController : ManageHttpController {
       return successResponse("Document moved successfully", 200, responseData);
     }
 
+protected void handleMove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+      try {
+        auto response = moveHandler(req);
+        res.writeJsonBody(response, response.code);
+      } catch (Exception e) {
+        writeError(res, 500, "Internal server error");
+      }
+    }
+    
+    protected Json archiveHandler(HTTPServerRequest req) {
+      auto precheck = super.postHandler(req);
+      if (precheck.hasError)
+        return precheck;
+
+      auto tenantId = precheck.tenantId;
+      auto id = DocumentId(precheck.id);
+      if (id.isNull)
+        return errorResponse("Invalid document ID", 400);
+
+      auto result = usecase.archiveDocument(tenantId, id);
+      if (result.hasError)
+        return errorResponse(result.message, 400);
+
+      auto responseData = Json.emptyObject
+        .set("id", result.id);
+      return successResponse("Document archived successfully", "Archived", 200, responseData);
+    }
+
     protected void handleArchive(scope HTTPServerRequest req, scope HTTPServerResponse res) {
       try {
-        auto tenantId = precheck.tenantId;
-        auto id = DocumentId(precheck.id);
-
-        auto result = usecase.archiveDocument(tenantId, id);
-        if (result.isSuccess) {
-          auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("status", "archived");
-
-          res.writeJsonBody(resp, 200);
-        } else
-          writeError(res, 404, result.message);
+        auto response = archiveHandler(req);
+        res.writeJsonBody(response, response.code);
       } catch (Exception e) {
         writeError(res, 500, "Internal server error");
       }
@@ -212,5 +234,5 @@ class DocumentController : ManageHttpController {
 
       auto responseData = Json.emptyObject.set("id", result.id);
       return successResponse("Document deleted successfully", 200, responseData);
+    }
   }
-}

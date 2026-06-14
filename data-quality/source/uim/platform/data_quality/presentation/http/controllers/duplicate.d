@@ -27,58 +27,79 @@ class DuplicateController : HttpController {
     router.get("/api/v1/duplicates/*", &handleGet);
   }
 
+  protected Json detectHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
+    auto r = DetectDuplicatesRequest();
+    r.tenantId = tenantId;
+    r.datasetId = DataSetId(data.getString("datasetId"));
+    r.matchFields = j.getStringsArray("matchFields");
+    r.strategy = data.getString("strategy").to!MatchStrategy;
+    r.threshold = data.getDouble("threshold", 70.0);
+
+    foreach (item; data.getArray("records")) {
+      if (item.isObject) {
+        DuplicateRecordInput dri;
+        dri.recordId = item.getString("recordId");
+        dri.fieldValues = item.getArray("fieldValues").map!(v => v.to!string).array;
+        r.records ~= dri;
+      }
+    }
+
+    auto groups = usecase.detect(r);
+    auto arr = groups.map!(g => g.toJson).array.toJson;
+
+    auto resp = Json.emptyObject
+      .set("matchGroups", arr)
+      .set("totalGroups", Json(groups.length))
+      .set("message", "Duplicate groups detected successfully");
+
+    return successResponse("Duplicate groups detected successfully", "Detected", 200, resp);
+  }
+
   protected void handleDetect(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
-      auto r = DetectDuplicatesRequest();
-      r.tenantId = tenantId;
-      r.datasetId = DataSetId(data.getString("datasetId"));
-      r.matchFields = j.getStringsArray("matchFields");
-      r.strategy = data.getString("strategy").to!MatchStrategy;
-      r.threshold = data.getDouble("threshold", 70.0);
-
-      foreach (item; data.getArray("records")) {
-        if (item.isObject) {
-          DuplicateRecordInput dri;
-          dri.recordId = item.getString("recordId");
-          dri.fieldValues = item.getArray("fieldValues").map!(v => v.to!string).array;
-          r.records ~= dri;
-        }
-      }
-
-      auto groups = usecase.detect(r);
-      auto arr = groups.map!(g => g.toJson).array.toJson;
-
-      auto resp = Json.emptyObject
-        .set("matchGroups", arr)
-        .set("totalGroups", Json(groups.length))
-        .set("message", "Duplicate groups detected successfully");
-
-      res.writeJsonBody(resp, 200);
+      auto response = detectHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
+  protected Json resolveHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
+    auto r = ResolveDuplicateRequest();
+    r.tenantId = tenantId;
+    r.groupId = data.getString("groupId");
+    r.survivorRecordId = data.getString("survivorRecordId");
+
+    auto result = usecase.resolve(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto resp = Json.emptyObject
+      .set("id", result.id)
+      .set("resolved", true);
+
+    return successResponse("Duplicate group resolved successfully", "Resolved", 200, resp);
+  }
+
   protected void handleResolve(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
-      auto r = ResolveDuplicateRequest();
-      r.tenantId = tenantId;
-      r.groupId = data.getString("groupId");
-      r.survivorRecordId = data.getString("survivorRecordId");
-
-      auto result = usecase.resolve(r);
-      if (result.hasError)
-        return errorResponse("", 0);
-
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("resolved", true);
-
-          return successResponse("", "", 0, resp);
+      auto response = resolveHandler(req);
+      res.writeJsonBody(response, response.code);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
+    }
   }
 
   protected Json listHandler(HTTPServerRequest req) {

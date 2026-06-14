@@ -53,56 +53,44 @@ class FolderController : ManageHttpController {
     r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
     auto result = usecase.createFolder(r);
-    if (result.isSuccess) {
-      auto resp = Json.emptyObject
-        .set("id", result.id)
-        .set("message", "Folder created");
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-      res.writeJsonBody(resp, 201);
-    } else
-      writeError(res, 400, result.message);
+    auto resp = Json.emptyObject
+      .set("id", result.id);
+
+    return successResponse("Folder created successfully", "Created", 201, resp);
   }
- catch (Exception e) {
-    writeError(res, 500, "Internal server error");
+
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto items = usecase.listFolders(tenantId);
+
+    auto list = items.map!(item => item.toJson()).array.toJson;
+
+    auto responseData = Json.emptyObject
+      .set("count", list.length)
+      .set("resources", list);
+    return successResponse("", 0, responseData);
   }
-}
 
-override protected Json listHandler(HTTPServerRequest req) {
-  auto precheck = super.listHandler(req);
-  if (precheck.hasError)
-    return precheck;
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-  auto tenantId = precheck.tenantId;
-  auto items = usecase.listFolders(tenantId);
+    auto tenantId = precheck.tenantId;
+    auto id = FolderId(precheck.id);
 
-  auto arr = items.map!(f => f.toJson).array.toJson;
+    auto folder = usecase.getFolder(tenantId, id);
+    if (folder.isNull) 
+    return errorResponse("Folder not found", 404);
 
-  auto list = items.map!(item => item.toJson()).array.toJson;
-
-  auto responseData = Json.emptyObject
-    .set("count", list.length)
-    .set("resources", list);
-  return successResponse("", 0, responseData);
-}
-
-override protected Json getHandler(HTTPServerRequest req) {
-  auto precheck = super.getHandler(req);
-  if (precheck.hasError)
-    return precheck;
-
-  auto tenantId = precheck.tenantId;
-  auto id = FolderId(precheck.id);
-
-  auto folder = usecase.getFolder(tenantId, id);
-  if (folder.isNull) {
-    writeError(res, 404, "Folder not found");
-    return;
-  }
-  res.writeJsonBody(folder.toJson, 200);
-}
- catch (Exception e) {
-  writeError(res, 500, "Internal server error");
-}
+    return successResponse("Folder retrieved successfully", "Retrieved", 200, folder.toJson);
 }
 
 /**
@@ -124,62 +112,69 @@ override protected Json updateHandler(HTTPServerRequest req) {
   r.description = data.getString("description");
 
   auto result = usecase.updateFolder(r);
-  if (result.isSuccess) {
-    auto resp = Json.emptyObject
-      .set("id", result.id)
-      .set("message", "Folder updated");
+  if (result.hasError)
+    return errorResponse(result.message, 400);
 
-    res.writeJsonBody(resp, 200);
-  } else {
-    auto status = result.message == "Folder not found" ? 404 : 400;
-    writeError(res, status, result.message);
-  }
+    auto resp = Json.emptyObject
+      .set("id", result.id);
+
+    return successResponse("Folder updated successfully", "Updated", 200, resp);
 }
- catch (Exception e) {
-  writeError(res, 500, "Internal server error");
-}
+
+protected Json moveHandler(HTTPServerRequest req) {
+  auto precheck = super.postHandler(req);
+  if (precheck.hasError)
+    return precheck;
+
+  auto tenantId = precheck.tenantId;
+  auto id = FolderId(precheck.id);
+  auto data = precheck.data;
+  auto r = MoveFolderRequest();
+  r.folderId = id;
+  r.tenantId = tenantId;
+  r.newParentFolderId = data.getString("newParentFolderId");
+
+  auto result = usecase.moveFolder(r);
+  if (result.hasError)
+    return errorResponse(result.message, 400);
+
+  auto resp = Json.emptyObject
+    .set("id", result.id);
+  return successResponse("Folder moved successfully", "Moved", 200, resp);
 }
 
 protected void handleMove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
   try {
-    auto tenantId = precheck.tenantId;
-    auto id = FolderId(precheck.id);
-    auto data = precheck.data;
-    auto r = MoveFolderRequest();
-    r.folderId = id;
-    r.tenantId = tenantId;
-    r.newParentFolderId = data.getString("newParentFolderId");
-
-    auto result = usecase.moveFolder(r);
-    if (result.isSuccess) {
-      auto resp = Json.emptyObject
-        .set("id", result.id)
-        .set("message", "Folder moved");
-
-      res.writeJsonBody(resp, 200);
-    } else {
-      auto status = result.message == "Folder not found" ? 404 : 400;
-      writeError(res, status, result.message);
-    }
+    auto response = moveHandler(req);
+    res.writeJsonBody(response, response.code);
   } catch (Exception e) {
     writeError(res, 500, "Internal server error");
   }
 }
 
-override protected void handleListChildren(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+protected Json listChildrenHandler(HTTPServerRequest req) {
+  auto precheck = super.getHandler(req);
+  if (precheck.hasError)
+    return precheck;
+
+  auto tenantId = precheck.tenantId;
+  auto parentId = FolderId(precheck.id);
+
+  auto subfolders = usecase.listSubfolders(tenantId, parentId);
+  auto arr = subfolders.map!(f => f.toJson()).array.toJson;
+
+  auto resp = Json.emptyObject
+    .set("items", arr)
+    .set("totalCount", subfolders.length)
+    .set("message", "Child folders retrieved successfully");
+
+  return successResponse("", "Retrieved", 200, resp);
+}
+
+protected void handleListChildren(scope HTTPServerRequest req, scope HTTPServerResponse res) {
   try {
-    auto parentId = FolderId(precheck.id);
-    auto tenantId = precheck.tenantId;
-
-    auto subfolders = usecase.listSubfolders(tenantId, parentId);
-    auto arr = subfolders.map!(f => f.toJson).array.toJson;
-
-    auto resp = Json.emptyObject
-      .set("items", arr)
-      .set("totalCount", subfolders.length)
-      .set("message", "Child folders retrieved successfully");
-
-    res.writeJsonBody(resp, 200);
+    auto response = listChildrenHandler(req);
+    res.writeJsonBody(response, response.code);
   } catch (Exception e) {
     writeError(res, 500, "Internal server error");
   }
@@ -192,18 +187,15 @@ override protected Json deleteHandler(HTTPServerRequest req) {
 
   auto tenantId = precheck.tenantId;
   auto id = FolderId(precheck.id);
+  if (id.isNull)
+    return errorResponse("Invalid folder ID", 400);
+    
   auto result = usecase.deleteFolder(tenantId, id);
+  if (result.hasError) 
+    return errorResponse(result.message, 400);
 
-  if (result.isSuccess) {
-    auto resp = Json.emptyObject
-      .set("deleted", true);
-
-    res.writeJsonBody(resp, 200);
-  } else
-    writeError(res, 404, result.message);
-}
- catch (Exception e) {
-  writeError(res, 500, "Internal server error");
-}
+  auto resp = Json.emptyObject
+    .set("id", result.id);
+  return successResponse("Folder deleted successfully", "Deleted", 200, resp);
 }
 }

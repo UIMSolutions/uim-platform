@@ -36,108 +36,153 @@ class BrowseController : HttpController {
     router.delete_("/api/v1/favorites/*", &handleDeleteFavorite);
   }
 
-  protected void handleGetBrowseFolder(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected Json browseFolderHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto folderId = FolderId(precheck.id);
+    auto tenantId = precheck.tenantId;
+    auto contents = usecase.browseFolderContents(tenantId, folderId);
+
+    auto fArr = contents.subfolders.map!(f => f.toJson).array.toJson;
+    auto dArr = contents.documents.map!(d => d.toJson).array.toJson;
+
+    auto resp = Json.emptyObject
+      .set("subfolders", fArr)
+      .set("documents", dArr)
+      .set("totalSubfolders", contents.subfolders.length)
+      .set("totalDocuments", contents.documents.length)
+      .set("message", "Folder contents retrieved successfully");
+
+    return successResponse("Folder contents retrieved successfully", "Retrieved", 200, resp);
+  }
+
+  protected void handleBrowseFolder(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto folderId = FolderId(precheck.id);
-      auto tenantId = precheck.tenantId;
-      auto contents = usecase.browseFolderContents(tenantId, folderId);
-
-      auto fArr = contents.subfolders.map!(f => f.toJson).array.toJson;
-      auto dArr = contents.documents.map!(d => d.toJson).array.toJson;
-
-      auto resp = Json.emptyObject
-        .set("subfolders", fArr)
-        .set("documents", dArr)
-        .set("totalSubfolders", contents.subfolders.length)
-        .set("totalDocuments", contents.documents.length)
-        .set("message", "Folder contents retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
+      auto result = getBrowseFolderHandler(req);
+      res.writeJsonBody(result, result.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
+  }
+
+  protected Json getRepositorySummaryHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto repoId = RepositoryId(precheck.id);
+    auto tenantId = precheck.tenantId;
+    auto summary = usecase.getRepositorySummary(tenantId, repoId);
+
+    if (summary.repositoryId.isEmpty)
+      return errorResponse("Repository not found", 404);
+
+    auto j = Json.emptyObject
+      .set("repositoryId", summary.repositoryId)
+      .set("name", summary.name)
+      .set("totalDocuments", summary.totalDocuments)
+      .set("totalFolders", summary.totalFolders)
+      .set("status", summary.status.to!string)
+      .set("message", "Repository summary retrieved successfully");
+
+    return successResponse("Repository summary retrieved successfully", "Retrieved", 200, j);
   }
 
   protected void handleRepositorySummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto repoId = RepositoryId(precheck.id);
-      auto tenantId = precheck.tenantId;
-      auto summary = usecase.getRepositorySummary(tenantId, repoId);
-
-      if (summary.repositoryId.isEmpty) {
-        writeError(res, 404, "Repository not found");
-        return;
-      }
-
-      auto j = Json.emptyObject
-        .set("repositoryId", summary.repositoryId)
-        .set("name", summary.name)
-        .set("totalDocuments", summary.totalDocuments)
-        .set("totalFolders", summary.totalFolders)
-        .set("status", summary.status.to!string)
-        .set("message", "Repository summary retrieved successfully");
-
-      res.writeJsonBody(j, 200);
+      auto response = getRepositorySummaryHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
+  }
+
+  protected Json addFavoriteHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
+    auto r = CreateFavoriteRequest();
+    r.tenantId = tenantId;
+    r.userId = UserId(req.headers.get("X-User-Id", "system"));
+    r.resourceId = data.getString("resourceId");
+    r.resourceType = data.getString("resourceType").to!ResourceType;
+
+    auto result = usecase.addFavorite(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto resp = Json.emptyObject
+      .set("id", result.id)
+      .set("message", "Favorite added successfully");
+
+    return successResponse("Favorite added successfully", "Created", 201, resp);
   }
 
   protected void handleAddFavorite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
-      auto r = CreateFavoriteRequest();
-      r.tenantId = tenantId;
-      r.userId = UserId(req.headers.get("X-User-Id", "system"));
-      r.resourceId = data.getString("resourceId");
-      r.resourceType = data.getString("resourceType").to!ResourceType;
-
-      auto result = usecase.addFavorite(r);
-      if (result.isSuccess) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Favorite added successfully");
-
-        res.writeJsonBody(resp, 201);
-      } else
-        writeError(res, 400, result.message);
+      auto response = addFavoriteHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
+  }
+
+  protected Json listFavoritesHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto userId = UserId(req.headers.get("X-User-Id", "system"));
+    auto items = usecase.getFavorites(tenantId, userId);
+
+    auto list = items.map!(f => f.toJson).array.toJson;
+    auto resp = Json.emptyObject
+      .set("items", list)
+      .set("totalCount", items.length);
+
+    return successResponse("Favorites retrieved successfully", "Retrieved", 200, resp);
   }
 
   protected void handleListFavorites(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto userId = UserId(req.headers.get("X-User-Id", "system"));
-      auto items = usecase.getFavorites(tenantId, userId);
-
-      auto list = items.map!(f => f.toJson).array.toJson;
-      auto resp = Json.emptyObject
-        .set("items", list)
-        .set("totalCount", items.length);
-
-      res.writeJsonBody(resp, 200);
+      auto response = listFavoritesHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
+  protected Json deleteFavoriteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = FavoriteId(precheck.id);
+    if (id.isEmpty)
+      return errorResponse("Invalid favorite ID", 400);
+
+    auto result = usecase.deleteFavorite(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto resp = Json.emptyObject
+      .set("deleted", true)
+      .set("message", "Favorite removed successfully");
+
+    return successResponse("Favorite removed successfully", "Deleted", 200, resp);
+  }
+
   protected void handleDeleteFavorite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto id = FavoriteId(precheck.id);
-
-      auto result = usecase.deleteFavorite(tenantId, id);
-      if (result.isSuccess) {
-        auto resp = Json.emptyObject
-          .set("deleted", true)
-          .set("message", "Favorite removed successfully");
-
-        res.writeJsonBody(resp, 200);
-      } else
-        writeError(res, 404, result.message);
+      auto response = deleteFavoriteHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

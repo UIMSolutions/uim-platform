@@ -30,7 +30,7 @@ class CapabilitiesController : HttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-      auto caps = usecase.getById();
+      auto caps = usecase.getCapabilities(tenantId);
 
       auto exMethods = caps.extractionMethods.map!(method => Json(m)).array.toJson;
       auto supFileTypes = caps.supportedFileTypes.map!(f => ftArr ~= Json(f)).array.toJson;
@@ -47,9 +47,6 @@ class CapabilitiesController : HttpController {
         .set("maxDocumentSizeMb", Json(caps.maxDocumentSizeMb))
         .set("maxPagesPerDocument", Json(caps.maxPagesPerDocument));
 
-      res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+      return successResponse("Capabilities retrieved successfully", "Retrieved", 200, resp);
   }
 }

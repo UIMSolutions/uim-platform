@@ -34,92 +34,127 @@ class PermissionController : ManageHttpController {
     router.post("/api/v1/permissions/check", &handleCheckAccess);
   }
 
+  protected Json grantHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
+    auto r = CreatePermissionRequest();
+    r.tenantId = tenantId;
+    r.resourceId = data.getString("resourceId");
+    r.resourceType = data.getString("resourceType").to!ResourceType;
+    r.userId = UserId(data.getString("userId"));
+    r.level = data.getString("level").to!PermissionLevel;
+    r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
+
+    auto result = permissions.grantPermission(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject
+      .set("id", result.id);
+
+    return successResponse("Permission granted successfully", "Granted", 201, responseData);
+  }
+
   protected void handleGrant(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
-      auto r = CreatePermissionRequest();
-      r.tenantId = tenantId;
-      r.resourceId = data.getString("resourceId");
-      r.resourceType = data.getString("resourceType").to!ResourceType;
-      r.userId = UserId(data.getString("userId"));
-      r.level = data.getString("level").to!PermissionLevel;
-      r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
-
-      auto result = permissions.grantPermission(r);
-      if (result.isSuccess) {
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Permission granted");
-
-        res.writeJsonBody(resp, 201);
-      } else
-        writeError(res, 400, result.message);
+      auto response = grantHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  override protected void handleListByResource(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected Json listByResourceHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto resourceId = precheck.id;
+    auto tenantId = precheck.tenantId;
+    auto resourceTypeStr = req.headers.get("X-Resource-Type", "document");
+    auto resourceType = resourceTypeStr.to!ResourceType;
+
+    auto items = permissions.listByResource(tenantId, resourceId, resourceType);
+    auto arr = items.map!(item => item.toJson).array.toJson;
+
+    auto resp = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", items.length)
+      .set("message", "Permissions for resource retrieved successfully");
+
+    return successResponse("Permissions for resource retrieved successfully", "Retrieved", 200, resp);
+  }
+
+  protected void handleListByResource(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto resourceId = precheck.id;
-      auto tenantId = precheck.tenantId;
-      auto resourceTypeStr = req.headers.get("X-Resource-Type", "document");
-      auto resourceType = resourceTypeStr.to!ResourceType;
-
-      auto items = permissions.listByResource(tenantId, resourceId, resourceType);
-      auto arr = items.map!(item => item.toJson).array.toJson;
-
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", items.length)
-        .set("message", "Permissions for resource retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
+      auto response = listByResourceHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  override protected void handleListByUser(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected Json listByUserHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto userId = UserId(precheck.id);
+    auto tenantId = precheck.tenantId;
+
+    auto items = permissions.listByUser(tenantId, userId);
+    auto arr = items.map!(item => item.toJson).array.toJson;
+
+    auto resp = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", items.length)
+      .set("message", "Permissions for user retrieved successfully");
+
+    return successResponse("Permissions for user retrieved successfully", "Retrieved", 200, resp);
+  }
+
+  protected void handleListByUser(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto userId = UserId(precheck.id);
-      auto tenantId = precheck.tenantId;
-
-      auto items = permissions.listByUser(tenantId, userId);
-      auto arr = items.map!(item => item.toJson).array.toJson;
-
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", items.length)
-        .set("message", "Permissions for user retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
+      auto response = listByUserHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
+  }
+
+  protected Json checkAccessHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
+    auto resourceId = data.getString("resourceId");
+    auto resourceType = data.getString("resourceType").to!ResourceType;
+    auto userId = UserId(data.getString("userId"));
+    auto required = data.getString("requiredLevel").to!PermissionLevel;
+
+    auto allowed = permissions.checkAccess(tenantId, resourceId, resourceType, userId, required);
+
+    auto resp = Json.emptyObject
+      .set("allowed", allowed ? Json(true) : Json(false))
+      .set("resourceId", Json(resourceId))
+      .set("resourceType", Json(resourceType.to!string))
+      .set("userId", Json(userId.value))
+      .set("requiredLevel", Json(required.to!string))
+      .set("message", "Access check completed");
+
+    return successResponse("Access check completed", "Checked", 200, resp);
   }
 
   protected void handleCheckAccess(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
-      auto resourceId = data.getString("resourceId");
-      auto resourceType = data.getString("resourceType").to!ResourceType;
-      auto userId = UserId(data.getString("userId"));
-      auto required = data.getString("requiredLevel").to!PermissionLevel;
-
-      auto allowed = permissions.checkAccess(tenantId, resourceId, resourceType, userId, required);
-
-      auto resp = Json.emptyObject
-        .set("allowed", allowed ? Json(true) : Json(false))
-        .set("resourceId", Json(resourceId))
-        .set("resourceType", Json(resourceType.to!string))
-        .set("userId", Json(userId.value))
-        .set("requiredLevel", Json(required.to!string))
-        .set("message", "Access check completed");
-
-      res.writeJsonBody(resp, 200);
+      auto response = checkAccessHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -146,23 +181,31 @@ class PermissionController : ManageHttpController {
     return successResponse("Permission updated successfully", 200, responseData);
   }
 
+  protected Json revokeHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = PermissionId(precheck.id);
+
+    auto result = permissions.revokePermission(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 404);
+
+    auto resp = Json.emptyObject
+      .set("deleted", true)
+      .set("message", "Permission revoked");
+
+    return successResponse("Permission revoked successfully", "Revoked", 200, resp);
+  }
+
   protected void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto id = PermissionId(precheck.id);
-
-      auto result = permissions.revokePermission(tenantId, id);
-      if (result.isSuccess) {
-        auto resp = Json.emptyObject
-          .set("deleted", true)
-          .set("message", "Permission revoked");
-
-        res.writeJsonBody(resp, 200);
-      } else
-        writeError(res, 404, result.message);
+      auto response = revokeHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
-
 }
