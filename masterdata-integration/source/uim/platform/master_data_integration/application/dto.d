@@ -28,6 +28,9 @@ struct CreateMasterDataObjectRequest {
 }
 
 struct UpdateMasterDataObjectRequest {
+  TenantId tenantId;
+  MasterDataObjectId objectId;
+
   string displayName;
   string description;
   string status; // "active", "inactive", "blocked", "markedForDeletion"
@@ -50,6 +53,9 @@ struct CreateDataModelRequest {
 }
 
 struct UpdateDataModelRequest {
+  TenantId tenantId;
+  DataModelId modelId;
+
   string description;
   string version_;
   FieldDefinitionDto[] fields;
@@ -58,6 +64,7 @@ struct UpdateDataModelRequest {
 }
 
 struct FieldDefinitionDto {
+  TenantId tenantId;
   string name;
   string displayName;
   string type_; // "string", "integer", "decimal", etc.
@@ -86,6 +93,9 @@ struct CreateDistributionModelRequest {
 }
 
 struct UpdateDistributionModelRequest {
+  TenantId tenantId;
+  DistributionModelId modelId;
+
   string name;
   string description;
   string status; // "active", "inactive", "draft"
@@ -100,17 +110,21 @@ struct UpdateDistributionModelRequest {
 
 struct CreateKeyMappingRequest {
   TenantId tenantId;
-  MasterDataObjectId masterDataObjectId;
+  MasterDataObjectId objectId;
   string category;
   string objectType;
   KeyMappingEntryDto[] entries;
 }
 
 struct UpdateKeyMappingRequest {
+  TenantId tenantId;
+  KeyMappingId mappingId;
+
   KeyMappingEntryDto[] entries;
 }
 
 struct KeyMappingEntryDto {
+  TenantId tenantId;
   ClientId clientId;
   string systemId;
   string localKey;
@@ -145,6 +159,9 @@ struct CreateClientRequest {
 }
 
 struct UpdateClientRequest {
+  TenantId tenantId;
+  ClientId clientId;
+
   string name;
   string description;
   string status; // "connected", "disconnected", "error", "suspended"
@@ -160,7 +177,7 @@ struct UpdateClientRequest {
 
 struct CreateReplicationJobRequest {
   TenantId tenantId;
-  DistributionModelId distributionModelId;
+  DistributionModelId modelId;
   string name;
   string description;
   string trigger; // "manual", "scheduled", "eventDriven", "onChange"
@@ -185,6 +202,9 @@ struct CreateFilterRuleRequest {
 }
 
 struct UpdateFilterRuleRequest {
+  TenantId tenantId;
+  FilterRuleId ruleId;
+  
   string name;
   string description;
   FilterConditionDto[] conditions;
@@ -193,6 +213,7 @@ struct UpdateFilterRuleRequest {
 }
 
 struct FilterConditionDto {
+  TenantId tenantId;
   string fieldName;
   string operator; // "equals", "contains", "inList", etc.
   string value;

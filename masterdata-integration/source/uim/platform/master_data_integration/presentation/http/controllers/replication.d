@@ -49,16 +49,14 @@ class ReplicationController : ManageHttpController {
     r.trigger = data.getString("trigger");
     r.categories = data.getStrings("categories");
     r.sourceClientId = data.getString("sourceClientId");
-    r.targetClientIds = data.getStrings("targetClientIds");
+    r.targetClientIds = data.getStrings("targetClientIds").map!(id => ClientId(id)).array;
     r.isInitialLoad = data.getBoolean("isInitialLoad");
     r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
     auto result = usecase.create(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
-    auto resp = Json.emptyObject
-      .set("id", result.id);
-
+    auto resp = Json.emptyObject.set("id", result.id);
     return successResponse("Replication job created successfully", 201, resp);
   }
 
@@ -119,8 +117,7 @@ class ReplicationController : ManageHttpController {
     auto result = usecase.startReplicationJob(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
-    auto resp = Json.emptyObject
-      .set("id", result.id);
+    auto resp = Json.emptyObject.set("id", result.id);
 
     return successResponse("Replication job started successfully", 200, resp);
   }
@@ -147,8 +144,7 @@ class ReplicationController : ManageHttpController {
     auto result = usecase.pauseReplicationJob(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
-    auto resp = Json.emptyObject
-      .set("id", result.id);
+    auto resp = Json.emptyObject.set("id", result.id);
 
     return successResponse("Replication job paused successfully", 200, resp);
   }
@@ -175,8 +171,7 @@ class ReplicationController : ManageHttpController {
     auto result = usecase.cancelReplicationJob(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
-    auto resp = Json.emptyObject
-      .set("id", result.id);
+    auto resp = Json.emptyObject.set("id", result.id);
 
     return successResponse("Replication job canceled successfully", 200, resp);
   }
@@ -200,8 +195,7 @@ class ReplicationController : ManageHttpController {
     auto result = usecase.deleteReplicationJob(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
-    auto resp = Json.emptyObject
-      .set("id", result.id);
+    auto resp = Json.emptyObject.set("id", result.id);
 
     return successResponse("Replication job deleted successfully", 200, resp);
   }

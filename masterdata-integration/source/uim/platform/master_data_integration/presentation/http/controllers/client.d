@@ -7,7 +7,8 @@ module uim.platform.master_data_integration.presentation.http.controllers.client
 
 // import uim.platform.master_data_integration.application.usecases.manage.clients;
 
-// import uim.platform.master_data_integration.domain.entities.client;
+import uim.platform.master_data_integration.application.usecases;
+
 
 import uim.platform.master_data_integration;
 
@@ -59,12 +60,11 @@ class ClientController : ManageHttpController {
     r.certificateRef = data.getString("certificateRef");
     r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
-    auto result = usecase.create(r);
+    auto result = usecase.createClient(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
       
     auto resp = Json.emptyObject.set("id", result.id);
-
     return successResponse("Client created successfully", 201, resp);
 
   }
@@ -80,11 +80,11 @@ class ClientController : ManageHttpController {
 
     Client[] clients;
     if (status.length > 0)
-      clients = usecase.listByStatus(tenantId, status);
+      clients = usecase.listClientsByStatus(tenantId, status);
     else if (type.length > 0)
-      clients = usecase.listByType(tenantId, type);
+      clients = usecase.listClientsByType(tenantId, type);
     else
-      clients = usecase.listByTenant(tenantId);
+      clients = usecase.listClients(tenantId);
 
     auto arr = clients.map!(c => c.toJson).array.toJson;
 
@@ -92,7 +92,7 @@ class ClientController : ManageHttpController {
       .set("items", arr)
       .set("totalCount", clients.length);
 
-    return successResponse("Clients retrieved successfully", 200, resp);
+    return successResponse("Clients retrieved successfully", "Retrieved", 200, resp);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
@@ -119,9 +119,14 @@ class ClientController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
+    auto id = ClientId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid client ID", 400);
+
     auto data = precheck.data;
     UpdateClientRequest r;
+    r.tenantId = tenantId;
+    r.clientId = id;
     r.name = data.getString("name");
     r.description = data.getString("description");
     r.status = data.getString("status");
@@ -133,7 +138,7 @@ class ClientController : ManageHttpController {
     r.clientIdRef = data.getString("clientIdRef");
     r.certificateRef = data.getString("certificateRef");
 
-    auto result = usecase.updateClient(id, r);
+    auto result = usecase.updateClient(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
 
@@ -147,7 +152,10 @@ class ClientController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
+    auto id = ClientId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid client ID", 400);
+
     auto result = usecase.deleteClient(id);
     if (result.hasError)
       return errorResponse(result.message, 400);
@@ -156,14 +164,17 @@ class ClientController : ManageHttpController {
         .emptyObject.set("id", id));
   }
 
-  protected Json connectHandler(HTTPServerRequest req) {
+  override protected Json connectHandler(HTTPServerRequest req) {
     auto precheck = super.postHandler(req);
     if (precheck.hasError)
       return precheck;
 
     auto tenantId = precheck.tenantId;
     auto id = ClientId(precheck.id);
-    auto result = usecase.connect(tenantId, id);
+    if (id.isNull)
+      return errorResponse("Invalid client ID", 400);
+
+    auto result = usecase.connectClient(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
 
@@ -171,7 +182,7 @@ class ClientController : ManageHttpController {
     return successResponse("Client connected successfully", "Connected", 200, resp);
   }
 
-  protected void handleConnect(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  override protected void handleConnect(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto response = connectHandler(req);
       res.writeJsonBody(response, response.code);
@@ -187,7 +198,10 @@ class ClientController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto id = ClientId(precheck.id);
-    auto result = usecase.disconnect(tenantId, id);
+    if (id.isNull)
+      return errorResponse("Invalid client ID", 400);
+
+    auto result = usecase.disconnectClient(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
 

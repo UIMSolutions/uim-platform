@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.master_data_integration.application.usecases.manage.data_models;
+module uim.platform.master_data_integration.application.usecases.manage.data_model;
 
 // import uim.platform.master_data_integration.domain.entities.data_model;
 // import uim.platform.master_data_integration.domain.ports.repositories.data_models;
@@ -21,7 +21,7 @@ class ManageDataModelsUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult createDataModel(CreateDataModelRequest req) {
+  CommandResult createModel(CreateDataModelRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Data model name is required");
     if (req.namespace.length == 0)
@@ -44,7 +44,7 @@ class ManageDataModelsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, model.id.value, "");
   }
 
-  CommandResult updateDataModel(UpdateDataModelRequest req) {
+  CommandResult updateModel(UpdateDataModelRequest req) {
     auto model = repo.findById(req.tenantId, req.modelId);
     if (model.isNull)
       return CommandResult(false, "", "Data model not found");
@@ -59,29 +59,29 @@ class ManageDataModelsUseCase { // TODO: UIMUseCase {
       model.keyFields = req.keyFields;
     if (req.requiredFields.length > 0)
       model.requiredFields = req.requiredFields;
-    model.updatedAt = clockSeconds();
+    model.updatedAt = currentTimestamp();
 
     repo.update(model);
     return CommandResult(true, model.id.value, "");
   }
 
-  DataModel getDataModel(TenantId tenantId, DataModelId id) {
+  DataModel getModel(TenantId tenantId, DataModelId id) {
     return repo.findById(tenantId, id);
   }
 
-  DataModel[] listDataModelsByTenant(TenantId tenantId) {
+  DataModel[] listModelsByTenant(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  DataModel[] listDataModelsByCategory(TenantId tenantId, string category) {
-    return repo.findByCategory(tenantId, parseCategory(category));
+  DataModel[] listModelsByCategory(TenantId tenantId, string category) {
+    return repo.findByCategory(tenantId, toMasterDataCategory(category));
   }
 
-  DataModel findDataModelByName(TenantId tenantId, string name) {
+  DataModel findModelByName(TenantId tenantId, string name) {
     return repo.findByName(tenantId, name);
   }
 
-  CommandResult deleteDataModel(TenantId tenantId, DataModelId id) {
+  CommandResult deleteModel(TenantId tenantId, DataModelId id) {
     auto model = repo.findById(tenantId, id);
     if (model.isNull)
       return CommandResult(false, "", "Data model not found");
@@ -107,7 +107,6 @@ class ManageDataModelsUseCase { // TODO: UIMUseCase {
     }
     return result;
   }
-
 }
 
 

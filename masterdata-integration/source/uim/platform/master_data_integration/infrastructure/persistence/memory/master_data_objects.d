@@ -16,7 +16,7 @@ module uim.platform.master_data_integration.infrastructure.persistence.memory
 
 @safe:
 
-class MemoryMasterDataObjectRepository : MasterDataObjectRepository {
+class MemoryMasterDataObjectRepository : TenantRepository!(MasterDataObject, MasterDataObjectId), MasterDataObjectRepository {
 
   size_t countByCategory(TenantId tenantId, MasterDataCategory category) {
     return findByCategory(tenantId, category).length;
@@ -66,11 +66,11 @@ class MemoryMasterDataObjectRepository : MasterDataObjectRepository {
     findBySourceSystem(tenantId, sourceSystem).each!(e => remove(e));
   }
 
-  bool existsByGlobalId(TenantId tenantId, string globalId) {
-    return findByGlobalId(tenantId, globalId).id != MasterDataObjectId.init;
+  bool existsByGlobal(TenantId tenantId, string globalId) {
+    return findByGlobal(tenantId, globalId).id != MasterDataObjectId.init;
   }
 
-  MasterDataObject findByGlobalId(TenantId tenantId, string globalId) {
+  MasterDataObject findByGlobal(TenantId tenantId, string globalId) {
     foreach (obj; findByTenant(tenantId)) {
       if (obj.globalId == globalId)
         return obj;
@@ -78,4 +78,7 @@ class MemoryMasterDataObjectRepository : MasterDataObjectRepository {
     return MasterDataObject.init;
   }
 
+  void removeByGlobal(TenantId tenantId, string globalId) {
+    findByGlobal(tenantId, globalId).each!(entity => remove(entity));
+  }
 }

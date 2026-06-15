@@ -51,9 +51,8 @@ class DataModelController : ManageHttpController {
     r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
     // Parse field definitions
-    auto fieldsArr = jsonObjArray(j, "fields");
     FieldDefinitionDto[] fields;
-    foreach (fj; fieldsArr) {
+    foreach (fdata; data.getArray("fields")) {
       FieldDefinitionDto fd;
       fd.name = fdata.getString("name");
       fd.displayName = fdata.getString("displayName");
@@ -61,14 +60,14 @@ class DataModelController : ManageHttpController {
       fd.isRequired = fdata.getBoolean("isRequired");
       fd.isKey = fdata.getBoolean("isKey");
       fd.defaultValue = fdata.getString("defaultValue");
-      fd.maxLength = jsonInt(fj, "maxLength");
+      fd.maxLength = jsonInt(fdata, "maxLength");
       fd.referenceModel = fdata.getString("referenceModel");
       fd.description = fdata.getString("description");
       fields ~= fd;
     }
     r.fields = fields;
 
-    auto result = usecase.create(r);
+    auto result = usecase.createModel(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
 
@@ -84,7 +83,7 @@ class DataModelController : ManageHttpController {
     auto category = req.params.get("category", "");
 
     DataModel[] models = category.length > 0
-      ? usecase.listByCategory(tenantId, category) : usecase.listByTenant(tenantId);
+      ? usecase.listModelsByCategory(tenantId, category) : usecase.listModelsByTenant(tenantId);
 
     auto arr = models.map!(m => m.toJson).array.toJson;
 
@@ -132,9 +131,8 @@ class DataModelController : ManageHttpController {
     r.keyFields = data.getStrings("keyFields");
     r.requiredFields = data.getStrings("requiredFields");
 
-    auto fieldsArr = jsonObjArray(j, "fields");
     FieldDefinitionDto[] fields;
-    foreach (fj; fieldsArr) {
+    foreach (fdata; data.getArray("fields")) {
       FieldDefinitionDto fd;
       fd.name = fdata.getString("name");
       fd.displayName = fdata.getString("displayName");
@@ -142,14 +140,14 @@ class DataModelController : ManageHttpController {
       fd.isRequired = fdata.getBoolean("isRequired");
       fd.isKey = fdata.getBoolean("isKey");
       fd.defaultValue = fdata.getString("defaultValue");
-      fd.maxLength = jsonInt(fj, "maxLength");
+      fd.maxLength = jsonInt(fdata, "maxLength");
       fd.referenceModel = fdata.getString("referenceModel");
       fd.description = fdata.getString("description");
       fields ~= fd;
     }
     r.fields = fields;
 
-    auto result = usecase.updateModel(id, r);
+    auto result = usecase.updateModel(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
 

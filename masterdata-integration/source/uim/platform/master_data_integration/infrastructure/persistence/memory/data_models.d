@@ -17,6 +17,7 @@ module uim.platform.master_data_integration.infrastructure.persistence.memory.da
 
 class MemoryDataModelRepository : TenantRepository!(DataModel, DataModelId), DataModelRepository {
 
+  // #region ByName
   bool existsByName(TenantId tenantId, string name) {
     return findByTenant(tenantId).any!((e) => e.name == name);
   }
@@ -27,7 +28,12 @@ class MemoryDataModelRepository : TenantRepository!(DataModel, DataModelId), Dat
     }
     return DataModel.init;
   }
+  void removeByName(TenantId tenantId, string name) {
+    remove(findByName(tenantId, name));
+  }
+  // #endregion ByName
 
+  // #region ByCategory
   size_t countByCategory(TenantId tenantId, MasterDataCategory category) {
     return findByCategory(tenantId, category).length;
   }
@@ -40,5 +46,6 @@ class MemoryDataModelRepository : TenantRepository!(DataModel, DataModelId), Dat
   void removeByCategory(TenantId tenantId, MasterDataCategory category) {
     findByCategory(tenantId, category).each!(entity => remove(entity));
   }
+  // #endregion ByCategory
 
 }

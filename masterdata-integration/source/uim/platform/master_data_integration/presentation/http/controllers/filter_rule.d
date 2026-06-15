@@ -44,17 +44,16 @@ class FilterRuleController : ManageHttpController {
     r.name = data.getString("name");
     r.description = data.getString("description");
     r.category = data.getString("category");
-    r.dataModelId = data.getString("dataModelId");
+    r.modelId = DataModelId(data.getString("dataModelId"));
     r.objectType = data.getString("objectType");
     r.logicOperator = data.getString("logicOperator");
     r.createdBy = UserId(req.headers.get("X-User-Id", ""));
-    r.conditions = parseConditions(j);
+    r.conditions = parseConditions(data);
 
-    auto result = usecase.create(r);
+    auto result = usecase.createRule(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
-    auto resp = Json.emptyObject
-      .set("id", result.id);
+    auto resp = Json.emptyObject.set("id", result.id);
 
     return successResponse("Filter rule created successfully", 201, resp);
   }
@@ -70,11 +69,11 @@ class FilterRuleController : ManageHttpController {
 
     FilterRule[] rules;
     if (activeOnly == "true")
-      rules = usecase.listActive(tenantId);
+      rules = usecase.listRulesActive(tenantId);
     else if (category.length > 0)
-      rules = usecase.listByCategory(tenantId, category);
+      rules = usecase.listRulesByCategory(tenantId, category);
     else
-      rules = usecase.listByTenant(tenantId);
+      rules = usecase.listRules(tenantId);
 
     auto arr = rules.map!(r => r.toJson).array.toJson;
 
@@ -92,7 +91,10 @@ class FilterRuleController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
+    auto id = FilterRuleId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid filter rule ID", 400);
+
     auto rule = usecase.getRule(tenantId, id);
     if (rule.isNull)
       return errorResponse("Filter rule not found", 404);
@@ -107,16 +109,21 @@ class FilterRuleController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
+    auto id = FilterRuleId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid filter rule ID", 400);
+
     auto data = precheck.data;
     UpdateFilterRuleRequest r;
+    r.tenantId = tenantId;
+    r.ruleId = id;
     r.name = data.getString("name");
     r.description = data.getString("description");
     r.logicOperator = data.getString("logicOperator");
     r.isActive = data.getBoolean("isActive", true);
-    r.conditions = parseConditions(j);
+    r.conditions = parseConditions(data);
 
-    auto result = usecase.updateRule(id, r);
+    auto result = usecase.updateRule(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
 
@@ -131,8 +138,11 @@ class FilterRuleController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
-    auto result = usecase.deleteRule(id);
+    auto id = FilterRuleId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid filter rule ID", 400);
+
+    auto result = usecase.deleteRule(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
 
@@ -146,12 +156,12 @@ class FilterRuleController : ManageHttpController {
     auto condsArr = jsonObjArray(j, "conditions");
     foreach (cj; condsArr) {
       FilterConditionDto c;
-      c.fieldName = cdata.getString("fieldName");
-      c.operator = cdata.getString("operator");
-      c.value = cdata.getString("value");
+      c.fieldName = cj.getString("fieldName");
+      c.operator = cj.getString("operator");
+      c.value = cj.getString("value");
       c.valueList = getStrings(cj, "valueList");
-      c.lowerBound = cdata.getString("lowerBound");
-      c.upperBound = cdata.getString("upperBound");
+      c.lowerBound = cj.getString("lowerBound");
+      c.upperBound = cj.getString("upperBound");
       conditions ~= c;
     }
     return conditions;

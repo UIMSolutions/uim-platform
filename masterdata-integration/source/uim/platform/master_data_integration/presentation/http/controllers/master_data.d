@@ -26,7 +26,7 @@ class MasterDataController : ManageHttpController {
 
     router.post("/api/v1/master-data", &handleCreate);
     router.get("/api/v1/master-data", &handleList);
-    router.get("/api/v1/master-data/lookup", &handleLookupByGlobalId);
+    router.get("/api/v1/master-data/lookup", &handleLookupByGlobal);
     router.get("/api/v1/master-data/*", &handleGet);
     router.put("/api/v1/master-data/*", &handleUpdate);
     router.delete_("/api/v1/master-data/*", &handleDelete);
@@ -42,7 +42,7 @@ class MasterDataController : ManageHttpController {
     auto data = precheck.data;
     CreateMasterDataObjectRequest r;
     r.tenantId = tenantId;
-    r.dataModelId = data.getString("dataModelId");
+    r.modelId = data.getString("dataModelId");
     r.category = data.getString("category");
     r.objectType = data.getString("objectType");
     r.displayName = data.getString("displayName");
@@ -54,7 +54,7 @@ class MasterDataController : ManageHttpController {
     r.sourceClient = data.getString("sourceClient");
     r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
-    auto result = usecase.create(r);
+    auto result = usecase.createObject(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
 
@@ -70,34 +70,29 @@ class MasterDataController : ManageHttpController {
     auto tenantId = precheck.tenantId;
     auto category = req.params.get("category", "");
 
-    MasterDataObject[] objs;
-    if (category.length > 0)
-      objs = usecase.listByCategory(tenantId, category);
-    else
-      objs = usecase.listByTenant(tenantId);
-
+    MasterDataObject[] objs = category.length > 0 
+      ? usecase.listObjects(tenantId, category) 
+      : usecase.listObjects(tenantId);
+    
     auto arr = objs.map!(o => o.toJson).array.toJson;
 
     auto resp = Json.emptyObject
       .set("items", arr)
-      .set("totalCount", objs.length)
-      .set("message", "Master data objects retrieved successfully");
-
+      .set("totalCount", objs.length);
     return successResponse("Master data objects retrieved successfully", 200, resp);
   }
 
-  protected Json lookupByGlobalIdHandler(HTTPServerRequest req) {
+  protected Json lookupByGlobalHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);
     if (precheck.hasError)
       return precheck;
 
     auto tenantId = precheck.tenantId;
     auto globalId = req.params.get("globalId", "");
-    if (globalId.isEmpty) {
+    if (globalId.isEmpty)
       return errorResponse("globalId query parameter is required", 400);
-    }
 
-    auto obj = usecase.findByGlobalId(tenantId, globalId);
+    auto obj = usecase.findObject(tenantId, globalId);
     if (obj.isNull)
       return errorResponse("Master data object not found", 404);
 
@@ -105,10 +100,10 @@ class MasterDataController : ManageHttpController {
     return successResponse("Master data object retrieved successfully", 200, response);
   }
 
-  protected void handleLookupByGlobalId(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleLookupByGlobal(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto response = lookupByGlobalIdHandler(req);
-      res.writeJson(response);
+      auto response = lookupByGlobalHandler(req);
+      res.writeJson(response, response.statusCode);
     } catch (Exception e) {
       auto errorResp = errorResponse("An unexpected error occurred: " ~ e.msg, 500);
       res.writeJson(errorResp);
@@ -146,6 +141,7 @@ class MasterDataController : ManageHttpController {
     auto data = precheck.data;
     UpdateMasterDataObjectRequest r;
     r.tenantId = tenantId;
+    r.objectId = id;
     r.displayName = data.getString("displayName");
     r.description = data.getString("description");
     r.status = data.getString("status");

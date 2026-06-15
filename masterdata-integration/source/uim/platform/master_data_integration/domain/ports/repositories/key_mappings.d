@@ -24,7 +24,7 @@ interface KeyMappingRepository : ITenantRepository!(KeyMapping, KeyMappingId) {
   KeyMapping[] findByCategory(TenantId tenantId, MasterDataCategory category);
   void removeByCategory(TenantId tenantId, MasterDataCategory category);
 
-  size_t countByClientKey(TenantId tenantId, ClientId clientId, string localKey);
+  bool existsByClientKey(TenantId tenantId, ClientId clientId, string localKey);
   KeyMapping findByClientKey(TenantId tenantId, ClientId clientId, string localKey);
   void removeByClientKey(TenantId tenantId, ClientId clientId, string localKey);
 

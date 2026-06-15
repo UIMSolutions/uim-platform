@@ -40,6 +40,11 @@ struct ChangeLogEntry {
   long timestamp;
 
   Json toJson() const {
+    auto jOld = Json.emptyObject;
+    foreach (k, v; oldValues)      jOld.set(k, v);
+    auto jNew = Json.emptyObject;
+    foreach (k, v; newValues)      jNew.set(k, v);  
+
     return entityToJson
       .set("objectId", objectId.value)
       .set("dataModelId", dataModelId.value)
@@ -47,8 +52,8 @@ struct ChangeLogEntry {
       .set("changeType", changeType.to!string)
       .set("objectType", objectType)
       .set("changedFields", changedFields.array.toJson)
-      .set("oldValues", oldValues)
-      .set("newValues", newValues)
+      .set("oldValues", jOld)
+      .set("newValues", jNew)
       .set("sourceSystem", sourceSystem)
       .set("sourceClient", sourceClient)
       .set("changedBy", changedBy)

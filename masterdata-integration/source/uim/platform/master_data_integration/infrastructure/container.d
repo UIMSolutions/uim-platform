@@ -28,6 +28,7 @@ module uim.platform.master_data_integration.infrastructure.container;
 // import uim.platform.master_data_integration.application.usecases.manage.replication_jobs;
 // import uim.platform.master_data_integration.application.usecases.manage.filter_rules;
 // import uim.platform.master_data_integration.application.usecases.query_change_log;
+import uim.platform.master_data_integration.application.usecases;
 // Controllers
 // import uim.platform.master_data_integration.presentation.http.master_data;
 // import uim.platform.master_data_integration.presentation.http.data_model;
@@ -37,7 +38,7 @@ module uim.platform.master_data_integration.infrastructure.container;
 // import uim.platform.master_data_integration.presentation.http.replication;
 // import uim.platform.master_data_integration.presentation.http.filter_rule;
 // import uim.platform.master_data_integration.presentation.http.change_log;
-// import uim.platform.master_data_integration.presentation.http.health;
+import uim.platform.master_data_integration.presentation.http.controllers;
 import uim.platform.master_data_integration;
 
 // mixin(ShowModule!());

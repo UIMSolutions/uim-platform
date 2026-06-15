@@ -14,7 +14,7 @@ import uim.platform.master_data_integration;
 struct MasterDataObject {
   mixin TenantEntity!MasterDataObjectId;
 
-  DataModelId dataModelId;
+  DataModelId modelId;
   MasterDataCategory category = MasterDataCategory.businessPartner;
   RecordStatus status = RecordStatus.active;
 
@@ -38,6 +38,11 @@ struct MasterDataObject {
   string sourceClient;
 
   Json toJson() const {
+    auto jAtt = Json.emptyObject;
+    foreach (k, v; attributes) {
+      jAtt.set(k, v);
+    }
+
     return entityToJson
       .set("dataModelId", dataModelId.value)
       .set("category", category.to!string)
@@ -49,7 +54,7 @@ struct MasterDataObject {
       .set("versionNumber", versionNumber)
       .set("localId", localId)
       .set("globalId", globalId)
-      .set("attributes", attributes) // Note: this is a simplification
+      .set("attributes", jAtt) // Note: this is a simplification
       .set("sourceSystem", sourceSystem)
       .set("sourceClient", sourceClient);
   }

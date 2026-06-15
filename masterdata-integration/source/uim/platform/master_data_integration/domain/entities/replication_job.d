@@ -14,7 +14,7 @@ import uim.platform.master_data_integration;
 struct ReplicationJob {
   mixin TenantEntity!(ReplicationJobId);
 
-  DistributionModelId distributionModelId;
+  DistributionModelId modelId;
 
   string name;
   string description;
@@ -44,7 +44,7 @@ struct ReplicationJob {
 
   Json toJson() const {
     return entityToJson
-      .set("distributionModelId", distributionModelId.value)
+      .set("distributionModelId", modelId.value)
       .set("name", name)
       .set("description", description)
       .set("status", status.to!string)

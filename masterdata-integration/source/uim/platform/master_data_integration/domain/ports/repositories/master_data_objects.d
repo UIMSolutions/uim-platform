@@ -15,9 +15,9 @@ import uim.platform.master_data_integration;
 /// Port: outgoing — master data object persistence.
 interface MasterDataObjectRepository : ITenantRepository!(MasterDataObject, MasterDataObjectId) {
 
-  bool existsByGlobalId(TenantId tenantId, string globalId);
-  MasterDataObject findByGlobalId(TenantId tenantId, string globalId);
-  void removeByGlobalId(TenantId tenantId, string globalId);
+  bool existsByGlobal(TenantId tenantId, string globalId);
+  MasterDataObject findByGlobal(TenantId tenantId, string globalId);
+  void removeByGlobal(TenantId tenantId, string globalId);
 
   size_t countByCategory(TenantId tenantId, MasterDataCategory category);
   MasterDataObject[] findByCategory(TenantId tenantId, MasterDataCategory category);

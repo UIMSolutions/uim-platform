@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.master_data_integration.application.usecases.manage.distribution_models;
+module uim.platform.master_data_integration.application.usecases.manage.distribution_model;
 
 // import uim.platform.master_data_integration.domain.entities.distribution_model;
 // import uim.platform.master_data_integration.domain.ports.repositories.distribution_models;
@@ -37,7 +37,7 @@ class ManageDistributionModelsUseCase { // TODO: UIMUseCase {
     model.direction = toDistributionDirection(req.direction);
     model.sourceClientId = req.sourceClientId;
     model.targetClientIds = req.targetClientIds;
-    model.categories = toMasterDataCategory(req.categories);
+    model.categories = toMasterDataCategories(req.categories);
     model.dataModelIds = req.dataModelIds;
     model.filterRuleIds = req.filterRuleIds;
     model.autoReplicate = req.autoReplicate;
@@ -48,7 +48,7 @@ class ManageDistributionModelsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateModel(UpdateDistributionModelRequest req) {
-    auto model = repo.findById(req.tenantId, req.id);
+    auto model = repo.findById(req.tenantId, req.modelId);
     if (model.isNull)
       return CommandResult(false, "", "Distribution model not found");
 
@@ -57,11 +57,12 @@ class ManageDistributionModelsUseCase { // TODO: UIMUseCase {
     if (req.description.length > 0)
       model.description = req.description;
     if (req.status.length > 0)
-      model.status = parseStatus(req.status);
+      model.status = toDistributionModelStatus(req.status);
     if (req.targetClientIds.length > 0)
       model.targetClientIds = req.targetClientIds;
-    if (req.categories.length > 0)
-      model.categories = req.categories.map!(c => parseCategory(c)).array;
+    // TODO:
+    // if (req.categories.length > 0)
+    //   model.categories = toMasterDataCategory(req.categories);
     if (req.dataModelIds.length > 0)
       model.dataModelIds = req.dataModelIds;
     if (req.filterRuleIds.length > 0)
@@ -104,7 +105,7 @@ class ManageDistributionModelsUseCase { // TODO: UIMUseCase {
   }
 
   DistributionModel[] listModelsByStatus(TenantId tenantId, string status) {
-    return repo.findByStatus(tenantId, parseStatus(status));
+    return repo.findByStatus(tenantId, toDistributionModelStatus(status));
   }
 
   CommandResult deleteModel(TenantId tenantId, DistributionModelId id) {
@@ -112,21 +113,8 @@ class ManageDistributionModelsUseCase { // TODO: UIMUseCase {
     if (model.isNull)
       return CommandResult(false, "", "Distribution model not found");
 
-    repo.removeBy(model);
+    repo.remove(model);
     return CommandResult(true, model.id.value, "");
-  }
-
-  private DistributionModelStatus parseStatus(string s) {
-    switch (s) {
-    case "active":
-      return DistributionModelStatus.active;
-    case "inactive":
-      return DistributionModelStatus.inactive;
-    case "draft":
-      return DistributionModelStatus.draft;
-    default:
-      return DistributionModelStatus.draft;
-    }
   }
 }
 

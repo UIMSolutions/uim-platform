@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.master_data_integration.application.usecases.manage.clients;
+module uim.platform.master_data_integration.application.usecases.manage.client;
 
 // import uim.platform.master_data_integration.domain.entities.client;
 // import uim.platform.master_data_integration.domain.ports.repositories.clients;
@@ -36,7 +36,7 @@ class ManageClientsUseCase { // TODO: UIMUseCase {
     client.systemUrl = req.systemUrl;
     client.destinationName = req.destinationName;
     client.communicationArrangement = req.communicationArrangement;
-    client.supportedCategories = parseCategories(req.supportedCategories);
+    client.supportedCategories = toMasterDataCategories(req.supportedCategories);
     client.supportsInitialLoad = req.supportsInitialLoad;
     client.supportsDeltaReplication = req.supportsDeltaReplication;
     client.supportsKeyMapping = req.supportsKeyMapping;
@@ -58,7 +58,7 @@ class ManageClientsUseCase { // TODO: UIMUseCase {
     if (req.description.length > 0)
       client.description = req.description;
     if (req.status.length > 0)
-      client.status = parseClientStatus(req.status);
+      client.status = toClientStatus(req.status);
     if (req.systemUrl.length > 0)
       client.systemUrl = req.systemUrl;
     if (req.destinationName.length > 0)
@@ -66,7 +66,7 @@ class ManageClientsUseCase { // TODO: UIMUseCase {
     if (req.communicationArrangement.length > 0)
       client.communicationArrangement = req.communicationArrangement;
     if (req.supportedCategories.length > 0)
-      client.supportedCategories = parseCategories(req.supportedCategories);
+      client.supportedCategories = toMasterDataCategories(req.supportedCategories);
     if (req.authType.length > 0)
       client.authType = req.authType;
     if (req.clientIdRef.length > 0)
@@ -85,8 +85,9 @@ class ManageClientsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Client not found");
 
     client.status = ClientStatus.connected;
-    client.lastSyncAt = clockSeconds();
-    client.updatedAt = client.lastSyncAt;
+    // TODO:
+    // client.lastSyncAt = currentTimestamp;
+    // client.updatedAt = client.lastSyncAt;
     repo.update(client);
     return CommandResult(true, client.id.value, "");
   }
@@ -112,11 +113,11 @@ class ManageClientsUseCase { // TODO: UIMUseCase {
   }
 
   Client[] listClientsByStatus(TenantId tenantId, string status) {
-    return repo.findByStatus(tenantId, parseClientStatus(status));
+    return repo.findByStatus(tenantId, toClientStatus(status));
   }
 
   Client[] listClientsByType(TenantId tenantId, string type) {
-    return repo.findByType(tenantId, parseClientType(type));
+    return repo.findByType(tenantId, toClientType(type));
   }
 
   CommandResult deleteClient(TenantId tenantId, ClientId id) {
@@ -128,78 +129,6 @@ class ManageClientsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, client.id.value, "");
   }
 
-  private ClientType parseClientType(string s) {
-    switch (s) {
-    case "sapS4Hana":
-      return ClientType.sapS4Hana;
-    case "sapSuccessFactors":
-      return ClientType.sapSuccessFactors;
-    case "sapAriba":
-      return ClientType.sapAriba;
-    case "sapFieldglass":
-      return ClientType.sapFieldglass;
-    case "sapConcur":
-      return ClientType.sapConcur;
-    case "sapBusinessByDesign":
-      return ClientType.sapBusinessByDesign;
-    case "thirdParty":
-      return ClientType.thirdParty;
-    case "custom":
-      return ClientType.custom;
-    default:
-      return ClientType.sapS4Hana;
-    }
-  }
-
-  private ClientStatus parseClientStatus(string s) {
-    switch (s) {
-    case "connected":
-      return ClientStatus.connected;
-    case "disconnected":
-      return ClientStatus.disconnected;
-    case "error":
-      return ClientStatus.error;
-    case "suspended":
-      return ClientStatus.suspended;
-    default:
-      return ClientStatus.disconnected;
-    }
-  }
-
-  private MasterDataCategory[] parseCategories(string[] cats) {
-    MasterDataCategory[] result;
-    foreach (s; cats) {
-      switch (s) {
-      case "businessPartner":
-        result ~= MasterDataCategory.businessPartner;
-        break;
-      case "costCenter":
-        result ~= MasterDataCategory.costCenter;
-        break;
-      case "profitCenter":
-        result ~= MasterDataCategory.profitCenter;
-        break;
-      case "companyCode":
-        result ~= MasterDataCategory.companyCode;
-        break;
-      case "workforcePerson":
-        result ~= MasterDataCategory.workforcePerson;
-        break;
-      case "bankAccount":
-        result ~= MasterDataCategory.bankAccount;
-        break;
-      case "plant":
-        result ~= MasterDataCategory.plant;
-        break;
-      case "custom":
-        result ~= MasterDataCategory.custom;
-        break;
-      default:
-        break;
-      }
-    }
-    return result;
-  }
 }
 
 

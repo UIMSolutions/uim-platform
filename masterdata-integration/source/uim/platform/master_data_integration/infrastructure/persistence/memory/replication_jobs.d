@@ -37,7 +37,7 @@ class MemoryReplicationJobRepository : TenantRepository!(ReplicationJob, Replica
   }
 
   ReplicationJob[] filterByDistributionModel(ReplicationJob[] jobs, DistributionModelId modelId) {
-    return jobs.filter!(e => e.distributionModelId == modelId).array;
+    return jobs.filter!(e => e.modelId == modelId).array;
   }
 
   ReplicationJob[] findByDistributionModel(TenantId tenantId, DistributionModelId modelId) {

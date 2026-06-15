@@ -42,12 +42,12 @@ class KeyMappingController : ManageHttpController {
     auto data = precheck.data;
     CreateKeyMappingRequest r;
     r.tenantId = tenantId;
-    r.masterDataObjectId = data.getString("masterDataObjectId");
+    r.objectId = data.getString("masterDataObjectId");
     r.category = data.getString("category");
     r.objectType = data.getString("objectType");
     r.entries = parseEntries(j);
 
-    auto result = usecase.create(r);
+    auto result = usecase.createMapping(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
     auto resp = Json.emptyObject.set("id", result.id);
@@ -66,11 +66,11 @@ override protected Json listHandler(HTTPServerRequest req) {
 
   KeyMapping[] mappings;
   if (!objectId.isEmpty)
-    mappings = usecase.listByObject(tenantId, objectId);
+    mappings = usecase.listMappings(tenantId, objectId);
   else if (category.length > 0)
-    mappings = usecase.listByCategory(tenantId, category);
+    mappings = usecase.listMappings(tenantId, category);
   else
-    mappings = usecase.listByTenant(tenantId);
+    mappings = usecase.listMappings(tenantId);
 
   auto arr = mappings.map!(m => m.toJson).array.toJson;
 
@@ -81,33 +81,42 @@ override protected Json listHandler(HTTPServerRequest req) {
   return successResponse("Key mappings retrieved successfully", 200, resp);
 }
 
+protected Json lookupHandler(HTTPServerRequest req) {
+  auto precheck = super.getHandler(req);
+  if (precheck.hasError)
+    return precheck;
+
+  auto tenantId = precheck.tenantId;
+
+  LookupKeyRequest r;
+  r.tenantId = tenantId;
+  r.sourceClientId = req.params.get("sourceClientId", "");
+  r.sourceLocalKey = req.params.get("sourceLocalKey", "");
+  r.targetClientId = req.params.get("targetClientId", "");
+
+  if (r.sourceClientId.isEmpty || r.sourceLocalKey.length == 0
+    || r.targetClientId.isEmpty) {
+    return errorResponse("sourceClientId, sourceLocalKey, and targetClientId are required", 400);
+  }
+
+  auto targetKey = usecase.lookupKey(r);
+  if (targetKey.length == 0) {
+    return errorResponse("Key mapping not found", 404);
+  }
+
+  auto resp = Json.emptyObject
+    .set("targetLocalKey", targetKey)
+    .set("sourceClientId", r.sourceClientId)
+    .set("sourceLocalKey", r.sourceLocalKey)
+    .set("targetClientId", r.targetClientId);
+
+  return successResponse("Key mapping lookup successful", 200, resp);
+}
+
 protected void handleLookup(scope HTTPServerRequest req, scope HTTPServerResponse res) {
   try {
-    LookupKeyRequest r;
-    r.tenantId = tenantId;
-    r.sourceClientId = req.params.get("sourceClientId", "");
-    r.sourceLocalKey = req.params.get("sourceLocalKey", "");
-    r.targetClientId = req.params.get("targetClientId", "");
-
-    if (r.sourceClientId.isEmpty || r.sourceLocalKey.length == 0
-      || r.targetClientId.isEmpty) {
-      writeError(res, 400, "sourceClientId, sourceLocalKey, and targetClientId are required");
-      return;
-    }
-
-    auto targetKey = usecase.lookupKey(r);
-    if (targetKey.length == 0) {
-      writeError(res, 404, "Key mapping not found");
-      return;
-    }
-
-    auto resp = Json.emptyObject
-      .set("targetLocalKey", targetKey)
-      .set("sourceClientId", r.sourceClientId)
-      .set("sourceLocalKey", r.sourceLocalKey)
-      .set("targetClientId", r.targetClientId);
-
-    res.writeJsonBody(resp, 200);
+    auto response = lookupHandler(req);
+    res.writeJsonBody(response, response.code);
   } catch (Exception e) {
     writeError(res, 500, "Internal server error");
   }
@@ -164,7 +173,7 @@ override protected Json deleteHandler(HTTPServerRequest req) {
   if (id.isNull)
     return errorResponse("Invalid key mapping ID", 400);
 
-  auto result = usecase.deleteMapping(id);
+  auto result = usecase.deleteMapping(tenantId, id);
   if (result.hasError)
     return errorResponse(result.message, 400);
 
@@ -177,13 +186,13 @@ override protected Json deleteHandler(HTTPServerRequest req) {
 private KeyMappingEntryDto[] parseEntries(Json j) {
   KeyMappingEntryDto[] entries;
   auto entriesArr = jsonObjArray(j, "entries");
-  foreach (ej; entriesArr) {
+  foreach (edata; entriesArr) {
     KeyMappingEntryDto e;
     e.clientId = edata.getString("clientId");
     e.systemId = edata.getString("systemId");
     e.localKey = edata.getString("localKey");
     e.sourceType = edata.getString("sourceType");
-    e.isPrimary = getBoolean(ej, "isPrimary");
+    e.isPrimary = getBoolean(edata, "isPrimary");
     entries ~= e;
   }
   return entries;

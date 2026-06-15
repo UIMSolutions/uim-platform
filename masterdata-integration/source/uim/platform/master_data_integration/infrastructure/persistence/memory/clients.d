@@ -22,8 +22,8 @@ class MemoryClientRepository : TenantRepository!(Client, ClientId), ClientReposi
   }
   Client[] filterByStatus(Client[] clients, ClientStatus status, size_t offset = 0, size_t limit = 0) {
     return (limit == 0)
-        ? clients.filter!(e => e.status == status).skip(offset).array
-        : clients.filter!(e => e.status == status).skip(offset).take(limit).array;
+        ? clients.filter!(e => e.status == status).array.skip(offset)
+        : clients.filter!(e => e.status == status).array.skip(offset).take(limit);
   }
 
   Client[] findByStatus(TenantId tenantId, ClientStatus status) {
@@ -38,8 +38,8 @@ class MemoryClientRepository : TenantRepository!(Client, ClientId), ClientReposi
   }
   Client[] filterByType(Client[] clients, ClientType clientType, size_t offset = 0, size_t limit = 0) {
     return (limit == 0)
-        ? clients.filter!(e => e.clientType == clientType).skip(offset).array
-        : clients.filter!(e => e.clientType == clientType).skip(offset).take(limit).array;
+        ? clients.filter!(e => e.clientType == clientType).array.skip(offset)
+        : clients.filter!(e => e.clientType == clientType).array.skip(offset).take(limit);
   }
 
   Client[] findByType(TenantId tenantId, ClientType clientType) {

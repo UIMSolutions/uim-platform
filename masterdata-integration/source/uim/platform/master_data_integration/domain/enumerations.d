@@ -44,6 +44,9 @@ MasterDataCategory toMasterDataCategory(string s) {
   return map.get(s.toLower, MasterDataCategory.custom);
 }
 
+  MasterDataCategory[] toMasterDataCategories(string[] cats) {
+    return cats.map!(s => toMasterDataCategory(s)).array;
+  }
 /// Status of a master data record.
 enum RecordStatus {
   active,
@@ -142,13 +145,13 @@ enum ClientType {
 }
 ClientType toClientType(string s) {
   const map = [
-    "sapS4Hana": ClientType.sapS4Hana,
-    "sapSuccessFactors": ClientType.sapSuccessFactors,
-    "sapAriba": ClientType.sapAriba,
-    "sapFieldglass": ClientType.sapFieldglass,
-    "sapConcur": ClientType.sapConcur,
-    "sapBusinessByDesign": ClientType.sapBusinessByDesign,
-    "thirdParty": ClientType.thirdParty,
+    "saps4hana": ClientType.sapS4Hana,
+    "sapsuccessfactors": ClientType.sapSuccessFactors,
+    "sapariba": ClientType.sapAriba,
+    "sapfieldglass": ClientType.sapFieldglass,
+    "sapconcur": ClientType.sapConcur,
+    "sapbusinessbydesign": ClientType.sapBusinessByDesign,
+    "thirdparty": ClientType.thirdParty,
     "custom": ClientType.custom,
   ];
   return map.get(s.toLower, ClientType.custom);

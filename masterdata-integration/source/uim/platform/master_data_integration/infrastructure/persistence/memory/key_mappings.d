@@ -17,6 +17,10 @@ module uim.platform.master_data_integration.infrastructure.persistence.memory.ke
 
 class MemoryKeyMappingRepository : TenantRepository!(KeyMapping, KeyMappingId), KeyMappingRepository {
 
+  bool existsByClientKey(TenantId tenantId, ClientId clientId, string localKey) {
+    return findByClientKey(tenantId, clientId, localKey).id != KeyMappingId.init;
+  }
+
   KeyMapping findByClientKey(TenantId tenantId, ClientId clientId, string localKey) {
     foreach (mapping; findByTenant(tenantId)) {
       foreach (entry; mapping.entries) {
@@ -25,6 +29,10 @@ class MemoryKeyMappingRepository : TenantRepository!(KeyMapping, KeyMappingId), 
       }
     }
     return KeyMapping.init;
+  }
+
+  void removeByClientKey(TenantId tenantId, ClientId clientId, string localKey) {
+    remove(findByClientKey(tenantId, clientId, localKey));
   }
 
   size_t countByObject(TenantId tenantId, MasterDataObjectId objectId) {
@@ -40,7 +48,8 @@ class MemoryKeyMappingRepository : TenantRepository!(KeyMapping, KeyMappingId), 
     findByObject(tenantId, objectId).each!(entity => remove(entity));
   }
 
-   size_t countByCategory(TenantId tenantId, MasterDataCategory category) {
+   // #region ByCategory
+  size_t countByCategory(TenantId tenantId, MasterDataCategory category) {
     return findByCategory(tenantId, category).length;
   }
   KeyMapping[] filterByCategory(KeyMapping[] mappings, MasterDataCategory category) {
@@ -53,5 +62,6 @@ class MemoryKeyMappingRepository : TenantRepository!(KeyMapping, KeyMappingId), 
   void removeByCategory(TenantId tenantId, MasterDataCategory category) {
     findByCategory(tenantId, category).each!(entity => remove(entity));
   }
+  // #endregion ByCategory
 
 }

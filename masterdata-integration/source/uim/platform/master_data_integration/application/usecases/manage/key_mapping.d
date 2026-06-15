@@ -3,11 +3,12 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.master_data_integration.application.usecases.manage.key_mappings;
+module uim.platform.master_data_integration.application.usecases.manage.key_mapping;
 
 // import uim.platform.master_data_integration.domain.entities.key_mapping;
 // import uim.platform.master_data_integration.domain.ports.repositories.key_mappings;
 // import uim.platform.master_data_integration.domain.services.key_mapping_resolver;
+import uim.platform.master_data_integration.application.usecases;
 
 import uim.platform.master_data_integration;
 
@@ -24,7 +25,7 @@ class ManageKeyMappingsUseCase { // TODO: UIMUseCase {
     this.resolver = resolver;
   }
 
-  CommandResult createKeyMapping(CreateKeyMappingRequest req) {
+  CommandResult createMapping(CreateKeyMappingRequest req) {
     if (req.objectId.isEmpty)
       return CommandResult(false, "", "Master data object ID is required");
     if (req.entries.length == 0)
@@ -46,8 +47,8 @@ class ManageKeyMappingsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, mapping.id.value, "");
   }
 
-  CommandResult updateKeyMapping(UpdateKeyMappingRequest req) {
-    auto mapping = repo.findById(req.tenantId, req.id);
+  CommandResult updateMapping(UpdateKeyMappingRequest req) {
+    auto mapping = repo.findById(req.tenantId, req.mappingId);
     if (mapping.isNull)
       return CommandResult(false, "", "Key mapping not found");
 
@@ -66,27 +67,28 @@ class ManageKeyMappingsUseCase { // TODO: UIMUseCase {
   string lookupKey(LookupKeyRequest req) {
     auto mapping = repo.findByClientKey(req.tenantId, req.sourceClientId, req.sourceLocalKey);
     if (mapping.isNull)
-      return ;
+      return "";
+
     return resolver.resolveLocalKey(mapping, req.targetClientId);
   }
 
-  KeyMapping getKeyMapping(TenantId tenantId, KeyMappingId id) {
+  KeyMapping getMapping(TenantId tenantId, KeyMappingId id) {
     return repo.findById(tenantId, id);
   }
 
-  KeyMapping[] listKeyMappings(TenantId tenantId) {
+  KeyMapping[] listMappings(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  KeyMapping[] listKeyMappings(TenantId tenantId, MasterDataObjectId objectId) {
+  KeyMapping[] listMappings(TenantId tenantId, MasterDataObjectId objectId) {
     return repo.findByObject(tenantId, objectId);
   }
 
-  KeyMapping[] listKeyMappings(TenantId tenantId, string category) {
+  KeyMapping[] listMappings(TenantId tenantId, string category) {
     return repo.findByCategory(tenantId, category.to!MasterDataCategory);
   }
 
-  CommandResult deleteKeyMapping(TenantId tenantId, KeyMappingId id) {
+  CommandResult deleteMapping(TenantId tenantId, KeyMappingId id) {
     auto mapping = repo.findById(tenantId, id);
     if (mapping.isNull)
       return CommandResult(false, "", "Key mapping not found");
@@ -108,7 +110,6 @@ class ManageKeyMappingsUseCase { // TODO: UIMUseCase {
     }
     return result;
   }
-
 }
 
 

@@ -14,17 +14,22 @@ import uim.platform.master_data_integration;
 
 @safe:
 
-class MemoryChangeLogRepository : ChangeLogRepository {
+class MemoryChangeLogRepository : TenantRepository!(ChangeLogEntry, ChangeLogEntryId), ChangeLogRepository {
 
   // #region ByObject
   size_t countByObject(TenantId tenantId, MasterDataObjectId objectId) {
     return findByObject(tenantId, objectId).length;
   }
 
-  ChangeLogEntry[] filterByObject(ChangeLogEntry[] entries, MasterDataObjectId objectId, size_t offset = 0, size_t limit = 0) {
+  ChangeLogEntry[] filterByObject(
+    ChangeLogEntry[] entries,
+    MasterDataObjectId objectId,
+    size_t offset = 0,
+    size_t limit = 0
+  ) {
     return (limit == 0)
-      ? entries.filter!(e => e.objectId == objectId).skip(offset).array
-      : entries.filter!(e => e.objectId == objectId).skip(offset).take(limit).array;
+      ? entries.filter!(e => e.objectId == objectId).array.skip(offset)
+      : entries.filter!(e => e.objectId == objectId).array.skip(offset).take(limit);
   }
 
   ChangeLogEntry[] findByObject(TenantId tenantId, MasterDataObjectId objectId) {
@@ -41,10 +46,15 @@ class MemoryChangeLogRepository : ChangeLogRepository {
     return findByCategory(tenantId, category).length;
   }
 
-  ChangeLogEntry[] filterByCategory(ChangeLogEntry[] entries, MasterDataCategory category, size_t offset = 0, size_t limit = 0) {
+  ChangeLogEntry[] filterByCategory(
+    ChangeLogEntry[] entries,
+    MasterDataCategory category,
+    size_t offset = 0,
+    size_t limit = 0
+  ) {
     return (limit == 0)
-      ? entries.filter!(e => e.category == category).skip(offset).array
-      : entries.filter!(e => e.category == category).skip(offset).take(limit).array;
+      ? entries.filter!(e => e.category == category).array.skip(offset)
+      : entries.filter!(e => e.category == category).array.skip(offset).take(limit);
   }
 
   ChangeLogEntry[] findByCategory(TenantId tenantId, MasterDataCategory category) {
@@ -61,20 +71,22 @@ class MemoryChangeLogRepository : ChangeLogRepository {
     return findSinceDeltaToken(tenantId, deltaToken).length;
   }
 
-  ChangeLogEntry[] filterSinceDeltaToken(ChangeLogEntry[] entries, string deltaToken, size_t offset = 0, size_t limit = 0) {
+  ChangeLogEntry[] filterSinceDeltaToken(
+    ChangeLogEntry[] entries,
+    string deltaToken, size_t offset = 0, size_t limit = 0
+  ) {
     return (limit == 0)
-      ? entries.filter!(e => e.deltaToken >= deltaToken).skip(offset).array
-      : entries.filter!(e => e.deltaToken >= deltaToken).skip(offset).take(limit).array;
+      ? entries.filter!(e => e.deltaToken >= deltaToken).array.skip(offset)
+      : entries.filter!(e => e.deltaToken >= deltaToken).array.skip(offset).take(limit);
   }
 
   ChangeLogEntry[] findSinceDeltaToken(TenantId tenantId, string deltaToken) {
     // Find the timestamp associated with the delta token
-    long tokenTimestamp = 0;
-    return filterSinceTimestamp(findByTenant(tenantId), deltaToken, 0, 0);
+    return filterSinceTimestamp(findByTenant(tenantId), deltaToken);
   }
 
   void removeSinceDeltaToken(TenantId tenantId, string deltaToken) {
-    filterSinceDeltaToken(findByTenant(tenantId), deltaToken, 0, 0).each!(e => remove(e));
+    findSinceDeltaToken(tenantId, deltaToken).each!(e => remove(e));
   }
   // #endregion SinceDeltaToken
     
@@ -83,10 +95,15 @@ class MemoryChangeLogRepository : ChangeLogRepository {
     return findSinceTimestamp(tenantId, sinceTimestamp).length;
   }
 
-  ChangeLogEntry[] filterSinceTimestamp(ChangeLogEntry[] entries, long sinceTimestamp, size_t offset = 0, size_t limit = 0) {
+  ChangeLogEntry[] filterSinceTimestamp(
+    ChangeLogEntry[] entries,
+    long sinceTimestamp,
+    size_t offset = 0,
+    size_t limit = 0
+  ) {
     return (limit == 0)
-      ? entries.filter!(e => e.timestamp > sinceTimestamp).skip(offset).array
-      : entries.filter!(e => e.timestamp > sinceTimestamp).skip(offset).take(limit).array;
+      ? entries.filter!(e => e.timestamp > sinceTimestamp).array.skip(offset)
+      : entries.filter!(e => e.timestamp > sinceTimestamp).array.skip(offset).take(limit);
   }
 
   ChangeLogEntry[] findSinceTimestamp(TenantId tenantId, long sinceTimestamp) {
@@ -97,7 +114,7 @@ class MemoryChangeLogRepository : ChangeLogRepository {
   }
 
   void removeSinceTimestamp(TenantId tenantId, long sinceTimestamp) {
-    filterSinceTimestamp(findByTenant(tenantId), sinceTimestamp, 0, 0).each!(e => remove(e));
+    findSinceTimestamp(tenantId, sinceTimestamp).each!(e => remove(e));
   }
 
 }

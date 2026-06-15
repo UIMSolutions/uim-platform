@@ -15,7 +15,9 @@ import uim.platform.master_data_integration;
 
 @safe:
 
-class MemoryDistributionModelRepository : TenantRepository!(DistributionModel, DistributionModelId), DistributionModelRepository {
+class MemoryDistributionModelRepository :
+  TenantRepository!(DistributionModel, DistributionModelId),
+  DistributionModelRepository {
 
   size_t countByStatus(TenantId tenantId, DistributionModelStatus status) {
     return findByStatus(tenantId, status).length;

@@ -54,7 +54,7 @@ struct FilterCondition {
       .set("fieldName", fieldName)
       .set("operator", operator.to!string)
       .set("value", value)
-      .set("valueList", valueList)
+      .set("valueList", valueList.toJson)
       .set("lowerBound", lowerBound)
       .set("upperBound", upperBound);
   }

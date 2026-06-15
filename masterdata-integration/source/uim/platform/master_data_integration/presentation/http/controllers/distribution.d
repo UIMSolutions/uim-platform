@@ -47,15 +47,15 @@ class DistributionController : ManageHttpController {
     r.description = data.getString("description");
     r.direction = data.getString("direction");
     r.sourceClientId = data.getString("sourceClientId");
-    r.targetClientIds = data.getStrings("targetClientIds");
-    r.categories = data.getStrings("categories");
-    r.dataModelIds = data.getStrings("dataModelIds");
+    r.targetClientIds = data.getStrings("targetClientIds").map!(id => ClientId(id)).array;
+    r.categories = toMasterDataCategories(data.getStrings("categories"));
+    r.dataModelIds = data.getStrings("dataModelIds").map!(id => DataModelId(id)).array;
     r.filterRuleIds = data.getStrings("filterRuleIds");
     r.autoReplicate = data.getBoolean("autoReplicate");
     r.cronSchedule = data.getString("cronSchedule");
     r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
-    auto result = usecase.create(r);
+    auto result = usecase.createModel(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
 
@@ -118,22 +118,22 @@ class DistributionController : ManageHttpController {
     auto data = precheck.data;
     UpdateDistributionModelRequest r;
     r.tenantId = tenantId;
+    r.modelId = id;
     r.name = data.getString("name");
     r.description = data.getString("description");
     r.status = data.getString("status");
-    r.targetClientIds = data.getStrings("targetClientIds");
-    r.categories = data.getStrings("categories");
-    r.dataModelIds = data.getStrings("dataModelIds");
+    r.targetClientIds = data.getStrings("targetClientIds").map!(id => ClientId(id)).array;
+    r.categories = toMasterDataCategories(data.getStrings("categories"));
+    r.dataModelIds = data.getStrings("dataModelIds").map!(id => DataModelId(id)).array;
     r.filterRuleIds = data.getStrings("filterRuleIds");
     r.autoReplicate = data.getBoolean("autoReplicate");
     r.cronSchedule = data.getString("cronSchedule");
 
-    auto result = usecase.updateModel(id, r);
+    auto result = usecase.updateModel(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
 
-    auto resp = Json.emptyObject
-      .set("id", result.id);
+    auto resp = Json.emptyObject.set("id", result.id);
     return successResponse("Distribution model updated successfully", 200, resp);
   }
 
@@ -170,8 +170,7 @@ class DistributionController : ManageHttpController {
     auto result = usecase.activateModel(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
-    auto resp = Json.emptyObject
-      .set("id", result.id);
+    auto resp = Json.emptyObject.set("id", result.id);
 
     return successResponse("Distribution model activated successfully", 200, resp);
   }
@@ -199,8 +198,7 @@ class DistributionController : ManageHttpController {
     if (result.hasError)
       return errorResponse(result.message, 400);
 
-    auto resp = Json.emptyObject
-      .set("id", result.id);
+    auto resp = Json.emptyObject.set("id", result.id);
     return successResponse("Distribution model deactivated successfully", 200, resp);
   }
 

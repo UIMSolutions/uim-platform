@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.master_data_integration.application.usecases.manage.replication_jobs;
+module uim.platform.master_data_integration.application.usecases.manage.replication_job;
 
 // import uim.platform.master_data_integration.domain.entities.replication_job;
 // import uim.platform.master_data_integration.domain.ports.repositories.replication_jobs;
@@ -22,7 +22,7 @@ class ManageReplicationJobsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createReplicationJob(CreateReplicationJobRequest req) {
-    if (req.distributionModelId.isEmpty)
+    if (req.modelId.isEmpty)
       return CommandResult(false, "", "Distribution model ID is required");
     if (req.sourceClientId.isEmpty)
       return CommandResult(false, "", "Source client ID is required");
@@ -30,8 +30,8 @@ class ManageReplicationJobsUseCase { // TODO: UIMUseCase {
     ReplicationJob job;
     job.initEntity(req.tenantId, req.createdBy);
 
-    job.distributionModelId = req.distributionModelId;
-    job.name = req.name.length > 0 ? req.name : "Replication-" ~ id[0 .. 8];
+    job.modelId = req.modelId;
+    job.name = req.name.length > 0 ? req.name : "Replication-" ~ job.id.value[0 .. 8];
     job.description = req.description;
     job.status = ReplicationJobStatus.pending;
     job.trigger = req.trigger.to!ReplicationTrigger;

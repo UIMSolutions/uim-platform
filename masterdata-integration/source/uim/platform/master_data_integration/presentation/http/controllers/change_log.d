@@ -7,7 +7,7 @@ module uim.platform.master_data_integration.presentation.http.controllers.change
 
 // import uim.platform.master_data_integration.application.usecases.query_change_log;
 
-// import uim.platform.master_data_integration.domain.entities.change_log_entry;
+import uim.platform.master_data_integration.application.usecases;
 
 import uim.platform.master_data_integration;
 
@@ -28,37 +28,46 @@ class ChangeLogController : HttpController {
     router.get("/api/v1/change-log/*", &handleGet);
   }
 
+  protected Json queryHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+
+    ChangeLogQueryRequest r;
+    r.tenantId = tenantId;
+    r.objectId = req.params.get("objectId", "");
+    r.category = req.params.get("category", "");
+    r.deltaToken = req.params.get("deltaToken", "");
+
+    auto sinceStr = req.params.get("since", "");
+    if (sinceStr.length > 0) {
+
+      r.sinceTimestamp = sinceStr.to!long;
+
+    }
+
+    auto entries = changeLogs.query(r);
+
+    auto arr = entries.map!(e => e.toJson).array.toJson;
+
+    auto resp = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", Json(entries.length))
+      .set("message", "Change log entries retrieved successfully");
+
+    // Provide the last delta token for incremental polling
+    if (entries.length > 0)
+      resp["nextDeltaToken"] = Json(entries[$ - 1].deltaToken);
+
+    return successResponse("Change log entries retrieved successfully", 200, resp);
+  }
+
   protected void handleQuery(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      ChangeLogQueryRequest r;
-      r.tenantId = tenantId;
-      r.objectId = req.params.get("objectId", "");
-      r.category = req.params.get("category", "");
-      r.deltaToken = req.params.get("deltaToken", "");
-
-      auto sinceStr = req.params.get("since", "");
-      if (sinceStr.length > 0) {
-
-        try
-          r.sinceTimestamp = sinceStr.to!long;
-        catch (Exception) {
-        }
-      }
-
-      auto entries = changeLogs.query(r);
-
-      auto arr = entries.map!(e => e.toJson).array.toJson;
-
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", Json(entries.length))
-        .set("message", "Change log entries retrieved successfully");
-
-      // Provide the last delta token for incremental polling
-      if (entries.length > 0)
-        resp["nextDeltaToken"] = Json(entries[$ - 1].deltaToken);
-
-      res.writeJsonBody(resp, 200);
+      auto response = queryHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
