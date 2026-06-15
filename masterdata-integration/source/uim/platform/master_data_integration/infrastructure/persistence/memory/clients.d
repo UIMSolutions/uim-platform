@@ -3,8 +3,8 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.master_data_integration.infrastructure.persistence.memory.client;
-// import uim.platform.master_data_integration.domain.types;
+module uim.platform.master_data_integration.infrastructure.persistence.memory.clients;
+
 // import uim.platform.master_data_integration.domain.entities.client;
 // import uim.platform.master_data_integration.domain.ports.repositories.clients;
 

@@ -4,10 +4,10 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.master_data_integration.application.usecases.manage.clients;
-// import uim.platform.master_data_integration.application.dto;
+
 // import uim.platform.master_data_integration.domain.entities.client;
 // import uim.platform.master_data_integration.domain.ports.repositories.clients;
-// import uim.platform.master_data_integration.domain.types;
+
 
 import uim.platform.master_data_integration;
 
@@ -48,8 +48,8 @@ class ManageClientsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, client.id.value, "");
   }
 
-  CommandResult updateClient(ClientId id, UpdateClientRequest req) {
-    auto client = repo.findById(tenantId, id);
+  CommandResult updateClient(UpdateClientRequest req) {
+    auto client = repo.findById(req.tenantId, req.clientId);
     if (client.isNull)
       return CommandResult(false, "", "Client not found");
 
@@ -79,10 +79,11 @@ class ManageClientsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, client.id.value, "");
   }
 
-  CommandResult connectClient(ClientId id) {
+  CommandResult connectClient(TenantId tenantId, ClientId id) {
     auto client = repo.findById(tenantId, id);
     if (client.isNull)
       return CommandResult(false, "", "Client not found");
+
     client.status = ClientStatus.connected;
     client.lastSyncAt = clockSeconds();
     client.updatedAt = client.lastSyncAt;
@@ -90,17 +91,19 @@ class ManageClientsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, client.id.value, "");
   }
 
-  CommandResult disconnectClient(ClientId id) {
+  CommandResult disconnectClient(TenantId tenantId, ClientId id) {
     auto client = repo.findById(tenantId, id);
     if (client.isNull)
       return CommandResult(false, "", "Client not found");
+
     client.status = ClientStatus.disconnected;
     client.updatedAt = clockSeconds();
+
     repo.update(client);
     return CommandResult(true, client.id.value, "");
   }
 
-  Client getClient(ClientId id) {
+  Client getClient(TenantId tenantId, ClientId id) {
     return repo.findById(tenantId, id);
   }
 
@@ -116,7 +119,7 @@ class ManageClientsUseCase { // TODO: UIMUseCase {
     return repo.findByType(tenantId, parseClientType(type));
   }
 
-  CommandResult deleteClient(ClientId id) {
+  CommandResult deleteClient(TenantId tenantId, ClientId id) {
     auto client = repo.findById(tenantId, id);
     if (client.isNull)
       return CommandResult(false, "", "Client not found");

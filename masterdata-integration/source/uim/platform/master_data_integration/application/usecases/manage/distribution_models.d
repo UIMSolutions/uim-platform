@@ -4,10 +4,10 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.master_data_integration.application.usecases.manage.distribution_models;
-// import uim.platform.master_data_integration.application.dto;
+
 // import uim.platform.master_data_integration.domain.entities.distribution_model;
 // import uim.platform.master_data_integration.domain.ports.repositories.distribution_models;
-// import uim.platform.master_data_integration.domain.types;
+
 import uim.platform.master_data_integration;
 
 // mixin(ShowModule!());
@@ -21,7 +21,7 @@ class ManageDistributionModelsUseCase { // TODO: UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult createDistributionModel(CreateDistributionModelRequest req) {
+  CommandResult createModel(CreateDistributionModelRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Distribution model name is required");
 
@@ -34,10 +34,10 @@ class ManageDistributionModelsUseCase { // TODO: UIMUseCase {
     model.name = req.name;
     model.description = req.description;
     model.status = DistributionModelStatus.draft;
-    model.direction = parseDirection(req.direction);
+    model.direction = toDistributionDirection(req.direction);
     model.sourceClientId = req.sourceClientId;
     model.targetClientIds = req.targetClientIds;
-    model.categories = parseCategories(req.categories);
+    model.categories = toMasterDataCategory(req.categories);
     model.dataModelIds = req.dataModelIds;
     model.filterRuleIds = req.filterRuleIds;
     model.autoReplicate = req.autoReplicate;
@@ -47,7 +47,7 @@ class ManageDistributionModelsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, model.id.value, "");
   }
 
-  CommandResult updateDistributionModel(UpdateDistributionModelRequest req) {
+  CommandResult updateModel(UpdateDistributionModelRequest req) {
     auto model = repo.findById(req.tenantId, req.id);
     if (model.isNull)
       return CommandResult(false, "", "Distribution model not found");
@@ -75,7 +75,7 @@ class ManageDistributionModelsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, model.id.value, "");
   }
 
-  CommandResult activateDistributionModel(TenantId tenantId, DistributionModelId id) {
+  CommandResult activateModel(TenantId tenantId, DistributionModelId id) {
     auto model = repo.findById(tenantId, id);
     if (model.isNull)
       return CommandResult(false, "", "Distribution model not found");
@@ -85,7 +85,7 @@ class ManageDistributionModelsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, model.id.value, "");
   }
 
-  CommandResult deactivateDistributionModel(TenantId tenantId, DistributionModelId id) {
+  CommandResult deactivateModel(TenantId tenantId, DistributionModelId id) {
     auto model = repo.findById(tenantId, id);
     if (model.isNull)
       return CommandResult(false, "", "Distribution model not found");
@@ -95,38 +95,25 @@ class ManageDistributionModelsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, model.id.value, "");
   }
 
-  DistributionModel getDistributionModel(TenantId tenantId, DistributionModelId id) {
+  DistributionModel getModel(TenantId tenantId, DistributionModelId id) {
     return repo.findById(tenantId, id);
   }
 
-  DistributionModel[] listDistributionModelsByTenant(TenantId tenantId) {
+  DistributionModel[] listModels(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  DistributionModel[] listDistributionModelsByStatus(TenantId tenantId, string status) {
+  DistributionModel[] listModelsByStatus(TenantId tenantId, string status) {
     return repo.findByStatus(tenantId, parseStatus(status));
   }
 
-  CommandResult deleteDistributionModel(TenantId tenantId, DistributionModelId id) {
+  CommandResult deleteModel(TenantId tenantId, DistributionModelId id) {
     auto model = repo.findById(tenantId, id);
     if (model.isNull)
       return CommandResult(false, "", "Distribution model not found");
 
     repo.removeBy(model);
     return CommandResult(true, model.id.value, "");
-  }
-
-  private DistributionDirection parseDirection(string s) {
-    switch (s) {
-    case "outbound":
-      return DistributionDirection.outbound;
-    case "inbound":
-      return DistributionDirection.inbound;
-    case "bidirectional":
-      return DistributionDirection.bidirectional;
-    default:
-      return DistributionDirection.outbound;
-    }
   }
 
   private DistributionModelStatus parseStatus(string s) {

@@ -32,14 +32,14 @@ class ImportContentUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult startImport(StartImportRequest req) {
-    auto pkg = packageRepo.findById(req.packageId);
+    auto pkg = packageRepo.findById(req.tenantId, req.packageId);
     if (pkg.isNull)
       return CommandResult(false, "", "Package not found");
 
     ImportJob job;
     job.initEntity(req.tenantId, req.startedBy);
     job.packageId = req.packageId;
-    job.transportRequestId = req.transportRequestId;
+    job.transportRequestId = req.requestId;
     job.sourceFilePath = req.sourceFilePath;
     job.status = ImportStatus.downloading;
     job.startedAt = clockSeconds();
@@ -68,13 +68,13 @@ class ImportContentUseCase { // TODO: UIMUseCase {
     pkg.updatedAt = clockSeconds();
     packageRepo.update(pkg);
 
-    recordActivity(req.tenantId, ActivityType.importCompleted, id, pkg.name,
-        "Import completed for package: " ~ pkg.name, req.startedBy);
+    recordActivity(req.tenantId, ActivityType.importCompleted, pkg.id.value, pkg.name,
+        "Import completed for package: " ~ pkg.name, req.startedBy.value);
 
-    return CommandResult(true, id.value, "");
+    return CommandResult(true,  pkg.id.value, "");
   }
 
-  ImportJob getImportJob(ImportJobId id) {
+  ImportJob getImportJob(TenantId tenantId, ImportJobId id) {
     return importRepo.findById(tenantId, id);
   }
 
@@ -82,8 +82,8 @@ class ImportContentUseCase { // TODO: UIMUseCase {
     return importRepo.findByTenant(tenantId);
   }
 
-  ImportJob[] listByPackage(ContentPackageId packageId) {
-    return importRepo.findByPackage(packageId);
+  ImportJob[] listByPackage(TenantId tenantId, ContentPackageId packageId) {
+    return importRepo.findByPackage(tenantId, packageId);
   }
 
   private void recordActivity(TenantId tenantId, ActivityType actType,

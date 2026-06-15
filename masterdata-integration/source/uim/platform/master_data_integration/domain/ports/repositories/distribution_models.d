@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.master_data_integration.domain.ports.repositories.distribution_models;
 
-import uim.platform.master_data_integration.domain.entities.distribution_model;
-import uim.platform.master_data_integration.domain.types;
+// import uim.platform.master_data_integration.domain.entities.distribution_model;
+// import uim.platform.master_data_integration.domain.types;
+import uim.platform.master_data_integration;
 
+// mixin(ShowModule!());
+
+@safe:
 /// Port: outgoing — distribution model persistence.
 interface DistributionModelRepository : ITenantRepository!(DistributionModel, DistributionModelId) {
 

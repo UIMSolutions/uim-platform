@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.master_data_integration.domain.ports.repositories.replication_jobs;
 
-import uim.platform.master_data_integration.domain.entities.replication_job;
-import uim.platform.master_data_integration.domain.types;
+// import uim.platform.master_data_integration.domain.entities.replication_job;
+// import uim.platform.master_data_integration.domain.types;
+import uim.platform.master_data_integration;
 
+// mixin(ShowModule!());
+
+@safe:
 /// Port: outgoing — replication job persistence.
 interface ReplicationJobRepository : ITenantRepository!(ReplicationJob, ReplicationJobId) {
 

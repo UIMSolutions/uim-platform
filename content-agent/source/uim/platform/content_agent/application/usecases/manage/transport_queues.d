@@ -47,7 +47,7 @@ class ManageTransportQueuesUseCase { // TODO: UIMUseCase {
 
     queueRepo.save(queue);
     recordActivity(req.tenantId, ActivityType.queueConfigured, queue.id.value, req.name,
-        "Transport queue configured", req.createdBy);
+        "Transport queue configured", req.createdBy.value);
 
     return CommandResult(true, queue.id.value, "");
   }
@@ -79,7 +79,7 @@ class ManageTransportQueuesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, queue.id.value, "");
   }
 
-  TransportQueue getQueue(TransportQueueId id) {
+  TransportQueue getQueue(TenantId tenantId, TransportQueueId id) {
     return queueRepo.findById(tenantId, id);
   }
 

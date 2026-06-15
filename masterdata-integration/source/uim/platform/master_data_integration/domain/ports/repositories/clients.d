@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.master_data_integration.domain.ports.repositories.clients;
 
-import uim.platform.master_data_integration.domain.entities.client;
-import uim.platform.master_data_integration.domain.types;
+// import uim.platform.master_data_integration.domain.entities.client;
+// import uim.platform.master_data_integration.domain.types;
+import uim.platform.master_data_integration;
 
+// mixin(ShowModule!());
+
+@safe:
 /// Port: outgoing — connected client system persistence.
 interface ClientRepository : ITenantRepository!(Client, ClientId) {
 

@@ -4,12 +4,12 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.master_data_integration.application.usecases.manage.master_data_objects;
-// import uim.platform.master_data_integration.application.dto;
+
 // import uim.platform.master_data_integration.domain.entities.master_data_object;
 // import uim.platform.master_data_integration.domain.entities.change_log_entry;
 // import uim.platform.master_data_integration.domain.ports.repositories.master_data_objects;
 // import uim.platform.master_data_integration.domain.ports.repositories.change_logs;
-// import uim.platform.master_data_integration.domain.types;
+
 import uim.platform.master_data_integration;
 
 // mixin(ShowModule!());
@@ -34,7 +34,7 @@ class ManageMasterDataObjectsUseCase { // TODO: UIMUseCase {
     MasterDataObject obj;
     obj.initEntity(req.tenantId, req.createdBy);
 
-    obj.dataModelId = req.dataModelId;
+    obj.dataModelId = req.modelId;
     obj.category = parseCategory(req.category);
     obj.objectType = req.objectType;
     obj.displayName = req.displayName;
@@ -50,13 +50,13 @@ class ManageMasterDataObjectsUseCase { // TODO: UIMUseCase {
 
     repo.save(obj);
     logChange(req.tenantId, obj.id, req.dataModelId, obj.category,
-        ChangeType.create_, obj.objectType, [], (string[string]).init,
-        req.attributes, req.sourceSystem, req.sourceClient, req.createdBy, 0, 1);
+      ChangeType.create_, obj.objectType, [], (string[string]).init,
+      req.attributes, req.sourceSystem, req.sourceClient, req.createdBy, 0, 1);
     return CommandResult(true, obj.id.value, "");
   }
 
   CommandResult updateMasterDataObject(UpdateMasterDataObjectRequest req) {
-    auto obj = repo.findById(req.tenantId, req.id);
+    auto obj = repo.findById(req.tenantId, req.objectId);
     if (obj.isNull)
       return CommandResult(false, "", "Master data object not found");
 
@@ -88,15 +88,14 @@ class ManageMasterDataObjectsUseCase { // TODO: UIMUseCase {
     auto oldVersion = obj.versionNumber;
     obj.versionNumber++;
 
-   
     obj.currentVersion = randomUUID();
     obj.updatedAt = clockSeconds();
     obj.updatedBy = req.updatedBy;
 
     repo.update(obj);
     logChange(obj.tenantId, obj.id, obj.dataModelId, obj.category, ChangeType.update_,
-        obj.objectType, changedFields, oldValues, req.attributes, obj.sourceSystem,
-        obj.sourceClient, req.updatedBy, oldVersion, obj.versionNumber);
+      obj.objectType, changedFields, oldValues, req.attributes, obj.sourceSystem,
+      obj.sourceClient, req.updatedBy, oldVersion, obj.versionNumber);
     return CommandResult(true, obj.id.value, "");
   }
 
@@ -127,17 +126,17 @@ class ManageMasterDataObjectsUseCase { // TODO: UIMUseCase {
 
     repo.remove(obj);
     logChange(obj.tenantId, obj.id, obj.dataModelId, obj.category,
-        ChangeType.delete_, obj.objectType, [], (string[string]).init,
-        (string[string]).init, obj.sourceSystem, obj.sourceClient, "",
-        obj.versionNumber, obj.versionNumber);
+      ChangeType.delete_, obj.objectType, [], (string[string]).init,
+      (string[string]).init, obj.sourceSystem, obj.sourceClient, "",
+      obj.versionNumber, obj.versionNumber);
     return CommandResult(true, obj.id.value, "");
   }
 
   private void logChange(TenantId tenantId, MasterDataObjectId objectId,
-      DataModelId dataModelId, MasterDataCategory category,
-      ChangeType changeType, string objectType, string[] changedFields, string[string] oldValues, string[string] newValues,
-      string sourceSystem, string sourceClient, string changedBy, long fromVersion, long toVersion) {
-   
+    DataModelId dataModelId, MasterDataCategory category,
+    ChangeType changeType, string objectType, string[] changedFields, string[string] oldValues, string[string] newValues,
+    string sourceSystem, string sourceClient, string changedBy, long fromVersion, long toVersion) {
+
     ChangeLogEntry entry;
     entry.initEntity(tenantId);
 
@@ -159,52 +158,4 @@ class ManageMasterDataObjectsUseCase { // TODO: UIMUseCase {
 
     changeLogRepo.save(entry);
   }
-
-  private MasterDataCategory parseCategory(string s) {
-    switch (s) {
-    case "businessPartner":
-      return MasterDataCategory.businessPartner;
-    case "costCenter":
-      return MasterDataCategory.costCenter;
-    case "profitCenter":
-      return MasterDataCategory.profitCenter;
-    case "companyCode":
-      return MasterDataCategory.companyCode;
-    case "workforcePerson":
-      return MasterDataCategory.workforcePerson;
-    case "bankAccount":
-      return MasterDataCategory.bankAccount;
-    case "plant":
-      return MasterDataCategory.plant;
-    case "purchasingOrganization":
-      return MasterDataCategory.purchasingOrganization;
-    case "salesOrganization":
-      return MasterDataCategory.salesOrganization;
-    case "customerMaterial":
-      return MasterDataCategory.customerMaterial;
-    case "supplierMaterial":
-      return MasterDataCategory.supplierMaterial;
-    case "custom":
-      return MasterDataCategory.custom;
-    default:
-      return MasterDataCategory.businessPartner;
-    }
-  }
-
-  private RecordStatus parseStatus(string s) {
-    switch (s) {
-    case "active":
-      return RecordStatus.active;
-    case "inactive":
-      return RecordStatus.inactive;
-    case "blocked":
-      return RecordStatus.blocked;
-    case "markedForDeletion":
-      return RecordStatus.markedForDeletion;
-    default:
-      return RecordStatus.active;
-    }
-  }
 }
-
-

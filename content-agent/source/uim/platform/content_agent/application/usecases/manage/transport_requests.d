@@ -43,20 +43,18 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
     // Resolve packages
     ContentPackage[] packages;
     foreach (pid; req.packageIds) {
-      auto pkg = packageRepo.findById(pid);
+      auto pkg = packageRepo.findById(req.tenantId, pid);
       if (pkg.isNull)
-        return CommandResult(false, "", "Package not found: " ~ pid);
+        return CommandResult(false, "", "Package not found: " ~ pid.value);
+
       packages ~= pkg;
     }
 
     // Resolve queue
-    TransportQueue queue;
-    if (req.queueId.length > 0)
-      queue = queueRepo.findById(req.queueId);
-    else
-      queue = queueRepo.findDefault(req.tenantId);
+    TransportQueue queue = req.queueId.isNull
+      ? queueRepo.findDefault(req.tenantId)
+      : queueRepo.findById(req.queueId);
 
-   
     TransportRequest tr;
     tr.initEntity(req.tenantId, req.createdBy);
 
@@ -81,14 +79,14 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
     }
 
     requestRepo.save(tr);
-    recordActivity(req.tenantId, ActivityType.transportCreated, id,
-      req.description, "Transport request created", req.createdBy);
+    recordActivity(req.tenantId, ActivityType.transportCreated, tr.id.value,
+      req.description, "Transport request created", req.createdBy.value);
 
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, tr.id.value, "");
   }
 
   CommandResult releaseTransport(ReleaseTransportRequest req) {
-    auto tr = requestRepo.findById(req.requestId);
+    auto tr = requestRepo.findById(req.tenantId, req.requestId);
     if (tr.isNull)
       return CommandResult(false, "", "Transport request not found");
 
@@ -100,14 +98,14 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
     tr.updatedAt = tr.releasedAt;
 
     requestRepo.update(tr);
-    recordActivity(req.tenantId, ActivityType.transportReleased, req.requestId,
-      tr.description, "Transport released", req.releasedBy);
+    recordActivity(req.tenantId, ActivityType.transportReleased, tr.id.value,
+      tr.description, "Transport released", req.releasedBy.value);
 
-    return CommandResult(true, req.requestId, "");
+    return CommandResult(true, tr.id.value, "");
   }
 
-  CommandResult cancelTransport(TransportRequestId id) {
-    auto tr = requestRepo.findById(tenantId, id);
+  CommandResult cancelTransport(TenantId tenantId, TransportRequestId requestId) {
+    auto tr = requestRepo.findById(tenantId, requestId);
     if (tr.isNull)
       return CommandResult(false, "", "Transport request not found");
 
@@ -115,10 +113,10 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
     tr.updatedAt = clockSeconds();
     requestRepo.update(tr);
 
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, tr.id.value, "");
   }
 
-  TransportRequest getTransportRequest(TransportRequestId id) {
+  TransportRequest getTransportRequest(TenantId tenantId, TransportRequestId id) {
     return requestRepo.findById(tenantId, id);
   }
 

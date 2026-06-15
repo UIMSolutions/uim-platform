@@ -4,7 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.master_data_integration.infrastructure.persistence.memory.change_logs;
-// import uim.platform.master_data_integration.domain.types;
+
 // import uim.platform.master_data_integration.domain.entities.change_log_entry;
 // import uim.platform.master_data_integration.domain.ports.repositories.change_logs;
 
@@ -13,56 +13,80 @@ import uim.platform.master_data_integration;
 // mixin(ShowModule!());
 
 @safe:
- 
 
 class MemoryChangeLogRepository : ChangeLogRepository {
 
-  size_t countByObjectId(TenantId tenantId, MasterDataObjectId objectId) {
-    return findByObjectId(tenantId, objectId).length;
-  }
-  ChangeLogEntry[] filterByObjectId(ChangeLogEntry[] entries, MasterDataObjectId objectId, size_t offset = 0, size_t limit = 0) {
-    return (limit == 0)
-        ? entries.filter!(e => e.objectId == objectId).skip(offset).array
-        : entries.filter!(e => e.objectId == objectId).skip(offset).take(limit).array;
-  }
-  ChangeLogEntry[] findByObjectId(TenantId tenantId, MasterDataObjectId objectId) {
-    return filterByObjectId(findByTenant(tenantId), objectId, 0, 0);
-  }
-  void removeByObjectId(TenantId tenantId, MasterDataObjectId objectId) {
-    filterByObjectId(findByTenant(tenantId), objectId, 0, 0).each!(e => remove(e));
+  // #region ByObject
+  size_t countByObject(TenantId tenantId, MasterDataObjectId objectId) {
+    return findByObject(tenantId, objectId).length;
   }
 
-   size_t countByCategory(TenantId tenantId, MasterDataCategory category) {
+  ChangeLogEntry[] filterByObject(ChangeLogEntry[] entries, MasterDataObjectId objectId, size_t offset = 0, size_t limit = 0) {
+    return (limit == 0)
+      ? entries.filter!(e => e.objectId == objectId).skip(offset).array
+      : entries.filter!(e => e.objectId == objectId).skip(offset).take(limit).array;
+  }
+
+  ChangeLogEntry[] findByObject(TenantId tenantId, MasterDataObjectId objectId) {
+    return filterByObject(findByTenant(tenantId), objectId, 0, 0);
+  }
+
+  void removeByObject(TenantId tenantId, MasterDataObjectId objectId) {
+    filterByObject(findByTenant(tenantId), objectId, 0, 0).each!(e => remove(e));
+  }
+  // #endregion ByObject
+
+  // #region ByCategory
+  size_t countByCategory(TenantId tenantId, MasterDataCategory category) {
     return findByCategory(tenantId, category).length;
   }
+
   ChangeLogEntry[] filterByCategory(ChangeLogEntry[] entries, MasterDataCategory category, size_t offset = 0, size_t limit = 0) {
     return (limit == 0)
-        ? entries.filter!(e => e.category == category).skip(offset).array
-        : entries.filter!(e => e.category == category).skip(offset).take(limit).array;
+      ? entries.filter!(e => e.category == category).skip(offset).array
+      : entries.filter!(e => e.category == category).skip(offset).take(limit).array;
   }
 
   ChangeLogEntry[] findByCategory(TenantId tenantId, MasterDataCategory category) {
-    return filterByCategory(findByTenant(tenantId), category, 0, 0); 
+    return filterByCategory(findByTenant(tenantId), category, 0, 0);
   }
+
+  void removeByCategory(TenantId tenantId, MasterDataCategory category) {
+    filterByCategory(findByTenant(tenantId), category, 0, 0).each!(e => remove(e));
+  }
+  // #endregion ByCategory
+
+  // #region SinceDeltaToken
+   size_t countSinceDeltaToken(TenantId tenantId, string deltaToken) {
+    return findSinceDeltaToken(tenantId, deltaToken).length;
+  }
+
+  ChangeLogEntry[] filterSinceDeltaToken(ChangeLogEntry[] entries, string deltaToken, size_t offset = 0, size_t limit = 0) {
+    return (limit == 0)
+      ? entries.filter!(e => e.deltaToken >= deltaToken).skip(offset).array
+      : entries.filter!(e => e.deltaToken >= deltaToken).skip(offset).take(limit).array;
+  }
+
+  ChangeLogEntry[] findSinceDeltaToken(TenantId tenantId, string deltaToken) {
+    // Find the timestamp associated with the delta token
+    long tokenTimestamp = 0;
+    return filterSinceTimestamp(findByTenant(tenantId), deltaToken, 0, 0);
+  }
+
+  void removeSinceDeltaToken(TenantId tenantId, string deltaToken) {
+    filterSinceDeltaToken(findByTenant(tenantId), deltaToken, 0, 0).each!(e => remove(e));
+  }
+  // #endregion SinceDeltaToken
+    
 
   size_t countSinceTimestamp(TenantId tenantId, long sinceTimestamp) {
     return findSinceTimestamp(tenantId, sinceTimestamp).length;
   }
+
   ChangeLogEntry[] filterSinceTimestamp(ChangeLogEntry[] entries, long sinceTimestamp, size_t offset = 0, size_t limit = 0) {
     return (limit == 0)
-        ? entries.filter!(e => e.timestamp > sinceTimestamp).skip(offset).array
-        : entries.filter!(e => e.timestamp > sinceTimestamp).skip(offset).take(limit).array;
-  }
-  ChangeLogEntry[] findSinceDeltaToken(TenantId tenantId, string deltaToken) {
-    // Find the timestamp associated with the delta token
-    long tokenTimestamp = 0;
-    return filterSinceTimestamp(findByTenant(tenantId), 0, 0):
-    }
-    // Return all entries after that timestamp
-    return findByTenant(tenantId).filter!(e => e.tenantId == tenantId && e.timestamp > tokenTimestamp)
-      .array
-      .sort!((a, b) => a.timestamp < b.timestamp)
-      .array;
+      ? entries.filter!(e => e.timestamp > sinceTimestamp).skip(offset).array
+      : entries.filter!(e => e.timestamp > sinceTimestamp).skip(offset).take(limit).array;
   }
 
   ChangeLogEntry[] findSinceTimestamp(TenantId tenantId, long sinceTimestamp) {
@@ -70,6 +94,10 @@ class MemoryChangeLogRepository : ChangeLogRepository {
       .array
       .sort!((a, b) => a.timestamp < b.timestamp)
       .array;
+  }
+
+  void removeSinceTimestamp(TenantId tenantId, long sinceTimestamp) {
+    filterSinceTimestamp(findByTenant(tenantId), sinceTimestamp, 0, 0).each!(e => remove(e));
   }
 
 }

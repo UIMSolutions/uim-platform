@@ -3,12 +3,12 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.master_data_integration.presentation.http.filter_rule;
+module uim.platform.master_data_integration.presentation.http.controllers.filter_rule;
 
 // import uim.platform.master_data_integration.application.usecases.manage.filter_rules;
-// import uim.platform.master_data_integration.application.dto;
+
 // import uim.platform.master_data_integration.domain.entities.filter_rule;
-// import uim.platform.master_data_integration.domain.types;
+
 import uim.platform.master_data_integration;
 
 // mixin(ShowModule!());
@@ -32,121 +32,113 @@ class FilterRuleController : ManageHttpController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-              CreateFilterRuleRequest r;
-      r.tenantId = tenantId;
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.category = data.getString("category");
-      r.dataModelId = data.getString("dataModelId");
-      r.objectType = data.getString("objectType");
-      r.logicOperator = data.getString("logicOperator");
-      r.createdBy = UserId(req.headers.get("X-User-Id", ""));
-      r.conditions = parseConditions(j);
+    auto data = precheck.data;
+    CreateFilterRuleRequest r;
+    r.tenantId = tenantId;
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.category = data.getString("category");
+    r.dataModelId = data.getString("dataModelId");
+    r.objectType = data.getString("objectType");
+    r.logicOperator = data.getString("logicOperator");
+    r.createdBy = UserId(req.headers.get("X-User-Id", ""));
+    r.conditions = parseConditions(j);
 
-      auto result = usecase.create(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-          .set("id", result.id)
-          .set("message", "Filter rule created successfully");
-          
-        res.writeJsonBody(resp, 201);
-      } else
-        writeError(res, 400, result.message);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto result = usecase.create(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+    auto resp = Json.emptyObject
+      .set("id", result.id);
+
+    return successResponse("Filter rule created successfully", 201, resp);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto category = req.params.get("category", "");
-      auto activeOnly = req.params.get("active", "");
+    auto tenantId = precheck.tenantId;
+    auto category = req.params.get("category", "");
+    auto activeOnly = req.params.get("active", "");
 
-      FilterRule[] rules;
-      if (activeOnly == "true")
-        rules = usecase.listActive(tenantId);
-      else if (category.length > 0)
-        rules = usecase.listByCategory(tenantId, category);
-      else
-        rules = usecase.listByTenant(tenantId);
+    FilterRule[] rules;
+    if (activeOnly == "true")
+      rules = usecase.listActive(tenantId);
+    else if (category.length > 0)
+      rules = usecase.listByCategory(tenantId, category);
+    else
+      rules = usecase.listByTenant(tenantId);
 
-      auto arr = rules.map!(r => r.toJson).array.toJson;
+    auto arr = rules.map!(r => r.toJson).array.toJson;
 
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", rules.length)
-        .set("message", "Filter rules retrieved successfully");
-        
-      return successResponse("Filter rules retrieved successfully", 200, resp);
+    auto resp = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", rules.length)
+      .set("message", "Filter rules retrieved successfully");
+
+    return successResponse("Filter rules retrieved successfully", 200, resp);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto rule = usecase.getRule(tenantId, id);
-      if (rule.isNull) 
-        return errorResponse("Filter rule not found", 404);
-      
-      auto response = rule.toJson();
-      return successResponse("Filter rule retrieved successfully", 200, response);
+    auto tenantId = precheck.tenantId;
+    auto id = precheck.id;
+    auto rule = usecase.getRule(tenantId, id);
+    if (rule.isNull)
+      return errorResponse("Filter rule not found", 404);
+
+    auto response = rule.toJson();
+    return successResponse("Filter rule retrieved successfully", 200, response);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto data = precheck.data;
-      UpdateFilterRuleRequest r;
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.logicOperator = data.getString("logicOperator");
-      r.isActive = data.getBoolean("isActive", true);
-      r.conditions = parseConditions(j);
+    auto tenantId = precheck.tenantId;
+    auto id = precheck.id;
+    auto data = precheck.data;
+    UpdateFilterRuleRequest r;
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.logicOperator = data.getString("logicOperator");
+    r.isActive = data.getBoolean("isActive", true);
+    r.conditions = parseConditions(j);
 
-      auto result = usecase.updateRule(id, r);
-      if (result.success)
-        res.writeJsonBody(Json.emptyObject, 200);
-      else
-        writeError(res, 400, result.message);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto result = usecase.updateRule(id, r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto resp = Json.emptyObject
+      .set("id", id);
+    return successResponse("Filter rule updated successfully", 200, resp);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto result = usecase.deleteRule(id);
-      if (result.success)
-        res.writeBody("", 204);
-      else
-        writeError(res, 404, result.message);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto tenantId = precheck.tenantId;
+    auto id = precheck.id;
+    auto result = usecase.deleteRule(id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto resp = Json.emptyObject
+      .set("id", id);
+    return successResponse("Filter rule deleted successfully", 200, resp);
   }
 
   private FilterConditionDto[] parseConditions(Json j) {

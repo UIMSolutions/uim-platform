@@ -12,7 +12,7 @@ import uim.platform.master_data_integration;
 @safe:
 /// A distribution model defines which data flows from/to which clients.
 struct DistributionModel {
-  mixin TenantEntity!(DistributionModelId);
+  mixin TenantEntity!DistributionModelId;
   
   string name;
   string description;

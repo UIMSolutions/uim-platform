@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.master_data_integration.domain.ports.repositories.master_data_objects;
 
-import uim.platform.master_data_integration.domain.entities.master_data_object;
-import uim.platform.master_data_integration.domain.types;
+// import uim.platform.master_data_integration.domain.entities.master_data_object;
+// import uim.platform.master_data_integration.domain.types;
+import uim.platform.master_data_integration;
 
+// mixin(ShowModule!());
+
+@safe:
 /// Port: outgoing — master data object persistence.
 interface MasterDataObjectRepository : ITenantRepository!(MasterDataObject, MasterDataObjectId) {
 

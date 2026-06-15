@@ -3,12 +3,12 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.master_data_integration.presentation.http.data_model;
+module uim.platform.master_data_integration.presentation.http.controllers.data_model;
 
 // import uim.platform.master_data_integration.application.usecases.manage.data_models;
-// import uim.platform.master_data_integration.application.dto;
+
 // import uim.platform.master_data_integration.domain.entities.data_model;
-// import uim.platform.master_data_integration.domain.types;
+
 import uim.platform.master_data_integration;
 
 // mixin(ShowModule!());

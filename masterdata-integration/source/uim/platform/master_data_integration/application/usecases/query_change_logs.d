@@ -4,10 +4,10 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.master_data_integration.application.usecases.query_change_logs;
-// import uim.platform.master_data_integration.application.dto;
+
 // import uim.platform.master_data_integration.domain.entities.change_log_entry;
 // import uim.platform.master_data_integration.domain.ports.repositories.change_logs;
-// import uim.platform.master_data_integration.domain.types;
+
 import uim.platform.master_data_integration;
 
 // mixin(ShowModule!());
@@ -27,7 +27,7 @@ class QueryChangeLogUseCase { // TODO: UIMUseCase {
 
   ChangeLogEntry[] query(ChangeLogQueryRequest req) {
     if (req.objectId.length > 0)
-      return repo.findByObjectId(req.tenantId, req.objectId);
+      return repo.findByObject(req.tenantId, req.objectId);
     if (req.deltaToken.length > 0)
       return repo.findSinceDeltaToken(req.tenantId, req.deltaToken);
     if (req.sinceTimestamp > 0)
@@ -41,8 +41,8 @@ class QueryChangeLogUseCase { // TODO: UIMUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  ChangeLogEntry[] listByObjectId(TenantId tenantId, MasterDataObjectId objectId) {
-    return repo.findByObjectId(tenantId, objectId);
+  ChangeLogEntry[] listByObject(TenantId tenantId, MasterDataObjectId objectId) {
+    return repo.findByObject(tenantId, objectId);
   }
 
   ChangeLogEntry[] listSinceDeltaToken(TenantId tenantId, string deltaToken) {

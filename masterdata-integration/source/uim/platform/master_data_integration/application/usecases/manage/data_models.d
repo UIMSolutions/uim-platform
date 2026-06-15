@@ -4,10 +4,10 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.master_data_integration.application.usecases.manage.data_models;
-// import uim.platform.master_data_integration.application.dto;
+
 // import uim.platform.master_data_integration.domain.entities.data_model;
 // import uim.platform.master_data_integration.domain.ports.repositories.data_models;
-// import uim.platform.master_data_integration.domain.types;
+
 import uim.platform.master_data_integration;
 
 // mixin(ShowModule!());
@@ -44,8 +44,8 @@ class ManageDataModelsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, model.id.value, "");
   }
 
-  CommandResult updateDataModel(DataModelId id, UpdateDataModelRequest req) {
-    auto model = repo.findById(tenantId, id);
+  CommandResult updateDataModel(UpdateDataModelRequest req) {
+    auto model = repo.findById(req.tenantId, req.modelId);
     if (model.isNull)
       return CommandResult(false, "", "Data model not found");
 
@@ -65,7 +65,7 @@ class ManageDataModelsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, model.id.value, "");
   }
 
-  DataModel getDataModel(DataModelId id) {
+  DataModel getDataModel(TenantId tenantId, DataModelId id) {
     return repo.findById(tenantId, id);
   }
 
@@ -81,7 +81,7 @@ class ManageDataModelsUseCase { // TODO: UIMUseCase {
     return repo.findByName(tenantId, name);
   }
 
-  CommandResult deleteDataModel(DataModelId id) {
+  CommandResult deleteDataModel(TenantId tenantId, DataModelId id) {
     auto model = repo.findById(tenantId, id);
     if (model.isNull)
       return CommandResult(false, "", "Data model not found");

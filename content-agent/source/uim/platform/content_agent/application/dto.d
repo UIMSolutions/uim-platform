@@ -108,6 +108,9 @@ struct CreateQueueRequest {
 }
 
 struct UpdateQueueRequest {
+  TenantId tenantId;
+  TransportQueueId queueId;
+  
   string description;
   string endpoint;
   string authToken;

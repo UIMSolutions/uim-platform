@@ -7,4 +7,11 @@ module uim.platform.management;
 
 public {
   import uim.platform.service;
+
+  import uim.platform.master_data_integration.application;
+  import uim.platform.master_data_integration.domain;
+  import uim.platform.master_data_integration.helpers;
+  import uim.platform.master_data_integration.infrastructure;
+  import uim.platform.master_data_integration.presentation;
+
 }

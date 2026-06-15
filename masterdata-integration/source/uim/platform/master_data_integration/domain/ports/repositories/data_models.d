@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.master_data_integration.domain.ports.repositories.data_models;
 
-import uim.platform.master_data_integration.domain.entities.data_model;
-import uim.platform.master_data_integration.domain.types;
+// import uim.platform.master_data_integration.domain.entities.data_model;
+// import uim.platform.master_data_integration.domain.types;
+import uim.platform.master_data_integration;
 
+// mixin(ShowModule!());
+
+@safe:
 /// Port: outgoing — data model/schema persistence.
 interface DataModelRepository : ITenantRepository!(DataModel, DataModelId) {
 

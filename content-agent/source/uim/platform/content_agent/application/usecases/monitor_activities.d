@@ -26,8 +26,8 @@ class MonitorActivitiesUseCase { // TODO: UIMUseCase {
     return activityRepo.findRecent(tenantId, limit);
   }
 
-  ContentActivity[] listByEntity(string entityId) {
-    return activityRepo.findByEntity(entityId);
+  ContentActivity[] listByEntity(TenantId tenantId, string entityId) {
+    return activityRepo.findByEntity(tenantId, entityId);
   }
 
   ContentActivity[] listByType(TenantId tenantId, string activityTypeStr) {

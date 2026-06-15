@@ -5,15 +5,20 @@
 *****************************************************************************************************************/
 module uim.platform.master_data_integration.domain.ports.repositories.key_mappings;
 
-import uim.platform.master_data_integration.domain.entities.key_mapping;
-import uim.platform.master_data_integration.domain.types;
+// import uim.platform.master_data_integration.domain.entities.key_mapping;
+// import uim.platform.master_data_integration.domain.types;
+import uim.platform.master_data_integration;
+
+// mixin(ShowModule!());
+
+@safe:
 
 /// Port: outgoing — key mapping persistence.
 interface KeyMappingRepository : ITenantRepository!(KeyMapping, KeyMappingId) {
 
-  size_t countByObjectId(TenantId tenantId, MasterDataObjectId objectId);
-  KeyMapping[] findByObjectId(TenantId tenantId, MasterDataObjectId objectId);
-  void removeByObjectId(TenantId tenantId, MasterDataObjectId objectId);
+  size_t countByObject(TenantId tenantId, MasterDataObjectId objectId);
+  KeyMapping[] findByObject(TenantId tenantId, MasterDataObjectId objectId);
+  void removeByObject(TenantId tenantId, MasterDataObjectId objectId);
 
   size_t countByCategory(TenantId tenantId, MasterDataCategory category);
   KeyMapping[] findByCategory(TenantId tenantId, MasterDataCategory category);

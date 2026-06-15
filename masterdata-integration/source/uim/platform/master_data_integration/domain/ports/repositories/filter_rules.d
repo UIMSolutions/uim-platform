@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.master_data_integration.domain.ports.repositories.filter_rules;
 
-import uim.platform.master_data_integration.domain.entities.filter_rule;
-import uim.platform.master_data_integration.domain.types;
+// import uim.platform.master_data_integration.domain.entities.filter_rule;
+// import uim.platform.master_data_integration.domain.types;
+import uim.platform.master_data_integration;
 
+// mixin(ShowModule!());
+
+@safe:
 /// Port: outgoing — filter rule persistence.
 interface FilterRuleRepository : ITenantRepository!(FilterRule, FilterRuleId) {
 

@@ -4,11 +4,11 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.master_data_integration.application.usecases.manage.key_mappings;
-// import uim.platform.master_data_integration.application.dto;
+
 // import uim.platform.master_data_integration.domain.entities.key_mapping;
 // import uim.platform.master_data_integration.domain.ports.repositories.key_mappings;
 // import uim.platform.master_data_integration.domain.services.key_mapping_resolver;
-// import uim.platform.master_data_integration.domain.types;
+
 import uim.platform.master_data_integration;
 
 // mixin(ShowModule!());
@@ -25,7 +25,7 @@ class ManageKeyMappingsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createKeyMapping(CreateKeyMappingRequest req) {
-    if (req.masterDataObjectId.isEmpty)
+    if (req.objectId.isEmpty)
       return CommandResult(false, "", "Master data object ID is required");
     if (req.entries.length == 0)
       return CommandResult(false, "", "At least one key mapping entry is required");
@@ -33,7 +33,7 @@ class ManageKeyMappingsUseCase { // TODO: UIMUseCase {
     KeyMapping mapping;
     mapping.initEntity(req.tenantId);
 
-    mapping.masterDataObjectId = req.masterDataObjectId;
+    mapping.masterDataObjectId = req.objectId;
     mapping.category = req.category.to!MasterDataCategory;
     mapping.objectType = req.objectType;
     mapping.entries = toEntries(req.entries);
@@ -47,7 +47,7 @@ class ManageKeyMappingsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateKeyMapping(UpdateKeyMappingRequest req) {
-    auto mapping = repo.findById(tenantId, req.id);
+    auto mapping = repo.findById(req.tenantId, req.id);
     if (mapping.isNull)
       return CommandResult(false, "", "Key mapping not found");
 
@@ -70,7 +70,7 @@ class ManageKeyMappingsUseCase { // TODO: UIMUseCase {
     return resolver.resolveLocalKey(mapping, req.targetClientId);
   }
 
-  KeyMapping getKeyMapping(KeyMappingId id) {
+  KeyMapping getKeyMapping(TenantId tenantId, KeyMappingId id) {
     return repo.findById(tenantId, id);
   }
 
@@ -79,14 +79,14 @@ class ManageKeyMappingsUseCase { // TODO: UIMUseCase {
   }
 
   KeyMapping[] listKeyMappings(TenantId tenantId, MasterDataObjectId objectId) {
-    return repo.findByObjectId(tenantId, objectId);
+    return repo.findByObject(tenantId, objectId);
   }
 
   KeyMapping[] listKeyMappings(TenantId tenantId, string category) {
     return repo.findByCategory(tenantId, category.to!MasterDataCategory);
   }
 
-  CommandResult deleteKeyMapping(KeyMappingId id) {
+  CommandResult deleteKeyMapping(TenantId tenantId, KeyMappingId id) {
     auto mapping = repo.findById(tenantId, id);
     if (mapping.isNull)
       return CommandResult(false, "", "Key mapping not found");

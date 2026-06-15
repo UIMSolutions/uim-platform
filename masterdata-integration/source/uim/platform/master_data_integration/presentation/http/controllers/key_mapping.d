@@ -3,12 +3,12 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.master_data_integration.presentation.http.key_mapping;
+module uim.platform.master_data_integration.presentation.http.controllers.key_mapping;
 
 // import uim.platform.master_data_integration.application.usecases.manage.key_mappings;
-// import uim.platform.master_data_integration.application.dto;
+
 // import uim.platform.master_data_integration.domain.entities.key_mapping;
-// import uim.platform.master_data_integration.domain.types;
+
 import uim.platform.master_data_integration;
 
 // mixin(ShowModule!());
@@ -66,7 +66,7 @@ override protected Json listHandler(HTTPServerRequest req) {
 
   KeyMapping[] mappings;
   if (!objectId.isEmpty)
-    mappings = usecase.listByObjectId(tenantId, objectId);
+    mappings = usecase.listByObject(tenantId, objectId);
   else if (category.length > 0)
     mappings = usecase.listByCategory(tenantId, category);
   else

@@ -3,12 +3,12 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.master_data_integration.presentation.http.distribution;
+module uim.platform.master_data_integration.presentation.http.controllers.distribution_model;
 
 // import uim.platform.master_data_integration.application.usecases.manage.distribution_models;
-// import uim.platform.master_data_integration.application.dto;
+
 // import uim.platform.master_data_integration.domain.entities.distribution_model;
-// import uim.platform.master_data_integration.domain.types;
+
 import uim.platform.master_data_integration;
 
 // mixin(ShowModule!());
@@ -58,6 +58,7 @@ class DistributionController : ManageHttpController {
     auto result = usecase.create(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
+
     auto resp = Json.emptyObject
       .set("id", result.id)
       .set("message", "Distribution model created");
@@ -73,11 +74,9 @@ class DistributionController : ManageHttpController {
     auto tenantId = precheck.tenantId;
     auto status = req.params.get("status", "");
 
-    DistributionModel[] models;
-    if (status.length > 0)
-      models = usecase.listByStatus(tenantId, status);
-    else
-      models = usecase.listByTenant(tenantId);
+    DistributionModel[] models = status.length > 0
+      ? usecase.listModels(tenantId, status)
+      : usecase.listModels(tenantId);
 
     auto arr = models.map!(m => m.toJson).array.toJson;
 
@@ -94,8 +93,11 @@ class DistributionController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
-    auto model = usecase.getModel(id);
+    auto id = DistributionModelId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid distribution model ID", 400);
+
+    auto model = usecase.getModel(tenantId, id);
     if (model.isNull)
       return errorResponse("Distribution model not found", 404);
 
@@ -109,9 +111,13 @@ class DistributionController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
+    auto id = DistributionModelId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid distribution model ID", 400);
+
     auto data = precheck.data;
     UpdateDistributionModelRequest r;
+    r.tenantId = tenantId;
     r.name = data.getString("name");
     r.description = data.getString("description");
     r.status = data.getString("status");
@@ -125,10 +131,9 @@ class DistributionController : ManageHttpController {
     auto result = usecase.updateModel(id, r);
     if (result.hasError)
       return errorResponse(result.message, 400);
-    auto resp = Json.emptyObject
-      .set("id", result.id)
-      .set("message", "Distribution model updated");
 
+    auto resp = Json.emptyObject
+      .set("id", result.id);
     return successResponse("Distribution model updated successfully", 200, resp);
   }
 
@@ -138,8 +143,11 @@ class DistributionController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
-    auto result = usecase.deleteModel(id);
+    auto id = DistributionModelId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid distribution model ID", 400);
+
+    auto result = usecase.deleteModel(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
     auto resp = Json.emptyObject
@@ -149,38 +157,59 @@ class DistributionController : ManageHttpController {
     return successResponse("Distribution model deleted successfully", 204, resp);
   }
 
+  protected Json activateHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = DistributionModelId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid distribution model ID", 400);
+
+    auto result = usecase.activateModel(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+    auto resp = Json.emptyObject
+      .set("id", result.id);
+
+    return successResponse("Distribution model activated successfully", 200, resp);
+  }
+
   protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto result = usecase.activate(id);
-      if (result.hasError)
-        return errorResponse(result.message, 400);
-      auto resp = Json.emptyObject
-        .set("id", result.id)
-        .set("message", "Distribution model activated");
-
-      res.writeJsonBody(resp, 200);
-    } else
-      writeError(res, 400, result.message);
+      auto response = activateHandler(req);
+      res.writeJsonBody(response, response.code);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
+    }
   }
- catch (Exception e) {
-    writeError(res, 500, "Internal server error");
-  }
-}
 
-protected void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-  try {
+  protected Json deactivateHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
     auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
-    auto result = usecase.deactivate(id);
-    if (result.success)
-      res.writeJsonBody(Json.emptyObject, 200);
-    else
-      writeError(res, 400, result.message);
-  } catch (Exception e) {
-    writeError(res, 500, "Internal server error");
-  }
-}
+    auto id = DistributionModelId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid distribution model ID", 400);
 
+    auto result = usecase.deactivateModel(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto resp = Json.emptyObject
+      .set("id", result.id);
+    return successResponse("Distribution model deactivated successfully", 200, resp);
+  }
+
+  protected void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto response = deactivateHandler(req);
+      res.writeJsonBody(response, response.code);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
+    }
+  }
 }

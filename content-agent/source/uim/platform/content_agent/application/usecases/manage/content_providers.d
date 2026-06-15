@@ -48,7 +48,7 @@ class ManageContentProvidersUseCase { // TODO: UIMUseCase {
 
     providerRepo.save(provider);
     recordActivity(req.tenantId, ActivityType.providerRegistered, provider.id.value, req.name,
-      "Provider registered", req.registeredBy);
+      "Provider registered", req.registeredBy.value);
 
     return CommandResult(true, provider.id.value, "");
   }

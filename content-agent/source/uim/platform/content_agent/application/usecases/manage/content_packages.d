@@ -47,7 +47,7 @@ class ManageContentPackagesUseCase { // TODO: UIMUseCase {
     pkg.name = req.name;
     pkg.description = req.description;
     pkg.version_ = req.version_;
-    pkg.format = req.format.to!PackageFormat;
+    pkg.format = req.format.toContentFormat;
     pkg.items = req.items;
     pkg.tags = req.tags;
     pkg.status = PackageStatus.draft;
@@ -59,8 +59,8 @@ class ManageContentPackagesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, pkg.id.value, "");
   }
 
-  CommandResult updatePackage(ContentPackageId id, UpdatePackageRequest req) {
-    auto pkg = packages.findById(tenantId, id);
+  CommandResult updatePackage(UpdatePackageRequest req) {
+    auto pkg = packages.findById(req.tenantId, req.packageId);
     if (pkg.isNull)
       return CommandResult(false, "", "Package not found");
 
@@ -79,11 +79,11 @@ class ManageContentPackagesUseCase { // TODO: UIMUseCase {
       pkg.status = PackageStatus.draft;
 
     packages.update(pkg);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, pkg.id.value, "");
   }
 
   CommandResult assemblePackage(AssemblePackageRequest req) {
-    auto pkg = packages.findById(req.packageId);
+    auto pkg = packages.findById(req.tenantId, req.packageId);
     if (pkg.isNull)
       return CommandResult(false, "", "Package not found");
 
@@ -109,7 +109,7 @@ class ManageContentPackagesUseCase { // TODO: UIMUseCase {
 
     packages.update(pkg);
     recordActivity(req.tenantId, ActivityType.packageAssembled, pkg.id.value,
-        pkg.name, "Package assembled", req.assembledBy);
+        pkg.name, "Package assembled", req.assembledBy.value);
 
     return CommandResult(true, pkg.id.value, "");
   }
@@ -133,7 +133,7 @@ class ManageContentPackagesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Package not found");
 
     packages.remove(pkg);
-    recordActivity(pkg.tenantId, ActivityType.packageDeleted, id, pkg.name, "Package deleted", "");
+    recordActivity(pkg.tenantId, ActivityType.packageDeleted, id.value, pkg.name, "Package deleted", "");
 
     return CommandResult(true, pkg.id.value, "");
   }

@@ -32,10 +32,10 @@ class ExportContentUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult startExport(StartExportRequest req) {
-    if (!packageRepo.existsById(req.packageId))
+    if (!packageRepo.existsById(req.tenantId, req.packageId))
       return CommandResult(false, "", "Package not found");
 
-    auto pkg = packageRepo.findById(req.packageId);
+    auto pkg = packageRepo.findById(req.tenantId, req.packageId);
     if (pkg.status != PackageStatus.assembled)
       return CommandResult(false, "", "Package must be assembled before export");
 
@@ -43,7 +43,7 @@ class ExportContentUseCase { // TODO: UIMUseCase {
     job.initEntity(req.tenantId, req.startedBy);
     
     job.packageId = req.packageId;
-    job.transportRequestId = req.transportRequestId;
+    job.transportRequestId = req.requestId;
     job.queueId = req.queueId;
     job.status = ExportStatus.assembling;
     job.startedAt = job.createdAt;
@@ -57,18 +57,18 @@ class ExportContentUseCase { // TODO: UIMUseCase {
     exportRepo.update(job);
 
     job.status = ExportStatus.completed;
-    job.completedAt = job.updatedAt;
+    job.completedAt = currentTimestamp();
     exportRepo.update(job);
 
     // Update package status
     pkg.status = PackageStatus.exported;
-    pkg.updatedAt = pkg.updatedAt;
+    pkg.updatedAt = currentTimestamp();
     packageRepo.update(pkg);
 
-    recordActivity(req.tenantId, ActivityType.exportCompleted, id, pkg.name,
+    recordActivity(req.tenantId, ActivityType.exportCompleted, pkg.id.value, pkg.name,
       "Export completed for package: " ~ pkg.name, req.startedBy);
 
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, pkg.id.value, "");
   }
 
   ExportJob getExportJob(TenantId tenantId, ExportJobId id) {

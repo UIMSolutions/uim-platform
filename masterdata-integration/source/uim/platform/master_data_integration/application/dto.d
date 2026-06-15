@@ -14,7 +14,7 @@ import uim.platform.master_data_integration;
 
 struct CreateMasterDataObjectRequest {
   TenantId tenantId;
-  DataModelId dataModelId;
+  DataModelId modelId;
   string category; // "businessPartner", "costCenter", etc.
   string objectType;
   string displayName;
@@ -177,7 +177,7 @@ struct CreateFilterRuleRequest {
   string name;
   string description;
   string category;
-  DataModelId dataModelId;
+  DataModelId modelId;
   string objectType;
   FilterConditionDto[] conditions;
   string logicOperator; // "AND" or "OR"

@@ -4,3 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.content_agent.domain.services;
+
+public:
+    import uim.platform.content_agent.domain.services.package_assembler;
+    import uim.platform.content_agent.domain.services.transport_validator;
