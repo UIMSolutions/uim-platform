@@ -57,7 +57,7 @@ struct CreateModelConfigRequest {
 }
 
 struct UpdateModelConfigRequest {
-  ModelConfigId configId;
+  ModelConfigurationId configId;
   TenantId tenantId;
   string name;
   string description;
@@ -69,7 +69,7 @@ struct UpdateModelConfigRequest {
 // --- Training Job ---
 
 struct StartTrainingRequest {
-  ModelConfigId configId;
+  ModelConfigurationId configId;
   TenantId tenantId;
   UserId createdBy;
 }

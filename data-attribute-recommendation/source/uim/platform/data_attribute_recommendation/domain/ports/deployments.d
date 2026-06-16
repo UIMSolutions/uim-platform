@@ -18,9 +18,9 @@ interface DeploymentRepository : ITenantRepository!(ModelDeployment, DeploymentI
   ModelDeployment findByTrainingJob(TenantId tenantId, TrainingJobId jobId);
   void removeByTrainingJob(TenantId tenantId, TrainingJobId jobId);
 
-  size_t countByModelConfig(TenantId tenantId, ModelConfigId configId);
-  ModelDeployment[] findByModelConfig(TenantId tenantId, ModelConfigId configId);
-  void removeByModelConfig(TenantId tenantId, ModelConfigId configId);
+  size_t countByModelConfig(TenantId tenantId, ModelConfigurationId configId);
+  ModelDeployment[] findByModelConfig(TenantId tenantId, ModelConfigurationId configId);
+  void removeByModelConfig(TenantId tenantId, ModelConfigurationId configId);
 
   size_t countByStatus(TenantId tenantId, DeploymentStatus status);
   ModelDeployment[] findByStatus(TenantId tenantId, DeploymentStatus status);

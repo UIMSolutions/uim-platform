@@ -46,7 +46,7 @@ class ModelController : ManageHttpController {
     r.datasetId = data.getString("datasetId");
     r.name = data.getString("name");
     r.description = data.getString("description");
-    r.modelType = toModelType(data.getString("modelType"));
+    r.modelType = data.getString("modelType");
     r.targetColumns = data.getString("targetColumns");
     r.featureColumns = data.getString("featureColumns");
     r.hyperparameters = data.getString("hyperparameters");
@@ -101,13 +101,16 @@ class ModelController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto id = ModelConfigurationId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid model configuration ID", 400);
+
     auto data = precheck.data;
     auto r = UpdateModelConfigRequest();
-    r.id = id;
+    r.configId = id;
     r.tenantId = tenantId;
     r.name = data.getString("name");
     r.description = data.getString("description");
-    r.modelType = toModelType(data.getString("modelType"));
+    r.modelType = data.getString("modelType");
     r.targetColumns = data.getString("targetColumns");
     r.featureColumns = data.getString("featureColumns");
     r.hyperparameters = data.getString("hyperparameters");
@@ -130,7 +133,7 @@ class ModelController : ManageHttpController {
     if (id.isNull)
       return errorResponse("Invalid model configuration ID", 400);
 
-    auto result = usecase.activateModelConfig(tenantId, id);
+    auto result = usecase.activateConfig(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
 
@@ -158,7 +161,7 @@ class ModelController : ManageHttpController {
       return errorResponse("Invalid model configuration ID", 400);
 
     auto r = StartTrainingRequest();
-    r.modelConfigId = id;
+    r.configId = id;
     r.tenantId = tenantId;
     r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 

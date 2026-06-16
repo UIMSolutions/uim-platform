@@ -44,7 +44,7 @@ class DeploymentController : ManageHttpController {
     auto data = precheck.data;
     auto r = CreateDeploymentRequest();
     r.tenantId = tenantId;
-    r.trainingJobId = data.getString("trainingJobId");
+    r.jobId = data.getString("trainingJobId");
     r.name = data.getString("name");
     r.replicas = data.getInteger("replicas", 1);
     r.createdBy = UserId(req.headers.get("X-User-Id", "system"));

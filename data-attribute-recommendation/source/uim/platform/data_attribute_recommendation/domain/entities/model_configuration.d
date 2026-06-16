@@ -13,7 +13,7 @@ import uim.platform.data_attribute_recommendation;
 /// Configuration for a machine-learning model that defines which dataset
 /// to train on, which columns are features/targets, and hyperparameters.
 struct ModelConfiguration {
-  mixin TenantEntity!(ModelConfigId);
+  mixin TenantEntity!(ModelConfigurationId);
 
   DatasetId datasetId;
   string name;

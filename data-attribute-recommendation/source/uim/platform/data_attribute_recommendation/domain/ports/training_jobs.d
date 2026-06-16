@@ -14,9 +14,9 @@ import uim.platform.data_attribute_recommendation;
 @safe:
 interface TrainingJobRepository : ITenantRepository!(TrainingJob, TrainingJobId) {
 
-  size_t countByModelConfig(TenantId tenantId, ModelConfigId configId);
-  TrainingJob[] findByModelConfig(TenantId tenantId, ModelConfigId configId);
-  void removeByModelConfig(TenantId tenantId, ModelConfigId configId);
+  size_t countByModelConfig(TenantId tenantId, ModelConfigurationId configId);
+  TrainingJob[] findByModelConfig(TenantId tenantId, ModelConfigurationId configId);
+  void removeByModelConfig(TenantId tenantId, ModelConfigurationId configId);
   
   size_t countByStatus(TenantId tenantId, JobStatus status);
   TrainingJob[] findByStatus(TenantId tenantId, JobStatus status);

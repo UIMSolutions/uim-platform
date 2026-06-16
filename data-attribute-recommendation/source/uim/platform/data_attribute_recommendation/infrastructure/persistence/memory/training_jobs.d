@@ -15,19 +15,19 @@ import uim.platform.data_attribute_recommendation;
 @safe:
 class MemoryTrainingJobRepository : TenantRepository!(TrainingJob, TrainingJobId), TrainingJobRepository {
   
-  size_t countByModelConfig(TenantId tenantId, ModelConfigId configId) {
+  size_t countByModelConfig(TenantId tenantId, ModelConfigurationId configId) {
     return findByModelConfig(tenantId, configId).length;
   }
 
-  TrainingJob[] filterByModelConfig(TrainingJob[] jobs, ModelConfigId configId) {
+  TrainingJob[] filterByModelConfig(TrainingJob[] jobs, ModelConfigurationId configId) {
     return jobs.filter!(e => e.modelConfigId == configId).array;
   }
 
-  TrainingJob[] findByModelConfig(TenantId tenantId, ModelConfigId configId) {
+  TrainingJob[] findByModelConfig(TenantId tenantId, ModelConfigurationId configId) {
     return filterByModelConfig(findByTenant(tenantId), configId);
   }
 
-  void removeByModelConfig(TenantId tenantId, ModelConfigId configId) {
+  void removeByModelConfig(TenantId tenantId, ModelConfigurationId configId) {
     findByModelConfig(tenantId, configId).each!(e => remove(e));
   }
 

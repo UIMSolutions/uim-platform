@@ -61,7 +61,7 @@ class ManageModelsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, config.id.value, "");
   }
 
-  ModelConfiguration getModelConfig(TenantId tenantId, ModelConfigId id) {
+  ModelConfiguration getModelConfig(TenantId tenantId, ModelConfigurationId id) {
     return repo.findById(tenantId, id);
   }
 
@@ -101,7 +101,7 @@ class ManageModelsUseCase { // TODO: UIMUseCase {
   }
 
   /// Mark a model configuration as ready for training.
-  CommandResult activateConfig(TenantId tenantId, ModelConfigId id) {
+  CommandResult activateConfig(TenantId tenantId, ModelConfigurationId id) {
     auto config = repo.findById(tenantId, id);
     if (config.isNull)
       return CommandResult(false, "", "Model configuration not found");
@@ -133,7 +133,7 @@ class ManageModelsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, job.id.value, "");
   }
 
-  CommandResult deleteModelConfig(TenantId tenantId, ModelConfigId id) {
+  CommandResult deleteModelConfig(TenantId tenantId, ModelConfigurationId id) {
     auto existing = repo.findById(tenantId, id);
     if (existing.isNull)
       return CommandResult(false, "", "Model configuration not found");

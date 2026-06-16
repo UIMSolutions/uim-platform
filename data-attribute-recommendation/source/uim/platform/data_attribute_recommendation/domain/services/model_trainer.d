@@ -35,7 +35,7 @@ class ModelTrainer {
   }
 
   /// Validate that a model configuration can be trained.
-  bool canTrain(TenantId tenantId, ModelConfigId configId) {
+  bool canTrain(TenantId tenantId, ModelConfigurationId configId) {
     auto config = configRepo.findById(tenantId, configId);
     if (config.isNull)
       return false;
@@ -53,9 +53,9 @@ class ModelTrainer {
   }
 
   /// Start a training job for the given model configuration.
-  TrainingJob startTraining(TenantId tenantId, ModelConfigId configId, UserId userId) {
+  TrainingJob startTraining(TenantId tenantId, ModelConfigurationId configId, UserId userId) {
     if (!canTrain(tenantId, configId))
-      return null;
+      return TrainingJob.init;
 
     auto config = configRepo.findById(tenantId, configId);
     auto now = currentTimestamp();

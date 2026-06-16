@@ -42,7 +42,7 @@ class InferenceEngine {
   InferenceResult predict(TenantId tenantId, InferenceRequestId requestId) {
     auto request = requestRepo.findById(tenantId, requestId);
     if (request.isNull)
-      return null;
+      return InferenceResult.init; // Or throw an exception depending on error handling strategy
 
     if (!isDeploymentReady(tenantId, request.deploymentId)) {
       request.status = InferenceStatus.failed;

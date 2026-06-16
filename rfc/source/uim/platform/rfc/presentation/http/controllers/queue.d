@@ -23,6 +23,7 @@ class QueueController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get    ("/api/v1/rfc/queues/*",           &handleList);
         router.post   ("/api/v1/rfc/queues/*/process",   &handleProcess);
         router.delete_("/api/v1/rfc/queues/entries/*",   &handleDeleteEntry);

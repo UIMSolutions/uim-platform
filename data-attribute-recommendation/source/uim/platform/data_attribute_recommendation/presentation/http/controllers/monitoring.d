@@ -28,11 +28,11 @@ class MonitoringController : HttpController {
     router.get("/api/v1/monitoring/jobs", &handleListJobs);
     router.get("/api/v1/monitoring/jobs/*", &handleGetJob);
     router.get("/api/v1/monitoring/deployments", &handleListDeployments);
-    router.get("/api/v1/monitoring/pipeline", &handlePipeline);
+    router.get("/api/v1/monitoring/pipeline", &handleGetPipeline);
   }
 
-  protected Json listHandler(HTTPServerRequest req) {
-    auto precheck = super.listHandler(req);
+  protected Json listJobsHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
     if (precheck.hasError)
       return precheck;
 
@@ -47,25 +47,36 @@ class MonitoringController : HttpController {
     return successResponse( "Training job list retrieved successfully", 200, responseData);
   }
 
-  protected Json jobHandler(HTTPServerRequest req) {
+  protected void handleListJobs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto response = listJobsHandler(req);
+      res.writeJsonBody(response, response.code);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  protected Json getJobHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);
     if (precheck.hasError)
       return precheck;
 
     auto tenantId = precheck.tenantId;
     auto id = TrainingJobId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid training job ID", 400);
 
     auto job = usecase.getTrainingJob(tenantId, id);
-    if (job.isNull)
-      return errorResponse("Training job not found", 404);
+    // if (job.isNull)
+    //   return errorResponse("Training job not found", 404);
 
     auto responseData = job.toJson();
     return successResponse( "Training job retrieved successfully", 200, responseData);
   }
 
-  protected void handleJob(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetJob(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-     auto response = jobHandler(req);
+     auto response = getJobHandler(req);
       res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -73,7 +84,7 @@ class MonitoringController : HttpController {
   }
 
   protected Json listDeploymentsHandler(HTTPServerRequest req) {
-     auto precheck = super.listHandler(req);
+     auto precheck = super.getHandler(req);
     if (precheck.hasError)
       return precheck;
 
@@ -87,6 +98,7 @@ class MonitoringController : HttpController {
       .set("resources", list);
     return successResponse("Deployment list retrieved successfully", 200, responseData);
   }
+
   protected void handleListDeployments(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto response = listDeploymentsHandler(req);
@@ -123,16 +135,5 @@ class MonitoringController : HttpController {
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
-  }
-
-  private static Json serializeDeploymentSummary(const DeploymentSummary s) {
-    return Json.emptyObject
-      .set("deploymentId", s.deploymentId)
-      .set("deploymentName", s.deploymentName)
-      .set("status", s.status.to!string)
-      .set("modelName", s.modelName)
-      .set("version", s.version_)
-      .set("replicas", s.replicas)
-      .set("inferenceCount", s.inferenceCount);
   }
 }

@@ -25,6 +25,6 @@ struct DataRecord {
       .set("datasetId", datasetId)
       .set("attributes", attributes)
       .set("labels", labels)
-      .set("status", status);
+      .set("status", status.to!string);
   }
 }

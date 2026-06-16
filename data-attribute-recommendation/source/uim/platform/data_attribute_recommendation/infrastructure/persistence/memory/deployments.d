@@ -30,19 +30,19 @@ class MemoryDeploymentRepository : TenantRepository!(ModelDeployment, Deployment
     remove(findByTrainingJob(tenantId, jobId));
   }
 
-  size_t countByModelConfig(TenantId tenantId, ModelConfigId configId) {
+  size_t countByModelConfig(TenantId tenantId, ModelConfigurationId configId) {
     return findByModelConfig(tenantId, configId).length;
   }
 
-  ModelDeployment[] filterByModelConfig(ModelDeployment[] deployments, ModelConfigId configId) {
+  ModelDeployment[] filterByModelConfig(ModelDeployment[] deployments, ModelConfigurationId configId) {
     return deployments.filter!(e => e.modelConfigId == configId).array;
   }
 
-  ModelDeployment[] findByModelConfig(TenantId tenantId, ModelConfigId configId) {
+  ModelDeployment[] findByModelConfig(TenantId tenantId, ModelConfigurationId configId) {
     return filterByModelConfig(findByTenant(tenantId), configId);
   }
 
-  void removeByModelConfig(TenantId tenantId, ModelConfigId configId) {
+  void removeByModelConfig(TenantId tenantId, ModelConfigurationId configId) {
     findByModelConfig(tenantId, configId).each!(e => remove(e));
   }
 

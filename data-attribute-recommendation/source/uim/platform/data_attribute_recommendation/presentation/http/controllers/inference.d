@@ -62,7 +62,7 @@ class InferenceController : HttpController {
     }
   }
 
-  protected Json requestHandler(HTTPServerRequest req) {
+  protected Json getRequestHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);
     if (precheck.hasError)
       return precheck;
@@ -72,7 +72,8 @@ class InferenceController : HttpController {
     if (id.isNull)
       return errorResponse("Invalid inference request ID", 400);
 
-    auto request = usecase.getRequest(tenantId, id);
+    // TODO: Add authorization check to ensure the user has access to this inference request
+    auto request = usecase.getInferenceRequest(tenantId, id);
     if (request.isNull)
       return errorResponse("Inference request not found", 404);
 
@@ -80,16 +81,16 @@ class InferenceController : HttpController {
     return successResponse("Inference request retrieved successfully", 200, responseData);
   }
 
-  protected void handleRequest(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetRequest(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto response = requestHandler(req);
+      auto response = getRequestHandler(req);
       res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  protected Json resultHandler(HTTPServerRequest req) {
+  protected Json getResultHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);
     if (precheck.hasError)
       return precheck;
@@ -99,17 +100,17 @@ class InferenceController : HttpController {
     if (id.isNull)
       return errorResponse("Invalid inference result ID", 400);
 
-    auto result = usecase.getResult(tenantId, id);
-    if (item.isNull)
+    auto result = usecase.getInferenceResult(tenantId, id);
+    if (result.isNull)
       return errorResponse("Inference result not found", 404);
 
     auto responseData = result.toJson;
     return successResponse("Inference result retrieved successfully", 200, responseData);
   }
 
-  protected void handleResult(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected void handleGetResult(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto response = resultHandler(req);
+      auto response = getResultHandler(req);
       res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -122,7 +123,7 @@ class InferenceController : HttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto items = usecase.listRequests(tenantId);
+    auto items = usecase.listInferenceRequests(tenantId);
     auto list = items.map!(item => item.toJson()).array.toJson;
 
     auto responseData = Json.emptyObject

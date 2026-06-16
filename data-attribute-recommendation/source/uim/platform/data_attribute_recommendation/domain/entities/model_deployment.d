@@ -16,7 +16,7 @@ struct ModelDeployment {
   mixin TenantEntity!(DeploymentId);
 
   TrainingJobId trainingJobId;
-  ModelConfigId modelConfigId;
+  ModelConfigurationId modelConfigId;
   string name;
   DeploymentStatus status = DeploymentStatus.deploying;
   string endpointUrl;

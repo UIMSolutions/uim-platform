@@ -14,7 +14,7 @@ import uim.platform.data_attribute_recommendation;
 /// progress, metrics, and completion status.
 struct TrainingJob {
   mixin TenantEntity!TrainingJobId;
-  ModelConfigId modelConfigId;
+  ModelConfigurationId modelConfigId;
 
   JobStatus status = JobStatus.queued;
   string metrics; // JSON: {accuracy, precision, recall, f1Score}

@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.data_attribute_recommendation.application.usecases.process_inference;
 
-
 // import uim.platform.data_attribute_recommendation.domain.entities.inference_request;
 // import uim.platform.data_attribute_recommendation.domain.entities.inference_result;
 // import uim.platform.data_attribute_recommendation.domain.ports.repositories.inference_requests;
@@ -23,7 +22,7 @@ class ProcessInferenceUseCase { // TODO: UIMUseCase {
   private InferenceEngine engine;
 
   this(InferenceRequestRepository requestRepo,
-      InferenceResultRepository resultRepo, InferenceEngine engine) {
+    InferenceResultRepository resultRepo, InferenceEngine engine) {
     this.requestRepo = requestRepo;
     this.resultRepo = resultRepo;
     this.engine = engine;
@@ -43,7 +42,7 @@ class ProcessInferenceUseCase { // TODO: UIMUseCase {
 
     InferenceRequest request;
     request.initEntity(req.tenantId);
-    request.createdBy = req.createdBy;
+    // request.createdBy = req.createdBy;
     request.deploymentId = req.deploymentId;
     request.inputData = req.inputData;
     request.status = InferenceStatus.pending;
@@ -57,19 +56,23 @@ class ProcessInferenceUseCase { // TODO: UIMUseCase {
     return CommandResult(true, result.id.value, "");
   }
 
-  InferenceResult getResult(TenantId tenantId, InferenceResultId id) {
+  InferenceResult getInferenceResult(TenantId tenantId, InferenceResultId id) {
     return resultRepo.findById(tenantId, id);
   }
 
-  InferenceResult getResult(TenantId tenantId, InferenceRequestId requestId) {
+  InferenceResult getInferenceResult(TenantId tenantId, InferenceRequestId requestId) {
     return resultRepo.findByRequest(tenantId, requestId);
   }
 
-  InferenceRequest[] listRequests(TenantId tenantId) {
+  InferenceRequest getInferenceRequest(TenantId tenantId, InferenceRequestId requestId) {
+    return requestRepo.findById(tenantId, requestId);
+  }
+
+  InferenceRequest[] listInferenceRequests(TenantId tenantId) {
     return requestRepo.findByTenant(tenantId);
   }
 
-  InferenceRequest[] listByDeployment(TenantId tenantId, DeploymentId deploymentId) {
+  InferenceRequest[] listInferenceRequests(TenantId tenantId, DeploymentId deploymentId) {
     return requestRepo.findByDeployment(tenantId, deploymentId);
   }
 }

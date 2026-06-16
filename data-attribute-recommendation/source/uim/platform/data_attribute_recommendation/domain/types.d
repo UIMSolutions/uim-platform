@@ -31,7 +31,7 @@ struct DataRecordId {
   mixin IdTemplate;
 }
 
-struct ModelConfigId {
+struct ModelConfigurationId {
   string value;
 
   this(string value) {

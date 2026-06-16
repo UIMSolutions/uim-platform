@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.data_attribute_recommendation.application.usecases.monitor_training;
 
-
 // import uim.platform.data_attribute_recommendation.domain.entities.training_job;
 // import uim.platform.data_attribute_recommendation.domain.entities.model_deployment;
 // import uim.platform.data_attribute_recommendation.domain.entities.model_configuration;
@@ -23,7 +22,7 @@ import uim.platform.data_attribute_recommendation;
 struct TrainingJobSummary {
   TenantId tenantId;
   TrainingJobId jobId;
-  ModelConfigId modelConfigId;
+  ModelConfigurationId modelConfigId;
   string modelName;
   JobStatus status;
   string metrics;
@@ -31,6 +30,20 @@ struct TrainingJobSummary {
   int totalEpochs;
   long startedAt;
   long completedAt;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("tenantId", tenantId)
+      .set("jobId", jobId)
+      .set("modelConfigId", modelConfigId)
+      .set("modelName", modelName)
+      .set("status", status.to!string)
+      .set("metrics", metrics)
+      .set("epochsCompleted", epochsCompleted)
+      .set("totalEpochs", totalEpochs)
+      .set("startedAt", startedAt)
+      .set("completedAt", completedAt);
+  }
 }
 
 struct DeploymentSummary {
@@ -41,6 +54,17 @@ struct DeploymentSummary {
   string version_;
   int replicas;
   long inferenceCount;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("deploymentId", deploymentId)
+      .set("deploymentName", deploymentName)
+      .set("status", status.to!string)
+      .set("modelName", modelName)
+      .set("version", version_)
+      .set("replicas", replicas)
+      .set("inferenceCount", inferenceCount);
+  }
 }
 
 struct PipelineSummary {
@@ -51,6 +75,17 @@ struct PipelineSummary {
   int completedJobs;
   int failedJobs;
   long totalInferenceRequests;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("totalModels", totalModels)
+      .set("trainedModels", trainedModels)
+      .set("activeDeployments", activeDeployments)
+      .set("totalTrainingJobs", totalTrainingJobs)
+      .set("completedJobs", completedJobs)
+      .set("failedJobs", failedJobs)
+      .set("totalInferenceRequests", totalInferenceRequests);
+  }
 }
 
 class MonitorTrainingUseCase { // TODO: UIMUseCase {
@@ -60,7 +95,7 @@ class MonitorTrainingUseCase { // TODO: UIMUseCase {
   private InferenceRequestRepository inferenceRepo;
 
   this(TrainingJobRepository jobRepo, DeploymentRepository deploymentRepo,
-      ModelConfigRepository configRepo, InferenceRequestRepository inferenceRepo) {
+    ModelConfigRepository configRepo, InferenceRequestRepository inferenceRepo) {
     this.jobRepo = jobRepo;
     this.deploymentRepo = deploymentRepo;
     this.configRepo = configRepo;
@@ -71,7 +106,7 @@ class MonitorTrainingUseCase { // TODO: UIMUseCase {
     auto jobs = jobRepo.findByTenant(tenantId);
     TrainingJobSummary[] result;
     foreach (job; jobs)
-      result ~= buildJobSummary(tenantId, job);
+      result ~= buildJobSummary(job);
     return result;
   }
 
@@ -84,14 +119,17 @@ class MonitorTrainingUseCase { // TODO: UIMUseCase {
 
   DeploymentSummary[] listDeploymentSummaries(TenantId tenantId) {
     auto deps = deploymentRepo.findByTenant(tenantId);
-    return deps.map!(d => buildDeploymentSummary(tenantId, d)).array.toJson;
+    DeploymentSummary[] result;
+    foreach (d; deps)
+      result ~= buildDeploymentSummary(d);
+    return result;
   }
 
   PipelineSummary getPipelineSummary(TenantId tenantId) {
     PipelineSummary s;
 
     auto configs = configRepo.findByTenant(tenantId);
-    s.totalModels = cast(int) configs.length;
+    s.totalModels = cast(int)configs.length;
     foreach (c; configs)
       if (c.status == ModelConfigStatus.trained)
         s.trainedModels++;
@@ -102,7 +140,7 @@ class MonitorTrainingUseCase { // TODO: UIMUseCase {
         s.activeDeployments++;
 
     auto jobs = jobRepo.findByTenant(tenantId);
-    s.totalTrainingJobs = cast(int) jobs.length;
+    s.totalTrainingJobs = cast(int)jobs.length;
     foreach (j; jobs) {
       if (j.status == JobStatus.completed)
         s.completedJobs++;
@@ -135,9 +173,8 @@ class MonitorTrainingUseCase { // TODO: UIMUseCase {
     return s;
   }
 
-  private DeploymentSummary buildDeploymentSummary(TenantId tenantId, ModelDeployment dep) {
+  private DeploymentSummary buildDeploymentSummary(ModelDeployment dep) {
     DeploymentSummary s;
-    s.tenantId = tenantId;
     s.deploymentId = dep.id;
     s.deploymentName = dep.name;
     s.status = dep.status;

@@ -25,7 +25,7 @@ class MemoryDatasetRepository : TenantRepository!(Dataset, DatasetId), DatasetRe
   }
 
   void removeByName(TenantId tenantId, string name) {
-    findByName(tenantId, name).remove;
+    remove(findByName(tenantId, name));
   }
 
   size_t countByStatus(TenantId tenantId, DatasetStatus status) {
