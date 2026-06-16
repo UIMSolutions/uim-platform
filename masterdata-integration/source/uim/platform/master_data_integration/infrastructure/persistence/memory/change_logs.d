@@ -5,9 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.master_data_integration.infrastructure.persistence.memory.change_logs;
 
-// import uim.platform.master_data_integration.domain.entities.change_log_entry;
-// import uim.platform.master_data_integration.domain.ports.repositories.change_logs;
-
 import uim.platform.master_data_integration;
 
 mixin(ShowModule!());

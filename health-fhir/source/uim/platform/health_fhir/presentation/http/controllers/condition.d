@@ -19,6 +19,7 @@ class ConditionController : ManageHttpController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+    
     router.get("/fhir/R4/Condition", &handleList);
     router.get("/fhir/R4/Condition/*", &handleGet);
     router.post("/fhir/R4/Condition", &handleCreate);
@@ -30,7 +31,9 @@ class ConditionController : ManageHttpController {
     res.writeJsonBody(
       Json.emptyObject.set("resourceType", "OperationOutcome")
         .set("issue", Json.emptyArray ~= Json.emptyObject
-          .set("severity", "error").set("code", "processing").set("diagnostics", msg)),
+          .set("severity", "error")
+          .set("code", "processing")
+          .set("diagnostics", msg)),
         status
     );
   }
@@ -43,7 +46,7 @@ class ConditionController : ManageHttpController {
     auto tenantId = precheck.tenantId;
 
     auto data = precheck.data;
-        CreateConditionRequest r;
+    CreateConditionRequest r;
     r.tenantId = tenantId;
     r.conditionId = ConditionId(precheck.id);
     r.note_ = data.getString("note");

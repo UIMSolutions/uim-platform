@@ -71,7 +71,7 @@ class MonitorTrainingUseCase { // TODO: UIMUseCase {
     auto jobs = jobRepo.findByTenant(tenantId);
     TrainingJobSummary[] result;
     foreach (job; jobs)
-      result ~= buildJobSummary(job, tenantId);
+      result ~= buildJobSummary(tenantId, job);
     return result;
   }
 
@@ -137,6 +137,7 @@ class MonitorTrainingUseCase { // TODO: UIMUseCase {
 
   private DeploymentSummary buildDeploymentSummary(TenantId tenantId, ModelDeployment dep) {
     DeploymentSummary s;
+    s.tenantId = tenantId;
     s.deploymentId = dep.id;
     s.deploymentName = dep.name;
     s.status = dep.status;

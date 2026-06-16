@@ -30,7 +30,22 @@ struct JobSummary {
   long failedEntities;
   long startedAt;
   long completedAt;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("jobId", jobId)
+      .set("sourceName", sourceName)
+      .set("targetName", targetName)
+      .set("jobType", jobType.to!string)
+      .set("status", status.to!string)
+      .set("totalEntities", totalEntities)
+      .set("processedEntities", processedEntities)
+      .set("failedEntities", failedEntities)
+      .set("startedAt", startedAt)
+      .set("completedAt", completedAt);
+  }
 }
+
 /// Overall provisioning pipeline health.
 struct ProvisioningSummary {
   int totalSourceSystems;

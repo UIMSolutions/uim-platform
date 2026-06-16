@@ -47,21 +47,23 @@ class CustomMetricController : ManageHttpController {
           ? mj["timestamp"].get!long : 0;
         usecase.submit(r);
       }
-      return successResponse("Metrics submitted", 200);
-    } else {
-      SubmitCustomMetricRequest r;
-      r.appId = appId;
-      r.metricName = data.getString("name");
-      r.value = data["value"].isFloat ? data["value"].get!double : 0.0;
-      r.unit = data.getString("unit");
-      r.timestamp = data["timestamp"].isInteger ? data["timestamp"].get!long : 0;
-      auto result = usecase.submit(r);
-      if (result.success)
-        return successResponse("Metric submitted", "Submitted", 201, Json.emptyObject.set("id", result
-            .id));
-      else
-        return errorResponse(result.message, 400);
+
+      return successResponse("Metrics submitted", "Submitted", 200, Json.emptyObject.set("count", metricsJ
+          .length));
     }
+
+    SubmitCustomMetricRequest r;
+    r.appId = appId;
+    r.metricName = data.getString("name");
+    r.value = data["value"].isFloat ? data["value"].get!double : 0.0;
+    r.unit = data.getString("unit");
+    r.timestamp = data["timestamp"].isInteger ? data["timestamp"].get!long : 0;
+    auto result = usecase.submit(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto resp = Json.emptyObject.set("id", result.id);
+    return successResponse("Metric submitted", "Submitted", 201, resp);
   }
 
   protected void handleSubmit(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -89,7 +91,7 @@ class CustomMetricController : ManageHttpController {
         break;
       }
     }
-    auto metrics = usecase.getMetrics(tenantId, ppId, metricName);
+    auto metrics = usecase.getMetrics(tenantId, appId, metricName);
     auto arr = Json.emptyArray;
     foreach (m; metrics)
       arr ~= m.toJson();

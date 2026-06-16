@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.identity.provisioning.presentation.http.controllers.monitoring_controller;
 
-
 // import uim.platform.identity.provisioning.application.usecases.monitor_provisioning;
 // import uim.platform.identity.provisioning.domain.entities.provisioning_log;
 // import uim.platform.identity.provisioning.domain.entities.provisioned_entity;
@@ -32,113 +31,145 @@ class MonitoringController : HttpController {
     router.get("/api/v1/monitoring/pipeline", &handlePipeline);
   }
 
-  override protected void handleListJobSummaries(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected Json listJobSummariesHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto items = usecase.listJobSummaries(tenantId);
+
+    auto arr = items.map!(s => s.toJson).array.toJson;
+
+    auto resp = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", items.length)
+      .set("message", "Job summaries retrieved successfully");
+
+    return successResponse("Job summaries retrieved successfully", "Retrieved", 200, resp);
+  }
+
+  protected void handleListJobSummaries(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto items = usecase.listJobSummaries(tenantId);
-
-      auto arr = items.map!(s => s.toJson).array.toJson;
-
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", items.length)
-        .set("message", "Job summaries retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
+      auto response = listJobSummariesHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  override protected void handleGetJobSummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-      auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto tenantId = precheck.tenantId;
-      auto summary = usecase.getJobSummary(tenantId, id);
-      if (summary.jobId.isEmpty) {
-        writeError(res, 404, "Job not found");
-        return;
-      }
-      res.writeJsonBody(summary.toJson, 200);
+  protected Json getJobSummaryHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = ProvisioningJobId(precheck.id);
+    auto summary = usecase.getJobSummary(tenantId, id);
+    if (summary.jobId.isEmpty)
+      return errorResponse("Job not found", 404);
+
+    auto resp = summary.toJson()
+      .set("message", "Job summary retrieved successfully");
+
+    return successResponse("Job summary retrieved successfully", "Retrieved", 200, resp);
+  }
+
+  protected void handleGetJobSummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto response = getJobSummaryHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
+  }
+
+  protected Json getJobLogsHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto jobId = ProvisioningJobId(precheck.id);
+    auto logs = usecase.getJobLogs(tenantId, jobId);
+    if (logs.length == 0)
+      return errorResponse("No logs found for this job", 404);
+
+    auto arr = logs.map!(l => l.toJson).array.toJson;
+
+    auto resp = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", logs.length)
+      .set("message", "Job execution logs retrieved successfully");
+
+    return successResponse("Job execution logs retrieved successfully", "Retrieved", 200, resp);
   }
 
   protected void handleJobLogs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto jobId = precheck.id;
-      auto tenantId = precheck.tenantId;
-
-      auto logs = usecase.getJobLogs(tenantId, jobId);
-      auto arr = logs.map!(l => l.toJson).array.toJson;
-
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", logs.length)
-        .set("jobId", jobId)
-        .set("message", "Job execution logs retrieved successfully");
-
-      res.writeJsonBody(resp, 200);
+      auto response = getJobLogsHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  override protected void handleListEntities(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  protected Json listEntitiesHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto items = usecase.listProvisionedEntities(tenantId);
+
+    auto arr = items.map!(e => e.toJson).array.toJson;
+
+    auto resp = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", items.length)
+      .set("message", "Provisioned entities retrieved successfully");
+
+    return successResponse("Provisioned entities retrieved successfully", "Retrieved", 200, resp);
+  }
+
+  protected void handleListEntities(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto items = usecase.listProvisionedEntities(tenantId);
-
-      auto arr = items.map!(e => e.toJson).array.toJson;
-
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", items.length)
-        .set("message", "Provisioned entities retrieved successfully");
-      
-      res.writeJsonBody(resp, 200);
+      auto response = listEntitiesHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
+  }
+
+  protected Json pipelineHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto summary = usecase.getPipelineSummary(tenantId);
+
+    auto j = Json.emptyObject
+      .set("totalSourceSystems", summary.totalSourceSystems)
+      .set("activeSourceSystems", summary.activeSourceSystems)
+      .set("totalTargetSystems", summary.totalTargetSystems)
+      .set("activeTargetSystems", summary.activeTargetSystems)
+      .set("totalJobs", summary.totalJobs)
+      .set("completedJobs", summary.completedJobs)
+      .set("failedJobs", summary.failedJobs)
+      .set("runningJobs", summary.runningJobs)
+      .set("totalProvisionedEntities", summary.totalProvisionedEntities)
+      .set("message", "Pipeline summary retrieved successfully");
+
+    return successResponse("Pipeline summary retrieved successfully", "Retrieved", 200, j);
   }
 
   protected void handlePipeline(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto summary = usecase.getPipelineSummary(tenantId);
-
-      auto j = Json.emptyObject
-        .set("totalSourceSystems", summary.totalSourceSystems)
-        .set("activeSourceSystems", summary.activeSourceSystems)
-        .set("totalTargetSystems", summary.totalTargetSystems)
-        .set("activeTargetSystems", summary.activeTargetSystems)
-        .set("totalJobs", summary.totalJobs)
-        .set("completedJobs", summary.completedJobs)
-        .set("failedJobs", summary.failedJobs)
-        .set("runningJobs", summary.runningJobs)
-        .set("totalProvisionedEntities", summary.totalProvisionedEntities)
-        .set("message", "Pipeline summary retrieved successfully");
-
-      res.writeJsonBody(j, 200);
+      auto response = pipelineHandler(req);
+      res.writeJsonBody(response, response.code);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
-  }
-
-  private static Json serializeJobSummary(const JobSummary s) {
-    auto j = Json.emptyObject;
-    j["jobId"] = Json(s.jobId);
-    j["sourceName"] = Json(s.sourceName);
-    j["targetName"] = Json(s.targetName);
-    j["jobType"] = Json(s.jobType.to!string);
-    j["status"] = Json(s.status.to!string);
-    j["totalEntities"] = Json(s.totalEntities);
-    j["processedEntities"] = Json(s.processedEntities);
-    j["failedEntities"] = Json(s.failedEntities);
-    j["startedAt"] = Json(s.startedAt);
-    j["completedAt"] = Json(s.completedAt);
-    return j;
   }
 }

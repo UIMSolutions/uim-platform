@@ -125,19 +125,6 @@ class MonitoringController : HttpController {
     }
   }
 
-  private static Json serializeJobSummary(const TrainingJobSummary s) {
-    return Json.emptyObject
-      .set("jobId", s.jobId)
-      .set("modelConfigId", s.modelConfigId)
-      .set("modelName", s.modelName)
-      .set("status", s.status.to!string)
-      .set("metrics", s.metrics)
-      .set("epochsCompleted", s.epochsCompleted)
-      .set("totalEpochs", s.totalEpochs)
-      .set("startedAt", s.startedAt)
-      .set("completedAt", s.completedAt);
-  }
-
   private static Json serializeDeploymentSummary(const DeploymentSummary s) {
     return Json.emptyObject
       .set("deploymentId", s.deploymentId)

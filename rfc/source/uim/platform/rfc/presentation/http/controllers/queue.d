@@ -15,7 +15,7 @@ import uim.platform.rfc;
 ///   GET    /api/v1/rfc/queues/*          — list entries in a named queue
 ///   POST   /api/v1/rfc/queues/*/process  — process all pending entries in a queue
 ///   DELETE /api/v1/rfc/queues/entries/*  — delete a specific queue entry
-class QueueController : HttpController {
+class QueueController : ManageHttpController {
 
     private ManageQueuesUseCase _usecase;
 

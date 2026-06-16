@@ -19,10 +19,10 @@ class EncounterController : ManageHttpController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    router.get("/fhir/R4/Encounter",     &handleList);
-    router.get("/fhir/R4/Encounter/*",   &handleGet);
-    router.post("/fhir/R4/Encounter",    &handleCreate);
-    router.put("/fhir/R4/Encounter/*",   &handleUpdate);
+    router.get("/fhir/R4/Encounter", &handleList);
+    router.get("/fhir/R4/Encounter/*", &handleGet);
+    router.post("/fhir/R4/Encounter", &handleCreate);
+    router.put("/fhir/R4/Encounter/*", &handleUpdate);
     router.delete_("/fhir/R4/Encounter/*", &handleDelete);
   }
 
@@ -31,129 +31,133 @@ class EncounterController : ManageHttpController {
       Json.emptyObject.set("resourceType", "OperationOutcome")
         .set("issue", Json.emptyArray ~= Json.emptyObject
           .set("severity", "error").set("code", "processing").set("diagnostics", msg)),
-      status
+        status
     );
   }
 
   private static EncounterStatus parseStatus(string s) {
     switch (s) {
-      case "planned":        return EncounterStatus.planned_;
-      case "arrived":        return EncounterStatus.arrived_;
-      case "triaged":        return EncounterStatus.triaged_;
-      case "in-progress":    return EncounterStatus.inProgress_;
-      case "onleave":        return EncounterStatus.onLeave_;
-      case "finished":       return EncounterStatus.finished_;
-      case "cancelled":      return EncounterStatus.cancelled_;
-      case "entered-in-error": return EncounterStatus.enteredInError;
-      default:               return EncounterStatus.unknown_;
+    case "planned":
+      return EncounterStatus.planned_;
+    case "arrived":
+      return EncounterStatus.arrived_;
+    case "triaged":
+      return EncounterStatus.triaged_;
+    case "in-progress":
+      return EncounterStatus.inProgress_;
+    case "onleave":
+      return EncounterStatus.onLeave_;
+    case "finished":
+      return EncounterStatus.finished_;
+    case "cancelled":
+      return EncounterStatus.cancelled_;
+    case "entered-in-error":
+      return EncounterStatus.enteredInError;
+    default:
+      return EncounterStatus.unknown_;
     }
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-              CreateEncounterRequest r;
-      r.tenantId    = tenantId;
-      r.encounterId = EncounterId(precheck.id);
-      r.status_     = parseStatus(data.getString("status"));
-      auto subjJ = j.get("subject", Json.emptyObject);
-      r.subject_ = FhirReference(subjJ.getString("reference"), subjJ.getString("display"));
-      auto periodJ = j.get("period", Json.emptyObject);
-      r.periodStart_ = periodJ.getString("start");
-      r.periodEnd_   = periodJ.getString("end");
-      auto result = usecase.createEncounter(r);
-      if (result.success)
-        res.writeJsonBody(Json.emptyObject.set("resourceType", "Encounter").set("id", result.id), 201);
-      else
-        writeFhirError(res, 400, result.message);
-    } catch (Exception e) {
-      writeFhirError(res, 500, "Internal server error");
-    }
+    auto data = precheck.data;
+    CreateEncounterRequest r;
+    r.tenantId = tenantId;
+    r.encounterId = EncounterId(precheck.id);
+    r.status_ = toEncounterStatus(data.getString("status"));
+    auto subjJ = data.get("subject", Json.emptyObject);
+    r.subject_ = FhirReference(subjJ.getString("reference"), subjJ.getString("display"));
+    auto periodJ = data.get("period", Json.emptyObject);
+    r.periodStart_ = periodJ.getString("start");
+    r.periodEnd_ = periodJ.getString("end");
+    auto result = usecase.createEncounter(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+      
+    auto resp = Json.emptyObject.set("id", result.id);
+    return successResponse("Encounter created successfully", 201, resp);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      Encounter[] encounters;
-      auto patientParam = req.query.get("subject", "");
-      if (patientParam.length > 0)
-        encounters = usecase.listByPatient(tenantId, patientParam);
-      else
-        encounters = usecase.listEncounters(tenantId);
-      auto entries = Json.emptyArray;
-      foreach (e; encounters) entries ~= e.toJson();
-      res.writeJsonBody(
-        Json.emptyObject.set("resourceType", "Bundle").set("type", "searchset")
-          .set("total", encounters.length).set("entry", entries),
-        200
-      );
-    } catch (Exception e) {
-      writeFhirError(res, 500, "Internal server error");
-    }
+    auto tenantId = precheck.tenantId;
+    Encounter[] encounters;
+    auto patientParam = req.query.get("subject", "");
+    if (patientParam.length > 0)
+      encounters = usecase.listByPatient(tenantId, patientParam);
+    else
+      encounters = usecase.listEncounters(tenantId);
+    auto entries = Json.emptyArray;
+    foreach (e; encounters)
+      entries ~= e.toJson();
+
+    auto resp = Json.emptyObject
+      .set("items", entries)
+      .set("totalCount", encounters.length);
+    return successResponse("Encounters retrieved successfully", 200, resp);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = EncounterId(precheck.id);
-      auto enc = usecase.getEncounter(tenantId, id);
-      if (enc.isNull) { writeFhirError(res, 404, "Encounter not found"); return; }
-      res.writeJsonBody(enc.toJson(), 200);
-    } catch (Exception e) {
-      writeFhirError(res, 500, "Internal server error");
-    }
+    auto tenantId = precheck.tenantId;
+    auto id = EncounterId(precheck.id);
+    auto enc = usecase.getEncounter(tenantId, id);
+    if (enc.isNull)
+      return errorResponse("Encounter not found", 404);
+
+    auto response = enc.toJson();
+    return successResponse("Encounter retrieved successfully", 200, response);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = EncounterId(precheck.id);
-      auto data = precheck.data;
-      UpdateEncounterRequest r;
-      r.tenantId    = tenantId;
-      r.encounterId = id;
-      r.status_     = parseStatus(data.getString("status"));
-      auto subjJ = j.get("subject", Json.emptyObject);
-      r.subject_ = FhirReference(subjJ.getString("reference"), subjJ.getString("display"));
-      auto periodJ = j.get("period", Json.emptyObject);
-      r.periodStart_ = periodJ.getString("start");
-      r.periodEnd_   = periodJ.getString("end");
-      auto result = usecase.updateEncounter(r);
-      if (result.success)
-        res.writeJsonBody(Json.emptyObject.set("resourceType", "Encounter").set("id", result.id), 200);
-      else
-        writeFhirError(res, 400, result.message);
-    } catch (Exception e) {
-      writeFhirError(res, 500, "Internal server error");
-    }
+    auto tenantId = precheck.tenantId;
+    auto id = EncounterId(precheck.id);
+    auto data = precheck.data;
+    UpdateEncounterRequest r;
+    r.tenantId = tenantId;
+    r.encounterId = id;
+    r.status_ = toEncounterStatus(data.getString("status"));
+    auto subjJ = data.get("subject", Json.emptyObject);
+    r.subject_ = FhirReference(subjJ.getString("reference"), subjJ.getString("display"));
+    auto periodJ = data.get("period", Json.emptyObject);
+    r.periodStart_ = periodJ.getString("start");
+    r.periodEnd_ = periodJ.getString("end");
+    auto result = usecase.updateEncounter(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto resp = Json.emptyObject.set("id", id);
+    return successResponse("Encounter updated successfully", "Updated", 200, resp);
+
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = EncounterId(precheck.id);
-      auto result = usecase.deleteEncounter(tenantId, id);
-      if (result.success) res.writeBody("", cast(int) HTTPStatus.noContent, "application/json");
-      else writeFhirError(res, 404, result.message);
-    } catch (Exception e) {
-      writeFhirError(res, 500, "Internal server error");
-    }
+    auto tenantId = precheck.tenantId;
+    auto id = EncounterId(precheck.id);
+    auto result = usecase.deleteEncounter(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto resp = Json.emptyObject.set("id", id);
+    return successResponse("Encounter deleted successfully", "Deleted", 200, resp);
   }
 }
