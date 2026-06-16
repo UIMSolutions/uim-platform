@@ -9,7 +9,7 @@ module uim.platform.master_data_integration.domain.ports.repositories.data_model
 // import uim.platform.master_data_integration.domain.types;
 import uim.platform.master_data_integration;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — data model/schema persistence.

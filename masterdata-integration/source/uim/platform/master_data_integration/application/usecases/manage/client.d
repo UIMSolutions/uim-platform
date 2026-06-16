@@ -11,7 +11,7 @@ module uim.platform.master_data_integration.application.usecases.manage.client;
 
 import uim.platform.master_data_integration;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Application service for connected client system management.

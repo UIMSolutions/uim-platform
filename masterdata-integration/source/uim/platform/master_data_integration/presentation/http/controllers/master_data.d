@@ -11,7 +11,7 @@ module uim.platform.master_data_integration.presentation.http.controllers.master
 
 import uim.platform.master_data_integration;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MasterDataController : ManageHttpController {

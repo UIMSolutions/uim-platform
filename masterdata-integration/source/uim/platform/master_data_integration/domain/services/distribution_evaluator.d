@@ -10,7 +10,7 @@ module uim.platform.master_data_integration.domain.services.distribution_evaluat
 
 import uim.platform.master_data_integration;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Domain service: evaluates whether a master data object matches distribution

@@ -7,7 +7,7 @@ module uim.platform.master_data_integration.domain.entities.key_mapping;
 
 import uim.platform.master_data_integration;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// A key mapping entry — maps IDs across different systems.

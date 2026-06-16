@@ -9,7 +9,7 @@ module uim.platform.master_data_integration.domain.ports.repositories.master_dat
 // import uim.platform.master_data_integration.domain.types;
 import uim.platform.master_data_integration;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — master data object persistence.

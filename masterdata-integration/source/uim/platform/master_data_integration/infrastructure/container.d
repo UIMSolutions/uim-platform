@@ -41,7 +41,7 @@ import uim.platform.master_data_integration.application.usecases;
 import uim.platform.master_data_integration.presentation.http.controllers;
 import uim.platform.master_data_integration;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Dependency injection container — wires all layers together.

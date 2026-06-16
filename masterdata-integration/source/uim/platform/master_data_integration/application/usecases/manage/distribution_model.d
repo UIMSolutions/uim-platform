@@ -10,7 +10,7 @@ module uim.platform.master_data_integration.application.usecases.manage.distribu
 
 import uim.platform.master_data_integration;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Application service for distribution model management.

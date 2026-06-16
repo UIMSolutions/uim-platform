@@ -7,7 +7,7 @@ module uim.platform.master_data_integration.domain.entities.filter_rule;
 
 import uim.platform.master_data_integration;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// A filter rule for selective master data distribution.

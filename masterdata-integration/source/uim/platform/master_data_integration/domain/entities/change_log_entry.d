@@ -7,7 +7,7 @@ module uim.platform.master_data_integration.domain.entities.change_log_entry;
 
 import uim.platform.master_data_integration;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// A change log entry for tracking master data modifications.
