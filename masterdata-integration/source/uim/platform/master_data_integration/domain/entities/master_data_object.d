@@ -44,7 +44,7 @@ struct MasterDataObject {
     }
 
     return entityToJson
-      .set("dataModelId", dataModelId.value)
+      .set("dataModelId", modelId.value)
       .set("category", category.to!string)
       .set("status", status.to!string)
       .set("objectType", objectType)

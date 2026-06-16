@@ -156,7 +156,7 @@ class ClientController : ManageHttpController {
     if (id.isNull)
       return errorResponse("Invalid client ID", 400);
 
-    auto result = usecase.deleteClient(id);
+    auto result = usecase.deleteClient(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
 
@@ -191,7 +191,7 @@ class ClientController : ManageHttpController {
     }
   }
 
-  protected Json diconnectHandler(HTTPServerRequest req) {
+  protected Json disconnectHandler(HTTPServerRequest req) {
     auto precheck = super.postHandler(req);
     if (precheck.hasError)
       return precheck;

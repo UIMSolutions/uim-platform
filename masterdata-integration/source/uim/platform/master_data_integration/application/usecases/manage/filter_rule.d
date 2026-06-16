@@ -25,8 +25,6 @@ class ManageFilterRulesUseCase { // TODO: UIMUseCase {
     if (req.name.length == 0)
       return CommandResult(false, "", "Filter rule name is required");
 
-   
-
     FilterRule rule;
     rule.initEntity(req.tenantId, req.createdBy);
 
@@ -43,8 +41,8 @@ class ManageFilterRulesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, rule.id.value, "");
   }
 
-  CommandResult updateRule(TenantId tenantId, FilterRuleId id, UpdateFilterRuleRequest req) {
-    auto rule = repo.findById(tenantId, id);
+  CommandResult updateRule(UpdateFilterRuleRequest req) {
+    auto rule = repo.findById(req.tenantId, req.ruleId);
     if (rule.isNull)
       return CommandResult(false, "", "Filter rule not found");
 
@@ -58,7 +56,7 @@ class ManageFilterRulesUseCase { // TODO: UIMUseCase {
     rule.updatedAt = clockSeconds();
 
     repo.update(rule);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, rule.id.value, "");
   }
 
   FilterRule getRule(TenantId tenantId, FilterRuleId id) {

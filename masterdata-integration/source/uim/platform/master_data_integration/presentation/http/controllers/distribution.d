@@ -48,9 +48,9 @@ class DistributionController : ManageHttpController {
     r.direction = data.getString("direction");
     r.sourceClientId = data.getString("sourceClientId");
     r.targetClientIds = data.getStrings("targetClientIds").map!(id => ClientId(id)).array;
-    r.categories = toMasterDataCategories(data.getStrings("categories"));
+    r.categories = data.getStrings("categories");
     r.dataModelIds = data.getStrings("dataModelIds").map!(id => DataModelId(id)).array;
-    r.filterRuleIds = data.getStrings("filterRuleIds");
+    r.filterRuleIds = data.getStrings("filterRuleIds").map!(id => FilterRuleId(id)).array;
     r.autoReplicate = data.getBoolean("autoReplicate");
     r.cronSchedule = data.getString("cronSchedule");
     r.createdBy = UserId(req.headers.get("X-User-Id", ""));
@@ -123,9 +123,9 @@ class DistributionController : ManageHttpController {
     r.description = data.getString("description");
     r.status = data.getString("status");
     r.targetClientIds = data.getStrings("targetClientIds").map!(id => ClientId(id)).array;
-    r.categories = toMasterDataCategories(data.getStrings("categories"));
+    r.categories = data.getStrings("categories");
     r.dataModelIds = data.getStrings("dataModelIds").map!(id => DataModelId(id)).array;
-    r.filterRuleIds = data.getStrings("filterRuleIds");
+    r.filterRuleIds = data.getStrings("filterRuleIds").map!(id => FilterRuleId(id)).array;
     r.autoReplicate = data.getBoolean("autoReplicate");
     r.cronSchedule = data.getString("cronSchedule");
 

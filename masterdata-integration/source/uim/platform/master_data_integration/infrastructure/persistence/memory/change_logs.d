@@ -82,7 +82,7 @@ class MemoryChangeLogRepository : TenantRepository!(ChangeLogEntry, ChangeLogEnt
 
   ChangeLogEntry[] findSinceDeltaToken(TenantId tenantId, string deltaToken) {
     // Find the timestamp associated with the delta token
-    return filterSinceTimestamp(findByTenant(tenantId), deltaToken);
+    return filterSinceDeltaToken(findByTenant(tenantId), deltaToken);
   }
 
   void removeSinceDeltaToken(TenantId tenantId, string deltaToken) {

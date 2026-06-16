@@ -34,20 +34,20 @@ class MemoryMasterDataObjectRepository : TenantRepository!(MasterDataObject, Mas
     findByCategory(tenantId, category).each!(e => remove(e));
   }
 
-  size_t countByDataModel(TenantId tenantId, DataModelId dataModelId) {
-    return findByDataModel(tenantId, dataModelId).length;
+  size_t countByDataModel(TenantId tenantId, DataModelId modelId) {
+    return findByDataModel(tenantId, modelId).length;
   }
 
-  MasterDataObject[] filterByDataModel(MasterDataObject[] objects, DataModelId dataModelId) {
-    return objects.filter!(e => e.dataModelId == dataModelId).array;
+  MasterDataObject[] filterByDataModel(MasterDataObject[] objects, DataModelId modelId) {
+    return objects.filter!(e => e.modelId == modelId).array;
   }
 
-  MasterDataObject[] findByDataModel(TenantId tenantId, DataModelId dataModelId) {
-    return findByTenant(tenantId).filter!(e => e.dataModelId == dataModelId).array;
+  MasterDataObject[] findByDataModel(TenantId tenantId, DataModelId modelId) {
+    return findByTenant(tenantId).filter!(e => e.modelId == modelId).array;
   }
 
-  void removeByDataModel(TenantId tenantId, DataModelId dataModelId) {
-    findByDataModel(tenantId, dataModelId).each!(e => remove(e));
+  void removeByDataModel(TenantId tenantId, DataModelId modelId) {
+    findByDataModel(tenantId, modelId).each!(e => remove(e));
   }
 
   size_t countBySourceSystem(TenantId tenantId, string sourceSystem) {
@@ -79,6 +79,6 @@ class MemoryMasterDataObjectRepository : TenantRepository!(MasterDataObject, Mas
   }
 
   void removeByGlobal(TenantId tenantId, string globalId) {
-    findByGlobal(tenantId, globalId).each!(entity => remove(entity));
+    remove(findByGlobal(tenantId, globalId));
   }
 }

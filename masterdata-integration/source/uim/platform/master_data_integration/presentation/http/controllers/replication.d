@@ -43,7 +43,7 @@ class ReplicationController : ManageHttpController {
     auto data = precheck.data;
     CreateReplicationJobRequest r;
     r.tenantId = tenantId;
-    r.distributionModelId = data.getString("distributionModelId");
+    r.modelId = data.getString("distributionModelId");
     r.name = data.getString("name");
     r.description = data.getString("description");
     r.trigger = data.getString("trigger");
@@ -53,7 +53,7 @@ class ReplicationController : ManageHttpController {
     r.isInitialLoad = data.getBoolean("isInitialLoad");
     r.createdBy = UserId(req.headers.get("X-User-Id", ""));
 
-    auto result = usecase.create(r);
+    auto result = usecase.createJob(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
     auto resp = Json.emptyObject.set("id", result.id);
@@ -71,11 +71,11 @@ class ReplicationController : ManageHttpController {
 
     ReplicationJob[] jobs;
     if (!status.isEmpty)
-      jobs = usecase.listReplicationJobs(tenantId, status);
+      jobs = usecase.listJobs(tenantId, status);
     else if (!modelId.isEmpty)
-      jobs = usecase.listReplicationJobs(tenantId, modelId);
+      jobs = usecase.listJobs(tenantId, modelId);
     else
-      jobs = usecase.listReplicationJobs(tenantId);
+      jobs = usecase.listJobs(tenantId);
 
     auto arr = jobs.map!(j => j.toJson).array.toJson;
 
@@ -96,7 +96,7 @@ class ReplicationController : ManageHttpController {
     if (id.isNull)
       return errorResponse("Invalid replication job ID", 400);
 
-    auto job = usecase.getReplicationJob(tenantId, id);
+    auto job = usecase.getJob(tenantId, id);
     if (job.isNull)
       return errorResponse("Replication job not found", 404);
 
@@ -114,7 +114,7 @@ class ReplicationController : ManageHttpController {
     if (id.isNull)
       return errorResponse("Invalid replication job ID", 400);
 
-    auto result = usecase.startReplicationJob(tenantId, id);
+    auto result = usecase.startJob(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
     auto resp = Json.emptyObject.set("id", result.id);
@@ -141,7 +141,7 @@ class ReplicationController : ManageHttpController {
     if (id.isNull)
       return errorResponse("Invalid replication job ID", 400);
 
-    auto result = usecase.pauseReplicationJob(tenantId, id);
+    auto result = usecase.pauseJob(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
     auto resp = Json.emptyObject.set("id", result.id);
@@ -168,7 +168,7 @@ class ReplicationController : ManageHttpController {
     if (id.isNull)
       return errorResponse("Invalid replication job ID", 400);
 
-    auto result = usecase.cancelReplicationJob(tenantId, id);
+    auto result = usecase.cancelJob(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
     auto resp = Json.emptyObject.set("id", result.id);
@@ -192,7 +192,7 @@ class ReplicationController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto id = ReplicationJobId(precheck.id);
-    auto result = usecase.deleteReplicationJob(tenantId, id);
+    auto result = usecase.deleteJob(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
     auto resp = Json.emptyObject.set("id", result.id);

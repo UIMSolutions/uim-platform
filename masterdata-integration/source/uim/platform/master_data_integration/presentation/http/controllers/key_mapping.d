@@ -45,7 +45,7 @@ class KeyMappingController : ManageHttpController {
     r.objectId = data.getString("masterDataObjectId");
     r.category = data.getString("category");
     r.objectType = data.getString("objectType");
-    r.entries = parseEntries(j);
+    r.entries = parseEntries(data);
 
     auto result = usecase.createMapping(r);
     if (result.hasError)

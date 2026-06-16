@@ -104,7 +104,7 @@ class ManageDistributionModelsUseCase { // TODO: UIMUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  DistributionModel[] listModelsByStatus(TenantId tenantId, string status) {
+  DistributionModel[] listModels(TenantId tenantId, string status) {
     return repo.findByStatus(tenantId, toDistributionModelStatus(status));
   }
 

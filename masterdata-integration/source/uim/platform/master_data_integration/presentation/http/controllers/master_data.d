@@ -103,10 +103,9 @@ class MasterDataController : ManageHttpController {
   protected void handleLookupByGlobal(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto response = lookupByGlobalHandler(req);
-      res.writeJson(response, response.statusCode);
+     res.writeJsonBody(response, response.code);
     } catch (Exception e) {
-      auto errorResp = errorResponse("An unexpected error occurred: " ~ e.msg, 500);
-      res.writeJson(errorResp);
+      writeError(res, 500, "Internal server error");
     }
   }
 

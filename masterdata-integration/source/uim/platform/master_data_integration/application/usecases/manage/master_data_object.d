@@ -26,7 +26,7 @@ class ManageMasterDataObjectsUseCase { // TODO: UIMUseCase {
     this.changeLogRepo = changeLogRepo;
   }
 
-  CommandResult createMasterDataObject(CreateMasterDataObjectRequest req) {
+  CommandResult createObject(CreateMasterDataObjectRequest req) {
     if (req.objectType.length == 0)
       return CommandResult(false, "", "Object type is required");
     if (req.displayName.length == 0)

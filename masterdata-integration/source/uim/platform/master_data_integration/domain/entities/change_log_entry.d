@@ -15,7 +15,7 @@ struct ChangeLogEntry {
   mixin TenantEntity!(ChangeLogEntryId);
 
   MasterDataObjectId objectId;
-  DataModelId dataModelId;
+  DataModelId modelId;
   MasterDataCategory category = MasterDataCategory.businessPartner;
   ChangeType changeType = ChangeType.create_;
 
@@ -47,7 +47,7 @@ struct ChangeLogEntry {
 
     return entityToJson
       .set("objectId", objectId.value)
-      .set("dataModelId", dataModelId.value)
+      .set("modelId", modelId.value)
       .set("category", category.to!string)
       .set("changeType", changeType.to!string)
       .set("objectType", objectType)
