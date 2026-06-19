@@ -70,7 +70,7 @@ class MemoryScheduleRepository : TenantRepository!(Schedule, ScheduleId), Schedu
 
     Schedule[] search(TenantId tenantId, string query) {
         auto q = query.toLower;
-        return findByTenant(tenantId).filter!(s => s.description.toLower.canFind(q) || s.jobId.toLower.canFind(
+        return findByTenant(tenantId).filter!(s => s.description.toLower.canFind(q) || s.jobId.value.toLower.canFind(
                 q)).array;
     }
 

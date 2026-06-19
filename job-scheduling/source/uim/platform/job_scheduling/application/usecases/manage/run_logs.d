@@ -68,7 +68,6 @@ class ManageRunLogsUseCase { // TODO: UIMUseCase {
         if (targetStatus == RunStatus.triggered)
             runlog.triggeredAt = currentTimestamp;
         
-
         repo.update(runlog);
         return CommandResult(true, runlog.id.value, "");
     }

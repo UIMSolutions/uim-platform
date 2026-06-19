@@ -84,7 +84,7 @@ class ScheduleController : ManageHttpController {
         auto jobId = JobId(extractJobIdFromSchedulePath(path));
 
         auto schedules = usecase.listSchedules(tenantId, jobId);
-        auto jarr = schedules.map!(s => s,toJson).array.toJson;
+        auto jarr = schedules.map!(s => s.toJson).array.toJson;
 
         auto resp = Json.emptyObject
             .set("total", schedules.length)
@@ -107,7 +107,7 @@ class ScheduleController : ManageHttpController {
         if (s.isNull)
             return errorResponse("Schedule not found", 404);
 
-        return successResponse("Schedule retrieved successfully", "Retrieved", 200, toJson(s));
+        return successResponse("Schedule retrieved successfully", "Retrieved", 200, s.toJson);
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -151,7 +151,7 @@ class ScheduleController : ManageHttpController {
         auto path = precheck.path;
         auto ids = extractJobAndScheduleIds(path);
 
-        auto result = usecase.deleteSchedule(tenantId, ScheduleId(ids[1]), JobId(ids[0]));
+        auto result = usecase.deleteSchedule(tenantId, ScheduleId(ids[1])); //), JobId(ids[0]));
         if (result.hasError)
             return errorResponse(result.message, 400);
 
@@ -166,11 +166,14 @@ class ScheduleController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto path = precheck.path;
-        auto jobId = JobId(extractJobIdFromSchedulePath(path));
+        auto id = JobId(extractJobIdFromSchedulePath(path));
+        if (id.isEmpty)
+            return errorResponse("Invalid job ID in path", 400);
+
         auto data = precheck.data;
         ActivateAllSchedulesRequest r;
         r.tenantId = tenantId;
-        r.jobId = jobId;
+        r.jobId = id;
         r.active = data.getBoolean("active", true);
 
         auto result = usecase.activateAllSchedules(r);
@@ -179,7 +182,8 @@ class ScheduleController : ManageHttpController {
 
         auto resp = Json.emptyObject
             .set("message", r.active
-                    ? "All schedules activated" : "All schedules deactivated");
+                    ? "All schedules activated" 
+                    : "All schedules deactivated");
 
         return successResponse("All schedules updated successfully", "Updated", 200, resp);
     }
@@ -204,14 +208,12 @@ class ScheduleController : ManageHttpController {
         if (query.isEmpty)
             return errorResponse("Missing search query parameter 'q'", 400);
 
-        auto schedules = usecase.searchSchedules(query, tenantId, query);
-
-        auto jarr = schedules.map!(s => toJson(s)).array.toJson;
+        auto schedules = usecase.searchSchedules(tenantId, query);
+        auto jarr = schedules.map!(s => s.toJson).array.toJson;
 
         auto resp = Json.emptyObject
             .set("total", schedules.length)
-            .set("results", jarr)
-            .set("message", "Search completed");
+            .set("results", jarr);
 
         return successResponse("Search completed successfully", "Retrieved", 200, resp);
     }
@@ -252,5 +254,4 @@ class ScheduleController : ManageHttpController {
         }
         return ids;
     }
-
 }
