@@ -25,7 +25,7 @@ class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
         rr.legalGroundId = LegalGroundId(req.legalGroundId);
         rr.duration = req.duration;
         rr.periodUnit = parsePeriodUnit(req.periodUnit);
-        rr.actionOnExpiry = parseDeletionActionType(req.actionOnExpiry);
+        rr.actionOnExpiry = toDeletionActionType(req.actionOnExpiry);
         rr.isActive = true;
         rr.createdBy = req.createdBy;
         rr.createdAt = clockSeconds();

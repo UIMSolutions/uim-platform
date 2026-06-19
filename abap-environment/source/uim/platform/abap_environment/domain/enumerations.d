@@ -15,6 +15,18 @@ enum SystemPlan {
   test,
   production,
 }
+
+SystemPlan toSystemPlan(string plan) {
+  const map = [
+    "standard": SystemPlan.standard,
+    "free": SystemPlan.free_,
+    "development": SystemPlan.development,
+    "test": SystemPlan.test,
+    "production": SystemPlan.production,
+  ];
+  return map.get(plan.toLower, SystemPlan.standard);
+}
+
 /// Lifecycle status of an ABAP system instance.
 enum SystemStatus {
   active,
@@ -25,6 +37,18 @@ enum SystemStatus {
   deleted,
   error,
 }
+
+SystemStatus toSystemStatus(string status) {
+  switch (status.toLower) {
+    static foreach (member; __traits(allMembers, SystemStatus)) {
+  case member:
+      return __traits(getMember, SystemStatus, member);
+    }
+  default:
+    return SystemStatus.provisioning;
+  }
+}
+
 /// Software component type.
 enum ComponentType {
   developmentPackage,
@@ -64,22 +88,22 @@ enum CommunicationProtocol {
 /// Authentication method used in communication arrangements.
 enum CommunicationAuthMethod {
   basicAuthentication, // default
-  oauth2ClientCredentials,    
-  oauth2SAMLBearerAssertion,  
+  oauth2ClientCredentials,
+  oauth2SAMLBearerAssertion,
   clientCertificate,
   noAuthentication // 
 }
 /// Status of a communication arrangement.
 enum ArrangementStatus {
   active, // default
-  inactive, 
+  inactive,
   error
 }
 // ─── Service Binding ───
 /// Binding type for service exposure.
 enum BindingType {
   odataV4,
-  odataV2, 
+  odataV2,
   soapHttp,
   restHttp,
   sql,

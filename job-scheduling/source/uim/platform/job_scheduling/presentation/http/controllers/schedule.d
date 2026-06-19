@@ -6,7 +6,7 @@
 module uim.platform.job_scheduling.presentation.http.controllers.schedule;
 
 // import uim.platform.job_scheduling.application.usecases.manage.schedules;
-// import uim.platform.job_scheduling.application.dto;
+
 
 import uim.platform.job_scheduling;
 
@@ -26,7 +26,9 @@ class ScheduleController : ManageHttpController {
 
         // /api/v1/scheduler/jobs/{jobId}/schedules
         router.post("/api/v1/scheduler/jobs/*/schedules", &handleCreate);
+        // /api/v1/scheduler/jobs/{jobId}/schedules
         router.get("/api/v1/scheduler/jobs/*/schedules", &handleList);
+        // /api/v1/scheduler/jobs/{jobId}/schedules/{scheduleId}
         router.put("/api/v1/scheduler/jobs/*/schedules/activate", &handleActivateAll);
         router.get("/api/v1/scheduler/jobs/*/schedules/*", &handleGet);
         router.put("/api/v1/scheduler/jobs/*/schedules/*", &handleUpdate);
@@ -41,33 +43,33 @@ class ScheduleController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto tenantId = precheck.tenantId;
 
         auto path = precheck.path;
-        auto jobId = extractJobIdFromSchedulePath(path);
+        auto id = JobId(extractJobIdFromSchedulePath(path));
+        if (id.isEmpty)
+            return errorResponse("Invalid job ID in path", 400);
+
         auto data = precheck.data;
         CreateScheduleRequest r;
         r.tenantId = tenantId;
-        r.jobId = jobId;
+        r.jobId = id;
         r.description = data.getString("description");
         r.type = data.getString("type");
         r.format = data.getString("format");
         r.active = data.getBoolean("active", true);
         r.cronExpression = data.getString("cron");
         r.humanReadableSchedule = data.getString("humanReadableSchedule");
-        r.repeatInterval = getLong(j, "repeatInterval");
-        r.repeatAt = getLong(j, "repeatAt");
-        r.time = getLong(j, "time");
-        r.startTime = getLong(j, "startTime");
-        r.endTime = getLong(j, "endTime");
+        r.repeatInterval = data.getLong("repeatInterval");
+        r.repeatAt = data.getLong("repeatAt");
+        r.time = data.getLong("time");
+        r.startTime = data.getLong("startTime");
+        r.endTime = data.getLong("endTime");
 
         auto result = usecase.createSchedule(r);
         if (result.hasError)
             return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("jobId", jobId);
 
+        auto resp = Json.emptyObject.set("id", result.id);
         return successResponse("Schedule created successfully", "Created", 201, resp);
     }
 
@@ -82,7 +84,7 @@ class ScheduleController : ManageHttpController {
         auto jobId = JobId(extractJobIdFromSchedulePath(path));
 
         auto schedules = usecase.listSchedules(tenantId, jobId);
-        auto jarr = schedules.map!(s => toJson(s)).array.toJson;
+        auto jarr = schedules.map!(s => s,toJson).array.toJson;
 
         auto resp = Json.emptyObject
             .set("total", schedules.length)
@@ -101,7 +103,7 @@ class ScheduleController : ManageHttpController {
         auto path = precheck.path;
         auto ids = extractJobAndScheduleIds(path);
 
-        auto s = usecase.getSchedule(tenantId, ScheduleId(ids[1]), JobId(ids[0]));
+        auto s = usecase.getSchedule(tenantId, ScheduleId(ids[1])); //, JobId(ids[0]));
         if (s.isNull)
             return errorResponse("Schedule not found", 404);
 
@@ -116,6 +118,7 @@ class ScheduleController : ManageHttpController {
         auto tenantId = precheck.tenantId;
         auto path = precheck.path;
         auto ids = extractJobAndScheduleIds(path);
+
         auto data = precheck.data;
         UpdateScheduleRequest r;
         r.tenantId = tenantId;
@@ -125,11 +128,11 @@ class ScheduleController : ManageHttpController {
         r.active = data.getBoolean("active", true);
         r.cronExpression = data.getString("cron");
         r.humanReadableSchedule = data.getString("humanReadableSchedule");
-        r.repeatInterval = getLong(j, "repeatInterval");
-        r.repeatAt = getLong(j, "repeatAt");
-        r.time = getLong(j, "time");
-        r.startTime = getLong(j, "startTime");
-        r.endTime = getLong(j, "endTime");
+        r.repeatInterval = getLong(data, "repeatInterval");
+        r.repeatAt = getLong(data, "repeatAt");
+        r.time = getLong(data, "time");
+        r.startTime = getLong(data, "startTime");
+        r.endTime = getLong(data, "endTime");
 
         auto result = usecase.updateSchedule(r);
         if (result.hasError)
@@ -173,6 +176,7 @@ class ScheduleController : ManageHttpController {
         auto result = usecase.activateAllSchedules(r);
         if (result.hasError)
             return errorResponse(result.message, 400);
+
         auto resp = Json.emptyObject
             .set("message", r.active
                     ? "All schedules activated" : "All schedules deactivated");
@@ -189,21 +193,33 @@ class ScheduleController : ManageHttpController {
         }
     }
 
+    protected Json searchHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+
+        auto query = req.params.get("q", "");
+        if (query.isEmpty)
+            return errorResponse("Missing search query parameter 'q'", 400);
+
+        auto schedules = usecase.searchSchedules(query, tenantId, query);
+
+        auto jarr = schedules.map!(s => toJson(s)).array.toJson;
+
+        auto resp = Json.emptyObject
+            .set("total", schedules.length)
+            .set("results", jarr)
+            .set("message", "Search completed");
+
+        return successResponse("Search completed successfully", "Retrieved", 200, resp);
+    }
+
     protected void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = precheck.tenantId;
-            auto query = req.params.get("q", "");
-
-            auto schedules = usecase.searchSchedules(query, tenantId, query);
-
-            auto jarr = schedules.map!(s => toJson(s)).array.toJson;
-
-            auto resp = Json.emptyObject
-                .set("total", schedules.length)
-                .set("results", jarr)
-                .set("message", "Search completed");
-
-            res.writeJsonBody(resp, 200);
+            auto response = searchHandler(req);
+            res.writeJsonBody(response, response.code);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

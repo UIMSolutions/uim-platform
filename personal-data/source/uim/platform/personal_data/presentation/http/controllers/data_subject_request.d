@@ -51,8 +51,7 @@ class DataSubjectRequestController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
 
-        auto responseData = Json.emptyObject
-            .set("id", result.id);
+        auto responseData = Json.emptyObject.set("id", result.id);
 
         return successResponse("Data subject request created successfully", "Created", 201, responseData);
     }
@@ -128,8 +127,7 @@ class DataSubjectRequestController : ManageHttpController {
         auto result = usecase.update(r);
         if (result.hasError)
             return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-            .set("id", result.id);
+        auto resp = Json.emptyObject.set("id", result.id);
         return successResponse("Data subject request updated successfully", "Updated", 200, resp);
     }
 
@@ -143,8 +141,7 @@ class DataSubjectRequestController : ManageHttpController {
         auto result = usecase.deleteDataSubjectRequest(tenantId, id);
         if (result.hasError)
             return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-            .set("id", result.id);
+        auto resp = Json.emptyObject.set("id", result.id);
         return successResponse("Data subject request deleted successfully", "Deleted", 200, resp);
     }
 }

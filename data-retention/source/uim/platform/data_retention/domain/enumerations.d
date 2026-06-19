@@ -1,3 +1,8 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module uim.platform.data_retention.domain.enumerations;
 import uim.platform.data_retention;
 
@@ -11,6 +16,7 @@ enum BusinessPurposeStatus {
     active,
     deprecated_
 }
+
 BusinessPurposeStatus toBusinessPurposeStatus(string name) {
     const map = [
         "inactive": BusinessPurposeStatus.inactive,
@@ -29,6 +35,7 @@ enum LegalGroundType {
     publicInterest,
     legitimateInterest
 }
+
 LegalGroundType toLegalGroundType(string name) {
     const map = [
         "consent": LegalGroundType.consent,
@@ -48,6 +55,7 @@ enum PeriodUnit {
     months,
     years
 }
+
 PeriodUnit toPeriodUnit(string name) {
     const map = [
         "days": PeriodUnit.days,
@@ -66,6 +74,7 @@ enum DataLifecycleStatus {
     deleted,
     archived
 }
+
 DataLifecycleStatus toDataLifecycleStatus(string name) {
     const map = [
         "active": DataLifecycleStatus.active,
@@ -119,6 +128,7 @@ enum ArchivingJobStatus {
     failed,
     cancelled
 }
+
 ArchivingJobStatus toArchivingJobStatus(string name) {
     const map = [
         "scheduled": ArchivingJobStatus.scheduled,
@@ -136,15 +146,14 @@ enum ArchivingOperationType {
     destruct,
     archiveAndDestruct
 }
-
-    ArchivingOperationType toArchivingOperationType(string name) {
+ArchivingOperationType toArchivingOperationType(string name) {
     const map = [
         "archive": ArchivingOperationType.archive,
         "destruct": ArchivingOperationType.destruct,
         "archiveAndDestruct": ArchivingOperationType.archiveAndDestruct
     ];
     return map.get(name.toLower(), ArchivingOperationType.archive);
-    }
+}
 
 /// Scope of an application group
 enum ApplicationGroupScope {
@@ -152,6 +161,7 @@ enum ApplicationGroupScope {
     regional,
     local
 }
+
 ApplicationGroupScope toApplicationGroupScope(string name) {
     const map = [
         "global": ApplicationGroupScope.global,
@@ -169,6 +179,7 @@ enum PurposeCheckResult {
     endOfRetention,
     noRuleFound
 }
+
 PurposeCheckResult toPurposeCheckResult(string name) {
     const map = [
         "withinResidence": PurposeCheckResult.withinResidence,

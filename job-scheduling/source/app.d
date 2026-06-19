@@ -5,14 +5,7 @@
 *****************************************************************************************************************/
 module app;
 
-import uim.platform.job_scheduling.infrastructure.config;
-import uim.platform.job_scheduling.infrastructure.container;
-
-import std.stdio : writefln;
-import vibe.http.router : URLRouter;
-import vibe.http.server : HTTPServerSettings;
-import vibe.http.server : listenHTTP;
-import vibe.core.core : runApplication;
+import uim.platform.job_scheduling;
 
 version (unittest) {
 } else {

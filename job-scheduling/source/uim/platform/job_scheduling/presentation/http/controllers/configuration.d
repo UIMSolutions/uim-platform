@@ -6,7 +6,6 @@
 module uim.platform.job_scheduling.presentation.http.controllers.configuration;
 
 // import uim.platform.job_scheduling.application.usecases.manage.configurations;
-// import uim.platform.job_scheduling.application.dto;
 
 import uim.platform.job_scheduling;
 
@@ -23,7 +22,7 @@ class ConfigurationController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        
+
         router.get("/api/v1/scheduler/configuration", &handleGet);
         router.put("/api/v1/scheduler/configuration", &handleUpdate);
     }
@@ -34,19 +33,16 @@ class ConfigurationController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto config = usecase.getConfiguration(tenantId);
+        auto config = usecase.getConfiguration(tenantId);
 
-            auto resp = Json.emptyObject
-                .set("defaultRetries", config.defaultRetries)
-                .set("defaultRetryDelayMs", config.defaultRetryDelayMs)
-                .set("maxRunDurationMs", config.maxRunDurationMs)
-                .set("enableAsyncMode", config.enableAsyncMode)
-                .set("enableAlertNotifications", config.enableAlertNotifications);
+        auto resp = Json.emptyObject
+            .set("defaultRetries", config.defaultRetries)
+            .set("defaultRetryDelayMs", config.defaultRetryDelayMs)
+            .set("maxRunDurationMs", config.maxRunDurationMs)
+            .set("enableAsyncMode", config.enableAsyncMode)
+            .set("enableAlertNotifications", config.enableAlertNotifications);
 
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        return successResponse("Configuration retrieved", "Configuration retrieved", 200, resp);
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -55,28 +51,22 @@ class ConfigurationController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto data = precheck.data;
-            UpdateConfigurationRequest r;
-            r.tenantId = tenantId;
-            r.defaultRetries = data.getInteger("defaultRetries", 3);
-            r.defaultRetryDelayMs = data.getLong("defaultRetryDelayMs", 30000);
-            r.maxRunDurationMs = data.getLong("maxRunDurationMs", 600000);
-            r.enableAsyncMode = data.getBoolean("enableAsyncMode", true);
-            r.enableAlertNotifications = data.getBoolean("enableAlertNotifications", false);
 
-            auto result = usecase.updateConfiguration(r);
-            if (result.hasError)
+        auto data = precheck.data;
+        UpdateConfigurationRequest r;
+        r.tenantId = tenantId;
+        r.defaultRetries = data.getInteger("defaultRetries", 3);
+        r.defaultRetryDelayMs = data.getLong("defaultRetryDelayMs", 30000);
+        r.maxRunDurationMs = data.getLong("maxRunDurationMs", 600000);
+        r.enableAsyncMode = data.getBoolean("enableAsyncMode", true);
+        r.enableAlertNotifications = data.getBoolean("enableAlertNotifications", false);
+
+        auto result = usecase.updateConfiguration(r);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Configuration updated");
-                
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+
+        auto resp = Json.emptyObject.set("id", result.id);
+
+        return successResponse("Configuration updated", "Configuration updated", 200, resp);
     }
 }

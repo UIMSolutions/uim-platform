@@ -90,8 +90,7 @@ class TechnicianController : ManageHttpController {
         auto result = usecase.createTechnician(dto);
         if (result.hasError)
             return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-            .set("id", result.id);
+        auto resp = Json.emptyObject.set("id", result.id);
 
         return successResponse("Technician created successfully", "Created", 201, resp);
 

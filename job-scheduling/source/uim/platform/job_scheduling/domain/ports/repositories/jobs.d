@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.job_scheduling.domain.ports.repositories.jobs;
 
-// import uim.platform.job_scheduling.domain.types;
+
 // import uim.platform.job_scheduling.domain.entities.job;
 import uim.platform.job_scheduling;
 

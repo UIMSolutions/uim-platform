@@ -39,7 +39,7 @@ long getLong(Json j, string key, long def = 0) {
 }
 
 uint getUint(Json j, string key, uint def = 0) {
-    return cast(uint) getLong(j, key, cast(long) def);
+    return cast(uint) data.getLong(key, cast(long) def);
 }
 
 string[] getStringArray(Json j, string key) {

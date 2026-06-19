@@ -84,8 +84,7 @@ class PrintQueueController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
 
-        auto resp = Json.emptyObject
-            .set("id", result.id);
+        auto resp = Json.emptyObject.set("id", result.id);
         return successResponse("Print queue created successfully", 201, resp);
     }
 
@@ -110,8 +109,7 @@ class PrintQueueController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 404);
 
-        auto resp = Json.emptyObject
-            .set("id", result.id);
+        auto resp = Json.emptyObject.set("id", result.id);
 
         return successResponse("Print queue updated successfully", 200, resp);
     }
@@ -128,8 +126,7 @@ class PrintQueueController : ManageHttpController {
         if (result.hasError) {
             return errorResponse(result.message, 404);
         }
-        auto resp = Json.emptyObject
-            .set("id", result.id);
+        auto resp = Json.emptyObject.set("id", result.id);
         return successResponse("Print queue deleted successfully", 200, resp);
     }
 }

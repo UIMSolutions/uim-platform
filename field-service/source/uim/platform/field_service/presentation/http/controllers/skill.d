@@ -89,8 +89,7 @@ class SkillController : ManageHttpController {
         auto result = usecase.createSkill(dto);
         if (result.hasError)
             return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-            .set("id", result.id);
+        auto resp = Json.emptyObject.set("id", result.id);
 
         return successResponse("Skill created successfully", "Created", 201, resp);
 
@@ -117,8 +116,7 @@ class SkillController : ManageHttpController {
         auto result = usecase.updateSkill(dto);
         if (result.hasError)
             return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-            .set("id", result.id);
+        auto resp = Json.emptyObject.set("id", result.id);
 
         return successResponse("Skill updated successfully", "Updated", 200, resp);
     }

@@ -166,8 +166,7 @@ class DataSubjectController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
 
-        auto response = Json.emptyObject
-            .set("id", result.id);
+        auto response = Json.emptyObject.set("id", result.id);
 
         return successResponse("Data subject deleted successfully", "Deleted", 200, response);
     }

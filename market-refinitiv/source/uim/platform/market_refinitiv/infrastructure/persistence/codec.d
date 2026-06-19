@@ -78,8 +78,8 @@ MarketRate marketRateFromJson(Json j) {
   MarketRate r;
   r.id = MarketRateId(getString(j, "id"));
   r.tenantId = TenantId(getString(j, "tenantId"));
-  r.createdAt = getLong(j, "createdAt");
-  r.updatedAt = getLong(j, "updatedAt");
+  r.createdAt = data.getLong("createdAt");
+  r.updatedAt = data.getLong("updatedAt");
   r.createdBy = getString(j, "createdBy");
   r.updatedBy = getString(j, "updatedBy");
   r.providerCode = getString(j, "providerCode");
@@ -103,8 +103,8 @@ Provider providerFromJson(Json j) {
   Provider p;
   p.id = ProviderId(getString(j, "id"));
   p.tenantId = TenantId(getString(j, "tenantId"));
-  p.createdAt = getLong(j, "createdAt");
-  p.updatedAt = getLong(j, "updatedAt");
+  p.createdAt = data.getLong("createdAt");
+  p.updatedAt = data.getLong("updatedAt");
   p.createdBy = getString(j, "createdBy");
   p.updatedBy = getString(j, "updatedBy");
   p.code = getString(j, "code");
@@ -119,8 +119,8 @@ AuditLog auditLogFromJson(Json j) {
   AuditLog l;
   l.id = AuditLogId(getString(j, "id"));
   l.tenantId = TenantId(getString(j, "tenantId"));
-  l.createdAt = getLong(j, "createdAt");
-  l.updatedAt = getLong(j, "updatedAt");
+  l.createdAt = data.getLong("createdAt");
+  l.updatedAt = data.getLong("updatedAt");
   l.createdBy = getString(j, "createdBy");
   l.updatedBy = getString(j, "updatedBy");
   l.operation = parseEnumOrDefault!AuditOperation(getString(j, "operation"), AuditOperation.query);

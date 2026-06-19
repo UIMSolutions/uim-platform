@@ -4,10 +4,10 @@
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.job_scheduling.application.usecases.manage.configurations;
-// import uim.platform.job_scheduling.domain.types;
+
 // import uim.platform.job_scheduling.domain.entities.configuration;
 // import uim.platform.job_scheduling.domain.ports.repositories.configurations;
-// import uim.platform.job_scheduling.application.dto;
+
 
 import uim.platform.job_scheduling;
 
@@ -62,7 +62,7 @@ class ManageConfigurationsUseCase { // TODO: UIMUseCase {
     existing.maxRunDurationMs = request.maxRunDurationMs;
     existing.enableAsyncMode = request.enableAsyncMode;
     existing.enableAlertNotifications = request.enableAlertNotifications;
-    existing.updatedAt = now;
+    existing.updatedAt = currentTimestamp;
 
     repo.update(existing);
     return CommandResult(true, existing.id.value, "");

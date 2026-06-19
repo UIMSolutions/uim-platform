@@ -89,8 +89,7 @@ class ServiceCallController : ManageHttpController {
         auto result = usecase.createServiceCall(dto);
         if (result.hasError)
             return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-            .set("id", result.id);
+        auto resp = Json.emptyObject.set("id", result.id);
 
         return successResponse("Service call created successfully", "Created", 201, resp);
     }
@@ -117,8 +116,7 @@ class ServiceCallController : ManageHttpController {
         auto result = usecase.updateServiceCall(dto);
         if (result.hasError)
             return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-            .set("id", result.id);
+        auto resp = Json.emptyObject.set("id", result.id);
 
         return successResponse("Service call updated successfully", "Updated", 200, resp);
     }

@@ -7,9 +7,7 @@ module uim.platform.job_scheduling.presentation.http.controllers.job;
 
 // import uim.platform.job_scheduling.application.usecases.manage.jobs;
 // import uim.platform.job_scheduling.application.usecases.manage.schedules;
-// import uim.platform.job_scheduling.application.dto;
 
-// import uim.platform.job_scheduling;
 import uim.platform.job_scheduling;
 
 // mixin(ShowModule!());
@@ -44,50 +42,43 @@ class JobController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-            CreateJobRequest r;
-            r.tenantId = tenantId;
-            r.name = data.getString("name");
-            r.description = data.getString("description");
-            r.actionUrl = data.getString("action");
-            r.httpMethod = data.getString("httpMethod");
-            r.type = data.getString("type");
-            r.active = data.getBoolean("active", true);
-            r.startTime = getLong(j, "startTime");
-            r.endTime = getLong(j, "endTime");
+        CreateJobRequest r;
+        r.tenantId = tenantId;
+        r.name = data.getString("name");
+        r.description = data.getString("description");
+        r.actionUrl = data.getString("action");
+        r.httpMethod = data.getString("httpMethod");
+        r.type = data.getString("type");
+        r.active = data.getBoolean("active", true);
+        r.startTime = data.getLong("startTime");
+        r.endTime = data.getLong("endTime");
 
-            auto result = usecase.createJob(r);
-            if (!result.success) {
-                writeError(res, 400, result.message);
-                return;
-            }
+        auto result = usecase.createJob(r);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
 
-            foreach (sj; data.getArray("schedules")) {
-                CreateScheduleRequest sr;
-                sr.tenantId = r.tenantId;
-                sr.jobId = result.id;
-                sr.description = getString(sj, "description");
-                sr.type = getString(sj, "type");
-                sr.format = getString(sj, "format");
-                sr.active = getBoolean(sj, "active", true);
-                sr.cronExpression = getString(sj, "cron");
-                sr.humanReadableSchedule = getString(sj, "humanReadableSchedule");
-                sr.repeatInterval = getLong(sj, "repeatInterval");
-                sr.repeatAt = getLong(sj, "repeatAt");
-                sr.time = getLong(sj, "time");
-                sr.startTime = getLong(sj, "startTime");
-                sr.endTime = getLong(sj, "endTime");
+        // Create schedules if provided
+        foreach (sj; data.getArray("schedules")) {
+            CreateScheduleRequest sr;
+            sr.tenantId = r.tenantId;
+            sr.jobId = result.id;
+            sr.description = getString(sj, "description");
+            sr.type = getString(sj, "type");
+            sr.format = getString(sj, "format");
+            sr.active = getBoolean(sj, "active", true);
+            sr.cronExpression = getString(sj, "cron");
+            sr.humanReadableSchedule = getString(sj, "humanReadableSchedule");
+            sr.repeatInterval = getLong(sj, "repeatInterval");
+            sr.repeatAt = getLong(sj, "repeatAt");
+            sr.time = getLong(sj, "time");
+            sr.startTime = getLong(sj, "startTime");
+            sr.endTime = getLong(sj, "endTime");
 
-                scheduleUsecase.createSchedule(sr);
-            }
-
-            auto resp = Json.emptyObject
-                .set("id", result.id)
-                .set("message", "Job created");
-
-            res.writeJsonBody(resp, 201);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
+            scheduleUsecase.createSchedule(sr);
         }
+
+        auto resp = Json.emptyObject.set("id", result.id);
+        return successResponse("Job created successfully", "Created", 201, resp);
     }
 
     override protected Json listHandler(HTTPServerRequest req) {
@@ -97,17 +88,12 @@ class JobController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-            auto jobs = usecase.listJobs(tenantId);
-
-            auto jarr = jobs.map!(job => job.toJson).array.toJson;
-            auto resp = Json.emptyObject
-                .set("total", jobs.length)
-                .set("results", jarr);
-
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto jobs = usecase.listJobs(tenantId);
+        auto jarr = jobs.map!(job => job.toJson).array.toJson;
+        auto resp = Json.emptyObject
+            .set("total", jobs.length)
+            .set("results", jarr);
+        return successResponse("Jobs retrieved successfully", "Retrieved", 200, resp);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -116,14 +102,16 @@ class JobController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto id = JobId(precheck.id);
+        auto id = JobId(precheck.id);
+        if (id.isEmpty)
+            return errorResponse("Invalid job ID in path", 400);
 
-            auto job = usecase.getJob(tenantId, id);
-            if (job.isNull)
-                return errorResponse("Job not found", 404);
+        auto job = usecase.getJob(tenantId, id);
+        if (job.isNull)
+            return errorResponse("Job not found", 404);
 
-            auto resp = job.toJson;
-            return successResponse("Job retrieved successfully", 200, resp);
+        auto resp = job.toJson;
+        return successResponse("Job retrieved successfully", 200, resp);
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -132,21 +120,24 @@ class JobController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto jobId = JobId(precheck.id);
-            auto data = precheck.data;
-            UpdateJobRequest r;
-            r.tenantId = tenantId;
-            r.jobId = jobId;
-            r.name = data.getString("name");
-            r.description = data.getString("description");
-            r.actionUrl = data.getString("action");
-            r.httpMethod = data.getString("httpMethod");
-            r.active = data.getBoolean("active", true);
-            r.startTime = getLong(j, "startTime");
-            r.endTime = getLong(j, "endTime");
+        auto id = JobId(precheck.id);
+        if (id.isEmpty)
+            return errorResponse("Invalid job ID in path", 400);
 
-            auto result = usecase.updateJob(r);
-            if (result.hasError)
+        auto data = precheck.data;
+        UpdateJobRequest r;
+        r.tenantId = tenantId;
+        r.jobId = id;
+        r.name = data.getString("name");
+        r.description = data.getString("description");
+        r.actionUrl = data.getString("action");
+        r.httpMethod = data.getString("httpMethod");
+        r.active = data.getBoolean("active", true);
+        r.startTime = data.getLong("startTime");
+        r.endTime = data.getLong("endTime");
+
+        auto result = usecase.updateJob(r);
+        if (result.hasError)
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
@@ -159,46 +150,66 @@ class JobController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto jobId = JobId(precheck.id);
+        auto id = JobId(precheck.id);
+        if (id.isEmpty)
+            return errorResponse("Invalid job ID in path", 400);
 
-            // Delete all schedules first
-            scheduleUsecase.deleteAllSchedules(tenantId, jobId);
-            auto result = usecase.deleteJob(tenantId, jobId);
-            if (result.hasError)
+        // Delete all schedules first
+        scheduleUsecase.deleteAllSchedules(tenantId, id);
+        auto result = usecase.deleteJob(tenantId, id);
+        if (result.hasError)
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
         return successResponse("Job deleted successfully", 200, responseData);
     }
 
+    protected Json countHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+
+        auto resp = Json.emptyObject
+            .set("total", usecase.countJobs(tenantId))
+            .set("active", usecase.countActiveJobs(tenantId))
+            .set("inactive", usecase.countInactiveJobs(tenantId));
+
+        return successResponse("Job counts retrieved successfully", 200, resp);
+    }
+
     protected void handleCount(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = precheck.tenantId;
-
-            auto resp = Json.emptyObject
-                .set("total", usecase.countJobs(tenantId))
-                .set("active", usecase.countActiveJobs(tenantId))
-                .set("inactive", usecase.countInactiveJobs(tenantId));
-
-            res.writeJsonBody(resp, 200);
+            auto response = countHandler(req);
+            res.writeJsonBody(response, response.code);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
+    protected Json searchHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+        auto query = req.params.get("q", "");
+
+        auto jobs = usecase.searchJobs(tenantId, query);
+        auto jarr = jobs.map!(job => job.toJson).array.toJson;
+
+        auto resp = Json.emptyObject
+            .set("total", jobs.length)
+            .set("results", jarr);
+
+        return successResponse("Job search completed successfully", 200, resp);
+    }
+
     protected void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = precheck.tenantId;
-            auto query = req.params.get("q", "");
-
-            auto jobs = usecase.searchJobs(tenantId, query);
-            auto jarr = jobs.map!(job => job.toJson).array.toJson;
-
-            auto resp = Json.emptyObject
-                .set("total", jobs.length)
-                .set("results", jarr);
-
-            res.writeJsonBody(resp, 200);
+            auto response = searchHandler(req);
+            res.writeJsonBody(response, response.code);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

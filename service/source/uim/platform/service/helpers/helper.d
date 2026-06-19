@@ -115,7 +115,7 @@ double attributeSimilarity(const string[string] a, const string[string] b) {
 }
 /// Simple text-relevance score (case-insensitive substring match).
 double textRelevance(string text, string query) {
-  // import std.uni : toLower;
+  
 
   if (query.length == 0)
     return 0.0;

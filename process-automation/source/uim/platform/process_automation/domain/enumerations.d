@@ -75,38 +75,100 @@ enum ProcessStatus {
 }
 
 ProcessStatus toProcessStatus(string status) {
-    const map = [
-        "draft": ProcessStatus.draft,
-        "active": ProcessStatus.active,
-        "inactive": ProcessStatus.inactive,
-        "deprecated": ProcessStatus.deprecated_,
-        "error": ProcessStatus.error,
-        "archived": ProcessStatus.archived,
-        "unknown": ProcessStatus.unknown,
-        "deleted": ProcessStatus.deleted,
-        "suspended": ProcessStatus.suspended,
-        "completed": ProcessStatus.completed,
-        "failed": ProcessStatus.failed,
-        "cancelled": ProcessStatus.cancelled,
-        "waiting": ProcessStatus.waiting,
-        "terminated": ProcessStatus.terminated,
-        "resumed": ProcessStatus.resumed,
-        "rolling_back": ProcessStatus.rollingBack,
-        "rolled_back": ProcessStatus.rolledBack,
-        "migrating": ProcessStatus.migrating,
-        "migrated": ProcessStatus.migrated,
-        "versioning": ProcessStatus.versioning,
-        "versioned": ProcessStatus.versioned,
-        "cloning": ProcessStatus.cloning,
-        "cloned": ProcessStatus.cloned,
-        "testing": ProcessStatus.testing,
-        "tested": ProcessStatus.tested,
-        "validating": ProcessStatus.validating,
-        "validated": ProcessStatus.validated,
-        "releasing": ProcessStatus.releasing,
-        "released": ProcessStatus.released,
-    ];
-    return map.get(status.toLower, ProcessStatus.draft);
+    switch (status.toLower) {
+    case "draft":
+        return ProcessStatus.draft;
+    case "active":
+        return ProcessStatus.active;
+    case "inactive":
+        return ProcessStatus.inactive;
+    case "deprecated":
+        return ProcessStatus.deprecated_;
+    case "error":
+        return ProcessStatus.error;
+    case "archived":
+        return ProcessStatus.archived;
+    case "unknown":
+        return ProcessStatus.unknown;
+    case "deleted":
+        return ProcessStatus.deleted;
+    case "suspended":
+        return ProcessStatus.suspended;
+    case "completed":
+        return ProcessStatus.completed;
+    case "failed":
+        return ProcessStatus.failed;
+    case "cancelled":
+        return ProcessStatus.cancelled;
+    case "waiting":
+        return ProcessStatus.waiting;
+    case "terminated":
+        return ProcessStatus.terminated;
+    case "resumed":
+        return ProcessStatus.resumed;
+    case "rollingback":
+        return ProcessStatus.rollingBack;
+    case "rolledback":
+        return ProcessStatus.rolledBack;
+    case "migrating":
+        return ProcessStatus.migrating;
+    case "migrated":
+        return ProcessStatus.migrated;
+    case "versioning":
+        return ProcessStatus.versioning;
+    case "versioned":
+        return ProcessStatus.versioned;
+    case "cloning":
+        return ProcessStatus.cloning;
+    case "cloned":
+        return ProcessStatus.cloned;
+    case "testing":
+        return ProcessStatus.testing;
+    case "tested":
+        return ProcessStatus.tested;
+    case "validating":
+        return ProcessStatus.validating;
+    case "validated":
+        return ProcessStatus.validated;
+    case "releasing":
+        return ProcessStatus.releasing;
+    case "released":
+        return ProcessStatus.released;
+    default:
+        return ProcessStatus.unknown;
+    }
+}
+/// 
+unittest {
+    assert(toProcessStatus("active") == ProcessStatus.active);
+    assert(toProcessStatus("inactive") == ProcessStatus.inactive);
+    assert(toProcessStatus("deprecated") == ProcessStatus.deprecated_);
+    assert(toProcessStatus("error") == ProcessStatus.error);
+    assert(toProcessStatus("archived") == ProcessStatus.archived);
+    assert(toProcessStatus("unknown") == ProcessStatus.unknown);
+    assert(toProcessStatus("deleted") == ProcessStatus.deleted);
+    assert(toProcessStatus("suspended") == ProcessStatus.suspended);
+    assert(toProcessStatus("completed") == ProcessStatus.completed);
+    assert(toProcessStatus("failed") == ProcessStatus.failed);
+    assert(toProcessStatus("cancelled") == ProcessStatus.cancelled);
+    assert(toProcessStatus("waiting") == ProcessStatus.waiting);
+    assert(toProcessStatus("terminated") == ProcessStatus.terminated);
+    assert(toProcessStatus("resumed") == ProcessStatus.resumed);
+    assert(toProcessStatus("rollingback") == ProcessStatus.rollingBack);
+    assert(toProcessStatus("rolledback") == ProcessStatus.rolledBack);
+    assert(toProcessStatus("migrating") == ProcessStatus.migrating);
+    assert(toProcessStatus("migrated") == ProcessStatus.migrated);
+    assert(toProcessStatus("versioning") == ProcessStatus.versioning);
+    assert(toProcessStatus("versioned") == ProcessStatus.versioned);
+    assert(toProcessStatus("cloning") == ProcessStatus.cloning);
+    assert(toProcessStatus("cloned") == ProcessStatus.cloned);
+    assert(toProcessStatus("testing") == ProcessStatus.testing);
+    assert(toProcessStatus("tested") == ProcessStatus.tested);
+    assert(toProcessStatus("validating") == ProcessStatus.validating);
+    assert(toProcessStatus("validated") == ProcessStatus.validated);
+    assert(toProcessStatus("releasing") == ProcessStatus.releasing);
+    assert(toProcessStatus("released") == ProcessStatus.released);
+    // TODO: assert(toProcessStatus("invalid") == ProcessStatus.draft);
 }
 
 enum ProcessCategory {
@@ -125,15 +187,24 @@ enum ProcessCategory {
 }
 
 ProcessCategory toProcessCategory(string category) {
-    const map = [
-        "workflow": ProcessCategory.workflow,
-        "approval": ProcessCategory.approval,
-        "notification": ProcessCategory.notification,
-        "automation": ProcessCategory.automation,
-        "hybrid": ProcessCategory.hybrid,
-        "custom": ProcessCategory.custom,
-    ];
-    return map.get(category.toLower, ProcessCategory.workflow);
+    switch (category.toLower) {
+        static foreach (member; __traits(allMembers, ProcessCategory)) {
+    case member:
+            return __traits(getMember, ProcessCategory, member);
+        }
+    default:
+        return ProcessCategory.workflow;
+    }
+
+}
+///
+unittest {
+    assert(toProcessCategory("workflow") == ProcessCategory.workflow);
+    assert(toProcessCategory("approval") == ProcessCategory.approval);
+    assert(toProcessCategory("notification") == ProcessCategory.notification);
+    assert(toProcessCategory("automation") == ProcessCategory.automation);
+    assert(toProcessCategory("hybrid") == ProcessCategory.hybrid);
+    assert(toProcessCategory("custom") == ProcessCategory.custom);
 }
 
 enum StepType {
@@ -180,32 +251,53 @@ enum StepType {
 }
 
 StepType toStepType(string type) {
-    const map = [
-        "start_event": StepType.startEvent,
-        "end_event": StepType.endEvent,
-        "user_task": StepType.userTask,
-        "service_task": StepType.serviceTask,
-        "script_task": StepType.scriptTask,
-        "decision_task": StepType.decisionTask,
-        "automation_task": StepType.automationTask,
-        "mail_task": StepType.mailTask,
-        "parallel_gateway": StepType.parallelGateway,
-        "exclusive_gateway": StepType.exclusiveGateway,
-        "inclusive_gateway": StepType.inclusiveGateway,
-        "event_based_gateway": StepType.eventBasedGateway,
-        "sub_process": StepType.subProcess,
-        "call_activity": StepType.callActivity,
-        "timer_event": StepType.timerEvent,
-        "message_event": StepType.messageEvent,
-        "signal_event": StepType.signalEvent,
-        "error_event": StepType.errorEvent,
-        "condition": StepType.condition,
-        "custom": StepType.custom,
-    ];
-    return map.get(type.toLower, StepType.userTask);
+    switch (type.toLower) {
+    case "start_event":
+        return StepType.startEvent;
+    case "end_event":
+        return StepType.endEvent;
+    case "user_task":
+        return StepType.userTask;
+    case "service_task":
+        return StepType.serviceTask;
+    case "script_task":
+        return StepType.scriptTask;
+    case "decision_task":
+        return StepType.decisionTask;
+    case "automation_task":
+        return StepType.automationTask;
+    case "mail_task":
+        return StepType.mailTask;
+    case "parallel_gateway":
+        return StepType.parallelGateway;
+    case "exclusive_gateway":
+        return StepType.exclusiveGateway;
+    case "inclusive_gateway":
+        return StepType.inclusiveGateway;
+    case "event_based_gateway":
+        return StepType.eventBasedGateway;
+    case "sub_process":
+        return StepType.subProcess;
+    case "call_activity":
+        return StepType.callActivity;
+    case "timer_event":
+        return StepType.timerEvent;
+    case "message_event":
+        return StepType.messageEvent;
+    case "signal_event":
+        return StepType.signalEvent;
+    case "error_event":
+        return StepType.errorEvent;
+    case "condition":
+        return StepType.condition;
+    case "custom":
+        return StepType.custom;
+    default:
+        return StepType.userTask;
+    }
 }
-// --- Process Instance ---
 
+// --- Process Instance ---
 enum InstanceStatus {
     // Used for instances that are currently running and have not yet completed, which may require monitoring and management to ensure successful execution and timely completion
     running,
@@ -226,17 +318,14 @@ enum InstanceStatus {
 }
 
 InstanceStatus toInstanceStatus(string status) {
-    const map = [
-        "running": InstanceStatus.running,
-        "completed": InstanceStatus.completed,
-        "failed": InstanceStatus.failed,
-        "suspended": InstanceStatus.suspended,
-        "cancelled": InstanceStatus.cancelled,
-        "waiting": InstanceStatus.waiting,
-        "error": InstanceStatus.error,
-        "unknown": InstanceStatus.unknown,
-    ];
-    return map.get(status.toLower, InstanceStatus.running);
+    switch (status.toLower) {
+        static foreach (member; __traits(allMembers, InstanceStatus)) {
+    case member:
+            return __traits(getMember, InstanceStatus, member);
+        }
+    default:
+        return InstanceStatus.unknown;
+    }
 }
 
 enum InstancePriority {
@@ -251,13 +340,14 @@ enum InstancePriority {
 }
 
 InstancePriority toInstancePriority(string priority) {
-    const map = [
-        "low": InstancePriority.low,
-        "medium": InstancePriority.medium,
-        "high": InstancePriority.high,
-        "critical": InstancePriority.critical
-    ];
-    return map.get(priority.toLower, InstancePriority.medium);
+    switch (priority.toLower) {
+        static foreach (member; __traits(allMembers, InstancePriority)) {
+    case member:
+            return __traits(getMember, InstancePriority, member);
+        }
+    default:
+        return InstancePriority.medium;
+    }
 }
 
 // --- Event (for Alerting and Monitoring) ---
@@ -273,13 +363,18 @@ enum EventCategory : string {
 }
 
 EventCategory toEventCategory(string category) {
-    const map = [
-        "notification": EventCategory.notification,
-        "alert": EventCategory.alert,
-        "exception": EventCategory.exception_,
-        "custom": EventCategory.custom
-    ];
-    return map.get(category.toLower, EventCategory.notification);
+    switch (category.toUpper) {
+        case "NOTIFICATION":
+            return EventCategory.notification;
+        case "ALERT":
+            return EventCategory.alert;
+        case "EXCEPTION":
+            return EventCategory.exception_;
+        case "CUSTOM":
+            return EventCategory.custom;
+        default:
+            return EventCategory.notification;
+    }
 }
 
 // --- PATask ---
@@ -304,17 +399,26 @@ enum TaskStatus {
 }
 
 TaskStatus toTaskStatus(string status) {
-    const map = [
-        "ready": TaskStatus.ready,
-        "reserved": TaskStatus.reserved,
-        "in_progress": TaskStatus.inProgress,
-        "completed": TaskStatus.completed,
-        "failed": TaskStatus.failed,
-        "cancelled": TaskStatus.cancelled,
-        "forwarded": TaskStatus.forwarded,
-        "unknown": TaskStatus.unknown
-    ];
-    return map.get(status.toLower, TaskStatus.ready);
+    switch (status.toLower) {
+        case "ready":
+            return TaskStatus.ready;
+        case "reserved":
+            return TaskStatus.reserved;
+        case "in_progress":
+            return TaskStatus.inProgress;
+        case "completed":
+            return TaskStatus.completed;
+        case "failed":
+            return TaskStatus.failed;
+        case "cancelled":
+            return TaskStatus.cancelled;
+        case "forwarded":
+            return TaskStatus.forwarded;
+        case "unknown":
+            return TaskStatus.unknown;
+        default:
+            return TaskStatus.ready;
+    }
 }
 
 enum TaskPriority {
@@ -331,15 +435,38 @@ enum TaskPriority {
 }
 
 TaskPriority toTaskPriority(string priority) {
-    const map = [
-        "low": TaskPriority.low,
-        "medium": TaskPriority.medium,
-        "high": TaskPriority.high,
-        "very_high": TaskPriority.veryHigh,
-        "unknown": TaskPriority.unknown
-    ];
-    return map.get(priority.toLower, TaskPriority.medium);
+    switch(priority.toLower) {
+        case "low":
+            return TaskPriority.low;
+        case "medium":
+            return TaskPriority.medium;
+        case "high":
+            return TaskPriority.high;
+        case "very_high", "veryhigh":
+            return TaskPriority.veryHigh;
+        case "unknown":
+            return TaskPriority.unknown;
+        default:
+            return TaskPriority.medium;
+    }   
 }
+/// 
+unittest {
+    assert(toTaskPriority("low") == TaskPriority.low);
+    assert(toTaskPriority("medium") == TaskPriority.medium);
+    assert(toTaskPriority("high") == TaskPriority.high);
+    assert(toTaskPriority("veryhigh") == TaskPriority.veryHigh);
+    assert(toTaskPriority("unknown") == TaskPriority.unknown);
+
+    assert(toTaskPriority("default") == TaskPriority.medium);
+
+    assert(TaskPriority.low.to!string == "low");
+    assert(TaskPriority.medium.to!string == "medium");
+    assert(TaskPriority.high.to!string == "high");
+    assert(TaskPriority.veryHigh.to!string == "veryHigh");
+    assert(TaskPriority.unknown.to!string == "unknown");
+}
+
 
 enum TaskType {
     // Used for tasks that require approval from one or more stakeholders, which may involve routing, escalation, and tracking of approval requests and responses based on the process flow and requirements

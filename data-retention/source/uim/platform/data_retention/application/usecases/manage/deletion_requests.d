@@ -1,3 +1,8 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module uim.platform.data_retention.application.usecases.manage.deletion_requests;
 import uim.platform.data_retention;
 
@@ -34,13 +39,13 @@ class ManageDeletionRequestsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, dr.id.value, "");
     }
 
-    CommandResult updateDeletionRequest(DeletionRequestId id, UpdateDeletionRequestRequest req) {
-        auto dr = repo.findById(tenantId, id);
+    CommandResult updateDeletionRequest(UpdateDeletionRequestRequest req) {
+        auto dr = repo.findById(req.tenantId, req.id);
         if (dr.isNull)
             return CommandResult(false, "", "Deletion request not found");
 
         if (req.status.length > 0)
-            dr.status = parseDeletionRequestStatus(req.status);
+            dr.status = toDeletionRequestStatus(req.status);
         if (req.errorMessage.length > 0)
             dr.errorMessage = req.errorMessage;
         if (dr.status == DeletionRequestStatus.completed)
@@ -48,7 +53,7 @@ class ManageDeletionRequestsUseCase { // TODO: UIMUseCase {
         dr.updatedAt = clockSeconds();
 
         repo.update(dr);
-        return CommandResult(true, id.value, "");
+        return CommandResult(true, dr.id.value, "");
     }
 
     bool hasDeletionRequest(TenantId tenantId, DeletionRequestId id) {
@@ -74,35 +79,5 @@ class ManageDeletionRequestsUseCase { // TODO: UIMUseCase {
 
         repo.remove(request);
         return CommandResult(true, request.id.value, "");
-    }
-
-    private static DeletionActionType parseDeletionActionType(string s) {
-        switch (s) {
-        case "block":
-            return DeletionActionType.block;
-        case "delete":
-            return DeletionActionType.delete_;
-        case "anonymize":
-            return DeletionActionType.anonymize;
-        default:
-            return DeletionActionType.delete_;
-        }
-    }
-
-    private static DeletionRequestStatus parseDeletionRequestStatus(string s) {
-        switch (s) {
-        case "pending":
-            return DeletionRequestStatus.pending;
-        case "inProgress":
-            return DeletionRequestStatus.inProgress;
-        case "completed":
-            return DeletionRequestStatus.completed;
-        case "failed":
-            return DeletionRequestStatus.failed;
-        case "cancelled":
-            return DeletionRequestStatus.cancelled;
-        default:
-            return DeletionRequestStatus.pending;
-        }
     }
 }

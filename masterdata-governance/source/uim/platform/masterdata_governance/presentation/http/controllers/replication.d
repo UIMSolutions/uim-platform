@@ -68,8 +68,7 @@ class ReplicationController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
 
-        auto responseData = Json.emptyObject
-            .set("id", result.id);
+        auto responseData = Json.emptyObject.set("id", result.id);
         return successResponse("Replication created successfully", "Created", 201, responseData);
     }
 
@@ -111,8 +110,7 @@ class ReplicationController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
 
-        auto responseData = Json.emptyObject
-            .set("id", result.id);
+        auto responseData = Json.emptyObject.set("id", result.id);
         return successResponse("Replication updated successfully", "Updated", 200, responseData);
     }
 
