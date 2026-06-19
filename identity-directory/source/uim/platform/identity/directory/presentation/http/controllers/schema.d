@@ -43,9 +43,9 @@ class SchemaController : ManageHttpController {
     request.tenantId = tenantId;
     request.name = data.getString("name");
     request.description = data.getString("description");
-    request.attributes = parseSchemaAttributes(j);
+    request.attributes = parseSchemaAttributes(data);
 
-    auto result = useCase.createSchema(createReq);
+    auto result = useCase.createSchema(request);
     if (result.hasError)
       return errorResponse(result.errorMessage);
 
@@ -66,74 +66,84 @@ class SchemaController : ManageHttpController {
     auto response = Json.emptyObject;
     response["totalResults"] = Json(schemas.length);
     response["Resources"] = toJsonArray(schemas);
-    res.writeJsonBody(response, 200);
+
+    return successResponse("Schema list retrieved successfully", "Retrieved", 200, response);
+    //  catch (Exception e) {
+    //     writeScimError(res, 500, "Internal server error");
+    //   }
   }
- catch (Exception e) {
-    writeScimError(res, 500, "Internal server error");
+
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto schemaId = precheck.id;
+    auto schema = useCase.getSchema(tenantId, schemaId);
+    if (schema.isNull)
+      return errorResponse("Schema not found", 404);
+
+    auto response = Json.emptyObject;
+    response["id"] = Json(schema.id);
+    response["name"] = Json(schema.name);
+    response["description"] = Json(schema.description);
+    response["attributes"] = toJsonArray(schema.attributes);
+    return successResponse("Schema retrieved successfully", "Retrieved", 200, response);
+
+    // writeScimError(res, 500, "Internal server error");}
   }
-}
 
-override protected Json getHandler(HTTPServerRequest req) {
-  auto precheck = super.getHandler(req);
-  if (precheck.hasError)
-    return precheck;
+  override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-  auto tenantId = precheck.tenantId;
-  auto schemaId = precheck.id;
-  auto schema = useCase.getSchema(schemaId);
-  if (schema == Schema.init) {
-    writeScimError(res, 404, "Schema not found");
-    return;
-  }
-  res.writeJsonBody(toJsonValue(schema), 200);
-}
- catch (Exception e) {
-  writeScimError(res, 500, "Internal server error");
-}
-}
+    auto tenantId = precheck.tenantId;
+    auto schemaId = precheck.id;
+    auto data = precheck.data;
+    auto updateReq = UpdateSchemaRequest(tenantId);
+    updateReq.schemaId = schemaId;
+    updateReq.name = data.getString("name");
+    updateReq.description = data.getString("description");
+    updateReq.attributes = parseSchemaAttributes(data);
 
-override protected Json updateHandler(HTTPServerRequest req) {
-  auto precheck = super.updateHandler(req);
-  if (precheck.hasError)
-    return precheck;
+    auto result = useCase.updateSchema(updateReq);
+    if (result.hasError)
+      return errorResponse(result.errorMessage);
 
-  auto tenantId = precheck.tenantId;
-  auto schemaId = precheck.id;
-  auto data = precheck.data;
-  auto updateReq = UpdateSchemaRequest(schemaId, data.getString("name"),
-    data.getString("description"), parseSchemaAttributes(j),);
-  auto error = useCase.updateSchema(updateReq);
-  if (error.length > 0)
-    writeScimError(res, 404, error);
-  else {
     auto resp = Json.emptyObject
       .set("status", "updated");
-
-    res.writeJsonBody(resp, 200);
+    return successResponse("Schema updated successfully", "Updated", 200, resp);
+    //  writeScimError(res, 500, "Internal server error");
   }
-}
- catch (Exception e) {
-  writeScimError(res, 500, "Internal server error");
-}
-}
 
-override protected Json deleteHandler(HTTPServerRequest req) {
-  auto precheck = super.deleteHandler(req);
-  if (precheck.hasError)
-    return precheck;
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-  auto tenantId = precheck.tenantId;
-  auto schemaId = precheck.id;
-  auto error = useCase.deleteSchema(schemaId);
-  if (error.length > 0)
-    writeScimError(res, 404, error);
-  else
-    res.writeBody("", 204);
-}
- catch (Exception e) {
-  writeScimError(res, 500, "Internal server error");
-}
-}
+    auto tenantId = precheck.tenantId;
+    auto id = SchemaId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid schema ID", 400);
+
+    auto result = useCase.deleteSchema(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.errorMessage);
+
+    return successResponse("Schema deleted successfully", "Deleted", 200, Json.emptyObject);
+
+    // if (error.length > 0)
+    // writeScimError(res, 404, error);
+    // else
+    // res.writeBody("", 204);
+    // }
+    //  catch (Exception e) {
+    // writeScimError(res, 500, "Internal server error");
+    // }
+
+  }
 }
 
 private SchemaAttribute[] parseSchemaAttributes(Json j) {

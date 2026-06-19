@@ -75,117 +75,122 @@ class GroupController : ManageHttpController {
       .set("schemas", ["urn:ietf:params:scim:schemas:core:2.0:Group"].toJson);
 
     return successResponse("Scan job created successfully", "Created", 201, responseData);
-}
+  }
 
-override protected Json getHandler(HTTPServerRequest req) {
-  auto precheck = super.getHandler(req);
-  if (precheck.hasError)
-    return precheck;
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-  auto tenantId = precheck.tenantId;
-  auto id = GroupId(precheck.id);
-  if (id.isNull)
-    return errorResponse("Invalid group ID", 400);
+    auto tenantId = precheck.tenantId;
+    auto id = GroupId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid group ID", 400);
 
-  auto group = useCase.getGroup(tenantId, id);
-  if (group.isNull)
-    return errorResponse("Group not found", 404);
+    auto group = useCase.getGroup(tenantId, id);
+    if (group.isNull)
+      return errorResponse("Group not found", 404);
 
-  auto responseData = group.toJson();
-  return successResponse("Group retrieved successfully", "Retrieved", 200, responseData);
-}
+    auto responseData = group.toJson();
+    return successResponse("Group retrieved successfully", "Retrieved", 200, responseData);
+  }
 
-override protected Json updateHandler(HTTPServerRequest req) {
-  auto precheck = super.updateHandler(req);
-  if (precheck.hasError)
-    return precheck;
+  override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-  auto tenantId = precheck.tenantId;
-  auto groupId = GroupId(precheck.id);
-  if (groupId.isNull)
-    return errorResponse("Invalid group ID", 400);
+    auto tenantId = precheck.tenantId;
+    auto groupId = GroupId(precheck.id);
+    if (groupId.isNull)
+      return errorResponse("Invalid group ID", 400);
 
-  
-  auto data = precheck.data;
-  auto updateReq = UpdateGroupRequest(groupId, data.getString("displayName"),
-    data.getString("description"),);
-  auto result = useCase.updateGroup(updateReq);
-  if (result.hasError) {
-    writeScimError(res, 404, result.errorMessage);
+    auto data = precheck.data;
+    auto updateReq = UpdateGroupRequest(groupId, data.getString("displayName"),
+      data.getString("description"),);
+    auto result = useCase.updateGroup(updateReq);
+    if (result.hasError)
+      writeScimError(res, 404, result.errorMessage);
 
-  return successResponse("Group updated successfully", "Updated", 200, Json.emptyObject.set("id", result.id));
-}
+    return successResponse("Group updated successfully", "Updated", 200, Json.emptyObject.set("id", result
+        .id));
+  }
 
-override protected Json deleteHandler(HTTPServerRequest req) {
-  auto precheck = super.deleteHandler(req);
-  if (precheck.hasError)
-    return precheck;
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-  auto tenantId = precheck.tenantId;
-  auto id = GroupId(precheck.id);
-  if (id.isNull)
-    return errorResponse("Invalid group ID", 400);
+    auto tenantId = precheck.tenantId;
+    auto id = GroupId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid group ID", 400);
 
-  auto result = useCase.deleteGroup(tenantId, id);
-  if (result.hasError)
-    return errorResponse(result.errorMessage, 404);
+    auto result = useCase.deleteGroup(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.errorMessage, 404);
 
-  return successResponse("Group deleted successfully", "Deleted", 200, Json.emptyObject);
-}
+    return successResponse("Group deleted successfully", "Deleted", 200, Json.emptyObject);
+  }
 
-protected Json addMemberHandler(HTTPServerRequest req) {
-  auto precheck = super.POSTHandler(req);
-  if (precheck.hasError)
-    return precheck;
+  protected Json addMemberHandler(HTTPServerRequest req) {
+    auto precheck = super.POSTHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-  auto tenantId = precheck.tenantId;
-  auto data = precheck.data;
-  auto addReq = AddMemberRequest(tenantId, data.getString("groupId"),
-    data.getString("memberId"), data.getString("memberType"), data.getString("display"),);
-  auto result = useCase.addMember(addReq);
-  if (result.hasError)
-    return errorResponse(result.errorMessage, 400);
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
+    auto addReq = AddMemberRequest(tenantId, data.getString("groupId"),
+      data.getString("memberId"), data.getString("memberType"), data.getString("display"),);
+    auto result = useCase.addMember(addReq);
+    if (result.hasError)
+      return errorResponse(result.errorMessage, 400);
 
-  // if (error.length > 0) {
-  //   writeScimError(res, 400, error);
-  //   return Json.emptyObject;
-  // } else {
-  //   auto resp = Json.emptyObject
-  //     .set("status", "member_added");
+    // if (error.length > 0) {
+    //   writeScimError(res, 400, error);
+    //   return Json.emptyObject;
+    // } else {
+    //   auto resp = Json.emptyObject
+    //     .set("status", "member_added");
 
-    return successResponse("Member added successfully", "Added", 200, Json.emptyObject.set("id", result.id));
+    return successResponse("Member added successfully", "Added", 200, Json.emptyObject.set("id", result
+        .id));
   }
 }
 
 protected void handleAddMember(scope HTTPServerRequest req, scope HTTPServerResponse res) {
   try {
     auto response = addMemberHandler(req);
-      res.writeJsonBody(response, response.code);
+    res.writeJsonBody(response, response.code);
   } catch (Exception e) {
     writeScimError(res, 500, "Internal server error");
   }
+}
+
+protected Json deleteMemberHandler(HTTPServerRequest req) {
+  auto precheck = super.deleteHandler(req);
+  if (precheck.hasError)
+    return precheck;
+
+  auto tenantId = precheck.tenantId;
+  auto data = precheck.data;
+  auto removeReq = RemoveMemberRequest(tenantId, data.getString("groupId"), data.getString("memberId"),);
+  auto result = useCase.removeMember(removeReq);
+  if (result.hasError)
+    return errorResponse(result.errorMessage, 400);
+
+  return successResponse("Member removed successfully", "Removed", 200, Json.emptyObject);
 }
 
 protected void handleDeleteMember(scope HTTPServerRequest req, scope HTTPServerResponse res) {
   try {
-    auto precheck = super.deleteHandler(req);
+    auto response = deleteMemberHandler(req);
 
-    auto tenantId = precheck.tenantId;
-    auto data = precheck.data;
-    auto removeReq = RemoveMemberRequest(tenantId, data.getString("groupId"), data.getString("memberId"),);
-    auto error = useCase.removeMember(removeReq);
-    if (error.length > 0) {
-      writeScimError(res, 400, error);
-    } else {
-      auto resp = Json.emptyObject
-        .set("status", "member_removed");
+    res.writeJsonBody(response, response.code);
 
-      res.writeJsonBody(resp, 200);
-    }
   } catch (Exception e) {
     writeScimError(res, 500, "Internal server error");
   }
-}
 }
 
 private GroupMember[] parseMembers(Json j) {
