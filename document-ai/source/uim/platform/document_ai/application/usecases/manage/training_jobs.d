@@ -69,7 +69,7 @@ class ManageTrainingJobsUseCase { // TODO: UIMUseCase {
           if (existing.status != TrainingJobStatus.pending)
             return CommandResult(false, "", "Can only start pending jobs");
           existing.status = TrainingJobStatus.running;
-          import core.time : MonoTime;
+          
           existing.startedAt = currentTimestamp;
           break;
         case "cancelled":
@@ -82,7 +82,7 @@ class ManageTrainingJobsUseCase { // TODO: UIMUseCase {
       }
     }
 
-    import core.time : MonoTime;
+    
     existing.updatedAt = currentTimestamp;
 
     jobRepo.update(existing);

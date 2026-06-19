@@ -67,7 +67,7 @@ class ManageCatalogAssetsUseCase { // TODO: UIMUseCase {
     asset.owner = r.owner;
     asset.glossaryTerms = r.glossaryTerms;
 
-    import core.time : MonoTime;
+    
     asset.updatedAt = currentTimestamp;
 
     repo.update(asset);

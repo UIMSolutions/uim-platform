@@ -41,7 +41,7 @@ struct TidManager {
         auto tid = _repo.findById(tenantId, value);
         if (tid.isNull()) return false;
         tid.status = LuwStatus.executing;
-        import core.time : MonoTime;
+        
         tid.updatedAt = MonoTime.currTime.ticks;
         return _repo.update(tid);
     }
@@ -51,7 +51,7 @@ struct TidManager {
         auto tid = _repo.findById(tenantId, value);
         if (tid.isNull()) return false;
         tid.status = LuwStatus.committed;
-        import core.time : MonoTime;
+        
         tid.updatedAt = MonoTime.currTime.ticks;
         return _repo.update(tid);
     }
@@ -61,7 +61,7 @@ struct TidManager {
         auto tid = _repo.findById(tenantId, value);
         if (tid.isNull()) return false;
         tid.status = LuwStatus.rolledBack;
-        import core.time : MonoTime;
+        
         tid.updatedAt = MonoTime.currTime.ticks;
         return _repo.update(tid);
     }

@@ -31,7 +31,7 @@ class ManageAuditLogsUseCase {
     }
 
     CommandResult recordAuditEvent(AuditLogDTO dto) {
-        import core.time : MonoTime;
+        
         AuditLog al;
         al.initEntity(dto.tenantId, dto.createdBy);
         al.actorId = dto.actorId;

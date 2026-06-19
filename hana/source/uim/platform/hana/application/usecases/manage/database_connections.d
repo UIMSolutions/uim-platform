@@ -74,7 +74,7 @@ class ManageDatabaseConnectionsUseCase { // TODO: UIMUseCase {
     existing.poolConfig.minConnections = r.minConnections;
     existing.poolConfig.maxConnections = r.maxConnections;
 
-    import core.time : MonoTime;
+    
     existing.updatedAt = currentTimestamp;
 
     repo.update(existing);

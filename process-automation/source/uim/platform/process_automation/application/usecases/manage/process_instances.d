@@ -30,7 +30,7 @@ class ManageProcessInstancesUseCase { // TODO: UIMUseCase {
         i.startedBy = r.startedBy;
         i.dueDate = r.dueDate;
 
-        import core.time : MonoTime;
+        
         i.startedAt = currentTimestamp;
 
         repo.save(i);
@@ -67,7 +67,7 @@ class ManageProcessInstancesUseCase { // TODO: UIMUseCase {
             break;
         case "cancel":
             existing.status = InstanceStatus.cancelled;
-            import core.time : MonoTime;
+            
             existing.completedAt = currentTimestamp;
             break;
         case "retry":

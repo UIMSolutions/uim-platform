@@ -85,7 +85,7 @@ class ProcessDocumentsUseCase { // TODO: UIMUseCase {
 
     doc.status = DocumentStatus.confirmed;
 
-    import core.time : MonoTime;
+    
     doc.updatedAt = currentTimestamp;
 
     docRepo.update(doc);
@@ -126,7 +126,7 @@ class ProcessDocumentsUseCase { // TODO: UIMUseCase {
   }
 
   private void processExtraction(Document doc) {
-    import core.time : MonoTime;
+    
 
     ExtractionResult result;
     result.initEntity(doc.tenantId);

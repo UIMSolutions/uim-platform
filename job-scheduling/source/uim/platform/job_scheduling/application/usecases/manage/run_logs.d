@@ -65,11 +65,9 @@ class ManageRunLogsUseCase { // TODO: UIMUseCase {
         runlog.completedAt = req.completedAt;
         runlog.executionDurationMs = req.executionDurationMs;
 
-        if (targetStatus == RunStatus.triggered) {
-            import core.time : MonoTime;
-
+        if (targetStatus == RunStatus.triggered)
             runlog.triggeredAt = currentTimestamp;
-        }
+        
 
         repo.update(runlog);
         return CommandResult(true, runlog.id.value, "");

@@ -26,7 +26,7 @@ class MemoryConsentRecordRepository : TenantRepository!(ConsentRecord, ConsentRe
     }
 
     void revokeByCustomer(TenantId tenantId, CustomerId customerId) {
-        import core.time : MonoTime;
+        
         auto records = findByCustomer(tenantId, customerId);
         foreach (ref cr; records) {
             cr.granted = false;

@@ -33,7 +33,7 @@ class ManageMtaOperationsUseCase {
 
     /// Poll/advance an operation one step forward (mock simulation).
     CommandResult pollOperation(TenantId tenantId, MtaOperationId id) {
-        import core.time : MonoTime;
+        
 
         auto op = getOperation(tenantId, id);
         if (op is null || op.isNull) return CommandResult(false, "", "Operation not found");
@@ -56,7 +56,7 @@ class ManageMtaOperationsUseCase {
 
     /// Abort a running operation.
     CommandResult abortOperation(AbortOperationRequest r) {
-        import core.time : MonoTime;
+        
 
         auto op = getOperation(r.tenantId, MtaOperationId(r.operationId));
         if (op is null || op.isNull) return CommandResult(false, "", "Operation not found");

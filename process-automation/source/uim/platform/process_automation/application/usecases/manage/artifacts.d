@@ -66,7 +66,7 @@ class ManageArtifactsUseCase { // TODO: UIMUseCase {
         artifact.version_ = r.version_;
         artifact.contentUrl = r.contentUrl;
 
-        import core.time : MonoTime;
+        
         artifact.updatedAt = currentTimestamp;
 
         repo.update(artifact);

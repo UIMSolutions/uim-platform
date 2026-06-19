@@ -55,7 +55,7 @@ class ManageDocumentTypesUseCase { // TODO: UIMUseCase {
     if (r.defaultSchemaId.length > 0) existing.defaultSchemaId = r.defaultSchemaId;
     if (r.category.length > 0) existing.category = toCategory(r.category);
 
-    import core.time : MonoTime;
+    
     existing.updatedAt = currentTimestamp;
 
     repo.update(existing);

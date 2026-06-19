@@ -63,7 +63,7 @@ class ManageConnectionsUseCase { // TODO: UIMUseCase {
     connection.database = r.database;
     connection.user = r.user;
 
-    import core.time : MonoTime;
+    
     connection.updatedAt = currentTimestamp;
 
     repo.update(connection);

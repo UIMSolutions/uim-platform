@@ -35,7 +35,7 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
         c.status = CertificateStatus.pending;
         c.createdBy = r.createdBy;
 
-        import core.time : MonoTime;
+        
         c.createdAt = currentTimestamp;
 
         repo.save(c);
@@ -66,7 +66,7 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
         existing.status = CertificateStatus.active;
         existing.activatedDomains = r.domains;
 
-        import core.time : MonoTime;
+        
         existing.activatedAt = currentTimestamp;
 
         repo.update(existing);

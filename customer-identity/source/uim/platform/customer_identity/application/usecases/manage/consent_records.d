@@ -31,7 +31,7 @@ class ManageConsentRecordsUseCase {
     }
 
     CommandResult grantConsent(ConsentRecordDTO dto) {
-        import core.time : MonoTime;
+        
         ConsentRecord cr;
         cr.initEntity(dto.tenantId, dto.createdBy);
         cr.customerId = dto.customerId;
@@ -57,7 +57,7 @@ class ManageConsentRecordsUseCase {
     }
 
     CommandResult revokeConsent(TenantId tenantId, ConsentRecordId id) {
-        import core.time : MonoTime;
+        
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Consent record not found");

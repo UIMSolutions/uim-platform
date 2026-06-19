@@ -73,7 +73,7 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
       e.status = ExecutionStatus.dead;
     }
 
-    import core.time : MonoTime;
+    
     e.updatedAt = currentTimestamp;
 
     execRepo.update(e);

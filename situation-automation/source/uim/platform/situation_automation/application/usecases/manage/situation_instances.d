@@ -70,7 +70,7 @@ class ManageSituationInstancesUseCase { // TODO: UIMUseCase {
         if (r.assignedTo.length > 0)
             existing.assignedTo = r.assignedTo;
 
-        import core.time : MonoTime;
+        
         existing.updatedAt = currentTimestamp;
 
         repo.update(existing);
@@ -88,7 +88,7 @@ class ManageSituationInstancesUseCase { // TODO: UIMUseCase {
         existing.resolution.ruleId = r.ruleId;
         existing.resolution.outcome = r.outcome;
 
-        import core.time : MonoTime;
+        
         auto now = currentTimestamp;
         existing.resolution.resolvedAt = now;
         existing.updatedAt = now;

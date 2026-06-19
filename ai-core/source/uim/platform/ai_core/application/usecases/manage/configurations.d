@@ -64,7 +64,7 @@ class ManageConfigurationsUseCase { // TODO: UIMUseCase {
     }
     c.inputArtifacts = artifacts;
 
-    import core.time : MonoTime;
+    
     c.createdAt = currentTimestamp;
 
     repo.save(c);

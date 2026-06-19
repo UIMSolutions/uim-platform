@@ -61,7 +61,7 @@ class ManageProcessesUseCase { // TODO: UIMUseCase {
         process.version_ = r.version_;
         process.updatedBy = r.updatedBy;
 
-        import core.time : MonoTime;
+        
         process.updatedAt = currentTimestamp;
 
         repo.update(process);
@@ -84,7 +84,7 @@ class ManageProcessesUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Unknown action: " ~ r.action);
         }
 
-        import core.time : MonoTime;
+        
         process.updatedAt = currentTimestamp;
 
         repo.update(process);

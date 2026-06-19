@@ -62,7 +62,7 @@ class ManageNotificationsUseCase { // TODO: UIMUseCase {
         if (notification.isNull)
             return CommandResult(false, "", "Notification not found");
 
-        import core.time : MonoTime;
+        
         auto now = currentTimestamp;
 
         if (r.status == "sent") {

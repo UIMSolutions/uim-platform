@@ -59,7 +59,7 @@ class ManageDatabaseUsersUseCase { // TODO: UIMUseCase {
     user.isRestricted = r.isRestricted;
     user.forcePasswordChange = r.forcePasswordChange;
 
-    import core.time : MonoTime;
+    
     user.updatedAt = currentTimestamp;
 
     repo.update(user);

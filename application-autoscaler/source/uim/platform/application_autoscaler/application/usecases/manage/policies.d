@@ -19,7 +19,7 @@ class ManageScalingPoliciesUseCase {
   }
 
   CommandResult createPolicy(CreateScalingPolicyRequest r) {
-    import core.time : MonoTime;
+    
     auto id = generateId();
     auto now = currentTimestamp;
 
@@ -80,7 +80,7 @@ class ManageScalingPoliciesUseCase {
   }
 
   CommandResult updatePolicy(UpdateScalingPolicyRequest r) {
-    import core.time : MonoTime;
+    
     auto existing = repo.findById(r.tenantId, r.policyId);
     if (existing.isNull)
       return CommandResult(false, "", "Policy not found");
@@ -136,7 +136,7 @@ class ManageScalingPoliciesUseCase {
 
   private string generateId() @safe {
     
-    import core.time : MonoTime;
+    
     import std.random : uniform;
     return "pol-" ~ currentTimestamp.to!string ~ "-" ~ uniform(1000, 9999).to!string;
   }

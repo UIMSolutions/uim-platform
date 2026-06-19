@@ -44,7 +44,7 @@ struct RfcQueueEntry {
 
     static RfcQueueEntry create(TenantId tenantId, QueueName queueName, QueueDirection dir,
                                 TidValue tid, RfcCallId callId, int seq) {
-        import core.time : MonoTime;
+        
         import std.uuid  : randomUUID;
         RfcQueueEntry e;
         e.id          = randomUUID().toString();

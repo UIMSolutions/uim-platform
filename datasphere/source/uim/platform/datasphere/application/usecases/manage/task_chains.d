@@ -52,7 +52,7 @@ class ManageTaskChainsUseCase { // TODO: UIMUseCase {
     if (chain.isNull)
       return CommandResult(false, "", "Task chain not found");
 
-    import core.time : MonoTime;
+    
     chain.updatedAt = currentTimestamp;
 
     repo.update(chain);

@@ -76,7 +76,7 @@ class ManageInstancesUseCase { // TODO: UIMUseCase {
     existing.allowAllIpAccess = r.allowAllIpAccess;
     existing.whitelistedIps = r.whitelistedIps;
 
-    import core.time : MonoTime;
+    
     existing.updatedAt = currentTimestamp;
 
     repo.update(existing);
@@ -102,7 +102,7 @@ class ManageInstancesUseCase { // TODO: UIMUseCase {
         return CommandResult(false, "", "Unknown action: " ~ r.action);
     }
 
-    import core.time : MonoTime;
+    
     existing.updatedAt = currentTimestamp;
 
     repo.update(existing);

@@ -57,7 +57,7 @@ class ManageVisibilitiesUseCase { // TODO: UIMUseCase {
         existing.refreshIntervalSeconds = r.refreshIntervalSeconds;
         existing.updatedBy = r.updatedBy;
 
-        import core.time : MonoTime;
+        
         existing.updatedAt = currentTimestamp;
 
         repo.update(existing);
