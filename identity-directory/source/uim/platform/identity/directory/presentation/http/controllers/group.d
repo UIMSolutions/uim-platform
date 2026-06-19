@@ -75,7 +75,6 @@ class GroupController : ManageHttpController {
       .set("schemas", ["urn:ietf:params:scim:schemas:core:2.0:Group"].toJson);
 
     return successResponse("Scan job created successfully", "Created", 201, responseData);
-  }
 }
 
 override protected Json getHandler(HTTPServerRequest req) {
@@ -123,32 +122,45 @@ override protected Json deleteHandler(HTTPServerRequest req) {
     return precheck;
 
   auto tenantId = precheck.tenantId;
-  auto groupId = GroupId(precheck.id);
-  if (groupId.isNull)
+  auto id = GroupId(precheck.id);
+  if (id.isNull)
     return errorResponse("Invalid group ID", 400);
 
-  auto result = useCase.deleteGroup(tenantId, groupId);
+  auto result = useCase.deleteGroup(tenantId, id);
   if (result.hasError)
     return errorResponse(result.errorMessage, 404);
 
   return successResponse("Group deleted successfully", "Deleted", 200, Json.emptyObject);
 }
 
+protected Json addMemberHandler(HTTPServerRequest req) {
+  auto precheck = super.POSTHandler(req);
+  if (precheck.hasError)
+    return precheck;
+
+  auto tenantId = precheck.tenantId;
+  auto data = precheck.data;
+  auto addReq = AddMemberRequest(tenantId, data.getString("groupId"),
+    data.getString("memberId"), data.getString("memberType"), data.getString("display"),);
+  auto result = useCase.addMember(addReq);
+  if (result.hasError)
+    return errorResponse(result.errorMessage, 400);
+
+  // if (error.length > 0) {
+  //   writeScimError(res, 400, error);
+  //   return Json.emptyObject;
+  // } else {
+  //   auto resp = Json.emptyObject
+  //     .set("status", "member_added");
+
+    return successResponse("Member added successfully", "Added", 200, Json.emptyObject.set("id", result.id));
+  }
+}
+
 protected void handleAddMember(scope HTTPServerRequest req, scope HTTPServerResponse res) {
   try {
-    auto tenantId = precheck.tenantId;
-    auto data = precheck.data;
-    auto addReq = AddMemberRequest(tenantId, data.getString("groupId"),
-      data.getString("memberId"), data.getString("memberType"), data.getString("display"),);
-    auto error = useCase.addMember(addReq);
-    if (error.length > 0) {
-      writeScimError(res, 400, error);
-    } else {
-      auto resp = Json.emptyObject
-        .set("status", "member_added");
-
-      res.writeJsonBody(resp, 200);
-    }
+    auto response = addMemberHandler(req);
+      res.writeJsonBody(response, response.code);
   } catch (Exception e) {
     writeScimError(res, 500, "Internal server error");
   }

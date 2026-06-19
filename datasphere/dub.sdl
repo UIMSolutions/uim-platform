@@ -20,7 +20,8 @@ configuration "defaultRun" {
   targetType "executable"
 }
 configuration "defaultTest" {
-  targetType "library"
+    targetType "library"
+    excludedSourceFiles "source/app.d"
 }
 configuration "modules" {
   targetType "library"

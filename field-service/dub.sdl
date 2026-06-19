@@ -4,6 +4,7 @@ authors "Ozan Nurettin Suel"
 copyright "Copyright (c) 2018-2026, Ozan Nurettin Suel"
 license "Apache-2.0"
 targetName "uim-field-service-platform-service"
+targetPath "build"
 
 dependency "uim-platform:service" path=".."
 
