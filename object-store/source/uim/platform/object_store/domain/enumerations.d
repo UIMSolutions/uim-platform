@@ -22,7 +22,7 @@ string toString(StorageClass value) {
 ///
 unittest {
   mixin(ShowTest!("StorageClass"));
-  
+
   assert("standard".toStorageClass == StorageClass.standard);
   assert("archive".toStorageClass == StorageClass.archive);
   assert("nearline".toStorageClass == StorageClass.nearline);
@@ -49,6 +49,8 @@ string toString(BucketStatus value) {
 }
 ///
 unittest {
+  mixin(ShowTest!("BucketStatus"));
+
   assert("active".toBucketStatus == BucketStatus.active);
   assert("suspended".toBucketStatus == BucketStatus.suspended);
   assert("deleted".toBucketStatus == BucketStatus.deleted);
@@ -74,6 +76,8 @@ string toString(ObjectStatus value) {
 }
 ///
 unittest {
+  mixin(ShowTest!("ObjectStatus"));
+
   assert("active".toObjectStatus == ObjectStatus.active);
   assert("archived".toObjectStatus == ObjectStatus.archived);
   assert("deleted".toObjectStatus == ObjectStatus.deleted);
@@ -100,6 +104,8 @@ string toString(EncryptionType value) {
 }
 /// 
 unittest {
+  mixin(ShowTest!("EncryptionType"));
+
   assert("none".toEncryptionType == EncryptionType.none);
   assert("sse_s3".toEncryptionType == EncryptionType.sse_s3);
   assert("sse_kms".toEncryptionType == EncryptionType.sse_kms);
@@ -126,6 +132,8 @@ string toString(PolicyEffect value) {
 }
 /// 
 unittest {
+  mixin(ShowTest!("PolicyEffect"));
+
   assert("allow".toPolicyEffect == PolicyEffect.allow);
   assert("deny".toPolicyEffect == PolicyEffect.deny);
   assert("unknown".toPolicyEffect == PolicyEffect.allow); // default
@@ -149,6 +157,8 @@ string toString(BindingPermission value) {
 }
 /// 
 unittest {
+  mixin(ShowTest!("BindingPermission"));
+
   assert("readOnly".toBindingPermission == BindingPermission.readOnly);
   assert("readWrite".toBindingPermission == BindingPermission.readWrite);
   assert("admin".toBindingPermission == BindingPermission.admin);
@@ -174,6 +184,8 @@ string toString(BindingStatus value) {
 }
 /// 
 unittest {
+  mixin(ShowTest!("BindingStatus"));
+
   assert("active".toBindingStatus == BindingStatus.active);
   assert("revoked".toBindingStatus == BindingStatus.revoked);
   assert("expired".toBindingStatus == BindingStatus.expired);
@@ -198,6 +210,8 @@ string toString(RuleStatus value) {
 }
 /// 
 unittest {
+  mixin(ShowTest!("RuleStatus"));
+  
   assert("enabled".toRuleStatus == RuleStatus.enabled);
   assert("disabled".toRuleStatus == RuleStatus.disabled);
   assert("unknown".toRuleStatus == RuleStatus.disabled); // default

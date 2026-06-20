@@ -8,7 +8,7 @@ module uim.platform.custom_domain.application.dto;
 
 import uim.platform.custom_domain;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

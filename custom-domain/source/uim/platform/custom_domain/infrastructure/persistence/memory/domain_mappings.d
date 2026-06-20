@@ -7,7 +7,7 @@ module uim.platform.custom_domain.infrastructure.persistence.memory.domain_mappi
 
 import uim.platform.custom_domain;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

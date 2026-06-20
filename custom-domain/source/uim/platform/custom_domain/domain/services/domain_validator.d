@@ -7,7 +7,7 @@ module uim.platform.custom_domain.domain.services.domain_validator;
 
 import uim.platform.custom_domain;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

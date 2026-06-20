@@ -8,7 +8,7 @@ module uim.platform.custom_domain.infrastructure.config;
 import std.process : environment;
 import uim.platform.custom_domain;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

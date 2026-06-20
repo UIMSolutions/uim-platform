@@ -7,7 +7,7 @@ module uim.platform.custom_domain.infrastructure.container;
 
 import uim.platform.custom_domain;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

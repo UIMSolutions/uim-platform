@@ -7,7 +7,7 @@ module uim.platform.custom_domain.infrastructure.persistence.memory.private_keys
 
 import uim.platform.custom_domain;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

@@ -7,7 +7,7 @@ module uim.platform.custom_domain.domain.ports.repositories.domain_mappings;
 
 import uim.platform.custom_domain;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

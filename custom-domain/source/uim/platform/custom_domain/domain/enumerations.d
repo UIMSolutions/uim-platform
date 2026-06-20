@@ -1,7 +1,7 @@
 module uim.platform.custom_domain.domain.enumerations;
 import uim.platform.custom_domain;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 
@@ -12,15 +12,28 @@ enum DomainStatus {
     error,
     deactivated,
 }
-DomainStatus toDomainStatus(string s) {
-    const map = [
-        "pending": DomainStatus.pending,
-        "active": DomainStatus.active,
-        "inactive": DomainStatus.inactive,
-        "error": DomainStatus.error,
-        "deactivated": DomainStatus.deactivated,
-    ];
-    return map.get(s, DomainStatus.error);
+DomainStatus toDomainStatus(string value) {
+    mixin(toEnumSwitch("DomainStatus", "DomainStatus.pending"));
+}
+string toString(DomainStatus value) {
+    return value.to!string();
+}
+///
+unittest {
+    mixin(ShowTest!("DomainStatus"));
+
+    assert("pending".toDomainStatus == DomainStatus.pending);
+    assert("active".toDomainStatus == DomainStatus.active);
+    assert("inactive".toDomainStatus == DomainStatus.inactive);
+    assert("error".toDomainStatus == DomainStatus.error);
+    assert("deactivated".toDomainStatus == DomainStatus.deactivated);
+    assert("unknown".toDomainStatus == DomainStatus.pending); // default
+
+    assert(DomainStatus.pending.toString == "pending");
+    assert(DomainStatus.active.toString == "active");
+    assert(DomainStatus.inactive.toString == "inactive");
+    assert(DomainStatus.error.toString == "error");
+    assert(DomainStatus.deactivated.toString == "deactivated");
 }
 
 enum DomainEnvironment {
@@ -28,14 +41,26 @@ enum DomainEnvironment {
     kyma,
     neo,
 }
-DomainEnvironment toDomainEnvironment(string s) {
-    const map = [
-        "cloudFoundry": DomainEnvironment.cloudFoundry,
-        "kyma": DomainEnvironment.kyma,
-        "neo": DomainEnvironment.neo,
-    ];
-    return map.get(s, DomainEnvironment.cloudFoundry);
+DomainEnvironment toDomainEnvironment(string value) {
+    mixin(toEnumSwitch("DomainEnvironment", "DomainEnvironment.cloudFoundry"));
 }
+string toString(DomainEnvironment value) {
+    return value.to!string();
+}
+///
+unittest {
+    mixin(ShowTest!("DomainEnvironment"));
+
+    assert("cloudFoundry".toDomainEnvironment == DomainEnvironment.cloudFoundry);
+    assert("kyma".toDomainEnvironment == DomainEnvironment.kyma);
+    assert("neo".toDomainEnvironment == DomainEnvironment.neo);
+    assert("unknown".toDomainEnvironment == DomainEnvironment.cloudFoundry); // default
+
+    assert(DomainEnvironment.cloudFoundry.toString == "cloudFoundry");
+    assert(DomainEnvironment.kyma.toString == "kyma");
+    assert(DomainEnvironment.neo.toString == "neo");
+}
+
 // --- Private Key ---
 
 enum KeyAlgorithm {
@@ -45,14 +70,26 @@ enum KeyAlgorithm {
     ecdsaP384,
 }
 
-KeyAlgorithm toKeyAlgorithm(string s) {
-    const map = [
-        "rsa2048": KeyAlgorithm.rsa2048,
-        "rsa4096": KeyAlgorithm.rsa4096,
-        "ecdsaP256": KeyAlgorithm.ecdsaP256,
-        "ecdsaP384": KeyAlgorithm.ecdsaP384,
-    ];
-    return map.get(s, KeyAlgorithm.rsa2048);
+KeyAlgorithm toKeyAlgorithm(string value) {
+    mixin(toEnumSwitch("KeyAlgorithm", "KeyAlgorithm.rsa2048"));
+}
+string toString(KeyAlgorithm value) {
+    return value.to!string();
+}
+///
+unittest {
+    mixin(ShowTest!("KeyAlgorithm"));
+
+    assert("rsa2048".toKeyAlgorithm == KeyAlgorithm.rsa2048);
+    assert("rsa4096".toKeyAlgorithm == KeyAlgorithm.rsa4096);
+    assert("ecdsaP256".toKeyAlgorithm == KeyAlgorithm.ecdsaP256);
+    assert("ecdsaP384".toKeyAlgorithm == KeyAlgorithm.ecdsaP384);
+    assert("unknown".toKeyAlgorithm == KeyAlgorithm.rsa2048); // default
+
+    assert(KeyAlgorithm.rsa2048.toString == "rsa2048");
+    assert(KeyAlgorithm.rsa4096.toString == "rsa4096");
+    assert(KeyAlgorithm.ecdsaP256.toString == "ecdsaP256");
+    assert(KeyAlgorithm.ecdsaP384.toString == "ecdsaP384");
 }
 
 enum KeyStatus {
@@ -61,13 +98,24 @@ enum KeyStatus {
     deleted,
 }
 
-KeyStatus toKeyStatus(string s) {
-    const map = [
-        "active": KeyStatus.active,
-        "inactive": KeyStatus.inactive,
-        "deleted": KeyStatus.deleted,
-    ];
-    return map.get(s, KeyStatus.active);
+KeyStatus toKeyStatus(string value) {
+    mixin(toEnumSwitch("KeyStatus", "KeyStatus.active"));
+}
+string toString(KeyStatus value) {
+    return value.to!string();
+}
+///
+unittest {
+    mixin(ShowTest!("KeyStatus"));
+
+    assert("active".toKeyStatus == KeyStatus.active);
+    assert("inactive".toKeyStatus == KeyStatus.inactive);
+    assert("deleted".toKeyStatus == KeyStatus.deleted);
+    assert("unknown".toKeyStatus == KeyStatus.active); // default
+
+    assert(KeyStatus.active.toString == "active");
+    assert(KeyStatus.inactive.toString == "inactive");
+    assert(KeyStatus.deleted.toString == "deleted");
 }
 
 // --- Certificate ---
@@ -79,15 +127,28 @@ enum CertificateStatus {
     revoked,
     deactivated,
 }
-CertificateStatus toCertificateStatus(string s) {
-    const map = [
-        "pending": CertificateStatus.pending,
-        "active": CertificateStatus.active,
-        "expired": CertificateStatus.expired,
-        "revoked": CertificateStatus.revoked,
-        "deactivated": CertificateStatus.deactivated,
-    ];
-    return map.get(s, CertificateStatus.pending);
+CertificateStatus toCertificateStatus(string value) {
+    mixin(toEnumSwitch("CertificateStatus", "CertificateStatus.pending"));
+}
+string toString(CertificateStatus value) {
+    return value.to!string();
+}
+/// 
+unittest {
+    mixin(ShowTest!("CertificateStatus"));
+
+    assert("pending".toCertificateStatus == CertificateStatus.pending);
+    assert("active".toCertificateStatus == CertificateStatus.active);
+    assert("expired".toCertificateStatus == CertificateStatus.expired);
+    assert("revoked".toCertificateStatus == CertificateStatus.revoked);
+    assert("deactivated".toCertificateStatus == CertificateStatus.deactivated);
+    assert("unknown".toCertificateStatus == CertificateStatus.pending); // default
+
+    assert(CertificateStatus.pending.toString == "pending");
+    assert(CertificateStatus.active.toString == "active");
+    assert(CertificateStatus.expired.toString == "expired");
+    assert(CertificateStatus.revoked.toString == "revoked");
+    assert(CertificateStatus.deactivated.toString == "deactivated");
 }
 
 enum CertificateType {
@@ -95,14 +156,26 @@ enum CertificateType {
     wildcard,
     multiDomain,
 }
-CertificateType toCertificateType(string s) {
-    const map = [
-        "standard": CertificateType.standard,
-        "wildcard": CertificateType.wildcard,
-        "multiDomain": CertificateType.multiDomain,
-    ];
-    return map.get(s, CertificateType.standard);
+CertificateType toCertificateType(string value) {
+    mixin(toEnumSwitch("CertificateType", "CertificateType.standard"));
 }
+string toString(CertificateType value) {
+    return value.to!string();
+}
+///
+unittest {
+    mixin(ShowTest!("CertificateType"));
+
+    assert("standard".toCertificateType == CertificateType.standard);
+    assert("wildcard".toCertificateType == CertificateType.wildcard);
+    assert("multiDomain".toCertificateType == CertificateType.multiDomain);
+    assert("unknown".toCertificateType == CertificateType.standard); // default
+
+    assert(CertificateType.standard.toString == "standard");
+    assert(CertificateType.wildcard.toString == "wildcard");
+    assert(CertificateType.multiDomain.toString == "multiDomain");
+}
+
 // --- TLS Configuration ---
 
 enum TlsProtocolVersion {
@@ -111,14 +184,26 @@ enum TlsProtocolVersion {
     tls1_2,
     tls1_3,
 }
-TlsProtocolVersion toTlsProtocolVersion(string s) {
-    const map = [
-        "tls1_0": TlsProtocolVersion.tls1_0,
-        "tls1_1": TlsProtocolVersion.tls1_1,
-        "tls1_2": TlsProtocolVersion.tls1_2,
-        "tls1_3": TlsProtocolVersion.tls1_3,
-    ];
-    return map.get(s, TlsProtocolVersion.tls1_2);
+TlsProtocolVersion toTlsProtocolVersion(string value) {
+    mixin(toEnumSwitch("TlsProtocolVersion", "TlsProtocolVersion.tls1_2"));
+}
+string toString(TlsProtocolVersion value) {
+    return value.to!string();
+}
+/// 
+unittest {
+    mixin(ShowTest!("TlsProtocolVersion"));
+
+    assert("tls1_0".toTlsProtocolVersion == TlsProtocolVersion.tls1_0);
+    assert("tls1_1".toTlsProtocolVersion == TlsProtocolVersion.tls1_1);
+    assert("tls1_2".toTlsProtocolVersion == TlsProtocolVersion.tls1_2);
+    assert("tls1_3".toTlsProtocolVersion == TlsProtocolVersion.tls1_3);
+    assert("unknown".toTlsProtocolVersion == TlsProtocolVersion.tls1_2); // default
+
+    assert(TlsProtocolVersion.tls1_0.toString == "tls1_0");
+    assert(TlsProtocolVersion.tls1_1.toString == "tls1_1");
+    assert(TlsProtocolVersion.tls1_2.toString == "tls1_2");
+    assert(TlsProtocolVersion.tls1_3.toString == "tls1_3"); 
 }
 
 enum CipherSuiteStrength {
@@ -126,14 +211,26 @@ enum CipherSuiteStrength {
     medium,
     weak,
 }
-CipherSuiteStrength toCipherSuiteStrength(string s) {
-    const map = [
-        "strong": CipherSuiteStrength.strong,
-        "medium": CipherSuiteStrength.medium,
-        "weak": CipherSuiteStrength.weak,
-    ];
-    return map.get(s, CipherSuiteStrength.strong);
+CipherSuiteStrength toCipherSuiteStrength(string value) {
+    mixin(toEnumSwitch("CipherSuiteStrength", "CipherSuiteStrength.strong"));
 }
+string toString(CipherSuiteStrength value) {
+    return value.to!string();
+}
+///
+unittest {
+    mixin(ShowTest!("CipherSuiteStrength"));
+
+    assert("strong".toCipherSuiteStrength == CipherSuiteStrength.strong);
+    assert("medium".toCipherSuiteStrength == CipherSuiteStrength.medium);
+    assert("weak".toCipherSuiteStrength == CipherSuiteStrength.weak);
+    assert("unknown".toCipherSuiteStrength == CipherSuiteStrength.strong); // default
+
+    assert(CipherSuiteStrength.strong.toString == "strong");
+    assert(CipherSuiteStrength.medium.toString == "medium");
+    assert(CipherSuiteStrength.weak.toString == "weak");
+}
+
 // --- Domain Mapping ---
 
 enum MappingStatus {
@@ -142,14 +239,26 @@ enum MappingStatus {
     pending,
     error,
 }
-MappingStatus toMappingStatus(string s) {
-    const map = [
-        "active": MappingStatus.active,
-        "inactive": MappingStatus.inactive,
-        "pending": MappingStatus.pending,
-        "error": MappingStatus.error,
-    ];
-    return map.get(s, MappingStatus.error);
+MappingStatus toMappingStatus(string value) {
+    mixin(toEnumSwitch("MappingStatus", "MappingStatus.active"));
+}
+string toString(MappingStatus value) {
+    return value.to!string();
+}
+///
+unittest {
+    mixin(ShowTest!("MappingStatus"));
+
+    assert("active".toMappingStatus == MappingStatus.active);
+    assert("inactive".toMappingStatus == MappingStatus.inactive);
+    assert("pending".toMappingStatus == MappingStatus.pending);
+    assert("error".toMappingStatus == MappingStatus.error);
+    assert("unknown".toMappingStatus == MappingStatus.active); // default   
+
+    assert(MappingStatus.active.toString == "active");
+    assert(MappingStatus.inactive.toString == "inactive");
+    assert(MappingStatus.pending.toString == "pending");
+    assert(MappingStatus.error.toString == "error");
 }
 
 enum MappingType {
@@ -157,14 +266,26 @@ enum MappingType {
     saasRoute,
     staticRoute,
 }
-MappingType toMappingType(string s) {
-    const map = [
-        "applicationRoute": MappingType.applicationRoute,
-        "saasRoute": MappingType.saasRoute,
-        "staticRoute": MappingType.staticRoute,
-    ];
-    return map.get(s, MappingType.applicationRoute);
+MappingType toMappingType(string value) {
+    mixin(toEnumSwitch("MappingType", "MappingType.applicationRoute"));
 }
+string toString(MappingType value) {
+    return value.to!string();
+}
+///
+unittest {
+    mixin(ShowTest!("MappingType"));
+
+    assert("applicationRoute".toMappingType == MappingType.applicationRoute);
+    assert("saasRoute".toMappingType == MappingType.saasRoute);
+    assert("staticRoute".toMappingType == MappingType.staticRoute);
+    assert("unknown".toMappingType == MappingType.applicationRoute); // default
+
+    assert(MappingType.applicationRoute.toString == "applicationRoute");
+    assert(MappingType.saasRoute.toString == "saasRoute");
+    assert(MappingType.staticRoute.toString == "staticRoute");
+}
+
 // --- Trusted Certificate ---
 
 enum TrustedCertificateStatus {
@@ -172,13 +293,24 @@ enum TrustedCertificateStatus {
     inactive,
     expired,
 }
-TrustedCertificateStatus toTrustedCertificateStatus(string s) {
-    const map = [
-        "active": TrustedCertificateStatus.active,
-        "inactive": TrustedCertificateStatus.inactive,
-        "expired": TrustedCertificateStatus.expired,
-    ];
-    return map.get(s, TrustedCertificateStatus.active);
+TrustedCertificateStatus toTrustedCertificateStatus(string value) {
+    mixin(toEnumSwitch("TrustedCertificateStatus", "TrustedCertificateStatus.active"));
+}
+string toString(TrustedCertificateStatus value) {
+    return value.to!string();
+}
+/// 
+unittest {
+    mixin(ShowTest!("TrustedCertificateStatus"));
+
+    assert("active".toTrustedCertificateStatus == TrustedCertificateStatus.active);
+    assert("inactive".toTrustedCertificateStatus == TrustedCertificateStatus.inactive);
+    assert("expired".toTrustedCertificateStatus == TrustedCertificateStatus.expired);
+    assert("unknown".toTrustedCertificateStatus == TrustedCertificateStatus.active); // default
+
+    assert(TrustedCertificateStatus.active.toString == "active");
+    assert(TrustedCertificateStatus.inactive.toString == "inactive");
+    assert(TrustedCertificateStatus.expired.toString == "expired");
 }
 
 enum ClientAuthMode {
@@ -186,14 +318,26 @@ enum ClientAuthMode {
     optional,
     disabled,
 }
-ClientAuthMode toClientAuthMode(string s) {
-    const map = [
-        "required": ClientAuthMode.required,
-        "optional": ClientAuthMode.optional,
-        "disabled": ClientAuthMode.disabled,
-    ];
-    return map.get(s, ClientAuthMode.disabled);
+ClientAuthMode toClientAuthMode(string value) {
+    mixin(toEnumSwitch("ClientAuthMode", "ClientAuthMode.required"));
 }
+string toString(ClientAuthMode value) {
+    return value.to!string();
+}
+///
+unittest {
+    mixin(ShowTest!("ClientAuthMode"));
+
+    assert("required".toClientAuthMode == ClientAuthMode.required);
+    assert("optional".toClientAuthMode == ClientAuthMode.optional);
+    assert("disabled".toClientAuthMode == ClientAuthMode.disabled);
+    assert("unknown".toClientAuthMode == ClientAuthMode.required); // default
+
+    assert(ClientAuthMode.required.toString == "required");
+    assert(ClientAuthMode.optional.toString == "optional");
+    assert(ClientAuthMode.disabled.toString == "disabled"); 
+}
+
 // --- DNS Record ---
 
 enum DnsRecordType {
@@ -203,16 +347,31 @@ enum DnsRecordType {
     txtRecord,
     mxRecord,
 }
-DnsRecordType toDnsRecordType(string s) {
-    const map = [
-        "aRecord": DnsRecordType.aRecord,
-        "aaaaRecord": DnsRecordType.aaaaRecord,
-        "cnameRecord": DnsRecordType.cnameRecord,
-        "txtRecord": DnsRecordType.txtRecord,
-        "mxRecord": DnsRecordType.mxRecord,
-    ];
-    return map.get(s, DnsRecordType.aRecord);
+DnsRecordType toDnsRecordType(string value) {
+    mixin(toEnumSwitch("DnsRecordType", "DnsRecordType.aRecord"));
 }
+string toString(DnsRecordType value) {
+    return value.to!string();
+}
+///
+unittest {
+    mixin(ShowTest!("DnsRecordType"));
+
+    assert("aRecord".toDnsRecordType == DnsRecordType.aRecord);
+    assert("aaaaRecord".toDnsRecordType == DnsRecordType.aaaaRecord);
+    assert("cnameRecord".toDnsRecordType == DnsRecordType.cnameRecord);
+    assert("txtRecord".toDnsRecordType == DnsRecordType.txtRecord);
+    assert("mxRecord".toDnsRecordType == DnsRecordType.mxRecord);
+    assert("unknown".toDnsRecordType == DnsRecordType.aRecord); // default
+
+    assert(DnsRecordType.aRecord.toString == "aRecord");
+    assert(DnsRecordType.aaaaRecord.toString == "aaaaRecord");
+    assert(DnsRecordType.cnameRecord.toString == "cnameRecord");
+    assert(DnsRecordType.txtRecord.toString == "txtRecord");
+    assert(DnsRecordType.mxRecord.toString == "mxRecord");
+}
+
+// --- DNS Validation ---
 
 enum DnsValidationStatus {
     pending,
@@ -220,15 +379,28 @@ enum DnsValidationStatus {
     failed,
     expired,
 }
-DnsValidationStatus toDnsValidationStatus(string s) {
-    const map = [
-        "pending": DnsValidationStatus.pending,
-        "validated": DnsValidationStatus.validated,
-        "failed": DnsValidationStatus.failed,
-        "expired": DnsValidationStatus.expired,
-    ];
-    return map.get(s, DnsValidationStatus.pending);
+DnsValidationStatus toDnsValidationStatus(string value) {
+    mixin(toEnumSwitch("DnsValidationStatus", "DnsValidationStatus.pending"));
 }
+string toString(DnsValidationStatus value) {
+    return value.to!string();
+}
+///
+unittest {
+    mixin(ShowTest!("DnsValidationStatus"));
+
+    assert("pending".toDnsValidationStatus == DnsValidationStatus.pending);
+    assert("validated".toDnsValidationStatus == DnsValidationStatus.validated);
+    assert("failed".toDnsValidationStatus == DnsValidationStatus.failed);
+    assert("expired".toDnsValidationStatus == DnsValidationStatus.expired);
+    assert("unknown".toDnsValidationStatus == DnsValidationStatus.pending); // default
+
+    assert(DnsValidationStatus.pending.toString == "pending");
+    assert(DnsValidationStatus.validated.toString == "validated");
+    assert(DnsValidationStatus.failed.toString == "failed");
+    assert(DnsValidationStatus.expired.toString == "expired");  
+}
+
 // --- Dashboard ---
 
 enum DashboardMetricType {
@@ -241,18 +413,34 @@ enum DashboardMetricType {
     domainCount,
     mappingCount,
 }
-DashboardMetricType toDashboardMetricType(string s) {
-    const map = [
-        "certificateExpiration": DashboardMetricType.certificateExpiration,
-        "domainHealth": DashboardMetricType.domainHealth,
-        "requestVolume": DashboardMetricType.requestVolume,
-        "tlsHandshakeErrors": DashboardMetricType.tlsHandshakeErrors,
-        "dnsResolutionTime": DashboardMetricType.dnsResolutionTime,
-        "certificateCount": DashboardMetricType.certificateCount,
-        "domainCount": DashboardMetricType.domainCount,
-        "mappingCount": DashboardMetricType.mappingCount,
-    ];
-    return map.get(s, DashboardMetricType.domainHealth);
+DashboardMetricType toDashboardMetricType(string value) {
+    mixin(toEnumSwitch("DashboardMetricType", "DashboardMetricType.certificateExpiration"));
+}
+string toString(DashboardMetricType value) {
+    return value.to!string();
+}
+///
+unittest {
+    mixin(ShowTest!("DashboardMetricType"));
+
+    assert("certificateExpiration".toDashboardMetricType == DashboardMetricType.certificateExpiration);
+    assert("domainHealth".toDashboardMetricType == DashboardMetricType.domainHealth);
+    assert("requestVolume".toDashboardMetricType == DashboardMetricType.requestVolume);
+    assert("tlsHandshakeErrors".toDashboardMetricType == DashboardMetricType.tlsHandshakeErrors);
+    assert("dnsResolutionTime".toDashboardMetricType == DashboardMetricType.dnsResolutionTime);
+    assert("certificateCount".toDashboardMetricType == DashboardMetricType.certificateCount);
+    assert("domainCount".toDashboardMetricType == DashboardMetricType.domainCount);
+    assert("mappingCount".toDashboardMetricType == DashboardMetricType.mappingCount);
+    assert("unknown".toDashboardMetricType == DashboardMetricType.certificateExpiration); // default    
+
+    assert(DashboardMetricType.certificateExpiration.toString == "certificateExpiration");
+    assert(DashboardMetricType.domainHealth.toString == "domainHealth");
+    assert(DashboardMetricType.requestVolume.toString == "requestVolume");
+    assert(DashboardMetricType.tlsHandshakeErrors.toString == "tlsHandshakeErrors");
+    assert(DashboardMetricType.dnsResolutionTime.toString == "dnsResolutionTime");
+    assert(DashboardMetricType.certificateCount.toString == "certificateCount");
+    assert(DashboardMetricType.domainCount.toString == "domainCount");
+    assert(DashboardMetricType.mappingCount.toString == "mappingCount");
 }
 
 enum HealthStatus {
@@ -261,14 +449,26 @@ enum HealthStatus {
     critical,
     unknown,
 }
-HealthStatus toHealthStatus(string s) {
-    const map = [
-        "healthy": HealthStatus.healthy,
-        "warning": HealthStatus.warning,
-        "critical": HealthStatus.critical,
-        "unknown": HealthStatus.unknown,
-    ];
-    return map.get(s, HealthStatus.unknown);
+HealthStatus toHealthStatus(string value) {
+    mixin(toEnumSwitch("HealthStatus", "HealthStatus.unknown"));
+}
+string toString(HealthStatus value) {
+    return value.to!string();
+}
+///
+unittest {
+    mixin(ShowTest!("HealthStatus"));
+
+    assert("healthy".toHealthStatus == HealthStatus.healthy);
+    assert("warning".toHealthStatus == HealthStatus.warning);
+    assert("critical".toHealthStatus == HealthStatus.critical);
+    assert("unknown".toHealthStatus == HealthStatus.unknown); 
+    assert("invalid".toHealthStatus == HealthStatus.unknown); // default  
+
+    assert(HealthStatus.healthy.toString == "healthy");
+    assert(HealthStatus.warning.toString == "warning");
+    assert(HealthStatus.critical.toString == "critical");
+    assert(HealthStatus.unknown.toString == "unknown");
 }
 
 enum ExpirationSeverity {
@@ -278,13 +478,26 @@ enum ExpirationSeverity {
     critical,
     expired,
 }
-ExpirationSeverity toExpirationSeverity(string s) {
-    const map = [
-        "none": ExpirationSeverity.none,
-        "info": ExpirationSeverity.info,
-        "warning": ExpirationSeverity.warning,
-        "critical": ExpirationSeverity.critical,
-        "expired": ExpirationSeverity.expired,
-    ];
-    return map.get(s, ExpirationSeverity.none);
+ExpirationSeverity toExpirationSeverity(string value) {
+    mixin(toEnumSwitch("ExpirationSeverity", "ExpirationSeverity.none"));
+}
+string toString(ExpirationSeverity value) {
+    return value.to!string();
+}
+///
+unittest {
+    mixin(ShowTest!("ExpirationSeverity")); 
+
+    assert("none".toExpirationSeverity == ExpirationSeverity.none);
+    assert("info".toExpirationSeverity == ExpirationSeverity.info);
+    assert("warning".toExpirationSeverity == ExpirationSeverity.warning);
+    assert("critical".toExpirationSeverity == ExpirationSeverity.critical);
+    assert("expired".toExpirationSeverity == ExpirationSeverity.expired);
+    assert("unknown".toExpirationSeverity == ExpirationSeverity.none); // default
+
+    assert(ExpirationSeverity.none.toString == "none");
+    assert(ExpirationSeverity.info.toString == "info");
+    assert(ExpirationSeverity.warning.toString == "warning");
+    assert(ExpirationSeverity.critical.toString == "critical");
+    assert(ExpirationSeverity.expired.toString == "expired");   
 }

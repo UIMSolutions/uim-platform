@@ -7,7 +7,7 @@ module uim.platform.custom_domain.application.usecases.manage.domain_dashboards;
 
 import uim.platform.custom_domain;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

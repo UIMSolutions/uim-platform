@@ -7,7 +7,7 @@ module uim.platform.custom_domain.application.usecases.manage.dns_records;
 
 import uim.platform.custom_domain;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 
