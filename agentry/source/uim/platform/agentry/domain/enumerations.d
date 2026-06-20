@@ -22,36 +22,63 @@ enum AppPlatform {
     // Cross-platform application, built using frameworks like React Native, Flutter, or Xamarin that allow for a single codebase to be deployed across multiple platforms, providing a consistent user experience regardless of the underlying operating system or device
     cross
 }
-AppPlatform toAppPlatform(string platform) {
-    const map = [
-        "ios": AppPlatform.ios,
-        "android": AppPlatform.android,
-        "windows": AppPlatform.windows,
-        "web": AppPlatform.web,
-        "cross": AppPlatform.cross
-    ];
-    return map.get(platform.toLower, AppPlatform.cross);
+AppPlatform toAppPlatform(string value) {
+    mixin(toEnumSwitch("AppPlatform", "AppPlatform.cross"));
+}
+string toString(AppPlatform value) {
+    return value.to!string; // This will return the enum member name as a string, e.g. "ios", "android", etc
+}
+///
+unittest {
+    assert(toAppPlatform("ios") == AppPlatform.ios);
+    assert(toAppPlatform("Android") == AppPlatform.android);
+    assert(toAppPlatform("WINDOWS") == AppPlatform.windows);
+    assert(toAppPlatform("web") == AppPlatform.web);
+    assert(toAppPlatform("cross") == AppPlatform.cross);
+    assert(toAppPlatform("unknown") == AppPlatform.cross);
+
+    assert(AppPlatform.ios.toString == "ios");
+    assert(AppPlatform.android.toString == "android");
+    assert(AppPlatform.windows.toString == "windows");
+    assert(AppPlatform.web.toString == "web");
+    assert(AppPlatform.cross.toString == "cross");
 }
 
 /// Lifecycle status of a registered mobile application
-enum AppStatus {
+enum AppStatus : string{
     // Used for app registrations that are currently in development and have not yet been published, which may indicate that they are not yet available for deployment or use by end users
-    draft, 
+    draft = "draft", 
     // Used for app registrations that are currently published and available for deployment or use by end users, which may indicate that they have passed any necessary testing and validation processes and are ready for production use
-    active,
+    active = "active",
     // Used for app registrations that are no longer recommended for use, which may indicate that they have been superseded by newer versions or have known issues that make them less desirable for deployment or use by end users, but may still be available for use in certain scenarios or for backward compatibility purposes
-    deprecated_, 
+    deprecated_ = "deprecated", 
     // Used for app registrations that are no longer active and have been withdrawn from availability, which may indicate that they have been removed from the system and are no longer accessible for deployment or use by end users, and may require cleanup or archival of any associated resources or data
-    archived 
+    archived = "archived" 
 }
 AppStatus toAppStatus(string status) {
-    const map = [
-        "draft": AppStatus.draft,
-        "active": AppStatus.active,
-        "deprecated": AppStatus.deprecated_,
-        "archived": AppStatus.archived
-    ];
-    return map.get(status.toLower, AppStatus.draft);
+    switch(status.toLower) {
+        case "draft": return AppStatus.draft;
+        case "active": return AppStatus.active;
+        case "deprecated": return AppStatus.deprecated_;
+        case "archived": return AppStatus.archived;
+        default: return AppStatus.draft; // Default to draft if the input string does not match any known status
+    }
+}
+string toString(AppStatus value) {
+    return cast(string)value; // This will return the enum member name as a string, e.g. "draft", "active", etc
+}
+///
+unittest {
+    assert(toAppStatus("draft") == AppStatus.draft);
+    assert(toAppStatus("Active") == AppStatus.active);
+    assert(toAppStatus("DEPRECATED") == AppStatus.deprecated_);
+    assert(toAppStatus("archived") == AppStatus.archived);
+    assert(toAppStatus("unknown") == AppStatus.draft);
+
+    assert(AppStatus.draft.toString == "draft");
+    assert(AppStatus.active.toString == "active");
+    assert(AppStatus.deprecated_.toString == "deprecated");
+    assert(AppStatus.archived.toString == "archived");
 }
 
 /// Lifecycle status of an app metadata definition
@@ -63,34 +90,59 @@ enum DefinitionStatus {
     // No longer recommended for use, but may still be available for use in certain scenarios or for backward compatibility purposes
     archived 
 }
-DefinitionStatus toDefinitionStatus(string status) {
-    const map = [
-        "draft": DefinitionStatus.draft,
-        "published": DefinitionStatus.published,
-        "archived": DefinitionStatus.archived
-    ];
-    return map.get(status.toLower, DefinitionStatus.draft);
+DefinitionStatus toDefinitionStatus(string value) {
+    mixin(toEnumSwitch("DefinitionStatus", "DefinitionStatus.draft"));
+}
+string toString(DefinitionStatus value) {
+    return value.to!string; // This will return the enum member name as a string, e.g. "draft", "published", etc
+}
+///
+unittest {
+    assert(toDefinitionStatus("draft") == DefinitionStatus.draft);
+    assert(toDefinitionStatus("Published") == DefinitionStatus.published);
+    assert(toDefinitionStatus("ARCHIVED") == DefinitionStatus.archived);
+    assert(toDefinitionStatus("unknown") == DefinitionStatus.draft);
+
+    assert(DefinitionStatus.draft.toString == "draft");
+    assert(DefinitionStatus.published.toString == "published");
+    assert(DefinitionStatus.archived.toString == "archived");   
 }
 
 /// Published release status of an app version
-enum AppVersionStatus {
+enum AppVersionStatus : string {
     // Used for app versions that are currently in development and have not yet been released, which may indicate that they are not yet available for deployment or use by end users
-    pending,
+    pending = "pending",
     // Used for app versions that are currently published and available for deployment or use by end users, which may indicate that they have passed any necessary testing and validation processes and are ready for production use
-    published,
+    published = "published",
     // Used for app versions that are no longer recommended for use, which may indicate that they have been superseded by newer versions or have known issues that make them less desirable for deployment or use by end users, but may still be available for use in certain scenarios or for backward compatibility purposes
-    deprecated_, 
+    deprecated_ = "deprecated", 
     // Used for app versions that are no longer active and have been withdrawn from availability, which may indicate that they have been removed from the system and are no longer accessible for deployment or use by end users, and may require cleanup or archival of any associated resources or data
-    withdrawn 
+    withdrawn = "withdrawn"
 }
 AppVersionStatus toAppVersionStatus(string status) {
-    const map = [
-        "pending": AppVersionStatus.pending,
-        "published": AppVersionStatus.published,
-        "deprecated": AppVersionStatus.deprecated_,
-        "withdrawn": AppVersionStatus.withdrawn
-    ];
-    return map.get(status.toLower, AppVersionStatus.pending);
+    switch(status.toLower) {
+        case "pending": return AppVersionStatus.pending;
+        case "published": return AppVersionStatus.published;
+        case "deprecated": return AppVersionStatus.deprecated_;
+        case "withdrawn": return AppVersionStatus.withdrawn;
+        default: return AppVersionStatus.pending; // Default to pending if the input string does not match any known status
+    }
+}
+string toString(AppVersionStatus value) {
+    return cast(string)value; // This will return the enum member name as a string, e.g. "pending", "published", etc
+}
+///
+unittest {
+    assert(toAppVersionStatus("pending") == AppVersionStatus.pending);
+    assert(toAppVersionStatus("Published") == AppVersionStatus.published);
+    assert(toAppVersionStatus("DEPRECATED") == AppVersionStatus.deprecated_);
+    assert(toAppVersionStatus("withdrawn") == AppVersionStatus.withdrawn);
+    assert(toAppVersionStatus("unknown") == AppVersionStatus.pending);
+
+    assert(AppVersionStatus.pending.toString == "pending");
+    assert(AppVersionStatus.published.toString == "published");
+    assert(AppVersionStatus.deprecated_.toString == "deprecated");
+    assert(AppVersionStatus.withdrawn.toString == "withdrawn"); 
 }
 
 /// Enrollment and activity status of a mobile device
@@ -104,14 +156,24 @@ enum DeviceStatus {
     // Used for devices that have been removed from the system, which may indicate that they are no longer in use and have been deleted from the system
     removed 
 }
-DeviceStatus toDeviceStatus(string status) {
-    const map = [
-        "enrolled": DeviceStatus.enrolled,
-        "active": DeviceStatus.active,
-        "suspended": DeviceStatus.suspended,
-        "removed": DeviceStatus.removed
-    ];
-    return map.get(status.toLower, DeviceStatus.enrolled);
+DeviceStatus toDeviceStatus(string value) {
+    mixin(toEnumSwitch("DeviceStatus", "DeviceStatus.enrolled"));
+}
+string toString(DeviceStatus value) {
+    return value.to!string; // This will return the enum member name as a string, e.g. "enrolled", "active", etc
+}
+///
+unittest {
+    assert(toDeviceStatus("enrolled") == DeviceStatus.enrolled);
+    assert(toDeviceStatus("Active") == DeviceStatus.active);
+    assert(toDeviceStatus("SUSPENDED") == DeviceStatus.suspended);
+    assert(toDeviceStatus("removed") == DeviceStatus.removed);
+    assert(toDeviceStatus("unknown") == DeviceStatus.enrolled);
+
+    assert(DeviceStatus.enrolled.toString == "enrolled");
+    assert(DeviceStatus.active.toString == "active");
+    assert(DeviceStatus.suspended.toString == "suspended");
+    assert(DeviceStatus.removed.toString == "removed"); 
 }
 
 /// Status of a data synchronization session
@@ -127,17 +189,27 @@ enum SyncStatus {
     // Used for synchronization sessions that have been cancelled, which may indicate that they were intentionally stopped before completion, either by the user or by the system, and may require cleanup or rollback of any partial data transfer
     cancelled
 }
-SyncStatus toSyncStatus(string status) {
-    const map = [
-        "pending": SyncStatus.pending,
-        "inProgress": SyncStatus.inProgress,
-        "completed": SyncStatus.completed,
-        "failed": SyncStatus.failed,
-        "cancelled": SyncStatus.cancelled
-    ];
-    return map.get(status.toLower, SyncStatus.pending);
+SyncStatus toSyncStatus(string value) {
+    mixin(toEnumSwitch("SyncStatus", "SyncStatus.pending"));
 }
+string toString(SyncStatus value) {
+    return value.to!string; // This will return the enum member name as a string, e.g. "pending", "inProgress", etc
+}
+///
+unittest {
+    assert(toSyncStatus("pending") == SyncStatus.pending);
+    assert(toSyncStatus("InProgress") == SyncStatus.inProgress);
+    assert(toSyncStatus("COMPLETED") == SyncStatus.completed);
+    assert(toSyncStatus("failed") == SyncStatus.failed);
+    assert(toSyncStatus("cancelled") == SyncStatus.cancelled);
+    assert(toSyncStatus("unknown") == SyncStatus.pending);
 
+    assert(SyncStatus.pending.toString == "pending");
+    assert(SyncStatus.inProgress.toString == "inProgress");
+    assert(SyncStatus.completed.toString == "completed");
+    assert(SyncStatus.failed.toString == "failed");
+    assert(SyncStatus.cancelled.toString == "cancelled"); 
+}
 
 /// Synchronization direction
 enum SyncDirection {
@@ -148,13 +220,22 @@ enum SyncDirection {
     // Used for synchronization sessions that are transferring data in both directions between the mobile device and the backend system, which may include a combination of upload and download actions as part of a comprehensive synchronization process
     bidirectional
 }
-SyncDirection toSyncDirection(string direction) {
-    const map = [
-        "upload": SyncDirection.upload,
-        "download": SyncDirection.download,
-        "bidirectional": SyncDirection.bidirectional
-    ];
-    return map.get(direction.toLower, SyncDirection.bidirectional);
+SyncDirection toSyncDirection(string value) {
+    mixin(toEnumSwitch("SyncDirection", "SyncDirection.bidirectional"));
+}
+string toString(SyncDirection value) {
+    return value.to!string; // This will return the enum member name as a string, e.g. "upload", "download", etc
+}
+///
+unittest {
+    assert(toSyncDirection("upload") == SyncDirection.upload);
+    assert(toSyncDirection("Download") == SyncDirection.download);
+    assert(toSyncDirection("BIDIRECTIONAL") == SyncDirection.bidirectional);
+    assert(toSyncDirection("unknown") == SyncDirection.bidirectional);
+
+    assert(SyncDirection.upload.toString == "upload");
+    assert(SyncDirection.download.toString == "download");
+    assert(SyncDirection.bidirectional.toString == "bidirectional"); 
 }
 
 /// SAP backend system type for backend connections
@@ -170,15 +251,25 @@ enum BackendType {
     // Custom backend system, which may indicate a non-SAP system or a custom-built solution that is integrated with the mobile application management platform for specific use cases or requirements
     custom
 }
-BackendType toBackendType(string type) {
-    const map = [
-        "s4hana": BackendType.s4hana,
-        "ecc": BackendType.ecc,
-        "btp": BackendType.btp,
-        "crm": BackendType.crm,
-        "custom": BackendType.custom
-    ];
-    return map.get(type.toLower, BackendType.custom);
+BackendType toBackendType(string value) {
+    mixin(toEnumSwitch("BackendType", "BackendType.custom"));
+}
+string toString(BackendType value) {
+    return value.to!string; // This will return the enum member name as a string, e.g. "s4hana", "ecc", etc
+}
+///
+unittest {
+    assert(toBackendType("s4hana") == BackendType.s4hana);
+    assert(toBackendType("ECC") == BackendType.ecc);
+    assert(toBackendType("BTP") == BackendType.btp);
+    assert(toBackendType("crm") == BackendType.crm);
+    assert(toBackendType("unknown") == BackendType.custom);
+
+    assert(BackendType.s4hana.toString == "s4hana");
+    assert(BackendType.ecc.toString == "ecc");
+    assert(BackendType.btp.toString == "btp");
+    assert(BackendType.crm.toString == "crm");
+    assert(BackendType.custom.toString == "custom"); 
 }
 
 /// Connectivity status of a backend connection
@@ -192,14 +283,24 @@ enum ConnectionStatus {
     // Used for backend connections that are currently in a testing state, which may indicate that they are being validated or verified for connectivity and functionality before being marked as active or inactive, and may require monitoring and management during the testing process
     testing
 }
-ConnectionStatus toConnectionStatus(string status) {
-    const map = [
-        "active": ConnectionStatus.active,
-        "inactive": ConnectionStatus.inactive,
-        "error": ConnectionStatus.error,
-        "testing": ConnectionStatus.testing
-    ];
-    return map.get(status.toLower, ConnectionStatus.inactive);
+ConnectionStatus toConnectionStatus(string value) {
+    mixin(toEnumSwitch("ConnectionStatus", "ConnectionStatus.inactive"));
+}
+string toString(ConnectionStatus value) {
+    return value.to!string; // This will return the enum member name as a string, e.g. "active", "inactive", etc
+}
+///
+unittest {
+    assert(toConnectionStatus("active") == ConnectionStatus.active);
+    assert(toConnectionStatus("INACTIVE") == ConnectionStatus.inactive);
+    assert(toConnectionStatus("Error") == ConnectionStatus.error);
+    assert(toConnectionStatus("testing") == ConnectionStatus.testing);
+    assert(toConnectionStatus("unknown") == ConnectionStatus.inactive);
+
+    assert(ConnectionStatus.active.toString == "active");
+    assert(ConnectionStatus.inactive.toString == "inactive");
+    assert(ConnectionStatus.error.toString == "error");
+    assert(ConnectionStatus.testing.toString == "testing");
 }
 
 /// Deployment lifecycle status
@@ -215,15 +316,26 @@ enum DeploymentStatus {
     // Used for deployments that have been rolled back to a previous version or configuration, which may indicate that the deployment was unsuccessful or caused issues on the target devices, and the system has reverted to a known good state to mitigate any problems
     rolledBack
 }
-DeploymentStatus toDeploymentStatus(string status) {
-    const map = [
-        "pending": DeploymentStatus.pending,
-        "deploying": DeploymentStatus.deploying,
-        "deployed": DeploymentStatus.deployed,
-        "failed": DeploymentStatus.failed,
-        "rolledBack": DeploymentStatus.rolledBack
-    ];
-    return map.get(status.toLower, DeploymentStatus.pending);
+DeploymentStatus toDeploymentStatus(string value) {
+    mixin(toEnumSwitch("DeploymentStatus", "DeploymentStatus.pending"));
+}
+string toString(DeploymentStatus value) {
+    return value.to!string; // This will return the enum member name as a string, e.g. "pending", "deploying", etc
+}
+///
+unittest {
+    assert(toDeploymentStatus("pending") == DeploymentStatus.pending);
+    assert(toDeploymentStatus("DEPLOYING") == DeploymentStatus.deploying);
+    assert(toDeploymentStatus("Deployed") == DeploymentStatus.deployed);
+    assert(toDeploymentStatus("failed") == DeploymentStatus.failed);
+    assert(toDeploymentStatus("rolledBack") == DeploymentStatus.rolledBack);
+    assert(toDeploymentStatus("unknown") == DeploymentStatus.pending);
+
+    assert(DeploymentStatus.pending.toString == "pending");
+    assert(DeploymentStatus.deploying.toString == "deploying");
+    assert(DeploymentStatus.deployed.toString == "deployed");
+    assert(DeploymentStatus.failed.toString == "failed");
+    assert(DeploymentStatus.rolledBack.toString == "rolledBack");
 }
 
 /// Target scope of a deployment
@@ -235,11 +347,20 @@ enum DeploymentScope {
     // Used for deployments that are targeted to an entire tenant, which may indicate that the deployment is intended for all devices and users within a specific tenant or organizational unit, and may require broader coordination and communication to ensure successful deployment across the entire scope
     tenant
 }
-DeploymentScope toDeploymentScope(string scope_) {
-    const map = [
-        "device": DeploymentScope.device,
-        "group": DeploymentScope.group,
-        "tenant": DeploymentScope.tenant
-    ];
-    return map.get(scope_.toLower, DeploymentScope.tenant);
+DeploymentScope toDeploymentScope(string value) {
+    mixin(toEnumSwitch("DeploymentScope", "DeploymentScope.tenant"));
+}
+string toString(DeploymentScope value) {
+    return value.to!string; // This will return the enum member name as a string, e.g. "device", "group", etc
+}
+///
+unittest {
+    assert(toDeploymentScope("device") == DeploymentScope.device);
+    assert(toDeploymentScope("GROUP") == DeploymentScope.group);
+    assert(toDeploymentScope("Tenant") == DeploymentScope.tenant);
+    assert(toDeploymentScope("unknown") == DeploymentScope.tenant);
+
+    assert(DeploymentScope.device.toString == "device");
+    assert(DeploymentScope.group.toString == "group");
+    assert(DeploymentScope.tenant.toString == "tenant"); 
 }

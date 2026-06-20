@@ -24,20 +24,33 @@ WorkspaceType toWorkspaceType(string s) {
     default: return WorkspaceType.team; // default
   }
 }
+///
+unittest {
+    assert(toWorkspaceType("project") == WorkspaceType.project);
+    assert(toWorkspaceType("TEAM") == WorkspaceType.team);
+    assert(toWorkspaceType("Department") == WorkspaceType.department);
+    assert(toWorkspaceType("public") == WorkspaceType.public_);
+    assert(toWorkspaceType("External") == WorkspaceType.external);
+    assert(toWorkspaceType("unknown") == WorkspaceType.team);
+}
+
 /// Workspace status.
 enum WorkspaceStatus {
   active,
   archived,
   suspended,
 }
-WorkspaceStatus toWorkspaceStatus(string s) {
-  switch (s.toLower()) {
-    case "active": return WorkspaceStatus.active;
-    case "archived": return WorkspaceStatus.archived;
-    case "suspended": return WorkspaceStatus.suspended;
-    default: return WorkspaceStatus.active; // default
-  }
+WorkspaceStatus toWorkspaceStatus(string value) {
+  mixin(toEnumSwitch("WorkspaceStatus", "WorkspaceStatus.active"));
 }
+/// 
+unittest {
+    assert(toWorkspaceStatus("active") == WorkspaceStatus.active);
+    assert(toWorkspaceStatus("ARCHIVED") == WorkspaceStatus.archived);
+    assert(toWorkspaceStatus("Suspended") == WorkspaceStatus.suspended);
+    assert(toWorkspaceStatus("unknown") == WorkspaceStatus.active);
+}
+
 /// Card type (integration card manifest type).
 enum CardType {
   adaptive,
@@ -62,6 +75,19 @@ CardType toCardType(string s) {
     default: return CardType.list; // default
   }
 }
+///
+unittest {
+    assert(toCardType("adaptive") == CardType.adaptive);
+    assert(toCardType("ANALYTICAL") == CardType.analytical);
+    assert(toCardType("List") == CardType.list);
+    assert(toCardType("TABLE") == CardType.table_);
+    assert(toCardType("Object") == CardType.object_);
+    assert(toCardType("timeline") == CardType.timeline);
+    assert(toCardType("Component") == CardType.component);
+    assert(toCardType("Calendar") == CardType.calendar);
+    assert(toCardType("unknown") == CardType.list);
+}
+
 /// Content type within a workspace.
 enum ContentType {
   blogPost,
@@ -71,17 +97,20 @@ enum ContentType {
   announcement,
   document,
 }
-ContentType toContentType(string s) {
-  switch (s.toLower()) {
-    case "blogpost": return ContentType.blogPost;
-    case "wikipage": return ContentType.wikiPage;
-    case "knowledgebase": return ContentType.knowledgeBase;
-    case "forumpost": return ContentType.forumPost;
-    case "announcement": return ContentType.announcement;
-    case "document": return ContentType.document;
-    default: return ContentType.document; // default
-  }
+ContentType toContentType(string value) {
+  mixin(toEnumSwitch("ContentType", "ContentType.blogPost"));
 }
+/// 
+unittest {
+    assert(toContentType("blogPost") == ContentType.blogPost);
+    assert(toContentType("WIKIPAGE") == ContentType.wikiPage);
+    assert(toContentType("KnowledgeBase") == ContentType.knowledgeBase);
+    assert(toContentType("forumPost") == ContentType.forumPost);
+    assert(toContentType("Announcement") == ContentType.announcement);
+    assert(toContentType("document") == ContentType.document);
+    assert(toContentType("unknown") == ContentType.blogPost);
+}
+
 /// Content status / lifecycle.
 enum ContentStatus {
   draft,
@@ -89,15 +118,18 @@ enum ContentStatus {
   archived,
   deleted,
 }
-ContentStatus toContentStatus(string s) {
-  switch (s.toLower()) {
-    case "draft": return ContentStatus.draft;
-    case "published": return ContentStatus.published;
-    case "archived": return ContentStatus.archived;
-    case "deleted": return ContentStatus.deleted;
-    default: return ContentStatus.draft; // default
-  }
+ContentStatus toContentStatus(string value) {
+  mixin(toEnumSwitch("ContentStatus", "ContentStatus.draft"));
 }
+///
+unittest {
+    assert(toContentStatus("draft") == ContentStatus.draft);
+    assert(toContentStatus("PUBLISHED") == ContentStatus.published);
+    assert(toContentStatus("Archived") == ContentStatus.archived);
+    assert(toContentStatus("deleted") == ContentStatus.deleted);
+    assert(toContentStatus("unknown") == ContentStatus.draft);
+}
+
 /// Notification priority.
 enum NotificationPriority {
   low,
@@ -105,15 +137,18 @@ enum NotificationPriority {
   high,
   critical,
 }
-NotificationPriority toNotificationPriority(string s) {
-  switch (s.toLower()) {
-    case "low": return NotificationPriority.low;
-    case "medium": return NotificationPriority.medium;
-    case "high": return NotificationPriority.high;
-    case "critical": return NotificationPriority.critical;
-    default: return NotificationPriority.medium; // default
-  }
+NotificationPriority toNotificationPriority(string value) {
+  mixin(toEnumSwitch("NotificationPriority", "NotificationPriority.medium"));
 }
+///
+unittest {
+    assert(toNotificationPriority("low") == NotificationPriority.low);
+    assert(toNotificationPriority("MEDIUM") == NotificationPriority.medium);
+    assert(toNotificationPriority("High") == NotificationPriority.high);
+    assert(toNotificationPriority("CRITICAL") == NotificationPriority.critical);
+    assert(toNotificationPriority("unknown") == NotificationPriority.medium);
+}
+
 /// Task status.
 enum TaskStatus {
   open,
@@ -122,16 +157,19 @@ enum TaskStatus {
   cancelled,
   overdue,
 }
-TaskStatus toTaskStatus(string s) {
-  switch (s.toLower()) {
-    case "open": return TaskStatus.open;
-    case "inprogress": return TaskStatus.inProgress;
-    case "completed": return TaskStatus.completed;
-    case "cancelled": return TaskStatus.cancelled;
-    case "overdue": return TaskStatus.overdue;
-    default: return TaskStatus.open; // default
-  }
+TaskStatus toTaskStatus(string value) {
+  mixin(toEnumSwitch("TaskStatus", "TaskStatus.open"));
 }
+///
+unittest {
+    assert(toTaskStatus("open") == TaskStatus.open);
+    assert(toTaskStatus("INPROGRESS") == TaskStatus.inProgress);
+    assert(toTaskStatus("Completed") == TaskStatus.completed);
+    assert(toTaskStatus("cancelled") == TaskStatus.cancelled);
+    assert(toTaskStatus("Overdue") == TaskStatus.overdue);
+    assert(toTaskStatus("unknown") == TaskStatus.open);
+}
+
 /// Task priority.
 enum TaskPriority {
   low,
@@ -139,15 +177,18 @@ enum TaskPriority {
   high,
   veryHigh,
 }
-TaskPriority toTaskPriority(string s) {
-  switch (s.toLower()) {
-    case "low": return TaskPriority.low;
-    case "medium": return TaskPriority.medium;
-    case "high": return TaskPriority.high;
-    case "veryhigh": return TaskPriority.veryHigh;
-    default: return TaskPriority.medium; // default
-  }
+TaskPriority toTaskPriority(string value) {
+  mixin(toEnumSwitch("TaskPriority", "TaskPriority.medium"));
 }
+///
+unittest {
+    assert(toTaskPriority("low") == TaskPriority.low);
+    assert(toTaskPriority("MEDIUM") == TaskPriority.medium);
+    assert(toTaskPriority("High") == TaskPriority.high);
+    assert(toTaskPriority("veryHigh") == TaskPriority.veryHigh);
+    assert(toTaskPriority("unknown") == TaskPriority.medium);
+}
+
 /// Channel type (content feed source).
 enum ChannelType {
   activity,
@@ -155,15 +196,18 @@ enum ChannelType {
   custom,
   external,
 }
-ChannelType toChannelType(string s) {
-  switch (s.toLower()) {
-    case "activity": return ChannelType.activity;
-    case "notification": return ChannelType.notification;
-    case "custom": return ChannelType.custom;
-    case "external": return ChannelType.external;
-    default: return ChannelType.custom; // default
-  }
+ChannelType toChannelType(string value) {
+  mixin(toEnumSwitch("ChannelType", "ChannelType.custom"));
 }
+///
+unittest {
+    assert(toChannelType("activity") == ChannelType.activity);
+    assert(toChannelType("NOTIFICATION") == ChannelType.notification);
+    assert(toChannelType("Custom") == ChannelType.custom);
+    assert(toChannelType("external") == ChannelType.external);
+    assert(toChannelType("unknown") == ChannelType.custom);
+}
+
 /// Application status (registered app lifecycle).
 enum AppStatus {
   active,
@@ -178,6 +222,13 @@ AppStatus toAppStatus(string s) {
     default: return AppStatus.active; // default      
   }
 }
+///
+unittest {
+    assert(toAppStatus("active") == AppStatus.active);
+    assert(toAppStatus("INACTIVE") == AppStatus.inactive);
+    assert(toAppStatus("Deprecated") == AppStatus.deprecated_);
+    assert(toAppStatus("unknown") == AppStatus.active);
+}
 
 /// Widget size on a workspace page.
 enum WidgetSize {
@@ -186,15 +237,18 @@ enum WidgetSize {
   large,
   fullWidth,
 }
-WidgetSize toWidgetSize(string s) {
-  switch (s.toLower()) {
-    case "small": return WidgetSize.small;
-    case "medium": return WidgetSize.medium;
-    case "large": return WidgetSize.large;
-    case "fullwidth": return WidgetSize.fullWidth;
-    default: return WidgetSize.medium; // default
-  }
+WidgetSize toWidgetSize(string value) {
+  mixin(toEnumSwitch("WidgetSize", "WidgetSize.medium"));
 }
+///
+unittest {
+    assert(toWidgetSize("small") == WidgetSize.small);
+    assert(toWidgetSize("MEDIUM") == WidgetSize.medium);
+    assert(toWidgetSize("Large") == WidgetSize.large);
+    assert(toWidgetSize("fullWidth") == WidgetSize.fullWidth);
+    assert(toWidgetSize("unknown") == WidgetSize.medium);
+}
+
 /// Member role within a workspace.
 enum MemberRole {
   viewer,
@@ -202,15 +256,18 @@ enum MemberRole {
   admin,
   owner,
 }
-MemberRole toMemberRole(string s) {
-  switch (s.toLower()) {
-    case "viewer": return MemberRole.viewer;
-    case "contributor": return MemberRole.contributor;
-    case "admin": return MemberRole.admin;
-    case "owner": return MemberRole.owner;
-    default: return MemberRole.contributor; // default
-  }
+MemberRole toMemberRole(string value) {
+  mixin(toEnumSwitch("MemberRole", "MemberRole.contributor"));
 }
+///
+unittest {
+    assert(toMemberRole("viewer") == MemberRole.viewer);
+    assert(toMemberRole("CONTRIBUTOR") == MemberRole.contributor);
+    assert(toMemberRole("Admin") == MemberRole.admin);
+    assert(toMemberRole("owner") == MemberRole.owner);
+    assert(toMemberRole("unknown") == MemberRole.contributor);
+}
+
 /// Site status.
 enum SiteStatus {
   draft,
@@ -218,15 +275,18 @@ enum SiteStatus {
   maintenance,  
   archived,
 }
-SiteStatus toSiteStatus(string s) { 
-  switch (s.toLower()) {
-    case "draft": return SiteStatus.draft;
-    case "published": return SiteStatus.published;
-    case "maintenance": return SiteStatus.maintenance;
-    case "archived": return SiteStatus.archived;
-    default: return SiteStatus.draft; // default
-  }
+SiteStatus toSiteStatus(string value) { 
+  mixin(toEnumSwitch("SiteStatus", "SiteStatus.draft"));
 }
+///
+unittest {
+    assert(toSiteStatus("draft") == SiteStatus.draft);
+    assert(toSiteStatus("PUBLISHED") == SiteStatus.published);
+    assert(toSiteStatus("Maintenance") == SiteStatus.maintenance);
+    assert(toSiteStatus("archived") == SiteStatus.archived);
+    assert(toSiteStatus("unknown") == SiteStatus.draft);
+}
+
 /// Event status.
 enum EventStatus {
   scheduled,
@@ -234,15 +294,18 @@ enum EventStatus {
   completed,
   cancelled,
 }
-EventStatus toEventStatus(string s) {
-  switch (s.toLower()) {
-    case "scheduled": return EventStatus.scheduled;
-    case "ongoing": return EventStatus.ongoing;
-    case "completed": return EventStatus.completed;   
-    case "cancelled": return EventStatus.cancelled;
-    default: return EventStatus.scheduled; // default
-  }
+EventStatus toEventStatus(string value) {
+  mixin(toEnumSwitch("EventStatus", "EventStatus.scheduled"));
 }
+/// 
+unittest {
+    assert(toEventStatus("scheduled") == EventStatus.scheduled);
+    assert(toEventStatus("ONGOING") == EventStatus.ongoing);
+    assert(toEventStatus("Completed") == EventStatus.completed);
+    assert(toEventStatus("cancelled") == EventStatus.cancelled);
+    assert(toEventStatus("unknown") == EventStatus.scheduled);
+}
+
 /// Survey status.
 enum SurveyStatus {
   draft,
@@ -250,15 +313,18 @@ enum SurveyStatus {
   closed,
   archived,
 }
-SurveyStatus toSurveyStatus(string s) {
-  switch (s.toLower()) {
-    case "draft": return SurveyStatus.draft;
-    case "active": return SurveyStatus.active;
-    case "closed": return SurveyStatus.closed;
-    case "archived": return SurveyStatus.archived;
-    default: return SurveyStatus.draft; // default
-  }
+SurveyStatus toSurveyStatus(string value) {
+  mixin(toEnumSwitch("SurveyStatus", "SurveyStatus.draft"));
 }
+///
+unittest {
+    assert(toSurveyStatus("draft") == SurveyStatus.draft);
+    assert(toSurveyStatus("ACTIVE") == SurveyStatus.active);
+    assert(toSurveyStatus("Closed") == SurveyStatus.closed);
+    assert(toSurveyStatus("archived") == SurveyStatus.archived);
+    assert(toSurveyStatus("unknown") == SurveyStatus.draft);
+}
+
 /// Survey question type.
 enum QuestionType {
   singleChoice,
@@ -267,16 +333,19 @@ enum QuestionType {
   rating,
   scale,
 }
-QuestionType toQuestionType(string s) {
-  switch (s.toLower()) {
-    case "singlechoice": return QuestionType.singleChoice;
-    case "multiplechoice": return QuestionType.multipleChoice;
-    case "freetext": return QuestionType.freeText;
-    case "rating": return QuestionType.rating;
-    case "scale": return QuestionType.scale;
-    default: return QuestionType.singleChoice; // default
-  }
+QuestionType toQuestionType(string value) {
+  mixin(toEnumSwitch("QuestionType", "QuestionType.singleChoice"));
 }
+///
+unittest {
+    assert(toQuestionType("singleChoice") == QuestionType.singleChoice);
+    assert(toQuestionType("MULTIPLECHOICE") == QuestionType.multipleChoice);
+    assert(toQuestionType("FreeText") == QuestionType.freeText);
+    assert(toQuestionType("rating") == QuestionType.rating);
+    assert(toQuestionType("Scale") == QuestionType.scale);
+    assert(toQuestionType("unknown") == QuestionType.singleChoice);
+}
+
 /// Forum topic status.
 enum ForumTopicStatus {
   open,
@@ -284,15 +353,18 @@ enum ForumTopicStatus {
   pinned,   
   archived,
 }
-ForumTopicStatus toForumTopicStatus(string s) {
-  switch (s.toLower()) {
-    case "open": return ForumTopicStatus.open;
-    case "closed": return ForumTopicStatus.closed;
-    case "pinned": return ForumTopicStatus.pinned;
-    case "archived": return ForumTopicStatus.archived;
-    default: return ForumTopicStatus.open; // default
-  }
+ForumTopicStatus toForumTopicStatus(string value) {
+  mixin(toEnumSwitch("ForumTopicStatus", "ForumTopicStatus.open"));
 } 
+///
+unittest {
+    assert(toForumTopicStatus("open") == ForumTopicStatus.open);
+    assert(toForumTopicStatus("CLOSED") == ForumTopicStatus.closed);
+    assert(toForumTopicStatus("Pinned") == ForumTopicStatus.pinned);
+    assert(toForumTopicStatus("archived") == ForumTopicStatus.archived);
+    assert(toForumTopicStatus("unknown") == ForumTopicStatus.open);
+}
+
 /// Notification status.
 enum NotificationStatus {
   unread,
@@ -300,8 +372,8 @@ enum NotificationStatus {
   dismissed,
   actionRequired,
 }
-NotificationStatus toNotificationStatus(string s) {
-  switch (s.toLower()) {
+NotificationStatus toNotificationStatus(string value) {
+  switch (value.toLower()) {
     case "unread": return NotificationStatus.unread;
     case "read": return NotificationStatus.read_;
     case "dismissed": return NotificationStatus.dismissed;
@@ -309,6 +381,15 @@ NotificationStatus toNotificationStatus(string s) {
     default: return NotificationStatus.unread; // default
   }
 }
+///
+unittest {
+    assert(toNotificationStatus("unread") == NotificationStatus.unread);
+    assert(toNotificationStatus("READ") == NotificationStatus.read_);
+    assert(toNotificationStatus("Dismissed") == NotificationStatus.dismissed);
+    assert(toNotificationStatus("actionrequired") == NotificationStatus.actionRequired);
+    assert(toNotificationStatus("unknown") == NotificationStatus.unread);
+}
+
 /// KB article status.
 enum KBArticleStatus {
   draft,
@@ -317,15 +398,18 @@ enum KBArticleStatus {
   archived,
 }
 
-KBArticleStatus toKBArticleStatus(string s) {
-  switch (s.toLower()) {
-    case "draft": return KBArticleStatus.draft;
-    case "published": return KBArticleStatus.published;
-    case "review": return KBArticleStatus.review;
-    case "archived": return KBArticleStatus.archived;
-    default: return KBArticleStatus.draft; // default
+KBArticleStatus toKBArticleStatus(string value) {
+  mixin(toEnumSwitch("KBArticleStatus", "KBArticleStatus.draft"));
   }
+  ///
+unittest {
+    assert(toKBArticleStatus("draft") == KBArticleStatus.draft);
+    assert(toKBArticleStatus("PUBLISHED") == KBArticleStatus.published);
+    assert(toKBArticleStatus("Review") == KBArticleStatus.review);
+    assert(toKBArticleStatus("archived") == KBArticleStatus.archived);
+    assert(toKBArticleStatus("unknown") == KBArticleStatus.draft);
 }
+
 /// WZGroup type.
 enum GroupType {
   security,
@@ -333,14 +417,17 @@ enum GroupType {
   dynamic,
 }
 
-GroupType toGroupType(string s) {
-  switch (s.toLower()) {
-    case "security": return GroupType.security;
-    case "distribution": return GroupType.distribution;
-    case "dynamic": return GroupType.dynamic;
-    default: return GroupType.security; // default
-  }
+GroupType toGroupType(string value) {
+  mixin(toEnumSwitch("GroupType", "GroupType.security"));
 }
+/// 
+unittest {
+    assert(toGroupType("security") == GroupType.security);
+    assert(toGroupType("DISTRIBUTION") == GroupType.distribution);
+    assert(toGroupType("Dynamic") == GroupType.dynamic);
+    assert(toGroupType("unknown") == GroupType.security);
+}
+
 /// Navigation item type.
 enum NavigationItemType {
   link,
@@ -349,16 +436,19 @@ enum NavigationItemType {
   app,
   externalLink,
 }
-NavigationItemType toNavigationItemType(string s) {
-  switch (s.toLower()) {
-    case "link": return NavigationItemType.link;
-    case "group": return NavigationItemType.group;
-    case "separator": return NavigationItemType.separator;
-    case "app": return NavigationItemType.app;
-    case "externallink": return NavigationItemType.externalLink;
-    default: return NavigationItemType.link; // default
-  }
+NavigationItemType toNavigationItemType(string value) {
+  mixin(toEnumSwitch("NavigationItemType", "NavigationItemType.link"));
 }
+///
+unittest {
+    assert(toNavigationItemType("link") == NavigationItemType.link);
+    assert(toNavigationItemType("GROUP") == NavigationItemType.group);
+    assert(toNavigationItemType("Separator") == NavigationItemType.separator);
+    assert(toNavigationItemType("app") == NavigationItemType.app);
+    assert(toNavigationItemType("ExternalLink") == NavigationItemType.externalLink);
+    assert(toNavigationItemType("unknown") == NavigationItemType.link);
+}
+
 /// Plugin status.
 enum PluginStatus {
   active,
@@ -373,6 +463,14 @@ PluginStatus toPluginStatus(string s) {
     default: return PluginStatus.active; // default
   }
 }
+///
+unittest {
+    assert(toPluginStatus("active") == PluginStatus.active);
+    assert(toPluginStatus("INACTIVE") == PluginStatus.inactive);
+    assert(toPluginStatus("Error") == PluginStatus.error);
+    assert(toPluginStatus("unknown") == PluginStatus.active);
+}
+
 /// External content provider status.
 enum ProviderStatus {
   connected,
@@ -388,6 +486,14 @@ ProviderStatus toProviderStatus(string s) {
     default: return ProviderStatus.disconnected; // default
   }
 }
+///
+unittest {
+    assert(toProviderStatus("connected") == ProviderStatus.connected);
+    assert(toProviderStatus("DISCONNECTED") == ProviderStatus.disconnected);
+    assert(toProviderStatus("Error") == ProviderStatus.error);
+    assert(toProviderStatus("unknown") == ProviderStatus.disconnected);
+}
+
 /// External content provider type.
 enum ProviderType {
   odata,
@@ -405,4 +511,13 @@ ProviderType toProviderType(string s) {
     case "custom": return ProviderType.custom;
     default: return ProviderType.custom; // default
   }
+}
+///
+unittest {
+    assert(toProviderType("odata") == ProviderType.odata);
+    assert(toProviderType("REST") == ProviderType.rest);
+    assert(toProviderType("GraphQL") == ProviderType.graphql);
+    assert(toProviderType("sapBTP") == ProviderType.sapBtp);
+    assert(toProviderType("Custom") == ProviderType.custom);
+    assert(toProviderType("unknown") == ProviderType.custom);
 }

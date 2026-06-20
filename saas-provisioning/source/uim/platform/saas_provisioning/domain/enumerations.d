@@ -18,14 +18,16 @@ enum AppRegistrationStatus : string {
 }
 
 AppRegistrationStatus toAppRegistrationStatus(string s) {
-  switch(s.lower) {
-    case "registered": return AppRegistrationStatus.registered;
-    case "unregistered": return AppRegistrationStatus.unregistered;
-    case "updating": return AppRegistrationStatus.updating;
-    case "failed": return AppRegistrationStatus.failed;
-    default: return AppRegistrationStatus.registered;
-  }
+  mixin(toEnumSwitch("AppRegistrationStatus", "AppRegistrationStatus.registered"));
 }
+///
+unittest {
+    assert(toAppRegistrationStatus("registered") == AppRegistrationStatus.registered);
+    assert(toAppRegistrationStatus("UNREGISTERED") == AppRegistrationStatus.unregistered);
+    assert(toAppRegistrationStatus("Updating") == AppRegistrationStatus.updating);
+    assert(toAppRegistrationStatus("failed") == AppRegistrationStatus.failed);
+    assert(toAppRegistrationStatus("unknown") == AppRegistrationStatus.registered);
+} 
 
 /// Lifecycle state of a consumer tenant's subscription to a SaaS application.
 enum SubscriptionState : string {
@@ -39,16 +41,15 @@ enum SubscriptionState : string {
 }
 
 SubscriptionState toSubscriptionState(string s) {
-  switch(s.lower) {
-    case "subscribed": return SubscriptionState.subscribed;
-    case "subscribing": return SubscriptionState.subscribing;
-    case "unsubscribed": return SubscriptionState.unsubscribed;
-    case "unsubscribing": return SubscriptionState.unsubscribing;
-    case "update_pending": return SubscriptionState.updatePending;
-    case "updating": return SubscriptionState.updating;
-    case "failed": return SubscriptionState.failed;
-    default: return SubscriptionState.subscribed;
-  }
+  mixin(toEnumSwitch("SubscriptionState", "SubscriptionState.subscribed"));
+}
+///
+unittest {
+    assert(toSubscriptionState("subscribed") == SubscriptionState.subscribed);
+    assert(toSubscriptionState("UNSUBSCRIBED") == SubscriptionState.unsubscribed);
+    assert(toSubscriptionState("Updating") == SubscriptionState.updating);
+    assert(toSubscriptionState("failed") == SubscriptionState.failed);
+    assert(toSubscriptionState("unknown") == SubscriptionState.subscribed);
 }
 
 /// Type of an asynchronous subscription job.
@@ -59,12 +60,14 @@ enum JobType : string {
 }
 
 JobType toJobType(string s) {
-  switch(s.lower) {
-    case "subscribe": return JobType.subscribe;
-    case "unsubscribe": return JobType.unsubscribe;
-    case "update": return JobType.update;
-    default: return JobType.subscribe;
-  }
+  mixin(toEnumSwitch("JobType", "JobType.subscribe"));
+}
+/// 
+unittest {
+    assert(toJobType("subscribe") == JobType.subscribe);
+    assert(toJobType("UNSUBSCRIBE") == JobType.unsubscribe);
+    assert(toJobType("Update") == JobType.update);
+    assert(toJobType("unknown") == JobType.subscribe);
 }
 
 /// Processing status of a subscription job.
@@ -75,13 +78,15 @@ enum JobStatus : string {
     failed    = "FAILED"
 }
 JobStatus toJobStatus(string s) {
-  switch(s.lower) {
-    case "queued": return JobStatus.queued;
-    case "running": return JobStatus.running;
-    case "succeeded": return JobStatus.succeeded;
-    case "failed": return JobStatus.failed;
-    default: return JobStatus.queued;
-  }
+  mixin(toEnumSwitch("JobStatus", "JobStatus.queued"));
+}
+///
+unittest {
+    assert(toJobStatus("queued") == JobStatus.queued);
+    assert(toJobStatus("RUNNING") == JobStatus.running);
+    assert(toJobStatus("Succeeded") == JobStatus.succeeded);
+    assert(toJobStatus("failed") == JobStatus.failed);
+    assert(toJobStatus("unknown") == JobStatus.queued);
 }
 
 /// Commercial plan offered by the multitenant application in the marketplace.
