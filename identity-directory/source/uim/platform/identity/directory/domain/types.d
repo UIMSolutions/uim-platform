@@ -11,7 +11,7 @@ import uim.platform.identity.directory;
 
 @safe:
 
-struct GroupId {
+struct IAMGroupId {
   string value;
 
   this(string value) {

@@ -46,11 +46,9 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
     auto policy = policyRepo.findActiveForTenant(req.tenantId);
     if (policy != typeof(policy).init && req.password.length > 0) {
       auto validation = validatePassword(req.password, policy);
-      if (!validation.valid) {
-        // import std.algorithm : joiner;
-        
-        return UserResponse("", validation.violations.joiner("; ").to!string);
-      }
+      if (!validation.valid) 
+        return errorResponse("Password does not meet policy requirements: " ~ validation.violations.joiner("; ").to!string, 400);
+        // return UserResponse("", validation.violations.joiner("; ").to!string);
     }
 
     User user;
@@ -101,7 +99,7 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
   /// Update user profile.
   string updateUser(UpdateUserRequest req) {
     auto user = userRepo.findById(req.userId);
-    if (user == User.init)
+    if (user.isNull)
       return "User not found";
 
     if (req.name != UserName.init)

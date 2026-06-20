@@ -15,4 +15,5 @@ public {
   import uim.platform.service.mixins.service;
   import uim.platform.service.mixins.store;
   import uim.platform.service.mixins.entities;
+  import uim.platform.service.mixins.enumerations;
 }

@@ -195,7 +195,6 @@ ProcessCategory toProcessCategory(string category) {
     default:
         return ProcessCategory.workflow;
     }
-
 }
 ///
 unittest {

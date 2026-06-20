@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.identity.directory.infrastructure.persistence.memory.user;
+module uim.platform.identity.directory.infrastructure.persistence.memory.users;
 // import uim.platform.identity.directory.domain.entities.user;
 
 // import uim.platform.identity.directory.domain.ports.repositories.users;
@@ -78,15 +78,15 @@ class MemoryUserRepository : UserRepository {
     findByEmail(tenantId, email).each!(u => remove(u));
   }
 
-  size_t countByGroupId(TenantId tenantId, GroupId groupId) {
+  size_t countByGroupId(TenantId tenantId, IAMGroupId groupId) {
     return findByGroupId(groupId).length;
   }
 
-  User[] filterByGroupId(User[] users, GroupId groupId) {
+  User[] filterByGroupId(User[] users, IAMGroupId groupId) {
     return users.filter!(u => u.groupIds.canFind(groupId)).array;
   }
 
-  User[] findByGroupId(GroupId groupId) {
+  User[] findByGroupId(IAMGroupId groupId) {
     return findByTenant(tenantId).filter!(u => u.groupIds.canFind(groupId)).array;
   }
 

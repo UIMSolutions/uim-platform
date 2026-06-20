@@ -23,6 +23,17 @@ enum RfcType {
     bgRFC,  /// Background RFC — successor to tRFC/qRFC; recommended for new development
     ldq     /// Local Data Queue — pull-based variant; data stored locally until retrieved
 }
+RfcType toRfcType(string s) {
+  switch(s.lower) {
+    case "srf": case "srfc": return RfcType.sRFC;
+    case "arf": case "arfc": return RfcType.aRFC;
+    case "trf": case "trfc": return RfcType.tRFC;
+    case "qrf": case "qrfc": return RfcType.qRFC;
+    case "bgrf": case "bgrfc": return RfcType.bgRFC;
+    case "ldq": return RfcType.ldq;
+    default: return RfcType.sRFC;
+  }
+}
 
 // ---------------------------------------------------------------------------
 // RFC call status lifecycle
@@ -37,7 +48,19 @@ enum RfcStatus {
     failed,         /// Call failed with error
     timedOut        /// No response within deadline
 }
-
+RfcStatus toRfcStatus(string s) {
+  switch(s.lower) {
+    case "pending": return RfcStatus.pending;
+    case "executing": return RfcStatus.executing;
+    case "queued": return RfcStatus.queued;
+    case "committed": return RfcStatus.committed;
+    case "rolledback": return RfcStatus.rolledBack;
+    case "succeeded": return RfcStatus.succeeded;
+    case "failed": return RfcStatus.failed;
+    case "timedout": return RfcStatus.timedOut;
+    default: return RfcStatus.pending;
+  }
+}
 // ---------------------------------------------------------------------------
 // RFC parameter direction (mirrors ABAP function-module interface)
 // ---------------------------------------------------------------------------
@@ -46,6 +69,15 @@ enum ParameterDirection {
     export_,    /// Callee → Caller (EXPORTING in ABAP)
     changing,   /// Bidirectional (CHANGING in ABAP)
     tables      /// Internal tables (TABLES in ABAP)
+}
+ParameterDirection toParameterDirection(string s) {
+  switch(s.lower) {
+    case "import": return ParameterDirection.import_;
+    case "export": return ParameterDirection.export_;
+    case "changing": return ParameterDirection.changing;
+    case "tables": return ParameterDirection.tables;
+    default: return ParameterDirection.import_;
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -59,6 +91,17 @@ enum ConnectionType {
     internalCall,       /// Type I — Internal (same system)
     sncDestination      /// Type X — SNC-secured connection
 }
+ConnectionType toConnectionType(string s) {
+  switch(s.lower) {
+    case "abap": case "abapsystem": return ConnectionType.abapSystem;
+    case "http": case "httpconnection": return ConnectionType.httpConnection;
+    case "tcpip": case "tcpipconnection": return ConnectionType.tcpIpConnection;
+    case "logical": case "logicaldestination": return ConnectionType.logicalDestination;
+    case "internal": case "internalcall": return ConnectionType.internalCall;
+    case "snc": case "sncdestination": return ConnectionType.sncDestination;
+    default: return ConnectionType.abapSystem;
+  }
+}
 
 // ---------------------------------------------------------------------------
 // Queue direction (qRFC)
@@ -66,6 +109,13 @@ enum ConnectionType {
 enum QueueDirection {
     outbound,   /// Outbound queue (sender side)
     inbound     /// Inbound queue (receiver side)
+}
+QueueDirection toQueueDirection(string s) {
+  switch(s.lower) {
+    case "outbound": return QueueDirection.outbound;
+    case "inbound": return QueueDirection.inbound;
+    default: return QueueDirection.outbound;
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -77,6 +127,15 @@ enum LuwStatus {
     committed,
     rolledBack
 }
+LuwStatus toLuwStatus(string s) {
+  switch(s.lower) {
+    case "open": return LuwStatus.open;
+    case "executing": return LuwStatus.executing;
+    case "committed": return LuwStatus.committed;
+    case "rolledback": return LuwStatus.rolledBack;
+    default: return LuwStatus.open;
+  }
+}
 
 // ---------------------------------------------------------------------------
 // bgRFC unit type
@@ -84,4 +143,11 @@ enum LuwStatus {
 enum BgRfcUnitType {
     noc,    /// No-commit unit — processing in the same LUW as the caller
     que     /// Queued unit — with serialisation guarantee
+}
+BgRfcUnitType toBgRfcUnitType(string s) {
+  switch(s.lower) {
+    case "noc": return BgRfcUnitType.noc;
+    case "que": return BgRfcUnitType.que;
+    default: return BgRfcUnitType.noc;
+  }
 }

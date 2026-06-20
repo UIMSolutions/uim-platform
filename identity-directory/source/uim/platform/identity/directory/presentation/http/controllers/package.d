@@ -4,3 +4,11 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.identity.directory.presentation.http.controllers;
+
+public: 
+    import uim.platform.identity.directory.presentation.http.controllers.api_client;
+    import uim.platform.identity.directory.presentation.http.controllers.audit;
+    import uim.platform.identity.directory.presentation.http.controllers.user;
+    import uim.platform.identity.directory.presentation.http.controllers.group;
+    import uim.platform.identity.directory.presentation.http.controllers.schema;
+    import uim.platform.identity.directory.presentation.http.controllers.password_policy;

@@ -13,14 +13,14 @@ import uim.platform.identity.directory;
 
 @safe:
 /// Port: outgoing — group persistence.
-interface GroupRepository : ITenantRepository!(Group, GroupId) {
+interface GroupRepository : ITenantRepository!(IAMGroup, IAMGroupId) {
   
   bool existsByDisplayName(TenantId tenantId, string displayName);
-  Group findByDisplayName(TenantId tenantId, string displayName);
+  IAMGroup findByDisplayName(TenantId tenantId, string displayName);
   void removeByDisplayName(TenantId tenantId, string displayName);
   
   size_t countByMember(string memberId);
-  Group[] findByMember(string memberId);
+  IAMGroup[] findByMember(string memberId);
   void removeByMember(string memberId);
   
 }

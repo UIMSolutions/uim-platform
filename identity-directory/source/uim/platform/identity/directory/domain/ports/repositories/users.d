@@ -27,9 +27,9 @@ interface UserRepository : ITenantRepository!(User, UserId) {
   User[] findByEmail(TenantId tenantId, string email);
   void removeByEmail(TenantId tenantId, string email);
 
-  size_t countByGroupId(TenantId tenantId, GroupId groupId);
-  User[] findByGroupId(TenantId tenantId, GroupId groupId);
-  void removeByGroupId(TenantId tenantId, GroupId groupId);
+  size_t countByGroupId(TenantId tenantId, IAMGroupId groupId);
+  User[] findByGroupId(TenantId tenantId, IAMGroupId groupId);
+  void removeByGroupId(TenantId tenantId, IAMGroupId groupId);
 
   User[] search(TenantId tenantId, string filter, size_t offset = 0, size_t limit = 100);
 

@@ -13,7 +13,7 @@ Part of the [UIM Platform](https://www.sueel.de/uim/sap) suite.
 | Capability | Description |
 |---|---|
 | **User Management (SCIM 2.0)** | Full CRUD for users with SCIM-compliant structured names, multi-valued emails, phone numbers, addresses, lifecycle status (Active / Inactive / Locked / Staged), and custom schema extensions |
-| **Group Management (SCIM 2.0)** | Standard and dynamic groups with nested membership (User or Group members), member add/remove operations, and tenant-scoped display name search |
+| **IAMGroup Management (SCIM 2.0)** | Standard and dynamic groups with nested membership (User or IAMGroup members), member add/remove operations, and tenant-scoped display name search |
 | **Custom Schemas** | SCIM 2.0 schema extensions with typed attributes (String, Integer, Boolean, DateTime, Reference, Complex, Binary), mutability rules, returned behavior, and uniqueness constraints |
 | **Password Policies** | Configurable password rules per tenant — min/max length, character class requirements (uppercase, lowercase, digit, special), unique character minimum, consecutive repeat limit, password history, failed-attempt lockout, and expiry days |
 | **Password Validation** | Domain service that validates passwords against all policy rules and returns a list of specific violations |
@@ -40,7 +40,7 @@ identity-directory/
 │   │   │   └── audit_event.d                       #     Immutable audit log entries
 │   │   ├── ports/                                  #   Repository interfaces (ports)
 │   │   │   ├── user_repository.d                   #     Paginated, searchable user store
-│   │   │   ├── group_repository.d                  #     Group store with member lookup
+│   │   │   ├── group_repository.d                  #     IAMGroup store with member lookup
 │   │   │   ├── schema_repository.d
 │   │   │   ├── password_policy_repository.d
 │   │   │   ├── api_client_repository.d
@@ -183,7 +183,7 @@ IDS_HOST=127.0.0.1 IDS_PORT=9090 ./build/uim-identity-directory-platform-service
 | Alias | Underlying | Purpose |
 |---|---|---|
 | `UserId` | `string` | User identifier |
-| `GroupId` | `string` | Group identifier |
+| `IAMGroupId` | `string` | IAMGroup identifier |
 | `TenantId` | `string` | Tenant identifier |
 | `SchemaId` | `string` | Schema URN identifier |
 | `AttributeId` | `string` | Schema attribute identifier |
@@ -212,7 +212,7 @@ IDS_HOST=127.0.0.1 IDS_PORT=9090 ./build/uim-identity-directory-platform-service
 | **PhoneNumber** | value, type (work/mobile/fax/other), primary |
 | **Address** | formatted, streetAddress, locality, region, postalCode, country, type, primary |
 | **ExtendedAttribute** | schemaId, attributeName, value |
-| **GroupMember** | value (user/group ID), type ("User"/"Group"), display |
+| **GroupMember** | value (user/group ID), type ("User"/"IAMGroup"), display |
 | **SchemaAttribute** | id, name, description, type, multiValued, required, mutability, returned, uniqueness, canonicalValues, referenceTypes |
 
 ### Domain Services

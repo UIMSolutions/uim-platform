@@ -13,7 +13,7 @@ import uim.platform.identity.directory;
 /// Member reference within a group.
 struct GroupMember {
   string value; // user or group ID
-  string type; // "User" or "Group"
+  string type; // "User" or "IAMGroup"
   string display;
 
   Json toJson() const {
@@ -24,8 +24,8 @@ struct GroupMember {
   }
 }
 /// SCIM 2.0 group entity.
-struct Group {
-  mixin TenantEntity!GroupId;
+struct IAMGroup {
+  mixin TenantEntity!IAMGroupId;
 
   string externalId;
   string displayName;

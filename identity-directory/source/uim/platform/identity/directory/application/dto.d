@@ -5,11 +5,16 @@
 *****************************************************************************************************************/
 module uim.platform.identity.directory.application.dto;
 
-import uim.platform.identity.directory.domain.types;
-import uim.platform.identity.directory.domain.entities.user : UserName, Email,
-  PhoneNumber, Address, ExtendedAttribute;
-import uim.platform.identity.directory.domain.entities.group : GroupMember;
-import uim.platform.identity.directory.domain.entities.schema : SchemaAttribute;
+// import uim.platform.identity.directory.domain.types;
+// import uim.platform.identity.directory.domain.entities.user : UserName, Email,
+//   PhoneNumber, Address, ExtendedAttribute;
+// import uim.platform.identity.directory.domain.entities.group : GroupMember;
+// import uim.platform.identity.directory.domain.entities.schema : SchemaAttribute;
+import uim.platform.identity.directory;
+
+// mixin(ShowModule!());
+
+@safe:
 /// --- User DTOs ---
 
 struct CreateUserRequest {
@@ -54,7 +59,7 @@ struct UserResponse {
     return error.length == 0;
   }
 }
-/// --- Group DTOs ---
+/// --- IAMGroup DTOs ---
 
 struct CreateGroupRequest {
   TenantId tenantId;
@@ -65,20 +70,20 @@ struct CreateGroupRequest {
 }
 
 struct UpdateGroupRequest {
-  GroupId groupId;
+  IAMGroupId groupId;
   string displayName;
   string description;
 }
 
 struct AddMemberRequest {
-  GroupId groupId;
+  IAMGroupId groupId;
   string memberId;
-  string memberType; // "User" or "Group"
+  string memberType; // "User" or "IAMGroup"
   string display;
 }
 
 struct RemoveMemberRequest {
-  GroupId groupId;
+  IAMGroupId groupId;
   string memberId;
 }
 

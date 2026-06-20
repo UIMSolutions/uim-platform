@@ -12,13 +12,13 @@ enum AuditCategory {
 }
 
 AuditCategory toAuditCategory(string s) {
-  const map = [
-    "audit.security-events": AuditCategory.securityEvents,
-    "audit.configuration": AuditCategory.configuration,
-    "audit.data-access": AuditCategory.dataAccess,
-    "audit.data-modification": AuditCategory.dataModification
-  ];
-  return map.get(s.toLower, AuditCategory.securityEvents);
+  switch(s.lower) {
+    case "audit.security-events": return AuditCategory.securityEvents;
+    case "audit.configuration": return AuditCategory.configuration;
+    case "audit.data-access": return AuditCategory.dataAccess;
+    case "audit.data-modification": return AuditCategory.dataModification;
+    default: return AuditCategory.securityEvents;
+  }
 }
 
 private static string categoryToString(AuditCategory c) {
@@ -41,13 +41,13 @@ enum AuditSeverity {
   critical,
 }
 AuditSeverity toAuditSeverity(string s) {
-  const map = [
-    "info": AuditSeverity.info,
-    "warning": AuditSeverity.warning,
-    "error": AuditSeverity.error,
-    "critical": AuditSeverity.critical
-  ];
-  return map.get(s.toLower, AuditSeverity.info);
+  switch(s.lower) {
+    case "info": return AuditSeverity.info;
+    case "warning": return AuditSeverity.warning;
+    case "error": return AuditSeverity.error;
+    case "critical": return AuditSeverity.critical;
+    default: return AuditSeverity.info;
+  }
 }
 
 /// Concrete action that triggered the audit entry.
@@ -73,28 +73,28 @@ enum AuditAction {
   mfaVerify,
 }
 AuditAction toAuditAction(string s) {
-  const map = [
-    "create": AuditAction.create,
-    "read": AuditAction.read_,
-    "update": AuditAction.update,
-    "delete": AuditAction.delete_,
-    "login": AuditAction.login,
-    "logout": AuditAction.logout,
-    "loginfailed": AuditAction.loginFailed,
-    "passwordchange": AuditAction.passwordChange,
-    "roleassign": AuditAction.roleAssign,
-    "rolerevoke": AuditAction.roleRevoke,
-    "policychange": AuditAction.policyChange,
-    "configchange": AuditAction.configChange,
-    "export": AuditAction.export_,
-    "dataaccess": AuditAction.dataAccess,
-    "consentchange": AuditAction.consentChange,
-    "tokenissue": AuditAction.tokenIssue,
-    "tokenrevoke": AuditAction.tokenRevoke,
-    "mfaenroll": AuditAction.mfaEnroll,
-    "mfaverify": AuditAction.mfaVerify
-  ];
-  return map.get(s.toLower, AuditAction.read_);
+  switch(s.lower) {
+    case "create": return AuditAction.create;
+    case "read": return AuditAction.read_;
+    case "update": return AuditAction.update;
+    case "delete": return AuditAction.delete_;
+    case "login": return AuditAction.login;
+    case "logout": return AuditAction.logout;
+    case "loginfailed": return AuditAction.loginFailed;
+    case "passwordchange": return AuditAction.passwordChange;
+    case "roleassign": return AuditAction.roleAssign;
+    case "rolerevoke": return AuditAction.roleRevoke;
+    case "policychange": return AuditAction.policyChange;
+    case "configchange": return AuditAction.configChange;
+    case "export": return AuditAction.export_;
+    case "dataaccess": return AuditAction.dataAccess;
+    case "consentchange": return AuditAction.consentChange;
+    case "tokenissue": return AuditAction.tokenIssue;
+    case "tokenrevoke": return AuditAction.tokenRevoke;
+    case "mfaenroll": return AuditAction.mfaEnroll;
+    case "mfaverify": return AuditAction.mfaVerify;
+    default: return AuditAction.read_;
+  }
 } 
 
 /// Outcome of the audited operation.
@@ -105,13 +105,13 @@ enum AuditOutcome {
   error,
 }
 AuditOutcome toAuditOutcome(string s) {
-  const map = [
-    "success": AuditOutcome.success,
-    "failure": AuditOutcome.failure,
-    "denied": AuditOutcome.denied,
-    "error": AuditOutcome.error
-  ];
-  return map.get(s.toLower, AuditOutcome.success);
+  switch(s.lower) {
+    case "success": return AuditOutcome.success;
+    case "failure": return AuditOutcome.failure;
+    case "denied": return AuditOutcome.denied;
+    case "error": return AuditOutcome.error;
+    default: return AuditOutcome.success;
+  }
 }
 
 /// Retention policy status.
@@ -121,11 +121,12 @@ enum RetentionStatus {
   expired,
 }
 RetentionStatus toRetentionStatus(string s) {
-  const map = [
-    "active": RetentionStatus.active,
-    "inactive": RetentionStatus.inactive,
-    "expired": RetentionStatus.expired
-  ];
+  switch(s.lower) {
+    case "active": return RetentionStatus.active;
+    case "inactive": return RetentionStatus.inactive;
+    case "expired": return RetentionStatus.expired;
+    default: return RetentionStatus.active;
+  }
   return map.get(s.toLower, RetentionStatus.active);
 }
 
@@ -137,13 +138,13 @@ enum ExportStatus {
   failed,
 }
 ExportStatus toExportStatus(string s) {
-  const map = [
-    "pending": ExportStatus.pending,
-    "inprogress": ExportStatus.inProgress,
-    "completed": ExportStatus.completed,
-    "failed": ExportStatus.failed
-  ];
-  return map.get(s.toLower, ExportStatus.pending);
+  switch(s.lower) {
+    case "pending": return ExportStatus.pending;
+    case "inprogress": return ExportStatus.inProgress;
+    case "completed": return ExportStatus.completed;
+    case "failed": return ExportStatus.failed;
+    default: return ExportStatus.pending;
+  }
 }
 
 /// Export output format.
@@ -152,11 +153,11 @@ enum ExportFormat {
   csv,
 }
 ExportFormat toExportFormat(string s) {
-  const map = [
-    "json": ExportFormat.json,
-    "csv": ExportFormat.csv
-  ];
-  return map.get(s.toLower, ExportFormat.json);
+  switch(s.lower) {
+    case "json": return ExportFormat.json;
+    case "csv": return ExportFormat.csv;
+    default: return ExportFormat.json;
+  }
 }
 
 /// Audit log configuration status.
@@ -165,9 +166,9 @@ enum ConfigStatus {
   disabled,
 }
 ConfigStatus toConfigStatus(string s) {
-  const map = [
-    "enabled": ConfigStatus.enabled,
-    "disabled": ConfigStatus.disabled
-  ];
-  return map.get(s.toLower, ConfigStatus.enabled);
+  switch(s.lower) {
+    case "enabled": return ConfigStatus.enabled;
+    case "disabled": return ConfigStatus.disabled;
+    default: return ConfigStatus.enabled;
+  }
 }

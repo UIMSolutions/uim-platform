@@ -13,27 +13,27 @@ import uim.platform.identity.directory;
 
 @safe:
 /// In-memory adapter for group persistence.
-class MemoryGroupRepository : TenantRepository!(Group, GroupId), GroupRepository {
+class MemoryGroupRepository : TenantRepository!(IAMGroup, IAMGroupId), GroupRepository {
 
   bool existsByDisplayName(TenantId tenantId, string displayName) {
     return findByTenant(tenantId).any!(g => g.tenantId == tenantId && g.displayName == displayName);
   }
   
-  Group findByDisplayName(TenantId tenantId, string displayName) {
+  IAMGroup findByDisplayName(TenantId tenantId, string displayName) {
     foreach (g; findByTenant(tenantId)) {
       if (g.tenantId == tenantId && g.displayName == displayName)
         return g;
     }
-    return Group.init;
+    return IAMGroup.init;
   }
 
   size_t countByMember(string memberId) {
     return findByMember(memberId).length;
   }
-  Group[] filterByMember(Group[] groups, string memberId) {
+  IAMGroup[] filterByMember(IAMGroup[] groups, string memberId) {
     return groups.filter!(g => g.hasMember(memberId)).array;
   }
-  Group[] findByMember(string memberId) {
+  IAMGroup[] findByMember(string memberId) {
     return findByTenant(tenantId).filter!(g => g.hasMember(memberId)).array;
   }
 

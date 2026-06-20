@@ -47,7 +47,7 @@ class GroupController : ManageHttpController {
       .set("schemas", ["urn:ietf:params:scim:api:messages:2.0:ListResponse"].toJson)
       .set("totalResults", groups.length)
       .set("Resources", list);
-    return successResponse("Group list retrieved successfully", "Retrieved", 200, response);
+    return successResponse("IAMGroup list retrieved successfully", "Retrieved", 200, response);
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
@@ -72,7 +72,7 @@ class GroupController : ManageHttpController {
 
     auto responseData = Json.emptyObject
       .set("id", result.id)
-      .set("schemas", ["urn:ietf:params:scim:schemas:core:2.0:Group"].toJson);
+      .set("schemas", ["urn:ietf:params:scim:schemas:core:2.0:IAMGroup"].toJson);
 
     return successResponse("Scan job created successfully", "Created", 201, responseData);
   }
@@ -83,16 +83,16 @@ class GroupController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = GroupId(precheck.id);
+    auto id = IAMGroupId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid group ID", 400);
 
     auto group = useCase.getGroup(tenantId, id);
     if (group.isNull)
-      return errorResponse("Group not found", 404);
+      return errorResponse("IAMGroup not found", 404);
 
     auto responseData = group.toJson();
-    return successResponse("Group retrieved successfully", "Retrieved", 200, responseData);
+    return successResponse("IAMGroup retrieved successfully", "Retrieved", 200, responseData);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
@@ -101,7 +101,7 @@ class GroupController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto groupId = GroupId(precheck.id);
+    auto groupId = IAMGroupId(precheck.id);
     if (groupId.isNull)
       return errorResponse("Invalid group ID", 400);
 
@@ -112,7 +112,7 @@ class GroupController : ManageHttpController {
     if (result.hasError)
       writeScimError(res, 404, result.errorMessage);
 
-    return successResponse("Group updated successfully", "Updated", 200, Json.emptyObject.set("id", result
+    return successResponse("IAMGroup updated successfully", "Updated", 200, Json.emptyObject.set("id", result
         .id));
   }
 
@@ -122,7 +122,7 @@ class GroupController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = GroupId(precheck.id);
+    auto id = IAMGroupId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid group ID", 400);
 
@@ -130,7 +130,7 @@ class GroupController : ManageHttpController {
     if (result.hasError)
       return errorResponse(result.errorMessage, 404);
 
-    return successResponse("Group deleted successfully", "Deleted", 200, Json.emptyObject);
+    return successResponse("IAMGroup deleted successfully", "Deleted", 200, Json.emptyObject);
   }
 
   protected Json addMemberHandler(HTTPServerRequest req) {
