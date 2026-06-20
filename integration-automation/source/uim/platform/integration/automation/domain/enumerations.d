@@ -33,6 +33,32 @@ ScenarioStatus toScenarioStatus(string s) {
     return ScenarioStatus.draft; // default to draft if unknown
   }
 }
+ScenarioStatus[] toScenarioStatus(string[] values) {
+  return values.map!(v => v.toScenarioStatus).array;
+}
+string toString(ScenarioStatus value) {
+  return value.to!string();
+}
+string[] toString(ScenarioStatus[] values) {
+  return values.map!(v => v.toString).array;
+}
+///
+unittest {
+  mixin(ShowTest!("ScenarioStatus"));
+
+  assert("draft".toScenarioStatus == ScenarioStatus.draft);
+  assert("active".toScenarioStatus == ScenarioStatus.active);
+  assert("deprecated".toScenarioStatus == ScenarioStatus.deprecated_);
+  assert("archived".toScenarioStatus == ScenarioStatus.archived);
+
+  assert(ScenarioStatus.draft.toString == "draft");
+  assert(ScenarioStatus.active.toString == "active");
+  assert(ScenarioStatus.deprecated_.toString == "deprecated_");
+  assert(ScenarioStatus.archived.toString == "archived");
+
+  assert(["draft", "active"].toScenarioStatus == [ScenarioStatus.draft, ScenarioStatus.active]);
+  assert([ScenarioStatus.draft, ScenarioStatus.active].toString == ["draft", "active"]);
+}
 
 /// Workflow instance execution status.
 enum WorkflowStatus {
@@ -43,23 +69,38 @@ enum WorkflowStatus {
   failed,
   suspended,
 }
-WorkflowStatus toWorkflowStatus(string s) {
-  switch (s) {
-    case "planned":
-      return WorkflowStatus.planned;
-    case "inProgress":
-      return WorkflowStatus.inProgress;
-    case "completed":
-      return WorkflowStatus.completed;
-    case "terminated":
-      return WorkflowStatus.terminated;
-    case "failed":
-      return WorkflowStatus.failed;
-    case "suspended":
-      return WorkflowStatus.suspended;
-    default:
-    return WorkflowStatus.planned; // default to planned if unknown
-  }
+WorkflowStatus toWorkflowStatus(string value) {
+  mixin(toEnumSwitch("WorkflowStatus", "WorkflowStatus.planned"));
+}
+WorkflowStatus[] toWorkflowStatus(string[] values) {
+  return values.map!(v => v.toWorkflowStatus).array;
+}
+string toString(WorkflowStatus value) {
+  return value.to!string();
+}
+string[] toString(WorkflowStatus[] values) {
+  return values.map!(v => v.toString()).array;
+}
+///
+unittest {
+  mixin(ShowTest!("WorkflowStatus"));
+
+  assert("planned".toWorkflowStatus == WorkflowStatus.planned);
+  assert("inProgress".toWorkflowStatus == WorkflowStatus.inProgress);
+  assert("completed".toWorkflowStatus == WorkflowStatus.completed);
+  assert("terminated".toWorkflowStatus == WorkflowStatus.terminated);
+  assert("failed".toWorkflowStatus == WorkflowStatus.failed);
+  assert("suspended".toWorkflowStatus == WorkflowStatus.suspended);
+
+  assert(WorkflowStatus.planned.toString == "planned");
+  assert(WorkflowStatus.inProgress.toString == "inProgress");
+  assert(WorkflowStatus.completed.toString == "completed");
+  assert(WorkflowStatus.terminated.toString == "terminated");
+  assert(WorkflowStatus.failed.toString == "failed");
+  assert(WorkflowStatus.suspended.toString == "suspended");
+
+  assert(["planned", "completed"].toWorkflowStatus == [WorkflowStatus.planned, WorkflowStatus.completed]);
+  assert([WorkflowStatus.planned, WorkflowStatus.completed].toString == ["planned", "completed"]);
 }
 
 /// Type of workflow step / task.
@@ -69,20 +110,36 @@ enum StepType {
   approval,
   notification,
 }
-StepType toStepType(string s) {
-  switch (s) {
-    case "manual":
-      return StepType.manual;
-    case "automated":
-      return StepType.automated;
-    case "approval":
-      return StepType.approval;
-    case "notification":
-      return StepType.notification;
-    default:
-    return StepType.manual; // default to manual if unknown
-  }
+StepType toStepType(string value) {
+  mixin(toEnumSwitch("StepType", "StepType.manual"));
 }
+StepType[] toStepType(string[] values) {
+  return values.map!(v => v.toStepType).array;
+}
+string toString(StepType value) {
+  return value.to!string();
+}
+string[] toString(StepType[] values) {
+  return values.map!(v => v.toString()).array;
+}
+///
+unittest {
+  mixin(ShowTest!("StepType"));
+
+  assert("manual".toStepType == StepType.manual);
+  assert("automated".toStepType == StepType.automated);
+  assert("approval".toStepType == StepType.approval);
+  assert("notification".toStepType == StepType.notification);
+  assert("unknown".toStepType == StepType.manual); // default
+
+  assert(StepType.manual.toString == "manual");
+  assert(StepType.automated.toString == "automated");
+  assert(StepType.approval.toString == "approval");
+  assert(StepType.notification.toString == "notification");
+
+  assert(["manual", "approval"].toStepType == [StepType.manual, StepType.approval]);
+  assert([StepType.manual, StepType.approval].toString == ["manual", "approval"]);
+} 
 
 /// Status of an individual workflow step.
 enum StepStatus {
@@ -94,22 +151,38 @@ enum StepStatus {
   blocked,
 }
 StepStatus toStepStatus(string s) {
-  switch (s) {
-    case "pending":
-      return StepStatus.pending;
-    case "inProgress":
-      return StepStatus.inProgress;
-    case "completed":
-      return StepStatus.completed;
-    case "skipped":
-      return StepStatus.skipped;
-    case "failed":
-      return StepStatus.failed;
-    case "blocked":
-      return StepStatus.blocked;
-    default:
-    return StepStatus.pending; // default to pending if unknown
-  }
+  mixin(toEnumSwitch("StepStatus", "StepStatus.pending"));
+}
+StepStatus[] toStepStatus(string[] values) {
+  return values.map!(v => v.toStepStatus).array;
+}
+string toString(StepStatus value) {
+  return value.to!string();
+}
+string[] toString(StepStatus[] values) {
+  return values.map!(v => v.toString()).array;
+}
+///
+unittest {
+  mixin(ShowTest!("StepStatus"));
+
+  assert("pending".toStepStatus == StepStatus.pending);
+  assert("inProgress".toStepStatus == StepStatus.inProgress);
+  assert("completed".toStepStatus == StepStatus.completed);
+  assert("skipped".toStepStatus == StepStatus.skipped);
+  assert("failed".toStepStatus == StepStatus.failed);
+  assert("blocked".toStepStatus == StepStatus.blocked);
+  assert("unknown".toStepStatus == StepStatus.pending); // default
+
+  assert(StepStatus.pending.toString == "pending");
+  assert(StepStatus.inProgress.toString == "inProgress");
+  assert(StepStatus.completed.toString == "completed");
+  assert(StepStatus.skipped.toString == "skipped");
+  assert(StepStatus.failed.toString == "failed");
+  assert(StepStatus.blocked.toString == "blocked");
+
+  assert(["pending", "completed"].toStepStatus == [StepStatus.pending, StepStatus.completed]);
+  assert([StepStatus.pending, StepStatus.completed].toString == ["pending", "completed"]);
 }
 
 /// Priority level for tasks.
@@ -120,18 +193,34 @@ enum StepPriority {
   critical,
 }
 StepPriority toStepPriority(string s) {
-  switch (s) {
-    case "low":
-      return StepPriority.low;
-    case "medium":
-      return StepPriority.medium;
-    case "high":
-      return StepPriority.high;
-    case "critical":
-      return StepPriority.critical;
-    default:
-    return StepPriority.medium; // default to medium if unknown
-  }
+  mixin(toEnumSwitch("StepPriority", "StepPriority.low"));
+}
+StepPriority[] toStepPriority(string[] values) {
+  return values.map!(v => v.toStepPriority).array;
+}
+string toString(StepPriority value) {
+  return value.to!string();
+}
+string[] toString(StepPriority[] values) {
+  return values.map!(v => v.toString()).array;
+}
+///
+unittest {
+  mixin(ShowTest!("StepPriority"));
+
+  assert("low".toStepPriority == StepPriority.low);
+  assert("medium".toStepPriority == StepPriority.medium);
+  assert("high".toStepPriority == StepPriority.high);
+  assert("critical".toStepPriority == StepPriority.critical);
+  assert("unknown".toStepPriority == StepPriority.low); // default
+
+  assert(StepPriority.low.toString == "low");
+  assert(StepPriority.medium.toString == "medium");
+  assert(StepPriority.high.toString == "high");
+  assert(StepPriority.critical.toString == "critical");
+
+  assert(["low", "high"].toStepPriority == [StepPriority.low, StepPriority.high]);
+  assert([StepPriority.low, StepPriority.high].toString == ["low", "high"]);
 }
 
 /// SAP system types supported in the landscape.
@@ -149,32 +238,48 @@ enum SystemType {
   thirdParty,
 }
 SystemType toSystemType(string s) {
-  switch (s) {
-    case "sapS4Hana":
-      return SystemType.sapS4Hana;
-    case "sapS4HanaCloud":
-      return SystemType.sapS4HanaCloud;
-    case "sapBtp":
-      return SystemType.sapBtp;
-    case "sapSuccessFactors":
-      return SystemType.sapSuccessFactors;
-    case "sapAriba":
-      return SystemType.sapAriba;
-    case "sapConcur":
-      return SystemType.sapConcur;
-    case "sapFieldglass":
-      return SystemType.sapFieldglass;
-    case "sapIntegratedBusinessPlanning":
-      return SystemType.sapIntegratedBusinessPlanning;
-    case "sapBuildWorkZone":
-      return SystemType.sapBuildWorkZone;
-    case "onPremise":
-      return SystemType.onPremise;
-    case "thirdParty":
-      return SystemType.thirdParty;
-    default:
-    return SystemType.thirdParty; // default to thirdParty if unknown
-  }
+  mixin(toEnumSwitch("SystemType", "SystemType.sapS4Hana"));
+}
+SystemType[] toSystemType(string[] values) {
+  return values.map!(v => v.toSystemType).array;
+}
+string toString(SystemType value) {
+  return value.to!string();
+}
+string[] toString(SystemType[] values) {
+  return values.map!(v => v.toString()).array;
+}
+///
+unittest {
+  mixin(ShowTest!("SystemType"));
+
+  assert("sapS4Hana".toSystemType == SystemType.sapS4Hana);
+  assert("sapS4HanaCloud".toSystemType == SystemType.sapS4HanaCloud);
+  assert("sapBtp".toSystemType == SystemType.sapBtp);
+  assert("sapSuccessFactors".toSystemType == SystemType.sapSuccessFactors);
+  assert("sapAriba".toSystemType == SystemType.sapAriba);
+  assert("sapConcur".toSystemType == SystemType.sapConcur);
+  assert("sapFieldglass".toSystemType == SystemType.sapFieldglass);
+  assert("sapIntegratedBusinessPlanning".toSystemType == SystemType.sapIntegratedBusinessPlanning);
+  assert("sapBuildWorkZone".toSystemType == SystemType.sapBuildWorkZone);
+  assert("onPremise".toSystemType == SystemType.onPremise);
+  assert("thirdParty".toSystemType == SystemType.thirdParty); 
+  assert("unknown".toSystemType == SystemType.sapS4Hana); // default
+
+  assert(SystemType.sapS4Hana.toString == "sapS4Hana");
+  assert(SystemType.sapS4HanaCloud.toString == "sapS4HanaCloud");
+  assert(SystemType.sapBtp.toString == "sapBtp");
+  assert(SystemType.sapSuccessFactors.toString == "sapSuccessFactors");
+  assert(SystemType.sapAriba.toString == "sapAriba");
+  assert(SystemType.sapConcur.toString == "sapConcur");
+  assert(SystemType.sapFieldglass.toString == "sapFieldglass");
+  assert(SystemType.sapIntegratedBusinessPlanning.toString == "sapIntegratedBusinessPlanning");
+  assert(SystemType.sapBuildWorkZone.toString == "sapBuildWorkZone");
+  assert(SystemType.onPremise.toString == "onPremise");
+  assert(SystemType.thirdParty.toString == "thirdParty");
+
+  assert(["sapS4Hana", "sapBtp"].toSystemType == [SystemType.sapS4Hana, SystemType.sapBtp]);
+  assert([SystemType.sapS4Hana, SystemType.sapBtp].toString == ["sapS4Hana", "sapBtp"]);
 }
 
 /// Connection status of a system in the landscape.
@@ -185,18 +290,34 @@ enum ConnectionStatus {
   testing,
 }
 ConnectionStatus toConnectionStatus(string s) {
-  switch (s) {
-    case "active":
-      return ConnectionStatus.active;
-    case "inactive":
-      return ConnectionStatus.inactive;
-    case "error":
-      return ConnectionStatus.error;
-    case "testing":
-      return ConnectionStatus.testing;
-    default:
-    return ConnectionStatus.inactive; // default to inactive if unknown
-  }
+  mixin(toEnumSwitch("ConnectionStatus", "ConnectionStatus.active"));
+}
+ConnectionStatus[] toConnectionStatus(string[] values) {
+  return values.map!(v => v.toConnectionStatus).array;
+}
+string toString(ConnectionStatus value) {
+  return value.to!string();
+}
+string[] toString(ConnectionStatus[] values) {
+  return values.map!(v => v.toString()).array;
+}
+///
+unittest {
+  mixin(ShowTest!("ConnectionStatus"));
+
+  assert("active".toConnectionStatus == ConnectionStatus.active);
+  assert("inactive".toConnectionStatus == ConnectionStatus.inactive);
+  assert("error".toConnectionStatus == ConnectionStatus.error);
+  assert("testing".toConnectionStatus == ConnectionStatus.testing);
+  assert("unknown".toConnectionStatus == ConnectionStatus.active); // default
+
+  assert(ConnectionStatus.active.toString == "active");
+  assert(ConnectionStatus.inactive.toString == "inactive");
+  assert(ConnectionStatus.error.toString == "error");
+  assert(ConnectionStatus.testing.toString == "testing");
+
+  assert(["active", "error"].toConnectionStatus == [ConnectionStatus.active, ConnectionStatus.error]);
+  assert([ConnectionStatus.active, ConnectionStatus.error].toString == ["active", "error"]);
 }
 
 /// Destination / API protocol type.
@@ -208,20 +329,36 @@ enum DestinationType {
   restApi,
 }
 DestinationType toDestinationType(string s) {
-  switch (s) {
-    case "http":
-      return DestinationType.http;
-    case "rfc":
-      return DestinationType.rfc;
-    case "odata":
-      return DestinationType.odata;
-    case "soap":
-      return DestinationType.soap;
-    case "restApi":
-      return DestinationType.restApi;
-    default:
-    return DestinationType.http; // default to http if unknown
-  }
+  mixin(toEnumSwitch("DestinationType", "DestinationType.http"));
+}
+DestinationType[] toDestinationType(string[] values) {
+  return values.map!(v => v.toDestinationType).array;
+}
+string toString(DestinationType value) {
+  return value.to!string();
+}
+string[] toString(DestinationType[] values) {
+  return values.map!(v => v.toString()).array;
+}
+///
+unittest {
+  mixin(ShowTest!("DestinationType"));  
+
+  assert("http".toDestinationType == DestinationType.http);
+  assert("rfc".toDestinationType == DestinationType.rfc);
+  assert("odata".toDestinationType == DestinationType.odata);
+  assert("soap".toDestinationType == DestinationType.soap);
+  assert("restApi".toDestinationType == DestinationType.restApi);
+  assert("unknown".toDestinationType == DestinationType.http); // default
+
+  assert(DestinationType.http.toString == "http");
+  assert(DestinationType.rfc.toString == "rfc");
+  assert(DestinationType.odata.toString == "odata");
+  assert(DestinationType.soap.toString == "soap");
+  assert(DestinationType.restApi.toString == "restApi");
+
+  assert(["http", "odata"].toDestinationType == [DestinationType.http, DestinationType.odata]);
+  assert([DestinationType.http, DestinationType.odata].toString == ["http", "odata"]);
 }
 
 /// Authentication method for destinations.
@@ -235,24 +372,40 @@ enum AuthenticationType {
   noAuthentication,
 }
 AuthenticationType toAuthenticationType(string s) {
-  switch (s) {
-    case "basic":
-      return AuthenticationType.basic;
-    case "oauth2ClientCredentials":
-      return AuthenticationType.oauth2ClientCredentials;
-    case "oauth2Saml":
-      return AuthenticationType.oauth2Saml;
-    case "certificate":
-      return AuthenticationType.certificate;
-    case "samlBearer":
-      return AuthenticationType.samlBearer;
-    case "principalPropagation":
-      return AuthenticationType.principalPropagation;
-    case "noAuthentication":
-      return AuthenticationType.noAuthentication;
-    default:
-    return AuthenticationType.noAuthentication; // default to noAuthentication if unknown
-  }
+  mixin(toEnumSwitch("AuthenticationType", "AuthenticationType.basic"));
+}
+AuthenticationType[] toAuthenticationType(string[] values) {
+  return values.map!(v => v.toAuthenticationType).array;
+}
+string toString(AuthenticationType value) {
+  return value.to!string();
+}
+string[] toString(AuthenticationType[] values) {
+  return values.map!(v => v.toString()).array;
+}
+///
+unittest {
+  mixin(ShowTest!("AuthenticationType"));
+
+  assert("basic".toAuthenticationType == AuthenticationType.basic);
+  assert("oauth2ClientCredentials".toAuthenticationType == AuthenticationType.oauth2ClientCredentials);
+  assert("oauth2Saml".toAuthenticationType == AuthenticationType.oauth2Saml);
+  assert("certificate".toAuthenticationType == AuthenticationType.certificate);
+  assert("samlBearer".toAuthenticationType == AuthenticationType.samlBearer);
+  assert("principalPropagation".toAuthenticationType == AuthenticationType.principalPropagation);
+  assert("noAuthentication".toAuthenticationType == AuthenticationType.noAuthentication);
+  assert("unknown".toAuthenticationType == AuthenticationType.basic); // default
+
+  assert(AuthenticationType.basic.toString == "basic");
+  assert(AuthenticationType.oauth2ClientCredentials.toString == "oauth2ClientCredentials");
+  assert(AuthenticationType.oauth2Saml.toString == "oauth2Saml");
+  assert(AuthenticationType.certificate.toString == "certificate");
+  assert(AuthenticationType.samlBearer.toString == "samlBearer");
+  assert(AuthenticationType.principalPropagation.toString == "principalPropagation");
+  assert(AuthenticationType.noAuthentication.toString == "noAuthentication");
+
+  assert(["basic", "certificate"].toAuthenticationType == [AuthenticationType.basic, AuthenticationType.certificate]);
+  assert([AuthenticationType.basic, AuthenticationType.certificate].toString == ["basic", "certificate"]);
 }
 
 /// Proxy type for destination routing.
@@ -261,17 +414,33 @@ enum ProxyType {
   onPremise,
   privateLink,
 }
-ProxyType toProxyType(string s) {
-  switch (s) {
-    case "internet":
-      return ProxyType.internet;
-    case "onPremise":
-      return ProxyType.onPremise;
-    case "privateLink":
-      return ProxyType.privateLink;
-    default:
-      return ProxyType.internet; // default to internet if unknown
-  }
+ProxyType toProxyType(string value) {
+  mixin(toEnumSwitch("ProxyType", "ProxyType.internet"));
+}
+ProxyType[] toProxyType(string[] values) {
+  return values.map!(v => v.toProxyType).array;
+}
+string toString(ProxyType value) {
+  return value.to!string();
+}
+string[] toString(ProxyType[] values) {
+  return values.map!(v => v.toString()).array;
+}
+///
+unittest {
+  mixin(ShowTest!("ProxyType"));
+
+  assert("internet".toProxyType == ProxyType.internet);
+  assert("onPremise".toProxyType == ProxyType.onPremise);
+  assert("privateLink".toProxyType == ProxyType.privateLink);
+  assert("unknown".toProxyType == ProxyType.internet); // default 
+
+  assert(ProxyType.internet.toString == "internet");
+  assert(ProxyType.onPremise.toString == "onPremise");
+  assert(ProxyType.privateLink.toString == "privateLink");
+
+  assert(["internet", "onPremise"].toProxyType == [ProxyType.internet, ProxyType.onPremise]);
+  assert([ProxyType.internet, ProxyType.onPremise].toString == ["internet", "onPremise"]);
 }
 
 /// Outcome of executing a step or automation.
@@ -283,20 +452,36 @@ enum ExecutionOutcome {
   error,
 }
 ExecutionOutcome toExecutionOutcome(string s) {
-  switch (s) {
-    case "success":
-      return ExecutionOutcome.success;
-    case "failure":
-      return ExecutionOutcome.failure;
-    case "skipped":
-      return ExecutionOutcome.skipped;
-    case "timeout":
-      return ExecutionOutcome.timeout;
-    case "error":
-      return ExecutionOutcome.error;
-    default:
-      return ExecutionOutcome.error; // default to error if unknown
-  }
+  mixin(toEnumSwitch("ExecutionOutcome", "ExecutionOutcome.success"));
+}
+ExecutionOutcome[] toExecutionOutcome(string[] values) {
+  return values.map!(v => v.toExecutionOutcome).array;
+}
+string toString(ExecutionOutcome value) {
+  return value.to!string();
+}
+string[] toString(ExecutionOutcome[] values) {
+  return values.map!(v => v.toString()).array;
+} 
+///
+unittest {
+  mixin(ShowTest!("ExecutionOutcome"));
+
+  assert("success".toExecutionOutcome == ExecutionOutcome.success);
+  assert("failure".toExecutionOutcome == ExecutionOutcome.failure);
+  assert("skipped".toExecutionOutcome == ExecutionOutcome.skipped);
+  assert("timeout".toExecutionOutcome == ExecutionOutcome.timeout);
+  assert("error".toExecutionOutcome == ExecutionOutcome.error);
+  assert("unknown".toExecutionOutcome == ExecutionOutcome.success); // default
+
+  assert(ExecutionOutcome.success.toString == "success");
+  assert(ExecutionOutcome.failure.toString == "failure");
+  assert(ExecutionOutcome.skipped.toString == "skipped");
+  assert(ExecutionOutcome.timeout.toString == "timeout");
+  assert(ExecutionOutcome.error.toString == "error");
+
+  assert(["success", "skipped"].toExecutionOutcome == [ExecutionOutcome.success, ExecutionOutcome.skipped]);
+  assert([ExecutionOutcome.success, ExecutionOutcome.skipped].toString == ["success", "skipped"]);
 }
 
 /// Category of an integration scenario.
@@ -311,26 +496,42 @@ enum ScenarioCategory {
   custom,
 }
 ScenarioCategory toScenarioCategory(string s) {
-  switch (s) {
-    case "leadToCash":
-      return ScenarioCategory.leadToCash;
-    case "sourceToPay":
-      return ScenarioCategory.sourceToPay;
-    case "recruitToRetire":
-      return ScenarioCategory.recruitToRetire;
-    case "designToOperate":
-      return ScenarioCategory.designToOperate;
-    case "btpServices":
-      return ScenarioCategory.btpServices;
-    case "s4HanaIntegration":
-      return ScenarioCategory.s4HanaIntegration;
-    case "communicationManagement":
-      return ScenarioCategory.communicationManagement;
-    case "custom":
-      return ScenarioCategory.custom;
-    default:
-      return ScenarioCategory.custom; // default to custom if unknown
-  }
+  mixin(toEnumSwitch("ScenarioCategory", "ScenarioCategory.custom"));
+}
+ScenarioCategory[] toScenarioCategory(string[] values) {
+  return values.map!(v => v.toScenarioCategory).array;
+}
+string toString(ScenarioCategory value) {
+  return value.to!string();
+}
+string[] toString(ScenarioCategory[] values) {
+  return values.map!(v => v.toString()).array;
+}
+///
+unittest {
+  mixin(ShowTest!("ScenarioCategory")); 
+
+  assert("leadToCash".toScenarioCategory == ScenarioCategory.leadToCash);
+  assert("sourceToPay".toScenarioCategory == ScenarioCategory.sourceToPay);
+  assert("recruitToRetire".toScenarioCategory == ScenarioCategory.recruitToRetire);
+  assert("designToOperate".toScenarioCategory == ScenarioCategory.designToOperate);
+  assert("btpServices".toScenarioCategory == ScenarioCategory.btpServices);
+  assert("s4HanaIntegration".toScenarioCategory == ScenarioCategory.s4HanaIntegration);
+  assert("communicationManagement".toScenarioCategory == ScenarioCategory.communicationManagement);
+  assert("custom".toScenarioCategory == ScenarioCategory.custom);
+  assert("unknown".toScenarioCategory.toScenarioCategory == ScenarioCategory.custom); // default
+
+  assert(ScenarioCategory.leadToCash.toString == "leadToCash");
+  assert(ScenarioCategory.sourceToPay.toString == "sourceToPay");
+  assert(ScenarioCategory.recruitToRetire.toString == "recruitToRetire");
+  assert(ScenarioCategory.designToOperate.toString == "designToOperate");
+  assert(ScenarioCategory.btpServices.toString == "btpServices");
+  assert(ScenarioCategory.s4HanaIntegration.toString == "s4HanaIntegration");
+  assert(ScenarioCategory.communicationManagement.toString == "communicationManagement");
+  assert(ScenarioCategory.custom.toString == "custom");
+
+  assert(["leadToCash", "designToOperate"].toScenarioCategory == [ScenarioCategory.leadToCash, ScenarioCategory.designToOperate]);
+  assert([ScenarioCategory.leadToCash, ScenarioCategory.designToOperate].toString == ["leadToCash", "designToOperate"]);
 }
 
 enum ScenarioType {
@@ -338,12 +539,28 @@ enum ScenarioType {
   custom,
 }
 ScenarioType toScenarioType(string s) { 
-  switch (s) {
-    case "standard":
-      return ScenarioType.standard;
-    case "custom":
-      return ScenarioType.custom;
-    default:
-      return ScenarioType.custom; // default to custom if unknown
-  }
+  mixin(toEnumSwitch("ScenarioType", "ScenarioType.custom"));
+}
+ScenarioType[] toScenarioType(string[] values) {
+  return values.map!(v => v.toScenarioType).array;
+}
+string toString(ScenarioType value) {
+  return value.to!string();
+}
+string[] toString(ScenarioType[] values) {
+  return values.map!(v => v.toString()).array;
+}
+///
+unittest {
+  mixin(ShowTest!("ScenarioType"));
+
+  assert("standard".toScenarioType == ScenarioType.standard);
+  assert("custom".toScenarioType == ScenarioType.custom);
+  assert("unknown".toScenarioType.toScenarioType == ScenarioType.custom); // default  
+
+  assert(ScenarioType.standard.toString == "standard");
+  assert(ScenarioType.custom.toString == "custom"); 
+
+  assert(["standard", "custom"].toScenarioType == [ScenarioType.standard, ScenarioType.custom]);
+  assert([ScenarioType.standard, ScenarioType.custom].toString == ["standard", "custom"]);
 }
