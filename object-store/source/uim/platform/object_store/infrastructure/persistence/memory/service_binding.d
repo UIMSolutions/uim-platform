@@ -13,7 +13,7 @@ module uim.platform.object_store.infrastructure.persistence.memory.service_bindi
  
 import uim.platform.object_store;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryServiceBindingRepository : TenantRepository!(ServiceBinding, ServiceBindingId), ServiceBindingRepository {

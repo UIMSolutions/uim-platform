@@ -13,7 +13,7 @@ module uim.platform.object_store.infrastructure.persistence.memory.bucket;
  
 import uim.platform.object_store;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryBucketRepository : TenantRepository!(Bucket, BucketId), BucketRepository {

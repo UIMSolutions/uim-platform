@@ -13,7 +13,7 @@ module uim.platform.object_store.infrastructure.persistence.memory.lifecycle_rul
  
 import uim.platform.object_store;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryLifecycleRuleRepository : TenantRepository!(LifecycleRule, LifecycleRuleId),  LifecycleRuleRepository {

@@ -13,7 +13,7 @@ module uim.platform.object_store.infrastructure.persistence.memory.cors_rule;
  
 import uim.platform.object_store;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryCorsRuleRepository : TenantRepository!(CorsRule, CorsRuleId), CorsRuleRepository {

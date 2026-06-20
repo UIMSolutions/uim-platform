@@ -10,7 +10,7 @@ module app;
 
 import uim.platform.object_store;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

@@ -11,7 +11,7 @@ module uim.platform.object_store.application.usecases.manage.cors_rules;
 // import uim.platform.object_store.domain.types;
 import uim.platform.object_store;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Application service for CORS rule management.
