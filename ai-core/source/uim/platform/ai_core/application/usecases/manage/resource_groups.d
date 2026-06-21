@@ -26,13 +26,11 @@ class ManageResourceGroupsUseCase { // TODO: UIMUseCase {
     if (r.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
 
-    auto existing = repo.findById(r.tenantId, r.resourceGroupId);
-    if (!existing.isNull)
+    if (repo.existsById(r.tenantId, r.resourceGroupId))
       return CommandResult(false, "", "Resource group already exists");
 
-    ResourceGroup rg;
+    auto rg = ResourceGroup(r.tenantId);
     rg.id = r.resourceGroupId;
-    rg.tenantId = r.tenantId;
     rg.status = "active";
 
     // Parse labels
@@ -46,9 +44,6 @@ class ManageResourceGroupsUseCase { // TODO: UIMUseCase {
       }
     }
     rg.labels = labels;
-
-    
-
     rg.createdAt = currentTimestamp;
 
     repo.save(rg);

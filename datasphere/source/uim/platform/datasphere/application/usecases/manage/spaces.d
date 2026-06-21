@@ -27,13 +27,10 @@ class ManageSpacesUseCase { // TODO: UIMUseCase {
     if (err.length > 0)
       return CommandResult(false, "", err);
 
-    auto existing = repo.findById(r.spaceId);
-    if (!existing.isNull)
+    if (repo.existsById(r.tenantId, r.spaceId))
       return CommandResult(false, "", "Space already exists");
 
-    Space s;
-    s.initEntity(r.tenantId);
-
+    auto s = Space(r.tenantId);
     s.id = r.spaceId;
     s.name = r.name;
     s.description = r.description;
@@ -44,7 +41,7 @@ class ManageSpacesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, s.id.value, "");
   }
 
-  Space getSpace(SpaceId id) {
+  Space getSpace(TenantId tenantId, SpaceId id) {
     return repo.findById(tenantId, id);
   }
 
@@ -53,7 +50,7 @@ class ManageSpacesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateSpace(UpdateSpaceRequest r) {
-    auto existing = repo.findById(r.spaceId);
+    auto existing = repo.findById(r.tenantId, r.spaceId);
     if (existing.isNull)
       return CommandResult(false, "", "Space not found");
 
@@ -69,7 +66,7 @@ class ManageSpacesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, existing.id.value, "");
   }
 
-  CommandResult deleteSpace(SpaceId id) {
+  CommandResult deleteSpace(TenantId tenantId, SpaceId id) {
     auto entity = repo.findById(tenantId, id);
     if (entity.isNull)
       return CommandResult(false, "", "Space not found");

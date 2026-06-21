@@ -27,12 +27,10 @@ class ManageNamespacesUseCase { // TODO: UIMUseCase {
     if (!CredentialValidator.validateNamespaceName(r.name))
       return CommandResult(false, "", "Invalid namespace name (1-100 chars, allowed: letters, digits, _ - . : ! ~)");
 
-    auto existing = namespaces.findByName(r.tenantId, r.name);
-    if (!existing.isNull)
+    if (namespaces.existsByName(r.tenantId, r.name))
       return CommandResult(false, "", "Namespace already exists");
 
-    Namespace ns;
-    ns.initEntity(r.tenantId, r.createdBy);
+    auto ns = Namespace(r.tenantId, r.createdBy);
     ns.name = r.name;
     ns.description = r.description;
 
@@ -47,6 +45,7 @@ class ManageNamespacesUseCase { // TODO: UIMUseCase {
 
     ns.description = r.description;
     ns.updatedAt = currentTimestamp();
+
     namespaces.update(ns);
     return CommandResult(true, ns.id.value, "");
   }
@@ -76,7 +75,7 @@ class ManageNamespacesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, namespace.id.value, "");
   }
 
-  size_t count(TenantId tenantId) {
+  size_t countNamespaces(TenantId tenantId) {
     return namespaces.countByTenant(tenantId);
   }
 

@@ -138,7 +138,7 @@ class ServiceController : ManageHttpController {
 
     auto data = precheck.data;
     auto r = UpdateServiceInstanceRequest();
-    r.id = id;
+    r.instanceId = id;
     r.tenantId = tenantId;
     r.name = data.getString("name");
     r.parameters = data.getString("parameters");
