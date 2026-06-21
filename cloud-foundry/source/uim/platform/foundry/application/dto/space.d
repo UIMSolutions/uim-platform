@@ -14,7 +14,7 @@ struct CreateSpaceRequest {
 }
 
 struct UpdateSpaceRequest {
-  SpaceId id;
+  SpaceId spaceId;
   TenantId tenantId;
   string name;
   SpaceStatus status;

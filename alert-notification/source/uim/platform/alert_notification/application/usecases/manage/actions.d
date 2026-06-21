@@ -17,11 +17,10 @@ class ManageActionsUseCase {
     this(ActionRepository repo) { this.repo = repo; }
 
     CommandResult createAction(TenantId tenantId, CreateActionRequest req) {
-        auto existing = repo.findByName(tenantId, req.name);
-        if (existing !is null && !existing.isNull())
+        if (repo.existsByName(tenantId, req.name))
             return CommandResult(false, "", "Action '" ~ req.name ~ "' already exists");
 
-        auto action = new Action(tenantId);
+        auto action = Action(tenantId, req.actionId);
         action.name        = req.name;
         action.description = req.description;
         action.type_       = req.type_.to!ActionType;

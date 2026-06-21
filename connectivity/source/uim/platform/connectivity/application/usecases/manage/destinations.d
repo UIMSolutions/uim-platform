@@ -29,19 +29,16 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
 
   CommandResult createDestination(CreateDestinationRequest req) {
     // Validate unique name within tenant
-    auto existing = destinations.findByName(req.tenantId, req.name);
-    if (!existing.isNull)
+    if (destinations.existsByName(req.tenantId, req.name))
       return CommandResult(false, "", "Destination with name '" ~ req.name ~ "' already exists");
 
     if (req.name.length == 0)
       return CommandResult(false, "", "Destination name is required");
+
     if (req.url.length == 0)
       return CommandResult(false, "", "Destination URL is required");
 
-   
-
-    Destination dest;
-    dest.initEntity(req.tenantId);
+    auto dest = Destination(req.tenantId);
     dest.name = req.name;
     dest.description = req.description;
     dest.url = req.url;

@@ -17,11 +17,13 @@ class ManageDestinationsUseCase {
     this(DestinationRepository repo) { _repo = repo; }
 
     CommandResult createDestination(CreateDestinationRequest req) {
-        auto existing = _repo.findById(req.tenantId, req.id);
-        if (!existing.isNull())
-            return CommandResult(false, req.id, "Destination already exists: " ~ req.id);
+        if (_repo.existsById(req.tenantId, req.destinationId))
+            return CommandResult(false, req.destinationId, "Destination already exists: " ~ req.destinationId);
 
-        auto dest = Destination.create(req.id, req.tenantId, req.connectionType, req.host);
+        auto dest = Destination(req.tenantId);
+        dest.active = req.active;
+        dest.connectionType = req.connectionType;
+        dest.host = req.host;
         dest.description  = req.description;
         dest.port         = req.port > 0 ? req.port : 3300;
         dest.systemId     = req.systemId;
@@ -33,7 +35,7 @@ class ManageDestinationsUseCase {
 
         if (!_repo.save(dest))
             return CommandResult(false, "", "Failed to save destination");
-        return CommandResult(true, dest.id, "");
+        return CommandResult(true, dest.id.value, "");
     }
 
     Destination getDestination(TenantId tenantId, DestinationId id) {

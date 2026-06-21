@@ -26,13 +26,10 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Certificate name is required");
 
     // Check for duplicate name within tenant
-    auto existing = certificates.findByName(req.tenantId, req.name);
-    if (!existing.isNull)
+    if (certificates.existsByName(req.tenantId, req.name))
       return CommandResult(false, "", "Certificate with name '" ~ req.name ~ "' already exists");
 
-    Certificate cert;
-    cert.initEntity(req.tenantId) ;
-
+    auto cert = Certificate(req.tenantId);
     cert.name = req.name;
     cert.description = req.description;
     cert.certType = req.certType.to!CertificateType;

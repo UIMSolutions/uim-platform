@@ -32,16 +32,13 @@ class ManageContentPackagesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createPackage(CreatePackageRequest req) {
-    auto existing = packages.findByName(req.tenantId, req.name);
-    if (!existing.isNull)
+    if (packages.existsByName(req.tenantId, req.name))
       return CommandResult(false, "", "Package with name '" ~ req.name ~ "' already exists");
 
     if (req.name.length == 0)
       return CommandResult(false, "", "Package name is required");
-
    
-    ContentPackage pkg;
-    pkg.initEntity(req.tenantId, req.createdBy);
+    auto pkg = ContentPackage(req.tenantId, req.createdBy);
 
     pkg.subaccountId = req.subaccountId;
     pkg.name = req.name;
@@ -141,9 +138,7 @@ class ManageContentPackagesUseCase { // TODO: UIMUseCase {
   private void recordActivity(TenantId tenantId, ActivityType actType,
       string entityId, string entityName, string desc, string by) {
    
-    ContentActivity activity;
-    activity.initEntity(tenantId);
-
+    auto activity = ContentActivity(tenantId);
     activity.activityType = actType;
     activity.severity = ActivitySeverity.info;
     activity.entityId = entityId;

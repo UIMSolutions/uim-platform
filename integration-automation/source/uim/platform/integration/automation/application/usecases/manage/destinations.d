@@ -40,7 +40,7 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
 
     // Validate linked system if provided
     if (req.systemId.length > 0) {
-      auto sys = systemRepo.findById(req.systemId, req.tenantId);
+      auto sys = systemRepo.findById(req.tenantId, req.systemId);
       if (sys.isNull)
         return CommandResult(false, "", "Linked system not found");
     }

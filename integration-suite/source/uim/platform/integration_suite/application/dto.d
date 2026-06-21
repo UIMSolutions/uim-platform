@@ -3,79 +3,83 @@ module uim.platform.integration_suite.application.dto;
 
 // --- Integration Packages ---
 struct CreatePackageRequest {
-  string   tenantId;
-  string   id;
-  string   name;
-  string   version_;
-  string   description;
-  string   vendor;
-  string   category;
+  TenantId tenantId;
+  IntegrationPackageId packageId;
+  string name;
+  string version_;
+  string description;
+  string vendor;
+  string category;
   string[] tags;
   string[string] metadata;
 }
+
 struct UpdatePackageRequest {
-  string   tenantId;
-  string   id;
-  string   name;
-  string   version_;
-  string   description;
-  string   status;
-  string   category;
+  TenantId tenantId;
+  IntegrationPackageId packageId;
+  string name;
+  string version_;
+  string description;
+  string status;
+  string category;
   string[] tags;
   string[string] metadata;
 }
 
 // --- Integration Flows ---
 struct CreateFlowRequest {
-  string   tenantId;
-  string   id;
-  string   packageId;
-  string   name;
-  string   description;
-  string   version_;
-  string   direction;
-  string   senderAdapterType;
-  string   receiverAdapterType;
-  string   senderEndpoint;
-  string   receiverEndpoint;
+  TenantId tenantId;
+  IntegrationFlowId id;
+  IntegrationPackageId packageId;
+  string name;
+  string description;
+  string version_;
+  string direction;
+  string senderAdapterType;
+  string receiverAdapterType;
+  string senderEndpoint;
+  string receiverEndpoint;
   string[] steps;
   string[string] metadata;
 }
+
 struct UpdateFlowRequest {
-  string   tenantId;
-  string   id;
-  string   name;
-  string   description;
-  string   version_;
-  string   status;
+  TenantId tenantId;
+  IntegrationFlowId id;
+  string name;
+  string description;
+  string version_;
+  string status;
   string[string] metadata;
 }
+
 struct DeployFlowRequest {
   TenantId tenantId;
-  string id;
+  IntegrationFlowId id;
   string deployedBy;
 }
 
 // --- API Proxies ---
 struct CreateApiProxyRequest {
-  string   tenantId;
-  string   id;
-  string   name;
-  string   description;
-  string   version_;
-  string   targetEndpoint;
-  string   basePath;
+  TenantId tenantId;
+  ApiProxyId proxyId;
+  string name;
+  string description;
+  string version_;
+  string targetEndpoint;
+  string basePath;
   string[] policies;
   string[] tags;
   string[string] metadata;
 }
+
 struct UpdateApiProxyRequest {
-  string   tenantId;
-  string   id;
-  string   name;
-  string   description;
-  string   status;
-  string   targetEndpoint;
+  TenantId tenantId;
+  ApiProxyId proxyId;
+  string name;
+  string description;
+  string status;
+  string targetEndpoint;
   string[] policies;
   string[] tags;
   string[string] metadata;
@@ -83,63 +87,67 @@ struct UpdateApiProxyRequest {
 
 // --- API Products ---
 struct CreateApiProductRequest {
-  string   tenantId;
-  string   id;
-  string   name;
-  string   description;
+  TenantId tenantId;
+  ApiProductId productId;
+  string name;
+  string description;
   string[] apiProxyIds;
   string[] scopes;
   string[] environments;
   string[string] metadata;
 }
+
 struct UpdateApiProductRequest {
-  string   tenantId;
-  string   id;
-  string   name;
-  string   description;
+  TenantId tenantId;
+  ApiProductId productId;
+  string name;
+  string description;
   string[] apiProxyIds;
-  string   status;
-  bool     isPublic;
+  string status;
+  bool isPublic;
   string[string] metadata;
 }
 
 // --- Message Queues ---
 struct CreateQueueRequest {
   TenantId tenantId;
-  string id;
+  MessageQueueId queueId;
   string name;
   string description;
-  int    maxMessageSize;
-  int    maxQueueSize;
-  int    retentionPeriod;
-  bool   deadLetterQueue;
+  int maxMessageSize;
+  int maxQueueSize;
+  int retentionPeriod;
+  bool deadLetterQueue;
   string deadLetterQueueName;
   string[string] metadata;
 }
+
 struct UpdateQueueRequest {
   TenantId tenantId;
-  string id;
+  MessageQueueId queueId;
   string status;
-  int    maxMessageSize;
-  int    maxQueueSize;
-  int    retentionPeriod;
+  int maxMessageSize;
+  int maxQueueSize;
+  int retentionPeriod;
   string[string] metadata;
 }
 
 // --- Topic Subscriptions ---
 struct CreateSubscriptionRequest {
   TenantId tenantId;
-  string id;
+  TopicSubscriptionId subscriptionId;
+  MessageQueueId queueId;
+
   string name;
-  string queueId;
   string topicPattern;
   string protocol;
   string endpoint;
   string[string] metadata;
 }
+
 struct UpdateSubscriptionRequest {
   TenantId tenantId;
-  string id;
+  TopicSubscriptionId subscriptionId;
   string status;
   string topicPattern;
   string endpoint;
@@ -149,34 +157,35 @@ struct UpdateSubscriptionRequest {
 
 // --- Trading Partners ---
 struct CreateTradingPartnerRequest {
-  string   tenantId;
-  string   id;
-  string   name;
-  string   description;
-  string   partnerType;
-  string   standard;
-  string   systemId;
-  string   contactEmail;
-  string   contactName;
-  string   country;
+  TenantId tenantId;
+  TradingPartnerId partnerId;
+  string name;
+  string description;
+  string partnerType;
+  string standard;
+  string systemId;
+  string contactEmail;
+  string contactName;
+  string country;
   string[string] metadata;
 }
+
 struct UpdateTradingPartnerRequest {
   TenantId tenantId;
-  string id;
+  TradingPartnerId partnerId;
   string name;
   string contactEmail;
   string contactName;
   string standard;
-  bool   active;
+  bool active;
   string[string] metadata;
 }
 
 // --- Message Mappings ---
 struct CreateMappingRequest {
   TenantId tenantId;
-  string id;
-  string packageId;
+  MessageMappingId mappingId;
+  IntegrationPackageId packageId;
   string name;
   string description;
   string version_;
@@ -187,9 +196,11 @@ struct CreateMappingRequest {
   string mappingExpression;
   string[string] metadata;
 }
+
 struct UpdateMappingRequest {
   TenantId tenantId;
-  string id;
+  MessageMappingId mappingId;
+  IntegrationPackageId packageId;
   string name;
   string description;
   string version_;
@@ -201,18 +212,19 @@ struct UpdateMappingRequest {
 // --- Integration Users ---
 struct CreateIntegrationUserRequest {
   TenantId tenantId;
-  string id;
+  IntegrationUserId userId;
   string email;
   string firstName;
   string lastName;
   string role;
   string externalUserId;
 }
+
 struct UpdateIntegrationUserRequest {
   TenantId tenantId;
-  string id;
+  IntegrationUserId userId;
   string firstName;
   string lastName;
   string role;
-  bool   active;
+  bool active;
 }

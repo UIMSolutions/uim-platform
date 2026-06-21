@@ -12,8 +12,7 @@ public:
   this(IntegrationFlowRepository repo) { _repo = repo; }
 
   CommandResult create(CreateFlowRequest req) {
-    auto flow = IntegrationFlow();
-    initEntity(flow, req.tenantId, req.id);
+    auto flow = IntegrationFlow(req.tenantId, req.flowId);
     flow.packageId           = IntegrationPackageId(req.packageId);
     flow.name                = req.name;
     flow.description         = req.description;

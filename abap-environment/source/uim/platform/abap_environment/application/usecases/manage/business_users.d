@@ -33,16 +33,13 @@ class ManageBusinessUsersUseCase { // TODO: UIMUseCase {
     if (req.systemInstanceId.isEmpty)
       return CommandResult(false, "", "System instance ID is required");
 
-    auto existing = repo.findByUsername(req.tenantId, req.systemInstanceId, req.username);
-    if (!existing.isNull)
+    if (repo.existsByUsername(req.tenantId, req.systemInstanceId, req.username))
       return CommandResult(false, "", "Username '" ~ req.username ~ "' already exists");
 
-    auto emailCheck = repo.findByEmail(req.tenantId, req.systemInstanceId, req.email);
-    if (!emailCheck.isNull)
+    if (repo.existsByEmail(req.tenantId, req.systemInstanceId, req.email))
       return CommandResult(false, "", "Email '" ~ req.email ~ "' already in use");
 
-    BusinessUser user;
-    user.initEntity(req.tenantId);
+    auto user = BusinessUser(req.tenantId);
     user.systemInstanceId = req.systemInstanceId;
     user.username = req.username;
     user.firstName = req.firstName;

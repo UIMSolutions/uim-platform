@@ -43,7 +43,7 @@ class BuildpackController : ManageHttpController {
     auto r = CreateBuildpackRequest();
     r.tenantId = tenantId;
     r.name = data.getString("name");
-    r.type_ = toBuildpackType(data.getString("type"));
+    r.type_ = data.getString("type");
     r.position = data.getInteger("position");
     r.stack = data.getString("stack");
     r.filename = data.getString("filename");

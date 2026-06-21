@@ -35,19 +35,17 @@ class ManageSpacesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Space name is required");
 
     // Validate org exists
-    auto org = orgRepo.findById(req.orgId, req.tenantId);
+    auto org = orgRepo.findById(req.tenantId, req.orgId);
     if (org.isNull)
       return CommandResult(false, "", "Organization not found");
     if (org.status == OrgStatus.suspended)
       return CommandResult(false, "", "Organization is suspended");
 
     // Unique name within org
-    auto existing = repo.findByName(req.orgId, req.tenantId, req.name);
-    if (!existing.isNull)
+    if (repo.existsByName(req.tenantId, req.orgId, req.name))
       return CommandResult(false, "", "Space with this name already exists in org");
 
-    auto now = currentTimestamp();
-    Space space;
+    auto space = Space();
     space.initEntity(req.tenantId, req.createdBy);
     space.orgId = req.orgId;
     space.name = req.name;
@@ -71,24 +69,23 @@ class ManageSpacesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateSpace(UpdateSpaceRequest req) {
-    if (req.isNull)
+    if (req.spaceId.isNull)
       return CommandResult(false, "", "Space ID is required");
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
 
-    auto existing = repo.findById(req.tenantId, req.id);
-    if (existing.isNull)
+    auto space = repo.findById(req.tenantId, req.spaceId);
+    if (space.isNull)
       return CommandResult(false, "", "Space not found");
 
-    auto updated = *existing;
     if (req.name.length > 0)
-      updated.name = req.name;
-    updated.status = req.status;
-    updated.allowSsh = req.allowSsh;
-    updated.updatedAt = currentTimestamp();
+      space.name = req.name;
+    space.status = req.status;
+    space.allowSsh = req.allowSsh;
+    space.updatedAt = currentTimestamp();
 
-    repo.update(updated);
-    return CommandResult(true, updated.id.value, "");
+    repo.update(space);
+    return CommandResult(true, space.id.value, "");
   }
 
   CommandResult deleteSpace(TenantId tenantId, SpaceId id) {

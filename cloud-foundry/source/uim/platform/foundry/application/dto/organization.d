@@ -7,6 +7,7 @@ module uim.platform.foundry.application.dto.organization;
 
 struct CreateOrgRequest {
   TenantId tenantId;
+  
   string name;
   int memoryQuotaMb;
   int instanceMemoryLimitMb;
@@ -17,10 +18,11 @@ struct CreateOrgRequest {
 }
 
 struct UpdateOrgRequest {
-  OrgId id;
   TenantId tenantId;
+  OrgId orgId;
+
   string name;
-  OrgStatus status;
+  string status;
   int memoryQuotaMb;
   int instanceMemoryLimitMb;
   int totalRoutes;

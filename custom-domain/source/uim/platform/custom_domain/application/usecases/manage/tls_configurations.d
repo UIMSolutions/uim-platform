@@ -23,8 +23,7 @@ class ManageTlsConfigurationsUseCase { // TODO: UIMUseCase {
         if (err.length > 0)
             return CommandResult(false, "", err);
 
-        auto existing = repo.findById(r.tenantId, r.tlsConfigurationId);
-        if (!existing.isNull)
+        if (repo.existsById(r.tenantId, r.tlsConfigurationId))
             return CommandResult(false, "", "TLS configuration already exists");
 
         TlsConfiguration c;
@@ -51,31 +50,29 @@ class ManageTlsConfigurationsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateTlsConfiguration(UpdateTlsConfigurationRequest r) {
-        auto existing = repo.findById(r.tenantId, r.tlsConfigurationId);
-        if (existing.isNull)
+        auto config = repo.findById(r.tenantId, r.tlsConfigurationId);
+        if (config.isNull)
             return CommandResult(false, "", "TLS configuration not found");
 
-        existing.name = r.name;
-        existing.description = r.description;
-        existing.http2Enabled = r.http2Enabled;
-        existing.hstsEnabled = r.hstsEnabled;
-        existing.hstsMaxAge = r.hstsMaxAge;
-        existing.hstsIncludeSubDomains = r.hstsIncludeSubDomains;
-        existing.updatedBy = r.updatedBy;
+        config.name = r.name;
+        config.description = r.description;
+        config.http2Enabled = r.http2Enabled;
+        config.hstsEnabled = r.hstsEnabled;
+        config.hstsMaxAge = r.hstsMaxAge;
+        config.hstsIncludeSubDomains = r.hstsIncludeSubDomains;
+        config.updatedBy = r.updatedBy;
+        config.updatedAt = currentTimestamp();
 
-        
-        existing.updatedAt = currentTimestamp;
-
-        repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        repo.update(config);
+        return CommandResult(true, config.id.value, "");
     }
 
     CommandResult deleteTlsConfiguration(TenantId tenantId, TlsConfigurationId id) {
-        auto entity = repo.findById(tenantId, id);
-        if (entity.isNull)
+        auto config = repo.findById(tenantId, id);
+        if (config.isNull)
             return CommandResult(false, "", "TLS configuration not found");
 
-        repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        repo.remove(config);
+        return CommandResult(true, config.id.value, "");
     }
 }

@@ -60,12 +60,12 @@ class ManageOrgsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateOrg(UpdateOrgRequest req) {
-    if (req.isNull)
+    if (req.orgId.isNull)
       return CommandResult(false, "", "Organization ID is required");
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
 
-    auto org = orgs.findById(req.tenantId, req.id);
+    auto org = orgs.findById(req.tenantId, req.orgId);
     if (org.isNull)
       return CommandResult(false, "", "Organization not found");
 

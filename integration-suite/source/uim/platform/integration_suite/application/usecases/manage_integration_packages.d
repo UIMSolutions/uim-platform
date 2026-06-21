@@ -12,8 +12,7 @@ public:
   this(IntegrationPackageRepository repo) { _repo = repo; }
 
   CommandResult create(CreatePackageRequest req) {
-    auto pkg = IntegrationPackage();
-    initEntity(pkg, req.tenantId, req.id);
+    auto pkg = IntegrationPackage(req.tenantId, req.packageId);
     pkg.name        = req.name;
     pkg.version_    = req.version_;
     pkg.description = req.description;

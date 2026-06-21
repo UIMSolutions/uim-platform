@@ -26,13 +26,10 @@ class ManagePrivateKeysUseCase { // TODO: UIMUseCase {
         if (r.domains.length == 0)
             return CommandResult(false, "", "At least one domain is required");
 
-        auto existing = repo.findById(r.tenantId, r.privateKeyId);
-        if (!existing.isNull)
+        if (repo.existsById(r.tenantId, r.privateKeyId))
             return CommandResult(false, "", "Key already exists");
 
-        PrivateKey k;
-        k.initEntity(r.tenantId, r.createdBy);
-
+        auto k = PrivateKey(r.tenantId, r.createdBy);
         k.id = r.privateKeyId;
         k.subject = r.subject;
         k.domains = r.domains;
@@ -52,11 +49,11 @@ class ManagePrivateKeysUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deletePrivateKey(TenantId tenantId, PrivateKeyId id) {
-        auto entity = repo.findById(tenantId, id);
-        if (entity.isNull)
+        auto key = repo.findById(tenantId, id);
+        if (key.isNull)
             return CommandResult(false, "", "Key not found");
 
-        repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        repo.remove(key);
+        return CommandResult(true, key.id.value, "");
     }
 }

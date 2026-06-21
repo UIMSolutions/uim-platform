@@ -12,8 +12,7 @@ public:
   this(TopicSubscriptionRepository repo) { _repo = repo; }
 
   CommandResult create(CreateSubscriptionRequest req) {
-    auto sub = TopicSubscription();
-    initEntity(sub, req.tenantId, req.id);
+    auto sub = TopicSubscription(req.tenantId, req.subscriptionId);
     sub.name         = req.name;
     sub.queueId      = MessageQueueId(req.queueId);
     sub.topicPattern = req.topicPattern;

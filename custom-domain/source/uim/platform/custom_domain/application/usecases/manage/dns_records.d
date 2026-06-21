@@ -26,12 +26,10 @@ class ManageDnsRecordsUseCase { // TODO: UIMUseCase {
         if (r.value.length == 0)
             return CommandResult(false, "", "Value is required");
 
-        auto existing = repo.findById(r.tenantId, r.dnsRecordId);
-        if (!existing.isNull)
+        if (repo.existsById(r.tenantId, r.dnsRecordId))
             return CommandResult(false, "", "DNS record already exists");
 
-        DnsRecord rec;
-        rec.initEntity(r.tenantId, r.createdBy);
+        auto rec = DnsRecord(r.tenantId);
         rec.id = r.dnsRecordId;
         rec.customDomainId = r.customDomainId;
         rec.hostname = r.hostname;

@@ -32,8 +32,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
 
   /// Create a new group.
   GroupResponse createGroup(CreateGroupRequest req) {
-    auto existing = groupRepo.findByDisplayName(req.tenantId, req.displayName);
-    if (!existing.isNull)
+    if (groupRepo.exitstByDisplayName(req.tenantId, req.displayName))
       return GroupResponse("", "IAMGroup with this displayName already exists");
 
     IAMGroup group;

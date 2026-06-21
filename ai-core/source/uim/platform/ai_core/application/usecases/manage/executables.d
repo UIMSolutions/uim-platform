@@ -28,24 +28,22 @@ class ManageExecutablesUseCase { // TODO: UIMUseCase {
         if (r.resourceGroupId.isEmpty)
             return CommandResult(false, "", "Resource group ID is required");
 
-        auto existing = repo.findById(r.tenantId, r.resourceGroupId, r.executableId);
-        if (!existing.isNull)
+        if (repo.existsById(r.tenantId, r.resourceGroupId, r.executableId))
             return CommandResult(false, "", "Executable already exists");
 
-        Executable e;
-        e.initEntity(r.tenantId);
-        e.id = r.executableId;
-        e.tenantId = r.tenantId;
-        e.resourceGroupId = r.resourceGroupId;
-        e.scenarioId = r.scenarioId;
-        e.name = r.name;
-        e.description = r.description;
-        e.versionId = r.versionId;
-        e.deployable = r.deployable;
-        e.type = r.type == "serving" ? ExecutableType.serving : ExecutableType.workflow;
+        auto executable = Executable(r.tenantId);
+        executable.id = r.executableId;
+        executable.tenantId = r.tenantId;
+        executable.resourceGroupId = r.resourceGroupId;
+        executable.scenarioId = r.scenarioId;
+        executable.name = r.name;
+        executable.description = r.description;
+        executable.versionId = r.versionId;
+        executable.deployable = r.deployable;
+        executable.type = r.type == "serving" ? ExecutableType.serving : ExecutableType.workflow;
 
-        repo.save(e);
-        return CommandResult(true, e.id.value, "");
+        repo.save(executable);
+        return CommandResult(true, executable.id.value, "");
     }
 
     Executable getExecutable(TenantId tenantId, ResourceGroupId resourceGroupId, ExecutableId id) {
@@ -61,11 +59,11 @@ class ManageExecutablesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteExecutable(TenantId tenantId, ResourceGroupId resourceGroupId, ExecutableId id) {
-        auto entity = repo.findById(tenantId, resourceGroupId, id);
-        if (entity.isNull)
+        auto executable = repo.findById(tenantId, resourceGroupId, id);
+        if (executable.isNull)
             return CommandResult(false, "", "Executable not found");
 
-        repo.remove(entity);
-        return CommandResult(true, entity.id.value, "");
+        repo.remove(executable);
+        return CommandResult(true, executable.id.value, "");
     }
 }

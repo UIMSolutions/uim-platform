@@ -78,38 +78,37 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
 
-    auto existing = apps.findById(req.tenantId, req.appId);
-    if (existing.isNull)
+    auto app = apps.findById(req.tenantId, req.appId);
+    if (app.isNull)
       return CommandResult(false, "", "Application not found");
 
-    auto updated = existing;
     if (req.name.length > 0)
-      updated.name = req.name;
+      app.name = req.name;
     if (req.instances > 0)
-      updated.instances = req.instances;
+      app.instances = req.instances;
     if (req.memoryMb > 0)
-      updated.memoryMb = req.memoryMb;
+      app.memoryMb = req.memoryMb;
     if (req.diskMb > 0)
-      updated.diskMb = req.diskMb;
+      app.diskMb = req.diskMb;
     if (req.buildpackId.length > 0)
-      updated.buildpackId = req.buildpackId;
+      app.buildpackId = req.buildpackId;
     if (req.stack.length > 0)
-      updated.stack = req.stack;
+      app.stack = req.stack;
     if (req.command.length > 0)
-      updated.command = req.command;
-    updated.healthCheckType = req.healthCheckType;
+      app.command = req.command;
+    app.healthCheckType = req.healthCheckType;
     if (req.healthCheckEndpoint.length > 0)
-      updated.healthCheckEndpoint = req.healthCheckEndpoint;
+      app.healthCheckEndpoint = req.healthCheckEndpoint;
     if (req.healthCheckTimeoutSec > 0)
-      updated.healthCheckTimeoutSec = req.healthCheckTimeoutSec;
+      app.healthCheckTimeoutSec = req.healthCheckTimeoutSec;
     if (req.environmentVariables.length > 0)
-      updated.environmentVariables = req.environmentVariables;
+      app.environmentVariables = req.environmentVariables;
     if (req.dockerImage.length > 0)
-      updated.dockerImage = req.dockerImage;
-    updated.updatedAt = currentTimestamp();
+      app.dockerImage = req.dockerImage;
+    app.updatedAt = currentTimestamp();
 
-    apps.update(updated);
-    return CommandResult(true, updated.id.value, "");
+    apps.update(app);
+    return CommandResult(true, app.id.value, "");
   }
 
   /// Start an application (stage then start).

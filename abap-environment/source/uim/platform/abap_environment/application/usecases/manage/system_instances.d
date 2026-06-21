@@ -26,8 +26,10 @@ class ManageSystemInstancesUseCase { // TODO: UIMUseCase {
   CommandResult createInstance(CreateSystemInstanceRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "System instance name is required");
+
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
+
     if (req.adminEmail.length == 0)
       return CommandResult(false, "", "Admin email is required");
 
@@ -39,12 +41,10 @@ class ManageSystemInstancesUseCase { // TODO: UIMUseCase {
     }
 
     // Unique name per tenant
-    auto existing = repo.findByName(req.tenantId, req.name);
-    if (!existing.isNull)
+    if (repo.existsByName(req.tenantId, req.name))
       return CommandResult(false, "", "System instance '" ~ req.name ~ "' already exists");
 
-    SystemInstance inst;
-    inst.initEntity(req.tenantId) ;
+    auto inst = SystemInstance(req.tenantId);
     inst.subaccountId = req.subaccountId;
     inst.name = req.name;
     inst.description = req.description;

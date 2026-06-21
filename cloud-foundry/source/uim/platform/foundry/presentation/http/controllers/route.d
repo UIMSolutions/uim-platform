@@ -56,7 +56,7 @@ class RouteController : ManageHttpController {
     r.host = data.getString("host");
     r.path = data.getString("path");
     r.port = data.getInteger("port");
-    r.protocol = parseRouteProtocol(data.getString("protocol"));
+    r.protocol = data.getString("protocol");
     r.createdBy = UserId(data.getString("createdBy"));
 
     auto result = useCase.createRoute(r);
@@ -166,7 +166,7 @@ class RouteController : ManageHttpController {
     r.appId = data.getString("appId");
 
     auto result = useCase.mapRoute(r);
-    if (result.isError)
+    if (result.hasError)
       return errorResponse(result.message, 400);
 
     auto responseData = Json.emptyObject.set("id", result.id);
@@ -279,7 +279,7 @@ class RouteController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = IdTemplate(precheck.id);
+    auto id = CfDomainId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid domain ID", 400);
 

@@ -12,8 +12,8 @@ public:
   this(ApiProductRepository repo) { _repo = repo; }
 
   CommandResult create(CreateApiProductRequest req) {
-    auto prod = ApiProduct();
-    initEntity(prod, req.tenantId, req.id);
+    auto prod = ApiProduct(req.tenantId);
+    prod.id = req.id);
     prod.name        = req.name;
     prod.description = req.description;
     prod.apiProxyIds = req.apiProxyIds;

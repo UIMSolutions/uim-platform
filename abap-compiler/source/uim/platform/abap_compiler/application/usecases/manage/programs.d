@@ -21,14 +21,19 @@ class ManageProgramsUseCase {
     CommandResult createProgram(CreateProgramRequest r) {
         if (r.programId.isNull())
             return CommandResult(false, "", "Program ID is required");
+
         if (r.tenantId.isNull())
             return CommandResult(false, "", "Tenant ID is required");
 
-        auto existing = repo.findById(r.tenantId, r.programId);
-        if (!existing.isNull)
-            return CommandResult(false, "", "Program '" ~ r.programId.toString() ~ "' already exists");
+        if (repo.existsById(r.tenantId, r.programId))
+             return CommandResult(false, "", "Program '" ~ r.programId.toString() ~ "' already exists");
 
-        auto program = AbapProgram.create(r.programId.toString(), r.tenantId, r.programType, r.title, r.language, r.sourceCode);
+        auto program = AbapProgram(r.tenantId, r.programId);
+        program.programType = r.programType.toString();
+        program.title = r.title;
+        program.language = r.language;
+        program.sourceCode = r.sourceCode;
+
         repo.save(program);
         return CommandResult(true, program.id.toString(), "");
     }
@@ -42,26 +47,26 @@ class ManageProgramsUseCase {
     }
 
     CommandResult updateProgram(UpdateProgramRequest r) {
-        auto existing = repo.findById(r.tenantId, r.programId);
-        if (existing.isNull)
+        auto program = repo.findById(r.tenantId, r.programId);
+        if (program.isNull)
             return CommandResult(false, "", "Program '" ~ r.programId.value ~ "' not found");
 
         
-        existing.title      = r.title;
-        existing.language   = r.language;
-        existing.sourceCode = r.sourceCode;
-        existing.updatedAt  = MonoTime.currTime.ticks;
-        repo.update(existing);
-        return CommandResult(true, existing.id.value, "");
+        program.title      = r.title;
+        program.language   = r.language;
+        program.sourceCode = r.sourceCode;
+        program.updatedAt  = MonoTime.currTime.ticks;
+        repo.update(program);
+        return CommandResult(true, program.id.value, "");
     }
 
     CommandResult deleteProgram(TenantId tenantId, AbapProgramId programId) {
-        auto existing = repo.findById(tenantId, programId);
-        if (existing.isNull)
+        auto program = repo.findById(tenantId, programId);
+        if (program.isNull)
             return CommandResult(false, "", "Program '" ~ programId.value ~ "' not found");
 
-        repo.remove(existing);
-        return CommandResult(true, existing.id.value, "");
+        repo.remove(program);
+        return CommandResult(true, program.id.value, "");
     }
 
     size_t countPrograms(TenantId tenantId) {

@@ -12,8 +12,7 @@ public:
   this(MessageQueueRepository repo) { _repo = repo; }
 
   CommandResult create(CreateQueueRequest req) {
-    auto q = MessageQueue();
-    initEntity(q, req.tenantId, req.id);
+    auto q = MessageQueue(req.tenantId, req.id);
     q.name                = req.name;
     q.description         = req.description;
     q.status              = QueueStatus.active;

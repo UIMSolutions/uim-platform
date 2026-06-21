@@ -12,8 +12,7 @@ public:
   this(TradingPartnerRepository repo) { _repo = repo; }
 
   CommandResult create(CreateTradingPartnerRequest req) {
-    auto tp = TradingPartner();
-    initEntity(tp, req.tenantId, req.id);
+    auto tp = TradingPartner(req.tenantId, req.partnerId);
     tp.name         = req.name;
     tp.description  = req.description;
     tp.partnerType  = req.partnerType.length > 0 ? req.partnerType.to!PartnerType : PartnerType.tradingPartner;

@@ -12,8 +12,7 @@ public:
   this(MessageMappingRepository repo) { _repo = repo; }
 
   CommandResult create(CreateMappingRequest req) {
-    auto m = MessageMapping();
-    initEntity(m, req.tenantId, req.id);
+    auto m = MessageMapping(req.tenantId, req.id);
     m.packageId         = IntegrationPackageId(req.packageId);
     m.name              = req.name;
     m.description       = req.description;

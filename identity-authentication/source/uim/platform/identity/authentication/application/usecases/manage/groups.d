@@ -28,9 +28,10 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
   }
 
   GroupResponse createGroup(CreateGroupRequest req) {
-    auto now = currentTimestamp();
-    auto group = IdaGroup(randomUUID().toString(), req.tenantId, req.name,
-        req.description, [], now, now);
+    auto group = IdaGroup(req.tenantId);
+    group.name = req.name;
+    group.description = req.description;
+    group.memberUserIds = [];
         
     groupRepo.save(group);
     return GroupResponse(group.id.value, "");

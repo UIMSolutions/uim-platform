@@ -30,17 +30,23 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
   /// Create a new user.
   UserResponse createUser(CreateUserRequest req) {
     // Check uniqueness
-    auto existing = userRepo.findByEmail(req.tenantId, req.email);
-    if (existing != User.init)
+    if (userRepo.existsByEmail(req.tenantId, req.email))
       return UserResponse("", "User with this email already exists");
 
     auto now = currentTimestamp();
-    auto user = User(randomUUID().toString(), req.tenantId, req.userName,
-        req.email, req.firstName, req.lastName, passwordSvc.hashPassword(req.password),
-        UserStatus.active, MfaType.none, "", [], req.phoneNumber, "", now, now,
-        randomUUID().toString() // globalUserId
+    auto user = User(req.tenantId);
+    user.userName = req.userName;
+    user.email = req.email;
+    user.firstName = req.firstName;
+    user.lastName = req.lastName;
+    user.passwordHash = passwordSvc.hashPassword(req.password);
+    user.status = UserStatus.active;
+    user.mfaType = MfaType.none;
+    user.phoneNumber = req.phoneNumber;
+    user.createdAt = now;
+    user.updatedAt = now;
+    user.globalUserId = randomUUID().toString();
 
-        );
     userRepo.save(user);
     return UserResponse(user.id.value, "");
   }

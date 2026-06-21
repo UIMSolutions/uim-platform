@@ -17,11 +17,10 @@ class ManageSubscriptionsUseCase {
     this(SubscriptionRepository repo) { this.repo = repo; }
 
     CommandResult createSubscription(TenantId tenantId, CreateSubscriptionRequest req) {
-        auto existing = repo.findByName(tenantId, req.name);
-        if (existing !is null && !existing.isNull())
+        if (repo.existsByName(tenantId, req.name))
             return CommandResult(false, "", "Subscription '" ~ req.name ~ "' already exists");
 
-        auto sub = new Subscription(tenantId);
+        auto sub = Subscription(tenantId);
         sub.name        = req.name;
         sub.description = req.description;
         sub.conditions  = req.conditions.dup;
@@ -30,7 +29,7 @@ class ManageSubscriptionsUseCase {
         sub.labels      = req.labels.dup;
 
         repo.save(sub);
-        return CommandResult(true, sub.id.toString(), sub.toJson().toString());
+        return CommandResult(true, sub.id.value, sub.toJson().toString());
     }
 
     QueryResult getSubscription(TenantId tenantId, string id) {
@@ -47,8 +46,8 @@ class ManageSubscriptionsUseCase {
         return QueryResult(true, "", arr);
     }
 
-    CommandResult updateSubscription(TenantId tenantId, string id, UpdateSubscriptionRequest req) {
-        auto sub = repo.findById(tenantId, SubscriptionId(id));
+    CommandResult updateSubscription(TenantId tenantId, SubscriptionId id, UpdateSubscriptionRequest req) {
+        auto sub = repo.findById(tenantId, id);
         if (sub is null || sub.isNull())
             return CommandResult(false, "", "Subscription not found");
 
@@ -59,14 +58,15 @@ class ManageSubscriptionsUseCase {
         if (req.labels.length)      sub.labels      = req.labels.dup;
 
         repo.save(sub);
-        return CommandResult(true, sub.id.toString(), sub.toJson().toString());
+        return CommandResult(true, sub.id.value, sub.toJson().toString());
     }
 
-    CommandResult deleteSubscription(TenantId tenantId, string id) {
-        auto sub = repo.findById(tenantId, SubscriptionId(id));
+    CommandResult deleteSubscription(TenantId tenantId, SubscriptionId id) {
+        auto sub = repo.findById(tenantId, id);
         if (sub is null || sub.isNull())
             return CommandResult(false, "", "Subscription not found");
-        repo.removeById(tenantId, SubscriptionId(id));
-        return CommandResult(true, id, "Subscription deleted");
+
+        repo.removeB(sub);
+        return CommandResult(true, sub.id.value, "Subscription deleted");
     }
 }

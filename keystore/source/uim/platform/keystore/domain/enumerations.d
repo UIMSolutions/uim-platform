@@ -18,38 +18,72 @@ enum KeystoreFormat {
   p12,
   pem,
 }
-KeystoreFormat toKeystoreFormat(string s) @safe {
-  import std.uni : toLower;
-
-  switch (s.toLower()) {
-  case "jceks":
-    return KeystoreFormat.jceks;
-  case "p12":
-    return KeystoreFormat.p12;
-  case "pem":
-    return KeystoreFormat.pem;
-  default:
-    return KeystoreFormat.jks;
-  }
+KeystoreFormat toKeystoreFormat(string value) {
+  mixin(toEnumSwitch("KeystoreFormat", "KeystoreFormat.jks"));
 }
+KeystoreFormat[] toKeystoreFormat(string[] values) {
+  return values.map!(v => v.toKeystoreFormat).array;
+}
+string toString(KeystoreFormat value) {
+  return value.to!string();
+}
+string[] toString(KeystoreFormat[] values) {
+  return values.map!(v => v.toString).array;
+}
+///
+unittest {
+  mixin(ShowTest!("KeystoreFormat"));
+
+  assert("jks".toKeystoreFormat == KeystoreFormat.jks);
+  assert("jceks".toKeystoreFormat == KeystoreFormat.jceks);
+  assert("p12".toKeystoreFormat == KeystoreFormat.p12);
+  assert("pem".toKeystoreFormat == KeystoreFormat.pem);
+  assert("unknown".toKeystoreFormat == KeystoreFormat.jks);
+
+  assert(KeystoreFormat.jks.toString == "jks");
+  assert(KeystoreFormat.jceks.toString == "jceks");
+  assert(KeystoreFormat.p12.toString == "p12");
+  assert(KeystoreFormat.pem.toString == "pem");
+
+  assert(["jks", "p12"].toKeystoreFormat == [KeystoreFormat.jks, KeystoreFormat.p12]);
+  assert([KeystoreFormat.jks, KeystoreFormat.p12].toString == ["jks", "p12"]);
+}
+
 // Keystore scope level (search order: subscription > application > account)
 enum KeystoreLevel {
   account,
   application,
   subscription,
 }
-KeystoreLevel toKeystoreLevel(string s) @safe {
-  import std.uni : toLower;
-
-  switch (s.toLower()) {
-  case "application":
-    return KeystoreLevel.application;
-  case "subscription":
-    return KeystoreLevel.subscription;
-  default:
-    return KeystoreLevel.account;
-  }
+KeystoreLevel toKeystoreLevel(string value) {
+ mixin(toEnumSwitch("KeystoreLevel", "KeystoreLevel.account"));
 }
+KeystoreLevel[] toKeystoreLevel(string[] values) {
+  return values.map!(v => v.toKeystoreLevel).array;
+}
+string toString(KeystoreLevel value) {
+  return value.to!string();
+}
+string[] toString(KeystoreLevel[] values) {
+  return values.map!(v => v.toString).array;
+}
+///
+unittest {
+  mixin(ShowTest!("KeystoreLevel"));
+
+  assert("account".toKeystoreLevel == KeystoreLevel.account);
+  assert("application".toKeystoreLevel == KeystoreLevel.application);
+  assert("subscription".toKeystoreLevel == KeystoreLevel.subscription);
+  assert("unknown".toKeystoreLevel == KeystoreLevel.account);
+
+  assert(KeystoreLevel.account.toString == "account");
+  assert(KeystoreLevel.application.toString == "application");
+  assert(KeystoreLevel.subscription.toString == "subscription");
+
+  assert(["account", "subscription"].toKeystoreLevel == [KeystoreLevel.account, KeystoreLevel.subscription]);
+  assert([KeystoreLevel.account, KeystoreLevel.subscription].toString == ["account", "subscription"]);
+}
+
 // Type of entry within a keystore
 enum KeyEntryType {
   trustedCertificate,
@@ -57,17 +91,33 @@ enum KeyEntryType {
   certificate,
   secretKey,
 }
-KeyEntryType toKeyEntryType(string s) @safe {
-  import std.uni : toLower;
+KeyEntryType toKeyEntryType(string value) {
+  mixin(toEnumSwitch("KeyEntryType", "KeyEntryType.trustedCertificate"));
+}
+KeyEntryType[] toKeyEntryType(string[] values) {
+  return values.map!(v => v.toKeyEntryType).array;
+}
+string toString(KeyEntryType value) {
+  return value.to!string();
+}
+string[] toString(KeyEntryType[] values) {
+  return values.map!(v => v.toString).array;
+}
+///
+unittest {
+  mixin(ShowTest!("KeyEntryType"));
 
-  switch (s.toLower()) {
-  case "privatekey":
-    return KeyEntryType.privateKey;
-  case "certificate":
-    return KeyEntryType.certificate;
-  case "secretkey":
-    return KeyEntryType.secretKey;
-  default:
-    return KeyEntryType.trustedCertificate;
-  }
+  assert("trustedCertificate".toKeyEntryType == KeyEntryType.trustedCertificate);
+  assert("privateKey".toKeyEntryType == KeyEntryType.privateKey);
+  assert("certificate".toKeyEntryType == KeyEntryType.certificate);
+  assert("secretKey".toKeyEntryType == KeyEntryType.secretKey);
+  assert("unknown".toKeyEntryType == KeyEntryType.trustedCertificate);
+
+  assert(KeyEntryType.trustedCertificate.toString == "trustedCertificate");
+  assert(KeyEntryType.privateKey.toString == "privateKey");
+  assert(KeyEntryType.certificate.toString == "certificate");
+  assert(KeyEntryType.secretKey.toString == "secretKey");
+
+  assert(["trustedCertificate", "privateKey"].toKeyEntryType == [KeyEntryType.trustedCertificate, KeyEntryType.privateKey]);
+  assert([KeyEntryType.trustedCertificate, KeyEntryType.privateKey].toString == ["trustedCertificate", "privateKey"]);
 }

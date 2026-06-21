@@ -101,7 +101,7 @@ class SpaceController : ManageHttpController {
 
     auto data = precheck.data;
     auto r = UpdateSpaceRequest();
-    r.id = id;
+    r.spaceId = id;
     r.tenantId = tenantId;
     r.name = data.getString("name");
     r.allowSsh = data.getBoolean("allowSsh", true);
@@ -128,7 +128,7 @@ class SpaceController : ManageHttpController {
     if (result.hasError)
       return errorResponse(result.message, 400);
 
-    aauto responseData = Json.emptyObject.set("id", result.id);
+    auto responseData = Json.emptyObject.set("id", result.id);
     return successResponse("Space deleted successfully", "Deleted", 200, responseData);
   }
 }

@@ -27,24 +27,23 @@ class ManageContentProvidersUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult registerProvider(RegisterProviderRequest req) {
-    auto existing = providerRepo.findByName(req.tenantId, req.name);
-    if (!existing.isNull)
+    if (providerRepo.existsByName(req.tenantId, req.name))
       return CommandResult(false, "", "Provider with name '" ~ req.name ~ "' already exists");
 
     if (req.name.length == 0)
       return CommandResult(false, "", "Provider name is required");
+      
     if (req.endpoint.length == 0)
       return CommandResult(false, "", "Provider endpoint is required");
 
-    ContentProvider provider;
-    provider.initEntity(req.tenantId, req.registeredBy);
-
+    auto provider = ContentProvider(req.tenantId);
     provider.name = req.name;
     provider.description = req.description;
     provider.endpoint = req.endpoint;
     provider.authToken = req.authToken;
     provider.status = ProviderStatus.active;
     provider.registeredAt = clockSeconds();
+    provider.registeredBy = req.registeredBy.value;
 
     providerRepo.save(provider);
     recordActivity(req.tenantId, ActivityType.providerRegistered, provider.id.value, req.name,

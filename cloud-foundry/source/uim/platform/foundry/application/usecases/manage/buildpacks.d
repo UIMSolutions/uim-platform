@@ -26,11 +26,11 @@ class ManageBuildpacksUseCase { // TODO: UIMUseCase {
   CommandResult createBuildpack(CreateBuildpackRequest req) {
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
+
     if (req.name.length == 0)
       return CommandResult(false, "", "Buildpack name is required");
 
-    auto existing = buildpacks.findByName(req.tenantId, req.name);
-    if (!existing.isNull)
+    if (buildpacks.existsByName(req.tenantId, req.name))
       return CommandResult(false, "", "Buildpack with this name already exists");
 
     auto now = currentTimestamp();

@@ -23,20 +23,16 @@ class ManageCustomDomainsUseCase { // TODO: UIMUseCase {
         if (err.length > 0)
             return CommandResult(false, "", err);
 
-        if (r.customDomainId.isEmpty)
+        if (r.customDomainId.isNull)
             return CommandResult(false, "", "Domain ID is required");
 
-        auto existing = repo.findById(r.tenantId, r.customDomainId);
-        if (!existing.isNull)
+        if (repo.existsById(r.tenantId, r.customDomainId))
             return CommandResult(false, "", "Domain already exists");
 
-        auto finding = repo.findByDomainName(r.tenantId, r.domainName);
-        if (!finding.isNull)
+        if (repo.existsByDomainName(r.tenantId, r.domainName))
             return CommandResult(false, "", "Domain name already registered");
 
-        CustomDomain d;
-        d.initEntity(r.tenantId, r.createdBy);
-
+        auto d = CustomDomain(r.tenantId);
         d.id = r.customDomainId;
         d.domainName = r.domainName;
         d.organizationId = r.organizationId;

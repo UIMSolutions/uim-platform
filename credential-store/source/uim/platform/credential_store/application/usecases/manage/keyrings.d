@@ -31,8 +31,7 @@ class ManageKeyringsUseCase { // TODO: UIMUseCase {
     if (r.name.length == 0 || r.name.length > 255)
       return CommandResult(false, "", "Keyring name must be 1-255 characters");
 
-    auto existing = credRepo.findByName(r.tenantId, r.namespaceId, r.name, CredentialType.keyring);
-    if (!existing.isNull)
+    if (credRepo.existsByName(r.tenantId, r.namespaceId, r.name, CredentialType.keyring))
       return CommandResult(false, "", "Keyring already exists in this namespace");
 
     auto now = currentTimestamp();

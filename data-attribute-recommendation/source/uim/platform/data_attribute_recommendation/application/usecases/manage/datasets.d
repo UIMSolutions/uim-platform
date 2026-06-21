@@ -28,9 +28,8 @@ class ManageDatasetsUseCase { // TODO: UIMUseCase {
     if (req.name.length == 0)
       return CommandResult(false, "", "Dataset name is required");
 
-    auto existing = repo.findByName(req.tenantId, req.name);
-    if (!existing.isNull)
-      return CommandResult(false, "", "Dataset with this name already exists");
+    if (repo.existsByName(req.tenantId, req.name))
+        return CommandResult(false, "", "Dataset with this name already exists");
 
     Dataset ds;
     ds.initEntity(req.tenantId, req.createdBy);

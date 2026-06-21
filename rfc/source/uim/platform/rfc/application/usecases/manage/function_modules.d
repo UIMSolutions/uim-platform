@@ -17,11 +17,12 @@ class ManageFunctionModulesUseCase {
     this(FunctionModuleRepository repo) { _repo = repo; }
 
     CommandResult createFunctionModule(CreateFunctionModuleRequest req) {
-        auto existing = _repo.findById(req.tenantId, req.id);
-        if (!existing.isNull())
+        if (_repo.existsById(req.tenantId, req.id))
             return CommandResult(false, req.id, "Function module already exists: " ~ req.id);
 
-        auto fm = FunctionModule.create(req.id, req.tenantId, req.functionGroup, req.shortText);
+        auto fm = FunctionModule(req.tenantId, req.id);
+        fm.functionGroup = req.functionGroup;
+        fm.shortText = req.shortText;
         fm.remoteEnabled = req.remoteEnabled.length > 0 ? req.remoteEnabled : "ENABLED";
         foreach (p; req.parameters) fm.parameters ~= RfcParameter(p.name, p.direction, p.typeName,
                                                                     p.defaultValue, p.optional, p.description);

@@ -27,16 +27,11 @@ class ManageConnectorsUseCase { // TODO: UIMUseCase {
 
   CommandResult registerConnector(RegisterConnectorRequest req) {
     // Check for duplicate location ID within subaccount
-    auto existing = repo.findByLocation(req.tenantId, req.subaccountId, req.locationId);
-    if (!existing.isNull)
+    if (repo.existsByLocation(req.tenantId, req.subaccountId, req.locationId))
       return CommandResult(false, "",
           "Connector with locationId '" ~ req.locationId ~ "' already registered");
 
-   
-
-    CloudConnector cc;
-    cc.initEntity(req.tenantId);
-
+    auto cc = CloudConnector(req.tenantId);
     cc.subaccountId = req.subaccountId;
     cc.locationId = req.locationId;
     cc.description = req.description;
@@ -108,9 +103,7 @@ class ManageConnectorsUseCase { // TODO: UIMUseCase {
   private void recordLog(TenantId tenantId, ConnectivityEventType evtType,
       string sourceId, string sourceType, string message) {
    
-    ConnectivityLog entry;
-    entry.initEntity(tenantId);
-
+    auto entry = ConnectivityLog(tenantId);
     entry.eventType = evtType;
     entry.severity = LogSeverity.info;
     entry.sourceId = sourceId;

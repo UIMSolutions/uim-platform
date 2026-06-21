@@ -17,11 +17,10 @@ class ManageConditionsUseCase {
     this(ConditionRepository repo) { this.repo = repo; }
 
     CommandResult createCondition(TenantId tenantId, CreateConditionRequest req) {
-        auto existing = repo.findByName(tenantId, req.name);
-        if (existing !is null && !existing.isNull())
+        if (repo.existsByName(tenantId, req.name))
             return CommandResult(false, "", "Condition '" ~ req.name ~ "' already exists");
 
-        auto cond = new Condition(tenantId);
+        auto cond = Condition(tenantId);
         cond.name      = req.name;
         cond.description = req.description;
         cond.propertyKey  = req.propertyKey.to!PropertyKey;

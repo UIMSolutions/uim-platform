@@ -21,22 +21,21 @@ class ManageDomainMappingsUseCase { // TODO: UIMUseCase {
     CommandResult createDomainMapping(CreateDomainMappingRequest r) {
         if (r.customDomainId.isEmpty)
             return CommandResult(false, "", "Custom domain ID is required");
+
         if (r.standardRoute.length == 0)
             return CommandResult(false, "", "Standard route is required");
+        
         if (r.customRoute.length == 0)
             return CommandResult(false, "", "Custom route is required");
 
-        auto existing = repo.findById(r.tenantId, r.domainMappingId);
-        if (!existing.isNull)
+        if (repo.existsById(r.tenantId, r.domainMappingId))
             return CommandResult(false, "", "Domain mapping already exists");
 
         auto byRoute = repo.findByCustomRoute(r.tenantId, r.customRoute);
         if (!byRoute.isNull)
             return CommandResult(false, "", "Custom route already mapped");
 
-        DomainMapping m;
-        m.initEntity(r.tenantId, r.createdBy);
-
+        auto m = DomainMapping(r.tenantId, r.createdBy);
         m.id = r.domainMappingId;
         m.customDomainId = r.customDomainId;
         m.standardRoute = r.standardRoute;

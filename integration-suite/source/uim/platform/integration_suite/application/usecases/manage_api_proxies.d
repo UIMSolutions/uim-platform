@@ -12,8 +12,7 @@ public:
   this(ApiProxyRepository repo) { _repo = repo; }
 
   CommandResult create(CreateApiProxyRequest req) {
-    auto proxy = ApiProxy();
-    initEntity(proxy, req.tenantId, req.id);
+    auto proxy = ApiProxy(req.tenantId, req.proxyId);
     proxy.name           = req.name;
     proxy.description    = req.description;
     proxy.version_       = req.version_;
