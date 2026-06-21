@@ -33,7 +33,7 @@ string toEnumSwitch(string enumType, string defaultValue, bool ignoreCase = true
         }
     default:
         return `
-        ~ defaultValue ~ `;
+        ~ enumType ~ `.` ~ defaultValue ~ `;
     }`;
 }
 ///
@@ -47,7 +47,7 @@ unittest {
     // Example usage of toEnumSwitch mixin
     {
         TestEnum toTestEnum(string value) {
-            mixin(toEnumSwitch("TestEnum", "TestEnum.one"));
+            mixin(toEnumSwitch("TestEnum", "one"));
         }
 
         assert(toTestEnum("two") == TestEnum.two);
@@ -58,7 +58,7 @@ unittest {
     // Case-sensitive example
     {
         TestEnum toTestEnum(string value) {
-            mixin(toEnumSwitch("TestEnum", "TestEnum.one", false));
+            mixin(toEnumSwitch("TestEnum", "one", false));
         }
 
         assert(toTestEnum("two") == TestEnum.two);

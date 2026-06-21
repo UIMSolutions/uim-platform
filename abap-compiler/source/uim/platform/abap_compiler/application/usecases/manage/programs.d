@@ -29,7 +29,7 @@ class ManageProgramsUseCase {
              return CommandResult(false, "", "Program '" ~ r.programId.toString() ~ "' already exists");
 
         auto program = AbapProgram(r.tenantId, r.programId);
-        program.programType = r.programType.toString();
+        program.programType = r.programType.toProgramType;
         program.title = r.title;
         program.language = r.language;
         program.sourceCode = r.sourceCode;
