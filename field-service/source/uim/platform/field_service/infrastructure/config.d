@@ -8,7 +8,7 @@ import std.process : environment;
 
 import uim.platform.field_service;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

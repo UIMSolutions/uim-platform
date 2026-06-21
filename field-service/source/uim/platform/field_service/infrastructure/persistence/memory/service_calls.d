@@ -7,7 +7,7 @@ module uim.platform.field_service.infrastructure.persistence.memory.service_call
 
 import uim.platform.field_service;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

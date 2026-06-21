@@ -7,7 +7,7 @@ module uim.platform.field_service.domain.repositories.service_calls;
 
 import uim.platform.field_service;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 
