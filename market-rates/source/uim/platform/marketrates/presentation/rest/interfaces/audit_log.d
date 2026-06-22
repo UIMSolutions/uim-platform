@@ -10,13 +10,14 @@ import uim.platform.marketrates;
 // mixin(ShowModule!());
 
 @safe:
-
-interface IAuditLogApi {
+// 
+// interface IAuditLogApi {
     // GET /rest/v1/auditlogs
-    @headerParam("tenantId", "X-Tenant-ID")
-    AuditLog[] getAuditLogs(string tenantId);
-
+    // @headerParam("tenantId", "X-Tenant-ID")
+    // AuditLog[] getAuditLogs(string tenantId);
+// 
     // GET /rest/v1/auditlogs/:id
-    @headerParam("tenantId", "X-Tenant-ID")
-    AuditLog getAuditLog(string tenantId, string id);
-}
+    // @headerParam("tenantId", "X-Tenant-ID")
+    // AuditLog getAuditLog(string tenantId, string id);
+// }
+// 

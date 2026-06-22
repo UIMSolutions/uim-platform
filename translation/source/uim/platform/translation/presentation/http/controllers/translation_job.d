@@ -31,81 +31,86 @@ class TranslationJobController : ManageHttpController {
         router.post("/api/v1/translation/jobs/*/cancel", &handleCancel);
     }
 
+    protected Json submitHandler(HTTPServerRequest req) {
+        auto precheck = super.postHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+        auto data = precheck.data;
+        SubmitTranslationJobRequest r;
+        r.tenantId = tenantId;
+        r.sourceLanguage = data.getString("sourceLanguage");
+        r.targetLanguage = data.getString("targetLanguage");
+        r.provider = data.getString("provider");
+        r.content = data.getString("content");
+        r.contentType = data.getString("contentType", "text/plain");
+
+        auto jobTypeStr = data.getString("jobType", "document");
+        try {
+            r.jobType = jobTypeStr.to!JobType;
+        } catch (Exception) {
+            r.jobType = JobType.document;
+        }
+
+        auto result = usecase.submitJob(r);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        return successResponse("Translation job submitted successfully", 202, Json.emptyObject.set("jobId", result
+                .id));
+    }
+
     protected void handleSubmit(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = precheck.tenantId;
-            auto data = precheck.data;
-            SubmitTranslationJobRequest r;
-            r.tenantId = tenantId;
-            r.sourceLanguage = data.getString("sourceLanguage");
-            r.targetLanguage = data.getString("targetLanguage");
-            r.provider = data.getString("provider");
-            r.content = data.getString("content");
-            r.contentType = data.getString("contentType", "text/plain");
-
-            auto jobTypeStr = data.getString("jobType", "document");
-            try {
-                r.jobType = jobTypeStr.to!JobType;
-            } catch (Exception) {
-                r.jobType = JobType.document;
-            }
-
-            auto result = usecase.submitJob(r);
-            if (result.hasError)
-                return errorResponse(result.message, 400);
-            res.writeJsonBody(
-                Json.emptyObject
-                    .set("jobId", result.id)
-                    .set("status", "pending")
-                    .set("message", "Translation job submitted"),
-                    202
-            );
-        } else {
-            writeError(res, 400, result.message);
+            autp response = submitHandler(req);
+            res.writeJsonBody(response.body, response.code);
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
         }
-    } catch (Exception e) {
-        writeError(res, 500, "Internal server error");
     }
-}
 
-override protected Json listHandler(HTTPServerRequest req) {
-    auto precheck = super.listHandler(req);
-    if (precheck.hasError)
-        return precheck;
+    override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-    auto tenantId = precheck.tenantId;
+        auto tenantId = precheck.tenantId;
 
-    auto jobs = usecase.listJobs(tenantId);
+        auto jobs = usecase.listJobs(tenantId);
 
-    auto arr = Json.emptyArray;
-    foreach (j; jobs)
-        arr ~= j.toJson;
+        auto arr = Json.emptyArray;
+        foreach (j; jobs)
+            arr ~= j.toJson;
 
-    return successResponse("Translation jobs retrieved successfully", 200, Json.emptyObject.set("count", jobs
-            .length).set("resources", arr));
-}
+        return successResponse("Translation jobs retrieved successfully", 200, Json.emptyObject.set("count", jobs
+                .length).set("resources", arr));
+    }
 
-override protected Json getHandler(HTTPServerRequest req) {
-    auto precheck = super.getHandler(req);
-    if (precheck.hasError)
-        return precheck;
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-    auto tenantId = precheck.tenantId;
-    auto id = TranslationJobId(precheck.id);
-    auto job = usecase.getJob(tenantId, id);
-    if (job.isNull)
-        return errorResponse("Translation job not found", 404);
+        auto tenantId = precheck.tenantId;
+        auto id = TranslationJobId(precheck.id);
+        auto job = usecase.getJob(tenantId, id);
+        if (job.isNull)
+            return errorResponse("Translation job not found", 404);
 
-    // Include output content only when completed
-    auto resp = job.toJson;
-    if (job.status == JobStatus.completed)
-        resp = resp.set("translatedContent", job.outputContent);
+        // Include output content only when completed
+        auto resp = job.toJson;
+        if (job.status == JobStatus.completed)
+            resp = resp.set("translatedContent", job.outputContent);
 
-    return successResponse("Translation job retrieved successfully", 200, resp);
-}
+        return successResponse("Translation job retrieved successfully", 200, resp);
+    }
 
-protected void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+    protected Json cancelHandler(HTTPServerRequest req) {
+        auto precheck = super.postHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
         auto tenantId = precheck.tenantId;
         // Path is /api/v1/translation/jobs/{id}/cancel — extract id from second-to-last segment
         auto path = precheck.path;
@@ -115,15 +120,17 @@ protected void handleCancel(scope HTTPServerRequest req, scope HTTPServerRespons
         auto result = usecase.cancelJob(tenantId, TranslationJobId(id));
         if (result.hasError)
             return errorResponse(result.message, 400);
-        res.writeJsonBody(
-            Json.emptyObject.set("jobId", id).set("status", "cancelled"),
-            200
-        );
-    } else {
-        writeError(res, 400, result.message);
+
+        return successResponse("Translation job cancelled successfully", 200, Json.emptyObject.set("jobId", id).set(
+                "status", "cancelled"));
     }
-} catch (Exception e) {
-    writeError(res, 500, "Internal server error");
-}
-}
+
+    protected void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+            auto response = cancelHandler(req);
+            res.writeJsonBody(response.body, response.code);
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
+    }
 }

@@ -10,7 +10,7 @@ import uim.platform.marketrates;
 
 @safe:
 
-class AuditLogController : SAPController {
+class AuditLogController : ManageHttpController {
   private ManageAuditLogsUseCase uc;
 
   this(ManageAuditLogsUseCase uc) {

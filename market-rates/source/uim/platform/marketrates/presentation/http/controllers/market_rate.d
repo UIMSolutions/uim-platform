@@ -13,7 +13,7 @@ import uim.platform.marketrates;
 
 // Handles upload, download, query and delete of market rates,
 // and provider CRUD – the primary HTTP driving adapter.
-class MarketRateController : SAPController {
+class MarketRateController : ManageHttpController {
   private ManageMarketRatesUseCase ratesUC;
   private ManageProvidersUseCase   providersUC;
 

@@ -1,0 +1,23 @@
+module uim.platform.service.mixins.handler;
+
+import uim.platform.service;
+
+// mixin(ShowModule!());
+
+@safe:
+
+string handleTemplate(string handleName, string handlerMethod) {
+    return `{
+    protected void handle` ~ handleName ~ `(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+            auto response = ` ~ handlerMethod ~ `(req);
+            res.writeJsonBody(response.body, response.code);
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
+    }`;
+}
+
+template HandleTemplate(string handleName, string handlerMethod) {
+    const char[] HandleTemplate = handleTemplate(handleName, handlerMethod);
+}

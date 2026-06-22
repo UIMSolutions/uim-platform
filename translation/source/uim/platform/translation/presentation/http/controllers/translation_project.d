@@ -36,34 +36,29 @@ class TranslationProjectController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-            CreateTranslationProjectRequest r;
-            r.tenantId = tenantId;
-            r.name = data.getString("name");
-            r.description = data.getString("description");
-            r.projectType = data.getString("projectType");
-            r.sourceLanguage = data.getString("sourceLanguage");
-            r.provider = data.getString("provider");
-            r.repositoryUrl = data.getString("repositoryUrl");
-            r.baseBranch = data.getString("baseBranch");
-            r.abapSystemId = data.getString("abapSystemId");
+        CreateTranslationProjectRequest r;
+        r.tenantId = tenantId;
+        r.name = data.getString("name");
+        r.description = data.getString("description");
+        r.projectType = data.getString("projectType");
+        r.sourceLanguage = data.getString("sourceLanguage");
+        r.provider = data.getString("provider");
+        r.repositoryUrl = data.getString("repositoryUrl");
+        r.baseBranch = data.getString("baseBranch");
+        r.abapSystemId = data.getString("abapSystemId");
 
-            if (j["targetLanguages"].isArray)
-                foreach (l; j["targetLanguages"])
-                    r.targetLanguages ~= l.get!string;
+        if (j["targetLanguages"].isArray)
+            foreach (l; j["targetLanguages"])
+                r.targetLanguages ~= l.get!string;
 
-            auto result = usecase.createProject(r);
-            if (result.hasError)
+        auto result = usecase.createProject(r);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                res.writeJsonBody(
-                    Json.emptyObject.set("id", result.id).set("message", "Translation project created"),
-                    201
-                );
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Translation project created successfully");
+        return successResponse("Translation project created successfully", 201, resp);
     }
 
     override protected Json listHandler(HTTPServerRequest req) {
@@ -73,33 +68,31 @@ class TranslationProjectController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-            auto projects = usecase.listProjects(tenantId);
+        auto projects = usecase.listProjects(tenantId);
 
-            auto arr = Json.emptyArray;
-            foreach (p; projects) {
-                auto langs = Json.emptyArray;
-                foreach (l; p.targetLanguages) langs ~= Json(l);
+        auto arr = Json.emptyArray;
+        foreach (p; projects) {
+            auto langs = Json.emptyArray;
+            foreach (l; p.targetLanguages)
+                langs ~= Json(l);
 
-                arr ~= Json.emptyObject
-                    .set("id", p.id.value)
-                    .set("name", p.name)
-                    .set("description", p.description)
-                    .set("projectType", p.projectType.to!string)
-                    .set("sourceLanguage", p.sourceLanguage)
-                    .set("targetLanguages", langs)
-                    .set("status", p.status.to!string)
-                    .set("provider", p.provider.to!string)
-                    .set("createdAt", p.createdAt)
-                    .set("updatedAt", p.updatedAt);
-            }
-
-            res.writeJsonBody(
-                Json.emptyObject.set("count", projects.length).set("projects", arr),
-                200
-            );
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
+            arr ~= Json.emptyObject
+                .set("id", p.id.value)
+                .set("name", p.name)
+                .set("description", p.description)
+                .set("projectType", p.projectType.to!string)
+                .set("sourceLanguage", p.sourceLanguage)
+                .set("targetLanguages", langs)
+                .set("status", p.status.to!string)
+                .set("provider", p.provider.to!string)
+                .set("createdAt", p.createdAt)
+                .set("updatedAt", p.updatedAt);
         }
+
+        auto resp = Json.emptyObject
+            .set("count", projects.length)
+            .set("projects", arr);
+        return successResponse("Translation projects retrieved successfully", 200, resp);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -108,16 +101,12 @@ class TranslationProjectController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto id = TranslationProjectId(precheck.id);
-            auto p = usecase.getProject(tenantId, id);
-            if (p.isNull) {
-                writeError(res, 404, "Translation project not found");
-                return;
-            }
-            res.writeJsonBody(p.toJson, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
+        auto id = TranslationProjectId(precheck.id);
+        auto p = usecase.getProject(tenantId, id);
+        if (p.isNull) {
+            return errorResponse("Translation project not found", 404);
         }
+        return successResponse("Translation project retrieved successfully", 200, p.toJson());
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -126,34 +115,29 @@ class TranslationProjectController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto data = precheck.data;
-            UpdateTranslationProjectRequest r;
-            r.tenantId = tenantId;
-            r.projectId = TranslationProjectId(precheck.id);
-            r.name = data.getString("name");
-            r.description = data.getString("description");
-            r.provider = data.getString("provider");
-            r.repositoryUrl = data.getString("repositoryUrl");
-            r.baseBranch = data.getString("baseBranch");
-            r.status = data.getString("status");
+        auto data = precheck.data;
+        UpdateTranslationProjectRequest r;
+        r.tenantId = tenantId;
+        r.projectId = TranslationProjectId(precheck.id);
+        r.name = data.getString("name");
+        r.description = data.getString("description");
+        r.provider = data.getString("provider");
+        r.repositoryUrl = data.getString("repositoryUrl");
+        r.baseBranch = data.getString("baseBranch");
+        r.status = data.getString("status");
 
-            if (j["targetLanguages"].isArray)
-                foreach (l; j["targetLanguages"])
-                    r.targetLanguages ~= l.get!string;
+        if (j["targetLanguages"].isArray)
+            foreach (l; j["targetLanguages"])
+                r.targetLanguages ~= l.get!string;
 
-            auto result = usecase.updateProject(r);
-            if (result.hasError)
+        auto result = usecase.updateProject(r);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                res.writeJsonBody(
-                    Json.emptyObject.set("id", result.id).set("message", "Translation project updated"),
-                    200
-                );
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Translation project updated successfully");
+        return successResponse("Translation project updated successfully", 200, resp);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -162,16 +146,12 @@ class TranslationProjectController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto id = TranslationProjectId(precheck.id);
-            auto result = usecase.deleteProject(tenantId, id);
-            if (result.hasError)
+        auto id = TranslationProjectId(precheck.id);
+        auto result = usecase.deleteProject(tenantId, id);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                res.writeJsonBody(Json.emptyObject, 204);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+
+        return successResponse("Translation project deleted successfully", 204, Json.emptyObject.set("id", id
+                .value));
     }
 }
