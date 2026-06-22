@@ -42,11 +42,11 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
     d.serviceInstanceId = req.serviceInstanceId;
     d.name = req.name;
     d.description = req.description;
-    d.destinationType = req.destinationType.to!DestinationType;
+    d.destinationType = req.destinationType.toDestinationType;
     d.url = req.url;
-    d.authenticationType = DestinationResolver.parseAuthType(req.authenticationType);
-    d.proxyType = DestinationResolver.toProxyType(req.proxyType);
-    d.level = req.level.to!DestinationLevel;
+    d.authenticationType = req.authenticationType.toAuthenticationType;
+    d.proxyType = req.proxyType.toProxyType;
+    d.level = req.level.toDestinationLevel;
     d.status = DestinationStatus.active;
 
     d.urlPath = req.urlPath;
@@ -91,9 +91,9 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
     if (req.url.length > 0)
       d.url = req.url;
     if (req.authenticationType.length > 0)
-      d.authenticationType = DestinationResolver.toAuthType(req.authenticationType);
+      d.authenticationType = req.authenticationType.toAuthenticationType;
     if (req.proxyType.length > 0)
-      d.proxyType = DestinationResolver.toProxyType(req.proxyType);
+      d.proxyType = req.proxyType.toProxyType;
     if (req.user.length > 0)
       d.user = req.user;
     if (req.password.length > 0)

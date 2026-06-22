@@ -64,14 +64,7 @@ class CertificateController : ManageHttpController {
       return successResponse("Certificate uploaded successfully", 201, responseData);
   }
 
-  protected void handleUpload(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = uploadHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleUpload", "uploadHandler"));
 
   override protected Json listHandler(HTTPServerRequest req) {
     auto precheck = super.listHandler(req);
@@ -114,14 +107,8 @@ class CertificateController : ManageHttpController {
 
     return successResponse("Expiring certificates retrieved successfully", 200, resp);
   }
-  protected void handleListExpiring(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = listExpiringHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+
+  mixin(HandleTemplate!("handleListExpiring", "listExpiringHandler"));
 
   override protected Json getHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);
@@ -211,12 +198,6 @@ class CertificateController : ManageHttpController {
       return successResponse("Certificate validation completed", 200, resp);
   }
 
-  protected void handleValidate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = validateHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleValidate", "validateHandler"));
+
 }

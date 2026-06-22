@@ -27,4 +27,8 @@ class MemoryNamespaceRepository : TenantRepository!(Namespace, NamespaceId), Nam
     return Namespace.init;
   }
 
+  void removeByName(TenantId tenantId, string name) {
+    remove(findByName(tenantId, name));
+  }
+
 }

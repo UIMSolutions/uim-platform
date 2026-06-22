@@ -147,3 +147,12 @@ enum DestinationType {
   mail,
   ldap,
 }
+DestinationType toDestinationType(string s) {
+  const map = [
+    "http": DestinationType.http,
+    "rfc": DestinationType.rfc,
+    "mail": DestinationType.mail,
+    "ldap": DestinationType.ldap,
+  ];
+  return map.get(s.toLower, DestinationType.http); // Default to http if not found
+}

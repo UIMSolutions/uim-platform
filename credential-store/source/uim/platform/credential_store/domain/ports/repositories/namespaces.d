@@ -12,5 +12,9 @@ import uim.platform.credential_store;
 
 @safe:
 interface NamespaceRepository : ITenantRepository!(Namespace, NamespaceId) {
+
+  bool existsByName(TenantId tenantId, string name);
   Namespace findByName(TenantId tenantId, string name);
+  void removeByName(TenantId tenantId, string name);
+
 }

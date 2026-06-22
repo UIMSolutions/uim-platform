@@ -78,12 +78,6 @@ class FindController : HttpController {
     return successResponse("Destination found", "Found", 200, j);
   }
 
-  protected void handleFind(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = findHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleFind", "findHandler"));
+  
 }
