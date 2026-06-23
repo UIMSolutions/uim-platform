@@ -58,14 +58,7 @@ class DatasetController : ManageHttpController {
     return successResponse("Dataset registered successfully", 201, responseData);
   }
 
-  protected void handleRegister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = registerHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleRegister", "registerHandler"));
 
   override protected Json listHandler(HTTPServerRequest req) {
     auto precheck = super.listHandler(req);

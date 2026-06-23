@@ -55,14 +55,7 @@ class ImportController : ManageHttpController {
     return successResponse("Import started successfully", "Started", 201, resp);
   }
 
-  protected void handleStartImport(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = startImportHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleStartImport", "startImportHandler"));
 
   override protected Json listHandler(HTTPServerRequest req) {
     auto precheck = super.listHandler(req);

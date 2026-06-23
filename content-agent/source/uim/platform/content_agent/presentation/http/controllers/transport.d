@@ -115,14 +115,8 @@ class TransportController : ManageHttpController {
     return successResponse("Transport request released successfully", "Released", 200, responseData);
   }
 
-  protected void handleRelease(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = releaseHandler(req);
-      res.writeJsonBody(resp, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleRelease", "releaseHandler"));
+  
 
   protected Json cancelHandler(HTTPServerRequest req) {
     auto precheck = super.postHandler(req);
@@ -144,13 +138,6 @@ class TransportController : ManageHttpController {
     return successResponse("Transport request cancelled successfully", "Cancelled", 200, responseData);
   }
 
-  protected void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = cancelHandler(req);
-
-      res.writeJsonBody(response.data, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleCancel", "cancelHandler"));
+  
 }

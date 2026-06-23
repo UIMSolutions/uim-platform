@@ -27,44 +27,62 @@ class ActionController : ManageHttpController {
         router.delete_("/api/v1/alert-notification/actions/*", &handleDelete);
     }
 
-    private void handleCreate(HTTPServerRequest req, HTTPServerResponse res) @safe {
-        auto tenantId = TenantId(req.headers.get("X-Tenant-Id", "default"));
-        auto body_ = req.json;
+    override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+        auto data = precheck.data;
         CreateActionRequest dto;
-        dto.name = body_["name"].to!string;
-        dto.description = body_["description"].opt!string("");
-        dto.type_ = body_["type"].to!string;
-        dto.state = body_["state"].opt!string("ENABLED");
-        dto.fallbackAction = body_["fallbackAction"].opt!string("");
-        dto.enableDeliveryStatus = body_["enableDeliveryStatus"].opt!bool(false);
+        dto.name = data.getString("name");
+        dto.description = data.getString("description", "");
+        dto.type_ = data.getString("type");
+        dto.state = data.getString("state", "ENABLED");
+        dto.fallbackAction = data.getString("fallbackAction", "");
+        dto.enableDeliveryStatus = data.getBool("enableDeliveryStatus", false);
         // parse properties object
-        auto propsNode = body_["properties"];
+        auto propsNode = data["properties"];
         if (propsNode.isObject())
             foreach (k, v; propsNode.byKeyValue())
                 dto.properties[k] = v.to!string;
+
         auto result = usecase.createAction(tenantId, dto);
-        if (!result.success) {
-            writeError(res, cast(int)HTTPStatus.badRequest, result.message);
-            return;
-        }
-        res.writeBody(result.message, cast(int)HTTPStatus.created, "application/json");
-    }
+        if (!result.success)
+            return errorResponse(result.message, 400);
 
-    private void handleList(HTTPServerRequest req, HTTPServerResponse res) @safe {
-        auto tenantId = TenantId(req.headers.get("X-Tenant-Id", "default"));
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Action created successfully", "Created", 201, responseData);
+    }
+    
+    override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
         auto result = usecase.listActions(tenantId);
-        res.writeJsonBody(result.data, cast(int)HTTPStatus.ok);
+        if (!result.success)
+            return errorResponse(result.message, 400);
+
+        return successResponse("Actions retrieved successfully", "Retrieved", 200, result.data);
     }
 
-    private void handleGet(HTTPServerRequest req, HTTPServerResponse res) @safe {
-        auto tenantId = TenantId(req.headers.get("X-Tenant-Id", "default"));
-        auto id = req.requestPath.to!string.split("/")[$ - 1];
-        auto result = usecase.getAction(tenantId, ActionId(id));
-        if (!result.success) {
-            writeError(res, cast(int)HTTPStatus.notFound, result.message);
-            return;
-        }
-        res.writeJsonBody(result.data, cast(int)HTTPStatus.ok);
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+        auto id = ActionId(req.requestPath.to!string.split("/")[$ - 1]);
+        if (id.isNull)
+            return errorResponse("Invalid action ID", 400);
+
+        auto result = usecase.getAction(tenantId, id);
+        if (!result.success)
+            return errorResponse(result.message, 404);
+
+        return successResponse("Action retrieved successfully", "Retrieved", 200, result.data);
     }
 
      override protected Json updateHandler(HTTPServerRequest req) {
@@ -94,14 +112,20 @@ class ActionController : ManageHttpController {
         return successResponse("Action updated successfully", "Updated", 200, responseData);
     }
 
-    private void handleDelete(HTTPServerRequest req, HTTPServerResponse res) @safe {
-        auto tenantId = TenantId(req.headers.get("X-Tenant-Id", "default"));
-        auto id = req.requestPath.to!string.split("/")[$ - 1];
-        auto result = usecase.deleteAction(tenantId, ActionId(id));
-        if (!result.success) {
-            writeError(res, cast(int)HTTPStatus.notFound, result.message);
-            return;
-        }
-        res.writeBody("", cast(int)HTTPStatus.noContent, "application/json");
+    override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+        auto id = ActionId(req.requestPath.to!string.split("/")[$ - 1]);
+        if (id.isNull)
+            return errorResponse("Invalid action ID", 400);
+
+        auto result = usecase.deleteAction(tenantId, id);
+        if (!result.success)
+            return errorResponse(result.message, 404);
+
+        return successResponse("Action deleted successfully", "Deleted", 204, Json.emptyObject);
     }
 }

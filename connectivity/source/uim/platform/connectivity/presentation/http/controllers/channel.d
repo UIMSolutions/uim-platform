@@ -106,14 +106,7 @@ class ChannelController : ManageHttpController {
     return successResponse("Channel opened successfully", 200, responseData);
   }
 
-  protected void handleOpen(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = openHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleOpen", "openHandler"));
 
   protected Json closeHandler(HTTPServerRequest req) {
     auto precheck = super.postHandler(req);
@@ -133,14 +126,7 @@ class ChannelController : ManageHttpController {
     return successResponse("Channel closed successfully", 200, responseData);
   }
 
-  protected void handleClose(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = closeHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleClose", "closeHandler"));
 
   override protected Json deleteHandler(HTTPServerRequest req) {
     auto precheck = super.deleteHandler(req);
