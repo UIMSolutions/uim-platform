@@ -52,14 +52,7 @@ class AddressController : HttpController {
     return successResponse("Address cleansed successfully", 0, result.toJson);
   }
 
-  protected void handleCleanse(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = cleanseHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleCleanse", "cleanseHandler"));
 
   protected Json cleanseBatchHandler(HTTPServerRequest req) {
     auto precheck = super.postHandler(req);

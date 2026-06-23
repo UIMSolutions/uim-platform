@@ -61,14 +61,7 @@ class DuplicateController : HttpController {
     return successResponse("Duplicate groups detected successfully", "Detected", 200, resp);
   }
 
-  protected void handleDetect(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = detectHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleDetect", "detectHandler"));
 
   protected Json resolveHandler(HTTPServerRequest req) {
     auto precheck = super.postHandler(req);
@@ -93,14 +86,7 @@ class DuplicateController : HttpController {
     return successResponse("Duplicate group resolved successfully", "Resolved", 200, resp);
   }
 
-  protected void handleResolve(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = resolveHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleResolve", "resolveHandler"));
 
   protected Json listHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);

@@ -119,13 +119,7 @@ class DeletionController : ManageHttpController {
     return successResponse("Deletion request status updated successfully", "Updated", 200, resp);
   }
 
-  protected void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = updateStatusHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
-  }
+  mixin(HandleTemplate!("handleUpdateStatus", "updateStatusHandler"));
 
   override protected Json deleteHandler(HTTPServerRequest req) {
     auto precheck = super.deleteHandler(req);

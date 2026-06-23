@@ -183,14 +183,7 @@ class CustomDomainController : ManageHttpController {
         return successResponse("Custom domain activated", 200, Json.emptyObject.set("id", result.id));
     }
 
-    protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto resp = activateHandler(req);
-            res.writeJsonBody(resp, resp.code);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+    mixin(HandleTemplate!("handleActivate", "activateHandler"));
 
     protected Json deactivateHandler(HTTPServerRequest req) {
         auto precheck = super.postHandler(req); // Reuse postHandler for pre-checks
@@ -215,14 +208,8 @@ class CustomDomainController : ManageHttpController {
         return successResponse("Custom domain deactivated", 200, Json.emptyObject.set("id", result.id));
     }
 
-    protected void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto response = deactivateHandler(req);
-            res.writeJsonBody(response, response.code);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+    mixin(HandleTemplate!("handleDeactivate", "deactivateHandler"));
+
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto precheck = super.deleteHandler(req); // Assuming ManageController.deleteHandler for pre-checks
         if (precheck.hasError)

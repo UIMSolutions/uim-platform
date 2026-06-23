@@ -65,12 +65,6 @@ class DomainDashboardController : ManageHttpController {
             Json.emptyObject.set("id", result.id));
     }
 
-    protected void handleRefresh(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto resp = refreshHandler(req);
-            res.writeJsonBody(resp, resp.code);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+    mixin(HandleTemplate!("handleRefresh", "refreshHandler"));
 }
+

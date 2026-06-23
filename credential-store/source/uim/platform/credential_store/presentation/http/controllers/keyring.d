@@ -135,14 +135,7 @@ class KeyringController : ManageHttpController {
     return successResponse("Keyring rotated successfully", "Rotated", 200, responseData);
   }
 
-  protected void handleRotate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = rotateHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleRotate", "rotateHandler"));
 
   protected Json disableHandler(HTTPServerRequest req) {
     auto precheck = super.postHandler(req);

@@ -94,14 +94,7 @@ class DataRecordController : ManageHttpController {
     return successResponse("Data records retrieved successfully", "Retrieved", 200, responseData);
   }
 
-  protected void handleListByDataset(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = listByDatasetHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleListByDataset", "listByDatasetHandler"));
 
   protected Json validateHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);
@@ -125,14 +118,7 @@ class DataRecordController : ManageHttpController {
     return successResponse("Data record validated successfully", "Validated", 200, resp);
   }
 
-  protected void handleValidate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = validateHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleValidate", "validateHandler"));
 
   protected Json rejectHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);

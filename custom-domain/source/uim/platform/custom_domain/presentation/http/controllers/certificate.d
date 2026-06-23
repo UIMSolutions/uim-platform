@@ -163,14 +163,7 @@ class CertificateController : ManageHttpController {
                 .id));
     }
 
-    protected void handleUploadChain(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto resp = uploadChainHandler(req);
-            res.writeJsonBody(resp, resp.code);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+    mixin(HandleTemplate!("handleUploadChain", "uploadChainHandler"));
 
     protected Json activateHandler(HTTPServerRequest req) {
         auto precheck = super.postHandler(req);
@@ -202,14 +195,7 @@ class CertificateController : ManageHttpController {
         return successResponse("Certificate activated", 200, Json.emptyObject.set("id", result.id));
     }
 
-    protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto resp = activateHandler(req);
-            res.writeJsonBody(resp, resp.code);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+    mixin(HandleTemplate!("handleActivate", "activateHandler"));
 
     protected Json deactivateHandler(HTTPServerRequest req) {
         auto precheck = super.postHandler(req);
@@ -230,14 +216,7 @@ class CertificateController : ManageHttpController {
         return successResponse("Certificate deactivated", 200, Json.emptyObject.set("id", result.id));
     }
 
-    protected void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto resp = deactivateHandler(req);
-            res.writeJsonBody(resp, resp.code);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+    mixin(HandleTemplate!("handleDeactivate", "deactivateHandler"));
 
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto precheck = super.deleteHandler(req);

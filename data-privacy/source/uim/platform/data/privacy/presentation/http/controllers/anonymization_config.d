@@ -126,13 +126,7 @@ class AnonymizationConfigController : ManageHttpController {
     return successResponse("Anonymization config activated successfully", 200, responseData);
   }
 
-  protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = activateHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
-  }
+  mixin(HandleTemplate!("handleActivate", "activateHandler"));
 
   override protected Json deleteHandler(HTTPServerRequest req) {
     auto precheck = super.deleteHandler(req);

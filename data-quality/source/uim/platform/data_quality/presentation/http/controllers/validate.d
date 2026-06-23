@@ -49,14 +49,7 @@ class ValidateController : HttpController {
     return successResponse("Record validated successfully", 200, result.toJson);
   }
 
-  protected void handleValidate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = validateHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleValidate", "validateHandler"));
 
   protected Json validateBatchHandler(HTTPServerRequest req) {
     auto precheck = super.postHandler(req);

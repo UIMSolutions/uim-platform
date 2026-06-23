@@ -55,14 +55,7 @@ class ProfileController : HttpController {
     return successResponse("Data profile created successfully", "Created", 201, profile.toJson);
   }
 
-  protected void handleProfile(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = profileHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+mixin(HandleTemplate!("handleProfile", "profileHandler"));
 
   override protected Json listHandler(HTTPServerRequest req) {
     auto precheck = super.listHandler(req);

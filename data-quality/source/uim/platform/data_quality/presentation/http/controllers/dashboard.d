@@ -24,21 +24,25 @@ class DashboardController : HttpController {
     router.post("/api/v1/dashboard", &handleCompute);
   }
 
-  protected void handleGetCompute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto precheck = super.postHandler(req);
+protected Json computeHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
-      auto r = ComputeDashboardRequest();
-      r.tenantId = tenantId;
-      r.datasetId = data.getString("datasetId");
-      r.datasetName = data.getString("datasetName");
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
+    auto r = ComputeDashboardRequest();
+    r.tenantId = tenantId;
+    r.datasetId = data.getString("datasetId");
+    r.datasetName = data.getString("datasetName");
 
-      auto dashboard = usecase.compute(r);
-      res.writeJsonBody(dashboard.toJson, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto dashboard = usecase.compute(r);
+    if (dashboard.hasError)
+      return errorResponse(dashboard.message, 400);
+
+    return successResponse("Dashboard computed successfully", 200, dashboard.toJson);
   }
+
+  mixin(HandleTemplate!("handleCompute", "computeHandler"));
+
 }
