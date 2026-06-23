@@ -162,14 +162,7 @@ class UserController : ManageHttpController {
      return successResponse("Password changed successfully", "", 200, response);
   }
 
-  protected void handleChangePassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = changePasswordHandler(req);
-        res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeScimError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleChangePassword", "changePasswordHandler"));
 
   protected Json searchHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);
@@ -190,14 +183,7 @@ class UserController : ManageHttpController {
       return successResponse("User search completed successfully", "", 200, responseData);
   }
 
-  protected void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = searchHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeScimError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleSearch", "searchHandler"));
 }
 
 private Email[] parseEmails(Json j) {

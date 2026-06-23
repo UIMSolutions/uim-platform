@@ -132,12 +132,6 @@ public:
     return successResponse("API product published successfully", "Published", 200, resp);
   }
 
-  protected void handlePublish(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = publishHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handlePublish", "publishHandler"));
+
 }

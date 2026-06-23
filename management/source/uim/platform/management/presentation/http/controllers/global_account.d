@@ -146,13 +146,7 @@ class GlobalAccountController : ManageHttpController {
     return successResponse("Global account suspended successfully", "Updated", 200, responseData);
   }
 
-  protected void handleSuspend(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = suspendHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
-  }
+  mixin(HandleTemplate!("handleSuspend", "suspendHandler"));
 
   protected Json reactivateHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);

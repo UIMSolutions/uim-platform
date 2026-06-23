@@ -58,15 +58,8 @@ class KeystoreController : ManageHttpController {
     auto responseData = Json.emptyObject.set("id", result.id);
     return successResponse("Keystore uploaded successfully", 201, responseData);
   }
-  // POST /api/v1/keystores
-  protected void handleUpload(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = uploadHandler(req);
-      res.writeJsonBody(response, 201);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  
+  mixin(HandleTemplate!("handleUpload", "uploadHandler"));
 
   // GET /api/v1/keystores?accountId=...&applicationId=...
   override protected Json listHandler(HTTPServerRequest req) {

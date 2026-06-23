@@ -57,14 +57,7 @@ class TraceController : HttpController {
     return successResponse("Span ingested successfully", "Created", 201, resp);
   }
 
-  protected void handleIngestSpan(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = ingestSpanHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+mixin(HandleTemplate!("handleIngestSpan", "ingestSpanHandler"));
 
   protected Json batchIngestHandler(HTTPServerRequest req) {
     auto precheck = super.postHandler(req);
@@ -100,14 +93,7 @@ class TraceController : HttpController {
     return successResponse("Batch span ingest completed successfully", "Created", 201, resp);
   }
 
-  protected void handleBatchIngest(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = batchIngestHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleBatchIngest", "batchIngestHandler"));
 
   override protected Json traceHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);

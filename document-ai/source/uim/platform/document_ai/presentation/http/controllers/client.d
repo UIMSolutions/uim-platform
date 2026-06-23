@@ -115,12 +115,6 @@ class ClientController : ManageHttpController {
     return successResponse("Client updated successfully", 200, resp);
   }
 
-  protected void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = patchHandler(req);
-      res.writeJson(response);
-    } catch (Exception e) {
-      res.writeJson(errorResponse(e.msg, 500));
-    }
-  }
+  mixin(HandleTemplate!("handlePatch", "patchHandler"));
+
 }

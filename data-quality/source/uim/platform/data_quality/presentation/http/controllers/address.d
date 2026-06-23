@@ -90,14 +90,7 @@ class AddressController : HttpController {
     return successResponse("Address cleansing batch processed successfully", 0, resp);
   }
 
-  protected void handleCleanseBatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = cleanseBatchHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleCleanseBatch", "cleanseBatchHandler"));
 
   protected Json listHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);

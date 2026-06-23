@@ -85,14 +85,7 @@ class ValidateController : HttpController {
     return successResponse("Validation completed successfully", 200, resp);
   }
 
-  protected void handleValidateBatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = validateBatchHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleValidateBatch", "validateBatchHandler"));
 
   protected Json getResultHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);
@@ -109,12 +102,6 @@ class ValidateController : HttpController {
     return successResponse("Validation result retrieved successfully", 200, result.toJson);
   }
 
-  protected void handleGetResult(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = getResultHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleGetResult", "getResultHandler"));
+
 }

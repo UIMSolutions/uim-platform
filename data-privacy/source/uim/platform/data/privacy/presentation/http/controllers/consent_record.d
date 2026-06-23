@@ -59,13 +59,7 @@ class ConsentController : ManageHttpController {
       return successResponse("Consent granted successfully", "Created", 201, responseData);
   }
 
-  protected void handleGrant(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = grantHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
-  }
+  mixin(HandleTemplate!("handleGrant", "grantHandler"));
 
   override protected Json listHandler(HTTPServerRequest req) {
     auto precheck = super.listHandler(req);

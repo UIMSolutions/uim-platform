@@ -113,14 +113,7 @@ class WorkflowController : ManageHttpController {
 
   }
 
-  protected void handleStart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = startHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+mixin(HandleTemplate!("handleStart", "startHandler"));
 
   protected Json suspendHandler(HTTPServerRequest req) {
     auto precheck = super.posttHandler(req);
@@ -141,14 +134,7 @@ class WorkflowController : ManageHttpController {
 
   }
 
-  protected void handleSuspend(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = suspendHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+mixin(HandleTemplate!("handleSuspend", "suspendHandler"));
 
   protected Json resumeHandler(HTTPServerRequest req) {
     auto precheck = super.posttHandler(req);
@@ -169,14 +155,7 @@ class WorkflowController : ManageHttpController {
 
   }
 
-  protected void handleResume(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = resumeHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleResume", "resumeHandler"));
 
   protected Json terminateHandler(HTTPServerRequest req) {
     auto precheck = super.posttHandler(req);
@@ -197,14 +176,7 @@ class WorkflowController : ManageHttpController {
 
   }
 
-  protected void handleTerminate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = terminateHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+mixin(HandleTemplate!("handleTerminate", "terminateHandler"));
 
   override protected Json deleteHandler(HTTPServerRequest req) {
     auto precheck = super.deleteHandler(req);

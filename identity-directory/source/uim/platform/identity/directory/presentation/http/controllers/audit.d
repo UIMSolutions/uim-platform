@@ -93,15 +93,6 @@ class AuditController : HttpController {
     return successResponse("Audit log list retrieved successfully", "Retrieved", 200, response);
   }
 
-  protected void handleByTarget(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = targetHandler(req);
-      res.writeJsonBody(response, 200);
-    } catch (Exception e) {
-      auto errRes = Json.emptyObject;
-      errRes["error"] = Json("Internal server error");
-      res.writeJsonBody(errRes, 400);
-      return;
-    }
-  }
+  mixin(HandleTemplate!("handleByTarget", "targetHandler"));
+
 }

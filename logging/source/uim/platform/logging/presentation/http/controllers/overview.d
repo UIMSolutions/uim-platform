@@ -6,7 +6,6 @@
 module uim.platform.logging.presentation.http.controllers.overview;
 // import uim.platform.logging.application.usecases.get_overview;
 
-
 import uim.platform.logging;
 
 // mixin(ShowModule!());
@@ -50,16 +49,9 @@ class OverviewController : HttpController {
     return successResponse("Overview retrieved successfully", 200, response);
   }
 
-  protected void handleOverview(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = overviewHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleOverview", "overviewHandler"));
 }
-
+///
 unittest {
   import uim.platform.service.tests;
 
@@ -86,7 +78,8 @@ unittest {
       auto tenantId = TenantId("test-tenant");
 
       // Seed a log entry
-      LogEntry log; log.tenantId = tenantId;
+      LogEntry log;
+      log.tenantId = tenantId;
       logRepo.save(log);
 
       auto request = createMockRequest("GET", "/api/v1/overview", tenantId);
@@ -96,5 +89,6 @@ unittest {
       assert(response["data"]["totalLogEntries"].get!int == 1);
     }
   }
+
   (new OverviewControllerTest).runTests();
 }

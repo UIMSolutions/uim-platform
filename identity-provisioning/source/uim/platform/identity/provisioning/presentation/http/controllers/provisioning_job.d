@@ -112,14 +112,7 @@ class ProvisioningJobController : HttpController {
       return successResponse("Provisioning job started successfully", 200, resp);
     }
 
-    protected void handleRun(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-      try {
-        auto response = runHandler(req);
-        res.writeJsonBody(response, response.code);
-      } catch (Exception e) {
-        writeError(res, 500, "Internal server error");
-      }
-    }
+    mixin(HandleTemplate!("handleRun", "runHandler"));
 
     protected Json createAndRunHandler(HTTPServerRequest req) {
       auto createResponse = super.postHandler(req);
@@ -140,14 +133,7 @@ class ProvisioningJobController : HttpController {
       return successResponse("Provisioning job created and started successfully", 201, resp);
     }
 
-    protected void handleCreateAndRun(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-      try {
-        auto response = createAndRunHandler(req);
-        res.writeJsonBody(response, response.code);
-      } catch (Exception e) {
-        writeError(res, 500, "Internal server error");
-      }
-    }
+    mixin(HandleTemplate!("handleCreateAndRun", "createAndRunHandler"));
 
     protected Json cancelHandler(HTTPServerRequest req) {
       auto precheck = super.postHandler(req);
@@ -168,14 +154,7 @@ class ProvisioningJobController : HttpController {
       return successResponse("Provisioning job cancelled successfully", 200, resp);
     }
 
-    protected void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-      try {
-        auto response = cancelHandler(req);
-        res.writeJsonBody(response, response.code);
-      } catch (Exception e) {
-        writeError(res, 500, "Internal server error");
-      }
-    }
+mixin(HandleTemplate!("handleCancel", "cancelHandler"));
 
     override protected Json deleteHandler(HTTPServerRequest req) {
       auto precheck = super.deleteHandler(req);

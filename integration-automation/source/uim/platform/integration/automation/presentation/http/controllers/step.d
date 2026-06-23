@@ -128,14 +128,7 @@ class StepController : ManageHttpController {
     return successResponse("Step started successfully", 200, resp);
   }
 
-  protected void handleStart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = startHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleStart", "startHandler"));
 
   protected Json completeHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);
@@ -203,14 +196,7 @@ class StepController : ManageHttpController {
     return successResponse("Step marked as failed", 200, resp);
   }
 
-  protected void handleFail(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = failHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleFail", "failHandler"));
 
   protected Json skipHandler(HTTPServerRequest req) {
     auto precheck = super.postHandler(req);

@@ -151,11 +151,7 @@ class EnvironmentController : ManageHttpController {
       return successResponse("Environment instance deprovisioned successfully", "Deprovisioned", 200, responseData);
 
   }
-  protected void handleDeprovision(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = getDesprovisionHandler(req);
-      res.writeJsonBody(response.data, response.code);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
-  }
+
+  mixin(HandleTemplate!("handleDeprovision", "getDesprovisionHandler"));
+
 }

@@ -78,15 +78,12 @@ public:
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto result = _usecase.getById(req.getTenantId, precheck.id);
-    if (result.success)
-      res.writeJsonBody(result.data, 200);
-    else
-      writeError(res, 404, result.message);
-  }
- catch (Exception e) {
-    writeError(res, 500, "Internal server error");
-  }
+    auto id = IntegrationFlowId(precheck.id);
+    auto flow = _usecase.getById(tenantId, id);
+    if (flow.isNull)
+      return errorResponse("Integration flow not found", 404);
+
+      return successResponse("Integration flow retrieved successfully", "OK", 200, flow.data.toJson());
 }
 
 override protected Json updateHandler(HTTPServerRequest req) {
@@ -98,7 +95,7 @@ override protected Json updateHandler(HTTPServerRequest req) {
   auto data = precheck.data;
   UpdateFlowRequest r;
   r.tenantId = tenantId;
-  r.id = precheck.id;
+  r.flowId = IntegrationFlowId(precheck.id);
   r.name = data.getString("name");
   r.description = data.getString("description");
   r.version_ = data.getString("version");
@@ -145,13 +142,6 @@ protected Json deployHandler(HTTPServerRequest req) {
   return successResponse("Integration flow deployed successfully", "Deployed", 200, responseData);
 }
 
-protected void handleDeploy(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-  try {
-    try {
-      auto response = deployHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+mixin(HandleTemplate!("handleDeploy", "deployHandler"));
+
 }

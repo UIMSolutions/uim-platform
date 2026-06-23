@@ -63,14 +63,7 @@ class DocumentController : HttpController {
     return successResponse("Document uploaded successfully", 201, resp);
   }
 
-  protected void handleUpload(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = uploadHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleUpload", "uploadHandler"));
 
   override protected Json listHandler(HTTPServerRequest req) {
     auto precheck = super.listHandler(req);
@@ -153,14 +146,7 @@ class DocumentController : HttpController {
     return successResponse("Document confirmed successfully", 200, responseData);
   }
 
-  protected void handleConfirm(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = confirmHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleConfirm", "confirmHandler"));
 
   protected Json resultHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);
@@ -219,12 +205,6 @@ class DocumentController : HttpController {
     return successResponse("Extraction result retrieved successfully", 200, rj);
   }
 
-  protected void handleResult(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = resultHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleResult", "resultHandler"));
+
 }

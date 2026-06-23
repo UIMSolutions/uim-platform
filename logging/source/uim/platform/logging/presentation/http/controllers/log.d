@@ -60,14 +60,7 @@ class LogController : HttpController {
     return successResponse("Log ingested successfully", "Created", 201, resp);
   }
 
-  protected void handleIngest(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = ingestHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+mixin(HandleTemplate!("handleIngest", "ingestHandler"));
 
   protected Json batchIngestHandler(HTTPServerRequest req) {
     auto precheck = super.postHandler(req);
@@ -107,12 +100,7 @@ class LogController : HttpController {
 
     return successResponse("Batch log ingestion completed", 200, resp);
   }
-  protected void handleBatchIngest(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = batchIngestHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+
+  mixin(HandleTemplate!("handleBatchIngest", "batchIngestHandler"));
+
 }

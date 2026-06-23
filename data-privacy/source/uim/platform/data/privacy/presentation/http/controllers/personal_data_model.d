@@ -97,15 +97,8 @@ class PersonalDataModelController : ManageHttpController {
     return successResponse("Special category personal data models retrieved successfully", "Retrieved", 200, responseData);
   }
 
-  protected void handleListSpecial(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = listSpecialHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
-
+  mixin(HandleTemplate!("handleListSpecial", "listSpecialHandler"));
+ 
   override protected Json getHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);
     if (precheck.hasError)
