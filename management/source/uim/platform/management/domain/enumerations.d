@@ -14,7 +14,7 @@ enum GlobalAccountStatus {
 }
 
 GlobalAccountStatus toGlobalAccountStatus(string value) {
-  mixin(toEnumSwitch("GlobalAccountStatus", "GlobalAccountStatus.active"));
+  mixin(toEnumSwitch("GlobalAccountStatus", "active"));
 }
 
 GlobalAccountStatus[] toGlobalAccountStatus(string[] values) {
@@ -59,7 +59,7 @@ enum LicenseType {
 }
 
 LicenseType toLicenseType(string value) {
-  mixin(toEnumSwitch("LicenseType", "LicenseType.enterprise"));
+  mixin(toEnumSwitch("LicenseType", "enterprise"));
 }
 
 LicenseType[] toLicenseType(string[] values) {
@@ -103,7 +103,7 @@ enum DirectoryStatus {
 }
 
 DirectoryStatus toDirectoryStatus(string value) {
-  mixin(toEnumSwitch("DirectoryStatus", "DirectoryStatus.active"));
+  mixin(toEnumSwitch("DirectoryStatus", "active"));
 }
 
 DirectoryStatus[] toDirectoryStatus(string[] values) {
@@ -124,7 +124,7 @@ unittest {
   assert("active".toDirectoryStatus == DirectoryStatus.active);
   assert("inactive".toDirectoryStatus == DirectoryStatus.inactive);
   assert("deleting".toDirectoryStatus == DirectoryStatus.deleting);
-  assert("unknown".toDirectoryStatus == DirectoryStatus.deleting);
+  assert("unknown".toDirectoryStatus == DirectoryStatus.active); // default
 
   assert(DirectoryStatus.active.toString == "active");
   assert(DirectoryStatus.inactive.toString == "inactive");
@@ -147,7 +147,7 @@ enum DirectoryType {
 }
 
 DirectoryType toDirectoryType(string value) {
-  switch (s.toLower()) {
+  switch (value.toLower()) {
   case "default":
     return DirectoryType.default_;
   case "ldap":
@@ -203,7 +203,7 @@ enum DirectoryFeature {
 }
 
 DirectoryFeature toDirectoryFeature(string value) {
-  switch (s.toLower()) {
+  switch (value.toLower()) {
   case "default":
     return DirectoryFeature.default_;
   case "entitlements":
@@ -259,7 +259,7 @@ enum SubaccountStatus {
 }
 
 SubaccountStatus toSubaccountStatus(string value) {
-  mixin(toEnumSwitch("SubaccountStatus", "SubaccountStatus.active"));
+  mixin(toEnumSwitch("SubaccountStatus", "active"));
 }
 
 SubaccountStatus[] toSubaccountStatus(string[] values) {
@@ -313,7 +313,7 @@ enum SubaccountUsage {
 }
 
 SubaccountUsage toSubaccountUsage(string value) {
-  mixin(toEnumSwitch("SubaccountUsage", "SubaccountUsage.unset"));
+  mixin(toEnumSwitch("SubaccountUsage", "unset"));
 }
 
 SubaccountUsage[] toSubaccountUsage(string[] values) {
@@ -363,7 +363,7 @@ enum EntitlementStatus {
 }
 
 EntitlementStatus toEntitlementStatus(string value) {
-  mixin(toEnumSwitch("EntitlementStatus", "EntitlementStatus.active"));
+  mixin(toEnumSwitch("EntitlementStatus", "active"));
 }
 
 EntitlementStatus[] toEntitlementStatus(string[] values) {
@@ -409,7 +409,7 @@ enum ServicePlanCategory {
 }
 
 ServicePlanCategory toServicePlanCategory(string value) {
-  mixin(toEnumSwitch("ServicePlanCategory", "ServicePlanCategory.service"));
+  mixin(toEnumSwitch("ServicePlanCategory", "service"));
 }
 
 ServicePlanCategory[] toServicePlanCategory(string[] values) {
@@ -454,7 +454,7 @@ enum ServicePlanStatus {
 }
 
 ServicePlanStatus toServicePlanStatus(string value) {
-  switch (s.toLower()) {
+  switch (value.toLower()) {
   case "active":
     return ServicePlanStatus.active;
   case "deprecated":
@@ -507,7 +507,7 @@ enum PricingModel {
 }
 
 PricingModel toPricingModel(string value) {
-  mixin(toEnumSwitch("PricingModel", "PricingModel.free"));
+  mixin(toEnumSwitch("PricingModel", "free"));
 }
 
 PricingModel[] toPricingModel(string[] values) {
@@ -552,7 +552,7 @@ enum QuotaStatus {
 }
 
 QuotaStatus toQuotaStatus(string value) {
-  switch (s.toLower()) {
+  switch (value.toLower()) {
   case "active":
     return QuotaStatus.active;
   case "deprecated":
@@ -607,7 +607,7 @@ enum EnvironmentStatus {
 }
 
 EnvironmentStatus toEnvironmentStatus(string value) {
-  mixin(toEnumSwitch("EnvironmentStatus", "EnvironmentStatus.creating"));
+  mixin(toEnumSwitch("EnvironmentStatus", "creating"));
 }
 /// Status of a subscription.
 enum SubscriptionStatus {
@@ -620,7 +620,7 @@ enum SubscriptionStatus {
 }
 
 SubscriptionStatus toSubscriptionStatus(string value) {
-  mixin(toEnumSwitch("SubscriptionStatus", "SubscriptionStatus.subscribed"));
+  mixin(toEnumSwitch("SubscriptionStatus", "subscribed"));
 }
 
 SubscriptionStatus[] toSubscriptionStatus(string[] values) {
@@ -671,7 +671,7 @@ enum ServiceInstanceStatus {
 }
 
 ServiceInstanceStatus toServiceInstanceStatus(string value) {
-  mixin(toEnumSwitch("ServiceInstanceStatus", "ServiceInstanceStatus.creating"));
+  mixin(toEnumSwitch("ServiceInstanceStatus", "creating"));
 }
 ServiceInstanceStatus[] toServiceInstanceStatus(string[] values) {
   return values.map!(v => v.toServiceInstanceStatus).array;
@@ -716,7 +716,7 @@ enum EnvironmentType {
 }
 
 EnvironmentType toEnvironmentType(string value) {
-  mixin(toEnumSwitch("EnvironmentType", "EnvironmentType.cloudFoundry"));
+  mixin(toEnumSwitch("EnvironmentType", "cloudFoundry"));
 }
 EnvironmentType[] toEnvironmentType(string[] values) {
   return values.map!(v => v.toEnvironmentType).array;
@@ -763,7 +763,7 @@ enum EnvironmentEventCategory {
 }
 
 EnvironmentEventCategory toEnvironmentEventCategory(string value) {
-  mixin(toEnumSwitch("EnvironmentEventCategory", "EnvironmentEventCategory.subaccountLifecycle"));
+  mixin(toEnumSwitch("EnvironmentEventCategory", "subaccountLifecycle"));
 }
 EnvironmentEventCategory[] toEnvironmentEventCategory(string[] values) {
   return values.map!(v => v.toEnvironmentEventCategory).array;
@@ -815,7 +815,7 @@ enum EnvironmentEventSeverity {
 }
 
 EnvironmentEventSeverity toEnvironmentEventSeverity(string value) {
-  mixin(toEnumSwitch("EnvironmentEventSeverity", "EnvironmentEventSeverity.info"));
+  mixin(toEnumSwitch("EnvironmentEventSeverity", "info"));
 }
 EnvironmentEventSeverity[] toEnvironmentEventSeverity(string[] values) {
   return values.map!(v => v.toEnvironmentEventSeverity).array;
@@ -859,7 +859,7 @@ enum LabeledResourceType {
 }
 
 LabeledResourceType toLabeledResourceType(string value) {
-  mixin(toEnumSwitch("LabeledResourceType", "LabeledResourceType.subaccount"));
+  mixin(toEnumSwitch("LabeledResourceType", "subaccount"));
 }
 LabeledResourceType[] toLabeledResourceType(string[] values) {
   return values.map!(v => v.toLabeledResourceType).array;

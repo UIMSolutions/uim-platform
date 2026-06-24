@@ -53,14 +53,7 @@ class MonitoringController : HttpController {
     return successResponse("Connectivity logs retrieved successfully", "Retrieved", 200, responseData);
   }
 
-  protected void handleListLogs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = listLogsHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleListLogs", "listLogsHandler"));
 
   protected Json summaryHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);
@@ -79,12 +72,6 @@ class MonitoringController : HttpController {
     return successResponse("Connectivity summary retrieved successfully", "Retrieved", 200, responseData);
   }
 
-  protected void handleSummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = summaryHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleSummary", "summaryHandler"));
+
 }

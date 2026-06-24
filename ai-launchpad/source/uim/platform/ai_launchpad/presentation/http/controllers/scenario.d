@@ -53,14 +53,7 @@ class ScenarioController : ManageHttpController {
     return successResponse("Scenario synced successfully", "Synced", 201, resp);
   }
 
-  protected void handleSync(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = syncHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleSync", "syncHandler"));
 
   override protected Json listHandler(HTTPServerRequest req) {
     auto precheck = super.listHandler(req);

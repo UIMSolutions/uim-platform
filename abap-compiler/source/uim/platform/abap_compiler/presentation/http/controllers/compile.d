@@ -31,7 +31,7 @@ class CompileController : HttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        
+
         auto data = precheck.data;
         CompileRequest r;
         r.tenantId = tenantId;
@@ -46,12 +46,6 @@ class CompileController : HttpController {
         return successResponse("Compilation successful", "Retrieved", 200, responseData);
     }
 
-    protected void handleCompile(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto response = compileHandler(req);
-            res.writeJsonBody(response, response.code);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+    mixin(HandleTemplate!("handleCompile", "compileHandler"));
+
 }

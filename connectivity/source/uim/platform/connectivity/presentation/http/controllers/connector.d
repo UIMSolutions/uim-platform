@@ -56,14 +56,7 @@ class ConnectorController : ManageHttpController {
     return successResponse("Connector registered successfully", "Created", 201, resp);
   }
 
-  protected void handleRegister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = registerHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleRegister", "registerHandler"));
 
   override protected Json listHandler(HTTPServerRequest req) {
     auto precheck = super.listHandler(req);
@@ -126,14 +119,7 @@ class ConnectorController : ManageHttpController {
     return successResponse("Heartbeat received successfully", "Acknowledged", 200, resp);
   }
 
-  protected void handleHeartbeat(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = heartbeatHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleHeartbeat", "heartbeatHandler"));
 
   protected Json unregisterHandler(HTTPServerRequest req) {
     auto precheck = super.deleteHandler(req);

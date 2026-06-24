@@ -142,14 +142,7 @@ class RouteController : ManageHttpController {
     return successResponse("Route deleted successfully", 200, responseData);
   }
 
-  protected void handleDeleteRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = deleteRouteHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleDeleteRoute", "deleteRouteHandler"));
 
   protected Json mapRouteHandler(HTTPServerRequest req) {
     auto precheck = super.updateHandler(req);
@@ -204,14 +197,7 @@ class RouteController : ManageHttpController {
     return successResponse("Route unmapped from app successfully", 200, resp);
   }
 
-  protected void handleUnmapRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = unmapRouteHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleUnmapRoute", "unmapRouteHandler"));
 
   // --- Domains ---
 

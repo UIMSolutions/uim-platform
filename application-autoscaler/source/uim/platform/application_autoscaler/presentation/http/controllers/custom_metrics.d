@@ -100,13 +100,6 @@ class CustomMetricController : ManageHttpController {
         .length));
   }
 
-  // GET /api/v1/apps/{appId}/metrics
-  protected void handleQuery(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = queryHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleQuery", "queryHandler"));
+
 }

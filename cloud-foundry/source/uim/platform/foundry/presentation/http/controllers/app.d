@@ -213,14 +213,7 @@ class AppController : ManageHttpController {
     return successResponse("Application restarted successfully", "Restarted", 200, responseData);
   }
 
-  protected void handleRestart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = restartHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleRestart", "restartHandler"));
 
   protected Json scaleHandler(HTTPServerRequest req) {
     auto precheck = super.postHandler(req);
