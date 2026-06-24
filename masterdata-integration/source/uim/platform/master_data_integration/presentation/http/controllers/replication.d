@@ -122,14 +122,7 @@ class ReplicationController : ManageHttpController {
     return successResponse("Replication job started successfully", 200, resp);
   }
 
-  protected void handleStart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = startHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleStart", "startHandler"));
 
   protected Json pauseHandler(HTTPServerRequest req) {
     auto precheck = super.postHandler(req);
@@ -176,14 +169,7 @@ class ReplicationController : ManageHttpController {
     return successResponse("Replication job canceled successfully", 200, resp);
   }
 
-  protected void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = cancelHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleCancel", "cancelHandler"));
 
   override protected Json deleteHandler(HTTPServerRequest req) {
     auto precheck = super.deleteHandler(req);
@@ -195,8 +181,8 @@ class ReplicationController : ManageHttpController {
     auto result = usecase.deleteJob(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
+    
     auto resp = Json.emptyObject.set("id", result.id);
-
     return successResponse("Replication job deleted successfully", 200, resp);
   }
 }

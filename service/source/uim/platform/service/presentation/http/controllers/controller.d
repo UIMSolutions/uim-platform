@@ -96,14 +96,8 @@ class HttpController {
     return successResponse(precheck, "Get handler not implemented", 200);
   }
 
-  protected void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = getHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleGet", "getHandler"));
+
   // #endregion get
 
   // #region post
@@ -115,14 +109,8 @@ class HttpController {
     return successResponse(precheck, "Head handler not implemented", 200);
   }
 
-  protected void handleHead(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = headHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleHead", "headHandler"));
+
   // #endregion head}
 
   // #region post
@@ -135,14 +123,8 @@ class HttpController {
     return successResponse(precheck, "Post handler not implemented", 201);
   }
 
-  protected void handlePost(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = postHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handlePost", "postHandler"));
+
   // #endregion post
 
   // #region put
@@ -155,14 +137,8 @@ class HttpController {
     return successResponse(precheck, "Put handler not implemented", 200);
   }
 
-  protected void handlePut(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = putHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handlePut", "putHandler"));
+
   // #endregion put
 
   // #region delete
@@ -176,14 +152,8 @@ class HttpController {
     return successResponse(precheck, "Delete handler not implemented", 200);
   }
 
-  protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = deleteHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleDelete", "deleteHandler"));
+
   // #endregion delete
 
   // #region connect
@@ -195,14 +165,8 @@ class HttpController {
     return successResponse(precheck, "Connect handler not implemented", 200);
   }
 
-  protected void handleConnect(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = connectHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleConnect", "connectHandler"));
+
   // #endregion connect
 
   // #region trace
@@ -214,14 +178,8 @@ class HttpController {
     return successResponse(precheck, "Trace handler not implemented", 200);
   }
 
-  protected void handleTrace(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = traceHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleTrace", "traceHandler"));
+
   // #endregion trace
 
   // #region patch
@@ -233,13 +191,8 @@ class HttpController {
     return successResponse(precheck, "Patch handler not implemented", 200);
   }
 
-  protected void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = patchHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handlePatch", "patchHandler"));
+
   // #endregion patch
+
 }

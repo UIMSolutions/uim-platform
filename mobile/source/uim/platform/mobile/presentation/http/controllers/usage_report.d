@@ -55,14 +55,7 @@ class UsageReportController : ManageHttpController {
     return successResponse("Usage report created successfully", "Created", 201, resp);
   }
 
-  protected void handleReport(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = reportHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleReport", "reportHandler"));
 
   override protected Json listHandler(HTTPServerRequest req) {
     auto precheck = super.listHandler(req);

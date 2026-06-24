@@ -206,15 +206,7 @@ class StepController : ManageHttpController {
     return successResponse("Step skipped successfully", 200, resp);
   }
 
-  protected void handleSkip(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = skipHandler(req);
-      res.writeJsonBody(response, response.code);
-
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleSkip", "skipHandler"));
 
   protected Json assignHandler(HTTPServerRequest req) {
     auto precheck = super.putHandler(req);

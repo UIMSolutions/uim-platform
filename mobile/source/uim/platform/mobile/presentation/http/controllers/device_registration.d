@@ -55,15 +55,7 @@ class DeviceRegistrationController : ManageHttpController {
     return successResponse("Device registered successfully", "Created", 201, resp);
   }
 
-
-  protected void handleRegister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = registerHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleRegister", "registerHandler"));
 
   override protected Json listHandler(HTTPServerRequest req) {
     auto precheck = super.listHandler(req);
@@ -138,14 +130,7 @@ class DeviceRegistrationController : ManageHttpController {
     return successResponse("Device registration status updated successfully", "Updated", 200, resp);
   }
 
-  protected void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = updateStatusHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleUpdateStatus", "updateStatusHandler"));
 
   override protected Json deleteHandler(HTTPServerRequest req) {
     auto precheck = super.deleteHandler(req);

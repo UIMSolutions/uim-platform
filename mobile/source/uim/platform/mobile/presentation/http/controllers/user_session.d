@@ -122,15 +122,7 @@ class UserSessionController : ManageHttpController {
     return successResponse("User session terminated successfully", "Terminated", 200, resp);
   }
 
-  protected void handleTerminate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = terminateHandler(req);
-      res.writeJsonBody(response, response.code);
-
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleTerminate", "terminateHandler"));
 
   override protected Json deleteHandler(HTTPServerRequest req) {
     auto precheck = super.deleteHandler(req);

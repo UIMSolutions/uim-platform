@@ -59,14 +59,7 @@ class PushNotificationController : ManageHttpController {
     return successResponse("Push notification sent successfully", "Created", 201, resp);
   }
 
-  protected void handleSend(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = sendHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleSend", "sendHandler"));
 
   override protected Json listHandler(HTTPServerRequest req) {
     auto precheck = super.listHandler(req);

@@ -182,14 +182,7 @@ class ClientController : ManageHttpController {
     return successResponse("Client connected successfully", "Connected", 200, resp);
   }
 
-  override protected void handleConnect(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = connectHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleConnect", "connectHandler"));
 
   protected Json disconnectHandler(HTTPServerRequest req) {
     auto precheck = super.postHandler(req);
@@ -209,12 +202,6 @@ class ClientController : ManageHttpController {
     return successResponse("Client disconnected successfully", "Disconnected", 200, resp);
   }
 
-  protected void handleDisconnect(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = disconnectHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleDisconnect", "disconnectHandler"));
+
 }

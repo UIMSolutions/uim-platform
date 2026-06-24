@@ -75,14 +75,7 @@ class CorsRuleController : ManageHttpController {
         .set("totalCount", rules.length));
   }
 
-  protected void handleListByBucket(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = listByBucket(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleListByBucket", "listByBucket"));
 
   override protected Json getHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);

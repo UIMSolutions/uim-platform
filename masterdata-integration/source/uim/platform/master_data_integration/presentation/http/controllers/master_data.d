@@ -100,14 +100,7 @@ class MasterDataController : ManageHttpController {
     return successResponse("Master data object retrieved successfully", 200, response);
   }
 
-  protected void handleLookupByGlobal(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = lookupByGlobalHandler(req);
-     res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleLookupByGlobal", "lookupByGlobalHandler"));
 
   override protected Json getHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);

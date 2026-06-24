@@ -48,13 +48,6 @@ class DashboardController : HttpController {
     return successResponse("Dashboard retrieved successfully", "Retrieved", 200, j);
   }
 
-  protected void handleDashboard(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = dashboardHandler(req);
-      res.writeJsonBody(response, response.code);
-    }
-    catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleDashboard", "dashboardHandler"));
+
 }

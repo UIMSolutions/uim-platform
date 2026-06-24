@@ -93,14 +93,7 @@ class AlertController : ManageHttpController {
     return successResponse("Alert acknowledged successfully", "Acknowledged", 200, resp);
   }
 
-  protected void handleAcknowledge(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = acknowledgeHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleAcknowledge", "acknowledgeHandler"));
 
   protected Json resolveHandler(HTTPServerRequest req) {
     auto precheck = super.postHandler(req);
@@ -125,14 +118,7 @@ class AlertController : ManageHttpController {
     return successResponse("Alert resolved successfully", "Resolved", 200, response);
   }
 
-  protected void handleResolve(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = resolveHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleResolve", "resolveHandler"));
 
   override protected Json deleteHandler(HTTPServerRequest req) {
     auto precheck = super.deleteHandler(req);
@@ -141,9 +127,13 @@ class AlertController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto id = AlertId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid alert ID", 400);
+
     auto result = usecase.deleteAlert(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
+      
     auto resp = Json.emptyObject.set("id", result.id);
     return successResponse("Alert deleted successfully", "Deleted", 200, resp);
   }

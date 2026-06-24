@@ -49,11 +49,6 @@ class OverviewController : HttpController {
     return successResponse("Account overview retrieved successfully", "Retrieved", 200, j);
   }
 
-  protected void handleOverview(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = getOverviewHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
-  }
+  mixin(HandleTemplate!("handleGetOverview", "getOverviewHandler"));
+
 }

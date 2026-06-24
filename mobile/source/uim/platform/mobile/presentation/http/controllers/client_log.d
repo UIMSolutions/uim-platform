@@ -51,17 +51,12 @@ class ClientLogController : ManageHttpController {
     auto result = usecase.upload(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
+      
     auto resp = Json.emptyObject.set("id", result.id);
+    return successResponse("Client log uploaded successfully", 201, resp);
   }
 
-  protected void handleUpload(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = uploadHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleUpload", "uploadHandler"));
 
   override protected Json listHandler(HTTPServerRequest req) {
     auto precheck = super.listHandler(req);

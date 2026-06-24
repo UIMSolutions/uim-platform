@@ -57,13 +57,7 @@ class SubscriptionController : ManageHttpController {
     return successResponse("Subscription created successfully", "Created", 201, responseData);
   }
 
-  protected void handleSubscribe(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = subscribeHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
-  }
+  mixin(HandleTemplate!("handleSubscribe", "subscribeHandler"));
 
   override protected Json listHandler(HTTPServerRequest req) {
     auto precheck = super.listHandler(req);
@@ -153,13 +147,9 @@ class SubscriptionController : ManageHttpController {
     auto responseData = Json.emptyObject.set("id", result.id);
     return successResponse("Subscription unsubscribed successfully", "Unsubscribed", 200, responseData);
   }
-  protected void handleUnsubscribe(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = unsubscribeHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
-  }
+
+  mixin(HandleTemplate!("handleUnsubscribe", "unsubscribeHandler"));
+
 }
 
 unittest {

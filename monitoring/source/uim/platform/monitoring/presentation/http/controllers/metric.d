@@ -54,14 +54,7 @@ class MetricController : ManageHttpController {
     return successResponse("Metric pushed successfully", "Created", 201, responseData);
   }
 
-  protected void handlePush(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = pushHandler(req);
-      res.writeJsonBody(response.data, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handlePush", "pushHandler"));
 
   protected Json batchPushHandler(HTTPServerRequest req) {
     auto precheck = super.createHandler(req);

@@ -168,14 +168,7 @@ class CheckController : ManageHttpController {
     return successResponse("Health check result recorded successfully", "Recorded", 201, resp);
   }
 
-  protected void handleRecordResult(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = recordResultHandler(req);
-      res.writeJsonBody(response.data, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleRecordResult", "recordResultHandler"));
 
   protected Json resultsHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);
@@ -194,13 +187,6 @@ class CheckController : ManageHttpController {
         return successResponse("Health check results retrieved successfully", "Retrieved", 200, resp);
   } 
 
-  protected void handleResults(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = resultsHandler(req);
-      res.writeJsonBody(response.data, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleResults", "resultsHandler"));
 
 }

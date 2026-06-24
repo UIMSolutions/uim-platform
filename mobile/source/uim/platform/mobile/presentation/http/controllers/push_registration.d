@@ -52,14 +52,7 @@ class PushRegistrationController : ManageHttpController {
     return successResponse("Push registration successful", "Created", 201, resp);
   }
 
-  protected void handleRegister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = registerHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleRegister", "registerHandler"));
 
   override protected Json listHandler(HTTPServerRequest req) {
     auto precheck = super.listHandler(req);
