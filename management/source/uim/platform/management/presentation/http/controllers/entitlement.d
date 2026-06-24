@@ -60,13 +60,7 @@ class EntitlementController : ManageHttpController {
     return successResponse("Entitlement assigned successfully", "Created", 201, resp);
   }
 
-  protected void handleAssign(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = assignHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
-  }
+  mixin(HandleTemplate!("handleAssign", "assignHandler"));
 
   override protected Json listHandler(HTTPServerRequest req) {
     auto precheck = super.listHandler(req);
@@ -138,13 +132,7 @@ class EntitlementController : ManageHttpController {
     return successResponse("Entitlement quota updated successfully", "Updated", 200, responseData);
   }
 
-  protected void handleUpdateQuota(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = updateQuotaHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
-  }
+  mixin(HandleTemplate!("handleUpdateQuota", "updateQuotaHandler"));
 
   protected Json revokeHandler(HTTPServerRequest req) {
     auto precheck = super.updateHandler(req);
@@ -163,13 +151,7 @@ class EntitlementController : ManageHttpController {
     return successResponse("Entitlement revoked successfully", "Updated", 200, Json.emptyObject);
   }
 
-  protected void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = revokeHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
-  }
+  mixin(HandleTemplate!("handleRevoke", "revokeHandler"));
 
   override protected Json deleteHandler(HTTPServerRequest req) {
     auto precheck = super.deleteHandler(req);
@@ -200,7 +182,6 @@ unittest {
       auto usecase = new ManageEntitlementsUseCase(repo, new EntitlementEvaluator);
       auto controller = new EntitlementController(usecase);
       auto tenantId = TenantId("test-tenant");
-
 
       // 2. Test List Handler (Initially empty)
       auto reqList = createMockRequest("GET", "/api/v1/entitlements", tenantId);

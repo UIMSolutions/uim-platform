@@ -83,12 +83,5 @@ class AuthController : HttpController {
     }
   }
 
-  protected void handleToken(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = tokenHandler(req);
-      res.writeJsonBody(response, response.code);
-
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleToken", "tokenHandler"));
+}

@@ -55,14 +55,7 @@ class ConfigChangeController : HttpController {
     return successResponse("Config change log entry created successfully", "Created", 201, resp);
   }
 
-  protected void handleWrite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = writeHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleWrite", "writeHandler"));
 
   private static AuditAttribute[] parseChanges(Json data) {
     AuditAttribute[] result;

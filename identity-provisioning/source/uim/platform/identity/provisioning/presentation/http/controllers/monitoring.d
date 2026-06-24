@@ -91,14 +91,7 @@ class MonitoringController : HttpController {
     return successResponse("Job execution logs retrieved successfully", "Retrieved", 200, resp);
   }
 
-  protected void handleJobLogs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = getJobLogsHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleGetJobLogs", "getJobLogsHandler"));
 
   protected Json listEntitiesHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);
@@ -143,12 +136,6 @@ class MonitoringController : HttpController {
     return successResponse("Pipeline summary retrieved successfully", "Retrieved", 200, j);
   }
 
-  protected void handlePipeline(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = pipelineHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+mixin(HandleTemplate!("handlePipeline", "pipelineHandler"));
+
 }

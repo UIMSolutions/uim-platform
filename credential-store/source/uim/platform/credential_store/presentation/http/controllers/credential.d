@@ -99,14 +99,7 @@ class CredentialController : ManageHttpController {
     return successResponse("Credential created successfully", "Created", 201, responseData);
   }
 
-  protected void handleCreateCredential(scope HTTPServerRequest req, scope HTTPServerResponse res, string type) {
-    try {
-      auto response = createCredentialHandler(req, type);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleCreateCredential", "createCredentialHandler"));
 
   protected Json listCredentialsHandler(HTTPServerRequest req, string type) {
     auto precheck = super.listHandler(req);
@@ -138,14 +131,7 @@ class CredentialController : ManageHttpController {
     return successResponse("Credentials retrieved successfully", "Retrieved", 200, resp);
   }
 
-  protected void handleListCredentials(scope HTTPServerRequest req, scope HTTPServerResponse res, string type) {
-    try {
-      auto response = listCredentialsHandler(req, type);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleListCredentials", "listCredentialsHandler"));
 
   protected Json getCredentialHandler(HTTPServerRequest req, string type) {
     auto precheck = super.getHandler(req);
@@ -175,14 +161,7 @@ class CredentialController : ManageHttpController {
     return successResponse("Credential retrieved successfully", "Retrieved", 200, response);
   }
 
-  protected void handleGetCredential(scope HTTPServerRequest req, scope HTTPServerResponse res, string type) {
-    try {
-      auto response = getCredentialHandler(req, type);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleGetCredential", "getCredentialHandler"));
 
   protected Json deleteCredentialHandler(HTTPServerRequest req, string type) {
     auto precheck = super.deleteHandler(req);
@@ -202,12 +181,6 @@ class CredentialController : ManageHttpController {
     return successResponse("Credential deleted successfully", "Deleted", 200, responseData);
   }
 
-  protected void handleDeleteCredential(scope HTTPServerRequest req, scope HTTPServerResponse res, string type) {
-    try {
-      auto response = deleteCredentialHandler(req, type);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleDeleteCredential", "deleteCredentialHandler"));
+  
 }

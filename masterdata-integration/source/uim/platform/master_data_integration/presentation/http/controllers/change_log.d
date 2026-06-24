@@ -64,14 +64,7 @@ class ChangeLogController : HttpController {
     return successResponse("Change log entries retrieved successfully", 200, resp);
   }
 
-  protected void handleQuery(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = queryHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+mixin(HandleTemplate!("handleQuery", "queryHandler"));
 
   override protected Json getHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);

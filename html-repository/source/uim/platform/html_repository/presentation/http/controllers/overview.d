@@ -49,11 +49,6 @@ class OverviewController : HttpController {
     return successResponse("Overview retrieved successfully", 200, response);
   }
   
-  protected void handleGetOverview(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = getOverviewHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
-  }
+  mixin(HandleTemplate!("handleGetOverview", "getOverviewHandler"));
+
 }

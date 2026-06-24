@@ -134,14 +134,7 @@ class ProviderController : ManageHttpController {
     return successResponse("Provider deregistered successfully", 200, responseData);
   }
 
-  protected void handleDeregister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = deregisterHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleDeregister", "deregisterHandler"));
 
   protected Json syncHandler(HTTPServerRequest req) {
     auto precheck = super.postHandler(req);
@@ -160,12 +153,6 @@ class ProviderController : ManageHttpController {
     return successResponse("Provider synced successfully", 200, responseData);
   }
 
-  protected void handleSync(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = syncHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleSync", "syncHandler"));
+
 }

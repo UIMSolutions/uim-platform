@@ -178,12 +178,7 @@ override protected Json deleteHandler(HTTPServerRequest req) {
       return successResponse("Connection test successful", 200, resp);
    
   }
-  protected void handleGetTestConnection(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = getTestConnectionHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+
+  mixin(HandleTemplate!("handleTestConnection", "getTestConnectionHandler"));
+
 }

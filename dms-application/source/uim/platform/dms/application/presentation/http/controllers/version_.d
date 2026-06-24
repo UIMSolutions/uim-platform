@@ -44,26 +44,19 @@ class VersionController : ManageHttpController {
     auto userId = UserId(req.headers.get("X-User-Id", "system"));
 
     auto result = usecase.checkOut(tenantId, docId, userId);
-    if (result.hasError) 
+    if (result.hasError)
       return errorResponse(result.message, 400);
 
-      auto resp = Json.emptyObject
-        .set("documentId", docId.value)
-        .set("status", Json("locked"));
+    auto resp = Json.emptyObject
+      .set("documentId", docId.value)
+      .set("status", Json("locked"));
 
-      return successResponse("Document checked out successfully", "CheckedOut", 200, resp);
+    return successResponse("Document checked out successfully", "CheckedOut", 200, resp);
   }
 
-  protected void handleCheckOut(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = checkOutHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleCheckOut", "checkOutHandler"));
 
-protected Json checkInHandler(HTTPServerRequest req) {
+  protected Json checkInHandler(HTTPServerRequest req) {
     auto precheck = super.postHandler(req);
     if (precheck.hasError)
       return precheck;
@@ -82,16 +75,16 @@ protected Json checkInHandler(HTTPServerRequest req) {
     r.checksum = data.getString("checksum");
 
     auto result = usecase.checkIn(r);
-    if (result.hasError) 
+    if (result.hasError)
       return errorResponse(result.message, 400);
 
-      auto resp = Json.emptyObject
-        .set("versionId", result.id)
-        .set("documentId", r.documentId.value)
-        .set("status", Json("active"))
-        .set("message", "Document checked in successfully");
+    auto resp = Json.emptyObject
+      .set("versionId", result.id)
+      .set("documentId", r.documentId.value)
+      .set("status", Json("active"))
+      .set("message", "Document checked in successfully");
 
-      return successResponse("Document checked in successfully", "CheckedIn", 201, resp);
+    return successResponse("Document checked in successfully", "CheckedIn", 201, resp);
   }
 
   mixin(HandleTemplate!("handleCheckIn", "checkInHandler"));
@@ -105,15 +98,15 @@ protected Json checkInHandler(HTTPServerRequest req) {
     auto tenantId = precheck.tenantId;
 
     auto result = usecase.cancelCheckOut(tenantId, docId);
-    if (result.hasError) 
+    if (result.hasError)
       return errorResponse(result.message, 400);
 
-      auto resp = Json.emptyObject
-        .set("documentId", docId.value)
-        .set("status", Json("active"))
-        .set("message", "Document checkout cancelled successfully");
+    auto resp = Json.emptyObject
+      .set("documentId", docId.value)
+      .set("status", Json("active"))
+      .set("message", "Document checkout cancelled successfully");
 
-      return successResponse("Document checkout cancelled successfully", "Cancelled", 200, resp);
+    return successResponse("Document checkout cancelled successfully", "Cancelled", 200, resp);
   }
 
   mixin(HandleTemplate!("handleCancelCheckOut", "cancelCheckOutHandler"));
@@ -125,8 +118,8 @@ protected Json checkInHandler(HTTPServerRequest req) {
 
     auto tenantId = precheck.tenantId;
     auto id = DocumentId(precheck.id);
-      if (id.isNull)
-        return errorResponse("Invalid document ID", 400);
+    if (id.isNull)
+      return errorResponse("Invalid document ID", 400);
 
     auto versions = usecase.getAllVersions(tenantId, id);
     auto arr = versions.map!(v => v.toJson).array.toJson;
@@ -139,14 +132,7 @@ protected Json checkInHandler(HTTPServerRequest req) {
     return successResponse("Document versions retrieved successfully", "Retrieved", 200, resp);
   }
 
-  protected void handleAllVersions(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = allVersionsHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleAllVersions", "allVersionsHandler"));
 
   protected Json getCurrentVersionHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);
@@ -160,7 +146,8 @@ protected Json checkInHandler(HTTPServerRequest req) {
     if (ver.isNull)
       return errorResponse("Document not found", 404);
 
-    return successResponse("Current document version retrieved successfully", "Retrieved", 200, ver.toJson);
+    return successResponse("Current document version retrieved successfully", "Retrieved", 200, ver
+        .toJson);
   }
 
   mixin(HandleTemplate!("handleCurrentVersion", "getCurrentVersionHandler"));

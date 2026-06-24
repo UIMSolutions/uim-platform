@@ -85,14 +85,7 @@ class RouteController : ManageHttpController {
     return successResponse("Route list retrieved successfully", 200, responseData);
   }
 
-  protected void handleListRoutes(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = listRoutesHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleListRoutes", "listRoutesHandler"));
 
   protected Json getRouteHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);
@@ -110,14 +103,7 @@ class RouteController : ManageHttpController {
     return successResponse("Route retrieved successfully", 200, responseData);
   }
 
-  protected void handleGetRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = getRouteHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleGetRoute", "getRouteHandler"));
 
   protected Json deleteRouteHandler(HTTPServerRequest req) {
     auto precheck = super.deleteHandler(req);
@@ -126,6 +112,8 @@ class RouteController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto id = RouteId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid route ID", 400);
 
     auto result = useCase.deleteRoute(tenantId, id);
     if (result.hasError)
@@ -211,14 +199,7 @@ class RouteController : ManageHttpController {
     return successResponse("Domain created successfully", 201, responseData);
   }
 
-    protected void handleCreateDomain(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = createDomainHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleCreateDomain", "createDomainHandler"));
 
   protected Json listDomainsHandler(HTTPServerRequest req) {
     auto precheck = super.listHandler(req);

@@ -54,14 +54,7 @@ class StepController : ManageHttpController {
     return successResponse("Steps retrieved successfully", 200, resp);
   }
 
-  protected void handleListByWorkflow(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = listByWorkflowHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleListByWorkflow", "listByWorkflowHandler"));
 
   override protected Json getHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);
@@ -98,14 +91,7 @@ class StepController : ManageHttpController {
     return successResponse("My tasks retrieved successfully", 200, responseData);
   }
 
-  protected void handleMyTasks(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = myTasksHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleMyTasks", "myTasksHandler"));
 
   protected Json startHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);
@@ -159,14 +145,7 @@ class StepController : ManageHttpController {
     return successResponse("Step completed successfully", 200, resp);
   }
 
-  protected void handleComplete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = completeHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleComplete", "completeHandler"));
 
   protected Json failHandler(HTTPServerRequest req) {
     auto precheck = super.postHandler(req);

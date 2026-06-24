@@ -49,15 +49,7 @@ class KeyPasswordController : ManageHttpController {
     return successResponse("Password set successfully", 200, responseData);
   }
 
-  // PUT /api/v1/passwords/{alias}  (set or overwrite a password)
-  protected void handleSetPassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = setPasswordHandler(req);
-      res.writeJsonBody(response, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleSetPassword", "setPasswordHandler"));
 
   override protected Json getHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);

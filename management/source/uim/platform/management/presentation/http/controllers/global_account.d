@@ -166,13 +166,7 @@ class GlobalAccountController : ManageHttpController {
     return successResponse("Global account reactivated successfully", "Updated", 200, responseData);
   }
 
-  protected void handleReactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = reactivateHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
-  }
+mixin(HandleTemplate!("handleReactivate", "reactivateHandler"));
 
   override protected Json deleteHandler(HTTPServerRequest req) {
     auto precheck = super.deleteHandler(req);

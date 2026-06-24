@@ -206,13 +206,6 @@ class KeystoreController : ManageHttpController {
     return successResponse("Keystore resolved successfully", "Resolved", 200, responseData);
   }
 
-  // GET /api/v1/keystores/resolve?name=...&accountId=...&applicationId=...&subscriptionId=...
-  protected void handleResolve(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = resolveHandler(req);
-      res.writeJsonBody(response, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleResolve", "resolveHandler"));
+
 }

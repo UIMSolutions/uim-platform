@@ -63,16 +63,7 @@ class AuditController : HttpController {
     return successResponse("Audit log list retrieved successfully", "Retrieved", 200, response);
   }
 
-  protected void handleByActor(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = actorHandler(req);
-      res.writeJsonBody(response, 200);
-    } catch (Exception e) {
-      auto errRes = Json.emptyObject;
-      errRes["error"] = Json("Internal server error");
-      res.writeJsonBody(errRes, 500);
-    }
-  }
+  mixin(HandleTemplate!("handleByActor", "actorHandler"));
 
   protected Json targetHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);
