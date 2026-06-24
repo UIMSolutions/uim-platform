@@ -12,42 +12,25 @@ import std.array     : array;
 
 @safe:
 
-class MemoryMarketRateRepository : MarketRateRepository {
-  private MarketRate[string] store;
+class MemoryMarketRateRepository : TenantRepository!(MarketRate, MarketRateId), MarketRateRepository {
 
-  // --- ITenantRepository ---
-  override MarketRate   findById(TenantId t, MarketRateId id) {
-    if (auto p = id.value in store) return *p;
-    MarketRate empty; return empty;
-  }
-  override MarketRate[] findByTenant(TenantId t) {
-    return store.values.filter!(r => r.tenantId == t).array;
-  }
-  override void save(MarketRate r)   { store[r.id.value] = r; }
-  override void saveAll(MarketRate[] rates) { foreach (r; rates) store[r.id.value] = r; }
-  override void update(MarketRate r) { store[r.id.value] = r; }
-  override void remove(MarketRate r) { store.remove(r.id.value); }
-
-  // --- Querying ---
   override MarketRate[] findByProvider(TenantId t, string code) {
-    return store.values.filter!(r => r.tenantId == t && r.providerCode == code).array;
+    return findByTenant(t).filter!(r => r.providerCode == code).array;
   }
   override MarketRate[] findByCategory(TenantId t, MarketDataCategory cat) {
-    return store.values.filter!(r => r.tenantId == t && r.category == cat).array;
+    return findByTenant(t).filter!(r => r.category == cat).array;
   }
   override MarketRate[] findByDateRange(TenantId t, string from_, string to_) {
-    return store.values.filter!(r =>
-      r.tenantId == t &&
+    return findByTenant(t).filter!(r =>
       r.effectiveDate >= from_ &&
       (to_.length == 0 || r.effectiveDate <= to_)
     ).array;
   }
   override MarketRate[] findByProviderAndCategory(TenantId t, string code, MarketDataCategory cat) {
-    return store.values.filter!(r => r.tenantId == t && r.providerCode == code && r.category == cat).array;
+    return findByTenant(t).filter!(r => r.providerCode == code && r.category == cat).array;
   }
   override MarketRate[] findByKey(TenantId t, string key1, string key2, MarketDataCategory cat) {
-    return store.values.filter!(r =>
-      r.tenantId == t &&
+    return findByTenant(t).filter!(r =>
       r.key1 == key1 &&
       r.key2 == key2 &&
       r.category == cat
@@ -65,26 +48,22 @@ class MemoryMarketRateRepository : MarketRateRepository {
 
   // --- Bulk removal ---
   override void removeByProvider(TenantId t, string code) {
-    foreach (key, r; store)
-      if (r.tenantId == t && r.providerCode == code)
+    foreach (key, r; findByTenant(t))
+      if (r.providerCode == code)
         store.remove(key);
   }
   override void removeByCategory(TenantId t, MarketDataCategory cat) {
-    foreach (key, r; store)
-      if (r.tenantId == t && r.category == cat)
+    foreach (key, r; findByTenant(t))
+      if (r.category == cat)
         store.remove(key);
   }
   override void removeByDateRange(TenantId t, string from_, string to_) {
-    foreach (key, r; store)
-      if (r.tenantId == t && r.effectiveDate >= from_ &&
+    foreach (key, r; findByTenant(t))
+      if (r.effectiveDate >= from_ &&
           (to_.length == 0 || r.effectiveDate <= to_))
         store.remove(key);
   }
 
-  // --- Counts ---
-  override size_t countByTenant(TenantId t) {
-    return store.values.filter!(r => r.tenantId == t).array.length;
-  }
   override size_t countByProvider(TenantId t, string code) {
     return findByProvider(t, code).length;
   }

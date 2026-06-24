@@ -19,6 +19,7 @@ class SpatialLayerController : ManageHttpController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+
     router.get("/api/v1/spatial/layers", &handleList);
     router.get("/api/v1/spatial/layers/*", &handleGet);
     router.post("/api/v1/spatial/layers", &handleCreate);
@@ -36,7 +37,7 @@ class SpatialLayerController : ManageHttpController {
         auto data = precheck.data;
               CreateSpatialLayerRequest r;
       r.tenantId = tenantId;
-      r.id = precheck.id;
+      r.id = SpatialLayerId(precheck.id);
       r.name = data.getString("name");
       r.description = data.getString("description");
       r.type = data.getString("type");
@@ -47,13 +48,8 @@ class SpatialLayerController : ManageHttpController {
       auto result = usecase.create(r);
       if (result.hasError)
             return errorResponse(result.message, 400);
-        res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Spatial layer created"), 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+        
+        return successResponse("Spatial layer created successfully", 201, Json.emptyObject.set("id", result.id));
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
@@ -88,15 +84,12 @@ class SpatialLayerController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
+      auto id = SpatialLayerId(precheck.id);
       auto item = usecase.getById(tenantId, id);
       if (item.isNull)
             return errorResponse("", 0);
             
-      res.writeJsonBody(item.toJson(), 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+     return successResponse("Spatial layer retrieved successfully", "Retrieved", 200, item.toJson);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
@@ -117,13 +110,8 @@ class SpatialLayerController : ManageHttpController {
       auto result = usecase.update(r);
       if (result.hasError)
             return errorResponse(result.message, 400);
-        res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Spatial layer updated"), 200);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+        
+        return successResponse("Spatial layer updated successfully", "Updated", 200, Json.emptyObject.set("id", result.id));
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
@@ -132,16 +120,13 @@ class SpatialLayerController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
+      auto id = SpatialLayerId(precheck.id);
+      if (id.isNull)
+            return errorResponse("Invalid spatial layer ID", 400);
+            
       auto result = usecase.remove(tenantId, id);
       if (result.hasError)
             return errorResponse(result.message, 400);
-        res.writeJsonBody(Json.emptyObject.set("message", "Deleted"), 200);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+        return successResponse("Spatial layer deleted successfully", "Deleted", 200, Json.emptyObject.set("id", result.id));
   }
 }

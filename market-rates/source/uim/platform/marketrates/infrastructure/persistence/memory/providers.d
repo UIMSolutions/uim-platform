@@ -12,31 +12,19 @@ import std.array     : array;
 
 @safe:
 
-class MemoryProviderRepository : ProviderRepository {
-  private Provider[string] store;
-
-  override Provider   findById(TenantId t, ProviderId id) {
-    if (auto p = id.value in store) return *p;
-    Provider empty; return empty;
-  }
-  override Provider[] findByTenant(TenantId t) {
-    return store.values.filter!(p => p.tenantId == t).array;
-  }
-  override void save(Provider p)   { store[p.id.value] = p; }
-  override void update(Provider p) { store[p.id.value] = p; }
-  override void remove(Provider p) { store.remove(p.id.value); }
+class MemoryProviderRepository : TenantRepository!(Provider, ProviderId), ProviderRepository {
 
   override Provider findByCode(TenantId t, string code) {
-    foreach (p; store.values)
+    foreach (p; findByTenant(t))
       if (p.tenantId == t && p.code == code) return p;
     Provider empty; return empty;
   }
   override Provider[] findActive(TenantId t) {
-    return store.values.filter!(p => p.tenantId == t && p.isActive).array;
+    return findByTenant(t).filter!(p => p.isActive).array;
   }
   override bool codeExists(TenantId t, string code) {
-    foreach (p; store.values)
-      if (p.tenantId == t && p.code == code) return true;
+    foreach (p; findByTenant(t))
+      if (p.code == code) return true;
     return false;
   }
 }

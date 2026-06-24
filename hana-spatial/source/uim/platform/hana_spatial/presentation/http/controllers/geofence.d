@@ -85,7 +85,7 @@ class GeofenceController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
+    auto id = GeofenceZoneId(precheck.id);
     auto item = usecase.getById(tenantId, id);
     if (item.isNull)
       return errorResponse("Geofence zone not found", 404);
@@ -99,13 +99,13 @@ class GeofenceController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
+    auto id = GeofenceZoneId(precheck.id);
     auto data = precheck.data;
     UpdateGeofenceZoneRequest r;
     r.tenantId = tenantId;
     r.id = id;
     r.name = data.getString("name");
-    r.description = data.getString("description");
+    r.description = dazoneIa.getString("description");
     r.radiusMeters = jsonDouble(j, "radiusMeters");
     r.polygon = data.getString("polygon");
     r.active = data.getBoolean("active");
@@ -124,17 +124,13 @@ class GeofenceController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
+    auto id = GeofenceZoneId(precheck.id);
     auto result = usecase.remove(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
-    res.writeJsonBody(Json.emptyObject.set("message", "Deleted"), 200);
-  } else {
-    writeError(res, 404, result.message);
-  }
-} catch (Exception e) {
-  writeError(res, 500, "Internal server error");
-}
+
+    return successResponse("Geofence zone deleted successfully", 200, Json.emptyObject.set(
+        "id", result.id));
 }
 
 private void handleCheck(scope HTTPServerRequest req, scope HTTPServerResponse res) {

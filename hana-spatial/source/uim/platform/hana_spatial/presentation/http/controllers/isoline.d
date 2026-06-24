@@ -73,12 +73,8 @@ class IsolineController : ManageHttpController {
         .set("createdAt", item.createdAt);
     }
 
-    res.writeJsonBody(Json.emptyObject.set("count", Json(items.length))
-        .set("resources", jarr), 200);
-  }
- catch (Exception e) {
-    writeError(res, 500, "Internal server error");
-  }
+    return successResponse("Isolines retrieved successfully", "Retrieved", 200, Json.emptyObject.set("count", Json(items.length))
+        .set("resources", jarr));
 }
 
 override protected Json getHandler(HTTPServerRequest req) {
@@ -90,13 +86,10 @@ override protected Json getHandler(HTTPServerRequest req) {
   auto id = precheck.id;
   auto item = usecase.getById(tenantId, id);
   if (item.isNull)
-    return errorResponse("", 0);
+    return errorResponse("Isoline not found", 404);
 
-  res.writeJsonBody(item.toJson(), 200);
-}
- catch (Exception e) {
-  writeError(res, 500, "Internal server error");
-}
+  return successResponse("Isoline retrieved successfully", "Retrieved", 200, item.toJson());
+
 }
 
 override protected Json deleteHandler(HTTPServerRequest req) {
@@ -105,16 +98,14 @@ override protected Json deleteHandler(HTTPServerRequest req) {
     return precheck;
 
   auto tenantId = precheck.tenantId;
-  auto id = precheck.id;
+  auto id = GeocodingResultId(precheck.id);
+  if (id.isNull)
+    return errorResponse("Invalid isoline ID", 400);
+    
   auto result = usecase.remove(tenantId, id);
   if (result.hasError)
     return errorResponse(result.message, 400);
-  res.writeJsonBody(Json.emptyObject.set("message", "Deleted"), 200);
-} else {
-  writeError(res, 404, result.message);
-}
-} catch (Exception e) {
-  writeError(res, 500, "Internal server error");
-}
+  
+  return successResponse("Isoline deleted successfully", "Deleted", 200, Json.emptyObject.set("id", result.id));
 }
 }

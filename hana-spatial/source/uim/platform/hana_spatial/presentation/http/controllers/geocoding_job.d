@@ -96,7 +96,6 @@ class GeocodingJobController : ManageHttpController {
     return successResponse("Geocoding job retrieved successfully", 200, item.toJson());
   }
 
-
   private void handleAction(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = precheck.tenantId;
@@ -113,7 +112,7 @@ class GeocodingJobController : ManageHttpController {
       auto result = usecase.performAction(r);
       if (result.hasError)
         return errorResponse(result.message, 400);
-        
+
       res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Action performed"), 200);
     } else {
       writeError(res, 400, result.message);

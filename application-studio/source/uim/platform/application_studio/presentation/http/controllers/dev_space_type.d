@@ -40,8 +40,7 @@ class DevSpaceTypeController : ManageHttpController {
 
         auto resp = Json.emptyObject
             .set("count", items.length)
-            .set("resources", list)
-            .set("message", "Dev space types retrieved");
+            .set("resources", list);
 
         return successResponse("Dev space type list retrieved successfully", "Retrieved", 200, resp);
     }
@@ -79,7 +78,6 @@ class DevSpaceTypeController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto path = precheck.path;
         auto id = DevSpaceTypeId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid dev space type ID", 400);

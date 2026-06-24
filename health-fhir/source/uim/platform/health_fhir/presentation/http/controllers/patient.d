@@ -74,8 +74,7 @@ class PatientController : ManageHttpController {
 
     auto response = Json.emptyObject
       .set("resourceType", "Patient")
-      .set("id", result.id)
-      .set("message", "Patient created");
+      .set("id", result.id);
 
     return successResponse("Patient created successfully", 201, response);
   }
@@ -188,8 +187,8 @@ class PatientController : ManageHttpController {
 
     auto response = Json.emptyObject
       .set("resourceType", "Patient")
-      .set("id", result.id)
-      .set("message", "Patient deleted");
+      .set("id", result.id);
+
     return successResponse("Patient deleted successfully", "Deleted", 200, response);
   }
 

@@ -89,7 +89,7 @@ class CustomerController : ManageHttpController {
         auto result = usecase.createCustomer(dto);
         if (result.hasError)
             return errorResponse(result.message, 400);
-            
+
         auto resp = Json.emptyObject
             .set("id", result.id);
 
@@ -119,8 +119,7 @@ class CustomerController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Customer updated");
+            .set("id", result.id);
 
         return successResponse("Customer updated successfully", "Updated", 200, resp);
     }
@@ -131,8 +130,10 @@ class CustomerController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto path = precheck.path;
         auto id = CustomerId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid customer ID", 400);
+            
         auto result = usecase.deleteCustomer(tenantId, id);
         if (result.hasError)
             return errorResponse(result.message, 400);

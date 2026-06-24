@@ -13,7 +13,7 @@ import uim.platform.marketrates;
 // A single market rate record – the core domain entity.
 // Maps directly to one entry in an upload/download payload.
 struct MarketRate {
-  mixin TenantEntity!(MarketRateId);
+  mixin TenantEntity!MarketRateId;
 
   // Identifies where the data comes from
   string providerCode;   // e.g. "ECB", "TR"
