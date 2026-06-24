@@ -58,14 +58,7 @@ class BrowseController : HttpController {
     return successResponse("Folder contents retrieved successfully", "Retrieved", 200, resp);
   }
 
-  protected void handleBrowseFolder(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto result = browseFolderHandler(req);
-      res.writeJsonBody(result, result.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleBrowseFolder", "browseFolderHandler"));
 
   protected Json getRepositorySummaryHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);
@@ -116,14 +109,7 @@ class BrowseController : HttpController {
     return successResponse("Favorite added successfully", "Created", 201, resp);
   }
 
-  protected void handleAddFavorite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = addFavoriteHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleAddFavorite", "addFavoriteHandler"));
 
   protected Json listFavoritesHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);

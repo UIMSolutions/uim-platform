@@ -141,14 +141,7 @@ protected Json moveHandler(HTTPServerRequest req) {
   return successResponse("Folder moved successfully", "Moved", 200, resp);
 }
 
-protected void handleMove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-  try {
-    auto response = moveHandler(req);
-    res.writeJsonBody(response, response.code);
-  } catch (Exception e) {
-    writeError(res, 500, "Internal server error");
-  }
-}
+mixin(HandleTemplate!("handleMove", "moveHandler"));
 
 protected Json listChildrenHandler(HTTPServerRequest req) {
   auto precheck = super.getHandler(req);

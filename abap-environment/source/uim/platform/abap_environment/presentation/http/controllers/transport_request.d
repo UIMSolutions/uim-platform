@@ -119,14 +119,7 @@ class TransportRequestController : ManageHttpController {
       Json.emptyObject.set("taskId", result.id));
   }
 
-  protected void handleAddTask(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = addTaskHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleAddTask", "addTaskHandler"));
 
   protected Json releaseHandler(HTTPServerRequest req) {
     auto precheck = super.precheckHandler(req);
@@ -139,17 +132,10 @@ class TransportRequestController : ManageHttpController {
     if (result.hasError)
       return errorResponse(result.message);
 
-    return successResponse("Transport request released", 200);
+    return successResponse("Transport request released", "Released", 200);
   }
 
-  protected void handleRelease(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = releaseHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleRelease", "releaseHandler"));
 
   protected Json releaseTaskHandler(HTTPServerRequest req) {
     auto precheck = super.precheckHandler(req);
@@ -170,17 +156,10 @@ class TransportRequestController : ManageHttpController {
     if (result.hasError)
       return errorResponse(result.message);
 
-    return successResponse("Transport task released", 200);
+    return successResponse("Transport task released", "Released", 200);
   }
 
-  protected void handleReleaseTask(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = releaseTaskHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleReleaseTask", "releaseTaskHandler"));
 
   override protected Json deleteHandler(HTTPServerRequest req) {
     auto precheck = super.createHandler(req);

@@ -139,14 +139,7 @@ class ApplicationJobController : ManageHttpController {
     return successResponse("Application job canceled successfully", 200, responseData);
   }
 
-  protected void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = cancelHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleCancel", "cancelHandler"));
 
   override protected Json deleteHandler(HTTPServerRequest req) {
     auto precheck = super.createHandler(req);

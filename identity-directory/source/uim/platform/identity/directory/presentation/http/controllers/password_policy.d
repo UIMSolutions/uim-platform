@@ -95,16 +95,7 @@ class PasswordPolicyController : ManageHttpController {
         .toJson);
   }
 
-  protected void handleActive(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = super.getActiveHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      auto errRes = Json.emptyObject.set("message", "Failed to retrieve active password policy");
-      errRes["error"] = Json("Internal server error");
-      res.writeJsonBody(errRes, 500);
-    }
-  }
+  mixin(HandleTemplate!("handleGetActive", "getActiveHandler"));
 
   override protected Json getHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);

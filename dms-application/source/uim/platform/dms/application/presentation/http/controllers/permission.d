@@ -58,14 +58,7 @@ class PermissionController : ManageHttpController {
     return successResponse("Permission granted successfully", "Granted", 201, responseData);
   }
 
-  protected void handleGrant(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = grantHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleGrant", "grantHandler"));
 
   protected Json listByResourceHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);

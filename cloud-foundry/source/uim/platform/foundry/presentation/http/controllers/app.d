@@ -241,14 +241,7 @@ class AppController : ManageHttpController {
     return successResponse("Application scaled successfully", "Scaled", 200, responseData);
   }
 
-  protected void handleScale(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = scaleHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleScale", "scaleHandler"));
 
   protected Json envHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);

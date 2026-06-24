@@ -49,14 +49,7 @@ class MonitoringController : HttpController {
     return successResponse("Job summaries retrieved successfully", "Retrieved", 200, resp);
   }
 
-  protected void handleListJobSummaries(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = listJobSummariesHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleListJobSummaries", "listJobSummariesHandler"));
 
   protected Json getJobSummaryHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);
@@ -75,14 +68,7 @@ class MonitoringController : HttpController {
     return successResponse("Job summary retrieved successfully", "Retrieved", 200, resp);
   }
 
-  protected void handleGetJobSummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = getJobSummaryHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleGetJobSummary", "getJobSummaryHandler"));
 
   protected Json getJobLogsHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);
@@ -132,14 +118,7 @@ class MonitoringController : HttpController {
     return successResponse("Provisioned entities retrieved successfully", "Retrieved", 200, resp);
   }
 
-  protected void handleListEntities(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = listEntitiesHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleListEntities", "listEntitiesHandler"));
 
   protected Json pipelineHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);

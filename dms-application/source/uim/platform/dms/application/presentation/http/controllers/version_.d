@@ -94,14 +94,7 @@ protected Json checkInHandler(HTTPServerRequest req) {
       return successResponse("Document checked in successfully", "CheckedIn", 201, resp);
   }
 
-  protected void handleCheckIn(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = checkInHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleCheckIn", "checkInHandler"));
 
   protected Json cancelCheckOutHandler(HTTPServerRequest req) {
     auto precheck = super.postHandler(req);
@@ -123,14 +116,7 @@ protected Json checkInHandler(HTTPServerRequest req) {
       return successResponse("Document checkout cancelled successfully", "Cancelled", 200, resp);
   }
 
-  protected void handleCancelCheckOut(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = cancelCheckOutHandler(req);
-        res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleCancelCheckOut", "cancelCheckOutHandler"));
 
   protected Json allVersionsHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);
@@ -177,13 +163,6 @@ protected Json checkInHandler(HTTPServerRequest req) {
     return successResponse("Current document version retrieved successfully", "Retrieved", 200, ver.toJson);
   }
 
-  protected void handleCurrentVersion(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = getCurrentVersionHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleCurrentVersion", "getCurrentVersionHandler"));
 
 }

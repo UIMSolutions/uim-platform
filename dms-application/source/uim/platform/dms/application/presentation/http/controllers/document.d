@@ -176,14 +176,7 @@ class DocumentController : ManageHttpController {
       return successResponse("Document moved successfully", 200, responseData);
     }
 
-protected void handleMove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-      try {
-        auto response = moveHandler(req);
-        res.writeJsonBody(response, response.code);
-      } catch (Exception e) {
-        writeError(res, 500, "Internal server error");
-      }
-    }
+    mixin(HandleTemplate!("handleMove", "moveHandler"));
     
     protected Json archiveHandler(HTTPServerRequest req) {
       auto precheck = super.postHandler(req);

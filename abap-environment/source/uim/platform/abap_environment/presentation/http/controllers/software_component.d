@@ -138,14 +138,7 @@ class SoftwareComponentController : ManageHttpController {
     return successResponse("Software component cloned successfully", "Cloned", 200, responseData);
   }
 
-  protected void handleClone(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = cloneHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleClone", "cloneHandler"));
 
   protected Json pullHandler(HTTPServerRequest req) {
     auto precheck = super.postHandler(req);
@@ -171,14 +164,7 @@ class SoftwareComponentController : ManageHttpController {
     return successResponse("Software component pulled successfully", "Pulled", 200, responseData);
   }
 
-  protected void handlePull(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = pullHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handlePull", "pullHandler"));
 
   override protected Json deleteHandler(HTTPServerRequest req) {
     auto precheck = super.deleteHandler(req);

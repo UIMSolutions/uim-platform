@@ -168,14 +168,7 @@ protected Json archiveHandler(HTTPServerRequest req) {
       return successResponse("Repository archived successfully", "Archived", 200, resp);
   }
 
-  protected void handleArchive(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = archiveHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleArchive", "archiveHandler"));
 
   override protected Json deleteHandler(HTTPServerRequest req) {
     auto precheck = super.deleteHandler(req);

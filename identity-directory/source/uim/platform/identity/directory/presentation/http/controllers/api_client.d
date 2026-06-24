@@ -110,15 +110,6 @@ class ApiClientController : ManageHttpController {
     return successResponse("API client revoked successfully", "Revoked", 200, responseData);
   }
 
-  protected void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = revokeHandler(req);
-      res.writeJsonBody(response, 200);
-    } catch (Exception e) {
-      auto errRes = Json.emptyObject
-        .set("error", "Internal server error");
+  mixin(HandleTemplate!("handleRevoke", "revokeHandler"));
 
-      res.writeJsonBody(errRes, 500);
-    }
-  }
 }

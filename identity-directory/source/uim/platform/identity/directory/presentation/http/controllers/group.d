@@ -158,14 +158,7 @@ class GroupController : ManageHttpController {
   }
 }
 
-protected void handleAddMember(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-  try {
-    auto response = addMemberHandler(req);
-    res.writeJsonBody(response, response.code);
-  } catch (Exception e) {
-    writeScimError(res, 500, "Internal server error");
-  }
-}
+mixin(HandleTemplate!("handleAddMember", "addMemberHandler"));
 
 protected Json deleteMemberHandler(HTTPServerRequest req) {
   auto precheck = super.deleteHandler(req);
@@ -182,16 +175,7 @@ protected Json deleteMemberHandler(HTTPServerRequest req) {
   return successResponse("Member removed successfully", "Removed", 200, Json.emptyObject);
 }
 
-protected void handleDeleteMember(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-  try {
-    auto response = deleteMemberHandler(req);
-
-    res.writeJsonBody(response, response.code);
-
-  } catch (Exception e) {
-    writeScimError(res, 500, "Internal server error");
-  }
-}
+mixin(HandleTemplate!("handleDeleteMember", "deleteMemberHandler"));
 
 private GroupMember[] parseMembers(Json j) {
   import uim.platform.identity.directory.domain.entities.group : GroupMember;

@@ -141,11 +141,6 @@ class ContentCacheController : ManageHttpController {
     return successResponse("Expired cache entries purged successfully", "Purged", 200, resp);
   }
 
-  protected void handlePurge(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = purgehandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
-  }
+  mixin(HandleTemplate!("handlePurge", "purgehandler"));
+
 }

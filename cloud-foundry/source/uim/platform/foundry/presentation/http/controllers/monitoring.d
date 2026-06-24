@@ -44,14 +44,7 @@ class MonitoringController : HttpController {
     return successResponse("Application health summaries retrieved successfully", "Retrieved", 200, responseData);
   }
 
-  protected void handleListAppHealth(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = listAppHealthHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleListAppHealth", "listAppHealthHandler"));
 
   protected Json appHealthHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);
