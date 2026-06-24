@@ -101,8 +101,7 @@ override protected Json getHandler(HTTPServerRequest req) {
     .set("description", result.data.description)
     .set("isSecret", result.data.isSecret)
     .set("platform", result.data.platform)
-    .set("createdBy", result.data.createdBy)
-    .set("message", "App configuration retrieved successfully");
+    .set("createdBy", result.data.createdBy);
 
   return successResponse("App configuration retrieved successfully", "Retrieved", 200, resp);
 }
@@ -150,8 +149,7 @@ override protected Json deleteHandler(HTTPServerRequest req) {
     return errorResponse(result.message, 400);
 
   auto resp = Json.emptyObject
-    .set("id", result.id)
-    .set("message", "App configuration deleted successfully");
+    .set("id", result.id);
 
   return successResponse("App configuration deleted successfully", "Deleted", 204, resp);
 }

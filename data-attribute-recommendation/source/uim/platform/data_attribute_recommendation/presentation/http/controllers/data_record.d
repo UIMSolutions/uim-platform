@@ -112,8 +112,7 @@ class DataRecordController : ManageHttpController {
 
     auto resp = Json.emptyObject
       .set("id", result.id)
-      .set("status", Json("validated"))
-      .set("message", "Data record validated successfully");
+      .set("status", Json("validated"));
 
     return successResponse("Data record validated successfully", "Validated", 200, resp);
   }

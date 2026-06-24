@@ -115,8 +115,7 @@ class ProcessingPurposeController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Processing purpose updated");
+            .set("id", result.id);
 
         return successResponse("Processing purpose updated successfully", 200, resp);
     }
@@ -128,14 +127,13 @@ class ProcessingPurposeController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto id = precheck.id;
-        auto result = usecase.deleteProcessingPurpose(id);
+        auto result = usecase.deleteProcessingPurpose(tenantId, id);
         if (result.hasError)
             return errorResponse(result.message, 400);
+
         auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Processing purpose deleted");
+            .set("id", result.id);
 
-        return successResponse("Processing purpose deleted successfully", 200, resp);
+        return successResponse("Processing purpose deleted successfully", "Deleted", 200, resp);
     }
-
 }

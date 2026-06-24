@@ -74,8 +74,7 @@ class ChannelController : ManageHttpController {
 
     auto resp = Json.emptyObject
       .set("items", arr)
-      .set("totalCount", Json(channels.length))
-      .set("message", "Notification channels retrieved successfully");
+      .set("totalCount", Json(channels.length));
 
     return successResponse("Notification channels retrieved successfully", "Retrieved", 200, resp);
   }

@@ -50,13 +50,10 @@ class DuplicateController : HttpController {
       }
     }
 
-    auto groups = usecase.detect(r);
-    auto arr = groups.map!(g => g.toJson).array.toJson;
-
+    auto groups = usecase.detect(r).map!(g => g.toJson).array.toJson;
     auto resp = Json.emptyObject
-      .set("matchGroups", arr)
-      .set("totalGroups", Json(groups.length))
-      .set("message", "Duplicate groups detected successfully");
+      .set("matchGroups", groups)
+      .set("totalGroups", groups.length);
 
     return successResponse("Duplicate groups detected successfully", "Detected", 200, resp);
   }

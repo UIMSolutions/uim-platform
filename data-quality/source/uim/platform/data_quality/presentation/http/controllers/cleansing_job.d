@@ -48,8 +48,7 @@ class CleansingJobController : ManageHttpController {
       
     auto resp = Json.emptyObject
       .set("id", result.id)
-      .set("status", "pending")
-      .set("message", "Cleansing job created successfully");
+      .set("status", "pending");
 
     return successResponse("Cleansing job created successfully", "Created", 201, resp);
   }

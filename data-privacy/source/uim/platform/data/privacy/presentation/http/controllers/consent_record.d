@@ -54,8 +54,8 @@ class ConsentController : ManageHttpController {
       return errorResponse("", 0);
 
       auto responseData = Json.emptyObject
-        .set("id", result.id)
-        .set("message", "Consent granted successfully");
+        .set("id", result.id);
+        
       return successResponse("Consent granted successfully", "Created", 201, responseData);
   }
 

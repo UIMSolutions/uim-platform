@@ -147,8 +147,7 @@ class ObjectController : ManageHttpController {
           .errorMessage == "Object not found" ? 404 : 400);
 
     auto resp = Json.emptyObject
-      .set("id", result.id)
-      .set("message", "Object deleted successfully");
+      .set("id", result.id);
 
     return successResponse("Object deleted successfully", "Deleted", 200, resp);
   }
@@ -173,8 +172,7 @@ class ObjectController : ManageHttpController {
       return errorResponse(result.errorMessage, 400);
 
     auto resp = Json.emptyObject
-      .set("id", result.id)
-      .set("message", "Object copied successfully");
+      .set("id", result.id);
 
     return successResponse("Object copied successfully", "Created", 201, resp);
   }

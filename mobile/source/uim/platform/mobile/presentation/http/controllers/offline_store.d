@@ -102,8 +102,7 @@ class OfflineStoreController : ManageHttpController {
       .set("storeType", Json(result.data.storeType))
       .set("syncPolicy", Json(result.data.syncPolicy))
       .set("status", Json(result.data.status))
-      .set("createdBy", Json(result.data.createdBy))
-      .set("message", "Offline store retrieved successfully");
+      .set("createdBy", Json(result.data.createdBy));
 
     return successResponse("Offline store retrieved successfully", "Retrieved", 200, resp);
   }

@@ -132,7 +132,6 @@ class FeatureRestrictionController : ManageHttpController {
       return errorResponse(result.message, 400);
 
     auto resp = Json.emptyObject.set("id", result.id);
-
     return successResponse("Feature restriction updated successfully", "Updated", 200, resp);
   }
 
@@ -145,7 +144,7 @@ class FeatureRestrictionController : ManageHttpController {
     auto id = FeatureRestrictionId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid feature restriction ID", 400);
-      
+
     auto result = usecase.deleteFeatureRestriction(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);

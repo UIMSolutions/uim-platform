@@ -115,10 +115,9 @@ class ViewController : ManageHttpController {
       .set("isPersisted", v.isPersisted)
       .set("rowCount", v.rowCount)
       .set("createdAt", v.createdAt)
-      .set("updatedAt", v.updatedAt)
-      .set("message", "View retrieved successfully");
+      .set("updatedAt", v.updatedAt);
 
-    return successResponse("View retrieved successfully", 200, resp);
+    return successResponse("View retrieved successfully", "Retrieved", 200, resp);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {

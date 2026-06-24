@@ -84,8 +84,7 @@ class AddressController : HttpController {
 
     auto resp = Json.emptyObject
       .set("results", arr)
-      .set("totalCount", Json(results.length))
-      .set("message", "Address cleansing results retrieved successfully");
+      .set("totalCount", Json(results.length));
 
     return successResponse("Address cleansing batch processed successfully", 0, resp);
   }

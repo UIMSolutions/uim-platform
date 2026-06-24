@@ -76,12 +76,10 @@ class DataProcessingLogController : ManageHttpController {
             logs = usecase.listProcessingLogs(tenantId);
         }
 
-        auto jarr = logs.map!(l => logToJson(l)).array.toJson;
-
+        auto jarr = logs.map!(l => l.toJson).array.toJson;
         auto resp = Json.emptyObject
             .set("count", logs.length)
-            .set("resources", jarr)
-            .set("message", "Data Processing log list retrieved successfully");
+            .set("resources", jarr);
 
         return successResponse("Data Processing log list retrieved successfully", "Retrieved", 200, resp);
     }

@@ -165,21 +165,13 @@ class BusinessPurposeController : ManageHttpController {
 
         auto response = Json.emptyObject
             .set("id", result.id)
-            .set("status", "active")
-            .set("message", "Business purpose activated");
+            .set("status", "active");
 
         return successResponse(
             "Business purpose activated successfully", "Activated", 200, response);
     }
 
-    protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto result = activateHandler(req);
-            res.writeJsonBody(response, result.code);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+    mixin(HandleTemplate!("handleActivate", "activateHandler"));
 
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto precheck = super.deleteHandler(req);

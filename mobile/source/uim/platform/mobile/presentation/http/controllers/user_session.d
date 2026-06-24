@@ -111,13 +111,16 @@ class UserSessionController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
+    auto id = UserSessionId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid user session ID", 400);
+
     auto result = usecase.terminate(id);
     if (result.hasError)
       return errorResponse(result.message, 400);
+
     auto resp = Json.emptyObject
-      .set("id", result.id)
-      .set("message", "User session terminated successfully");
+      .set("id", result.id);
 
     return successResponse("User session terminated successfully", "Terminated", 200, resp);
   }
@@ -131,13 +134,15 @@ class UserSessionController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto id = UserSessionId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid user session ID", 400);
+
     auto result = usecase.delete(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
 
     auto resp = Json.emptyObject
-      .set("id", result.id)
-      .set("message", "User session deleted successfully");
+      .set("id", result.id);
 
     return successResponse("User session deleted successfully", "Deleted", 200, resp);
   }

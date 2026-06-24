@@ -115,9 +115,11 @@ class ServiceBindingController : ManageHttpController {
     auto start = bindingsPos + 17; // length of "service-bindings/"
     auto rest = path[start .. $];
     auto slashPos = rest.indexOf('/');
-    auto id = slashPos > 0 ? rest[0 .. slashPos] : rest;
+    auto id = ServiceBindingId(slashPos > 0 ? rest[0 .. slashPos] : rest);
+    if (id.isNull)
+      return errorResponse("Invalid service binding ID", 400);
 
-    auto result = usecase.revokeBinding(tenantId, ServiceBindingId(id));
+    auto result = usecase.revokeBinding(tenantId, (id));
     if (result.hasError)
       return errorResponse(result.message, 400);
     

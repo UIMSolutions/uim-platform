@@ -51,7 +51,7 @@ class ClientLogController : ManageHttpController {
     auto result = usecase.upload(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
-      
+
     auto resp = Json.emptyObject.set("id", result.id);
     return successResponse("Client log uploaded successfully", 201, resp);
   }
@@ -106,8 +106,7 @@ class ClientLogController : ManageHttpController {
       .set("metadata", result.data.metadata)
       .set("platform", result.data.platform)
       .set("appVersion", result.data.appVersion)
-      .set("timestamp", result.data.timestamp)
-      .set("message", "Client log retrieved successfully");
+      .set("timestamp", result.data.timestamp);
 
     return successResponse("Client log retrieved successfully", "Retrieved", 200, resp);
   }

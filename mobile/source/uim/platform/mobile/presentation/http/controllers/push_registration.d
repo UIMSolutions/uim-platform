@@ -99,8 +99,7 @@ class PushRegistrationController : ManageHttpController {
       .set("provider", Json(result.data.provider))
       .set("pushToken", Json(result.data.pushToken))
       .set("topics", toJsonArray(result.data.topics))
-      .set("status", Json(result.data.status))
-      .set("message", "Push registration retrieved successfully");
+      .set("status", Json(result.data.status));
 
     return successResponse("Push registration retrieved successfully", "Retrieved", 200, resp);
   }
@@ -117,8 +116,7 @@ class PushRegistrationController : ManageHttpController {
       return errorResponse(result.message, 400);
 
     auto resp = Json.emptyObject
-      .set("id", result.id)
-      .set("message", "Push registration deleted successfully");
+      .set("id", result.id);
 
     return successResponse("Push registration deleted successfully", "Deleted", 200, resp);
   }

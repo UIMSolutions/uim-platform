@@ -139,8 +139,7 @@ class MobileAppController : ManageHttpController {
       return errorResponse(result.message, 400);
 
     auto resp = Json.emptyObject
-      .set("id", result.id)
-      .set("message", "Mobile app updated successfully");
+      .set("id", result.id);
 
     return successResponse("Mobile app updated successfully", "Updated", 200, resp);
     }

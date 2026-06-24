@@ -116,8 +116,7 @@ class BindingController : ManageHttpController {
       .set("allowedNamespaces", b.allowedNamespaces.map!(ns => ns.value)
           .array.toJson)
       .set("createdAt", b.createdAt)
-      .set("expiresAt", b.expiresAt)
-      .set("message", "Service binding retrieved successfully");
+      .set("expiresAt", b.expiresAt);
 
     return successResponse("Service binding retrieved successfully", 200, response);
   }

@@ -87,8 +87,7 @@ class AlertController : ManageHttpController {
       return errorResponse(result.message, 400);
     auto resp = Json.emptyObject
       .set("id", result.id)
-      .set("state", "acknowledged")
-      .set("message", "Alert acknowledged successfully");
+      .set("state", "acknowledged");
 
     return successResponse("Alert acknowledged successfully", "Acknowledged", 200, resp);
   }
@@ -112,8 +111,7 @@ class AlertController : ManageHttpController {
       return errorResponse(result.message, 400);
     auto response = Json.emptyObject
       .set("id", result.id)
-      .set("state", "resolved")
-      .set("message", "Alert resolved successfully");
+      .set("state", "resolved");
 
     return successResponse("Alert resolved successfully", "Resolved", 200, response);
   }
@@ -133,7 +131,7 @@ class AlertController : ManageHttpController {
     auto result = usecase.deleteAlert(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
-      
+
     auto resp = Json.emptyObject.set("id", result.id);
     return successResponse("Alert deleted successfully", "Deleted", 200, resp);
   }
