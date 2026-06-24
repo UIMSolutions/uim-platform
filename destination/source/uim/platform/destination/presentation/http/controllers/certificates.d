@@ -68,17 +68,13 @@ class CertificateController : ManageHttpController {
       return errorResponse("Invalid certificate type: " ~ certificateType, 400);
 
     auto certificates = certificateType.length > 0
-      ? usecase.listByType(tenantId, subaccountId, certificateType)
-      : usecase.listBySubaccount(tenantId, subaccountId);
+      ? usecase.listByType(tenantId, subaccountId, certificateType) : usecase.listBySubaccount(tenantId, subaccountId);
 
-    auto items = Json.emptyArray;
-    foreach (c; certificates) {
-      items ~= Json.emptyObject
+    auto items = certificates.map!(c => Json.emptyObject
         .set("id", c.id)
         .set("name", c.name)
         .set("subaccountId", c.subaccountId)
-        .set("status", c.status.to!string);
-    }
+        .set("status", c.status.to!string)).array.toJson;
 
     auto resp = Json.emptyObject
       .set("items", items)

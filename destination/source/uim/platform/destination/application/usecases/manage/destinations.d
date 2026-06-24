@@ -127,9 +127,7 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
     if (req.properties.length > 0)
       d.properties = req.properties;
     if (req.fragmentIds.length > 0) {
-      d.fragmentIds = null;
-      foreach (s; req.fragmentIds)
-        d.fragmentIds ~= DestinationFragmentId(s);
+      d.fragmentIds = req.fragmentIds.map!(s => DestinationFragmentId(s)).array;
     }
     d.updatedAt = clockSeconds();
 

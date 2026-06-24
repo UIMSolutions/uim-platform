@@ -111,6 +111,7 @@ class FindDestinationUseCase { // TODO: UIMUseCase {
       cd.type_ = c.certificateType.to!string;
       cd.format_ = c.format_.to!string;
       cd.status = c.status.to!string;
+      
       resp.certificates ~= cd;
     }
 

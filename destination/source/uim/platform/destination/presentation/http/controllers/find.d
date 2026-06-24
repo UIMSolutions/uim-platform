@@ -46,23 +46,17 @@ class FindController : HttpController {
     auto fragArr = result.appliedFragments.map!(s => Json(s)).array.toJson;
 
     // Auth tokens
-    auto tokenArr = Json.emptyArray;
-    foreach (t; result.authTokens) {
-      tokenArr ~= Json.emptyObject
+    auto tokenArr = result.authTokens.map!(t => Json.emptyObject
         .set("type", t.type_)
         .set("value", t.value_)
         .set("expiresAt", t.expiresAt)
-        .set("httpHeaderSuggestion", t.httpHeaderSuggestion);
-    }
+        .set("httpHeaderSuggestion", t.httpHeaderSuggestion)).array.toJson;
 
-    auto certArr = Json.emptyArray;
-    foreach (c; result.certificates) {
-      certArr ~= Json.emptyObject
+    auto certArr = result.certificates.map!(c => Json.emptyObject
         .set("name", c.name)
         .set("type", c.type_)
         .set("format", c.format_)
-        .set("status", c.status);
-    }
+        .set("status", c.status)).array.toJson;
 
     auto j = Json.emptyObject
       .set("destinationName", result.destinationName)
@@ -79,5 +73,5 @@ class FindController : HttpController {
   }
 
   mixin(HandleTemplate!("handleFind", "findHandler"));
-  
+
 }

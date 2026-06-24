@@ -165,13 +165,7 @@ class SubaccountController : ManageHttpController {
     return successResponse("Subaccount moved successfully", "Moved", 200, responseData);
   }
 
-  protected void handleMove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = moveHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
-  }
+  mixin(HandleTemplate!("handleMove", "moveHandler"));
 
   protected Json suspendHandler(HTTPServerRequest req) {
     auto precheck = super.postHandler(req);
@@ -191,13 +185,7 @@ class SubaccountController : ManageHttpController {
     return successResponse("Subaccount suspended successfully", "Suspended", 200, responseData);
   }
 
-  protected void handleSuspend(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = suspendHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
-  }
+  mixin(HandleTemplate!("handleSuspend", "suspendHandler"));
 
   protected Json reactivateHandler(HTTPServerRequest req) {
     auto precheck = super.postHandler(req);
@@ -217,13 +205,7 @@ class SubaccountController : ManageHttpController {
     return successResponse("Subaccount reactivated successfully", "Reactivated", 200, responseData);
   }
 
-  protected void handleReactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = reactivateHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
-  }
+  mixin(HandleTemplate!("handleReactivate", "reactivateHandler"));
 
   override protected Json deleteHandler(HTTPServerRequest req) {
     auto precheck = super.deleteHandler(req);

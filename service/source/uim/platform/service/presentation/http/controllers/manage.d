@@ -42,14 +42,7 @@ class ManageHttpController : HttpController {
     return successResponse("List handler not implemented", 200);
   }
 
-  protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = listHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleList", "listHandler"));
   // #endregion list
 
   // #region create
@@ -61,14 +54,7 @@ class ManageHttpController : HttpController {
     return successResponse(precheck, "Create handler not implemented", 201);
   }
 
-  protected void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = createHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleCreate", "createHandler"));
   // #endregion create
 
   // #region get
@@ -95,14 +81,7 @@ class ManageHttpController : HttpController {
     return successResponse(precheck, "Update handler not implemented", 200);
   }
 
-  protected void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = updateHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleUpdate", "updateHandler"));
   // #endregion update
 
   // #region delete
@@ -118,14 +97,6 @@ class ManageHttpController : HttpController {
     return successResponse(precheck, "Delete handler not implemented", 200);
   }
 
-  override protected void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = deleteHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
   // #endregion delete
 }
 ///

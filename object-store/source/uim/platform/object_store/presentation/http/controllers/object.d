@@ -84,14 +84,7 @@ class ObjectController : ManageHttpController {
     return successResponse("Objects retrieved successfully", "OK", 200, resp);
   }
 
-  protected void handleListByBucket(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = listByBucketHandler(req);
-      res.writeJsonBody(response, 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleListByBucket", "listByBucketHandler"));
 
   override protected Json getHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);
@@ -136,14 +129,7 @@ class ObjectController : ManageHttpController {
     return successResponse("Object metadata updated successfully", "Updated", 200, responseData);
   }
 
-  protected void handleUpdateMetadata(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = updateMetadataHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleUpdateMetadata", "updateMetadataHandler"));
 
   override protected Json deleteHandler(HTTPServerRequest req) {
     auto precheck = super.deleteHandler(req);
@@ -193,14 +179,7 @@ class ObjectController : ManageHttpController {
     return successResponse("Object copied successfully", "Created", 201, resp);
   }
 
-  protected void handleCopy(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = copyHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleCopy", "copyHandler"));
 
   protected Json listVersionsHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);
@@ -222,14 +201,7 @@ class ObjectController : ManageHttpController {
     return successResponse("Object versions retrieved successfully", "OK", 200, resp);
   }
 
-  protected void handleListVersions(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = listVersionsHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleListVersions", "listVersionsHandler"));
 
   /// Extract bucket ID from /api/v1/buckets/{id}/objects
   private static string extractBucketIdFromPath(string uri) {

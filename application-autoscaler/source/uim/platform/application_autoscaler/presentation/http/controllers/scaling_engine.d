@@ -54,12 +54,6 @@ class ScalingEngineController : HttpController {
     return successResponse("Scaling evaluation completed", 200, responseData);
   }
 
-  protected void handleTrigger(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = triggerHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleTrigger", "triggerHandler"));
+
 }

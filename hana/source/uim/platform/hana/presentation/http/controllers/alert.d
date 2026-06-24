@@ -177,14 +177,7 @@ class AlertController : ManageHttpController {
     return successResponse("Alert acknowledged successfully", 200, resp);
   }
 
-  protected void handleAcknowledge(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = acknowledgeHandler(req);
-      res.writeJson(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleAcknowledge", "acknowledgeHandler"));
 
   override protected Json deleteHandler(HTTPServerRequest req) {
     auto precheck = super.deleteHandler(req);

@@ -142,14 +142,7 @@ class ReplicationController : ManageHttpController {
     return successResponse("Replication job paused successfully", 200, resp);
   }
 
-  protected void handlePause(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = pauseHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handlePause", "pauseHandler"));
 
   protected Json cancelHandler(HTTPServerRequest req) {
     auto precheck = super.postHandler(req);

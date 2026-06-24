@@ -237,12 +237,6 @@ class StepController : ManageHttpController {
     return successResponse("Step assigned successfully", 200, resp);
   }
 
-  protected void handleAssign(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = assignHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleAssign", "assignHandler"));
+
 }

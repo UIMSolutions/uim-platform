@@ -182,16 +182,9 @@ class TaskController : ManageHttpController {
     return successResponse("Task claimed successfully", "Claimed", 200, resp);
   }
 
-  protected void handleClaim(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = handleClaim(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleClaim", "claimHandler"));
 
-  protected Json handleComplete(HTTPServerRequest req) {
+  protected Json completeHandler(HTTPServerRequest req) {
     auto precheck = super.postHandler(req);
     if (precheck.hasError)
       return precheck;
@@ -226,14 +219,7 @@ class TaskController : ManageHttpController {
         return successResponse("Task completed successfully", "Completed", 200, resp);
   }
 
-  protected void handleComplete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = handleComplete(req);
-      res.writeJsonBody(response, response.code);
-  } catch (Exception e) {
-    writeError(res, 500, "Internal server error");
-  }
-}
+  mixin(HandleTemplate!("handleComplete", "completeHandler"));
 
 override protected Json deleteHandler(HTTPServerRequest req) {
   auto precheck = super.deleteHandler(req);

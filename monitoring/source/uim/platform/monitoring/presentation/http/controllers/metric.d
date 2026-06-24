@@ -89,14 +89,7 @@ class MetricController : ManageHttpController {
     return successResponse("Metrics batch pushed successfully", "Created", 201, responseData);
   }
 
-  protected void handleBatchPush(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = batchPushHandler(req);
-      res.writeJsonBody(response.data, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleBatchPush", "batchPushHandler"));
 
   protected Json queryHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);
@@ -104,7 +97,10 @@ class MetricController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto resourceId = MonitoredResourceId(req.params.get("resourceId", ""));
+    auto id = MonitoredResourceId(req.params.get("resourceId", ""));
+    if (id.isEmpty)
+      return errorResponse("Missing required parameter: resourceId", 400);
+    
     auto metricName = req.params.get("name", "");
 
 QueryMetricsRequest qr;
@@ -120,14 +116,7 @@ QueryMetricsRequest qr;
     return successResponse("Metrics retrieved successfully", "Retrieved", 200, responseData);
   }
 
-  protected void handleQuery(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = queryHandler(req);
-      res.writeJsonBody(response.data, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleQuery", "queryHandler"));
 
   protected Json summaryHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);
@@ -155,12 +144,7 @@ QueryMetricsRequest qr;
       .set("windowEndTime", summary.windowEndTime);
     return successResponse("Metric summary retrieved successfully", "Retrieved", 200, responseData);
   }
-  protected void handleSummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = summaryHandler(req);
-      res.writeJsonBody(response.data, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+
+  mixin(HandleTemplate!("handleSummary", "summaryHandler"));
+
 }
