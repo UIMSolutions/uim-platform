@@ -53,9 +53,9 @@ class FileGroupRepository : GroupRepository {
                 g.id = GroupId(j["id"].str);
                 g.tenantId = TenantId(j["tenantId"].str);
                 g.name = j["name"].str;
-                g.description = j.object.get("description", JSONValue("")).str;
+                g.description = j.object.get("description", Json("")).str;
                 g.type_ = j["type"].str.to!GroupType;
-                foreach (m; j.object.get("members", JSONValue(cast(JSONValue[])[])).array)
+                foreach (m; j.object.get("members", Json(cast(Json)[])).array)
                     g.memberIds ~= m.str;
                 store[g.id.value] = g;
             }
@@ -64,15 +64,15 @@ class FileGroupRepository : GroupRepository {
 
     private void persist() @trusted {
         
-        JSONValue[] arr;
+        Json arr;
         foreach (g; store.values) {
-            JSONValue[] members;
-            foreach (m; g.memberIds) members ~= JSONValue(m);
-            auto j = JSONValue(["id": JSONValue(g.id.value), "tenantId": JSONValue(g.tenantId.value),
-                "name": JSONValue(g.name), "description": JSONValue(g.description),
-                "type": JSONValue(g.type_.to!string), "members": JSONValue(members)]);
+            Json members;
+            foreach (m; g.memberIds) members ~= Json(m);
+            auto j = Json(["id": Json(g.id.value), "tenantId": Json(g.tenantId.value),
+                "name": Json(g.name), "description": Json(g.description),
+                "type": Json(g.type_.to!string), "members": Json(members)]);
             arr ~= j;
         }
-        write(filePath(), JSONValue(arr).toString());
+        write(filePath(), Json(arr).toString());
     }
 }

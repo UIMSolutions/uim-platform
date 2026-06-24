@@ -1,7 +1,7 @@
 module uim.platform.analytics.infrastructure.persistence.file.assets;
 
 // import std.file : exists, mkdirRecurse, readText, write;
-// import std.json : JSONType, JSONValue, parseJSON;
+// import std.json : JSONType, Json, parseJSON;
 // import std.path : buildPath;
 // 
 // import uim.platform.analytics.domain;
@@ -106,33 +106,28 @@ class FileAssetRepository : AssetRepository {
   }
 
   private void flushToDisk() {
-    JSONValue[] serialized;
+    Json serialized = Json.emptyArray;
 
     foreach (_tenantId, assets; byTenant) {
       foreach (a; assets) {
-        JSONValue[] dims;
-        foreach (d; a.dimensions) dims ~= JSONValue(d);
+        Json dims = a.dimensions.map!(dim => dim.toJson()).array.toJson;
+        Json meas = a.measures.map!(m => m.toJson).array.toJson;
 
-        JSONValue[] meas;
-        foreach (m; a.measures) meas ~= JSONValue(m);
-
-        JSONValue row;
-        row["id"] = JSONValue(a.id);
-        row["tenantId"] = JSONValue(a.tenantId);
-        row["name"] = JSONValue(a.name);
-        row["kind"] = JSONValue(a.kind);
-        row["sourceSystem"] = JSONValue(a.sourceSystem);
-        row["dimensions"] = JSONValue(dims);
-        row["measures"] = JSONValue(meas);
-        row["published"] = JSONValue(a.published);
-        row["createdAt"] = JSONValue(a.createdAt);
-        row["updatedAt"] = JSONValue(a.updatedAt);
-
-        serialized ~= row;
+        serialized ~= Json.emptyObject
+        .set("id", a.id)
+        .set("tenantId", a.tenantId)
+        .set("name", a.name)
+        .set("kind", a.kind)
+        .set("sourceSystem", a.sourceSystem)
+        .set("dimensions", dims)
+        .set("measures", meas)
+        .set("published", a.published)
+        .set("createdAt", a.createdAt)
+        .set("updatedAt", a.updatedAt);
       }
     }
 
-    write(filePath, JSONValue(serialized).toString());
+    write(filePath, Json(serialized).toString());
   }
 }
 

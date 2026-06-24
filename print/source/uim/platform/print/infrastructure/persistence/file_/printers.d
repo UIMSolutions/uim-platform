@@ -70,9 +70,9 @@ class FilePrinterRepository : PrinterRepository {
 
     private void persist() @trusted {
         
-        JSONValue arr = JSONValue(cast(JSONValue[]) []);
+        Json arr = Json(cast(Json) []);
         foreach (p; store.values) {
-            JSONValue j;
+            Json j;
             j["id"] = p.id.value;
             j["tenantId"] = p.tenantId.value;
             j["name"] = p.name;

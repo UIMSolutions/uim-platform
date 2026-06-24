@@ -56,10 +56,10 @@ class FileIdentityProviderRepository : IdentityProviderRepository {
                 idp.id = IdentityProviderId(j["id"].str);
                 idp.tenantId = TenantId(j["tenantId"].str);
                 idp.name = j["name"].str;
-                idp.entityId = j.object.get("entityId", JSONValue("")).str;
+                idp.entityId = j.object.get("entityId", Json("")).str;
                 idp.type_ = j["type"].str.to!IdpType;
                 idp.status = j["status"].str.to!IdpStatus;
-                idp.isDefault = j.object.get("isDefault", JSONValue(false)).boolean;
+                idp.isDefault = j.object.get("isDefault", Json(false)).boolean;
                 store[idp.id.value] = idp;
             }
         } catch (Exception) {}
@@ -67,13 +67,13 @@ class FileIdentityProviderRepository : IdentityProviderRepository {
 
     private void persist() @trusted {
         
-        JSONValue[] arr;
+        Json arr;
         foreach (idp; store.values) {
-            arr ~= JSONValue(["id": JSONValue(idp.id.value), "tenantId": JSONValue(idp.tenantId.value),
-                "name": JSONValue(idp.name), "entityId": JSONValue(idp.entityId),
-                "type": JSONValue(idp.type_.to!string), "status": JSONValue(idp.status.to!string),
-                "isDefault": JSONValue(idp.isDefault)]);
+            arr ~= Json(["id": Json(idp.id.value), "tenantId": Json(idp.tenantId.value),
+                "name": Json(idp.name), "entityId": Json(idp.entityId),
+                "type": Json(idp.type_.to!string), "status": Json(idp.status.to!string),
+                "isDefault": Json(idp.isDefault)]);
         }
-        write(filePath(), JSONValue(arr).toString());
+        write(filePath(), Json(arr).toString());
     }
 }

@@ -22,7 +22,7 @@ class OverviewController : HttpController {
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
 
-    router.get("/api/v1/overview", &handleOverview);
+    router.get("/api/v1/overview", &handleGetOverview);
   }
 
   protected Json getOverviewHandler(HTTPServerRequest req) {

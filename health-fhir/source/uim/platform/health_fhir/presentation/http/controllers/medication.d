@@ -47,13 +47,13 @@ class MedicationController : ManageHttpController {
       r.tenantId    = tenantId;
       r.medicationId = MedicationId(precheck.id);
       auto result = usecase.createMedication(r);
-      if (result.success)
-        res.writeJsonBody(Json.emptyObject.set("resourceType", "Medication").set("id", result.id), 201);
-      else
-        writeFhirError(res, 400, result.message);
-    } catch (Exception e) {
-      writeFhirError(res, 500, "Internal server error");
-    }
+      if (result.hasError)
+        return errorResponse(result.message, 400);
+
+      return successResponse("Medication created successfully", 201, Json.emptyObject.set("resourceType", "Medication").set("id", result.id));  
+
+      // res.writeJsonBody(Json.emptyObject.set("resourceType", "Medication").set("id", result.id), 201);
+      // writeFhirError(res, 500, "Internal server error");
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
@@ -63,16 +63,17 @@ class MedicationController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
       auto meds = usecase.listMedications(tenantId);
-      auto entries = Json.emptyArray;
-      foreach (m; meds) entries ~= m.toJson();
-      res.writeJsonBody(
-        Json.emptyObject.set("resourceType", "Bundle").set("type", "searchset")
-          .set("total", meds.length).set("entry", entries),
-        200
-      );
-    } catch (Exception e) {
-      writeFhirError(res, 500, "Internal server error");
-    }
+      auto entries = meds.map!(m => m.toJson()).array;
+
+      auto responseData = Json.emptyObject.set("resourceType", "Bundle").set("type", "searchset")
+        .set("total", meds.length).set("entry", entries);
+      return successResponse("Medications retrieved successfully", 200, responseData);
+        // Json.emptyObject.set("resourceType", "Bundle").set("type", "searchset")
+        //   .set("total", meds.length).set("entry", entries),
+        // 200
+      
+    // writeFhirError(res, 500, "Internal server error");
+    
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
@@ -86,7 +87,7 @@ class MedicationController : ManageHttpController {
       if (m.isNull) { writeFhirError(res, 404, "Medication not found"); return; }
       res.writeJsonBody(m.toJson(), 200);
     } catch (Exception e) {
-      writeFhirError(res, 500, "Internal server error");
+    // writeFhirError(res, 500, "Internal server error");
     }
   }
 
@@ -107,7 +108,7 @@ class MedicationController : ManageHttpController {
       else
         writeFhirError(res, 400, result.message);
     } catch (Exception e) {
-      writeFhirError(res, 500, "Internal server error");
+    // writeFhirError(res, 500, "Internal server error");
     }
   }
 
@@ -122,7 +123,7 @@ class MedicationController : ManageHttpController {
       if (result.success) res.writeBody("", cast(int) HTTPStatus.noContent, "application/json");
       else writeFhirError(res, 404, result.message);
     } catch (Exception e) {
-      writeFhirError(res, 500, "Internal server error");
+    // writeFhirError(res, 500, "Internal server error");
     }
   }
 }

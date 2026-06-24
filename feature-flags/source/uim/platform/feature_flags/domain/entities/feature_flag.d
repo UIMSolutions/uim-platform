@@ -6,7 +6,7 @@
 module uim.platform.feature_flags.domain.entities.feature_flag;
 
 import uim.platform.feature_flags;
-import std.json : JSONValue;
+import std.json : Json;
 
 // mixin(ShowModule!());
 

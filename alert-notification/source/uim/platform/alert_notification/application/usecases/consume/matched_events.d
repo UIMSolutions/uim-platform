@@ -20,9 +20,7 @@ class ConsumeMatchedEventsUseCase {
 
     QueryResult listMatchedEvents(TenantId tenantId) {
         auto items = repo.findByTenant(tenantId);
-        auto arr = Json.emptyArray;
-        foreach (e; items)
-            arr ~= e.toJson();
+        auto arr = items.map!(e => e.toJson()).array.toJson();
         return QueryResult(true, "", arr);
     }
 

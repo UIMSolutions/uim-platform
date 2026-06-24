@@ -73,9 +73,9 @@ class FilePrintDocumentRepository : PrintDocumentRepository {
 
     private void persist() @trusted {
         
-        JSONValue arr = JSONValue(cast(JSONValue[]) []);
+        Json arr = Json(cast(Json) []);
         foreach (d; store.values) {
-            JSONValue j;
+            Json j;
             j["id"] = d.id.value;
             j["tenantId"] = d.tenantId.value;
             j["fileName"] = d.fileName;

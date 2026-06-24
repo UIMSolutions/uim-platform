@@ -56,13 +56,11 @@ class ManageResourceGroupsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Resource group not found");
 
     ResourceGroupLabel[] labels;
-    foreach (pair; r.labels) {
-      if (pair.length >= 2) {
-        ResourceGroupLabel lbl;
-        lbl.key = pair[0];
-        lbl.value = pair[1];
-        labels ~= lbl;
-      }
+    foreach (pair; r.labels.filter!(p => p.length >= 2)) {
+      ResourceGroupLabel lbl;
+      lbl.key = pair[0];
+      lbl.value = pair[1];
+      labels ~= lbl;
     }
     rg.labels = labels;
 

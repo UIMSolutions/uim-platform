@@ -63,9 +63,9 @@ class FileUserRepository : UserRepository {
                 u.tenantId = TenantId(j["tenantId"].str);
                 u.userName = j["userName"].str;
                 u.email = j["email"].str;
-                u.displayName = j.object.get("displayName", JSONValue("")).str;
-                u.firstName = j.object.get("firstName", JSONValue("")).str;
-                u.lastName = j.object.get("lastName", JSONValue("")).str;
+                u.displayName = j.object.get("displayName", Json("")).str;
+                u.firstName = j.object.get("firstName", Json("")).str;
+                u.lastName = j.object.get("lastName", Json("")).str;
                 u.status = j["status"].str.to!UserStatus;
                 u.type_ = j["type"].str.to!UserType;
                 store[u.id.value] = u;
@@ -75,15 +75,15 @@ class FileUserRepository : UserRepository {
 
     private void persist() @trusted {
         
-        JSONValue[] arr;
+        Json arr;
         foreach (u; store.values) {
-            auto j = JSONValue(["id": JSONValue(u.id.value), "tenantId": JSONValue(u.tenantId.value),
-                "userName": JSONValue(u.userName), "email": JSONValue(u.email),
-                "displayName": JSONValue(u.displayName), "firstName": JSONValue(u.firstName),
-                "lastName": JSONValue(u.lastName), "status": JSONValue(u.status.to!string),
-                "type": JSONValue(u.type_.to!string)]);
+            auto j = Json(["id": Json(u.id.value), "tenantId": Json(u.tenantId.value),
+                "userName": Json(u.userName), "email": Json(u.email),
+                "displayName": Json(u.displayName), "firstName": Json(u.firstName),
+                "lastName": Json(u.lastName), "status": Json(u.status.to!string),
+                "type": Json(u.type_.to!string)]);
             arr ~= j;
         }
-        write(filePath(), JSONValue(arr).toString());
+        write(filePath(), Json(arr).toString());
     }
 }

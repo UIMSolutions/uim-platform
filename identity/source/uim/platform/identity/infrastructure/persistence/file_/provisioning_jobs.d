@@ -62,13 +62,13 @@ class FileProvisioningJobRepository : ProvisioningJobRepository {
 
     private void persist() @trusted {
         
-        JSONValue[] arr;
+        Json arr;
         foreach (j; store.values) {
-            arr ~= JSONValue(["id": JSONValue(j.id.value), "tenantId": JSONValue(j.tenantId.value),
-                "name": JSONValue(j.name), "sourceSystem": JSONValue(j.sourceSystem),
-                "targetSystem": JSONValue(j.targetSystem), "type": JSONValue(j.type_.to!string),
-                "status": JSONValue(j.status.to!string)]);
+            arr ~= Json(["id": Json(j.id.value), "tenantId": Json(j.tenantId.value),
+                "name": Json(j.name), "sourceSystem": Json(j.sourceSystem),
+                "targetSystem": Json(j.targetSystem), "type": Json(j.type_.to!string),
+                "status": Json(j.status.to!string)]);
         }
-        write(filePath(), JSONValue(arr).toString());
+        write(filePath(), Json(arr).toString());
     }
 }

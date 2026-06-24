@@ -62,12 +62,12 @@ class FileApplicationRepository : ApplicationRepository {
 
     private void persist() @trusted {
         
-        JSONValue[] arr;
+        Json arr;
         foreach (a; store.values) {
-            arr ~= JSONValue(["id": JSONValue(a.id.value), "tenantId": JSONValue(a.tenantId.value),
-                "name": JSONValue(a.name), "clientId": JSONValue(a.clientId),
-                "protocol": JSONValue(a.protocol.to!string), "status": JSONValue(a.status.to!string)]);
+            arr ~= Json(["id": Json(a.id.value), "tenantId": Json(a.tenantId.value),
+                "name": Json(a.name), "clientId": Json(a.clientId),
+                "protocol": Json(a.protocol.to!string), "status": Json(a.status.to!string)]);
         }
-        write(filePath(), JSONValue(arr).toString());
+        write(filePath(), Json(arr).toString());
     }
 }

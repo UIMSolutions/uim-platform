@@ -121,7 +121,7 @@ class MedicationRequestController : ManageHttpController {
     res.writeJsonBody(mr.toJson(), 200);
   }
  catch (Exception e) {
-    writeFhirError(res, 500, "Internal server error");
+  // writeFhirError(res, 500, "Internal server error");
   }
 }
 
@@ -149,7 +149,7 @@ override protected Json updateHandler(HTTPServerRequest req) {
     writeFhirError(res, 400, result.message);
 }
  catch (Exception e) {
-  writeFhirError(res, 500, "Internal server error");
+// writeFhirError(res, 500, "Internal server error");
 }
 }
 
@@ -167,7 +167,7 @@ override protected Json deleteHandler(HTTPServerRequest req) {
     writeFhirError(res, 404, result.message);
 }
  catch (Exception e) {
-  writeFhirError(res, 500, "Internal server error");
+// writeFhirError(res, 500, "Internal server error");
 }
 }
 }

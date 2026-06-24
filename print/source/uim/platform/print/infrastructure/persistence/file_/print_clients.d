@@ -67,9 +67,9 @@ class FilePrintClientRepository : PrintClientRepository {
 
     private void persist() @trusted {
         
-        JSONValue arr = JSONValue(cast(JSONValue[]) []);
+        Json arr = Json(cast(Json) []);
         foreach (c; store.values) {
-            JSONValue j;
+            Json j;
             j["id"] = c.id.value;
             j["tenantId"] = c.tenantId.value;
             j["name"] = c.name;

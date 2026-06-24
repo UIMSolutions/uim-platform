@@ -55,7 +55,7 @@ class PractitionerController : ManageHttpController {
       else
         writeFhirError(res, 400, result.message);
     } catch (Exception e) {
-      writeFhirError(res, 500, "Internal server error");
+    // writeFhirError(res, 500, "Internal server error");
     }
   }
 
@@ -74,7 +74,7 @@ class PractitionerController : ManageHttpController {
         200
       );
     } catch (Exception e) {
-      writeFhirError(res, 500, "Internal server error");
+    // writeFhirError(res, 500, "Internal server error");
     }
   }
 
@@ -89,7 +89,7 @@ class PractitionerController : ManageHttpController {
       if (p.isNull) { writeFhirError(res, 404, "Practitioner not found"); return; }
       res.writeJsonBody(p.toJson(), 200);
     } catch (Exception e) {
-      writeFhirError(res, 500, "Internal server error");
+    // writeFhirError(res, 500, "Internal server error");
     }
   }
 
@@ -112,7 +112,7 @@ class PractitionerController : ManageHttpController {
       else
         writeFhirError(res, 400, result.message);
     } catch (Exception e) {
-      writeFhirError(res, 500, "Internal server error");
+    // writeFhirError(res, 500, "Internal server error");
     }
   }
 
@@ -127,7 +127,7 @@ class PractitionerController : ManageHttpController {
       if (result.success) res.writeBody("", cast(int) HTTPStatus.noContent, "application/json");
       else writeFhirError(res, 404, result.message);
     } catch (Exception e) {
-      writeFhirError(res, 500, "Internal server error");
+    // writeFhirError(res, 500, "Internal server error");
     }
   }
 }

@@ -95,9 +95,9 @@ class FilePrintQueueRepository : PrintQueueRepository {
     }
 
     private void persist() @trusted {
-        JSONValue arr = JSONValue(cast(JSONValue[]) []);
+        Json arr = Json(cast(Json) []);
         foreach (q; store.values) {
-            JSONValue j;
+            Json j;
             j["id"] = q.id.value;
             j["tenantId"] = q.tenantId.value;
             j["name"] = q.name;

@@ -42,9 +42,7 @@ class Action {
         auto props = Json.emptyObject;
         foreach (k, v; properties) props[k] = Json(v);
         j["properties"] = props;
-        auto lbls = Json.emptyArray;
-        foreach (l; labels) lbls ~= Json(l);
-        j["labels"] = lbls;
+        j["labels"] = labels.map!(l => Json(l)).array.toJson();
         return j;
     }
 

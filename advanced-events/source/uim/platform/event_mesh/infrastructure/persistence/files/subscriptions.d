@@ -71,9 +71,7 @@ class FileSubscriptionRepository : MemorySubscriptionRepository {
     private void persistTenant(TenantId tenantId) @trusted {
         auto fp = filePath(tenantId);
         mkdirRecurse(dirName(fp));
-        Json arr = Json.emptyArray;
-        foreach (item; super.findByTenant(tenantId))
-            arr ~= item.toJson;
+        Json arr = super.findByTenant(tenantId).map!(item => item.toJson).array.toJson;
         write(fp, arr.toString());
     }
 

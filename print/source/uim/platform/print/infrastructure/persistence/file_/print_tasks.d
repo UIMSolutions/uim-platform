@@ -77,9 +77,9 @@ class FilePrintTaskRepository : PrintTaskRepository {
 
     private void persist() @trusted {
         
-        JSONValue arr = JSONValue(cast(JSONValue[]) []);
+        Json arr = Json(cast(Json) []);
         foreach (t; store.values) {
-            JSONValue j;
+            Json j;
             j["id"] = t.id.value;
             j["tenantId"] = t.tenantId.value;
             j["queueId"] = t.queueId.value;

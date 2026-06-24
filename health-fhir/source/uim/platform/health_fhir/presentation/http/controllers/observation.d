@@ -61,7 +61,7 @@ class ObservationController : ManageHttpController {
       writeFhirError(res, 400, result.message);
   }
  catch (Exception e) {
-    writeFhirError(res, 500, "Internal server error");
+  // writeFhirError(res, 500, "Internal server error");
   }
 }
 
@@ -88,7 +88,7 @@ override protected Json listHandler(HTTPServerRequest req) {
   );
 }
  catch (Exception e) {
-  writeFhirError(res, 500, "Internal server error");
+// writeFhirError(res, 500, "Internal server error");
 }
 }
 
@@ -107,7 +107,7 @@ override protected Json getHandler(HTTPServerRequest req) {
   res.writeJsonBody(o.toJson(), 200);
 }
  catch (Exception e) {
-  writeFhirError(res, 500, "Internal server error");
+// writeFhirError(res, 500, "Internal server error");
 }
 }
 
@@ -137,7 +137,7 @@ override protected Json updateHandler(HTTPServerRequest req) {
     writeFhirError(res, 400, result.message);
 }
  catch (Exception e) {
-  writeFhirError(res, 500, "Internal server error");
+// writeFhirError(res, 500, "Internal server error");
 }
 }
 
