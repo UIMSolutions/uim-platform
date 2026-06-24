@@ -88,14 +88,7 @@ class PermissionController : ManageHttpController {
     return successResponse("Permissions for resource retrieved successfully", "Retrieved", 200, resp);
   }
 
-  protected void handleListByResource(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = listByResourceHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleListByResource", "listByResourceHandler"));
 
   protected Json listByUserHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);
@@ -116,14 +109,7 @@ class PermissionController : ManageHttpController {
     return successResponse("Permissions for user retrieved successfully", "Retrieved", 200, resp);
   }
 
-  protected void handleListByUser(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = listByUserHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleListByUser", "listByUserHandler"));
 
   protected Json checkAccessHandler(HTTPServerRequest req) {
     auto precheck = super.postHandler(req);
@@ -150,14 +136,7 @@ class PermissionController : ManageHttpController {
     return successResponse("Access check completed", "Checked", 200, resp);
   }
 
-  protected void handleCheckAccess(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = checkAccessHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleCheckAccess", "checkAccessHandler"));
 
   override protected Json updateHandler(HTTPServerRequest req) {
     auto precheck = super.updateHandler(req);
@@ -199,12 +178,6 @@ class PermissionController : ManageHttpController {
     return successResponse("Permission revoked successfully", "Revoked", 200, resp);
   }
 
-  protected void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = revokeHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleRevoke", "revokeHandler"));
+
 }

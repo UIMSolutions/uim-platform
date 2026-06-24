@@ -141,14 +141,7 @@ class DataRecordController : ManageHttpController {
     return successResponse("Data record rejected successfully", "Rejected", 200, resp);
   }
 
-  protected void handleReject(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = rejectHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleReject", "rejectHandler"));
 
   override protected Json deleteHandler(HTTPServerRequest req) {
     auto precheck = super.deleteHandler(req);

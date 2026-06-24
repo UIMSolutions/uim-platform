@@ -55,14 +55,7 @@ class EncryptionController : HttpController {
     return successResponse("DEK generated successfully", 200, resp);
   }
 
-  protected void handleGenerate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = generateHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleGenerate", "generateHandler"));
 
   protected Json encryptHandler(HTTPServerRequest req) {
     auto precheck = super.postHandler(req);
@@ -90,14 +83,7 @@ class EncryptionController : HttpController {
     return successResponse("DEK encrypted successfully", 200, resp);
   }
 
-  protected void handleEncrypt(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = encryptHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleEncrypt", "encryptHandler"));
 
   protected Json decryptHandler(HTTPServerRequest req) {
     auto precheck = super.postHandler(req);
@@ -124,12 +110,6 @@ class EncryptionController : HttpController {
     return successResponse("DEK decrypted successfully", 200, resp);
   }
 
-  protected void handleDecrypt(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = decryptHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleDecrypt", "decryptHandler"));
+
 }

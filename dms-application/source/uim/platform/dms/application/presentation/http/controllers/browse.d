@@ -90,14 +90,7 @@ class BrowseController : HttpController {
     return successResponse("Repository summary retrieved successfully", "Retrieved", 200, j);
   }
 
-  protected void handleRepositorySummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = getRepositorySummaryHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleRepositorySummary", "getRepositorySummaryHandler"));
 
   protected Json addFavoriteHandler(HTTPServerRequest req) {
     auto precheck = super.postHandler(req);
@@ -149,14 +142,7 @@ class BrowseController : HttpController {
     return successResponse("Favorites retrieved successfully", "Retrieved", 200, resp);
   }
 
-  protected void handleListFavorites(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = listFavoritesHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleListFavorites", "listFavoritesHandler"));
 
   protected Json deleteFavoriteHandler(HTTPServerRequest req) {
     auto precheck = super.deleteHandler(req);
@@ -179,12 +165,6 @@ class BrowseController : HttpController {
     return successResponse("Favorite removed successfully", "Deleted", 200, resp);
   }
 
-  protected void handleDeleteFavorite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = deleteFavoriteHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleDeleteFavorite", "deleteFavoriteHandler"));
+
 }

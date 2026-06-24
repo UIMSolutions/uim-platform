@@ -53,14 +53,7 @@ class InferenceController : HttpController {
     return successResponse("Inference submitted successfully", 201, responseData);
   }
 
-  protected void handleSubmit(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = submitHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleSubmit", "submitHandler"));
 
   protected Json getRequestHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);
@@ -81,14 +74,7 @@ class InferenceController : HttpController {
     return successResponse("Inference request retrieved successfully", 200, responseData);
   }
 
-  protected void handleGetRequest(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = getRequestHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleGetRequest", "getRequestHandler"));
 
   protected Json getResultHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);
@@ -108,14 +94,7 @@ class InferenceController : HttpController {
     return successResponse("Inference result retrieved successfully", 200, responseData);
   }
 
-  protected void handleGetResult(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = getResultHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleGetResult", "getResultHandler"));
 
   protected Json listRequestsHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);
@@ -132,12 +111,6 @@ class InferenceController : HttpController {
     return successResponse("Inference requests retrieved successfully", 200, responseData);
   }
 
-  protected void handleListRequests(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = listRequestsHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleListRequests", "listRequestsHandler"));
+  
 }

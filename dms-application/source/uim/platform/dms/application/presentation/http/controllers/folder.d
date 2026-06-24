@@ -169,14 +169,7 @@ protected Json listChildrenHandler(HTTPServerRequest req) {
   return successResponse("", "Retrieved", 200, resp);
 }
 
-protected void handleListChildren(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-  try {
-    auto response = listChildrenHandler(req);
-    res.writeJsonBody(response, response.code);
-  } catch (Exception e) {
-    writeError(res, 500, "Internal server error");
-  }
-}
+mixin(HandleTemplate!("handleListChildren", "listChildrenHandler"));
 
 override protected Json deleteHandler(HTTPServerRequest req) {
   auto precheck = super.deleteHandler(req);

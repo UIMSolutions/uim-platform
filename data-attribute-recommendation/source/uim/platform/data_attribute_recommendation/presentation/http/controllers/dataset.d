@@ -136,14 +136,8 @@ class DatasetController : ManageHttpController {
     return successResponse("Dataset validation completed successfully", "Validated", 200, responseData);
   }
 
-  protected void handleValidate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = validateHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+
+  mixin(HandleTemplate!("handleValidate", "validateHandler"));
 
   protected Json processHandler(HTTPServerRequest req) {
     auto precheck = super.postHandler(req);
@@ -163,14 +157,7 @@ class DatasetController : ManageHttpController {
     return successResponse("Dataset processing started successfully", "Processing", 200, responseData);
   }
 
-  protected void handleProcess(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = processHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleProcess", "processHandler"));
 
   override protected Json deleteHandler(HTTPServerRequest req) {
     auto precheck = super.deleteHandler(req);
@@ -189,4 +176,5 @@ class DatasetController : ManageHttpController {
     auto responseData = Json.emptyObject.set("id", result.id);
     return successResponse("Dataset deleted successfully", "Deleted", 200, responseData);
   }
+  
 }
