@@ -34,12 +34,11 @@ class CredentialController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto items = creds.listCredentials(tenantId);
-        return Json.emptyObject
+        auto responseData = Json.emptyObject
             .set("count", items.length)
-            .set("resources", items.map!(e => e.toJson()).array.toJson)
-            .set("message", "Credentials retrieved successfully")
-            .set("status", "success")
-            .set("statusCode", 200);
+            .set("resources", items.map!(e => e.toJson()).array.toJson);
+
+        return successResponse("Credentials retrieved successfully", "Retrieved", 200, responseData);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -54,9 +53,9 @@ class CredentialController : ManageHttpController {
 
         auto e = creds.getCredential(tenantId, id);
         if (e.isNull)
-            return Json.emptyObject.set("error", "Credential not found").set("statusCode", 404);
+            return errorResponse("Credential not found", 404);
 
-        return e.toJson().set("message", "Credential retrieved successfully").set("status", "success").set("statusCode", 200);
+        return successResponse("Credential retrieved successfully", "Retrieved", 200, e.toJson);
     }
 
     override protected Json createHandler(HTTPServerRequest req) {
@@ -104,9 +103,9 @@ class CredentialController : ManageHttpController {
 
         auto result = creds.updateCredential(dto);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.message).set("statusCode", 400);
+        return errorResponse(result.message, 400);
 
-        return Json.emptyObject.set("id", result.id).set("message", "Credential updated").set("status", "updated").set("statusCode", 200);
+        return successResponse("Credential updated successfully", "Updated", 200, Json.emptyObject.set("id", result.id));
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -121,8 +120,8 @@ class CredentialController : ManageHttpController {
 
         auto result = creds.deleteCredential(tenantId, id);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.message).set("statusCode", 400);
+            return errorResponse(result.message, 400);
 
-        return Json.emptyObject.set("id", result.id).set("message", "Credential deleted").set("status", "deleted").set("statusCode", 200);
+        return successResponse("Credential deleted successfully", "Deleted", 200, Json.emptyObject.set("id", result.id)); e", 200);
     }
 }

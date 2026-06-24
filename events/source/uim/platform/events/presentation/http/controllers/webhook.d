@@ -14,14 +14,16 @@ import uim.platform.events;
 class WebhookController : ManageHttpController {
     private ManageWebhooksUseCase usecase;
 
-    this(ManageWebhooksUseCase usecase) { this.usecase = usecase; }
+    this(ManageWebhooksUseCase usecase) {
+        this.usecase = usecase;
+    }
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        router.get("/api/v1/sap-event-mesh/webhooks",    &handleList);
-        router.get("/api/v1/sap-event-mesh/webhooks/*",  &handleGet);
-        router.post("/api/v1/sap-event-mesh/webhooks",   &handleCreate);
-        router.put("/api/v1/sap-event-mesh/webhooks/*",  &handleUpdate);
+        router.get("/api/v1/sap-event-mesh/webhooks", &handleList);
+        router.get("/api/v1/sap-event-mesh/webhooks/*", &handleGet);
+        router.post("/api/v1/sap-event-mesh/webhooks", &handleCreate);
+        router.put("/api/v1/sap-event-mesh/webhooks/*", &handleUpdate);
         router.delete_("/api/v1/sap-event-mesh/webhooks/*", &handleDelete);
     }
 
@@ -31,13 +33,10 @@ class WebhookController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-
-            auto items = usecase.listWebhooks(tenantId);
-            res.writeJsonBody(Json.emptyObject
+        auto items = usecase.listWebhooks(tenantId).map!(e => e.toJson).array.toJson;
+        return successResponse("Webhook list retrieved successfully", 200, Json.emptyObject
                 .set("count", items.length)
-                .set("resources", items.map!(e => e.toJson).array.toJson)
-                .set("message", "Webhook list retrieved successfully"), 200);
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+                .set("resources", items));
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -46,13 +45,12 @@ class WebhookController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto id = precheck.id;
-            auto e = usecase.getWebhook(tenantId, WebhookId(id));
-            if (e.isNull) { writeError(res, 404, "Webhook not found"); return; }
-            res.writeJsonBody(Json.emptyObject
-                .set("message", "Webhook retrieved successfully")
-                .set("resource", e.toJson), 200);
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+        auto id = precheck.id;
+        auto e = usecase.getWebhook(tenantId, WebhookId(id));
+        if (e.isNull)
+            return errorResponse("Webhook not found", 404);
+
+        return successResponse("Webhook retrieved successfully", 200, e.toJson);
     }
 
     override protected Json createHandler(HTTPServerRequest req) {
@@ -63,31 +61,31 @@ class WebhookController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-            WebhookDTO dto;
-            dto.webhookId        = WebhookId(precheck.id);
-            dto.tenantId         = tenantId;
-            dto.serviceId        = MessagingServiceId(data.getString("serviceId"));
-            dto.subscriptionId   = QueueSubscriptionId(data.getString("subscriptionId"));
-            dto.name             = data.getString("name");
-            dto.description      = data.getString("description");
-            dto.url              = data.getString("url");
-            dto.headers          = data.getString("headers");
-            dto.exemptHandshake  = data.getBoolean("exemptHandshake");
-            dto.authenticationType = data.getString("authenticationType");
-            dto.credentialsType  = data.getString("credentialsType");
-            dto.credentialGrant  = data.getString("credentialGrant");
-            dto.tokenUrl         = data.getString("tokenUrl");
-            dto.clientId         = data.getString("clientId");
-            dto.pushInterval     = data.getString("pushInterval");
-            dto.deliveryMode     = data.getString("deliveryMode");
-            dto.maxParallelity   = data.getString("maxParallelity");
-            dto.createdBy        = UserId(data.getString("createdBy"));
-            auto result = usecase.createWebhook(dto);
-            if (result.hasError)
+        WebhookDTO dto;
+        dto.webhookId = WebhookId(precheck.id);
+        dto.tenantId = tenantId;
+        dto.serviceId = MessagingServiceId(data.getString("serviceId"));
+        dto.subscriptionId = QueueSubscriptionId(data.getString("subscriptionId"));
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.url = data.getString("url");
+        dto.headers = data.getString("headers");
+        dto.exemptHandshake = data.getBoolean("exemptHandshake");
+        dto.authenticationType = data.getString("authenticationType");
+        dto.credentialsType = data.getString("credentialsType");
+        dto.credentialGrant = data.getString("credentialGrant");
+        dto.tokenUrl = data.getString("tokenUrl");
+        dto.clientId = data.getString("clientId");
+        dto.pushInterval = data.getString("pushInterval");
+        dto.deliveryMode = data.getString("deliveryMode");
+        dto.maxParallelity = data.getString("maxParallelity");
+        dto.createdBy = UserId(data.getString("createdBy"));
+        auto result = usecase.createWebhook(dto);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Webhook created"), 201);
-            } else { writeError(res, 400, result.message); }
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+
+        return successResponse("Webhook created successfully", 201, Json.emptyObject.set(
+                "id", result.id));
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -96,23 +94,23 @@ class WebhookController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto webhookId = WebhookId(precheck.id);
-            auto data = precheck.data;
-            WebhookDTO dto;
-            dto.tenantId       = tenantId;
-            dto.webhookId      = webhookId;
-            dto.url            = data.getString("url");
-            dto.description    = data.getString("description");
-            dto.headers        = data.getString("headers");
-            dto.pushInterval   = data.getString("pushInterval");
-            dto.maxParallelity = data.getString("maxParallelity");
-            dto.updatedBy      = UserId(data.getString("updatedBy"));
-            auto result = usecase.updateWebhook(dto);
-            if (result.hasError)
+        auto webhookId = WebhookId(precheck.id);
+        auto data = precheck.data;
+        WebhookDTO dto;
+        dto.tenantId = tenantId;
+        dto.webhookId = webhookId;
+        dto.url = data.getString("url");
+        dto.description = data.getString("description");
+        dto.headers = data.getString("headers");
+        dto.pushInterval = data.getString("pushInterval");
+        dto.maxParallelity = data.getString("maxParallelity");
+        dto.updatedBy = UserId(data.getString("updatedBy"));
+        auto result = usecase.updateWebhook(dto);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Webhook updated"), 200);
-            } else { writeError(res, 404, result.message); }
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+
+        return successResponse("Webhook updated successfully", 200, Json.emptyObject.set(
+                "id", result.id));
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -121,12 +119,15 @@ class WebhookController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto id = WebhookId(precheck.id);
-            auto result = usecase.deleteWebhook(tenantId, id);
-            if (result.hasError)
+        auto id = WebhookId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid webhook ID", 400);
+
+        auto result = usecase.deleteWebhook(tenantId, id);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Webhook deleted"), 200);
-            } else { writeError(res, 404, result.message); }
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+
+        return successResponse("Webhook deleted successfully", 200, Json.emptyObject.set(
+                "id", result.id));
     }
 }

@@ -40,8 +40,7 @@ class EquipmentController : ManageHttpController {
 
         auto resp = Json.emptyObject
             .set("count", items.length)
-            .set("resources", list)
-            .set("message", "Equipment list retrieved");
+            .set("resources", list);
 
         return successResponse("Equipment list retrieved successfully", "Retrieved", 200, resp);
     }
@@ -93,10 +92,9 @@ class EquipmentController : ManageHttpController {
         auto result = usecase.createEquipment(dto);
         if (result.hasError)
             return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Equipment created");
 
+        auto resp = Json.emptyObject
+            .set("id", result.id);
         return successResponse("Equipment created successfully", "Created", 201, resp);
     }
 
@@ -106,10 +104,13 @@ class EquipmentController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto path = precheck.path;
+        auto id = EquipmentId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid equipment ID", 400);
+
         auto data = precheck.data;
         EquipmentDTO dto;
-        dto.equipmentId = EquipmentId(precheck.id);
+        dto.equipmentId = id;
         dto.tenantId = tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
@@ -126,7 +127,6 @@ class EquipmentController : ManageHttpController {
         auto resp = Json.emptyObject.set("id", result.id);
 
         return successResponse("Equipment updated successfully", "Updated", 200, resp);
-
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -135,7 +135,6 @@ class EquipmentController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto path = precheck.path;
         auto id = EquipmentId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid equipment ID", 400);

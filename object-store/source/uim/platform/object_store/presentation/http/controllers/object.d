@@ -78,8 +78,7 @@ class ObjectController : ManageHttpController {
 
     auto resp = Json.emptyObject
       .set("items", arr)
-      .set("totalCount", objects.length)
-      .set("message", "Objects retrieved successfully");
+      .set("totalCount", objects.length);
 
     return successResponse("Objects retrieved successfully", "OK", 200, resp);
   }
@@ -93,6 +92,7 @@ class ObjectController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto id = StorageObjectId(precheck.id);
+
     // Check if this is a versions request
     if (id.value == "versions" || id.value == "copy")
       return errorResponse("Invalid object ID", 400);

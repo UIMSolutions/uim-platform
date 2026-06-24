@@ -85,8 +85,7 @@ class DataQualityScoreController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Data quality score created");
+            .set("id", result.id);
         return successResponse("Data quality score created successfully", "Created", 201, responseData);
     }
 

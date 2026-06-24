@@ -53,9 +53,9 @@ class DatabaseUserController : ManageHttpController {
     auto result = usecase.createDatabaseUser(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
+      
     auto resp = Json.emptyObject
-      .set("id", result.id)
-      .set("message", "Database user created");
+      .set("id", result.id);
 
     return successResponse("Database user created successfully", 201, resp);
   }

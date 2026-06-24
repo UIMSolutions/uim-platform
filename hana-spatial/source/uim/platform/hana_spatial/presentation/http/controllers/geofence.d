@@ -28,145 +28,132 @@ class GeofenceController : ManageHttpController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-              CreateGeofenceZoneRequest r;
-      r.tenantId = tenantId;
-      r.id = precheck.id;
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.shapeType = data.getString("shapeType");
-      r.centerLat = jsonDouble(j, "centerLat");
-      r.centerLon = jsonDouble(j, "centerLon");
-      r.radiusMeters = jsonDouble(j, "radiusMeters");
-      r.polygon = data.getString("polygon");
-      r.active = data.getBoolean("active");
-      r.metadata = jsonKeyValuePairs(j, "metadata");
+    auto data = precheck.data;
+    CreateGeofenceZoneRequest r;
+    r.tenantId = tenantId;
+    r.id = precheck.id;
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.shapeType = data.getString("shapeType");
+    r.centerLat = jsonDouble(j, "centerLat");
+    r.centerLon = jsonDouble(j, "centerLon");
+    r.radiusMeters = jsonDouble(j, "radiusMeters");
+    r.polygon = data.getString("polygon");
+    r.active = data.getBoolean("active");
+    r.metadata = jsonKeyValuePairs(j, "metadata");
 
-      auto result = usecase.create(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Geofence zone created"), 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto result = usecase.create(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    return successResponse("Geofence zone created successfully", 201, Json.emptyObject.set("id", result
+        .id));
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto items = usecase.list(tenantId);
+    auto tenantId = precheck.tenantId;
+    auto items = usecase.list(tenantId);
 
-      auto jarr = Json.emptyArray;
-      foreach (item; items) {
-        jarr ~= Json.emptyObject
-          .set("id", item.id.value)
-          .set("name", item.name)
-          .set("shapeType", item.shapeType.to!string)
-          .set("active", item.active)
-          .set("radiusMeters", item.radiusMeters)
-          .set("createdAt", item.createdAt);
-      }
-
-      res.writeJsonBody(Json.emptyObject.set("count", Json(items.length)).set("resources", jarr), 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
+    auto jarr = Json.emptyArray;
+    foreach (item; items) {
+      jarr ~= Json.emptyObject
+        .set("id", item.id.value)
+        .set("name", item.name)
+        .set("shapeType", item.shapeType.to!string)
+        .set("active", item.active)
+        .set("radiusMeters", item.radiusMeters)
+        .set("createdAt", item.createdAt);
     }
+
+    return successResponse("Geofence zones retrieved successfully", 200, Json.emptyObject.set("count", Json(
+        items.length)).set("resources", jarr));
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto item = usecase.getById(tenantId, id);
-      if (item.isNull)
-            return errorResponse("", 0);
-            
-      res.writeJsonBody(item.toJson(), 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto tenantId = precheck.tenantId;
+    auto id = precheck.id;
+    auto item = usecase.getById(tenantId, id);
+    if (item.isNull)
+      return errorResponse("Geofence zone not found", 404);
+
+    return successResponse("Geofence zone retrieved successfully", 200, item.toJson());
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto data = precheck.data;
-      UpdateGeofenceZoneRequest r;
-      r.tenantId = tenantId;
-      r.id = id;
-      r.name = data.getString("name");
-      r.description = data.getString("description");
-      r.radiusMeters = jsonDouble(j, "radiusMeters");
-      r.polygon = data.getString("polygon");
-      r.active = data.getBoolean("active");
+    auto tenantId = precheck.tenantId;
+    auto id = precheck.id;
+    auto data = precheck.data;
+    UpdateGeofenceZoneRequest r;
+    r.tenantId = tenantId;
+    r.id = id;
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.radiusMeters = jsonDouble(j, "radiusMeters");
+    r.polygon = data.getString("polygon");
+    r.active = data.getBoolean("active");
 
-      auto result = usecase.update(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Geofence zone updated"), 200);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto result = usecase.update(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    return successResponse("Geofence zone updated successfully", 200, Json.emptyObject.set(
+        "id", result.id));
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto result = usecase.remove(tenantId, id);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        res.writeJsonBody(Json.emptyObject.set("message", "Deleted"), 200);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto tenantId = precheck.tenantId;
+    auto id = precheck.id;
+    auto result = usecase.remove(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+    res.writeJsonBody(Json.emptyObject.set("message", "Deleted"), 200);
+  } else {
+    writeError(res, 404, result.message);
   }
+} catch (Exception e) {
+  writeError(res, 500, "Internal server error");
+}
+}
 
-  private void handleCheck(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
-      GeofenceCheckRequest r;
-      r.tenantId = tenantId;
-      r.zoneId = data.getString("zoneId");
-      r.latitude = jsonDouble(j, "latitude");
-      r.longitude = jsonDouble(j, "longitude");
+private void handleCheck(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  try {
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
+    GeofenceCheckRequest r;
+    r.tenantId = tenantId;
+    r.zoneId = data.getString("zoneId");
+    r.latitude = jsonDouble(j, "latitude");
+    r.longitude = jsonDouble(j, "longitude");
 
-      auto checkResult = usecase.checkPoint(r);
-      res.writeJsonBody(Json.emptyObject
+    auto checkResult = usecase.checkPoint(r);
+    res.writeJsonBody(Json.emptyObject
         .set("inside", checkResult.inside)
         .set("zoneId", checkResult.zoneId)
         .set("zoneName", checkResult.zoneName), 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+  } catch (Exception e) {
+    writeError(res, 500, "Internal server error");
   }
+}
 }

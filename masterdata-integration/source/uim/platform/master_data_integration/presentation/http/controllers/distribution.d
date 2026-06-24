@@ -60,8 +60,7 @@ class DistributionController : ManageHttpController {
       return errorResponse(result.message, 400);
 
     auto resp = Json.emptyObject
-      .set("id", result.id)
-      .set("message", "Distribution model created");
+      .set("id", result.id);
 
     return successResponse("Distribution model created successfully", 201, resp);
   }
@@ -151,10 +150,9 @@ class DistributionController : ManageHttpController {
     if (result.hasError)
       return errorResponse(result.message, 400);
     auto resp = Json.emptyObject
-      .set("id", result.id)
-      .set("message", "Distribution model deleted");
+      .set("id", result.id);
 
-    return successResponse("Distribution model deleted successfully", 204, resp);
+    return successResponse("Distribution model deleted successfully", "Deleted", 204, resp);
   }
 
   protected Json activateHandler(HTTPServerRequest req) {

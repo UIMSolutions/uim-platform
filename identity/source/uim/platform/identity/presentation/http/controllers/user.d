@@ -14,7 +14,9 @@ import uim.platform.identity;
 class UserController : ManageHttpController {
     private ManageUsersUseCase usecase;
 
-    this(ManageUsersUseCase usecase) { this.usecase = usecase; }
+    this(ManageUsersUseCase usecase) {
+        this.usecase = usecase;
+    }
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
@@ -32,13 +34,12 @@ class UserController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-            auto items = usecase.listUsers(tenantId);
-            auto list = items.map!(e => e.toJson()).array.toJson;
-            res.writeJsonBody(Json.emptyObject
-                .set("count", items.length)
-                .set("resources", jarr)
-                .set("message", "Users retrieved successfully"), 200);
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+        auto items = usecase.listUsers(tenantId).map!(e => e.toJson()).array.toJson;
+        auto responseDate = Json.emptyObject
+            .set("count", items.length)
+            .set("resources", items);
+
+        return successResponse("Users retrieved successfully", "Retrieved", 200, responseDate);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -47,11 +48,13 @@ class UserController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto id = UserId(precheck.id);
-            auto e = usecase.getUser(tenantId, id);
-            if (e.isNull) { writeError(res, 404, "User not found"); return; }
-            res.writeJsonBody(e.toJson(), 200);
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+        auto id = UserId(precheck.id);
+        auto e = usecase.getUser(tenantId, id);
+        if (e.isNull)
+            return errorResponse("User not found", 404);
+
+        return successResponse("User retrieved successfully", "Retrieved", 200, e.toJson);
+
     }
 
     override protected Json createHandler(HTTPServerRequest req) {
@@ -62,25 +65,27 @@ class UserController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-            UserDTO dto;
-            dto.userId = UserId(precheck.id);
-            dto.tenantId = tenantId;
-            dto.userName = data.getString("userName");
-            dto.email = data.getString("email");
-            dto.displayName = data.getString("displayName");
-            dto.firstName = data.getString("firstName");
-            dto.lastName = data.getString("lastName");
-            dto.phoneNumber = data.getString("phoneNumber");
-            dto.language = data.getString("language");
-            dto.locale = data.getString("locale");
-            dto.timeZone = data.getString("timeZone");
-            dto.type_ = data.getString("type");
-            dto.password = data.getString("password");
+        UserDTO dto;
+        dto.userId = UserId(precheck.id);
+        dto.tenantId = tenantId;
+        dto.userName = data.getString("userName");
+        dto.email = data.getString("email");
+        dto.displayName = data.getString("displayName");
+        dto.firstName = data.getString("firstName");
+        dto.lastName = data.getString("lastName");
+        dto.phoneNumber = data.getString("phoneNumber");
+        dto.language = data.getString("language");
+        dto.locale = data.getString("locale");
+        dto.timeZone = data.getString("timeZone");
+        dto.type_ = data.getString("type");
+        dto.password = data.getString("password");
 
-            auto result = usecase.createUser(dto);
-            if (!result.success) { writeError(res, 400, result.message); return; }
-            res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "User created successfully"), 201);
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+        auto result = usecase.createUser(dto);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        return successResponse("User created successfully", 201, Json.emptyObject.set("id", result
+                .id));
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -89,23 +94,25 @@ class UserController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto data = precheck.data;
-            UserDTO dto;
-            dto.userId = UserId(precheck.id);
-            dto.tenantId = tenantId;
-            dto.displayName = data.getString("displayName");
-            dto.firstName = data.getString("firstName");
-            dto.lastName = data.getString("lastName");
-            dto.phoneNumber = data.getString("phoneNumber");
-            dto.language = data.getString("language");
-            dto.locale = data.getString("locale");
-            dto.timeZone = data.getString("timeZone");
-            dto.status = data.getString("status");
+        auto data = precheck.data;
+        UserDTO dto;
+        dto.userId = UserId(precheck.id);
+        dto.tenantId = tenantId;
+        dto.displayName = data.getString("displayName");
+        dto.firstName = data.getString("firstName");
+        dto.lastName = data.getString("lastName");
+        dto.phoneNumber = data.getString("phoneNumber");
+        dto.language = data.getString("language");
+        dto.locale = data.getString("locale");
+        dto.timeZone = data.getString("timeZone");
+        dto.status = data.getString("status");
 
-            auto result = usecase.updateUser(dto);
-            if (!result.success) { writeError(res, 404, result.message); return; }
-            res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "User updated successfully"), 200);
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+        auto result = usecase.updateUser(dto);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        return successResponse("User updated successfully", 200, Json.emptyObject.set("id", result
+                .id));
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -114,10 +121,12 @@ class UserController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto id = UserId(precheck.id);
-            auto result = usecase.deleteUser(tenantId, id);
-            if (!result.success) { writeError(res, 404, result.message); return; }
-            res.writeJsonBody(Json.emptyObject.set("message", "User deleted successfully"), 200);
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+        auto id = UserId(precheck.id);
+        auto result = usecase.deleteUser(tenantId, id);
+        if (result.hasError)
+            return errorResponse(result.message, 404);
+
+        return successResponse("User deleted successfully", 200, Json.emptyObject.set("id", result
+                .id));
     }
 }

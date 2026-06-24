@@ -40,8 +40,7 @@ class ActivityController : ManageHttpController {
 
         auto resp = Json.emptyObject
             .set("count", items.length)
-            .set("resources", list)
-            .set("message", "Activities retrieved successfully");
+            .set("resources", list);
 
         return successResponse("Activities retrieved successfully", "Retrieved", 200, resp);
     }

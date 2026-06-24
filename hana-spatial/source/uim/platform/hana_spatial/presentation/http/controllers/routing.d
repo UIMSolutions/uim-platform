@@ -26,101 +26,85 @@ class RoutingController : ManageHttpController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-        ScanJobDTO dto;
-        dto.tenantId = tenantId;
-      CalculateRouteRequest r;
-      r.tenantId = tenantId;
-      r.id = precheck.id;
-      r.originLat = jsonDouble(j, "originLat");
-      r.originLon = jsonDouble(j, "originLon");
-      r.destinationLat = jsonDouble(j, "destinationLat");
-      r.destinationLon = jsonDouble(j, "destinationLon");
-      r.originLabel = data.getString("originLabel");
-      r.destinationLabel = data.getString("destinationLabel");
-      r.travelMode = data.getString("travelMode");
-      r.optimization = data.getString("optimization");
-      r.language = data.getString("language");
-      r.providerId = data.getString("providerId");
+    auto data = precheck.data;
+    ScanJobDTO dto;
+    dto.tenantId = tenantId;
+    CalculateRouteRequest r;
+    r.tenantId = tenantId;
+    r.id = precheck.id;
+    r.originLat = jsonDouble(j, "originLat");
+    r.originLon = jsonDouble(j, "originLon");
+    r.destinationLat = jsonDouble(j, "destinationLat");
+    r.destinationLon = jsonDouble(j, "destinationLon");
+    r.originLabel = data.getString("originLabel");
+    r.destinationLabel = data.getString("destinationLabel");
+    r.travelMode = data.getString("travelMode");
+    r.optimization = data.getString("optimization");
+    r.language = data.getString("language");
+    r.providerId = data.getString("providerId");
 
-      auto result = usecase.calculateRoute(r);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Route calculated"), 201);
-      } else {
-        writeError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto result = usecase.calculateRoute(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+    
+    return successResponse("Route calculated successfully", 201, Json.emptyObject.set("id", result.id));
+}
+
+override protected Json listHandler(HTTPServerRequest req) {
+  auto precheck = super.listHandler(req);
+  if (precheck.hasError)
+    return precheck;
+
+  auto tenantId = precheck.tenantId;
+  auto items = usecase.list(tenantId);
+
+  auto jarr = Json.emptyArray;
+  foreach (item; items) {
+    jarr ~= Json.emptyObject
+      .set("id", item.id.value)
+      .set("travelMode", item.travelMode.to!string)
+      .set("totalDistanceMeters", item.totalDistanceMeters)
+      .set("totalDurationSeconds", item.totalDurationSeconds)
+      .set("originLabel", item.originLabel)
+      .set("destinationLabel", item.destinationLabel)
+      .set("providerId", item.providerId)
+      .set("createdAt", item.createdAt);
   }
 
-  override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+  return successResponse("Routes retrieved successfully", "Retrieved", 200, Json.emptyObject.set("count", Json(items.length)).set("resources", jarr));
+}
 
-        auto tenantId = precheck.tenantId;
-      auto items = usecase.list(tenantId);
+override protected Json getHandler(HTTPServerRequest req) {
+  auto precheck = super.getHandler(req);
+  if (precheck.hasError)
+    return precheck;
 
-      auto jarr = Json.emptyArray;
-      foreach (item; items) {
-        jarr ~= Json.emptyObject
-          .set("id", item.id.value)
-          .set("travelMode", item.travelMode.to!string)
-          .set("totalDistanceMeters", item.totalDistanceMeters)
-          .set("totalDurationSeconds", item.totalDurationSeconds)
-          .set("originLabel", item.originLabel)
-          .set("destinationLabel", item.destinationLabel)
-          .set("providerId", item.providerId)
-          .set("createdAt", item.createdAt);
-      }
+  auto tenantId = precheck.tenantId;
+  auto id = precheck.id;
+  auto item = usecase.getById(tenantId, id);
+  if (item.isNull)
+    return errorResponse("Route not found", 404);
 
-      res.writeJsonBody(Json.emptyObject.set("count", Json(items.length)).set("resources", jarr), 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  return successResponse("Route retrieved successfully", "Retrieved", 200, item.toJson);
+}
 
-  override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+override protected Json deleteHandler(HTTPServerRequest req) {
+  auto precheck = super.deleteHandler(req);
+  if (precheck.hasError)
+    return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto item = usecase.getById(tenantId, id);
-      if (item.isNull)
-            return errorResponse("", 0);
-            
-      res.writeJsonBody(item.toJson(), 200);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  auto tenantId = precheck.tenantId;
+  auto id = precheck.id;
+  auto result = usecase.remove(tenantId, id);
+  if (result.hasError)
+    return errorResponse(result.message, 400);
 
-  override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
-
-        auto tenantId = precheck.tenantId;
-      auto id = precheck.id;
-      auto result = usecase.remove(tenantId, id);
-      if (result.hasError)
-            return errorResponse(result.message, 400);
-        res.writeJsonBody(Json.emptyObject.set("message", "Deleted"), 200);
-      } else {
-        writeError(res, 404, result.message);
-      }
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  return successResponse("Route deleted successfully", "Deleted", 200, Json.emptyObject);
+}
 }

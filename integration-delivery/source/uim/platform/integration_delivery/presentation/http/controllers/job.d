@@ -124,8 +124,8 @@ class JobController : ManageHttpController {
 
         auto result = jobs.deleteJob(tenantId, id);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.message).set("statusCode", 400);
+            return errorResponse(result.message, 400);
 
-        return Json.emptyObject.set("id", result.id).set("message", "Job deleted").set("status", "deleted").set("statusCode", 200);
+        return successResponse("Job deleted successfully", "Deleted", 200, Json.emptyObject.set("id", result.id));
     }
 }

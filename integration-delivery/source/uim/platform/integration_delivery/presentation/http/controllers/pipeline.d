@@ -56,7 +56,8 @@ class PipelineController : ManageHttpController {
         if (e.isNull)
             return Json.emptyObject.set("error", "Pipeline not found").set("statusCode", 404);
 
-        return e.toJson().set("message", "Pipeline retrieved successfully").set("status", "success").set("statusCode", 200);
+        return e.toJson().set("message", "Pipeline retrieved successfully")
+            .set("status", "success").set("statusCode", 200);
     }
 
     override protected Json createHandler(HTTPServerRequest req) {
@@ -79,7 +80,8 @@ class PipelineController : ManageHttpController {
         if (result.hasError)
             return Json.emptyObject.set("error", result.message).set("statusCode", 400);
 
-        return Json.emptyObject.set("id", result.id).set("message", "Pipeline created").set("status", "created").set("statusCode", 201);
+        return Json.emptyObject.set("id", result.id).set("message", "Pipeline created").set("status", "created").set(
+            "statusCode", 201);
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -91,7 +93,7 @@ class PipelineController : ManageHttpController {
         auto data = precheck.data;
         auto id = PipelineId(precheck.id);
         if (id.isNull)
-            return Json.emptyObject.set("error", "Invalid pipeline ID").set("statusCode", 400);
+            return errorResponse("Invalid pipeline ID", 400);
 
         PipelineDTO dto;
         dto.tenantId = tenantId;
@@ -105,7 +107,8 @@ class PipelineController : ManageHttpController {
         if (result.hasError)
             return Json.emptyObject.set("error", result.message).set("statusCode", 400);
 
-        return Json.emptyObject.set("id", result.id).set("message", "Pipeline updated").set("status", "updated").set("statusCode", 200);
+        return Json.emptyObject.set("id", result.id).set("message", "Pipeline updated").set("status", "updated").set(
+            "statusCode", 200);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -116,12 +119,13 @@ class PipelineController : ManageHttpController {
         auto tenantId = precheck.tenantId;
         auto id = PipelineId(precheck.id);
         if (id.isNull)
-            return Json.emptyObject.set("error", "Invalid pipeline ID").set("statusCode", 400);
+            return errorResponse("Invalid pipeline ID", 400);
 
         auto result = pipelines.deletePipeline(tenantId, id);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.message).set("statusCode", 400);
+            return errorResponse(result.message, 400);
 
-        return Json.emptyObject.set("id", result.id).set("message", "Pipeline deleted").set("status", "deleted").set("statusCode", 200);
+        return successResponse("Pipeline deleted successfully", "Deleted", 200, Json.emptyObject.set("id", result
+                .id));
     }
 }

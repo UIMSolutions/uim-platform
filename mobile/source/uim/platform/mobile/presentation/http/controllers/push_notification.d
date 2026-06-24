@@ -53,8 +53,7 @@ class PushNotificationController : ManageHttpController {
     if (result.hasError)
       return errorResponse(result.message, 400);
     auto resp = Json.emptyObject
-      .set("id", result.id)
-      .set("message", "Push notification sent successfully");
+      .set("id", result.id);
 
     return successResponse("Push notification sent successfully", "Created", 201, resp);
   }

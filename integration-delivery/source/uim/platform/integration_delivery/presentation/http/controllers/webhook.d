@@ -54,9 +54,9 @@ class WebhookController : ManageHttpController {
 
         auto e = webhooks.getWebhook(tenantId, id);
         if (e.isNull)
-            return Json.emptyObject.set("error", "Webhook not found").set("statusCode", 404);
+            return errorResponse("Webhook not found", 404);
 
-        return e.toJson().set("message", "Webhook retrieved successfully").set("status", "success").set("statusCode", 200);
+        return successResponse("Webhook retrieved successfully", "Retrieved", 200, e.toJson());
     }
 
     override protected Json createHandler(HTTPServerRequest req) {
@@ -75,9 +75,9 @@ class WebhookController : ManageHttpController {
 
         auto result = webhooks.createWebhook(dto);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.message).set("statusCode", 400);
+        return errorResponse(result.message, 400);
 
-        return Json.emptyObject.set("id", result.id).set("message", "Webhook created").set("status", "created").set("statusCode", 201);
+    return successResponse("Webhook created successfully", "Created", 201, Json.emptyObject.set("id", result.id));
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -89,7 +89,7 @@ class WebhookController : ManageHttpController {
         auto data = precheck.data;
         auto id = WebhookId(precheck.id);
         if (id.isNull)
-            return Json.emptyObject.set("error", "Invalid webhook ID").set("statusCode", 400);
+        return errorResponse("Invalid webhook ID", 400);
 
         WebhookDTO dto;
         dto.tenantId = tenantId;
@@ -100,9 +100,9 @@ class WebhookController : ManageHttpController {
 
         auto result = webhooks.updateWebhook(dto);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.message).set("statusCode", 400);
+            return errorResponse(result.message, 400);
 
-        return Json.emptyObject.set("id", result.id).set("message", "Webhook updated").set("status", "updated").set("statusCode", 200);
+        return successResponse("Webhook updated successfully", "Updated", 200, Json.emptyObject.set("id", result.id));
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -113,12 +113,12 @@ class WebhookController : ManageHttpController {
         auto tenantId = precheck.tenantId;
         auto id = WebhookId(precheck.id);
         if (id.isNull)
-            return Json.emptyObject.set("error", "Invalid webhook ID").set("statusCode", 400);
+            return errorResponse("Invalid webhook ID", 400);
 
         auto result = webhooks.deleteWebhook(tenantId, id);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.message).set("statusCode", 400);
+            return errorResponse(result.message, 400);
 
-        return Json.emptyObject.set("id", result.id).set("message", "Webhook deleted").set("status", "deleted").set("statusCode", 200);
+        return successResponse("Webhook deleted successfully", "Deleted", 200, Json.emptyObject.set("id", result.id));
     }
 }

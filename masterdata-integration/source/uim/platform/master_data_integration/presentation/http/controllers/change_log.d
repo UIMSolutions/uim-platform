@@ -48,14 +48,11 @@ class ChangeLogController : HttpController {
 
     }
 
-    auto entries = changeLogs.query(r);
-
-    auto arr = entries.map!(e => e.toJson).array.toJson;
+    auto entries = changeLogs.query(r).map!(e => e.toJson).array.toJson;
 
     auto resp = Json.emptyObject
-      .set("items", arr)
-      .set("totalCount", Json(entries.length))
-      .set("message", "Change log entries retrieved successfully");
+      .set("items", entries)
+      .set("totalCount", entries.length);
 
     // Provide the last delta token for incremental polling
     if (entries.length > 0)

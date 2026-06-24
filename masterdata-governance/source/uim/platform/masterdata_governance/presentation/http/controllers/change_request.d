@@ -133,8 +133,7 @@ class ChangeRequestController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Change request updated");
+            .set("id", result.id);
         return successResponse("Change request updated successfully", "Updated", 200, responseData);
     }
 
