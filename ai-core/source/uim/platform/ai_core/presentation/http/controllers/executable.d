@@ -112,10 +112,9 @@ class ExecutableController : ManageHttpController {
       .set("versionId", e.versionId)
       .set("deployable", e.deployable)
       .set("createdAt", e.createdAt)
-      .set("updatedAt", e.updatedAt)
-      .set("message", "Executable retrieved");
+      .set("updatedAt", e.updatedAt);
 
-    return successResponse("Scan job retrieved successfully", "Retrieved", 200, responseData);
+    return successResponse("Executable retrieved successfully", "Retrieved", 200, responseData);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {

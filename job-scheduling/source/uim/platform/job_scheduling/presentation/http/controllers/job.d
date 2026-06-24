@@ -179,14 +179,7 @@ class JobController : ManageHttpController {
         return successResponse("Job counts retrieved successfully", 200, resp);
     }
 
-    protected void handleCount(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto response = countHandler(req);
-            res.writeJsonBody(response, response.code);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+    mixin(HandleTemplate!("handleCount", "countHandler"));
 
     protected Json searchHandler(HTTPServerRequest req) {
         auto precheck = super.getHandler(req);
@@ -196,22 +189,15 @@ class JobController : ManageHttpController {
         auto tenantId = precheck.tenantId;
         auto query = req.params.get("q", "");
 
-        auto jobs = usecase.searchJobs(tenantId, query);
-        auto jarr = jobs.map!(job => job.toJson).array.toJson;
+        auto jobs = usecase.searchJobs(tenantId, query).map!(job => job.toJson).array.toJson;
 
         auto resp = Json.emptyObject
             .set("total", jobs.length)
-            .set("results", jarr);
+            .set("results", jobs);
 
         return successResponse("Job search completed successfully", 200, resp);
     }
 
-    protected void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto response = searchHandler(req);
-            res.writeJsonBody(response, response.code);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+    mixin(HandleTemplate!("handleSearch", "searchHandler"));
+
 }

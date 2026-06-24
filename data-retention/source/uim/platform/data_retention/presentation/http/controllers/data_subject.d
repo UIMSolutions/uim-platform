@@ -143,14 +143,7 @@ class DataSubjectController : ManageHttpController {
         return successResponse("Data subject blocked successfully", "Blocked", 200, response);
     }
 
-    protected void handleBlock(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto response = blockHandler(req);
-            res.writeJsonBody(response, response.code);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+    mixin(HandleTemplate!("handleBlock", "blockHandler"));
 
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto precheck = super.deleteHandler(req);

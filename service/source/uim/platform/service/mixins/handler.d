@@ -7,19 +7,19 @@ import uim.platform.service;
 @safe:
 
 string handleTemplate(string handleName, string handlerMethod) {
-    return `
-    protected void ` ~ handleName ~ `(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+  return `
+    protected void `
+    ~ handleName ~ `(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto response = ` ~ handlerMethod ~ `(req);
-            res.writeJsonBody(response, response.code);
+          auto response = `
+    ~ handlerMethod ~ `(req);
+          res.writeJsonBody(response, response.code);
         } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
+          writeError(res, 500, "Internal server error");
         }
     }`;
 }
 
-
-
 template HandleTemplate(string handleName, string handlerMethod) {
-    const char[] HandleTemplate = handleTemplate(handleName, handlerMethod);
+  const char[] HandleTemplate = handleTemplate(handleName, handlerMethod);
 }

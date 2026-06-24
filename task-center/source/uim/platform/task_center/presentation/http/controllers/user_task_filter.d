@@ -136,14 +136,7 @@ class UserTaskFilterController : ManageHttpController {
         return successResponse("Filter set as default successfully", "Updated", 200, responseData);
     }
 
-    protected void handleSetDefault(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto response = setDefaultHandler(req);
-            res.writeJsonBody(response, response.code);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+    mixin(HandleTemplate!("handleSetDefault", "setDefaultHandler"));
 
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto precheck = super.deleteHandler(req);
@@ -152,6 +145,9 @@ class UserTaskFilterController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto id = UserTaskFilterId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid filter ID", 400);
+            
         auto result = usecase.deleteFilter(tenantId, id);
         if (result.hasError)
             return errorResponse(result.message, 400);

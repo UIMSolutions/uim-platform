@@ -115,9 +115,11 @@ class TranslationJobController : ManageHttpController {
         // Path is /api/v1/translation/jobs/{id}/cancel — extract id from second-to-last segment
         auto path = precheck.path;
         auto parts = path.split("/");
-        string id = parts.length >= 2 ? parts[$ - 2] : "";
+        auto id = TranslationJobId(parts.length >= 2 ? parts[$ - 2] : "");
+        if (id.isNull)
+            return errorResponse("Invalid translation job ID", 400);
 
-        auto result = usecase.cancelJob(tenantId, TranslationJobId(id));
+        auto result = usecase.cancelJob(tenantId, id);
         if (result.hasError)
             return errorResponse(result.message, 400);
 
@@ -125,12 +127,6 @@ class TranslationJobController : ManageHttpController {
                 "status", "cancelled"));
     }
 
-    protected void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto response = cancelHandler(req);
-            res.writeJsonBody(response.body, response.code);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+    mixin(HandleTemplate!("handleCancel", "cancelHandler"));
+
 }

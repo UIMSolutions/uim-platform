@@ -88,10 +88,12 @@ class FeatureRestrictionController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
-    auto result = usecase.get(id);
+    auto id = FeatureRestrictionId(precheck.id);
+
+    auto result = usecase.get(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
+
     auto resp = Json.emptyObject
       .set("id", Json(result.data.id))
       .set("tenantId", Json(result.data.tenantId))
@@ -103,8 +105,7 @@ class FeatureRestrictionController : ManageHttpController {
       .set("percentage", Json(result.data.percentage))
       .set("whitelist", toJsonArray(result.data.whitelist))
       .set("metadata", Json(result.data.metadata))
-      .set("createdBy", Json(result.data.createdBy))
-      .set("message", "Feature restriction retrieved successfully");
+      .set("createdBy", Json(result.data.createdBy));
 
     return successResponse("Feature restriction retrieved successfully", "Retrieved", 200, resp);
   }
@@ -142,7 +143,10 @@ class FeatureRestrictionController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto id = FeatureRestrictionId(precheck.id);
-    auto result = usecase.deleteFeatureRestriction(id);
+    if (id.isNull)
+      return errorResponse("Invalid feature restriction ID", 400);
+      
+    auto result = usecase.deleteFeatureRestriction(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
     

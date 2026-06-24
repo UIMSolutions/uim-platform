@@ -51,14 +51,7 @@ class RunLogController : ManageHttpController {
         return successResponse("Run log list retrieved successfully", "Retrieved", 200, resp);
     }
 
-    protected void handleListBySchedule(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto response = listByScheduleHandler(req);
-            res.writeJsonBody(response, response.code);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+    mixin(HandleTemplate!("handleListBySchedule", "listByScheduleHandler"));
 
     protected Json listByJobHandler(HTTPServerRequest req) {
         auto precheck = super.getHandler(req);
@@ -81,14 +74,7 @@ class RunLogController : ManageHttpController {
         return successResponse("Run log list retrieved successfully", "Retrieved", 200, resp);
     }
 
-    protected void handleListByJob(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto response = listByJobHandler(req);
-            res.writeJsonBody(response, response.code);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+    mixin(HandleTemplate!("handleListByJob", "listByJobHandler"));
 
     protected Json updateStatusHandler(HTTPServerRequest req) {
         auto precheck = super.putHandler(req);
@@ -118,14 +104,7 @@ class RunLogController : ManageHttpController {
         return successResponse("Run log updated successfully", "Updated", 200, resp);
     }
 
-    protected void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto response = updateStatusHandler(req);
-            res.writeJsonBody(response, response.code);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+    mixin(HandleTemplate!("handleUpdateStatus", "updateStatusHandler"));
 
     // Extract jobId from path: /api/v1/scheduler/jobs/{jobId}/runLogs
     private static string extractJobId(string path) {

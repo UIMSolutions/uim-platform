@@ -187,15 +187,8 @@ class ScheduleController : ManageHttpController {
 
         return successResponse("All schedules updated successfully", "Updated", 200, resp);
     }
-
-    protected void handleActivateAll(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto response = activateAllHandler(req);
-            res.writeJsonBody(response, response.code);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+    
+    mixin(HandleTemplate!("handleActivateAll", "activateAllHandler"));
 
     protected Json searchHandler(HTTPServerRequest req) {
         auto precheck = super.listHandler(req);
@@ -218,14 +211,7 @@ class ScheduleController : ManageHttpController {
         return successResponse("Search completed successfully", "Retrieved", 200, resp);
     }
 
-    protected void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto response = searchHandler(req);
-            res.writeJsonBody(response, response.code);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+    mixin(HandleTemplate!("handleSearch", "searchHandler"));
 
     // Extract jobId from path: /api/v1/scheduler/jobs/{jobId}/schedules
     private static string extractJobIdFromSchedulePath(string path) {

@@ -154,14 +154,7 @@ class TaskDefinitionController : ManageHttpController {
         return successResponse("Task definition activated successfully", "Activated", 200, resp);
     }
 
-    protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto response = activateHandler(req);
-            res.writeJsonBody(response, response.code);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+    mixin(HandleTemplate!("handleActivate", "activateHandler"));
 
     protected Json deactivateHandler(HTTPServerRequest req) {
         auto precheck = super.postHandler(req);
@@ -186,14 +179,7 @@ class TaskDefinitionController : ManageHttpController {
         return successResponse("Task definition deactivated successfully", "Deactivated", 200, resp);
     }
 
-    protected void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto response = deactivateHandler(req);
-            res.writeJsonBody(response, response.code);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+    mixin(HandleTemplate!("handleDeactivate", "deactivateHandler"));
 
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto precheck = super.deleteHandler(req);

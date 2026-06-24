@@ -56,14 +56,7 @@ class ProcessInstanceController : ManageHttpController {
         return successResponse("Process instance started successfully", "Started", 201, resp);
     }
 
-    protected void handleStart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto response = startHandler(req);
-            res.writeJsonBody(response, response.code);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+    mixin(HandleTemplate!("handleStart", "startHandler"));
 
     override protected Json listHandler(HTTPServerRequest req) {
         auto precheck = super.listHandler(req);
@@ -154,14 +147,7 @@ class ProcessInstanceController : ManageHttpController {
         return successResponse("Action performed successfully", "Performed", 200, resp);
     }
 
-    protected void handleAction(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto response = actionHandler(req);
-            res.writeJsonBody(response, response.code);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+    mixin(HandleTemplate!("handleAction", "actionHandler"));
 
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto precheck = super.deleteHandler(req);

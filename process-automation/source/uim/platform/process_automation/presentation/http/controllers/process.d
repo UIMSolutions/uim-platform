@@ -177,14 +177,7 @@ class ProcessController : ManageHttpController {
         return successResponse("Process deployment action performed successfully", "Deployed", 200, resp);
     }
 
-    protected void handleDeploy(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto response = deplpyHandler(req);
-            res.writeJsonBody(response, response.code);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+    mixin(HandleTemplate!("handleDeploy", "deplpyHandler"));
 
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto precheck = super.deleteHandler(req);

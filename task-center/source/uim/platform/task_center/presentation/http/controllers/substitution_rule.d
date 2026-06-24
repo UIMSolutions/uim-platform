@@ -147,14 +147,7 @@ class SubstitutionRuleController : ManageHttpController {
         return successResponse("Substitution rule activated successfully", "Updated", 200, responseData);
     }
 
-    protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto response = activateHandler(req);
-            res.writeJsonBody(response, response.code);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+    mixin(HandleTemplate!("handleActivate", "activateHandler"));
 
     protected Json deactivateHandler(HTTPServerRequest req) {
         auto precheck = super.postHandler(req);
@@ -176,14 +169,7 @@ class SubstitutionRuleController : ManageHttpController {
         return successResponse("Substitution rule deactivated successfully", "Updated", 200, responseData);
     }
 
-    protected void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto response = deactivateHandler(req);
-            res.writeJsonBody(response, response.code);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+    mixin(HandleTemplate!("handleDeactivate", "deactivateHandler"));
 
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto precheck = super.deleteHandler(req);

@@ -149,14 +149,7 @@ class TaskProviderController : ManageHttpController {
         return successResponse("Provider activated successfully", "Updated", 200, responseData);
     }
 
-    protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto response = activateHandler(req);
-            res.writeJsonBody(response, response.code);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+    mixin(HandleTemplate!("handleActivate", "activateHandler"));
 
     protected Json deactivateHandler(HTTPServerRequest req) {
         auto precheck = super.postHandler(req);
@@ -179,14 +172,7 @@ class TaskProviderController : ManageHttpController {
         return successResponse("Provider deactivated successfully", "Updated", 200, responseData);
     }
 
-    protected void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto response = deactivateHandler(req);
-            res.writeJsonBody(response, response.code);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+    mixin(HandleTemplate!("handleDeactivate", "deactivateHandler"));
 
     protected Json syncHandler(HTTPServerRequest req) {
         auto precheck = super.postHandler(req);
@@ -209,14 +195,7 @@ class TaskProviderController : ManageHttpController {
         return successResponse("Provider sync initiated successfully", "Updated", 200, responseData);
     }
 
-    protected void handleSync(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto response = syncHandler(req);
-            res.writeJsonBody(response, response.code);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+    mixin(HandleTemplate!("handleSync", "syncHandler"));
 
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto precheck = super.deleteHandler(req);
@@ -225,6 +204,9 @@ class TaskProviderController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto id = TaskProviderId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid provider ID", 400);
+
         auto result = usecase.deleteProvider(tenantId, id);
         if (result.hasError)
             return errorResponse(result.message, 400);

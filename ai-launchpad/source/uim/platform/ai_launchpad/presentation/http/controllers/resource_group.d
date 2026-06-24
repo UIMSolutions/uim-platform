@@ -69,8 +69,7 @@ class ResourceGroupController : ManageHttpController {
       return errorResponse(result.message, 400);
 
     auto resp = Json.emptyObject
-      .set("id", result.id)
-      .set("message", "Resource group created");
+      .set("id", result.id);
 
     return successResponse("Resource group created successfully", "Created", 201, resp);
   }

@@ -154,14 +154,7 @@ class RegisteredApplicationController : ManageHttpController {
         return successResponse("Application activated", "Activated", 200, resp);
     }
 
-    protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto response = activateHandler(req);
-            res.writeJsonBody(response, response.code);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+    mixin(HandleTemplate!("handleActivate", "activateHandler"));
 
     protected Json suspendHandler(HTTPServerRequest req) {
         auto precheck = super.postHandler(req);
@@ -186,14 +179,7 @@ class RegisteredApplicationController : ManageHttpController {
         return successResponse("Application suspended", "Suspended", 200, resp);
     }
 
-    protected void handleSuspend(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto response = suspendHandler(req);
-            res.writeJsonBody(response, response.code);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+    mixin(HandleTemplate!("handleSuspend", "suspendHandler"));
 
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto precheck = super.deleteHandler(req);
@@ -210,9 +196,7 @@ class RegisteredApplicationController : ManageHttpController {
             return errorResponse(result.message);
 
         auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Application deleted");
-
+            .set("id", result.id);
         return successResponse("Application deleted", "Deleted", 200, resp);
     }
 }

@@ -82,8 +82,7 @@ class TopicController : ManageHttpController {
       return errorResponse(result.message, 400);
 
     auto resp = Json.emptyObject
-      .set("id", result.id)
-      .set("message", "Topic created");
+      .set("id", result.id);
 
     return successResponse("Topic created successfully", "Created", 201, resp);
   }
@@ -130,8 +129,7 @@ class TopicController : ManageHttpController {
     auto responseData = Json.emptyObject.set("id", result.id);
 
     auto resp = Json.emptyObject
-      .set("id", result.id)
-      .set("message", "Topic updated");
+      .set("id", result.id);
 
     return successResponse("Topic updated successfully", "Updated", 200, resp);
   }

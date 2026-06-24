@@ -110,8 +110,9 @@ class ConnectionController : ManageHttpController {
     auto result = usecase.patchConnection(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
+      
     auto resp = Json.emptyObject
-      .set("message", "Connection updated");
+      .set("id", result.id);
 
     return successResponse("Connection updated successfully", 200, resp);
   }

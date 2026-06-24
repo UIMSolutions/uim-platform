@@ -112,14 +112,7 @@ class EventMessageController : ManageHttpController {
         return successResponse("Event message published successfully", "Published", 201, resp);
     }
 
-    protected void handlePublish(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto response = publishHandler(req);
-            res.writeJsonBody(response.data, response.code);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+    mixin(HandleTemplate!("handlePublish", "publishHandler"));
 
     protected Json acknowledgeHandler(HTTPServerRequest req) {
         auto precheck = super.putHandler(req);
@@ -142,14 +135,8 @@ class EventMessageController : ManageHttpController {
 
         return successResponse("Event message acknowledged successfully", "Acknowledged", 200, resp);
     }
-    protected void handleAcknowledge(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto response = acknowledgeHandler(req);
-            res.writeJsonBody(response.data, response.code);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+
+    mixin(HandleTemplate!("handleAcknowledge", "acknowledgeHandler"));
 
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto precheck = super.deleteHandler(req);

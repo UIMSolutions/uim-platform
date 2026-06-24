@@ -171,14 +171,7 @@ class TaskController : ManageHttpController {
         return successResponse("Task claimed successfully", "Claimed", 200, resp);
     }
 
-    protected void handleClaim(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto response = claimHandler(req);
-            res.writeJsonBody(response, response.code);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+    mixin(HandleTemplate!("handleClaim", "claimHandler"));
 
     protected Json releaseHandler(HTTPServerRequest req) {
         auto precheck = super.getHandler(req);
@@ -201,14 +194,7 @@ class TaskController : ManageHttpController {
         return successResponse("Task released successfully", "Released", 200, resp);
     }
 
-    protected void handleRelease(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto response = releaseHandler(req);
-            res.writeJsonBody(response, response.code);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+    mixin(HandleTemplate!("handleRelease", "releaseHandler"));
 
     protected Json forwardHandler(HTTPServerRequest req) {
         auto precheck = super.getHandler(req);
@@ -231,20 +217,11 @@ class TaskController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Task forwarded");
-
+            .set("id", result.id);
         return successResponse("Task forwarded successfully", "Forwarded", 200, resp);
     }
 
-    protected void handleForward(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto response = forwardHandler(req);
-            res.writeJsonBody(response, response.code);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+    mixin(HandleTemplate!("handleForward", "forwardHandler"));
 
     protected Json completeHandler(HTTPServerRequest req) {
         auto precheck = super.getHandler(req);
@@ -269,14 +246,7 @@ class TaskController : ManageHttpController {
         return successResponse("Task completed successfully", "Completed", 200, resp);
     }
 
-    protected void handleComplete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto response = completeHandler(req);
-            res.writeJsonBody(response, response.code);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+    mixin(HandleTemplate!("handleComplete", "completeHandler"));
 
     protected Json cancelHandler(HTTPServerRequest req) {
         auto precheck = super.getHandler(req);
@@ -285,11 +255,11 @@ class TaskController : ManageHttpController {
 
         auto path = precheck.path;
         auto stripped = path[0 .. $ - 7]; // remove "/cancel"
+
+        auto tenantId = precheck.tenantId;
         auto id = TaskId(extractIdFromPath(stripped));
         if (id.isNull)
             return errorResponse("Invalid task ID", 400);
-
-        auto tenantId = precheck.tenantId;
 
         auto result = usecase.cancelTask(tenantId, id);
         if (result.hasError)
@@ -300,14 +270,7 @@ class TaskController : ManageHttpController {
         return successResponse("Task cancelled successfully", "Cancelled", 200, resp);
     }
 
-    protected void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto response = cancelHandler(req);
-            res.writeJsonBody(response, response.code);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+    mixin(HandleTemplate!("handleCancel", "cancelHandler"));
 
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto precheck = super.deleteHandler(req);

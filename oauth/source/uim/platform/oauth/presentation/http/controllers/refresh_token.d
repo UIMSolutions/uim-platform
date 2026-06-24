@@ -94,8 +94,9 @@ class RefreshTokenController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto path = precheck.path;
         auto id = RefreshTokenId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid refresh token ID", 400);
 
         auto result = usecase.revokeToken(tenantId, id);
         if (result.hasError)
@@ -105,14 +106,7 @@ class RefreshTokenController : ManageHttpController {
         return successResponse("", 0, responseData);
     }
 
-    protected void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto response = revokeHandler(req);
-            res.writeJsonBody(response, response.code);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+    mixin(HandleTemplate!("handleRevoke", "revokeHandler"));
 
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto precheck = super.deleteHandler(req);
@@ -120,8 +114,9 @@ class RefreshTokenController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto path = precheck.path;
         auto id = RefreshTokenId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid refresh token ID", 400);
 
         auto result = usecase.deleteToken(tenantId, id);
         if (result.hasError)
