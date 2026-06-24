@@ -57,10 +57,9 @@ class DocumentController : HttpController {
       return errorResponse(result.message, 400);
     auto resp = Json.emptyObject
       .set("id", result.id)
-      .set("status", Json("pending"))
-      .set("message", "Document uploaded for processing");
+      .set("status", Json("pending"));
 
-    return successResponse("Document uploaded successfully", 201, resp);
+    return successResponse("Document uploaded successfully", "Uploaded", 201, resp);
   }
 
   mixin(HandleTemplate!("handleUpload", "uploadHandler"));

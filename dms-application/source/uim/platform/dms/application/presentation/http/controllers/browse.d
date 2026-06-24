@@ -145,8 +145,7 @@ class BrowseController : HttpController {
       return errorResponse(result.message, 400);
 
     auto resp = Json.emptyObject
-      .set("deleted", true)
-      .set("message", "Favorite removed successfully");
+      .set("deleted", true);
 
     return successResponse("Favorite removed successfully", "Deleted", 200, resp);
   }

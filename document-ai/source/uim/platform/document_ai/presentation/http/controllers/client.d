@@ -109,10 +109,9 @@ class ClientController : ManageHttpController {
       return errorResponse(result.message, 400);
 
     auto resp = Json.emptyObject
-      .set("id", result.id)
-      .set("message", "Client updated");
+      .set("id", result.id);
 
-    return successResponse("Client updated successfully", 200, resp);
+    return successResponse("Client updated successfully", "Updated", 200, resp);
   }
 
   mixin(HandleTemplate!("handlePatch", "patchHandler"));

@@ -105,8 +105,7 @@ class SpaceController : ManageHttpController {
       .set("priority", s.priority)
       .set("enableAuditLog", s.enableAuditLog)
       .set("createdAt", s.createdAt)
-      .set("updatedAt", s.updatedAt)
-      .set("message", "Space retrieved successfully");
+      .set("updatedAt", s.updatedAt);
 
     return successResponse("Space retrieved successfully", 200, resp);
   }
@@ -140,6 +139,8 @@ class SpaceController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto id = SpaceId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid space ID", 400);
 
     auto result = usecase.deleteSpace(tenantId, id);
     if (result.hasError)

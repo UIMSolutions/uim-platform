@@ -54,8 +54,7 @@ class DocumentTypeController : ManageHttpController {
     if (result.hasError)
       return errorResponse(result.message, 400);
     auto resp = Json.emptyObject
-      .set("id", result.id)
-      .set("message", "Document type created");
+      .set("id", result.id);
 
     return successResponse("Document type created successfully", 201, resp);
   }

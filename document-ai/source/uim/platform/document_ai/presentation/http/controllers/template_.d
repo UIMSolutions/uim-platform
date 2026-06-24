@@ -137,7 +137,7 @@ class TemplateController : ManageHttpController {
       return errorResponse(result.message, 400);
       
     auto resp = Json.emptyObject
-      .set("message", "Template deleted");
+      .set("id", result.id);
 
     return successResponse("Template deleted successfully", 200, resp);
   }

@@ -126,8 +126,7 @@ class VersionController : ManageHttpController {
 
     auto resp = Json.emptyObject
       .set("items", arr)
-      .set("totalCount", Json(versions.length))
-      .set("message", "Document versions retrieved successfully");
+      .set("totalCount", Json(versions.length));
 
     return successResponse("Document versions retrieved successfully", "Retrieved", 200, resp);
   }

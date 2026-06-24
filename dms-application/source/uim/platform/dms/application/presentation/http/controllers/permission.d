@@ -75,8 +75,7 @@ class PermissionController : ManageHttpController {
 
     auto resp = Json.emptyObject
       .set("items", arr)
-      .set("totalCount", items.length)
-      .set("message", "Permissions for resource retrieved successfully");
+      .set("totalCount", items.length);
 
     return successResponse("Permissions for resource retrieved successfully", "Retrieved", 200, resp);
   }
@@ -96,8 +95,7 @@ class PermissionController : ManageHttpController {
 
     auto resp = Json.emptyObject
       .set("items", arr)
-      .set("totalCount", items.length)
-      .set("message", "Permissions for user retrieved successfully");
+      .set("totalCount", items.length);
 
     return successResponse("Permissions for user retrieved successfully", "Retrieved", 200, resp);
   }
@@ -123,8 +121,7 @@ class PermissionController : ManageHttpController {
       .set("resourceId", Json(resourceId))
       .set("resourceType", Json(resourceType.to!string))
       .set("userId", Json(userId.value))
-      .set("requiredLevel", Json(required.to!string))
-      .set("message", "Access check completed");
+      .set("requiredLevel", Json(required.to!string));
 
     return successResponse("Access check completed", "Checked", 200, resp);
   }
@@ -138,6 +135,9 @@ class PermissionController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto id = PermissionId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid permission ID", 400);
+
     auto data = precheck.data;
     auto r = UpdatePermissionRequest();
     r.id = id;
@@ -149,7 +149,7 @@ class PermissionController : ManageHttpController {
       return errorResponse(result.message, 400);
 
     auto responseData = Json.emptyObject.set("id", result.id);
-    return successResponse("Permission updated successfully", 200, responseData);
+    return successResponse("Permission updated successfully", "Updated", 200, responseData);
   }
 
   protected Json revokeHandler(HTTPServerRequest req) {
@@ -159,14 +159,16 @@ class PermissionController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto id = PermissionId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid permission ID", 400);
 
     auto result = permissions.revokePermission(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 404);
 
     auto resp = Json.emptyObject
-      .set("deleted", true)
-      .set("message", "Permission revoked");
+      .set("id", result.id)
+      .set("deleted", true);
 
     return successResponse("Permission revoked successfully", "Revoked", 200, resp);
   }

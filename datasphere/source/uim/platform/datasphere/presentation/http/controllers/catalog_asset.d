@@ -143,8 +143,7 @@ class CatalogAssetController : ManageHttpController {
           .array.toJson)
       .set("accessCount", ca.accessCount)
       .set("createdAt", ca.createdAt)
-      .set("updatedAt", ca.updatedAt)
-      .set("message", "Catalog asset retrieved successfully");
+      .set("updatedAt", ca.updatedAt);
 
     return successResponse("Catalog asset retrieved successfully", 200, resp);
   }
@@ -156,6 +155,9 @@ class CatalogAssetController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto id = CatalogAssetId(precheck.id);
+    if (id.isEmpty)
+      return errorResponse("Invalid catalog asset ID", 400);
+      
     auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
     auto result = assets.deleteCatalogAsset(tenantId, spaceId, id);

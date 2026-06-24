@@ -132,8 +132,7 @@ class RepositoryController : ManageHttpController {
 
     auto resp = Json.emptyObject
       .set("id", result.id)
-      .set("status", Json("active"))
-      .set("message", "Repository activated successfully");
+      .set("status", "active");
 
     return successResponse("Repository activated successfully", "Activated", 200, resp);
   }
@@ -154,8 +153,7 @@ class RepositoryController : ManageHttpController {
 
     auto resp = Json.emptyObject
       .set("id", result.id)
-      .set("status", Json("archived"))
-      .set("message", "Repository archived successfully");
+      .set("status", Json("archived"));
 
     return successResponse("Repository archived successfully", "Archived", 200, resp);
   }
@@ -169,6 +167,8 @@ class RepositoryController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto id = RepositoryId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid repository ID", 400);
 
     auto result = usecase.deleteRepository(tenantId, id);
     if (result.hasError)

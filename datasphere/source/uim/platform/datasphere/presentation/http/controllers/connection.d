@@ -109,10 +109,9 @@ class ConnectionController : ManageHttpController {
       .set("isValid", c.isValid)
       .set("statusMessage", c.statusMessage)
       .set("createdAt", c.createdAt)
-      .set("updatedAt", c.updatedAt)
-      .set("message", "Connection retrieved successfully");
+      .set("updatedAt", c.updatedAt);
 
-    return successResponse("Connection retrieved successfully", 200, resp);
+    return successResponse("Connection retrieved successfully", "Retrieved", 200, resp);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
@@ -122,6 +121,9 @@ class ConnectionController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto id = ConnectionId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid connection ID", 400);
+      
     auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
 
     auto result = usecase.deleteConnection(tenantId, spaceId, id);

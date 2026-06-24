@@ -111,10 +111,9 @@ class DataAccessControlController : ManageHttpController {
       .set("assignedUserIds", dac.assignedUserIds.map!(v => v.toJson)
           .array.toJson)
       .set("createdAt", dac.createdAt)
-      .set("updatedAt", dac.updatedAt)
-      .set("message", "Data access control retrieved successfully");
+      .set("updatedAt", dac.updatedAt);
 
-    return successResponse("Data access control retrieved successfully", 200, resp);
+    return successResponse("Data access control retrieved successfully", "Retrieved", 200, resp);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {

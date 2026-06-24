@@ -156,8 +156,7 @@ protected Json listChildrenHandler(HTTPServerRequest req) {
 
   auto resp = Json.emptyObject
     .set("items", arr)
-    .set("totalCount", subfolders.length)
-    .set("message", "Child folders retrieved successfully");
+    .set("totalCount", subfolders.length);
 
   return successResponse("", "Retrieved", 200, resp);
 }

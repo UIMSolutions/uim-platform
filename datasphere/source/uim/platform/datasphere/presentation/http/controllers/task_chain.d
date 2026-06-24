@@ -105,10 +105,9 @@ class TaskChainController : ManageHttpController {
       .set("lastRunDurationMs", tc.lastRunDurationMs)
       .set("lastRunMessage", tc.lastRunMessage)
       .set("createdAt", tc.createdAt)
-      .set("updatedAt", tc.updatedAt)
-      .set("message", "Task chain retrieved successfully");
+      .set("updatedAt", tc.updatedAt);
 
-    return successResponse("Task chain retrieved successfully", 200, resp);
+    return successResponse("Task chain retrieved successfully", "Retrieved", 200, resp);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
