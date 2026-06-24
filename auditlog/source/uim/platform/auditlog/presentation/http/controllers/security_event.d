@@ -63,8 +63,7 @@ class SecurityEventController : HttpController {
       return errorResponse(result.message, 400);
 
     auto resp = Json.emptyObject
-      .set("id", result.id)
-      .set("message", "Security event recorded");
+      .set("id", result.id);
 
     return successResponse("Security event recorded successfully", 201, resp);
   }

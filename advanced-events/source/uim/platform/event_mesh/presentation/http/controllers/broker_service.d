@@ -53,7 +53,6 @@ class BrokerServiceController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto path = precheck.path;
     auto id = BrokerServiceId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid broker service ID", "BadRequest", 400);
@@ -107,7 +106,6 @@ class BrokerServiceController : ManageHttpController {
 
     auto resp = Json.emptyObject
       .set("id", service.id);
-
     return successResponse("Broker service created successfully", "Created", 201, resp);
   }
 

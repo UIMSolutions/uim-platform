@@ -109,8 +109,7 @@ class PromptCollectionController : ManageHttpController {
     if (result.hasError)
       return errorResponse(result.message, 400);
     auto resp = Json.emptyObject
-      .set("id", result.id)
-      .set("message", "Prompt collection updated");
+      .set("id", result.id);
 
     return successResponse("Prompt collection updated successfully", 200, resp);
   }

@@ -75,12 +75,11 @@ class ValidateController : HttpController {
     if (results is null)
       return errorResponse("Failed to validate batch", 500);
 
-    auto arr = results.map!(res_ => res_.toJson).array.toJson;
+    auto items = results.map!(res_ => res_.toJson).array.toJson;
 
     auto resp = Json.emptyObject
-      .set("results", arr)
-      .set("totalCount", Json(results.length))
-      .set("message", "Validation results retrieved successfully");
+      .set("results", items)
+      .set("totalCount", items.length);
 
     return successResponse("Validation completed successfully", 200, resp);
   }

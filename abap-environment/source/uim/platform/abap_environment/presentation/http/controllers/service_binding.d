@@ -10,7 +10,6 @@ module uim.platform.abap_environment.presentation.http.controllers.service_bindi
 // import uim.platform.abap_environment.application.dto;
 // import uim.platform.abap_environment.domain.entities.service_binding;
 
-
 import uim.platform.abap_environment;
 
 // // mixin(ShowModule!());
@@ -68,16 +67,11 @@ class ServiceBindingController : ManageHttpController {
     r.bindingType = data.getString("bindingType");
 
     auto result = usecase.createServiceBinding(r);
-    if (result.hasError()) {
-      return Json.emptyObject
-        .set("status", 400)
-        .set("error", result.message)
-        .set("message", "Failed to create service binding");
-    }
-    return Json.emptyObject
-      .set("id", result.id)
-      .set("status", 201)
-      .set("message", "Service binding created");
+    if (result.hasError())
+      return errorResponse(result.message, 400);
+
+    return successResponse("Service binding created successfully", 201, Json.emptyObject.set("id", result
+        .id));
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
@@ -89,16 +83,10 @@ class ServiceBindingController : ManageHttpController {
     auto id = ServiceBindingId(precheck.id);
 
     auto binding = usecase.getServiceBinding(tenantId, id);
-    if (binding.isNull) {
-      return Json.emptyObject
-        .set("status", 404)
-        .set("error", "Service binding not found")
-        .set("message", "Service binding not found");
-    }
-    return Json.emptyObject
-      .set("item", binding.toJson)
-      .set("status", 200)
-      .set("message", "Service binding retrieved successfully");
+    if (binding.isNull) 
+      return errorResponse("Service binding not found", 404);
+
+    return successResponse("Service binding retrieved successfully", 200, Json.emptyObject.set("item", binding.toJson));
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
@@ -117,15 +105,11 @@ class ServiceBindingController : ManageHttpController {
     r.status = data.getString("status");
 
     auto result = usecase.updateServiceBinding(r);
-    if (result.hasError()) {
-      return Json.emptyObject
-        .set("status", 404)
-        .set("error", result.message)
-        .set("message", "Service binding not found");
-    }
-    return Json.emptyObject
-      .set("status", 200)
-      .set("message", "Service binding updated");
+    if (result.hasError()) 
+      return errorResponse(result.message, 400);
+
+
+    return successResponse("Service binding updated successfully", 200, Json.emptyObject.set("id", result.id));
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
@@ -135,16 +119,13 @@ class ServiceBindingController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto id = ServiceBindingId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid service binding ID", 400);
 
     auto result = usecase.deleteServiceBinding(tenantId, id);
-    if (result.hasError()) {
-      return Json.emptyObject
-        .set("status", 404)
-        .set("error", result.message)
-        .set("message", "Service binding not found");
-    }
-    return Json.emptyObject
-      .set("status", 200)
-      .set("message", "Service binding deleted");
+    if (result.hasError()) 
+      return errorResponse(result.message, 400);
+
+    return successResponse("Service binding deleted successfully", 200, Json.emptyObject.set("id", result.id));
   }
 }

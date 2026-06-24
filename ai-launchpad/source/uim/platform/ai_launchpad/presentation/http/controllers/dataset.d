@@ -126,7 +126,7 @@ class DatasetController : ManageHttpController {
       return errorResponse(result.message, 400);
 
     auto responseData = Json.emptyObject
-      .set("message", "Dataset updated successfully");
+      .set("id", result.id);
 
     return successResponse("Dataset updated successfully", 200, responseData);
   }
@@ -137,10 +137,10 @@ class DatasetController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-
     auto id = DatasetId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid dataset ID", 400);
+      
     auto connectionId = ConnectionId(req.headers.get("X-Connection-Id", ""));
     auto result = usecase.deleteDataset(tenantId, connectionId, id);
     if (result.hasError)

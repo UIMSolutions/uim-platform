@@ -34,12 +34,12 @@ class ActivityController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
 
-    auto activities = usecase.listActivities(tenantId);
-    auto list = activities.map!(item => item.toJson).array.toJson;
+    auto activities = usecase.listActivities(tenantId).map!(item => item.toJson).array.toJson;
 
     auto responseData = Json.emptyObject
-      .set("count", list.length)
-      .set("resources", list);
+      .set("count", activities.length)
+      .set("resources", activities);
+
     return successResponse("Activity list retrieved successfully", "Retrieved", 200, responseData);
   }
 

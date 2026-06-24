@@ -53,7 +53,7 @@ class RemoteTableController : ManageHttpController {
       return errorResponse(result.message, 400);
 
     auto responseData = Json.emptyObject.set("id", result.id);
-    return successResponse("Remote table created successfully", 0, responseData);
+    return successResponse("Remote table created successfully", 200, responseData);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
@@ -113,8 +113,7 @@ class RemoteTableController : ManageHttpController {
       .set("rowCount", rt.rowCount)
       .set("lastReplicatedAt", rt.lastReplicatedAt)
       .set("createdAt", rt.createdAt)
-      .set("updatedAt", rt.updatedAt)
-      .set("message", "Remote table retrieved successfully");
+      .set("updatedAt", rt.updatedAt);
 
     return successResponse("Remote table retrieved successfully", 200, resp);
   }

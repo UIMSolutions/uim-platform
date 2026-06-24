@@ -113,8 +113,7 @@ class ConnectorController : ManageHttpController {
       return errorResponse(result.message, 400);
 
     auto resp = Json.emptyObject
-      .set("status", "acknowledged")
-      .set("message", "Heartbeat received");
+      .set("status", "acknowledged");
 
     return successResponse("Heartbeat received successfully", "Acknowledged", 200, resp);
   }

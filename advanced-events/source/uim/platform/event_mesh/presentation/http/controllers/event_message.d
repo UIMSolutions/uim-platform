@@ -106,8 +106,7 @@ class EventMessageController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Event message published");
+            .set("id", result.id);
 
         return successResponse("Event message published successfully", "Published", 201, resp);
     }
@@ -120,8 +119,6 @@ class EventMessageController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto path = precheck.path;
-
         auto id = EventMessageId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid message ID", 400);

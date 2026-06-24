@@ -49,8 +49,7 @@ class ConfigChangeController : HttpController {
       return errorResponse(result.message, 400);
 
     auto resp = Json.emptyObject
-      .set("id", result.id)
-      .set("message", "Config change log entry created");
+      .set("id", result.id);
 
     return successResponse("Config change log entry created successfully", "Created", 201, resp);
   }
