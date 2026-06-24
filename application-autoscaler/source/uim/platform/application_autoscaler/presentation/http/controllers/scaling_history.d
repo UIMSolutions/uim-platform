@@ -57,14 +57,7 @@ class ScalingHistoryController : ManageHttpController {
     return successResponse("Scaling event list retrieved successfully", "Retrieved", 200, responseData);
   }
 
-  protected void handleListByApp(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = listByAppHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleListByApp", "listByAppHandler"));
 
   // GET /api/v1/scaling-history/{id}
   override protected Json getHandler(HTTPServerRequest req) {

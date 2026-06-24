@@ -159,14 +159,7 @@ class AppController : ManageHttpController {
     return successResponse("Application started successfully", "Started", 200, responseData);
   }
 
-  protected void handleStart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = startHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleStart", "startHandler"));
 
   protected Json stopHandler(HTTPServerRequest req) {
     auto precheck = super.postHandler(req);
@@ -186,14 +179,7 @@ class AppController : ManageHttpController {
     return successResponse("Application stopped successfully", "Stopped", 200, responseData);
   }
 
-  protected void handleStop(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = stopHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleStop", "stopHandler"));
 
   protected Json restartHandler(HTTPServerRequest req) {
     auto precheck = super.postHandler(req);
@@ -262,14 +248,7 @@ class AppController : ManageHttpController {
     return successResponse("Application environment variables retrieved successfully", "Retrieved", 200, responseData);
   }
 
-  protected void handleEnv(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = envHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleEnv", "envHandler"));
 
   protected Json setEnvHandler(HTTPServerRequest req) {
     auto precheck = super.putHandler(req);
@@ -292,14 +271,7 @@ class AppController : ManageHttpController {
     return successResponse("Application environment variables updated successfully", "Updated", 200, responseData);
   }
 
-  protected void handleSetEnv(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = setEnvHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleSetEnv", "setEnvHandler"));
 
   override protected Json deleteHandler(HTTPServerRequest req) {
     auto precheck = super.deleteHandler(req);

@@ -65,14 +65,7 @@ class ServiceController : ManageHttpController {
     return successResponse("Service instance created successfully", 201, responseData);
   }
 
-  protected void handleCreateInstance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = createInstanceHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleCreateInstance", "createInstanceHandler"));
 
   protected Json listInstancesHandler(HTTPServerRequest req) {
     auto precheck = super.listHandler(req);
@@ -90,14 +83,7 @@ class ServiceController : ManageHttpController {
     return successResponse("Service instances retrieved successfully", 200, responseData);
   }
 
-  protected void handleListInstances(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = listInstancesHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleListInstances", "listInstancesHandler"));
 
   protected Json getInstanceHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);
@@ -117,14 +103,7 @@ class ServiceController : ManageHttpController {
     return successResponse("Service instance retrieved successfully", 200, responseData);
   }
 
-  protected void handleGetInstance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = getInstanceHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleGetInstance", "getInstanceHandler"));
 
   protected Json updateInstanceHandler(HTTPServerRequest req) {
     auto precheck = super.updateHandler(req);
@@ -152,14 +131,7 @@ class ServiceController : ManageHttpController {
     return successResponse("Service instance updated successfully", 200, responseData);
   }
 
-  protected void handleUpdateInstance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = updateInstanceHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleUpdateInstance", "updateInstanceHandler"));
 
   protected Json deleteInstanceHandler(HTTPServerRequest req) {
     auto precheck = super.deleteHandler(req);
@@ -176,14 +148,7 @@ class ServiceController : ManageHttpController {
     return successResponse("Service instance deleted successfully", 200, responseData);
   }
 
-  protected void handleDeleteInstance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = deleteInstanceHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleDeleteInstance", "deleteInstanceHandler"));
 
   // --- Service Bindings ---
   protected Json createBindingHandler(HTTPServerRequest req) {

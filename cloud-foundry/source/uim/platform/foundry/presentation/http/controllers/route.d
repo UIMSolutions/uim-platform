@@ -67,14 +67,7 @@ class RouteController : ManageHttpController {
     return successResponse("Route created successfully", 201, responseData);
   }
 
-    protected void handleCreateRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = createRouteHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleCreateRoute", "createRouteHandler"));
 
   protected Json listRoutesHandler(HTTPServerRequest req) {
     auto precheck = super.listHandler(req);
@@ -166,14 +159,7 @@ class RouteController : ManageHttpController {
     return successResponse("Route mapped to app successfully", 200, responseData);
   }
 
-  protected void handleMapRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = mapRouteHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleMapRoute", "mapRouteHandler"));
 
   protected Json unmapRouteHandler(HTTPServerRequest req) {
     auto precheck = super.postHandler(req);
@@ -250,14 +236,7 @@ class RouteController : ManageHttpController {
     return successResponse("Domain list retrieved successfully", 200, responseData);
   }
 
-  protected void handleListDomains(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = listDomainsHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleListDomains", "listDomainsHandler"));
 
   protected Json deleteDomainHandler(HTTPServerRequest req) {
     auto precheck = super.deleteHandler(req);
@@ -277,12 +256,6 @@ class RouteController : ManageHttpController {
     return successResponse("Domain deleted successfully", 200, responseData);
   }
 
-  protected void handleDeleteDomain(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = deleteDomainHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleDeleteDomain", "deleteDomainHandler"));
+
 }

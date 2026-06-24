@@ -81,14 +81,6 @@ class MetaController : HttpController {
     return successResponse("Meta information retrieved successfully", "Retrieved", 200, j);
   }
 
+  mixin(HandleTemplate!("handleMeta", "metaHandler"));
 
-
-  protected void handleMeta(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = metaHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
 }

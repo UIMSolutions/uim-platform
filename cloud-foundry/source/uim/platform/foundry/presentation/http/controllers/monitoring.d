@@ -64,14 +64,7 @@ class MonitoringController : HttpController {
     return successResponse("Application health summary retrieved successfully", "Retrieved", 200, responseData);
   }
 
-  protected void handleAppHealth(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = appHealthHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleAppHealth", "appHealthHandler"));
 
   protected Json spaceUsageHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);
@@ -100,14 +93,8 @@ class MonitoringController : HttpController {
 
     return successResponse("Space usage retrieved successfully", "Retrieved", 200, responseData);
   }
-  protected void handleSpaceUsage(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = spaceUsageHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+
+  mixin(HandleTemplate!("handleSpaceUsage", "spaceUsageHandler"));
 
   private static Json serializeHealth(const AppHealthSummary h) {
     return Json.emptyObject

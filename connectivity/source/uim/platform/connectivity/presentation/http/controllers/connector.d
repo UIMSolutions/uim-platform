@@ -139,14 +139,7 @@ class ConnectorController : ManageHttpController {
     return successResponse("Connector unregistered successfully", "Deleted", 200, resp);
   }
 
-  protected void handleUnregister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = unregisterHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleUnregister", "unregisterHandler"));
 
   private static string[] splitPath(string uri) {
     // import std.string : indexOf, split;

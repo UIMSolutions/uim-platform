@@ -53,13 +53,6 @@ class DataAccessController : HttpController {
     return successResponse("Data access log written successfully", 201, responseData);
   }
 
-  protected void handleWrite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = writeHandler(req);
-      res.writeJsonBody(response, response.code);
+  mixin(HandleTemplate!("handleWrite", "writeHandler"));
 
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
 }

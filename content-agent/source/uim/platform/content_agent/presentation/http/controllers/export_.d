@@ -51,14 +51,7 @@ class ExportController : ManageHttpController {
     return successResponse("Export started successfully", "Created", 201, responseData);
   }
 
-  protected void handleStartExport(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = startExportHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleStartExport", "startExportHandler"));
 
   override protected Json listHandler(HTTPServerRequest req) {
     auto precheck = super.listHandler(req);

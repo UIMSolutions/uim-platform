@@ -83,12 +83,6 @@ class TokenController : HttpController {
     return successResponse("Access token issued successfully", "Issued", 200, resp);
   }
 
-  protected void handleGetToken(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = tokenHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleGetToken", "tokenHandler"));
+
 }
