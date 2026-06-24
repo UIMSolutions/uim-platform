@@ -154,14 +154,7 @@ class KeyringController : ManageHttpController {
     return successResponse("Keyring disabled successfully", "Disabled", 200, resp);
   }
 
-  protected void handleDisable(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = disableHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleDisable", "disableHandler"));
 
   override protected Json deleteHandler(HTTPServerRequest req) {
     auto precheck = super.deleteHandler(req);

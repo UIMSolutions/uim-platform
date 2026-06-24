@@ -148,14 +148,7 @@ class PackageController : ManageHttpController {
     return successResponse("Package assembled successfully", "Assembled", 200, responseData);
   }
 
-  protected void handleAssemble(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = assembleHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleAssemble", "assembleHandler"));
 
   private static ContentItem[] parseContentItems(Json j) {
     ContentItem[] items;

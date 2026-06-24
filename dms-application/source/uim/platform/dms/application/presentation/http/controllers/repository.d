@@ -130,25 +130,17 @@ class RepositoryController : ManageHttpController {
     if (result.hasError)
       return errorResponse(result.message, 404);
 
-      auto resp = Json.emptyObject
-        .set("id", result.id)
-        .set("status", Json("active"))
-        .set("message", "Repository activated successfully");
+    auto resp = Json.emptyObject
+      .set("id", result.id)
+      .set("status", Json("active"))
+      .set("message", "Repository activated successfully");
 
-      return successResponse("Repository activated successfully", "Activated", 200, resp);
+    return successResponse("Repository activated successfully", "Activated", 200, resp);
   }
 
-  protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = activateHandler(req);
+  mixin(HandleTemplate!("handleActivate", "activateHandler"));
 
-        res.writeJsonBody(response, response.code);
-      } catch (Exception e) {
-        writeError(res, 500, "Internal server error");
-      }
-  }
-
-protected Json archiveHandler(HTTPServerRequest req) {
+  protected Json archiveHandler(HTTPServerRequest req) {
     auto precheck = super.postHandler(req);
     if (precheck.hasError)
       return precheck;
@@ -160,12 +152,12 @@ protected Json archiveHandler(HTTPServerRequest req) {
     if (result.hasError)
       return errorResponse(result.message, 404);
 
-      auto resp = Json.emptyObject
-        .set("id", result.id)
-        .set("status", Json("archived"))
-        .set("message", "Repository archived successfully");
+    auto resp = Json.emptyObject
+      .set("id", result.id)
+      .set("status", Json("archived"))
+      .set("message", "Repository archived successfully");
 
-      return successResponse("Repository archived successfully", "Archived", 200, resp);
+    return successResponse("Repository archived successfully", "Archived", 200, resp);
   }
 
   mixin(HandleTemplate!("handleArchive", "archiveHandler"));

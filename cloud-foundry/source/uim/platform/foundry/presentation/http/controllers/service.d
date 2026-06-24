@@ -174,14 +174,7 @@ class ServiceController : ManageHttpController {
     return successResponse("Service binding created successfully", 201, responseData);
   }
 
-  protected void handleCreateBinding(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = createBindingHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleCreateBinding", "createBindingHandler"));
 
   protected Json listBindingsHandler(HTTPServerRequest req) {
     auto precheck = super.listHandler(req);
@@ -198,14 +191,7 @@ class ServiceController : ManageHttpController {
     return successResponse("Service bindings retrieved successfully", 200, responseData);
   }
 
-  protected void handleListBindings(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = listBindingsHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleListBindings", "listBindingsHandler"));
 
   protected Json deleteBindingHandler(HTTPServerRequest req) {
     auto precheck = super.deleteHandler(req);
@@ -225,12 +211,6 @@ class ServiceController : ManageHttpController {
     return successResponse("Service binding deleted successfully", 200, responseData);
   }
 
-  protected void handleDeleteBinding(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = deleteBindingHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleDeleteBinding", "deleteBindingHandler"));
+
 }

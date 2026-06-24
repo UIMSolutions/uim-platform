@@ -114,14 +114,7 @@ class CatalogAssetController : ManageHttpController {
     return successResponse("Catalog assets retrieved successfully", 0, resp);
   }
 
-  protected void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = searchHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleSearch", "searchHandler"));
 
   override protected Json getHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);

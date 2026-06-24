@@ -141,14 +141,7 @@ class ModelController : ManageHttpController {
     return successResponse("Model configuration activated successfully", 200, responseData);
   }
 
-  protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = activateHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleActivate", "activateHandler"));
 
   protected Json trainHandler(HTTPServerRequest req) {
     auto precheck = super.postHandler(req);
@@ -173,14 +166,7 @@ class ModelController : ManageHttpController {
     return successResponse("Model training started successfully", "Running", 202, responseData);
   }
 
-  protected void handleTrain(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = trainHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleTrain", "trainHandler"));
 
   override protected Json deleteHandler(HTTPServerRequest req) {
     auto precheck = super.deleteHandler(req);

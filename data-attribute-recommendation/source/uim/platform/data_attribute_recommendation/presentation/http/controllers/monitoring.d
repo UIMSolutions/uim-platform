@@ -47,14 +47,7 @@ class MonitoringController : HttpController {
     return successResponse( "Training job list retrieved successfully", 200, responseData);
   }
 
-  protected void handleListJobs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = listJobsHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleListJobs", "listJobsHandler"));
 
   protected Json getJobHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);
@@ -74,14 +67,7 @@ class MonitoringController : HttpController {
     return successResponse( "Training job retrieved successfully", 200, responseData);
   }
 
-  protected void handleGetJob(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-     auto response = getJobHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleGetJob", "getJobHandler"));
 
   protected Json listDeploymentsHandler(HTTPServerRequest req) {
      auto precheck = super.getHandler(req);
@@ -99,14 +85,7 @@ class MonitoringController : HttpController {
     return successResponse("Deployment list retrieved successfully", 200, responseData);
   }
 
-  protected void handleListDeployments(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = listDeploymentsHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleListDeployments", "listDeploymentsHandler"));
 
   protected Json pipelineHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);
@@ -128,12 +107,6 @@ class MonitoringController : HttpController {
     return successResponse("Pipeline summary retrieved successfully", 200, responseData);
   }
 
-  protected void handleGetPipeline(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = pipelineHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleGetPipeline", "pipelineHandler"));
+
 }

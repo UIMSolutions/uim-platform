@@ -106,13 +106,7 @@ class ConsentController : ManageHttpController {
     return successResponse("Active consent record list retrieved successfully", "Retrieved", 200, responseData);
   }
 
-  protected void handleListActive(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = listActiveHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
-  }
+  mixin(HandleTemplate!("handleListActive", "listActiveHandler"));
 
   override protected Json getHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);
@@ -135,11 +129,14 @@ class ConsentController : ManageHttpController {
     if (precheck.hasError)
       return precheck;
 
-    auto tenantId = precheck.tenantId;
-    auto data = precheck.data;
+    auto tenantId = precheck.tenantId; // Assuming tenantId is passed in the request data for revocation
+    auto id = ConsentRecordId(precheck.id); // Assuming the ID is passed in the request data for revocation
+    if (id.isNull)
+      return errorResponse("Invalid consent record ID", 400);
+
     RevokeConsentRequest r;
-    r.id = ConsentRecordId(precheck.id);
     r.tenantId = tenantId;
+    r.id = id;
 
     auto result = usecase.revokeConsent(r);
     if (result.hasError)
@@ -149,13 +146,7 @@ class ConsentController : ManageHttpController {
     return successResponse("Consent revoked successfully", "Updated", 200, responseData);
   }
 
-  protected void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto response = revokeHandler(req);
-      res.writeJsonBody(response, response.code);
-    } catch (Exception e)
-      writeError(res, 500, "Internal server error");
-  }
+  mixin(HandleTemplate!("handleRevoke", "revokeHandler"));
 
   override protected Json deleteHandler(HTTPServerRequest req) {
     auto precheck = super.deleteHandler(req);
@@ -164,6 +155,8 @@ class ConsentController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto id = ConsentRecordId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid consent record ID", 400);
 
     auto result = usecase.deleteConsent(tenantId, id);
     if (result.hasError)
