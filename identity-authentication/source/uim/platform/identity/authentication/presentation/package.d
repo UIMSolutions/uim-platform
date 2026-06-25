@@ -10,6 +10,8 @@ public {
   import uim.platform.identity.authentication.presentation.web;
   import uim.platform.identity.authentication.presentation.api;
   import uim.platform.identity.authentication.presentation.gui;
+  import uim.platform.identity.authentication.presentation.rest;
+
     // import uim.platform.identity.authentication.presentation.components;
     // import uim.platform.identity.authentication.presentation.pages;
     // import uim.platform.identity.authentication.presentation.routes;
