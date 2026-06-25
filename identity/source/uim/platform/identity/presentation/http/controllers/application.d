@@ -14,7 +14,9 @@ import uim.platform.identity;
 class ApplicationController : ManageHttpController {
     private ManageApplicationsUseCase usecase;
 
-    this(ManageApplicationsUseCase usecase) { this.usecase = usecase; }
+    this(ManageApplicationsUseCase usecase) {
+        this.usecase = usecase;
+    }
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
@@ -32,13 +34,11 @@ class ApplicationController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-            auto items = usecase.listApplications(tenantId);
-            auto list = items.map!(e => e.toJson()).array.toJson;
-            res.writeJsonBody(Json.emptyObject
+        auto items = usecase.listApplications(tenantId);
+        auto list = items.map!(e => e.toJson()).array.toJson;
+        return successResponse("Applications retrieved successfully", "OK", 200, Json.emptyObject
                 .set("count", items.length)
-                .set("resources", jarr)
-                .set("message", "Applications retrieved successfully"), 200);
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+                .set("resources", list));
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -47,11 +47,12 @@ class ApplicationController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto id = ApplicationId(precheck.id);
-            auto e = usecase.getApplication(tenantId, id);
-            if (e.isNull) { writeError(res, 404, "Application not found"); return; }
-            res.writeJsonBody(e.toJson(), 200);
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+        auto id = ApplicationId(precheck.id);
+        auto e = usecase.getApplication(tenantId, id);
+        if (e.isNull)
+            return errorResponse("Application not found", 404);
+
+        return successResponse("Application retrieved successfully", "OK", 200, e.toJson());
     }
 
     override protected Json createHandler(HTTPServerRequest req) {
@@ -62,21 +63,21 @@ class ApplicationController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-            ApplicationDTO dto;
-            dto.applicationId = ApplicationId(precheck.id);
-            dto.tenantId = tenantId;
-            dto.name = data.getString("name");
-            dto.description = data.getString("description");
-            dto.protocol = data.getString("protocol");
-            dto.clientId = data.getString("clientId");
-            dto.authScheme = data.getString("authScheme");
-            dto.logoUrl = data.getString("logoUrl");
-            dto.homepageUrl = data.getString("homepageUrl");
-            dto.multiTenantEnabled = data.getBoolean("multiTenantEnabled");
-            dto.riskBasedAuthEnabled = data.getBoolean("riskBasedAuthEnabled");
+        ApplicationDTO dto;
+        dto.applicationId = ApplicationId(precheck.id);
+        dto.tenantId = tenantId;
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.protocol = data.getString("protocol");
+        dto.clientId = data.getString("clientId");
+        dto.authScheme = data.getString("authScheme");
+        dto.logoUrl = data.getString("logoUrl");
+        dto.homepageUrl = data.getString("homepageUrl");
+        dto.multiTenantEnabled = data.getBoolean("multiTenantEnabled");
+        dto.riskBasedAuthEnabled = data.getBoolean("riskBasedAuthEnabled");
 
-            auto result = usecase.createApplication(dto);
-            if (result.hasError)
+        auto result = usecase.createApplication(dto);
+        if (result.hasError)
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
@@ -89,20 +90,20 @@ class ApplicationController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto data = precheck.data;
-            ApplicationDTO dto;
-            dto.applicationId = ApplicationId(precheck.id);
-            dto.tenantId = tenantId;
-            dto.name = data.getString("name");
-            dto.description = data.getString("description");
-            dto.status = data.getString("status");
-            dto.logoUrl = data.getString("logoUrl");
-            dto.homepageUrl = data.getString("homepageUrl");
-            dto.multiTenantEnabled = data.getBoolean("multiTenantEnabled");
-            dto.riskBasedAuthEnabled = data.getBoolean("riskBasedAuthEnabled");
+        auto data = precheck.data;
+        ApplicationDTO dto;
+        dto.applicationId = ApplicationId(precheck.id);
+        dto.tenantId = tenantId;
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.status = data.getString("status");
+        dto.logoUrl = data.getString("logoUrl");
+        dto.homepageUrl = data.getString("homepageUrl");
+        dto.multiTenantEnabled = data.getBoolean("multiTenantEnabled");
+        dto.riskBasedAuthEnabled = data.getBoolean("riskBasedAuthEnabled");
 
-            auto result = usecase.updateApplication(dto);
-            if (result.hasError)
+        auto result = usecase.updateApplication(dto);
+        if (result.hasError)
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
@@ -115,9 +116,9 @@ class ApplicationController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto id = ApplicationId(precheck.id);
-            auto result = usecase.deleteApplication(tenantId, id);
-            if (result.hasError)
+        auto id = ApplicationId(precheck.id);
+        auto result = usecase.deleteApplication(tenantId, id);
+        if (result.hasError)
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);

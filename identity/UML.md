@@ -20,8 +20,8 @@ classDiagram
         +toJson() Json
     }
 
-    class Group {
-        +GroupId id
+    class IDMGroup {
+        +IDMGroupId id
         +TenantId tenantId
         +string name
         +string description
@@ -77,9 +77,9 @@ classDiagram
 
     class GroupRepository {
         <<interface>>
-        +save(Group)
-        +findById(TenantId, GroupId) Group
-        +findByMember(TenantId, UserId) Group[]
+        +save(IDMGroup)
+        +findById(TenantId, IDMGroupId) IDMGroup
+        +findByMember(TenantId, UserId) IDMGroup[]
     }
 
     class ApplicationRepository {
@@ -117,8 +117,8 @@ classDiagram
     class ManageGroupsUseCase {
         -GroupRepository repo
         +createGroup(GroupDTO) UseCaseResult
-        +addMember(TenantId, GroupId, UserId) UseCaseResult
-        +removeMember(TenantId, GroupId, UserId) UseCaseResult
+        +addMember(TenantId, IDMGroupId, UserId) UseCaseResult
+        +removeMember(TenantId, IDMGroupId, UserId) UseCaseResult
     }
 
     class ManageApplicationsUseCase {
@@ -181,7 +181,7 @@ classDiagram
     }
 
     %% Relationships
-    User --> Group : "member of"
+    User --> IDMGroup : "member of"
     Application --> IdentityProvider : "delegates auth to"
     ProvisioningJob --> User : "provisions"
 

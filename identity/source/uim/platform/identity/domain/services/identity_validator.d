@@ -17,7 +17,7 @@ class IdentityValidator {
         return u.userName.length > 0 && u.email.length > 0;
     }
 
-    static bool isValidGroup(const Group g) {
+    static bool isValidGroup(const IDMGroup g) {
         return g.name.length > 0;
     }
 

@@ -68,7 +68,7 @@ class ManageApiClientsUseCase { // TODO: UIMUseCase {
   /// Revoke an API client.
   CommandResult revokeClient(ApiClientId id) {
     auto client = clientRepo.findById(tenantId, id);
-    if (client == ApiClient.init)
+    if (client.isNull)
       return CommandResult(false, "", "API client not found");
 
     client.active = false;

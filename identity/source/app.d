@@ -12,7 +12,9 @@ import vibe.core.core : runApplication;
 import std.stdio : writeln;
 
 
-void main() {
+version (unittest) {
+} else {
+    void main() {
     auto config = loadConfig();
     auto container = buildContainer(config);
 
@@ -36,7 +38,7 @@ void main() {
     container.provisioningJobController.registerRoutes(router);
 
     // Web UI
-    container.identityWebController.registerRoutes(router);
+    // container.identityWebController.registerRoutes(router);
 
     auto settings = new HTTPServerSettings();
     settings.bindAddresses = [config.host];
@@ -87,4 +89,5 @@ void main() {
 
     listenHTTP(settings, router);
     runApplication();
+}
 }

@@ -33,12 +33,6 @@ mixin template TenantEntity(TId) {
     this.updatedBy = byUser;
   }
 
-  this(TenantId tenantId, UserId byUser) {
-    this(tenantId);
-    this.createdBy = byUser;
-    this.updatedBy = byUser;
-  }
-
   // Helper method to check if the entity is new (i.e. has no ID assigned yet)
   bool isNull() const {
     return id.isNull;
@@ -51,17 +45,10 @@ mixin template TenantEntity(TId) {
   }
 
   void initEntity(TenantId tenantId) {
-    this.id = randomUUID();
+    this.id = randomUUID().toString;
     this.tenantId = tenantId;
     this.createdAt = Clock.currStdTime();
     this.updatedAt = createdAt;
-  }
-
-  void initEntity(TenantId tenantId, UserId byUser) {
-    initEntity(tenantId);
-    this.id = randomUUID();
-    this.createdBy = byUser;
-    this.updatedBy = this.createdBy;
   }
 
   void initEntity(TenantId tenantId, TId id) {
@@ -77,7 +64,7 @@ mixin template TenantEntity(TId) {
 
   // Call this method when creating a new entity to initialize ID, tenantId, and timestamps
   void createEntity(TenantId tenantId) {
-    id = randomUUID();
+    id = randomUUID().toString;
     this.tenantId = tenantId;
     createdAt = Clock.currStdTime();
     updatedAt = createdAt;

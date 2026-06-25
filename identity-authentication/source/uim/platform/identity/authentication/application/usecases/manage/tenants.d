@@ -24,8 +24,7 @@ class ManageTenantsUseCase { // TODO: UIMUseCase {
   }
 
   TenantResponse createTenant(CreateTenantRequest req) {
-    auto existing = tenantRepo.findBySubdomain(req.subdomain);
-    if (existing != Tenant.init)
+    if (tenantRepo.existsBySubdomain(req.subdomain))
       return TenantResponse("", "Subdomain already in use");
 
     auto now = currentTimestamp();
@@ -45,7 +44,7 @@ class ManageTenantsUseCase { // TODO: UIMUseCase {
 
   CommandResult updateTenant(UpdateTenantRequest req) {
     auto tenant = tenantRepo.findById(req.tenantId);
-    if (tenant == Tenant.init)
+    if (tenant.isNull)
       return CommandResult(false, "", "Tenant not found");
 
     if (req.name.length > 0)
@@ -55,6 +54,6 @@ class ManageTenantsUseCase { // TODO: UIMUseCase {
 
     tenant.updatedAt = currentTimestamp();
     tenantRepo.update(tenant);
-    return CommnandResult(true, tenant.id.value, "");
+    return CommandResult(true, tenant.id.value, "");
   }
 }

@@ -49,11 +49,11 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
     import uim.platform.identity.authentication.domain.entities.user : User;
 
     auto group = groupRepo.findById(tenantId, groupId);
-    if (group == IdaGroup.init)
+    if (group.isNull)
       return CommandResult(false, "", "IdaGroup not found");
 
     auto user = userRepo.findById(userId);
-    if (user == User.init)
+    if (user.isNull)
       return CommandResult(false, "", "User not found");
 
     if (!group.memberUserIds.canFind(userId)) {
@@ -72,7 +72,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
 
   CommandResult removeMember(TenantId tenantId, GroupId groupId, UserId userId) {
     auto group = groupRepo.findById(tenantId, groupId);
-    if (group == IdaGroup.init)
+    if (group.isNull)
       return CommandResult(false, "", "IdaGroup not found");
 
     string[] updated;
@@ -88,7 +88,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
 
   CommandResult deleteGroup(TenantId tenantId, GroupId id) {
     auto group = groupRepo.findById(tenantId, id);
-    if (group == IdaGroup.init)
+    if (group.isNull)
       return CommandResult(false, "", "IdaGroup not found");  
 
     groupRepo.remove(group);

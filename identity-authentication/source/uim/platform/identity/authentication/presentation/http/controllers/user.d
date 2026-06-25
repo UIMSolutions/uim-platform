@@ -6,7 +6,6 @@
 module uim.platform.identity.authentication.presentation.http.controllers.user;
 // 
 
-
 // import uim.platform.identity.authentication.application.usecases.manage.users;
 // import uim.platform.identity.authentication.application.dto;
 // import uim.platform.identity.authentication.domain.entities.user;
@@ -34,123 +33,97 @@ class UserController : ManageHttpController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-              CreateUserRequest request;
-      request.tenantId = tenantId;
-      request.userName = data.getString("userName");
-      request.email = data.getString("email");
-      request.firstName = data.getString("firstName");
-      request.lastName = data.getString("lastName");
-      request.password = data.getString("password");
-      request.phoneNumber = data.getString("phoneNumber");
+    auto data = precheck.data;
+    CreateUserRequest request;
+    request.tenantId = tenantId;
+    request.userName = data.getString("userName");
+    request.email = data.getString("email");
+    request.firstName = data.getString("firstName");
+    request.lastName = data.getString("lastName");
+    request.password = data.getString("password");
+    request.phoneNumber = data.getString("phoneNumber");
 
-      auto result = useCase.createUser(request);
-      auto response = Json.emptyObject;
+    auto result = useCase.createUser(request);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-      if (result.isSuccess()) {
-        response["userId"] = Json(result.userId);
-        res.writeJsonBody(response, 201);
-      } else {
-        response["error"] = Json(result.message);
-        res.writeJsonBody(response, 409);
-      }
-    } catch (Exception e) {
-      auto errRes = Json.emptyObject;
-      errRes["error"] = Json("Internal server error");
-      res.writeJsonBody(errRes, 500);
-    }
+    auto response = Json.emptyObject;
+    response["id"] = result.userId;
+    return successResponse("User created successfully", "Created", 201, response);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      TenantId tenantId = req.params.get("tenantId", "");
-      if (tenantId.isEmpty)
-        tenantId = tenantId;
+    auto tenantId = precheck.tenantId;
+    TenantId tenantId = req.params.get("tenantId", "");
+    if (tenantId.isEmpty)
+      tenantId = tenantId;
 
-      auto users = useCase.listUsers(tenantId);
-      auto response = Json.emptyObject;
-      response["totalResults"] = users.length.toJson;
-      response["resources"] = users.toJson;
-      res.writeJsonBody(response, 200);
-    } catch (Exception e) {
-      auto errRes = Json.emptyObject;
-      errRes["error"] = Json("Internal server error");
-      res.writeJsonBody(errRes, 500);
-    }
+    auto users = useCase.listUsers(tenantId);
+    auto response = Json.emptyObject;
+    response["totalResults"] = users.length.toJson;
+    response["resources"] = users.toJson;
+    return successResponse("Users retrieved successfully", "OK", 200, response);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-auto tenantId = precheck.tenantId;
-      auto path = req.requestURI;
-      auto userId = precheck.id;
+    auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
+    auto path = req.requestURI;
+    auto userId = precheck.id;
 
-      auto user = useCase.getUser(tenantId, userId);
-      if (user == User.init) {
-        auto errRes = Json.emptyObject;
-        errRes["error"] = Json("User not found");
-        res.writeJsonBody(errRes, 404);
-        return;
-      }
+    auto user = useCase.getUser(tenantId, userId);
+    if (user.isNull)
+      return errorResponse("User not found", 404);
 
-      auto response = toJsonValue(user);
-      // Remove sensitive field
-      response.remove("passwordHash");
-      response.remove("mfaSecret");
-      res.writeJsonBody(response, 200);
-    } catch (Exception e) {
-      auto errRes = Json.emptyObject;
-      errRes["error"] = Json("Internal server error");
-      res.writeJsonBody(errRes, 500);
-    }
+    auto response = user.toJson;
+    // Remove sensitive field
+    response.remove("passwordHash");
+    response.remove("mfaSecret");
+    return successResponse("User retrieved successfully", "Retrieved", 200, response);
+
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto path = req.requestURI;
-      auto userId = precheck.id;
-      auto data = precheck.data;
-      auto updateReq = UpdateUserRequest(tenantId, userId, data.getString("firstName"),
-        data.getString("lastName"), data.getString("phoneNumber"));
+    auto tenantId = precheck.tenantId;
+    auto path = req.requestURI;
+    auto userId = precheck.id;
+    auto data = precheck.data;
+    auto updateReq = UpdateUserRequest(tenantId, userId, data.getString("firstName"),
+      data.getString("lastName"), data.getString("phoneNumber"));
 
-      auto error = useCase.updateUser(updateReq);
-      if (error.length > 0) {
-        auto errRes = Json.emptyObject;
-        errRes["error"] = Json(error);
-        res.writeJsonBody(errRes, 404);
-      } else {
-        auto resp = Json.emptyObject
-          .set("status", "updated");
+    auto result = useCase.updateUser(updateReq);
+    if (result.hasError) {
+      return errorResponse(result.message, 404);
 
-        res.writeJsonBody(resp, 200);
-      }
-    } catch (Exception e) {
-      auto errRes = Json.emptyObject;
-      errRes["error"] = Json("Internal server error");
-      res.writeJsonBody(errRes, 500);
+      auto resp = Json.emptyObject
+        .set("status", "updated");
+
+      return successResponse("User updated successfully", "Updated", 200, resp);
     }
-  }
 
-  protected void handleChangePassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+    protected Json changePasswordHandler(HTTPServerRequest req) {
+      auto precheck = super.postHandler(req);
+      if (precheck.hasError)
+        return precheck;
+
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
       auto error = useCase.changePassword(tenantId, data.getString("userId"),
@@ -159,27 +132,23 @@ auto tenantId = precheck.tenantId;
       if (error.length > 0) {
         auto errRes = Json.emptyObject;
         errRes["error"] = Json(error);
-        res.writeJsonBody(errRes, 400);
+        return errorResponse(error, 400);
       } else {
         auto resp = Json.emptyObject
           .set("status", "password_changed");
 
-        res.writeJsonBody(resp, 200);
+        return successResponse("Password changed successfully", "Updated", 200, resp);
       }
-    } catch (Exception e) {
-      auto errRes = Json.emptyObject
-        .set("error", "Internal server error");
-
-      res.writeJsonBody(errRes, 500);
     }
+
+    mixin(HandleTemplate!("HandleChangePassword", "changePasswordHandler"));
   }
-}
 
-private string extractIdFromPath(string path) {
-  // import std.string : lastIndexOf;
+  private string extractIdFromPath(string path) {
+    // import std.string : lastIndexOf;
 
-  auto idx = path.lastIndexOf('/');
-  if (idx >= 0 && idx + 1 < path.length)
-    return path[idx + 1 .. $];
-  return "";
-}
+    auto idx = path.lastIndexOf('/');
+    if (idx >= 0 && idx + 1 < path.length)
+      return path[idx + 1 .. $];
+    return "";
+  }

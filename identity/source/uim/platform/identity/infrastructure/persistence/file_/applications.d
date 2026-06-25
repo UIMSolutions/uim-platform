@@ -13,61 +13,61 @@ import std.json;
 
 @safe:
 
-class FileApplicationRepository : ApplicationRepository {
-    private string dataDir;
-    private Application[string] store;
+// class FileApplicationRepository : ApplicationRepository {
+//     private string dataDir;
+//     private Application[string] store;
 
-    this(string dataDir) { this.dataDir = dataDir; loadFromFile(); }
+//     this(string dataDir) { this.dataDir = dataDir; loadFromFile(); }
 
-    void save(Application entity) { store[entity.id.value] = entity; persist(); }
-    void update(Application entity) { store[entity.id.value] = entity; persist(); }
-    void remove(Application entity) { store.remove(entity.id.value); persist(); }
+//     void save(Application entity) { store[entity.id.value] = entity; persist(); }
+//     void update(Application entity) { store[entity.id.value] = entity; persist(); }
+//     void remove(Application entity) { store.remove(entity.id.value); persist(); }
 
-    Application findById(TenantId tenantId, ApplicationId id) {
-        if (id.value in store && store[id.value].tenantId == tenantId) return store[id.value];
-        return Application.init;
-    }
-    Application[] findByTenant(TenantId tenantId) {
-        return store.values.filter!(a => a.tenantId == tenantId).array;
-    }
-    Application findByClient(TenantId tenantId, string clientId) {
-        foreach (a; findByTenant(tenantId)) if (a.clientId == clientId) return a;
-        return Application.init;
-    }
-    Application[] findByStatus(TenantId tenantId, AppStatus status) {
-        return findByTenant(tenantId).filter!(a => a.status == status).array;
-    }
-    Application[] findByProtocol(TenantId tenantId, AppProtocol protocol) {
-        return findByTenant(tenantId).filter!(a => a.protocol == protocol).array;
-    }
+//     Application findById(TenantId tenantId, ApplicationId id) {
+//         if (id.value in store && store[id.value].tenantId == tenantId) return store[id.value];
+//         return Application.init;
+//     }
+//     Application[] findByTenant(TenantId tenantId) {
+//         return store.values.filter!(a => a.tenantId == tenantId).array;
+//     }
+//     Application findByClient(TenantId tenantId, string clientId) {
+//         foreach (a; findByTenant(tenantId)) if (a.clientId == clientId) return a;
+//         return Application.init;
+//     }
+//     Application[] findByStatus(TenantId tenantId, AppStatus status) {
+//         return findByTenant(tenantId).filter!(a => a.status == status).array;
+//     }
+//     Application[] findByProtocol(TenantId tenantId, AppProtocol protocol) {
+//         return findByTenant(tenantId).filter!(a => a.protocol == protocol).array;
+//     }
 
-    private string filePath() { return dataDir ~ "/identity_applications.json"; }
+//     private string filePath() { return dataDir ~ "/identity_applications.json"; }
 
-    private void loadFromFile() @trusted {
-        if (!filePath().exists) return;
-        try {
+//     private void loadFromFile() @trusted {
+//         if (!filePath().exists) return;
+//         try {
             
-            foreach (j; parseJSON(readText(filePath())).array) {
-                Application a;
-                a.id = ApplicationId(j["id"].str);
-                a.tenantId = TenantId(j["tenantId"].str);
-                a.name = j["name"].str;
-                a.clientId = j["clientId"].str;
-                a.protocol = j["protocol"].str.to!AppProtocol;
-                a.status = j["status"].str.to!AppStatus;
-                store[a.id.value] = a;
-            }
-        } catch (Exception) {}
-    }
+//             foreach (j; parseJSON(readText(filePath())).array) {
+//                 Application a;
+//                 a.id = ApplicationId(j["id"].str);
+//                 a.tenantId = TenantId(j["tenantId"].str);
+//                 a.name = j["name"].str;
+//                 a.clientId = j["clientId"].str;
+//                 a.protocol = j["protocol"].str.to!AppProtocol;
+//                 a.status = j["status"].str.to!AppStatus;
+//                 store[a.id.value] = a;
+//             }
+//         } catch (Exception) {}
+//     }
 
-    private void persist() @trusted {
+//     private void persist() @trusted {
         
-        Json arr;
-        foreach (a; store.values) {
-            arr ~= Json(["id": Json(a.id.value), "tenantId": Json(a.tenantId.value),
-                "name": Json(a.name), "clientId": Json(a.clientId),
-                "protocol": Json(a.protocol.to!string), "status": Json(a.status.to!string)]);
-        }
-        write(filePath(), Json(arr).toString());
-    }
-}
+//         Json arr;
+//         foreach (a; store.values) {
+//             arr ~= Json(["id": Json(a.id.value), "tenantId": Json(a.tenantId.value),
+//                 "name": Json(a.name), "clientId": Json(a.clientId),
+//                 "protocol": Json(a.protocol.to!string), "status": Json(a.status.to!string)]);
+//         }
+//         write(filePath(), Json(arr).toString());
+//     }
+// }

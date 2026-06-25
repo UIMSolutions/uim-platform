@@ -35,14 +35,15 @@ public:
 
   UseCaseResult!MlExperiment get(TenantId tenantId, MlExperimentId id) {
     auto e = _repo.find(tenantId, id);
-    if (e == MlExperiment.init)
+    if (e.isNull)
       return UseCaseResult!MlExperiment(false, "ML experiment not found", MlExperiment.init);
+
     return UseCaseResult!MlExperiment(true, "", e);
   }
 
   UseCaseResult!MlExperiment update(UpdateMlExperimentRequest r) {
     auto e = _repo.find(r.tenantId, r.id);
-    if (e == MlExperiment.init)
+    if (e.isNull)
       return UseCaseResult!MlExperiment(false, "ML experiment not found", MlExperiment.init);
     if (r.name.length > 0) e.name = r.name;
     if (r.tags.length > 0) e.tags = r.tags;

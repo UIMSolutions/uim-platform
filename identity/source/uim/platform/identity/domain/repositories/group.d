@@ -11,13 +11,10 @@ import uim.platform.identity;
 
 @safe:
 
-interface GroupRepository {
-    void save(Group entity);
-    void update(Group entity);
-    void remove(Group entity);
-    Group findById(TenantId tenantId, GroupId id);
-    Group[] findByTenant(TenantId tenantId);
-    Group findByName(TenantId tenantId, string name);
-    Group[] findByType(TenantId tenantId, GroupType type_);
-    Group[] findByMember(TenantId tenantId, UserId userId);
+interface GroupRepository : ITenantRepository!(IDMGroup, IDMGroupId) {
+
+    IDMGroup findByName(TenantId tenantId, string name);
+    IDMGroup[] findByType(TenantId tenantId, GroupType type_);
+    IDMGroup[] findByMember(TenantId tenantId, UserId userId);
+
 }

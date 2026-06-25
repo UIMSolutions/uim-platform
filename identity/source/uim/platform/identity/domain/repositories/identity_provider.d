@@ -11,14 +11,11 @@ import uim.platform.identity;
 
 @safe:
 
-interface IdentityProviderRepository {
-    void save(IdentityProvider entity);
-    void update(IdentityProvider entity);
-    void remove(IdentityProvider entity);
-    IdentityProvider findById(TenantId tenantId, IdentityProviderId id);
-    IdentityProvider[] findByTenant(TenantId tenantId);
+interface IdentityProviderRepository : ITenantRepository!(IdentityProvider, IdentityProviderId) {
+
     IdentityProvider findByEntityId(TenantId tenantId, string entityId);
     IdentityProvider findDefault(TenantId tenantId);
     IdentityProvider[] findByStatus(TenantId tenantId, IdpStatus status);
     IdentityProvider[] findByType(TenantId tenantId, IdpType type_);
+    
 }

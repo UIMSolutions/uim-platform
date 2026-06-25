@@ -37,14 +37,14 @@ public:
 
   UseCaseResult!MlModel get(TenantId tenantId, MlModelId id) {
     auto m = _repo.find(tenantId, id);
-    if (m == MlModel.init)
+    if (m.isNull)
       return UseCaseResult!MlModel(false, "ML model not found", MlModel.init);
     return UseCaseResult!MlModel(true, "", m);
   }
 
   UseCaseResult!MlModel update(UpdateMlModelRequest r) {
     auto m = _repo.find(r.tenantId, r.id);
-    if (m == MlModel.init)
+    if (m.isNull)
       return UseCaseResult!MlModel(false, "ML model not found", MlModel.init);
     if (r.description.length > 0) m.description = r.description;
     if (r.tags.length        > 0) m.tags         = r.tags;
@@ -57,7 +57,7 @@ public:
 
   UseCaseResult!bool remove(TenantId tenantId, MlModelId id) {
     auto m = _repo.find(tenantId, id);
-    if (m == MlModel.init)
+    if (m.isNull)
       return UseCaseResult!bool(false, "ML model not found", false);
     _repo.remove(m);
     return UseCaseResult!bool(true, "ML model deleted", true);

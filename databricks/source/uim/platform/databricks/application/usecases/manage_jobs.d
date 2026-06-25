@@ -40,7 +40,7 @@ public:
 
   UseCaseResult!Job get(TenantId tenantId, JobId id) {
     auto j = _repo.find(tenantId, id);
-    if (j == Job.init)
+    if (j.isNull)
       return UseCaseResult!Job(false, "Job not found", Job.init);
     return UseCaseResult!Job(true, "", j);
   }

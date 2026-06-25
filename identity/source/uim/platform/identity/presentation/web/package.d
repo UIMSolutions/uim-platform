@@ -14,101 +14,101 @@ import uim.platform.identity;
 @safe:
 
 /// Web view — generates HTML pages
-class IdentityWebView {
-    string renderUserList(User[] users) {
-        import std.array : appender;
-        auto html = appender!string;
-        html.put("<!DOCTYPE html><html><head><meta charset='utf-8'>");
-        html.put("<title>Identity Service - Users</title></head><body>");
-        html.put("<h1>Users</h1><table border='1'>");
-        html.put("<tr><th>ID</th><th>UserName</th><th>Email</th><th>DisplayName</th><th>Status</th></tr>");
-        foreach (u; users) {
-            html.put("<tr><td>" ~ u.id.value ~ "</td><td>" ~ u.userName ~ "</td><td>" ~
-                u.email ~ "</td><td>" ~ u.displayName ~ "</td><td>" ~ u.status.to!string ~ "</td></tr>");
-        }
-        html.put("</table></body></html>");
-        return html.data;
-    }
+// class IdentityWebView {
+//     string renderUserList(User[] users) {
+//         import std.array : appender;
+//         auto html = appender!string;
+//         html.put("<!DOCTYPE html><html><head><meta charset='utf-8'>");
+//         html.put("<title>Identity Service - Users</title></head><body>");
+//         html.put("<h1>Users</h1><table border='1'>");
+//         html.put("<tr><th>ID</th><th>UserName</th><th>Email</th><th>DisplayName</th><th>Status</th></tr>");
+//         foreach (u; users) {
+//             html.put("<tr><td>" ~ u.id.value ~ "</td><td>" ~ u.userName ~ "</td><td>" ~
+//                 u.email ~ "</td><td>" ~ u.displayName ~ "</td><td>" ~ u.status.to!string ~ "</td></tr>");
+//         }
+//         html.put("</table></body></html>");
+//         return html.data;
+//     }
 
-    string renderGroupList(Group[] groups) {
-        import std.array : appender;
+//     string renderGroupList(IDMGroup[] groups) {
+//         import std.array : appender;
         
-        auto html = appender!string;
-        html.put("<!DOCTYPE html><html><head><meta charset='utf-8'>");
-        html.put("<title>Identity Service - Groups</title></head><body>");
-        html.put("<h1>Groups</h1><table border='1'>");
-        html.put("<tr><th>ID</th><th>Name</th><th>Type</th><th>Members</th></tr>");
-        foreach (g; groups) {
-            html.put("<tr><td>" ~ g.id.value ~ "</td><td>" ~ g.name ~ "</td><td>" ~
-                g.type_.to!string ~ "</td><td>" ~ g.memberIds.length.to!string ~ "</td></tr>");
-        }
-        html.put("</table></body></html>");
-        return html.data;
-    }
+//         auto html = appender!string;
+//         html.put("<!DOCTYPE html><html><head><meta charset='utf-8'>");
+//         html.put("<title>Identity Service - Groups</title></head><body>");
+//         html.put("<h1>Groups</h1><table border='1'>");
+//         html.put("<tr><th>ID</th><th>Name</th><th>Type</th><th>Members</th></tr>");
+//         foreach (g; groups) {
+//             html.put("<tr><td>" ~ g.id.value ~ "</td><td>" ~ g.name ~ "</td><td>" ~
+//                 g.type_.to!string ~ "</td><td>" ~ g.memberIds.length.to!string ~ "</td></tr>");
+//         }
+//         html.put("</table></body></html>");
+//         return html.data;
+//     }
 
-    string renderApplicationList(Application[] apps) {
-        import std.array : appender;
-        auto html = appender!string;
-        html.put("<!DOCTYPE html><html><head><meta charset='utf-8'>");
-        html.put("<title>Identity Service - Applications</title></head><body>");
-        html.put("<h1>Applications</h1><table border='1'>");
-        html.put("<tr><th>ID</th><th>Name</th><th>Protocol</th><th>Status</th></tr>");
-        foreach (a; apps) {
-            html.put("<tr><td>" ~ a.id.value ~ "</td><td>" ~ a.name ~ "</td><td>" ~
-                a.protocol.to!string ~ "</td><td>" ~ a.status.to!string ~ "</td></tr>");
-        }
-        html.put("</table></body></html>");
-        return html.data;
-    }
-}
+//     string renderApplicationList(Application[] apps) {
+//         import std.array : appender;
+//         auto html = appender!string;
+//         html.put("<!DOCTYPE html><html><head><meta charset='utf-8'>");
+//         html.put("<title>Identity Service - Applications</title></head><body>");
+//         html.put("<h1>Applications</h1><table border='1'>");
+//         html.put("<tr><th>ID</th><th>Name</th><th>Protocol</th><th>Status</th></tr>");
+//         foreach (a; apps) {
+//             html.put("<tr><td>" ~ a.id.value ~ "</td><td>" ~ a.name ~ "</td><td>" ~
+//                 a.protocol.to!string ~ "</td><td>" ~ a.status.to!string ~ "</td></tr>");
+//         }
+//         html.put("</table></body></html>");
+//         return html.data;
+//     }
+// }
 
-/// Web controller — registers browser-facing HTML routes
-class IdentityWebController {
-    private ManageUsersUseCase userUseCase;
-    private ManageGroupsUseCase groupUseCase;
-    private ManageApplicationsUseCase appUseCase;
-    private IdentityWebView view;
+// /// Web controller — registers browser-facing HTML routes
+// class IdentityWebController {
+//     private ManageUsersUseCase userUseCase;
+//     private ManageGroupsUseCase groupUseCase;
+//     private ManageApplicationsUseCase appUseCase;
+//     private IdentityWebView view;
 
-    this(ManageUsersUseCase u, ManageGroupsUseCase g, ManageApplicationsUseCase a) {
-        userUseCase = u;
-        groupUseCase = g;
-        appUseCase = a;
-        view = new IdentityWebView();
-    }
+//     this(ManageUsersUseCase u, ManageGroupsUseCase g, ManageApplicationsUseCase a) {
+//         userUseCase = u;
+//         groupUseCase = g;
+//         appUseCase = a;
+//         view = new IdentityWebView();
+//     }
 
-    void registerRoutes(URLRouter router) {
-        router.get("/web/identity/users", &handleUsers);
-        router.get("/web/identity/groups", &handleGroups);
-        router.get("/web/identity/applications", &handleApplications);
-    }
+//     void registerRoutes(URLRouter router) {
+//         router.get("/web/identity/users", &handleUsers);
+//         router.get("/web/identity/groups", &handleGroups);
+//         router.get("/web/identity/applications", &handleApplications);
+//     }
 
-    private void handleUsers(scope HTTPServerRequest req, scope HTTPServerResponse res) @safe {
-        try {
-            auto tenantId = precheck.tenantId;
-            auto users = userUseCase.listUsers(tenantId);
-            res.writeBody(view.renderUserList(users), cast(int) HTTPStatus.ok, "text/html; charset=utf-8");
-        } catch (Exception e) {
-            res.writeBody("<h1>Error</h1>", cast(int) HTTPStatus.internalServerError, "text/html");
-        }
-    }
+//     private void handleUsers(scope HTTPServerRequest req, scope HTTPServerResponse res) @safe {
+//         try {
+//             auto tenantId = precheck.tenantId;
+//             auto users = userUseCase.listUsers(tenantId);
+//             res.writeBody(view.renderUserList(users), cast(int) HTTPStatus.ok, "text/html; charset=utf-8");
+//         } catch (Exception e) {
+//             res.writeBody("<h1>Error</h1>", cast(int) HTTPStatus.internalServerError, "text/html");
+//         }
+//     }
 
-    private void handleGroups(scope HTTPServerRequest req, scope HTTPServerResponse res) @safe {
-        try {
-            auto tenantId = precheck.tenantId;
-            auto groups = groupUseCase.listGroups(tenantId);
-            res.writeBody(view.renderGroupList(groups), cast(int) HTTPStatus.ok, "text/html; charset=utf-8");
-        } catch (Exception e) {
-            res.writeBody("<h1>Error</h1>", cast(int) HTTPStatus.internalServerError, "text/html");
-        }
-    }
+//     private void handleGroups(scope HTTPServerRequest req, scope HTTPServerResponse res) @safe {
+//         try {
+//             auto tenantId = precheck.tenantId;
+//             auto groups = groupUseCase.listGroups(tenantId);
+//             res.writeBody(view.renderGroupList(groups), cast(int) HTTPStatus.ok, "text/html; charset=utf-8");
+//         } catch (Exception e) {
+//             res.writeBody("<h1>Error</h1>", cast(int) HTTPStatus.internalServerError, "text/html");
+//         }
+//     }
 
-    private void handleApplications(scope HTTPServerRequest req, scope HTTPServerResponse res) @safe {
-        try {
-            auto tenantId = precheck.tenantId;
-            auto apps = appUseCase.listApplications(tenantId);
-            res.writeBody(view.renderApplicationList(apps), cast(int) HTTPStatus.ok, "text/html; charset=utf-8");
-        } catch (Exception e) {
-            res.writeBody("<h1>Error</h1>", cast(int) HTTPStatus.internalServerError, "text/html");
-        }
-    }
-}
+//     private void handleApplications(scope HTTPServerRequest req, scope HTTPServerResponse res) @safe {
+//         try {
+//             auto tenantId = precheck.tenantId;
+//             auto apps = appUseCase.listApplications(tenantId);
+//             res.writeBody(view.renderApplicationList(apps), cast(int) HTTPStatus.ok, "text/html; charset=utf-8");
+//         } catch (Exception e) {
+//             res.writeBody("<h1>Error</h1>", cast(int) HTTPStatus.internalServerError, "text/html");
+//         }
+//     }
+// }

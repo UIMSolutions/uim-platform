@@ -64,7 +64,7 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
   /// Update user profile.
   CommandResult updateUser(UpdateUserRequest req) {
     auto user = userRepo.findById(req.userId);
-    if (user == User.init)
+    if (user.isNull)
       return CommandResult(false, "", "User not found");
 
     if (req.firstName.length > 0)
@@ -94,7 +94,7 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
   /// Change password.
   CommandResult changePassword(UserId id, string oldPassword, string newPassword) {
     auto user = userRepo.findById(tenantId, id);
-    if (user == User.init)
+    if (user.isNull)
       return CommandResult(false, "", "User not found");
 
     if (!passwordSvc.verifyPassword(oldPassword, user.passwordHash))

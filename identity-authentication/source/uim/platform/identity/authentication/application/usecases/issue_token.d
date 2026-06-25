@@ -44,15 +44,15 @@ class IssueTokenUseCase { // TODO: UIMUseCase {
     auto session = sessionRepo.findById(req.sessionId);
     import uim.platform.identity.authentication.domain.entities.session : IdaSession;
 
-    if (session == IdaSession.init || session.revoked)
+    if (session.isNull || session.revoked)
       return TokenResponse("", "", "", "Invalid session");
 
     auto user = userRepo.findById(session.userId);
-    if (user == User.init)
+    if (user.isNull)
       return TokenResponse("", "", "", "User not found");
 
     auto app = appRepo.findByClient(req.clientId);
-    if (app == Application.init)
+    if (app.isNull)
       return TokenResponse("", "", "", "Unknown application");
 
     if (app.clientSecret != req.clientSecret)

@@ -12,61 +12,61 @@ import vibe.db.mongo.mongo;
 
 @safe:
 
-class MongoApplicationRepository : ApplicationRepository {
-    private MongoCollection collection;
+// class MongoApplicationRepository : ApplicationRepository {
+//     private MongoCollection collection;
 
-    this(MongoCollection col) { this.collection = col; }
+//     this(MongoCollection col) { this.collection = col; }
 
-    void save(Application entity) @trusted { collection.insert(entityToBson(entity)); }
-    void update(Application entity) @trusted {
-        collection.update(["_id": Bson(entity.id.value)], ["$set": entityToBson(entity)]);
-    }
-    void remove(Application entity) @trusted { collection.remove(["_id": Bson(entity.id.value)]); }
+//     void save(Application entity) @trusted { collection.insert(entityToBson(entity)); }
+//     void update(Application entity) @trusted {
+//         collection.update(["_id": Bson(entity.id.value)], ["$set": entityToBson(entity)]);
+//     }
+//     void remove(Application entity) @trusted { collection.remove(["_id": Bson(entity.id.value)]); }
 
-    Application findById(TenantId tenantId, ApplicationId id) @trusted {
-        auto doc = collection.findOne(["_id": Bson(id.value), "tenantId": Bson(tenantId.value)]);
-        return doc.isNull ? Application.init : bsonToEntity(doc);
-    }
-    Application[] findByTenant(TenantId tenantId) @trusted {
-        Application[] result;
-        foreach (doc; collection.find(["tenantId": Bson(tenantId.value)])) result ~= bsonToEntity(doc);
-        return result;
-    }
-    Application findByClient(TenantId tenantId, string clientId) @trusted {
-        auto doc = collection.findOne(["tenantId": Bson(tenantId.value), "clientId": Bson(clientId)]);
-        return doc.isNull ? Application.init : bsonToEntity(doc);
-    }
-    Application[] findByStatus(TenantId tenantId, AppStatus status) @trusted {
+//     Application findById(TenantId tenantId, ApplicationId id) @trusted {
+//         auto doc = collection.findOne(["_id": Bson(id.value), "tenantId": Bson(tenantId.value)]);
+//         return doc.isNull ? Application.init : bsonToEntity(doc);
+//     }
+//     Application[] findByTenant(TenantId tenantId) @trusted {
+//         Application[] result;
+//         foreach (doc; collection.find(["tenantId": Bson(tenantId.value)])) result ~= bsonToEntity(doc);
+//         return result;
+//     }
+//     Application findByClient(TenantId tenantId, string clientId) @trusted {
+//         auto doc = collection.findOne(["tenantId": Bson(tenantId.value), "clientId": Bson(clientId)]);
+//         return doc.isNull ? Application.init : bsonToEntity(doc);
+//     }
+//     Application[] findByStatus(TenantId tenantId, AppStatus status) @trusted {
         
-        Application[] result;
-        foreach (doc; collection.find(["tenantId": Bson(tenantId.value), "status": Bson(status.to!string)]))
-            result ~= bsonToEntity(doc);
-        return result;
-    }
-    Application[] findByProtocol(TenantId tenantId, AppProtocol protocol) @trusted {
+//         Application[] result;
+//         foreach (doc; collection.find(["tenantId": Bson(tenantId.value), "status": Bson(status.to!string)]))
+//             result ~= bsonToEntity(doc);
+//         return result;
+//     }
+//     Application[] findByProtocol(TenantId tenantId, AppProtocol protocol) @trusted {
         
-        Application[] result;
-        foreach (doc; collection.find(["tenantId": Bson(tenantId.value), "protocol": Bson(protocol.to!string)]))
-            result ~= bsonToEntity(doc);
-        return result;
-    }
+//         Application[] result;
+//         foreach (doc; collection.find(["tenantId": Bson(tenantId.value), "protocol": Bson(protocol.to!string)]))
+//             result ~= bsonToEntity(doc);
+//         return result;
+//     }
 
-    private static Bson entityToBson(Application a) @trusted {
+//     private static Bson entityToBson(Application a) @trusted {
         
-        return Bson(["_id": Bson(a.id.value), "tenantId": Bson(a.tenantId.value),
-            "name": Bson(a.name), "clientId": Bson(a.clientId),
-            "protocol": Bson(a.protocol.to!string), "status": Bson(a.status.to!string)]);
-    }
+//         return Bson(["_id": Bson(a.id.value), "tenantId": Bson(a.tenantId.value),
+//             "name": Bson(a.name), "clientId": Bson(a.clientId),
+//             "protocol": Bson(a.protocol.to!string), "status": Bson(a.status.to!string)]);
+//     }
 
-    private static Application bsonToEntity(Bson doc) @trusted {
+//     private static Application bsonToEntity(Bson doc) @trusted {
         
-        Application a;
-        a.id = ApplicationId(doc["_id"].get!string);
-        a.tenantId = TenantId(doc["tenantId"].get!string);
-        a.name = doc["name"].get!string;
-        a.clientId = doc["clientId"].get!string;
-        a.protocol = doc["protocol"].get!string.to!AppProtocol;
-        a.status = doc["status"].get!string.to!AppStatus;
-        return a;
-    }
-}
+//         Application a;
+//         a.id = ApplicationId(doc["_id"].get!string);
+//         a.tenantId = TenantId(doc["tenantId"].get!string);
+//         a.name = doc["name"].get!string;
+//         a.clientId = doc["clientId"].get!string;
+//         a.protocol = doc["protocol"].get!string.to!AppProtocol;
+//         a.status = doc["status"].get!string.to!AppStatus;
+//         return a;
+//     }
+// }

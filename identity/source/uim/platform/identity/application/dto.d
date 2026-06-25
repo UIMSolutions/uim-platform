@@ -31,7 +31,7 @@ struct UserDTO {
 }
 
 struct GroupDTO {
-    GroupId groupId;
+    IDMGroupId groupId;
     TenantId tenantId;
     string name;
     string description;

@@ -35,14 +35,14 @@ public:
 
   UseCaseResult!Workspace get(TenantId tenantId, WorkspaceId id) {
     auto w = _repo.find(tenantId, id);
-    if (w == Workspace.init)
+    if (w.isNull)
       return UseCaseResult!Workspace(false, "Workspace not found", Workspace.init);
     return UseCaseResult!Workspace(true, "", w);
   }
 
   UseCaseResult!Workspace update(UpdateWorkspaceRequest r) {
     auto w = _repo.find(r.tenantId, r.id);
-    if (w == Workspace.init)
+    if (w.isNull)
       return UseCaseResult!Workspace(false, "Workspace not found", Workspace.init);
     if (r.name.length   > 0) w.name        = r.name;
     if (r.storageRoot.length > 0) w.storageRoot = r.storageRoot;
@@ -53,7 +53,7 @@ public:
 
   UseCaseResult!bool remove(TenantId tenantId, WorkspaceId id) {
     auto w = _repo.find(tenantId, id);
-    if (w == Workspace.init)
+    if (w.isNull)
       return UseCaseResult!bool(false, "Workspace not found", false);
     w.status = WorkspaceStatus.deleted;
     _repo.save(w);

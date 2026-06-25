@@ -23,8 +23,8 @@ struct Container {
     IdentityProviderController identityProviderController;
     ProvisioningJobController provisioningJobController;
 
-    IdentityWebController identityWebController;
-    IdentityCliController identityCliController;
+    // IdentityWebController identityWebController;
+    // IdentityCliController identityCliController;
 }
 
 Container buildContainer(SrvConfig config) @trusted {
@@ -44,23 +44,23 @@ Container buildContainer(SrvConfig config) @trusted {
             jobRepo = new MemoryProvisioningJobRepository();
             break;
         case PersistenceBackend.file_:
-            import std.file : mkdirRecurse;
-            mkdirRecurse(config.dataDir);
-            userRepo = new FileUserRepository(config.dataDir);
-            groupRepo = new FileGroupRepository(config.dataDir);
-            appRepo = new FileApplicationRepository(config.dataDir);
-            idpRepo = new FileIdentityProviderRepository(config.dataDir);
-            jobRepo = new FileProvisioningJobRepository(config.dataDir);
+            // import std.file : mkdirRecurse;
+            // mkdirRecurse(config.dataDir);
+            // userRepo = new FileUserRepository(config.dataDir);
+            // groupRepo = new FileGroupRepository(config.dataDir);
+            // appRepo = new FileApplicationRepository(config.dataDir);
+            // idpRepo = new FileIdentityProviderRepository(config.dataDir);
+            // jobRepo = new FileProvisioningJobRepository(config.dataDir);
             break;
         case PersistenceBackend.mongodb:
-            import vibe.db.mongo.mongo : connectMongoDB;
-            auto mongoClient = connectMongoDB(config.mongoUri);
-            auto db = mongoClient.getDatabase(config.mongoDb);
-            userRepo = new MongoUserRepository(db["users"]);
-            groupRepo = new MongoGroupRepository(db["groups"]);
-            appRepo = new MongoApplicationRepository(db["applications"]);
-            idpRepo = new MongoIdentityProviderRepository(db["identity_providers"]);
-            jobRepo = new MongoProvisioningJobRepository(db["provisioning_jobs"]);
+            // import vibe.db.mongo.mongo : connectMongoDB;
+            // auto mongoClient = connectMongoDB(config.mongoUri);
+            // auto db = mongoClient.getDatabase(config.mongoDb);
+            // userRepo = new MongoUserRepository(db["users"]);
+            // groupRepo = new MongoGroupRepository(db["groups"]);
+            // appRepo = new MongoApplicationRepository(db["applications"]);
+            // idpRepo = new MongoIdentityProviderRepository(db["identity_providers"]);
+            // jobRepo = new MongoProvisioningJobRepository(db["provisioning_jobs"]);
             break;
     }
 
@@ -76,10 +76,10 @@ Container buildContainer(SrvConfig config) @trusted {
     c.identityProviderController = new IdentityProviderController(c.manageIdentityProvidersUseCase);
     c.provisioningJobController = new ProvisioningJobController(c.manageProvisioningJobsUseCase);
 
-    c.identityWebController = new IdentityWebController(
-        c.manageUsersUseCase, c.manageGroupsUseCase, c.manageApplicationsUseCase);
-    c.identityCliController = new IdentityCliController(
-        c.manageUsersUseCase, c.manageGroupsUseCase, c.manageApplicationsUseCase, c.manageProvisioningJobsUseCase);
+    // c.identityWebController = new IdentityWebController(
+    //     c.manageUsersUseCase, c.manageGroupsUseCase, c.manageApplicationsUseCase);
+    // c.identityCliController = new IdentityCliController(
+    //     c.manageUsersUseCase, c.manageGroupsUseCase, c.manageApplicationsUseCase, c.manageProvisioningJobsUseCase);
 
     return c;
 }

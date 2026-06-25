@@ -21,8 +21,7 @@ class ManageProvisioningJobsUseCase {
     ProvisioningJob[] listByStatus(TenantId tenantId, JobStatus status) { return repo.findByStatus(tenantId, status); }
 
     CommandResult createJob(ProvisioningJobDTO dto) {
-        ProvisioningJob j;
-        j.initEntity(dto.tenantId, dto.createdBy);
+        auto j = ProvisioningJob(dto.tenantId);
         j.id = dto.jobId;
         j.name = dto.name;
         j.description = dto.description;

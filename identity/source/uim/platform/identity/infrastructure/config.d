@@ -6,8 +6,10 @@
 /// Runtime configuration loaded from environment variables.
 module uim.platform.identity.infrastructure.config;
 
-import uim.platform.identity.domain.enumerations;
+import uim.platform.identity;
 import std.process : environment;
+
+mixin(ShowModule!());
 
 
 @safe:

@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-/// Identity Group entity — user groups and authorization groups.
+/// Identity IDMGroup entity — user groups and authorization groups.
 module uim.platform.identity.domain.entities.group;
 
 import uim.platform.identity;
@@ -12,8 +12,8 @@ import uim.platform.identity;
 
 @safe:
 
-struct Group {
-    mixin TenantEntity!(GroupId);
+struct IDMGroup {
+    mixin TenantEntity!IDMGroupId;
 
     string name;
     string description;

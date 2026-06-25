@@ -41,7 +41,7 @@ class DelegatedAuthUseCase { // TODO: UIMUseCase {
 
   /// Build the authorization URL for the external IdP.
   string buildAuthorizationUrl(IdpConfig idp, string redirectUri, string state) {
-    if (idp == IdpConfig.init)
+    if (idp.isNull)
       return "";
 
     return idp.authorizationEndpoint ~ "?client_id=" ~ idp.clientId

@@ -48,7 +48,7 @@ class GroupController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto id = GroupId(precheck.id);
+        auto id = IDMGroupId(precheck.id);
         auto e = usecase.getGroup(tenantId, id);
         if (e.isNull)
             return errorResponse("Group not found", 404);
@@ -65,7 +65,7 @@ class GroupController : ManageHttpController {
 
         auto data = precheck.data;
         GroupDTO dto;
-        dto.groupId = GroupId(precheck.id);
+        dto.groupId = IDMGroupId(precheck.id);
         dto.tenantId = tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
@@ -87,7 +87,7 @@ class GroupController : ManageHttpController {
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         GroupDTO dto;
-        dto.groupId = GroupId(precheck.id);
+        dto.groupId = IDMGroupId(precheck.id);
         dto.tenantId = tenantId;
         dto.name = data.getString("name");
         dto.description = data.getString("description");
@@ -106,7 +106,7 @@ class GroupController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto id = GroupId(precheck.id);
+        auto id = IDMGroupId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid group ID", 400);
 

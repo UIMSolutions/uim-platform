@@ -39,7 +39,7 @@ public:
 
   UseCaseResult!DataProduct get(TenantId tenantId, DataProductId id) {
     auto dp = _repo.find(tenantId, id);
-    if (dp == DataProduct.init)
+    if (dp.isNull)
       return UseCaseResult!DataProduct(false, "Data product not found", DataProduct.init);
     return UseCaseResult!DataProduct(true, "", dp);
   }
@@ -60,7 +60,7 @@ public:
 
   UseCaseResult!bool remove(TenantId tenantId, DataProductId id) {
     auto dp = _repo.find(tenantId, id);
-    if (dp == DataProduct.init)
+    if (dp.isNull)
       return UseCaseResult!bool(false, "Data product not found", false);
     dp.status = DataProductStatus.unavailable;
     _repo.save(dp);

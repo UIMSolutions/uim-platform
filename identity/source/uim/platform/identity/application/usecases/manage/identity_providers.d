@@ -23,8 +23,7 @@ class ManageIdentityProvidersUseCase {
     IdentityProvider findDefault(TenantId tenantId) { return repo.findDefault(tenantId); }
 
     CommandResult createIdentityProvider(IdentityProviderDTO dto) {
-        IdentityProvider idp;
-        idp.initEntity(dto.tenantId, dto.createdBy);
+        auto idp = IdentityProvider(dto.tenantId);
         idp.id = dto.idpId;
         idp.name = dto.name;
         idp.description = dto.description;

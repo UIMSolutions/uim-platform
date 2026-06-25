@@ -34,14 +34,14 @@ public:
 
   UseCaseResult!JobRun get(TenantId tenantId, JobRunId id) {
     auto run = _repo.find(tenantId, id);
-    if (run == JobRun.init)
+    if (run.isNull)
       return UseCaseResult!JobRun(false, "Job run not found", JobRun.init);
     return UseCaseResult!JobRun(true, "", run);
   }
 
   UseCaseResult!JobRun update(UpdateJobRunRequest r) {
     auto run = _repo.find(r.tenantId, r.id);
-    if (run == JobRun.init)
+    if (run.isNull)
       return UseCaseResult!JobRun(false, "Job run not found", JobRun.init);
     run.state        = r.state;
     run.stateMessage = r.stateMessage;
@@ -53,7 +53,7 @@ public:
 
   UseCaseResult!bool remove(TenantId tenantId, JobRunId id) {
     auto run = _repo.find(tenantId, id);
-    if (run == JobRun.init)
+    if (run.isNull)
       return UseCaseResult!bool(false, "Job run not found", false);
     _repo.remove(run);
     return UseCaseResult!bool(true, "Job run deleted", true);

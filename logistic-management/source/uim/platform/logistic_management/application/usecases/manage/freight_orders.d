@@ -31,7 +31,6 @@ public:
         return CommandResult(false, "Carrier is not available or does not exist");
     }
 
-    
     FreightOrder fo;
     fo.id = FreightOrderId(generateId());
     fo.tenantId = tenantId;
@@ -48,7 +47,10 @@ public:
     fo.plannedArrivalAt = req.plannedArrivalAt;
     fo.status = FreightOrderStatus.draft;
     if (req.transportMode.length > 0) {
-      try { fo.transportMode = req.transportMode.to!TransportMode; } catch (Exception) {}
+      try {
+        fo.transportMode = req.transportMode.to!TransportMode;
+      } catch (Exception) {
+      }
     }
     fo.createdAt = currentTimeMs();
     fo.updatedAt = fo.createdAt;
@@ -58,11 +60,11 @@ public:
 
   CommandResult updateFreightOrder(TenantId tenantId, FreightOrderId id, UpdateFreightOrderRequest req) {
     auto fo = _repo.findById(tenantId, id);
-    if (fo == FreightOrder.init) return CommandResult(false, "Freight order not found");
+    if (fo.isNull)
+      return CommandResult(false, "Freight order not found");
     if (fo.status != FreightOrderStatus.draft && fo.status != FreightOrderStatus.planned)
       return CommandResult(false, "Cannot update a freight order that is in transit or completed");
 
-    
     FreightOrder updated;
     updated.id = fo.id;
     updated.tenantId = fo.tenantId;
@@ -70,13 +72,17 @@ public:
     updated.description = req.description.length > 0 ? req.description : fo.description;
     updated.originName = req.originName.length > 0 ? req.originName : fo.originName;
     updated.originAddress = req.originAddress.length > 0 ? req.originAddress : fo.originAddress;
-    updated.destinationName = req.destinationName.length > 0 ? req.destinationName : fo.destinationName;
-    updated.destinationAddress = req.destinationAddress.length > 0 ? req.destinationAddress : fo.destinationAddress;
+    updated.destinationName = req.destinationName.length > 0 ? req.destinationName
+      : fo.destinationName;
+    updated.destinationAddress = req.destinationAddress.length > 0 ? req.destinationAddress
+      : fo.destinationAddress;
     updated.carrierId = req.carrierId.length > 0 ? CarrierId(req.carrierId) : fo.carrierId;
     updated.weightKg = req.weightKg > 0 ? req.weightKg : fo.weightKg;
     updated.volumeM3 = req.volumeM3 > 0 ? req.volumeM3 : fo.volumeM3;
-    updated.plannedDepartureAt = req.plannedDepartureAt > 0 ? req.plannedDepartureAt : fo.plannedDepartureAt;
-    updated.plannedArrivalAt = req.plannedArrivalAt > 0 ? req.plannedArrivalAt : fo.plannedArrivalAt;
+    updated.plannedDepartureAt = req.plannedDepartureAt > 0 ? req.plannedDepartureAt
+      : fo.plannedDepartureAt;
+    updated.plannedArrivalAt = req.plannedArrivalAt > 0 ? req.plannedArrivalAt : fo
+      .plannedArrivalAt;
     updated.status = fo.status;
     updated.statusMessage = fo.statusMessage;
     updated.actualDepartureAt = fo.actualDepartureAt;
@@ -84,7 +90,11 @@ public:
     updated.createdAt = fo.createdAt;
     updated.updatedAt = currentTimeMs();
     if (req.transportMode.length > 0) {
-      try { updated.transportMode = req.transportMode.to!TransportMode; } catch (Exception) { updated.transportMode = fo.transportMode; }
+      try {
+        updated.transportMode = req.transportMode.to!TransportMode;
+      } catch (Exception) {
+        updated.transportMode = fo.transportMode;
+      }
     } else {
       updated.transportMode = fo.transportMode;
     }
@@ -94,12 +104,15 @@ public:
 
   CommandResult transitionFreightOrder(TenantId tenantId, FreightOrderId id, TransitionFreightOrderRequest req) {
     auto fo = _repo.findById(tenantId, id);
-    if (fo == FreightOrder.init) return CommandResult(false, "Freight order not found");
+    if (fo.isNull)
+      return CommandResult(false, "Freight order not found");
 
-    
     FreightOrderStatus newStatus;
-    try { newStatus = req.status.to!FreightOrderStatus; }
-    catch (Exception) { return CommandResult(false, "Invalid status value"); }
+    try {
+      newStatus = req.status.to!FreightOrderStatus;
+    } catch (Exception) {
+      return CommandResult(false, "Invalid status value");
+    }
 
     if (!_planner.canTransitionFreightOrder(fo.status, newStatus))
       return CommandResult(false, "Invalid status transition");
@@ -121,7 +134,8 @@ public:
     updated.plannedArrivalAt = fo.plannedArrivalAt;
     updated.status = newStatus;
     updated.statusMessage = req.statusMessage.length > 0 ? req.statusMessage : fo.statusMessage;
-    updated.actualDepartureAt = req.actualDepartureAt > 0 ? req.actualDepartureAt : fo.actualDepartureAt;
+    updated.actualDepartureAt = req.actualDepartureAt > 0 ? req.actualDepartureAt
+      : fo.actualDepartureAt;
     updated.actualArrivalAt = req.actualArrivalAt > 0 ? req.actualArrivalAt : fo.actualArrivalAt;
     updated.createdAt = fo.createdAt;
     updated.updatedAt = currentTimeMs();
@@ -131,7 +145,8 @@ public:
 
   CommandResult deleteFreightOrder(TenantId tenantId, FreightOrderId id) {
     auto fo = _repo.findById(tenantId, id);
-    if (fo == FreightOrder.init) return CommandResult(false, "Freight order not found");
+    if (fo.isNull)
+      return CommandResult(false, "Freight order not found");
     if (fo.status == FreightOrderStatus.inTransit)
       return CommandResult(false, "Cannot delete a freight order that is in transit");
     _repo.remove(tenantId, id);

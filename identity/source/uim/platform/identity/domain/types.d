@@ -12,13 +12,7 @@ import uim.platform.identity;
 
 @safe:
 
-struct UserId {
-    string value;
-    this(string value) { this.value = value; }
-    mixin IdTemplate;
-}
-
-struct GroupId {
+struct IDMGroupId {
     string value;
     this(string value) { this.value = value; }
     mixin IdTemplate;

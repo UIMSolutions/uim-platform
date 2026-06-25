@@ -16,13 +16,12 @@ class ManageGroupsUseCase {
 
     this(GroupRepository repo) { this.repo = repo; }
 
-    Group getGroup(TenantId tenantId, GroupId id) { return repo.findById(tenantId, id); }
-    Group[] listGroups(TenantId tenantId) { return repo.findByTenant(tenantId); }
-    Group[] listByType(TenantId tenantId, GroupType type_) { return repo.findByType(tenantId, type_); }
+    IDMGroup getGroup(TenantId tenantId, IDMGroupId id) { return repo.findById(tenantId, id); }
+    IDMGroup[] listGroups(TenantId tenantId) { return repo.findByTenant(tenantId); }
+    IDMGroup[] listByType(TenantId tenantId, GroupType type_) { return repo.findByType(tenantId, type_); }
 
     CommandResult createGroup(GroupDTO dto) {
-        Group g;
-        g.initEntity(dto.tenantId, dto.createdBy);
+        auto g = IDMGroup(dto.tenantId);
         g.id = dto.groupId;
         g.name = dto.name;
         g.description = dto.description;
@@ -52,7 +51,7 @@ class ManageGroupsUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult addMember(TenantId tenantId, GroupId groupId, UserId userId) {
+    CommandResult addMember(TenantId tenantId, IDMGroupId groupId, UserId userId) {
         auto g = repo.findById(tenantId, groupId);
         if (g.isNull) return CommandResult(false, "", "Group not found");
         import std.algorithm : canFind;
@@ -62,7 +61,7 @@ class ManageGroupsUseCase {
         return CommandResult(true, groupId.value, "");
     }
 
-    CommandResult removeMember(TenantId tenantId, GroupId groupId, UserId userId) {
+    CommandResult removeMember(TenantId tenantId, IDMGroupId groupId, UserId userId) {
         auto g = repo.findById(tenantId, groupId);
         if (g.isNull) return CommandResult(false, "", "Group not found");
         import std.algorithm : filter;
@@ -72,7 +71,7 @@ class ManageGroupsUseCase {
         return CommandResult(true, groupId.value, "");
     }
 
-    CommandResult deleteGroup(TenantId tenantId, GroupId id) {
+    CommandResult deleteGroup(TenantId tenantId, IDMGroupId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull) return CommandResult(false, "", "Group not found");
         repo.remove(entity);

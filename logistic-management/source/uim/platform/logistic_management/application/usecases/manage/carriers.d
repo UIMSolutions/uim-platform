@@ -40,9 +40,12 @@ public:
     c.status = CarrierStatus.active;
     c.createdAt = currentTimeMs();
     c.updatedAt = c.createdAt;
-    
+
     foreach (m; req.supportedModes) {
-      try { c.supportedModes ~= m.to!TransportMode; } catch (Exception) {}
+      try {
+        c.supportedModes ~= m.to!TransportMode;
+      } catch (Exception) {
+      }
     }
     _repo.save(c);
     return CommandResult(true, "", c.id.value);
@@ -50,7 +53,8 @@ public:
 
   CommandResult updateCarrier(TenantId tenantId, CarrierId id, UpdateCarrierRequest req) {
     auto c = _repo.findById(tenantId, id);
-    if (c == Carrier.init) return CommandResult(false, "Carrier not found");
+    if (c.isNull)
+      return CommandResult(false, "Carrier not found");
 
     Carrier updated;
     updated.id = c.id;
@@ -65,15 +69,22 @@ public:
     updated.taxId = c.taxId;
     updated.createdAt = c.createdAt;
     updated.updatedAt = currentTimeMs();
-    
+
     if (req.status.length > 0) {
-      try { updated.status = req.status.to!CarrierStatus; } catch (Exception) { updated.status = c.status; }
+      try {
+        updated.status = req.status.to!CarrierStatus;
+      } catch (Exception) {
+        updated.status = c.status;
+      }
     } else {
       updated.status = c.status;
     }
     if (req.supportedModes.length > 0) {
       foreach (m; req.supportedModes) {
-        try { updated.supportedModes ~= m.to!TransportMode; } catch (Exception) {}
+        try {
+          updated.supportedModes ~= m.to!TransportMode;
+        } catch (Exception) {
+        }
       }
     } else {
       updated.supportedModes = c.supportedModes;
@@ -84,7 +95,8 @@ public:
 
   CommandResult deleteCarrier(TenantId tenantId, CarrierId id) {
     auto c = _repo.findById(tenantId, id);
-    if (c == Carrier.init) return CommandResult(false, "Carrier not found");
+    if (c == Carrier.init)
+      return CommandResult(false, "Carrier not found");
     _repo.remove(tenantId, id);
     return CommandResult(true);
   }

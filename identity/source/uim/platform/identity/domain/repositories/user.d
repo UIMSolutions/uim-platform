@@ -11,15 +11,12 @@ import uim.platform.identity;
 
 @safe:
 
-interface UserRepository {
-    void save(User entity);
-    void update(User entity);
-    void remove(User entity);
-    User findById(TenantId tenantId, UserId id);
-    User[] findByTenant(TenantId tenantId);
+interface UserRepository : ITenantRepository!(User, UserId) {
+
     User findByUserName(TenantId tenantId, string userName);
     User findByEmail(TenantId tenantId, string email);
     User[] findByStatus(TenantId tenantId, UserStatus status);
     User[] findByType(TenantId tenantId, UserType type_);
-    User[] findByGroup(TenantId tenantId, GroupId groupId);
+    User[] findByGroup(TenantId tenantId, IDMGroupId groupId);
+
 }

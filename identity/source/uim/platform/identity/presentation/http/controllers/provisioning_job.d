@@ -103,7 +103,7 @@ class ProvisioningJobController : ManageHttpController {
         return successResponse("Provisioning job deleted successfully", "Deleted", 200, responseData);
     }
 
-    protected Json starthandler(HTTPServerRequest req) {
+    protected Json startHandler(HTTPServerRequest req) {
         auto precheck = super.postHandler(req);
         if (precheck.hasError)
             return precheck;

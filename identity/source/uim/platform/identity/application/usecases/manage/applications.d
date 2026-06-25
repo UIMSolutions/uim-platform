@@ -23,8 +23,8 @@ class ManageApplicationsUseCase {
     CommandResult createApplication(ApplicationDTO dto) {
         import std.digest.sha : sha256Of, toHexString;
         import std.random : uniform;
-        Application app;
-        app.initEntity(dto.tenantId, dto.createdBy);
+        
+        auto app = Application(dto.tenantId);
         app.id = dto.applicationId;
         app.name = dto.name;
         app.description = dto.description;

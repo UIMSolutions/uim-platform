@@ -37,7 +37,7 @@ public:
 
   UseCaseResult!Notebook get(TenantId tenantId, NotebookId id) {
     auto n = _repo.find(tenantId, id);
-    if (n == Notebook.init)
+    if (n.isNull)
       return UseCaseResult!Notebook(false, "Notebook not found", Notebook.init);
     return UseCaseResult!Notebook(true, "", n);
   }

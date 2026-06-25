@@ -83,50 +83,42 @@ class ApplicationController : ManageHttpController {
     auto appId = idx >= 0 ? path[idx + 1 .. $] : "";
 
     auto app = useCase.getApplication(tenantId, appId);
-    if (app == Application.init) {
-      auto errRes = Json.emptyObject;
-      errRes["error"] = Json("Application not found");
-      res.writeJsonBody(errRes, 404);
-      return;
-    }
+    if (app.isNull)
+      return errorResponse("Application not found", 404);
 
-    auto response = toJsonValue(app);
+    auto response = app.toJson;
     response.remove("clientSecret"); // Don't expose secret on GET
-    res.writeJsonBody(response, 200);
+
+    return successResponse("Application retrieved successfully", "Retrieved", 200, response);
   }
- catch (Exception e) {
-    auto errRes = Json.emptyObject;
-    errRes["error"] = Json("Internal server error");
-    res.writeJsonBody(errRes, 500);
+
+  override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    // import std.string : lastIndexOf;
+
+    auto tenantId = precheck.tenantId;
+    auto path = req.requestURI;
+    auto idx = path.lastIndexOf('/');
+    auto appId = idx >= 0 ? path[idx + 1 .. $] : "";
+
+    auto data = precheck.data;
+    UpdateAppRequest request;
+    request.tenantId = tenantId;
+    request.applicationId = appId;
+    request.name = data.getString("name");
+    request.redirectUris = data.getStrings("redirectUris");
+    request.allowedScopes = data.getStrings("allowedScopes");
+
+    auto result = useCase.updateApplication(request);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto responseData = Json.emptyObject
+      .set("applicationId", result.applicationId);
+    return successResponse("Application updated successfully", "Updated", 200, responseData);
   }
-}
-
-override protected Json updateHandler(HTTPServerRequest req) {
-  auto precheck = super.updateHandler(req);
-  if (precheck.hasError)
-    return precheck;
-
-  auto tenantId = precheck.tenantId;
-  // import std.string : lastIndexOf;
-
-  auto tenantId = precheck.tenantId;
-  auto path = req.requestURI;
-  auto idx = path.lastIndexOf('/');
-  auto appId = idx >= 0 ? path[idx + 1 .. $] : "";
-
-  auto data = precheck.data;
-  UpdateAppRequest request;
-  request.tenantId = tenantId;
-  request.applicationId = appId;
-  request.name = data.getString("name");
-  request.redirectUris = data.getStrings("redirectUris");
-  request.allowedScopes = data.getStrings("allowedScopes");
-
-  auto result = useCase.updateApplication(request);
-  if (result.hasError)
-    return errorResponse(result.message, 400);
-
-  auto responseData = Json.emptyObject
-    .set("applicationId", result.applicationId);
-  return successResponse("Application updated successfully", "Updated", 200, responseData);
 }

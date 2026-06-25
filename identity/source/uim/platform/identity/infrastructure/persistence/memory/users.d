@@ -32,7 +32,7 @@ class MemoryUserRepository : TenantRepository!(User, UserId), UserRepository {
         return findByTenant(tenantId).filter!(u => u.type_ == type_).array;
     }
 
-    User[] findByGroup(TenantId tenantId, GroupId groupId) {
+    User[] findByGroup(TenantId tenantId, IDMGroupId groupId) {
         import std.algorithm : canFind;
         return findByTenant(tenantId).filter!(u => u.groups.canFind(groupId.value)).array;
     }

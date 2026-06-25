@@ -42,7 +42,7 @@ public:
 
   UseCaseResult!Cluster get(TenantId tenantId, ClusterId id) {
     auto c = _repo.find(tenantId, id);
-    if (c == Cluster.init)
+    if (c.isNull)
       return UseCaseResult!Cluster(false, "Cluster not found", Cluster.init);
     return UseCaseResult!Cluster(true, "", c);
   }

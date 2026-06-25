@@ -43,7 +43,7 @@ class AuthenticateUserUseCase { // TODO: UIMUseCase {
   AuthResult execute(AuthRequest req) {
     // Find user
     auto user = userRepo.findByEmail(req.tenantId, req.email);
-    if (user == User.init)
+    if (user.isNull)
       return AuthResult(false, "Invalid credentials");
 
     if (!user.isActive())

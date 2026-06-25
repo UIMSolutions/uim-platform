@@ -11,13 +11,10 @@ import uim.platform.identity;
 
 @safe:
 
-interface ProvisioningJobRepository {
-    void save(ProvisioningJob entity);
-    void update(ProvisioningJob entity);
-    void remove(ProvisioningJob entity);
-    ProvisioningJob findById(TenantId tenantId, ProvisioningJobId id);
-    ProvisioningJob[] findByTenant(TenantId tenantId);
+interface ProvisioningJobRepository : ITenantRepository!(ProvisioningJob, ProvisioningJobId) {
+
     ProvisioningJob[] findByStatus(TenantId tenantId, JobStatus status);
     ProvisioningJob[] findByType(TenantId tenantId, JobType type_);
     ProvisioningJob[] findByTargetSystem(TenantId tenantId, string targetSystem);
+
 }

@@ -128,7 +128,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
   /// Remove a member from a group.
   CommandResult removeMember(RemoveMemberRequest req) {
     auto group = groupRepo.findById(req.groupId);
-    if (group == IAMGroup.init)
+    if (group.isNull)
       return CommandResult(false, "", "IAMGroup not found");
 
     auto newMembers = group.members.filter!(m => m.value != req.memberId).array.toJson;
@@ -141,7 +141,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
 
     // Update user's groupIds
     auto user = userRepo.findById(req.memberId);
-    if (user != User.init) {
+    if (!user.isNull) {
       user.groupIds = user.groupIds.filter!(g => g != req.groupId).array.toJson;
       userRepo.update(user);
     }
@@ -163,7 +163,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
     foreach (m; group.members) {
       if (m.type == "User") {
         auto user = userRepo.findById(m.value);
-        if (user != User.init) {
+        if (!user.isNull) {
           user.groupIds = user.groupIds.filter!(g => g != id).array.toJson;
           userRepo.update(user);
         }
