@@ -34,12 +34,9 @@ class ServicePlanController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto items = plans.listServicePlans(tenantId);
-        return Json.emptyObject
+        return successResponse("Service plans retrieved successfully", "Retrieved", 200, Json.emptyObject
             .set("count", items.length)
-            .set("resources", items.map!(e => e.toJson()).array.toJson)
-            .set("message", "Service plans retrieved successfully")
-            .set("status", "success")
-            .set("statusCode", 200);
+            .set("resources", items.map!(e => e.toJson()).array.toJson));
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -50,13 +47,13 @@ class ServicePlanController : ManageHttpController {
         auto tenantId = precheck.tenantId;
         auto id = ServicePlanId(precheck.id);
         if (id.isNull)
-            return Json.emptyObject.set("error", "Invalid service plan ID").set("statusCode", 400);
+            return errorResponse("Invalid service plan ID", 400);
 
         auto e = plans.getServicePlan(tenantId, id);
         if (e.isNull)
-            return Json.emptyObject.set("error", "Service plan not found").set("statusCode", 404);
+            return errorResponse("Service plan not found", 404);
 
-        return e.toJson().set("message", "Service plan retrieved successfully").set("status", "success").set("statusCode", 200);
+        return successResponse("Service plan retrieved successfully", "Retrieved", 200, e.toJson());
     }
 
     override protected Json createHandler(HTTPServerRequest req) {
@@ -82,13 +79,10 @@ class ServicePlanController : ManageHttpController {
 
         auto result = plans.createServicePlan(dto);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.message).set("statusCode", 400);
+            return errorResponse(result.message, 400);
 
-        return Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Service plan created successfully")
-            .set("status", "success")
-            .set("statusCode", 201);
+        return successResponse("Service plan created successfully", "Created", 201, Json.emptyObject
+            .set("id", result.id));
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -109,13 +103,10 @@ class ServicePlanController : ManageHttpController {
 
         auto result = plans.updateServicePlan(dto);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.message).set("statusCode", 400);
+            return errorResponse(result.message, 400);
 
-        return Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Service plan updated successfully")
-            .set("status", "success")
-            .set("statusCode", 200);
+        return successResponse("Service plan updated successfully", "Updated", 200, Json.emptyObject
+            .set("id", result.id));
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -125,15 +116,14 @@ class ServicePlanController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto id = ServicePlanId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid service plan ID", 400);
 
         auto result = plans.deleteServicePlan(tenantId, id);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.message).set("statusCode", 404);
+            return errorResponse(result.message, 404);
 
-        return Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Service plan deleted successfully")
-            .set("status", "success")
-            .set("statusCode", 200);
+        return successResponse("Service plan deleted successfully", "Deleted", 200, Json.emptyObject
+            .set("id", result.id));
     }
 }

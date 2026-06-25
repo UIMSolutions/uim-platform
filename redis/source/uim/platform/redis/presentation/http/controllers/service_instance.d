@@ -34,12 +34,9 @@ class ServiceInstanceController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto items = instances.listServiceInstances(tenantId);
-        return Json.emptyObject
+        return successResponse("Service instances retrieved successfully", "Retrieved", 200, Json.emptyObject
             .set("count", items.length)
-            .set("resources", items.map!(e => e.toJson()).array.toJson)
-            .set("message", "Service instances retrieved successfully")
-            .set("status", "success")
-            .set("statusCode", 200);
+            .set("resources", items.map!(e => e.toJson()).array.toJson));
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -50,13 +47,13 @@ class ServiceInstanceController : ManageHttpController {
         auto tenantId = precheck.tenantId;
         auto id = ServiceInstanceId(precheck.id);
         if (id.isNull)
-            return Json.emptyObject.set("error", "Invalid service instance ID").set("statusCode", 400);
+            return errorResponse("Invalid service instance ID", 400);
 
         auto e = instances.getServiceInstance(tenantId, id);
         if (e.isNull)
-            return Json.emptyObject.set("error", "Service instance not found").set("statusCode", 404);
+            return errorResponse("Service instance not found", 404);
 
-        return e.toJson().set("message", "Service instance retrieved successfully").set("status", "success").set("statusCode", 200);
+        return successResponse("Service instance retrieved successfully", "Retrieved", 200, e.toJson());
     }
 
     override protected Json createHandler(HTTPServerRequest req) {
@@ -81,13 +78,10 @@ class ServiceInstanceController : ManageHttpController {
 
         auto result = instances.createServiceInstance(dto);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.message).set("statusCode", 400);
+            return errorResponse(result.message, 400);
 
-        return Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Service instance created successfully")
-            .set("status", "success")
-            .set("statusCode", 201);
+        return successResponse("Service instance created successfully", "Created", 201, Json.emptyObject
+            .set("id", result.id));
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -108,13 +102,10 @@ class ServiceInstanceController : ManageHttpController {
 
         auto result = instances.updateServiceInstance(dto);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.message).set("statusCode", 400);
+            return errorResponse(result.message, 400);
 
-        return Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Service instance updated successfully")
-            .set("status", "success")
-            .set("statusCode", 200);
+        return successResponse("Service instance updated successfully", "Updated", 200, Json.emptyObject
+            .set("id", result.id));
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -127,12 +118,9 @@ class ServiceInstanceController : ManageHttpController {
 
         auto result = instances.deleteServiceInstance(tenantId, id);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.message).set("statusCode", 404);
+            return errorResponse(result.message, 404);
 
-        return Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Service instance deleted successfully")
-            .set("status", "success")
-            .set("statusCode", 200);
+        return successResponse("Service instance deleted successfully", "Deleted", 200, Json.emptyObject
+            .set("id", result.id));
     }
 }

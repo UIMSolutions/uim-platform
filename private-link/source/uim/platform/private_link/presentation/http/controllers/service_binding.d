@@ -27,12 +27,11 @@ class ServiceBindingController : ManageHttpController {
 
   override protected Json listHandler(HTTPServerRequest req) {
     auto tenantId = precheck.tenantId;
-    auto items = usecase.listBindings(tenantId);
-    return Json.emptyObject
-        .set("items", items.map!(b => b.toJson).array.toJson)
-        .set("totalCount", Json(items.length))
-        .set("message", "Service bindings retrieved successfully")
-        .set("statusCode", 200);
+    auto items = usecase.listBindings(tenantId).map!(b => b.toJson).array;
+    return successResponse("Service bindings retrieved successfully", "Retrieved", 200,
+     Json.emptyObject
+        .set("items", items)
+        .set("totalCount", items.length));
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
@@ -46,6 +45,7 @@ class ServiceBindingController : ManageHttpController {
     auto result = usecase.createBinding(r);
     if (result.hasError())
       return errorResponse(result.message, 400);
+
     return successResponse("Service binding created", "Created", 201, Json.emptyObject
         .set("id", result.id));
   }
@@ -53,9 +53,13 @@ class ServiceBindingController : ManageHttpController {
   override protected Json getHandler(HTTPServerRequest req) {
     auto tenantId = precheck.tenantId;
     auto id = ServiceBindingId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid service binding ID", 400);
+
     auto binding = usecase.getBinding(tenantId, id);
     if (binding.id.value.length == 0)
       return errorResponse("Service binding not found", 404);
+
     return successResponse("Service binding retrieved", "Retrieved", 200, binding.toJson
         .set("status", "success")
         .set("statusCode", 200));
@@ -69,14 +73,14 @@ class ServiceBindingController : ManageHttpController {
   override protected Json deleteHandler(HTTPServerRequest req) {
     auto tenantId = precheck.tenantId;
     auto id = ServiceBindingId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid service binding ID", 400);
+
     auto result = usecase.deleteBinding(tenantId, id);
-    if (result.hasError()) {
-      auto code = result.message == "Service binding not found" ? 404 : 400;
-      return errorResponse(result.message, code);
-    }
+    if (result.hasError()) 
+      return errorResponse(result.message, result.message == "Service binding not found" ? 404 : 400);
+
     return successResponse("Service binding deleted", "Deleted", 200, Json.emptyObject
-        .set("id", result.id)
-        .set("status", "success")
-        .set("statusCode", 200));
+        .set("id", result.id));
   }
 }

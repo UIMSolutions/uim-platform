@@ -30,11 +30,9 @@ class PrivateEndpointController : ManageHttpController {
   override protected Json listHandler(HTTPServerRequest req) {
     auto tenantId = precheck.tenantId;
     auto items = usecase.listEndpoints(tenantId);
-    return Json.emptyObject
+    return successResponse("Private endpoints retrieved successfully", "Retrieved", 200, Json.emptyObject
         .set("items", items.map!(e => e.toJson).array.toJson)
-        .set("totalCount", Json(items.length))
-        .set("message", "Private endpoints retrieved successfully")
-        .set("statusCode", 200);
+        .set("totalCount", Json(items.length)));
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
@@ -53,11 +51,10 @@ class PrivateEndpointController : ManageHttpController {
 
     auto result = usecase.createEndpoint(r);
     if (result.hasError())
-      return Json.emptyObject.set("message", result.message).set("statusCode", 400);
-    return Json.emptyObject
-        .set("id", result.id)
-        .set("message", "Private endpoint created, awaiting acceptance")
-        .set("statusCode", 201);
+      return errorResponse(result.message, 400);
+
+    return successResponse("Private endpoint created successfully", "Created", 201, Json.emptyObject
+        .set("id", result.id));
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
@@ -65,8 +62,9 @@ class PrivateEndpointController : ManageHttpController {
     auto id = PrivateEndpointId(precheck.id);
     auto ep = usecase.getEndpoint(tenantId, id);
     if (ep.id.value.length == 0)
-      return Json.emptyObject.set("message", "Private endpoint not found").set("statusCode", 404);
-    return ep.toJson.set("message", "Private endpoint retrieved").set("statusCode", 200);
+      return errorResponse("Private endpoint not found", 404);
+
+    return successResponse("Private endpoint retrieved successfully", "Retrieved", 200, ep.toJson);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
@@ -82,9 +80,10 @@ class PrivateEndpointController : ManageHttpController {
     auto result = usecase.updateEndpointStatus(r);
     if (result.hasError()) {
       auto code = result.message == "Private endpoint not found" ? 404 : 400;
-      return Json.emptyObject.set("message", result.message).set("statusCode", code);
+      return errorResponse(result.message, code);
     }
-    return Json.emptyObject.set("id", result.id).set("message", "Endpoint status updated").set("statusCode", 200);
+    return successResponse("Endpoint status updated successfully", "Updated", 200, Json.emptyObject
+        .set("id", result.id));
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
@@ -93,9 +92,10 @@ class PrivateEndpointController : ManageHttpController {
     auto result = usecase.deleteEndpoint(tenantId, id);
     if (result.hasError()) {
       auto code = result.message == "Private endpoint not found" ? 404 : 400;
-      return Json.emptyObject.set("message", result.message).set("statusCode", code);
+      return errorResponse(result.message, code);
     }
-    return Json.emptyObject.set("id", result.id).set("message", "Private endpoint deleted").set("statusCode", 200);
+    return successResponse("Private endpoint deleted successfully", "Deleted", 200, Json.emptyObject
+        .set("id", result.id));
   }
 
   /// POST /api/v1/private-endpoints/:id/approve

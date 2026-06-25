@@ -57,12 +57,11 @@ class ContentController : ManageHttpController {
     auto resources = useCase.listByWorkspace(precheck.tenantId, WorkspaceId(workspaceIdRaw));
     auto payload = resources.map!(c => c.toJson()).array.toJson;
 
-    return Json.emptyObject
-      .set("count", resources.length)
-      .set("resources", payload)
-      .set("message", "Content retrieved successfully")
-      .set("status", "success")
-      .set("statusCode", 200);
+    return successResponse("Content retrieved successfully", "Retrieved", 200,
+      Json.emptyObject
+        .set("count", resources.length)
+        .set("resources", payload));
+
   }
 
   override protected Json getHandler(HTTPServerRequest req) {

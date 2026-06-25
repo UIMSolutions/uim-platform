@@ -34,12 +34,10 @@ class ConfigurationController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto items = configurations.listConfigurations(tenantId);
-        return Json.emptyObject
+        return successResponse("Configurations retrieved successfully", "Retrieved", 200, Json.emptyObject
             .set("count", items.length)
-            .set("resources", items.map!(e => e.toJson()).array.toJson)
-            .set("message", "Configurations retrieved successfully")
-            .set("status", "success")
-            .set("statusCode", 200);
+            .set("resources", items.map!(e => e.toJson()).array.toJson));
+
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -54,9 +52,9 @@ class ConfigurationController : ManageHttpController {
 
         auto e = configurations.getConfiguration(tenantId, id);
         if (e.isNull)
-            return Json.emptyObject.set("error", "Configuration not found").set("statusCode", 404);
+            return errorResponse("Configuration not found", 404);
 
-        return e.toJson().set("message", "Configuration retrieved successfully").set("status", "success").set("statusCode", 200);
+        return successResponse("Configuration retrieved successfully", "Retrieved", 200, e.toJson());
     }
 
     override protected Json createHandler(HTTPServerRequest req) {
@@ -80,13 +78,10 @@ class ConfigurationController : ManageHttpController {
 
         auto result = configurations.createConfiguration(dto);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.message).set("statusCode", 400);
+            return errorResponse(result.message, 400);
 
-        return Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Configuration created successfully")
-            .set("status", "success")
-            .set("statusCode", 201);
+        return successResponse("Configuration created successfully", "Created", 201, Json.emptyObject
+            .set("id", result.id));
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -95,9 +90,13 @@ class ConfigurationController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
+        auto id = ConfigurationId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid configuration ID", 400);
+
         auto data = precheck.data;
         ConfigurationDTO dto;
-        dto.configurationId      = ConfigurationId(precheck.id);
+        dto.configurationId      = id;
         dto.tenantId             = tenantId;
         dto.timeout_             = data.getLong("timeout", 0);
         dto.maxConnections       = data.getLong("maxConnections", 0);
@@ -109,13 +108,10 @@ class ConfigurationController : ManageHttpController {
 
         auto result = configurations.updateConfiguration(dto);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.message).set("statusCode", 400);
+            return errorResponse(result.message, 400);
 
-        return Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Configuration updated successfully")
-            .set("status", "success")
-            .set("statusCode", 200);
+        return successResponse("Configuration updated successfully", "Updated", 200, Json.emptyObject
+            .set("id", result.id));
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -125,15 +121,14 @@ class ConfigurationController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto id = ConfigurationId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid configuration ID", 400);
 
         auto result = configurations.deleteConfiguration(tenantId, id);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.message).set("statusCode", 404);
+            return errorResponse(result.message, 404);
 
-        return Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Configuration deleted successfully")
-            .set("status", "success")
-            .set("statusCode", 200);
+        return successResponse("Configuration deleted successfully", "Deleted", 200, Json.emptyObject
+            .set("id", result.id));
     }
 }

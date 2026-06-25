@@ -53,7 +53,7 @@ class NotificationController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
         auto resp = Json.emptyObject.set("id", result.id);
-        return successResponse("Notification created successfully", 201, resp);
+        return successResponse("Notification created successfully", "Created", 201, resp);
     }
 
     override protected Json listHandler(HTTPServerRequest req) {
@@ -81,9 +81,9 @@ class NotificationController : ManageHttpController {
 
         auto resp = Json.emptyObject
             .set("count", notifications.length)
-            .set("resources", list);
+            .set("resources", jarr);
 
-        return successResponse("Notifications retrieved successfully", 200, resp);
+        return successResponse("Notifications retrieved successfully", "Retrieved",  200, resp);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -110,10 +110,9 @@ class NotificationController : ManageHttpController {
             .set("actionUrl", n.actionUrl)
             .set("createdAt", n.createdAt)
             .set("sentAt", n.sentAt)
-            .set("readAt", n.readAt)
-            .set("message", "Notification retrieved");
+            .set("readAt", n.readAt);
 
-        return successResponse("Notification retrieved successfully", 200, resp);
+        return successResponse("Notification retrieved successfully", "Retrieved", 200, resp);
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -135,10 +134,9 @@ class NotificationController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Notification updated");
+            .set("id", result.id);
 
-        return successResponse("Notification updated successfully", 200, resp);
+        return successResponse("Notification updated successfully", "Updated", 200, resp);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -154,7 +152,7 @@ class NotificationController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
-        return successResponse("Notification deleted successfully", 200, responseData);
+        return successResponse("Notification deleted successfully", "Deleted", 200, responseData);
 
     }
 }

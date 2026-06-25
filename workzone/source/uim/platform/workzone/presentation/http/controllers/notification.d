@@ -55,20 +55,16 @@ class NotificationController : ManageHttpController {
     if (recipientIdRaw.length == 0)
       return errorResponse("recipientId query parameter is required", 400);
 
-    Notification[] resources;
-    if (req.query.get("unread", "0") == "1")
-      resources = useCase.listUnreadNotifications(precheck.tenantId, UserId(recipientIdRaw));
-    else
-      resources = useCase.listNotifications(precheck.tenantId, UserId(recipientIdRaw));
+    Notification[] resources = [];req.query.get("unread", "0") == "1"
+      ? resources = useCase.listUnreadNotifications(precheck.tenantId, UserId(recipientIdRaw))
+      : resources = useCase.listNotifications(precheck.tenantId, UserId(recipientIdRaw));
 
     auto payload = resources.map!(n => n.toJson()).array.toJson;
 
-    return Json.emptyObject
-      .set("count", resources.length)
-      .set("resources", payload)
-      .set("message", "Notifications retrieved successfully")
-      .set("status", "success")
-      .set("statusCode", 200);
+    return successResponse("Notifications retrieved successfully", "Retrieved", 200,
+      Json.emptyObject
+        .set("count", resources.length)
+        .set("resources", payload));
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
@@ -97,7 +93,7 @@ class NotificationController : ManageHttpController {
     else
       return errorResponse("Supported status values: read, dismissed", 400);
 
-    if (!result.success)
+    if (result.hasError)
       return errorResponse(result.message, 404);
 
     return successResponse("Notification updated successfully", "Updated", 200,
@@ -110,9 +106,9 @@ class NotificationController : ManageHttpController {
       return precheck;
 
     auto result = useCase.deleteNotification(precheck.tenantId, NotificationId(precheck.id));
-    if (!result.success)
+    if (result.hasError)
       return errorResponse(result.message, 404);
 
-    return successResponse("Notification deleted successfully", "Deleted", 200, Json.emptyObject);
+    return successResponse("Notification deleted successfully", "Deleted", 200, Json.emptyObject.set("id", result.id));
   }
 }

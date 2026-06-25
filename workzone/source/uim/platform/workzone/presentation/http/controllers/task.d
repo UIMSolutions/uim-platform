@@ -66,12 +66,11 @@ class TaskController : ManageHttpController {
 
     auto payload = resources.map!(t => t.toJson()).array.toJson;
 
-    return Json.emptyObject
-      .set("count", resources.length)
-      .set("resources", payload)
-      .set("message", "Tasks retrieved successfully")
-      .set("status", "success")
-      .set("statusCode", 200);
+    return successResponse("Tasks retrieved successfully", "Retrieved", 200,
+      Json.emptyObject
+        .set("count", resources.length)
+        .set("resources", payload));
+
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
@@ -91,9 +90,14 @@ class TaskController : ManageHttpController {
     if (precheck.hasError)
       return precheck;
 
+    auto tenantId = precheck.tenantId;
+    auto id = TaskId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Task ID is required", 400);
+
     UpdateTaskRequest r;
-    r.id = TaskId(precheck.id);
-    r.tenantId = precheck.tenantId;
+    r.tenantId = tenantId;
+    r.id = id;
     r.status = toTaskStatus(precheck.data.getString("status", "open"));
     r.priority = toTaskPriority(precheck.data.getString("priority", "medium"));
     r.title = precheck.data.getString("title");

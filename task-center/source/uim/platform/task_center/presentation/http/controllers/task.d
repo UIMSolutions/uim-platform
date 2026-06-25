@@ -286,8 +286,7 @@ class TaskController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Task deleted");
+            .set("id", result.id);
 
         return successResponse("Task deleted successfully", "Deleted", 200, resp);
 }

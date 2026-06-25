@@ -33,12 +33,10 @@ class ServiceBindingController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto items = bindings.listServiceBindings(tenantId);
-        return Json.emptyObject
+        return successResponse("Service bindings retrieved successfully", "Retrieved", 200, Json.emptyObject
             .set("count", items.length)
-            .set("resources", items.map!(e => e.toJson()).array.toJson)
-            .set("message", "Service bindings retrieved successfully")
-            .set("status", "success")
-            .set("statusCode", 200);
+            .set("resources", items.map!(e => e.toJson()).array.toJson));
+
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -49,13 +47,13 @@ class ServiceBindingController : ManageHttpController {
         auto tenantId = precheck.tenantId;
         auto id = ServiceBindingId(precheck.id);
         if (id.isNull)
-            return Json.emptyObject.set("error", "Invalid service binding ID").set("statusCode", 400);
+            return errorResponse("Invalid service binding ID", 400);
 
         auto e = bindings.getServiceBinding(tenantId, id);
         if (e.isNull)
-            return Json.emptyObject.set("error", "Service binding not found").set("statusCode", 404);
+            return errorResponse("Service binding not found", 404);
 
-        return e.toJson().set("message", "Service binding retrieved successfully").set("status", "success").set("statusCode", 200);
+        return successResponse("Service binding retrieved successfully", "Retrieved", 200, e.toJson());
     }
 
     override protected Json createHandler(HTTPServerRequest req) {
@@ -76,12 +74,10 @@ class ServiceBindingController : ManageHttpController {
 
         auto result = bindings.createServiceBinding(dto);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.message).set("statusCode", 400);
+            return errorResponse(result.message, 400);
 
-        return Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Service binding created successfully")
-            .set("status", "success")
+        return successResponse("Service binding created successfully", "Created", 201, Json.emptyObject
+            .set("id", result.id));
             .set("statusCode", 201);
     }
 
@@ -92,15 +88,15 @@ class ServiceBindingController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto id = ServiceBindingId(precheck.id);
+        if (id.isNull)
+            return Json.emptyObject.set("error", "Invalid service binding ID").set("statusCode", 400);
 
         auto result = bindings.deleteServiceBinding(tenantId, id);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.message).set("statusCode", 404);
+            return errorResponse(result.message, 404);
 
-        return Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Service binding deleted successfully")
-            .set("status", "success")
+        return successResponse("Service binding deleted successfully", "Deleted", 200, Json.emptyObject
+            .set("id", result.id));
             .set("statusCode", 200);
     }
 }

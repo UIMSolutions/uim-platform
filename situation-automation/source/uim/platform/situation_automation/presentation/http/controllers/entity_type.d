@@ -51,11 +51,10 @@ class EntityTypeController : ManageHttpController {
         auto result = usecase.createEntityType(r);
         if (result.hasError)
             return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Entity type created");
 
-        return successResponse("Entity type created successfully", 201, resp);
+        auto resp = Json.emptyObject
+            .set("id", result.id);
+        return successResponse("Entity type created successfully", "Created", 201, resp);
     }
 
     override protected Json listHandler(HTTPServerRequest req) {
@@ -83,7 +82,7 @@ class EntityTypeController : ManageHttpController {
             .set("resources", jarr)
             .set("message", "Entity types retrieved");
 
-        return successResponse("Entity types retrieved successfully", 200, resp);
+        return successResponse("Entity types retrieved successfully", "Retrieved",  200, resp);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -114,7 +113,7 @@ class EntityTypeController : ManageHttpController {
             .set("updatedAt", et.updatedAt)
             .set("relatedTemplateIds", stringsToJsonArray(et.relatedTemplateIds));
 
-        return successResponse("Entity type retrieved successfully", 200, resp);
+        return successResponse("Entity type retrieved successfully", "Retrieved", 200, resp);
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -138,7 +137,7 @@ class EntityTypeController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject.set("id", result.id);
-        return successResponse("Entity type updated successfully", 200, resp);
+        return successResponse("Entity type updated successfully", "Updated", 200, resp);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -155,9 +154,8 @@ class EntityTypeController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Entity type deleted");
+            .set("id", result.id);
 
-        return successResponse("Entity type deleted successfully", 200, resp);
+        return successResponse("Entity type deleted successfully", "Deleted", 200, resp);
     }
 }

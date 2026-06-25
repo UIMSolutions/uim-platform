@@ -74,11 +74,11 @@ class FunctionModuleController : HttpController {
             }
 
             auto result = _usecase.createFunctionModule(r);
-            if (result.success)
-                res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Function module created"), 201);
-            else
-                writeError(res, 400, result.error);
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+            if (result.hasError)
+                return errorResponse(result.error, 400);
+                
+            auto resp = Json.emptyObject.set("id", result.id);
+            return successResponse("Function module created successfully", "Created", 201, resp);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {

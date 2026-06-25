@@ -33,12 +33,10 @@ class MetricController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto items = metrics.listMetrics(tenantId);
-        return Json.emptyObject
+        return successResponse("Metrics retrieved successfully", "Retrieved", 200, Json.emptyObject
             .set("count", items.length)
-            .set("resources", items.map!(e => e.toJson()).array.toJson)
-            .set("message", "Metrics retrieved successfully")
-            .set("status", "success")
-            .set("statusCode", 200);
+            .set("resources", items.map!(e => e.toJson()).array.toJson));
+
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -49,13 +47,13 @@ class MetricController : ManageHttpController {
         auto tenantId = precheck.tenantId;
         auto id = MetricId(precheck.id);
         if (id.isNull)
-            return Json.emptyObject.set("error", "Invalid metric ID").set("statusCode", 400);
+            return errorResponse("Invalid metric ID", 400);
 
         auto e = metrics.getMetric(tenantId, id);
         if (e.isNull)
-            return Json.emptyObject.set("error", "Metric not found").set("statusCode", 404);
+            return errorResponse("Metric not found", 404);
 
-        return e.toJson().set("message", "Metric retrieved successfully").set("status", "success").set("statusCode", 200);
+        return successResponse("Metric retrieved successfully", "Retrieved", 200, e.toJson());
     }
 
     override protected Json createHandler(HTTPServerRequest req) {
@@ -85,13 +83,10 @@ class MetricController : ManageHttpController {
 
         auto result = metrics.recordMetric(dto);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.message).set("statusCode", 400);
+            return errorResponse(result.message, 400);
 
-        return Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Metric recorded successfully")
-            .set("status", "success")
-            .set("statusCode", 201);
+        return successResponse("Metric recorded successfully", "Created", 201, Json.emptyObject
+            .set("id", result.id));
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -101,15 +96,14 @@ class MetricController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto id = MetricId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid metric ID", 400);
 
         auto result = metrics.deleteMetric(tenantId, id);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.message).set("statusCode", 404);
+            return errorResponse(result.message, 404);
 
-        return Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Metric deleted successfully")
-            .set("status", "success")
-            .set("statusCode", 200);
+        return successResponse("Metric deleted successfully", "Deleted", 200, Json.emptyObject
+            .set("id", result.id));
     }
 }

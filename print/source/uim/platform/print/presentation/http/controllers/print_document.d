@@ -33,12 +33,10 @@ class PrintDocumentController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-        auto items = usecase.listPrintDocuments(tenantId);
-        auto list = items.map!(e => e.toJson()).array.toJson;
+        auto items = usecase.listPrintDocuments(tenantId).map!(e => e.toJson()).array.toJson;
         auto resp = Json.emptyObject
             .set("count", items.length)
-            .set("resources", jarr)
-            .set("message", "Document list retrieved successfully");
+            .set("resources", items);
 
         return successResponse("Document list retrieved successfully", 200, resp);
     }

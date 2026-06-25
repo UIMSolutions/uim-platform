@@ -51,12 +51,11 @@ class AppController : ManageHttpController {
     auto resources = useCase.listApps(precheck.tenantId);
     auto payload = resources.map!(a => a.toJson()).array.toJson;
 
-    return Json.emptyObject
-      .set("count", resources.length)
-      .set("resources", payload)
-      .set("message", "Apps retrieved successfully")
-      .set("status", "success")
-      .set("statusCode", 200);
+    return successResponse("Apps retrieved successfully", "Retrieved", 200,
+      Json.emptyObject
+        .set("count", resources.length)
+        .set("resources", payload));
+
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
@@ -86,7 +85,7 @@ class AppController : ManageHttpController {
     r.status = toAppStatus(precheck.data.getString("status", "active"));
 
     auto result = useCase.updateApp(r);
-    if (!result.success)
+    if (result.hasError)
       return errorResponse(result.message, 404);
 
     return successResponse("App updated successfully", "Updated", 200,
@@ -99,9 +98,9 @@ class AppController : ManageHttpController {
       return precheck;
 
     auto result = useCase.deleteApp(precheck.tenantId, AppId(precheck.id));
-    if (!result.success)
+    if (result.hasError)
       return errorResponse(result.message, 404);
 
-    return successResponse("App deleted successfully", "Deleted", 200, Json.emptyObject);
+    return successResponse("App deleted successfully", "Deleted", 200, Json.emptyObject.set("id", result.id));
   }
 }

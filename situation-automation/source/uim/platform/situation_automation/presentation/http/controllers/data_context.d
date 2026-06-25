@@ -38,25 +38,24 @@ class DataContextController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-            CreateDataContextRequest r;
-            r.tenantId = tenantId;
-            r.situationInstanceId = SituationInstanceId(data.getString("instanceId"));
-            r.dataContextId = DataContextId(precheck.id);
-            r.entityId = data.getString("entityId");
-            r.entityTypeId = EntityTypeId(data.getString("entityTypeId"));
-            r.data = jsonKeyValuePairs(j, "data");
-            r.sourceSystem = data.getString("sourceSystem");
-            r.containsPersonalData = data.getBoolean("containsPersonalData");
-            r.expiresAt = data.getLong("expiresAt");
+        CreateDataContextRequest r;
+        r.tenantId = tenantId;
+        r.situationInstanceId = SituationInstanceId(data.getString("instanceId"));
+        r.dataContextId = DataContextId(precheck.id);
+        r.entityId = data.getString("entityId");
+        r.entityTypeId = EntityTypeId(data.getString("entityTypeId"));
+        r.data = jsonKeyValuePairs(j, "data");
+        r.sourceSystem = data.getString("sourceSystem");
+        r.containsPersonalData = data.getBoolean("containsPersonalData");
+        r.expiresAt = data.getLong("expiresAt");
 
-            auto result = usecase.createDataContext(r);
-            if (result.hasError)
+        auto result = usecase.createDataContext(r);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Data context created");
+        auto resp = Json.emptyObject
+            .set("id", result.id);
 
-                return successResponse("Data context created successfully", 201, resp);
+        return successResponse("Data context created successfully", "Created", 201, resp);
     }
 
     override protected Json listHandler(HTTPServerRequest req) {
@@ -66,26 +65,26 @@ class DataContextController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-            auto contexts = usecase.listDataContexts(tenantId);
+        auto contexts = usecase.listDataContexts(tenantId);
 
-            auto jarr = Json.emptyArray;
-            foreach (d; contexts) {
-                jarr ~= Json.emptyObject
-                    .set("id", d.id)
-                    .set("instanceId", d.instanceId)
-                    .set("entityId", d.entityId)
-                    .set("entityTypeId", d.entityTypeId)
-                    .set("sourceSystem", d.sourceSystem)
-                    .set("containsPersonalData", d.containsPersonalData)
-                    .set("capturedAt", d.capturedAt)
-                    .set("expiresAt", d.expiresAt);
-            }
+        auto jarr = Json.emptyArray;
+        foreach (d; contexts) {
+            jarr ~= Json.emptyObject
+                .set("id", d.id)
+                .set("instanceId", d.instanceId)
+                .set("entityId", d.entityId)
+                .set("entityTypeId", d.entityTypeId)
+                .set("sourceSystem", d.sourceSystem)
+                .set("containsPersonalData", d.containsPersonalData)
+                .set("capturedAt", d.capturedAt)
+                .set("expiresAt", d.expiresAt);
+        }
 
-            auto resp = Json.emptyObject
-                .set("count", Json(contexts.length))
-                .set("resources", jarr);
-        
-            return successResponse("Data contexts retrieved successfully", 200, resp);
+        auto resp = Json.emptyObject
+            .set("count", Json(contexts.length))
+            .set("resources", jarr);
+
+        return successResponse("Data contexts retrieved successfully", "Retrieved", 200, resp);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -94,24 +93,24 @@ class DataContextController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto id = DataContextId(precheck.id);
-            auto d = usecase.getDataContext(tenantId, id);
-            if (d.isNull) {
-                writeError(res, 404, "Data context not found");
-                return;
-            }
+        auto id = DataContextId(precheck.id);
+        auto d = usecase.getDataContext(tenantId, id);
+        if (d.isNull) {
+            writeError(res, 404, "Data context not found");
+            return;
+        }
 
-            auto resp = Json.emptyObject
-                .set("id", d.id.value)
-                .set("instanceId", d.instanceId.value)
-                .set("entityId", d.entityId)
-                .set("entityTypeId", d.entityTypeId.value)
-                .set("sourceSystem", d.sourceSystem)
-                .set("containsPersonalData", d.containsPersonalData)
-                .set("capturedAt", d.capturedAt)
-                .set("expiresAt", d.expiresAt);
+        auto resp = Json.emptyObject
+            .set("id", d.id.value)
+            .set("instanceId", d.instanceId.value)
+            .set("entityId", d.entityId)
+            .set("entityTypeId", d.entityTypeId.value)
+            .set("sourceSystem", d.sourceSystem)
+            .set("containsPersonalData", d.containsPersonalData)
+            .set("capturedAt", d.capturedAt)
+            .set("expiresAt", d.expiresAt);
 
-            return successResponse("Data context retrieved successfully", 200, resp);
+        return successResponse("Data context retrieved successfully", "Retrieved", 200, resp);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -121,16 +120,19 @@ class DataContextController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-            auto id = DataContextId(precheck.id);
-            auto result = usecase.deleteDataContext(tenantId, id);
-            if (result.hasError)
-            return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id)
-                    .set("message", "Data context deleted");
+        auto id = DataContextId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid data context ID", 400);
 
-            return successResponse("Data context deleted successfully", 200, resp);
-            
+        auto result = usecase.deleteDataContext(tenantId, id);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto resp = Json.emptyObject
+            .set("id", result.id);
+
+        return successResponse("Data context deleted successfully", "Deleted", 200, resp);
+
     }
 
     override protected void handleDeletePersonalData(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -139,16 +141,16 @@ class DataContextController : ManageHttpController {
 
             auto result = usecase.deletePersonalData(tenantId);
             if (result.hasError)
-            return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("message", "Personal data contexts deleted");
+                return errorResponse(result.message, 400);
+            auto resp = Json.emptyObject
+                .set("message", "Personal data contexts deleted");
 
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
+            res.writeJsonBody(resp, 200);
+        } else {
+            writeError(res, 400, result.message);
         }
+    } catch (Exception e) {
+        writeError(res, 500, "Internal server error");
     }
+}
 }

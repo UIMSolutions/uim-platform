@@ -140,10 +140,10 @@ class ProcessInstanceController : ManageHttpController {
         auto result = processInstanceUsecase.performProcessInstanceAction(r);
         if (result.hasError)
             return errorResponse(result.message, 400);
+
         auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Action performed: " ~ r.action);
-        return successResponse("Action performed successfully", "Performed", 200, resp);
+            .set("id", result.id);
+        return successResponse("Action " ~ r.action ~ " performed successfully", "Performed", 200, resp);
     }
 
     mixin(HandleTemplate!("handleAction", "actionHandler"));
@@ -155,13 +155,15 @@ class ProcessInstanceController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto id = ProcessInstanceId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid process instance ID", 400);
 
         auto result = processInstanceUsecase.deleteProcessInstance(tenantId, id);
         if (result.hasError)
             return errorResponse(result.message, 400);
+
         auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Process instance deleted");
+            .set("id", result.id);
 
         return successResponse("Process instance deleted successfully", "Deleted", 200, resp);
     }

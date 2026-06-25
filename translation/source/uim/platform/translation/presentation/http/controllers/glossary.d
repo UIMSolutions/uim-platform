@@ -144,24 +144,14 @@ class GlossaryController : ManageHttpController {
 
         auto tenantId = TenantId(req.getTenantId);
         auto entryId = GlossaryEntryId(precheck.id);
-        if (entryId.isNull) {
-            return Json.emptyObject
-                .set("status", "error")
-                .set("message", "Invalid glossary entry ID")
-                .set("statusCode", 400);
-        }
+        if (entryId.isNull) 
+            return errorResponse("Invalid glossary entry ID", 400);
 
         auto result = usecase.deleteEntry(tenantId, entryId);
-        if (result.hasError) {
-            return Json.emptyObject
-                .set("status", "error")
-                .set("message", result.message)
+        if (result.hasError) 
+            return errorResponse(result.message, 400);
                 .set("statusCode", 400);
-        }
-
-        return Json.emptyObject
-            .set("status", "error")
-            .set("message", result.message)
-            .set("statusCode", 404);
+        
+        return successResponse("Glossary entry deleted successfully", "Deleted", 200, Json.emptyObject.set("id", result.id));
     }
 }

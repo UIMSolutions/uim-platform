@@ -53,8 +53,7 @@ class DecisionController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Decision created");
+            .set("id", result.id);
 
         return successResponse("Decision created successfully", "Created", 201, resp);
     }

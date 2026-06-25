@@ -35,7 +35,7 @@ class CardController : ManageHttpController {
     r.cardType = toCardType(data.getString("cardType", "list"));
 
     auto result = useCase.createCard(r);
-    if (!result.success)
+    if (result.hasError)
       return errorResponse(result.message, 400);
 
     return successResponse("Card created successfully", "Created", 201,
@@ -47,15 +47,13 @@ class CardController : ManageHttpController {
     if (precheck.hasError)
       return precheck;
 
-    auto resources = useCase.listCards(precheck.tenantId);
-    auto payload = resources.map!(c => c.toJson()).array.toJson;
+    auto resources = useCase.listCards(precheck.tenantId).map!(c => c.toJson()).array.toJson;
 
-    return Json.emptyObject
-      .set("count", resources.length)
-      .set("resources", payload)
-      .set("message", "Cards retrieved successfully")
-      .set("status", "success")
-      .set("statusCode", 200);
+    return successResponse("Cards retrieved successfully", "Retrieved", 200,
+      Json.emptyObject
+        .set("count", resources.length)
+        .set("resources", resources));
+
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
@@ -85,7 +83,7 @@ class CardController : ManageHttpController {
     r.active = precheck.data.getLong("active", 1) != 0;
 
     auto result = useCase.updateCard(r);
-    if (!result.success)
+    if (result.hasError)
       return errorResponse(result.message, 404);
 
     return successResponse("Card updated successfully", "Updated", 200,
@@ -98,9 +96,9 @@ class CardController : ManageHttpController {
       return precheck;
 
     auto result = useCase.deleteCard(precheck.tenantId, CardId(precheck.id));
-    if (!result.success)
+    if (result.hasError)
       return errorResponse(result.message, 404);
 
-    return successResponse("Card deleted successfully", "Deleted", 200, Json.emptyObject);
+    return successResponse("Card deleted successfully", "Deleted", 200, Json.emptyObject.set("id", result.id));
   }
 }

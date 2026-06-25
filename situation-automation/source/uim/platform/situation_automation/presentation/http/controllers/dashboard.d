@@ -51,8 +51,7 @@ class DashboardController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Dashboard created");
+            .set("id", result.id);
 
         return successResponse("Dashboard created successfully", "Created", 201, resp);
     }
@@ -79,8 +78,7 @@ class DashboardController : ManageHttpController {
 
         auto resp = Json.emptyObject
             .set("count", Json(dashboards.length))
-            .set("resources", jarr)
-            .set("message", "Dashboards retrieved");
+            .set("resources", jarr);
 
         return successResponse("Dashboards retrieved successfully", "Retrieved", 200, resp);
     }
@@ -93,10 +91,9 @@ class DashboardController : ManageHttpController {
         auto tenantId = precheck.tenantId;
         auto id = DashboardId(precheck.id);
         auto d = usecase.getDashboard(tenantId, id);
-        if (d.isNull) {
-            writeError(res, 404, "Dashboard not found");
-            return;
-        }
+        if (d.isNull) 
+            return errorResponse("Dashboard not found", 404);
+        
 
         auto resp = Json.emptyObject
             .set("id", d.id)
@@ -156,8 +153,7 @@ override protected Json deleteHandler(HTTPServerRequest req) {
         return errorResponse(result.message, 400);
 
     auto resp = Json.emptyObject
-        .set("id", result.id)
-        .set("message", "Dashboard deleted");
+        .set("id", result.id);
 
     return successResponse("Dashboard deleted successfully", "Deleted", 200, resp);
 }
