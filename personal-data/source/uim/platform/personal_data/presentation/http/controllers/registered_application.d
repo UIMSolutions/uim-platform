@@ -172,9 +172,7 @@ class RegisteredApplicationController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message);
 
-        auto resp = Json.emptyObject
-            .set("id", result.id);
-
+        auto resp = Json.emptyObject.set("id", result.id);
         return successResponse("Application suspended", "Suspended", 200, resp);
     }
 
@@ -194,8 +192,7 @@ class RegisteredApplicationController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message);
 
-        auto resp = Json.emptyObject
-            .set("id", result.id);
+        auto resp = Json.emptyObject.set("id", result.id);
         return successResponse("Application deleted", "Deleted", 200, resp);
     }
 }

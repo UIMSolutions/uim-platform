@@ -96,9 +96,7 @@ class RunLogController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
 
-        auto resp = Json.emptyObject
-            .set("id", result.id);
-
+        auto resp = Json.emptyObject.set("id", result.id);
         return successResponse("Run log updated successfully", "Updated", 200, resp);
     }
 

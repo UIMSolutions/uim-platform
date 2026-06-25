@@ -52,8 +52,7 @@ class EntityTypeController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
 
-        auto resp = Json.emptyObject
-            .set("id", result.id);
+        auto resp = Json.emptyObject.set("id", result.id);
         return successResponse("Entity type created successfully", "Created", 201, resp);
     }
 
@@ -153,9 +152,7 @@ class EntityTypeController : ManageHttpController {
         auto result = usecase.deleteEntityType(tenantId, id);
         if (result.hasError)
             return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-            .set("id", result.id);
-
+        auto resp = Json.emptyObject.set("id", result.id);
         return successResponse("Entity type deleted successfully", "Deleted", 200, resp);
     }
 }

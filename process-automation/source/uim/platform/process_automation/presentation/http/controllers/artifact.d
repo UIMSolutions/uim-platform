@@ -54,7 +54,6 @@ class ArtifactController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
         auto resp = Json.emptyObject.set("id", result.id);
-
         return successResponse("Artifact created successfully", "Created", 201, resp);
     }
 

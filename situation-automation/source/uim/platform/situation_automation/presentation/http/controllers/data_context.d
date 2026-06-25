@@ -52,9 +52,7 @@ class DataContextController : ManageHttpController {
         auto result = usecase.createDataContext(r);
         if (result.hasError)
             return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-            .set("id", result.id);
-
+        auto resp = Json.emptyObject.set("id", result.id);
         return successResponse("Data context created successfully", "Created", 201, resp);
     }
 
@@ -128,9 +126,7 @@ class DataContextController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
 
-        auto resp = Json.emptyObject
-            .set("id", result.id);
-
+        auto resp = Json.emptyObject.set("id", result.id);
         return successResponse("Data context deleted successfully", "Deleted", 200, resp);
 
     }

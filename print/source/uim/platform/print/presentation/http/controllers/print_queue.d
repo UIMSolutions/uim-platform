@@ -110,7 +110,6 @@ class PrintQueueController : ManageHttpController {
             return errorResponse(result.message, 404);
 
         auto resp = Json.emptyObject.set("id", result.id);
-
         return successResponse("Print queue updated successfully", 200, resp);
     }
 

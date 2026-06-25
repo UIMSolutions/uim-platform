@@ -49,9 +49,7 @@ class ProcessInstanceController : ManageHttpController {
         auto result = processInstanceUsecase.startProcessInstance(r);
         if (result.hasError)
             return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-            .set("id", result.id);
-
+        auto resp = Json.emptyObject.set("id", result.id);
         return successResponse("Process instance started successfully", "Started", 201, resp);
     }
 
@@ -141,8 +139,7 @@ class ProcessInstanceController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
 
-        auto resp = Json.emptyObject
-            .set("id", result.id);
+        auto resp = Json.emptyObject.set("id", result.id);
         return successResponse("Action " ~ r.action ~ " performed successfully", "Performed", 200, resp);
     }
 
@@ -162,9 +159,7 @@ class ProcessInstanceController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
 
-        auto resp = Json.emptyObject
-            .set("id", result.id);
-
+        auto resp = Json.emptyObject.set("id", result.id);
         return successResponse("Process instance deleted successfully", "Deleted", 200, resp);
     }
 }

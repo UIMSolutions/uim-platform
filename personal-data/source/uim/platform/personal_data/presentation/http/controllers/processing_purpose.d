@@ -114,9 +114,7 @@ class ProcessingPurposeController : ManageHttpController {
         auto result = usecase.update(r);
         if (result.hasError)
             return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-            .set("id", result.id);
-
+        auto resp = Json.emptyObject.set("id", result.id);
         return successResponse("Processing purpose updated successfully", 200, resp);
     }
 
@@ -131,9 +129,7 @@ class ProcessingPurposeController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
 
-        auto resp = Json.emptyObject
-            .set("id", result.id);
-
+        auto resp = Json.emptyObject.set("id", result.id);
         return successResponse("Processing purpose deleted successfully", "Deleted", 200, resp);
     }
 }

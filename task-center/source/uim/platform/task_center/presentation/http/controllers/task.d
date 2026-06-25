@@ -216,8 +216,7 @@ class TaskController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
 
-        auto resp = Json.emptyObject
-            .set("id", result.id);
+        auto resp = Json.emptyObject.set("id", result.id);
         return successResponse("Task forwarded successfully", "Forwarded", 200, resp);
     }
 
@@ -266,7 +265,6 @@ class TaskController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto resp = Json.emptyObject.set("id", result.id);
-
         return successResponse("Task cancelled successfully", "Cancelled", 200, resp);
     }
 
@@ -285,9 +283,7 @@ class TaskController : ManageHttpController {
         auto result = usecase.deleteTask(tenantId, id);
         if (result.hasError)
             return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-            .set("id", result.id);
-
+        auto resp = Json.emptyObject.set("id", result.id);
         return successResponse("Task deleted successfully", "Deleted", 200, resp);
 }
 

@@ -47,7 +47,6 @@ class TaskCommentController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
         auto resp = Json.emptyObject.set("id", result.id);
-
         return successResponse("Comment created successfully", "Created", 201, resp);
     }
 
@@ -107,7 +106,6 @@ class TaskCommentController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
         auto resp = Json.emptyObject.set("id", result.id);
-
         return successResponse("Comment updated successfully", "Updated", 200, resp);
     }
 

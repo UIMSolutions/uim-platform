@@ -48,10 +48,7 @@ class TaskActionController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
 
-        auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Action performed");
-
+        auto resp = Json.emptyObject.set("id", result.id);
         return successResponse("Action performed successfully", "Created", 201, resp);
     }
 

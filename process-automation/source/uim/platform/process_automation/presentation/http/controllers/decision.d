@@ -52,9 +52,7 @@ class DecisionController : ManageHttpController {
         auto result = decisionUsecase.createDecision(r);
         if (result.hasError)
             return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-            .set("id", result.id);
-
+        auto resp = Json.emptyObject.set("id", result.id);
         return successResponse("Decision created successfully", "Created", 201, resp);
     }
 
@@ -137,9 +135,7 @@ class DecisionController : ManageHttpController {
         auto result = decisionUsecase.updateDecision(r);
         if (result.hasError)
             return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-            .set("id", result.id);
-
+        auto resp = Json.emptyObject.set("id", result.id);
         return successResponse("Decision updated successfully", "Updated", 200, resp);
     }
 
