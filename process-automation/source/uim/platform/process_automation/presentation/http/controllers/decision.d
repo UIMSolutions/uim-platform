@@ -139,8 +139,7 @@ class DecisionController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Decision updated");
+            .set("id", result.id);
 
         return successResponse("Decision updated successfully", "Updated", 200, resp);
     }

@@ -55,7 +55,7 @@ class FilterRuleController : ManageHttpController {
       return errorResponse(result.message, 400);
     auto resp = Json.emptyObject.set("id", result.id);
 
-    return successResponse("Filter rule created successfully", 201, resp);
+    return successResponse("Filter rule created successfully", "Created", 201, resp);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
@@ -79,10 +79,9 @@ class FilterRuleController : ManageHttpController {
 
     auto resp = Json.emptyObject
       .set("items", arr)
-      .set("totalCount", rules.length)
-      .set("message", "Filter rules retrieved successfully");
+      .set("totalCount", rules.length);
 
-    return successResponse("Filter rules retrieved successfully", 200, resp);
+    return successResponse("Filter rules retrieved successfully", "Retrieved", 200, resp);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
@@ -100,7 +99,7 @@ class FilterRuleController : ManageHttpController {
       return errorResponse("Filter rule not found", 404);
 
     auto response = rule.toJson();
-    return successResponse("Filter rule retrieved successfully", 200, response);
+    return successResponse("Filter rule retrieved successfully", "Retrieved", 200, response);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
@@ -129,7 +128,7 @@ class FilterRuleController : ManageHttpController {
 
     auto resp = Json.emptyObject
       .set("id", id);
-    return successResponse("Filter rule updated successfully", 200, resp);
+    return successResponse("Filter rule updated successfully", "Updated", 200, resp);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
@@ -148,7 +147,7 @@ class FilterRuleController : ManageHttpController {
 
     auto resp = Json.emptyObject
       .set("id", id);
-    return successResponse("Filter rule deleted successfully", 200, resp);
+    return successResponse("Filter rule deleted successfully", "Deleted", 200, resp);
   }
 
   private FilterConditionDto[] parseConditions(Json j) {

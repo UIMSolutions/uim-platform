@@ -34,12 +34,9 @@ class AccessControlController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto items = accessControls.listAccessControls(tenantId);
-        return Json.emptyObject
+        return successResponse("Access controls retrieved successfully", "Retrieved", 200, Json.emptyObject
             .set("count", items.length)
-            .set("resources", items.map!(e => e.toJson()).array.toJson)
-            .set("message", "Access controls retrieved successfully")
-            .set("status", "success")
-            .set("statusCode", 200);
+            .set("resources", items.map!(e => e.toJson()).array.toJson));
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -50,13 +47,15 @@ class AccessControlController : ManageHttpController {
         auto tenantId = precheck.tenantId;
         auto id = AccessControlId(precheck.id);
         if (id.isNull)
-            return Json.emptyObject.set("error", "Invalid access control ID").set("statusCode", 400);
+            return errorResponse("Invalid access control ID", 400);
 
         auto e = accessControls.getAccessControl(tenantId, id);
         if (e.isNull)
-            return Json.emptyObject.set("error", "Access control not found").set("statusCode", 404);
+            return errorResponse("Access control not found", 404);
 
-        return e.toJson().set("message", "Access control retrieved successfully").set("status", "success").set("statusCode", 200);
+        return successResponse("Access control retrieved successfully", "Retrieved", 200, e.toJson()
+            .set("status", "success")
+            .set("statusCode", 200));
     }
 
     override protected Json createHandler(HTTPServerRequest req) {
@@ -76,12 +75,10 @@ class AccessControlController : ManageHttpController {
 
         auto result = accessControls.createAccessControl(dto);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.message).set("statusCode", 400);
+            return errorResponse(result.message, 400);
 
-        return Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Access control created successfully")
-            .set("status", "success")
+        return successResponse("Access control created successfully", "Created", 201, Json.emptyObject
+            .set("id", result.id));
             .set("statusCode", 201);
     }
 
@@ -100,13 +97,10 @@ class AccessControlController : ManageHttpController {
 
         auto result = accessControls.updateAccessControl(dto);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.message).set("statusCode", 400);
+            return errorResponse(result.message, 400);
 
-        return Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Access control updated successfully")
-            .set("status", "success")
-            .set("statusCode", 200);
+        return successResponse("Access control updated successfully", "Updated", 200, Json.emptyObject
+            .set("id", result.id));
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -119,12 +113,10 @@ class AccessControlController : ManageHttpController {
 
         auto result = accessControls.deleteAccessControl(tenantId, id);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.message).set("statusCode", 404);
+            return errorResponse(result.message, 404);
 
-        return Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Access control deleted successfully")
-            .set("status", "success")
+        return successResponse("Access control deleted successfully", "Deleted", 200, Json.emptyObject
+            .set("id", result.id));
             .set("statusCode", 200);
     }
 }

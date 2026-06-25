@@ -169,8 +169,7 @@ class PatientController : ManageHttpController {
 
     auto response = Json.emptyObject
       .set("resourceType", "Patient")
-      .set("id", result.id)
-      .set("message", "Patient updated");
+      .set("id", result.id);
     return successResponse("Patient updated successfully", "Updated", 200, response);
   }
 

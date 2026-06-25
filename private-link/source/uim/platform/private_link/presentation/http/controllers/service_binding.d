@@ -45,11 +45,9 @@ class ServiceBindingController : ManageHttpController {
 
     auto result = usecase.createBinding(r);
     if (result.hasError())
-      return Json.emptyObject.set("message", result.message).set("statusCode", 400);
-    return Json.emptyObject
-        .set("id", result.id)
-        .set("message", "Service binding created")
-        .set("statusCode", 201);
+      return errorResponse(result.message, 400);
+    return successResponse("Service binding created", "Created", 201, Json.emptyObject
+        .set("id", result.id));
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
@@ -57,8 +55,10 @@ class ServiceBindingController : ManageHttpController {
     auto id = ServiceBindingId(precheck.id);
     auto binding = usecase.getBinding(tenantId, id);
     if (binding.id.value.length == 0)
-      return Json.emptyObject.set("message", "Service binding not found").set("statusCode", 404);
-    return binding.toJson.set("message", "Service binding retrieved").set("statusCode", 200);
+      return errorResponse("Service binding not found", 404);
+    return successResponse("Service binding retrieved", "Retrieved", 200, binding.toJson
+        .set("status", "success")
+        .set("statusCode", 200));
   }
 
   // No update for bindings (immutable after creation)
@@ -72,8 +72,11 @@ class ServiceBindingController : ManageHttpController {
     auto result = usecase.deleteBinding(tenantId, id);
     if (result.hasError()) {
       auto code = result.message == "Service binding not found" ? 404 : 400;
-      return Json.emptyObject.set("message", result.message).set("statusCode", code);
+      return errorResponse(result.message, code);
     }
-    return Json.emptyObject.set("id", result.id).set("message", "Service binding deleted").set("statusCode", 200);
+    return successResponse("Service binding deleted", "Deleted", 200, Json.emptyObject
+        .set("id", result.id)
+        .set("status", "success")
+        .set("statusCode", 200));
   }
 }

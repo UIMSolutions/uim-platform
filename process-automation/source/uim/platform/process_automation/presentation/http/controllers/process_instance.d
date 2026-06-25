@@ -50,8 +50,7 @@ class ProcessInstanceController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Process instance started");
+            .set("id", result.id);
 
         return successResponse("Process instance started successfully", "Started", 201, resp);
     }

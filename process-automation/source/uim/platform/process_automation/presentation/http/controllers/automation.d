@@ -53,8 +53,7 @@ class AutomationController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Automation created");
+            .set("id", result.id);
 
         return successResponse("Automation created successfully", "Created", 201, resp);
     }
@@ -142,8 +141,7 @@ class AutomationController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Automation updated");
+            .set("id", result.id);
 
         return successResponse("Automation updated successfully", "Updated", 200, resp);
     }
@@ -160,8 +158,7 @@ class AutomationController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Automation deleted");
+            .set("id", result.id);
 
         return successResponse("Automation deleted successfully", "Deleted", 200, resp);
     }

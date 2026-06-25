@@ -213,8 +213,7 @@ class TaskController : ManageHttpController {
       if (result.hasError)
         return errorResponse(result.message, 400);
       auto resp = Json.emptyObject
-        .set("id", result.id)
-        .set("message", "PATask completed");
+        .set("id", result.id);
 
         return successResponse("Task completed successfully", "Completed", 200, resp);
   }
@@ -229,6 +228,9 @@ override protected Json deleteHandler(HTTPServerRequest req) {
   auto tenantId = precheck.tenantId;
 
   auto id = TaskId(precheck.id);
+  if (id.isNull)
+    return errorResponse("Task ID is required", 400);
+    
   auto result = taskUsecase.deleteTask(tenantId, id);
   if (result.hasError)
     return errorResponse(result.message, 400);

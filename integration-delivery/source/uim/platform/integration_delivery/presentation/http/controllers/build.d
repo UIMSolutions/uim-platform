@@ -20,6 +20,7 @@ class BuildController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/integration-delivery/builds", &handleList);
         router.get("/api/v1/integration-delivery/builds/*", &handleGet);
         router.post("/api/v1/integration-delivery/builds", &handleCreate);
@@ -34,12 +35,9 @@ class BuildController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto items = builds.listBuilds(tenantId);
-        return Json.emptyObject
+        return successResponse("Builds retrieved successfully", "Retrieved", 200, Json.emptyObject
             .set("count", items.length)
-            .set("resources", items.map!(e => e.toJson()).array.toJson)
-            .set("message", "Builds retrieved successfully")
-            .set("status", "success")
-            .set("statusCode", 200);
+            .set("resources", items.map!(e => e.toJson()).array.toJson));
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -54,9 +52,9 @@ class BuildController : ManageHttpController {
 
         auto e = builds.getBuild(tenantId, id);
         if (e.isNull)
-            return Json.emptyObject.set("error", "Build not found").set("statusCode", 404);
+            return errorResponse("Build not found", 404);
 
-        return e.toJson().set("message", "Build retrieved successfully").set("status", "success").set("statusCode", 200);
+        return successResponse("Build retrieved successfully", "Retrieved", 200, e.toJson());
     }
 
     override protected Json createHandler(HTTPServerRequest req) {
@@ -78,9 +76,10 @@ class BuildController : ManageHttpController {
 
         auto result = builds.triggerBuild(dto);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.message).set("statusCode", 400);
+            return errorResponse(result.message, 400);
 
-        return Json.emptyObject.set("id", result.id).set("message", "Build triggered").set("status", "created").set("statusCode", 201);
+        return successResponse("Build triggered successfully", "Created", 201, Json.emptyObject
+                .set("id", result.id));
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -97,9 +96,10 @@ class BuildController : ManageHttpController {
         auto errorMessage = data.getString("errorMessage", "");
         auto result = builds.updateBuildStatus(tenantId, id, BuildStatus.running, errorMessage);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.message).set("statusCode", 400);
+            return errorResponse(result.message, 400);
 
-        return Json.emptyObject.set("id", result.id).set("message", "Build updated").set("status", "updated").set("statusCode", 200);
+        return successResponse("Build updated successfully", "Updated", 200, Json.emptyObject
+                .set("id", result.id));
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -110,12 +110,13 @@ class BuildController : ManageHttpController {
         auto tenantId = precheck.tenantId;
         auto id = BuildId(precheck.id);
         if (id.isNull)
-            return Json.emptyObject.set("error", "Invalid build ID").set("statusCode", 400);
+            return errorResponse("Invalid build ID", 400);
 
         auto result = builds.deleteBuild(tenantId, id);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.message).set("statusCode", 400);
+            return errorResponse(result.message, 400); 
 
-        return Json.emptyObject.set("id", result.id).set("message", "Build deleted").set("status", "deleted").set("statusCode", 200);
+        return successResponse("Build deleted successfully", "Deleted", 200, Json.emptyObject
+                .set("id", result.id));
     }
 }

@@ -100,9 +100,9 @@ class StageController : ManageHttpController {
 
         auto result = stages.updateStage(dto);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.message).set("statusCode", 400);
+            return errorResponse(result.message, 400); 
 
-        return Json.emptyObject.set("id", result.id).set("message", "Stage updated").set("status", "updated").set("statusCode", 200);
+        return successResponse("Stage updated successfully", "Updated", 200, Json.emptyObject.set("id", result.id));
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -117,8 +117,8 @@ class StageController : ManageHttpController {
 
         auto result = stages.deleteStage(tenantId, id);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.message).set("statusCode", 400);
+            return errorResponse(result.message, 400);
 
-        return Json.emptyObject.set("id", result.id).set("message", "Stage deleted").set("status", "deleted").set("statusCode", 200);
+        return successResponse("Stage deleted successfully", "Deleted", 200, Json.emptyObject.set("id", result.id));
     }
 }

@@ -104,10 +104,9 @@ class PipelineController : ManageHttpController {
       .set("name", p.name)
       .set("description", p.description)
       .set("isActive", p.isActive)
-      .set("targetStreamId", p.targetStreamId)
-      .set("message", "Pipeline retrieved successfully");
+      .set("targetStreamId", p.targetStreamId);
 
-    return successResponse("Pipeline retrieved successfully", 200, response);
+    return successResponse("Pipeline retrieved successfully", "Retrieved", 200, response);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
@@ -131,7 +130,7 @@ class PipelineController : ManageHttpController {
       return errorResponse(result.message, 400);
     auto response = Json.emptyObject.set("id", result.id);
 
-    return successResponse("Pipeline updated successfully", 200, response);
+    return successResponse("Pipeline updated successfully", "Updated", 200, response);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
@@ -146,7 +145,7 @@ class PipelineController : ManageHttpController {
     auto response = Json.emptyObject
       .set("id", pipelineId);
 
-    return successResponse("Pipeline deleted successfully", 200, response);
+    return successResponse("Pipeline deleted successfully", "Deleted", 200, response);
   }
 }
 

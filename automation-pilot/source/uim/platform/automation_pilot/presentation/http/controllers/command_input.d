@@ -36,15 +36,11 @@ class CommandInputController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-        auto items = commandInputs.listCommandInputs(tenantId);
-        auto list = items.map!(e => e.toJson()).array.toJson;
+        auto items = commandInputs.listCommandInputs(tenantId).map!(e => e.toJson()).array.toJson;
 
-        return Json.emptyObject
+        return successResponse("Command inputs retrieved successfully", "Retrieved", 200, Json.emptyObject
             .set("count", items.length)
-            .set("resources", list)
-            .set("message", "Command inputs retrieved successfully")
-            .set("status", "success")
-            .set("statusCode", 200);
+            .set("resources", list));
     }
 
     override protected Json createHandler(HTTPServerRequest req) {

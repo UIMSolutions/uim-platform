@@ -19,21 +19,19 @@ class ServiceInstanceController : ManageHttpController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    router.post("/api/v1/service-instances",    &handleCreate);
-    router.get("/api/v1/service-instances",     &handleList);
-    router.get("/api/v1/service-instances/*",   &handleGet);
-    router.put("/api/v1/service-instances/*",   &handleUpdate);
+    router.post("/api/v1/service-instances", &handleCreate);
+    router.get("/api/v1/service-instances", &handleList);
+    router.get("/api/v1/service-instances/*", &handleGet);
+    router.put("/api/v1/service-instances/*", &handleUpdate);
     router.delete_("/api/v1/service-instances/*", &handleDelete);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
     auto tenantId = precheck.tenantId;
-    auto items = usecase.listInstances(tenantId);
-    return Json.emptyObject
-        .set("items", items.map!(i => i.toJson).array.toJson)
-        .set("totalCount", Json(items.length))
-        .set("message", "Service instances retrieved successfully")
-        .set("statusCode", 200);
+    auto items = usecase.listInstances(tenantId).map!(i => i.toJson).array;
+    return successResponse("Service instances retrieved successfully", 200, Json.emptyObject
+      .set("items", items)
+      .set("totalCount", items.length));
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
@@ -51,11 +49,9 @@ class ServiceInstanceController : ManageHttpController {
 
     auto result = usecase.createInstance(r);
     if (result.hasError())
-      return Json.emptyObject.set("message", result.message).set("statusCode", 400);
-    return Json.emptyObject
-        .set("id", result.id)
-        .set("message", "Service instance created")
-        .set("statusCode", 201);
+      return errorResponse(result.message, 400);
+
+    return successResponse("Service instance created successfully", 201, Json.emptyObject.set("id", result.id));
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
@@ -63,8 +59,9 @@ class ServiceInstanceController : ManageHttpController {
     auto id = ServiceInstanceId(precheck.id);
     auto inst = usecase.getInstance(tenantId, id);
     if (inst.id.value.length == 0)
-      return Json.emptyObject.set("message", "Service instance not found").set("statusCode", 404);
-    return inst.toJson.set("message", "Service instance retrieved").set("statusCode", 200);
+      return errorResponse("Service instance not found", 404);
+
+    return successResponse("Service instance retrieved successfully", 200, inst.toJson);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
@@ -78,21 +75,19 @@ class ServiceInstanceController : ManageHttpController {
     r.statusMessage = data.getString("statusMessage");
 
     auto result = usecase.updateInstance(r);
-    if (result.hasError()) {
-      auto code = result.message == "Service instance not found" ? 404 : 400;
-      return Json.emptyObject.set("message", result.message).set("statusCode", code);
-    }
-    return Json.emptyObject.set("id", result.id).set("message", "Service instance updated").set("statusCode", 200);
+    if (result.hasError())
+      return errorResponse(result.message, result.message == "Service instance not found" ? 404 : 400);
+    
+    return successResponse("Service instance updated successfully", 200, Json.emptyObject.set("id", result.id));
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
     auto tenantId = precheck.tenantId;
     auto id = ServiceInstanceId(precheck.id);
     auto result = usecase.deleteInstance(tenantId, id);
-    if (result.hasError()) {
-      auto code = result.message == "Service instance not found" ? 404 : 400;
-      return Json.emptyObject.set("message", result.message).set("statusCode", code);
-    }
-    return Json.emptyObject.set("id", result.id).set("message", "Service instance deleted").set("statusCode", 200);
+    if (result.hasError()) 
+      return errorResponse(result.message, result.message == "Service instance not found" ? 404 : 400);
+    
+    return successResponse("Service instance deleted successfully", 200, Json.emptyObject.set("id", result.id));
   }
 }

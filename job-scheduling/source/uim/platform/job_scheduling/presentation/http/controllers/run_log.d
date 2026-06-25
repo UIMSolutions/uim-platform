@@ -45,8 +45,7 @@ class RunLogController : ManageHttpController {
 
         auto resp = Json.emptyObject
             .set("total", logs.length)
-            .set("results", jarr)
-            .set("message", "Run log list retrieved successfully");
+            .set("results", jarr);
 
         return successResponse("Run log list retrieved successfully", "Retrieved", 200, resp);
     }
@@ -64,12 +63,11 @@ class RunLogController : ManageHttpController {
         if (id.isEmpty)
             return errorResponse("Invalid job ID in path", 400);
 
-        auto logs = usecase.listRunLogs(tenantId, id);
-        auto jarr = logs.map!(l => l.toJson).array.toJson;
+        auto logs = usecase.listRunLogs(tenantId, id).map!(l => l.toJson).array.toJson;
 
         auto resp = Json.emptyObject
             .set("total", logs.length)
-            .set("results", jarr);
+            .set("results", logs);
 
         return successResponse("Run log list retrieved successfully", "Retrieved", 200, resp);
     }

@@ -34,12 +34,10 @@ class WebhookController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto items = webhooks.listWebhooks(tenantId);
-        return Json.emptyObject
+        return successResponse("Webhooks retrieved successfully", "Retrieved", 200, Json.emptyObject
             .set("count", items.length)
-            .set("resources", items.map!(e => e.toJson()).array.toJson)
-            .set("message", "Webhooks retrieved successfully")
-            .set("status", "success")
-            .set("statusCode", 200);
+            .set("resources", items.map!(e => e.toJson()).array.toJson));
+
     }
 
     override protected Json getHandler(HTTPServerRequest req) {

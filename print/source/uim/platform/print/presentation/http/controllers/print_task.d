@@ -20,6 +20,7 @@ class PrintTaskController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/print/tasks", &handleList);
         router.get("/api/v1/print/tasks/*", &handleGet);
         router.post("/api/v1/print/tasks", &handleCreate);
@@ -38,13 +39,9 @@ class PrintTaskController : ManageHttpController {
         auto list = items.map!(e => e.toJson()).array.toJson;
         auto resp = Json.emptyObject
             .set("count", items.length)
-            .set("resources", jarr)
-            .set("message", "Print task list retrieved successfully");
-        res.writeJsonBody(resp, 200);
-    }
- catch (Exception e) {
-        writeError(res, 500, "Internal server error");
-    }
+            .set("resources", jarr);
+        
+        return successResponse("Print task list retrieved successfully", "Retrieved", 200, resp);
 }
 
 override protected Json getHandler(HTTPServerRequest req) {
@@ -56,15 +53,10 @@ override protected Json getHandler(HTTPServerRequest req) {
     auto path = precheck.path;
     auto id = PrintTaskId(precheck.id);
     auto e = usecase.getPrintTask(tenantId, id);
-    if (e.isNull) {
-        writeError(res, 404, "Print task not found");
-        return;
-    }
-    res.writeJsonBody(e.toJson(), 200);
-}
- catch (Exception e) {
-    writeError(res, 500, "Internal server error");
-}
+    if (e.isNull)
+        return errorResponse("Print task not found", 404, Json.emptyObject.set("error", "Print task not found"));
+    return successResponse("Print task retrieved successfully", 200, e.toJson());
+
 }
 
 override protected Json createHandler(HTTPServerRequest req) {
@@ -91,10 +83,9 @@ override protected Json createHandler(HTTPServerRequest req) {
     dto.tray = data.getString("tray");
 
     auto result = usecase.createPrintTask(dto);
-    if (!result.success) {
-        writeError(res, 400, result.message);
-        return;
-    }
+    if (result.hasError) 
+        return errorResponse(result.message, 400);
+    
 
     auto resp = Json.emptyObject
         .set("id", result.id);
@@ -115,14 +106,11 @@ override protected Json updateHandler(HTTPServerRequest req) {
     auto errorMessage = data.getString("errorMessage");
 
     auto result = usecase.updatePrintTask(tenantId, id, status, errorMessage);
-    if (!result.success) {
-        writeError(res, 404, result.message);
-        return;
-    }
+    if (result.hasError)
+        return errorResponse(result.message, 400);
 
     auto resp = Json.emptyObject
-        .set("id", result.id)
-        .set("message", "Print task updated successfully");
+        .set("id", result.id);
 
     return successResponse("Print task updated successfully", 200, resp);
 }
@@ -142,8 +130,7 @@ override protected Json deleteHandler(HTTPServerRequest req) {
         return errorResponse(result.message, 400);
 
     auto resp = Json.emptyObject
-        .set("id", result.id)
-        .set("message", "Print task deleted successfully");
+        .set("id", result.id);
     return successResponse("Print task deleted successfully", 200, resp);
 }
 }

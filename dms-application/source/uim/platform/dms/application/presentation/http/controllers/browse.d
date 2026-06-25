@@ -52,8 +52,7 @@ class BrowseController : HttpController {
       .set("subfolders", fArr)
       .set("documents", dArr)
       .set("totalSubfolders", contents.subfolders.length)
-      .set("totalDocuments", contents.documents.length)
-      .set("message", "Folder contents retrieved successfully");
+      .set("totalDocuments", contents.documents.length);
 
     return successResponse("Folder contents retrieved successfully", "Retrieved", 200, resp);
   }
@@ -65,8 +64,11 @@ class BrowseController : HttpController {
     if (precheck.hasError)
       return precheck;
 
-    auto repoId = RepositoryId(precheck.id);
     auto tenantId = precheck.tenantId;
+    auto id = RepositoryId(precheck.id);
+    if (id.isEmpty)
+      return errorResponse("Invalid repository ID", 400);
+
     auto summary = usecase.getRepositorySummary(tenantId, repoId);
 
     if (summary.repositoryId.isEmpty)
@@ -77,8 +79,7 @@ class BrowseController : HttpController {
       .set("name", summary.name)
       .set("totalDocuments", summary.totalDocuments)
       .set("totalFolders", summary.totalFolders)
-      .set("status", summary.status.to!string)
-      .set("message", "Repository summary retrieved successfully");
+      .set("status", summary.status.to!string);
 
     return successResponse("Repository summary retrieved successfully", "Retrieved", 200, j);
   }
@@ -103,8 +104,7 @@ class BrowseController : HttpController {
       return errorResponse(result.message, 400);
 
     auto resp = Json.emptyObject
-      .set("id", result.id)
-      .set("message", "Favorite added successfully");
+      .set("id", result.id);
 
     return successResponse("Favorite added successfully", "Created", 201, resp);
   }

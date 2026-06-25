@@ -90,8 +90,7 @@ override protected Json listHandler(HTTPServerRequest req) {
 
   auto resp = Json.emptyObject
     .set("items", arr)
-    .set("totalCount", items.length)
-    .set("message", "API rules retrieved successfully");
+    .set("totalCount", items.length);
 
   return successResponse("API rules retrieved successfully", "Retrieved", 200, resp);
 }

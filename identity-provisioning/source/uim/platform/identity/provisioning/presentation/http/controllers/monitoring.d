@@ -43,8 +43,7 @@ class MonitoringController : HttpController {
 
     auto resp = Json.emptyObject
       .set("items", arr)
-      .set("totalCount", items.length)
-      .set("message", "Job summaries retrieved successfully");
+      .set("totalCount", items.length);
 
     return successResponse("Job summaries retrieved successfully", "Retrieved", 200, resp);
   }
@@ -62,8 +61,7 @@ class MonitoringController : HttpController {
     if (summary.jobId.isEmpty)
       return errorResponse("Job not found", 404);
 
-    auto resp = summary.toJson()
-      .set("message", "Job summary retrieved successfully");
+    auto resp = summary.toJson();
 
     return successResponse("Job summary retrieved successfully", "Retrieved", 200, resp);
   }
@@ -85,8 +83,7 @@ class MonitoringController : HttpController {
 
     auto resp = Json.emptyObject
       .set("items", arr)
-      .set("totalCount", logs.length)
-      .set("message", "Job execution logs retrieved successfully");
+      .set("totalCount", logs.length);
 
     return successResponse("Job execution logs retrieved successfully", "Retrieved", 200, resp);
   }

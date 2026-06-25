@@ -14,64 +14,73 @@ import uim.platform.postgres;
 class ServiceBindingController : ManageHttpController {
     private ManageServiceBindingsUseCase bindings;
 
-    this(ManageServiceBindingsUseCase bindings) { this.bindings = bindings; }
+    this(ManageServiceBindingsUseCase bindings) {
+        this.bindings = bindings;
+    }
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        router.get("/api/v1/postgres/bindings",        &handleList);
-        router.get("/api/v1/postgres/bindings/*",      &handleGet);
-        router.post("/api/v1/postgres/bindings",       &handleCreate);
-        router.delete_("/api/v1/postgres/bindings/*",  &handleDelete);
+        
+        router.get("/api/v1/postgres/bindings", &handleList);
+        router.get("/api/v1/postgres/bindings/*", &handleGet);
+        router.post("/api/v1/postgres/bindings", &handleCreate);
+        router.delete_("/api/v1/postgres/bindings/*", &handleDelete);
     }
 
     override protected Json listHandler(HTTPServerRequest req) {
         auto precheck = super.listHandler(req);
-        if (precheck.hasError) return precheck;
+        if (precheck.hasError)
+            return precheck;
         auto tenantId = precheck.tenantId;
         auto items = bindings.listServiceBindings(tenantId);
-        return Json.emptyObject
+        return successResponse("Service bindings retrieved successfully", 200, Json.emptyObject
             .set("count", items.length)
-            .set("resources", items.map!(e => e.toJson()).array.toJson)
-            .set("message", "Service bindings retrieved successfully")
-            .set("status", "success").set("statusCode", 200);
+            .set("resources", items.map!(e => e.toJson()).array.toJson));
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
         auto precheck = super.getHandler(req);
-        if (precheck.hasError) return precheck;
+        if (precheck.hasError)
+            return precheck;
         auto tenantId = precheck.tenantId;
         auto id = ServiceBindingId(precheck.id);
-        if (id.isNull) return Json.emptyObject.set("error", "Invalid ID").set("statusCode", 400);
+        if (id.isNull)
+            return errorResponse("Invalid ID", 400, Json.emptyObject.set("error", "Invalid ID"));
         auto e = bindings.getServiceBinding(tenantId, id);
-        if (e.isNull) return Json.emptyObject.set("error", "Service binding not found").set("statusCode", 404);
-        return e.toJson().set("message", "OK").set("status", "success").set("statusCode", 200);
+        if (e.isNull)
+            return errorResponse("Service binding not found", 404, Json.emptyObject.set("error", "Service binding not found"));
+        return successResponse("Service binding retrieved successfully", 200, e.toJson());
     }
 
     override protected Json createHandler(HTTPServerRequest req) {
         auto precheck = super.createHandler(req);
-        if (precheck.hasError) return precheck;
+        if (precheck.hasError)
+            return precheck;
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         ServiceBindingDTO dto;
         dto.serviceBindingId = ServiceBindingId(data.getString("serviceBindingId", ""));
-        dto.tenantId         = tenantId;
-        dto.instanceId       = ServiceInstanceId(data.getString("instanceId", ""));
-        dto.appId            = data.getString("appId", "");
-        dto.name             = data.getString("name", "");
-        dto.expiresAt        = data.getLong("expiresAt", 0);
-        dto.createdBy        = UserId(data.getString("createdBy", ""));
+        dto.tenantId = tenantId;
+        dto.instanceId = ServiceInstanceId(data.getString("instanceId", ""));
+        dto.appId = data.getString("appId", "");
+        dto.name = data.getString("name", "");
+        dto.expiresAt = data.getLong("expiresAt", 0);
+        dto.createdBy = UserId(data.getString("createdBy", ""));
         auto result = bindings.createServiceBinding(dto);
-        if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 400);
-        return Json.emptyObject.set("id", result.id).set("message", "Service binding created successfully").set("status", "success").set("statusCode", 201);
+        if (result.hasError)
+            return errorResponse("Service binding creation failed", 400, Json.emptyObject.set("error", result.message));
+        return successResponse("Service binding created successfully", 201, Json.emptyObject.set("id", result.id));
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto precheck = super.deleteHandler(req);
-        if (precheck.hasError) return precheck;
+        if (precheck.hasError)
+            return precheck;
         auto tenantId = precheck.tenantId;
         auto id = ServiceBindingId(precheck.id);
         auto result = bindings.deleteServiceBinding(tenantId, id);
-        if (result.hasError) return Json.emptyObject.set("error", result.message).set("statusCode", 404);
-        return Json.emptyObject.set("id", result.id).set("message", "Service binding deleted successfully").set("status", "success").set("statusCode", 200);
+        if (result.hasError)
+            return errorResponse("Service binding deletion failed", 404, Json.emptyObject.set("error", result.message));
+        return successResponse("Service binding deleted successfully", 200, Json.emptyObject.set("id", result.id));
     }
 }

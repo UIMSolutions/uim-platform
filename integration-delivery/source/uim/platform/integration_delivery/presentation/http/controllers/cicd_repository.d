@@ -56,7 +56,8 @@ class CicdRepositoryController : ManageHttpController {
         if (e.isNull)
             return Json.emptyObject.set("error", "Repository not found").set("statusCode", 404);
 
-        return e.toJson().set("message", "Repository retrieved successfully").set("status", "success").set("statusCode", 200);
+        return e.toJson().set("message", "Repository retrieved successfully")
+            .set("status", "success").set("statusCode", 200);
     }
 
     override protected Json createHandler(HTTPServerRequest req) {
@@ -80,7 +81,8 @@ class CicdRepositoryController : ManageHttpController {
         if (result.hasError)
             return Json.emptyObject.set("error", result.message).set("statusCode", 400);
 
-        return Json.emptyObject.set("id", result.id).set("message", "Repository created").set("status", "created").set("statusCode", 201);
+        return Json.emptyObject.set("id", result.id).set("message", "Repository created").set("status", "created").set(
+            "statusCode", 201);
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -105,9 +107,10 @@ class CicdRepositoryController : ManageHttpController {
 
         auto result = repos.updateCicdRepository(dto);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.message).set("statusCode", 400);
+            return errorResponse(result.message, 400);
 
-        return Json.emptyObject.set("id", result.id).set("message", "Repository updated").set("status", "updated").set("statusCode", 200);
+        return successResponse("Repository updated successfully", "Updated", 200, Json.emptyObject
+                .set("id", result.id));
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -122,8 +125,9 @@ class CicdRepositoryController : ManageHttpController {
 
         auto result = repos.deleteCicdRepository(tenantId, id);
         if (result.hasError)
-            return Json.emptyObject.set("error", result.message).set("statusCode", 400);
+            return errorResponse(result.message, 400);
 
-        return Json.emptyObject.set("id", result.id).set("message", "Repository deleted").set("status", "deleted").set("statusCode", 200);
+        return successResponse("Repository deleted successfully", "Deleted", 200, Json.emptyObject
+                .set("id", result.id));
     }
 }

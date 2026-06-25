@@ -35,14 +35,10 @@ class MessageClientController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto items = usecase.listClients(tenantId);
-        res.writeJsonBody(Json.emptyObject
+        return successResponse("Message clients retrieved successfully", "Retrieved", 200, Json.emptyObject
                 .set("count", items.length)
-                .set("resources", items.map!(e => e.toJson).array.toJson)
-                .set("message", "Message client list retrieved successfully"), 200);
-    }
- catch (Exception e) {
-        writeError(res, 500, "Internal server error");
-    }
+                .set("resources", items.map!(e => e.toJson).array.toJson));
+
 }
 
 override protected Json getHandler(HTTPServerRequest req) {
@@ -56,13 +52,8 @@ override protected Json getHandler(HTTPServerRequest req) {
     if (e.isNull)
             return errorResponse("", 0);
             
-    res.writeJsonBody(Json.emptyObject
-            .set("message", "Message client retrieved successfully")
-            .set("resource", e.toJson), 200);
-}
- catch (Exception e) {
-    writeError(res, 500, "Internal server error");
-}
+    return successResponse("Message client retrieved successfully", "Retrieved", 200, Json.emptyObject
+            .set("resource", e.toJson));
 }
 
 override protected Json createHandler(HTTPServerRequest req) {

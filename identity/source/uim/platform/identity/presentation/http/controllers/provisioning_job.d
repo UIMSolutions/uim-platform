@@ -37,11 +37,10 @@ class ProvisioningJobController : ManageHttpController {
 
             auto items = usecase.listJobs(tenantId);
             auto list = items.map!(e => e.toJson()).array.toJson;
-            res.writeJsonBody(Json.emptyObject
+
+            return successResponse("Provisioning jobs retrieved successfully", "Retrieved", 200, Json.emptyObject
                 .set("count", items.length)
-                .set("resources", jarr)
-                .set("message", "Provisioning jobs retrieved successfully"), 200);
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+                .set("resources", list));   
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -53,9 +52,10 @@ class ProvisioningJobController : ManageHttpController {
             auto path = precheck.path;
             auto id = ProvisioningJobId(precheck.id);
             auto e = usecase.getJob(tenantId, id);
-            if (e.isNull) { writeError(res, 404, "Provisioning job not found"); return; }
-            res.writeJsonBody(e.toJson(), 200);
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+            if (e.isNull)
+                return errorResponse("Provisioning job not found", 404);
+
+            return successResponse("Provisioning job retrieved successfully", 200, e.toJson());
     }
 
     override protected Json createHandler(HTTPServerRequest req) {
@@ -103,32 +103,40 @@ class ProvisioningJobController : ManageHttpController {
         return successResponse("Provisioning job deleted successfully", "Deleted", 200, responseData);
     }
 
-    private void handleStart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = precheck.tenantId;
-            // path: /api/v1/ips/provisioning-jobs/{id}/start
-            auto parts = req.requestURI.to!string.split("/");
-            string id = parts.length >= 6 ? parts[$ - 2] : "";
-            if (id.length == 0) { writeError(res, 400, "Missing job ID"); return; }
-            auto result = usecase.startJob(tenantId, ProvisioningJobId(id));
+    protected Json starthandler(HTTPServerRequest req) {
+        auto precheck = super.postHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+            auto path = precheck.path;
+            auto id = ProvisioningJobId(precheck.id);
+            auto result = usecase.startJob(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
         return successResponse("Provisioning job started successfully", "Started", 200, responseData);
-        } 
-        
-    private void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = precheck.tenantId;
-            auto parts = req.requestURI.to!string.split("/");
-            string id = parts.length >= 6 ? parts[$ - 2] : "";
-            if (id.length == 0) { writeError(res, 400, "Missing job ID"); return; }
-            auto result = usecase.cancelJob(tenantId, ProvisioningJobId(id));
+    }
+
+    mixin(HandleTemplate!("handleStart", "startHandler"));
+
+    protected Json cancelHandler(HTTPServerRequest req) {
+        auto precheck = super.postHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+            auto path = precheck.path;
+            auto id = ProvisioningJobId(precheck.id);
+            auto result = usecase.cancelJob(tenantId, id);
             if (result.hasError)
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
         return successResponse("Provisioning job cancelled successfully", "Cancelled", 200, responseData);
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+    }
+
+    mixin(HandleTemplate!("handleCancel", "cancelHandler"));
+
 }

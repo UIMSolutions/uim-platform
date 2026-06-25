@@ -30,9 +30,9 @@ class AppBuildController : ManageHttpController {
 
     override protected Json listHandler(HTTPServerRequest req) {
         auto precheck = super.getHandler(req);
-        if (precheck.hasError) {
+        if (precheck.hasError)
             return precheck;
-        }
+        
 
         auto tenantId = precheck.tenantId;
         auto applicationIdRaw = req.query.get("applicationId", "");
@@ -44,12 +44,10 @@ class AppBuildController : ManageHttpController {
 
         auto list = items.map!(e => e.toJson()).array.toJson;
 
-        return Json.emptyObject
+        return successResponse("App builds retrieved successfully", "Retrieved", 200, Json.emptyObject
             .set("count", items.length)
-            .set("resources", list)
-            .set("message", "App builds retrieved successfully")
-            .set("status", "success")
-            .set("statusCode", 200);
+            .set("resources", list));
+
     }
 
     override protected Json createHandler(HTTPServerRequest req) {

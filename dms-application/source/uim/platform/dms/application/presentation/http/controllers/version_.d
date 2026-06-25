@@ -81,8 +81,7 @@ class VersionController : ManageHttpController {
     auto resp = Json.emptyObject
       .set("versionId", result.id)
       .set("documentId", r.documentId.value)
-      .set("status", Json("active"))
-      .set("message", "Document checked in successfully");
+      .set("status", Json("active"));
 
     return successResponse("Document checked in successfully", "CheckedIn", 201, resp);
   }
@@ -103,8 +102,7 @@ class VersionController : ManageHttpController {
 
     auto resp = Json.emptyObject
       .set("documentId", docId.value)
-      .set("status", Json("active"))
-      .set("message", "Document checkout cancelled successfully");
+      .set("status", Json("active"));
 
     return successResponse("Document checkout cancelled successfully", "Cancelled", 200, resp);
   }
@@ -121,12 +119,11 @@ class VersionController : ManageHttpController {
     if (id.isNull)
       return errorResponse("Invalid document ID", 400);
 
-    auto versions = usecase.getAllVersions(tenantId, id);
-    auto arr = versions.map!(v => v.toJson).array.toJson;
+    auto versions = usecase.getAllVersions(tenantId, id).map!(v => v.toJson).array.toJson;
 
     auto resp = Json.emptyObject
-      .set("items", arr)
-      .set("totalCount", Json(versions.length));
+      .set("items", versions)
+      .set("totalCount", versions.length);
 
     return successResponse("Document versions retrieved successfully", "Retrieved", 200, resp);
   }

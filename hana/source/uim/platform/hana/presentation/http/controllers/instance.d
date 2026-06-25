@@ -95,88 +95,83 @@ class InstanceController : ManageHttpController {
       .set("resources", jarr);
 
     return successResponse("Instance list retrieved successfully", "Retrieved", 200, resp);
-}
+  }
 
-override protected Json getHandler(HTTPServerRequest req) {
-  auto precheck = super.getHandler(req);
-  if (precheck.hasError)
-    return precheck;
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-  auto tenantId = precheck.tenantId;
-  auto id = DatabaseInstanceId(precheck.id);
-  if (id.isNull)
-    return errorResponse("Invalid instance ID", 400);
+    auto tenantId = precheck.tenantId;
+    auto id = DatabaseInstanceId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid instance ID", 400);
 
-  auto instance = usecase.getById(tenantId, id);
-  if (instance.isNull)
-    return errorResponse("", 0);
+    auto instance = usecase.getById(tenantId, id);
+    if (instance.isNull)
+      return errorResponse("", 0);
 
-  auto resp = Json.emptyObject
-    .set("id", instance.id)
-    .set("name", instance.name)
-    .set("description", instance.description)
-    .set("status", instance.status.to!string)
-    .set("version", instance.version_)
-    .set("region", instance.region)
-    .set("availabilityZone", instance.availabilityZone)
-    .set("memoryGB", instance.resources.memoryGB)
-    .set("vcpus", instance.resources.vcpus)
-    .set("storageGB", instance.resources.storageGB)
-    .set("usedStorageGB", instance.resources.usedStorageGB)
-    .set("enableScriptServer", instance.enableScriptServer)
-    .set("enableDocStore", instance.enableDocStore)
-    .set("enableDataLake", instance.enableDataLake)
-    .set("allowAllIpAccess", instance.allowAllIpAccess)
-    .set("whitelistedIps", stringsToJsonArray(i.whitelistedIps))
-    .set("createdAt", instance.createdAt)
-    .set("updatedAt", instance.updatedAt);
+    auto resp = Json.emptyObject
+      .set("id", instance.id)
+      .set("name", instance.name)
+      .set("description", instance.description)
+      .set("status", instance.status.to!string)
+      .set("version", instance.version_)
+      .set("region", instance.region)
+      .set("availabilityZone", instance.availabilityZone)
+      .set("memoryGB", instance.resources.memoryGB)
+      .set("vcpus", instance.resources.vcpus)
+      .set("storageGB", instance.resources.storageGB)
+      .set("usedStorageGB", instance.resources.usedStorageGB)
+      .set("enableScriptServer", instance.enableScriptServer)
+      .set("enableDocStore", instance.enableDocStore)
+      .set("enableDataLake", instance.enableDataLake)
+      .set("allowAllIpAccess", instance.allowAllIpAccess)
+      .set("whitelistedIps", stringsToJsonArray(i.whitelistedIps))
+      .set("createdAt", instance.createdAt)
+      .set("updatedAt", instance.updatedAt);
 
-  return successResponse("Instance retrieved successfully", "Retrieved", 200, resp);
-}
+    return successResponse("Instance retrieved successfully", "Retrieved", 200, resp);
+  }
 
-override protected Json updateHandler(HTTPServerRequest req) {
-  auto precheck = super.updateHandler(req);
-  if (precheck.hasError)
-    return precheck;
+  override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-  auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-  auto data = precheck.data;
-  UpdateInstanceRequest r;
-  r.tenantId = tenantId;
-  r.id = precheck.id;
-  r.name = data.getString("name");
-  r.description = data.getString("description");
-  r.memoryGB = data.getLong("memoryGB");
-  r.vcpus = data.getInteger("vcpus");
-  r.storageGB = data.getLong("storageGB");
-  r.enableScriptServer = data.getBoolean("enableScriptServer");
-  r.enableDocStore = data.getBoolean("enableDocStore");
-  r.allowAllIpAccess = data.getBoolean("allowAllIpAccess");
-  r.whitelistedIps = data.getStrings("whitelistedIps");
+    auto data = precheck.data;
+    UpdateInstanceRequest r;
+    r.tenantId = tenantId;
+    r.id = precheck.id;
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.memoryGB = data.getLong("memoryGB");
+    r.vcpus = data.getInteger("vcpus");
+    r.storageGB = data.getLong("storageGB");
+    r.enableScriptServer = data.getBoolean("enableScriptServer");
+    r.enableDocStore = data.getBoolean("enableDocStore");
+    r.allowAllIpAccess = data.getBoolean("allowAllIpAccess");
+    r.whitelistedIps = data.getStrings("whitelistedIps");
 
-  auto result = usecase.update(r);
-  if (result.hasError)
-    return errorResponse(result.message, 400);
-  auto resp = Json.emptyObject
-    .set("id", result.id)
-    .set("message", "Instance updated");
+    auto result = usecase.update(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-  res.writeJsonBody(resp, 200);
-} else {
-  writeError(res, 404, result.message);
-}
-} catch (Exception e) {
-  writeError(res, 500, "Internal server error");
-}
-}
+    auto resp = Json.emptyObject
+      .set("id", result.id);
+    return successResponse("Instance updated successfully", "Updated", 200, resp);
+  }
 
-protected void handleAction(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-  try {
+  protected Json actionHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-    import std.string : lastIndexOf;
-
+    auto tenantId = precheck.tenantId;
     auto path = precheck.path;
+
     // extract id from /api/v1/hana/instances/{id}/action
     auto actionIdx = lastIndexOf(path, "/action");
     if (actionIdx < 0) {
@@ -197,31 +192,43 @@ protected void handleAction(scope HTTPServerRequest req, scope HTTPServerRespons
       return errorResponse(result.message, 400);
     auto resp = Json.emptyObject
       .set("id", result.id)
+      auto id = DatabaseInstanceId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid instance ID", 400);
+
+    auto data = precheck.data;
+    InstanceActionRequest r;
+    r.tenantId = tenantId;
+    r.id = id;
+    r.action = data.getString("action");
+
+    auto result = usecase.performAction(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto resp = Json.emptyObject
+      .set("id", result.id)
       .set("message", "Action performed: " ~ r.action);
 
-    res.writeJsonBody(resp, 200);
-  } else {
-    writeError(res, 400, result.message);
+    return successResponse("Action performed successfully", "Performed", 200, resp);
   }
-} catch (Exception e) {
-  writeError(res, 500, "Internal server error");
-}
-}
 
-override protected Json deleteHandler(HTTPServerRequest req) {
-  auto precheck = super.deleteHandler(req);
-  if (precheck.hasError)
-    return precheck;
+  mixin(HandleTemplate!("handleAction", "actionHandler"));
 
-  auto tenantId = precheck.tenantId;
-  auto id = InstanceId(precheck.id);
-  auto result = usecase.deleteInstance(id);
-  if (result.hasError)
-    return errorResponse(result.message, 400);
-  res.writeJsonBody(Json.emptyObject, 204);
-} else {
-  writeError(res, 404, result.message);
-}
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = InstanceId(precheck.id);
+    auto result = usecase.deleteInstance(id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+    res.writeJsonBody(Json.emptyObject, 204);
+  } else {
+    writeError(res, 404, result.message);
+  }
 } catch (Exception e) {
   writeError(res, 500, "Internal server error");
 }
