@@ -12,7 +12,7 @@ import uim.platform.abap_environment;
 /// Business role for authorization in the ABAP environment.
 struct BusinessRole {
   mixin TenantEntity!(BusinessRoleId);
-  SystemInstanceId systemInstanceId;
+  SystemInstanceId instanceId;
   string name;
   string description;
   RoleType roleType = RoleType.unrestricted;
@@ -23,7 +23,7 @@ struct BusinessRole {
 
   Json toJson() const {
     auto j = entityToJson
-      .set("systemInstanceId", systemInstanceId)
+      .set("systemInstanceId", instanceId)
       .set("name", name)
       .set("description", description)
       .set("roleType", roleType.to!string)

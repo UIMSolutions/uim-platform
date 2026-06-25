@@ -25,14 +25,14 @@ class ManageBusinessRolesUseCase { // TODO: UIMUseCase {
     if (req.name.isEmpty)
       return CommandResult(false, "", "Role name is required");
 
-    if (req.systemInstanceId.isNull)
+    if (req.instanceId.isNull)
       return CommandResult(false, "", "System instance ID is required");
 
-    if (repo.existsByName(req.tenantId, req.systemInstanceId, req.name))
+    if (repo.existsByName(req.tenantId, req.instanceId, req.name))
       return CommandResult(false, "", "Business role '" ~ req.name ~ "' already exists");
 
     auto role = BusinessRole(req.tenantId);
-    role.id = req.systemInstanceId;
+    role.instanceId = req.instanceId;
     role.name = req.name;
     role.description = req.description;
     role.roleType = req.roleType.to!RoleType;

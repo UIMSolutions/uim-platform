@@ -41,7 +41,7 @@ class MemoryBusinessRoleRepository : TenantRepository!(BusinessRole, BusinessRol
   }
 
   BusinessRole[] filterBySystem(BusinessRole[] roles, SystemInstanceId systemId) {
-    return roles.filter!(e => e.systemInstanceId == systemId).array;
+    return roles.filter!(e => e.instanceId == systemId).array;
   }
 
   BusinessRole[] findBySystem(TenantId tenantId, SystemInstanceId systemId) {

@@ -92,7 +92,7 @@ enum SystemStatus {
 }
 
 SystemStatus toSystemStatus(string value) {
-  mixin(toEnumSwitch!("SystemStatus", "active"));
+  mixin(toEnumSwitch("SystemStatus", "active"));
 }
 
 SystemStatus[] toSystemStatus(string[] values) {
@@ -144,7 +144,7 @@ enum ComponentType {
 }
 
 ComponentType toComponentType(string value) {
-  mixin(toEnumSwitch!("ComponentType", "developmentPackage"));
+  mixin(toEnumSwitch("ComponentType", "developmentPackage"));
 }
 
 ComponentType[] toComponentType(string[] values) {
@@ -192,7 +192,7 @@ enum ComponentStatus {
 }
 
 ComponentStatus toComponentStatus(string value) {
-  mixin(toEnumSwitch!("ComponentStatus", "notCloned"));
+  mixin(toEnumSwitch("ComponentStatus", "notCloned"));
 }
 
 ComponentStatus[] toComponentStatus(string[] values) {
@@ -241,7 +241,7 @@ enum BranchStrategy {
 }
 
 BranchStrategy toBranchStrategy(string value) {
-  mixin(toEnumSwitch!("BranchStrategy", "main"));
+  mixin(toEnumSwitch("BranchStrategy", "main"));
 }
 
 BranchStrategy[] toBranchStrategy(string[] values) {
@@ -286,7 +286,7 @@ enum CommunicationDirection {
 }
 
 CommunicationDirection toCommunicationDirection(string value) {
-  mixin(toEnumSwitch!("CommunicationDirection", "inbound"));
+  mixin(toEnumSwitch("CommunicationDirection", "inbound"));
 }
 
 CommunicationDirection[] toCommunicationDirection(string[] values) {
@@ -330,7 +330,7 @@ enum CommunicationProtocol {
 }
 
 CommunicationProtocol toCommunicationProtocol(string value) {
-  mixin(toEnumSwitch!("CommunicationProtocol", "httpRest"));
+  mixin(toEnumSwitch("CommunicationProtocol", "httpRest"));
 }
 
 CommunicationProtocol[] toCommunicationProtocol(string[] values) {
@@ -380,7 +380,7 @@ enum CommunicationAuthMethod {
 }
 
 CommunicationAuthMethod toCommunicationAuthMethod(string value) {
-  mixin(toEnumSwitch!("CommunicationAuthMethod", "basicAuthentication"));
+  mixin(toEnumSwitch("CommunicationAuthMethod", "basicAuthentication"));
 }
 
 CommunicationAuthMethod[] toCommunicationAuthMethod(string[] values) {
@@ -438,7 +438,7 @@ enum ArrangementStatus {
 }
 
 ArrangementStatus toArrangementStatus(string value) {
-  mixin(toEnumSwitch!("ArrangementStatus", "active"));
+  mixin(toEnumSwitch("ArrangementStatus", "active"));
 }
 
 ArrangementStatus[] toArrangementStatus(string[] values) {
@@ -486,7 +486,7 @@ enum BindingType {
 }
 
 BindingType toBindingType(string value) {
-  mixin(toEnumSwitch!("BindingType", "odataV4"));
+  mixin(toEnumSwitch("BindingType", "odataV4"));
 }
 
 BindingType[] toBindingType(string[] values) {
@@ -588,7 +588,7 @@ enum UserStatus {
 }
 
 UserStatus toUserStatus(string value) {
-  mixin(toEnumSwitch!("UserStatus", "active"));
+  mixin(toEnumSwitch("UserStatus", "active"));
 }
 
 UserStatus[] toUserStatus(string[] values) {
@@ -633,7 +633,7 @@ enum RoleType {
 }
 
 RoleType toRoleType(string value) {
-  mixin(toEnumSwitch!("RoleType", "unrestricted"));
+  mixin(toEnumSwitch("RoleType", "unrestricted"));
 }
 
 RoleType[] toRoleType(string[] values) {
@@ -677,7 +677,7 @@ enum TransportType {
 }
 
 TransportType toTransportType(string value) {
-  mixin(toEnumSwitch!("TransportType", "workbench"));
+  mixin(toEnumSwitch("TransportType", "workbench"));
 }
 
 TransportType[] toTransportType(string[] values) {
@@ -722,7 +722,7 @@ enum TransportStatus {
 }
 
 TransportStatus toTransportStatus(string value) {
-  mixin(toEnumSwitch!("TransportStatus", "modifiable"));
+  mixin(toEnumSwitch("TransportStatus", "modifiable"));
 }
 
 TransportStatus[] toTransportStatus(string[] values) {
@@ -771,7 +771,7 @@ enum JobFrequency {
 }
 
 JobFrequency toJobFrequency(string value) {
-  mixin(toEnumSwitch!("JobFrequency", "once"));
+  mixin(toEnumSwitch("JobFrequency", "once"));
 }
 
 JobFrequency[] toJobFrequency(string[] values) {
@@ -820,7 +820,7 @@ enum JobStatus {
 }
 
 JobStatus toJobStatus(string value) {
-  mixin(toEnumSwitch!("JobStatus", "scheduled"));
+  mixin(toEnumSwitch("JobStatus", "scheduled"));
 }
 
 JobStatus[] toJobStatus(string[] values) {

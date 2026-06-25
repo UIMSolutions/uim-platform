@@ -21,7 +21,7 @@ enum ProgramType {
     unknown
 }
 ProgramType toProgramType(string value) {
-    mixin(toEnumSwitch!("ProgramType", "unknown"));
+    mixin(toEnumSwitch("ProgramType", "unknown"));
 }
 ProgramType[] toProgramType(string[] values) {
     return values.map!(v => toProgramType(v)).array;
@@ -82,7 +82,7 @@ enum TokenType {
     unknown
 }
 TokenType toTokenType(string value) {
-    mixin(toEnumSwitch!("TokenType", "unknown"));
+    mixin(toEnumSwitch("TokenType", "unknown"));
 }
 TokenType[] toTokenType(string[] values) {
     return values.map!(v => toTokenType(v)).array;
@@ -186,7 +186,7 @@ enum ProcessingMode {
     rfc            /// RFC-enabled function module
 }
 ProcessingMode toProcessingMode(string value) {
-    mixin(toEnumSwitch!("ProcessingMode", "normal"));
+    mixin(toEnumSwitch("ProcessingMode", "normal"));
 }
 ProcessingMode[] toProcessingMode(string[] values) {
     return values.map!(v => toProcessingMode(v)).array;
@@ -223,7 +223,7 @@ enum DiagnosticSeverity {
     hint
 }
 DiagnosticSeverity toDiagnosticSeverity(string value) {
-    mixin(toEnumSwitch!("DiagnosticSeverity", "error"));
+    mixin(toEnumSwitch("DiagnosticSeverity", "error"));
 }
 DiagnosticSeverity[] toDiagnosticSeverity(string[] values) {
     return values.map!(v => toDiagnosticSeverity(v)).array;
@@ -261,7 +261,7 @@ enum CompilationStatus {
     aborted
 }
 CompilationStatus toCompilationStatus(string value) {
-    mixin(toEnumSwitch!("CompilationStatus", "pending"));
+    mixin(toEnumSwitch("CompilationStatus", "pending"));
 }
 CompilationStatus[] toCompilationStatus(string[] values) {
     return values.map!(v => toCompilationStatus(v)).array;

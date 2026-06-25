@@ -8,7 +8,7 @@ import uim.platform.abap_environment;
 
 struct CreateBusinessRoleRequest {
   TenantId tenantId;
-  SystemInstanceId systemInstanceId;
+  SystemInstanceId instanceId;
   
   string name;
   string description;
@@ -18,7 +18,7 @@ struct CreateBusinessRoleRequest {
 
   Json toJson() const {
     return Json.emptyObject.set("tenantId", tenantId.value)
-      .set("systemInstanceId", systemInstanceId.value)
+      .set("systemInstanceId", instanceId.value)
       .set("name", name)
       .set("description", description)
       .set("roleType", roleType)

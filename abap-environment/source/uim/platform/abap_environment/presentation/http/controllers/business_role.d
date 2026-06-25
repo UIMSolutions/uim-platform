@@ -54,7 +54,7 @@ class BusinessRoleController : ManageHttpController {
 
     CreateBusinessRoleRequest r;
     r.tenantId = tenantId;
-    r.systemInstanceId = SystemInstanceId(data.getString("systemInstanceId"));
+    r.instanceId = SystemInstanceId(data.getString("systemInstanceId"));
     r.name = data.getString("name");
     r.description = data.getString("description");
     r.roleType = data.getString("roleType");

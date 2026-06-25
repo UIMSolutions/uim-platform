@@ -128,11 +128,15 @@ class TransportRequestController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto id = TransportRequestId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid transport request id", 400);
+
     auto result = usecase.releaseTransportRequest(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message);
 
-    return successResponse("Transport request released", "Released", 200);
+    auto resp = Json.emptyObject.set("id", result.id);
+    return successResponse("Transport request released", "Released", 200, resp);
   }
 
   mixin(HandleTemplate!("handleRelease", "releaseHandler"));
@@ -156,7 +160,8 @@ class TransportRequestController : ManageHttpController {
     if (result.hasError)
       return errorResponse(result.message);
 
-    return successResponse("Transport task released", "Released", 200);
+    auto resp = Json.emptyObject.set("id", requestId.value).set("taskId", taskId.value);
+    return successResponse("Transport task released", "Released", 200, resp);
   }
 
   mixin(HandleTemplate!("handleReleaseTask", "releaseTaskHandler"));

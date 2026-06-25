@@ -68,7 +68,6 @@ class CustomMetricController : ManageHttpController {
 
   protected void handleSubmit(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-
       auto response = submitHandler(req);
       res.writeJsonBody(response, response.code);
 
