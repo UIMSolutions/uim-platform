@@ -21,7 +21,7 @@ struct FlexPersonalization {
   PersonalizationScope scope_;
   ChangeType changeType_;   // What kind of personalization
   string content_;          // JSON string with personalization data
-  string updatedAt_;        // ISO timestamp
+  long updatedAt_;        // ISO timestamp
   bool isSynced_;           // Whether synced to server
 
   Json toJson() const @trusted {

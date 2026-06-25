@@ -6,7 +6,6 @@
 module uim.platform.feature_flags.domain.entities.feature_flag;
 
 import uim.platform.feature_flags;
-import std.json : Json;
 
 // mixin(ShowModule!());
 
@@ -14,19 +13,18 @@ import std.json : Json;
 
 /// Core domain entity: a named feature flag with type, state, variants and rules.
 struct FeatureFlag {
-    FlagId    id;
-    TenantId  tenantId;
+    mixin TenantEntity!FlagId;
 
-    string    name;           /// Unique name within a service instance (e.g. "dark-mode")
-    string    description;
-    FlagType  type_;          /// BOOLEAN | STRING | JSON | NUMBER
-    FlagState state_;         /// ENABLED | DISABLED | ARCHIVED
+    string name; /// Unique name within a service instance (e.g. "dark-mode")
+    string description;
+    FlagType type_; /// BOOLEAN | STRING | JSON | NUMBER
+    FlagState state_; /// ENABLED | DISABLED | ARCHIVED
 
     /// Identifier of the service instance this flag belongs to
     ServiceInstanceId instanceId;
 
     /// The default variant key returned when no targeting rule matches
-    string    defaultVariant;
+    string defaultVariant;
 
     /// All declared variants for this flag
     FlagVariant[] variants;
@@ -37,18 +35,15 @@ struct FeatureFlag {
     /// Arbitrary key/value labels for organisational filtering
     string[string] labels;
 
-    /// ISO-8601 creation / update timestamps (strings for portability)
-    long createdAt;
-    long updatedAt;
-    UserId createdBy;
-    UserId updatedBy;
-
-    bool isNull() const { return id.isNull; }
+    bool isNull() const {
+        return id.isNull;
+    }
 
     /// Return the variant matching `key`, or a zero-value struct.
     FlagVariant findVariant(string key) const {
         foreach (v; variants)
-            if (v.key == key) return v;
+            if (v.key == key)
+                return v;
         return FlagVariant.init;
     }
 }

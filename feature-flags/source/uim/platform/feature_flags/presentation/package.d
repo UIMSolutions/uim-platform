@@ -6,6 +6,8 @@
 module uim.platform.feature_flags.presentation;
 
 public {
+    import uim.platform.service;
+    
     import uim.platform.feature_flags.presentation.http;
     import uim.platform.feature_flags.presentation.cli;
     import uim.platform.feature_flags.presentation.web;

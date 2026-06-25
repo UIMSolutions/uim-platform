@@ -13,8 +13,7 @@ import uim.platform.feature_flags;
 
 /// Immutable audit log entry written on every flag management operation.
 struct AuditEntry {
-    AuditEntryId id;
-    TenantId     tenantId;
+     mixin TenantEntity!AuditEntryId;
 
     AuditAction  action_;
     string       entityType;  /// "FeatureFlag" | "ServiceInstance"
@@ -27,5 +26,4 @@ struct AuditEntry {
     UserId       performedBy;
     long       performedAt;  /// ISO-8601 timestamp
 
-    bool isNull() const { return id.isNull; }
 }

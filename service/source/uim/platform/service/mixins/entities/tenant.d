@@ -9,6 +9,7 @@ import uim.platform.service;
 mixin template TenantEntity(TId) {
   TenantId tenantId; // required for multi-tenancy support
   TId id; // unique identifier for the entity
+  
   UserId createdBy; // user who created the entity
   long createdAt; // timestamp of when the entity was created
   UserId updatedBy; // user who last updated the entity

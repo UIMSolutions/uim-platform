@@ -52,12 +52,6 @@ struct AuditEntryId {
     bool isNull() const { return value.length == 0; }
 }
 
-/// Tenant scoping identifier
-alias TenantId = string;
-
-/// User context identifier used for evaluation
-alias UserId = string;
-
 /// Generic service result for command operations
 struct FlagResult {
     bool   success;

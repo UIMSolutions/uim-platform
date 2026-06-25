@@ -17,7 +17,7 @@ struct FlexDraft {
 
   string appId_;       // Target application
   string[] changeIds_; // Pending FlexChange IDs in this draft
-  string updatedAt_;   // ISO timestamp of last modification
+  long updatedAt_;   // ISO timestamp of last modification
   string updatedBy_;   // User who last modified the draft
   string baseVersionId_; // Version this draft is based on (empty = from scratch)
   long changeCount_;   // Cached count of pending changes

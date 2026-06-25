@@ -106,7 +106,7 @@ The service exposes the following operational capabilities:
 All entities are multi-tenant. Every entity has:
 - A typed ID struct (`mixin IdTemplate`)
 - `TenantId tenantId` field
-- `string createdAt`, `string updatedAt` timestamps (via `initEntity`)
+- `string createdAt`, `long updatedAt` timestamps (via `initEntity`)
 - `bool deleted` soft-delete flag
 
 Storage backends (configurable via infrastructure):

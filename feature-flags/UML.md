@@ -49,7 +49,7 @@ package "Domain" {
     +TargetingRule[] rules
     +string[string] labels
     +string createdAt
-    +string updatedAt
+    +long updatedAt
     +string createdBy
     +string updatedBy
     +bool isNull()
@@ -84,7 +84,7 @@ package "Domain" {
     +string bindingGuid
     +string[string] labels
     +string createdAt
-    +string updatedAt
+    +long updatedAt
   }
 
   class AuditEntry {

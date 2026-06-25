@@ -14,7 +14,7 @@ import uim.platform.feature_flags;
 /// A rule that targets a specific variant at evaluation time.
 /// Rules are evaluated in ascending `priority` order (lower = higher priority).
 struct TargetingRule {
-    RuleId   id;
+    mixin TenantEntity!RuleId;
     RuleType type_;
 
     /// Human-readable label
@@ -35,6 +35,4 @@ struct TargetingRule {
 
     /// ATTRIBUTE_MATCH: key/value pairs that must all appear in the evaluation context
     string[string] attributeConstraints;
-
-    bool isNull() const { return id.isNull; }
 }

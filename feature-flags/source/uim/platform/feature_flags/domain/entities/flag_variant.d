@@ -16,7 +16,7 @@ import uim.platform.feature_flags;
 /// For STRING flags: key is the variant name, value is the string value.
 /// For JSON/NUMBER flags: value holds the serialised payload.
 struct FlagVariant {
-    VariantId id;
+     mixin TenantEntity!VariantId;
 
     /// Short identifier used in targeting rules and evaluations (e.g. "beta", "on", "v2")
     string key;
@@ -31,5 +31,4 @@ struct FlagVariant {
     /// Weight used for percentage-based rollouts (0-100 000, millipercent precision)
     uint   weight;
 
-    bool isNull() const { return id.isNull; }
 }

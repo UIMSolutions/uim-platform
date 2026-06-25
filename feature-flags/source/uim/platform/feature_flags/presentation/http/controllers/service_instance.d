@@ -17,14 +17,16 @@ import std.array : array;
 
 @safe:
 
-class ServiceInstanceController {
+class ServiceInstanceController : ManageHttpController {
     private ManageServiceInstancesUseCase useCase;
 
     this(ManageServiceInstancesUseCase useCase) {
         this.useCase = useCase;
     }
 
-    void registerRoutes(URLRouter router) {
+    override void registerRoutes(URLRouter router) {
+        super.registerRoutes(router);
+
         router.get("/api/v1/feature-flags/instances", &handleList);
         router.post("/api/v1/feature-flags/instances", &handleCreate);
         router.get("/api/v1/feature-flags/instances/*", &handleGet);
@@ -32,49 +34,49 @@ class ServiceInstanceController {
         router.delete_("/api/v1/feature-flags/instances/*", &handleDelete);
     }
 
-    private void handleList(HTTPServerRequest req, HTTPServerResponse res) @safe {
-        auto tenantId = req.query.get("tenantId", "default");
-        auto instances = useCase.listInstances(tenantId);
+override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-        auto jarr = Json.emptyArray;
-        foreach (inst; instances)
-            jarr ~= toJson(inst);
+        auto tenantId = precheck.tenantId;
+        auto instances = useCase.listInstances(tenantId).map!(inst => inst.toJson()).array;
 
-        auto j = Json.emptyObject;
-        j["count"] = cast(long)instances.length;
-        j["resources"] = jarr;
-        res.writeJsonBody(j, cast(int)HTTPStatus.ok);
+        auto j = Json.emptyObject
+        .set("count", instances.length)
+            .set("resources", instances);
+        return successResponse("Service instance list retrieved successfully", "Retrieved", 200, j);
     }
 
-    private void handleCreate(HTTPServerRequest req, HTTPServerResponse res) @safe {
-        auto body_ = req.json;
-        if (body_.type == Json.Type.undefined) {
-            writeError(res, cast(int)HTTPStatus.badRequest, "Request body required");
-            return;
-        }
+    override protected Json createHandler(HTTPServerRequest req) {
+        auto precheck = super.createHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
+        auto tenantId = precheck.tenantId;
+    
+        auto data = precheck.data;
         CreateServiceInstanceRequest dto;
-        dto.name = getString(body_, "name");
-        dto.description = getString(body_, "description");
-        dto.bindingGuid = getString(body_, "bindingGuid");
-        dto.labels = getStringMap(body_, "labels");
-        dto.createdBy = getString(body_, "createdBy");
+        dto.name = getString(data, "name");
+        dto.description = getString(data, "description");
+        dto.bindingGuid = getString(data, "bindingGuid");
+        dto.labels = getStringMap(data, "labels");
+        dto.createdBy = getString(data, "createdBy");
 
         auto result = useCase.createInstance(dto);
-        if (result.hasError) {
-            writeError(res, 400, result.message);
-            return;
-        }
+        if (result.hasError)
+            return errorResponse(result.message, 400);
 
-        auto j = Json.emptyObject;
-        j["id"] = result.id;
-        j["message"] = "Service instance created";
-        res.writeJsonBody(j, cast(int)HTTPStatus.created);
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Service instance created successfully", "Created", 201, responseData);
     }
 
-    private void handleGet(HTTPServerRequest req, HTTPServerResponse res) @safe {
-        auto tenantId = req.query.get("tenantId", "default");
-        auto path = req.requestPath.to!string;
+ override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
         auto id = ServiceInstanceId(extractIdFromPath(path));
         if (id.isNull) {
             writeError(res, 400, "Invalid instance ID");
@@ -82,18 +84,19 @@ class ServiceInstanceController {
         }
 
         auto inst = useCase.getInstance(tenantId, id);
-        if (inst.isNull) {
-            writeError(res, 404, "Service instance not found");
-            return;
-        }
+        if (inst.isNull)
+            return errorResponse("Service instance not found", 404);
 
-        res.writeJsonBody(toJson(inst), cast(int)HTTPStatus.ok);
+        return successResponse("Service instance retrieved successfully", "Retrieved", 200, toJson(inst));
     }
 
-    private void handleUpdate(HTTPServerRequest req, HTTPServerResponse res) @safe {
-        auto tenantId = req.query.get("tenantId", "default");
-        auto path = req.requestPath.to!string;
-        auto id = ServiceInstanceId(extractIdFromPath(path));
+    override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+        auto id = ServiceInstanceId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid instance ID", 400);
 
@@ -107,9 +110,8 @@ class ServiceInstanceController {
         if (result.hasError)
             return errorResponse(result.message, 400);
 
-        auto j = Json.emptyObject;
-        j["id"] = result.id;
-        return successResponse("Service instance updated successfully", "Updated", 200, j);
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Service instance updated successfully", "Updated", 200, responseData);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -119,17 +121,15 @@ class ServiceInstanceController {
 
         auto tenantId = precheck.tenantId;
         auto deletedBy = req.query.get("deletedBy", "");
-        auto path = req.requestPath.to!string;
-        auto id = ServiceInstanceId(extractIdFromPath(path));
+        auto id = ServiceInstanceId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid instance ID", 400);
 
         auto result = useCase.deleteInstance(tenantId, id, deletedBy);
-        if (result.hasError) {
+        if (result.hasError) 
             return errorResponse(result.message, 404);
-        }
 
-        return successResponse("Service instance deleted successfully", "Deleted", 200, Json.emptyObject.set("id", result
-                .id));
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Service instance deleted successfully", "Deleted", 200, responseData);
     }
 }

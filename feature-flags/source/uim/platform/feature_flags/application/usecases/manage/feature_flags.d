@@ -50,13 +50,12 @@ class ManageFeatureFlagsUseCase {
         try   { type_ = req.type_.to!FlagType; }
         catch (ConvException) { return FlagResult(false, "", "Invalid flag type: " ~ req.type_); }
 
-        auto existing = repo.findByName(req.instanceId, ServiceInstanceId(req.instanceId), req.name);
+        auto existing = repo.findByName(req.tenantId, ServiceInstanceId(req.instanceId), req.name);
         if (!existing.isNull)
             return FlagResult(false, "", "Flag with name '" ~ req.name ~ "' already exists in this instance");
 
-        FeatureFlag flag_;
+        auto flag_ = FeatureFlag(req.tenantId);   // tenantId scoped via instanceId for simplicity
         flag_.id         = FlagId(generateId());
-        flag_.tenantId   = req.instanceId;   // tenantId scoped via instanceId for simplicity
         flag_.name       = req.name;
         flag_.description = req.description;
         flag_.type_      = type_;

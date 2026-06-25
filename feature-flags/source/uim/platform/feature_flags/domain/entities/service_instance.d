@@ -14,8 +14,7 @@ import uim.platform.feature_flags;
 /// A service instance groups feature flags for a single bound application.
 /// Equivalent to an SAP BTP service instance of the Feature Flags service.
 struct ServiceInstance {
-    ServiceInstanceId id;
-    TenantId          tenantId;
+     mixin TenantEntity!ServiceInstanceId;
 
     string name;
     string description;
@@ -26,10 +25,4 @@ struct ServiceInstance {
     /// Arbitrary key/value labels
     string[string] labels;
 
-    long createdAt;
-    long updatedAt;
-    UserId createdBy;
-    UserId updatedBy;
-
-    bool isNull() const { return id.isNull; }
 }
