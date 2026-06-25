@@ -82,7 +82,7 @@ class ThemeController : ManageHttpController {
     try {
       auto tenantId = precheck.tenantId;
       auto theme = useCase.getDefaultTheme(tenantId);
-      if (theme == Theme.init) {
+      if (theme.isNull) {
         writeApiError(res, 404, "No default theme found");
         return;
       }
@@ -100,7 +100,7 @@ class ThemeController : ManageHttpController {
         auto tenantId = precheck.tenantId;
       auto themeId = precheck.id;
       auto theme = useCase.getTheme(themeId);
-      if (theme == Theme.init) {
+      if (theme.isNull) {
         writeApiError(res, 404, "Theme not found");
         return;
       }

@@ -65,7 +65,7 @@ protected:
     auto tenantId = getTenantId(req);
     auto id = CarrierId(extractIdFromPath(req.requestPath.to!string));
     auto carrier = _useCase.getCarrier(tenantId, id);
-    if (carrier == Carrier.init) {
+    if (carrier.isNull) {
       res.statusCode = cast(int) HTTPStatus.notFound;
       return writeError("Carrier not found");
     }

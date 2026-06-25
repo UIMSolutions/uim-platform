@@ -44,7 +44,7 @@ public:
 
   UseCaseResult!Notebook update(UpdateNotebookRequest r) {
     auto n = _repo.find(r.tenantId, r.id);
-    if (n == Notebook.init)
+    if (n.isNull)
       return UseCaseResult!Notebook(false, "Notebook not found", Notebook.init);
     if (r.name.length    > 0) n.name    = r.name;
     if (r.content.length > 0) n.content = r.content;
@@ -57,7 +57,7 @@ public:
 
   UseCaseResult!bool remove(TenantId tenantId, NotebookId id) {
     auto n = _repo.find(tenantId, id);
-    if (n == Notebook.init)
+    if (n.isNull)
       return UseCaseResult!bool(false, "Notebook not found", false);
     n.status = NotebookStatus.deleted;
     _repo.save(n);

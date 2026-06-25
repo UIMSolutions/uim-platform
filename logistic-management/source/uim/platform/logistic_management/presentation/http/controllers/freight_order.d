@@ -93,11 +93,10 @@ protected:
     auto tenantId = getTenantId(req);
     auto id = FreightOrderId(extractIdFromPath(req.requestPath.to!string));
     auto fo = _useCase.getFreightOrder(tenantId, id);
-    if (fo == FreightOrder.init) {
-      res.statusCode = cast(int) HTTPStatus.notFound;
-      return writeError("Freight order not found");
-    }
-    return fo.toJson;
+    if (fo.isNull)
+      return errorResponse("Freight order not found", 404);
+
+    return successResponse("Freight order retrieved successfully", "OK", 200, fo.toJson());
   }
 
   override Json updateHandler(HTTPServerRequest req, HTTPServerResponse res) {
@@ -117,22 +116,22 @@ protected:
     dto.plannedDepartureAt = jsonInt(body_, "plannedDepartureAt");
     dto.plannedArrivalAt = jsonInt(body_, "plannedArrivalAt");
     auto result = _useCase.updateFreightOrder(tenantId, id, dto);
-    if (!result.success) {
-      res.statusCode = cast(int) HTTPStatus.badRequest;
-      return writeError(result.message);
-    }
-    return Json(["id": Json(result.id), "statusCode": Json(200)]);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    return successResponse("Freight order updated successfully", "OK", 200, Json(["id": Json(result.id)]));
   }
 
   override Json deleteHandler(HTTPServerRequest req, HTTPServerResponse res) {
     auto tenantId = getTenantId(req);
     auto id = FreightOrderId(extractIdFromPath(req.requestPath.to!string));
+    if (id.isNull)
+      return errorResponse("Invalid freight order ID", 400);
+      
     auto result = _useCase.deleteFreightOrder(tenantId, id);
-    if (!result.success) {
-      res.statusCode = cast(int) HTTPStatus.notFound;
-      return writeError(result.message);
-    }
-    res.statusCode = cast(int) HTTPStatus.noContent;
-    return Json(["statusCode": Json(204)]);
+    if (result.hasError) 
+      return errorResponse(result.message, 404);
+  
+    return successResponse("Freight order deleted successfully", "OK", 200, Json(["id": Json(result.id)]));
   }
 }

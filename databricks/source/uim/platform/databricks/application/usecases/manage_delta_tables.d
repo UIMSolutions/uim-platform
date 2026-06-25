@@ -47,7 +47,7 @@ public:
 
   UseCaseResult!DeltaTable update(UpdateDeltaTableRequest r) {
     auto t = _repo.find(r.tenantId, r.id);
-    if (t == DeltaTable.init)
+    if (t.isNull)
       return UseCaseResult!DeltaTable(false, "Delta table not found", DeltaTable.init);
     if (r.comment.length         > 0) t.comment         = r.comment;
     if (r.storageLocation.length > 0) t.storageLocation = r.storageLocation;

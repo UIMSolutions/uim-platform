@@ -104,7 +104,7 @@ class TileController : ManageHttpController {
         auto tenantId = precheck.tenantId;
       auto tileId = precheck.id;
       auto tile = useCase.getTile(tileId);
-      if (tile == Tile.init) {
+      if (tile.isNull) {
         writeApiError(res, 404, "Tile not found");
         return;
       }

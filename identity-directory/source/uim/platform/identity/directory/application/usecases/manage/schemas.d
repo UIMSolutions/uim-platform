@@ -29,8 +29,7 @@ class ManageSchemasUseCase { // TODO: UIMUseCase {
 
   /// Create a new custom schema.
   SchemaResponse createSchema(CreateSchemaRequest req) {
-    auto existing = schemaRepo.findByName(req.tenantId, req.name);
-    if (existing != Schema.init)
+    if (schemaRepo.existsByName(req.tenantId, req.name))
       return SchemaResponse("", "Schema with this name already exists");
 
     auto now = currentTimestamp();
@@ -59,7 +58,7 @@ class ManageSchemasUseCase { // TODO: UIMUseCase {
   /// Update a schema.
   CommandResult updateSchema(UpdateSchemaRequest req) {
     auto schema = schemaRepo.findById(req.schemaId);
-    if (schema == Schema.init)
+    if (schema.isNull)
       return CommandResult(false, "", "Schema not found");
 
     if (req.name.length > 0)
@@ -82,7 +81,7 @@ class ManageSchemasUseCase { // TODO: UIMUseCase {
   /// Delete a schema.
   CommandResult deleteSchema(SchemaId id) {
     auto schema = schemaRepo.findById(tenantId, id);
-    if (schema == Schema.init)
+    if (schema.isNull)
       return CommandResult(false, "", "Schema not found");
 
     schemaRepo.remove(schema);

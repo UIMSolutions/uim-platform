@@ -38,8 +38,7 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
   /// Create a new user.
   UserResponse createUser(CreateUserRequest req) {
     // Check username uniqueness
-    auto existing = userRepo.findByUserName(req.tenantId, req.userName);
-    if (existing != User.init)
+    if (userRepo.existsByUserName(req.tenantId, req.userName))
       return UserResponse("", "User with this userName already exists");
 
     // Validate password against policy
@@ -51,8 +50,7 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
         // return UserResponse("", validation.violations.joiner("; ").to!string);
     }
 
-    User user;
-    user.initEntity(req.tenantId, req.createdBy);
+    auto user = User(req.tenantId);
 
     user.externalId = req.externalId;
     user.userName = req.userName;
@@ -138,7 +136,7 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
   /// Deactivate (soft-delete) a user.
   CommandResult deactivateUser(UserId id) {
     auto user = userRepo.findById(tenantId, id);
-    if (user == User.init)
+    if (user.isNull)
       return CommandResult(false, "", "User not found");
 
     user.active = false;
@@ -156,7 +154,7 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
   /// Delete a user permanently.
   CommandResult deleteUser(UserId id) {
     auto user = userRepo.findById(tenantId, id);
-    if (user == User.init)
+    if (user.isNull)
       return CommandResult(false, "", "User not found");
 
     userRepo.remove(user);
@@ -171,7 +169,7 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
   /// Change user password.
   string changePassword(UserId id, string oldPassword, string newPassword) {
     auto user = userRepo.findById(tenantId, id);
-    if (user == User.init)
+    if (user.isNull)
       return "User not found";
 
     if (user.passwordHash.length > 0 && !passwordSvc.verifyPassword(oldPassword, user.passwordHash))

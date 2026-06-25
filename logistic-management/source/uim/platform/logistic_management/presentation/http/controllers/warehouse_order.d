@@ -59,7 +59,7 @@ protected:
     auto tenantId = getTenantId(req);
     auto id = WarehouseOrderId(extractIdFromPath(req.requestPath.to!string));
     auto wo = _useCase.getWarehouseOrder(tenantId, id);
-    if (wo == WarehouseOrder.init) {
+    if (wo.isNull) {
       res.statusCode = cast(int) HTTPStatus.notFound;
       return writeError("Warehouse order not found");
     }

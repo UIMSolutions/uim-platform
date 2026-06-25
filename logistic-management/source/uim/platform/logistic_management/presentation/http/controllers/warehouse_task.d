@@ -85,13 +85,18 @@ protected:
   }
 
   override Json getHandler(HTTPServerRequest req, HTTPServerResponse res) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
     auto tenantId = getTenantId(req);
     auto id = WarehouseTaskId(extractIdFromPath(req.requestPath.to!string));
+    if (id.isNull) 
+    
     auto wt = _useCase.getWarehouseTask(tenantId, id);
-    if (wt == WarehouseTask.init) {
-      res.statusCode = cast(int) HTTPStatus.notFound;
-      return writeError("Warehouse task not found");
-    }
+    if (wt.isNull) 
+      return errorResponse("Warehouse task not found", 404);
+    
     return wt.toJson;
   }
 
@@ -102,8 +107,16 @@ protected:
   }
 
   override Json deleteHandler(HTTPServerRequest req, HTTPServerResponse res) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
+      
     auto tenantId = getTenantId(req);
     auto id = WarehouseTaskId(extractIdFromPath(req.requestPath.to!string));
+    if (id.isNull) {
+      res.statusCode = cast(int) HTTPStatus.badRequest;
+      return writeError("Invalid warehouse task ID");
+    }
     auto result = _useCase.deleteWarehouseTask(tenantId, id);
     if (!result.success) {
       res.statusCode = cast(int) HTTPStatus.notFound;

@@ -61,7 +61,7 @@ public:
 
   CommandResult updateDeliveryStatus(TenantId tenantId, DeliveryId id, UpdateDeliveryRequest req) {
     auto d = _repo.findById(tenantId, id);
-    if (d == Delivery.init) return CommandResult(false, "Delivery not found");
+    if (d.isNull) return CommandResult(false, "Delivery not found");
 
     
     DeliveryStatus newStatus;
@@ -96,7 +96,7 @@ public:
 
   CommandResult deleteDelivery(TenantId tenantId, DeliveryId id) {
     auto d = _repo.findById(tenantId, id);
-    if (d == Delivery.init) return CommandResult(false, "Delivery not found");
+    if (d.isNull) return CommandResult(false, "Delivery not found");
     // Cascade: remove warehouse orders
     _warehouseOrders.removeByDelivery(tenantId, id);
     _repo.remove(tenantId, id);

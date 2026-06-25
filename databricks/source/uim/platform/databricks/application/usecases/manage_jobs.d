@@ -47,7 +47,7 @@ public:
 
   UseCaseResult!Job update(UpdateJobRequest r) {
     auto j = _repo.find(r.tenantId, r.id);
-    if (j == Job.init)
+    if (j.isNull)
       return UseCaseResult!Job(false, "Job not found", Job.init);
     if (r.name.length         > 0) j.name         = r.name;
     if (r.description.length  > 0) j.description  = r.description;
@@ -61,7 +61,7 @@ public:
 
   UseCaseResult!bool remove(TenantId tenantId, JobId id) {
     auto j = _repo.find(tenantId, id);
-    if (j == Job.init)
+    if (j.isNull)
       return UseCaseResult!bool(false, "Job not found", false);
     j.status = JobStatus.deleted;
     _repo.save(j);

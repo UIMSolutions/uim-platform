@@ -82,7 +82,7 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
   /// Deactivate (soft-delete) a user.
   CommandResult deactivateUser(UserId id) {
     auto user = userRepo.findById(tenantId, id);
-    if (user == User.init)
+    if (user.isNull)
       return CommandResult(false, "", "User not found");
 
     user.status = UserStatus.inactive;

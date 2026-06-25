@@ -88,9 +88,9 @@ class PasswordPolicyController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto policy = useCase.getActivePolicy(tenantId);
-    if (policy == PasswordPolicy.init) {
+    if (policy.isNull) 
       return errorResponse("No active password policy found", 404);
-    }
+    
     return successResponse("Active password policy retrieved successfully", "Retrieved", 200, policy
         .toJson);
   }

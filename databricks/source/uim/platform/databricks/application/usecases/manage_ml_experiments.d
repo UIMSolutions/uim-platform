@@ -55,7 +55,7 @@ public:
 
   UseCaseResult!bool remove(TenantId tenantId, MlExperimentId id) {
     auto e = _repo.find(tenantId, id);
-    if (e == MlExperiment.init)
+    if (e.isNull)
       return UseCaseResult!bool(false, "ML experiment not found", false);
     e.lifecycleStage = "deleted";
     _repo.save(e);

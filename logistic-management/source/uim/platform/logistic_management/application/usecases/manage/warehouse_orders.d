@@ -44,7 +44,7 @@ public:
 
   CommandResult updateWarehouseOrder(TenantId tenantId, WarehouseOrderId id, UpdateWarehouseOrderRequest req) {
     auto wo = _repo.findById(tenantId, id);
-    if (wo == WarehouseOrder.init) return CommandResult(false, "Warehouse order not found");
+    if (wo .isNull) return CommandResult(false, "Warehouse order not found");
 
     
     WarehouseOrder updated;
@@ -69,7 +69,7 @@ public:
 
   CommandResult deleteWarehouseOrder(TenantId tenantId, WarehouseOrderId id) {
     auto wo = _repo.findById(tenantId, id);
-    if (wo == WarehouseOrder.init) return CommandResult(false, "Warehouse order not found");
+    if (wo .isNull) return CommandResult(false, "Warehouse order not found");
     // Cascade: remove all tasks for this order
     _tasks.removeByWarehouseOrder(tenantId, id);
     _repo.remove(tenantId, id);

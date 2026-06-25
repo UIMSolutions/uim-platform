@@ -95,7 +95,7 @@ public:
 
   CommandResult deleteCarrier(TenantId tenantId, CarrierId id) {
     auto c = _repo.findById(tenantId, id);
-    if (c == Carrier.init)
+    if (c.isNull)
       return CommandResult(false, "Carrier not found");
     _repo.remove(tenantId, id);
     return CommandResult(true);

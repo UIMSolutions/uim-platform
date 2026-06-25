@@ -30,8 +30,7 @@ class ManageSitesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Site name is required");
 
     if (req.alias_.length > 0) {
-      auto existing = siteRepo.findByAlias(req.tenantId, req.alias_);
-      if (existing != Site.init)
+      if (siteRepo.existsByAlias(req.tenantId, req.alias_))
         return CommandResult(false, "", "Site alias already exists");
     }
 
@@ -63,7 +62,7 @@ class ManageSitesUseCase { // TODO: UIMUseCase {
 
   CommandResult updateSite(UpdateSiteRequest req) {
     auto site = siteRepo.findById(req.tenantId, req.siteId);
-    if (site == Site.init)
+    if (site.isNull)
       return CommandResult(false, "", "Site not found");
 
     site.name = req.name.length > 0 ? req.name : site.name;
@@ -78,7 +77,7 @@ class ManageSitesUseCase { // TODO: UIMUseCase {
 
   CommandResult publishSite(TenantId tenantId, SiteId id) {
     auto site = siteRepo.findById(tenantId, id);
-    if (site == Site.init)
+    if (site.isNull)
       return CommandResult(false, "", "Site not found");
 
     auto result = validateForPublish(site);
@@ -96,7 +95,7 @@ class ManageSitesUseCase { // TODO: UIMUseCase {
 
   CommandResult unpublishSite(TenantId tenantId, SiteId id) {
     auto site = siteRepo.findById(tenantId, id);
-    if (site == Site.init)
+    if (site.isNull)
       return CommandResult(false, "", "Site not found");
 
     site.status = SiteStatus.unpublished;
@@ -107,7 +106,7 @@ class ManageSitesUseCase { // TODO: UIMUseCase {
 
   CommandResult archiveSite(TenantId tenantId, SiteId id) {
     auto site = siteRepo.findById(tenantId, id);
-    if (site == Site.init)
+    if (site.isNull)
       return CommandResult(false, "", "Site not found");
 
     site.status = SiteStatus.archived;
@@ -118,7 +117,7 @@ class ManageSitesUseCase { // TODO: UIMUseCase {
 
   CommandResult deleteSite(TenantId tenantId, SiteId id) {
     auto site = siteRepo.findById(tenantId, id);
-    if (site == Site.init)
+    if (site.isNull)
       return CommandResult(false, "", "Site not found");
 
     siteRepo.remove(site);

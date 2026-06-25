@@ -156,7 +156,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
   /// Delete a group.
   CommandResult deleteGroup(IAMGroupId id) {
     auto group = groupRepo.findById(tenantId, id);
-    if (group == IAMGroup.init)
+    if (group.isNull)
       return CommandResult(false, "", "IAMGroup not found");
 
     // Remove group from all member users

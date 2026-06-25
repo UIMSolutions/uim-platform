@@ -49,7 +49,7 @@ public:
 
   UseCaseResult!Cluster update(UpdateClusterRequest r) {
     auto c = _repo.find(r.tenantId, r.id);
-    if (c == Cluster.init)
+    if (c.isNull)
       return UseCaseResult!Cluster(false, "Cluster not found", Cluster.init);
     if (r.name.length > 0)   c.name       = r.name;
     c.numWorkers            = r.numWorkers;
@@ -63,7 +63,7 @@ public:
 
   UseCaseResult!bool remove(TenantId tenantId, ClusterId id) {
     auto c = _repo.find(tenantId, id);
-    if (c == Cluster.init)
+    if (c.isNull)
       return UseCaseResult!bool(false, "Cluster not found", false);
     c.state = ClusterState.terminated;
     _repo.save(c);

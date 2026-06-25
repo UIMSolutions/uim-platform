@@ -62,7 +62,7 @@ protected:
     auto tenantId = getTenantId(req);
     auto id = ShipmentId(extractIdFromPath(req.requestPath.to!string));
     auto s = _useCase.getShipment(tenantId, id);
-    if (s == Shipment.init) {
+    if (s.isNull) {
       res.statusCode = cast(int) HTTPStatus.notFound;
       return writeError("Shipment not found");
     }

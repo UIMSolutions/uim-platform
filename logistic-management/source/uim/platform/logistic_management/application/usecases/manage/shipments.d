@@ -46,7 +46,7 @@ public:
 
   CommandResult updateShipment(TenantId tenantId, ShipmentId id, UpdateShipmentRequest req) {
     auto s = _repo.findById(tenantId, id);
-    if (s == Shipment.init) return CommandResult(false, "Shipment not found");
+    if (s.isNull) return CommandResult(false, "Shipment not found");
 
     
     Shipment updated;
@@ -75,7 +75,7 @@ public:
 
   CommandResult deleteShipment(TenantId tenantId, ShipmentId id) {
     auto s = _repo.findById(tenantId, id);
-    if (s == Shipment.init) return CommandResult(false, "Shipment not found");
+    if (s.isNull) return CommandResult(false, "Shipment not found");
     _repo.remove(tenantId, id);
     return CommandResult(true);
   }

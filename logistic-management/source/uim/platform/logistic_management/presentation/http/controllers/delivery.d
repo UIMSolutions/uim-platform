@@ -76,7 +76,7 @@ protected:
     auto tenantId = getTenantId(req);
     auto id = DeliveryId(extractIdFromPath(req.requestPath.to!string));
     auto d = _useCase.getDelivery(tenantId, id);
-    if (d == Delivery.init) {
+    if (d.isNull) {
       res.statusCode = cast(int) HTTPStatus.notFound;
       return writeError("Delivery not found");
     }
