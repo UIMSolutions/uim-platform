@@ -15,20 +15,20 @@ import uim.platform.abap_compiler;
 // ---------------------------------------------------------------------------
 
 struct CreateProgramRequest {
-    TenantId    tenantId;
-    AbapProgramId   programId;
-    ProgramType programType;
-    string      title;
-    string      language;
-    string      sourceCode;
+    TenantId tenantId;
+    AbapProgramId programId;
+    string programType;
+    string title;
+    string language;
+    string sourceCode;
 }
 
 struct UpdateProgramRequest {
-    TenantId    tenantId;
+    TenantId tenantId;
     AbapProgramId programId;
-    string    title;
-    string    language;
-    string    sourceCode;
+    string title;
+    string language;
+    string sourceCode;
 }
 
 // ---------------------------------------------------------------------------
@@ -36,33 +36,35 @@ struct UpdateProgramRequest {
 // ---------------------------------------------------------------------------
 
 struct CompileRequest {
-    TenantId    tenantId;
+    TenantId tenantId;
     AbapProgramId programId;
-    string    sourceCode; /// Optional override — if empty, source is loaded from repo
+    string sourceCode; /// Optional override — if empty, source is loaded from repo
 }
 
 struct CompileResponse {
     CompilationJobId jobId;
-    CompilationStatus status;
-    Diagnostic[]      diagnostics;
-    string[]          generatedCode;
-    bool              success;
-    string            error;
+    
+    string status;
+    Diagnostic[] diagnostics;
+    string[] generatedCode;
+    bool success;
+    string error;
 
     Json toJson() const {
         auto jDiag = Json.emptyArray;
-        foreach (d; diagnostics) jDiag ~= d.toJson();
+        foreach (d; diagnostics)
+            jDiag ~= d.toJson();
 
         auto jCode = Json.emptyArray;
-        foreach (c; generatedCode) jCode ~= Json(c);
+        foreach (c; generatedCode)
+            jCode ~= Json(c);
 
         return Json.emptyObject
-            .set("jobId",         jobId)
-            .set("status",        to!string(status))
-            .set("diagnostics",   jDiag)
+            .set("jobId", jobId)
+            .set("status", to!string(status))
+            .set("diagnostics", jDiag)
             .set("generatedCode", jCode)
-            .set("success",       success)
-            .set("error",         error);
+            .set("success", success)
+            .set("error", error);
     }
 }
-

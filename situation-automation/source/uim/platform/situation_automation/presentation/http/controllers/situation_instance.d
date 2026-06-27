@@ -61,114 +61,113 @@ class SituationInstanceController : ManageHttpController {
             .set("message", "Situation instance created");
 
         return successResponse("Situation instance created successfully", 201, resp);
-}
+    }
 
-override protected Json listHandler(HTTPServerRequest req) {
-    auto precheck = super.listHandler(req);
-    if (precheck.hasError)
-        return precheck;
+    override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-    auto tenantId = precheck.tenantId;
+        auto tenantId = precheck.tenantId;
 
-    auto instances = usecase.listSituationInstances(tenantId);
+        auto instances = usecase.listSituationInstances(tenantId);
 
-    auto jarr = Json.emptyArray;
-    foreach (i; instances) {
-        jarr ~= Json.emptyObject
+        auto jarr = Json.emptyArray;
+        foreach (i; instances) {
+            jarr ~= Json.emptyObject
+                .set("id", i.id)
+                .set("situationTemplateId", i.situationTemplateId)
+                .set("description", i.description)
+                .set("status", i.status.to!string)
+                .set("severity", i.severity.to!string)
+                .set("entityId", i.entityId)
+                .set("assignedTo", i.assignedTo)
+                .set("detectedAt", i.detectedAt)
+                .set("dueAt", i.dueAt)
+                .set("updatedAt", i.updatedAt);
+        }
+
+        auto resp = Json.emptyObject
+            .set("count", instances.length)
+            .set("resources", jarr)
+            .set("message", "Situation instances retrieved successfully");
+
+        return successResponse("Situation instances retrieved successfully", 200, resp);
+    }
+
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+        auto id = SituationInstanceId(precheck.id);
+
+        auto i = usecase.getSituationInstance(tenantId, id);
+        if (i.isNull) {
+            writeError(res, 404, "Situation instance not found");
+            return;
+        }
+
+        auto resInfo = Json.emptyObject
+            .set("type", i.resolution.type.to!string)
+            .set("resolvedBy", i.resolution.resolvedBy)
+            .set("actionId", i.resolution.actionId)
+            .set("ruleId", i.resolution.ruleId)
+            .set("outcome", i.resolution.outcome)
+            .set("resolvedAt", i.resolution.resolvedAt);
+
+        auto resp = Json.emptyObject
             .set("id", i.id)
             .set("situationTemplateId", i.situationTemplateId)
             .set("description", i.description)
             .set("status", i.status.to!string)
             .set("severity", i.severity.to!string)
             .set("entityId", i.entityId)
+            .set("entityTypeId", i.entityTypeId)
             .set("assignedTo", i.assignedTo)
+            .set("sourceSystem", i.sourceSystem)
+            .set("sourceInstanceId", i.sourceInstanceId)
+            .set("retryCount", i.retryCount)
             .set("detectedAt", i.detectedAt)
             .set("dueAt", i.dueAt)
-            .set("updatedAt", i.updatedAt);
+            .set("updatedAt", i.updatedAt)
+            .set("resolution", resInfo);
+
+        return successResponse("Situation instance retrieved successfully", "Retrieved", 200, resp);
     }
 
-    auto resp = Json.emptyObject
-        .set("count", instances.length)
-        .set("resources", jarr)
-        .set("message", "Situation instances retrieved successfully");
-
-    return successResponse("Situation instances retrieved successfully", 200, resp);
-}
-
-override protected Json getHandler(HTTPServerRequest req) {
-    auto precheck = super.getHandler(req);
-    if (precheck.hasError)
-        return precheck;
-
-    auto tenantId = precheck.tenantId;
-    auto id = SituationInstanceId(precheck.id);
-
-    auto i = usecase.getSituationInstance(tenantId, id);
-    if (i.isNull) {
-        writeError(res, 404, "Situation instance not found");
-        return;
-    }
-
-    auto resInfo = Json.emptyObject
-        .set("type", i.resolution.type.to!string)
-        .set("resolvedBy", i.resolution.resolvedBy)
-        .set("actionId", i.resolution.actionId)
-        .set("ruleId", i.resolution.ruleId)
-        .set("outcome", i.resolution.outcome)
-        .set("resolvedAt", i.resolution.resolvedAt);
-
-    auto resp = Json.emptyObject
-        .set("id", i.id)
-        .set("situationTemplateId", i.situationTemplateId)
-        .set("description", i.description)
-        .set("status", i.status.to!string)
-        .set("severity", i.severity.to!string)
-        .set("entityId", i.entityId)
-        .set("entityTypeId", i.entityTypeId)
-        .set("assignedTo", i.assignedTo)
-        .set("sourceSystem", i.sourceSystem)
-        .set("sourceInstanceId", i.sourceInstanceId)
-        .set("retryCount", i.retryCount)
-        .set("detectedAt", i.detectedAt)
-        .set("dueAt", i.dueAt)
-        .set("updatedAt", i.updatedAt)
-        .set("resolution", resInfo);
-
-    return successResponse("Situation instance retrieved successfully", "Retrieved", 200, resp);
-}
-
-override protected Json updateHandler(HTTPServerRequest req) {
-    auto precheck = super.updateHandler(req);
-    if (precheck.hasError)
-        return precheck;
-
-    auto tenantId = precheck.tenantId;
-    auto id = SituationInstanceId(precheck.id);
-    auto data = precheck.data;
-    UpdateSituationInstanceRequest r;
-    r.tenantId = tenantId;
-    r.situationInstanceId = id;
-    r.status = data.getString("status");
-    r.severity = data.getString("severity").to!SituationSeverity;
-    r.assignedTo = data.getString("assignedTo");
-
-    auto result = usecase.updateSituationInstance(r);
-    if (result.hasError)
-        return errorResponse(result.message, 400);
-    auto resp = Json.emptyObject
-        .set("id", result.id)
-        .set("message", "Situation instance updated");
-
-    return successResponse("Situation instance updated successfully", "Updated", 200, resp);
-}
-
-protected void handleResolve(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-        import std.string : lastIndexOf;
+    override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
         auto tenantId = precheck.tenantId;
+        auto id = SituationInstanceId(precheck.id);
+        auto data = precheck.data;
+        UpdateSituationInstanceRequest r;
+        r.tenantId = tenantId;
+        r.situationInstanceId = id;
+        r.status = data.getString("status");
+        r.severity = data.getString("severity").to!SituationSeverity;
+        r.assignedTo = data.getString("assignedTo");
 
-        auto path = precheck.path;
+        auto result = usecase.updateSituationInstance(r);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Situation instance updated");
+
+        return successResponse("Situation instance updated successfully", "Updated", 200, resp);
+    }
+
+    protected Json resolveHandler(HTTPServerRequest req) {
+        auto precheck = super.postHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
         auto resolveIdx = lastIndexOf(path, "/resolve");
         if (resolveIdx < 0) {
             writeError(res, 400, "Invalid resolve path");
@@ -176,7 +175,9 @@ protected void handleResolve(scope HTTPServerRequest req, scope HTTPServerRespon
         }
         auto sub = path[0 .. resolveIdx];
         auto id = SituationInstanceId(extractIdFromPath(sub));
-        
+        // auto id = SituationInstanceId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid situation instance ID", 400);
 
         auto data = precheck.data;
         ResolveSituationRequest r;
@@ -191,35 +192,32 @@ protected void handleResolve(scope HTTPServerRequest req, scope HTTPServerRespon
         auto result = usecase.resolveSituationInstance(r);
         if (result.hasError)
             return errorResponse(result.message, 400);
+
         auto resp = Json.emptyObject
             .set("id", result.id)
             .set("message", "Situation resolved");
 
-        res.writeJsonBody(resp, 200);
-    } else {
-        writeError(res, 400, result.message);
+        return successResponse("Situation resolved successfully", "Resolved", 200, resp);
     }
-} catch (Exception e) {
-    writeError(res, 500, "Internal server error");
-}
-}
 
-override protected Json deleteHandler(HTTPServerRequest req) {
-    auto precheck = super.deleteHandler(req);
-    if (precheck.hasError)
-        return precheck;
+    mixin(HandleTemplate!("handleResolve", "resolveHandler"));
 
-    auto tenantId = precheck.tenantId;
-    auto id = SituationInstanceId(precheck.id);
-    if (id.isNull)
-        return errorResponse("Invalid situation instance ID", 400);
+    override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-    auto result = usecase.deleteSituationInstance(tenantId, id);
-    if (result.hasError)
-        return errorResponse(result.message, 400);
+        auto tenantId = precheck.tenantId;
+        auto id = SituationInstanceId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid situation instance ID", 400);
 
-    auto resp = Json.emptyObject
-        .set("id", result.id);
-    return successResponse("Situation instance deleted successfully", "Deleted", 200, resp);
-}
+        auto result = usecase.deleteSituationInstance(tenantId, id);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto resp = Json.emptyObject
+            .set("id", result.id);
+        return successResponse("Situation instance deleted successfully", "Deleted", 200, resp);
+    }
 }

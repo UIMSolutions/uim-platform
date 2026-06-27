@@ -110,45 +110,42 @@ class UserController : ManageHttpController {
       data.getString("lastName"), data.getString("phoneNumber"));
 
     auto result = useCase.updateUser(updateReq);
-    if (result.hasError) {
+    if (result.hasError)
       return errorResponse(result.message, 404);
 
-      auto resp = Json.emptyObject
-        .set("status", "updated");
+    auto resp = Json.emptyObject
+      .set("status", "updated");
 
-      return successResponse("User updated successfully", "Updated", 200, resp);
-    }
-
-    protected Json changePasswordHandler(HTTPServerRequest req) {
-      auto precheck = super.postHandler(req);
-      if (precheck.hasError)
-        return precheck;
-
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
-      auto error = useCase.changePassword(tenantId, data.getString("userId"),
-        data.getString("oldPassword"), data.getString("newPassword"));
-
-      if (error.length > 0) {
-        auto errRes = Json.emptyObject;
-        errRes["error"] = Json(error);
-        return errorResponse(error, 400);
-      } else {
-        auto resp = Json.emptyObject
-          .set("status", "password_changed");
-
-        return successResponse("Password changed successfully", "Updated", 200, resp);
-      }
-    }
-
-    mixin(HandleTemplate!("HandleChangePassword", "changePasswordHandler"));
+    return successResponse("User updated successfully", "Updated", 200, resp);
   }
 
-  private string extractIdFromPath(string path) {
-    // import std.string : lastIndexOf;
+  protected Json changePasswordHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-    auto idx = path.lastIndexOf('/');
-    if (idx >= 0 && idx + 1 < path.length)
-      return path[idx + 1 .. $];
-    return "";
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
+    auto result = useCase.changePassword(tenantId, data.getString("userId"),
+      data.getString("oldPassword"), data.getString("newPassword"));
+
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto resp = Json.emptyObject
+      .set("status", "password_changed");
+
+    return successResponse("Password changed successfully", "Updated", 200, resp);
   }
+
+  mixin(HandleTemplate!("HandleChangePassword", "changePasswordHandler"));
+}
+
+private string extractIdFromPath(string path) {
+  // import std.string : lastIndexOf;
+
+  auto idx = path.lastIndexOf('/');
+  if (idx >= 0 && idx + 1 < path.length)
+    return path[idx + 1 .. $];
+  return "";
+}

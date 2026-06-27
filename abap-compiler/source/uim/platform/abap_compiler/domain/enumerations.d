@@ -157,6 +157,7 @@ string toString(OOVisibility visibility) {
         case OOVisibility.public_: return "public";
         case OOVisibility.protected_: return "protected";
         case OOVisibility.private_: return "private";
+        default: return "public"; // default to public if unknown
     }
 }
 string[] toString(OOVisibility[] visibilities) {

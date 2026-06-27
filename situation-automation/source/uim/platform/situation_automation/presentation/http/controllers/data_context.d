@@ -131,22 +131,21 @@ class DataContextController : ManageHttpController {
 
     }
 
-    override protected void handleDeletePersonalData(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = precheck.tenantId;
+    protected Json deletePersonalDataHandler(HTTPServerRequest req) {
+        auto precheck = super.postHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto result = usecase.deletePersonalData(tenantId);
-            if (result.hasError)
-                return errorResponse(result.message, 400);
-            auto resp = Json.emptyObject
-                .set("message", "Personal data contexts deleted");
+        auto tenantId = precheck.tenantId;
 
-            res.writeJsonBody(resp, 200);
-        } else {
-            writeError(res, 400, result.message);
-        }
-    } catch (Exception e) {
-        writeError(res, 500, "Internal server error");
+        auto result = usecase.deletePersonalData(tenantId);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto resp = Json.emptyObject.set("message", "Personal data contexts deleted");
+        return successResponse("Personal data contexts deleted successfully", "Deleted", 200, resp);
     }
-}
+
+    mixin(HandleTemplate!("handleDeletePersonalData", "deletePersonalDataHandler"));
+
 }

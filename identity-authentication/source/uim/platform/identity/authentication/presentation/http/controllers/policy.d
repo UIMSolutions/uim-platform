@@ -72,8 +72,8 @@ class PolicyController : ManageHttpController {
     auto arr = policies.map!(p => p.toJson).array;
 
     auto response = Json.emptyObject
-    .set("totalResults", policies.length)
-    .set("resources", arr);
+      .set("totalResults", policies.length)
+      .set("resources", arr);
 
     return successResponse("Policies retrieved successfully", "OK", 200, response);
   }
@@ -95,6 +95,6 @@ class PolicyController : ManageHttpController {
     if (policy.isNull)
       return errorResponse("Policy not found", 404);
 
-    return successResponse("Policy retrieved successfully", "OK", 200, policy.toJson)
+    return successResponse("Policy retrieved successfully", "OK", 200, policy.toJson);
   }
 }

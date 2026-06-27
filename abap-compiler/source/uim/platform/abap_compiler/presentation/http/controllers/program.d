@@ -56,6 +56,7 @@ class ProgramController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
+        
         auto data = precheck.data;
         CreateProgramRequest r;
         r.tenantId = tenantId;
@@ -63,7 +64,7 @@ class ProgramController : ManageHttpController {
         r.title = data.getString("title");
         r.language = data.getString("language", "EN");
         r.sourceCode = data.getString("sourceCode");
-        r.programType = data.getString("programType", "report").to!ProgramType;
+        r.programType = data.getString("programType", "report");
 
         auto result = usecase.createProgram(r);
         if (result.hasError)

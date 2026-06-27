@@ -30,57 +30,60 @@ class AuthController : HttpController {
     router.get("/api/v1/auth/health", &handleHealth);
   }
 
-  protected void handleLogin(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
-      auto authReq = AuthRequest(data.getString("tenantId"), data.getString("applicationId"),
-        data.getString("email"), data.getString("password"),
-        data.getString("mfaCode"), req.peer, req.headers.get("User-Agent", ""));
+  protected Json loginHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto result = authUseCase.execute(authReq);
-      if (result.hasError)
-        return errorResponse(result.message, 400);
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
+    auto authReq = AuthRequest(data.getString("tenantId"), data.getString("applicationId"),
+      data.getString("email"), data.getString("password"),
+      data.getString("mfaCode"), req.peer, req.headers.get("User-Agent", ""));
 
-      auto response = Json.emptyObject
-        .set("success", result.success)
-        .set("message", result.message);
+    auto result = authUseCase.execute(authReq);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-      if (result.mfaRequired) {
-        response["mfaRequired"] = Json(true);
-        response["mfaType"] = Json(result.mfaType.to!string);
-      }
+    auto response = Json.emptyObject
+      .set("success", result.success)
+      .set("message", result.message);
 
-      response["sessionId"] = Json(result.sessionId);
-      response["userId"] = Json(result.userId);
-
-      return successResponse("", "", 0, response);
-
+    if (result.mfaRequired) {
+      response["mfaRequired"] = Json(true);
+      response["mfaType"] = Json(result.mfaType.to!string);
     }
 
-    protected Json tokenHandler(HTTPServerRequest req) {
-      auto precheck = super.postHandler(req);
-      if (precheck.hasError)
-        return precheck;
+    response["sessionId"] = Json(result.sessionId);
+    response["userId"] = Json(result.userId);
 
-      auto tenantId = precheck.tenantId;
-      auto data = precheck.data;
-      auto tokenReq = TokenRequest(data.getString("sessionId"), data.getString("clientId"),
-        data.getString("clientSecret"), data.getStrings("scopes"));
+    return successResponse("Login successful", "OK", 200, response);
+  }
 
-      auto result = tokenUseCase.execute(tokenReq);
-      if (result.hasError())
-        return errorResponse("", 0);
+  mixin(HandleTemplate!("handleLogin", "loginHandler"));
 
-      auto response = Json.emptyObject
-        .set("access_token", result.accessToken)
-        .set("refresh_token", result.refreshToken)
-        .set("id_token", result.idToken)
-        .set("token_type", "Bearer")
-        .set("expires_in", 3600L);
+  protected Json tokenHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      return successResponse("", "", 0, response);
-    }
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
+    auto tokenReq = TokenRequest(data.getString("sessionId"), data.getString("clientId"),
+      data.getString("clientSecret"), data.getStrings("scopes"));
+
+    auto result = tokenUseCase.execute(tokenReq);
+    if (result.hasError())
+      return errorResponse(result.message, 400);
+
+    auto response = Json.emptyObject
+      .set("access_token", result.accessToken)
+      .set("refresh_token", result.refreshToken)
+      .set("id_token", result.idToken)
+      .set("token_type", "Bearer")
+      .set("expires_in", 3600L);
+
+    return successResponse("Token issued successfully", "OK", 200, response);
   }
 
   mixin(HandleTemplate!("handleToken", "tokenHandler"));

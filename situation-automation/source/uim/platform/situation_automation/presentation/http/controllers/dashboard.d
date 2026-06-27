@@ -89,9 +89,8 @@ class DashboardController : ManageHttpController {
         auto tenantId = precheck.tenantId;
         auto id = DashboardId(precheck.id);
         auto d = usecase.getDashboard(tenantId, id);
-        if (d.isNull) 
+        if (d.isNull)
             return errorResponse("Dashboard not found", 404);
-        
 
         auto resp = Json.emptyObject
             .set("id", d.id)
@@ -133,25 +132,24 @@ class DashboardController : ManageHttpController {
         auto resp = Json.emptyObject.set("id", result.id);
         return successResponse("Dashboard updated successfully", "Updated", 200, resp);
     }
-}
 
-override protected Json deleteHandler(HTTPServerRequest req) {
-    auto precheck = super.deleteHandler(req);
-    if (precheck.hasError)
-        return precheck;
+    override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-    auto tenantId = precheck.tenantId;
-    auto id = DashboardId(precheck.id);
-    if (id.isNull)
-        return errorResponse("Invalid dashboard ID", 400);
+        auto tenantId = precheck.tenantId;
+        auto id = DashboardId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid dashboard ID", 400);
 
-    auto result = usecase.deleteDashboard(tenantId, id);
-    if (result.hasError)
-        return errorResponse(result.message, 400);
+        auto result = usecase.deleteDashboard(tenantId, id);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
 
-    auto resp = Json.emptyObject
-        .set("id", result.id);
+        auto resp = Json.emptyObject
+            .set("id", result.id);
 
-    return successResponse("Dashboard deleted successfully", "Deleted", 200, resp);
-}
+        return successResponse("Dashboard deleted successfully", "Deleted", 200, resp);
+    }
 }

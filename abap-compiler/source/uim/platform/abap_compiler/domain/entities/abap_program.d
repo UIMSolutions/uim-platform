@@ -16,30 +16,28 @@ struct AbapProgram {
     mixin TenantEntity!AbapProgramId;
 
     ProgramType programType; /// Program type (report, class pool, …)
-    string      title;       /// Short text description (up to 70 chars)
-    string      language;    /// Original language key, e.g. "DE" / "EN"
-    string      sourceCode;  /// Full ABAP source text
-    long        createdAt;   /// Unix millis
-    long        updatedAt;   /// Unix millis
+    string title; /// Short text description (up to 70 chars)
+    string language; /// Original language key, e.g. "DE" / "EN"
+    string sourceCode; /// Full ABAP source text
 
     Json toJson() const {
         return entityToJson()
             .set("programType", to!string(programType))
-            .set("title",       title)
-            .set("language",    language)
-            .set("sourceCode",  sourceCode);
+            .set("title", title)
+            .set("language", language)
+            .set("sourceCode", sourceCode);
     }
 
     static AbapProgram create(string id, TenantId tenantId, ProgramType pt, string title, string language, string src) {
-        
+
         AbapProgram p;
         p.initEntity(tenantId);
 
-        p.id          = id;
+        p.id = id;
         p.programType = pt;
-        p.title       = title;
-        p.language    = language;
-        p.sourceCode  = src;
+        p.title = title;
+        p.language = language;
+        p.sourceCode = src;
 
         return p;
     }

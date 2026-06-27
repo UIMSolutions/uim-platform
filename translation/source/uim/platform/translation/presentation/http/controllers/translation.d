@@ -24,35 +24,37 @@ class TranslationController : HttpController {
         router.post("/api/v1/translation/translate", &handleTranslate);
     }
 
-    protected void handleTranslate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = precheck.tenantId;
-            auto data = precheck.data;
-            TranslateTextRequest r;
-            r.tenantId = tenantId;
-            r.sourceLanguage = data.getString("sourceLanguage");
-            r.targetLanguage = data.getString("targetLanguage");
-            r.domainName = data.getString("domain");
-            r.textType = data.getString("textType");
-            r.provider = data.getString("provider");
+    protected Json translateHandler(HTTPServerRequest req) {
+        auto precheck = super.postandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            // Accept either "texts" (array) or "text" (single string)
-            if (j["texts"].isArray) {
-                foreach (item; j["texts"])
-                    r.texts ~= item.get!string;
-            } else if (j["text"].isString) {
-                r.texts ~= data.getString("text");
-            }
+        auto tenantId = precheck.tenantId;
+        auto data = precheck.data;
 
-            auto result = usecase.translateTexts(r);
-            if (result.getString("status") == "error") {
-                writeError(res, 400, result.getString("message"));
-                return;
-            }
+        TranslateTextRequest r;
+        r.tenantId = tenantId;
+        r.sourceLanguage = data.getString("sourceLanguage");
+        r.targetLanguage = data.getString("targetLanguage");
+        r.domainName = data.getString("domain");
+        r.textType = data.getString("textType");
+        r.provider = data.getString("provider");
 
-            res.writeJsonBody(result, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
+        // Accept either "texts" (array) or "text" (single string)
+        if (data["texts"].isArray) {
+            foreach (item; data["texts"])
+                r.texts ~= item.get!string;
+        } else if (data["text"].isString) {
+            r.texts ~= data.getString("text");
         }
+
+        auto result = usecase.translateTexts(r);
+        if (result.getString("status") == "error") {
+            return errorResponse(400, result.getString("message"));
+        }
+
+        return successResponse("Translation successful", "Translated", 200, result);
     }
+
+    mixin(HandleTemplate!("handleTranslate", "translateHandler"));
 }

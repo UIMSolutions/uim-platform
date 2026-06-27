@@ -19,6 +19,7 @@ class PrivateEndpointController : ManageHttpController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+
     router.post("/api/v1/private-endpoints",        &handleCreate);
     router.get("/api/v1/private-endpoints",         &handleList);
     router.get("/api/v1/private-endpoints/*",       &handleGet);
@@ -28,6 +29,10 @@ class PrivateEndpointController : ManageHttpController {
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
     auto tenantId = precheck.tenantId;
     auto items = usecase.listEndpoints(tenantId);
     return successResponse("Private endpoints retrieved successfully", "Retrieved", 200, Json.emptyObject
@@ -36,11 +41,16 @@ class PrivateEndpointController : ManageHttpController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
     auto tenantId = precheck.tenantId;
     auto data = precheck.data;
     auto r = CreatePrivateEndpointRequest();
     r.tenantId = tenantId;
     r.serviceInstanceId = ServiceInstanceId(data.getString("serviceInstanceId"));
+
     r.name = data.getString("name");
     r.privateIpAddress = data.getString("privateIpAddress");
     r.hostname = data.getString("hostname");
@@ -58,16 +68,27 @@ class PrivateEndpointController : ManageHttpController {
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
     auto tenantId = precheck.tenantId;
     auto id = PrivateEndpointId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid private endpoint ID", 400);
+
     auto ep = usecase.getEndpoint(tenantId, id);
-    if (ep.id.value.length == 0)
+    if (ep.id.isNull)
       return errorResponse("Private endpoint not found", 404);
 
     return successResponse("Private endpoint retrieved successfully", "Retrieved", 200, ep.toJson);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
     auto tenantId = precheck.tenantId;
     auto id = PrivateEndpointId(precheck.id);
     auto data = precheck.data;
@@ -87,8 +108,13 @@ class PrivateEndpointController : ManageHttpController {
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
     auto tenantId = precheck.tenantId;
     auto id = PrivateEndpointId(precheck.id);
+    
     auto result = usecase.deleteEndpoint(tenantId, id);
     if (result.hasError()) {
       auto code = result.message == "Private endpoint not found" ? 404 : 400;
@@ -98,8 +124,7 @@ class PrivateEndpointController : ManageHttpController {
         .set("id", result.id));
   }
 
-  /// POST /api/v1/private-endpoints/:id/approve
-  private void handleApprove(HTTPServerRequest req, HTTPServerResponse res) @safe {
+  protected Json approveHandler(HTTPServerRequest req) {
     auto tenantId = precheck.tenantId;
     // path: /api/v1/private-endpoints/<id>/approve
     auto path = req.requestURI;
@@ -120,11 +145,14 @@ class PrivateEndpointController : ManageHttpController {
     r.port = cast(ushort) j.getInt("port");
 
     auto result = usecase.approveEndpoint(r);
-    auto statusCode = result.success ? 200 : (result.message.endsWith("not found") ? 404 : 400);
-    res.writeJsonBody(Json.emptyObject
-        .set("id", result.id)
-        .set("message", result.message)
-        .set("statusCode", statusCode),
-        cast(int) statusCode);
+    if (result.hasError()) {
+      auto code = result.message == "Private endpoint not found" ? 404 : 400;
+      return errorResponse(result.message, code);
+    }
+    return successResponse("Private endpoint approved successfully", "Approved", 200, Json.emptyObject
+        .set("id", result.id));
   }
+
+  mixin(HandleTemplate!("handleApprove", "approveHandler"));
+
 }
