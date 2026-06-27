@@ -7,7 +7,7 @@ module uim.platform.service.classes.tenants.tenant;
 
 import uim.platform.service;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class UIMTenant : UIMEntity, IUIMTenant {

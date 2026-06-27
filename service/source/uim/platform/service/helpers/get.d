@@ -7,7 +7,7 @@ module uim.platform.service.helpers.get;
 
 import uim.platform.service;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 // #region getLong

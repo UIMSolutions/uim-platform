@@ -6,7 +6,7 @@
 module uim.platform.service.mixins.store;
 import uim.platform.service;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 string sapStoreTemplate() {

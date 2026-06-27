@@ -2,7 +2,7 @@ module uim.platform.service.infrastructure.stores.tenant.memory;
 
 import uim.platform.service;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 
@@ -11,10 +11,10 @@ class MemoryTenantStore(TEntity, TId) : ITenantStore!(TEntity, TId) {
         initialize();
     }
 
-    override bool initialize(Json initData = Json(null)) {
-        if (!super.initialize(initData)) {
-            return false;
-        }
+    bool initialize(Json initData = Json(null)) {
+        // if (!super.initialize(initData)) {
+        //     return false;
+        // }
 
         return true;
     }
@@ -23,11 +23,17 @@ class MemoryTenantStore(TEntity, TId) : ITenantStore!(TEntity, TId) {
 
     // #region exists
     bool exists(TenantId tenantId) {
-        return tenantId in _entities;
+        return tenantId in _entities ? true : false;
     }
 
-    bool existsId(TenantId tenantId, TId id) {
+    bool exists(TenantId tenantId, TId id) {
         return exists(tenantId) && id in _entities[tenantId];
+    }
+
+    bool exists(TEntity entity) {
+        auto tenantId = entity.tenantId;
+        auto id = entity.id;
+        return exists(tenantId, id);
     }
     // #endregion exists
 
@@ -39,19 +45,21 @@ class MemoryTenantStore(TEntity, TId) : ITenantStore!(TEntity, TId) {
         return 0;
     }
 
-    size_t count(TenantId tenantId, bool delegate(TEntity) predicate) {
-        return exists(tenantId)
-            ? _entities[tenantId].byValue.count!(predicate) : 0;
+    size_t count(TenantId tenantId, bool delegate(TEntity) @safe predicate) {
+        if (!exists(tenantId))
+            return 0;
+        auto entities = filter(_entities[tenantId].byValue.array, predicate);
+        return entities.length;
     }
     // #endregion count
 
     bool isEmpty(TenantId tenantId) {
-        return countAll(tenantId) == 0;
+        return count(tenantId) == 0;
     }
 
     // #region find
-    TEntity[] filter(TEntity[] entities, bool delegate(TEntity) predicate) {
-        return entities.filter!(predicate);
+    TEntity[] filter(TEntity[] entities, bool delegate(TEntity) @safe predicate) {
+        return entities.filter!((TEntity entity) => predicate(entity)).array;
     }
     // #endregion find
 
@@ -66,23 +74,18 @@ class MemoryTenantStore(TEntity, TId) : ITenantStore!(TEntity, TId) {
     }
 
     TEntity find(TenantId tenantId, TId id) {
-        if (existsId(tenantId, id)) {
+        if (exists(tenantId, id)) {
             return _entities[tenantId][id];
         }
         return TEntity.init;
-    }
-
-    TEntity create(TenantId tenantId) {
-        auto entity = TEntity(tenantId);
-        save(entity);
-        return entity;
     }
 
     void save(TEntity entity) {
         auto tenantId = entity.tenantId;
         auto id = entity.id;
         if (!exists(tenantId)) {
-            _entities[tenantId] = TEntity[TId]();
+            TEntity[TId] newEntities;
+            _entities[tenantId] = newEntities;
         }
         _entities[tenantId][id] = entity;
     }
@@ -94,7 +97,7 @@ class MemoryTenantStore(TEntity, TId) : ITenantStore!(TEntity, TId) {
     void update(TEntity entity) {
         auto tenantId = entity.tenantId;
         auto id = entity.id;
-        if (existsId(tenantId, id)) {
+        if (exists(tenantId, id)) {
             _entities[tenantId][id] = entity;
         }
     }
@@ -105,7 +108,7 @@ class MemoryTenantStore(TEntity, TId) : ITenantStore!(TEntity, TId) {
 
     // #region remove
     void remove(TenantId tenantId, TId id) {
-        if (existsId(tenantId, id)) {
+        if (exists(tenantId, id)) {
             _entities[tenantId].remove(id);
         }
     }
@@ -120,4 +123,30 @@ class MemoryTenantStore(TEntity, TId) : ITenantStore!(TEntity, TId) {
         entities.each!(entity => remove(entity));
     }
     // #endregion remove
+}
+///
+unittest {
+    auto store = new MemoryTenantStore!(User, UserId)();
+
+    auto tenantId = TenantId("tenant1");
+    auto user1 = User(tenantId, UserId("user1"));
+    user1.displayName = "User 1";
+    auto user2 = User(tenantId, UserId("user2"));
+    user2.displayName = "User 2";
+
+    store.save(user1);
+    store.save(user2);
+    // writeln("Saved users: ", store.count(tenantId));
+
+    assert(store.exists(user1.tenantId));
+    assert(store.exists(user2.tenantId));
+
+    assert(store.count(user1.tenantId) == 2);
+    assert(store.count(user2.tenantId) == 2);
+
+    auto foundUser1 = store.find(user1.tenantId, user1.id);
+    assert(foundUser1 == user1);
+
+    store.remove(user1);
+    assert(!store.exists(user1));
 }

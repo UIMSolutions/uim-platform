@@ -2,168 +2,125 @@ module uim.platform.service.infrastructure.repositories.tenant;
 
 import uim.platform.service;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 
-class TenantRepository(TEntity, TId) : BaseRepository!(TEntity), ITenantRepository!(TEntity, TId) {
+class TenantRepository(TEntity, TId) : ITenantRepository!(TEntity, TId) {
   protected ITenantStore!(TEntity, TId) _store;
 
+  this() {
+    initialize();
+  }
+
   this(ITenantStore!(TEntity, TId) store) {
-    super();
+    initialize();
     _store = store;
   }
 
-  override bool initialize(Json initData = Json(null)) {
-    if (!super.initialize(initData)) {
-      return false;
-    }
+  bool initialize(Json initData = Json(null)) {
+    // if (!super.initialize(initData)) {
+    //   return false;
+    // }
 
+    _store = new MemoryTenantStore!(TEntity, TId)();
     return true;
   }
 
-  bool existsByTenant(TenantId tenantId) {
-    return _store.exists(tenantId);
-  }
+  // bool existsByTenant(TenantId tenantId) {
+  //   return _store.exists(tenantId);
+  // }
 
-  bool isTenantEmpty(TenantId tenantId) {
-    return !existsByTenant(tenantId) || store[tenantId].empty;
-  }
+  // bool isTenantEmpty(TenantId tenantId) {
+  //   return !existsByTenant(tenantId) || _store[tenantId].empty;
+  // }
 
-  TenantId[] findAllTenants() {
-    return store.byKey.array;
-  }
+  // TenantId[] findAllTenants() {
+  //   return store.byKey.array;
+  // }
 
-  void createTenant(TenantId tenantId) {
-    if (!existsByTenant(tenantId)) {
-      TEntity[TId] entities;
-      store[tenantId] = entities;
+  // void createTenant(TenantId tenantId) {
+  //   if (!existsByTenant(tenantId)) {
+  //     TEntity[TId] entities;
+  //     _store[tenantId] = entities;
+  //   }
+  // }
+
+    // #region exists
+    bool exists(TenantId tenantId) {
+        return _store.exists(tenantId);
     }
-  }
-
-  override bool exists(TEntity entity) {
-    return existsById(entity.tenantId, entity.id);
-  }
-
-  override size_t indexOf(TEntity entity) {
-    size_t idx = 0;
-    foreach (item; findByTenant(entity.tenantId)) {
-      if (item.tenantId == entity.tenantId && item.id == entity.id) {
-        return idx;
-      }
-      idx++;
+    bool exists(TenantId tenantId, TId id) {
+        return _store.exists(tenantId, id);
     }
-    return size_t.max;
-  }
-
-  override size_t countAll() {
-    return findAll().length;
-  }
-
-  override TEntity[] findAll(size_t offset = 0, size_t limit = 0) {
-    auto tenants = findAllTenants();
-    auto tenantsItems = tenants.map!(tenantId => store[tenantId].values.array).array.flat();
-    return limit == 0
-      ? tenantsItems.skip(offset) : tenantsItems.skip(offset).take(limit);
-  }
-
-  override void removeAll() {
-    findAll().each!(e => remove(e));
-  }
-
-  // #region ById
-  bool existsById(TenantId tenantId, TId id) {
-    return existsByTenant(tenantId) && (id in store[tenantId]);
-  }
-
-  bool existsAllById(TenantId tenantId, TId[] ids) {
-    return ids.all!(id => existsById(tenantId, id));
-  }
-
-  TEntity findById(TenantId tenantId, TId id) {
-    if (tenantId in store && id in store[tenantId]) {
-      return store[tenantId][id];
+    bool exists(TEntity entity) {
+        return _store.exists(entity);
     }
-    return TEntity.init;
-  }
+    // #endregion exists
 
-  TEntity[] findAllById(TenantId tenantId, TId[] ids) {
-    return ids.filter!(id => existsById(tenantId, id))
-      .map!(id => findById(tenantId, id))
-      .array;
-  }
-
-  void removeById(TenantId tenantId, TId id) {
-    if (existsById(tenantId, id)) {
-      store[tenantId].remove(id);
+     // #region count
+    size_t count(TenantId tenantId) {
+        return _store.count(tenantId);
     }
-  }
+    size_t count(TenantId tenantId, bool delegate(TEntity) @safe predicate) {
+        return _store.count(tenantId, predicate);
+    }
+    // #endregion count
 
-  void removeAllById(TenantId tenantId, TId[] ids) {
-    ids.each!(id => removeById(tenantId, id));
-  }
-  // #endregion ById
-
-  size_t countByTenant(TEntity[] items, TenantId tenantId) {
-    return filterByTenant(items, tenantId).length;
-  }
-
-  size_t countByTenant(TenantId tenantId) {
-    return findByTenant(tenantId).length;
-  }
-
-  TEntity[] filterByTenant(TEntity[] items, TenantId tenantId) {
-    return items.filter!(e => e.tenantId == tenantId).array;
-  }
-
-  TEntity[] findByTenant(TenantId tenantId, size_t offset = 0, size_t limit = 0) {
-    if (!existsByTenant(tenantId)) {
-      return null;
+    bool isEmpty(TenantId tenantId) {
+        return _store.isEmpty(tenantId);
     }
 
-    TEntity[] allItems;
-    size_t idx;
-    foreach (item; store[tenantId].values.array) {
-      if (idx >= offset && (limit == 0 || allItems.length < limit))
-        allItems ~= item;
-      idx++;
+    // #region filter
+    TEntity[] filter(TEntity[] entities, bool delegate(TEntity) @safe predicate) {
+        return _store.filter(entities, predicate);
     }
-    return allItems;
-  }
+    // #endregion filter
 
-  void removeByTenant(TenantId tenantId) {
-    findByTenant(tenantId).each!(e => remove(e));
-  }
-
-  override void save(TEntity item) {
-    if (!existsByTenant(item.tenantId)) {
-      TEntity[TId] entities;
-      store[item.tenantId] = entities;
+    // #region find
+    TEntity[] find(TenantId tenantId, size_t offset = 0, size_t limit = 0) {
+        return _store.find(tenantId, offset, limit);
     }
-    store[item.tenantId][item.id] = item;
-  }
-
-  override void saveAll(TEntity[] items) {
-    items.each!(item => save(item));
-  }
-
-  override void update(TEntity item) {
-    if (existsById(item.tenantId, item.id)) {
-      store[item.tenantId][item.id] = item;
+    TEntity find(TenantId tenantId, TId id) {
+        return _store.find(tenantId, id);
     }
-  }
+    // #endregion find
 
-  override void updateAll(TEntity[] items) {
-    items.each!(item => update(item));
-  }
+    // #region save
+    void save(TEntity entity) {
+        _store.save(entity);
+    }
+    void save(TEntity[] entities) {
+        foreach (entity; entities) {
+            _store.save(entity);
+        }
+    }
+    // #endregion save
 
-  override void remove(TEntity item) {
-    removeById(item.tenantId, item.id);
-  }
+    // #region update
+    void update(TEntity entity) {
+        _store.update(entity);
+    }
+    void update(TEntity[] entities) {
+        foreach (entity; entities) {
+            _store.update(entity);
+        }
+    }
+    // #endregion update
 
-  override void removeAll(TEntity[] items) {
-    items.each!(item => remove(item));
-  }
+    // #region remove
+    void remove(TenantId tenantId, TId id) {
+        _store.remove(tenantId, id);
+    }
+    void remove(TEntity entity) {
+        _store.remove(entity);
+    }
+    void remove(TEntity[] entities) {
+        foreach (entity; entities) {
+            _store.remove(entity);
+        }
+    }
+    // #endregion remove
 }
 ///
 
@@ -199,11 +156,11 @@ unittest {
   repo.save(entity2);
 
   assert(repo.exists(entity1));
-  assert(repo.existsById(entity1.tenantId, entity1.id));
-  assert(repo.countAll() == 2);
+  assert(repo.exists(entity1.tenantId, entity1.id));
+  assert(repo.count(entity1.tenantId) == 2);
 
   repo.remove(entity1);
   assert(!repo.exists(entity1));
   // writeln("Count after removal: ", repo.countAll());
-  assert(repo.countAll() == 1);
+  assert(repo.count(entity1.tenantId) == 1);
 }

@@ -10,19 +10,42 @@ import uim.platform.service;
 // mixin(ShowModule!());
 
 @safe:
-interface ITenantStore(TEntity, TId) : IEntityStore!(TEntity) {
+interface ITenantStore(TEntity, TId) {
+    // #region exists
     bool exists(TenantId tenantId);
+    bool exists(TenantId tenantId, TId id);
+    bool exists(TEntity entity);
+    // #endregion exists
 
-    size_t countAll(TenantId tenantId);
+    // #region count
+    size_t count(TenantId tenantId);
+    size_t count(TenantId tenantId, bool delegate(TEntity) @safe predicate);
+    // #endregion count
+
     bool isEmpty(TenantId tenantId);
-    TEntity[] findAll(TenantId tenantId); // TODO, #4 size_t offset = 0, size_t limit = 100);
-    void removeAll(TenantId tenantId);
 
-    bool existsId(TenantId tenantId, TId id);
-    TEntity findId(TenantId tenantId, TId id);
+    // #region filter
+    TEntity[] filter(TEntity[] entities, bool delegate(TEntity) @safe predicate);
+    // #endregion filter
 
-    void saveId(TenantId tenantId, TId id);
-    void updateId(TenantId tenantId, TId id);
-    void removeId(TenantId tenantId, TId id);
+    // #region find
+    TEntity[] find(TenantId tenantId, size_t offset = 0, size_t limit = 0);
+    TEntity find(TenantId tenantId, TId id);
+    // #endregion find
 
+    // #region save
+    void save(TEntity entity);
+    void save(TEntity[] entities);
+    // #endregion save
+
+    // #region update
+    void update(TEntity entity);
+    void update(TEntity[] entities);
+    // #endregion update
+
+    // #region remove
+    void remove(TenantId tenantId, TId id);
+    void remove(TEntity entity);
+    void remove(TEntity[] entities);
+    // #endregion remove
 }

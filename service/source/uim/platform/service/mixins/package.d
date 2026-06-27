@@ -12,6 +12,7 @@ public {
   import uim.platform.service.mixins.imports;
   import uim.platform.service.mixins.obj;
   import uim.platform.service.mixins.repository;
+  import uim.platform.service.mixins.repositories;
   import uim.platform.service.mixins.server;
   import uim.platform.service.mixins.service;
   import uim.platform.service.mixins.store;

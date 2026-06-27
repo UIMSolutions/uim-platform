@@ -6,26 +6,43 @@ import uim.platform.service;
 
 @safe:
 
-interface ITenantRepository(TEntity, TId) : IBaseRepository!TEntity /* : IIdRepository!(TEntity, TId) */ {
-  
-  // #region byTenant
-  bool isTenantEmpty(TenantId tenantId);
-  void createTenant(TenantId tenantId);
-  TenantId[] findAllTenants();
-  bool existsByTenant(TenantId tenantId);
-  size_t countByTenant(TenantId tenantId);
-  TEntity[] findByTenant(TenantId tenantId, size_t offset = 0, size_t limit = 0);
-  void removeByTenant(TenantId tenantId);  
-  // #endregion byTenant
+interface ITenantRepository(TEntity, TId) {
 
-  // #region byId  
-  bool existsById(TenantId tenantId, TId id);
-  TEntity findById(TenantId tenantId, TId id);
-  void removeById(TenantId tenantId, TId id);
+  // #region exists
+  bool exists(TenantId tenantId);
+  bool exists(TenantId tenantId, TId id);
+  bool exists(TEntity entity);
+  // #endregion exists
 
-  bool existsAllById(TenantId tenantId, TId[] ids);
-  TEntity[] findAllById(TenantId tenantId, TId[] ids);
-  void removeAllById(TenantId tenantId, TId[] ids);
-  // #endregion byId  
+  // #region count
+  size_t count(TenantId tenantId);
+  size_t count(TenantId tenantId, bool delegate(TEntity) @safe predicate);
+  // #endregion count
 
+  bool isEmpty(TenantId tenantId);
+
+  // #region filter
+  TEntity[] filter(TEntity[] entities, bool delegate(TEntity) @safe  predicate);
+  // #endregion filter
+
+  // #region find
+  TEntity[] find(TenantId tenantId, size_t offset = 0, size_t limit = 0);
+  TEntity find(TenantId tenantId, TId id);
+  // #endregion find
+
+  // #region save
+  void save(TEntity entity);
+  void save(TEntity[] entities);
+  // #endregion save
+
+  // #region update
+  void update(TEntity entity);
+  void update(TEntity[] entities);
+  // #endregion update
+
+  // #region remove
+  void remove(TenantId tenantId, TId id);
+  void remove(TEntity entity);
+  void remove(TEntity[] entities);
+  // #endregion remove
 }

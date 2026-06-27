@@ -7,7 +7,7 @@ module uim.platform.service.helpers.optional;
 
 import uim.platform.service;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

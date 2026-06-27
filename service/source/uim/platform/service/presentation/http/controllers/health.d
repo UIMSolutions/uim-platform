@@ -7,7 +7,7 @@ module uim.platform.service.presentation.http.controllers.health;
 
 import uim.platform.service;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class HealthController : HttpController {

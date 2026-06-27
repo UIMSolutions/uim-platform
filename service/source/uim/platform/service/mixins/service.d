@@ -6,7 +6,7 @@
 module uim.platform.service.mixins.service;
 import uim.platform.service;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 string sapServiceTemplate() {

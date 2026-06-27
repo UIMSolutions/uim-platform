@@ -2,7 +2,7 @@ module uim.platform.service.application.dto;
 
 import uim.platform.service;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 struct CommandResult {
   bool success;
