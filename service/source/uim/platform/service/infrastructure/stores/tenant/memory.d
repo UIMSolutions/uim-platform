@@ -1,4 +1,4 @@
-module uim.platform.service.infrastructure.stores.memory;
+module uim.platform.service.infrastructure.stores.tenant.memory;
 
 import uim.platform.service;
 
@@ -6,7 +6,7 @@ import uim.platform.service;
 
 @safe:
 
-class MemoryTenantStore(TEntity, TId) : TenantStore!(TEntity, TId) {
+class MemoryTenantStore(TEntity, TId) : ITenantStore!(TEntity, TId) {
 
     TEntity[TId][TenantId] entities;
 

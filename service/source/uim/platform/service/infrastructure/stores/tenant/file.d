@@ -1,14 +1,13 @@
-module uim.platform.service.infrastructure.stores.file;
-
-import uim.platform.service;
+module uim.platform.service.infrastructure.stores.tenant.file;
 import std.file;
 import std.path;
+import uim.platform.service;
 
 // mixin(ShowModule!());
 
 @safe:
 
-class FileTenantStore(TEntity, TId) : TenantStore!(TEntity, TId) {
+class FileTenantStore(TEntity, TId) : ITenantStore!(TEntity, TId) {
 
     string rootPath = "build/store/tenants";
 
@@ -41,14 +40,14 @@ class FileTenantStore(TEntity, TId) : TenantStore!(TEntity, TId) {
         }
     }
 
-    override bool existsEntity(TenantId tenantId, TId id) {
+    override bool exists(TenantId tenantId, TId id) {
         if (existsTenant(tenantId)) {
             return buildPath(rootPath, tenantId.value, id.value ~ ".json").exists;
         }
         return false;
     }
 
-    override TEntity readEntity(TenantId tenantId, TId id) {
+    override TEntity find(TenantId tenantId, TId id) {
         if (existsTenant(tenantId)) {
             string filePath = buildPath(rootPath, tenantId.value, id.value ~ ".json");
             if (filePath.exists) {
@@ -61,7 +60,7 @@ class FileTenantStore(TEntity, TId) : TenantStore!(TEntity, TId) {
         return TEntity.init;
     }
 
-    override void saveEntity(TEntity entity) {
+    override void save(TEntity entity) {
         auto tId = entity.tenantId;
         if (!existsTenant(tId))
             createTenant(tId);
@@ -70,7 +69,7 @@ class FileTenantStore(TEntity, TId) : TenantStore!(TEntity, TId) {
         std.file.write(filePath, entity.toJson().toString);
     }
 
-    override void removeEntity(TEntity entity) {
+    override void remove(TEntity entity) {
         string filePath = buildPath(rootPath, entity.tenantId.value, entity.id.value ~ ".json");
         if (filePath.exists) {
             filePath.remove;
@@ -134,10 +133,10 @@ unittest {
     writeln("ReadEntity JSON: ", readEntity.toJson());
 
     // 3. Test Entity Deletion
-    store.removeEntity(entity);
+    store.remove(entity);
     assert(!store.existsEntity(tId, entity.id));
 
     // 4. Test Tenant Removal
-    store.removeTenant(tId);
+    store.remove(tId);
     assert(!store.existsTenant(tId));
 }

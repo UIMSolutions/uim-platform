@@ -13,31 +13,31 @@ import uim.platform.identity.authentication;
 // mixin(ShowModule!());
 @safe:
 /// In-memory adapter for tenant persistence.
-class MemoryTenantRepository : TenantRepository {
-  private Tenant[TenantId] store;
+class MemoryTenantRepository : IdMTenantRepository {
+  private IdMTenant[IdMTenantId] store;
 
-  bool existsById(TenantId id) {
+  bool existsById(IdMTenantId id) {
     return (id in store) ? true : false;
   }
 
-  Tenant findById(TenantId id) {
+  IdMTenant findById(IdMTenantId id) {
     if (existsById(id))
       return store[id];
-    return Tenant.init;
+    return IdMTenant.init;
   }
 
-  Tenant findBySubdomain(string subdomain) {
-    foreach (t; findByTenant(tenantId)) {
+  IdMTenant findBySubdomain(string subdomain) {
+    foreach (t; store.byValue) {
       if (t.subdomain == subdomain)
         return t;
     }
-    return Tenant.init;
+    return IdMTenant.init;
   }
 
-  Tenant[] findAll(size_t offset = 0, size_t limit = 100) {
-    Tenant[] result;
+  IdMTenant[] findAll(size_t offset = 0, size_t limit = 100) {
+    IdMTenant[] result;
     size_t idx;
-    foreach (t; findByTenant(tenantId)) {
+    foreach (t; store.byValue) {
       if (idx >= offset && result.length < limit)
         result ~= t;
       idx++;
@@ -45,15 +45,15 @@ class MemoryTenantRepository : TenantRepository {
     return result;
   }
 
-  void save(Tenant tenant) {
+  void save(IdMTenant tenant) {
     store[tenant.id] = tenant;
   }
 
-  void update(Tenant tenant) {
+  void update(IdMTenant tenant) {
     store[tenant.id] = tenant;
   }
 
-  void remove(TenantId id) {
-    removeById(id);
+  void remove(IdMTenant tenant) {
+    store.remove(tenant.id);
   }
 }

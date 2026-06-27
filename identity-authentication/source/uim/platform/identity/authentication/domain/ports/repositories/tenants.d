@@ -11,11 +11,14 @@ import uim.platform.identity.authentication;
 // mixin(ShowModule!());
 @safe:
 /// Port: outgoing — tenant persistence.
-interface TenantRepository {
-  Tenant findById(TenantId id);
-  Tenant findBySubdomain(string subdomain);
-  Tenant[] findAll(size_t offset = 0, size_t limit = 100);
-  void save(Tenant tenant);
-  void update(Tenant tenant);
-  void remove(TenantId id);
+interface IdMTenantRepository {
+
+  IdMTenant findById(TenantId id);
+  IdMTenant findBySubdomain(string subdomain);
+  IdMTenant[] findAll(size_t offset = 0, size_t limit = 100);
+
+  void save(IdMTenant tenant);
+  void update(IdMTenant tenant);
+  void remove(IdMTenant tenant);
+
 }

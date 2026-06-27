@@ -6,13 +6,35 @@ import uim.platform.service;
 
 @safe:
 
-class TenantStore(TEntity, TId) {
+class TenantStore(TEntity, TId) : ITenantStore!(TEntity, TId) {
+    this(UUID tenantId) {
+        super();
+        this.tenantId(tenantId);
+    }
 
-    bool existsTenant(TenantId tenantId) {
+    this(UUID tenantId, Json[string] initData) {
+        super(initData);
+        this.tenantId(tenantId);
+    }
+
+    bool initialize(Json[string] initData = null) {
+        if (!super.initialize(initData)) {
+            return false;
+        }
+
+        if (initData.hasKey("tenant_id")) {
+            _tenantId = UUID(initData["tenant_id"].getString);
+        }
+
+        return true;
+    }
+
+    bool existsById(TenantId tenantId, TId id) {
         return false; // Placeholder implementation
     }
 
-    void createTenant(TenantId tenantId) {
+    void saveById(TenantId tenantId, TId id) {
+        // Placeholder implementation
     }
 
     TEntity[TId] getEntities(TenantId tenantId) {
@@ -36,9 +58,9 @@ class TenantStore(TEntity, TId) {
         return TEntity.init;
     }
 
-    void saveEntity(TEntity entity) {
+    void save(TEntity entity) {
     }
 
-    void removeEntity(TEntity entity) {
+    void remove(TEntity entity) {
     }
 }
