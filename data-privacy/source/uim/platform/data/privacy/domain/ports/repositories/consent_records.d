@@ -12,7 +12,7 @@ import uim.platform.data.privacy;
 
 @safe:
 /// Port for persisting consent records.
-interface ConsentRecordRepository : ITenantRepository!(ConsentRecord, ConsentRecordId) {
+interface ConsentRecordRepository : ITentRepository!(ConsentRecord, ConsentRecordId) {
 
   size_t countByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
   ConsentRecord[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);

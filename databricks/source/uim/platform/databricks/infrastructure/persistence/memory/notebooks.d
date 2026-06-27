@@ -5,7 +5,7 @@ import uim.platform.databricks;
 
 @safe:
 
-class MemoryNotebookRepository : TenantRepository!(Notebook, NotebookId), NotebookRepository {
+class MemoryNotebookRepository : TentRepository!(Notebook, NotebookId), NotebookRepository {
   Notebook[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
     import std.algorithm : filter;
     import std.array : array;

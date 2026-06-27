@@ -13,7 +13,7 @@ import uim.platform.foundry;
 
 @safe:
 /// Port for persisting and querying spaces.
-interface ISpaceRepository : ITenantRepository!(Space, SpaceId) {
+interface ISpaceRepository : ITentRepository!(Space, SpaceId) {
   bool existsByName(TenantId tenantId, OrgId orgId, string name);
   Space findByName(TenantId tenantId, OrgId orgId, string name);
   void removeByName(TenantId tenantId, OrgId orgId, string name);

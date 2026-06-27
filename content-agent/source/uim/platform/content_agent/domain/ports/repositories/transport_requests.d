@@ -11,7 +11,7 @@ import uim.platform.content_agent;
 
 @safe:
 /// Port: outgoing - transport request persistence.
-interface TransportRequestRepository : ITenantRepository!(TransportRequest, TransportRequestId) {
+interface TransportRequestRepository : ITentRepository!(TransportRequest, TransportRequestId) {
 
   size_t countByStatus(TenantId tenantId, TransportStatus status);
   TransportRequest[] findByStatus(TenantId tenantId, TransportStatus status);

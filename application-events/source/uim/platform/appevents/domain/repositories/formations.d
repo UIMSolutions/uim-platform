@@ -12,7 +12,7 @@ import uim.platform.appevents.domain.enums.formation_status;
 
 @safe:
 
-interface FormationRepository : ITenantRepository!(Formation, FormationId) {
+interface FormationRepository : ITentRepository!(Formation, FormationId) {
     Formation[] findByStatus(TenantId tenantId, FormationStatus status);
     Formation[] findByGlobalAccount(TenantId tenantId, string globalAccountId);
     bool nameExists(TenantId tenantId, string name);

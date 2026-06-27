@@ -11,7 +11,7 @@ import uim.platform.automation_pilot;
 
 @safe:
 
-interface CommandInputRepository : ITenantRepository!(CommandInput, CommandInputId) {
+interface CommandInputRepository : ITentRepository!(CommandInput, CommandInputId) {
 
     size_t countByType(TenantId tenantId, InputType inputType);    
     CommandInput[] findByType(TenantId tenantId, InputType inputType);

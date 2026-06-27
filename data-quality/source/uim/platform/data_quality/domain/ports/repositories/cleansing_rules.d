@@ -12,7 +12,7 @@ import uim.platform.data_quality;
 
 @safe:
 /// Port for persisting data cleansing rules.
-interface CleansingRuleRepository : ITenantRepository!(CleansingRule, CleansingRuleId) {
+interface CleansingRuleRepository : ITentRepository!(CleansingRule, CleansingRuleId) {
 
   size_t countByDataset(TenantId tenantId, string datasetPattern);
   CleansingRule[] findByDataset(TenantId tenantId, string datasetPattern);

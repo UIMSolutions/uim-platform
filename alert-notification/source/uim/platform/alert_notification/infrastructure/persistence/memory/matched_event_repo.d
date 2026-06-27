@@ -12,7 +12,7 @@ import uim.platform.alert_notification;
 @safe:
 
 class MemoryMatchedEventRepository
-    : TenantRepository!(MatchedEvent, MatchedEventId),
+    : TentRepository!(MatchedEvent, MatchedEventId),
       MatchedEventRepository
 {
     MatchedEvent[] findBySubscription(TenantId tenantId, string subscriptionName) {

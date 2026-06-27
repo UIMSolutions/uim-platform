@@ -12,7 +12,7 @@ import uim.platform.content_agent;
 
 @safe:
 /// Port: outgoing - content package persistence.
-interface ContentPackageRepository : ITenantRepository!(ContentPackage, ContentPackageId) {
+interface ContentPackageRepository : ITentRepository!(ContentPackage, ContentPackageId) {
   bool existsByName(TenantId tenantId, string name);
   ContentPackage findByName(TenantId tenantId, string name);
   void removeByName(TenantId tenantId, string name);

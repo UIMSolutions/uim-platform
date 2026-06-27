@@ -5,7 +5,7 @@ import uim.platform.databricks;
 
 @safe:
 
-interface DeltaTableRepository : TenantRepository!(DeltaTable, DeltaTableId) {
+interface DeltaTableRepository : TentRepository!(DeltaTable, DeltaTableId) {
   DeltaTable[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId);
   DeltaTable[] findByCatalog(TenantId tenantId, string catalogName);
   DeltaTable[] findBySchema(TenantId tenantId, string catalogName, string schemaName);

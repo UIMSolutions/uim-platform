@@ -12,7 +12,7 @@ import uim.platform.data.privacy;
 
 @safe:
 /// Port for persisting personal data model definitions.
-interface PersonalDataModelRepository : ITenantRepository!(PersonalDataModel, PersonalDataModelId) {
+interface PersonalDataModelRepository : ITentRepository!(PersonalDataModel, PersonalDataModelId) {
 
   size_t countByCategory(TenantId tenantId, PersonalDataCategory category);
   PersonalDataModel[] findByCategory(TenantId tenantId, PersonalDataCategory category);

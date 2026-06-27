@@ -11,7 +11,7 @@ import uim.platform.application_autoscaler;
 
 @safe:
 
-interface CustomMetricRepository : ITenantRepository!(CustomMetricEntity, CustomMetricId) {
+interface CustomMetricRepository : ITentRepository!(CustomMetricEntity, CustomMetricId) {
 
   size_t countByApp(TenantId tenantId, AppBindingId appId);
   CustomMetricEntity[] findByApp(TenantId tenantId, AppBindingId appId);

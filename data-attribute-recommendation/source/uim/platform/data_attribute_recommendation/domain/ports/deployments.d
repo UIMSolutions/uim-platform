@@ -12,7 +12,7 @@ import uim.platform.data_attribute_recommendation;
 // mixin(ShowModule!());
 
 @safe:
-interface DeploymentRepository : ITenantRepository!(ModelDeployment, DeploymentId) {
+interface DeploymentRepository : ITentRepository!(ModelDeployment, DeploymentId) {
 
   bool existsByTrainingJob(TenantId tenantId, TrainingJobId jobId);
   ModelDeployment findByTrainingJob(TenantId tenantId, TrainingJobId jobId);

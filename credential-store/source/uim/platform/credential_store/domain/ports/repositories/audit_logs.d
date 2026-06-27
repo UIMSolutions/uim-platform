@@ -13,7 +13,7 @@ import uim.platform.credential_store;
 
 @safe:
 
-interface AuditLogRepository : ITenantRepository!(AuditLogEntry, AuditLogEntryId) {
+interface AuditLogRepository : ITentRepository!(AuditLogEntry, AuditLogEntryId) {
 
   size_t countByNamespace(TenantId tenantId, NamespaceId namespaceId);
   AuditLogEntry[] findByNamespace(TenantId tenantId, NamespaceId namespaceId);

@@ -12,7 +12,7 @@ import uim.platform.data_attribute_recommendation;
 // mixin(ShowModule!());
 
 @safe:
-interface ModelConfigRepository : ITenantRepository!(ModelConfiguration, ModelConfigurationId) {
+interface ModelConfigRepository : ITentRepository!(ModelConfiguration, ModelConfigurationId) {
 
   bool existsByName(TenantId tenantId, string name);
   ModelConfiguration findByName(TenantId tenantId, string name);

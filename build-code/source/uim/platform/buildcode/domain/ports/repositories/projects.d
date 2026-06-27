@@ -11,7 +11,7 @@ import uim.platform.buildcode;
 
 @safe:
 
-interface ProjectRepository : ITenantRepository!(Project, ProjectId) {
+interface ProjectRepository : ITentRepository!(Project, ProjectId) {
   Project[]  findByStatus(TenantId tenantId, ProjectStatus status);
   Project[]  findByType(TenantId tenantId, ProjectType type);
   Project[]  findByOwner(TenantId tenantId, string ownerEmail);

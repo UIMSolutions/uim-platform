@@ -12,7 +12,7 @@ import uim.platform.connectivity;
 
 @safe:
 /// Port: outgoing - cloud connector persistence.
-interface ConnectorRepository : ITenantRepository!(CloudConnector, ConnectorId) {
+interface ConnectorRepository : ITentRepository!(CloudConnector, ConnectorId) {
 
   bool existsByLocation(TenantId tenantId, SubaccountId subaccountId, string locationId);
   CloudConnector findByLocation(TenantId tenantId, SubaccountId subaccountId, string locationId);

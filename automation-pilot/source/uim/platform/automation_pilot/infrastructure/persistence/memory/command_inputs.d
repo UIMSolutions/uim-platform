@@ -11,7 +11,7 @@ import uim.platform.automation_pilot;
 
 @safe:
 
-class MemoryCommandInputRepository : TenantRepository!(CommandInput, CommandInputId), CommandInputRepository {
+class MemoryCommandInputRepository : TentRepository!(CommandInput, CommandInputId), CommandInputRepository {
 
     size_t countByType(TenantId tenantId, InputType inputType) {
         return findByType(tenantId, inputType).length;

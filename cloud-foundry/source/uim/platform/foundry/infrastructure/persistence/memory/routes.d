@@ -16,7 +16,7 @@ import uim.platform.foundry;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryRouteRepository : TenantRepository!(Route, RouteId), IRouteRepository {
+class MemoryRouteRepository : TentRepository!(Route, RouteId), IRouteRepository {
 
   bool existsByHostAndDomain(TenantId tenantId, string host, CfDomainId domainId) {
     return !findByHostAndDomain(tenantId, host, domainId).isNull;

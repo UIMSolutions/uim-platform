@@ -11,7 +11,7 @@ import uim.platform.application_studio;
 
 @safe:
 
-interface RunConfigurationRepository : ITenantRepository!(RunConfiguration, RunConfigurationId) {
+interface RunConfigurationRepository : ITentRepository!(RunConfiguration, RunConfigurationId) {
     
     size_t countByProject(TenantId tenantId, ProjectId projectId);
     RunConfiguration[] findByProject(TenantId tenantId, ProjectId projectId);

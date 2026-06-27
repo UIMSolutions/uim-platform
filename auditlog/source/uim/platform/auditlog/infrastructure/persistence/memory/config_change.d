@@ -16,7 +16,7 @@ import uim.platform.auditlog;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryConfigChangeLogRepository : TenantRepository!(ConfigChangeLog, ConfigChangeLogId), ConfigChangeLogRepository {
+class MemoryConfigChangeLogRepository : TentRepository!(ConfigChangeLog, ConfigChangeLogId), ConfigChangeLogRepository {
 
   bool existsByAuditLogId(TenantId tenantId, AuditLogId auditLogId) {
     return findByTenant(tenantId).any!(e => e.auditLogId == auditLogId);

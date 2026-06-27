@@ -11,7 +11,7 @@ import uim.platform.buildcode;
 
 @safe:
 
-interface BuildJobRepository : ITenantRepository!(BuildJob, BuildJobId) {
+interface BuildJobRepository : ITentRepository!(BuildJob, BuildJobId) {
   BuildJob[]  findByPipeline(TenantId tenantId, string pipelineId);
   BuildJob[]  findByProject(TenantId tenantId, string projectId);
   BuildJob[]  findByStatus(TenantId tenantId, JobStatus status);

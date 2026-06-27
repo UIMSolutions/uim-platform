@@ -11,7 +11,7 @@ import uim.platform.automation_pilot;
 
 @safe:
 
-interface ExecutionRepository : ITenantRepository!(Execution, ExecutionId) {
+interface ExecutionRepository : ITentRepository!(Execution, ExecutionId) {
 
     size_t countByCommand(TenantId tenantId, CommandId commandId);
     Execution[] findByCommand(TenantId tenantId, CommandId commandId);

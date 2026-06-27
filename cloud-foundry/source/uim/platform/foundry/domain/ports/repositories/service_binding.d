@@ -13,7 +13,7 @@ import uim.platform.foundry;
 
 @safe:
 /// Port for persisting and querying service bindings.
-interface IServiceBindingRepository : ITenantRepository!(ServiceBinding, ServiceBindingId) {
+interface IServiceBindingRepository : ITentRepository!(ServiceBinding, ServiceBindingId) {
 
   size_t countByServiceInstance(TenantId tenantId, ServiceInstanceId instanceId);
   ServiceBinding[] filterByServiceInstance(ServiceBinding[] bindings, ServiceInstanceId instanceId);

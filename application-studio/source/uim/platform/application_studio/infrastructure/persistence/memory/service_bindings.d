@@ -11,7 +11,7 @@ import uim.platform.application_studio;
 
 @safe:
 
-class MemoryServiceBindingRepository : TenantRepository!(ServiceBinding, ServiceBindingId), ServiceBindingRepository {
+class MemoryServiceBindingRepository : TentRepository!(ServiceBinding, ServiceBindingId), ServiceBindingRepository {
 
     size_t countByDevSpace(TenantId tenantId, DevSpaceId devSpaceId) {
         return findByDevSpace(tenantId, devSpaceId).length;

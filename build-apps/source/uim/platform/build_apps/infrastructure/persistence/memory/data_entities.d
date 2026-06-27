@@ -11,7 +11,7 @@ import uim.platform.build_apps;
 
 @safe:
 
-class MemoryDataEntityRepository : TenantRepository!(DataEntity, DataEntityId), DataEntityRepository {
+class MemoryDataEntityRepository : TentRepository!(DataEntity, DataEntityId), DataEntityRepository {
 
     size_t countByApplication(ApplicationId applicationId) {
         return findByApplication(applicationId).length;

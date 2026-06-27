@@ -16,7 +16,7 @@ import std.array : array;
 @safe:
 
 class MemoryEventChannelRepository
-    : TenantRepository!(EventChannel, EventChannelId)
+    : TentRepository!(EventChannel, EventChannelId)
     , EventChannelRepository
 {
     override EventChannel[] findByTopic(TenantId tenantId, EventTopicId topicId) {

@@ -11,7 +11,7 @@ import uim.platform.buildcode;
 
 @safe:
 
-interface TemplateRepository : ITenantRepository!(ProjectTemplate, TemplateId) {
+interface TemplateRepository : ITentRepository!(ProjectTemplate, TemplateId) {
   ProjectTemplate[]  findByProjectType(TenantId tenantId, ProjectType type);
   ProjectTemplate[]  findByTechStack(TenantId tenantId, TechStack stack);
   ProjectTemplate[]  findBuiltIn(TenantId tenantId);

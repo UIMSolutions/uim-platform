@@ -12,7 +12,7 @@ import uim.platform.data.privacy;
 
 @safe:
 /// Port for persisting and querying business processes.
-interface BusinessProcessRepository : ITenantRepository!(BusinessProcess, BusinessProcessId) {
+interface BusinessProcessRepository : ITentRepository!(BusinessProcess, BusinessProcessId) {
   
   size_t countByController(TenantId tenantId, DataControllerId controllerId);
   BusinessProcess[] findByController(TenantId tenantId, DataControllerId controllerId);

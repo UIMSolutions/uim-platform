@@ -12,7 +12,7 @@ import uim.platform.data.privacy;
 
 @safe:
 /// Port for persisting and querying information reports.
-interface InformationReportRepository : ITenantRepository!(InformationReport, InformationReportId) {
+interface InformationReportRepository : ITentRepository!(InformationReport, InformationReportId) {
 
   size_t countByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
   InformationReport[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);

@@ -5,7 +5,7 @@ import uim.platform.databricks;
 
 @safe:
 
-interface MlModelRepository : TenantRepository!(MlModel, MlModelId) {
+interface MlModelRepository : TentRepository!(MlModel, MlModelId) {
   MlModel[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId);
   MlModel[] findByStage(TenantId tenantId, ModelStage stage);
   MlModel   findByName(TenantId tenantId, string name);

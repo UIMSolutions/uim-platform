@@ -13,7 +13,7 @@ import uim.platform.data_attribute_recommendation;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryDeploymentRepository : TenantRepository!(ModelDeployment, DeploymentId), DeploymentRepository {
+class MemoryDeploymentRepository : TentRepository!(ModelDeployment, DeploymentId), DeploymentRepository {
 
   bool existsByTrainingJob(TenantId tenantId, TrainingJobId jobId) {
     return findByTenant(tenantId).any!(e => e.trainingJobId == jobId);

@@ -11,7 +11,7 @@ import uim.platform.customer_identity;
 
 @safe:
 
-class MemoryScreenSetRepository : TenantRepository!(ScreenSet, ScreenSetId), ScreenSetRepository {
+class MemoryScreenSetRepository : TentRepository!(ScreenSet, ScreenSetId), ScreenSetRepository {
 
     ScreenSet[] findByFlowType(TenantId tenantId, ScreenSetFlowType flowType) {
         return findByTenant(tenantId).filter!(ss => ss.flowType == flowType).array;

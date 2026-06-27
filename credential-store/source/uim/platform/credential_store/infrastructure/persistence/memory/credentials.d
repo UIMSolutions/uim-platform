@@ -13,7 +13,7 @@ import uim.platform.credential_store;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryCredentialRepository : TenantRepository!(Credential, CredentialId), CredentialRepository {
+class MemoryCredentialRepository : TentRepository!(Credential, CredentialId), CredentialRepository {
 
   bool existsByName(TenantId tenantId, NamespaceId namespaceId, string name, CredentialType type) {
     return findByTenant(tenantId).any!(c => c.namespaceId == namespaceId && c.name == name && c.type == type); 

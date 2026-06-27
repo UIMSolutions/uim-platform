@@ -12,7 +12,7 @@ import uim.platform.ai_launchpad;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryDatasetRepository : TenantRepository!(Dataset, DatasetId), IDatasetRepository {
+class MemoryDatasetRepository : TentRepository!(Dataset, DatasetId), IDatasetRepository {
   
   bool existsById(TenantId tenantId, ConnectionId connectionId, DatasetId id) {
     return findByConnection(tenantId, connectionId).any!(d => d.id == id);

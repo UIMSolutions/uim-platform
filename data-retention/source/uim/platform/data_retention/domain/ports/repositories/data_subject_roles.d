@@ -5,7 +5,7 @@ import uim.platform.data_retention;
 
 @safe:
 
-interface DataSubjectRoleRepository : ITenantRepository!(DataSubjectRole, DataSubjectRoleId) {
+interface DataSubjectRoleRepository : ITentRepository!(DataSubjectRole, DataSubjectRoleId) {
 
     DataSubjectRole[] findActive(TenantId tenantId);
 

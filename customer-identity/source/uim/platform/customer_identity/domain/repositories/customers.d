@@ -11,7 +11,7 @@ import uim.platform.customer_identity;
 
 @safe:
 
-interface CustomerRepository : ITenantRepository!(Customer, CustomerId) {
+interface CustomerRepository : ITentRepository!(Customer, CustomerId) {
     Customer findByEmail(TenantId tenantId, string email);
     Customer findByPhone(TenantId tenantId, string phone);
     Customer[] findByStatus(TenantId tenantId, CustomerStatus status);

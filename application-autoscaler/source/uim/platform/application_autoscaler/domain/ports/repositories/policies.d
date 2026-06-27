@@ -11,7 +11,7 @@ import uim.platform.application_autoscaler;
 
 @safe:
 
-interface ScalingPolicyRepository : ITenantRepository!(ScalingPolicyEntity, ScalingPolicyId) {
+interface ScalingPolicyRepository : ITentRepository!(ScalingPolicyEntity, ScalingPolicyId) {
 
   bool existsByApp(TenantId tenantId, AppBindingId appId);
   ScalingPolicyEntity findByApp(TenantId tenantId, AppBindingId appId);

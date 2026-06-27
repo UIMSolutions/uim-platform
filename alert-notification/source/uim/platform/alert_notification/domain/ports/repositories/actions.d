@@ -11,6 +11,6 @@ import uim.platform.alert_notification;
 
 @safe:
 
-interface ActionRepository : ITenantRepository!(Action, ActionId) {
+interface ActionRepository : ITentRepository!(Action, ActionId) {
     Action findByName(TenantId tenantId, string name);
 }

@@ -5,7 +5,7 @@ import uim.platform.databricks;
 
 @safe:
 
-interface ClusterRepository : TenantRepository!(Cluster, ClusterId) {
+interface ClusterRepository : TentRepository!(Cluster, ClusterId) {
   Cluster[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId);
   Cluster[] findByState(TenantId tenantId, ClusterState state);
   Cluster[] findByType(TenantId tenantId, ClusterType clusterType);

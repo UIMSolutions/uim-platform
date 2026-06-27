@@ -11,7 +11,7 @@ import uim.platform.build_apps;
 
 @safe:
 
-interface DataConnectionRepository : ITenantRepository!(DataConnection, DataConnectionId) {
+interface DataConnectionRepository : ITentRepository!(DataConnection, DataConnectionId) {
 
     size_t countByApplication(ApplicationId applicationId);
     DataConnection[] findByApplication(ApplicationId applicationId);

@@ -5,7 +5,7 @@ import uim.platform.databricks;
 
 @safe:
 
-class MemorySqlWarehouseRepository : TenantRepository!(SqlWarehouse, SqlWarehouseId), SqlWarehouseRepository {
+class MemorySqlWarehouseRepository : TentRepository!(SqlWarehouse, SqlWarehouseId), SqlWarehouseRepository {
   SqlWarehouse[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
     import std.algorithm : filter;
     import std.array : array;

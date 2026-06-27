@@ -15,7 +15,7 @@ import uim.platform.data_quality;
 
 @safe:
 
-class MemoryCleansingRuleRepository : TenantRepository!(CleansingRule, CleansingRuleId), CleansingRuleRepository {
+class MemoryCleansingRuleRepository : TentRepository!(CleansingRule, CleansingRuleId), CleansingRuleRepository {
 
   size_t countByDataset(TenantId tenantId, string datasetPattern) {
     return findByDataset(tenantId, datasetPattern).length;

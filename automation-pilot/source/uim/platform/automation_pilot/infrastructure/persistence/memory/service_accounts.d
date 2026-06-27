@@ -11,7 +11,7 @@ import uim.platform.automation_pilot;
 
 @safe:
 
-class MemoryServiceAccountRepository : TenantRepository!(ServiceAccount, ServiceAccountId), ServiceAccountRepository {
+class MemoryServiceAccountRepository : TentRepository!(ServiceAccount, ServiceAccountId), ServiceAccountRepository {
 
     size_t countByStatus(TenantId tenantId, ServiceAccountStatus status) {
         return findByStatus(tenantId, status).length;

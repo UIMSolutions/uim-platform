@@ -12,7 +12,7 @@ import uim.platform.data.privacy;
 
 @safe:
 /// Port for persisting and querying data subjects.
-interface DataSubjectRepository : ITenantRepository!(DataSubject, DataSubjectId) {
+interface DataSubjectRepository : ITentRepository!(DataSubject, DataSubjectId) {
 
   bool existsByExternalId(TenantId tenantId, string externalId);
   DataSubject findByExternalId(TenantId tenantId, string externalId);

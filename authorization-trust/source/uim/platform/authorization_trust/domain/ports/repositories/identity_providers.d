@@ -11,7 +11,7 @@ import uim.platform.authorization_trust;
 
 @safe:
 
-interface IdentityProviderRepository : ITenantRepository!(IdentityProvider, IdentityProviderId) {
+interface IdentityProviderRepository : ITentRepository!(IdentityProvider, IdentityProviderId) {
 
   bool existsByAlias(TenantId tenantId, string alias_);
   IdentityProvider findByAlias(TenantId tenantId, string alias_);

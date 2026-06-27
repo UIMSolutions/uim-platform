@@ -12,7 +12,7 @@ import uim.platform.alert_notification;
 @safe:
 
 class MemoryConditionRepository
-    : TenantRepository!(Condition, ConditionId),
+    : TentRepository!(Condition, ConditionId),
       ConditionRepository
 {
     Condition findByName(TenantId tenantId, string name) {

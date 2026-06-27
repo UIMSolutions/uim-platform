@@ -5,7 +5,7 @@ import uim.platform.databricks;
 
 @safe:
 
-interface JobRepository : TenantRepository!(Job, JobId) {
+interface JobRepository : TentRepository!(Job, JobId) {
   Job[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId);
   Job[] findByStatus(TenantId tenantId, JobStatus status);
   Job[] findByCreator(TenantId tenantId, string creatorId);

@@ -11,7 +11,7 @@ import uim.platform.application_studio;
 
 @safe:
 
-interface DevSpaceRepository : ITenantRepository!(DevSpace, DevSpaceId) {
+interface DevSpaceRepository : ITentRepository!(DevSpace, DevSpaceId) {
 
     size_t countByOwner(TenantId tenantId, string owner);
     DevSpace[] findByOwner(TenantId tenantId, string owner);

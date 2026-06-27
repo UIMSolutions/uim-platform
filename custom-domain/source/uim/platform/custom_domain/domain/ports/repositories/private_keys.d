@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface PrivateKeyRepository : ITenantRepository!(PrivateKey, PrivateKeyId) {
+interface PrivateKeyRepository : ITentRepository!(PrivateKey, PrivateKeyId) {
 
     size_t countByStatus(TenantId tenantId, KeyStatus status);
     PrivateKey[] findByStatus(TenantId tenantId, KeyStatus status);

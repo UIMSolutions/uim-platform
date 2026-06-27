@@ -5,7 +5,7 @@ import uim.platform.databricks;
 
 @safe:
 
-interface WorkspaceRepository : TenantRepository!(Workspace, WorkspaceId) {
+interface WorkspaceRepository : TentRepository!(Workspace, WorkspaceId) {
   Workspace[] findByStatus(TenantId tenantId, WorkspaceStatus status);
   Workspace[] findByRegion(TenantId tenantId, string region);
   Workspace[] findByTier(TenantId tenantId, WorkspaceTier tier);

@@ -12,7 +12,7 @@ import uim.platform.data_attribute_recommendation;
 // mixin(ShowModule!());
 
 @safe:
-interface InferenceResultRepository : ITenantRepository!(InferenceResult, InferenceResultId) {
+interface InferenceResultRepository : ITentRepository!(InferenceResult, InferenceResultId) {
 
   size_t countByPredictions(TenantId tenantId, string predictions);
   InferenceResult[] findByPredictions(TenantId tenantId, string predictions);

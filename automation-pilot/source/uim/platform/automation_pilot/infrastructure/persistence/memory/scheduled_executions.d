@@ -11,7 +11,7 @@ import uim.platform.automation_pilot;
 
 @safe:
 
-class MemoryScheduledExecutionRepository : TenantRepository!(ScheduledExecution, ScheduledExecutionId), ScheduledExecutionRepository {
+class MemoryScheduledExecutionRepository : TentRepository!(ScheduledExecution, ScheduledExecutionId), ScheduledExecutionRepository {
 
     size_t countByCommand(TenantId tenantId, CommandId commandId) {
         return findByCommand(tenantId, commandId).length;

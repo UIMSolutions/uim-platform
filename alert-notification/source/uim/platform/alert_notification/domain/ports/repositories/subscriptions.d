@@ -11,7 +11,7 @@ import uim.platform.alert_notification;
 
 @safe:
 
-interface SubscriptionRepository : ITenantRepository!(Subscription, SubscriptionId) {
+interface SubscriptionRepository : ITentRepository!(Subscription, SubscriptionId) {
     Subscription findByName(TenantId tenantId, string name);
     Subscription[] findEnabled(TenantId tenantId);
 }

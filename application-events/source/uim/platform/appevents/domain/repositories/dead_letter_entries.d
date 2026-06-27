@@ -12,7 +12,7 @@ import uim.platform.appevents.domain.enums.dead_letter_status;
 
 @safe:
 
-interface DeadLetterEntryRepository : ITenantRepository!(DeadLetterEntry, DeadLetterEntryId) {
+interface DeadLetterEntryRepository : ITentRepository!(DeadLetterEntry, DeadLetterEntryId) {
     DeadLetterEntry[] findByChannel(TenantId tenantId, EventChannelId channelId);
     DeadLetterEntry[] findByStatus(TenantId tenantId, DeadLetterStatus status);
     DeadLetterEntry[] findByOriginalMessage(TenantId tenantId, EventMessageId messageId);

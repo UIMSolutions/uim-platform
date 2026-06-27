@@ -5,7 +5,7 @@ import uim.platform.data_retention;
 
 @safe:
 
-interface RetentionRuleRepository : ITenantRepository!(RetentionRule, RetentionRuleId) {
+interface RetentionRuleRepository : ITentRepository!(RetentionRule, RetentionRuleId) {
 
     RetentionRule[] findByBusinessPurpose(TenantId tenantId, BusinessPurposeId purposeId);
     RetentionRule[] findByLegalGround(TenantId tenantId, LegalGroundId groundId);

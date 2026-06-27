@@ -13,7 +13,7 @@ import uim.platform.foundry;
 
 @safe:
 /// Port for persisting and querying buildpacks.
-interface IBuildpackRepository : ITenantRepository!(Buildpack, BuildpackId) {
+interface IBuildpackRepository : ITentRepository!(Buildpack, BuildpackId) {
 
   bool existsByName(TenantId tenantId, string name);
   Buildpack findByName(TenantId tenantId, string name);

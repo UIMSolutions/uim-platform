@@ -11,7 +11,7 @@ import uim.platform.automation_pilot;
 
 @safe:
 
-class MemoryCatalogRepository : TenantRepository!(Catalog, CatalogId), CatalogRepository {
+class MemoryCatalogRepository : TentRepository!(Catalog, CatalogId), CatalogRepository {
 
     size_t countByStatus(TenantId tenantId, CatalogStatus status) {
         return findByStatus(tenantId, status).length;

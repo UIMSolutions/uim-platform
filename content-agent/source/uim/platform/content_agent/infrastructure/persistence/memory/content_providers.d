@@ -16,7 +16,7 @@ import uim.platform.content_agent;
 
 @safe:
 class MemoryContentProviderRepository :
-    TenantRepository!(ContentProvider, ContentProviderId),
+    TentRepository!(ContentProvider, ContentProviderId),
     ContentProviderRepository {
 
   // #region byName

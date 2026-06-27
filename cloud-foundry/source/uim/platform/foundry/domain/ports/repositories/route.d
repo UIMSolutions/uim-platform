@@ -13,7 +13,7 @@ import uim.platform.foundry;
 
 @safe:
 /// Port for persisting and querying routes.
-interface IRouteRepository : ITenantRepository!(Route, RouteId) {
+interface IRouteRepository : ITentRepository!(Route, RouteId) {
 
   bool existsByHostAndDomain(TenantId tenantId, string host, CfDomainId domainId);
   Route findByHostAndDomain(TenantId tenantId, string host, CfDomainId domainId);

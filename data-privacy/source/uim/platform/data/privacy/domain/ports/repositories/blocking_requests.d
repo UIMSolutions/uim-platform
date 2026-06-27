@@ -12,7 +12,7 @@ import uim.platform.data.privacy;
 
 @safe:
 /// Port for persisting data blocking / restriction requests.
-interface BlockingRequestRepository : ITenantRepository!(BlockingRequest, BlockingRequestId) {
+interface BlockingRequestRepository : ITentRepository!(BlockingRequest, BlockingRequestId) {
 
   size_t countByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
   BlockingRequest[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);

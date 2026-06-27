@@ -15,7 +15,7 @@ import uim.platform.content_agent;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryTransportRequestRepository : TenantRepository!(TransportRequest, TransportRequestId), TransportRequestRepository {
+class MemoryTransportRequestRepository : TentRepository!(TransportRequest, TransportRequestId), TransportRequestRepository {
 
   size_t countByStatus(TenantId tenantId, TransportStatus status) {
     return findByStatus(tenantId, status).length;

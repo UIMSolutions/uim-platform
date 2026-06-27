@@ -12,7 +12,7 @@ import uim.platform.data_attribute_recommendation;
 // mixin(ShowModule!());
 
 @safe:
-interface InferenceRequestRepository : ITenantRepository!(InferenceRequest, InferenceRequestId) {
+interface InferenceRequestRepository : ITentRepository!(InferenceRequest, InferenceRequestId) {
 
   size_t countByDeployment(TenantId tenantId, DeploymentId deploymentId);
   InferenceRequest[] findByDeployment(TenantId tenantId, DeploymentId deploymentId);

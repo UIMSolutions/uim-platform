@@ -13,7 +13,7 @@ import uim.platform.ai_launchpad;
 
 @safe:
 
-interface IConfigurationRepository : ITenantRepository!(Configuration, ConfigurationId) {
+interface IConfigurationRepository : ITentRepository!(Configuration, ConfigurationId) {
 
   bool existsById(TenantId tenantId, ConnectionId connectionId, ConfigurationId id);
   Configuration findById(TenantId tenantId, ConnectionId connectionId, ConfigurationId id);

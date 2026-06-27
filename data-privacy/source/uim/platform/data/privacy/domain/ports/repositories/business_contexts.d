@@ -12,7 +12,7 @@ import uim.platform.data.privacy;
 
 @safe:
 /// Port for persisting and querying business contexts.
-interface BusinessContextRepository : ITenantRepository!(BusinessContext, BusinessContextId) {
+interface BusinessContextRepository : ITentRepository!(BusinessContext, BusinessContextId) {
   
   size_t countByStatus(TenantId tenantId, BusinessContextStatus status);
   BusinessContext[] findByStatus(TenantId tenantId, BusinessContextStatus status);

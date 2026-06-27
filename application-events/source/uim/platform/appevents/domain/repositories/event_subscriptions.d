@@ -12,7 +12,7 @@ import uim.platform.appevents.domain.enums.subscription_status;
 
 @safe:
 
-interface EventSubscriptionRepository : ITenantRepository!(EventSubscription, EventSubscriptionId) {
+interface EventSubscriptionRepository : ITentRepository!(EventSubscription, EventSubscriptionId) {
     EventSubscription[] findByStatus(TenantId tenantId, SubscriptionStatus status);
     EventSubscription[] findByProducerSystem(TenantId tenantId, string producerSystemId);
     EventSubscription[] findByConsumerSystem(TenantId tenantId, string consumerSystemId);

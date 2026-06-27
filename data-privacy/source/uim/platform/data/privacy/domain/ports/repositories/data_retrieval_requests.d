@@ -12,7 +12,7 @@ import uim.platform.data.privacy;
 
 @safe:
 /// Port for persisting data subject access / retrieval requests.
-interface DataRetrievalRequestRepository : ITenantRepository!(DataRetrievalRequest, DataRetrievalRequestId) {
+interface DataRetrievalRequestRepository : ITentRepository!(DataRetrievalRequest, DataRetrievalRequestId) {
 
   size_t countByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
   DataRetrievalRequest[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);

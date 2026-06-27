@@ -16,7 +16,7 @@ import uim.platform.foundry;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryServiceBindingRepository : TenantRepository!(ServiceBinding, ServiceBindingId), IServiceBindingRepository {
+class MemoryServiceBindingRepository : TentRepository!(ServiceBinding, ServiceBindingId), IServiceBindingRepository {
 
   size_t countByApp(TenantId tenantId, AppId appId) {
     return findByApp(tenantId, appId).length;

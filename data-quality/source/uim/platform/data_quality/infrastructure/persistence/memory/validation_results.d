@@ -10,7 +10,7 @@ import uim.platform.data_quality;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryValidationResultRepository : TenantRepository!(ValidationResult, ValidationResultId), ValidationResultRepository {
+class MemoryValidationResultRepository : TentRepository!(ValidationResult, ValidationResultId), ValidationResultRepository {
 
   size_t countByDataset(TenantId tenantId, DatasetId datasetId) {
     return findByDataset(tenantId, datasetId).length;

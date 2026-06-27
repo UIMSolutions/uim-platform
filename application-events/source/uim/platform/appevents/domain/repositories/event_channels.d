@@ -12,7 +12,7 @@ import uim.platform.appevents.domain.enums.channel_status;
 
 @safe:
 
-interface EventChannelRepository : ITenantRepository!(EventChannel, EventChannelId) {
+interface EventChannelRepository : ITentRepository!(EventChannel, EventChannelId) {
     EventChannel[] findByTopic(TenantId tenantId, EventTopicId topicId);
     EventChannel[] findByStatus(TenantId tenantId, ChannelStatus status);
     bool nameExists(TenantId tenantId, string name);

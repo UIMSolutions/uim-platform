@@ -13,7 +13,7 @@ import uim.platform.data_attribute_recommendation;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryModelConfigRepository : TenantRepository!(ModelConfiguration, ModelConfigurationId), ModelConfigRepository {
+class MemoryModelConfigRepository : TentRepository!(ModelConfiguration, ModelConfigurationId), ModelConfigRepository {
   bool existsByName(TenantId tenantId, string name) {
     return findByTenant(tenantId).any!(e => e.name == name);
   }

@@ -5,7 +5,7 @@ import uim.platform.data_retention;
 
 @safe:
 
-class MemoryDataSubjectRoleRepository : TenantRepository!(DataSubjectRole, DataSubjectRoleId), DataSubjectRoleRepository {
+class MemoryDataSubjectRoleRepository : TentRepository!(DataSubjectRole, DataSubjectRoleId), DataSubjectRoleRepository {
 
     size_t countActive(TenantId tenantId) {
         return findActive(tenantId).length;

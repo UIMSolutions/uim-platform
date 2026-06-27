@@ -11,7 +11,7 @@ import uim.platform.automation_pilot;
 
 @safe:
 
-interface TriggerRepository : ITenantRepository!(Trigger, TriggerId) {
+interface TriggerRepository : ITentRepository!(Trigger, TriggerId) {
     
     size_t countByStatus(TenantId tenantId, TriggerStatus status);
     Trigger[] findByStatus(TenantId tenantId, TriggerStatus status);

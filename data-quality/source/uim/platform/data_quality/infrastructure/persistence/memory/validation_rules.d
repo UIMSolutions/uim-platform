@@ -14,7 +14,7 @@ import uim.platform.data_quality.domain.entities.validation_rule;
 
 @safe:
 
-class MemoryValidationRuleRepository : TenantRepository!(ValidationRule, ValidationRuleId), ValidationRuleRepository {
+class MemoryValidationRuleRepository : TentRepository!(ValidationRule, ValidationRuleId), ValidationRuleRepository {
 
   size_t countByDataset(TenantId tenantId, string datasetPattern) {
     return findByDataset(tenantId, datasetPattern).length;

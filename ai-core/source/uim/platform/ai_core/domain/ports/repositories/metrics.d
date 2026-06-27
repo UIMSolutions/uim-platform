@@ -11,7 +11,7 @@ import uim.platform.ai_core;
 // mixin(ShowModule!()); 
 
 @safe:
-interface MetricRepository : ITenantRepository!(Metric, MetricId) {
+interface MetricRepository : ITentRepository!(Metric, MetricId) {
 
   bool existsById(TenantId tenantId, ResourceGroupId rgId, MetricId id);
   Metric findById(TenantId tenantId, ResourceGroupId rgId, MetricId id);

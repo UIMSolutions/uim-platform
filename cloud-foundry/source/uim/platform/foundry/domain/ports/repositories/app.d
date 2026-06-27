@@ -13,7 +13,7 @@ import uim.platform.foundry;
 
 @safe:
 /// Port for persisting and querying applications.
-interface IAppRepository : ITenantRepository!(Application, AppId) {
+interface IAppRepository : ITentRepository!(Application, AppId) {
 
   bool existsByName(TenantId tenantId, SpaceId spaceId, string name);
   Application findByName(TenantId tenantId, SpaceId spaceId, string name);

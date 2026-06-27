@@ -5,7 +5,7 @@ import uim.platform.data_retention;
 
 @safe:
 
-interface LegalGroundRepository : ITenantRepository!(LegalGround, LegalGroundId) {
+interface LegalGroundRepository : ITentRepository!(LegalGround, LegalGroundId) {
 
     LegalGround[] findByBusinessPurpose(TenantId tenantId, BusinessPurposeId purposeId);
     LegalGround[] findByType(TenantId tenantId, LegalGroundType type);

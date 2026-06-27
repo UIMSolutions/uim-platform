@@ -11,7 +11,7 @@ import uim.platform.appevents.domain.valueobjects;
 
 @safe:
 
-interface EventFilterRepository : ITenantRepository!(EventFilter, EventFilterId) {
+interface EventFilterRepository : ITentRepository!(EventFilter, EventFilterId) {
     EventFilter[] findBySubscription(TenantId tenantId, EventSubscriptionId subscriptionId);
     EventFilter[] findActive(TenantId tenantId);
 }

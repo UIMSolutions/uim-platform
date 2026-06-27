@@ -12,7 +12,7 @@ import uim.platform.credential_store;
 // mixin(ShowModule!());
 
 @safe:
-interface KeyringVersionRepository : ITenantRepository!(KeyringVersion, KeyringVersionId) {
+interface KeyringVersionRepository : ITentRepository!(KeyringVersion, KeyringVersionId) {
   KeyringVersion findActiveVersion(TenantId tenantId, CredentialId keyringId);
   KeyringVersion findByVersion(TenantId tenantId, CredentialId keyringId, long versionNumber);
   KeyringVersion[] findByKeyring(TenantId tenantId, CredentialId keyringId);

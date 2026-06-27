@@ -12,7 +12,7 @@ import uim.platform.data.privacy;
 
 @safe:
 /// Port for persisting data retention rules.
-interface RetentionRuleRepository : ITenantRepository!(RetentionRule, RetentionRuleId) {
+interface RetentionRuleRepository : ITentRepository!(RetentionRule, RetentionRuleId) {
 
   bool existsDefault(TenantId tenantId);
   RetentionRule findDefault(TenantId tenantId);

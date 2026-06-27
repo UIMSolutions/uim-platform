@@ -11,7 +11,7 @@ import uim.platform.build_apps;
 
 @safe:
 
-class MemoryUIComponentRepository : TenantRepository!(UIComponent, UIComponentId), UIComponentRepository {
+class MemoryUIComponentRepository : TentRepository!(UIComponent, UIComponentId), UIComponentRepository {
 
     size_t countByCategory(ComponentCategory category) {
         return findByCategory(category).length;

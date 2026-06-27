@@ -16,7 +16,7 @@ import uim.platform.auditlog;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryExportJobRepository : TenantRepository!(ExportJob, ExportJobId), ExportJobRepository {
+class MemoryExportJobRepository : TentRepository!(ExportJob, ExportJobId), ExportJobRepository {
 
   size_t countByRequestedBy(TenantId tenantId, UserId requestedBy) {
     return findByRequestedBy(tenantId, requestedBy).length;

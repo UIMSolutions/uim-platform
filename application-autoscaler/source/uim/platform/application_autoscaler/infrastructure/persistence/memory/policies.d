@@ -11,7 +11,7 @@ import uim.platform.application_autoscaler;
 
 @safe:
 
-class MemoryScalingPolicyRepository : TenantRepository!(ScalingPolicyEntity, ScalingPolicyId), ScalingPolicyRepository {
+class MemoryScalingPolicyRepository : TentRepository!(ScalingPolicyEntity, ScalingPolicyId), ScalingPolicyRepository {
 
   bool existsByApp(TenantId tenantId, AppBindingId appId) {
     return findByApp(tenantId, appId).isNull ? false : true;

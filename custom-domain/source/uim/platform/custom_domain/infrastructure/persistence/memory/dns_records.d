@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryDnsRecordRepository : TenantRepository!(DnsRecord, DnsRecordId), DnsRecordRepository {
+class MemoryDnsRecordRepository : TentRepository!(DnsRecord, DnsRecordId), DnsRecordRepository {
 
     size_t countByDomain(TenantId tenantId, CustomDomainId domainId) {
         return findByDomain(tenantId, domainId).length;

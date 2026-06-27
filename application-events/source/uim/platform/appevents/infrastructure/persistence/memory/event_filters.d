@@ -15,7 +15,7 @@ import std.array : array;
 @safe:
 
 class MemoryEventFilterRepository
-    : TenantRepository!(EventFilter, EventFilterId)
+    : TentRepository!(EventFilter, EventFilterId)
     , EventFilterRepository
 {
     override EventFilter[] findBySubscription(TenantId tenantId, EventSubscriptionId subscriptionId) {

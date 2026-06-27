@@ -13,7 +13,7 @@ import uim.platform.ai_launchpad;
 
 @safe:
 
-interface IExecutionRepository : ITenantRepository!(Execution, ExecutionId) {
+interface IExecutionRepository : ITentRepository!(Execution, ExecutionId) {
 
   bool existsById(TenantId tenantId, ConnectionId connectionId, ExecutionId id );
   Execution findById(TenantId tenantId, ConnectionId connectionId, ExecutionId id);

@@ -11,7 +11,7 @@ import uim.platform.application_studio;
 
 @safe:
 
-class MemoryRunConfigurationRepository : TenantRepository!(RunConfiguration, RunConfigurationId), RunConfigurationRepository {
+class MemoryRunConfigurationRepository : TentRepository!(RunConfiguration, RunConfigurationId), RunConfigurationRepository {
 
     size_t countByProject(TenantId tenantId, ProjectId projectId) {
         return findByProject(tenantId, projectId).length;

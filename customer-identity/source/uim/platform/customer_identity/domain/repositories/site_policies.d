@@ -11,7 +11,7 @@ import uim.platform.customer_identity;
 
 @safe:
 
-interface SitePolicyRepository : ITenantRepository!(SitePolicy, SitePolicyId) {
+interface SitePolicyRepository : ITentRepository!(SitePolicy, SitePolicyId) {
     SitePolicy[] findByType(TenantId tenantId, PolicyType policyType);
     SitePolicy findActiveByType(TenantId tenantId, PolicyType policyType);
 }

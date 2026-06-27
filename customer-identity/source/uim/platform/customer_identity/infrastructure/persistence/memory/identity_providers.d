@@ -11,7 +11,7 @@ import uim.platform.customer_identity;
 
 @safe:
 
-class MemoryIdentityProviderRepository : TenantRepository!(IdentityProvider, IdentityProviderId), IdentityProviderRepository {
+class MemoryIdentityProviderRepository : TentRepository!(IdentityProvider, IdentityProviderId), IdentityProviderRepository {
 
     IdentityProvider[] findByType(TenantId tenantId, IdentityProviderType providerType) {
         return findByTenant(tenantId).filter!(ip => ip.providerType == providerType).array;

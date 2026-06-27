@@ -5,7 +5,7 @@ import uim.platform.data_retention;
 
 @safe:
 
-class MemoryLegalGroundRepository : TenantRepository!(LegalGround, LegalGroundId), LegalGroundRepository {
+class MemoryLegalGroundRepository : TentRepository!(LegalGround, LegalGroundId), LegalGroundRepository {
 
     LegalGround[] findAll(TenantId tenantId) {
         return findByTenant(tenantId);

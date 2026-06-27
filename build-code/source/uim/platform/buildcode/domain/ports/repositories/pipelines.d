@@ -11,7 +11,7 @@ import uim.platform.buildcode;
 
 @safe:
 
-interface PipelineRepository : ITenantRepository!(Pipeline, PipelineId) {
+interface PipelineRepository : ITentRepository!(Pipeline, PipelineId) {
   Pipeline[]  findByProject(TenantId tenantId, string projectId);
   Pipeline[]  findByStage(TenantId tenantId, PipelineStage stage);
   Pipeline[]  findActive(TenantId tenantId);

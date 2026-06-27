@@ -11,7 +11,7 @@ import uim.platform.application_autoscaler;
 
 @safe:
 
-class MemoryScalingHistoryRepository : TenantRepository!(ScalingHistory, ScalingHistoryId), ScalingHistoryRepository {
+class MemoryScalingHistoryRepository : TentRepository!(ScalingHistory, ScalingHistoryId), ScalingHistoryRepository {
 
   size_t countByApp(TenantId tenantId, AppBindingId appId) {
     return findByApp(tenantId, appId).length;

@@ -13,7 +13,7 @@ import uim.platform.ai_launchpad;
 
 @safe:
 
-interface IResourceGroupRepository : ITenantRepository!(ResourceGroup, ResourceGroupId) {
+interface IResourceGroupRepository : ITentRepository!(ResourceGroup, ResourceGroupId) {
 
   bool existsById(TenantId tenantId, ConnectionId connectionId, ResourceGroupId id);
   ResourceGroup findById(TenantId tenantId, ConnectionId connectionId, ResourceGroupId id);

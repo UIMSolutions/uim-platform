@@ -11,7 +11,7 @@ import uim.platform.customer_identity;
 
 @safe:
 
-class MemoryConsentRecordRepository : TenantRepository!(ConsentRecord, ConsentRecordId), ConsentRecordRepository {
+class MemoryConsentRecordRepository : TentRepository!(ConsentRecord, ConsentRecordId), ConsentRecordRepository {
 
     ConsentRecord[] findByCustomer(TenantId tenantId, CustomerId customerId) {
         return findByTenant(tenantId).filter!(cr => cr.customerId.value == customerId.value).array;

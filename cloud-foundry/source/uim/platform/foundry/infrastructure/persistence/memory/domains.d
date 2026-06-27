@@ -16,7 +16,7 @@ import uim.platform.foundry;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryDomainRepository : TenantRepository!(CfDomain, CfDomainId), IDomainRepository {
+class MemoryDomainRepository : TentRepository!(CfDomain, CfDomainId), IDomainRepository {
 
   // #region ByName
   bool existsByName(TenantId tenantId, string name) {

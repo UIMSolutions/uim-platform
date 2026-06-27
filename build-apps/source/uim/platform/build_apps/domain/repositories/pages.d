@@ -11,7 +11,7 @@ import uim.platform.build_apps;
 
 @safe:
 
-interface PageRepository : ITenantRepository!(Page, PageId) {
+interface PageRepository : ITentRepository!(Page, PageId) {
 
     size_t countByApplication(ApplicationId applicationId);
     Page[] findByApplication(ApplicationId applicationId);

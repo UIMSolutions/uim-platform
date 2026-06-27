@@ -11,7 +11,7 @@ import uim.platform.build_apps;
 
 @safe:
 
-class MemoryApplicationRepository : TenantRepository!(Application, ApplicationId), ApplicationRepository {
+class MemoryApplicationRepository : TentRepository!(Application, ApplicationId), ApplicationRepository {
 
     size_t countByOwner(string owner) {
         return findByOwner(owner).length;

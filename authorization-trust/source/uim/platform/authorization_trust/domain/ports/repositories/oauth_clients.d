@@ -11,7 +11,7 @@ import uim.platform.authorization_trust;
 
 @safe:
 
-interface OAuthClientRepository : ITenantRepository!(OAuthClient, OAuthClientId) {
+interface OAuthClientRepository : ITentRepository!(OAuthClient, OAuthClientId) {
 
   size_t countByApp(TenantId tenantId, string appId);
   OAuthClient[] findByApp(TenantId tenantId, string appId);

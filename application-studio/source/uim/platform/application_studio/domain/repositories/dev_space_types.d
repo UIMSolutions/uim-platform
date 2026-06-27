@@ -11,7 +11,7 @@ import uim.platform.application_studio;
 
 @safe:
 
-interface DevSpaceTypeRepository : ITenantRepository!(DevSpaceType, DevSpaceTypeId) {
+interface DevSpaceTypeRepository : ITentRepository!(DevSpaceType, DevSpaceTypeId) {
 
     size_t countByCategory(TenantId tenantId, DevSpaceTypeCategory category);
     DevSpaceType[] findByCategory(TenantId tenantId, DevSpaceTypeCategory category);

@@ -11,7 +11,7 @@ import uim.platform.application_autoscaler;
 
 @safe:
 
-class MemoryCustomMetricRepository : TenantRepository!(CustomMetricEntity, CustomMetricId), CustomMetricRepository {
+class MemoryCustomMetricRepository : TentRepository!(CustomMetricEntity, CustomMetricId), CustomMetricRepository {
 
   size_t countByApp(TenantId tenantId, AppBindingId appId) {
     return findByApp(tenantId, appId).length;

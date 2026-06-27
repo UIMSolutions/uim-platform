@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryTrustedCertificateRepository : TenantRepository!(TrustedCertificate, TrustedCertificateId), TrustedCertificateRepository {
+class MemoryTrustedCertificateRepository : TentRepository!(TrustedCertificate, TrustedCertificateId), TrustedCertificateRepository {
 
     size_t countByCustomDomain(TenantId tenantId, CustomDomainId domainId) {
         return findByCustomDomain(tenantId, domainId).length;

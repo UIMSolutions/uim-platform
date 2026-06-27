@@ -5,7 +5,7 @@ import uim.platform.data_retention;
 
 @safe:
 
-interface DeletionRequestRepository : ITenantRepository!(DeletionRequest, DeletionRequestId) {
+interface DeletionRequestRepository : ITentRepository!(DeletionRequest, DeletionRequestId) {
 
     DeletionRequest[] findByDataSubject(TenantId tenantId, DataSubjectId subjectId);
     DeletionRequest[] findByStatus(TenantId tenantId, DeletionRequestStatus status);

@@ -16,7 +16,7 @@ import uim.platform.foundry;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryOrgRepository : TenantRepository!(Organization, OrgId), IOrgRepository {
+class MemoryOrgRepository : TentRepository!(Organization, OrgId), IOrgRepository {
   
   bool existsByName(TenantId tenantId, string name) {
     return !findByName(tenantId, name).isNull;

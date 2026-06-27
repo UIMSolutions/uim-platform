@@ -12,7 +12,7 @@ import uim.platform.data.privacy;
 
 @safe:
 /// Port for persisting data deletion requests.
-interface DeletionRequestRepository : ITenantRepository!(DeletionRequest, DeletionRequestId) {
+interface DeletionRequestRepository : ITentRepository!(DeletionRequest, DeletionRequestId) {
 
   size_t countByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
   DeletionRequest[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);

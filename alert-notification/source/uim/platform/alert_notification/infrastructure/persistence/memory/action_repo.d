@@ -12,7 +12,7 @@ import uim.platform.alert_notification;
 @safe:
 
 class MemoryActionRepository
-    : TenantRepository!(Action, ActionId),
+    : TentRepository!(Action, ActionId),
       ActionRepository
 {
     Action findByName(TenantId tenantId, string name) {

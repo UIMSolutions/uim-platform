@@ -11,7 +11,7 @@ import uim.platform.automation_pilot;
 
 @safe:
 
-class MemoryContentConnectorRepository : TenantRepository!(ContentConnector, ContentConnectorId), ContentConnectorRepository {
+class MemoryContentConnectorRepository : TentRepository!(ContentConnector, ContentConnectorId), ContentConnectorRepository {
 
     size_t countByType(TenantId tenantId, ConnectorType connectorType) {
         return findByType(tenantId, connectorType).length;

@@ -12,7 +12,7 @@ import uim.platform.data.privacy;
 
 @safe:
 /// Port for persisting and querying anonymization configurations.
-interface AnonymizationConfigRepository : ITenantRepository!(AnonymizationConfig, AnonymizationConfigId) {
+interface AnonymizationConfigRepository : ITentRepository!(AnonymizationConfig, AnonymizationConfigId) {
   // size_t countByController(TenantId tenantId, DataControllerId controllerId);
   // AnonymizationConfig[] findByController(TenantId tenantId, DataControllerId controllerId);
   // void removeByController(TenantId tenantId, DataControllerId controllerId);

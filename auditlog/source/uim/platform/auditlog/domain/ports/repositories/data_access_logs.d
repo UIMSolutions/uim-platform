@@ -12,7 +12,7 @@ import uim.platform.auditlog;
 // mixin(ShowModule!());
 /// Port for persisting data access log records.
 @safe:
-interface DataAccessLogRepository : ITenantRepository!(DataAccessLog, DataAccessLogId) {
+interface DataAccessLogRepository : ITentRepository!(DataAccessLog, DataAccessLogId) {
 
   bool existsByAuditLogId(TenantId tenantId, AuditLogId auditLogId);
   DataAccessLog findByAuditLogId(TenantId tenantId, AuditLogId auditLogId);

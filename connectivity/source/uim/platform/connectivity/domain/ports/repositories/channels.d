@@ -12,7 +12,7 @@ import uim.platform.connectivity;
 
 @safe:
 /// Port: outgoing - service channel persistence.
-interface ChannelRepository : ITenantRepository!(ServiceChannel, ChannelId) {
+interface ChannelRepository : ITentRepository!(ServiceChannel, ChannelId) {
   ServiceChannel[] findByConnector(TenantId tenantId, ConnectorId connectorId);
   ServiceChannel[] findByStatus(TenantId tenantId, ChannelStatus status);
 }

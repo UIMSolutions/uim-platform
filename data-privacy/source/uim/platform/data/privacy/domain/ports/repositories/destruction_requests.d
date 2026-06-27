@@ -12,7 +12,7 @@ import uim.platform.data.privacy;
 
 @safe:
 /// Port for persisting and querying destruction requests.
-interface DestructionRequestRepository : ITenantRepository!(DestructionRequest, DestructionRequestId) {
+interface DestructionRequestRepository : ITentRepository!(DestructionRequest, DestructionRequestId) {
 
   size_t countByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
   DestructionRequest[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);

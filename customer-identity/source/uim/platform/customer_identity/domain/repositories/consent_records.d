@@ -11,7 +11,7 @@ import uim.platform.customer_identity;
 
 @safe:
 
-interface ConsentRecordRepository : ITenantRepository!(ConsentRecord, ConsentRecordId) {
+interface ConsentRecordRepository : ITentRepository!(ConsentRecord, ConsentRecordId) {
     ConsentRecord[] findByCustomer(TenantId tenantId, CustomerId customerId);
     ConsentRecord[] findByType(TenantId tenantId, ConsentType consentType);
     ConsentRecord[] findGrantedByCustomer(TenantId tenantId, CustomerId customerId);

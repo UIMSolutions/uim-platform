@@ -15,7 +15,7 @@ import uim.platform.content_agent;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryExportJobRepository : TenantRepository!(ExportJob, ExportJobId), ExportJobRepository {
+class MemoryExportJobRepository : TentRepository!(ExportJob, ExportJobId), ExportJobRepository {
 
   size_t countByPackage(TenantId tenantId, ContentPackageId packageId) {
     return findByPackage(tenantId, packageId).length;

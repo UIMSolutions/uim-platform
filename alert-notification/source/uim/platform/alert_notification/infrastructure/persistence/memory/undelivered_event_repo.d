@@ -12,7 +12,7 @@ import uim.platform.alert_notification;
 @safe:
 
 class MemoryUndeliveredEventRepository
-    : TenantRepository!(UndeliveredEvent, UndeliveredEventId),
+    : TentRepository!(UndeliveredEvent, UndeliveredEventId),
       UndeliveredEventRepository
 {
     UndeliveredEvent[] findBySubscription(TenantId tenantId, string subscriptionName) {

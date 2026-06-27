@@ -11,7 +11,7 @@ import uim.platform.authorization_trust;
 
 @safe:
 
-class MemoryIdentityProviderRepository : TenantRepository!(IdentityProvider, IdentityProviderId), IdentityProviderRepository {
+class MemoryIdentityProviderRepository : TentRepository!(IdentityProvider, IdentityProviderId), IdentityProviderRepository {
 
   bool existsByAlias(TenantId tenantId, string alias_) {
     return findByTenant(tenantId).any!(idp => idp.alias_ == alias_);

@@ -13,7 +13,7 @@ import uim.platform.connectivity;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryCertificateRepository : TenantRepository!(Certificate, CertificateId), CertificateRepository {
+class MemoryCertificateRepository : TentRepository!(Certificate, CertificateId), CertificateRepository {
 
   bool existsByName(TenantId tenantId, string name) {
     return findByTenant(tenantId).any!(e => e.name == name);

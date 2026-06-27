@@ -12,7 +12,7 @@ import uim.platform.data.privacy;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryConsentPurposeRepository : TenantRepository!(ConsentPurpose, ConsentPurposeId), ConsentPurposeRepository {
+class MemoryConsentPurposeRepository : TentRepository!(ConsentPurpose, ConsentPurposeId), ConsentPurposeRepository {
 
   // #region ByController
   size_t countByController(TenantId tenantId, DataControllerId controllerId) {

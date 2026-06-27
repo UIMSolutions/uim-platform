@@ -5,7 +5,7 @@ import uim.platform.data_retention;
 
 @safe:
 
-interface ArchivingJobRepository : ITenantRepository!(ArchivingJob, ArchivingJobId) {
+interface ArchivingJobRepository : ITentRepository!(ArchivingJob, ArchivingJobId) {
     
     ArchivingJob[] findByApplicationGroup(TenantId tenantId, ApplicationGroupId groupId);
     ArchivingJob[] findByStatus(TenantId tenantId, ArchivingJobStatus status);

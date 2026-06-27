@@ -12,7 +12,7 @@ import uim.platform.connectivity;
 
 @safe:
 /// Port: outgoing - certificate store persistence.
-interface CertificateRepository : ITenantRepository!(Certificate, CertificateId) {
+interface CertificateRepository : ITentRepository!(Certificate, CertificateId) {
 
   bool existsByName(TenantId tenantId, string name);
   Certificate findByName(TenantId tenantId, string name);

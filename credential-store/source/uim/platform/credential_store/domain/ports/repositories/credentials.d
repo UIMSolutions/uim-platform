@@ -12,7 +12,7 @@ import uim.platform.credential_store;
 // mixin(ShowModule!());
 
 @safe:
-interface CredentialRepository : ITenantRepository!(Credential, CredentialId) {
+interface CredentialRepository : ITentRepository!(Credential, CredentialId) {
 
   bool existsByName(TenantId tenantId, NamespaceId namespaceId, string name, CredentialType type);
   Credential findByName(TenantId tenantId, NamespaceId namespaceId, string name, CredentialType type);

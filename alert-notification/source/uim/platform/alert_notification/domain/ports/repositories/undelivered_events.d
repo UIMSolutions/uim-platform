@@ -11,6 +11,6 @@ import uim.platform.alert_notification;
 
 @safe:
 
-interface UndeliveredEventRepository : ITenantRepository!(UndeliveredEvent, UndeliveredEventId) {
+interface UndeliveredEventRepository : ITentRepository!(UndeliveredEvent, UndeliveredEventId) {
     UndeliveredEvent[] findBySubscription(TenantId tenantId, string subscriptionName);
 }

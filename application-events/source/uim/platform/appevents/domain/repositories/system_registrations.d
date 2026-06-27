@@ -13,7 +13,7 @@ import uim.platform.appevents.domain.enums.system_status;
 
 @safe:
 
-interface SystemRegistrationRepository : ITenantRepository!(SystemRegistration, SystemRegistrationId) {
+interface SystemRegistrationRepository : ITentRepository!(SystemRegistration, SystemRegistrationId) {
     SystemRegistration[] findByFormation(TenantId tenantId, FormationId formationId);
     SystemRegistration[] findBySystemType(TenantId tenantId, SystemType systemType);
     SystemRegistration[] findByStatus(TenantId tenantId, SystemStatus status);

@@ -12,7 +12,7 @@ import uim.platform.data.privacy;
 
 @safe:
 /// Port for persisting and querying purpose records.
-interface PurposeRecordRepository : ITenantRepository!(PurposeRecord, PurposeRecordId) {
+interface PurposeRecordRepository : ITentRepository!(PurposeRecord, PurposeRecordId) {
 
   size_t countByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
   PurposeRecord[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);

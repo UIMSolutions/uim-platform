@@ -13,7 +13,7 @@ import uim.platform.ai_launchpad;
 
 @safe:
 
-interface IScenarioRepository : ITenantRepository!(Scenario, ScenarioId) {
+interface IScenarioRepository : ITentRepository!(Scenario, ScenarioId) {
 
   bool existsById(TenantId tenantId, ConnectionId connectionId, ScenarioId id);
   Scenario findById(TenantId tenantId, ConnectionId connectionId, ScenarioId id);

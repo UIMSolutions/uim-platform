@@ -12,7 +12,7 @@ import uim.platform.data_quality;
 
 @safe:
 /// Port for persisting data profiling results.
-interface DataProfileRepository : ITenantRepository!(DataProfile, DataProfileId) {
+interface DataProfileRepository : ITentRepository!(DataProfile, DataProfileId) {
   DataProfile findLatestByDataset(TenantId tenantId, DatasetId datasetId);
 
   size_t countByDataset(TenantId tenantId, DatasetId datasetId);

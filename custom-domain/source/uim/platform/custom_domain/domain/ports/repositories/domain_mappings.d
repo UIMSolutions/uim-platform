@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface DomainMappingRepository : ITenantRepository!(DomainMapping, DomainMappingId) {
+interface DomainMappingRepository : ITentRepository!(DomainMapping, DomainMappingId) {
 
     bool existsByCustomRoute(TenantId tenantId, string customRoute);
     DomainMapping findByCustomRoute(TenantId tenantId, string customRoute);

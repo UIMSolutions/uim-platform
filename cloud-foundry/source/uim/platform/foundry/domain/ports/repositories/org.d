@@ -13,7 +13,7 @@ import uim.platform.foundry;
 
 @safe:
 /// Port for persisting and querying organizations.
-interface IOrgRepository : ITenantRepository!(Organization, OrgId) {
+interface IOrgRepository : ITentRepository!(Organization, OrgId) {
 
   bool existsByName(TenantId tenantId, string name);
   Organization findByName(TenantId tenantId, string name);

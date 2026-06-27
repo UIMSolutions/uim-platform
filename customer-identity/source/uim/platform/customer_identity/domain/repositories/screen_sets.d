@@ -11,7 +11,7 @@ import uim.platform.customer_identity;
 
 @safe:
 
-interface ScreenSetRepository : ITenantRepository!(ScreenSet, ScreenSetId) {
+interface ScreenSetRepository : ITentRepository!(ScreenSet, ScreenSetId) {
     ScreenSet[] findByFlowType(TenantId tenantId, ScreenSetFlowType flowType);
     ScreenSet[] findActive(TenantId tenantId);
     ScreenSet findByNameAndLocale(TenantId tenantId, string name, string locale);

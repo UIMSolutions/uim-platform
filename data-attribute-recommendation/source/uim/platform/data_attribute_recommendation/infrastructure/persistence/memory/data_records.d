@@ -13,7 +13,7 @@ import uim.platform.data_attribute_recommendation;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryDataRecordRepository : TenantRepository!(DataRecord, DataRecordId), DataRecordRepository {
+class MemoryDataRecordRepository : TentRepository!(DataRecord, DataRecordId), DataRecordRepository {
 
   size_t countByDataset(TenantId tenantId, DatasetId datasetId) {
     return findByDataset(tenantId, datasetId).length;

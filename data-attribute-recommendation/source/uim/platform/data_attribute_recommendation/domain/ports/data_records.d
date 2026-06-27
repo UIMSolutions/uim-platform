@@ -12,7 +12,7 @@ import uim.platform.data_attribute_recommendation;
 // mixin(ShowModule!());
 
 @safe:
-interface DataRecordRepository : ITenantRepository!(DataRecord, DataRecordId) {
+interface DataRecordRepository : ITentRepository!(DataRecord, DataRecordId) {
 
   size_t countByDataset(TenantId tenantId, DatasetId datasetId);
   DataRecord[] findByDataset(TenantId tenantId, DatasetId datasetId);

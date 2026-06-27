@@ -12,7 +12,7 @@ import uim.platform.data.privacy;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryDataControllerGroupRepository : TenantRepository!(DataControllerGroup, DataControllerGroupId), DataControllerGroupRepository {
+class MemoryDataControllerGroupRepository : TentRepository!(DataControllerGroup, DataControllerGroupId), DataControllerGroupRepository {
 
   size_t countByName(TenantId tenantId, string name) {
     return findByName(tenantId, name).length;

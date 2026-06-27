@@ -10,7 +10,7 @@ import uim.platform.data_quality;
 
 @safe:
 /// Port for persisting validation rules.
-interface ValidationRuleRepository : ITenantRepository!(ValidationRule, ValidationRule) {
+interface ValidationRuleRepository : ITentRepository!(ValidationRule, ValidationRule) {
   
   size_t countByDataset(TenantId tenantId, string datasetPattern);
   ValidationRule[] findByDataset(TenantId tenantId, string datasetPattern);

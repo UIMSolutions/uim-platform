@@ -11,7 +11,7 @@ import uim.platform.automation_pilot;
 
 @safe:
 
-interface CatalogRepository : ITenantRepository!(Catalog, CatalogId) {
+interface CatalogRepository : ITentRepository!(Catalog, CatalogId) {
 
     size_t countByStatus(TenantId tenantId, CatalogStatus status);
     Catalog[] findByStatus(TenantId tenantId, CatalogStatus status);

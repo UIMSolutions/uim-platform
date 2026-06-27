@@ -12,7 +12,7 @@ import uim.platform.data_attribute_recommendation;
 // mixin(ShowModule!());
 
 @safe:
-interface TrainingJobRepository : ITenantRepository!(TrainingJob, TrainingJobId) {
+interface TrainingJobRepository : ITentRepository!(TrainingJob, TrainingJobId) {
 
   size_t countByModelConfig(TenantId tenantId, ModelConfigurationId configId);
   TrainingJob[] findByModelConfig(TenantId tenantId, ModelConfigurationId configId);
