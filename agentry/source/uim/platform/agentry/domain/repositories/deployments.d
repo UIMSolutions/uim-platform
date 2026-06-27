@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface DeploymentRepository : ITenantRepository!(Deployment, DeploymentId) {
+interface DeploymentRepository : ITentRepository!(Deployment, DeploymentId) {
     Deployment[] findByMobileApplication(TenantId tenantId, MobileApplicationId appId);
     Deployment[] findByStatus(TenantId tenantId, DeploymentStatus status);
     Deployment[] findByAppVersion(TenantId tenantId, AppVersionId versionId);

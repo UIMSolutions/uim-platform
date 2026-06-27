@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryBackendConnectionRepository : TenantRepository!(BackendConnection, BackendConnectionId), BackendConnectionRepository {
+class MemoryBackendConnectionRepository : TentRepository!(BackendConnection, BackendConnectionId), BackendConnectionRepository {
 
     // #region ByBackendType 
     size_t countByBackendType(TenantId tenantId, BackendType backendType) {

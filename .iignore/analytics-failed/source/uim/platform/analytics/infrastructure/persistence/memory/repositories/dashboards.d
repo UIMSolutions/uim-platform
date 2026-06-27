@@ -13,7 +13,7 @@ import uim.platform.analytics;
 // mixin(ShowModule!());
 @safe:
 /// In-memory adapter implementing DashboardRepository port.
-class MemoryDashboardRepository : TenantRepository!(Dashboard, DashboardId), DashboardRepository {
+class MemoryDashboardRepository : TentRepository!(Dashboard, DashboardId), DashboardRepository {
 
   size_t countByOwner(TenantId tenantId, EntityId ownerId) {
     return findByOwner(tenantId, ownerId).length;

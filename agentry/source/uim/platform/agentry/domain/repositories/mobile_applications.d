@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface MobileApplicationRepository : ITenantRepository!(MobileApplication, MobileApplicationId) {
+interface MobileApplicationRepository : ITentRepository!(MobileApplication, MobileApplicationId) {
     size_t countByStatus(TenantId tenantId, AppStatus status);
     MobileApplication[] findByStatus(TenantId tenantId, AppStatus status);
     void removeByStatus(TenantId tenantId, AppStatus status);

@@ -12,7 +12,7 @@ import uim.platform.abap_environment;
 
 @safe:
 /// Port: outgoing - system instance persistence.
-interface SystemInstanceRepository : ITenantRepository!(SystemInstance, SystemInstanceId) {
+interface SystemInstanceRepository : ITentRepository!(SystemInstance, SystemInstanceId) {
   
   bool existsByName(TenantId tenantId, string name);
   SystemInstance findByName(TenantId tenantId, string name);

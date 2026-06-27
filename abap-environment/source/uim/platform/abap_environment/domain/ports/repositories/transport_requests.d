@@ -12,7 +12,7 @@ import uim.platform.abap_environment;
 
 @safe:
 /// Port: outgoing - transport request persistence.
-interface TransportRequestRepository : ITenantRepository!(TransportRequest, TransportRequestId) {
+interface TransportRequestRepository : ITentRepository!(TransportRequest, TransportRequestId) {
 
   size_t countBySystem(TenantId tenantId, SystemInstanceId systemId);
   TransportRequest[] findBySystem(TenantId tenantId, SystemInstanceId systemId);

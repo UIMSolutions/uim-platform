@@ -11,7 +11,7 @@ import uim.platform.analytics;
 // mixin(ShowModule!());
 @safe:
 /// Port: outgoing repository interface for Dashboard persistence.
-interface DashboardRepository : ITenantRepository!(Dashboard, DashboardId) {
+interface DashboardRepository : ITentRepository!(Dashboard, DashboardId) {
 
   size_t countByOwner(TenantId tenantId, EntityId ownerId);
   Dashboard[] findByOwner(TenantId tenantId, EntityId ownerId);

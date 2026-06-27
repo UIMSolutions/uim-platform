@@ -11,7 +11,7 @@ import uim.platform.abap_compiler;
 @safe:
 
 /// Primary port: repository contract for compilation jobs.
-interface CompilationJobRepository : ITenantRepository!(CompilationJob, CompilationJobId) {
+interface CompilationJobRepository : ITentRepository!(CompilationJob, CompilationJobId) {
  
     size_t countByProgram(TenantId tenantId, AbapProgramId pid);  
     CompilationJob[] findByProgram(TenantId tenantId, AbapProgramId pid);

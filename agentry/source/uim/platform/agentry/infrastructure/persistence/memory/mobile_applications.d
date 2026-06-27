@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class MemoryMobileApplicationRepository
-    : TenantRepository!(MobileApplication, MobileApplicationId), MobileApplicationRepository {
+    : TentRepository!(MobileApplication, MobileApplicationId), MobileApplicationRepository {
 
     size_t countByStatus(TenantId tenantId, AppStatus status) {
         return findByStatus(tenantId, status).length;

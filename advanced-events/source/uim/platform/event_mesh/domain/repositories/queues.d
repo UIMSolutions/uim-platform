@@ -11,7 +11,7 @@ import uim.platform.event_mesh;
 
 @safe:
 
-interface QueueRepository : ITenantRepository!(Queue, QueueId) {
+interface QueueRepository : ITentRepository!(Queue, QueueId) {
 
     size_t countByBrokerService(TenantId tenantId, BrokerServiceId brokerServiceId);
     Queue[] findByBrokerService(TenantId tenantId, BrokerServiceId brokerServiceId);

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface BackendConnectionRepository : ITenantRepository!(BackendConnection, BackendConnectionId) {
+interface BackendConnectionRepository : ITentRepository!(BackendConnection, BackendConnectionId) {
     BackendConnection[] findByBackendType(TenantId tenantId, BackendType backendType);
     BackendConnection[] findByStatus(TenantId tenantId, ConnectionStatus status);
     size_t countByStatus(TenantId tenantId, ConnectionStatus status);

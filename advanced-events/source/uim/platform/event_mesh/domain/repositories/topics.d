@@ -11,7 +11,7 @@ import uim.platform.event_mesh;
 
 @safe:
 
-interface TopicRepository : ITenantRepository!(Topic, TopicId) {
+interface TopicRepository : ITentRepository!(Topic, TopicId) {
 
     size_t countByBrokerService(TenantId tenantId, BrokerServiceId brokerServiceId);
     Topic[] findByBrokerService(TenantId tenantId, BrokerServiceId brokerServiceId);

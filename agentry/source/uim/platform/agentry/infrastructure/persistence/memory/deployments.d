@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class MemoryDeploymentRepository
-    : TenantRepository!(Deployment, DeploymentId), DeploymentRepository {
+    : TentRepository!(Deployment, DeploymentId), DeploymentRepository {
 
     size_t countByMobileApplication(TenantId tenantId, MobileApplicationId appId) {
         return findByMobileApplication(tenantId, appId).length;

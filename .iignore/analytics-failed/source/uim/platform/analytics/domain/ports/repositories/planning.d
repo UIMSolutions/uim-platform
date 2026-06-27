@@ -11,7 +11,7 @@ import uim.platform.analytics;
 // mixin(ShowModule!());
 @safe:
 
-interface PlanningRepository : ITenantRepository!(PlanningModel, PlanningModelId) {
+interface PlanningRepository : ITentRepository!(PlanningModel, PlanningModelId) {
 
   size_t countByDataset(TenantId tenantId, DatasetId datasetId);
   PlanningModel[] findByDataset(TenantId tenantId, DatasetId datasetId);

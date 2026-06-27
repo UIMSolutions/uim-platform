@@ -12,7 +12,7 @@ import uim.platform.abap_environment;
 
 @safe:
 /// Port: outgoing - software component persistence.
-interface SoftwareComponentRepository : ITenantRepository!(SoftwareComponent, SoftwareComponentId) {
+interface SoftwareComponentRepository : ITentRepository!(SoftwareComponent, SoftwareComponentId) {
 
   bool existsByName(TenantId tenantId, SystemInstanceId systemId, string name);
   SoftwareComponent findByName(TenantId tenantId, SystemInstanceId systemId, string name);

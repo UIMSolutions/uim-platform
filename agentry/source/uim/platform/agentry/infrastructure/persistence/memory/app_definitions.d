@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class MemoryAppDefinitionRepository
-    : TenantRepository!(AppDefinition, AppDefinitionId), AppDefinitionRepository {
+    : TentRepository!(AppDefinition, AppDefinitionId), AppDefinitionRepository {
 
     size_t countByStatus(TenantId tenantId, DefinitionStatus status) {
         return findByStatus(tenantId, status).length;

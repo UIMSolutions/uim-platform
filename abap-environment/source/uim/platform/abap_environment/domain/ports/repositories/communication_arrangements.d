@@ -12,7 +12,7 @@ import uim.platform.abap_environment;
 
 @safe:
 /// Port: outgoing - communication arrangement persistence.
-interface CommunicationArrangementRepository : ITenantRepository!(CommunicationArrangement, CommunicationArrangementId) {
+interface CommunicationArrangementRepository : ITentRepository!(CommunicationArrangement, CommunicationArrangementId) {
 
   size_t countBySystem(TenantId tenantId, SystemInstanceId systemId);
   CommunicationArrangement[] findBySystem(TenantId tenantId, SystemInstanceId systemId);

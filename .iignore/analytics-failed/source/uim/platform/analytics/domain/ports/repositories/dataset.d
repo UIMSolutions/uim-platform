@@ -11,7 +11,7 @@ import uim.platform.analytics;
 // mixin(ShowModule!());
 @safe:
 
-interface DatasetRepository : ITenantRepository!(Dataset, DatasetId) {
+interface DatasetRepository : ITentRepository!(Dataset, DatasetId) {
   
   size_t countByDataSource(TenantId tenantId, DataSourceId dataSourceId);
   Dataset[] findByDataSource(TenantId tenantId, DataSourceId dataSourceId);

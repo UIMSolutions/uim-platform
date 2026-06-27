@@ -10,7 +10,7 @@ import uim.platform.analytics;
 
 // mixin(ShowModule!());
 @safe:
-class MemoryPlanningRepository : TenantRepository!(PlanningModel, PlanningModelId), PlanningRepository {
+class MemoryPlanningRepository : TentRepository!(PlanningModel, PlanningModelId), PlanningRepository {
  
   // #region ByDataset
   size_t countByDataset(TenantId tenantId, DatasetId datasetId) {

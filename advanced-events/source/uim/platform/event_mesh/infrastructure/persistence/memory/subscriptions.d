@@ -11,7 +11,7 @@ import uim.platform.event_mesh;
 
 @safe:
 
-class MemorySubscriptionRepository : TenantRepository!(EventSubscription, EventSubscriptionId), SubscriptionRepository {
+class MemorySubscriptionRepository : TentRepository!(EventSubscription, EventSubscriptionId), SubscriptionRepository {
 
     // #region ByBrokerService
     size_t countByBrokerService(TenantId tenantId, BrokerServiceId brokerServiceId) {

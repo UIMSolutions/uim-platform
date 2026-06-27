@@ -11,7 +11,7 @@ import uim.platform.event_mesh;
 
 @safe:
 
-class MemoryMeshBridgeRepository : TenantRepository!(MeshBridge, MeshBridgeId), MeshBridgeRepository {
+class MemoryMeshBridgeRepository : TentRepository!(MeshBridge, MeshBridgeId), MeshBridgeRepository {
 
     size_t countBySourceBrokerService(TenantId tenantId, BrokerServiceId sourceServiceId) {
         return findBySourceBrokerService(tenantId, sourceServiceId).length;

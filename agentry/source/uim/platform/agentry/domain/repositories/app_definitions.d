@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface AppDefinitionRepository : ITenantRepository!(AppDefinition, AppDefinitionId) {
+interface AppDefinitionRepository : ITentRepository!(AppDefinition, AppDefinitionId) {
     AppDefinition[] findByMobileApplication(TenantId tenantId, MobileApplicationId appId);
     AppDefinition[] findByStatus(TenantId tenantId, DefinitionStatus status);
     void removeByMobileApplication(TenantId tenantId, MobileApplicationId appId);

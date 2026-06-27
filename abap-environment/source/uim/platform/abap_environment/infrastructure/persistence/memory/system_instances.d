@@ -11,7 +11,7 @@ import uim.platform.abap_environment;
 
 // // mixin(ShowModule!());
 @safe:
-class MemorySystemInstanceRepository : TenantRepository!(SystemInstance, SystemInstanceId), SystemInstanceRepository {
+class MemorySystemInstanceRepository : TentRepository!(SystemInstance, SystemInstanceId), SystemInstanceRepository {
 
   bool existsByName(TenantId tenantId, string name) {
     return findByTenant(tenantId).any!(e => e.tenantId == tenantId && e.name == name);

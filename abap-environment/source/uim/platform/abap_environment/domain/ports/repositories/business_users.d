@@ -12,7 +12,7 @@ import uim.platform.abap_environment;
 
 @safe:
 /// Port: outgoing - business user persistence.
-interface BusinessUserRepository : ITenantRepository!(BusinessUser, BusinessUserId) {
+interface BusinessUserRepository : ITentRepository!(BusinessUser, BusinessUserId) {
 
   bool existsByUsername(TenantId tenantId, SystemInstanceId systemId, string username);
   BusinessUser findByUsername(TenantId tenantId, SystemInstanceId systemId, string username);

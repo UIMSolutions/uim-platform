@@ -11,7 +11,7 @@ import uim.platform.event_mesh;
 
 @safe:
 
-interface EventMessageRepository : ITenantRepository!(EventMessage, EventMessageId) {
+interface EventMessageRepository : ITentRepository!(EventMessage, EventMessageId) {
 
     size_t countByBrokerService(TenantId tenantId, BrokerServiceId brokerServiceId);
     EventMessage[] findByBrokerService(TenantId tenantId, BrokerServiceId brokerServiceId);

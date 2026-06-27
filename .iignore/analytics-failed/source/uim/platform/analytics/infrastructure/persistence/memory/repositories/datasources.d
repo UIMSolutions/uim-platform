@@ -10,7 +10,7 @@ import uim.platform.analytics;
 
 // mixin(ShowModule!());
 @safe:
-class MemoryDataSourceRepository : TenantRepository!(DataSource, DataSourceId), DataSourceRepository {
+class MemoryDataSourceRepository : TentRepository!(DataSource, DataSourceId), DataSourceRepository {
 
   size_t countBySourceType(TenantId tenantId, DataSourceType sourceType) {
     return findBySourceType(tenantId, sourceType).length;
