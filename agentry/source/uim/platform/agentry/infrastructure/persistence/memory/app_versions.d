@@ -12,6 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class MemoryAppVersionRepository : TenantRepository!(AppVersion, AppVersionId), AppVersionRepository {
+    mixin TenantRepositoryTemplate!(MemoryAppVersionRepository, AppVersion, AppVersionId);
 
     size_t countByMobileApplication(TenantId tenantId, MobileApplicationId appId) {
         return findByMobileApplication(tenantId, appId).length;
@@ -22,7 +23,7 @@ class MemoryAppVersionRepository : TenantRepository!(AppVersion, AppVersionId), 
     }
 
     AppVersion[] findByMobileApplication(TenantId tenantId, MobileApplicationId appId) {
-        return filterByMobileApplication(findByTenant(tenantId), appId);
+        return filterByMobileApplication(find(tenantId), appId);
     }
 
     void removeByMobileApplication(TenantId tenantId, MobileApplicationId appId) {
@@ -38,7 +39,7 @@ class MemoryAppVersionRepository : TenantRepository!(AppVersion, AppVersionId), 
     }
 
     AppVersion[] findByStatus(TenantId tenantId, AppVersionStatus status) {
-        return filterByStatus(findByTenant(tenantId), status);
+        return filterByStatus(find(tenantId), status);
     }
 
     void removeByStatus(TenantId tenantId, AppVersionStatus status) {
@@ -54,7 +55,7 @@ class MemoryAppVersionRepository : TenantRepository!(AppVersion, AppVersionId), 
     }
 
     AppVersion[] findByDefinition(TenantId tenantId, AppDefinitionId definitionId) {
-        return filterByDefinition(findByTenant(tenantId), definitionId);
+        return filterByDefinition(find(tenantId), definitionId);
     }
 
     void removeByDefinition(TenantId tenantId, AppDefinitionId definitionId) {

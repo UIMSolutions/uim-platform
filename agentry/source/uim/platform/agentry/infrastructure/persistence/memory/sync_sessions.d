@@ -12,6 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class MemorySyncSessionRepository : TenantRepository!(SyncSession, SyncSessionId), SyncSessionRepository {
+    mixin TenantRepositoryTemplate!(MemorySyncSessionRepository, SyncSession, SyncSessionId);
 
     size_t countByDevice(TenantId tenantId, DeviceId deviceId) {
         return findByDevice(tenantId, deviceId).length;
@@ -22,7 +23,7 @@ class MemorySyncSessionRepository : TenantRepository!(SyncSession, SyncSessionId
     }
 
     SyncSession[] findByDevice(TenantId tenantId, DeviceId deviceId) {
-        return filterByDevice(findByTenant(tenantId), deviceId);
+        return filterByDevice(find(tenantId), deviceId);
     }
     void removeByDevice(TenantId tenantId, DeviceId deviceId) {
         findByDevice(tenantId, deviceId).each!(e => remove(e));
@@ -35,7 +36,7 @@ class MemorySyncSessionRepository : TenantRepository!(SyncSession, SyncSessionId
         return sessions.filter!(s => s.applicationId == appId).array;
     }
     SyncSession[] findByMobileApplication(TenantId tenantId, MobileApplicationId appId) {
-        return filterByMobileApplication(findByTenant(tenantId), appId);
+        return filterByMobileApplication(find(tenantId), appId);
     }
     void removeByMobileApplication(TenantId tenantId, MobileApplicationId appId) {
         findByMobileApplication(tenantId, appId).each!(e => remove(e));
@@ -48,7 +49,7 @@ class MemorySyncSessionRepository : TenantRepository!(SyncSession, SyncSessionId
         return sessions.filter!(s => s.status == status).array;
     }
     SyncSession[] findByStatus(TenantId tenantId, SyncStatus status) {
-        return filterByStatus(findByTenant(tenantId), status);
+        return filterByStatus(find(tenantId), status);
     }
     void removeByStatus(TenantId tenantId, SyncStatus status) {
         findByStatus(tenantId, status).each!(e => remove(e));

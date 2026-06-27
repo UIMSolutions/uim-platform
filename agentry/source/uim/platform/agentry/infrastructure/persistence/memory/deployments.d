@@ -13,6 +13,7 @@ mixin(ShowModule!());
 
 class MemoryDeploymentRepository
     : TenantRepository!(Deployment, DeploymentId), DeploymentRepository {
+    mixin TenantRepositoryTemplate!(MemoryDeploymentRepository, Deployment, DeploymentId);
 
     size_t countByMobileApplication(TenantId tenantId, MobileApplicationId appId) {
         return findByMobileApplication(tenantId, appId).length;
@@ -21,7 +22,7 @@ class MemoryDeploymentRepository
         return deployments.filter!(d => d.mobileApplicationId == appId).array;
     }
     Deployment[] findByMobileApplication(TenantId tenantId, MobileApplicationId appId) {
-        return filterByMobileApplication(findByTenant(tenantId), appId);
+        return filterByMobileApplication(find(tenantId), appId);
     }
     void removeByMobileApplication(TenantId tenantId, MobileApplicationId appId) {
         findByMobileApplication(tenantId, appId).each!(e => remove(e));
@@ -36,7 +37,7 @@ class MemoryDeploymentRepository
     }
 
     Deployment[] findByStatus(TenantId tenantId, DeploymentStatus status) {
-        return filterByStatus(findByTenant(tenantId), status);
+        return filterByStatus(find(tenantId), status);
     }
     void removeByStatus(TenantId tenantId, DeploymentStatus status) {
         findByStatus(tenantId, status).each!(e => remove(e));
@@ -49,7 +50,7 @@ class MemoryDeploymentRepository
         return deployments.filter!(d => d.appVersionId == versionId).array;
     }
     Deployment[] findByAppVersion(TenantId tenantId, AppVersionId versionId) {
-        return filterByAppVersion(findByTenant(tenantId), versionId);
+        return filterByAppVersion(find(tenantId), versionId);
     }
     void removeByAppVersion(TenantId tenantId, AppVersionId versionId) {
         findByAppVersion(tenantId, versionId).each!(e => remove(e));

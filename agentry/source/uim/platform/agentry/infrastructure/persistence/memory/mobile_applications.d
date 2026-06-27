@@ -13,6 +13,7 @@ mixin(ShowModule!());
 
 class MemoryMobileApplicationRepository
     : TenantRepository!(MobileApplication, MobileApplicationId), MobileApplicationRepository {
+    mixin TenantRepositoryTemplate!(MemoryMobileApplicationRepository, MobileApplication, MobileApplicationId);
 
     size_t countByStatus(TenantId tenantId, AppStatus status) {
         return findByStatus(tenantId, status).length;
@@ -23,7 +24,7 @@ class MemoryMobileApplicationRepository
     }
 
     MobileApplication[] findByStatus(TenantId tenantId, AppStatus status) {
-        return filterByStatus(findByTenant(tenantId), status);
+        return filterByStatus(find(tenantId), status);
     }
 
     void removeByStatus(TenantId tenantId, AppStatus status) {
@@ -39,7 +40,7 @@ class MemoryMobileApplicationRepository
     }
 
     MobileApplication[] findByPlatform(TenantId tenantId, AppPlatform platform) {
-        return filterByPlatform(findByTenant(tenantId), platform);
+        return filterByPlatform(find(tenantId), platform);
     }
     void removeByPlatform(TenantId tenantId, AppPlatform platform) {
         findByPlatform(tenantId, platform).each!(e => remove(e));

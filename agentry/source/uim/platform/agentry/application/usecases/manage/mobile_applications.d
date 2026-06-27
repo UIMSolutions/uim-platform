@@ -19,11 +19,11 @@ class ManageMobileApplicationsUseCase {
     }
 
     MobileApplication getMobileApplication(TenantId tenantId, MobileApplicationId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     MobileApplication[] listMobileApplications(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     MobileApplication[] listByStatus(TenantId tenantId, AppStatus status) {
@@ -35,9 +35,7 @@ class ManageMobileApplicationsUseCase {
     }
 
     CommandResult createMobileApplication(MobileApplicationDTO dto) {
-        MobileApplication app;
-        app.initEntity(dto.tenantId, dto.createdBy);
-        app.id = dto.applicationId;
+        auto app = MobileApplication(dto.tenantId, dto.applicationId, dto.createdBy);
         app.name = dto.name;
         app.description = dto.description;
         app.iconUrl = dto.iconUrl;
@@ -58,7 +56,7 @@ class ManageMobileApplicationsUseCase {
     }
 
     CommandResult updateMobileApplication(MobileApplicationDTO dto) {
-        auto existing = repo.findById(dto.tenantId, dto.applicationId);
+        auto existing = repo.find(dto.tenantId, dto.applicationId);
         if (existing.isNull)
             return CommandResult(false, "", "Mobile application not found");
 
@@ -76,7 +74,7 @@ class ManageMobileApplicationsUseCase {
     }
 
     CommandResult deleteMobileApplication(TenantId tenantId, MobileApplicationId id) {
-        auto entity = repo.findById(tenantId, id);
+        auto entity = repo.find(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Mobile application not found");
 

@@ -12,6 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class MemoryBackendConnectionRepository : TenantRepository!(BackendConnection, BackendConnectionId), BackendConnectionRepository {
+    mixin TenantRepositoryTemplate!(MemoryBackendConnectionRepository, BackendConnection, BackendConnectionId);
 
     // #region ByBackendType 
     size_t countByBackendType(TenantId tenantId, BackendType backendType) {
@@ -23,7 +24,7 @@ class MemoryBackendConnectionRepository : TenantRepository!(BackendConnection, B
     }
 
     BackendConnection[] findByBackendType(TenantId tenantId, BackendType backendType) {
-        return filterByBackendType(findByTenant(tenantId), backendType);
+        return filterByBackendType(find(tenantId), backendType);
     }
 
     void removeByBackendType(TenantId tenantId, BackendType backendType) {
@@ -41,7 +42,7 @@ class MemoryBackendConnectionRepository : TenantRepository!(BackendConnection, B
     }
 
     BackendConnection[] findByStatus(TenantId tenantId, ConnectionStatus status) {
-        return filterByStatus(findByTenant(tenantId), status);
+        return filterByStatus(find(tenantId), status);
     }
 
     void removeByStatus(TenantId tenantId, ConnectionStatus status) {

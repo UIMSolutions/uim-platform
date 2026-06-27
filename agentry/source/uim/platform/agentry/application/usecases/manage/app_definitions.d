@@ -19,11 +19,11 @@ class ManageAppDefinitionsUseCase {
     }
 
     AppDefinition getDefinition(TenantId tenantId, AppDefinitionId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     AppDefinition[] listDefinitions(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     AppDefinition[] listDefinitions(TenantId tenantId, MobileApplicationId appId) {
@@ -35,9 +35,7 @@ class ManageAppDefinitionsUseCase {
     }
 
     CommandResult createDefinition(AppDefinitionDTO dto) {
-        AppDefinition def;
-        def.initEntity(dto.tenantId, dto.createdBy);
-        def.id = dto.definitionId;
+        auto def = AppDefinition(dto.tenantId, dto.definitionId, dto.createdBy);
         def.applicationId = dto.applicationId;
         def.name = dto.name;
         def.description = dto.description;
@@ -56,7 +54,7 @@ class ManageAppDefinitionsUseCase {
     }
 
     CommandResult updateDefinition(AppDefinitionDTO dto) {
-        auto existing = repo.findById(dto.tenantId, dto.definitionId);
+        auto existing = repo.find(dto.tenantId, dto.definitionId);
         if (existing.isNull)
             return CommandResult(false, "", "App definition not found");
 
@@ -72,7 +70,7 @@ class ManageAppDefinitionsUseCase {
     }
 
     CommandResult deleteDefinition(TenantId tenantId, AppDefinitionId id) {
-        auto entity = repo.findById(tenantId, id);
+        auto entity = repo.find(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "App definition not found");
 

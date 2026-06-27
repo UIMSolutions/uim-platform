@@ -19,11 +19,11 @@ class ManageBackendConnectionsUseCase {
     }
 
     BackendConnection getBackendConnection(TenantId tenantId, BackendConnectionId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     BackendConnection[] listBackendConnections(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     BackendConnection[] listByBackendType(TenantId tenantId, BackendType backendType) {
@@ -35,9 +35,7 @@ class ManageBackendConnectionsUseCase {
     }
 
     CommandResult createBackendConnection(BackendConnectionDTO dto) {
-        BackendConnection conn;
-        conn.initEntity(dto.tenantId, dto.createdBy);
-        conn.id = dto.connectionId;
+        auto conn = BackendConnection(dto.tenantId, dto.connectionId, dto.createdBy);
         conn.name = dto.name;
         conn.description = dto.description;
         conn.backendUrl = dto.backendUrl;
@@ -59,7 +57,7 @@ class ManageBackendConnectionsUseCase {
     }
 
     CommandResult updateBackendConnection(BackendConnectionDTO dto) {
-        auto existing = repo.findById(dto.tenantId, dto.connectionId);
+        auto existing = repo.find(dto.tenantId, dto.connectionId);
         if (existing.isNull)
             return CommandResult(false, "", "Backend connection not found");
 
@@ -74,7 +72,7 @@ class ManageBackendConnectionsUseCase {
     }
 
     CommandResult deleteBackendConnection(TenantId tenantId, BackendConnectionId id) {
-        auto entity = repo.findById(tenantId, id);
+        auto entity = repo.find(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Backend connection not found");
 

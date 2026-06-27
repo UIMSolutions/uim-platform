@@ -19,11 +19,11 @@ class ManageDevicesUseCase {
     }
 
     Device getDevice(TenantId tenantId, DeviceId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     Device[] listDevices(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     Device[] listByMobileApplication(TenantId tenantId, MobileApplicationId appId) {
@@ -39,9 +39,7 @@ class ManageDevicesUseCase {
     }
 
     CommandResult enrollDevice(DeviceDTO dto) {
-        Device device;
-        device.initEntity(dto.tenantId, dto.createdBy);
-        device.id = dto.deviceId;
+        auto device = Device(dto.tenantId, dto.deviceId, dto.createdBy);
         device.mobileApplicationId = dto.applicationId;
         device.deviceName = dto.deviceName;
         device.deviceModel = dto.deviceModel;
@@ -63,7 +61,7 @@ class ManageDevicesUseCase {
     }
 
     CommandResult updateDevice(DeviceDTO dto) {
-        auto existing = repo.findById(dto.tenantId, dto.deviceId);
+        auto existing = repo.find(dto.tenantId, dto.deviceId);
         if (existing.isNull)
             return CommandResult(false, "", "Device not found");
 
@@ -78,7 +76,7 @@ class ManageDevicesUseCase {
     }
 
     CommandResult removeDevice(TenantId tenantId, DeviceId id) {
-        auto entity = repo.findById(tenantId, id);
+        auto entity = repo.find(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Device not found");
 
