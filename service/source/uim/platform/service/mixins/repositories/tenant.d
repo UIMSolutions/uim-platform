@@ -10,11 +10,7 @@ template TenantRepositoryTemplate(alias Repository, TEntity, TId) {
 		super();
 	}
 
-	override bool initialize(Json initData = Json(null)) {
-		if (!super.initialize(initData)) {
-			return false;
-		}
-
-		return true;
-	}
+    this(ITenantStore!(TEntity, TId) store) {
+        super(store);
+    }
 }

@@ -7,7 +7,7 @@ module uim.platform.service.helpers.validate;
 
 import uim.platform.service;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

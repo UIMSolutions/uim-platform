@@ -2,7 +2,7 @@ module uim.platform.service.domain.ports.repositories.tenant;
 
 import uim.platform.service;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

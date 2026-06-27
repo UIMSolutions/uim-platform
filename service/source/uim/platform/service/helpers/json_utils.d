@@ -7,7 +7,7 @@ module uim.platform.service.helpers.json_utils;
 
 import uim.platform.service;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Extract an integer field from a Json object.

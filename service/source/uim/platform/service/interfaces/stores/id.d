@@ -7,7 +7,7 @@ module uim.platform.service.interfaces.stores.id;
 
 import uim.platform.service;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 interface IIdStore(TEntity, TId) : IEntityStore!(TEntity) {

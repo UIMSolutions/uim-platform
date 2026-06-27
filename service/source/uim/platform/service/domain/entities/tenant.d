@@ -7,7 +7,7 @@ module uim.platform.service.domain.entities.tenant;
 
 import uim.platform.service;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Represents a tenant in the system, which is an organizational unit that can have multiple users and resources.

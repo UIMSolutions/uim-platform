@@ -11,7 +11,7 @@ import std.uuid : randomUUID;
 import std.datetime : Clock;
 import uim.platform.service;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

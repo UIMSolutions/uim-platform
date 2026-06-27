@@ -7,7 +7,7 @@ module uim.platform.service.interfaces.config;
 
 import uim.platform.service;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 interface IUIMConfig {

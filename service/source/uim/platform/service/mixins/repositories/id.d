@@ -10,7 +10,5 @@ template IdRepositoryTemplate(alias Repository, TEntity, TId) {
         super();
     }
 
-    this(ITenantStore!(TEntity, TId) store) {
-        super(store);
-    }
+
 }
