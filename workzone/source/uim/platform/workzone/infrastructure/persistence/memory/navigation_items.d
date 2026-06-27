@@ -15,7 +15,7 @@ import uim.platform.workzone;
 
  
 
-class MemoryNavigationItemRepository : TenantRepository!(NavigationItem, NavigationItemId), NavigationItemRepository {
+class MemoryNavigationItemRepository : TentRepository!(NavigationItem, NavigationItemId), NavigationItemRepository {
 
   // #region bySite
   size_t countBySite(TenantId tenantId, SiteId siteId) {

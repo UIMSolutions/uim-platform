@@ -13,7 +13,7 @@ import uim.platform.dms.application;
 // mixin(ShowModule!());
 @safe:
 
-class MemoryFavoriteRepository : TenantRepository!(Favorite, FavoriteId), IFavoriteRepository {
+class MemoryFavoriteRepository : TentRepository!(Favorite, FavoriteId), IFavoriteRepository {
   bool existsByUserAndResource(TenantId tenantId, UserId userId, string resourceId) {
     foreach (e; findByTenant(tenantId))
       if (e.userId == userId && e.resourceId == resourceId)

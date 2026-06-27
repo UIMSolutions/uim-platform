@@ -11,7 +11,7 @@ import uim.platform.identity;
 
 @safe:
 
-interface ApplicationRepository : ITenantRepository!(Application, ApplicationId) {
+interface ApplicationRepository : ITentRepository!(Application, ApplicationId) {
 
     Application findByClient(TenantId tenantId, string clientId);
     Application[] findByStatus(TenantId tenantId, AppStatus status);

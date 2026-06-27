@@ -11,7 +11,7 @@ import uim.platform.hana_spatial;
 
 @safe:
 class MemoryIsolineRepository
-  : TenantRepository!(Isoline, IsolineId),
+  : TentRepository!(Isoline, IsolineId),
     IsolineRepository {
 
   Isoline[] findByMode(TenantId tenantId, IsolineMode mode) {

@@ -11,7 +11,7 @@ import uim.platform.task_center;
 
 @safe:
 
-class MemoryTaskDefinitionRepository : TenantRepository!(TaskDefinition, TaskDefinitionId), TaskDefinitionRepository {
+class MemoryTaskDefinitionRepository : TentRepository!(TaskDefinition, TaskDefinitionId), TaskDefinitionRepository {
 
     bool existsByName(TenantId tenantId, string name) {
         return findByName(tenantId, name).id != TaskDefinitionId.init;

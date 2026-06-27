@@ -12,7 +12,7 @@ import uim.platform.monitoring;
 
 @safe:
 /// Port: outgoing - health check configuration persistence.
-interface HealthCheckRepository : ITenantRepository!(HealthCheck, HealthCheckId) {
+interface HealthCheckRepository : ITentRepository!(HealthCheck, HealthCheckId) {
 
   size_t countByResource(TenantId tenantId, MonitoredResourceId resourceId);
   HealthCheck[] findByResource(TenantId tenantId, MonitoredResourceId resourceId);

@@ -13,7 +13,7 @@ import uim.platform.identity.authentication;
 // mixin(ShowModule!());
 @safe:
 /// In-memory adapter for user persistence (swap for DB adapter in production).
-class MemoryUserRepository : TenantRepository!(User, UserId), UserRepository {
+class MemoryUserRepository : TentRepository!(User, UserId), UserRepository {
 
   bool existsByEmail(TenantId tenantId, string email) {
     foreach (u; findByTenant(tenantId)) {

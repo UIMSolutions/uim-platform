@@ -3,7 +3,7 @@ import uim.platform.snowflake;
 // mixin(ShowModule!());
 @safe:
 class MemoryProvisioningRequestRepository
-    : TenantRepository!(ProvisioningRequest, ProvisioningRequestId),
+    : TentRepository!(ProvisioningRequest, ProvisioningRequestId),
       ProvisioningRequestRepository {
 
   ProvisioningRequest[] findByStatus(TenantId tenantId, ProvisioningStatus status) {

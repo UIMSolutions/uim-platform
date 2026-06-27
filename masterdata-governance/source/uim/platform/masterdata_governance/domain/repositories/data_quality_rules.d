@@ -11,7 +11,7 @@ import uim.platform.masterdata_governance;
 
 @safe:
 
-interface DataQualityRuleRepository : ITenantRepository!(DataQualityRule, DataQualityRuleId) {
+interface DataQualityRuleRepository : ITentRepository!(DataQualityRule, DataQualityRuleId) {
 
     DataQualityRule[] findByFieldName(TenantId tenantId, string fieldName);
     DataQualityRule[] findByRuleType(TenantId tenantId, RuleType ruleType);

@@ -6,7 +6,7 @@ import uim.platform.service_manager;
 
 @safe:
 
-interface ServicePlanRepository : ITenantRepository!(ServicePlan, ServicePlanId) {
+interface ServicePlanRepository : ITentRepository!(ServicePlan, ServicePlanId) {
     
     size_t countByPricing(TenantId tenantId, ServicePlanPricing pricing);
     ServicePlan[] findByPricing(TenantId tenantId, ServicePlanPricing pricing);

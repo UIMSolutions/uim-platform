@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ServiceCallRepository : ITenantRepository!(ServiceCall, ServiceCallId) {
+interface ServiceCallRepository : ITentRepository!(ServiceCall, ServiceCallId) {
 
     size_t countByStatus(TenantId tenantId, ServiceCallStatus status);
     ServiceCall[] findByStatus(TenantId tenantId, ServiceCallStatus status);

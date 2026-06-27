@@ -11,7 +11,7 @@ import uim.platform.workzone;
 // mixin(ShowModule!());
 
 @safe:
-interface UserProfileRepository : ITenantRepository!(UserProfile, UserProfileId) {
+interface UserProfileRepository : ITentRepository!(UserProfile, UserProfileId) {
 
   bool existsByUser(TenantId tenantId, UserId userId);
   UserProfile findByUser(TenantId tenantId, UserId userId);

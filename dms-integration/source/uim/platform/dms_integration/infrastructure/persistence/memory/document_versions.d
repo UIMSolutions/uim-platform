@@ -11,7 +11,7 @@ import uim.platform.dms_integration;
 
 @safe:
 
-class MemoryDocumentVersionRepository : TenantRepository!(DocumentVersion, DocumentVersionId), DocumentVersionRepository {
+class MemoryDocumentVersionRepository : TentRepository!(DocumentVersion, DocumentVersionId), DocumentVersionRepository {
 
     DocumentVersion[] findByDocument(TenantId tenantId, DocumentId documentId) {
         return findByTenant(tenantId).filter!(e => e.documentId == documentId).array;

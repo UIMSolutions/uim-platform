@@ -11,7 +11,7 @@ import uim.platform.hana_spatial;
 
 @safe:
 class MemoryProviderRepository
-  : TenantRepository!(Provider, ProviderId),
+  : TentRepository!(Provider, ProviderId),
     ProviderRepository {
 
   Provider[] findByType(TenantId tenantId, ProviderType type) {

@@ -12,7 +12,7 @@ import uim.platform.responsibility;
 @safe:
 
 class MemoryTeamCategoryRepository
-    : TenantRepository!(TeamCategory, TeamCategoryId),
+    : TentRepository!(TeamCategory, TeamCategoryId),
       TeamCategoryRepository {
 
     TeamCategory findByCode(TenantId tenantId, string code) {

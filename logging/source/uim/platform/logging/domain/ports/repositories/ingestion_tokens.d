@@ -11,7 +11,7 @@ import uim.platform.logging;
 // mixin(ShowModule!());
 
 @safe:
-interface IngestionTokenRepository : ITenantRepository!(IngestionToken, IngestionTokenId) {
+interface IngestionTokenRepository : ITentRepository!(IngestionToken, IngestionTokenId) {
 
   bool existsByHash(TenantId tenantId, string tokenHash);
   IngestionToken findByHash(TenantId tenantId, string tokenHash);

@@ -15,7 +15,7 @@ import uim.platform.hana;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryDatabaseConnectionRepository : TenantRepository!(DatabaseConnection, DatabaseConnectionId), DatabaseConnectionRepository {
+class MemoryDatabaseConnectionRepository : TentRepository!(DatabaseConnection, DatabaseConnectionId), DatabaseConnectionRepository {
 
 
   DatabaseConnection[] findByInstance(DatabaseInstanceId instanceId) {

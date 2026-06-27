@@ -15,7 +15,7 @@ import uim.platform.job_scheduling;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryScheduleRepository : TenantRepository!(Schedule, ScheduleId), ScheduleRepository {
+class MemoryScheduleRepository : TentRepository!(Schedule, ScheduleId), ScheduleRepository {
 
     // #region ByJob
     size_t countByJob(TenantId tenantId, JobId jobId) {

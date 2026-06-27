@@ -10,7 +10,7 @@ import uim.platform.health_fhir;
 
 @safe:
 
-class MemoryMedicationRequestRepository : TenantRepository!(MedicationRequest, MedicationRequestId), MedicationRequestRepository {
+class MemoryMedicationRequestRepository : TentRepository!(MedicationRequest, MedicationRequestId), MedicationRequestRepository {
 
   bool existsById(TenantId tenantId, MedicationRequestId id) {
     return !findById(tenantId, id).isNull;

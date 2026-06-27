@@ -11,7 +11,7 @@ import uim.platform.datasphere;
 // mixin(ShowModule!()); 
 
 @safe:
-interface ViewRepository : ITenantRepository!(View, ViewId) {
+interface ViewRepository : ITentRepository!(View, ViewId) {
 
   bool existsById(TenantId tenantId, SpaceId spaceId, ViewId id);
   View findById(TenantId tenantId, SpaceId spaceId, ViewId id);

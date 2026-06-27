@@ -11,7 +11,7 @@ import uim.platform.logging;
 // mixin(ShowModule!());
 
 @safe:
-interface LogEntryRepository : ITenantRepository!(LogEntry, LogEntryId) {
+interface LogEntryRepository : ITentRepository!(LogEntry, LogEntryId) {
 
   size_t countByStream(TenantId tenantId, LogStreamId streamId);
   LogEntry[] findByStream(TenantId tenantId, LogStreamId streamId);

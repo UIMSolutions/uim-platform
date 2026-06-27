@@ -9,7 +9,7 @@ import uim.platform.market_refinitiv;
 // mixin(ShowModule!());
 
 @safe:
-interface ProviderRepository : ITenantRepository!(Provider, ProviderId) {
+interface ProviderRepository : ITentRepository!(Provider, ProviderId) {
 
   Provider   findByCode(TenantId tenantId, string code);
   Provider[] findActive(TenantId tenantId);

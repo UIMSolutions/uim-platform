@@ -11,7 +11,7 @@ import uim.platform.personal_data;
 
 @safe:
 
-class MemoryRegisteredApplicationRepository : TenantRepository!(RegisteredApplication, RegisteredApplicationId), RegisteredApplicationRepository {
+class MemoryRegisteredApplicationRepository : TentRepository!(RegisteredApplication, RegisteredApplicationId), RegisteredApplicationRepository {
 
     bool existsByName(TenantId tenantId, string name) {
         return findByTenant(tenantId).any!(v => v.name == name);

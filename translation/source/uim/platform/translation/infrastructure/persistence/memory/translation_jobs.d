@@ -14,7 +14,7 @@ import std.array : array;
 @safe:
 
 class MemoryTranslationJobRepository
-    : TenantRepository!(TranslationJob, TranslationJobId),
+    : TentRepository!(TranslationJob, TranslationJobId),
       TranslationJobRepository
 {
 

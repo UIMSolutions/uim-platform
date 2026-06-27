@@ -11,7 +11,7 @@ import uim.platform.usage_data;
 @safe:
 /// In-memory adapter implementing MonthlyCostReportRepository port.
 class MemoryMonthlyCostReportRepository
-    : TenantRepository!(MonthlyCostReport, MonthlyCostReportId),
+    : TentRepository!(MonthlyCostReport, MonthlyCostReportId),
       MonthlyCostReportRepository {
 
   MonthlyCostReport[] findByGlobalAccount(TenantId tenantId, string globalAccountId) {

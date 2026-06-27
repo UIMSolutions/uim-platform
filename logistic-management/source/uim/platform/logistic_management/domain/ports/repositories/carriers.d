@@ -11,7 +11,7 @@ import uim.platform.logistic_management;
 // mixin(ShowModule!());
 
 @safe:
-interface CarrierRepository : ITenantRepository!(Carrier, CarrierId) {
+interface CarrierRepository : ITentRepository!(Carrier, CarrierId) {
   Carrier[] findByStatus(TenantId tenantId, CarrierStatus status);
   Carrier[] findByName(TenantId tenantId, string name);
   bool existsByName(TenantId tenantId, string name);

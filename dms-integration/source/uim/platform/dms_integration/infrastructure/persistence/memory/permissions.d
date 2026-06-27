@@ -11,7 +11,7 @@ import uim.platform.dms_integration;
 
 @safe:
 
-class MemoryPermissionRepository : TenantRepository!(Permission, PermissionId), PermissionRepository {
+class MemoryPermissionRepository : TentRepository!(Permission, PermissionId), PermissionRepository {
 
     Permission[] findByDocument(TenantId tenantId, DocumentId documentId) {
         return findByTenant(tenantId).filter!(e => e.documentId == documentId).array;

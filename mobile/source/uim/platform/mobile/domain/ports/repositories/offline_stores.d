@@ -11,7 +11,7 @@ import uim.platform.mobile;
 
 @safe:
 
-interface OfflineStoreRepository : ITenantRepository!(OfflineStore, OfflineStoreId) {
+interface OfflineStoreRepository : ITentRepository!(OfflineStore, OfflineStoreId) {
 
   size_t countByApp(TenantId tenantId, MobileAppId appId);
   OfflineStore[] findByApp(TenantId tenantId, MobileAppId appId);

@@ -11,7 +11,7 @@ import uim.platform.integration_delivery;
 
 @safe:
 
-interface CicdRepositoryRepository : ITenantRepository!(CicdRepository, CicdRepositoryId) {
+interface CicdRepositoryRepository : ITentRepository!(CicdRepository, CicdRepositoryId) {
     CicdRepository[] findByStatus(TenantId tenantId, RepositoryStatus status);
     CicdRepository[] findByType(TenantId tenantId, RepositoryType repositoryType);
     CicdRepository findByUrl(TenantId tenantId, string url);

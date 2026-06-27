@@ -6,7 +6,7 @@ import uim.platform.service_manager;
 
 @safe:
 
-class MemoryServicePlanRepository : TenantRepository!(ServicePlan, ServicePlanId), ServicePlanRepository {
+class MemoryServicePlanRepository : TentRepository!(ServicePlan, ServicePlanId), ServicePlanRepository {
 
     size_t countByPricing(TenantId tenantId, ServicePlanPricing pricing) {
         return this.findByPricing(tenantId, pricing).length;

@@ -11,7 +11,7 @@ import uim.platform.hana_spatial;
 
 @safe:
 class MemoryGeocodingJobRepository
-  : TenantRepository!(GeocodingJob, GeocodingJobId),
+  : TentRepository!(GeocodingJob, GeocodingJobId),
     GeocodingJobRepository {
 
   GeocodingJob[] findByStatus(TenantId tenantId, SpatialJobStatus status) {

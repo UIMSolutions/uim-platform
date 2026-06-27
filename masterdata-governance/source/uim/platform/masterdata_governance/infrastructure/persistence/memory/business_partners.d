@@ -12,7 +12,7 @@ import uim.platform.masterdata_governance;
 @safe:
 
 class MemoryBusinessPartnerRepository
-    : TenantRepository!(BusinessPartner, BusinessPartnerId), BusinessPartnerRepository {
+    : TentRepository!(BusinessPartner, BusinessPartnerId), BusinessPartnerRepository {
 
     BusinessPartner findByBpNumber(TenantId tenantId, string bpNumber) {
         auto all = findByTenant(tenantId);

@@ -3,7 +3,7 @@ import uim.platform.snowflake;
 // mixin(ShowModule!());
 @safe:
 class MemoryDataProductShareRepository
-    : TenantRepository!(DataProductShare, DataProductShareId),
+    : TentRepository!(DataProductShare, DataProductShareId),
       DataProductShareRepository {
 
   DataProductShare[] findByAccount(TenantId tenantId, SnowflakeAccountId accountId) {

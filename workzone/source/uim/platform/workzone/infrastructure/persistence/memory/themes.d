@@ -15,7 +15,7 @@ import uim.platform.workzone;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryThemeRepository : TenantRepository!(Theme, ThemeId), ThemeRepository {
+class MemoryThemeRepository : TentRepository!(Theme, ThemeId), ThemeRepository {
 
   bool existsDefault(TenantId tenantId) {
     return findByTenant(tenantId).any!(t => t.isDefault);

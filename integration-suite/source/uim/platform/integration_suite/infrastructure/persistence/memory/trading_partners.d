@@ -6,7 +6,7 @@ import uim.platform.integration_suite;
 @safe:
 
 class MemoryTradingPartnerRepository
-    : TenantRepository!(TradingPartner, TradingPartnerId),
+    : TentRepository!(TradingPartner, TradingPartnerId),
       TradingPartnerRepository {
 
   TradingPartner[] findByType(TenantId tenantId, PartnerType partnerType) {

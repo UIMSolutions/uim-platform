@@ -10,7 +10,7 @@ import uim.platform.dms.application;
 
 // mixin(ShowModule!());
 @safe:
-interface IFavoriteRepository : ITenantRepository!(Favorite, FavoriteId) {
+interface IFavoriteRepository : ITentRepository!(Favorite, FavoriteId) {
   bool existsByUserAndResource(TenantId tenantId, UserId userId, string resource);
   Favorite findByUserAndResource(TenantId tenantId, UserId userId, string resource);
   void removeByUserAndResource(TenantId tenantId, UserId userId, string resource);

@@ -11,7 +11,7 @@ import uim.platform.workzone;
 // mixin(ShowModule!());
 
 @safe:
-interface AppRepository : ITenantRepository!(AppRegistration, AppId) {
+interface AppRepository : ITentRepository!(AppRegistration, AppId) {
 
   size_t countByStatus(TenantId tenantId, AppStatus status);
   AppRegistration[] findByStatus(TenantId tenantId, AppStatus status);

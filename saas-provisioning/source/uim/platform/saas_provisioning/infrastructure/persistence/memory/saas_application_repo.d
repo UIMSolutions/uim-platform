@@ -13,7 +13,7 @@ import uim.platform.saas_provisioning;
 
 /// In-memory implementation of SaasApplicationRepository.
 class MemorySaasApplicationRepository
-    : TenantRepository!(SaasApplication, SaasApplicationId),
+    : TentRepository!(SaasApplication, SaasApplicationId),
       SaasApplicationRepository
 {
     SaasApplication findByAppName(TenantId tenantId, string appName) {

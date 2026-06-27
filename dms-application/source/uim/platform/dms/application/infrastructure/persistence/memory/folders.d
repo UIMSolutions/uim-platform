@@ -13,7 +13,7 @@ import uim.platform.dms.application;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryFolderRepository : TenantRepository!(Folder, FolderId), IFolderRepository {
+class MemoryFolderRepository : TentRepository!(Folder, FolderId), IFolderRepository {
   bool existsByPath(TenantId tenantId, RepositoryId repositoryId, string path) {
     return findByTenant(tenantId).any!(e => e.repositoryId == repositoryId && e.path == path);
   }

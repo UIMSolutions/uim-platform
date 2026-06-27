@@ -11,7 +11,7 @@ import uim.platform.datasphere_composer;
 
 @safe:
 class MemoryCompositionRunRepository
-    : TenantRepository!(CompositionRun, CompositionRunId),
+    : TentRepository!(CompositionRun, CompositionRunId),
       CompositionRunRepository {
 
   CompositionRun[] findByStatus(TenantId tenantId, CompositionRunStatus status) {

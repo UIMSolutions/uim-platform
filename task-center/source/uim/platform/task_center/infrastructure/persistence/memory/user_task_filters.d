@@ -11,7 +11,7 @@ import uim.platform.task_center;
 
 @safe:
 
-class MemoryUserTaskFilterRepository : TenantRepository!(UserTaskFilter, UserTaskFilterId), UserTaskFilterRepository {
+class MemoryUserTaskFilterRepository : TentRepository!(UserTaskFilter, UserTaskFilterId), UserTaskFilterRepository {
 
     // bool existsDefault(TenantId tenantId, UserId userId) {
     //     return findDefault(tenantId, userId).id != UserTaskFilterId.init;

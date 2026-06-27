@@ -14,7 +14,7 @@ import uim.platform.mobile;
 
 @safe:
 
-class MemoryOfflineStoreRepository : TenantRepository!(OfflineStore, OfflineStoreId), OfflineStoreRepository {
+class MemoryOfflineStoreRepository : TentRepository!(OfflineStore, OfflineStoreId), OfflineStoreRepository {
 
   bool existsByName(TenantId tenantId, MobileAppId appId, string name) {
     return findByApp(tenantId, appId).any!(s => s.name == name);

@@ -11,7 +11,7 @@ import uim.platform.usage_data;
 @safe:
 /// In-memory adapter implementing ServiceMetricRepository port.
 class MemoryServiceMetricRepository
-    : TenantRepository!(ServiceMetric, ServiceMetricId), ServiceMetricRepository {
+    : TentRepository!(ServiceMetric, ServiceMetricId), ServiceMetricRepository {
 
   ServiceMetric[] findByService(TenantId tenantId, string serviceId) {
     return findByTenant(tenantId).filter!(m => m.serviceId == serviceId).array;

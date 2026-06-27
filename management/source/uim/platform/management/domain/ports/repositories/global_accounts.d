@@ -12,7 +12,7 @@ import uim.platform.management;
 
 @safe:
 /// Port: outgoing — global account persistence.
-interface GlobalAccountRepository : ITenantRepository!(GlobalAccount, GlobalAccountId) {
+interface GlobalAccountRepository : ITentRepository!(GlobalAccount, GlobalAccountId) {
 
   GlobalAccount[] findByStatus(TenantId tenantId, GlobalAccountStatus status);
   

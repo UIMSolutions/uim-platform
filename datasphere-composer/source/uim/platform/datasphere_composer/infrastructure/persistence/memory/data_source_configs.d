@@ -11,7 +11,7 @@ import uim.platform.datasphere_composer;
 
 @safe:
 class MemoryDataSourceConfigRepository
-    : TenantRepository!(DataSourceConfig, DataSourceConfigId),
+    : TentRepository!(DataSourceConfig, DataSourceConfigId),
       DataSourceConfigRepository {
 
   DataSourceConfig[] findByProduct(TenantId tenantId, DataProductId productId) {

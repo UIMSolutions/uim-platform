@@ -11,7 +11,7 @@ import uim.platform.hana_spatial;
 
 @safe:
 class MemoryRouteRepository
-  : TenantRepository!(Route, RouteId),
+  : TentRepository!(Route, RouteId),
     RouteRepository {
 
   Route[] findByTravelMode(TenantId tenantId, TravelMode mode) {

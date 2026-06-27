@@ -11,7 +11,7 @@ import uim.platform.hana;
 // mixin(ShowModule!());
 
 @safe:
-interface DatabaseConnectionRepository : ITenantRepository!(DatabaseConnection, DatabaseConnectionId) {
+interface DatabaseConnectionRepository : ITentRepository!(DatabaseConnection, DatabaseConnectionId) {
 
   size_t countByInstance(DatabaseInstanceId instanceId);
   DatabaseConnection[] findByInstance(DatabaseInstanceId instanceId);

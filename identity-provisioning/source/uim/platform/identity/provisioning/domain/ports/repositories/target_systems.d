@@ -12,7 +12,7 @@ import uim.platform.identity.provisioning;
 // mixin(ShowModule!());
 
 @safe:
-interface TargetSystemRepository : ITenantRepository!(TargetSystem, TargetSystemId) {
+interface TargetSystemRepository : ITentRepository!(TargetSystem, TargetSystemId) {
 
   bool existsByName(TenantId tenantId, string name);
   TargetSystem findByName(TenantId tenantId, string name);

@@ -10,7 +10,7 @@ import uim.platform.dms.application;
 
 // mixin(ShowModule!());
 @safe:
-interface IPermissionRepository : ITenantRepository!(Permission, PermissionId) {
+interface IPermissionRepository : ITentRepository!(Permission, PermissionId) {
   size_t countByResource(TenantId tenantId, string resourceId, ResourceType resourceType, );
   Permission[] findByResource(TenantId tenantId, string resourceId, ResourceType resourceType, );
   void removeByResource(TenantId tenantId, string resourceId, ResourceType resourceType);

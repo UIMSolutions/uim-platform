@@ -12,7 +12,7 @@ import uim.platform.integration.automation;
 
 @safe:
 /// Port for persisting and querying workflow instances.
-interface WorkflowRepository : ITenantRepository!(Workflow, WorkflowId) {
+interface WorkflowRepository : ITentRepository!(Workflow, WorkflowId) {
 
   size_t countActiveByTenant(TenantId tenantId);
 

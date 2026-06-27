@@ -11,7 +11,7 @@ import uim.platform.hana_spatial;
 
 @safe:
 class MemoryGeocodingResultRepository
-  : TenantRepository!(GeocodingResult, GeocodingResultId),
+  : TentRepository!(GeocodingResult, GeocodingResultId),
     GeocodingResultRepository {
 
   GeocodingResult[] findByType(TenantId tenantId, GeocodingType type) {

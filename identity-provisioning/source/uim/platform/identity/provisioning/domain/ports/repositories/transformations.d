@@ -12,7 +12,7 @@ import uim.platform.identity.provisioning;
 // mixin(ShowModule!());
 
 @safe:  
-interface TransformationRepository : ITenantRepository!(Transformation, TransformationId) {
+interface TransformationRepository : ITentRepository!(Transformation, TransformationId) {
 
   size_t countBySystem(TenantId tenantId, string systemtenantId);
   Transformation[] findBySystem(TenantId tenantId, string systemtenantId);

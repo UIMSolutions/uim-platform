@@ -11,7 +11,7 @@ import uim.platform.transport;
 
 @safe:
 
-class MemoryTransportRouteRepository : TenantRepository!(TransportRoute, TransportRouteId), TransportRouteRepository {
+class MemoryTransportRouteRepository : TentRepository!(TransportRoute, TransportRouteId), TransportRouteRepository {
 
     TransportRoute[] findBySourceNode(TenantId tenantId, TransportNodeId sourceNodeId) {
         return findByTenant(tenantId).filter!(e => e.sourceNodeId.value == sourceNodeId.value).array;

@@ -11,7 +11,7 @@ import uim.platform.mobile;
 
 @safe:
 
-interface ClientResourceRepository : ITenantRepository!(ClientResource, ClientResourceId) {
+interface ClientResourceRepository : ITentRepository!(ClientResource, ClientResourceId) {
 
   bool existsByName(TenantId tenantId, MobileAppId appId, string name);
   ClientResource findByName(TenantId tenantId, MobileAppId appId, string name);

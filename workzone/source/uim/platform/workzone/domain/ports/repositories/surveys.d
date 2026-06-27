@@ -11,7 +11,7 @@ import uim.platform.workzone;
 // mixin(ShowModule!());
 
 @safe:
-interface SurveyRepository : ITenantRepository!(Survey, SurveyId) {
+interface SurveyRepository : ITentRepository!(Survey, SurveyId) {
 
   size_t countByWorkspace(TenantId tenantId, WorkspaceId workspaceId);
   Survey[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId);

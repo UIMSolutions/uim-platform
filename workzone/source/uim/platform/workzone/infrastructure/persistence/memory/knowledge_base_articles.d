@@ -15,7 +15,7 @@ import uim.platform.workzone;
 
  
 
-class MemoryKnowledgeBaseArticleRepository : TenantRepository!(KnowledgeBaseArticle, KBArticleId), KnowledgeBaseArticleRepository {
+class MemoryKnowledgeBaseArticleRepository : TentRepository!(KnowledgeBaseArticle, KBArticleId), KnowledgeBaseArticleRepository {
   
   size_t countByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
     return findByWorkspace(tenantId, workspaceId).length;

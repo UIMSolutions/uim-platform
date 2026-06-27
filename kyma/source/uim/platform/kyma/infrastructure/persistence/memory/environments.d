@@ -15,7 +15,7 @@ import uim.platform.kyma;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryEnvironmentRepository : TenantRepository!(KymaEnvironment, KymaEnvironmentId), EnvironmentRepository {
+class MemoryEnvironmentRepository : TentRepository!(KymaEnvironment, KymaEnvironmentId), EnvironmentRepository {
 
   size_t countBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
     return findBySubaccount(tenantId, subaccountId).length;

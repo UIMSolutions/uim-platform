@@ -14,7 +14,7 @@ import uim.platform.portal;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryRoleRepository : TenantRepository!(Role, RoleId), RoleRepository {
+class MemoryRoleRepository : TentRepository!(Role, RoleId), RoleRepository {
 
   bool existsByName(TenantId tenantId, string name) {
     return findByTenant(tenantId).any!(r => r.name == name);

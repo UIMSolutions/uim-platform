@@ -12,7 +12,7 @@ import uim.platform.identity.provisioning;
 // mixin(ShowModule!());
 
 @safe:
-interface ProvisioningLogRepository : ITenantRepository!(ProvisioningLog, ProvisioningLogId) {
+interface ProvisioningLogRepository : ITentRepository!(ProvisioningLog, ProvisioningLogId) {
 
   size_t countByJob(TenantId tenantId, ProvisioningJobId jobId);
   ProvisioningLog[] findByJob(TenantId tenantId, ProvisioningJobId jobId);

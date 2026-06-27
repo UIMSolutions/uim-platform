@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — replication job persistence.
-interface ReplicationJobRepository : ITenantRepository!(ReplicationJob, ReplicationJobId) {
+interface ReplicationJobRepository : ITentRepository!(ReplicationJob, ReplicationJobId) {
 
   size_t countByStatus(TenantId tenantId, ReplicationJobStatus status);
   ReplicationJob[] findByStatus(TenantId tenantId, ReplicationJobStatus status);

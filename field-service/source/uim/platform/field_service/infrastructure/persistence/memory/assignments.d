@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryAssignmentRepository : TenantRepository!(Assignment, AssignmentId), AssignmentRepository {
+class MemoryAssignmentRepository : TentRepository!(Assignment, AssignmentId), AssignmentRepository {
 
     size_t countByActivity(TenantId tenantId, ActivityId activityId) {
         return findByActivity(tenantId, activityId).length;

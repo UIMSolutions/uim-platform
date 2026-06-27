@@ -6,7 +6,7 @@ import uim.platform.service;
 
 @safe:
 
-class TenantRepository(TEntity, TId) : BaseRepository!(TEntity), ITenantRepository!(TEntity, TId) {
+class TentRepository(TEntity, TId) : BaseRepository!(TEntity), ITentRepository!(TEntity, TId) {
   protected TEntity[TId][TenantId] store;
 
   this() {
@@ -186,7 +186,7 @@ struct TestEntity {
   }
 }
 
-class TestRepository : TenantRepository!(TestEntity, TestEntityId) {
+class TestRepository : TentRepository!(TestEntity, TestEntityId) {
 }
 
 unittest {

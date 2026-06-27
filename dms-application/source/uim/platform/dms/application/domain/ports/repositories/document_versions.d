@@ -10,7 +10,7 @@ import uim.platform.dms.application;
 
 // mixin(ShowModule!());
 @safe:
-interface IDocumentVersionRepository : ITenantRepository!(DocumentVersion, DocumentVersionId) {
+interface IDocumentVersionRepository : ITentRepository!(DocumentVersion, DocumentVersionId) {
   DocumentVersion[] findByDocument(TenantId tenantId, DocumentId documentId);
   DocumentVersion findLatest(TenantId tenantId, DocumentId documentId);
   size_t countByDocument(TenantId tenantId, DocumentId documentId);

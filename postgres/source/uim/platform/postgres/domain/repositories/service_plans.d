@@ -11,7 +11,7 @@ import uim.platform.postgres;
 
 @safe:
 
-interface ServicePlanRepository : ITenantRepository!(ServicePlan, ServicePlanId) {
+interface ServicePlanRepository : ITentRepository!(ServicePlan, ServicePlanId) {
     ServicePlan[] findByTier(TenantId tenantId, PlanTier tier);
     ServicePlan[] findAvailable(TenantId tenantId);
     bool nameExists(TenantId tenantId, string name);

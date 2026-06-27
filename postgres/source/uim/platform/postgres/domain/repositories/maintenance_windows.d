@@ -11,7 +11,7 @@ import uim.platform.postgres;
 
 @safe:
 
-interface MaintenanceWindowRepository : ITenantRepository!(MaintenanceWindow, MaintenanceWindowId) {
+interface MaintenanceWindowRepository : ITentRepository!(MaintenanceWindow, MaintenanceWindowId) {
     MaintenanceWindow findByInstance(TenantId tenantId, ServiceInstanceId instanceId);
     MaintenanceWindow[] findByStatus(TenantId tenantId, MaintenanceStatus status);
 }

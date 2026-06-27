@@ -11,6 +11,6 @@ import uim.platform.redis;
 
 @safe:
 
-interface ConfigurationRepository : ITenantRepository!(Configuration, ConfigurationId) {
+interface ConfigurationRepository : ITentRepository!(Configuration, ConfigurationId) {
     Configuration findByInstance(TenantId tenantId, ServiceInstanceId instanceId);
 }

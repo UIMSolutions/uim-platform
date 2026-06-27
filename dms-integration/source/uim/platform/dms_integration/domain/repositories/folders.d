@@ -11,7 +11,7 @@ import uim.platform.dms_integration;
 
 @safe:
 
-interface FolderRepository : ITenantRepository!(Folder, FolderId) {
+interface FolderRepository : ITentRepository!(Folder, FolderId) {
 
     size_t countByRepository(TenantId tenantId, RepositoryId repositoryId);
     Folder[] findByRepository(TenantId tenantId, RepositoryId repositoryId);

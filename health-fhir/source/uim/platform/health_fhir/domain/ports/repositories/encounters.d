@@ -10,7 +10,7 @@ import uim.platform.health_fhir;
 
 @safe:
 
-interface EncounterRepository : ITenantRepository!(Encounter, EncounterId) {
+interface EncounterRepository : ITentRepository!(Encounter, EncounterId) {
   bool existsById(TenantId tenantId, EncounterId id);
   Encounter findById(TenantId tenantId, EncounterId id);
   void removeById(TenantId tenantId, EncounterId id);

@@ -13,7 +13,7 @@ import uim.platform.identity.authentication;
 // mixin(ShowModule!());
 @safe:
 /// In-memory adapter for risk rule persistence.
-class MemoryRiskRuleRepository : TenantRepository!(RiskRule, string), RiskRuleRepository {
+class MemoryRiskRuleRepository : TentRepository!(RiskRule, string), RiskRuleRepository {
 
   // TODO
 }

@@ -11,7 +11,7 @@ import uim.platform.identity;
 
 @safe:
 
-interface UserRepository : ITenantRepository!(User, UserId) {
+interface UserRepository : ITentRepository!(User, UserId) {
 
     User findByUserName(TenantId tenantId, string userName);
     User findByEmail(TenantId tenantId, string email);

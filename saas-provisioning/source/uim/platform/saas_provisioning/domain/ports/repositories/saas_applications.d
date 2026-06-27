@@ -12,7 +12,7 @@ import uim.platform.saas_provisioning;
 @safe:
 
 /// Port: persistence contract for the SaasApplication aggregate root.
-interface SaasApplicationRepository : ITenantRepository!(SaasApplication, SaasApplicationId) {
+interface SaasApplicationRepository : ITentRepository!(SaasApplication, SaasApplicationId) {
     /// Find an application by its unique technical name within a provider tenant.
     SaasApplication findByAppName(TenantId tenantId, string appName);
 }

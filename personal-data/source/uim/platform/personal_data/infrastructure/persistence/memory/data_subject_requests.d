@@ -11,7 +11,7 @@ import uim.platform.personal_data;
 
 @safe:
 
-class MemoryDataSubjectRequestRepository : TenantRepository!(DataSubjectRequest, DataSubjectRequestId), DataSubjectRequestRepository {
+class MemoryDataSubjectRequestRepository : TentRepository!(DataSubjectRequest, DataSubjectRequestId), DataSubjectRequestRepository {
     
     size_t countByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
         return findByDataSubject(tenantId, dataSubjectId).length;

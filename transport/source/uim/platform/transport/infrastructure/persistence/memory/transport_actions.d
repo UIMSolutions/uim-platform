@@ -11,7 +11,7 @@ import uim.platform.transport;
 
 @safe:
 
-class MemoryTransportActionRepository : TenantRepository!(TransportAction, TransportActionId), TransportActionRepository {
+class MemoryTransportActionRepository : TentRepository!(TransportAction, TransportActionId), TransportActionRepository {
 
     TransportAction[] findByNode(TenantId tenantId, TransportNodeId nodeId) {
         return findByTenant(tenantId).filter!(e => e.nodeId.value == nodeId.value).array;

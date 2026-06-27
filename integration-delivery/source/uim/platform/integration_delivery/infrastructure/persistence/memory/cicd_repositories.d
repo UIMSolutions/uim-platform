@@ -13,7 +13,7 @@ import std.array : array;
 
 @safe:
 
-class MemoryCicdRepositoryRepository : TenantRepository!(CicdRepository, CicdRepositoryId), CicdRepositoryRepository {
+class MemoryCicdRepositoryRepository : TentRepository!(CicdRepository, CicdRepositoryId), CicdRepositoryRepository {
     CicdRepository[] findByStatus(TenantId tenantId, RepositoryStatus status) {
         return findByTenant(tenantId).filter!(r => r.status == status).array;
     }

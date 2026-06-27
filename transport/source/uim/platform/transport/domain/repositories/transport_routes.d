@@ -11,7 +11,7 @@ import uim.platform.transport;
 
 @safe:
 
-interface TransportRouteRepository : ITenantRepository!(TransportRoute, TransportRouteId) {
+interface TransportRouteRepository : ITentRepository!(TransportRoute, TransportRouteId) {
     TransportRoute[] findBySourceNode(TenantId tenantId, TransportNodeId sourceNodeId);
     TransportRoute[] findByDestinationNode(TenantId tenantId, TransportNodeId destNodeId);
     TransportRoute[] findByStatus(TenantId tenantId, RouteStatus status);

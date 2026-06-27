@@ -10,7 +10,7 @@ import uim.platform.situation_automation;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryNotificationRepository : TenantRepository!(Notification, NotificationId), NotificationRepository {
+class MemoryNotificationRepository : TentRepository!(Notification, NotificationId), NotificationRepository {
 
     // #region ByRecipient
     size_t countByRecipient(TenantId tenantId, string recipientId) {

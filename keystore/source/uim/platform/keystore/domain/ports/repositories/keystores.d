@@ -13,7 +13,7 @@ import uim.platform.keystore;
 
 @safe:
 
-interface KeystoreRepository : ITenantRepository!(Keystore, KeystoreId) {
+interface KeystoreRepository : ITentRepository!(Keystore, KeystoreId) {
 
   bool existsByName(TenantId tenantId, string accountId, string applicationId, KeystoreLevel level, string name);
   Keystore findByName(TenantId tenantId, string accountId, string applicationId, KeystoreLevel level, string name);

@@ -11,7 +11,7 @@ import uim.platform.oauth;
 
 @safe:
 
-interface AuthorizationCodeRepository : ITenantRepository!(AuthorizationCode, AuthorizationCodeId) {
+interface AuthorizationCodeRepository : ITentRepository!(AuthorizationCode, AuthorizationCodeId) {
 
     bool existsByCode(TenantId tenantId, string code);
     AuthorizationCode findByCode(TenantId tenantId, string code);

@@ -11,7 +11,7 @@ import uim.platform.workzone;
 // mixin(ShowModule!());
 
 @safe:
-interface SiteRepository : ITenantRepository!(Site, SiteId) {
+interface SiteRepository : ITentRepository!(Site, SiteId) {
 
   bool existsByAlias(TenantId tenantId, string alias_);
   Site findByAlias(TenantId tenantId, string alias_);

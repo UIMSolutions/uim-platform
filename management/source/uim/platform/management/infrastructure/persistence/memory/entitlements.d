@@ -15,7 +15,7 @@ import uim.platform.management;
 // mixin(ShowModule!());
 @safe:
 
-class MemoryEntitlementRepository : TenantRepository!(Entitlement, EntitlementId), EntitlementRepository {
+class MemoryEntitlementRepository : TentRepository!(Entitlement, EntitlementId), EntitlementRepository {
   // TODO: mixin IdRepositoryTemplate!(MemoryEntitlementRepository, Entitlement, EntitlementId);
 
   // #region ByGlobalAccount

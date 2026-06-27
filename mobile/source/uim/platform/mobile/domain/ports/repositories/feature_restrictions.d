@@ -11,7 +11,7 @@ import uim.platform.mobile;
 
 @safe:
 
-interface FeatureRestrictionRepository : ITenantRepository!(FeatureRestriction, FeatureRestrictionId) {
+interface FeatureRestrictionRepository : ITentRepository!(FeatureRestriction, FeatureRestrictionId) {
 
   bool existsByKey(TenantId tenantId, MobileAppId appId, string featureKey);
   FeatureRestriction findByKey(TenantId tenantId, MobileAppId appId, string featureKey);

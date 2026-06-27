@@ -11,7 +11,7 @@ import std.array : array;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryFreightOrderRepository : TenantRepository!(FreightOrder, FreightOrderId), FreightOrderRepository {
+class MemoryFreightOrderRepository : TentRepository!(FreightOrder, FreightOrderId), FreightOrderRepository {
   override FreightOrder[] findByStatus(TenantId tenantId, FreightOrderStatus status) {
     return findAll(tenantId).filter!(o => o.status == status).array;
   }

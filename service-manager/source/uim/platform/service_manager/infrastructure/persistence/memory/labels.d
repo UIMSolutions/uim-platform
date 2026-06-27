@@ -6,7 +6,7 @@ import uim.platform.service_manager;
 
 @safe:
 
-class MemoryLabelRepository : TenantRepository!(Label, LabelId), LabelRepository {
+class MemoryLabelRepository : TentRepository!(Label, LabelId), LabelRepository {
 
     size_t countByResource(TenantId tenantId, string resourceType, string resourceId) {
         return findByResource(tenantId, resourceType, resourceId).length;

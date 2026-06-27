@@ -10,7 +10,7 @@ import uim.platform.ui_flexibility;
 
 @safe:
 
-interface FlexChangeRepository : ITenantRepository!(FlexChange, FlexChangeId) {
+interface FlexChangeRepository : ITentRepository!(FlexChange, FlexChangeId) {
   bool existsById(TenantId tenantId, FlexChangeId id);
   FlexChange findById(TenantId tenantId, FlexChangeId id);
   bool removeById(TenantId tenantId, FlexChangeId id);

@@ -14,7 +14,7 @@ import uim.platform.destination;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryCertificateRepository : TenantRepository!(Certificate, CertificateId), CertificateRepository {
+class MemoryCertificateRepository : TentRepository!(Certificate, CertificateId), CertificateRepository {
 
   bool existsByName(TenantId tenantId, SubaccountId subaccountId, string name) {
     foreach (e; findByTenant(tenantId))

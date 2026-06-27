@@ -11,7 +11,7 @@ import uim.platform.datasphere_composer;
 
 @safe:
 class MemoryAttributeMappingRepository
-    : TenantRepository!(AttributeMapping, AttributeMappingId),
+    : TentRepository!(AttributeMapping, AttributeMappingId),
       AttributeMappingRepository {
 
   AttributeMapping[] findByConfig(TenantId tenantId, DataSourceConfigId configId) {

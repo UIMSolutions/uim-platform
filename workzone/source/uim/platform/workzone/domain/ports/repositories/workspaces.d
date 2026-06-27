@@ -11,7 +11,7 @@ import uim.platform.workzone;
 // mixin(ShowModule!());
 
 @safe:
-interface WorkspaceRepository : ITenantRepository!(Workspace, WorkspaceId) {
+interface WorkspaceRepository : ITentRepository!(Workspace, WorkspaceId) {
 
   bool existsByAlias(TenantId tenantId, string alias_);
   Workspace findByAlias(TenantId tenantId, string alias_);

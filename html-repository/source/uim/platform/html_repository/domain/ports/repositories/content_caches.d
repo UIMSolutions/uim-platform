@@ -11,7 +11,7 @@ import uim.platform.html_repository;
 // mixin(ShowModule!());
 
 @safe:
-interface ContentCacheRepository : ITenantRepository!(ContentCache, ContentCacheId) {
+interface ContentCacheRepository : ITentRepository!(ContentCache, ContentCacheId) {
 
   size_t countByStatus(CacheStatus status);
   ContentCache[] findByStatus(CacheStatus status);

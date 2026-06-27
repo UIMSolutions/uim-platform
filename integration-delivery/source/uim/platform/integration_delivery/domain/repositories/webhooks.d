@@ -11,7 +11,7 @@ import uim.platform.integration_delivery;
 
 @safe:
 
-interface WebhookRepository : ITenantRepository!(Webhook, WebhookId) {
+interface WebhookRepository : ITentRepository!(Webhook, WebhookId) {
     Webhook[] findByRepository(TenantId tenantId, CicdRepositoryId repositoryId);
     Webhook[] findByJob(TenantId tenantId, JobId jobId);
     Webhook[] findByStatus(TenantId tenantId, WebhookStatus status);

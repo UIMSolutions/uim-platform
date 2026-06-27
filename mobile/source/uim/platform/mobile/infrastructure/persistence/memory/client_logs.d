@@ -14,7 +14,7 @@ import uim.platform.mobile;
 
 @safe:
 
-class MemoryClientLogRepository : TenantRepository!(ClientLogEntry, ClientLogEntryId), ClientLogRepository {
+class MemoryClientLogRepository : TentRepository!(ClientLogEntry, ClientLogEntryId), ClientLogRepository {
 
   size_t countByApp(TenantId tenantId, MobileAppId appId) {
     return findByApp(tenantId, appId).length;

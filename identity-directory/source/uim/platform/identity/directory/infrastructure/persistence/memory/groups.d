@@ -13,7 +13,7 @@ import uim.platform.identity.directory;
 
 @safe:
 /// In-memory adapter for group persistence.
-class MemoryGroupRepository : TenantRepository!(IAMGroup, IAMGroupId), GroupRepository {
+class MemoryGroupRepository : TentRepository!(IAMGroup, IAMGroupId), GroupRepository {
 
   bool existsByDisplayName(TenantId tenantId, string displayName) {
     return findByTenant(tenantId).any!(g => g.tenantId == tenantId && g.displayName == displayName);

@@ -11,7 +11,7 @@ import uim.platform.document_ai;
 // mixin(ShowModule!());
 
 @safe:
-interface TrainingJobRepository : ITenantRepository!(TrainingJob, TrainingJobId) {
+interface TrainingJobRepository : ITentRepository!(TrainingJob, TrainingJobId) {
   
   bool existsById(TenantId tenantId, TrainingJobId id, ClientId clientId);
   TrainingJob findById(TenantId tenantId, TrainingJobId id, ClientId clientId);

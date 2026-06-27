@@ -12,7 +12,7 @@ import uim.platform.destination;
 
 @safe:
 /// Port: outgoing — destination fragment persistence.
-interface FragmentRepository : ITenantRepository!(DestinationFragment, DestinationFragmentId) {
+interface FragmentRepository : ITentRepository!(DestinationFragment, DestinationFragmentId) {
   
   bool existsByName(TenantId tenantId, SubaccountId subaccountId, string name);
   DestinationFragment findByName(TenantId tenantId, SubaccountId subaccountId, string name);

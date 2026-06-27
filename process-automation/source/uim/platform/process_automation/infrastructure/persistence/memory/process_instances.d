@@ -10,7 +10,7 @@ import uim.platform.process_automation;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryProcessInstanceRepository : TenantRepository!(ProcessInstance, ProcessInstanceId), ProcessInstanceRepository {
+class MemoryProcessInstanceRepository : TentRepository!(ProcessInstance, ProcessInstanceId), ProcessInstanceRepository {
 
     size_t countByProcess(TenantId tenantId, ProcessId processId) {
         return findByProcess(tenantId, processId).length;

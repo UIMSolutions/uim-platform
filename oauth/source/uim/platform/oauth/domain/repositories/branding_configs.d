@@ -11,7 +11,7 @@ import uim.platform.oauth;
 
 @safe:
 
-interface BrandingConfigRepository : ITenantRepository!(BrandingConfig, BrandingConfigId) {
+interface BrandingConfigRepository : ITentRepository!(BrandingConfig, BrandingConfigId) {
 
     bool existsByName(TenantId tenantId, string name);
     BrandingConfig findByName(TenantId tenantId, string name);

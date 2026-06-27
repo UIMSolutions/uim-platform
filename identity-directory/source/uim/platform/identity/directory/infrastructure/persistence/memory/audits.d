@@ -13,7 +13,7 @@ import uim.platform.identity.directory;
 
 @safe:
 /// In-memory adapter for audit event persistence (append-only).
-class MemoryAuditRepository : TenantRepository!(AuditEvent, AuditEventId), AuditRepository {
+class MemoryAuditRepository : TentRepository!(AuditEvent, AuditEventId), AuditRepository {
 
   size_t countByActor(string actorId) {
     return findByActor(actorId).length;

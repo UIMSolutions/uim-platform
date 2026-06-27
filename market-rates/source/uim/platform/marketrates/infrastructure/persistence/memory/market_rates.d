@@ -12,7 +12,7 @@ import std.array     : array;
 
 @safe:
 
-class MemoryMarketRateRepository : TenantRepository!(MarketRate, MarketRateId), MarketRateRepository {
+class MemoryMarketRateRepository : TentRepository!(MarketRate, MarketRateId), MarketRateRepository {
 
   override MarketRate[] findByProvider(TenantId t, string code) {
     return findByTenant(t).filter!(r => r.providerCode == code).array;

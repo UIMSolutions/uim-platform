@@ -11,7 +11,7 @@ import uim.platform.identity.authentication;
 // mixin(ShowModule!());
 @safe:
 /// Port: outgoing — user persistence.
-interface UserRepository : ITenantRepository!(User, UserId) {
+interface UserRepository : ITentRepository!(User, UserId) {
 
   bool existsByEmail(TenantId tenantId, string email);
   User findByEmail(TenantId tenantId, string email);

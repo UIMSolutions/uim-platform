@@ -10,7 +10,7 @@ import uim.platform.process_automation;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryProcessRepository : TenantRepository!(Process, ProcessId), ProcessRepository {
+class MemoryProcessRepository : TentRepository!(Process, ProcessId), ProcessRepository {
     size_t countByProject(TenantId tenantId, ProjectId projectId) {
         return findByProject(tenantId, projectId).length;
     }

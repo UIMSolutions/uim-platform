@@ -12,7 +12,7 @@ import uim.platform.integration.automation;
 
 @safe:
 /// Port for persisting and querying workflow steps.
-interface StepRepository : ITenantRepository!(WorkflowStep, WorkflowStepId) {
+interface StepRepository : ITentRepository!(WorkflowStep, WorkflowStepId) {
   
   bool existsBySequence(TenantId tenantId, WorkflowId workflowId, int sequenceNumber);
   WorkflowStep findBySequence(TenantId tenantId, WorkflowId workflowId, int sequenceNumber);

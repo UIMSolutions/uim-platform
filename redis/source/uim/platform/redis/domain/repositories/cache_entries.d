@@ -11,7 +11,7 @@ import uim.platform.redis;
 
 @safe:
 
-interface CacheEntryRepository : ITenantRepository!(CacheEntry, CacheEntryId) {
+interface CacheEntryRepository : ITentRepository!(CacheEntry, CacheEntryId) {
     CacheEntry[] findByInstance(TenantId tenantId, ServiceInstanceId instanceId);
     CacheEntry   findByKey(TenantId tenantId, ServiceInstanceId instanceId, string key);
     CacheEntry[] findByType(TenantId tenantId, ServiceInstanceId instanceId, CacheEntryType entryType);

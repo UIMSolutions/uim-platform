@@ -10,7 +10,7 @@ import uim.platform.health_fhir;
 
 @safe:
 
-interface ObservationRepository : ITenantRepository!(Observation, ObservationId) {
+interface ObservationRepository : ITentRepository!(Observation, ObservationId) {
   bool existsById(TenantId tenantId, ObservationId id);
   Observation findById(TenantId tenantId, ObservationId id);
   void removeById(TenantId tenantId, ObservationId id);

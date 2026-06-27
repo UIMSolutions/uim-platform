@@ -11,7 +11,7 @@ import uim.platform.postgres;
 
 @safe:
 
-interface DatabaseUserRepository : ITenantRepository!(DatabaseUser, DatabaseUserId) {
+interface DatabaseUserRepository : ITentRepository!(DatabaseUser, DatabaseUserId) {
     DatabaseUser[] findByInstance(TenantId tenantId, ServiceInstanceId instanceId);
     DatabaseUser[] findByStatus(TenantId tenantId, UserStatus status);
     bool usernameExists(TenantId tenantId, ServiceInstanceId instanceId, string username);

@@ -12,7 +12,7 @@ import uim.platform.responsibility;
 @safe:
 
 class MemoryDeterminationLogRepository
-    : TenantRepository!(DeterminationLog, DeterminationLogId),
+    : TentRepository!(DeterminationLog, DeterminationLogId),
       DeterminationLogRepository {
 
     DeterminationLog[] findByContext(TenantId tenantId, string contextId) {

@@ -13,7 +13,7 @@ import uim.platform.integration.automation.domain.ports;
 
  
 
-class MemoryWorkflowRepository : TenantRepository!(Workflow, WorkflowId), WorkflowRepository {
+class MemoryWorkflowRepository : TentRepository!(Workflow, WorkflowId), WorkflowRepository {
 
   size_t countByScenario(TenantId tenantId, ScenarioId scenarioId) {
     return findByScenario(tenantId, scenarioId).length;

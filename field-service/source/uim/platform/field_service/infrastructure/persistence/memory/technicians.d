@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryTechnicianRepository : TenantRepository!(Technician, TechnicianId), TechnicianRepository {
+class MemoryTechnicianRepository : TentRepository!(Technician, TechnicianId), TechnicianRepository {
 
     size_t countByStatus(TenantId tenantId, TechnicianStatus status) {
         return findByStatus(tenantId, status).length;

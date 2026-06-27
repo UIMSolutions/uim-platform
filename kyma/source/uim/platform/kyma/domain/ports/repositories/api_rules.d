@@ -12,7 +12,7 @@ import uim.platform.kyma;
 
 @safe:
 /// Port: outgoing — API rule persistence.
-interface ApiRuleRepository : ITenantRepository!(ApiRule, ApiRuleId) {
+interface ApiRuleRepository : ITentRepository!(ApiRule, ApiRuleId) {
 
   bool existsByName(TenantId tenantId, NamespaceId nsId, string name);
   ApiRule findByName(TenantId tenantId, NamespaceId nsId, string name);

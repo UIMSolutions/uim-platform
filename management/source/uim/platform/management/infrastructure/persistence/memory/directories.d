@@ -14,7 +14,7 @@ import uim.platform.management;
 
 // mixin(ShowModule!());
 @safe:
-class MemoryDirectoryRepository : TenantRepository!(Directory, DirectoryId), DirectoryRepository {
+class MemoryDirectoryRepository : TentRepository!(Directory, DirectoryId), DirectoryRepository {
 
   // #region ByGlobalAccount
   size_t countByGlobalAccount(TenantId tenantId, GlobalAccountId globalAccountId) {

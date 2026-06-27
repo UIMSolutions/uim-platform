@@ -11,7 +11,7 @@ import uim.platform.hana;
 // mixin(ShowModule!());
 
 @safe:
-interface AlertRepository : ITenantRepository!(Alert, AlertId){
+interface AlertRepository : ITentRepository!(Alert, AlertId){
 
   size_t countByInstance(TenantId tenantId, DatabaseInstanceId instanceId);
   Alert[] findByInstance(TenantId tenantId, DatabaseInstanceId instanceId);

@@ -11,7 +11,7 @@ import uim.platform.logging;
 // mixin(ShowModule!());
 
 @safe:
-interface RetentionPolicyRepository : ITenantRepository!(RetentionPolicy, RetentionPolicyId) {
+interface RetentionPolicyRepository : ITentRepository!(RetentionPolicy, RetentionPolicyId) {
 
   bool existsDefault(TenantId tenantId);
   RetentionPolicy findDefault(TenantId tenantId);

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface AssignmentRepository : ITenantRepository!(Assignment, AssignmentId) {
+interface AssignmentRepository : ITentRepository!(Assignment, AssignmentId) {
 
     size_t countByActivity(TenantId tenantId, ActivityId activityId);
     Assignment[] findByActivity(TenantId tenantId, ActivityId activityId);

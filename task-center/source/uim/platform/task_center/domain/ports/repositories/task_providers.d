@@ -11,7 +11,7 @@ import uim.platform.task_center;
 
 @safe:
 
-interface TaskProviderRepository : ITenantRepository!(TaskProvider, TaskProviderId) {
+interface TaskProviderRepository : ITentRepository!(TaskProvider, TaskProviderId) {
 
     bool existsByName(TenantId tenantId, string name);
     TaskProvider findByName(TenantId tenantId, string name);

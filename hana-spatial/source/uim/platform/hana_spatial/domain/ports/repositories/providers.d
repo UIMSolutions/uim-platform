@@ -10,7 +10,7 @@ import uim.platform.hana_spatial;
 // mixin(ShowModule!());
 
 @safe:
-interface ProviderRepository : ITenantRepository!(Provider, ProviderId) {
+interface ProviderRepository : ITentRepository!(Provider, ProviderId) {
   Provider[] findByType(TenantId tenantId, ProviderType type);
   Provider[] findActive(TenantId tenantId);
   Provider[] findByStatus(TenantId tenantId, ProviderStatus status);

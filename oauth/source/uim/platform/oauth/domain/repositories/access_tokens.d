@@ -11,7 +11,7 @@ import uim.platform.oauth;
 
 @safe:
 
-interface AccessTokenRepository : ITenantRepository!(AccessToken, AccessTokenId) {
+interface AccessTokenRepository : ITentRepository!(AccessToken, AccessTokenId) {
 
     bool existsByTokenValue(TenantId tenantId, string tokenValue);
     AccessToken findByTokenValue(TenantId tenantId, string tokenValue);

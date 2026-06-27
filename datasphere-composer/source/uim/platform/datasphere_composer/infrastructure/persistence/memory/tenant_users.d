@@ -11,7 +11,7 @@ import uim.platform.datasphere_composer;
 
 @safe:
 class MemoryTenantUserRepository
-    : TenantRepository!(TenantUser, TenantUserId),
+    : TentRepository!(TenantUser, TenantUserId),
       TenantUserRepository {
 
   TenantUser[] findByRole(TenantId tenantId, TenantUserRole role) {

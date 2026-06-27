@@ -12,7 +12,7 @@ import uim.platform.workzone;
 // mixin(ShowModule!());
 
 @safe:
-interface WidgetRepository : ITenantRepository!(Widget, WidgetId) {
+interface WidgetRepository : ITentRepository!(Widget, WidgetId) {
 
   size_t countBySite(TenantId tenantId, SiteId siteId);
   Widget[] findBySite(TenantId tenantId, SiteId siteId);

@@ -13,7 +13,7 @@ import uim.platform.keystore;
 
 @safe:
 
-interface KeyEntryRepository : ITenantRepository!(KeyEntry, KeyEntryId) {
+interface KeyEntryRepository : ITentRepository!(KeyEntry, KeyEntryId) {
 
   bool existsByAlias(TenantId tenantId, KeystoreId keystoreId, string alias_);
   KeyEntry findByAlias(TenantId tenantId, KeystoreId keystoreId, string alias_);

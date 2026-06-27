@@ -10,7 +10,7 @@ import uim.platform.dms.application;
 
 // mixin(ShowModule!());
 @safe:
-interface IFolderRepository : ITenantRepository!(Folder, FolderId) {
+interface IFolderRepository : ITentRepository!(Folder, FolderId) {
   bool existsByPath(TenantId tenantId, RepositoryId repositoryId, string path);
   Folder findByPath(TenantId tenantId, RepositoryId repositoryId, string path);
   void removeByPath(TenantId tenantId, RepositoryId repositoryId, string path);

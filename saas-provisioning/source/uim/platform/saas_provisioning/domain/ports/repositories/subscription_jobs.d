@@ -12,7 +12,7 @@ import uim.platform.saas_provisioning;
 @safe:
 
 /// Port: persistence contract for the SubscriptionJob aggregate.
-interface SubscriptionJobRepository : ITenantRepository!(SubscriptionJob, SubscriptionJobId) {
+interface SubscriptionJobRepository : ITentRepository!(SubscriptionJob, SubscriptionJobId) {
     /// Retrieve all jobs associated with a given subscription record.
     SubscriptionJob[] findBySubscription(TenantId tenantId, string subscriptionId);
 }

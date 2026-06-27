@@ -11,7 +11,7 @@ import uim.platform.postgres;
 
 @safe:
 
-interface ServiceInstanceRepository : ITenantRepository!(ServiceInstance, ServiceInstanceId) {
+interface ServiceInstanceRepository : ITentRepository!(ServiceInstance, ServiceInstanceId) {
     ServiceInstance[] findByStatus(TenantId tenantId, InstanceStatus status);
     ServiceInstance[] findByPlan(TenantId tenantId, ServicePlanId planId);
     ServiceInstance[] findByHyperscaler(TenantId tenantId, Hyperscaler hyperscaler);

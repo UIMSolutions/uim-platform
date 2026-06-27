@@ -17,7 +17,7 @@ import std.string   : lastIndexOf;
 @safe:
 
 class FileConfigurationRepository
-    : TenantRepository!(Configuration, ConfigurationId)
+    : TentRepository!(Configuration, ConfigurationId)
     , ConfigurationRepository
 {
     private string _basePath;

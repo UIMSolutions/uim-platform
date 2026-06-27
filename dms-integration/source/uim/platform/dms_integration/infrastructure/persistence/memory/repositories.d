@@ -11,7 +11,7 @@ import uim.platform.dms_integration;
 
 @safe:
 
-class MemoryRepositoryRepository : TenantRepository!(Repository_, RepositoryId), RepositoryRepository {
+class MemoryRepositoryRepository : TentRepository!(Repository_, RepositoryId), RepositoryRepository {
 
     size_t countByStatus(TenantId tenantId, RepositoryStatus status) {
         return findByStatus(tenantId, status).length;

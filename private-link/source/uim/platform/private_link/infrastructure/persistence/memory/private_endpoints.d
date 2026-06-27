@@ -10,7 +10,7 @@ import uim.platform.private_link;
 
 @safe:
 class MemoryPrivateEndpointRepository
-    : TenantRepository!(PrivateEndpoint, PrivateEndpointId),
+    : TentRepository!(PrivateEndpoint, PrivateEndpointId),
       PrivateEndpointRepository {
 
   PrivateEndpoint[] findByServiceInstance(TenantId tenantId, ServiceInstanceId instanceId) {

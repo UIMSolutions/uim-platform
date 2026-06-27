@@ -16,7 +16,7 @@ import uim.platform.logging;
 
 @safe:
 
-class MemorySpanRepository : TenantRepository!(Span, SpanId), SpanRepository {
+class MemorySpanRepository : TentRepository!(Span, SpanId), SpanRepository {
 
   Span[] findByTrace(TenantId tenantId, TraceId traceId) {
     return findByTenant(tenantId).filter!(s => s.traceId == traceId).array;

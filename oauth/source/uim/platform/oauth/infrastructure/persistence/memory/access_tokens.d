@@ -11,7 +11,7 @@ import uim.platform.oauth;
 
 @safe:
 
-class MemoryAccessTokenRepository : TenantRepository!(AccessToken, AccessTokenId), AccessTokenRepository {
+class MemoryAccessTokenRepository : TentRepository!(AccessToken, AccessTokenId), AccessTokenRepository {
 
     bool existsByTokenValue(TenantId tenantId, string tokenValue) {
         foreach (e; findByTenant(tenantId))

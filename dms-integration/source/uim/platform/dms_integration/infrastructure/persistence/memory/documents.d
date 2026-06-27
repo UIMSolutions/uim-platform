@@ -11,7 +11,7 @@ import uim.platform.dms_integration;
 
 @safe:
 
-class MemoryDocumentRepository : TenantRepository!(Document, DocumentId), DocumentRepository {
+class MemoryDocumentRepository : TentRepository!(Document, DocumentId), DocumentRepository {
 
     size_t countByRepository(TenantId tenantId, RepositoryId repositoryId) {
         return findByRepository(tenantId, repositoryId).length;

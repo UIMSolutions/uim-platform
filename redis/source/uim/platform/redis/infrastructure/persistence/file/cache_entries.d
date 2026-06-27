@@ -17,7 +17,7 @@ import std.conv   : to;
 @safe:
 
 class FileCacheEntryRepository
-    : TenantRepository!(CacheEntry, CacheEntryId)
+    : TentRepository!(CacheEntry, CacheEntryId)
     , CacheEntryRepository
 {
     private string _basePath;

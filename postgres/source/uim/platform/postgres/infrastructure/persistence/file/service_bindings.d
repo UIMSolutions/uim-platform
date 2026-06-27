@@ -18,7 +18,7 @@ import std.string   : lastIndexOf;
 @safe:
 
 class FileServiceBindingRepository
-    : TenantRepository!(ServiceBinding, ServiceBindingId)
+    : TentRepository!(ServiceBinding, ServiceBindingId)
     , ServiceBindingRepository
 {
     private string _basePath;

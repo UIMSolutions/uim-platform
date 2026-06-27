@@ -3,7 +3,7 @@ import uim.platform.snowflake;
 // mixin(ShowModule!());
 @safe:
 class MemorySnowflakeRoleRepository
-    : TenantRepository!(SnowflakeRole, SnowflakeRoleId),
+    : TentRepository!(SnowflakeRole, SnowflakeRoleId),
       SnowflakeRoleRepository {
 
   SnowflakeRole[] findByAccount(TenantId tenantId, SnowflakeAccountId accountId) {

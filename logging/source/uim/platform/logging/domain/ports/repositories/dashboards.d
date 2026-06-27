@@ -11,7 +11,7 @@ import uim.platform.logging;
 // mixin(ShowModule!());
 
 @safe:
-interface DashboardRepository : ITenantRepository!(Dashboard, DashboardId) {
+interface DashboardRepository : ITentRepository!(Dashboard, DashboardId) {
 
   bool existsDefault(TenantId tenantId);
   Dashboard findDefault(TenantId tenantId);

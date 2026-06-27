@@ -11,7 +11,7 @@ import uim.platform.oauth;
 
 @safe:
 
-class MemoryOAuthScopeRepository : TenantRepository!(OAuthScope, OAuthScopeId), OAuthScopeRepository {
+class MemoryOAuthScopeRepository : TentRepository!(OAuthScope, OAuthScopeId), OAuthScopeRepository {
 
     bool existsByName(TenantId tenantId, string name) {
         return findByTenant(tenantId).any!(e => e.name == name);

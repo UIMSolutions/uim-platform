@@ -6,7 +6,7 @@ import uim.platform.integration_suite;
 @safe:
 
 class MemoryIntegrationFlowRepository
-    : TenantRepository!(IntegrationFlow, IntegrationFlowId),
+    : TentRepository!(IntegrationFlow, IntegrationFlowId),
       IntegrationFlowRepository {
 
   IntegrationFlow[] findByPackage(TenantId tenantId, IntegrationPackageId packageId) {

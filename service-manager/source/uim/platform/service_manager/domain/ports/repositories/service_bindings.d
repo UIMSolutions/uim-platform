@@ -6,7 +6,7 @@ import uim.platform.service_manager;
 
 @safe:
 
-interface ServiceBindingRepository : ITenantRepository!(ServiceBinding, ServiceBindingId) {
+interface ServiceBindingRepository : ITentRepository!(ServiceBinding, ServiceBindingId) {
 
     size_t countByStatus(TenantId tenantId, ServiceBindingStatus status);
     ServiceBinding[] findByStatus(TenantId tenantId, ServiceBindingStatus status);

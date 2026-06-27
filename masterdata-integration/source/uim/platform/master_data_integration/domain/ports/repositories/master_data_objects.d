@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — master data object persistence.
-interface MasterDataObjectRepository : ITenantRepository!(MasterDataObject, MasterDataObjectId) {
+interface MasterDataObjectRepository : ITentRepository!(MasterDataObject, MasterDataObjectId) {
 
   bool existsByGlobal(TenantId tenantId, string globalId);
   MasterDataObject findByGlobal(TenantId tenantId, string globalId);

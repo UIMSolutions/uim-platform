@@ -12,7 +12,7 @@ import uim.platform.dms.application;
 
 // mixin(ShowModule!());
 @safe:
-class MemoryRepositoryRepository : TenantRepository!(Repository, RepositoryId), IRepositoryRepository {
+class MemoryRepositoryRepository : TentRepository!(Repository, RepositoryId), IRepositoryRepository {
   // #region byName
   bool existsByName(TenantId tenantId, string name) {
     return findByTenant(tenantId).any!(e => e.name == name);

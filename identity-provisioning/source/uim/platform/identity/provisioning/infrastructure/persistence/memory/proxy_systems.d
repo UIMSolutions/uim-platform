@@ -13,7 +13,7 @@ import uim.platform.identity.provisioning;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryProxySystemRepository : TenantRepository!(ProxySystem, ProxySystemId), ProxySystemRepository {
+class MemoryProxySystemRepository : TentRepository!(ProxySystem, ProxySystemId), ProxySystemRepository {
 
   bool existsByName(TenantId tenantId, string name) {
     return findByName(tenantId, name) !is null;

@@ -8,7 +8,7 @@ module uim.platform.datasphere_composer.domain.ports.repositories.attribute_mapp
 import uim.platform.datasphere_composer;
 
 @safe:
-interface AttributeMappingRepository : ITenantRepository!(AttributeMapping, AttributeMappingId) {
+interface AttributeMappingRepository : ITentRepository!(AttributeMapping, AttributeMappingId) {
   AttributeMapping[] findByConfig(TenantId tenantId, DataSourceConfigId configId);
   AttributeMapping[] findByTarget(TenantId tenantId, string targetAttributeName);
 }

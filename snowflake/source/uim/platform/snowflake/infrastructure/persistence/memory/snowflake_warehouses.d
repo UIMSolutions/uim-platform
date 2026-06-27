@@ -3,7 +3,7 @@ import uim.platform.snowflake;
 // mixin(ShowModule!());
 @safe:
 class MemorySnowflakeWarehouseRepository
-    : TenantRepository!(SnowflakeWarehouse, SnowflakeWarehouseId),
+    : TentRepository!(SnowflakeWarehouse, SnowflakeWarehouseId),
       SnowflakeWarehouseRepository {
 
   SnowflakeWarehouse[] findByAccount(TenantId tenantId, SnowflakeAccountId accountId) {

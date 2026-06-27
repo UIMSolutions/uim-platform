@@ -12,7 +12,7 @@ import uim.platform.saas_provisioning;
 @safe:
 
 /// Port: persistence contract for the AppSubscription aggregate root.
-interface AppSubscriptionRepository : ITenantRepository!(AppSubscription, AppSubscriptionId) {
+interface AppSubscriptionRepository : ITentRepository!(AppSubscription, AppSubscriptionId) {
     /// List all subscriptions to a specific application (provider view).
     AppSubscription[] findByAppName(TenantId tenantId, string appName);
 

@@ -10,7 +10,7 @@ import uim.platform.hana_spatial;
 // mixin(ShowModule!());
 
 @safe:
-interface GeofenceZoneRepository : ITenantRepository!(GeofenceZone, GeofenceZoneId) {
+interface GeofenceZoneRepository : ITentRepository!(GeofenceZone, GeofenceZoneId) {
   GeofenceZone[] findActive(TenantId tenantId);
   GeofenceZone[] findByShape(TenantId tenantId, GeofenceShapeType shape);
 }

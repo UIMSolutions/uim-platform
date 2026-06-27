@@ -13,7 +13,7 @@ import uim.platform.keystore;
 
 @safe:
 
-interface KeyPasswordRepository : ITenantRepository!(KeyPassword, KeyPasswordId) {
+interface KeyPasswordRepository : ITentRepository!(KeyPassword, KeyPasswordId) {
 
   bool existsByAlias(TenantId tenantId, string accountId, string applicationId, string alias_);
   KeyPassword findByAlias(TenantId tenantId, string accountId, string applicationId, string alias_);

@@ -12,7 +12,7 @@ import uim.platform.print;
 @safe:
 
 class MemoryPrintDocumentRepository
-    : TenantRepository!(PrintDocument, PrintDocumentId), PrintDocumentRepository {
+    : TentRepository!(PrintDocument, PrintDocumentId), PrintDocumentRepository {
 
     PrintDocument[] findByFormat(TenantId tenantId, DocumentFormat format) {
         return findByTenant(tenantId).filter!(d => d.format == format).array;

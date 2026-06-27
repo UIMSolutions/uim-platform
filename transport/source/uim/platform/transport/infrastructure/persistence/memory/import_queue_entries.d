@@ -11,7 +11,7 @@ import uim.platform.transport;
 
 @safe:
 
-class MemoryImportQueueEntryRepository : TenantRepository!(ImportQueueEntry, ImportQueueEntryId), ImportQueueEntryRepository {
+class MemoryImportQueueEntryRepository : TentRepository!(ImportQueueEntry, ImportQueueEntryId), ImportQueueEntryRepository {
 
     ImportQueueEntry[] findByNode(TenantId tenantId, TransportNodeId nodeId) {
         return findByTenant(tenantId).filter!(e => e.nodeId.value == nodeId.value).array;

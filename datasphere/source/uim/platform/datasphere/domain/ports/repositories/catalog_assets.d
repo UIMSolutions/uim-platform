@@ -11,7 +11,7 @@ import uim.platform.datasphere;
 // mixin(ShowModule!()); 
 
 @safe:
-interface CatalogAssetRepository : ITenantRepository!(CatalogAsset, CatalogAssetId) {
+interface CatalogAssetRepository : ITentRepository!(CatalogAsset, CatalogAssetId) {
 
   bool existsById(TenantId tenantId, SpaceId spaceId, CatalogAssetId id);
   CatalogAsset findById(TenantId tenantId, SpaceId spaceId, CatalogAssetId id);

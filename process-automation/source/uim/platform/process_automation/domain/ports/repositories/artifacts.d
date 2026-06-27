@@ -11,7 +11,7 @@ import uim.platform.process_automation;
 // mixin(ShowModule!());
 
 @safe:
-interface ArtifactRepository : ITenantRepository!(Artifact, ArtifactId) {
+interface ArtifactRepository : ITentRepository!(Artifact, ArtifactId) {
 
     Artifact[] findByType(TenantId tenantId, ArtifactType type);
 

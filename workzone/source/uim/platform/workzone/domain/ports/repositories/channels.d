@@ -11,7 +11,7 @@ import uim.platform.workzone;
 // mixin(ShowModule!());
 
 @safe:
-interface ChannelRepository : ITenantRepository!(Channel, ChannelId) {
+interface ChannelRepository : ITentRepository!(Channel, ChannelId) {
 
   size_t countByWorkspace(TenantId tenantId, WorkspaceId workspaceId);
   Channel[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId);

@@ -12,7 +12,7 @@ import uim.platform.monitoring;
 
 @safe:
 /// Port: outgoing - health check result persistence.
-interface HealthCheckResultRepository : ITenantRepository!(HealthCheckResult, HealthCheckResultId) {
+interface HealthCheckResultRepository : ITentRepository!(HealthCheckResult, HealthCheckResultId) {
 
   HealthCheckResult findLatestByCheck(TenantId tenantId, HealthCheckId checkId);
 

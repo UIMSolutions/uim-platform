@@ -11,7 +11,7 @@ import uim.platform.masterdata_governance;
 
 @safe:
 
-interface ReplicationRepository : ITenantRepository!(Replication, ReplicationId) {
+interface ReplicationRepository : ITentRepository!(Replication, ReplicationId) {
 
     size_t countByStatus(TenantId tenantId, ReplicationStatus status);
     Replication[] findByStatus(TenantId tenantId, ReplicationStatus status);

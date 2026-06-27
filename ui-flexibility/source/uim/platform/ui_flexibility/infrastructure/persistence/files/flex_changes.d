@@ -12,7 +12,7 @@ import uim.platform.ui_flexibility;
 
 /// File-backed FlexChange repository.
 /// Stores each change as a JSON file: {basePath}/FlexChange_{tenantId}_{id}.json
-class FileFlexChangeRepository : TenantRepository!(FlexChange, FlexChangeId), FlexChangeRepository {
+class FileFlexChangeRepository : TentRepository!(FlexChange, FlexChangeId), FlexChangeRepository {
   private string basePath;
 
   this(string basePath) {

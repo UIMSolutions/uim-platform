@@ -11,7 +11,7 @@ import uim.platform.oauth;
 
 @safe:
 
-interface OAuthScopeRepository  : ITenantRepository!(OAuthScope, OAuthScopeId) {
+interface OAuthScopeRepository  : ITentRepository!(OAuthScope, OAuthScopeId) {
 
     size_t countByApplication(TenantId tenantId, string applicationId);
     OAuthScope[] findByApplication(TenantId tenantId, string applicationId);

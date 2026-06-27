@@ -12,7 +12,7 @@ import uim.platform.logging;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryDashboardRepository : TenantRepository!(Dashboard, DashboardId), DashboardRepository {
+class MemoryDashboardRepository : TentRepository!(Dashboard, DashboardId), DashboardRepository {
 
   bool existsDefault(TenantId tenantId) {
     return findByTenant(tenantId).any!(d => d.isDefault);

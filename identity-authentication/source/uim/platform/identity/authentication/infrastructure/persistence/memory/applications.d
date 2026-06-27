@@ -13,17 +13,13 @@ import uim.platform.identity.authentication;
 // mixin(ShowModule!());
 @safe:
 /// In-memory adapter for application/service provider persistence.
-class MemoryApplicationRepository : ApplicationRepository {
+class MemoryApplicationRepository : TentRepository!(Application, ApplicationId), ApplicationRepository {
   
-  bool existsByClient(string clientId) {
-    foreach (a; findByTenant(tenantId)) {
-      if (a.clientId == clientId)
-        return true;
-    }
-    return false;
+  bool existsByClient(TenantId tenantId, string clientId) {
+    return findByTenant(tenantId).any!(item => item.clientId == clientId);
   }
 
-  Application findByClient(string clientId) {
+  Application findByClient(TenantId tenantId, string clientId) {
     foreach (a; findByTenant(tenantId)) {
       if (a.clientId == clientId)
         return a;
@@ -31,4 +27,7 @@ class MemoryApplicationRepository : ApplicationRepository {
     return Application.init;
   }
 
+  void removeByClient(TenantId tenantId, string clientId) {
+    remove(findByClient(tenantId, clientId));
+  }
 }

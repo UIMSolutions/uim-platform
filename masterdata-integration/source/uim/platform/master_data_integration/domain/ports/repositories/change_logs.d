@@ -14,7 +14,7 @@ mixin(ShowModule!());
 @safe:
 
 /// Port: outgoing — change log persistence.
-interface ChangeLogRepository : ITenantRepository!(ChangeLogEntry, ChangeLogEntryId) {
+interface ChangeLogRepository : ITentRepository!(ChangeLogEntry, ChangeLogEntryId) {
 
   size_t countByObject(TenantId tenantId, MasterDataObjectId objectId);
   ChangeLogEntry[] findByObject(TenantId tenantId, MasterDataObjectId objectId);

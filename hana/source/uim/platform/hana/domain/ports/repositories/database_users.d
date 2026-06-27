@@ -11,7 +11,7 @@ import uim.platform.hana;
 // mixin(ShowModule!());
 
 @safe:
-interface DatabaseUserRepository : ITenantRepository!(DatabaseUser, DatabaseUserId) {
+interface DatabaseUserRepository : ITentRepository!(DatabaseUser, DatabaseUserId) {
 
   size_t countByInstance(DatabaseInstanceId instanceId);
   DatabaseUser[] findByInstance(DatabaseInstanceId instanceId);

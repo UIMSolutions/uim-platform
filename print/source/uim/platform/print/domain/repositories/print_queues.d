@@ -11,7 +11,7 @@ import uim.platform.print;
 
 @safe:
 
-interface PrintQueueRepository : ITenantRepository!(PrintQueue, PrintQueueId) {
+interface PrintQueueRepository : ITentRepository!(PrintQueue, PrintQueueId) {
     PrintQueue[] findByStatus(TenantId tenantId, PrintQueueStatus status);
     PrintQueue[] findByPrinter(TenantId tenantId, PrinterId printerId);
     PrintQueue findDefault(TenantId tenantId);

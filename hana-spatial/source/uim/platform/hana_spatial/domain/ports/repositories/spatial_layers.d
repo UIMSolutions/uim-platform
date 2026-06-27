@@ -10,7 +10,7 @@ import uim.platform.hana_spatial;
 // mixin(ShowModule!());
 
 @safe:
-interface SpatialLayerRepository : ITenantRepository!(SpatialLayer, SpatialLayerId) {
+interface SpatialLayerRepository : ITentRepository!(SpatialLayer, SpatialLayerId) {
   SpatialLayer[] findByType(TenantId tenantId, SpatialLayerType type);
   SpatialLayer[] findPublic(TenantId tenantId);
 }

@@ -6,7 +6,7 @@ import uim.platform.integration_suite;
 @safe:
 
 class MemoryTopicSubscriptionRepository
-    : TenantRepository!(TopicSubscription, TopicSubscriptionId),
+    : TentRepository!(TopicSubscription, TopicSubscriptionId),
       TopicSubscriptionRepository {
 
   TopicSubscription[] findByQueue(TenantId tenantId, MessageQueueId queueId) {

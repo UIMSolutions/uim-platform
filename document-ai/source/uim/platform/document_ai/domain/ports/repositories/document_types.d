@@ -11,7 +11,7 @@ import uim.platform.document_ai;
 // mixin(ShowModule!());
 
 @safe:
-interface DocumentTypeRepository : ITenantRepository!(DocumentType, DocumentTypeId) {
+interface DocumentTypeRepository : ITentRepository!(DocumentType, DocumentTypeId) {
 
   bool existsById(TenantId tenantId, DocumentTypeId id, ClientId clientId);
   DocumentType findById(TenantId tenantId, DocumentTypeId id, ClientId clientId);

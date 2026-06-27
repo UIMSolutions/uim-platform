@@ -14,7 +14,7 @@ mixin(ShowModule!());
 @safe:
 
 /// Port: outgoing — key mapping persistence.
-interface KeyMappingRepository : ITenantRepository!(KeyMapping, KeyMappingId) {
+interface KeyMappingRepository : ITentRepository!(KeyMapping, KeyMappingId) {
 
   size_t countByObject(TenantId tenantId, MasterDataObjectId objectId);
   KeyMapping[] findByObject(TenantId tenantId, MasterDataObjectId objectId);

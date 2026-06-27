@@ -11,7 +11,7 @@ import uim.platform.identity.authentication;
 // mixin(ShowModule!());
 @safe:
 /// Port: outgoing — application/service provider persistence.
-interface ApplicationRepository : ITenantRepository!(Application, ApplicationId) {
+interface ApplicationRepository : ITentRepository!(Application, ApplicationId) {
 
   bool existsByClient(string clientId);
   Application findByClient(string clientId);

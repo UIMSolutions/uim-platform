@@ -15,7 +15,7 @@ import uim.platform.monitoring;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryHealthCheckRepository : TenantRepository!(HealthCheck, HealthCheckId), HealthCheckRepository {
+class MemoryHealthCheckRepository : TentRepository!(HealthCheck, HealthCheckId), HealthCheckRepository {
 
   size_t countByResource(TenantId tenantId, MonitoredResourceId resourceId) {
     return findByResource(tenantId, resourceId).length;

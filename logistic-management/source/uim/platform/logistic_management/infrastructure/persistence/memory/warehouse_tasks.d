@@ -11,7 +11,7 @@ import std.array : array;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryWarehouseTaskRepository : TenantRepository!(WarehouseTask, WarehouseTaskId), WarehouseTaskRepository {
+class MemoryWarehouseTaskRepository : TentRepository!(WarehouseTask, WarehouseTaskId), WarehouseTaskRepository {
   override WarehouseTask[] findByWarehouseOrder(TenantId tenantId, WarehouseOrderId orderId) {
     return findAll(tenantId).filter!(t => t.warehouseOrderId.value == orderId.value).array;
   }

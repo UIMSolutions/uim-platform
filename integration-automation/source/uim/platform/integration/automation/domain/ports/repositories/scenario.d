@@ -12,7 +12,7 @@ import uim.platform.integration.automation;
 
 @safe:
 /// Port for persisting and querying integration scenarios.
-interface ScenarioRepository : ITenantRepository!(IntegrationScenario, IntegrationScenarioId) {
+interface ScenarioRepository : ITentRepository!(IntegrationScenario, IntegrationScenarioId) {
   size_t countByCategory(TenantId tenantId, ScenarioCategory category);
   IntegrationScenario[] findByCategory(TenantId tenantId, ScenarioCategory category);
   void removeByCategory(TenantId tenantId, ScenarioCategory category);

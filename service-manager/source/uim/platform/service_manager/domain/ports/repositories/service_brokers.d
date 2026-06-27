@@ -6,7 +6,7 @@ import uim.platform.service_manager;
 
 @safe:
 
-interface ServiceBrokerRepository : ITenantRepository!(ServiceBroker, ServiceBrokerId) {
+interface ServiceBrokerRepository : ITentRepository!(ServiceBroker, ServiceBrokerId) {
 
     size_t countByStatus(TenantId tenantId, ServiceBrokerStatus status);
     ServiceBroker[] findByStatus(TenantId tenantId, ServiceBrokerStatus status);

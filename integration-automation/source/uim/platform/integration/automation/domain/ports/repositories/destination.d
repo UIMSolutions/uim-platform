@@ -12,7 +12,7 @@ import uim.platform.integration.automation;
 
 @safe:
 /// Port for persisting and querying destinations.
-interface DestinationRepository : ITenantRepository!(Destination, DestinationId) {
+interface DestinationRepository : ITentRepository!(Destination, DestinationId) {
 
   bool existsByName(TenantId tenantId, string name);
   Destination findByName(TenantId tenantId, string name);

@@ -11,7 +11,7 @@ import uim.platform.service;
 
 @safe:
 /*
-class UIMTenantRepository {
+class UIMTentRepository {
   private IUIMTenant[UUID] tenants;
 
   this() {

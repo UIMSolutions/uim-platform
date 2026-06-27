@@ -11,7 +11,7 @@ import uim.platform.process_automation;
 // mixin(ShowModule!());
 
 @safe:
-interface AutomationRepository : ITenantRepository!(Automation, AutomationId) {
+interface AutomationRepository : ITentRepository!(Automation, AutomationId) {
 
     size_t countByProject(TenantId tenantId, ProjectId projectId);
     Automation[] findByProject(TenantId tenantId, ProjectId projectId);

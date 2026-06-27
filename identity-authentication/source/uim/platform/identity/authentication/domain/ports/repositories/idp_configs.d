@@ -12,7 +12,7 @@ import uim.platform.identity.authentication;
 
 @safe:
 /// Port: outgoing — external IdP configuration persistence.
-interface IdpConfigRepository : ITenantRepository!(IdpConfig, IdpConfigId) {
+interface IdpConfigRepository : ITentRepository!(IdpConfig, IdpConfigId) {
 
   bool existsDefaultForTenant(TenantId tenantId);
   IdpConfig findDefaultForTenant(TenantId tenantId);

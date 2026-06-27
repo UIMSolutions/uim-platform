@@ -9,7 +9,7 @@ import uim.platform.logistic_management;
 // mixin(ShowModule!());
 
 @safe:
-interface WarehouseTaskRepository : ITenantRepository!(WarehouseTask, WarehouseTaskId) {
+interface WarehouseTaskRepository : ITentRepository!(WarehouseTask, WarehouseTaskId) {
   WarehouseTask[] findByWarehouseOrder(TenantId tenantId, WarehouseOrderId orderId);
   WarehouseTask[] findByStatus(TenantId tenantId, WarehouseTaskStatus status);
   WarehouseTask[] findByTaskType(TenantId tenantId, WarehouseTaskType taskType);

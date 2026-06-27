@@ -12,7 +12,7 @@ import uim.platform.monitoring;
 
 @safe:
 /// Port: outgoing - metric data point persistence.
-interface MetricRepository : ITenantRepository!(Metric, MetricId) {
+interface MetricRepository : ITentRepository!(Metric, MetricId) {
 
     bool existsByName(TenantId tenantId, string metricName);
     Metric findByName(TenantId tenantId, string metricName);

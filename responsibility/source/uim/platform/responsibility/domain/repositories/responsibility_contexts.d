@@ -11,7 +11,7 @@ import uim.platform.responsibility;
 
 @safe:
 
-interface ResponsibilityContextRepository : ITenantRepository!(ResponsibilityContext, ResponsibilityContextId) {
+interface ResponsibilityContextRepository : ITentRepository!(ResponsibilityContext, ResponsibilityContextId) {
     ResponsibilityContext[] findByStatus(TenantId tenantId, ContextStatus status);
     ResponsibilityContext findByObjectType(TenantId tenantId, string objectType);
 }

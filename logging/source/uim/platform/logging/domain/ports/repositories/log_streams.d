@@ -11,7 +11,7 @@ import uim.platform.logging;
 // mixin(ShowModule!());
 
 @safe:
-interface LogStreamRepository : ITenantRepository!(LogStream, LogStreamId) {
+interface LogStreamRepository : ITentRepository!(LogStream, LogStreamId) {
 
   bool existsByName(TenantId tenantId, string name);
   LogStream findByName(TenantId tenantId, string name);

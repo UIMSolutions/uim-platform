@@ -11,7 +11,7 @@ import uim.platform.print;
 
 @safe:
 
-interface PrinterRepository : ITenantRepository!(Printer, PrinterId) {
+interface PrinterRepository : ITentRepository!(Printer, PrinterId) {
     Printer[] findByStatus(TenantId tenantId, PrinterStatus status);
     Printer[] findByClient(TenantId tenantId, PrintClientId clientId);
     Printer[] findByProtocol(TenantId tenantId, PrinterProtocol protocol);

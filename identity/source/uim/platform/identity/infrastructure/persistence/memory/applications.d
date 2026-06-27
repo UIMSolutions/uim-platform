@@ -11,7 +11,7 @@ import uim.platform.identity;
 
 @safe:
 
-class MemoryApplicationRepository : TenantRepository!(Application, ApplicationId), ApplicationRepository {
+class MemoryApplicationRepository : TentRepository!(Application, ApplicationId), ApplicationRepository {
     Application findByClient(TenantId tenantId, string clientId) {
         foreach (a; findByTenant(tenantId))
             if (a.clientId == clientId) return a;

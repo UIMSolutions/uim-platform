@@ -11,7 +11,7 @@ import uim.platform.personal_data;
 
 @safe:
 
-class MemoryProcessingPurposeRepository : TenantRepository!(ProcessingPurpose, ProcessingPurposeId), ProcessingPurposeRepository {
+class MemoryProcessingPurposeRepository : TentRepository!(ProcessingPurpose, ProcessingPurposeId), ProcessingPurposeRepository {
 
     size_t countByLegalBasis(TenantId tenantId, LegalBasis basis) {
         return findByLegalBasis(tenantId, basis).length;

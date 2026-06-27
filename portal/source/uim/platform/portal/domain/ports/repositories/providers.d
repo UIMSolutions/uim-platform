@@ -12,7 +12,7 @@ import uim.platform.portal;
 
 @safe:
 /// Port: outgoing — content provider persistence.
-interface ProviderRepository : ITenantRepository!(ContentProvider, ProviderId) {
+interface ProviderRepository : ITentRepository!(ContentProvider, ProviderId) {
 
   bool existsByName(string name);
   ContentProvider findByName(string name);

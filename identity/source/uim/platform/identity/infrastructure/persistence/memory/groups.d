@@ -11,7 +11,7 @@ import uim.platform.identity;
 
 @safe:
 
-class MemoryGroupRepository : TenantRepository!(IDMGroup, IDMGroupId), GroupRepository {
+class MemoryGroupRepository : TentRepository!(IDMGroup, IDMGroupId), GroupRepository {
     IDMGroup findByName(TenantId tenantId, string name) {
         foreach (g; findByTenant(tenantId))
             if (g.name == name) return g;

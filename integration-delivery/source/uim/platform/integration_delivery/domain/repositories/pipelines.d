@@ -11,7 +11,7 @@ import uim.platform.integration_delivery;
 
 @safe:
 
-interface PipelineRepository : ITenantRepository!(Pipeline, PipelineId) {
+interface PipelineRepository : ITentRepository!(Pipeline, PipelineId) {
     Pipeline[] findByStatus(TenantId tenantId, PipelineStatus status);
     Pipeline[] findByType(TenantId tenantId, PipelineType pipelineType);
 }

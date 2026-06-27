@@ -14,7 +14,7 @@ import uim.platform.mobile;
 
 @safe:
 
-class MemoryAppVersionRepository : TenantRepository!(AppVersion, AppVersionId), AppVersionRepository {
+class MemoryAppVersionRepository : TentRepository!(AppVersion, AppVersionId), AppVersionRepository {
 
 bool existsLatest(TenantId tenantId, MobileAppId appId, AppPlatform platform) {
     return findLatest(tenantId, appId, platform).id != AppVersionId.init;

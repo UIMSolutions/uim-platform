@@ -11,7 +11,7 @@ import uim.platform.print;
 
 @safe:
 
-interface PrintClientRepository : ITenantRepository!(PrintClient, PrintClientId) {
+interface PrintClientRepository : ITentRepository!(PrintClient, PrintClientId) {
     PrintClient[] findByStatus(TenantId tenantId, PrintClientStatus status);
     PrintClient findByToken(TenantId tenantId, string authToken);
 }

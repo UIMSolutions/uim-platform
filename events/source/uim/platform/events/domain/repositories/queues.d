@@ -11,7 +11,7 @@ import uim.platform.events;
 
 @safe:
 
-interface QueueRepository : ITenantRepository!(Queue, QueueId) {
+interface QueueRepository : ITentRepository!(Queue, QueueId) {
     size_t countByService(TenantId tenantId, MessagingServiceId serviceId);
     Queue[] findByService(TenantId tenantId, MessagingServiceId serviceId);
     Queue[] findByStatus(TenantId tenantId, QueueStatus status);

@@ -13,7 +13,7 @@ import uim.platform.job_scheduling;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryConfigurationRepository : TenantRepository!(Configuration, ConfigurationId), ConfigurationRepository {
+class MemoryConfigurationRepository : TentRepository!(Configuration, ConfigurationId), ConfigurationRepository {
     Configuration get(TenantId tenantId) {
         auto configs = findByTenant(tenantId);
         if (configs.length > 0) {

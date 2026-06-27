@@ -11,7 +11,7 @@ import uim.platform.responsibility;
 
 @safe:
 
-interface ResponsibilityDefinitionRepository : ITenantRepository!(ResponsibilityDefinition, ResponsibilityDefinitionId) {
+interface ResponsibilityDefinitionRepository : ITentRepository!(ResponsibilityDefinition, ResponsibilityDefinitionId) {
     ResponsibilityDefinition[] findByContext(TenantId tenantId, string contextId);
     ResponsibilityDefinition[] findByTeam(TenantId tenantId, string teamId);
     ResponsibilityDefinition[] findByRule(TenantId tenantId, string ruleId);

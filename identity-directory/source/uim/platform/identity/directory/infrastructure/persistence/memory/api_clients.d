@@ -13,7 +13,7 @@ import uim.platform.identity.directory;
 
 @safe:
 /// In-memory adapter for API client persistence.
-class MemoryApiClientRepository : TenantRepository!(ApiClient, ApiClientId), ApiClientRepository {
+class MemoryApiClientRepository : TentRepository!(ApiClient, ApiClientId), ApiClientRepository {
   bool existsByClient(string clientId) {
     return findByTenant(tenantId).any!(c => c.clientId == clientId);
   }

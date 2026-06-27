@@ -6,7 +6,7 @@ import uim.platform.integration_suite;
 @safe:
 
 class MemoryMessageMappingRepository
-    : TenantRepository!(MessageMapping, MessageMappingId),
+    : TentRepository!(MessageMapping, MessageMappingId),
       MessageMappingRepository {
 
   MessageMapping[] findByPackage(TenantId tenantId, IntegrationPackageId packageId) {

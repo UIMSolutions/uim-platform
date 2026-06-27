@@ -12,7 +12,7 @@ import uim.platform.events;
 @safe:
 
 class MemoryWebhookRepository
-    : TenantRepository!(Webhook, WebhookId), WebhookRepository {
+    : TentRepository!(Webhook, WebhookId), WebhookRepository {
 
     size_t countByService(TenantId tenantId, MessagingServiceId serviceId) {
         return findByService(tenantId, serviceId).length;

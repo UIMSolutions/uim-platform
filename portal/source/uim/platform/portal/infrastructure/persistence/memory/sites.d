@@ -13,7 +13,7 @@ import uim.platform.portal;
 // mixin(ShowModule!());
 
 @safe:
-class MemorySiteRepository : TenantRepository!(Site, SiteId), SiteRepository {
+class MemorySiteRepository : TentRepository!(Site, SiteId), SiteRepository {
 
   bool existsByAlias(TenantId tenantId, string alias_) {
     return findByTenant(tenantId).any!(s => s.alias_ == alias_);

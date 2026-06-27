@@ -17,7 +17,7 @@ import uim.platform.datasphere;
 
 @safe:
 
-class MemoryCatalogAssetRepository : TenantRepository!(CatalogAsset, CatalogAssetId), CatalogAssetRepository {
+class MemoryCatalogAssetRepository : TentRepository!(CatalogAsset, CatalogAssetId), CatalogAssetRepository {
 
   // #region ById
   bool existsById(TenantId tenantId, SpaceId spaceId, CatalogAssetId id) {

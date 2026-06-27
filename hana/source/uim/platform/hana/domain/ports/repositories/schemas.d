@@ -11,7 +11,7 @@ import uim.platform.hana;
 // mixin(ShowModule!());
 
 @safe:
-interface SchemaRepository : ITenantRepository!(Schema, SchemaId) {
+interface SchemaRepository : ITentRepository!(Schema, SchemaId) {
 
   size_t countByInstance(DatabaseInstanceId instanceId);
   Schema[] findByInstance(DatabaseInstanceId instanceId);

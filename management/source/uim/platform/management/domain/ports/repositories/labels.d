@@ -12,7 +12,7 @@ import uim.platform.management;
 
 @safe:
 /// Port: outgoing — label/tag persistence.
-interface LabelRepository : ITenantRepository!(Label, LabelId) {
+interface LabelRepository : ITentRepository!(Label, LabelId) {
 
   size_t countByResource(TenantId tenantId, LabeledResourceType resourceType, string resourceId);
   Label[] findByResource(TenantId tenantId, LabeledResourceType resourceType, string resourceId);

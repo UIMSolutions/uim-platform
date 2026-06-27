@@ -11,7 +11,7 @@ import uim.platform.datasphere_composer;
 
 @safe:
 class MemoryUnificationRuleRepository
-    : TenantRepository!(UnificationRule, UnificationRuleId),
+    : TentRepository!(UnificationRule, UnificationRuleId),
       UnificationRuleRepository {
 
   UnificationRule[] findByPriority(TenantId tenantId) {

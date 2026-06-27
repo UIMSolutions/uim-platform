@@ -12,7 +12,7 @@ import uim.platform.workzone;
 // mixin(ShowModule!());
 
 @safe:
-interface CardRepository : ITenantRepository!(Card, CardId) {
+interface CardRepository : ITentRepository!(Card, CardId) {
 
   size_t countByType(TenantId tenantId, CardType cardType);
   Card[] findByType(TenantId tenantId, CardType cardType);

@@ -11,7 +11,7 @@ import uim.platform.workzone;
 // mixin(ShowModule!());
 
 @safe:
-interface RoleRepository : ITenantRepository!(Role, RoleId) {
+interface RoleRepository : ITentRepository!(Role, RoleId) {
 
   size_t countByUser(TenantId tenantId, UserId userId);
   Role[] findByUser(TenantId tenantId, UserId userId);

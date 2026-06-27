@@ -20,7 +20,7 @@ template IdRepositoryTemplate(alias Repository, TEntity, TId) {
 	}
 }
 
-template TenantRepositoryTemplate(alias Repository, TEntity, TId) {
+template TentRepositoryTemplate(alias Repository, TEntity, TId) {
 	this() {
 		super();
 	}

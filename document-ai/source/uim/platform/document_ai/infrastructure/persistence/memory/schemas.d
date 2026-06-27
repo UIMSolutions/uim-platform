@@ -15,7 +15,7 @@ import uim.platform.document_ai;
 // mixin(ShowModule!());
 
 @safe:
-class MemorySchemaRepository : TenantRepository!(Schema, SchemaId), SchemaRepository {
+class MemorySchemaRepository : TentRepository!(Schema, SchemaId), SchemaRepository {
   
   
   Schema[] findByClient(ClientId clientId) {

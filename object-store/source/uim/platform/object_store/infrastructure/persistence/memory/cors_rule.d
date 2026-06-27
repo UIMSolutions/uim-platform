@@ -16,7 +16,7 @@ import uim.platform.object_store;
 mixin(ShowModule!());
 
 @safe:
-class MemoryCorsRuleRepository : TenantRepository!(CorsRule, CorsRuleId), CorsRuleRepository {
+class MemoryCorsRuleRepository : TentRepository!(CorsRule, CorsRuleId), CorsRuleRepository {
 
   size_t countByBucket(TenantId tenantId, BucketId bucketId) {
     return findByBucket(tenantId, bucketId).length;

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryChangeLogRepository : TenantRepository!(ChangeLogEntry, ChangeLogEntryId), ChangeLogRepository {
+class MemoryChangeLogRepository : TentRepository!(ChangeLogEntry, ChangeLogEntryId), ChangeLogRepository {
 
   // #region ByObject
   size_t countByObject(TenantId tenantId, MasterDataObjectId objectId) {

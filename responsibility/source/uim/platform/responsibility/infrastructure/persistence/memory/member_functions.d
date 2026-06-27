@@ -12,7 +12,7 @@ import uim.platform.responsibility;
 @safe:
 
 class MemoryMemberFunctionRepository
-    : TenantRepository!(MemberFunction, MemberFunctionId),
+    : TentRepository!(MemberFunction, MemberFunctionId),
       MemberFunctionRepository {
 
     MemberFunction[] findByStatus(TenantId tenantId, FunctionStatus status) {

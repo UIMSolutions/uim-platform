@@ -11,7 +11,7 @@ import uim.platform.oauth;
 
 @safe:
 
-class MemoryOAuthClientRepository : TenantRepository!(OAuthClient, OAuthClientId), OAuthClientRepository {
+class MemoryOAuthClientRepository : TentRepository!(OAuthClient, OAuthClientId), OAuthClientRepository {
 
     // #region ByClient
     bool existsByClient(TenantId tenantId, string clientId) {

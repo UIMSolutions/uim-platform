@@ -12,7 +12,7 @@ import uim.platform.masterdata_governance;
 @safe:
 
 class MemoryChangeRequestRepository
-    : TenantRepository!(ChangeRequest, ChangeRequestId), ChangeRequestRepository {
+    : TentRepository!(ChangeRequest, ChangeRequestId), ChangeRequestRepository {
 
     size_t countByStatus(TenantId tenantId, ChangeRequestStatus status) {
         return findByStatus(tenantId, status).length;

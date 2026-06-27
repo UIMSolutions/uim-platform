@@ -13,7 +13,7 @@ import uim.platform.identity.directory;
 
 @safe:
 /// Port: outgoing — custom schema persistence.
-interface SchemaRepository : ITenantRepository!(Schema, SchemaId) {
+interface SchemaRepository : ITentRepository!(Schema, SchemaId) {
 
   bool existsByName(TenantId tenantId, string name);
   Schema findByName(TenantId tenantId, string name);

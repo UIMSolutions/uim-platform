@@ -12,7 +12,7 @@ import uim.platform.portal;
 
 @safe:
 /// Port: outgoing — menu item persistence.
-interface MenuItemRepository : ITenantRepository!(MenuItem, MenuItemId) {
+interface MenuItemRepository : ITentRepository!(MenuItem, MenuItemId) {
 
   bool existsById(TenantId tenantId, MenuItemId id);
   MenuItem findById(TenantId tenantId, MenuItemId id);

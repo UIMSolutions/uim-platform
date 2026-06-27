@@ -11,7 +11,7 @@ import uim.platform.identity;
 
 @safe:
 
-interface ProvisioningJobRepository : ITenantRepository!(ProvisioningJob, ProvisioningJobId) {
+interface ProvisioningJobRepository : ITentRepository!(ProvisioningJob, ProvisioningJobId) {
 
     ProvisioningJob[] findByStatus(TenantId tenantId, JobStatus status);
     ProvisioningJob[] findByType(TenantId tenantId, JobType type_);

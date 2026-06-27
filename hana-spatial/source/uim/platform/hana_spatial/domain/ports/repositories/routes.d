@@ -10,7 +10,7 @@ import uim.platform.hana_spatial;
 // mixin(ShowModule!());
 
 @safe:
-interface RouteRepository : ITenantRepository!(Route, RouteId) {
+interface RouteRepository : ITentRepository!(Route, RouteId) {
   Route[] findByTravelMode(TenantId tenantId, TravelMode mode);
   Route[] findByProvider(TenantId tenantId, string providerId);
 }

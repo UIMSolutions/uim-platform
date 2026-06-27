@@ -11,7 +11,7 @@ import uim.platform.hana_spatial;
 
 @safe:
 class MemoryGeofenceZoneRepository
-  : TenantRepository!(GeofenceZone, GeofenceZoneId),
+  : TentRepository!(GeofenceZone, GeofenceZoneId),
     GeofenceZoneRepository {
 
   GeofenceZone[] findActive(TenantId tenantId) {

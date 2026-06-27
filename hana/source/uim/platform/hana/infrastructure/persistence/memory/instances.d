@@ -15,7 +15,7 @@ import uim.platform.hana;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryInstanceRepository : TenantRepository!(Instance, DatabaseInstanceId), InstanceRepository {
+class MemoryInstanceRepository : TentRepository!(Instance, DatabaseInstanceId), InstanceRepository {
 
   // TODO
   

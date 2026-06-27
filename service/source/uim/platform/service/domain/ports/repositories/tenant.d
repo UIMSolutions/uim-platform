@@ -6,7 +6,7 @@ import uim.platform.service;
 
 @safe:
 
-interface ITenantRepository(TEntity, TId) : IBaseRepository!TEntity /* : IIdRepository!(TEntity, TId) */ {
+interface ITentRepository(TEntity, TId) : IBaseRepository!TEntity /* : IIdRepository!(TEntity, TId) */ {
   
   // #region byTenant
   bool isTenantEmpty(TenantId tenantId);

@@ -11,7 +11,7 @@ import uim.platform.workzone;
 // mixin(ShowModule!());
 
 @safe:
-interface TagRepository : ITenantRepository!(Tag, TagId) {
+interface TagRepository : ITentRepository!(Tag, TagId) {
 
   bool existsByName(TenantId tenantId, string name);
   Tag findByName(TenantId tenantId, string name);

@@ -15,7 +15,7 @@ import uim.platform.workzone;
 
  
 
-class MemoryEventRepository : TenantRepository!(Event, EventId), EventRepository {
+class MemoryEventRepository : TentRepository!(Event, EventId), EventRepository {
 
   // #region ByWorkspace
   size_t countByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {

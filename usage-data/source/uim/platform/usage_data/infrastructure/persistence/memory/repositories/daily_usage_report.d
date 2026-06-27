@@ -11,7 +11,7 @@ import uim.platform.usage_data;
 @safe:
 /// In-memory adapter implementing DailyUsageReportRepository port.
 class MemoryDailyUsageReportRepository
-    : TenantRepository!(DailyUsageReport, DailyUsageReportId),
+    : TentRepository!(DailyUsageReport, DailyUsageReportId),
       DailyUsageReportRepository {
 
   DailyUsageReport[] findBySubaccount(TenantId tenantId, string subaccountId) {

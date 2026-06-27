@@ -12,7 +12,7 @@ import uim.platform.kyma;
 
 @safe:
 /// Port: outgoing — service binding persistence.
-interface ServiceBindingRepository : ITenantRepository!(ServiceBinding, ServiceBindingId) {
+interface ServiceBindingRepository : ITentRepository!(ServiceBinding, ServiceBindingId) {
   
   bool existsById(ServiceBindingId id);
   ServiceBinding findById(ServiceBindingId id);

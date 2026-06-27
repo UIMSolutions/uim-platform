@@ -10,7 +10,7 @@ import uim.platform.health_fhir;
 
 @safe:
 
-class MemoryPractitionerRepository : TenantRepository!(Practitioner, PractitionerId), PractitionerRepository {
+class MemoryPractitionerRepository : TentRepository!(Practitioner, PractitionerId), PractitionerRepository {
 
   bool existsById(TenantId tenantId, PractitionerId id) {
     return !findById(tenantId, id).isNull;

@@ -11,7 +11,7 @@ import uim.platform.personal_data;
 
 @safe:
 
-interface RegisteredApplicationRepository : ITenantRepository!(RegisteredApplication, RegisteredApplicationId) {
+interface RegisteredApplicationRepository : ITentRepository!(RegisteredApplication, RegisteredApplicationId) {
 
     bool existsByName(TenantId tenantId, string name);
     RegisteredApplication findByName(TenantId tenantId, string name);

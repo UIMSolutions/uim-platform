@@ -14,7 +14,7 @@ import uim.platform.destination;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryDestinationRepository : TenantRepository!(Destination, DestinationId), DestinationRepository {
+class MemoryDestinationRepository : TentRepository!(Destination, DestinationId), DestinationRepository {
 
   bool existsByName(TenantId tenantId, SubaccountId subaccountId, string name) {
     return findByTenant(tenantId).any!(e => e.subaccountId == subaccountId && e.name == name);

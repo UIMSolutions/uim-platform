@@ -14,7 +14,7 @@ import std.array : array;
 @safe:
 
 class MemoryConfigurationRepository
-    : TenantRepository!(Configuration, ConfigurationId)
+    : TentRepository!(Configuration, ConfigurationId)
     , ConfigurationRepository
 {
     override Configuration findByInstance(TenantId tenantId, ServiceInstanceId instanceId) {

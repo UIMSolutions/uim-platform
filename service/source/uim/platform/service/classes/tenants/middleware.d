@@ -11,9 +11,9 @@ import uim.platform.service;
 @safe:
 /*
 class UIMTenantMiddleware {
-  private SAPTenantRepository tenantRepository;
+  private SAPTentRepository tenantRepository;
 
-  this(SAPTenantRepository tenantRepository) {
+  this(SAPTentRepository tenantRepository) {
   this.tenantRepository = tenantRepository;
   }
 

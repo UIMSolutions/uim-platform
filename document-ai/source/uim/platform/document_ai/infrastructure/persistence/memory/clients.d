@@ -15,7 +15,7 @@ import uim.platform.document_ai;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryClientRepository : TenantRepository!(Client, ClientId), ClientRepository {
+class MemoryClientRepository : TentRepository!(Client, ClientId), ClientRepository {
 
   // TODO
 

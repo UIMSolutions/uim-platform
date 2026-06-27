@@ -10,7 +10,7 @@ import uim.platform.hana_spatial;
 // mixin(ShowModule!());
 
 @safe:
-interface GeocodingJobRepository : ITenantRepository!(GeocodingJob, GeocodingJobId) {
+interface GeocodingJobRepository : ITentRepository!(GeocodingJob, GeocodingJobId) {
   GeocodingJob[] findByStatus(TenantId tenantId, SpatialJobStatus status);
   GeocodingJob[] findByProvider(TenantId tenantId, string providerId);
 }

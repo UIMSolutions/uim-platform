@@ -12,7 +12,7 @@ import uim.platform.solution_lifecycle;
 @safe:
 
 class MemoryMtaSubscriptionRepository
-    : TenantRepository!(MtaSubscription, MtaSubscriptionId),
+    : TentRepository!(MtaSubscription, MtaSubscriptionId),
       MtaSubscriptionRepository
 {
     /// Find all subscriptions for a given provider MTA ID

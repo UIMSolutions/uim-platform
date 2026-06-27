@@ -13,7 +13,7 @@ import uim.platform.logging;
 
 @safe:
 
-class MemoryRetentionPolicyRepository : TenantRepository!(RetentionPolicy, RetentionPolicyId), RetentionPolicyRepository {
+class MemoryRetentionPolicyRepository : TentRepository!(RetentionPolicy, RetentionPolicyId), RetentionPolicyRepository {
 
   bool existsDefault(TenantId tenantId) {
     return findByTenant(tenantId).any!(p => p.isDefault);

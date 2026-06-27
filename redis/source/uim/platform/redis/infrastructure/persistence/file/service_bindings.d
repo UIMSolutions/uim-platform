@@ -17,7 +17,7 @@ import std.conv   : to;
 @safe:
 
 class FileServiceBindingRepository
-    : TenantRepository!(ServiceBinding, ServiceBindingId)
+    : TentRepository!(ServiceBinding, ServiceBindingId)
     , ServiceBindingRepository
 {
     private string _basePath;

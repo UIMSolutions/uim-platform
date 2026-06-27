@@ -12,7 +12,7 @@ import uim.platform.logging;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryIngestionTokenRepository : TenantRepository!(IngestionToken, IngestionTokenId), IngestionTokenRepository {
+class MemoryIngestionTokenRepository : TentRepository!(IngestionToken, IngestionTokenId), IngestionTokenRepository {
 
   bool existsByHash(TenantId tenantId, string tokenHash) {
     return findByTenant(tenantId).any!(t => t.tokenHash == tokenHash);

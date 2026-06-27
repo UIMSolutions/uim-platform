@@ -11,7 +11,7 @@ import uim.platform.workzone;
 // mixin(ShowModule!());
 
 @safe:
-interface PageTemplateRepository : ITenantRepository!(PageTemplate, PageTemplateId) {
+interface PageTemplateRepository : ITentRepository!(PageTemplate, PageTemplateId) {
 
   bool existsDefault(TenantId tenantId);
   PageTemplate findDefault(TenantId tenantId);

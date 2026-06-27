@@ -12,7 +12,7 @@ import uim.platform.masterdata_governance;
 @safe:
 
 class MemoryDataQualityScoreRepository
-    : TenantRepository!(DataQualityScore, DataQualityScoreId), DataQualityScoreRepository {
+    : TentRepository!(DataQualityScore, DataQualityScoreId), DataQualityScoreRepository {
 
     DataQualityScore findByBusinessPartner(TenantId tenantId, BusinessPartnerId bpId) {
         auto all = findByTenant(tenantId);

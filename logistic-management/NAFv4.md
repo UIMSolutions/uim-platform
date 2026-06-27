@@ -168,7 +168,7 @@ created ──► queued ──► inProgress ──► confirmed
 | Serialization | vibe-serialization (JSON) |
 | Container | Docker (multi-stage, ubuntu:24.04 runtime) |
 | Orchestration | Kubernetes — Deployment, Service, ConfigMap |
-| Default Storage | In-memory (`TenantRepository!(T, Id)` base class) |
+| Default Storage | In-memory (`TentRepository!(T, Id)` base class) |
 | File Storage | NDJSON files (stub — `LOGMGMT_DATA_DIR`) |
 | MongoDB Storage | vibe.d MongoDB driver (stub — `LOGMGMT_MONGO_URI`) |
 | Architecture Patterns | Hexagonal (Ports and Adapters), Clean Architecture, MVC (web/cli/gui) |

@@ -13,7 +13,7 @@ import uim.platform.situation_automation;
 
 @safe:
 
-interface SituationInstanceRepository : ITenantRepository!(SituationInstance, SituationInstanceId) {
+interface SituationInstanceRepository : ITentRepository!(SituationInstance, SituationInstanceId) {
 
     size_t countByTemplate(TenantId tenantId, SituationTemplateId templateId);
     SituationInstance[] findByTemplate(TenantId tenantId, SituationTemplateId templateId);

@@ -14,7 +14,7 @@ import uim.platform.keystore;
 
 @safe:
 
-class MemoryKeystoreRepository : TenantRepository!(Keystore, KeystoreId), KeystoreRepository {
+class MemoryKeystoreRepository : TentRepository!(Keystore, KeystoreId), KeystoreRepository {
 
   bool existsByName(TenantId tenantId, string accountId, string applicationId, KeystoreLevel level, string name) {
     return findByApplication(tenantId, accountId, applicationId).any!(ks => ks.level == level && ks.name == name);        

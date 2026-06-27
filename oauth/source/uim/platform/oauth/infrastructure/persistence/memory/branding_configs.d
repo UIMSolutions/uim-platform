@@ -11,7 +11,7 @@ import uim.platform.oauth;
 
 @safe:
 
-class MemoryBrandingConfigRepository : TenantRepository!(BrandingConfig, BrandingConfigId), BrandingConfigRepository {
+class MemoryBrandingConfigRepository : TentRepository!(BrandingConfig, BrandingConfigId), BrandingConfigRepository {
     
     bool existsByName(TenantId tenantId, string name) {
         return findByName(tenantId, name).id != BrandingConfigId.init;

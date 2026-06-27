@@ -11,7 +11,7 @@ import uim.platform.html_repository;
 // mixin(ShowModule!());
 
 @safe:
-interface ServiceInstanceRepository : ITenantRepository!(ServiceInstance, ServiceInstanceId) {
+interface ServiceInstanceRepository : ITentRepository!(ServiceInstance, ServiceInstanceId) {
 
   bool existsByName(TenantId tenantId, string name);
   ServiceInstance findByName(TenantId tenantId, string name);  

@@ -11,7 +11,7 @@ import uim.platform.responsibility;
 
 @safe:
 
-interface DeterminationLogRepository : ITenantRepository!(DeterminationLog, DeterminationLogId) {
+interface DeterminationLogRepository : ITentRepository!(DeterminationLog, DeterminationLogId) {
     DeterminationLog[] findByContext(TenantId tenantId, string contextId);
     DeterminationLog[] findByObject(TenantId tenantId, string objectType, string objectId);
     DeterminationLog[] findByStatus(TenantId tenantId, DeterminationStatus status);

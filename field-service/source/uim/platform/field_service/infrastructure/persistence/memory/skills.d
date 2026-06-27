@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemorySkillRepository : TenantRepository!(Skill, SkillId), SkillRepository {
+class MemorySkillRepository : TentRepository!(Skill, SkillId), SkillRepository {
 
 
     size_t countByTechnician(TenantId tenantId, TechnicianId technicianId) {

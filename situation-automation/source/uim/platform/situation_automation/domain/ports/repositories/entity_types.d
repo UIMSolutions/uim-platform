@@ -13,7 +13,7 @@ import uim.platform.situation_automation;
 
 @safe:
 
-interface EntityTypeRepository : ITenantRepository!(EntityType, EntityTypeId) {
+interface EntityTypeRepository : ITentRepository!(EntityType, EntityTypeId) {
 
     size_t countByCategory(TenantId tenantId, EntityCategory category);
     EntityType[] findByCategory(TenantId tenantId, EntityCategory category);

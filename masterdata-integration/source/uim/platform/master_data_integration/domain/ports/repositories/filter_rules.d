@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — filter rule persistence.
-interface FilterRuleRepository : ITenantRepository!(FilterRule, FilterRuleId) {
+interface FilterRuleRepository : ITentRepository!(FilterRule, FilterRuleId) {
 
   size_t countByCategory(TenantId tenantId, MasterDataCategory category);
   FilterRule[] findByCategory(TenantId tenantId, MasterDataCategory category);

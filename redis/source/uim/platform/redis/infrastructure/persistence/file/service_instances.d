@@ -19,7 +19,7 @@ import std.conv   : to;
 /// File-backed repository for ServiceInstance.
 /// Persists each tenant's data as a JSON file under basePath/{tenantId}/service_instances.json.
 class FileServiceInstanceRepository
-    : TenantRepository!(ServiceInstance, ServiceInstanceId)
+    : TentRepository!(ServiceInstance, ServiceInstanceId)
     , ServiceInstanceRepository
 {
     private string _basePath;

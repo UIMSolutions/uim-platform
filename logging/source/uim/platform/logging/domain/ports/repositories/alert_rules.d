@@ -11,7 +11,7 @@ import uim.platform.logging;
 // mixin(ShowModule!());
 
 @safe:
-interface AlertRuleRepository : ITenantRepository!(AlertRule, AlertRuleId) {
+interface AlertRuleRepository : ITentRepository!(AlertRule, AlertRuleId) {
 
   size_t countEnabled(TenantId tenantId);
   AlertRule[] findEnabled(TenantId tenantId);

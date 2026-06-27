@@ -13,7 +13,7 @@ import uim.platform.identity.directory;
 
 @safe:
 /// In-memory adapter for password policy persistence.
-class MemoryPasswordPolicyRepository : TenantRepository!(PasswordPolicy, PasswordPolicyId), PasswordPolicyRepository {
+class MemoryPasswordPolicyRepository : TentRepository!(PasswordPolicy, PasswordPolicyId), PasswordPolicyRepository {
 
   bool existsActiveForTenant(TenantId tenantId) {
     return findByTenant(tenantId).any!(p => p.active);

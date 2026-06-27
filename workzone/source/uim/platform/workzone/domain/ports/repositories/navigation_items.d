@@ -11,7 +11,7 @@ import uim.platform.workzone;
 // mixin(ShowModule!());
 
 @safe:
-interface NavigationItemRepository : ITenantRepository!(NavigationItem, NavigationItemId) {
+interface NavigationItemRepository : ITentRepository!(NavigationItem, NavigationItemId) {
 
   size_t countBySite(TenantId tenantId, SiteId siteId);
   NavigationItem[] findBySite(TenantId tenantId, SiteId siteId);

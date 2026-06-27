@@ -11,7 +11,7 @@ import uim.platform.situation_automation;
 
 @safe:
 
-class MemorySituationActionRepository : TenantRepository!(SituationAction, SituationActionId), SituationActionRepository {
+class MemorySituationActionRepository : TentRepository!(SituationAction, SituationActionId), SituationActionRepository {
 
     // #region ByType
     size_t countByType(TenantId tenantId, ActionType type) {

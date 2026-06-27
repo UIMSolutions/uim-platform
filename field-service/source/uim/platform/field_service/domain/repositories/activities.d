@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ActivityRepository : ITenantRepository!(Activity, ActivityId) {
+interface ActivityRepository : ITentRepository!(Activity, ActivityId) {
 
     size_t countByServiceCall(TenantId tenantId, ServiceCallId serviceCallId);
     Activity[] findByServiceCall(TenantId tenantId, ServiceCallId serviceCallId);

@@ -11,7 +11,7 @@ import uim.platform.redis;
 
 @safe:
 
-interface BackupPolicyRepository : ITenantRepository!(BackupPolicy, BackupPolicyId) {
+interface BackupPolicyRepository : ITentRepository!(BackupPolicy, BackupPolicyId) {
     BackupPolicy findByInstance(TenantId tenantId, ServiceInstanceId instanceId);
     BackupPolicy[] findByStatus(TenantId tenantId, BackupStatus status);
 }

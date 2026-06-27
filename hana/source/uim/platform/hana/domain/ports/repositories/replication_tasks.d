@@ -11,7 +11,7 @@ import uim.platform.hana;
 // mixin(ShowModule!());
 
 @safe:
-interface ReplicationTaskRepository : ITenantRepository!(ReplicationTask, ReplicationTaskId) {
+interface ReplicationTaskRepository : ITentRepository!(ReplicationTask, ReplicationTaskId) {
 
   size_t countByInstance(DatabaseInstanceId instanceId);
   ReplicationTask[] findByInstance(DatabaseInstanceId instanceId);

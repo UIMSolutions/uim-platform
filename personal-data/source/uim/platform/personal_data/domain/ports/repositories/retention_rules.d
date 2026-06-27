@@ -11,7 +11,7 @@ import uim.platform.personal_data;
 
 @safe:
 
-interface RetentionRuleRepository : ITenantRepository!(RetentionRule, RetentionRuleId) {
+interface RetentionRuleRepository : ITentRepository!(RetentionRule, RetentionRuleId) {
 
     size_t countByApplication(TenantId tenantId, RegisteredApplicationId applicationId);
     RetentionRule[] findByApplication(TenantId tenantId, RegisteredApplicationId applicationId);

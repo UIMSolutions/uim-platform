@@ -6,7 +6,7 @@ import uim.platform.integration_suite;
 @safe:
 
 class MemoryIntegrationUserRepository
-    : TenantRepository!(IntegrationUser, IntegrationUserId),
+    : TentRepository!(IntegrationUser, IntegrationUserId),
       IntegrationUserRepository {
 
   IntegrationUser[] findByRole(TenantId tenantId, IntegrationUserRole role) {

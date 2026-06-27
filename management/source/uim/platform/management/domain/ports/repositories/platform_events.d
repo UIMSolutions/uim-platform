@@ -12,7 +12,7 @@ import uim.platform.management;
 
 @safe:
 /// Port: outgoing — platform event persistence.
-interface EnvironmentEventRepository : ITenantRepository!(EnvironmentEvent, EnvironmentEventId) {
+interface EnvironmentEventRepository : ITentRepository!(EnvironmentEvent, EnvironmentEventId) {
 
   EnvironmentEvent[] findByGlobalAccount(TenantId tenantId, GlobalAccountId globalAccountId);
   EnvironmentEvent[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId);

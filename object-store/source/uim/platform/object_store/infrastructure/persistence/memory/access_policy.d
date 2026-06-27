@@ -14,7 +14,7 @@ import uim.platform.object_store;
 mixin(ShowModule!());
 
 @safe:
-class MemoryAccessPolicyRepository : TenantRepository!(AccessPolicy, AccessPolicyId), AccessPolicyRepository {
+class MemoryAccessPolicyRepository : TentRepository!(AccessPolicy, AccessPolicyId), AccessPolicyRepository {
 
   size_t countByBucket(TenantId tenantId, BucketId bucketId) {
     return findByBucket(tenantId, bucketId).length;

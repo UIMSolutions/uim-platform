@@ -3,7 +3,7 @@ import uim.platform.snowflake;
 // mixin(ShowModule!());
 @safe:
 class MemoryZerocopyConnectorRepository
-    : TenantRepository!(ZerocopyConnector, ZerocopyConnectorId),
+    : TentRepository!(ZerocopyConnector, ZerocopyConnectorId),
       ZerocopyConnectorRepository {
 
   ZerocopyConnector[] findByAccount(TenantId tenantId, SnowflakeAccountId accountId) {

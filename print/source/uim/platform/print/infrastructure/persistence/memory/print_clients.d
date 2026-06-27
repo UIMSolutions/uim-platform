@@ -12,7 +12,7 @@ import uim.platform.print;
 @safe:
 
 class MemoryPrintClientRepository
-    : TenantRepository!(PrintClient, PrintClientId), PrintClientRepository {
+    : TentRepository!(PrintClient, PrintClientId), PrintClientRepository {
 
     PrintClient[] findByStatus(TenantId tenantId, PrintClientStatus status) {
         return findByTenant(tenantId).filter!(c => c.status == status).array;

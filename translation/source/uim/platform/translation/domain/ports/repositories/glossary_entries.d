@@ -11,4 +11,4 @@ import uim.platform.translation;
 
 @safe:
 
-interface GlossaryEntryRepository : ITenantRepository!(GlossaryEntry, GlossaryEntryId) {}
+interface GlossaryEntryRepository : ITentRepository!(GlossaryEntry, GlossaryEntryId) {}

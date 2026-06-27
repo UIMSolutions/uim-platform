@@ -18,7 +18,7 @@ import std.string   : lastIndexOf;
 @safe:
 
 class FileMaintenanceWindowRepository
-    : TenantRepository!(MaintenanceWindow, MaintenanceWindowId)
+    : TentRepository!(MaintenanceWindow, MaintenanceWindowId)
     , MaintenanceWindowRepository
 {
     private string _basePath;

@@ -11,7 +11,7 @@ import uim.platform.oauth;
 
 @safe:
 
-class MemoryAuthorizationCodeRepository : TenantRepository!(AuthorizationCode, AuthorizationCodeId), AuthorizationCodeRepository {
+class MemoryAuthorizationCodeRepository : TentRepository!(AuthorizationCode, AuthorizationCodeId), AuthorizationCodeRepository {
 
     // #region ByCode
     bool existsByCode(TenantId tenantId, string code) {

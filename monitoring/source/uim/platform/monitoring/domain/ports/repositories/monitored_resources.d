@@ -12,7 +12,7 @@ import uim.platform.monitoring;
 
 @safe:
 /// Port: outgoing - monitored resource persistence.
-interface MonitoredResourceRepository : ITenantRepository!(MonitoredResource, MonitoredResourceId) {
+interface MonitoredResourceRepository : ITentRepository!(MonitoredResource, MonitoredResourceId) {
 
   bool existsByName(TenantId tenantId, string name);
   MonitoredResource findByName(TenantId tenantId, string name);

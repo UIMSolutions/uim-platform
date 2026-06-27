@@ -14,7 +14,7 @@ import std.array : array;
 @safe:
 
 class MemoryCacheEntryRepository
-    : TenantRepository!(CacheEntry, CacheEntryId)
+    : TentRepository!(CacheEntry, CacheEntryId)
     , CacheEntryRepository
 {
     override CacheEntry[] findByInstance(TenantId tenantId, ServiceInstanceId instanceId) {

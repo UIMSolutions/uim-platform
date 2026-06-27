@@ -10,7 +10,7 @@ import uim.platform.hana_spatial;
 // mixin(ShowModule!());
 
 @safe:
-interface IsolineRepository : ITenantRepository!(Isoline, IsolineId) {
+interface IsolineRepository : ITentRepository!(Isoline, IsolineId) {
   Isoline[] findByMode(TenantId tenantId, IsolineMode mode);
   Isoline[] findByProvider(TenantId tenantId, string providerId);
 }

@@ -10,7 +10,7 @@ import uim.platform.hana_spatial;
 // mixin(ShowModule!());
 
 @safe:
-interface SpatialFeatureRepository : ITenantRepository!(SpatialFeature, SpatialFeatureId) {
+interface SpatialFeatureRepository : ITentRepository!(SpatialFeature, SpatialFeatureId) {
   SpatialFeature[] findByLayer(TenantId tenantId, SpatialLayerId layerId);
   SpatialFeature[] findByGeometryType(TenantId tenantId, GeometryType geometryType);
 }

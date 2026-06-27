@@ -15,7 +15,7 @@ import uim.platform.workzone;
 
  
 
-class MemoryShellPluginRepository : TenantRepository!(ShellPlugin, ShellPluginId), ShellPluginRepository {
+class MemoryShellPluginRepository : TentRepository!(ShellPlugin, ShellPluginId), ShellPluginRepository {
 
   // #region BySite
   size_t countBySite(TenantId tenantId, SiteId siteId) {

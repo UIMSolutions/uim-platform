@@ -13,7 +13,7 @@ import uim.platform.portal;
 
 @safe:
 /// Port: outgoing — section persistence.
-interface SectionRepository : ITenantRepository!(PortalSection, SectionId) {
+interface SectionRepository : ITentRepository!(PortalSection, SectionId) {
 
   size_t countByPage(TenantId tenantId, PageId pageId);
   PortalSection[] findByPage(TenantId tenantId, PageId pageId);

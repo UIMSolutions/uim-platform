@@ -14,7 +14,7 @@ import uim.platform.situation_automation;
 
 @safe:
 
-interface SituationActionRepository : ITenantRepository!(SituationAction, SituationActionId) {
+interface SituationActionRepository : ITentRepository!(SituationAction, SituationActionId) {
 
     size_t countByType(TenantId tenantId, ActionType type);
     SituationAction[] findByType(TenantId tenantId, ActionType type);

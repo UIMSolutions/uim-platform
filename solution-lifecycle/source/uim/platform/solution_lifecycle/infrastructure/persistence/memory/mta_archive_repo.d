@@ -12,7 +12,7 @@ import uim.platform.solution_lifecycle;
 @safe:
 
 class MemoryMtaArchiveRepository
-    : TenantRepository!(MtaArchive, MtaArchiveId),
+    : TentRepository!(MtaArchive, MtaArchiveId),
       MtaArchiveRepository
 {
     /// Find archives by MTA application ID
