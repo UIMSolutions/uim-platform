@@ -12,7 +12,7 @@ import uim.platform.integration.automation;
 
 @safe:
 /// Port for persisting and querying system connections.
-interface SystemRepository : ITentRepository!(SystemConnection, SystemConnectionId) {
+interface SystemRepository : ITenantRepository!(SystemConnection, SystemConnectionId) {
 
   size_t countByType(TenantId tenantId, SystemType systemType);
   SystemConnection[] findByType(TenantId tenantId, SystemType systemType);

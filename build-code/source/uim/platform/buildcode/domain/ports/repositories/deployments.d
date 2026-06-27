@@ -11,7 +11,7 @@ import uim.platform.buildcode;
 
 @safe:
 
-interface DeploymentRepository : ITentRepository!(Deployment, DeploymentId) {
+interface DeploymentRepository : ITenantRepository!(Deployment, DeploymentId) {
   Deployment[]  findByProject(TenantId tenantId, string projectId);
   Deployment[]  findByEnvironment(TenantId tenantId, DeploymentEnvironment env);
   Deployment[]  findByStatus(TenantId tenantId, DeploymentStatus status);

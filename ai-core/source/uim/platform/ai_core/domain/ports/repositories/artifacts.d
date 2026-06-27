@@ -11,7 +11,7 @@ import uim.platform.ai_core;
 // mixin(ShowModule!()); 
 
 @safe:
-interface ArtifactRepository : ITentRepository!(Artifact, ArtifactId) {
+interface ArtifactRepository : ITenantRepository!(Artifact, ArtifactId) {
 
   bool existsById(TenantId tenantId, ResourceGroupId rgId, ArtifactId id);
   Artifact findById(TenantId tenantId, ResourceGroupId rgId, ArtifactId id);

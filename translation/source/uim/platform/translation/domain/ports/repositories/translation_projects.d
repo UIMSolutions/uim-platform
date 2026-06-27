@@ -11,4 +11,4 @@ import uim.platform.translation;
 
 @safe:
 
-interface TranslationProjectRepository : ITentRepository!(TranslationProject, TranslationProjectId) {}
+interface TranslationProjectRepository : ITenantRepository!(TranslationProject, TranslationProjectId) {}

@@ -11,7 +11,7 @@ import uim.platform.personal_data;
 
 @safe:
 
-class MemoryPersonalDataRecordRepository : TentRepository!(PersonalDataRecord, PersonalDataRecordId), PersonalDataRecordRepository {
+class MemoryPersonalDataRecordRepository : TenantRepository!(PersonalDataRecord, PersonalDataRecordId), PersonalDataRecordRepository {
     
     // #region ByDataSubject
     size_t countByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {

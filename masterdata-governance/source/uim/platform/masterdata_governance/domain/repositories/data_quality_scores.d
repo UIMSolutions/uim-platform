@@ -11,7 +11,7 @@ import uim.platform.masterdata_governance;
 
 @safe:
 
-interface DataQualityScoreRepository : ITentRepository!(DataQualityScore, DataQualityScoreId) {
+interface DataQualityScoreRepository : ITenantRepository!(DataQualityScore, DataQualityScoreId) {
 
     DataQualityScore findByBusinessPartner(TenantId tenantId, BusinessPartnerId bpId);
     DataQualityScore[] findByQualityStatus(TenantId tenantId, QualityStatus status);

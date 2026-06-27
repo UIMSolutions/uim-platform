@@ -69,7 +69,7 @@ The service exposes the following operational capabilities:
 - **DTOs**: create/update requests per entity
 
 #### Infrastructure Layer
-- **Memory Repositories**: `MemoryXxxRepository` extending `TentRepository!(E, Id)` and implementing domain port
+- **Memory Repositories**: `MemoryXxxRepository` extending `TenantRepository!(E, Id)` and implementing domain port
 - **Container**: `buildContainer(SrvConfig)` — wires all dependencies
 - **Config**: `loadConfig()` reading env vars `DATASPHERE_COMPOSER_HOST`, `DATASPHERE_COMPOSER_PORT`
 

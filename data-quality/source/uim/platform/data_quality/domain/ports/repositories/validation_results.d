@@ -11,7 +11,7 @@ import uim.platform.data_quality;
 
 @safe:
 /// Port for persisting validation results.
-interface ValidationResultRepository : ITentRepository!(ValidationResult, ValidationResultId) {
+interface ValidationResultRepository : ITenantRepository!(ValidationResult, ValidationResultId) {
 
   bool existsByRecord(TenantId tenantId, RecordId recordId);
   ValidationResult findByRecord(TenantId tenantId, RecordId recordId);

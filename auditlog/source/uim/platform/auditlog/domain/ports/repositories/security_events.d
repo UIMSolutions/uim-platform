@@ -12,7 +12,7 @@ import uim.platform.auditlog;
 // mixin(ShowModule!());
 /// Port for persisting enriched security events.
 @safe:
-interface SecurityEventRepository : ITentRepository!(SecurityEvent, SecurityEventId) {
+interface SecurityEventRepository : ITenantRepository!(SecurityEvent, SecurityEventId) {
 
   size_t countByUser(TenantId tenantId, UserId userId);
   SecurityEvent[] findByUser(TenantId tenantId, UserId userId);

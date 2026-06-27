@@ -15,7 +15,7 @@ import uim.platform.data_quality;
 @safe:
  
 
-class MemoryDataProfileRepository : TentRepository!(DataProfile, DataProfileId), DataProfileRepository {
+class MemoryDataProfileRepository : TenantRepository!(DataProfile, DataProfileId), DataProfileRepository {
 
   DataProfile findLatestByDataset(TenantId tenantId, DatasetId datasetId) {
     DataProfile latest;

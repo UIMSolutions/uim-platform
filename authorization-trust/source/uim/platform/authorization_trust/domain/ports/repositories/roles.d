@@ -11,7 +11,7 @@ import uim.platform.authorization_trust;
 
 @safe:
 
-interface RoleRepository : ITentRepository!(RoleEntity, RoleId) {
+interface RoleRepository : ITenantRepository!(RoleEntity, RoleId) {
 
   bool existsByName(TenantId tenantId, string name, string appId);
   RoleEntity findByName(TenantId tenantId, string name, string appId);

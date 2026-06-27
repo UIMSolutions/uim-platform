@@ -12,7 +12,7 @@ import uim.platform.management;
 
 @safe:
 /// Port: outgoing — subscription persistence.
-interface SubscriptionRepository : ITentRepository!(Subscription, SubscriptionId) {
+interface SubscriptionRepository : ITenantRepository!(Subscription, SubscriptionId) {
 
   Subscription[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId);
   Subscription[] findByApp(TenantId tenantId, SubaccountId subaccountId, string appName);

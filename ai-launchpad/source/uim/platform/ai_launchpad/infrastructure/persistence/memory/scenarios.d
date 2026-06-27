@@ -13,7 +13,7 @@ import uim.platform.ai_launchpad;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryScenarioRepository : TentRepository!(Scenario, ScenarioId), IScenarioRepository {
+class MemoryScenarioRepository : TenantRepository!(Scenario, ScenarioId), IScenarioRepository {
   
   bool existsById(TenantId tenantId, ConnectionId connectionId, ScenarioId id) {
     return findByConnection(tenantId, connectionId).any!(s => s.id == id);

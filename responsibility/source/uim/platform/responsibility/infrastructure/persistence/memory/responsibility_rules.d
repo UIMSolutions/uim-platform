@@ -12,7 +12,7 @@ import uim.platform.responsibility;
 @safe:
 
 class MemoryResponsibilityRuleRepository
-    : TentRepository!(ResponsibilityRule, ResponsibilityRuleId),
+    : TenantRepository!(ResponsibilityRule, ResponsibilityRuleId),
       ResponsibilityRuleRepository {
 
     ResponsibilityRule[] findByStatus(TenantId tenantId, RuleStatus status) {

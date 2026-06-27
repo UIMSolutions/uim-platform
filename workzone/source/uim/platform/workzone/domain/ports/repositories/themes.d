@@ -12,7 +12,7 @@ import uim.platform.workzone;
 // mixin(ShowModule!());
 
 @safe:
-interface ThemeRepository : ITentRepository!(Theme, ThemeId) {
+interface ThemeRepository : ITenantRepository!(Theme, ThemeId) {
 
   bool existsDefault(TenantId tenantId);
   Theme findDefault(TenantId tenantId);

@@ -11,6 +11,6 @@ import uim.platform.alert_notification;
 
 @safe:
 
-interface ConditionRepository : ITentRepository!(Condition, ConditionId) {
+interface ConditionRepository : ITenantRepository!(Condition, ConditionId) {
     Condition findByName(TenantId tenantId, string name);
 }

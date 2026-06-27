@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryReplicationJobRepository : TentRepository!(ReplicationJob, ReplicationJobId), ReplicationJobRepository {
+class MemoryReplicationJobRepository : TenantRepository!(ReplicationJob, ReplicationJobId), ReplicationJobRepository {
 
   size_t countByStatus(TenantId tenantId, ReplicationJobStatus status) {
     return findByStatus(tenantId, status).length;

@@ -11,7 +11,7 @@ import uim.platform.buildcode;
 
 @safe:
 
-interface DevSpaceRepository : ITentRepository!(DevSpace, DevSpaceId) {
+interface DevSpaceRepository : ITenantRepository!(DevSpace, DevSpaceId) {
   DevSpace[]  findByProject(TenantId tenantId, string projectId);
   DevSpace[]  findByStatus(TenantId tenantId, DevSpaceStatus status);
 }

@@ -6,7 +6,7 @@ import uim.platform.integration_suite;
 @safe:
 
 class MemoryApiProductRepository
-    : TentRepository!(ApiProduct, ApiProductId),
+    : TenantRepository!(ApiProduct, ApiProductId),
       ApiProductRepository {
 
   ApiProduct[] findByStatus(TenantId tenantId, ApiProxyStatus status) {

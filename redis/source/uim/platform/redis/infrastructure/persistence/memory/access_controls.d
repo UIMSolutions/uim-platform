@@ -14,7 +14,7 @@ import std.array : array;
 @safe:
 
 class MemoryAccessControlRepository
-    : TentRepository!(AccessControl, AccessControlId)
+    : TenantRepository!(AccessControl, AccessControlId)
     , AccessControlRepository
 {
     override AccessControl[] findByInstance(TenantId tenantId, ServiceInstanceId instanceId) {

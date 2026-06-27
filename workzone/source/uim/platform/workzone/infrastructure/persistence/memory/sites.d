@@ -15,7 +15,7 @@ import uim.platform.workzone;
 
  
 
-class MemorySiteRepository : TentRepository!(Site, SiteId), SiteRepository {
+class MemorySiteRepository : TenantRepository!(Site, SiteId), SiteRepository {
 
   // #region ByAlias
   bool existsByAlias(TenantId tenantId, string alias_) {

@@ -12,7 +12,7 @@ import uim.platform.connectivity;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryConnectorRepository : TentRepository!(CloudConnector, ConnectorId), ConnectorRepository {
+class MemoryConnectorRepository : TenantRepository!(CloudConnector, ConnectorId), ConnectorRepository {
  
   bool existsByLocation(TenantId tenantId, SubaccountId subaccountId, string locationId) {
     return findByTenant(tenantId).any!(e => e.subaccountId == subaccountId && e.locationId == locationId);

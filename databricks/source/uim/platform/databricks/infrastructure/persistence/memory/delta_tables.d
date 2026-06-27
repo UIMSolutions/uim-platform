@@ -5,7 +5,7 @@ import uim.platform.databricks;
 
 @safe:
 
-class MemoryDeltaTableRepository : TentRepository!(DeltaTable, DeltaTableId), DeltaTableRepository {
+class MemoryDeltaTableRepository : TenantRepository!(DeltaTable, DeltaTableId), DeltaTableRepository {
   DeltaTable[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
     import std.algorithm : filter;
     import std.array : array;

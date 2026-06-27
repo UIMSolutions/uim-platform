@@ -11,7 +11,7 @@ import uim.platform.events;
 
 @safe:
 
-interface MessagingServiceRepository : ITentRepository!(MessagingService, MessagingServiceId) {
+interface MessagingServiceRepository : ITenantRepository!(MessagingService, MessagingServiceId) {
     size_t countByStatus(TenantId tenantId, MessagingServiceStatus status);
     MessagingService[] findByStatus(TenantId tenantId, MessagingServiceStatus status);
     void removeByStatus(TenantId tenantId, MessagingServiceStatus status);

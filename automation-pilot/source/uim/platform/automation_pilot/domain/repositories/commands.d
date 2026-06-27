@@ -11,7 +11,7 @@ import uim.platform.automation_pilot;
 
 @safe:
 
-interface CommandRepository : ITentRepository!(Command, CommandId) {
+interface CommandRepository : ITenantRepository!(Command, CommandId) {
 
     size_t countByCatalog(TenantId tenantId, CatalogId catalogId);
     Command[] findByCatalog(TenantId tenantId, CatalogId catalogId);

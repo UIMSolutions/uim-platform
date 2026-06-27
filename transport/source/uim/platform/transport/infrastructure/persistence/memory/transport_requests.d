@@ -11,7 +11,7 @@ import uim.platform.transport;
 
 @safe:
 
-class MemoryTransportRequestRepository : TentRepository!(TransportRequest, TransportRequestId), TransportRequestRepository {
+class MemoryTransportRequestRepository : TenantRepository!(TransportRequest, TransportRequestId), TransportRequestRepository {
 
     TransportRequest[] findByStatus(TenantId tenantId, RequestStatus status) {
         return findByTenant(tenantId).filter!(e => e.status == status).array;

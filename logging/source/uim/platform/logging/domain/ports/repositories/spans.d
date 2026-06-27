@@ -11,7 +11,7 @@ import uim.platform.logging;
 // mixin(ShowModule!());
 
 @safe:
-interface SpanRepository : ITentRepository!(Span, SpanId) {
+interface SpanRepository : ITenantRepository!(Span, SpanId) {
 
   Span[] findByTrace(TenantId tenantId, TraceId traceId);
   Span[] findByService(TenantId tenantId, string serviceName);

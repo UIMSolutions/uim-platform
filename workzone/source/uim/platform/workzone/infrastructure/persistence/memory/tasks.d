@@ -15,7 +15,7 @@ import uim.platform.workzone;
 
  
 
-class MemoryTaskRepository : TentRepository!(WZTask, TaskId), TaskRepository {
+class MemoryTaskRepository : TenantRepository!(WZTask, TaskId), TaskRepository {
 
   // #region ByAssignee
   size_t countByAssignee(TenantId tenantId, UserId assigneeId) {

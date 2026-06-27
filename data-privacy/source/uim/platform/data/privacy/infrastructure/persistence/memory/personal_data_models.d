@@ -12,7 +12,7 @@ import uim.platform.data.privacy;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryPersonalDataModelRepository : TentRepository!(PersonalDataModel, PersonalDataModelId), PersonalDataModelRepository {
+class MemoryPersonalDataModelRepository : TenantRepository!(PersonalDataModel, PersonalDataModelId), PersonalDataModelRepository {
 
   size_t countByCategory(TenantId tenantId, PersonalDataCategory category) {
     return findByCategory(tenantId, category).length;

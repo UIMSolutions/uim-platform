@@ -11,7 +11,7 @@ import uim.platform.oauth;
 
 @safe:
 
-interface RefreshTokenRepository : ITentRepository!(RefreshToken, RefreshTokenId) {
+interface RefreshTokenRepository : ITenantRepository!(RefreshToken, RefreshTokenId) {
 
     bool existsByTokenValue(TenantId tenantId, string tokenValue);
     RefreshToken findByTokenValue(TenantId tenantId, string tokenValue);

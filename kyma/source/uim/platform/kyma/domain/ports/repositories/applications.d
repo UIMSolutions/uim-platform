@@ -12,7 +12,7 @@ import uim.platform.kyma;
 
 @safe:
 /// Port: outgoing — external application connectivity persistence.
-interface ApplicationRepository : ITentRepository!(Application, ApplicationId) {
+interface ApplicationRepository : ITenantRepository!(Application, ApplicationId) {
 
   bool existsByName(KymaEnvironmentId envId, string name);
   Application findByName(KymaEnvironmentId envId, string name);

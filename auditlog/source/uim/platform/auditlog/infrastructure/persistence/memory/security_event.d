@@ -15,7 +15,7 @@ import uim.platform.auditlog;
 // mixin(ShowModule!());
 
 @safe:
-class MemorySecurityEventRepository : TentRepository!(SecurityEvent, SecurityEventId), SecurityEventRepository {
+class MemorySecurityEventRepository : TenantRepository!(SecurityEvent, SecurityEventId), SecurityEventRepository {
 
   // #region ByAuditLogId
   bool existsByAuditLogId(TenantId tenantId, AuditLogId auditLogId) {

@@ -10,7 +10,7 @@ import uim.platform.private_link;
 
 @safe:
 class MemoryServiceInstanceRepository
-    : TentRepository!(ServiceInstance, ServiceInstanceId),
+    : TenantRepository!(ServiceInstance, ServiceInstanceId),
       ServiceInstanceRepository {
 
   bool existsByName(TenantId tenantId, string name) {

@@ -8,7 +8,7 @@ module uim.platform.datasphere_composer.domain.ports.repositories.data_products;
 import uim.platform.datasphere_composer;
 
 @safe:
-interface DataProductRepository : ITentRepository!(DataProduct, DataProductId) {
+interface DataProductRepository : ITenantRepository!(DataProduct, DataProductId) {
   DataProduct[] findByProvider(TenantId tenantId, DataProviderId providerId);
   DataProduct[] findEnabled(TenantId tenantId);
 }

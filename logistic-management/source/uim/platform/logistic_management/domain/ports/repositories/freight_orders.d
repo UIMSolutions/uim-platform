@@ -9,7 +9,7 @@ import uim.platform.logistic_management;
 // mixin(ShowModule!());
 
 @safe:
-interface FreightOrderRepository : ITentRepository!(FreightOrder, FreightOrderId) {
+interface FreightOrderRepository : ITenantRepository!(FreightOrder, FreightOrderId) {
   FreightOrder[] findByStatus(TenantId tenantId, FreightOrderStatus status);
   FreightOrder[] findByCarrier(TenantId tenantId, CarrierId carrierId);
   FreightOrder[] findByOrderNumber(TenantId tenantId, string orderNumber);

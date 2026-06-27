@@ -13,7 +13,7 @@ import uim.platform.foundry;
 
 @safe:
 /// Port for persisting and querying Cloud Foundry domains.
-interface IDomainRepository : ITentRepository!(CfDomain, CfDomainId) {
+interface IDomainRepository : ITenantRepository!(CfDomain, CfDomainId) {
 
   bool existsByName(TenantId tenantId, string name);
   CfDomain findByName(TenantId tenantId, string name);

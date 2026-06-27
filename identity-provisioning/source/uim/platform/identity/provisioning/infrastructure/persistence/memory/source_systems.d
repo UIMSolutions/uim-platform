@@ -13,7 +13,7 @@ import uim.platform.identity.provisioning;
 // mixin(ShowModule!());
 
 @safe:
-class MemorySourceSystemRepository : TentRepository!(SourceSystem, SourceSystemId), SourceSystemRepository {
+class MemorySourceSystemRepository : TenantRepository!(SourceSystem, SourceSystemId), SourceSystemRepository {
 
   bool existsByName(TenantId tenantId, string name) {
     return findByTenant(tenantId).any!((e) => e.name == name);

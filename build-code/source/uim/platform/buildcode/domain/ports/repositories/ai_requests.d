@@ -11,7 +11,7 @@ import uim.platform.buildcode;
 
 @safe:
 
-interface AIRequestRepository : ITentRepository!(AIRequest, AIRequestId) {
+interface AIRequestRepository : ITenantRepository!(AIRequest, AIRequestId) {
   AIRequest[]  findByProject(TenantId tenantId, string projectId);
   AIRequest[]  findByStatus(TenantId tenantId, AIRequestStatus status);
   AIRequest[]  findByType(TenantId tenantId, AIGenerationType type);

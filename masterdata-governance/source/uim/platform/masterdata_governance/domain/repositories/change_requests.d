@@ -11,7 +11,7 @@ import uim.platform.masterdata_governance;
 
 @safe:
 
-interface ChangeRequestRepository : ITentRepository!(ChangeRequest, ChangeRequestId) {
+interface ChangeRequestRepository : ITenantRepository!(ChangeRequest, ChangeRequestId) {
 
     size_t countByStatus(TenantId tenantId, ChangeRequestStatus status);
     ChangeRequest[] findByStatus(TenantId tenantId, ChangeRequestStatus status);

@@ -11,7 +11,7 @@ import uim.platform.usage_data;
 @safe:
 /// In-memory adapter implementing UsageRecordRepository port.
 class MemoryUsageRecordRepository
-    : TentRepository!(UsageRecord, UsageRecordId), UsageRecordRepository {
+    : TenantRepository!(UsageRecord, UsageRecordId), UsageRecordRepository {
 
   UsageRecord[] findByGlobalAccount(TenantId tenantId, string globalAccountId) {
     return findByTenant(tenantId).filter!(r => r.globalAccountId == globalAccountId).array;

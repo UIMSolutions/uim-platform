@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — connected client system persistence.
-interface ClientRepository : ITentRepository!(Client, ClientId) {
+interface ClientRepository : ITenantRepository!(Client, ClientId) {
 
   size_t countByStatus(TenantId tenantId, ClientStatus status);
   Client[] findByStatus(TenantId tenantId, ClientStatus status);

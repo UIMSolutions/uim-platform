@@ -12,7 +12,7 @@ import uim.platform.portal;
 
 @safe:
 /// Port: outgoing — site persistence.
-interface SiteRepository : ITentRepository!(Site, SiteId) {
+interface SiteRepository : ITenantRepository!(Site, SiteId) {
 
   bool existsByAlias(TenantId tenantId, string alias_);
   Site findByAlias(TenantId tenantId, string alias_);

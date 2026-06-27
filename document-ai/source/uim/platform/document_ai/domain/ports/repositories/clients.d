@@ -11,7 +11,7 @@ import uim.platform.document_ai;
 // mixin(ShowModule!());
 
 @safe:
-interface ClientRepository : ITentRepository!(Client, ClientId) {
+interface ClientRepository : ITenantRepository!(Client, ClientId) {
   
   size_t countByName(TenantId tenantId, string name);
   Client[] findByName(TenantId tenantId, string name);

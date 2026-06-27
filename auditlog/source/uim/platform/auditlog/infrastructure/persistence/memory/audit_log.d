@@ -16,7 +16,7 @@ import uim.platform.auditlog;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryAuditLogRepository : TentRepository!(AuditLogEntry, AuditLogId), AuditLogRepository {
+class MemoryAuditLogRepository : TenantRepository!(AuditLogEntry, AuditLogId), AuditLogRepository {
 
   size_t countByCategory(TenantId tenantId, AuditCategory category) {
     return findByCategory(tenantId, category).length;

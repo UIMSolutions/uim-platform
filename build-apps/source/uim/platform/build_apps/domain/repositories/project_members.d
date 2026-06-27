@@ -11,7 +11,7 @@ import uim.platform.build_apps;
 
 @safe:
 
-interface ProjectMemberRepository : ITentRepository!(ProjectMember, ProjectMemberId) {
+interface ProjectMemberRepository : ITenantRepository!(ProjectMember, ProjectMemberId) {
 
     size_t countByApplication(ApplicationId applicationId);
     ProjectMember[] findByApplication(ApplicationId applicationId);

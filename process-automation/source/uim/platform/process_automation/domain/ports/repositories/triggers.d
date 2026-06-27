@@ -11,7 +11,7 @@ import uim.platform.process_automation;
 // mixin(ShowModule!());
 
 @safe:
-interface TriggerRepository : ITentRepository!(Trigger, TriggerId) {
+interface TriggerRepository : ITenantRepository!(Trigger, TriggerId) {
 
     size_t countByProcess(TenantId tenantId, ProcessId processId);
     Trigger[] findByProcess(TenantId tenantId, ProcessId processId);

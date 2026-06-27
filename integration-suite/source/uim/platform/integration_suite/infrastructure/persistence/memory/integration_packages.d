@@ -6,7 +6,7 @@ import uim.platform.integration_suite;
 @safe:
 
 class MemoryIntegrationPackageRepository
-    : TentRepository!(IntegrationPackage, IntegrationPackageId),
+    : TenantRepository!(IntegrationPackage, IntegrationPackageId),
       IntegrationPackageRepository {
 
   IntegrationPackage[] findByStatus(TenantId tenantId, ArtifactStatus status) {

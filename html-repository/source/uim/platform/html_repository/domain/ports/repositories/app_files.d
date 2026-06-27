@@ -11,7 +11,7 @@ import uim.platform.html_repository;
 // mixin(ShowModule!());
 
 @safe:
-interface AppFileRepository : ITentRepository!(AppFile, AppFileId) {
+interface AppFileRepository : ITenantRepository!(AppFile, AppFileId) {
   
   bool existsByPath(AppVersionId versionId, string filePath);
   AppFile findByPath(AppVersionId versionId, string filePath);

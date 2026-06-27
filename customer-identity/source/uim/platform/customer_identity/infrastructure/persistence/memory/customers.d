@@ -11,7 +11,7 @@ import uim.platform.customer_identity;
 
 @safe:
 
-class MemoryCustomerRepository : TentRepository!(Customer, CustomerId), CustomerRepository {
+class MemoryCustomerRepository : TenantRepository!(Customer, CustomerId), CustomerRepository {
 
     Customer findByEmail(TenantId tenantId, string email) {
         auto items = findByTenant(tenantId).filter!(c => c.email == email).array;

@@ -11,7 +11,7 @@ import uim.platform.integration_delivery;
 
 @safe:
 
-interface StageRepository : ITentRepository!(Stage, StageId) {
+interface StageRepository : ITenantRepository!(Stage, StageId) {
     Stage[] findByBuild(TenantId tenantId, BuildId buildId);
     Stage[] findByStatus(TenantId tenantId, StageStatus status);
     Stage[] findByBuildOrdered(TenantId tenantId, BuildId buildId);

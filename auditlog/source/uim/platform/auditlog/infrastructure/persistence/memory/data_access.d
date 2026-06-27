@@ -13,7 +13,7 @@ import uim.platform.auditlog;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryDataAccessLogRepository : TentRepository!(DataAccessLog, DataAccessLogId), DataAccessLogRepository {
+class MemoryDataAccessLogRepository : TenantRepository!(DataAccessLog, DataAccessLogId), DataAccessLogRepository {
 
   // #region ByAuditLogId
   bool existsByAuditLogId(TenantId tenantId, AuditLogId auditLogId) {

@@ -13,7 +13,7 @@ import uim.platform.situation_automation;
 
 @safe:
 
-interface DashboardRepository : ITentRepository!(Dashboard, DashboardId) {
+interface DashboardRepository : ITenantRepository!(Dashboard, DashboardId) {
 
     size_t countByType(TenantId tenantId, DashboardType type);
     Dashboard[] findByType(TenantId tenantId, DashboardType type);

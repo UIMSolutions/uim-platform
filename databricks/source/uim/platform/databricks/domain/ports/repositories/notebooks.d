@@ -5,7 +5,7 @@ import uim.platform.databricks;
 
 @safe:
 
-interface NotebookRepository : TentRepository!(Notebook, NotebookId) {
+interface NotebookRepository : TenantRepository!(Notebook, NotebookId) {
   Notebook[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId);
   Notebook[] findByLanguage(TenantId tenantId, NotebookLanguage language);
   Notebook[] findByStatus(TenantId tenantId, NotebookStatus status);

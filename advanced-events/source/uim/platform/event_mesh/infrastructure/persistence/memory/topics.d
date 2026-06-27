@@ -11,7 +11,7 @@ import uim.platform.event_mesh;
 
 @safe:
 
-class MemoryTopicRepository : TentRepository!(Topic, TopicId), TopicRepository {
+class MemoryTopicRepository : TenantRepository!(Topic, TopicId), TopicRepository {
 
     size_t countByBrokerService(TenantId tenantId, BrokerServiceId serviceId) {
         return findByBrokerService(tenantId, serviceId).length;

@@ -11,7 +11,7 @@ import uim.platform.ai_core;
 // mixin(ShowModule!());
 
 @safe:
-interface ConfigurationRepository : ITentRepository!(Configuration, ConfigurationId) {
+interface ConfigurationRepository : ITenantRepository!(Configuration, ConfigurationId) {
 
   bool existsById(TenantId tenantId, ResourceGroupId rgId, ConfigurationId id);
   Configuration findById(TenantId tenantId, ResourceGroupId rgId, ConfigurationId id);

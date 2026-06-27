@@ -11,7 +11,7 @@ import uim.platform.personal_data;
 
 @safe:
 
-interface DataSubjectRepository : ITentRepository!(DataSubject, DataSubjectId) {
+interface DataSubjectRepository : ITenantRepository!(DataSubject, DataSubjectId) {
 
     bool existsByEmail(TenantId tenantId, string email);
     DataSubject findByEmail(TenantId tenantId, string email);

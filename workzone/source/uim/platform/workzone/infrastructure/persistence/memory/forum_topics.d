@@ -15,7 +15,7 @@ import uim.platform.workzone;
 
  
 
-class MemoryForumTopicRepository : TentRepository!(ForumTopic, ForumTopicId), ForumTopicRepository {
+class MemoryForumTopicRepository : TenantRepository!(ForumTopic, ForumTopicId), ForumTopicRepository {
 
   size_t countByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
     return findByWorkspace(tenantId, workspaceId).length;

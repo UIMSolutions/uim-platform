@@ -11,7 +11,7 @@ import uim.platform.workzone;
 // mixin(ShowModule!());
 
 @safe:
-interface EventRepository : ITentRepository!(Event, EventId) {
+interface EventRepository : ITenantRepository!(Event, EventId) {
   
   size_t countByWorkspace(TenantId tenantId, WorkspaceId workspaceId);
   Event[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId);

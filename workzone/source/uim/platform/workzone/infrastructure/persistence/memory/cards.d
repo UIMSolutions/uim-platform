@@ -15,7 +15,7 @@ import uim.platform.workzone;
 
  
 
-class MemoryCardRepository : TentRepository!(Card, CardId), CardRepository {
+class MemoryCardRepository : TenantRepository!(Card, CardId), CardRepository {
 
   size_t countByType(TenantId tenantId, CardType cardType) {
     return findByType(tenantId, cardType).length;

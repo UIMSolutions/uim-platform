@@ -12,7 +12,7 @@ import uim.platform.integration.automation;
 
 @safe:
 /// Port for persisting and querying execution logs.
-interface ExecutionLogRepository : ITentRepository!(ExecutionLog, ExecutionLogId) {
+interface ExecutionLogRepository : ITenantRepository!(ExecutionLog, ExecutionLogId) {
 
   size_t countByWorkflow(TenantId tenantId, WorkflowId workflowId);
   ExecutionLog[] findByWorkflow(TenantId tenantId, WorkflowId workflowId);

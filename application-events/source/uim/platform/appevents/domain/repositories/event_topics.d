@@ -12,7 +12,7 @@ import uim.platform.appevents.domain.enums.topic_status;
 
 @safe:
 
-interface EventTopicRepository : ITentRepository!(EventTopic, EventTopicId) {
+interface EventTopicRepository : ITenantRepository!(EventTopic, EventTopicId) {
     EventTopic[] findByStatus(TenantId tenantId, TopicStatus status);
     EventTopic[] findByNamespace(TenantId tenantId, string namespace);
     bool nameExists(TenantId tenantId, string name);

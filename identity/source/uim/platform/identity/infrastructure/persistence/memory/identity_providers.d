@@ -11,7 +11,7 @@ import uim.platform.identity;
 
 @safe:
 
-class MemoryIdentityProviderRepository : TentRepository!(IdentityProvider, IdentityProviderId), IdentityProviderRepository {
+class MemoryIdentityProviderRepository : TenantRepository!(IdentityProvider, IdentityProviderId), IdentityProviderRepository {
     IdentityProvider findByEntityId(TenantId tenantId, string entityId) {
         foreach (idp; findByTenant(tenantId))
             if (idp.entityId == entityId) return idp;

@@ -12,7 +12,7 @@ import uim.platform.abap_environment;
 
 @safe:
 /// Port: outgoing - business role persistence.
-interface BusinessRoleRepository : ITentRepository!(BusinessRole, BusinessRoleId) {
+interface BusinessRoleRepository : ITenantRepository!(BusinessRole, BusinessRoleId) {
 
   bool existsByName(TenantId tenantId, SystemInstanceId systemId, string name);
   BusinessRole findByName(TenantId tenantId, SystemInstanceId systemId, string name);

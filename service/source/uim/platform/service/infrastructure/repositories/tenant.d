@@ -6,11 +6,12 @@ import uim.platform.service;
 
 @safe:
 
-class TentRepository(TEntity, TId) : BaseRepository!(TEntity), ITentRepository!(TEntity, TId) {
-  protected TEntity[TId][TenantId] store;
+class TenantRepository(TEntity, TId) : BaseRepository!(TEntity), ITenantRepository!(TEntity, TId) {
+  protected ITenantStore!(TEntity, TId) _store;
 
-  this() {
+  this(ITenantStore!(TEntity, TId) store) {
     super();
+    _store = store;
   }
 
   override bool initialize(Json initData = Json(null)) {
@@ -22,7 +23,7 @@ class TentRepository(TEntity, TId) : BaseRepository!(TEntity), ITentRepository!(
   }
 
   bool existsByTenant(TenantId tenantId) {
-    return tenantId in store ? true : false;
+    return _store.exists(tenantId);
   }
 
   bool isTenantEmpty(TenantId tenantId) {
@@ -186,7 +187,7 @@ struct TestEntity {
   }
 }
 
-class TestRepository : TentRepository!(TestEntity, TestEntityId) {
+class TestRepository : TenantRepository!(TestEntity, TestEntityId) {
 }
 
 unittest {

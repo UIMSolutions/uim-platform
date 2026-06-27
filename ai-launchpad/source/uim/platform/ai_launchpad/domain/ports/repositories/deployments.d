@@ -13,7 +13,7 @@ import uim.platform.ai_launchpad;
 
 @safe:
 
-interface IDeploymentRepository : ITentRepository!(Deployment, DeploymentId) {
+interface IDeploymentRepository : ITenantRepository!(Deployment, DeploymentId) {
   
   bool existsById(TenantId tenantId, ConnectionId connectionId, DeploymentId id);
   Deployment findById(TenantId tenantId, ConnectionId connectionId, DeploymentId id);

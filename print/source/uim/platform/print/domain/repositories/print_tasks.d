@@ -11,7 +11,7 @@ import uim.platform.print;
 
 @safe:
 
-interface PrintTaskRepository : ITentRepository!(PrintTask, PrintTaskId) {
+interface PrintTaskRepository : ITenantRepository!(PrintTask, PrintTaskId) {
     PrintTask[] findByQueue(TenantId tenantId, PrintQueueId queueId);
     PrintTask[] findByStatus(TenantId tenantId, PrintTaskStatus status);
     PrintTask[] findPendingByQueue(TenantId tenantId, PrintQueueId queueId);

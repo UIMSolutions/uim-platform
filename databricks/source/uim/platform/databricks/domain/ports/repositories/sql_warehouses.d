@@ -5,7 +5,7 @@ import uim.platform.databricks;
 
 @safe:
 
-interface SqlWarehouseRepository : TentRepository!(SqlWarehouse, SqlWarehouseId) {
+interface SqlWarehouseRepository : TenantRepository!(SqlWarehouse, SqlWarehouseId) {
   SqlWarehouse[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId);
   SqlWarehouse[] findByState(TenantId tenantId, WarehouseState state);
   SqlWarehouse[] findByType(TenantId tenantId, WarehouseType warehouseType);

@@ -11,7 +11,7 @@ import uim.platform.authorization_trust;
 
 @safe:
 
-class MemoryUserAssignmentRepository : TentRepository!(UserAssignment, UserAssignmentId), UserAssignmentRepository {
+class MemoryUserAssignmentRepository : TenantRepository!(UserAssignment, UserAssignmentId), UserAssignmentRepository {
 
   size_t countByUser(TenantId tenantId, UserId userId) {
     return findByUser(tenantId, userId).length;

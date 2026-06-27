@@ -10,7 +10,7 @@ import uim.platform.private_link;
 
 @safe:
 /// Port: repository contract for PrivateEndpoint persistence.
-interface PrivateEndpointRepository : ITentRepository!(PrivateEndpoint, PrivateEndpointId) {
+interface PrivateEndpointRepository : ITenantRepository!(PrivateEndpoint, PrivateEndpointId) {
   PrivateEndpoint[] findByServiceInstance(TenantId tenantId, ServiceInstanceId instanceId);
   PrivateEndpoint[] findByStatus(TenantId tenantId, EndpointStatus status);
   void removeByServiceInstance(TenantId tenantId, ServiceInstanceId instanceId);

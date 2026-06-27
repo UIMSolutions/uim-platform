@@ -11,7 +11,7 @@ import uim.platform.transport;
 
 @safe:
 
-class MemoryTransportNodeRepository : TentRepository!(TransportNode, TransportNodeId), TransportNodeRepository {
+class MemoryTransportNodeRepository : TenantRepository!(TransportNode, TransportNodeId), TransportNodeRepository {
 
     size_t countByStatus(TenantId tenantId, NodeStatus status) {
         return findByStatus(tenantId, status).length;

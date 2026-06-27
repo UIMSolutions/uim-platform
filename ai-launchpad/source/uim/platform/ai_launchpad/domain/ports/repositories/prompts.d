@@ -13,7 +13,7 @@ import uim.platform.ai_launchpad;
 
 @safe:
 
-interface IPromptRepository : ITentRepository!(Prompt, PromptId) {
+interface IPromptRepository : ITenantRepository!(Prompt, PromptId) {
 
   // bool existsById(TenantId tenantId, PromptId id);
   // Prompt findById(TenantId tenantId, PromptId id);

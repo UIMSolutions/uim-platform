@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Repository interface for managing TLS certificates associated with custom domains.
-interface CertificateRepository : ITentRepository!(Certificate, CertificateId) {
+interface CertificateRepository : ITenantRepository!(Certificate, CertificateId) {
 
     size_t countByKey(TenantId tenantId, PrivateKeyId keyId);
     Certificate[] findByKey(TenantId tenantId, PrivateKeyId keyId);

@@ -11,7 +11,7 @@ import uim.platform.usage_data;
 @safe:
 /// Port: outgoing repository interface for ServiceMetric persistence.
 interface ServiceMetricRepository
-    : ITentRepository!(ServiceMetric, ServiceMetricId) {
+    : ITenantRepository!(ServiceMetric, ServiceMetricId) {
 
   ServiceMetric[] findByService(TenantId tenantId, string serviceId);
   ServiceMetric[] findByPlan(TenantId tenantId, string planId);

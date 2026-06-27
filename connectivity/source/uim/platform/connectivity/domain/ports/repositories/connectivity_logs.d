@@ -12,7 +12,7 @@ import uim.platform.connectivity;
 
 @safe:
 /// Port: outgoing - connectivity event log persistence.
-interface ConnectivityLogRepository : ITentRepository!(ConnectivityLog, ConnectivityLogId) {
+interface ConnectivityLogRepository : ITenantRepository!(ConnectivityLog, ConnectivityLogId) {
 
   size_t countBySeverity(TenantId tenantId, LogSeverity severity);
   ConnectivityLog[] findBySeverity(TenantId tenantId, LogSeverity severity);

@@ -14,7 +14,7 @@ import std.array : array;
 @safe:
 
 class MemoryDatabaseUserRepository
-    : TentRepository!(DatabaseUser, DatabaseUserId)
+    : TenantRepository!(DatabaseUser, DatabaseUserId)
     , DatabaseUserRepository
 {
     override DatabaseUser[] findByInstance(TenantId t, ServiceInstanceId instanceId) {

@@ -13,7 +13,7 @@ import uim.platform.abap_environment;
 // // mixin(ShowModule!());
 @safe:
 
-class MemoryBusinessUserRepository : TentRepository!(BusinessUser, BusinessUserId), BusinessUserRepository {
+class MemoryBusinessUserRepository : TenantRepository!(BusinessUser, BusinessUserId), BusinessUserRepository {
 
   bool existsByUsername(TenantId tenantId, SystemInstanceId systemId, string username) {
     return findBySystem(tenantId, systemId).any!(e => e.username == username);

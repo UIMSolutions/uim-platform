@@ -11,7 +11,7 @@ import uim.platform.integration_delivery;
 
 @safe:
 
-interface DeploymentTargetRepository : ITentRepository!(DeploymentTarget, DeploymentTargetId) {
+interface DeploymentTargetRepository : ITenantRepository!(DeploymentTarget, DeploymentTargetId) {
     DeploymentTarget[] findByStatus(TenantId tenantId, DeploymentTargetStatus status);
     DeploymentTarget[] findByType(TenantId tenantId, DeploymentTargetType targetType);
     bool nameExists(TenantId tenantId, string name);

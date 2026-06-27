@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface SyncSessionRepository : ITentRepository!(SyncSession, SyncSessionId) {
+interface SyncSessionRepository : ITenantRepository!(SyncSession, SyncSessionId) {
     SyncSession[] findByDevice(TenantId tenantId, DeviceId deviceId);
     SyncSession[] findByStatus(TenantId tenantId, SyncStatus status);
     SyncSession[] findByMobileApplication(TenantId tenantId, MobileApplicationId appId);

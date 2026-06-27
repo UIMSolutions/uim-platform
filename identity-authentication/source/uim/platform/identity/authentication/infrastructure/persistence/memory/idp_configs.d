@@ -14,7 +14,7 @@ import uim.platform.identity.authentication;
 // mixin(ShowModule!());
 @safe:
 /// In-memory adapter for external IdP configuration persistence.
-class MemoryIdpConfigRepository : TentRepository!(IdpConfig, string), IdpConfigRepository {
+class MemoryIdpConfigRepository : TenantRepository!(IdpConfig, string), IdpConfigRepository {
 
   bool exists(string id) {
     return findByTenant(tenantId).any!(c => c.id == id);

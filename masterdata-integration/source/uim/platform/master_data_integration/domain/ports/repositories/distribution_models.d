@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — distribution model persistence.
-interface DistributionModelRepository : ITentRepository!(DistributionModel, DistributionModelId) {
+interface DistributionModelRepository : ITenantRepository!(DistributionModel, DistributionModelId) {
 
   size_t countByStatus(TenantId tenantId, DistributionModelStatus status);
   DistributionModel[] findByStatus(TenantId tenantId, DistributionModelStatus status);

@@ -11,7 +11,7 @@ import uim.platform.automation_pilot;
 
 @safe:
 
-interface ServiceAccountRepository : ITentRepository!(ServiceAccount, ServiceAccountId) {
+interface ServiceAccountRepository : ITenantRepository!(ServiceAccount, ServiceAccountId) {
 
     size_t countByStatus(TenantId tenantId, ServiceAccountStatus status);
     ServiceAccount[] findByStatus(TenantId tenantId, ServiceAccountStatus status);

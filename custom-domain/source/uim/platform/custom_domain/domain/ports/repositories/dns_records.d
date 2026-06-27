@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface DnsRecordRepository : ITentRepository!(DnsRecord, DnsRecordId) {
+interface DnsRecordRepository : ITenantRepository!(DnsRecord, DnsRecordId) {
 
     size_t countByDomain(TenantId tenantId, CustomDomainId domainId);
     DnsRecord[] findByDomain(TenantId tenantId, CustomDomainId domainId);

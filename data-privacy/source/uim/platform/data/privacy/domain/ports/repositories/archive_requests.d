@@ -12,7 +12,7 @@ import uim.platform.data.privacy;
 
 @safe:
 /// Port for persisting and querying archive requests.
-interface ArchiveRequestRepository : ITentRepository!(ArchiveRequest, ArchiveRequestId) {
+interface ArchiveRequestRepository : ITenantRepository!(ArchiveRequest, ArchiveRequestId) {
 
   size_t countByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
   ArchiveRequest[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);

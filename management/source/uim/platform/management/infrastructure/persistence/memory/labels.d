@@ -15,7 +15,7 @@ import uim.platform.management;
 // mixin(ShowModule!());
 @safe:
 
-class MemoryLabelRepository : TentRepository!(Label, LabelId), LabelRepository {
+class MemoryLabelRepository : TenantRepository!(Label, LabelId), LabelRepository {
   // TODO: mixin IdRepositoryTemplate!(MemoryLabelRepository, Label, LabelId);
 
   // #region ByResourceType

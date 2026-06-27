@@ -11,7 +11,7 @@ import uim.platform.workzone;
 // mixin(ShowModule!());
 
 @safe:
-interface KnowledgeBaseArticleRepository : ITentRepository!(KnowledgeBaseArticle, KBArticleId) {
+interface KnowledgeBaseArticleRepository : ITenantRepository!(KnowledgeBaseArticle, KBArticleId) {
 
   size_t countByWorkspace(TenantId tenantId, WorkspaceId workspaceId);
   KnowledgeBaseArticle[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId);

@@ -11,7 +11,7 @@ import uim.platform.workzone;
 // mixin(ShowModule!());
 
 @safe:
-interface ShellPluginRepository : ITentRepository!(ShellPlugin, ShellPluginId) {
+interface ShellPluginRepository : ITenantRepository!(ShellPlugin, ShellPluginId) {
 
   size_t countBySite(TenantId tenantId, SiteId siteId);
   ShellPlugin[] findBySite(TenantId tenantId, SiteId siteId);

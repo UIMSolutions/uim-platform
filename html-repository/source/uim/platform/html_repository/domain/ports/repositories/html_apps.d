@@ -11,7 +11,7 @@ import uim.platform.html_repository;
 // mixin(ShowModule!());
 
 @safe:
-interface HtmlAppRepository : ITentRepository!(HtmlApp, HtmlAppId) {
+interface HtmlAppRepository : ITenantRepository!(HtmlApp, HtmlAppId) {
 
   size_t countByName(TenantId tenantId, string name);
   HtmlApp[] findByName(TenantId tenantId, string name);

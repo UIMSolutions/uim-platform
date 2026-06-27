@@ -16,7 +16,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryMasterDataObjectRepository : TentRepository!(MasterDataObject, MasterDataObjectId), MasterDataObjectRepository {
+class MemoryMasterDataObjectRepository : TenantRepository!(MasterDataObject, MasterDataObjectId), MasterDataObjectRepository {
 
   size_t countByCategory(TenantId tenantId, MasterDataCategory category) {
     return findByCategory(tenantId, category).length;

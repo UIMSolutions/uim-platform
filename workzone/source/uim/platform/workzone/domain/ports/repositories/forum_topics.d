@@ -11,7 +11,7 @@ import uim.platform.workzone;
 // mixin(ShowModule!());
 
 @safe:
-interface ForumTopicRepository : ITentRepository!(ForumTopic, ForumTopicId) {
+interface ForumTopicRepository : ITenantRepository!(ForumTopic, ForumTopicId) {
 
   size_t countByWorkspace(TenantId tenantId, WorkspaceId workspaceId);
   ForumTopic[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId);

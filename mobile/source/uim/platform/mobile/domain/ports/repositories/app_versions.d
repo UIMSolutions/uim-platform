@@ -11,7 +11,7 @@ import uim.platform.mobile;
 
 @safe:
 
-interface AppVersionRepository : ITentRepository!(AppVersion, AppVersionId) {
+interface AppVersionRepository : ITenantRepository!(AppVersion, AppVersionId) {
 
   bool existsLatest(TenantId tenantId, MobileAppId appId, AppPlatform platform);
   AppVersion findLatest(TenantId tenantId, MobileAppId appId, AppPlatform platform);

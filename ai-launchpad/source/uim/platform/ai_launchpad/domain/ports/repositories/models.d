@@ -13,7 +13,7 @@ import uim.platform.ai_launchpad;
 
 @safe:
 
-interface IModelRepository : ITentRepository!(Model, ModelId) {
+interface IModelRepository : ITenantRepository!(Model, ModelId) {
 
   bool existsById(TenantId tenantId, ConnectionId connectionId, ModelId id);
   Model findById(TenantId tenantId, ConnectionId connectionId, ModelId id);

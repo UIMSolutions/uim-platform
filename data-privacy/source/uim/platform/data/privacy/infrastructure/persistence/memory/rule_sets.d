@@ -12,7 +12,7 @@ import uim.platform.data.privacy;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryRuleSetRepository : TentRepository!(RuleSet, RuleSetId), RuleSetRepository {
+class MemoryRuleSetRepository : TenantRepository!(RuleSet, RuleSetId), RuleSetRepository {
 
   // #region ByBusinessContext
   size_t countByBusinessContext(TenantId tenantId, BusinessContextId contextId) {

@@ -10,7 +10,7 @@ import uim.platform.ui_flexibility;
 
 @safe:
 
-interface FlexPersonalizationRepository : ITentRepository!(FlexPersonalization, FlexPersonalizationId) {
+interface FlexPersonalizationRepository : ITenantRepository!(FlexPersonalization, FlexPersonalizationId) {
   bool existsById(TenantId tenantId, FlexPersonalizationId id);
   FlexPersonalization findById(TenantId tenantId, FlexPersonalizationId id);
   bool removeById(TenantId tenantId, FlexPersonalizationId id);

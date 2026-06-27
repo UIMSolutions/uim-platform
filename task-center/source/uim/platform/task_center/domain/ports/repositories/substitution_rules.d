@@ -11,7 +11,7 @@ import uim.platform.task_center;
 
 @safe:
 
-interface SubstitutionRuleRepository : ITentRepository!(SubstitutionRule, SubstitutionRuleId) {
+interface SubstitutionRuleRepository : ITenantRepository!(SubstitutionRule, SubstitutionRuleId) {
 
     size_t countByUser(TenantId tenantId, UserId userId);
     SubstitutionRule[] findByUser(TenantId tenantId, UserId userId);

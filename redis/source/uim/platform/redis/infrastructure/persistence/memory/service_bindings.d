@@ -14,7 +14,7 @@ import std.array : array;
 @safe:
 
 class MemoryServiceBindingRepository
-    : TentRepository!(ServiceBinding, ServiceBindingId)
+    : TenantRepository!(ServiceBinding, ServiceBindingId)
     , ServiceBindingRepository
 {
     override ServiceBinding[] findByInstance(TenantId tenantId, ServiceInstanceId instanceId) {

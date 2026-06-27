@@ -11,7 +11,7 @@ import uim.platform.redis;
 
 @safe:
 
-interface MetricRepository : ITentRepository!(Metric, MetricId) {
+interface MetricRepository : ITenantRepository!(Metric, MetricId) {
     Metric[] findByInstance(TenantId tenantId, ServiceInstanceId instanceId);
     Metric[] findByInstanceAndTimeRange(TenantId tenantId, ServiceInstanceId instanceId, long from, long to);
     Metric   findLatestByInstance(TenantId tenantId, ServiceInstanceId instanceId);

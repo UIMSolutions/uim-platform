@@ -11,7 +11,7 @@ import uim.platform.application_studio;
 
 @safe:
 
-class MemoryDevSpaceRepository : TentRepository!(DevSpace, DevSpaceId), DevSpaceRepository {
+class MemoryDevSpaceRepository : TenantRepository!(DevSpace, DevSpaceId), DevSpaceRepository {
 
     size_t countByOwner(TenantId tenantId, string owner) {
         return findByOwner(tenantId, owner).length;

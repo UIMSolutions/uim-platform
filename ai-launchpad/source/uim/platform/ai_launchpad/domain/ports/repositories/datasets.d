@@ -13,7 +13,7 @@ import uim.platform.ai_launchpad;
 
 @safe:
 
-interface IDatasetRepository : ITentRepository!(Dataset, DatasetId) {
+interface IDatasetRepository : ITenantRepository!(Dataset, DatasetId) {
 
   bool existsById(TenantId tenantId, ConnectionId connectionId, DatasetId id);
   Dataset findById(TenantId tenantId, ConnectionId connectionId, DatasetId id);

@@ -14,7 +14,7 @@ import std.array : array;
 @safe:
 
 class MemoryMetricRepository
-    : TentRepository!(Metric, MetricId)
+    : TenantRepository!(Metric, MetricId)
     , MetricRepository
 {
     override Metric[] findByInstance(TenantId tenantId, ServiceInstanceId instanceId) {

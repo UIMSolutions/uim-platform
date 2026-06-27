@@ -13,7 +13,7 @@ import std.array : array;
 
 @safe:
 
-class MemoryDeploymentTargetRepository : TentRepository!(DeploymentTarget, DeploymentTargetId), DeploymentTargetRepository {
+class MemoryDeploymentTargetRepository : TenantRepository!(DeploymentTarget, DeploymentTargetId), DeploymentTargetRepository {
     DeploymentTarget[] findByStatus(TenantId tenantId, DeploymentTargetStatus status) {
         return findByTenant(tenantId).filter!(d => d.status == status).array;
     }

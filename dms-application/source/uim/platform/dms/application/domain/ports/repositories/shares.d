@@ -10,7 +10,7 @@ import uim.platform.dms.application;
 
 // mixin(ShowModule!());
 @safe:
-interface IShareRepository : ITentRepository!(Share, ShareId) {
+interface IShareRepository : ITenantRepository!(Share, ShareId) {
   size_t countByDocument(TenantId tenantId, DocumentId documentId);
   Share[] findByDocument(TenantId tenantId, DocumentId documentId);
   void removeByDocument(TenantId tenantId, DocumentId documentId);

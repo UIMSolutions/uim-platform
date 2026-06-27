@@ -8,7 +8,7 @@ module uim.platform.datasphere_composer.domain.ports.repositories.tenant_users;
 import uim.platform.datasphere_composer;
 
 @safe:
-interface TenantUserRepository : ITentRepository!(TenantUser, TenantUserId) {
+interface TenantUserRepository : ITenantRepository!(TenantUser, TenantUserId) {
   TenantUser[] findByRole(TenantId tenantId, TenantUserRole role);
   TenantUser findByEmail(TenantId tenantId, string email);
 }

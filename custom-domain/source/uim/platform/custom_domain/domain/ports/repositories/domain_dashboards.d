@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface DomainDashboardRepository : ITentRepository!(DomainDashboard, DomainDashboardId) {
+interface DomainDashboardRepository : ITenantRepository!(DomainDashboard, DomainDashboardId) {
     
     DomainDashboard get(TenantId tenantId);
     

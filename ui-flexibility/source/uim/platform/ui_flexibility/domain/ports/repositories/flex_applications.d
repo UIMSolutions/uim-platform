@@ -10,7 +10,7 @@ import uim.platform.ui_flexibility;
 
 @safe:
 
-interface FlexApplicationRepository : ITentRepository!(FlexApplication, FlexApplicationId) {
+interface FlexApplicationRepository : ITenantRepository!(FlexApplication, FlexApplicationId) {
   bool existsById(TenantId tenantId, FlexApplicationId id);
   FlexApplication findById(TenantId tenantId, FlexApplicationId id);
   bool removeById(TenantId tenantId, FlexApplicationId id);

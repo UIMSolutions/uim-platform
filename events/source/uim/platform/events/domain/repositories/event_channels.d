@@ -11,7 +11,7 @@ import uim.platform.events;
 
 @safe:
 
-interface EventChannelRepository : ITentRepository!(EventChannel, EventChannelId) {
+interface EventChannelRepository : ITenantRepository!(EventChannel, EventChannelId) {
     size_t countByService(TenantId tenantId, MessagingServiceId serviceId);
     EventChannel[] findByService(TenantId tenantId, MessagingServiceId serviceId);
     EventChannel[] findByNamespace(TenantId tenantId, string namespace);

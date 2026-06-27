@@ -11,5 +11,5 @@ import uim.platform.datasphere;
 // mixin(ShowModule!()); 
 
 @safe:
-interface SpaceRepository : ITentRepository!(Space, SpaceId) {
+interface SpaceRepository : ITenantRepository!(Space, SpaceId) {
 }

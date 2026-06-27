@@ -5,7 +5,7 @@ import uim.platform.data_retention;
 
 @safe:
 
-class MemoryRetentionRuleRepository : TentRepository!(RetentionRule, RetentionRuleId), RetentionRuleRepository {
+class MemoryRetentionRuleRepository : TenantRepository!(RetentionRule, RetentionRuleId), RetentionRuleRepository {
 
     size_t countByBusinessPurpose(TenantId tenantId, BusinessPurposeId purposeId) {
         return findByBusinessPurpose(tenantId, purposeId).length;

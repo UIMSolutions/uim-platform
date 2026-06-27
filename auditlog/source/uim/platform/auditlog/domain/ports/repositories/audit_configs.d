@@ -12,6 +12,6 @@ import uim.platform.auditlog;
 // mixin(ShowModule!());
 /// Port for persisting tenant-level audit configurations.
 @safe:
-interface AuditConfigRepository : ITentRepository!(AuditConfig, AuditConfigId) {
+interface AuditConfigRepository : ITenantRepository!(AuditConfig, AuditConfigId) {
   AuditConfig getByTenant(TenantId tenantId);
 }

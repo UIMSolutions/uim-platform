@@ -13,7 +13,7 @@ import uim.platform.ai_launchpad;
 
 @safe:
 
-interface IConnectionRepository : ITentRepository!(Connection, ConnectionId) {
+interface IConnectionRepository : ITenantRepository!(Connection, ConnectionId) {
   
   size_t countByWorkspace(TenantId tenantId, WorkspaceId workspaceId);
   Connection[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId);

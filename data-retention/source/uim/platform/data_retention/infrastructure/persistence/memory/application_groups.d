@@ -5,7 +5,7 @@ import uim.platform.data_retention;
 
 @safe:
 
-class MemoryApplicationGroupRepository : TentRepository!(ApplicationGroup, ApplicationGroupId), ApplicationGroupRepository {
+class MemoryApplicationGroupRepository : TenantRepository!(ApplicationGroup, ApplicationGroupId), ApplicationGroupRepository {
 
     size_t countByActive(TenantId tenantId) {
         return findActive(tenantId).length;

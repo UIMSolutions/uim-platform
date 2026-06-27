@@ -11,7 +11,7 @@ import uim.platform.build_apps;
 
 @safe:
 
-interface LogicFlowRepository : ITentRepository!(LogicFlow, LogicFlowId) {
+interface LogicFlowRepository : ITenantRepository!(LogicFlow, LogicFlowId) {
 
     size_t countByApplication(ApplicationId applicationId);
     LogicFlow[] findByApplication(ApplicationId applicationId);

@@ -13,7 +13,7 @@ import uim.platform.identity.directory;
 
 @safe:
 /// Port: outgoing — API client persistence.
-interface ApiClientRepository : ITentRepository!(ApiClient, ApiClientId) {
+interface ApiClientRepository : ITenantRepository!(ApiClient, ApiClientId) {
 
   size_t countByClient(string clientId);
   ApiClient findByClient(string clientId);

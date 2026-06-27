@@ -11,7 +11,7 @@ import uim.platform.personal_data;
 
 @safe:
 
-interface ProcessingPurposeRepository : ITentRepository!(ProcessingPurpose, ProcessingPurposeId) {
+interface ProcessingPurposeRepository : ITenantRepository!(ProcessingPurpose, ProcessingPurposeId) {
 
     size_t countByLegalBasis(TenantId tenantId, LegalBasis basis);
     ProcessingPurpose[] findByLegalBasis(TenantId tenantId, LegalBasis basis);

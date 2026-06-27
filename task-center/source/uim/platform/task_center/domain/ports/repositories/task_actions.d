@@ -11,7 +11,7 @@ import uim.platform.task_center;
 
 @safe:
 
-interface TaskActionRepository : ITentRepository!(TaskAction, TaskActionId) {
+interface TaskActionRepository : ITenantRepository!(TaskAction, TaskActionId) {
 
     size_t countByTask(TenantId tenantId, TaskId taskId);
     TaskAction[] findByTask(TenantId tenantId, TaskId taskId);

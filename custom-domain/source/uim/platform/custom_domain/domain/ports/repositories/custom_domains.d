@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface CustomDomainRepository : ITentRepository!(CustomDomain, CustomDomainId) {
+interface CustomDomainRepository : ITenantRepository!(CustomDomain, CustomDomainId) {
     
     bool existsByDomainName(TenantId tenantId, string domainName);
     CustomDomain findByDomainName(TenantId tenantId, string domainName);

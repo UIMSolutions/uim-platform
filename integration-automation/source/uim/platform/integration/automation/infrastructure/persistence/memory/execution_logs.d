@@ -15,7 +15,7 @@ import uim.platform.integration.automation;
 
 @safe:;
 
-class MemoryExecutionLogRepository : TentRepository!(ExecutionLog, ExecutionLogId), ExecutionLogRepository {
+class MemoryExecutionLogRepository : TenantRepository!(ExecutionLog, ExecutionLogId), ExecutionLogRepository {
 
 
   size_t countByWorkflow(TenantId tenantId, WorkflowId workflowId) {

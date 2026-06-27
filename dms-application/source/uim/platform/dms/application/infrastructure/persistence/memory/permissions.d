@@ -12,7 +12,7 @@ import uim.platform.dms.application;
 
 // mixin(ShowModule!());
 @safe:
-class MemoryPermissionRepository : TentRepository!(Permission, PermissionId), IPermissionRepository {
+class MemoryPermissionRepository : TenantRepository!(Permission, PermissionId), IPermissionRepository {
   // #region byResource
   size_t countByResource(TenantId tenantId, string resourceId, ResourceType resourceType) {
     return findByResource(tenantId, resourceId, resourceType).count;

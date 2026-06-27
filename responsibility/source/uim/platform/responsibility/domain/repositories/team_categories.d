@@ -11,6 +11,6 @@ import uim.platform.responsibility;
 
 @safe:
 
-interface TeamCategoryRepository : ITentRepository!(TeamCategory, TeamCategoryId) {
+interface TeamCategoryRepository : ITenantRepository!(TeamCategory, TeamCategoryId) {
     TeamCategory findByCode(TenantId tenantId, string code);
 }

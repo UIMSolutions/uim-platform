@@ -12,7 +12,7 @@ import uim.platform.data.privacy;
 
 @safe:
 /// Port for persisting legal grounds for data processing.
-interface LegalGroundRepository : ITentRepository!(LegalGround, LegalGroundId) {
+interface LegalGroundRepository : ITenantRepository!(LegalGround, LegalGroundId) {
 
   size_t countByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
   LegalGround[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);

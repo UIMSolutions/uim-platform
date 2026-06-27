@@ -11,7 +11,7 @@ import uim.platform.hana_spatial;
 
 @safe:
 class MemoryPointOfInterestRepository
-  : TentRepository!(PointOfInterest, PointOfInterestId),
+  : TenantRepository!(PointOfInterest, PointOfInterestId),
     PointOfInterestRepository {
 
   PointOfInterest[] findByCategory(TenantId tenantId, PoiCategory category) {

@@ -11,7 +11,7 @@ import uim.platform.personal_data;
 
 @safe:
 
-class MemoryDataProcessingLogRepository : TentRepository!(DataProcessingLog, DataProcessingLogId), DataProcessingLogRepository {
+class MemoryDataProcessingLogRepository : TenantRepository!(DataProcessingLog, DataProcessingLogId), DataProcessingLogRepository {
 
     // #region ByDataSubject
     size_t countByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {

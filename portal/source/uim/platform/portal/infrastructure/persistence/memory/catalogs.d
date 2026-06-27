@@ -14,7 +14,7 @@ import uim.platform.portal;
 
 @safe:
 
-class MemoryCatalogRepository : TentRepository!(Catalog, CatalogId), CatalogRepository {
+class MemoryCatalogRepository : TenantRepository!(Catalog, CatalogId), CatalogRepository {
 
   size_t countByProvider(ProviderId providerId) {
     return findByProvider(providerId).length;

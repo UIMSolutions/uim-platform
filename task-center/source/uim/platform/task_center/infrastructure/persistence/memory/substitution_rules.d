@@ -11,7 +11,7 @@ import uim.platform.task_center;
 
 @safe:
 
-class MemorySubstitutionRuleRepository : TentRepository!(SubstitutionRule, SubstitutionRuleId), SubstitutionRuleRepository {
+class MemorySubstitutionRuleRepository : TenantRepository!(SubstitutionRule, SubstitutionRuleId), SubstitutionRuleRepository {
 
     size_t countByUser(TenantId tenantId, UserId userId) {
         return findByUser(tenantId, userId).length;

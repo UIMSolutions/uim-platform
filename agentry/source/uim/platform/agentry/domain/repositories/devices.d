@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface DeviceRepository : ITentRepository!(Device, DeviceId) {
+interface DeviceRepository : ITenantRepository!(Device, DeviceId) {
     Device[] findByMobileApplication(TenantId tenantId, MobileApplicationId appId);
     Device[] findByStatus(TenantId tenantId, DeviceStatus status);
     Device[] findByPlatform(TenantId tenantId, AppPlatform platform);

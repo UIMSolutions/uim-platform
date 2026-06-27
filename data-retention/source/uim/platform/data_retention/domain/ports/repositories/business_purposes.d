@@ -5,7 +5,7 @@ import uim.platform.data_retention;
 
 @safe:
 
-interface BusinessPurposeRepository : ITentRepository!(BusinessPurpose, BusinessPurposeId) {
+interface BusinessPurposeRepository : ITenantRepository!(BusinessPurpose, BusinessPurposeId) {
 
     BusinessPurpose[] findByApplicationGroup(TenantId tenantId, ApplicationGroupId groupId);
     BusinessPurpose[] findByStatus(TenantId tenantId, BusinessPurposeStatus status);

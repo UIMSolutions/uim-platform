@@ -11,7 +11,7 @@ import uim.platform.mobile;
 
 @safe:
 
-interface UsageReportRepository : ITentRepository!(UsageReport, UsageReportId) {
+interface UsageReportRepository : ITenantRepository!(UsageReport, UsageReportId) {
 
   size_t countByApp(TenantId tenantId, MobileAppId appId);
   UsageReport[] findByApp(TenantId tenantId, MobileAppId appId);

@@ -11,7 +11,7 @@ import uim.platform.build_apps;
 
 @safe:
 
-class MemoryLogicFlowRepository : TentRepository!(LogicFlow, LogicFlowId), LogicFlowRepository {
+class MemoryLogicFlowRepository : TenantRepository!(LogicFlow, LogicFlowId), LogicFlowRepository {
 
     size_t countByApplication(ApplicationId applicationId) {
         return findByApplication(applicationId).length;

@@ -13,7 +13,7 @@ import uim.platform.identity.directory;
 
 @safe:
 /// In-memory adapter for custom schema persistence.
-class MemorySchemaRepository : TentRepository!(Schema, SchemaId), SchemaRepository {
+class MemorySchemaRepository : TenantRepository!(Schema, SchemaId), SchemaRepository {
 
   bool existsByName(TenantId tenantId, string name) {
     return findByTenant(tenantId).any!(s => s.tenantId == tenantId && s.name == name);

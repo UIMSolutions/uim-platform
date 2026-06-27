@@ -11,7 +11,7 @@ import uim.platform.event_mesh;
 
 @safe:
 
-class BrokerServiceRepository : TentRepository!(BrokerService, BrokerServiceId), IBrokerServiceRepository {
+class BrokerServiceRepository : TenantRepository!(BrokerService, BrokerServiceId), IBrokerServiceRepository {
 
     size_t countByStatus(TenantId tenantId, BrokerServiceStatus status) {
         return findByStatus(tenantId, status).length;

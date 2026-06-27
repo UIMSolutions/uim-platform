@@ -11,7 +11,7 @@ import uim.platform.print;
 
 @safe:
 
-interface PrintDocumentRepository : ITentRepository!(PrintDocument, PrintDocumentId) {
+interface PrintDocumentRepository : ITenantRepository!(PrintDocument, PrintDocumentId) {
     PrintDocument[] findByFormat(TenantId tenantId, DocumentFormat format);
     PrintDocument[] findExpired(TenantId tenantId, long nowTimestamp);
     void removeExpired(TenantId tenantId, long nowTimestamp);

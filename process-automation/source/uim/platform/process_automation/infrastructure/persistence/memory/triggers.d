@@ -10,7 +10,7 @@ import uim.platform.process_automation;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryTriggerRepository : TentRepository!(Trigger, TriggerId), TriggerRepository {
+class MemoryTriggerRepository : TenantRepository!(Trigger, TriggerId), TriggerRepository {
 
     size_t countByProcess(TenantId tenantId, ProcessId processId) {
         return findByProcess(tenantId, processId).length;

@@ -11,7 +11,7 @@ import uim.platform.dms_integration;
 
 @safe:
 
-interface DocumentVersionRepository : ITentRepository!(DocumentVersion, DocumentVersionId) {
+interface DocumentVersionRepository : ITenantRepository!(DocumentVersion, DocumentVersionId) {
 
     DocumentVersion[] findByDocument(TenantId tenantId, DocumentId documentId);
     void removeByDocument(TenantId tenantId, DocumentId documentId);

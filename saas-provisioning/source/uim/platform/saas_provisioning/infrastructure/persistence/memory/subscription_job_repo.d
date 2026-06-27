@@ -13,7 +13,7 @@ import uim.platform.saas_provisioning;
 
 /// In-memory implementation of SubscriptionJobRepository.
 class MemorySubscriptionJobRepository
-    : TentRepository!(SubscriptionJob, SubscriptionJobId),
+    : TenantRepository!(SubscriptionJob, SubscriptionJobId),
       SubscriptionJobRepository
 {
     SubscriptionJob[] findBySubscription(TenantId tenantId, string subscriptionId) {

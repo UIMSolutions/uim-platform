@@ -5,7 +5,7 @@ import uim.platform.data_retention;
 
 @safe:
 
-class MemoryLegalEntityRepository : TentRepository!(LegalEntity, LegalEntityId), LegalEntityRepository {
+class MemoryLegalEntityRepository : TenantRepository!(LegalEntity, LegalEntityId), LegalEntityRepository {
 
         size_t countByActive(TenantId tenantId) {
             return findActive(tenantId).length;

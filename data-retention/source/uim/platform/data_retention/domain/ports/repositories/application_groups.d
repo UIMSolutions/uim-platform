@@ -5,7 +5,7 @@ import uim.platform.data_retention;
 
 @safe:
 
-interface ApplicationGroupRepository : ITentRepository!(ApplicationGroup, ApplicationGroupId) {
+interface ApplicationGroupRepository : ITenantRepository!(ApplicationGroup, ApplicationGroupId) {
 
     ApplicationGroup[] findActive(TenantId tenantId);
 

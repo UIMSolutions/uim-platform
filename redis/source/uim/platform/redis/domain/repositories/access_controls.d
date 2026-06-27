@@ -11,7 +11,7 @@ import uim.platform.redis;
 
 @safe:
 
-interface AccessControlRepository : ITentRepository!(AccessControl, AccessControlId) {
+interface AccessControlRepository : ITenantRepository!(AccessControl, AccessControlId) {
     AccessControl[] findByInstance(TenantId tenantId, ServiceInstanceId instanceId);
     AccessControl[] findByStatus(TenantId tenantId, AccessControlStatus status);
     bool cidrExists(TenantId tenantId, ServiceInstanceId instanceId, string cidr);

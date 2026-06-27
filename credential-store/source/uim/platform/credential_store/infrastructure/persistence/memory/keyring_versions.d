@@ -13,7 +13,7 @@ import uim.platform.credential_store;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryKeyringVersionRepository : TentRepository!(KeyringVersion, KeyringVersionId), KeyringVersionRepository {
+class MemoryKeyringVersionRepository : TenantRepository!(KeyringVersion, KeyringVersionId), KeyringVersionRepository {
 
   KeyringVersion findActiveVersion(TenantId tenantId, CredentialId keyringId) {
     foreach (v; findByTenant(tenantId))

@@ -11,7 +11,7 @@ import uim.platform.build_apps;
 
 @safe:
 
-class MemoryDataConnectionRepository : TentRepository!(DataConnection, DataConnectionId), DataConnectionRepository {
+class MemoryDataConnectionRepository : TenantRepository!(DataConnection, DataConnectionId), DataConnectionRepository {
 
     size_t countByApplication(ApplicationId applicationId) {
         return findByApplication(applicationId).length;

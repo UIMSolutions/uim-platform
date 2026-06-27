@@ -12,7 +12,7 @@ import uim.platform.abap_environment;
 
 @safe:
 /// Port: outgoing - application job persistence.
-interface ApplicationJobRepository : ITentRepository!(ApplicationJob, ApplicationJobId) {
+interface ApplicationJobRepository : ITenantRepository!(ApplicationJob, ApplicationJobId) {
 
   size_t countBySystem(TenantId tenantId, SystemInstanceId systemId);
   ApplicationJob[] findBySystem(TenantId tenantId, SystemInstanceId systemId);

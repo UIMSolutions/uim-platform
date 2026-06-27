@@ -11,7 +11,7 @@ import uim.platform.transport;
 
 @safe:
 
-interface TransportNodeRepository : ITentRepository!(TransportNode, TransportNodeId) {
+interface TransportNodeRepository : ITenantRepository!(TransportNode, TransportNodeId) {
     size_t countByStatus(TenantId tenantId, NodeStatus status);
     TransportNode[] findByStatus(TenantId tenantId, NodeStatus status);
     TransportNode[] findByType(TenantId tenantId, NodeType nodeType);

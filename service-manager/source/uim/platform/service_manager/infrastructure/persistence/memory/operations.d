@@ -6,7 +6,7 @@ import uim.platform.service_manager;
 
 @safe:
 
-class MemoryOperationRepository : TentRepository!(Operation, OperationId), OperationRepository {
+class MemoryOperationRepository : TenantRepository!(Operation, OperationId), OperationRepository {
 
     // #region ByOperationType
     size_t countByOperationType(TenantId tenantId, OperationType type) {

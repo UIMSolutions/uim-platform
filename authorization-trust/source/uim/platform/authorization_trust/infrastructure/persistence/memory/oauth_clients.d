@@ -11,7 +11,7 @@ import uim.platform.authorization_trust;
 
 @safe:
 
-class MemoryOAuthClientRepository : TentRepository!(OAuthClient, OAuthClientId), OAuthClientRepository {
+class MemoryOAuthClientRepository : TenantRepository!(OAuthClient, OAuthClientId), OAuthClientRepository {
   
   size_t countByApp(TenantId tenantId, string appId) {
     return filterByApp(findByTenant(tenantId), appId).length;

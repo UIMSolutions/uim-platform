@@ -10,7 +10,7 @@ import uim.platform.private_link;
 
 @safe:
 class MemoryServiceBindingRepository
-    : TentRepository!(ServiceBinding, ServiceBindingId),
+    : TenantRepository!(ServiceBinding, ServiceBindingId),
       ServiceBindingRepository {
 
   ServiceBinding[] findByServiceInstance(TenantId tenantId, ServiceInstanceId instanceId) {

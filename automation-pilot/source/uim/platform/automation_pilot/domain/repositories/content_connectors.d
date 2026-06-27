@@ -11,7 +11,7 @@ import uim.platform.automation_pilot;
 
 @safe:
 
-interface ContentConnectorRepository : ITentRepository!(ContentConnector, ContentConnectorId) {
+interface ContentConnectorRepository : ITenantRepository!(ContentConnector, ContentConnectorId) {
 
     size_t countByType(TenantId tenantId, ConnectorType connectorType);
     ContentConnector[] findByType(TenantId tenantId, ConnectorType connectorType);

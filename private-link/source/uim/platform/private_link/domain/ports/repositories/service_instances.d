@@ -10,7 +10,7 @@ import uim.platform.private_link;
 
 @safe:
 /// Port: repository contract for ServiceInstance persistence.
-interface ServiceInstanceRepository : ITentRepository!(ServiceInstance, ServiceInstanceId) {
+interface ServiceInstanceRepository : ITenantRepository!(ServiceInstance, ServiceInstanceId) {
   bool existsByName(TenantId tenantId, string name);
   ServiceInstance findByName(TenantId tenantId, string name);
   ServiceInstance[] findByStatus(TenantId tenantId, InstanceStatus status);

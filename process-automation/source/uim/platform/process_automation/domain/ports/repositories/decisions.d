@@ -11,7 +11,7 @@ import uim.platform.process_automation;
 // mixin(ShowModule!());
 
 @safe:
-interface DecisionRepository : ITentRepository!(Decision, DecisionId) {
+interface DecisionRepository : ITenantRepository!(Decision, DecisionId) {
 
     size_t countByProject(TenantId tenantId, ProjectId projectId);
     Decision[] findByProject(TenantId tenantId, ProjectId projectId);

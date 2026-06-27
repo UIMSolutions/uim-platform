@@ -11,7 +11,7 @@ import uim.platform.identity;
 
 @safe:
 
-interface GroupRepository : ITentRepository!(IDMGroup, IDMGroupId) {
+interface GroupRepository : ITenantRepository!(IDMGroup, IDMGroupId) {
 
     IDMGroup findByName(TenantId tenantId, string name);
     IDMGroup[] findByType(TenantId tenantId, GroupType type_);

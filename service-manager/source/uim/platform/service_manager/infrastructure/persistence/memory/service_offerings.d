@@ -6,7 +6,7 @@ import uim.platform.service_manager;
 
 @safe:
 
-class MemoryServiceOfferingRepository : TentRepository!(ServiceOffering, ServiceOfferingId), ServiceOfferingRepository {
+class MemoryServiceOfferingRepository : TenantRepository!(ServiceOffering, ServiceOfferingId), ServiceOfferingRepository {
 
     size_t countByStatus(TenantId tenantId, ServiceOfferingStatus status) {
         return this.findByStatus(tenantId, status).length;

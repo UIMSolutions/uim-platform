@@ -11,7 +11,7 @@ import uim.platform.responsibility;
 
 @safe:
 
-interface MemberFunctionRepository : ITentRepository!(MemberFunction, MemberFunctionId) {
+interface MemberFunctionRepository : ITenantRepository!(MemberFunction, MemberFunctionId) {
     MemberFunction[] findByStatus(TenantId tenantId, FunctionStatus status);
     MemberFunction findByCode(TenantId tenantId, string code);
 }

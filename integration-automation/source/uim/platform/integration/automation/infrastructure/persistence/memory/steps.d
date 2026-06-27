@@ -15,7 +15,7 @@ import uim.platform.integration.automation;
 
 @safe:
 
-class MemoryStepRepository : TentRepository!(WorkflowStep, StepId), StepRepository {
+class MemoryStepRepository : TenantRepository!(WorkflowStep, StepId), StepRepository {
 
   size_t countByWorkflow(TenantId tenantId, WorkflowId workflowId) {
     return findByWorkflow(tenantId, workflowId).length;

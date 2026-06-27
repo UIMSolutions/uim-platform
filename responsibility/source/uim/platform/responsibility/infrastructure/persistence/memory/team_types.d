@@ -12,7 +12,7 @@ import uim.platform.responsibility;
 @safe:
 
 class MemoryTeamTypeRepository
-    : TentRepository!(TeamType, TeamTypeId),
+    : TenantRepository!(TeamType, TeamTypeId),
       TeamTypeRepository {
 
     TeamType[] findByCategory(TenantId tenantId, string categoryId) {

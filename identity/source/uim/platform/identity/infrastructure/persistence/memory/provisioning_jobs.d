@@ -11,7 +11,7 @@ import uim.platform.identity;
 
 @safe:
 
-class MemoryProvisioningJobRepository : TentRepository!(ProvisioningJob, ProvisioningJobId), ProvisioningJobRepository {
+class MemoryProvisioningJobRepository : TenantRepository!(ProvisioningJob, ProvisioningJobId), ProvisioningJobRepository {
     ProvisioningJob[] findByStatus(TenantId tenantId, JobStatus status) {
         return findByTenant(tenantId).filter!(j => j.status == status).array;
     }

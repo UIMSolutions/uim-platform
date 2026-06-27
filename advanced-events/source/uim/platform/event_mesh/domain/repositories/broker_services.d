@@ -11,7 +11,7 @@ import uim.platform.event_mesh;
 
 @safe:
 
-interface IBrokerServiceRepository : ITentRepository!(BrokerService, BrokerServiceId) {
+interface IBrokerServiceRepository : ITenantRepository!(BrokerService, BrokerServiceId) {
 
     size_t countByStatus(TenantId tenantId, BrokerServiceStatus status);
     BrokerService[] findByStatus(TenantId tenantId, BrokerServiceStatus status);

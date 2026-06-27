@@ -11,7 +11,7 @@ import uim.platform.authorization_trust;
 
 @safe:
 
-interface ScopeRepository : ITentRepository!(ScopeEntity, ScopeId) {
+interface ScopeRepository : ITenantRepository!(ScopeEntity, ScopeId) {
 
   bool existsByName(TenantId tenantId, string name);
   ScopeEntity findByName(TenantId tenantId, string name);

@@ -13,7 +13,7 @@ import uim.platform.ai_launchpad;
 
 @safe:
 
-interface IUsageStatisticRepository : ITentRepository!(UsageStatistic, UsageStatisticId) {
+interface IUsageStatisticRepository : ITenantRepository!(UsageStatistic, UsageStatisticId) {
 
   size_t countByScenario(TenantId tenantId, ConnectionId connectionId, ScenarioId scenarioId);
   UsageStatistic[] findByScenario(TenantId tenantId, ConnectionId connectionId, ScenarioId scenarioId);

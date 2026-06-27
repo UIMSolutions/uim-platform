@@ -12,7 +12,7 @@ import uim.platform.ai_launchpad;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryPromptRepository : TentRepository!(Prompt, PromptId), IPromptRepository {
+class MemoryPromptRepository : TenantRepository!(Prompt, PromptId), IPromptRepository {
 
   // bool existsById(TenantId tenantId, PromptId id) {
   //   return findByTenant(tenantId).any!(p => p.id == id);

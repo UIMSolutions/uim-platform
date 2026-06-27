@@ -9,7 +9,7 @@ import uim.platform.marketrates;
 // mixin(ShowModule!());
 
 @safe:
-interface AuditLogRepository : ITentRepository!(AuditLog, AuditLogId) {
+interface AuditLogRepository : ITenantRepository!(AuditLog, AuditLogId) {
 
   AuditLog[] findByOperation(TenantId tenantId, AuditOperation op);
   AuditLog[] findByProvider(TenantId tenantId, string providerCode);

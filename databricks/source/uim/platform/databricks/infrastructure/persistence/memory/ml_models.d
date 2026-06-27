@@ -5,7 +5,7 @@ import uim.platform.databricks;
 
 @safe:
 
-class MemoryMlModelRepository : TentRepository!(MlModel, MlModelId), MlModelRepository {
+class MemoryMlModelRepository : TenantRepository!(MlModel, MlModelId), MlModelRepository {
   MlModel[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
     import std.algorithm : filter;
     import std.array : array;

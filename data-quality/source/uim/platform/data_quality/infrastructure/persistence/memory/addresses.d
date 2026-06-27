@@ -15,7 +15,7 @@ import uim.platform.data_quality;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryAddressRepository : MemoryTentRepository!(AddressRecord, AddressId), AddressRepository {
+class MemoryAddressRepository : MemoryTenantRepository!(AddressRecord, AddressId), AddressRepository {
 
   size_t countBySourceRecord(TenantId tenantId, RecordId sourceRecordId) {
     return findBySourceRecord(tenantId, sourceRecordId).length;

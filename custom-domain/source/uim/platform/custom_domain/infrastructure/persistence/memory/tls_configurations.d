@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryTlsConfigurationRepository : TentRepository!(TlsConfiguration, TlsConfigurationId), TlsConfigurationRepository {
+class MemoryTlsConfigurationRepository : TenantRepository!(TlsConfiguration, TlsConfigurationId), TlsConfigurationRepository {
 
     size_t countByCustomDomain(TenantId tenantId, CustomDomainId customDomainId) {
         return findByCustomDomain(tenantId, customDomainId).length;

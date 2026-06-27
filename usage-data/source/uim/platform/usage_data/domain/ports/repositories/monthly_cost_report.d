@@ -11,7 +11,7 @@ import uim.platform.usage_data;
 @safe:
 /// Port: outgoing repository interface for MonthlyCostReport persistence.
 interface MonthlyCostReportRepository
-    : ITentRepository!(MonthlyCostReport, MonthlyCostReportId) {
+    : ITenantRepository!(MonthlyCostReport, MonthlyCostReportId) {
 
   MonthlyCostReport[] findByGlobalAccount(TenantId tenantId, string globalAccountId);
   MonthlyCostReport[] findBySubaccount(TenantId tenantId, string subaccountId);

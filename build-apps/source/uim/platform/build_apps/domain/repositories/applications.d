@@ -11,7 +11,7 @@ import uim.platform.build_apps;
 
 @safe:
 
-interface ApplicationRepository : ITentRepository!(Application, ApplicationId) {
+interface ApplicationRepository : ITenantRepository!(Application, ApplicationId) {
 
     size_t countByOwner(string owner);
     Application[] findByOwner(string owner);

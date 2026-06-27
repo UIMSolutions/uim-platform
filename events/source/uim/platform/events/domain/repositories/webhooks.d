@@ -11,7 +11,7 @@ import uim.platform.events;
 
 @safe:
 
-interface WebhookRepository : ITentRepository!(Webhook, WebhookId) {
+interface WebhookRepository : ITenantRepository!(Webhook, WebhookId) {
     size_t countByService(TenantId tenantId, MessagingServiceId serviceId);
     Webhook[] findByService(TenantId tenantId, MessagingServiceId serviceId);
     Webhook[] findByStatus(TenantId tenantId, WebhookStatus status);

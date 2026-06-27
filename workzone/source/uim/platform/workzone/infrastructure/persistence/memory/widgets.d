@@ -15,7 +15,7 @@ import uim.platform.workzone;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryWidgetRepository : TentRepository!(Widget, WidgetId), WidgetRepository {
+class MemoryWidgetRepository : TenantRepository!(Widget, WidgetId), WidgetRepository {
 
   size_t countByPage(TenantId tenantId, WorkpageId pageId) {
     return findByPage(tenantId, pageId).length;

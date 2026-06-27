@@ -12,7 +12,7 @@ import uim.platform.appevents.domain.enums.message_status;
 
 @safe:
 
-interface EventMessageRepository : ITentRepository!(EventMessage, EventMessageId) {
+interface EventMessageRepository : ITenantRepository!(EventMessage, EventMessageId) {
     EventMessage[] findByChannel(TenantId tenantId, EventChannelId channelId);
     EventMessage[] findByStatus(TenantId tenantId, MessageStatus status);
     EventMessage[] findBySourceSystem(TenantId tenantId, string sourceSystemId);

@@ -10,7 +10,7 @@ import uim.platform.health_fhir;
 
 @safe:
 
-interface PractitionerRepository : ITentRepository!(Practitioner, PractitionerId) {
+interface PractitionerRepository : ITenantRepository!(Practitioner, PractitionerId) {
   bool existsById(TenantId tenantId, PractitionerId id);
   Practitioner findById(TenantId tenantId, PractitionerId id);
   void removeById(TenantId tenantId, PractitionerId id);

@@ -15,7 +15,7 @@ import uim.platform.datasphere;
 // mixin(ShowModule!()); 
 
 @safe:
-class MemoryDataFlowRepository : TentRepository!(DataFlow, DataFlowId), DataFlowRepository {
+class MemoryDataFlowRepository : TenantRepository!(DataFlow, DataFlowId), DataFlowRepository {
   
   // #region ById
   bool existsById(TenantId tenantId, SpaceId spaceId, CatalogAssetId id) {

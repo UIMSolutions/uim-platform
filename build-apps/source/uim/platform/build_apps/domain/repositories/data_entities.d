@@ -11,7 +11,7 @@ import uim.platform.build_apps;
 
 @safe:
 
-interface DataEntityRepository : ITentRepository!(DataEntity, DataEntityId) {
+interface DataEntityRepository : ITenantRepository!(DataEntity, DataEntityId) {
 
     size_t countByApplication(ApplicationId applicationId);
     DataEntity[] findByApplication(ApplicationId applicationId);

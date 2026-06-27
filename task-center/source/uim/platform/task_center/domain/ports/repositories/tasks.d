@@ -11,7 +11,7 @@ import uim.platform.task_center;
 
 @safe:
 
-interface TaskRepository : ITentRepository!(UIMTask, TaskId) {
+interface TaskRepository : ITenantRepository!(UIMTask, TaskId) {
 
     size_t countByAssignee(TenantId tenantId, string assignee);
     UIMTask[] findByAssignee(TenantId tenantId, string assignee);

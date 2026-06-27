@@ -13,6 +13,6 @@ import uim.platform.portal;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryProviderRepository : TentRepository!(ContentProvider, ProviderId), ProviderRepository {
+class MemoryProviderRepository : TenantRepository!(ContentProvider, ProviderId), ProviderRepository {
 // TODO
 }

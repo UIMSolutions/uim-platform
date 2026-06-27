@@ -17,7 +17,7 @@ import std.conv   : to;
 @safe:
 
 class FileAccessControlRepository
-    : TentRepository!(AccessControl, AccessControlId)
+    : TenantRepository!(AccessControl, AccessControlId)
     , AccessControlRepository
 {
     private string _basePath;

@@ -11,7 +11,7 @@ import uim.platform.process_automation;
 // mixin(ShowModule!());
 
 @safe:
-interface VisibilityRepository : ITentRepository!(Visibility, VisibilityId) {
+interface VisibilityRepository : ITenantRepository!(Visibility, VisibilityId) {
 
     size_t countByProcess(TenantId tenantId, ProcessId processId);
     Visibility[] findByProcess(TenantId tenantId, ProcessId processId);

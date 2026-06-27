@@ -15,7 +15,7 @@ import uim.platform.hana;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryAlertRepository : MemoryTentRepository!(Alert, AlertId), AlertRepository {
+class MemoryAlertRepository : MemoryTenantRepository!(Alert, AlertId), AlertRepository {
 
   size_t countByInstance(DatabaseInstanceId instanceId) {
     return findByInstance(instanceId).length;

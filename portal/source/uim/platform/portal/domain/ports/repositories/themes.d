@@ -12,7 +12,7 @@ import uim.platform.portal;
 
 @safe:
 /// Port: outgoing — theme persistence.
-interface ThemeRepository : ITentRepository!(Theme, ThemeId) {
+interface ThemeRepository : ITenantRepository!(Theme, ThemeId) {
 
   bool existsDefault(TenantId tenantId);
   Theme findDefault(TenantId tenantId);

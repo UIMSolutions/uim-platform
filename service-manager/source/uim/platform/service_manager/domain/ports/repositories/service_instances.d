@@ -6,7 +6,7 @@ import uim.platform.service_manager;
 
 @safe:
 
-interface ServiceInstanceRepository : ITentRepository!(ServiceInstance, ServiceInstanceId) {
+interface ServiceInstanceRepository : ITenantRepository!(ServiceInstance, ServiceInstanceId) {
 
     size_t countByStatus(TenantId tenantId, ServiceInstanceStatus status);
     ServiceInstance[] findByStatus(TenantId tenantId, ServiceInstanceStatus status);

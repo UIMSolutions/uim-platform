@@ -12,7 +12,7 @@ import uim.platform.data.privacy;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryArchiveRequestRepository : TentRepository!(ArchiveRequest, ArchiveRequestId), ArchiveRequestRepository {
+class MemoryArchiveRequestRepository : TenantRepository!(ArchiveRequest, ArchiveRequestId), ArchiveRequestRepository {
 
   size_t countByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
     return findByDataSubject(tenantId, subjectId).length;

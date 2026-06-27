@@ -12,7 +12,7 @@ import uim.platform.identity.provisioning;
 // mixin(ShowModule!());
 
 @safe:
-interface ProvisionedEntityRepository : ITentRepository!(ProvisionedEntity, ProvisionedEntityId) {
+interface ProvisionedEntityRepository : ITenantRepository!(ProvisionedEntity, ProvisionedEntityId) {
 
   bool existsByExternalId(TenantId tenantId, string externalId, TargetSystemId targettenantId);
   ProvisionedEntity findByExternalId(TenantId tenantId, string externalId, TargetSystemId targettenantId);

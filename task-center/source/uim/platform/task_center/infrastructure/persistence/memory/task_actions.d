@@ -11,7 +11,7 @@ import uim.platform.task_center;
 
 @safe:
 
-class MemoryTaskActionRepository : TentRepository!(TaskAction, TaskActionId), TaskActionRepository {
+class MemoryTaskActionRepository : TenantRepository!(TaskAction, TaskActionId), TaskActionRepository {
 
     size_t countByTask(TenantId tenantId, TaskId taskId) {
         return findByTask(tenantId, taskId).length;

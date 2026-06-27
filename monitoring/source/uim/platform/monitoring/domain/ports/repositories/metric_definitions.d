@@ -12,7 +12,7 @@ import uim.platform.monitoring;
 
 @safe:
 /// Port: outgoing - metric definition persistence.
-interface MetricDefinitionRepository : ITentRepository!(MetricDefinition, MetricDefinitionId) {
+interface MetricDefinitionRepository : ITenantRepository!(MetricDefinition, MetricDefinitionId) {
 
   bool existsByName(TenantId tenantId, string name);
   MetricDefinition findByName(TenantId tenantId, string name);

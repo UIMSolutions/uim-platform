@@ -12,7 +12,7 @@ import uim.platform.data_quality;
 
 @safe:
 /// Port for persisting cleansing job records.
-interface CleansingJobRepository : ITentRepository!(CleansingJob, CleansingJobId) {
+interface CleansingJobRepository : ITenantRepository!(CleansingJob, CleansingJobId) {
 
   size_t countByDataset(TenantId tenantId, DatasetId datasetId);
   CleansingJob[] findByDataset(TenantId tenantId, DatasetId datasetId);

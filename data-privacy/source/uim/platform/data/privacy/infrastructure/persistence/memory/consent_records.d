@@ -12,7 +12,7 @@ import uim.platform.data.privacy;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryConsentRecordRepository : TentRepository!(ConsentRecord, ConsentRecordId), ConsentRecordRepository {
+class MemoryConsentRecordRepository : TenantRepository!(ConsentRecord, ConsentRecordId), ConsentRecordRepository {
 
   size_t countByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
     return findByDataSubject(tenantId, dataSubjectId).length;

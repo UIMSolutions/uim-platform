@@ -11,7 +11,7 @@ import uim.platform.credential_store;
 // mixin(ShowModule!());
 
 @safe:
-interface NamespaceRepository : ITentRepository!(Namespace, NamespaceId) {
+interface NamespaceRepository : ITenantRepository!(Namespace, NamespaceId) {
 
   bool existsByName(TenantId tenantId, string name);
   Namespace findByName(TenantId tenantId, string name);

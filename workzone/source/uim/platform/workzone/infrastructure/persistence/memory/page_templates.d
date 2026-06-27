@@ -15,7 +15,7 @@ import uim.platform.workzone;
 
  
 
-class MemoryPageTemplateRepository : TentRepository!(PageTemplate, PageTemplateId), PageTemplateRepository {
+class MemoryPageTemplateRepository : TenantRepository!(PageTemplate, PageTemplateId), PageTemplateRepository {
 
   bool existsDefault(TenantId tenantId) {
     return findByTenant(tenantId).any!(t => t.isDefault);

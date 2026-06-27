@@ -15,7 +15,7 @@ import uim.platform.foundry;
 
 @safe:
 
-class MemoryAppRepository : TentRepository!(Application, AppId), IAppRepository {
+class MemoryAppRepository : TenantRepository!(Application, AppId), IAppRepository {
 
   bool existsByName(TenantId tenantId, SpaceId spaceId, string name) {
     return findByTenant(tenantId).any!(e => e.spaceId == spaceId && e.name == name);

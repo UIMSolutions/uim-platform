@@ -15,7 +15,7 @@ import uim.platform.workzone;
 
  
 
-class MemoryAppRepository : TentRepository!(AppRegistration, AppId), AppRepository {
+class MemoryAppRepository : TenantRepository!(AppRegistration, AppId), AppRepository {
 
   size_t countByStatus(TenantId tenantId, AppStatus status) {
     return findByStatus(tenantId, status).length;

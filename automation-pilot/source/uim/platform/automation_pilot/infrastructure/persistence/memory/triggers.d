@@ -11,7 +11,7 @@ import uim.platform.automation_pilot;
 
 @safe:
 
-class MemoryTriggerRepository : TentRepository!(Trigger, TriggerId), TriggerRepository {
+class MemoryTriggerRepository : TenantRepository!(Trigger, TriggerId), TriggerRepository {
 
     size_t countByCommand(TenantId tenantId, CommandId commandId) {
         return findByCommand(tenantId, commandId).length;

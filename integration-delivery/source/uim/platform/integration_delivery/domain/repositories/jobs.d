@@ -11,7 +11,7 @@ import uim.platform.integration_delivery;
 
 @safe:
 
-interface JobRepository : ITentRepository!(Job, JobId) {
+interface JobRepository : ITenantRepository!(Job, JobId) {
     Job[] findByPipeline(TenantId tenantId, PipelineId pipelineId);
     Job[] findByRepository(TenantId tenantId, CicdRepositoryId repositoryId);
     Job[] findByStatus(TenantId tenantId, JobStatus status);

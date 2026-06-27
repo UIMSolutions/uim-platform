@@ -15,7 +15,7 @@ import uim.platform.datasphere;
 // mixin(ShowModule!()); 
 
 @safe:
-class MemoryTaskRepository : TentRepository!(Task, TaskId), TaskRepository {
+class MemoryTaskRepository : TenantRepository!(Task, TaskId), TaskRepository {
   
   // #region ById
   bool existsById(TenantId tenantId, SpaceId spaceId, CatalogAssetId id) {

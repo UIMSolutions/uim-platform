@@ -13,7 +13,7 @@ import std.array : array;
 
 @safe:
 
-class MemoryGlossaryEntryRepository : TentRepository!(GlossaryEntry, GlossaryEntryId),
+class MemoryGlossaryEntryRepository : TenantRepository!(GlossaryEntry, GlossaryEntryId),
 GlossaryEntryRepository {
 
     size_t countByLanguagePair(TenantId tenantId, string sourceLang, string targetLang) {

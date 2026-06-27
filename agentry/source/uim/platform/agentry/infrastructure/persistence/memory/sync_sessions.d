@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemorySyncSessionRepository : TentRepository!(SyncSession, SyncSessionId), SyncSessionRepository {
+class MemorySyncSessionRepository : TenantRepository!(SyncSession, SyncSessionId), SyncSessionRepository {
 
     size_t countByDevice(TenantId tenantId, DeviceId deviceId) {
         return findByDevice(tenantId, deviceId).length;

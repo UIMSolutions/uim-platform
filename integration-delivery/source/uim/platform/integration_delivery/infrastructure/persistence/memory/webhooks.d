@@ -13,7 +13,7 @@ import std.array : array;
 
 @safe:
 
-class MemoryWebhookRepository : TentRepository!(Webhook, WebhookId), WebhookRepository {
+class MemoryWebhookRepository : TenantRepository!(Webhook, WebhookId), WebhookRepository {
     Webhook[] findByRepository(TenantId tenantId, CicdRepositoryId repositoryId) {
         return findByTenant(tenantId).filter!(w => w.repositoryId == repositoryId).array;
     }

@@ -14,7 +14,7 @@ import std.array : array;
 @safe:
 
 class MemoryMaintenanceWindowRepository
-    : TentRepository!(MaintenanceWindow, MaintenanceWindowId)
+    : TenantRepository!(MaintenanceWindow, MaintenanceWindowId)
     , MaintenanceWindowRepository
 {
     override MaintenanceWindow findByInstance(TenantId t, ServiceInstanceId instanceId) {

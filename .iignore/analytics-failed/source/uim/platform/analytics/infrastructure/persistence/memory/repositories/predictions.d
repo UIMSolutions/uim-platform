@@ -10,7 +10,7 @@ import uim.platform.analytics;
 
 // mixin(ShowModule!());
 @safe:
-class MemoryPredictionRepository : TentRepository!(Prediction, PredictionId), PredictionRepository {
+class MemoryPredictionRepository : TenantRepository!(Prediction, PredictionId), PredictionRepository {
 
   size_t countByDataset(TenantId tenantId, EntityId datasetId) {
     return findByDataset(tenantId, datasetId).length;

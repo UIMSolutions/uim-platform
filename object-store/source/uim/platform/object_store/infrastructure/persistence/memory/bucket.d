@@ -16,7 +16,7 @@ import uim.platform.object_store;
 mixin(ShowModule!());
 
 @safe:
-class MemoryBucketRepository : TentRepository!(Bucket, BucketId), BucketRepository {
+class MemoryBucketRepository : TenantRepository!(Bucket, BucketId), BucketRepository {
 
   bool existsByName(TenantId tenantId, string name) {
     return findByTenant(tenantId).any!(e => e.name == name);

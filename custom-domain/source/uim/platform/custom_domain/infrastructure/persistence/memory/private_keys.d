@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryPrivateKeyRepository : TentRepository!(PrivateKey, PrivateKeyId), PrivateKeyRepository {
+class MemoryPrivateKeyRepository : TenantRepository!(PrivateKey, PrivateKeyId), PrivateKeyRepository {
 
     size_t countByStatus(TenantId tenantId, KeyStatus status) {
         return findByTenant(tenantId).count!(k => k.tenantId == tenantId && k.status == status);

@@ -15,7 +15,7 @@ import uim.platform.hana;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryHDIContainerRepository : TentRepository!(HDIContainer, HDIContainerId), HDIContainerRepository {
+class MemoryHDIContainerRepository : TenantRepository!(HDIContainer, HDIContainerId), HDIContainerRepository {
 
 
   size_t countByInstance(DatabaseInstanceId instanceId) {

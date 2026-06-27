@@ -12,7 +12,7 @@ import uim.platform.data.privacy;
 
 @safe:
 /// Port for persisting and querying rule sets.
-interface RuleSetRepository : ITentRepository!(RuleSet, RuleSetId) {
+interface RuleSetRepository : ITenantRepository!(RuleSet, RuleSetId) {
 
   size_t countByBusinessContext(TenantId tenantId, BusinessContextId contextId);
   RuleSet[] findByBusinessContext(TenantId tenantId, BusinessContextId contextId);

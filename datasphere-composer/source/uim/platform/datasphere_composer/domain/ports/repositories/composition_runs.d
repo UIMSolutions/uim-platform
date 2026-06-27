@@ -8,7 +8,7 @@ module uim.platform.datasphere_composer.domain.ports.repositories.composition_ru
 import uim.platform.datasphere_composer;
 
 @safe:
-interface CompositionRunRepository : ITentRepository!(CompositionRun, CompositionRunId) {
+interface CompositionRunRepository : ITenantRepository!(CompositionRun, CompositionRunId) {
   CompositionRun[] findByStatus(TenantId tenantId, CompositionRunStatus status);
   CompositionRun[] findRecent(TenantId tenantId, int limit);
 }

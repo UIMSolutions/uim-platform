@@ -10,7 +10,7 @@ import uim.platform.process_automation;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryVisibilityRepository : TentRepository!(Visibility, VisibilityId), VisibilityRepository {
+class MemoryVisibilityRepository : TenantRepository!(Visibility, VisibilityId), VisibilityRepository {
 
     size_t countByProcess(TenantId tenantId, ProcessId processId) {
         return findByProcess(tenantId, processId).length;

@@ -13,7 +13,7 @@ import uim.platform.identity.directory;
 
 @safe:
 /// Port: outgoing — password policy persistence.
-interface PasswordPolicyRepository : ITentRepository!(PasswordPolicy, PasswordPolicyId) {
+interface PasswordPolicyRepository : ITenantRepository!(PasswordPolicy, PasswordPolicyId) {
 
   bool existsActiveForTenant(TenantId tenantId);
   PasswordPolicy findActiveForTenant(TenantId tenantId);

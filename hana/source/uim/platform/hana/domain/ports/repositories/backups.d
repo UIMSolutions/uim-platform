@@ -11,7 +11,7 @@ import uim.platform.hana;
 // mixin(ShowModule!());
 
 @safe:
-interface BackupRepository : ITentRepository!(Backup, BackupId) {
+interface BackupRepository : ITenantRepository!(Backup, BackupId) {
 
   size_t countByInstance(DatabaseInstanceId instanceId);
   Backup[] findByInstance(DatabaseInstanceId instanceId);

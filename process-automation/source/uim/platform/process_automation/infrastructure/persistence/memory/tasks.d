@@ -10,7 +10,7 @@ import uim.platform.process_automation;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryTaskRepository : TentRepository!(PATask, TaskId), TaskRepository {
+class MemoryTaskRepository : TenantRepository!(PATask, TaskId), TaskRepository {
 
     size_t countByAssignee(TenantId tenantId, string assignee) {
         return findByAssignee(tenantId, assignee).length;

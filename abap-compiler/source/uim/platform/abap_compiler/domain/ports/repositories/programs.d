@@ -11,7 +11,7 @@ import uim.platform.abap_compiler;
 @safe:
 
 /// Primary port: repository contract for ABAP program source artefacts.
-interface AbapProgramRepository : ITentRepository!(AbapProgram, AbapProgramId) {
+interface AbapProgramRepository : ITenantRepository!(AbapProgram, AbapProgramId) {
 
     size_t countByProgramType(TenantId tenantId, ProgramType programType);
     AbapProgram[]  findByProgramType(TenantId tenantId, ProgramType programType);

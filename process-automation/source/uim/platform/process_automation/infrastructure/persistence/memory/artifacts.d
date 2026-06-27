@@ -10,7 +10,7 @@ import uim.platform.process_automation;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryArtifactRepository : TentRepository!(Artifact, ArtifactId), ArtifactRepository {
+class MemoryArtifactRepository : TenantRepository!(Artifact, ArtifactId), ArtifactRepository {
 
     size_t countByType(TenantId tenantId, ArtifactType type) {
         return findByType(tenantId, type).length;

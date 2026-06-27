@@ -13,7 +13,7 @@ import uim.platform.datasphere;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryRemoteTableRepository : TentRepository!(RemoteTable, RemoteTableId), RemoteTableRepository {
+class MemoryRemoteTableRepository : TenantRepository!(RemoteTable, RemoteTableId), RemoteTableRepository {
 
   // #region ById
   bool existsById(TenantId tenantId, SpaceId spaceId, RemoteTableId id) {

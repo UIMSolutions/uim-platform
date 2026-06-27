@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryCertificateRepository : TentRepository!(Certificate, CertificateId), CertificateRepository {
+class MemoryCertificateRepository : TenantRepository!(Certificate, CertificateId), CertificateRepository {
 
     // #region ByKey
     size_t countByKey(TenantId tenantId, PrivateKeyId keyId) {

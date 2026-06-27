@@ -14,7 +14,7 @@ import uim.platform.datasphere;
 // mixin(ShowModule!());
 @safe:
 
-class MemorySpaceRepository : TentRepository!(Space, SpaceId), SpaceRepository {
+class MemorySpaceRepository : TenantRepository!(Space, SpaceId), SpaceRepository {
   bool existsByName(TenantId tenantId, string name) {
     return findByTenant(tenantId).any!(e => e.name == name);
   }

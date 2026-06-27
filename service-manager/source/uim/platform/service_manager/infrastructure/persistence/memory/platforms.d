@@ -6,7 +6,7 @@ import uim.platform.service_manager;
 
 @safe:
 
-class MemoryPlatformRepository : TentRepository!(Platform, PlatformId), PlatformRepository {
+class MemoryPlatformRepository : TenantRepository!(Platform, PlatformId), PlatformRepository {
     
     size_t countByType(TenantId tenantId, PlatformType type) {
         return this.findByType(tenantId, type).length;

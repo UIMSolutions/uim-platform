@@ -11,7 +11,7 @@ import uim.platform.datasphere;
 // mixin(ShowModule!()); 
 
 @safe:
-interface DataAccessControlRepository : ITentRepository!(DataAccessControl, DataAccessControlId) {
+interface DataAccessControlRepository : ITenantRepository!(DataAccessControl, DataAccessControlId) {
 
   bool existsById(TenantId tenantId, SpaceId spaceId, DataAccessControlId id);
   DataAccessControl findById(TenantId tenantId, SpaceId spaceId, DataAccessControlId id);

@@ -6,7 +6,7 @@ import uim.platform.service_manager;
 
 @safe:
 
-interface OperationRepository : ITentRepository!(Operation, OperationId) {
+interface OperationRepository : ITenantRepository!(Operation, OperationId) {
 
     size_t countByOperationType(TenantId tenantId, OperationType type);
     Operation[] findByOperationType(TenantId tenantId, OperationType type);

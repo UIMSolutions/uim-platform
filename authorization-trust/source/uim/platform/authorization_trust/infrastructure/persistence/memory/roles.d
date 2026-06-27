@@ -11,7 +11,7 @@ import uim.platform.authorization_trust;
 
 @safe:
 
-class MemoryRoleRepository : TentRepository!(RoleEntity, RoleId), RoleRepository {
+class MemoryRoleRepository : TenantRepository!(RoleEntity, RoleId), RoleRepository {
 
   bool existsByName(TenantId tenantId, string name, string appId) {
     return findByTenant(tenantId).any!(r => r.name == name && r.appId == appId);

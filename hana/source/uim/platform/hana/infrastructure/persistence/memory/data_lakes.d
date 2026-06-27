@@ -16,7 +16,7 @@ import uim.platform.hana;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryDataLakeRepository : TentRepository!(DataLake, DataLakeId), DataLakeRepository {
+class MemoryDataLakeRepository : TenantRepository!(DataLake, DataLakeId), DataLakeRepository {
 
 
   size_t countByInstance(DatabaseInstanceId instanceId) {

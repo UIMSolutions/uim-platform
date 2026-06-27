@@ -12,7 +12,7 @@ import uim.platform.content_agent;
 
 @safe:
 /// Port: outgoing - transport queue persistence.
-interface TransportQueueRepository : ITentRepository!(TransportQueue, TransportQueueId) {
+interface TransportQueueRepository : ITenantRepository!(TransportQueue, TransportQueueId) {
 
   bool existsDefault(TenantId tenantId);
   TransportQueue findDefault(TenantId tenantId);

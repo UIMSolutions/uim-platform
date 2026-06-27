@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface SkillRepository : ITentRepository!(Skill, SkillId) {
+interface SkillRepository : ITenantRepository!(Skill, SkillId) {
 
     size_t countByTechnician(TenantId tenantId, TechnicianId technicianId);
     Skill[] findByTechnician(TenantId tenantId, TechnicianId technicianId);

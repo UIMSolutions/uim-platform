@@ -12,7 +12,7 @@ import uim.platform.masterdata_governance;
 @safe:
 
 class MemoryReplicationRepository
-    : TentRepository!(Replication, ReplicationId), ReplicationRepository {
+    : TenantRepository!(Replication, ReplicationId), ReplicationRepository {
 
     size_t countByStatus(TenantId tenantId, ReplicationStatus status) {
         return findByStatus(tenantId, status).length;

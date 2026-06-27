@@ -8,7 +8,7 @@ module uim.platform.datasphere_composer.domain.ports.repositories.customer_profi
 import uim.platform.datasphere_composer;
 
 @safe:
-interface CustomerProfileRepository : ITentRepository!(CustomerProfile, CustomerProfileId) {
+interface CustomerProfileRepository : ITenantRepository!(CustomerProfile, CustomerProfileId) {
   CustomerProfile[] findByEmail(TenantId tenantId, string email);
   CustomerProfile[] findByExternalId(TenantId tenantId, string externalId);
 }

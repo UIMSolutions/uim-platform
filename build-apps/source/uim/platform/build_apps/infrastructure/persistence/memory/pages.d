@@ -11,7 +11,7 @@ import uim.platform.build_apps;
 
 @safe:
 
-class MemoryPageRepository : TentRepository!(Page, PageId), PageRepository {
+class MemoryPageRepository : TenantRepository!(Page, PageId), PageRepository {
 
     size_t countByApplication(ApplicationId applicationId) {
         return findByApplication(applicationId).length;

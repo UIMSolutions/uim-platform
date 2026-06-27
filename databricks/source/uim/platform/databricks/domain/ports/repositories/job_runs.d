@@ -5,7 +5,7 @@ import uim.platform.databricks;
 
 @safe:
 
-interface JobRunRepository : TentRepository!(JobRun, JobRunId) {
+interface JobRunRepository : TenantRepository!(JobRun, JobRunId) {
   JobRun[] findByJob(TenantId tenantId, JobId jobId);
   JobRun[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId);
   JobRun[] findByState(TenantId tenantId, RunState state);

@@ -11,7 +11,7 @@ import uim.platform.mobile;
 
 @safe:
 
-interface ClientLogRepository : ITentRepository!(ClientLogEntry, ClientLogEntryId) {
+interface ClientLogRepository : ITenantRepository!(ClientLogEntry, ClientLogEntryId) {
 
   size_t countByApp(TenantId tenantId, MobileAppId appId);
   ClientLogEntry[] findByApp(TenantId tenantId, MobileAppId appId);

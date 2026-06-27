@@ -12,7 +12,7 @@ import uim.platform.abap_environment;
 
 @safe:
 /// Port: outgoing - service binding persistence.
-interface ServiceBindingRepository : ITentRepository!(ServiceBinding, ServiceBindingId) {
+interface ServiceBindingRepository : ITenantRepository!(ServiceBinding, ServiceBindingId) {
 
   size_t countBySystem(TenantId tenantId, SystemInstanceId systemId);
   ServiceBinding[] findBySystem(TenantId tenantId, SystemInstanceId systemId);

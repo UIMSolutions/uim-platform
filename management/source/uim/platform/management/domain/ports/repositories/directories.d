@@ -12,7 +12,7 @@ import uim.platform.management;
 
 @safe:
 /// Port: outgoing — directory persistence.
-interface DirectoryRepository : ITentRepository!(Directory, DirectoryId) {
+interface DirectoryRepository : ITenantRepository!(Directory, DirectoryId) {
 
   Directory[] findByGlobalAccount(TenantId tenantId, GlobalAccountId globalAccountId);
   Directory[] findByParent(TenantId tenantId, DirectoryId parentDirectoryId);  

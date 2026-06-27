@@ -13,7 +13,7 @@ import uim.platform.integration.automation.domain.ports;
 
  
 
-class MemorySystemRepository : TentRepository!(SystemConnection, SystemConnectionId), SystemRepository {
+class MemorySystemRepository : TenantRepository!(SystemConnection, SystemConnectionId), SystemRepository {
 
   size_t countByType(TenantId tenantId, SystemType systemType) {
     return findByType(tenantId, systemType).length;

@@ -12,7 +12,7 @@ import uim.platform.auditlog;
 // mixin(ShowModule!());
 /// Port for persisting export job records.
 @safe:
-interface ExportJobRepository : ITentRepository!(ExportJob,ExportJobId) {
+interface ExportJobRepository : ITenantRepository!(ExportJob,ExportJobId) {
 
   size_t countByRequestedBy(TenantId tenantId, UserId requestedBy);
   ExportJob[] findByRequestedBy(TenantId tenantId, UserId requestedBy);

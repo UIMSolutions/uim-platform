@@ -10,7 +10,7 @@ import uim.platform.ui_flexibility;
 
 @safe:
 
-interface FlexDraftRepository : ITentRepository!(FlexDraft, FlexDraftId) {
+interface FlexDraftRepository : ITenantRepository!(FlexDraft, FlexDraftId) {
   bool existsById(TenantId tenantId, FlexDraftId id);
   FlexDraft findById(TenantId tenantId, FlexDraftId id);
   bool removeById(TenantId tenantId, FlexDraftId id);

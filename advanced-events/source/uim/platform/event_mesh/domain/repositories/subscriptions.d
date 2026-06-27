@@ -11,7 +11,7 @@ import uim.platform.event_mesh;
 
 @safe:
 
-interface SubscriptionRepository : ITentRepository!(EventSubscription, EventSubscriptionId) {
+interface SubscriptionRepository : ITenantRepository!(EventSubscription, EventSubscriptionId) {
 
     size_t countByBrokerService(TenantId tenantId, BrokerServiceId brokerServiceId);
     EventSubscription[] findByBrokerService(TenantId tenantId, BrokerServiceId brokerServiceId);

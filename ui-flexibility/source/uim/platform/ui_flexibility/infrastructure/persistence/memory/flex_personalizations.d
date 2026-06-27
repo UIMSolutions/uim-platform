@@ -10,7 +10,7 @@ import uim.platform.ui_flexibility;
 
 @safe:
 
-class MemoryFlexPersonalizationRepository : TentRepository!(FlexPersonalization, FlexPersonalizationId), FlexPersonalizationRepository {
+class MemoryFlexPersonalizationRepository : TenantRepository!(FlexPersonalization, FlexPersonalizationId), FlexPersonalizationRepository {
 
   bool existsById(TenantId tenantId, FlexPersonalizationId id) {
     return !findById(tenantId, id).isNull;

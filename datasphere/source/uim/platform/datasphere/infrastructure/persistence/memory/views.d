@@ -13,7 +13,7 @@ import uim.platform.datasphere;
 // mixin(ShowModule!()); 
 
 @safe:
-class MemoryViewRepository : TentRepository!(View, ViewId), Repository {
+class MemoryViewRepository : TenantRepository!(View, ViewId), Repository {
 
  // #region ById
   bool existsById(TenantId tenantId, SpaceId spaceId, CatalogAssetId id) {

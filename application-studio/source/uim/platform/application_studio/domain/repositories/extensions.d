@@ -11,7 +11,7 @@ import uim.platform.application_studio;
 
 @safe:
 
-interface ExtensionRepository : ITentRepository!(Extension, ExtensionId) {
+interface ExtensionRepository : ITenantRepository!(Extension, ExtensionId) {
     
     size_t countByScope(TenantId tenantId, ExtensionScope scope_);
     Extension[] findByScope(TenantId tenantId, ExtensionScope scope_);

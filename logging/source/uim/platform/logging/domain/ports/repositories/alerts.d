@@ -11,7 +11,7 @@ import uim.platform.logging;
 // mixin(ShowModule!());
 
 @safe:
-interface AlertRepository : ITentRepository!(Alert, AlertId) {
+interface AlertRepository : ITenantRepository!(Alert, AlertId) {
 
   size_t countByState(TenantId tenantId, AlertState state);
   Alert[] findByState(TenantId tenantId, AlertState state);

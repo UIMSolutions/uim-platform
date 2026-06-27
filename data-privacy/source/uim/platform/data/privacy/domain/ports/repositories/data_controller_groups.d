@@ -12,7 +12,7 @@ import uim.platform.data.privacy;
 
 @safe:
 /// Port for persisting and querying data controller groups.
-interface DataControllerGroupRepository : ITentRepository!(DataControllerGroup, DataControllerGroupId) {
+interface DataControllerGroupRepository : ITenantRepository!(DataControllerGroup, DataControllerGroupId) {
 
   size_t countByName(TenantId tenantId, string name);
   DataControllerGroup[] findByName(TenantId tenantId, string name);

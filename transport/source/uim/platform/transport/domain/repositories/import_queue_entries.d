@@ -11,7 +11,7 @@ import uim.platform.transport;
 
 @safe:
 
-interface ImportQueueEntryRepository : ITentRepository!(ImportQueueEntry, ImportQueueEntryId) {
+interface ImportQueueEntryRepository : ITenantRepository!(ImportQueueEntry, ImportQueueEntryId) {
     ImportQueueEntry[] findByNode(TenantId tenantId, TransportNodeId nodeId);
     ImportQueueEntry[] findByRequest(TenantId tenantId, TransportRequestId requestId);
     ImportQueueEntry[] findByStatus(TenantId tenantId, ImportStatus status);

@@ -11,7 +11,7 @@ import uim.platform.translation;
 
 @safe:
 
-class MemoryTranslationProjectRepository : TentRepository!(TranslationProject, TranslationProjectId),
+class MemoryTranslationProjectRepository : TenantRepository!(TranslationProject, TranslationProjectId),
 TranslationProjectRepository {
     
     bool existsByName(TenantId tenantId, string name) {

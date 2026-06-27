@@ -15,7 +15,7 @@ import uim.platform.data_quality;
 
 @safe:
 
-class MemoryMatchGroupRepository : TentRepository!(MatchGroup, MatchGroupId), MatchGroupRepository {
+class MemoryMatchGroupRepository : TenantRepository!(MatchGroup, MatchGroupId), MatchGroupRepository {
 
   // #region ByDataset
   size_t countByDataset(TenantId tenantId, DatasetId datasetId) {

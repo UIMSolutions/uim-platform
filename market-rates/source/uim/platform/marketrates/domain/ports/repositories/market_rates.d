@@ -9,7 +9,7 @@ import uim.platform.marketrates;
 // mixin(ShowModule!());
 
 @safe:
-interface MarketRateRepository : ITentRepository!(MarketRate, MarketRateId) {
+interface MarketRateRepository : ITenantRepository!(MarketRate, MarketRateId) {
 
   MarketRate[] findByProvider(TenantId tenantId, string providerCode);
   MarketRate[] findByCategory(TenantId tenantId, MarketDataCategory category);

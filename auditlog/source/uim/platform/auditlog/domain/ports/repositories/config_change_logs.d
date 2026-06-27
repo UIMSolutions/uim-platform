@@ -15,7 +15,7 @@ import uim.platform.auditlog;
 // mixin(ShowModule!());
 /// Port for persisting configuration change log records.
 @safe:
-interface ConfigChangeLogRepository : ITentRepository!(ConfigChangeLog, ConfigChangeLogId) {
+interface ConfigChangeLogRepository : ITenantRepository!(ConfigChangeLog, ConfigChangeLogId) {
   
   bool existsByAuditLogId(TenantId tenantId, AuditLogId auditLogId);
   ConfigChangeLog findByAuditLogId(TenantId tenantId, AuditLogId auditLogId);

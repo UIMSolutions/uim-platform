@@ -12,7 +12,7 @@ import uim.platform.alert_notification;
 @safe:
 
 class MemorySubscriptionRepository
-    : TentRepository!(Subscription, SubscriptionId),
+    : TenantRepository!(Subscription, SubscriptionId),
       SubscriptionRepository
 {
     Subscription findByName(TenantId tenantId, string name) {

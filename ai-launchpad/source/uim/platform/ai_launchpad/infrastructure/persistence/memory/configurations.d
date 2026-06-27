@@ -12,7 +12,7 @@ import uim.platform.ai_launchpad;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryConfigurationRepository : TentRepository!(Configuration, ConfigurationId), IConfigurationRepository {
+class MemoryConfigurationRepository : TenantRepository!(Configuration, ConfigurationId), IConfigurationRepository {
   
   bool existsById(TenantId tenantId, ConnectionId connectionId, ConfigurationId id) {
     return findByConnection(tenantId, connectionId).any!(c => c.id == id); 

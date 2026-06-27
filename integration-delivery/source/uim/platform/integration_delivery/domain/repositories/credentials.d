@@ -11,7 +11,7 @@ import uim.platform.integration_delivery;
 
 @safe:
 
-interface CredentialRepository : ITentRepository!(Credential, CredentialId) {
+interface CredentialRepository : ITenantRepository!(Credential, CredentialId) {
     Credential[] findByStatus(TenantId tenantId, CredentialStatus status);
     Credential[] findByType(TenantId tenantId, CredentialType credentialType);
     bool nameExists(TenantId tenantId, string name);

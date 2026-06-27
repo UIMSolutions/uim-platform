@@ -12,7 +12,7 @@ import uim.platform.auditlog;
 // mixin(ShowModule!());
 /// Port for persisting and querying audit log entries.
 @safe:
-interface AuditLogRepository : ITentRepository!(AuditLogEntry, AuditLogId) {
+interface AuditLogRepository : ITenantRepository!(AuditLogEntry, AuditLogId) {
 
   AuditLogEntry[] findByCategory(TenantId tenantId, AuditCategory category);
   AuditLogEntry[] findByTimeRange(TenantId tenantId, long timeFrom, long timeTo);

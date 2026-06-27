@@ -13,7 +13,7 @@ import uim.platform.identity.directory;
 
 @safe:
 /// Port: outgoing — audit event persistence.
-interface AuditRepository  : ITentRepository!(AuditEvent, AuditEventId) {
+interface AuditRepository  : ITenantRepository!(AuditEvent, AuditEventId) {
 
   size_t countByActor(string actorId);
   AuditEvent[] findByActor(string actorId, size_t offset = 0, size_t limit = 100);

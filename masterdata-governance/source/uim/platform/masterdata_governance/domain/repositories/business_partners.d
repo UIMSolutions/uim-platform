@@ -11,7 +11,7 @@ import uim.platform.masterdata_governance;
 
 @safe:
 
-interface BusinessPartnerRepository : ITentRepository!(BusinessPartner, BusinessPartnerId) {
+interface BusinessPartnerRepository : ITenantRepository!(BusinessPartner, BusinessPartnerId) {
 
     BusinessPartner findByBpNumber(TenantId tenantId, string bpNumber);
 

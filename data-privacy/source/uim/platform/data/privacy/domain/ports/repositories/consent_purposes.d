@@ -12,7 +12,7 @@ import uim.platform.data.privacy;
 
 @safe:
 /// Port for persisting and querying consent purpose configurations.
-interface ConsentPurposeRepository : ITentRepository!(ConsentPurpose, ConsentPurposeId) {
+interface ConsentPurposeRepository : ITenantRepository!(ConsentPurpose, ConsentPurposeId) {
   
   size_t countByController(TenantId tenantId, DataControllerId controllerId);
   ConsentPurpose[] findByController(TenantId tenantId, DataControllerId controllerId);

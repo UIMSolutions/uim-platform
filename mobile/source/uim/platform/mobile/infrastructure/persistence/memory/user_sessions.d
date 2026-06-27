@@ -14,7 +14,7 @@ import uim.platform.mobile;
 
 @safe:
 
-class MemoryUserSessionRepository : TentRepository!(UserSession, UserSessionId), UserSessionRepository {
+class MemoryUserSessionRepository : TenantRepository!(UserSession, UserSessionId), UserSessionRepository {
   
   size_t countByUser(TenantId tenantId, UserId userId) {
     return findByUser(tenantId, userId).length;

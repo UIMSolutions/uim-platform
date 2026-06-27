@@ -16,7 +16,7 @@ import uim.platform.object_store;
 mixin(ShowModule!());
 
 @safe:
-class MemoryObjectVersionRepository : TentRepository!(ObjectVersion, ObjectVersionId),  ObjectVersionRepository {
+class MemoryObjectVersionRepository : TenantRepository!(ObjectVersion, ObjectVersionId),  ObjectVersionRepository {
 
   bool existsLatest(TenantId tenantId, StorageObjectId objectId) {
     return findByTenant(tenantId).any!(e => e.objectId == objectId && e.isLatest);

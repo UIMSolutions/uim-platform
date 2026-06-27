@@ -15,7 +15,7 @@ import uim.platform.workzone;
 
  
 
-class MemoryGroupRepository : TentRepository!(WZGroup, GroupId), GroupRepository {
+class MemoryGroupRepository : TenantRepository!(WZGroup, GroupId), GroupRepository {
 
   size_t countByMember(TenantId tenantId, UserId userId) {
     return findByMember(tenantId, userId).length;

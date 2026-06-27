@@ -11,7 +11,7 @@ import uim.platform.event_mesh;
 
 @safe:
 
-interface EventSchemaRepository : ITentRepository!(EventSchema, EventSchemaId) {
+interface EventSchemaRepository : ITenantRepository!(EventSchema, EventSchemaId) {
 
     size_t countByFormat(TenantId tenantId, SchemaFormat format);
     EventSchema[] findByFormat(TenantId tenantId, SchemaFormat format);

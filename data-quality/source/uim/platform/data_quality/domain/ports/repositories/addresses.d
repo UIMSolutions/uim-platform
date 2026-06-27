@@ -12,7 +12,7 @@ import uim.platform.data_quality;
 
 @safe:
 /// Port for persisting address records.
-interface AddressRepository : ITentRepository!(AddressRecord, AddressId) {
+interface AddressRepository : ITenantRepository!(AddressRecord, AddressId) {
 
   size_t countBySourceRecord(TenantId tenantId, RecordId sourceRecordId);
   AddressRecord[] findBySourceRecord(TenantId tenantId, RecordId sourceRecordId);

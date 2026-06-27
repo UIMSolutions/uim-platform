@@ -11,7 +11,7 @@ import uim.platform.postgres;
 
 @safe:
 
-interface BackupPolicyRepository : ITentRepository!(BackupPolicy, BackupPolicyId) {
+interface BackupPolicyRepository : ITenantRepository!(BackupPolicy, BackupPolicyId) {
     BackupPolicy findByInstance(TenantId tenantId, ServiceInstanceId instanceId);
     BackupPolicy[] findByStatus(TenantId tenantId, BackupStatus status);
 }

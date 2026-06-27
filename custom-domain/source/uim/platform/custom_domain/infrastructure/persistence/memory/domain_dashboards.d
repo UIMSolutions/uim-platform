@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryDomainDashboardRepository : TentRepository!(DomainDashboard, DomainDashboardId), DomainDashboardRepository {
+class MemoryDomainDashboardRepository : TenantRepository!(DomainDashboard, DomainDashboardId), DomainDashboardRepository {
 
     DomainDashboard get(TenantId tenantId) {
         auto dashboards = findByTenant(tenantId);

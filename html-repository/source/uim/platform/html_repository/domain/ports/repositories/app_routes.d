@@ -11,7 +11,7 @@ import uim.platform.html_repository;
 // mixin(ShowModule!());
 
 @safe:
-interface AppRouteRepository : ITentRepository!(AppRoute, AppRouteId) {
+interface AppRouteRepository : ITenantRepository!(AppRoute, AppRouteId) {
 
   bool existsByPathPrefix(TenantId tenantId, string pathPrefix);
   AppRoute findByPathPrefix(TenantId tenantId, string pathPrefix);

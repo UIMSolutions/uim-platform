@@ -18,7 +18,7 @@ import uim.platform.kyma;
   *
   * The NamespaceRepository interface defines the contract for persisting and retrieving namespace entities. It includes methods for checking the existence of a namespace by its ID or name, finding namespaces by their environment or tenant, and saving, updating, or removing namespace entities.
   */
-interface NamespaceRepository : ITentRepository!(Namespace, NamespaceId) {
+interface NamespaceRepository : ITenantRepository!(Namespace, NamespaceId) {
 
   bool existsByName(KymaEnvironmentId envId, string name);
   Namespace findByName(KymaEnvironmentId envId, string name);

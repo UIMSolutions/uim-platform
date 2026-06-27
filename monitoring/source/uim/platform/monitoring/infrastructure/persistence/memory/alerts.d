@@ -15,7 +15,7 @@ import uim.platform.monitoring;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryAlertRepository : TentRepository!(Alert, AlertId), AlertRepository {
+class MemoryAlertRepository : TenantRepository!(Alert, AlertId), AlertRepository {
 
   size_t countByResource(TenantId tenantId, MonitoredResourceId resourceId) {
     return findByResource(tenantId, resourceId).length;

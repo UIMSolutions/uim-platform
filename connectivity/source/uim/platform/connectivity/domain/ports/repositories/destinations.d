@@ -12,7 +12,7 @@ import uim.platform.connectivity;
 
 @safe:
 /// Port: outgoing - destination persistence.
-interface DestinationRepository : ITentRepository!(Destination, DestinationId) {
+interface DestinationRepository : ITenantRepository!(Destination, DestinationId) {
   bool existsByName(TenantId tenantId, string name);
   Destination findByName(TenantId tenantId, string name);
   

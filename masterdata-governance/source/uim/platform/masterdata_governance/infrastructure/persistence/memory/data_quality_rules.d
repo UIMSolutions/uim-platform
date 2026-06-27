@@ -12,7 +12,7 @@ import uim.platform.masterdata_governance;
 @safe:
 
 class MemoryDataQualityRuleRepository
-    : TentRepository!(DataQualityRule, DataQualityRuleId), DataQualityRuleRepository {
+    : TenantRepository!(DataQualityRule, DataQualityRuleId), DataQualityRuleRepository {
 
     DataQualityRule[] findByFieldName(TenantId tenantId, string fieldName) {
         return findByTenant(tenantId).filter!(e => e.fieldName == fieldName).array;

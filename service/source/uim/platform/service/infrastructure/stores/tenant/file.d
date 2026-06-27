@@ -18,7 +18,7 @@ class FileTenantStore(TEntity, TId) : ITenantStore!(TEntity, TId) {
         }
     }
 
-    override bool existsTenant(TenantId tenantId) {
+    override bool exists(TenantId tenantId) {
         return buildPath(rootPath, tenantId.value).exists;
     }
 

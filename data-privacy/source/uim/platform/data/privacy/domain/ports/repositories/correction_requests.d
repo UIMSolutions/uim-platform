@@ -13,7 +13,7 @@ import uim.platform.data.privacy;
 
 @safe:
 /// Port for persisting and querying correction requests.
-interface CorrectionRequestRepository : ITentRepository!(CorrectionRequest, CorrectionRequestId) {
+interface CorrectionRequestRepository : ITenantRepository!(CorrectionRequest, CorrectionRequestId) {
   
   size_t countByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
   CorrectionRequest[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);

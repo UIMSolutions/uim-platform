@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryFilterRuleRepository : TentRepository!(FilterRule, FilterRuleId), FilterRuleRepository {
+class MemoryFilterRuleRepository : TenantRepository!(FilterRule, FilterRuleId), FilterRuleRepository {
 
   size_t countByCategory(TenantId tenantId, MasterDataCategory category) {
     return findByCategory(tenantId, category).length;

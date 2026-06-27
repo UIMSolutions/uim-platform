@@ -14,7 +14,7 @@ import std.array : array;
 @safe:
 
 class MemoryServiceInstanceRepository
-    : TentRepository!(ServiceInstance, ServiceInstanceId)
+    : TenantRepository!(ServiceInstance, ServiceInstanceId)
     , ServiceInstanceRepository
 {
     override ServiceInstance[] findByStatus(TenantId tenantId, InstanceStatus status) {

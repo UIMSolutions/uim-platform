@@ -6,7 +6,7 @@ import uim.platform.service_manager;
 
 @safe:
 
-interface PlatformRepository : ITentRepository!(Platform, PlatformId) {
+interface PlatformRepository : ITenantRepository!(Platform, PlatformId) {
 
     size_t countByType(TenantId tenantId, PlatformType type);
     Platform[] findByType(TenantId tenantId, PlatformType type);

@@ -11,7 +11,7 @@ import uim.platform.analytics;
 // mixin(ShowModule!());
 @safe:
 
-interface DataSourceRepository : ITentRepository!(DataSource, DataSourceId) {
+interface DataSourceRepository : ITenantRepository!(DataSource, DataSourceId) {
 
   size_t countBySourceType(TenantId tenantId, DataSourceType sourceType);
   DataSource[] findBySourceType(TenantId tenantId, DataSourceType sourceType);

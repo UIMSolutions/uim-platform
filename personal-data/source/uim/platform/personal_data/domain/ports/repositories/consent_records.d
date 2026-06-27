@@ -11,7 +11,7 @@ import uim.platform.personal_data;
 
 @safe:
 
-interface ConsentRecordRepository : ITentRepository!(ConsentRecord, ConsentRecordId) {
+interface ConsentRecordRepository : ITenantRepository!(ConsentRecord, ConsentRecordId) {
 
     size_t countByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
     ConsentRecord[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);

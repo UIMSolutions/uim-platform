@@ -12,7 +12,7 @@ import uim.platform.events;
 @safe:
 
 class MemoryQueueRepository
-    : TentRepository!(Queue, QueueId), QueueRepository {
+    : TenantRepository!(Queue, QueueId), QueueRepository {
 
     size_t countByService(TenantId tenantId, MessagingServiceId serviceId) {
         return findByService(tenantId, serviceId).length;

@@ -9,7 +9,7 @@ import uim.platform.marketrates;
 // mixin(ShowModule!());
 
 @safe:
-interface ProviderRepository : ITentRepository!(Provider, ProviderId) {
+interface ProviderRepository : ITenantRepository!(Provider, ProviderId) {
 
   Provider   findByCode(TenantId tenantId, string code);
   Provider[] findActive(TenantId tenantId);

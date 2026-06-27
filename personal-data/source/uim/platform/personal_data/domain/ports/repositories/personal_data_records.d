@@ -11,7 +11,7 @@ import uim.platform.personal_data;
 
 @safe:
 
-interface PersonalDataRecordRepository : ITentRepository!(PersonalDataRecord, PersonalDataRecordId) {
+interface PersonalDataRecordRepository : ITenantRepository!(PersonalDataRecord, PersonalDataRecordId) {
 
     size_t countByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
     PersonalDataRecord[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);

@@ -13,7 +13,7 @@ import uim.platform.foundry;
 
 @safe:
 /// Port for persisting and querying service instances.
-interface IServiceInstanceRepository : ITentRepository!(ServiceInstance, ServiceInstanceId) {
+interface IServiceInstanceRepository : ITenantRepository!(ServiceInstance, ServiceInstanceId) {
   
   bool existsByName(TenantId tenantId, SpaceId spaceId, string name);
   ServiceInstance findByName(TenantId tenantId, SpaceId spaceId, string name);

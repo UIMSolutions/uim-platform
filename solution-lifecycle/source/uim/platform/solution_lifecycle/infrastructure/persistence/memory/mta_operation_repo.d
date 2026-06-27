@@ -12,7 +12,7 @@ import uim.platform.solution_lifecycle;
 @safe:
 
 class MemoryMtaOperationRepository
-    : TentRepository!(MtaOperation, MtaOperationId),
+    : TenantRepository!(MtaOperation, MtaOperationId),
       MtaOperationRepository
 {
     /// Find all operations for a given MTA application ID

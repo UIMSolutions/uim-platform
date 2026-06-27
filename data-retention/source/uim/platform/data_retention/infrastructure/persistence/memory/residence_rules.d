@@ -5,7 +5,7 @@ import uim.platform.data_retention;
 
 @safe:
 
-class MemoryResidenceRuleRepository : TentRepository!(ResidenceRule, ResidenceRuleId), ResidenceRuleRepository {
+class MemoryResidenceRuleRepository : TenantRepository!(ResidenceRule, ResidenceRuleId), ResidenceRuleRepository {
 
 
     size_t countByBusinessPurpose(TenantId tenantId, BusinessPurposeId purposeId) {

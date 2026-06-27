@@ -11,7 +11,7 @@ import uim.platform.personal_data;
 
 @safe:
 
-interface DataSubjectRequestRepository : ITentRepository!(DataSubjectRequest, DataSubjectRequestId) {
+interface DataSubjectRequestRepository : ITenantRepository!(DataSubjectRequest, DataSubjectRequestId) {
 
     size_t countByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
     DataSubjectRequest[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);

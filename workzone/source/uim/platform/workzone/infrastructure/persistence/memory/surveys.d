@@ -15,7 +15,7 @@ import uim.platform.workzone;
 
  
 
-class MemorySurveyRepository : TentRepository!(Survey, SurveyId), SurveyRepository {
+class MemorySurveyRepository : TenantRepository!(Survey, SurveyId), SurveyRepository {
 
   // #region ByWorkspace
   size_t countByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {

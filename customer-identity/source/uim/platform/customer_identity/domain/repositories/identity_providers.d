@@ -11,7 +11,7 @@ import uim.platform.customer_identity;
 
 @safe:
 
-interface IdentityProviderRepository : ITentRepository!(IdentityProvider, IdentityProviderId) {
+interface IdentityProviderRepository : ITenantRepository!(IdentityProvider, IdentityProviderId) {
     IdentityProvider[] findByType(TenantId tenantId, IdentityProviderType providerType);
     IdentityProvider[] findActive(TenantId tenantId);
     IdentityProvider findByClient(TenantId tenantId, string clientId);

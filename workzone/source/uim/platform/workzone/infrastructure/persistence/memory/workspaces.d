@@ -15,7 +15,7 @@ import uim.platform.workzone;
 
  
 
-class MemoryWorkspaceRepository : TentRepository!(Workspace, WorkspaceId), WorkspaceRepository {
+class MemoryWorkspaceRepository : TenantRepository!(Workspace, WorkspaceId), WorkspaceRepository {
 
   bool existsByAlias(TenantId tenantId, string alias_) {
     return findByTenant(tenantId).any!(w => w.alias_ == alias_);

@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — data model/schema persistence.
-interface DataModelRepository : ITentRepository!(DataModel, DataModelId) {
+interface DataModelRepository : ITenantRepository!(DataModel, DataModelId) {
 
   bool existsByName(TenantId tenantId, string name);
   DataModel findByName(TenantId tenantId, string name);

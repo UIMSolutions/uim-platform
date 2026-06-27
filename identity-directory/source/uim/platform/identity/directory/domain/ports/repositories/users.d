@@ -13,7 +13,7 @@ import uim.platform.identity.directory;
 
 @safe:
 /// Port: outgoing — user persistence (SCIM 2.0 compliant).
-interface UserRepository : ITentRepository!(User, UserId) {
+interface UserRepository : ITenantRepository!(User, UserId) {
 
   bool existsByUserName(TenantId tenantId, string userName);
   User findByUserName(TenantId tenantId, string userName);

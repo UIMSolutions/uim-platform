@@ -11,7 +11,7 @@ import uim.platform.oauth;
 
 @safe:
 
-class MemoryRefreshTokenRepository : TentRepository!(RefreshToken, RefreshTokenId), RefreshTokenRepository {
+class MemoryRefreshTokenRepository : TenantRepository!(RefreshToken, RefreshTokenId), RefreshTokenRepository {
 
     // #region ByTokenValue
     bool existsByTokenValue(TenantId tenantId, string tokenValue) {

@@ -6,7 +6,7 @@ import uim.platform.service_manager;
 
 @safe:
 
-class MemoryServiceBrokerRepository : TentRepository!(ServiceBroker, ServiceBrokerId), ServiceBrokerRepository {
+class MemoryServiceBrokerRepository : TenantRepository!(ServiceBroker, ServiceBrokerId), ServiceBrokerRepository {
 
     size_t countByStatus(TenantId tenantId, ServiceBrokerStatus status) {
         return findByStatus(tenantId, status).length;

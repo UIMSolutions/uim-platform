@@ -11,7 +11,7 @@ import uim.platform.html_repository;
 // mixin(ShowModule!());
 
 @safe:
-interface DeploymentRecordRepository : ITentRepository!(DeploymentRecord, DeploymentRecordId) {
+interface DeploymentRecordRepository : ITenantRepository!(DeploymentRecord, DeploymentRecordId) {
 
   size_t countByApp(HtmlAppId appId);
   DeploymentRecord[] findByApp(HtmlAppId appId);

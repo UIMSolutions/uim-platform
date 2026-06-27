@@ -11,7 +11,7 @@ import uim.platform.application_studio;
 
 @safe:
 
-class MemoryProjectTemplateRepository : TentRepository!(ProjectTemplate, ProjectTemplateId), ProjectTemplateRepository {
+class MemoryProjectTemplateRepository : TenantRepository!(ProjectTemplate, ProjectTemplateId), ProjectTemplateRepository {
 
     size_t countByCategory(TenantId tenantId, TemplateCategory category) {
         return findByCategory(tenantId, category).length;

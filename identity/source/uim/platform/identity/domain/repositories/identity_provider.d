@@ -11,7 +11,7 @@ import uim.platform.identity;
 
 @safe:
 
-interface IdentityProviderRepository : ITentRepository!(IdentityProvider, IdentityProviderId) {
+interface IdentityProviderRepository : ITenantRepository!(IdentityProvider, IdentityProviderId) {
 
     IdentityProvider findByEntityId(TenantId tenantId, string entityId);
     IdentityProvider findDefault(TenantId tenantId);

@@ -11,7 +11,7 @@ import uim.platform.application_studio;
 
 @safe:
 
-interface ProjectRepository : ITentRepository!(Project, ProjectId) {
+interface ProjectRepository : ITenantRepository!(Project, ProjectId) {
 
     size_t countByDevSpace(TenantId tenantId, DevSpaceId devSpaceId);
     Project[] findByDevSpace(TenantId tenantId, DevSpaceId devSpaceId);

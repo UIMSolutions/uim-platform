@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface EquipmentRepository : ITentRepository!(Equipment, EquipmentId) {
+interface EquipmentRepository : ITenantRepository!(Equipment, EquipmentId) {
 
     size_t countByCustomer(TenantId tenantId, CustomerId customerId);
     Equipment[] findByCustomer(TenantId tenantId, CustomerId customerId);

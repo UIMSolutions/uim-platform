@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface TlsConfigurationRepository : ITentRepository!(TlsConfiguration, TlsConfigurationId) {
+interface TlsConfigurationRepository : ITenantRepository!(TlsConfiguration, TlsConfigurationId) {
 
     size_t countByCustomDomain(TenantId tenantId, CustomDomainId customDomainId);
     TlsConfiguration[] findByCustomDomain(TenantId tenantId, CustomDomainId customDomainId);

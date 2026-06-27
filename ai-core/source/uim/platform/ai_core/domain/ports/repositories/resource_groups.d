@@ -11,7 +11,7 @@ import uim.platform.ai_core;
 // mixin(ShowModule!()); 
 
 @safe:
-interface ResourceGroupRepository : ITentRepository!(ResourceGroup, ResourceGroupId) {
+interface ResourceGroupRepository : ITenantRepository!(ResourceGroup, ResourceGroupId) {
 
     size_t countByStatus(TenantId tenantId, string status);
     ResourceGroup[] findByStatus(TenantId tenantId, string status);

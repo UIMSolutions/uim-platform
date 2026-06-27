@@ -13,7 +13,7 @@ import uim.platform.saas_provisioning;
 
 /// In-memory implementation of AppSubscriptionRepository.
 class MemoryAppSubscriptionRepository
-    : TentRepository!(AppSubscription, AppSubscriptionId),
+    : TenantRepository!(AppSubscription, AppSubscriptionId),
       AppSubscriptionRepository
 {
     AppSubscription[] findByAppName(TenantId tenantId, string appName) {

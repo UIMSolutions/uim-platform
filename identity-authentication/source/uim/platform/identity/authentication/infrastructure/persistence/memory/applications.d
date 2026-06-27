@@ -13,7 +13,7 @@ import uim.platform.identity.authentication;
 // mixin(ShowModule!());
 @safe:
 /// In-memory adapter for application/service provider persistence.
-class MemoryApplicationRepository : TentRepository!(Application, ApplicationId), ApplicationRepository {
+class MemoryApplicationRepository : TenantRepository!(Application, ApplicationId), ApplicationRepository {
   
   bool existsByClient(TenantId tenantId, string clientId) {
     return findByTenant(tenantId).any!(item => item.clientId == clientId);

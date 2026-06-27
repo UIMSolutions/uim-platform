@@ -11,7 +11,7 @@ import uim.platform.automation_pilot;
 
 @safe:
 
-class MemoryExecutionRepository : TentRepository!(Execution, ExecutionId), ExecutionRepository {
+class MemoryExecutionRepository : TenantRepository!(Execution, ExecutionId), ExecutionRepository {
 
     // #region ByCommand
     size_t countByCommand(TenantId tenantId, CommandId commandId) {

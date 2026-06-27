@@ -11,7 +11,7 @@ import uim.platform.customer_identity;
 
 @safe:
 
-class MemoryCustomerSessionRepository : TentRepository!(CustomerSession, CustomerSessionId), CustomerSessionRepository {
+class MemoryCustomerSessionRepository : TenantRepository!(CustomerSession, CustomerSessionId), CustomerSessionRepository {
 
     CustomerSession findByToken(TenantId tenantId, string token) {
         auto items = findByTenant(tenantId).filter!(s => s.token == token).array;

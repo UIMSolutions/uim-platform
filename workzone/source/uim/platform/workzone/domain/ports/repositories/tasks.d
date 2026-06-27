@@ -11,7 +11,7 @@ import uim.platform.workzone;
 // mixin(ShowModule!());
 
 @safe:
-interface TaskRepository : ITentRepository!(WZTask, TaskId) {
+interface TaskRepository : ITenantRepository!(WZTask, TaskId) {
 
   size_t countByAssignee(TenantId tenantId, UserId assignee);
   WZTask[] findByAssignee(TenantId tenantId, UserId assignee);

@@ -11,7 +11,7 @@ import uim.platform.mobile;
 
 @safe:
 
-interface DeviceRegistrationRepository : ITentRepository!(DeviceRegistration, DeviceRegistrationId) {
+interface DeviceRegistrationRepository : ITenantRepository!(DeviceRegistration, DeviceRegistrationId) {
 
   bool existsByDeviceToken(TenantId tenantId, string deviceToken);
   DeviceRegistration findByDeviceToken(TenantId tenantId, string deviceToken);

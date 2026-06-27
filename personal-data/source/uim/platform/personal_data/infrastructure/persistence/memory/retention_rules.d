@@ -11,7 +11,7 @@ import uim.platform.personal_data;
 
 @safe:
 
-class MemoryRetentionRuleRepository : TentRepository!(RetentionRule, RetentionRuleId), RetentionRuleRepository {
+class MemoryRetentionRuleRepository : TenantRepository!(RetentionRule, RetentionRuleId), RetentionRuleRepository {
 
     size_t countByApplication(TenantId tenantId, RegisteredApplicationId applicationId) {
         return findByApplication(tenantId, applicationId).length;

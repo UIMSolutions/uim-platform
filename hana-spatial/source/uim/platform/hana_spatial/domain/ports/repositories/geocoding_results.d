@@ -10,7 +10,7 @@ import uim.platform.hana_spatial;
 // mixin(ShowModule!());
 
 @safe:
-interface GeocodingResultRepository : ITentRepository!(GeocodingResult, GeocodingResultId) {
+interface GeocodingResultRepository : ITenantRepository!(GeocodingResult, GeocodingResultId) {
   GeocodingResult[] findByType(TenantId tenantId, GeocodingType type);
   GeocodingResult[] findByProvider(TenantId tenantId, string providerId);
 }

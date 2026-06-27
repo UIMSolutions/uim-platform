@@ -11,7 +11,7 @@ import uim.platform.ai_core;
 // mixin(ShowModule!()); 
 
 @safe:
-interface DeploymentRepository : ITentRepository!(Deployment, DeploymentId) {
+interface DeploymentRepository : ITenantRepository!(Deployment, DeploymentId) {
   
   bool existsById(TenantId tenantId, ResourceGroupId rgId, DeploymentId id);
   Deployment findById(TenantId tenantId, ResourceGroupId rgId, DeploymentId id);

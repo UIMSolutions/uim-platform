@@ -12,7 +12,7 @@ import uim.platform.monitoring;
 
 @safe:
 /// Port: outgoing - notification channel persistence.
-interface NotificationChannelRepository : ITentRepository!(NotificationChannel, NotificationChannelId) {
+interface NotificationChannelRepository : ITenantRepository!(NotificationChannel, NotificationChannelId) {
 
   size_t countByType(TenantId tenantId, NotificationChannelType channelType);
   NotificationChannel[] findByType(TenantId tenantId, NotificationChannelType channelType);

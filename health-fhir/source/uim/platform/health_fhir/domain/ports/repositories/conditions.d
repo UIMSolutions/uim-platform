@@ -10,7 +10,7 @@ import uim.platform.health_fhir;
 
 @safe:
 
-interface ConditionRepository : ITentRepository!(Condition, ConditionId) {
+interface ConditionRepository : ITenantRepository!(Condition, ConditionId) {
   bool existsById(TenantId tenantId, ConditionId id);
   Condition findById(TenantId tenantId, ConditionId id);
   void removeById(TenantId tenantId, ConditionId id);

@@ -15,7 +15,7 @@ import uim.platform.workzone;
 
  
 
-class MemoryFeedRepository : TentRepository!(FeedEntry, FeedEntryId), FeedRepository {
+class MemoryFeedRepository : TenantRepository!(FeedEntry, FeedEntryId), FeedRepository {
 
   size_t countByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
     return findByWorkspace(tenantId, workspaceId).length;

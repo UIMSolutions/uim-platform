@@ -11,7 +11,7 @@ import uim.platform.dms_integration;
 
 @safe:
 
-interface PermissionRepository : ITentRepository!(Permission, PermissionId) {
+interface PermissionRepository : ITenantRepository!(Permission, PermissionId) {
 
     Permission[] findByDocument(TenantId tenantId, DocumentId documentId);
     void removeByDocument(TenantId tenantId, DocumentId documentId);

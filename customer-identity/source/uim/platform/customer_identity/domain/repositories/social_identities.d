@@ -11,7 +11,7 @@ import uim.platform.customer_identity;
 
 @safe:
 
-interface SocialIdentityRepository : ITentRepository!(SocialIdentity, SocialIdentityId) {
+interface SocialIdentityRepository : ITenantRepository!(SocialIdentity, SocialIdentityId) {
     SocialIdentity[] findByCustomer(TenantId tenantId, CustomerId customerId);
     SocialIdentity findByProvider(TenantId tenantId, LoginProvider provider, string providerUserId);
     void unlinkByCustomerAndProvider(TenantId tenantId, CustomerId customerId, LoginProvider provider);

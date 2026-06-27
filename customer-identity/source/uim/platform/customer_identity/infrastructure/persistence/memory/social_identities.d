@@ -11,7 +11,7 @@ import uim.platform.customer_identity;
 
 @safe:
 
-class MemorySocialIdentityRepository : TentRepository!(SocialIdentity, SocialIdentityId), SocialIdentityRepository {
+class MemorySocialIdentityRepository : TenantRepository!(SocialIdentity, SocialIdentityId), SocialIdentityRepository {
 
     SocialIdentity[] findByCustomer(TenantId tenantId, CustomerId customerId) {
         return findByTenant(tenantId).filter!(si => si.customerId.value == customerId.value).array;

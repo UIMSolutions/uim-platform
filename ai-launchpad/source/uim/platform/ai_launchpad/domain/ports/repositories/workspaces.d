@@ -13,7 +13,7 @@ import uim.platform.ai_launchpad;
 
 @safe:
 
-interface IWorkspaceRepository : ITentRepository!(Workspace, WorkspaceId) {
+interface IWorkspaceRepository : ITenantRepository!(Workspace, WorkspaceId) {
 
   bool existsByName(TenantId tenantId, string name);
   Workspace findByName(TenantId tenantId, string name);

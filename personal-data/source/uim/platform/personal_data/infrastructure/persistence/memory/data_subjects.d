@@ -11,7 +11,7 @@ import uim.platform.personal_data;
 
 @safe:
 
-class MemoryDataSubjectRepository : TentRepository!(DataSubject, DataSubjectId), DataSubjectRepository {
+class MemoryDataSubjectRepository : TenantRepository!(DataSubject, DataSubjectId), DataSubjectRepository {
 
     // #region ByEmail
     bool existsByEmail(TenantId tenantId, string email) {

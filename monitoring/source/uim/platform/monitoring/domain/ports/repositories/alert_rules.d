@@ -12,7 +12,7 @@ import uim.platform.monitoring;
 
 @safe:
 /// Port: outgoing - alert rule persistence.
-interface AlertRuleRepository : ITentRepository!(AlertRule, AlertRuleId) {
+interface AlertRuleRepository : ITenantRepository!(AlertRule, AlertRuleId) {
 
   size_t countByResource(TenantId tenantId, MonitoredResourceId resourceId);
   AlertRule[] findByResource(TenantId tenantId, MonitoredResourceId resourceId);

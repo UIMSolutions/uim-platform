@@ -12,7 +12,7 @@ import std.array     : array;
 
 @safe:
 
-class MemoryProviderRepository : TentRepository!(Provider, ProviderId), ProviderRepository {
+class MemoryProviderRepository : TenantRepository!(Provider, ProviderId), ProviderRepository {
 
   override Provider findByCode(TenantId t, string code) {
     foreach (p; findByTenant(t))

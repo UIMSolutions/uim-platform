@@ -14,7 +14,7 @@ import uim.platform.integration.automation;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryScenarioRepository : TentRepository!(IntegrationScenario, ScenarioId), ScenarioRepository {
+class MemoryScenarioRepository : TenantRepository!(IntegrationScenario, ScenarioId), ScenarioRepository {
 
   size_t countByCategory(TenantId tenantId, ScenarioCategory category) {
     return findByCategory(tenantId, category).length;

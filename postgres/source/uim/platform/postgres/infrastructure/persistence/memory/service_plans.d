@@ -14,7 +14,7 @@ import std.array : array;
 @safe:
 
 class MemoryServicePlanRepository
-    : TentRepository!(ServicePlan, ServicePlanId)
+    : TenantRepository!(ServicePlan, ServicePlanId)
     , ServicePlanRepository
 {
     override ServicePlan[] findByTier(TenantId t, PlanTier tier) {

@@ -11,7 +11,7 @@ import uim.platform.workzone;
 // mixin(ShowModule!());
 
 @safe:
-interface ContentRepository : ITentRepository!(ContentItem, ContentId) {
+interface ContentRepository : ITenantRepository!(ContentItem, ContentId) {
 
   size_t countByWorkspace(TenantId tenantId, WorkspaceId workspaceId);
   ContentItem[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId);

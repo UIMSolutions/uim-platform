@@ -15,7 +15,7 @@ import uim.platform.identity.authentication;
 // mixin(ShowModule!());
 @safe:
 /// In-memory adapter for authorization policy persistence.
-class MemoryPolicyRepository : TentRepository!(AuthorizationPolicy, PolicyId), PolicyRepository {
+class MemoryPolicyRepository : TenantRepository!(AuthorizationPolicy, PolicyId), PolicyRepository {
 
   size_t countByApplication(TenantId tenantId, ApplicationId appId) {
     return findByApplication(tenantId, appId).length;

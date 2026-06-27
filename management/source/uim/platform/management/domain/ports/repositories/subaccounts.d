@@ -12,7 +12,7 @@ import uim.platform.management;
 
 @safe:
 /// Port: outgoing — subaccount persistence.
-interface SubaccountRepository : ITentRepository!(Subaccount, SubaccountId) {
+interface SubaccountRepository : ITenantRepository!(Subaccount, SubaccountId) {
 
   bool existsBySubdomain(TenantId tenantId, string subdomain);
   Subaccount findBySubdomain(TenantId tenantId, string subdomain);

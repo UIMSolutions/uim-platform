@@ -11,6 +11,6 @@ import uim.platform.alert_notification;
 
 @safe:
 
-interface MatchedEventRepository : ITentRepository!(MatchedEvent, MatchedEventId) {
+interface MatchedEventRepository : ITenantRepository!(MatchedEvent, MatchedEventId) {
     MatchedEvent[] findBySubscription(TenantId tenantId, string subscriptionName);
 }

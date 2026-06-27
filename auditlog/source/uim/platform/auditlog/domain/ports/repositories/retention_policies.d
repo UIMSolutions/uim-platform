@@ -12,7 +12,7 @@ import uim.platform.auditlog;
 // mixin(ShowModule!());
 /// Port for persisting retention policies.
 @safe:
-interface RetentionPolicyRepository : ITentRepository!(RetentionPolicy, RetentionPolicyId) {
+interface RetentionPolicyRepository : ITenantRepository!(RetentionPolicy, RetentionPolicyId) {
   bool existsDefault(TenantId tenantId);
   RetentionPolicy findDefault(TenantId tenantId);
 }

@@ -13,7 +13,7 @@ import uim.platform.ai_core;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryExecutableRepository : TentRepository!(Executable, ExecutableId), ExecutableRepository {
+class MemoryExecutableRepository : TenantRepository!(Executable, ExecutableId), ExecutableRepository {
 
   bool existsById(TenantId tenantId, ResourceGroupId rgId, ExecutableId id) {
     return findByResourceGroup(tenantId, rgId).any!(e => e.id == id);

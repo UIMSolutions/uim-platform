@@ -11,7 +11,7 @@ import uim.platform.build_apps;
 
 @safe:
 
-interface AppBuildRepository : ITentRepository!(AppBuild, AppBuildId) {
+interface AppBuildRepository : ITenantRepository!(AppBuild, AppBuildId) {
     
     size_t countByApplication(ApplicationId applicationId);
     AppBuild[] findByApplication(ApplicationId applicationId);

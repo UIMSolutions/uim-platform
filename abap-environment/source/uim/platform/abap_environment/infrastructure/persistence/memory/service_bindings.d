@@ -12,7 +12,7 @@ import uim.platform.abap_environment;
 
 // // mixin(ShowModule!());
 @safe:
-class MemoryServiceBindingRepository : TentRepository!(ServiceBinding, ServiceBindingId), ServiceBindingRepository {
+class MemoryServiceBindingRepository : TenantRepository!(ServiceBinding, ServiceBindingId), ServiceBindingRepository {
 
   // #region BySystem
   size_t countBySystem(TenantId tenantId, SystemInstanceId systemId) {

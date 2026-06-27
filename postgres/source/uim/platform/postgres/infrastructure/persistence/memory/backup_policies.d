@@ -14,7 +14,7 @@ import std.array : array;
 @safe:
 
 class MemoryBackupPolicyRepository
-    : TentRepository!(BackupPolicy, BackupPolicyId)
+    : TenantRepository!(BackupPolicy, BackupPolicyId)
     , BackupPolicyRepository
 {
     override BackupPolicy findByInstance(TenantId t, ServiceInstanceId instanceId) {

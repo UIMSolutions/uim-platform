@@ -5,7 +5,7 @@ import uim.platform.data_retention;
 
 @safe:
 
-class MemoryArchivingJobRepository : TentRepository!(ArchivingJob, ArchivingJobId), ArchivingJobRepository {
+class MemoryArchivingJobRepository : TenantRepository!(ArchivingJob, ArchivingJobId), ArchivingJobRepository {
 
     // #region ByApplicationGroup
     size_t countByApplicationGroup(TenantId tenantId, ApplicationGroupId groupId) {

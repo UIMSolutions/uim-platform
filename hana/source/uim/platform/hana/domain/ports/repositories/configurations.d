@@ -11,7 +11,7 @@ import uim.platform.hana;
 // mixin(ShowModule!());
 
 @safe:
-interface ConfigurationRepository : ITentRepository!(Configuration, ConfigurationId) {
+interface ConfigurationRepository : ITenantRepository!(Configuration, ConfigurationId) {
 
   size_t countByInstance(DatabaseInstanceId instanceId);
   Configuration[] findByInstance(DatabaseInstanceId instanceId);

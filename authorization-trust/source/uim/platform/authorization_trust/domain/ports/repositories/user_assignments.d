@@ -11,7 +11,7 @@ import uim.platform.authorization_trust;
 
 @safe:
 
-interface UserAssignmentRepository : ITentRepository!(UserAssignment, UserAssignmentId) {
+interface UserAssignmentRepository : ITenantRepository!(UserAssignment, UserAssignmentId) {
 
   size_t countByUser(TenantId tenantId, UserId userId);
   UserAssignment[] findByUser(TenantId tenantId, UserId userId);

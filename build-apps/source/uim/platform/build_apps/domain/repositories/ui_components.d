@@ -11,7 +11,7 @@ import uim.platform.build_apps;
 
 @safe:
 
-interface UIComponentRepository : ITentRepository!(UIComponent, UIComponentId) {
+interface UIComponentRepository : ITenantRepository!(UIComponent, UIComponentId) {
 
     size_t countByCategory(ComponentCategory category);
     UIComponent[] findByCategory(ComponentCategory category);

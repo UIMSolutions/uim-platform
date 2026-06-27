@@ -10,7 +10,7 @@ import uim.platform.private_link;
 
 @safe:
 /// Port: repository contract for ServiceBinding persistence.
-interface ServiceBindingRepository : ITentRepository!(ServiceBinding, ServiceBindingId) {
+interface ServiceBindingRepository : ITenantRepository!(ServiceBinding, ServiceBindingId) {
   ServiceBinding[] findByServiceInstance(TenantId tenantId, ServiceInstanceId instanceId);
   ServiceBinding[] findByApplication(TenantId tenantId, string applicationId);
   void removeByServiceInstance(TenantId tenantId, ServiceInstanceId instanceId);

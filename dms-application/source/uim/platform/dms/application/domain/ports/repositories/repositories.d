@@ -11,7 +11,7 @@ import uim.platform.dms.application;
 
 // mixin(ShowModule!());
 @safe:
-interface IRepositoryRepository : ITentRepository!(Repository, RepositoryId) {
+interface IRepositoryRepository : ITenantRepository!(Repository, RepositoryId) {
   bool existsByName(TenantId tenantId, string name);
   Repository findByName(TenantId tenantId, string name);
   void removeByName(TenantId tenantId, string name);

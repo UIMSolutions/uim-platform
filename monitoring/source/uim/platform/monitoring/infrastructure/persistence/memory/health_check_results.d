@@ -15,7 +15,7 @@ import uim.platform.monitoring;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryHealthCheckResultRepository : TentRepository!(HealthCheckResult, HealthCheckResultId), HealthCheckResultRepository {
+class MemoryHealthCheckResultRepository : TenantRepository!(HealthCheckResult, HealthCheckResultId), HealthCheckResultRepository {
 
   HealthCheckResult findLatestByCheck(TenantId tenantId, HealthCheckId checkId) {
     HealthCheckResult latest;

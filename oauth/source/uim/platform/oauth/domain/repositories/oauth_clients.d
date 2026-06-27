@@ -11,7 +11,7 @@ import uim.platform.oauth;
 
 @safe:
 
-interface OAuthClientRepository : ITentRepository!(OAuthClient, OAuthClientId) {
+interface OAuthClientRepository : ITenantRepository!(OAuthClient, OAuthClientId) {
 
     bool existsByClient(TenantId tenantId, string clientId);
     OAuthClient findByClient(TenantId tenantId, string clientId);

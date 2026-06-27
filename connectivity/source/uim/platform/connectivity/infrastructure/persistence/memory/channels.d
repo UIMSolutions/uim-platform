@@ -14,7 +14,7 @@ import uim.platform.connectivity;
 
 @safe:
 
-class MemoryChannelRepository : TentRepository!(ServiceChannel, ChannelId), ChannelRepository {
+class MemoryChannelRepository : TenantRepository!(ServiceChannel, ChannelId), ChannelRepository {
 
   size_t countByConnector(TenantId tenantId, ConnectorId connectorId) {
     return findByConnector(tenantId, connectorId).length;

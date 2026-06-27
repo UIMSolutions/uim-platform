@@ -5,7 +5,7 @@ import uim.platform.data_retention;
 
 @safe:
 
-class MemoryDeletionRequestRepository : TentRepository!(DeletionRequest, DeletionRequestId), DeletionRequestRepository {
+class MemoryDeletionRequestRepository : TenantRepository!(DeletionRequest, DeletionRequestId), DeletionRequestRepository {
 
     size_t countByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
         return findByDataSubject(tenantId, subjectId).length;

@@ -13,7 +13,7 @@ import uim.platform.auditlog;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryAuditConfigRepository : TentRepository!(AuditConfig, AuditConfigId), AuditConfigRepository {
+class MemoryAuditConfigRepository : TenantRepository!(AuditConfig, AuditConfigId), AuditConfigRepository {
   override AuditConfig[] findAll(size_t offset = 0, size_t limit = 0) {
     return limit == 0 
       ? store.byKeyValue.map!(kv => getByTenant(kv.key)).array.skip(offset)

@@ -13,7 +13,7 @@ import uim.platform.situation_automation;
 
 @safe:
 
-interface AutomationRuleRepository : ITentRepository!(AutomationRule, AutomationRuleId) {
+interface AutomationRuleRepository : ITenantRepository!(AutomationRule, AutomationRuleId) {
     
     size_t countByTemplate(TenantId tenantId, SituationTemplateId templateId);
     AutomationRule[] findByTemplate(TenantId tenantId, SituationTemplateId templateId);

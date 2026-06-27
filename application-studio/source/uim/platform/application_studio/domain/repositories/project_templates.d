@@ -11,7 +11,7 @@ import uim.platform.application_studio;
 
 @safe:
 
-interface ProjectTemplateRepository : ITentRepository!(ProjectTemplate, ProjectTemplateId) {
+interface ProjectTemplateRepository : ITenantRepository!(ProjectTemplate, ProjectTemplateId) {
 
     size_t countByCategory(TenantId tenantId, TemplateCategory category);
     ProjectTemplate[] findByCategory(TenantId tenantId, TemplateCategory category); // size_t offset = 0, size_t limit = 100);

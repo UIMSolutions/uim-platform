@@ -12,7 +12,7 @@ import uim.platform.job_scheduling;
 // mixin(ShowModule!());
 
 @safe:
-interface JobRepository : ITentRepository!(Job, JobId) {
+interface JobRepository : ITenantRepository!(Job, JobId) {
 
     bool existsByName(TenantId tenantId, string name);
     Job findByName(TenantId tenantId, string name);

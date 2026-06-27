@@ -12,7 +12,7 @@ import uim.platform.management;
 
 @safe:
 /// Port: outgoing — entitlement persistence.
-interface EntitlementRepository : ITentRepository!(Entitlement, EntitlementId) {
+interface EntitlementRepository : ITenantRepository!(Entitlement, EntitlementId) {
 
   Entitlement[] findByGlobalAccount(TenantId tenantId, GlobalAccountId globalAccountId);
   Entitlement[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId);

@@ -11,7 +11,7 @@ import uim.platform.datasphere;
 // mixin(ShowModule!()); 
 
 @safe:
-interface RemoteTableRepository : ITentRepository!(RemoteTable, RemoteTableId) {
+interface RemoteTableRepository : ITenantRepository!(RemoteTable, RemoteTableId) {
 
   bool existsById(TenantId tenantId, SpaceId spaceId, RemoteTableId id);  
   RemoteTable findById(TenantId tenantId, SpaceId spaceId, RemoteTableId id);

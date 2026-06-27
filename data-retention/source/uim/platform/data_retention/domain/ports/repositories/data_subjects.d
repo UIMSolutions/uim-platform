@@ -5,7 +5,7 @@ import uim.platform.data_retention;
 
 @safe:
 
-interface DataSubjectRepository : ITentRepository!(DataSubject, DataSubjectId) {
+interface DataSubjectRepository : ITenantRepository!(DataSubject, DataSubjectId) {
     
     DataSubject[] findByApplicationGroup(TenantId tenantId, ApplicationGroupId groupId);
     DataSubject[] findByLifecycleStatus(TenantId tenantId, DataLifecycleStatus status);

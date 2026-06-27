@@ -15,7 +15,7 @@ import uim.platform.ai_core;
 // mixin(ShowModule!()); 
 
 @safe:
-class MemoryScenarioRepository : TentRepository!(Scenario, ScenarioId), ScenarioRepository {
+class MemoryScenarioRepository : TenantRepository!(Scenario, ScenarioId), ScenarioRepository {
 
   bool existsById(TenantId tenantId, ResourceGroupId rgId, ScenarioId id) {
     return findByResourceGroup(tenantId, rgId).any!(s => s.id == id);

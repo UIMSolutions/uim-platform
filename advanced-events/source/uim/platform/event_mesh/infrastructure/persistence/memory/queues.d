@@ -11,7 +11,7 @@ import uim.platform.event_mesh;
 
 @safe:
 
-class MemoryQueueRepository : TentRepository!(Queue, QueueId), QueueRepository {
+class MemoryQueueRepository : TenantRepository!(Queue, QueueId), QueueRepository {
 
     size_t countByBrokerService(TenantId tenantId, BrokerServiceId serviceId) {
         return findByBrokerService(tenantId, serviceId).length;

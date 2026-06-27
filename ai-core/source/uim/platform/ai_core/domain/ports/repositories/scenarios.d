@@ -11,7 +11,7 @@ import uim.platform.ai_core;
 // mixin(ShowModule!()); 
 
 @safe:
-interface ScenarioRepository : ITentRepository!(Scenario, ScenarioId) {
+interface ScenarioRepository : ITenantRepository!(Scenario, ScenarioId) {
 
   bool existsById(TenantId tenantId, ResourceGroupId rgId, ScenarioId id);
   Scenario findById(TenantId tenantId, ResourceGroupId rgId, ScenarioId id);

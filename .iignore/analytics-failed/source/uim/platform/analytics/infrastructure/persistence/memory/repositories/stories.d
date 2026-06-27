@@ -10,7 +10,7 @@ import uim.platform.analytics;
 
 // mixin(ShowModule!());
 @safe:
-class MemoryStoryRepository : TentRepository!(Story, StoryId), StoryRepository {
+class MemoryStoryRepository : TenantRepository!(Story, StoryId), StoryRepository {
 
   size_t countByOwner(TenantId tenantId, EntityId ownerId) {
     return findByOwner(tenantId, ownerId).length;

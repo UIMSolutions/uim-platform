@@ -11,7 +11,7 @@ import uim.platform.hana;
 // mixin(ShowModule!());
 
 @safe:
-interface DataLakeRepository : ITentRepository!(DataLake, DataLakeId) {
+interface DataLakeRepository : ITenantRepository!(DataLake, DataLakeId) {
 
   size_t countByInstance(DatabaseInstanceId instanceId);
   DataLake[] findByInstance(DatabaseInstanceId instanceId);

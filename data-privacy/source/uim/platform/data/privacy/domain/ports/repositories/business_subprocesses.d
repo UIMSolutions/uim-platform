@@ -12,7 +12,7 @@ import uim.platform.data.privacy;
 
 @safe:
 /// Port for persisting and querying business subprocesses.
-interface BusinessSubprocessRepository : ITentRepository!(BusinessSubprocess, BusinessSubprocessId) {
+interface BusinessSubprocessRepository : ITenantRepository!(BusinessSubprocess, BusinessSubprocessId) {
 
   bool existsByParentProcess(TenantId tenantId, BusinessProcessId parentId);
   BusinessSubprocess[] findByParentProcess(TenantId tenantId, BusinessProcessId parentId);

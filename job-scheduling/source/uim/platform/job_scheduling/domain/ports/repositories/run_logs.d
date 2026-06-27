@@ -12,7 +12,7 @@ import uim.platform.job_scheduling;
 // mixin(ShowModule!());
 
 @safe:
-interface RunLogRepository : ITentRepository!(RunLog, RunLogId) {
+interface RunLogRepository : ITenantRepository!(RunLog, RunLogId) {
 
     size_t countBySchedule(TenantId tenantId, ScheduleId scheduleId);
     RunLog[] findBySchedule(TenantId tenantId, ScheduleId scheduleId);

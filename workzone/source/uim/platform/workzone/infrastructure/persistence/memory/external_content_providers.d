@@ -15,7 +15,7 @@ import uim.platform.workzone;
 
  
 
-class MemoryExternalContentProviderRepository : TentRepository!(ExternalContentProvider, ExternalContentProviderId), ExternalContentProviderRepository {
+class MemoryExternalContentProviderRepository : TenantRepository!(ExternalContentProvider, ExternalContentProviderId), ExternalContentProviderRepository {
 
   size_t countByStatus(TenantId tenantId, ProviderStatus status) {
     return findByStatus(tenantId, status).length;

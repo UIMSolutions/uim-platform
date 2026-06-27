@@ -12,7 +12,7 @@ import uim.platform.solution_lifecycle;
 @safe:
 
 class MemoryMtaRepository
-    : TentRepository!(Mta, MtaId),
+    : TenantRepository!(Mta, MtaId),
       MtaRepository
 {
     /// Find all MTAs for a tenant with a given MTA application ID

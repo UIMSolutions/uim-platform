@@ -12,7 +12,7 @@ import uim.platform.responsibility;
 @safe:
 
 class MemoryResponsibilityDefinitionRepository
-    : TentRepository!(ResponsibilityDefinition, ResponsibilityDefinitionId),
+    : TenantRepository!(ResponsibilityDefinition, ResponsibilityDefinitionId),
       ResponsibilityDefinitionRepository {
 
     ResponsibilityDefinition[] findByContext(TenantId tenantId, string contextId) {

@@ -11,7 +11,7 @@ import uim.platform.integration_delivery;
 
 @safe:
 
-interface BuildRepository : ITentRepository!(Build, BuildId) {
+interface BuildRepository : ITenantRepository!(Build, BuildId) {
     Build[] findByJob(TenantId tenantId, JobId jobId);
     Build[] findByStatus(TenantId tenantId, BuildStatus status);
     Build[] findByJobAndStatus(TenantId tenantId, JobId jobId, BuildStatus status);

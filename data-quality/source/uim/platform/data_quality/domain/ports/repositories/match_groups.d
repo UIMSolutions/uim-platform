@@ -12,7 +12,7 @@ import uim.platform.data_quality;
 
 @safe:
 /// Port for persisting duplicate match groups.
-interface MatchGroupRepository : ITentRepository!(MatchGroup, MatchGroupId) {
+interface MatchGroupRepository : ITenantRepository!(MatchGroup, MatchGroupId) {
 
   size_t countByDataset(TenantId tenantId, DatasetId datasetId);
   MatchGroup[] findByDataset(TenantId tenantId, DatasetId datasetId);

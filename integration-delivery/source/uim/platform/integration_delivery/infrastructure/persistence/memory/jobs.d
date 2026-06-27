@@ -13,7 +13,7 @@ import std.array : array;
 
 @safe:
 
-class MemoryJobRepository : TentRepository!(Job, JobId), JobRepository {
+class MemoryJobRepository : TenantRepository!(Job, JobId), JobRepository {
     Job[] findByPipeline(TenantId tenantId, PipelineId pipelineId) {
         return findByTenant(tenantId).filter!(j => j.pipelineId == pipelineId).array;
     }

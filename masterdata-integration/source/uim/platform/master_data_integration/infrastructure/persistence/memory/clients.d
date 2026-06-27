@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryClientRepository : TentRepository!(Client, ClientId), ClientRepository {
+class MemoryClientRepository : TenantRepository!(Client, ClientId), ClientRepository {
 
   size_t countByStatus(TenantId tenantId, ClientStatus status) {
     return findByStatus(tenantId, status).length;

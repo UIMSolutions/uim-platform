@@ -3,7 +3,7 @@ import uim.platform.snowflake;
 // mixin(ShowModule!());
 @safe:
 class MemorySnowflakeAccountRepository
-    : TentRepository!(SnowflakeAccount, SnowflakeAccountId),
+    : TenantRepository!(SnowflakeAccount, SnowflakeAccountId),
       SnowflakeAccountRepository {
 
   SnowflakeAccount[] findByStatus(TenantId tenantId, AccountStatus status) {

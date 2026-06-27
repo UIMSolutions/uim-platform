@@ -13,7 +13,7 @@ import uim.platform.data_attribute_recommendation;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryTrainingJobRepository : TentRepository!(TrainingJob, TrainingJobId), TrainingJobRepository {
+class MemoryTrainingJobRepository : TenantRepository!(TrainingJob, TrainingJobId), TrainingJobRepository {
   
   size_t countByModelConfig(TenantId tenantId, ModelConfigurationId configId) {
     return findByModelConfig(tenantId, configId).length;

@@ -13,7 +13,7 @@ import uim.platform.ai_launchpad;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryUsageStatisticRepository : TentRepository!(UsageStatistic, UsageStatisticId), IUsageStatisticRepository {
+class MemoryUsageStatisticRepository : TenantRepository!(UsageStatistic, UsageStatisticId), IUsageStatisticRepository {
 
   size_t countByScenario(TenantId tenantId, ConnectionId connectionId, ScenarioId scenarioId) {
     return findByScenario(tenantId, connectionId, scenarioId).length;

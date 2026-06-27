@@ -11,7 +11,7 @@ import uim.platform.transport;
 
 @safe:
 
-interface TransportActionRepository : ITentRepository!(TransportAction, TransportActionId) {
+interface TransportActionRepository : ITenantRepository!(TransportAction, TransportActionId) {
     TransportAction[] findByNode(TenantId tenantId, TransportNodeId nodeId);
     TransportAction[] findByRequest(TenantId tenantId, TransportRequestId requestId);
     TransportAction[] findByType(TenantId tenantId, ActionType actionType);

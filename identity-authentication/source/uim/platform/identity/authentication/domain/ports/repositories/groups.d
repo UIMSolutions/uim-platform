@@ -11,7 +11,7 @@ import uim.platform.identity.authentication;
 // mixin(ShowModule!());
 @safe:
 /// Port: outgoing — group persistence.
-interface GroupRepository : ITentRepository!(IdaGroup, GroupId) {
+interface GroupRepository : ITenantRepository!(IdaGroup, GroupId) {
   
   bool existsByName(TenantId tenantId, string name);
   IdaGroup findByName(TenantId tenantId, string name);

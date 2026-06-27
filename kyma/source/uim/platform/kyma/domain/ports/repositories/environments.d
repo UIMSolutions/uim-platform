@@ -12,7 +12,7 @@ import uim.platform.kyma;
 
 @safe:
 /// Port: outgoing — Kyma environment persistence.
-interface EnvironmentRepository : ITentRepository!(KymaEnvironment, KymaEnvironmentId) {
+interface EnvironmentRepository : ITenantRepository!(KymaEnvironment, KymaEnvironmentId) {
 
   size_t countBySubaccount(TenantId tenantId, SubaccountId subaccountId);
   KymaEnvironment[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId);

@@ -12,7 +12,7 @@ import uim.platform.destination;
 
 @safe:
 /// Port: outgoing — destination configuration persistence.
-interface DestinationRepository : ITentRepository!(Destination, DestinationId) {
+interface DestinationRepository : ITenantRepository!(Destination, DestinationId) {
 
   bool existsByName(TenantId tenantId, SubaccountId subaccountId, string name);
   Destination findByName(TenantId tenantId, SubaccountId subaccountId, string name);

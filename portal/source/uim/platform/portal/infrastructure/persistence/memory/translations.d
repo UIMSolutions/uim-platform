@@ -12,7 +12,7 @@ import uim.platform.portal;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryTranslationRepository : TentRepository!(Translation, TranslationId), TranslationRepository {
+class MemoryTranslationRepository : TenantRepository!(Translation, TranslationId), TranslationRepository {
 
   size_t countByResource(string resourceType, string resourceId) {
     return findByResource(resourceType, resourceId).length;

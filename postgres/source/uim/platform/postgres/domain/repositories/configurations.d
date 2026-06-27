@@ -11,6 +11,6 @@ import uim.platform.postgres;
 
 @safe:
 
-interface ConfigurationRepository : ITentRepository!(Configuration, ConfigurationId) {
+interface ConfigurationRepository : ITenantRepository!(Configuration, ConfigurationId) {
     Configuration findByInstance(TenantId tenantId, ServiceInstanceId instanceId);
 }

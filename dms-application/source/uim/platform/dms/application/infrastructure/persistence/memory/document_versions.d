@@ -13,7 +13,7 @@ import uim.platform.dms.application;
 // mixin(ShowModule!());
 @safe:
 
-class MemoryDocumentVersionRepository : TentRepository!(DocumentVersion, DocumentVersionId), IDocumentVersionRepository {
+class MemoryDocumentVersionRepository : TenantRepository!(DocumentVersion, DocumentVersionId), IDocumentVersionRepository {
   size_t countByDocument(TenantId tenantId, DocumentId documentId) {
     return findByDocument(tenantId, documentId).length;
   }

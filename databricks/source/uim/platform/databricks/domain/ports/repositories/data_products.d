@@ -5,7 +5,7 @@ import uim.platform.databricks;
 
 @safe:
 
-interface DataProductRepository : TentRepository!(DataProduct, DataProductId) {
+interface DataProductRepository : TenantRepository!(DataProduct, DataProductId) {
   DataProduct[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId);
   DataProduct[] findByStatus(TenantId tenantId, DataProductStatus status);
   DataProduct[] findByProvider(TenantId tenantId, string provider);

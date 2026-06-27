@@ -11,7 +11,7 @@ import uim.platform.events;
 
 @safe:
 
-interface MessageBindingRepository : ITentRepository!(MessageBinding, MessageBindingId) {
+interface MessageBindingRepository : ITenantRepository!(MessageBinding, MessageBindingId) {
     size_t countByClient(TenantId tenantId, MessageClientId clientId);
     MessageBinding[] findByClient(TenantId tenantId, MessageClientId clientId);
     MessageBinding[] findByService(TenantId tenantId, MessagingServiceId serviceId);

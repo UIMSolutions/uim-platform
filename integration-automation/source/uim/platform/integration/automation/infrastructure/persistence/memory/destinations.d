@@ -15,7 +15,7 @@ import uim.platform.integration.automation;
 
 @safe:
 
-class MemoryDestinationRepository : TentRepository!(Destination, DestinationId), DestinationRepository {
+class MemoryDestinationRepository : TenantRepository!(Destination, DestinationId), DestinationRepository {
 
   size_t countBySystem(TenantId tenantId, SystemConnectionId systemId) {
     return findBySystem(tenantId, systemId).length;

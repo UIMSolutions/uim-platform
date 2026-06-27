@@ -11,7 +11,7 @@ import uim.platform.application_studio;
 
 @safe:
 
-interface ServiceBindingRepository : ITentRepository!(ServiceBinding, ServiceBindingId) {
+interface ServiceBindingRepository : ITenantRepository!(ServiceBinding, ServiceBindingId) {
 
     size_t countByDevSpace(TenantId tenantId, DevSpaceId devSpaceId);
     ServiceBinding[] findByDevSpace(TenantId tenantId, DevSpaceId devSpaceId);

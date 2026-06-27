@@ -10,7 +10,7 @@ import uim.platform.ui_flexibility;
 
 @safe:
 
-interface FlexVersionRepository : ITentRepository!(FlexVersion, FlexVersionId) {
+interface FlexVersionRepository : ITenantRepository!(FlexVersion, FlexVersionId) {
   bool existsById(TenantId tenantId, FlexVersionId id);
   FlexVersion findById(TenantId tenantId, FlexVersionId id);
   bool removeById(TenantId tenantId, FlexVersionId id);

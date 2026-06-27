@@ -11,7 +11,7 @@ import uim.platform.customer_identity;
 
 @safe:
 
-class MemoryAuditLogRepository : TentRepository!(AuditLog, AuditLogId), AuditLogRepository {
+class MemoryAuditLogRepository : TenantRepository!(AuditLog, AuditLogId), AuditLogRepository {
 
     AuditLog[] findByActor(TenantId tenantId, string actorId) {
         return findByTenant(tenantId).filter!(al => al.actorId == actorId).array;

@@ -11,7 +11,7 @@ import uim.platform.hana_spatial;
 
 @safe:
 class MemorySpatialFeatureRepository
-  : TentRepository!(SpatialFeature, SpatialFeatureId),
+  : TenantRepository!(SpatialFeature, SpatialFeatureId),
     SpatialFeatureRepository {
 
   SpatialFeature[] findByLayer(TenantId tenantId, SpatialLayerId layerId) {

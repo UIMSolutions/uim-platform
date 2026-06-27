@@ -6,7 +6,7 @@ import uim.platform.integration_suite;
 @safe:
 
 class MemoryMessageQueueRepository
-    : TentRepository!(MessageQueue, MessageQueueId),
+    : TenantRepository!(MessageQueue, MessageQueueId),
       MessageQueueRepository {
 
   MessageQueue[] findByStatus(TenantId tenantId, QueueStatus status) {

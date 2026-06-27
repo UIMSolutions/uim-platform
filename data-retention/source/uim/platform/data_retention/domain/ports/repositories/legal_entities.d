@@ -5,7 +5,7 @@ import uim.platform.data_retention;
 
 @safe:
 
-interface LegalEntityRepository : ITentRepository!(LegalEntity, LegalEntityId) {
+interface LegalEntityRepository : ITenantRepository!(LegalEntity, LegalEntityId) {
 
     LegalEntity[] findActive(TenantId tenantId);
 

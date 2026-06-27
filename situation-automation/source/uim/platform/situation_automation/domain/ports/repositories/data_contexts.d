@@ -13,7 +13,7 @@ import uim.platform.situation_automation;
 
 @safe:
 
-interface DataContextRepository : ITentRepository!(DataContext, DataContextId) {
+interface DataContextRepository : ITenantRepository!(DataContext, DataContextId) {
 
     size_t countByInstance(TenantId tenantId, SituationInstanceId instanceId);
     DataContext[] findByInstance(TenantId tenantId, SituationInstanceId instanceId);

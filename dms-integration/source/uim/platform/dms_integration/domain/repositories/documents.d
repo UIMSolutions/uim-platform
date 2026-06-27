@@ -11,7 +11,7 @@ import uim.platform.dms_integration;
 
 @safe:
 
-interface DocumentRepository : ITentRepository!(Document, DocumentId) {
+interface DocumentRepository : ITenantRepository!(Document, DocumentId) {
 
     size_t countByRepository(TenantId tenantId, RepositoryId repositoryId);
     Document[] findByRepository(TenantId tenantId, RepositoryId repositoryId);

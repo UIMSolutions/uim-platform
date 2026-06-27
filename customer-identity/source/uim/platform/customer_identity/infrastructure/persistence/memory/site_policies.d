@@ -11,7 +11,7 @@ import uim.platform.customer_identity;
 
 @safe:
 
-class MemorySitePolicyRepository : TentRepository!(SitePolicy, SitePolicyId), SitePolicyRepository {
+class MemorySitePolicyRepository : TenantRepository!(SitePolicy, SitePolicyId), SitePolicyRepository {
 
     SitePolicy[] findByType(TenantId tenantId, PolicyType policyType) {
         return findByTenant(tenantId).filter!(sp => sp.policyType == policyType).array;

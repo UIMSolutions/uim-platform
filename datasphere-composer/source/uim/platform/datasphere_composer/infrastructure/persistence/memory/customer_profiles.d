@@ -11,7 +11,7 @@ import uim.platform.datasphere_composer;
 
 @safe:
 class MemoryCustomerProfileRepository
-    : TentRepository!(CustomerProfile, CustomerProfileId),
+    : TenantRepository!(CustomerProfile, CustomerProfileId),
       CustomerProfileRepository {
 
   CustomerProfile[] findByEmail(TenantId tenantId, string email) {

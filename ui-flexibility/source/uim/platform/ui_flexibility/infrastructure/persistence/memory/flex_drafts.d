@@ -10,7 +10,7 @@ import uim.platform.ui_flexibility;
 
 @safe:
 
-class MemoryFlexDraftRepository : TentRepository!(FlexDraft, FlexDraftId), FlexDraftRepository {
+class MemoryFlexDraftRepository : TenantRepository!(FlexDraft, FlexDraftId), FlexDraftRepository {
 
   bool existsById(TenantId tenantId, FlexDraftId id) {
     return !findById(tenantId, id).isNull;

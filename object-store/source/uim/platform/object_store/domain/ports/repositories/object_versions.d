@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing - object version persistence.
-interface ObjectVersionRepository : ITentRepository!(ObjectVersion, ObjectVersionId) {
+interface ObjectVersionRepository : ITenantRepository!(ObjectVersion, ObjectVersionId) {
 
   bool existsLatest(TenantId tenantId, StorageObjectId objectId);
   ObjectVersion findLatest(TenantId tenantId, StorageObjectId objectId);

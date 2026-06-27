@@ -15,7 +15,7 @@ import uim.platform.hana;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryBackupRepository : TentRepository!(Backup, BackupId), BackupRepository {
+class MemoryBackupRepository : TenantRepository!(Backup, BackupId), BackupRepository {
 
   size_t countByInstance(DatabaseInstanceId instanceId) {
     return findByInstance(instanceId).length;

@@ -15,7 +15,7 @@ import uim.platform.management;
 // mixin(ShowModule!());
 @safe:
 
-class MemorySubaccountRepository : TentRepository!(Subaccount, SubaccountId), SubaccountRepository {
+class MemorySubaccountRepository : TenantRepository!(Subaccount, SubaccountId), SubaccountRepository {
 
   // #region BySubdomain
   bool existsBySubdomain(TenantId tenantId, string subdomain) {

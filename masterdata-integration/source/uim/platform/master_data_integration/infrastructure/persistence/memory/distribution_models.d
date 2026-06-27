@@ -16,7 +16,7 @@ mixin(ShowModule!());
 @safe:
 
 class MemoryDistributionModelRepository :
-  TentRepository!(DistributionModel, DistributionModelId),
+  TenantRepository!(DistributionModel, DistributionModelId),
   DistributionModelRepository {
 
   size_t countByStatus(TenantId tenantId, DistributionModelStatus status) {

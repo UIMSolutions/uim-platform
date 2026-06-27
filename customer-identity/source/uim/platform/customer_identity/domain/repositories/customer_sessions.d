@@ -11,7 +11,7 @@ import uim.platform.customer_identity;
 
 @safe:
 
-interface CustomerSessionRepository : ITentRepository!(CustomerSession, CustomerSessionId) {
+interface CustomerSessionRepository : ITenantRepository!(CustomerSession, CustomerSessionId) {
     CustomerSession findByToken(TenantId tenantId, string token);
     CustomerSession[] findByCustomer(TenantId tenantId, CustomerId customerId);
     CustomerSession[] findActive(TenantId tenantId);

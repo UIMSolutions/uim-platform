@@ -14,7 +14,7 @@ import uim.platform.keystore;
 
 @safe:
 
-class MemoryKeyEntryRepository : TentRepository!(KeyEntry, KeyEntryId), KeyEntryRepository {
+class MemoryKeyEntryRepository : TenantRepository!(KeyEntry, KeyEntryId), KeyEntryRepository {
 
   bool existsByAlias(TenantId tenantId, KeystoreId keystoreId, string alias_) {
     return findByKeystore(tenantId, keystoreId).any!(e => e.alias_ == alias_);

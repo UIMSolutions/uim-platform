@@ -11,4 +11,4 @@ import uim.platform.solution_lifecycle;
 
 @safe:
 
-interface MtaArchiveRepository : ITentRepository!(MtaArchive, MtaArchiveId) {}
+interface MtaArchiveRepository : ITenantRepository!(MtaArchive, MtaArchiveId) {}

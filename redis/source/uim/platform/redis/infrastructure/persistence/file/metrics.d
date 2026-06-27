@@ -17,7 +17,7 @@ import std.conv   : to;
 @safe:
 
 class FileMetricRepository
-    : TentRepository!(Metric, MetricId)
+    : TenantRepository!(Metric, MetricId)
     , MetricRepository
 {
     private string _basePath;

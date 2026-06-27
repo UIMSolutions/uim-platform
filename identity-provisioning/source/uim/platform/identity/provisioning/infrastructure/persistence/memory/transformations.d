@@ -13,7 +13,7 @@ import uim.platform.identity.provisioning;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryTransformationRepository : TentRepository!(Transformation, TransformationId), TransformationRepository {
+class MemoryTransformationRepository : TenantRepository!(Transformation, TransformationId), TransformationRepository {
 
   // #region BySystem
   size_t countBySystem(TenantId tenantId, string systemId) {

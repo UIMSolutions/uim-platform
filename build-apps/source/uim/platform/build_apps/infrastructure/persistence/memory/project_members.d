@@ -11,7 +11,7 @@ import uim.platform.build_apps;
 
 @safe:
 
-class MemoryProjectMemberRepository : TentRepository!(ProjectMember, ProjectMemberId), ProjectMemberRepository {
+class MemoryProjectMemberRepository : TenantRepository!(ProjectMember, ProjectMemberId), ProjectMemberRepository {
 
     size_t countByApplication(ApplicationId applicationId) {
         return findByApplication(applicationId).length;

@@ -12,7 +12,7 @@ import uim.platform.data.privacy;
 
 @safe:
 /// Port for persisting and querying data controllers.
-interface DataControllerRepository : ITentRepository!(DataController, DataControllerId) {
+interface DataControllerRepository : ITenantRepository!(DataController, DataControllerId) {
 
   size_t countByCountry(TenantId tenantId, string country);
   DataController[] findByCountry(TenantId tenantId, string country);

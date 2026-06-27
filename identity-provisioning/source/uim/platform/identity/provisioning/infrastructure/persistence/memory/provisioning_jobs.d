@@ -13,7 +13,7 @@ import uim.platform.identity.provisioning;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryProvisioningJobRepository : TentRepository!(ProvisioningJob, ProvisioningJobId), ProvisioningJobRepository {
+class MemoryProvisioningJobRepository : TenantRepository!(ProvisioningJob, ProvisioningJobId), ProvisioningJobRepository {
 
   size_t countBySource(TenantId tenantId, SourceSystemId sourceId) {
     return findBySource(tenantId, sourceId).length;

@@ -12,7 +12,7 @@ import uim.platform.connectivity;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryDestinationRepository : TentRepository!(Destination, DestinationId), DestinationRepository {
+class MemoryDestinationRepository : TenantRepository!(Destination, DestinationId), DestinationRepository {
 
   // #region ByName
   bool existsByName(TenantId tenantId, string name) {

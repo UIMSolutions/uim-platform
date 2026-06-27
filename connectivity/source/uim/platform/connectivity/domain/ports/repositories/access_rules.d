@@ -12,7 +12,7 @@ import uim.platform.connectivity;
 
 @safe:
 /// Port: outgoing - access rule persistence.
-interface AccessRuleRepository : ITentRepository!(AccessRule, RuleId) {
+interface AccessRuleRepository : ITenantRepository!(AccessRule, RuleId) {
   
   size_t countByConnector(TenantId tenantId, ConnectorId connectorId);
   AccessRule[] findByConnector(TenantId tenantId, ConnectorId connectorId);

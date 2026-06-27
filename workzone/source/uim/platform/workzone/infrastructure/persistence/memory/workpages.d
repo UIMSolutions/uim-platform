@@ -15,7 +15,7 @@ import uim.platform.workzone;
 
  
 
-class MemoryWorkpageRepository : TentRepository!(Workpage, WorkpageId), WorkpageRepository {
+class MemoryWorkpageRepository : TenantRepository!(Workpage, WorkpageId), WorkpageRepository {
 
   size_t countByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
     return findByWorkspace(tenantId, workspaceId).length;

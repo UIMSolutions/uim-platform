@@ -12,7 +12,7 @@ import uim.platform.data.privacy;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryDeletionRequestRepository : TentRepository!(DeletionRequest, DeletionRequestId), DeletionRequestRepository {
+class MemoryDeletionRequestRepository : TenantRepository!(DeletionRequest, DeletionRequestId), DeletionRequestRepository {
 
   // #region ByDataSubject
   size_t countByDataSubject(TenantId tenantId, DataSubjectId subjectId) {

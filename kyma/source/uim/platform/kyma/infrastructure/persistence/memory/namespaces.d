@@ -15,7 +15,7 @@ import uim.platform.kyma;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryNamespaceRepository : TentRepository!(Namespace, NamespaceId), NamespaceRepository {
+class MemoryNamespaceRepository : TenantRepository!(Namespace, NamespaceId), NamespaceRepository {
 
   bool existsByName(KymaEnvironmentId envId, string name) {
     return findByEnvironment(envId).any!(e => e.name == name);

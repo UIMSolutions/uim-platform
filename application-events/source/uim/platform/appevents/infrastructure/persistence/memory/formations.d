@@ -16,7 +16,7 @@ import std.array : array;
 @safe:
 
 class MemoryFormationRepository
-    : TentRepository!(Formation, FormationId)
+    : TenantRepository!(Formation, FormationId)
     , FormationRepository
 {
     override Formation[] findByStatus(TenantId tenantId, FormationStatus status) {
