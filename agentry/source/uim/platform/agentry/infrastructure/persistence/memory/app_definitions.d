@@ -44,3 +44,7 @@ class MemoryAppDefinitionRepository
         findByMobileApplication(tenantId, appId).each!(e => remove(e));
     }
 }
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryAppDefinitionRepository));
+}

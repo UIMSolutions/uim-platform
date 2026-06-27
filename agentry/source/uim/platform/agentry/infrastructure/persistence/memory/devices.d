@@ -79,3 +79,26 @@ class MemoryDeviceRepository : TenantRepository!(Device, DeviceId), DeviceReposi
     }
 
 }
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryDeviceRepository));
+
+    // auto repo = new MemoryDeviceRepository();
+    // auto tenantId = TenantId("tenant1");
+    // auto deviceId = DeviceId("device1");
+    // auto userId = UserId("user1");
+    // auto device = Device(tenantId, deviceId, userId);
+    // device.mobileApplicationId = MobileApplicationId("app1");
+    // device.platform = AppPlatform.android;
+    // device.groupName = "group1";
+    // repo.save(device);
+
+    // assert(repo.countByMobileApplication(tenantId, MobileApplicationId("app1")) == 1);
+//     assert(repo.countByStatus(tenantId, DeviceStatus.active) == 1);
+//     assert(repo.countByPlatform(tenantId, AppPlatform.android) == 1);
+//     assert(repo.countByGroup(tenantId, "group1") == 1);
+
+//     repo.removeByMobileApplication(tenantId, MobileApplicationId("app1"));
+//     assert(repo.countByMobileApplication(tenantId, MobileApplicationId("app1")) == 0);
+// }
+}

@@ -57,3 +57,7 @@ class MemoryDeploymentRepository
     }
 
 }
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryDeploymentRepository));
+}

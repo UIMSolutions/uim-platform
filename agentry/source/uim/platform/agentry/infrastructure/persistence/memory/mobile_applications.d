@@ -46,3 +46,7 @@ class MemoryMobileApplicationRepository
         findByPlatform(tenantId, platform).each!(e => remove(e));
     }
 }
+///
+unittest {  
+    assert(tenantRepositoryTest(new MemoryMobileApplicationRepository));
+}

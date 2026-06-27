@@ -62,3 +62,7 @@ class MemoryAppVersionRepository : TenantRepository!(AppVersion, AppVersionId), 
         findByDefinition(tenantId, definitionId).each!(e => remove(e));
     }
 }
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryAppVersionRepository));
+}

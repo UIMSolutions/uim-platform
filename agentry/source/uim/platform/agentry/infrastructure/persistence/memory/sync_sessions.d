@@ -56,3 +56,7 @@ class MemorySyncSessionRepository : TenantRepository!(SyncSession, SyncSessionId
     }
 
 }
+///
+unittest {
+    assert(tenantRepositoryTest(new MemorySyncSessionRepository));
+}

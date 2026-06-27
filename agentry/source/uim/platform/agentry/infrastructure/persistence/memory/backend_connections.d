@@ -50,3 +50,7 @@ class MemoryBackendConnectionRepository : TenantRepository!(BackendConnection, B
     }
     // #endregion ByStatus
 }
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryBackendConnectionRepository));
+}
