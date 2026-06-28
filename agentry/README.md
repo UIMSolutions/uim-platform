@@ -45,11 +45,11 @@ Agentry enables customers to develop, test, and operate metadata-driven mobile a
 | Port (Interface)                  | Adapter (Implementation)                |
 |-----------------------------------|-----------------------------------------|
 | `MobileApplicationRepository`     | `MemoryMobileApplicationRepository`     |
-| `AppDefinitionRepository`         | `MemoryAppDefinitionRepository`         |
-| `AppVersionRepository`            | `MemoryAppVersionRepository`            |
+| `IAppDefinitionRepository`         | `MemoryAppDefinitionRepository`         |
+| `IAppVersionRepository`            | `AppVersionRepository`            |
 | `DeviceRepository`                | `MemoryDeviceRepository`                |
 | `SyncSessionRepository`           | `MemorySyncSessionRepository`           |
-| `BackendConnectionRepository`     | `MemoryBackendConnectionRepository`     |
+| `IBackendConnectionRepository`     | `MemoryBackendConnectionRepository`     |
 | `DeploymentRepository`            | `MemoryDeploymentRepository`            |
 
 ## API Endpoints

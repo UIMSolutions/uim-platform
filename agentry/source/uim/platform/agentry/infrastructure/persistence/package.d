@@ -6,7 +6,5 @@
 module uim.platform.agentry.infrastructure.persistence;
 
 public {
-    import uim.platform.agentry.infrastructure.persistence.files;
-    import uim.platform.agentry.infrastructure.persistence.memory;
-    import uim.platform.agentry.infrastructure.persistence.mongo;
+    import uim.platform.agentry.infrastructure.persistence.repositories;
 }

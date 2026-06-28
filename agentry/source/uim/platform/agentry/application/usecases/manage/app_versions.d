@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageAppVersionsUseCase {
-    private AppVersionRepository repo;
+    private IAppVersionRepository repo;
 
-    this(AppVersionRepository repo) {
+    this(IAppVersionRepository repo) {
         this.repo = repo;
     }
 

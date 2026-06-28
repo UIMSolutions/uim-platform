@@ -36,7 +36,7 @@ Container buildContainer(SrvConfig config) {
     // Repositories
     auto mobileApplicationRepo = new MemoryMobileApplicationRepository();
     auto appDefinitionRepo = new MemoryAppDefinitionRepository();
-    auto appVersionRepo = new MemoryAppVersionRepository();
+    auto appVersionRepo = new AppVersionRepository();
     auto deviceRepo = new MemoryDeviceRepository();
     auto syncSessionRepo = new MemorySyncSessionRepository();
     auto backendConnectionRepo = new MemoryBackendConnectionRepository();

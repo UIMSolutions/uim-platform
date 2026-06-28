@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageAppDefinitionsUseCase {
-    private AppDefinitionRepository repo;
+    private IAppDefinitionRepository repo;
 
-    this(AppDefinitionRepository repo) {
+    this(IAppDefinitionRepository repo) {
         this.repo = repo;
     }
 
