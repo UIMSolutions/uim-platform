@@ -17,7 +17,7 @@ class ManageIdentityProvidersUseCase {
     this(IdentityProviderRepository repo) { this.repo = repo; }
 
     IdentityProvider getIdentityProvider(TenantId tenantId, IdentityProviderId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
     IdentityProvider[] listIdentityProviders(TenantId tenantId) { return repo.find(tenantId); }
     IdentityProvider findDefault(TenantId tenantId) { return repo.findDefault(tenantId); }
@@ -70,7 +70,7 @@ class ManageIdentityProvidersUseCase {
     }
 
     CommandResult deleteIdentityProvider(TenantId tenantId, IdentityProviderId id) {
-        auto entity = repo.findById(tenantId, id);
+        auto entity = repo.find(tenantId, id);
         if (entity.isNull) return CommandResult(false, "", "Identity provider not found");
         repo.remove(entity);
         return CommandResult(true, id.value, "");

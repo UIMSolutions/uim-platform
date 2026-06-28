@@ -16,7 +16,7 @@ class ManageProvisioningJobsUseCase {
 
     this(ProvisioningJobRepository repo) { this.repo = repo; }
 
-    ProvisioningJob getJob(TenantId tenantId, ProvisioningJobId id) { return repo.findById(tenantId, id); }
+    ProvisioningJob getJob(TenantId tenantId, ProvisioningJobId id) { return repo.find(tenantId, id); }
     ProvisioningJob[] listJobs(TenantId tenantId) { return repo.find(tenantId); }
     ProvisioningJob[] listByStatus(TenantId tenantId, JobStatus status) { return repo.findByStatus(tenantId, status); }
 
@@ -43,7 +43,7 @@ class ManageProvisioningJobsUseCase {
 
     CommandResult startJob(TenantId tenantId, ProvisioningJobId id) {
         
-        auto j = repo.findById(tenantId, id);
+        auto j = repo.find(tenantId, id);
         if (j.isNull) return CommandResult(false, "", "Provisioning job not found");
         if (j.status != JobStatus.pending)
             return CommandResult(false, "", "Job is not in pending state");
@@ -55,7 +55,7 @@ class ManageProvisioningJobsUseCase {
 
     CommandResult finishJob(TenantId tenantId, ProvisioningJobId id, bool success, string errorLog = "") {
         
-        auto j = repo.findById(tenantId, id);
+        auto j = repo.find(tenantId, id);
         if (j.isNull) return CommandResult(false, "", "Provisioning job not found");
         j.status = success ? JobStatus.success : JobStatus.failed;
         j.finishedAt = MonoTime.currTime.ticks;
@@ -65,7 +65,7 @@ class ManageProvisioningJobsUseCase {
     }
 
     CommandResult cancelJob(TenantId tenantId, ProvisioningJobId id) {
-        auto j = repo.findById(tenantId, id);
+        auto j = repo.find(tenantId, id);
         if (j.isNull) return CommandResult(false, "", "Provisioning job not found");
         if (j.status == JobStatus.success || j.status == JobStatus.failed)
             return CommandResult(false, "", "Cannot cancel a completed job");
@@ -75,7 +75,7 @@ class ManageProvisioningJobsUseCase {
     }
 
     CommandResult deleteJob(TenantId tenantId, ProvisioningJobId id) {
-        auto entity = repo.findById(tenantId, id);
+        auto entity = repo.find(tenantId, id);
         if (entity.isNull) return CommandResult(false, "", "Provisioning job not found");
         repo.remove(entity);
         return CommandResult(true, id.value, "");

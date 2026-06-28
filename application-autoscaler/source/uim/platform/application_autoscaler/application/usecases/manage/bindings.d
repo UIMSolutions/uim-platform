@@ -53,7 +53,7 @@ class ManageAppBindingsUseCase {
   }
 
   CommandResult deleteBinding(TenantId tenantId, AppBindingId id) {
-    auto existing = repo.findById(tenantId, id);
+    auto existing = repo.find(tenantId, id);
     if (existing.isNull)
       return CommandResult(false, "", "Binding not found");
 
@@ -75,7 +75,7 @@ class ManageAppBindingsUseCase {
   }
 
   AppBinding getBinding(TenantId tenantId, AppBindingId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   AppBinding[] listBindings(TenantId tenantId) {

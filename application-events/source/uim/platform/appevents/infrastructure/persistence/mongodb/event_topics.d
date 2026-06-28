@@ -99,7 +99,7 @@ class MongoEventTopicRepository : EventTopicRepository {
     EventTopic[] findAllById(TenantId tenantId, EventTopicId[] ids) {
         EventTopic[] result;
         foreach (id; ids) {
-            auto e = findById(tenantId, id);
+            auto e = find(tenantId, id);
             if (!e.isNull) result ~= e;
         }
         return result;

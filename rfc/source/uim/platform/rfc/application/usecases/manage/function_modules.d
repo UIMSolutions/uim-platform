@@ -33,7 +33,7 @@ class ManageFunctionModulesUseCase {
     }
 
     FunctionModule getFunctionModule(TenantId tenantId, FunctionModuleId id) {
-        return _repo.findById(tenantId, id);
+        return _repo.find(tenantId, id);
     }
 
     FunctionModule[] listFunctionModules(TenantId tenantId) {
@@ -64,7 +64,7 @@ class ManageFunctionModulesUseCase {
     }
 
     CommandResult deleteFunctionModule(TenantId tenantId, FunctionModuleId id) {
-        auto fm = _repo.findById(tenantId, id);
+        auto fm = _repo.find(tenantId, id);
         if (fm.isNull())
             return CommandResult(false, id, "Function module not found: " ~ id);
         if (!_repo.remove(tenantId, id))

@@ -148,7 +148,7 @@ classDiagram
 classDiagram
     class AbapProgramRepository {
         <<interface>>
-        +AbapProgram findById(tenantId, id)
+        +AbapProgram find(tenantId, id)
         +AbapProgram[] find(tenantId)
         +void save(AbapProgram)
         +void update(AbapProgram)
@@ -158,7 +158,7 @@ classDiagram
 
     class CompilationJobRepository {
         <<interface>>
-        +CompilationJob findById(tenantId, id)
+        +CompilationJob find(tenantId, id)
         +CompilationJob[] findByProgram(tenantId, pid)
         +CompilationJob[] find(tenantId)
         +void save(CompilationJob)

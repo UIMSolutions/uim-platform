@@ -43,7 +43,7 @@ class ManageDataLakesUseCase { // TODO: UIMUseCase {
   }
 
   DataLake getDataLake(DataLakeId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   DataLake[] listDataLakes(TenantId tenantId) {
@@ -67,7 +67,7 @@ class ManageDataLakesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteDataLake(DataLakeId id) {
-    auto lake = repo.findById(tenantId, id);
+    auto lake = repo.find(tenantId, id);
     if (lake.isNull)
       return CommandResult(false, "", "Data lake not found");
 

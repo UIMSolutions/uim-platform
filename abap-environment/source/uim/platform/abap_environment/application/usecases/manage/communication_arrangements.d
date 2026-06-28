@@ -84,7 +84,7 @@ class ManageCommunicationArrangementsUseCase { // TODO: UIMUseCase {
   }
 
   CommunicationArrangement getArrangement(TenantId tenantId, CommunicationArrangementId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   CommunicationArrangement[] listArrangements(TenantId tenantId, SystemInstanceId systemId) {
@@ -92,7 +92,7 @@ class ManageCommunicationArrangementsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteArrangement(TenantId tenantId, CommunicationArrangementId id) {
-    auto arrangement = repo.findById(tenantId, id);
+    auto arrangement = repo.find(tenantId, id);
     if (arrangement.isNull)      
       return CommandResult(false, "", "Communication arrangement not found");
 

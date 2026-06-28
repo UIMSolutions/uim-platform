@@ -86,7 +86,7 @@ class FileEventApplicationRepository : MemoryEventApplicationRepository {
 
     override EventApplication findById(TenantId tenantId, EventApplicationId id) {
         ensureLoaded(tenantId);
-        return super.findById(tenantId, id);
+        return super.find(tenantId, id);
     }
 
     override void save(EventApplication item) {

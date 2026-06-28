@@ -93,7 +93,7 @@ class ManageSystemInstancesUseCase { // TODO: UIMUseCase {
   }
 
   SystemInstance getInstance(TenantId tenantId, SystemInstanceId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   SystemInstance[] listInstances(TenantId tenantId) {
@@ -101,7 +101,7 @@ class ManageSystemInstancesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteInstance(TenantId tenantId, SystemInstanceId id) {
-    auto inst = repo.findById(tenantId, id);
+    auto inst = repo.find(tenantId, id);
     if (inst.isNull)
       return CommandResult(false, "", "System instance not found");
 

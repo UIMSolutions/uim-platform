@@ -37,7 +37,7 @@ class ManageAnonymizationConfigsUseCase { // TODO: UIMUseCase {
   }
 
   AnonymizationConfig getConfig(TenantId tenantId, AnonymizationConfigId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   AnonymizationConfig[] listConfigs(TenantId tenantId) {

@@ -79,7 +79,7 @@ class ManageLogStreamsUseCase { // TODO: UIMUseCase {
   }
 
   LogStream getStream(TenantId tenantId, LogStreamId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   LogStream[] listStreams(TenantId tenantId) {
@@ -87,7 +87,7 @@ class ManageLogStreamsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteStream(TenantId tenantId, LogStreamId id) {
-    auto stream = repo.findById(tenantId, id);
+    auto stream = repo.find(tenantId, id);
     if (stream.isNull)
       return CommandResult(false, "", "Log stream not found");
 

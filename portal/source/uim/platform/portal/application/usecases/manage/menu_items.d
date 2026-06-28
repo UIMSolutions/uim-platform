@@ -62,7 +62,7 @@ class ManageMenuItemsUseCase { // TODO: UIMUseCase {
   }
 
   MenuItem getMenuItem(MenuItemId id) {
-    return menuRepo.findById(tenantId, id);
+    return menuRepo.find(tenantId, id);
   }
 
   MenuItem[] listMenuItems(SiteId siteId) {

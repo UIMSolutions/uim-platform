@@ -75,7 +75,7 @@ class ManageBucketsUseCase { // TODO: UIMUseCase {
   }
 
   Bucket getBucket(TenantId tenantId, BucketId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   Bucket[] listBuckets(TenantId tenantId) {

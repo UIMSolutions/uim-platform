@@ -110,7 +110,7 @@ class ManageHealthChecksUseCase { // TODO: UIMUseCase {
   }
 
   HealthCheck getCheck(TenantId tenantId, HealthCheckId id) {
-    return checkRepo.findById(tenantId, id);
+    return checkRepo.find(tenantId, id);
   }
 
   HealthCheck[] listChecks(TenantId tenantId) {
@@ -134,7 +134,7 @@ class ManageHealthChecksUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteCheck(TenantId tenantId, HealthCheckId id) {
-    auto check = checkRepo.findById(tenantId, id);
+    auto check = checkRepo.find(tenantId, id);
     if (check.isNull)
       return CommandResult(false, "", "Health check not found");
 

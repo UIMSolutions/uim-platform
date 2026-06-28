@@ -17,7 +17,7 @@ class ManageServiceBindingsUseCase {
     this(ServiceBindingRepository repo) { this.repo = repo; }
 
     ServiceBinding getServiceBinding(TenantId tenantId, ServiceBindingId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     ServiceBinding[] listServiceBindings(TenantId tenantId) {
@@ -49,7 +49,7 @@ class ManageServiceBindingsUseCase {
     }
 
     CommandResult deleteServiceBinding(TenantId tenantId, ServiceBindingId id) {
-        auto existing = repo.findById(tenantId, id);
+        auto existing = repo.find(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Service binding not found");
         repo.remove(tenantId, id);

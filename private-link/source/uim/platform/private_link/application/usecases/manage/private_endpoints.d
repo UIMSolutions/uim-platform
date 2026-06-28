@@ -97,7 +97,7 @@ class ManagePrivateEndpointsUseCase {
   }
 
   CommandResult deleteEndpoint(TenantId tenantId, PrivateEndpointId id) {
-    auto ep = endpoints.findById(tenantId, id);
+    auto ep = endpoints.find(tenantId, id);
     if (ep.id.value.length == 0)
       return CommandResult(false, "", "Private endpoint not found");
     endpoints.remove(ep);
@@ -105,7 +105,7 @@ class ManagePrivateEndpointsUseCase {
   }
 
   PrivateEndpoint getEndpoint(TenantId tenantId, PrivateEndpointId id) {
-    return endpoints.findById(tenantId, id);
+    return endpoints.find(tenantId, id);
   }
 
   PrivateEndpoint[] listEndpoints(TenantId tenantId) {

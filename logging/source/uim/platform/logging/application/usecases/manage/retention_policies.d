@@ -66,7 +66,7 @@ class ManageRetentionPoliciesUseCase { // TODO: UIMUseCase {
   }
 
   RetentionPolicy getRetentionPolicy(TenantId tenantId, RetentionPolicyId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   RetentionPolicy[] listRetentionPolicies(TenantId tenantId) {

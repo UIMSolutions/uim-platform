@@ -19,7 +19,7 @@ class ManageSkillsUseCase { // TODO: UIMUseCase {
     }
 
     Skill getSkill(TenantId tenantId, SkillId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     Skill[] listSkills(TenantId tenantId) {
@@ -68,7 +68,7 @@ class ManageSkillsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteSkill(TenantId tenantId, SkillId id) {
-        auto entity = repo.findById(tenantId, id);
+        auto entity = repo.find(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Skill not found");
 

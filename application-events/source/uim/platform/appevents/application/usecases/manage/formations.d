@@ -21,7 +21,7 @@ class ManageFormationsUseCase {
     }
 
     Formation getFormation(TenantId tenantId, FormationId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     Formation[] listFormations(TenantId tenantId) {
@@ -63,7 +63,7 @@ class ManageFormationsUseCase {
     }
 
     CommandResult deleteFormation(TenantId tenantId, FormationId id) {
-        auto f = repo.findById(tenantId, id);
+        auto f = repo.find(tenantId, id);
         if (f.isNull)
             return CommandResult(false, "", "Formation not found");
 

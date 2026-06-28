@@ -95,7 +95,7 @@ class MongoFormationRepository : FormationRepository {
     Formation[] findAllById(TenantId tenantId, FormationId[] ids) {
         Formation[] result;
         foreach (id; ids) {
-            auto e = findById(tenantId, id);
+            auto e = find(tenantId, id);
             if (!e.isNull) result ~= e;
         }
         return result;

@@ -45,7 +45,7 @@ class ManageApplicationsUseCase { // TODO: UIMUseCase {
   }
 
   Application getApplication(TenantId tenantId, ApplicationId id) {
-    return appRepo.findById(tenantId, id);
+    return appRepo.find(tenantId, id);
   }
 
   Application[] listApplications(TenantId tenantId, size_t offset = 0, size_t limit = 100) {
@@ -71,7 +71,7 @@ class ManageApplicationsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteApplication(TenantId tenantId, ApplicationId id) {
-    auto app = appRepo.findById(tenantId, id);
+    auto app = appRepo.find(tenantId, id);
     if (app.isNull)      
       return CommandResult(false, "", "Application not found.");
 

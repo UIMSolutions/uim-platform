@@ -13,7 +13,7 @@ import uim.platform.ui_flexibility;
 class MemoryFlexVersionRepository : TenantRepository!(FlexVersion, FlexVersionId), FlexVersionRepository {
 
   bool existsById(TenantId tenantId, FlexVersionId id) {
-    return !findById(tenantId, id).isNull;
+    return !find(tenantId, id).isNull;
   }
 
   FlexVersion findById(TenantId tenantId, FlexVersionId id) {

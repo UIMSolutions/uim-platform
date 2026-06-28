@@ -40,7 +40,7 @@ class ManageFeedsUseCase { // TODO: UIMUseCase {
   }
 
   FeedEntry getFeedEntry(TenantId tenantId, FeedEntryId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   FeedEntry[] listFeedEntries(TenantId tenantId, WorkspaceId workspaceId) {
@@ -48,7 +48,7 @@ class ManageFeedsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteFeedEntry(TenantId tenantId, FeedEntryId id) {
-    auto entry = repo.findById(tenantId, id);
+    auto entry = repo.find(tenantId, id);
     if (entry.isNull)
       return CommandResult(false, "", "Feed entry not found");
 

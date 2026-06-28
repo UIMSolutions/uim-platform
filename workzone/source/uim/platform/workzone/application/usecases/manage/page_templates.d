@@ -41,7 +41,7 @@ class ManagePageTemplatesUseCase { // TODO: UIMUseCase {
   }
 
   PageTemplate getTemplate(TenantId tenantId, PageTemplateId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   PageTemplate[] listTemplates(TenantId tenantId) {
@@ -67,7 +67,7 @@ class ManagePageTemplatesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteTemplate(TenantId tenantId, PageTemplateId id) {
-    auto t = repo.findById(tenantId, id);
+    auto t = repo.find(tenantId, id);
     if (t.isNull)
       return CommandResult(false, "", "Page template not found");
 

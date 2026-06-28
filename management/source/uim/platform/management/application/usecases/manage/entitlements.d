@@ -72,7 +72,7 @@ class ManageEntitlementsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult revokeEntitlement(TenantId tenantId, EntitlementId id) {
-    auto ent = repo.findById(tenantId, id);
+    auto ent = repo.find(tenantId, id);
     if (ent.isNull)
       return CommandResult(false, "", "Entitlement not found");
 
@@ -84,7 +84,7 @@ class ManageEntitlementsUseCase { // TODO: UIMUseCase {
   }
 
   Entitlement getEntitlement(TenantId tenantId, EntitlementId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   Entitlement[] listEntitlements(TenantId tenantId, GlobalAccountId gaId) {
@@ -100,7 +100,7 @@ class ManageEntitlementsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteEntitlement(TenantId tenantId, EntitlementId id) {
-    auto entity = repo.findById(tenantId, id);
+    auto entity = repo.find(tenantId, id);
     if (entity.isNull)
       return CommandResult(false, "", "Entitlement not found");
 

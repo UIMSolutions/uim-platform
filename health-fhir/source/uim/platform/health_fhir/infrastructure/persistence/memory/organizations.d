@@ -13,7 +13,7 @@ import uim.platform.health_fhir;
 class MemoryOrganizationRepository : TenantRepository!(Organization, OrganizationId), OrganizationRepository {
 
   bool existsById(TenantId tenantId, OrganizationId id) {
-    return !findById(tenantId, id).isNull;
+    return !find(tenantId, id).isNull;
   }
 
   Organization findById(TenantId tenantId, OrganizationId id) {
@@ -24,7 +24,7 @@ class MemoryOrganizationRepository : TenantRepository!(Organization, Organizatio
   }
 
   void removeById(TenantId tenantId, OrganizationId id) {
-    auto o = findById(tenantId, id);
+    auto o = find(tenantId, id);
     if (!o.isNull) remove(o);
   }
 

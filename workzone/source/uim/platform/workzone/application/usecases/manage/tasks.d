@@ -50,7 +50,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
   }
 
   WZTask getTask(TenantId tenantId, TaskId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   WZTask[] listTasks(TenantId tenantId) {
@@ -88,7 +88,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult completeTask(TenantId tenantId, TaskId id) {
-    auto t = repo.findById(tenantId, id);
+    auto t = repo.find(tenantId, id);
     if (t.isNull)
       return CommandResult(false, "", "WZTask not found");
 
@@ -100,7 +100,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteTask(TenantId tenantId, TaskId id) {
-    auto t = repo.findById(tenantId, id);
+    auto t = repo.find(tenantId, id);
     if (t.isNull)
       return CommandResult(false, "", "WZTask not found");
 

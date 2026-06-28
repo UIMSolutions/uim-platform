@@ -13,7 +13,7 @@ import uim.platform.ui_flexibility;
 class MemoryFlexChangeRepository : TenantRepository!(FlexChange, FlexChangeId), FlexChangeRepository {
 
   bool existsById(TenantId tenantId, FlexChangeId id) {
-    return !findById(tenantId, id).isNull;
+    return !find(tenantId, id).isNull;
   }
 
   FlexChange findById(TenantId tenantId, FlexChangeId id) {

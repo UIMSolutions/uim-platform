@@ -69,7 +69,7 @@ class DeployApplicationUseCase { // TODO: UIMUseCase {
     }
 
     DeploymentRecord getById(DeploymentRecordId id) {
-        return deploymentRepo.findById(tenantId, id);
+        return deploymentRepo.find(tenantId, id);
     }
 
     DeploymentRecord[] listByApp(HtmlAppId appId) {

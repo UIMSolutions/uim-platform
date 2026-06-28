@@ -19,7 +19,7 @@ class ManageCicdRepositoriesUseCase {
     }
 
     CicdRepository getCicdRepository(TenantId tenantId, CicdRepositoryId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     CicdRepository[] listCicdRepositories(TenantId tenantId) {
@@ -65,7 +65,7 @@ class ManageCicdRepositoriesUseCase {
     }
 
     CommandResult deleteCicdRepository(TenantId tenantId, CicdRepositoryId id) {
-        auto existing = repo.findById(tenantId, id);
+        auto existing = repo.find(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Repository not found");
         repo.remove(tenantId, id);

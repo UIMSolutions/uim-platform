@@ -19,7 +19,7 @@ class ManageCredentialsUseCase {
     }
 
     Credential getCredential(TenantId tenantId, CredentialId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     Credential[] listCredentials(TenantId tenantId) {
@@ -68,7 +68,7 @@ class ManageCredentialsUseCase {
     }
 
     CommandResult deleteCredential(TenantId tenantId, CredentialId id) {
-        auto existing = repo.findById(tenantId, id);
+        auto existing = repo.find(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Credential not found");
         repo.remove(tenantId, id);

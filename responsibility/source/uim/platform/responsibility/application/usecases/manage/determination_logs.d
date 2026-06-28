@@ -17,7 +17,7 @@ class ManageDeterminationLogsUseCase {
     this(DeterminationLogRepository repo) { this.repo = repo; }
 
     DeterminationLog getLog(TenantId tenantId, DeterminationLogId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     DeterminationLog[] listLogs(TenantId tenantId) {
@@ -33,7 +33,7 @@ class ManageDeterminationLogsUseCase {
     }
 
     CommandResult deleteLog(TenantId tenantId, DeterminationLogId id) {
-        auto e = repo.findById(tenantId, id);
+        auto e = repo.find(tenantId, id);
         if (e.isNull)
             return CommandResult(false, "", "Log entry not found");
         repo.remove(e);

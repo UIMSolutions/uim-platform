@@ -45,7 +45,7 @@ class ManageContentCacheUseCase { // TODO: UIMUseCase {
     }
 
     ContentCache getContent(ContentCacheId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     ContentCache getByFileId(AppFileId fileId) {
@@ -53,7 +53,7 @@ class ManageContentCacheUseCase { // TODO: UIMUseCase {
     }
 
     void invalidate(ContentCacheId id) {
-        auto entry = repo.findById(tenantId, id);
+        auto entry = repo.find(tenantId, id);
         if (entry.id.length > 0) {
             entry.status = CacheStatus.invalidated;
             repo.update(entry);

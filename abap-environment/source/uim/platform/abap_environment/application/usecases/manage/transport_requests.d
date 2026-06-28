@@ -98,7 +98,7 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult releaseTransportRequest(TenantId tenantId, TransportRequestId id) {
-    auto tr = repo.findById(tenantId, id);
+    auto tr = repo.find(tenantId, id);
     if (tr.isNull)
       return CommandResult(false, "", "Transport request not found");
 
@@ -122,7 +122,7 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
   }
 
   TransportRequest getTransportRequest(TenantId tenantId, TransportRequestId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   TransportRequest[] listTransportRequests(TenantId tenantId, SystemInstanceId systemId) {
@@ -134,7 +134,7 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteTransportRequest(TenantId tenantId, TransportRequestId id) {
-    auto request = repo.findById(tenantId, id);
+    auto request = repo.find(tenantId, id);
     if (request.isNull)
       return CommandResult(false, "", "Transport request not found");
 

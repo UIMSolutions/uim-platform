@@ -55,7 +55,7 @@ class ManageTilesUseCase { // TODO: UIMUseCase {
   }
 
   Tile getTile(TileId id) {
-    return tileRepo.findById(tenantId, id);
+    return tileRepo.find(tenantId, id);
   }
 
   Tile[] listTiles(TenantId tenantId, size_t offset = 0, size_t limit = 100) {

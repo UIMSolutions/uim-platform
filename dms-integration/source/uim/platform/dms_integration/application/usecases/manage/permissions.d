@@ -19,7 +19,7 @@ class ManagePermissionsUseCase {
     }
 
     Permission getPermission(TenantId tenantId, PermissionId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     Permission[] listPermissions(TenantId tenantId) {
@@ -69,7 +69,7 @@ class ManagePermissionsUseCase {
     }
 
     CommandResult revokePermission(TenantId tenantId, PermissionId id) {
-        auto existing = repo.findById(tenantId, id);
+        auto existing = repo.find(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Permission not found");
         if (existing.isInherited)
@@ -79,7 +79,7 @@ class ManagePermissionsUseCase {
     }
 
     CommandResult deletePermission(TenantId tenantId, PermissionId id) {
-        auto existing = repo.findById(tenantId, id);
+        auto existing = repo.find(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Permission not found");
         repo.remove(existing);

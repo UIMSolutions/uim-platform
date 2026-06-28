@@ -17,7 +17,7 @@ class ManageDatabaseUsersUseCase {
     this(DatabaseUserRepository repo) { this.repo = repo; }
 
     DatabaseUser getDatabaseUser(TenantId tenantId, DatabaseUserId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     DatabaseUser[] listDatabaseUsers(TenantId tenantId) {
@@ -58,7 +58,7 @@ class ManageDatabaseUsersUseCase {
     }
 
     CommandResult deleteDatabaseUser(TenantId tenantId, DatabaseUserId id) {
-        auto existing = repo.findById(tenantId, id);
+        auto existing = repo.find(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Database user not found");
         repo.removeById(tenantId, id);

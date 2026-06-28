@@ -19,7 +19,7 @@ class ManagePrintDocumentsUseCase {
     }
 
     PrintDocument getPrintDocument(TenantId tenantId, PrintDocumentId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     PrintDocument[] listPrintDocuments(TenantId tenantId) {
@@ -50,7 +50,7 @@ class ManagePrintDocumentsUseCase {
     }
 
     CommandResult deletePrintDocument(TenantId tenantId, PrintDocumentId id) {
-        auto entity = repo.findById(tenantId, id);
+        auto entity = repo.find(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Document not found");
         repo.remove(entity);

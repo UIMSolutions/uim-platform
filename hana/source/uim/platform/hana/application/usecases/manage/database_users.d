@@ -43,7 +43,7 @@ class ManageDatabaseUsersUseCase { // TODO: UIMUseCase {
   }
 
   DatabaseUser getDatabaseUser(TenantId tenantId, DatabaseUserId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   DatabaseUser[] listDatabaseUsers(TenantId tenantId) {
@@ -67,7 +67,7 @@ class ManageDatabaseUsersUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteDatabaseUser(TenantId tenantId, DatabaseUserId id) {
-    auto user = repo.findById(tenantId, id);
+    auto user = repo.find(tenantId, id);
     if (user.isNull)
       return CommandResult(false, "", "Database user not found");
 

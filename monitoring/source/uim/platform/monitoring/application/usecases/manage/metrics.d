@@ -69,7 +69,7 @@ class ManageMetricsUseCase { // TODO: UIMUseCase {
   }
 
   MetricDefinition getDefinition(TenantId tenantId, MetricDefinitionId id) {
-    return definitions.findById(tenantId, id);
+    return definitions.find(tenantId, id);
   }
 
   MetricDefinition[] listDefinitions(TenantId tenantId) {
@@ -77,7 +77,7 @@ class ManageMetricsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteMetricDefinition(TenantId tenantId, MetricDefinitionId id) {
-    auto definition = definitions.findById(tenantId, id);
+    auto definition = definitions.find(tenantId, id);
     if (definition.isNull)
       return CommandResult(false, "", "Metric definition not found");
 

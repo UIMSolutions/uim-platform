@@ -25,7 +25,7 @@ class DailyUsageReportUseCases {
   }
 
   DailyUsageReportResponse getReport(TenantId tenantId, DailyUsageReportId id) {
-    auto r = repo.findById(tenantId, id);
+    auto r = repo.find(tenantId, id);
     return DailyUsageReportResponse.fromEntity(r);
   }
 
@@ -44,7 +44,7 @@ class DailyUsageReportUseCases {
   }
 
   DailyUsageReportResponse markReady(TenantId tenantId, DailyUsageReportId id) {
-    auto r = repo.findById(tenantId, id);
+    auto r = repo.find(tenantId, id);
     if (r.isNull) return DailyUsageReportResponse.init;
     r.status = ReportStatus.ready;
     repo.save(r);
@@ -52,7 +52,7 @@ class DailyUsageReportUseCases {
   }
 
   CommandResult deleteReport(TenantId tenantId, DailyUsageReportId id) {
-    auto r = repo.findById(tenantId, id);
+    auto r = repo.find(tenantId, id);
     if (r.isNull) return CommandResult(false, "", "Daily usage report not found");
     repo.remove(r);
     return CommandResult(true, r.id.value, "");

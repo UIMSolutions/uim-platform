@@ -42,7 +42,7 @@ class ManageForumTopicsUseCase { // TODO: UIMUseCase {
   }
 
   ForumTopic getForumTopic(TenantId tenantId, ForumTopicId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   ForumTopic[] listForumTopics(TenantId tenantId, WorkspaceId workspaceId) {
@@ -68,7 +68,7 @@ class ManageForumTopicsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteForumTopic(TenantId tenantId, ForumTopicId id) {
-    auto t = repo.findById(tenantId, id);
+    auto t = repo.find(tenantId, id);
     if (t.isNull)
       return CommandResult(false, "", "Forum topic not found");
 

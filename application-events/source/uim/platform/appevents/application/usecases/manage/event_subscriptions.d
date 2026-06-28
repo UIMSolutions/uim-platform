@@ -20,7 +20,7 @@ class ManageEventSubscriptionsUseCase {
     this(EventSubscriptionRepository repo) { this.repo = repo; }
 
     EventSubscription getEventSubscription(TenantId tenantId, EventSubscriptionId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     EventSubscription[] listEventSubscriptions(TenantId tenantId) {
@@ -68,7 +68,7 @@ class ManageEventSubscriptionsUseCase {
     }
 
     CommandResult deleteEventSubscription(TenantId tenantId, EventSubscriptionId id) {
-        auto sub = repo.findById(tenantId, id);
+        auto sub = repo.find(tenantId, id);
         if (sub.isNull) return CommandResult(false, "", "Subscription not found");
 
         repo.remove(sub);

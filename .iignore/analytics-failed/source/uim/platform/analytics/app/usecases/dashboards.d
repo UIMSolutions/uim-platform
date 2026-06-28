@@ -27,7 +27,7 @@ class DashboardUseCases {
   }
 
   DashboardResponse getDashboard(TenantId tenantId, DashboardId id) {
-    auto d = repo.findById(tenantId, id);
+    auto d = repo.find(tenantId, id);
     return DashboardResponse.fromEntity(d);
   }
 

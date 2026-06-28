@@ -101,7 +101,7 @@ class MongoEventChannelRepository : EventChannelRepository {
     EventChannel[] findAllById(TenantId tenantId, EventChannelId[] ids) {
         EventChannel[] result;
         foreach (id; ids) {
-            auto e = findById(tenantId, id);
+            auto e = find(tenantId, id);
             if (!e.isNull) result ~= e;
         }
         return result;

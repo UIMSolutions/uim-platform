@@ -48,7 +48,7 @@ class ManagePushNotificationsUseCase { // TODO: UIMUseCase {
     }
 
     PushNotification getNotification(TenantId tenantId, PushNotificationId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     PushNotification[] listNotifications(TenantId tenantId, MobileAppId appId) {
@@ -60,7 +60,7 @@ class ManagePushNotificationsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteNotification(TenantId tenantId, PushNotificationId id) {
-        auto notif = repo.findById(tenantId, id);
+        auto notif = repo.find(tenantId, id);
         if (notif.isNull)
             return CommandResult(false, "", "Notification not found");
 

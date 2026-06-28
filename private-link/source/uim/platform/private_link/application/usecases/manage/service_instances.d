@@ -62,7 +62,7 @@ class ManageServiceInstancesUseCase {
   }
 
   CommandResult deleteInstance(TenantId tenantId, ServiceInstanceId id) {
-    auto inst = instances.findById(tenantId, id);
+    auto inst = instances.find(tenantId, id);
     if (inst.id.value.length == 0)
       return CommandResult(false, "", "Service instance not found");
 
@@ -72,7 +72,7 @@ class ManageServiceInstancesUseCase {
   }
 
   ServiceInstance getInstance(TenantId tenantId, ServiceInstanceId id) {
-    return instances.findById(tenantId, id);
+    return instances.find(tenantId, id);
   }
 
   ServiceInstance getByName(TenantId tenantId, string name) {

@@ -47,7 +47,7 @@ class SearchLogsUseCase { // TODO: UIMUseCase {
   }
 
   LogEntry getLog(TenantId tenantId, LogEntryId id) {
-    return logRepo.findById(tenantId, id);
+    return logRepo.find(tenantId, id);
   }
 
   size_t count(TenantId tenantId) {

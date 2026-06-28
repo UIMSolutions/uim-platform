@@ -47,7 +47,7 @@ class ManageSchemasUseCase { // TODO: UIMUseCase {
 
   /// Get schema by ID.
   Schema getSchema(SchemaId id) {
-    return schemaRepo.findById(tenantId, id);
+    return schemaRepo.find(tenantId, id);
   }
 
   /// List schemas for a tenant.
@@ -80,7 +80,7 @@ class ManageSchemasUseCase { // TODO: UIMUseCase {
 
   /// Delete a schema.
   CommandResult deleteSchema(SchemaId id) {
-    auto schema = schemaRepo.findById(tenantId, id);
+    auto schema = schemaRepo.find(tenantId, id);
     if (schema.isNull)
       return CommandResult(false, "", "Schema not found");
 

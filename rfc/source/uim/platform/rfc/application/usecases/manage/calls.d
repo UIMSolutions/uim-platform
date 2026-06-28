@@ -17,7 +17,7 @@ class ManageCallsUseCase {
     this(RfcCallRepository repo) { _repo = repo; }
 
     RfcCall getCall(TenantId tenantId, RfcCallId id) {
-        return _repo.findById(tenantId, id);
+        return _repo.find(tenantId, id);
     }
 
     RfcCall[] listCalls(TenantId tenantId) {
@@ -37,7 +37,7 @@ class ManageCallsUseCase {
     }
 
     CommandResult deleteCall(TenantId tenantId, RfcCallId id) {
-        auto call = _repo.findById(tenantId, id);
+        auto call = _repo.find(tenantId, id);
         if (call.isNull())
             return CommandResult(false, id, "RFC call not found: " ~ id);
         if (!_repo.remove(tenantId, id))

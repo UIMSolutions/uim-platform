@@ -46,7 +46,7 @@ class ManageAppFilesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult update(AppFileId id, UpdateAppFileRequest r) {
-        auto file = repo.findById(tenantId, id);
+        auto file = repo.find(tenantId, id);
         if (file.isNull)
             return CommandResult(false, "", "File not found");
 
@@ -65,7 +65,7 @@ class ManageAppFilesUseCase { // TODO: UIMUseCase {
     }
 
     AppFile getById(AppFileId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     AppFile getByPath(AppVersionId versionId, string filePath) {
@@ -77,7 +77,7 @@ class ManageAppFilesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult delete(AppFileId id) {
-        auto file = repo.findById(tenantId, id);
+        auto file = repo.find(tenantId, id);
         if (file.isNull)
             return CommandResult(false, "", "File not found");
 

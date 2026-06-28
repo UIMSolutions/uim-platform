@@ -57,7 +57,7 @@ class ProcessInferenceUseCase { // TODO: UIMUseCase {
   }
 
   InferenceResult getInferenceResult(TenantId tenantId, InferenceResultId id) {
-    return resultRepo.findById(tenantId, id);
+    return resultRepo.find(tenantId, id);
   }
 
   InferenceResult getInferenceResult(TenantId tenantId, InferenceRequestId requestId) {

@@ -19,7 +19,7 @@ class ManagePrintClientsUseCase {
     }
 
     PrintClient getPrintClient(TenantId tenantId, PrintClientId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     PrintClient[] listPrintClients(TenantId tenantId) {
@@ -70,7 +70,7 @@ class ManagePrintClientsUseCase {
     }
 
     CommandResult deletePrintClient(TenantId tenantId, PrintClientId id) {
-        auto entity = repo.findById(tenantId, id);
+        auto entity = repo.find(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Print client not found");
         repo.remove(entity);

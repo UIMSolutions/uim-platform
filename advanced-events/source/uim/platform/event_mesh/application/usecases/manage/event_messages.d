@@ -19,7 +19,7 @@ class ManageEventMessagesUseCase { // TODO: UIMUseCase {
     }
 
     EventMessage getMessage(TenantId tenantId, EventMessageId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     EventMessage[] listMessages(TenantId tenantId) {

@@ -24,7 +24,7 @@ class MemoryPromptCollectionRepository : TenantRepository!(PromptCollection, Pro
   //   return PromptCollection.init;
   // }
   // void removeById(TenantId tenantId, PromptCollectionId id) {
-  //   remove(findById(tenantId, id));
+  //   remove(find(tenantId, id));
   // }
 
   size_t countByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {

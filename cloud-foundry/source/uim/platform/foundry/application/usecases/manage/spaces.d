@@ -89,7 +89,7 @@ class ManageSpacesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteSpace(TenantId tenantId, SpaceId id) {
-    auto space = repo.findById(tenantId, id);
+    auto space = repo.find(tenantId, id);
     if (space.isNull)
       return CommandResult(false, "", "Space not found");
 

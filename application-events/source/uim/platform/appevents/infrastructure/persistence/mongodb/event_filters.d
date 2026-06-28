@@ -94,7 +94,7 @@ class MongoEventFilterRepository : EventFilterRepository {
     EventFilter[] findAllById(TenantId tenantId, EventFilterId[] ids) {
         EventFilter[] result;
         foreach (id; ids) {
-            auto e = findById(tenantId, id);
+            auto e = find(tenantId, id);
             if (!e.isNull) result ~= e;
         }
         return result;

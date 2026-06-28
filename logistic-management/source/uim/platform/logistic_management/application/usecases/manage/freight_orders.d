@@ -57,7 +57,7 @@ public:
   }
 
   CommandResult updateFreightOrder(TenantId tenantId, FreightOrderId id, UpdateFreightOrderRequest req) {
-    auto fo = _repo.findById(tenantId, id);
+    auto fo = _repo.find(tenantId, id);
     if (fo.isNull)
       return CommandResult(false, "Freight order not found");
     if (fo.status != FreightOrderStatus.draft && fo.status != FreightOrderStatus.planned)
@@ -101,7 +101,7 @@ public:
   }
 
   CommandResult transitionFreightOrder(TenantId tenantId, FreightOrderId id, TransitionFreightOrderRequest req) {
-    auto fo = _repo.findById(tenantId, id);
+    auto fo = _repo.find(tenantId, id);
     if (fo.isNull)
       return CommandResult(false, "Freight order not found");
 
@@ -142,7 +142,7 @@ public:
   }
 
   CommandResult deleteFreightOrder(TenantId tenantId, FreightOrderId id) {
-    auto fo = _repo.findById(tenantId, id);
+    auto fo = _repo.find(tenantId, id);
     if (fo.isNull)
       return CommandResult(false, "Freight order not found");
     if (fo.status == FreightOrderStatus.inTransit)
@@ -152,7 +152,7 @@ public:
   }
 
   FreightOrder getFreightOrder(TenantId tenantId, FreightOrderId id) {
-    return _repo.findById(tenantId, id);
+    return _repo.find(tenantId, id);
   }
 
   FreightOrder[] listFreightOrders(TenantId tenantId) {

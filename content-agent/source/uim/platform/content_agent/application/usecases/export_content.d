@@ -72,7 +72,7 @@ class ExportContentUseCase { // TODO: UIMUseCase {
   }
 
   ExportJob getExportJob(TenantId tenantId, ExportJobId id) {
-    return exportRepo.findById(tenantId, id);
+    return exportRepo.find(tenantId, id);
   }
 
   ExportJob[] listExportJobs(TenantId tenantId) {

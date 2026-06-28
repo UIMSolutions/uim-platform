@@ -55,7 +55,7 @@ class ManageSchedulesUseCase { // TODO: UIMUseCase {
     }
 
     Schedule getSchedule(TenantId tenantId, ScheduleId id) {
-        return schedules.findById(tenantId, id);
+        return schedules.find(tenantId, id);
     }
 
     Schedule[] listSchedules(TenantId tenantId, JobId jobId) {
@@ -101,7 +101,7 @@ class ManageSchedulesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteSchedule(TenantId tenantId, ScheduleId id) {
-        auto existing = schedules.findById(tenantId, id);
+        auto existing = schedules.find(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Schedule not found");
 

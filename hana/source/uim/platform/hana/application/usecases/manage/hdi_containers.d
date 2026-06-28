@@ -43,7 +43,7 @@ class ManageHDIContainersUseCase { // TODO: UIMUseCase {
   }
 
   HDIContainer getHDIContainer(HDIContainerId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   HDIContainer[] listHDIContainers(TenantId tenantId) {
@@ -67,7 +67,7 @@ class ManageHDIContainersUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteHDIContainer(HDIContainerId id) {
-    auto entity = repo.findById(tenantId, id);
+    auto entity = repo.find(tenantId, id);
     if (entity.isNull)
       return CommandResult(false, "", "HDI Container not found");
 

@@ -40,7 +40,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
   }
 
   WZGroup getGroup(TenantId tenantId, GroupId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   WZGroup[] listGroups(TenantId tenantId) {
@@ -64,7 +64,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteGroup(TenantId tenantId, GroupId id) {
-    auto g = repo.findById(tenantId, id);
+    auto g = repo.find(tenantId, id);
     if (g.isNull)
       return CommandResult(false, "", "WZGroup not found");
 

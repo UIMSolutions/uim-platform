@@ -67,7 +67,7 @@ class ManageEncountersUseCase {
   }
 
   Encounter getEncounter(TenantId tenantId, EncounterId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   Encounter[] listEncounters(TenantId tenantId) {
@@ -79,7 +79,7 @@ class ManageEncountersUseCase {
   }
 
   CommandResult deleteEncounter(TenantId tenantId, EncounterId id) {
-    auto entity = repo.findById(tenantId, id);
+    auto entity = repo.find(tenantId, id);
     if (entity.isNull)
       return CommandResult(false, "", "Encounter not found");
     repo.remove(entity);

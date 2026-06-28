@@ -47,7 +47,7 @@ class ManageScenariosUseCase { // TODO: UIMUseCase {
   }
 
   IntegrationScenario getScenario(TenantId tenantId, ScenarioId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   IntegrationScenario[] listScenarios(TenantId tenantId) {
@@ -94,7 +94,7 @@ class ManageScenariosUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteScenario(TenantId tenantId, ScenarioId id) {
-    auto existing = repo.findById(tenantId, id);
+    auto existing = repo.find(tenantId, id);
     if (existing.isNull)
       return CommandResult(false, "", "Scenario not found");
 

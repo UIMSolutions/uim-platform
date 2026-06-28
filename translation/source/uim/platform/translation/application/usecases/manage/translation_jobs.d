@@ -46,7 +46,7 @@ class ManageTranslationJobsUseCase {
 
     /// Simulate processing a pending job (in production, a worker would do this).
     CommandResult processJob(TenantId tenantId, TranslationJobId id) {
-        auto job = repo.findById(tenantId, id);
+        auto job = repo.find(tenantId, id);
         if (job.isNull)
             return CommandResult(false, "", "Translation job not found");
         if (job.status != JobStatus.pending)
@@ -70,11 +70,11 @@ class ManageTranslationJobsUseCase {
     }
 
     TranslationJob getJob(TenantId tenantId, TranslationJobId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     CommandResult cancelJob(TenantId tenantId, TranslationJobId id) {
-        auto job = repo.findById(tenantId, id);
+        auto job = repo.find(tenantId, id);
         if (job.isNull)
             return CommandResult(false, "", "Translation job not found");
         if (job.status == JobStatus.completed || job.status == JobStatus.failed)

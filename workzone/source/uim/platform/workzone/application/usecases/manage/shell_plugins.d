@@ -45,7 +45,7 @@ class ManageShellPluginsUseCase { // TODO: UIMUseCase {
   }
 
   ShellPlugin getPlugin(TenantId tenantId, ShellPluginId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   ShellPlugin[] listPlugins(TenantId tenantId) {
@@ -71,7 +71,7 @@ class ManageShellPluginsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deletePlugin(TenantId tenantId, ShellPluginId id) {
-    auto p = repo.findById(tenantId, id);
+    auto p = repo.find(tenantId, id);
     if (p.isNull)
       return CommandResult(false, "", "Plugin not found");
 

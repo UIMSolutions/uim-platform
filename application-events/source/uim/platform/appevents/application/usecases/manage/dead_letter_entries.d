@@ -21,7 +21,7 @@ class ManageDeadLetterEntriesUseCase {
     this(DeadLetterEntryRepository repo) { this.repo = repo; }
 
     DeadLetterEntry getDeadLetterEntry(TenantId tenantId, DeadLetterEntryId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     DeadLetterEntry[] listDeadLetterEntries(TenantId tenantId) {
@@ -47,7 +47,7 @@ class ManageDeadLetterEntriesUseCase {
     }
 
     CommandResult deleteDeadLetterEntry(TenantId tenantId, DeadLetterEntryId id) {
-        auto entry = repo.findById(tenantId, id);
+        auto entry = repo.find(tenantId, id);
         if (entry.isNull) return CommandResult(false, "", "Dead-letter entry not found");
 
         repo.remove(entry);

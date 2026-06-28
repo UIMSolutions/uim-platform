@@ -19,7 +19,7 @@ class ManageChangeRequestsUseCase {
     }
 
     ChangeRequest getChangeRequest(TenantId tenantId, ChangeRequestId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     ChangeRequest[] listChangeRequests(TenantId tenantId) {
@@ -63,7 +63,7 @@ class ManageChangeRequestsUseCase {
     }
 
     CommandResult submitChangeRequest(TenantId tenantId, ChangeRequestId id, UserId submittedBy) {
-        auto cr = repo.findById(tenantId, id);
+        auto cr = repo.find(tenantId, id);
         if (cr.isNull)
             return CommandResult(false, "", "Change request not found");
         if (cr.status != ChangeRequestStatus.draft && cr.status != ChangeRequestStatus.revisionRequested)
@@ -76,7 +76,7 @@ class ManageChangeRequestsUseCase {
     }
 
     CommandResult approveChangeRequest(TenantId tenantId, ChangeRequestId id, UserId approvedBy, string reviewerComments) {
-        auto cr = repo.findById(tenantId, id);
+        auto cr = repo.find(tenantId, id);
         if (cr.isNull)
             return CommandResult(false, "", "Change request not found");
         if (cr.status != ChangeRequestStatus.submitted && cr.status != ChangeRequestStatus.inReview)
@@ -90,7 +90,7 @@ class ManageChangeRequestsUseCase {
     }
 
     CommandResult rejectChangeRequest(TenantId tenantId, ChangeRequestId id, UserId rejectedBy, string reviewerComments) {
-        auto cr = repo.findById(tenantId, id);
+        auto cr = repo.find(tenantId, id);
         if (cr.isNull)
             return CommandResult(false, "", "Change request not found");
         if (cr.status != ChangeRequestStatus.submitted && cr.status != ChangeRequestStatus.inReview)
@@ -104,7 +104,7 @@ class ManageChangeRequestsUseCase {
     }
 
     CommandResult requestRevision(TenantId tenantId, ChangeRequestId id, UserId reviewedBy, string reviewerComments) {
-        auto cr = repo.findById(tenantId, id);
+        auto cr = repo.find(tenantId, id);
         if (cr.isNull)
             return CommandResult(false, "", "Change request not found");
 
@@ -116,7 +116,7 @@ class ManageChangeRequestsUseCase {
     }
 
     CommandResult withdrawChangeRequest(TenantId tenantId, ChangeRequestId id) {
-        auto cr = repo.findById(tenantId, id);
+        auto cr = repo.find(tenantId, id);
         if (cr.isNull)
             return CommandResult(false, "", "Change request not found");
 
@@ -126,7 +126,7 @@ class ManageChangeRequestsUseCase {
     }
 
     CommandResult deleteChangeRequest(TenantId tenantId, ChangeRequestId id) {
-        auto cr = repo.findById(tenantId, id);
+        auto cr = repo.find(tenantId, id);
         if (cr.isNull)
             return CommandResult(false, "", "Change request not found");
 

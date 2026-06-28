@@ -79,7 +79,7 @@ class FileTopicRepository : MemoryTopicRepository {
 
     override Topic findById(TenantId tenantId, TopicId id) {
         ensureLoaded(tenantId);
-        return super.findById(tenantId, id);
+        return super.find(tenantId, id);
     }
 
     override void save(Topic item) {

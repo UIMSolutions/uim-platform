@@ -17,7 +17,7 @@ class ManageDatabaseExtensionsUseCase {
     this(DatabaseExtensionRepository repo) { this.repo = repo; }
 
     DatabaseExtension getDatabaseExtension(TenantId tenantId, DatabaseExtensionId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     DatabaseExtension[] listDatabaseExtensions(TenantId tenantId) {
@@ -49,7 +49,7 @@ class ManageDatabaseExtensionsUseCase {
     }
 
     CommandResult deleteDatabaseExtension(TenantId tenantId, DatabaseExtensionId id) {
-        auto existing = repo.findById(tenantId, id);
+        auto existing = repo.find(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Extension not found");
         repo.removeById(tenantId, id);

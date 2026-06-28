@@ -17,7 +17,7 @@ class ManageAccessControlsUseCase {
     this(AccessControlRepository repo) { this.repo = repo; }
 
     AccessControl getAccessControl(TenantId tenantId, AccessControlId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     AccessControl[] listAccessControls(TenantId tenantId) {
@@ -64,7 +64,7 @@ class ManageAccessControlsUseCase {
     }
 
     CommandResult deleteAccessControl(TenantId tenantId, AccessControlId id) {
-        auto existing = repo.findById(tenantId, id);
+        auto existing = repo.find(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Access control not found");
         repo.remove(tenantId, id);

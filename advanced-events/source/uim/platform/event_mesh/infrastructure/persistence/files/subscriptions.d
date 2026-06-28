@@ -82,7 +82,7 @@ class FileSubscriptionRepository : MemorySubscriptionRepository {
 
     override EventSubscription findById(TenantId tenantId, EventSubscriptionId id) {
         ensureLoaded(tenantId);
-        return super.findById(tenantId, id);
+        return super.find(tenantId, id);
     }
 
     override void save(EventSubscription item) {

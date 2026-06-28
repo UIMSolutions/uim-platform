@@ -66,7 +66,7 @@ class ManageRoutesUseCase { // TODO: UIMUseCase {
   }
 
   Route getRoute(TenantId tenantId, RouteId id) {
-    return routes.findById(tenantId, id);
+    return routes.find(tenantId, id);
   }
 
   Route[] listRoutes(TenantId tenantId) {
@@ -78,7 +78,7 @@ class ManageRoutesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteRoute(TenantId tenantId, RouteId id) {
-    auto route = routes.findById(tenantId, id);
+    auto route = routes.find(tenantId, id);
     if (route.isNull)
       return CommandResult(false, "", "Route not found");
 

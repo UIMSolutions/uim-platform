@@ -41,7 +41,7 @@ class ManageBusinessContextsUseCase { // TODO: UIMUseCase {
   }
 
   BusinessContext getContext(TenantId tenantId, BusinessContextId id) {
-    return businessContexts.findById(tenantId, id);
+    return businessContexts.find(tenantId, id);
   }
 
   BusinessContext[] listContexts(TenantId tenantId) {
@@ -86,7 +86,7 @@ class ManageBusinessContextsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteContext(TenantId tenantId, BusinessContextId id) {
-    auto ctx = businessContexts.findById(tenantId, id);
+    auto ctx = businessContexts.find(tenantId, id);
     if (ctx.isNull)
       return CommandResult(false, "", "Business context not found");
 

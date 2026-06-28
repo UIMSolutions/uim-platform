@@ -18,7 +18,7 @@ class ManageLabelsUseCase { // TODO: UIMUseCase {
     }
 
     Label getLabel(TenantId tenantId, LabelId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     Label[] listLabels(TenantId tenantId, string resourceType, string resourceId) {
@@ -57,7 +57,7 @@ class ManageLabelsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteLabel(TenantId tenantId, LabelId id) {
-        auto label = repo.findById(tenantId, id);
+        auto label = repo.find(tenantId, id);
         if (label.isNull)
             return CommandResult(false, "", "Label not found");
 

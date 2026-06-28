@@ -93,7 +93,7 @@ class MongoDeadLetterEntryRepository : DeadLetterEntryRepository {
     DeadLetterEntry[] findAllById(TenantId tenantId, DeadLetterEntryId[] ids) {
         DeadLetterEntry[] result;
         foreach (id; ids) {
-            auto e = findById(tenantId, id);
+            auto e = find(tenantId, id);
             if (!e.isNull) result ~= e;
         }
         return result;

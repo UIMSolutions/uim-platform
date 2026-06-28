@@ -39,7 +39,7 @@ class ManageDestinationsUseCase {
     }
 
     Destination getDestination(TenantId tenantId, DestinationId id) {
-        return _repo.findById(tenantId, id);
+        return _repo.find(tenantId, id);
     }
 
     Destination[] listDestinations(TenantId tenantId) {
@@ -66,7 +66,7 @@ class ManageDestinationsUseCase {
     }
 
     CommandResult deleteDestination(TenantId tenantId, DestinationId id) {
-        auto dest = _repo.findById(tenantId, id);
+        auto dest = _repo.find(tenantId, id);
         if (dest.isNull())
             return CommandResult(false, id, "Destination not found: " ~ id);
         if (!_repo.remove(tenantId, id))

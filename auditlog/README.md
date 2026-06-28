@@ -427,7 +427,7 @@ package "Domain Layer  «core business logic»" as DOM <<Rectangle>> {
   package "Ports  «interfaces»" as PORTS {
     @safe: interface  AuditLogRepository << (P,#42A5F5) >> {
       + find(tenantId) : AuditLogEntry[]
-      + findById(tenantId, id) : AuditLogEntry*
+      + find(tenantId, id) : AuditLogEntry*
       + search(tenantId, categories, from, to, limit, offset) : AuditLogEntry[]
       + count(tenantId) : long
       + save(entry) : void
@@ -445,7 +445,7 @@ package "Domain Layer  «core business logic»" as DOM <<Rectangle>> {
 
     @safe: interface  RetentionPolicyRepository << (P,#42A5F5) >> {
       + find(tenantId) : RetentionPolicy[]
-      + findById(tenantId, id) : RetentionPolicy*
+      + find(tenantId, id) : RetentionPolicy*
       + findDefault(tenantId) : RetentionPolicy*
       + save(policy) : void
       + update(policy) : void
@@ -454,7 +454,7 @@ package "Domain Layer  «core business logic»" as DOM <<Rectangle>> {
 
     @safe: interface  ExportJobRepository << (P,#42A5F5) >> {
       + find(tenantId) : ExportJob[]
-      + findById(tenantId, id) : ExportJob*
+      + find(tenantId, id) : ExportJob*
       + save(job) : void
       + update(job) : void
       + removeById(tenantId, id) : void

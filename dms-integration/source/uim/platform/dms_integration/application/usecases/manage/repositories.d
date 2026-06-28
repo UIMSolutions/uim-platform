@@ -19,7 +19,7 @@ class ManageRepositoriesUseCase {
     }
 
     Repository_ getRepository(TenantId tenantId, RepositoryId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     Repository_[] listRepositories(TenantId tenantId) {
@@ -85,7 +85,7 @@ class ManageRepositoriesUseCase {
     }
 
     CommandResult activateRepository(TenantId tenantId, RepositoryId id) {
-        auto existing = repo.findById(tenantId, id);
+        auto existing = repo.find(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Repository not found");
         existing.status = RepositoryStatus.active;
@@ -94,7 +94,7 @@ class ManageRepositoriesUseCase {
     }
 
     CommandResult deactivateRepository(TenantId tenantId, RepositoryId id) {
-        auto existing = repo.findById(tenantId, id);
+        auto existing = repo.find(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Repository not found");
         existing.status = RepositoryStatus.inactive;
@@ -103,7 +103,7 @@ class ManageRepositoriesUseCase {
     }
 
     CommandResult deleteRepository(TenantId tenantId, RepositoryId id) {
-        auto existing = repo.findById(tenantId, id);
+        auto existing = repo.find(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Repository not found");
         repo.remove(existing);

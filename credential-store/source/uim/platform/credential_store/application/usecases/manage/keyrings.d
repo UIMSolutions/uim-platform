@@ -99,7 +99,7 @@ class ManageKeyringsUseCase { // TODO: UIMUseCase {
   }
 
   Credential getCredential(TenantId tenantId, CredentialId id) {
-    return credRepo.findById(tenantId, id);
+    return credRepo.find(tenantId, id);
   }
 
   Credential[] listCredentials(TenantId tenantId, NamespaceId namespaceId) {
@@ -115,7 +115,7 @@ class ManageKeyringsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult disableCredential(TenantId tenantId, CredentialId id) {
-    auto cred = credRepo.findById(tenantId, id);
+    auto cred = credRepo.find(tenantId, id);
     if (cred.isNull)
       return CommandResult(false, "", "Keyring not found");
 
@@ -126,7 +126,7 @@ class ManageKeyringsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteCredential(TenantId tenantId, CredentialId id) {
-    auto cred = credRepo.findById(tenantId, id);
+    auto cred = credRepo.find(tenantId, id);
     if (cred.isNull)
       return CommandResult(false, "", "Keyring not found");
 

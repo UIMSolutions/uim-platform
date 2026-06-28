@@ -19,7 +19,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
     }
 
     UIMTask getTask(TenantId tenantId, TaskId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     UIMTask[] listTasks(TenantId tenantId) {
@@ -84,7 +84,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult claimTask(TenantId tenantId, TaskId id, UserId userId) {
-        auto task = repo.findById(tenantId, id);
+        auto task = repo.find(tenantId, id);
         if (task.isNull)
             return CommandResult(false, "", "Task not found");
 
@@ -98,7 +98,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult releaseTask(TenantId tenantId, TaskId id) {
-        auto task = repo.findById(tenantId, id);
+        auto task = repo.find(tenantId, id);
         if (task.isNull)
             return CommandResult(false, "", "Task not found");
 
@@ -112,7 +112,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult forwardTask(TenantId tenantId, TaskId id, UserId toUser, string comment) {
-        auto task = repo.findById(tenantId, id);
+        auto task = repo.find(tenantId, id);
         if (task.isNull)
             return CommandResult(false, "", "Task not found");
 
@@ -124,7 +124,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult completeTask(TenantId tenantId, TaskId id) {
-        auto task = repo.findById(tenantId, id);
+        auto task = repo.find(tenantId, id);
         if (task.isNull)
             return CommandResult(false, "", "Task not found");
 
@@ -135,7 +135,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult cancelTask(TenantId tenantId, TaskId id) {
-        auto task = repo.findById(tenantId, id);
+        auto task = repo.find(tenantId, id);
         if (task.isNull)
             return CommandResult(false, "", "Task not found");
 
@@ -146,7 +146,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteTask(TenantId tenantId, TaskId id) {
-        auto task = repo.findById(tenantId, id);
+        auto task = repo.find(tenantId, id);
         if (task.isNull)
             return CommandResult(false, "", "Task not found");
 

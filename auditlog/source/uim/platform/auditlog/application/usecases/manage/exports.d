@@ -61,7 +61,7 @@ class ManageExportsUseCase { // TODO: UIMUseCase {
   }
 
   ExportJob getExport(TenantId tenantId, ExportJobId id) {
-    return jobs.findById(tenantId, id);
+    return jobs.find(tenantId, id);
   }
 
   ExportJob[] listExports(TenantId tenantId) {
@@ -69,7 +69,7 @@ class ManageExportsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteExport(TenantId tenantId, ExportJobId id) {
-    auto job = jobs.findById(tenantId, id);
+    auto job = jobs.find(tenantId, id);
     if (job.isNull)
       return CommandResult(false, "", "Export job not found");
 

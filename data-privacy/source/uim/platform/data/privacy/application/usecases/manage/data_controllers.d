@@ -42,7 +42,7 @@ class ManageDataControllersUseCase { // TODO: UIMUseCase {
   }
 
   DataController getController(TenantId tenantId, DataControllerId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   DataController[] listControllers(TenantId tenantId) {
@@ -79,7 +79,7 @@ class ManageDataControllersUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteController(TenantId tenantId, DataControllerId id) {
-    auto existing = repo.findById(tenantId, id);
+    auto existing = repo.find(tenantId, id);
     if (existing.isNull)
       return CommandResult(false, "", "Data controller not found");
 

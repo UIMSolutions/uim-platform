@@ -13,7 +13,7 @@ import uim.platform.health_fhir;
 class MemoryMedicationRepository : TenantRepository!(Medication, MedicationId), MedicationRepository {
 
   bool existsById(TenantId tenantId, MedicationId id) {
-    return !findById(tenantId, id).isNull;
+    return !find(tenantId, id).isNull;
   }
 
   Medication findById(TenantId tenantId, MedicationId id) {
@@ -24,7 +24,7 @@ class MemoryMedicationRepository : TenantRepository!(Medication, MedicationId), 
   }
 
   void removeById(TenantId tenantId, MedicationId id) {
-    auto m = findById(tenantId, id);
+    auto m = find(tenantId, id);
     if (!m.isNull) remove(m);
   }
 

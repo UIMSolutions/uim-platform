@@ -19,7 +19,7 @@ class ManageBrokerServicesUseCase { // TODO: UIMUseCase {
     }
 
     BrokerService getService(TenantId tenantId, BrokerServiceId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     BrokerService[] listServices(TenantId tenantId) {
@@ -68,7 +68,7 @@ class ManageBrokerServicesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteService(TenantId tenantId, BrokerServiceId id) {
-        auto service = repo.findById(tenantId, id);
+        auto service = repo.find(tenantId, id);
         if (service.isNull)
             return CommandResult(false, "", "Broker service not found");
 

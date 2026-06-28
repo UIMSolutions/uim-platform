@@ -50,7 +50,7 @@ class ManageDomainMappingsUseCase { // TODO: UIMUseCase {
     }
 
     DomainMapping getDomainMapping(TenantId tenantId, DomainMappingId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     DomainMapping[] listDomainMappings(TenantId tenantId) {
@@ -62,7 +62,7 @@ class ManageDomainMappingsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteDomainMapping(TenantId tenantId, DomainMappingId id) {
-        auto entity = repo.findById(tenantId, id);
+        auto entity = repo.find(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Domain mapping not found");
 

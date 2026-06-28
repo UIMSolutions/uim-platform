@@ -45,7 +45,7 @@ class ManageMobileAppsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateMobileApp(MobileAppId id, UpdateMobileAppRequest r) {
-        auto app = repo.findById(tenantId, id);
+        auto app = repo.find(tenantId, id);
         if (app.isNull)
             return CommandResult(false, "", "App not found");
         if (r.description.length > 0) app.description = r.description;
@@ -61,7 +61,7 @@ class ManageMobileAppsUseCase { // TODO: UIMUseCase {
     }
 
     MobileApp getMobileApp(MobileAppId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     MobileApp[] listMobileAppsByTenant(TenantId tenantId) {
@@ -69,7 +69,7 @@ class ManageMobileAppsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteMobileApp(MobileAppId id) {
-        auto app = repo.findById(tenantId, id);
+        auto app = repo.find(tenantId, id);
         if (app.isNull)
             return CommandResult(false, "", "App not found");
 

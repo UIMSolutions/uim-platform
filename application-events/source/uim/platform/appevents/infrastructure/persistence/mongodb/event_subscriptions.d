@@ -103,7 +103,7 @@ class MongoEventSubscriptionRepository : EventSubscriptionRepository {
     EventSubscription[] findAllById(TenantId tenantId, EventSubscriptionId[] ids) {
         EventSubscription[] result;
         foreach (id; ids) {
-            auto e = findById(tenantId, id);
+            auto e = find(tenantId, id);
             if (!e.isNull) result ~= e;
         }
         return result;

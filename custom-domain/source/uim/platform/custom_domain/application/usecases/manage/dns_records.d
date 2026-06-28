@@ -44,7 +44,7 @@ class ManageDnsRecordsUseCase { // TODO: UIMUseCase {
     }
 
     DnsRecord getDnsRecord(TenantId tenantId, DnsRecordId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     DnsRecord[] listDnsRecords(TenantId tenantId) {
@@ -73,7 +73,7 @@ class ManageDnsRecordsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteDnsRecord(TenantId tenantId, DnsRecordId id) {
-        auto record = repo.findById(tenantId, id);
+        auto record = repo.find(tenantId, id);
         if (record.isNull)
             return CommandResult(false, "", "DNS record not found");
 

@@ -19,7 +19,7 @@ class ManageStagesUseCase {
     }
 
     Stage getStage(TenantId tenantId, StageId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     Stage[] listStages(TenantId tenantId) {
@@ -60,7 +60,7 @@ class ManageStagesUseCase {
     }
 
     CommandResult deleteStage(TenantId tenantId, StageId id) {
-        auto existing = repo.findById(tenantId, id);
+        auto existing = repo.find(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Stage not found");
         repo.remove(tenantId, id);

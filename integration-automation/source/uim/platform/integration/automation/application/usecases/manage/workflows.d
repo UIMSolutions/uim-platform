@@ -101,7 +101,7 @@ class ManageWorkflowsUseCase { // TODO: UIMUseCase {
   }
 
   Workflow getWorkflow(TenantId tenantId, WorkflowId id) {
-    return workflowRepo.findById(tenantId, id);
+    return workflowRepo.find(tenantId, id);
   }
 
   Workflow[] listWorkflows(TenantId tenantId) {
@@ -114,7 +114,7 @@ class ManageWorkflowsUseCase { // TODO: UIMUseCase {
 
   /// Start a planned workflow.
   CommandResult startWorkflow(TenantId tenantId, WorkflowId id) {
-    auto wf = workflowRepo.findById(tenantId, id);
+    auto wf = workflowRepo.find(tenantId, id);
     if (wf.isNull)
       return CommandResult(false, "", "Workflow not found");
     if (wf.status != WorkflowStatus.planned)
@@ -131,7 +131,7 @@ class ManageWorkflowsUseCase { // TODO: UIMUseCase {
 
   /// Suspend an in-progress workflow.
   CommandResult suspendWorkflow(TenantId tenantId, WorkflowId id) {
-    auto wf = workflowRepo.findById(tenantId, id);
+    auto wf = workflowRepo.find(tenantId, id);
     if (wf.isNull)
       return CommandResult(false, "", "Workflow not found");
     if (wf.status != WorkflowStatus.inProgress)
@@ -145,7 +145,7 @@ class ManageWorkflowsUseCase { // TODO: UIMUseCase {
 
   /// Resume a suspended workflow.
   CommandResult resumeWorkflow(TenantId tenantId, WorkflowId id) {
-    auto wf = workflowRepo.findById(tenantId, id);
+    auto wf = workflowRepo.find(tenantId, id);
     if (wf.isNull)
       return CommandResult(false, "", "Workflow not found");
     if (wf.status != WorkflowStatus.suspended)
@@ -161,7 +161,7 @@ class ManageWorkflowsUseCase { // TODO: UIMUseCase {
 
   /// Terminate a workflow.
   CommandResult terminateWorkflow(TenantId tenantId, WorkflowId id) {
-    auto wf = workflowRepo.findById(tenantId, id);
+    auto wf = workflowRepo.find(tenantId, id);
     if (wf.isNull)
       return CommandResult(false, "", "Workflow not found");
     if (wf.status == WorkflowStatus.completed || wf.status == WorkflowStatus.terminated)
@@ -175,7 +175,7 @@ class ManageWorkflowsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteWorkflow(TenantId tenantId, WorkflowId id) {
-    auto existing = workflowRepo.findById(tenantId, id);
+    auto existing = workflowRepo.find(tenantId, id);
     if (existing.isNull)
       return CommandResult(false, "", "Workflow not found");
 

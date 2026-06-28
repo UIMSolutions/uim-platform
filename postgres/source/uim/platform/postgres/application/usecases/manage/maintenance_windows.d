@@ -17,7 +17,7 @@ class ManageMaintenanceWindowsUseCase {
     this(MaintenanceWindowRepository repo) { this.repo = repo; }
 
     MaintenanceWindow getMaintenanceWindow(TenantId tenantId, MaintenanceWindowId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     MaintenanceWindow getByInstance(TenantId tenantId, ServiceInstanceId instanceId) {
@@ -60,7 +60,7 @@ class ManageMaintenanceWindowsUseCase {
     }
 
     CommandResult deleteMaintenanceWindow(TenantId tenantId, MaintenanceWindowId id) {
-        auto existing = repo.findById(tenantId, id);
+        auto existing = repo.find(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Maintenance window not found");
         repo.removeById(tenantId, id);

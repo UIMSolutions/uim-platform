@@ -48,7 +48,7 @@ class ManageFlexPersonalizationsUseCase {
   }
 
   FlexPersonalization getPersonalization(TenantId tenantId, FlexPersonalizationId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   FlexPersonalization[] listPersonalizations(TenantId tenantId) {
@@ -60,7 +60,7 @@ class ManageFlexPersonalizationsUseCase {
   }
 
   CommandResult deletePersonalization(TenantId tenantId, FlexPersonalizationId id) {
-    auto existing = repo.findById(tenantId, id);
+    auto existing = repo.find(tenantId, id);
     if (existing.isNull)
     return CommandResult(false, null, "FlexPersonalization not found");
     repo.removeById(tenantId, id);

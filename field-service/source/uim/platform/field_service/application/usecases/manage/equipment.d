@@ -19,7 +19,7 @@ class ManageEquipmentUseCase { // TODO: UIMUseCase {
     }
 
     Equipment getEquipment(TenantId tenantId, EquipmentId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     Equipment[] listEquipments(TenantId tenantId) {
@@ -73,7 +73,7 @@ class ManageEquipmentUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteEquipment(TenantId tenantId, EquipmentId id) {
-        auto equipment = repo.findById(tenantId, id);
+        auto equipment = repo.find(tenantId, id);
         if (equipment.isNull)
             return CommandResult(false, "", "Equipment not found");
 

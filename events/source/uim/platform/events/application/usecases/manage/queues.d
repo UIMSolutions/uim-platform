@@ -16,7 +16,7 @@ class ManageQueuesUseCase {
 
     this(QueueRepository repo) { this.repo = repo; }
 
-    Queue getQueue(TenantId tenantId, QueueId id) { return repo.findById(tenantId, id); }
+    Queue getQueue(TenantId tenantId, QueueId id) { return repo.find(tenantId, id); }
     Queue[] listQueues(TenantId tenantId) { return repo.find(tenantId); }
     Queue[] listByService(TenantId tenantId, MessagingServiceId serviceId) { return repo.findByService(tenantId, serviceId); }
 
@@ -60,7 +60,7 @@ class ManageQueuesUseCase {
     }
 
     CommandResult deleteQueue(TenantId tenantId, QueueId id) {
-        auto q = repo.findById(tenantId, id);
+        auto q = repo.find(tenantId, id);
         if (q.isNull) return CommandResult(false, "", "Queue not found");
         repo.remove(q);
         return CommandResult(true, q.id.value, "");

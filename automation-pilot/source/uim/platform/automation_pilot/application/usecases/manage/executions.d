@@ -59,7 +59,7 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteExecution(TenantId tenantId, ExecutionId id) {
-        auto entity = repo.findById(tenantId, id);
+        auto entity = repo.find(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Execution not found");
             

@@ -19,7 +19,7 @@ class ManageProjectsUseCase { // TODO: UIMUseCase {
     }
 
     Project getById(TenantId tenantId, ProjectId id) {
-        return projects.findById(tenantId, id);
+        return projects.find(tenantId, id);
     }
 
     Project[] listProjects(TenantId tenantId) {
@@ -67,7 +67,7 @@ class ManageProjectsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteProject(TenantId tenantId, ProjectId id) {
-        auto project = projects.findById(tenantId, id);
+        auto project = projects.find(tenantId, id);
         if (project.isNull)
             return CommandResult(false, "", "Project not found");
 

@@ -90,7 +90,7 @@ class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
   }
 
   NotificationChannel getChannel(TenantId tenantId, NotificationChannelId id) {
-    return channels.findById(tenantId, id);
+    return channels.find(tenantId, id);
   }
 
   NotificationChannel[] listChannels(TenantId tenantId) {
@@ -102,7 +102,7 @@ class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult activateChannel(TenantId tenantId, NotificationChannelId id) {
-    auto channel = channels.findById(tenantId, id);
+    auto channel = channels.find(tenantId, id);
     if (channel.isNull)
       return CommandResult(false, "", "Notification channel not found");
 
@@ -113,7 +113,7 @@ class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteChannel(TenantId tenantId, NotificationChannelId id) {
-    auto channel = channels.findById(tenantId, id);
+    auto channel = channels.find(tenantId, id);
     if (channel.isNull)
       return CommandResult(false, "", "Notification channel not found");
 

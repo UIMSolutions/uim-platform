@@ -48,7 +48,7 @@ class ManageBackupsUseCase { // TODO: UIMUseCase {
   }
 
   Backup getBackup(BackupId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   Backup[] listBackups(TenantId tenantId) {
@@ -70,7 +70,7 @@ class ManageBackupsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteBackup(BackupId id) {
-    auto entity = repo.findById(tenantId, id);
+    auto entity = repo.find(tenantId, id);
     if (entity.isNull)
       return CommandResult(false, "", "Backup not found");
 

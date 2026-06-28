@@ -102,7 +102,7 @@ class ManageMasterDataObjectsUseCase { // TODO: UIMUseCase {
   }
 
   MasterDataObject getObject(TenantId tenantId, MasterDataObjectId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   MasterDataObject[] listObjects(TenantId tenantId) {
@@ -122,7 +122,7 @@ class ManageMasterDataObjectsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteObject(TenantId tenantId, MasterDataObjectId id) {
-    auto obj = repo.findById(tenantId, id);
+    auto obj = repo.find(tenantId, id);
     if (obj.isNull)
       return CommandResult(false, "", "Master data object not found");
 

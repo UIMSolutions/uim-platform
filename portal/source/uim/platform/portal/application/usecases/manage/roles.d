@@ -49,7 +49,7 @@ class ManageRolesUseCase { // TODO: UIMUseCase {
   }
 
   Role getRole(RoleId id) {
-    return roleRepo.findById(tenantId, id);
+    return roleRepo.find(tenantId, id);
   }
 
   Role[] listRoles(TenantId tenantId, size_t offset = 0, size_t limit = 100) {

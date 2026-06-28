@@ -42,7 +42,7 @@ class ManageDecisionsUseCase { // TODO: UIMUseCase {
     }
 
     Decision getDecision(TenantId tenantId, DecisionId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     Decision[] listDecisions(TenantId tenantId) {
@@ -67,7 +67,7 @@ class ManageDecisionsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteDecision(TenantId tenantId, DecisionId id) {
-        auto decision = repo.findById(tenantId, id);
+        auto decision = repo.find(tenantId, id);
         if (decision.isNull)
             return CommandResult(false, "", "Decision not found");
 

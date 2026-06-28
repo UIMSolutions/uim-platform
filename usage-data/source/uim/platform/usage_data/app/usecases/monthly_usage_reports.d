@@ -25,7 +25,7 @@ class MonthlyUsageReportUseCases {
   }
 
   MonthlyUsageReportResponse getReport(TenantId tenantId, MonthlyUsageReportId id) {
-    auto r = repo.findById(tenantId, id);
+    auto r = repo.find(tenantId, id);
     return MonthlyUsageReportResponse.fromEntity(r);
   }
 
@@ -44,7 +44,7 @@ class MonthlyUsageReportUseCases {
   }
 
   MonthlyUsageReportResponse markReady(TenantId tenantId, MonthlyUsageReportId id) {
-    auto r = repo.findById(tenantId, id);
+    auto r = repo.find(tenantId, id);
     if (r.isNull) return MonthlyUsageReportResponse.init;
     r.status = ReportStatus.ready;
     repo.save(r);
@@ -52,7 +52,7 @@ class MonthlyUsageReportUseCases {
   }
 
   CommandResult deleteReport(TenantId tenantId, MonthlyUsageReportId id) {
-    auto r = repo.findById(tenantId, id);
+    auto r = repo.find(tenantId, id);
     if (r.isNull) return CommandResult(false, "", "Monthly usage report not found");
     repo.remove(r);
     return CommandResult(true, r.id.value, "");

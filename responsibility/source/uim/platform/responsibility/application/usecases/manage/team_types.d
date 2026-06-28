@@ -17,7 +17,7 @@ class ManageTeamTypesUseCase {
     this(TeamTypeRepository repo) { this.repo = repo; }
 
     TeamType getType(TenantId tenantId, TeamTypeId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     TeamType[] listTypes(TenantId tenantId) {
@@ -55,7 +55,7 @@ class ManageTeamTypesUseCase {
     }
 
     CommandResult deleteType(TenantId tenantId, TeamTypeId id) {
-        auto e = repo.findById(tenantId, id);
+        auto e = repo.find(tenantId, id);
         if (e.isNull)
             return CommandResult(false, "", "Team type not found");
         repo.remove(e);

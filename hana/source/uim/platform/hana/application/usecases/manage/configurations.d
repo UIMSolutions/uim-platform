@@ -46,7 +46,7 @@ class ManageConfigurationsUseCase { // TODO: UIMUseCase {
   }
 
   Configuration getConfiguration(ConfigurationId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   Configuration[] listConfigurations(TenantId tenantId) {
@@ -75,7 +75,7 @@ class ManageConfigurationsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteConfiguration(ConfigurationId id) {
-    auto existing = repo.findById(tenantId, id);
+    auto existing = repo.find(tenantId, id);
     if (existing.isNull)
       return CommandResult(false, "", "Configuration not found");
 

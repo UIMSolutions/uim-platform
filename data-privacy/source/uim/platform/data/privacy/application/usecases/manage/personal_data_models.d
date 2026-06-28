@@ -48,7 +48,7 @@ class ManagePersonalDataModelsUseCase { // TODO: UIMUseCase {
   }
 
   PersonalDataModel getModel(TenantId tenantId, PersonalDataModelId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   PersonalDataModel[] listModels(TenantId tenantId) {
@@ -90,7 +90,7 @@ class ManagePersonalDataModelsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteModel(TenantId tenantId, PersonalDataModelId id) {
-    auto existing = repo.findById(tenantId, id);
+    auto existing = repo.find(tenantId, id);
     if (existing.isNull)
       return CommandResult(false, "", "Personal data model not found");
 

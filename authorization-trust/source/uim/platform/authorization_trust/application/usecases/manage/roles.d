@@ -48,7 +48,7 @@ class ManageRolesUseCase {
   }
 
   CommandResult deleteRole(TenantId tenantId, RoleId id) {
-    auto existing = repo.findById(tenantId, id);
+    auto existing = repo.find(tenantId, id);
     if (existing.isNull)
       return CommandResult(false, "", "Role not found");
 
@@ -57,7 +57,7 @@ class ManageRolesUseCase {
   }
 
   RoleEntity getRole(TenantId tenantId, RoleId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   RoleEntity[] listRoles(TenantId tenantId) {

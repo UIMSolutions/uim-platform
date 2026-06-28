@@ -74,7 +74,7 @@ class ManageAccessRulesUseCase { // TODO: UIMUseCase {
   }
 
   AccessRule getAccessRule(TenantId tenantId, RuleId id) {
-    return rules.findById(tenantId, id);
+    return rules.find(tenantId, id);
   }
 
   AccessRule[] listAccessRules(TenantId tenantId, ConnectorId connectorId) {
@@ -86,7 +86,7 @@ class ManageAccessRulesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteAccessRule(TenantId tenantId, RuleId id) {
-    auto rule = rules.findById(tenantId, id);
+    auto rule = rules.find(tenantId, id);
     if (rule.isNull)
       return CommandResult(false, "", "Access rule not found");
 

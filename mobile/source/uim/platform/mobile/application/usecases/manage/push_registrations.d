@@ -48,7 +48,7 @@ class ManagePushRegistrationsUseCase { // TODO: UIMUseCase {
     }
 
     PushRegistration getPushRegistration(TenantId tenantId, PushRegistrationId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     PushRegistration[] listPushRegistrationsByApp(TenantId tenantId, MobileAppId appId) {
@@ -60,7 +60,7 @@ class ManagePushRegistrationsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deletePushRegistration(TenantId tenantId, PushRegistrationId id) {
-        auto reg = repo.findById(tenantId, id);
+        auto reg = repo.find(tenantId, id);
         if (reg.isNull)
             return CommandResult(false, "", "Push registration not found");
 

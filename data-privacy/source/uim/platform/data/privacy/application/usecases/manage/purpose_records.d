@@ -41,7 +41,7 @@ class ManagePurposeRecordsUseCase { // TODO: UIMUseCase {
   }
 
   PurposeRecord getRecord(TenantId tenantId, PurposeRecordId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   PurposeRecord[] listRecords(TenantId tenantId) {

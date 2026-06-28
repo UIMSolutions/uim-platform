@@ -42,7 +42,7 @@ class ManageCardsUseCase { // TODO: UIMUseCase {
   }
 
   Card getCard(TenantId tenantId, CardId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   Card[] listCards(TenantId tenantId) {
@@ -76,7 +76,7 @@ class ManageCardsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteCard(TenantId tenantId, CardId id) {
-    auto entity = repo.findById(tenantId, id);
+    auto entity = repo.find(tenantId, id);
     if (entity.isNull)
       return CommandResult(false, "", "Card not found");
 

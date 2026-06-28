@@ -41,7 +41,7 @@ class ManageSchemasUseCase { // TODO: UIMUseCase {
   }
 
   Schema getSchemaById(TenantId tenantId, SchemaId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   Schema[] listSchemas(TenantId tenantId) {

@@ -70,7 +70,7 @@ class ManageAccessPoliciesUseCase { // TODO: UIMUseCase {
   }
 
   AccessPolicy getPolicy(TenantId tenantId, AccessPolicyId id) {
-    return policyRepo.findById(tenantId, id);
+    return policyRepo.find(tenantId, id);
   }
 
   AccessPolicy[] listPolicies(TenantId tenantId, BucketId bucketId) {
@@ -78,7 +78,7 @@ class ManageAccessPoliciesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deletePolicy(TenantId tenantId, AccessPolicyId id) {
-    auto policy = policyRepo.findById(tenantId, id);
+    auto policy = policyRepo.find(tenantId, id);
     if (policy.isNull)
       return CommandResult(false, "", "Access policy not found");
 

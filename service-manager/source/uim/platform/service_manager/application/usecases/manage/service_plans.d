@@ -18,7 +18,7 @@ class ManageServicePlansUseCase { // TODO: UIMUseCase {
     }
 
     ServicePlan getPlan(TenantId tenantId, ServicePlanId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     CommandResult createPlan(CreateServicePlanRequest dto) {
@@ -60,7 +60,7 @@ class ManageServicePlansUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deletePlan(TenantId tenantId, ServicePlanId id) {
-        auto plan = repo.findById(tenantId, id);
+        auto plan = repo.find(tenantId, id);
         if (plan.isNull)
             return CommandResult(false, "", "Service plan not found");
 

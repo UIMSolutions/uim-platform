@@ -19,7 +19,7 @@ class ManageDataEntitiesUseCase { // TODO: UIMUseCase {
     }
 
     DataEntity getDataEntity(TenantId tenantId, DataEntityId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     DataEntity[] listDataEntities(TenantId tenantId) {
@@ -68,7 +68,7 @@ class ManageDataEntitiesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteDataEntity(TenantId tenantId, DataEntityId id) {
-        auto entity = repo.findById(tenantId, id);
+        auto entity = repo.find(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Data entity not found");
             

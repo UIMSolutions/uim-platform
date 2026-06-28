@@ -19,7 +19,7 @@ class ManageUserTaskFiltersUseCase { // TODO: UIMUseCase {
     }
 
     UserTaskFilter getFilter(TenantId tenantId, UserTaskFilterId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     UserTaskFilter[] listFilters(TenantId tenantId, UserId userId) {
@@ -56,7 +56,7 @@ class ManageUserTaskFiltersUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult setDefaultFilter(TenantId tenantId, UserTaskFilterId id) {
-        auto taskFilter = repo.findById(tenantId, id);
+        auto taskFilter = repo.find(tenantId, id);
         if (taskFilter.isNull)
             return CommandResult(false, "", "Filter not found");
         taskFilter.isDefault = true;
@@ -66,7 +66,7 @@ class ManageUserTaskFiltersUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteFilter(TenantId tenantId, UserTaskFilterId id) {
-        auto taskFilter = repo.findById(tenantId, id);
+        auto taskFilter = repo.find(tenantId, id);
         if (taskFilter.isNull)
             return CommandResult(false, "", "Filter not found");
 

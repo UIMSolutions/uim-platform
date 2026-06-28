@@ -55,7 +55,7 @@ class ManageAppConfigurationsUseCase { // TODO: UIMUseCase {
     }
 
     AppConfiguration getAppConfiguration(TenantId tenantId, AppConfigurationId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     AppConfiguration getAppConfigurationByKey(TenantId tenantId, MobileAppId appId, string key) {
@@ -67,7 +67,7 @@ class ManageAppConfigurationsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteAppConfiguration(TenantId tenantId, AppConfigurationId id) {
-        auto config = repo.findById(tenantId, id);
+        auto config = repo.find(tenantId, id);
         if (config.isNull)
             return CommandResult(false, "", "Configuration not found");
 

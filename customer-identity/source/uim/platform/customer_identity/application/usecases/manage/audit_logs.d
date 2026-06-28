@@ -19,7 +19,7 @@ class ManageAuditLogsUseCase {
     }
 
     AuditLog getAuditLog(TenantId tenantId, AuditLogId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     AuditLog[] listAuditLogs(TenantId tenantId) {
@@ -56,7 +56,7 @@ class ManageAuditLogsUseCase {
     }
 
     CommandResult deleteAuditLog(TenantId tenantId, AuditLogId id) {
-        auto existing = repo.findById(tenantId, id);
+        auto existing = repo.find(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Audit log not found");
 

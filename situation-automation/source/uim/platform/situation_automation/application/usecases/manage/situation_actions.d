@@ -45,7 +45,7 @@ class ManageSituationActionsUseCase { // TODO: UIMUseCase {
     }
 
     SituationAction getSituationAction(TenantId tenantId, SituationActionId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     SituationAction[] listSituationActions(TenantId tenantId) {
@@ -73,7 +73,7 @@ class ManageSituationActionsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteSituationAction(TenantId tenantId, SituationActionId id) {
-        auto action = repo.findById(tenantId, id);
+        auto action = repo.find(tenantId, id);
         if (action.isNull)
             return CommandResult(false, "", "Situation action not found");
 

@@ -45,7 +45,7 @@ class ManageReplicationJobsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult startJob(TenantId tenantId, ReplicationJobId id) {
-    auto job = repo.findById(tenantId, id);
+    auto job = repo.find(tenantId, id);
     if (job.isNull)
       return CommandResult(false, "", "Replication job not found");
     if (job.status != ReplicationJobStatus.pending && job.status != ReplicationJobStatus.paused)
@@ -59,7 +59,7 @@ class ManageReplicationJobsUseCase { // TODO: UIMUseCase {
 
   CommandResult completeJob(TenantId tenantId, ReplicationJobId id, long successRecords,
       long errorRecords, long skippedRecords, string[] errorMessages, string deltaToken) {
-    auto job = repo.findById(tenantId, id);
+    auto job = repo.find(tenantId, id);
     if (job.isNull)
       return CommandResult(false, "", "Replication job not found");
 
@@ -78,7 +78,7 @@ class ManageReplicationJobsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult cancelJob(TenantId tenantId, ReplicationJobId id) {
-    auto job = repo.findById(tenantId, id);
+    auto job = repo.find(tenantId, id);
     if (job.isNull)
       return CommandResult(false, "", "Replication job not found");
     job.status = ReplicationJobStatus.cancelled;
@@ -88,7 +88,7 @@ class ManageReplicationJobsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult pauseJob(TenantId tenantId, ReplicationJobId id) {
-    auto job = repo.findById(tenantId, id);
+    auto job = repo.find(tenantId, id);
     if (job.isNull)
       return CommandResult(false, "", "Replication job not found");
     if (job.status != ReplicationJobStatus.running)
@@ -99,7 +99,7 @@ class ManageReplicationJobsUseCase { // TODO: UIMUseCase {
   }
 
   ReplicationJob getJob(TenantId tenantId, ReplicationJobId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   ReplicationJob[] listJobs(TenantId tenantId) {
@@ -115,7 +115,7 @@ class ManageReplicationJobsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteJob(TenantId tenantId, ReplicationJobId id) {
-    auto job = repo.findById(tenantId, id);
+    auto job = repo.find(tenantId, id);
     if (job.isNull)
       return CommandResult(false, "", "Replication job not found");
 

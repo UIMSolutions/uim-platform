@@ -34,6 +34,6 @@ class ManageAuditLogsUseCase {
   }
 
   AuditLog getById(TenantId tenantId, AuditLogId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 }

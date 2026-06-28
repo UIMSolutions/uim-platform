@@ -18,7 +18,7 @@ class ManageOperationsUseCase { // TODO: UIMUseCase {
     }
 
     Operation getOperation(TenantId tenantId, OperationId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     CommandResult createOperation(CreateOperationRequest dto) {
@@ -49,7 +49,7 @@ class ManageOperationsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteOperation(TenantId tenantId, OperationId id) {
-        auto operation = repo.findById(tenantId, id);
+        auto operation = repo.find(tenantId, id);
         if (operation.isNull)
             return CommandResult(false, "", "Operation not found");
 

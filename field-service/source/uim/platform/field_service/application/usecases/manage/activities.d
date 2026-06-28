@@ -19,7 +19,7 @@ class ManageActivitiesUseCase { // TODO: UIMUseCase {
     }
 
     Activity getActivity(TenantId tenantId, ActivityId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     Activity[] listActivities(TenantId tenantId) {
@@ -75,7 +75,7 @@ class ManageActivitiesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteActivity(TenantId tenantId, ActivityId id) {
-        auto activity = repo.findById(tenantId, id);
+        auto activity = repo.find(tenantId, id);
         if (activity.isNull)
             return CommandResult(false, "", "Activity not found");
             

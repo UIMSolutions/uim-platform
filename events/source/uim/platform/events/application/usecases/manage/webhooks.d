@@ -16,7 +16,7 @@ class ManageWebhooksUseCase {
 
     this(WebhookRepository repo) { this.repo = repo; }
 
-    Webhook getWebhook(TenantId tenantId, WebhookId id) { return repo.findById(tenantId, id); }
+    Webhook getWebhook(TenantId tenantId, WebhookId id) { return repo.find(tenantId, id); }
     Webhook[] listWebhooks(TenantId tenantId) { return repo.find(tenantId); }
     Webhook[] listByService(TenantId tenantId, MessagingServiceId serviceId) { return repo.findByService(tenantId, serviceId); }
     Webhook[] listBySubscription(TenantId tenantId, QueueSubscriptionId subscriptionId) { return repo.findBySubscription(tenantId, subscriptionId); }
@@ -58,7 +58,7 @@ class ManageWebhooksUseCase {
     }
 
     CommandResult deleteWebhook(TenantId tenantId, WebhookId id) {
-        auto wh = repo.findById(tenantId, id);
+        auto wh = repo.find(tenantId, id);
         if (wh.isNull) return CommandResult(false, "", "Webhook not found");
         repo.remove(wh);
         return CommandResult(true, wh.id.value, "");

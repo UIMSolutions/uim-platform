@@ -19,7 +19,7 @@ class ManageScreenSetsUseCase {
     }
 
     ScreenSet getScreenSet(TenantId tenantId, ScreenSetId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     ScreenSet[] listScreenSets(TenantId tenantId) {
@@ -72,7 +72,7 @@ class ManageScreenSetsUseCase {
     }
 
     CommandResult deleteScreenSet(TenantId tenantId, ScreenSetId id) {
-        auto existing = repo.findById(tenantId, id);
+        auto existing = repo.find(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Screen set not found");
 

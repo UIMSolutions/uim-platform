@@ -72,7 +72,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
   }
 
   ServiceBinding getServiceBinding(TenantId tenantId, ServiceBindingId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   ServiceBinding[] listServiceBindingsByNamespace(TenantId tenantId, NamespaceId nsId) {
@@ -84,7 +84,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteServiceBinding(TenantId tenantId, ServiceBindingId id) {
-    auto binding = repo.findById(tenantId, id);
+    auto binding = repo.find(tenantId, id);
     if (binding.isNull)
       return CommandResult(false, "", "Service binding not found");
 

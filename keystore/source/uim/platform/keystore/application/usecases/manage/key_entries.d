@@ -51,7 +51,7 @@ class ManageKeyEntriesUseCase {
   }
 
   KeyEntry getById(TenantId tenantId, KeyEntryId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   KeyEntry getByAlias(TenantId tenantId, KeystoreId keystoreId, string alias_) {
@@ -63,7 +63,7 @@ class ManageKeyEntriesUseCase {
   }
 
   CommandResult deleteKeyEntry(TenantId tenantId, KeyEntryId id) {
-    auto entry = repo.findById(tenantId, id);
+    auto entry = repo.find(tenantId, id);
     if (entry.isNull)
       return CommandResult(false, "", "Key entry not found");
 

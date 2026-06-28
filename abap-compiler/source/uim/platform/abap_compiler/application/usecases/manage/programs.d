@@ -43,14 +43,13 @@ class ManageProgramsUseCase {
     }
 
     AbapProgram[] listPrograms(TenantId tenantId) {
-        return repo.findAll().filter!(p => p.tenantId.value == tenantId.value).array;
+        return repo.find(tenantId);
     }
 
     CommandResult updateProgram(UpdateProgramRequest r) {
         auto program = repo.find(r.tenantId, r.programId);
         if (program.isNull)
             return CommandResult(false, "", "Program '" ~ r.programId.value ~ "' not found");
-
         
         program.title      = r.title;
         program.language   = r.language;

@@ -19,7 +19,7 @@ class ManageSmartformsUseCase { // TODO: UIMUseCase {
     }
 
     Smartform getSmartform(TenantId tenantId, SmartformId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     Smartform[] listSmartforms(TenantId tenantId) {
@@ -68,7 +68,7 @@ class ManageSmartformsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteSmartform(TenantId tenantId, SmartformId id) {
-        auto entity = repo.findById(tenantId, id);
+        auto entity = repo.find(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Smartform not found");
 

@@ -143,7 +143,7 @@ class ManagePipelinesUseCase { // TODO: UIMUseCase {
   }
 
   Pipeline getPipeline(TenantId tenantId, PipelineId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   Pipeline[] listPipelines(TenantId tenantId) {
@@ -155,7 +155,7 @@ class ManagePipelinesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deletePipeline(TenantId tenantId, PipelineId id) {
-    auto p = repo.findById(tenantId, id);
+    auto p = repo.find(tenantId, id);
     if (p.isNull)
       return CommandResult(false, "", "Pipeline not found");
 

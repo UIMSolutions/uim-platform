@@ -19,7 +19,7 @@ class ManageEventFiltersUseCase {
     this(EventFilterRepository repo) { this.repo = repo; }
 
     EventFilter getEventFilter(TenantId tenantId, EventFilterId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     EventFilter[] listEventFilters(TenantId tenantId) {
@@ -56,7 +56,7 @@ class ManageEventFiltersUseCase {
     }
 
     CommandResult deleteEventFilter(TenantId tenantId, EventFilterId id) {
-        auto f = repo.findById(tenantId, id);
+        auto f = repo.find(tenantId, id);
         if (f.isNull) return CommandResult(false, "", "Filter not found");
 
         repo.remove(f);

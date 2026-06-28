@@ -67,7 +67,7 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
   }
 
   ModelDeployment getDeployment(TenantId tenantId, DeploymentId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   ModelDeployment[] listDeployments(TenantId tenantId) {
@@ -76,7 +76,7 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
 
   /// Activate a deploying or inactive deployment.
   CommandResult activateDeployment(TenantId tenantId, DeploymentId id) {
-    auto dep = repo.findById(tenantId, id);
+    auto dep = repo.find(tenantId, id);
     if (dep.isNull)
       return CommandResult(false, "", "Deployment not found");
 
@@ -91,7 +91,7 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
 
   /// Deactivate an active deployment.
   CommandResult deactivateDeployment(TenantId tenantId, DeploymentId id) {
-    auto dep = repo.findById(tenantId, id);
+    auto dep = repo.find(tenantId, id);
     if (dep.isNull)
       return CommandResult(false, "", "Deployment not found");
 
@@ -105,7 +105,7 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteDeployment(TenantId tenantId, DeploymentId id) {
-    auto existing = repo.findById(tenantId, id);
+    auto existing = repo.find(tenantId, id);
     if (existing.isNull)
       return CommandResult(false, "", "Deployment not found");
 

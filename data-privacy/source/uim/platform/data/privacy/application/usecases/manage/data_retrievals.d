@@ -79,7 +79,7 @@ class ManageDataRetrievalsUseCase { // TODO: UIMUseCase {
   }
 
   DataRetrievalRequest getRequest(TenantId tenantId, DataRetrievalRequestId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   DataRetrievalRequest[] listRequests(TenantId tenantId) {
@@ -108,7 +108,7 @@ class ManageDataRetrievalsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteRequest(TenantId tenantId, DataRetrievalRequestId id) {
-    auto request = repo.findById(tenantId, id);
+    auto request = repo.find(tenantId, id);
     if (request.isNull)
       return CommandResult(false, "", "Data retrieval request not found");
 

@@ -32,7 +32,7 @@ class UsageRecordUseCases {
   }
 
   UsageRecordResponse getRecord(TenantId tenantId, UsageRecordId id) {
-    auto r = repo.findById(tenantId, id);
+    auto r = repo.find(tenantId, id);
     return UsageRecordResponse.fromEntity(r);
   }
 
@@ -58,7 +58,7 @@ class UsageRecordUseCases {
   }
 
   CommandResult deleteRecord(TenantId tenantId, UsageRecordId id) {
-    auto r = repo.findById(tenantId, id);
+    auto r = repo.find(tenantId, id);
     if (r.isNull) return CommandResult(false, "", "Usage record not found");
     repo.remove(r);
     return CommandResult(true, r.id.value, "");

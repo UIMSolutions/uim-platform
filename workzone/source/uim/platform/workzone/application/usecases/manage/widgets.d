@@ -42,7 +42,7 @@ class ManageWidgetsUseCase { // TODO: UIMUseCase {
   }
 
   Widget getWidget(TenantId tenantId, WidgetId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   Widget[] listWidgets(TenantId tenantId, WorkpageId pageId) {
@@ -74,7 +74,7 @@ class ManageWidgetsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteWidget(TenantId tenantId, WidgetId id) {
-    auto w = repo.findById(tenantId, id);
+    auto w = repo.find(tenantId, id);
     if (w.isNull)
       return CommandResult(false, "", "Widget not found");
 

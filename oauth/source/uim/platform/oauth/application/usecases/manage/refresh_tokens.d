@@ -23,7 +23,7 @@ class ManageRefreshTokensUseCase { // TODO: UIMUseCase {
     }
 
     RefreshToken getToken(TenantId tenantId, RefreshTokenId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     RefreshToken getToken(TenantId tenantId, string tokenValue) {
@@ -49,7 +49,7 @@ class ManageRefreshTokensUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult revokeToken(TenantId tenantId, RefreshTokenId id) {
-        auto token = repo.findById(tenantId, id);
+        auto token = repo.find(tenantId, id);
         if (token.isNull)
             return CommandResult(false, "", "Refresh token not found");
 
@@ -59,7 +59,7 @@ class ManageRefreshTokensUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteToken(TenantId tenantId, RefreshTokenId id) {
-        auto token = repo.findById(tenantId, id);
+        auto token = repo.find(tenantId, id);
         if (token.isNull)
             return CommandResult(false, "", "Refresh token not found");
 

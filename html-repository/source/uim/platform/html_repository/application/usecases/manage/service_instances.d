@@ -41,7 +41,7 @@ class ManageServiceInstancesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateServiceInstance(ServiceInstanceId id, UpdateServiceInstanceRequest r) {
-        auto inst = repo.findById(tenantId, id);
+        auto inst = repo.find(tenantId, id);
         if (inst.isNull)
             return CommandResult(false, "", "Service instance not found");
 
@@ -56,7 +56,7 @@ class ManageServiceInstancesUseCase { // TODO: UIMUseCase {
     }
 
     ServiceInstance getServiceInstance(ServiceInstanceId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     ServiceInstance[] listServiceInstances(TenantId tenantId) {
@@ -64,7 +64,7 @@ class ManageServiceInstancesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteServiceInstance(ServiceInstanceId id) {
-        auto inst = repo.findById(tenantId, id);
+        auto inst = repo.find(tenantId, id);
         if (inst.isNull)
             return CommandResult(false, "", "Service instance not found");
 

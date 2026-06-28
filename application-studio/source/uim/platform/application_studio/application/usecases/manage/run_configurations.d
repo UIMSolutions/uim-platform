@@ -19,7 +19,7 @@ class ManageRunConfigurationsUseCase { // TODO: UIMUseCase {
     }
 
     RunConfiguration getRunConfiguration(TenantId tenantId, RunConfigurationId id) {
-        return configurations.findById(tenantId, id);
+        return configurations.find(tenantId, id);
     }
 
     RunConfiguration[] listRunConfigurations(TenantId tenantId) {
@@ -65,7 +65,7 @@ class ManageRunConfigurationsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteRunConfiguration(TenantId tenantId, RunConfigurationId id) {
-        auto config = configurations.findById(tenantId, id);
+        auto config = configurations.find(tenantId, id);
         if (config.isNull)
             return CommandResult(false, "", "Run configuration not found");
 

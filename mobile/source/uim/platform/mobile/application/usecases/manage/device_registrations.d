@@ -52,7 +52,7 @@ class ManageDeviceRegistrationsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateStatus(TenantId tenantId, DeviceRegistrationId id, string status) {
-        auto reg = repo.findById(tenantId, id);
+        auto reg = repo.find(tenantId, id);
         if (reg.isNull)
             return CommandResult(false, "", "Device not found");
 
@@ -68,7 +68,7 @@ class ManageDeviceRegistrationsUseCase { // TODO: UIMUseCase {
     }
 
     DeviceRegistration getDeviceRegistration(TenantId tenantId, DeviceRegistrationId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     DeviceRegistration[] listByApp(TenantId tenantId, MobileAppId appId) {
@@ -80,7 +80,7 @@ class ManageDeviceRegistrationsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteDeviceRegistration(TenantId tenantId, DeviceRegistrationId id) {
-        auto reg = repo.findById(tenantId, id);
+        auto reg = repo.find(tenantId, id);
         if (reg.isNull)
             return CommandResult(false, "", "Device not found");
 

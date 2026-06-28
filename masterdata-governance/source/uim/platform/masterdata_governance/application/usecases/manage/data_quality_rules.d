@@ -19,7 +19,7 @@ class ManageDataQualityRulesUseCase {
     }
 
     DataQualityRule getDataQualityRule(TenantId tenantId, DataQualityRuleId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     DataQualityRule[] listDataQualityRules(TenantId tenantId) {
@@ -86,7 +86,7 @@ class ManageDataQualityRulesUseCase {
     }
 
     CommandResult deleteDataQualityRule(TenantId tenantId, DataQualityRuleId id) {
-        auto rule = repo.findById(tenantId, id);
+        auto rule = repo.find(tenantId, id);
         if (rule.isNull)
             return CommandResult(false, "", "Data quality rule not found");
 

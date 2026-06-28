@@ -17,7 +17,7 @@ class ManageTeamsUseCase {
     this(TeamRepository repo) { this.repo = repo; }
 
     Team getTeam(TenantId tenantId, TeamId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     Team[] listTeams(TenantId tenantId) {
@@ -57,7 +57,7 @@ class ManageTeamsUseCase {
     }
 
     CommandResult deleteTeam(TenantId tenantId, TeamId id) {
-        auto e = repo.findById(tenantId, id);
+        auto e = repo.find(tenantId, id);
         if (e.isNull)
             return CommandResult(false, "", "Team not found");
         repo.remove(e);

@@ -55,7 +55,7 @@ class ManageNamespacesUseCase { // TODO: UIMUseCase {
   }
 
   Namespace getNamespace(TenantId tenantId, NamespaceId id) {
-    return namespaces.findById(tenantId, id);
+    return namespaces.find(tenantId, id);
   }
 
   Namespace getNamespace(TenantId tenantId, string name) {

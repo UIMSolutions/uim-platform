@@ -92,7 +92,7 @@ class ManageDocumentsUseCase { // TODO: UIMUseCase {
   }
 
   Document getDocument(TenantId tenantId, DocumentId id) {
-    return docs.findById(tenantId, id);
+    return docs.find(tenantId, id);
   }
 
   Document[] searchByName(TenantId tenantId, string name) {

@@ -50,7 +50,7 @@ class ManageDatabaseConnectionsUseCase { // TODO: UIMUseCase {
   }
 
   DatabaseConnection getDatabaseConnection(TenantId tenantId, DatabaseConnectionId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   DatabaseConnection[] listDatabaseConnections(TenantId tenantId) {
@@ -82,7 +82,7 @@ class ManageDatabaseConnectionsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteDatabaseConnection(TenantId tenantId, DatabaseConnectionId id) {
-    auto connection = repo.findById(tenantId, id);
+    auto connection = repo.find(tenantId, id);
     if (connection.isNull)
       return CommandResult(false, "", "Database connection not found");
 

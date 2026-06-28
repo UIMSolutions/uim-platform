@@ -19,7 +19,7 @@ class ManageTaskAttachmentsUseCase { // TODO: UIMUseCase {
     }
 
     TaskAttachment getAttachment(TenantId tenantId, TaskAttachmentId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     TaskAttachment[] listAttachments(TenantId tenantId, TaskId taskId) {
@@ -42,7 +42,7 @@ class ManageTaskAttachmentsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteAttachment(TenantId tenantId, TaskAttachmentId id) {
-        auto attachment = repo.findById(tenantId, id);
+        auto attachment = repo.find(tenantId, id);
         if (attachment.isNull)
             return CommandResult(false, "", "Task attachment not found");
 

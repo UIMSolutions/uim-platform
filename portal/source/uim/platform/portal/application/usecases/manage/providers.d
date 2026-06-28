@@ -44,7 +44,7 @@ class ManageProvidersUseCase { // TODO: UIMUseCase {
   }
 
   ContentProvider getProvider(ProviderId id) {
-    return providerRepo.findById(tenantId, id);
+    return providerRepo.find(tenantId, id);
   }
 
   ContentProvider[] listProviders(TenantId tenantId, size_t offset = 0, size_t limit = 100) {

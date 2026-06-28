@@ -41,7 +41,7 @@ class ManageUsageReportsUseCase { // TODO: UIMUseCase {
     }
 
     UsageReport getUsageReport(TenantId tenantId, UsageReportId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     UsageReport[] listUsageReports(TenantId tenantId, MobileAppId appId) {
@@ -53,7 +53,7 @@ class ManageUsageReportsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteUsageReport(TenantId tenantId, UsageReportId id) {
-        auto report = repo.findById(tenantId, id);
+        auto report = repo.find(tenantId, id);
         if (report.isNull)
             return CommandResult(false, "", "Usage report not found");
 

@@ -99,7 +99,7 @@ class ManageBusinessUsersUseCase { // TODO: UIMUseCase {
   }
 
   BusinessUser getBusinessUser(TenantId tenantId, BusinessUserId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   BusinessUser[] listBusinessUsers(TenantId tenantId, SystemInstanceId systemId) {
@@ -107,7 +107,7 @@ class ManageBusinessUsersUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteBusinessUser(TenantId tenantId, BusinessUserId id) {
-      auto user = repo.findById(tenantId, id);
+      auto user = repo.find(tenantId, id);
     if (user.isNull)
       return CommandResult(false, "", "Business user not found");
 

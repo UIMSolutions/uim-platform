@@ -38,7 +38,7 @@ class MongoPatientRepository : PatientRepository {
   void remove(Patient p) { fallback.remove(p); }
   Patient[] findByTenant(TenantId tenantId) { return fallback.find(tenantId); }
   bool existsById(TenantId tenantId, PatientId id) { return fallback.existsById(tenantId, id); }
-  Patient findById(TenantId tenantId, PatientId id) { return fallback.findById(tenantId, id); }
+  Patient findById(TenantId tenantId, PatientId id) { return fallback.find(tenantId, id); }
   void removeById(TenantId tenantId, PatientId id) { fallback.removeById(tenantId, id); }
   size_t countByTenant(TenantId tenantId) { return fallback.count(tenantId); }
   Patient[] findByTenantAll(TenantId tenantId) { return fallback.findByTenantAll(tenantId); }

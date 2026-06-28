@@ -47,7 +47,7 @@ class ManageSituationInstancesUseCase { // TODO: UIMUseCase {
     }
 
     SituationInstance getSituationInstance(TenantId tenantId, SituationInstanceId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     SituationInstance[] listSituationInstances(TenantId tenantId) {
@@ -98,7 +98,7 @@ class ManageSituationInstancesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteSituationInstance(TenantId tenantId, SituationInstanceId id) {
-        auto instance = repo.findById(tenantId, id);
+        auto instance = repo.find(tenantId, id);
         if (instance.isNull)
             return CommandResult(false, "", "Situation instance not found");
 

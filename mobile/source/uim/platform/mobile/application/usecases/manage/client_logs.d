@@ -42,7 +42,7 @@ class ManageClientLogsUseCase { // TODO: UIMUseCase {
     }
 
     ClientLogEntry getLog(TenantId tenantId, ClientLogEntryId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     ClientLogEntry[] listLogs(TenantId tenantId, MobileAppId appId) {
@@ -58,7 +58,7 @@ class ManageClientLogsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteLog(TenantId tenantId, ClientLogEntryId id) {
-        auto entry = repo.findById(tenantId, id);
+        auto entry = repo.find(tenantId, id);
         if (entry.isNull)
             return CommandResult(false, "", "Client log entry not found");
 

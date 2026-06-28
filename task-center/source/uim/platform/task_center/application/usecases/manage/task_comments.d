@@ -19,7 +19,7 @@ class ManageTaskCommentsUseCase { // TODO: UIMUseCase {
     }
 
     TaskComment getComment(TenantId tenantId, TaskCommentId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     TaskComment[] listComments(TenantId tenantId, TaskId byTaskId) {
@@ -50,7 +50,7 @@ class ManageTaskCommentsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteComment(TenantId tenantId, TaskCommentId id) {
-        auto comment = repo.findById(tenantId, id);
+        auto comment = repo.find(tenantId, id);
         if (comment.isNull)
             return CommandResult(false, "", "Comment not found");
 

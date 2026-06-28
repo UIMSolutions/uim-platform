@@ -61,7 +61,7 @@ class ManageOrganizationsUseCase {
   }
 
   Organization getOrganization(TenantId tenantId, OrganizationId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   Organization[] listOrganizations(TenantId tenantId) {
@@ -69,7 +69,7 @@ class ManageOrganizationsUseCase {
   }
 
   CommandResult deleteOrganization(TenantId tenantId, OrganizationId id) {
-    auto entity = repo.findById(tenantId, id);
+    auto entity = repo.find(tenantId, id);
     if (entity.isNull)
       return CommandResult(false, "", "Organization not found");
     repo.remove(entity);

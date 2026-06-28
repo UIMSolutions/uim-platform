@@ -19,7 +19,7 @@ class ManageDeploymentTargetsUseCase {
     }
 
     DeploymentTarget getDeploymentTarget(TenantId tenantId, DeploymentTargetId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     DeploymentTarget[] listDeploymentTargets(TenantId tenantId) {
@@ -71,7 +71,7 @@ class ManageDeploymentTargetsUseCase {
     }
 
     CommandResult deleteDeploymentTarget(TenantId tenantId, DeploymentTargetId id) {
-        auto existing = repo.findById(tenantId, id);
+        auto existing = repo.find(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Deployment target not found");
         repo.remove(tenantId, id);

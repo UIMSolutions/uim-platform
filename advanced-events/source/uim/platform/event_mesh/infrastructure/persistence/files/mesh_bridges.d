@@ -85,7 +85,7 @@ class FileMeshBridgeRepository : MemoryMeshBridgeRepository {
 
     override MeshBridge findById(TenantId tenantId, MeshBridgeId id) {
         ensureLoaded(tenantId);
-        return super.findById(tenantId, id);
+        return super.find(tenantId, id);
     }
 
     override void save(MeshBridge item) {

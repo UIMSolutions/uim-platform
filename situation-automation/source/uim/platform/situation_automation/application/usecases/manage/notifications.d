@@ -42,7 +42,7 @@ class ManageNotificationsUseCase { // TODO: UIMUseCase {
     }
 
     Notification getNotification(TenantId tenantId, NotificationId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     Notification[] listNotifications(TenantId tenantId) {
@@ -80,7 +80,7 @@ class ManageNotificationsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteNotification(TenantId tenantId, NotificationId id) {
-        auto notification = repo.findById(tenantId, id);
+        auto notification = repo.find(tenantId, id);
         if (notification.isNull)
             return CommandResult(false, "", "Notification not found");
 

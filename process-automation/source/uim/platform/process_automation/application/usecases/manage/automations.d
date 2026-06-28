@@ -42,7 +42,7 @@ class ManageAutomationsUseCase { // TODO: UIMUseCase {
     }
 
     Automation getAutomation(TenantId tenantId, AutomationId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     Automation[] listAutomations(TenantId tenantId) {
@@ -68,7 +68,7 @@ class ManageAutomationsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteAutomation(TenantId tenantId, AutomationId id) {
-        auto automation = repo.findById(tenantId, id);
+        auto automation = repo.find(tenantId, id);
         if (automation.isNull)
             return CommandResult(false, "", "Automation not found");
 

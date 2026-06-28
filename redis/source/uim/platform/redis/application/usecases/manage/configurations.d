@@ -17,7 +17,7 @@ class ManageConfigurationsUseCase {
     this(ConfigurationRepository repo) { this.repo = repo; }
 
     Configuration getConfiguration(TenantId tenantId, ConfigurationId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     Configuration[] listConfigurations(TenantId tenantId) {
@@ -74,7 +74,7 @@ class ManageConfigurationsUseCase {
     }
 
     CommandResult deleteConfiguration(TenantId tenantId, ConfigurationId id) {
-        auto existing = repo.findById(tenantId, id);
+        auto existing = repo.find(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Configuration not found");
         repo.remove(tenantId, id);

@@ -62,7 +62,7 @@ class ManagePatientsUseCase {
   }
 
   Patient getPatient(TenantId tenantId, PatientId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   Patient[] listPatients(TenantId tenantId) {
@@ -74,7 +74,7 @@ class ManagePatientsUseCase {
   }
 
   CommandResult deletePatient(TenantId tenantId, PatientId id) {
-    auto entity = repo.findById(tenantId, id);
+    auto entity = repo.find(tenantId, id);
     if (entity.isNull)
       return CommandResult(false, "", "Patient not found");
     repo.remove(entity);

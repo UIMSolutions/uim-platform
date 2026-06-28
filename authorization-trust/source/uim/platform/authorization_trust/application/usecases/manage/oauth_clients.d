@@ -66,7 +66,7 @@ class ManageOAuthClientsUseCase {
   }
 
   CommandResult deleteClient(TenantId tenantId, OAuthClientId id) {
-    auto c = repo.findById(tenantId, id);
+    auto c = repo.find(tenantId, id);
     if (c.isNull)
       return CommandResult(false, "", "OAuth client not found");
 
@@ -75,7 +75,7 @@ class ManageOAuthClientsUseCase {
   }
 
   OAuthClient getClient(TenantId tenantId, OAuthClientId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   OAuthClient[] listClients(TenantId tenantId) {

@@ -28,7 +28,7 @@ class MongoDbServiceInstanceRepository : ServiceInstanceRepository {
     void remove(ServiceInstance inst) { fallback.remove(inst); }
 
     ServiceInstance findById(TenantId tenantId, ServiceInstanceId id) {
-        return fallback.findById(tenantId, id);
+        return fallback.find(tenantId, id);
     }
 
     ServiceInstance findByName(TenantId tenantId, string name) {

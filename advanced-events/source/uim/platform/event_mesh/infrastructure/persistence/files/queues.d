@@ -88,7 +88,7 @@ class FileQueueRepository : MemoryQueueRepository {
 
     override Queue findById(TenantId tenantId, QueueId id) {
         ensureLoaded(tenantId);
-        return super.findById(tenantId, id);
+        return super.find(tenantId, id);
     }
 
     override void save(Queue item) {

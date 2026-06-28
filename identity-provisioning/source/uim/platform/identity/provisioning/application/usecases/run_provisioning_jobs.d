@@ -94,7 +94,7 @@ class RunProvisioningJobsUseCase { // TODO: UIMUseCase {
   }
 
   ProvisioningJob getJob(TenantId tenantId, ProvisioningJobId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   ProvisioningJob[] listJobs(TenantId tenantId) {
@@ -106,7 +106,7 @@ class RunProvisioningJobsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteJob(TenantId tenantId, ProvisioningJobId id) {
-    auto existing = repo.findById(tenantId, id);
+    auto existing = repo.find(tenantId, id);
     if (existing.isNull)
       return CommandResult(false, "", "Provisioning job not found");
 

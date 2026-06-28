@@ -43,7 +43,7 @@ public:
   }
 
   CommandResult updateWarehouseOrder(TenantId tenantId, WarehouseOrderId id, UpdateWarehouseOrderRequest req) {
-    auto wo = _repo.findById(tenantId, id);
+    auto wo = _repo.find(tenantId, id);
     if (wo .isNull) return CommandResult(false, "Warehouse order not found");
 
     
@@ -68,7 +68,7 @@ public:
   }
 
   CommandResult deleteWarehouseOrder(TenantId tenantId, WarehouseOrderId id) {
-    auto wo = _repo.findById(tenantId, id);
+    auto wo = _repo.find(tenantId, id);
     if (wo .isNull) return CommandResult(false, "Warehouse order not found");
     // Cascade: remove all tasks for this order
     _tasks.removeByWarehouseOrder(tenantId, id);
@@ -77,7 +77,7 @@ public:
   }
 
   WarehouseOrder getWarehouseOrder(TenantId tenantId, WarehouseOrderId id) {
-    return _repo.findById(tenantId, id);
+    return _repo.find(tenantId, id);
   }
 
   WarehouseOrder[] listWarehouseOrders(TenantId tenantId) {

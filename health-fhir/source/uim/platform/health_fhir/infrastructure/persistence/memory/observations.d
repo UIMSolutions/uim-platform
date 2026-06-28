@@ -13,7 +13,7 @@ import uim.platform.health_fhir;
 class MemoryObservationRepository : TenantRepository!(Observation, ObservationId), ObservationRepository {
 
   bool existsById(TenantId tenantId, ObservationId id) {
-    return !findById(tenantId, id).isNull;
+    return !find(tenantId, id).isNull;
   }
 
   Observation findById(TenantId tenantId, ObservationId id) {
@@ -24,7 +24,7 @@ class MemoryObservationRepository : TenantRepository!(Observation, ObservationId
   }
 
   void removeById(TenantId tenantId, ObservationId id) {
-    auto o = findById(tenantId, id);
+    auto o = find(tenantId, id);
     if (!o.isNull) remove(o);
   }
 

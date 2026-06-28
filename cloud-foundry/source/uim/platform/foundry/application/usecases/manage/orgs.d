@@ -52,7 +52,7 @@ class ManageOrgsUseCase { // TODO: UIMUseCase {
   }
 
   Organization getOrg(TenantId tenantId, OrgId id) {
-    return orgs.findById(tenantId, id);
+    return orgs.find(tenantId, id);
   }
 
   Organization[] listOrgs(TenantId tenantId) {
@@ -89,7 +89,7 @@ class ManageOrgsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult suspendOrg(TenantId tenantId, OrgId id) {
-    auto org = orgs.findById(tenantId, id);
+    auto org = orgs.find(tenantId, id);
     if (org.isNull)
       return CommandResult(false, "", "Organization not found");
     if (org.status == OrgStatus.suspended)
@@ -102,7 +102,7 @@ class ManageOrgsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult activateOrg(TenantId tenantId, OrgId id) {
-    auto org = orgs.findById(tenantId, id);
+    auto org = orgs.find(tenantId, id);
     if (org.isNull)
       return CommandResult(false, "", "Organization not found");
 

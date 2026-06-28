@@ -48,7 +48,7 @@ class FileFlexChangeRepository : TenantRepository!(FlexChange, FlexChangeId), Fl
   }
 
   bool existsById(TenantId tenantId, FlexChangeId id) {
-    return !findById(tenantId, id).isNull;
+    return !find(tenantId, id).isNull;
   }
 
   FlexChange findById(TenantId tenantId, FlexChangeId id) {

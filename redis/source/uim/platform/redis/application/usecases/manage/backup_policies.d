@@ -17,7 +17,7 @@ class ManageBackupPoliciesUseCase {
     this(BackupPolicyRepository repo) { this.repo = repo; }
 
     BackupPolicy getBackupPolicy(TenantId tenantId, BackupPolicyId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     BackupPolicy[] listBackupPolicies(TenantId tenantId) {
@@ -67,7 +67,7 @@ class ManageBackupPoliciesUseCase {
     }
 
     CommandResult deleteBackupPolicy(TenantId tenantId, BackupPolicyId id) {
-        auto existing = repo.findById(tenantId, id);
+        auto existing = repo.find(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Backup policy not found");
         repo.remove(tenantId, id);

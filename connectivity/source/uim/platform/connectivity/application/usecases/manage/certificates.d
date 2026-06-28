@@ -59,7 +59,7 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
   }
 
   Certificate getCertificate(TenantId tenantId, CertificateId id) {
-    return certificates.findById(tenantId, id);
+    return certificates.find(tenantId, id);
   }
 
   Certificate[] listCertificates(TenantId tenantId) {
@@ -71,7 +71,7 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteCertificate(TenantId tenantId, CertificateId id) {
-    auto cert = certificates.findById(tenantId, id);
+    auto cert = certificates.find(tenantId, id);
     if (cert.isNull)
       return CommandResult(false, "", "Certificate not found");
 

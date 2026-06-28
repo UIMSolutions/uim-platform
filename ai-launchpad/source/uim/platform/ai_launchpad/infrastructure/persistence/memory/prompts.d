@@ -27,7 +27,7 @@ class MemoryPromptRepository : TenantRepository!(Prompt, PromptId), IPromptRepos
   // }
 
   // void removeById(TenantId tenantId, PromptId id) {
-  //   remove(findById(tenantId, id));
+  //   remove(find(tenantId, id));
   // }
 
   size_t countByCollection(TenantId tenantId, PromptCollectionId collectionId) {

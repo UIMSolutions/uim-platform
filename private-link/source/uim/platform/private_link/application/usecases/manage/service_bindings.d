@@ -53,7 +53,7 @@ class ManageServiceBindingsUseCase {
   }
 
   CommandResult deleteBinding(TenantId tenantId, ServiceBindingId id) {
-    auto binding = bindings.findById(tenantId, id);
+    auto binding = bindings.find(tenantId, id);
     if (binding.id.value.length == 0)
       return CommandResult(false, "", "Service binding not found");
     bindings.remove(binding);
@@ -61,7 +61,7 @@ class ManageServiceBindingsUseCase {
   }
 
   ServiceBinding getBinding(TenantId tenantId, ServiceBindingId id) {
-    return bindings.findById(tenantId, id);
+    return bindings.find(tenantId, id);
   }
 
   ServiceBinding[] listBindings(TenantId tenantId) {

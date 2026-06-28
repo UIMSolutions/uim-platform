@@ -17,7 +17,7 @@ class ManageMetricsUseCase {
     this(MetricRepository repo) { this.repo = repo; }
 
     Metric getMetric(TenantId tenantId, MetricId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     Metric[] listMetrics(TenantId tenantId) {
@@ -62,7 +62,7 @@ class ManageMetricsUseCase {
     }
 
     CommandResult deleteMetric(TenantId tenantId, MetricId id) {
-        auto existing = repo.findById(tenantId, id);
+        auto existing = repo.find(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Metric not found");
         repo.remove(tenantId, id);

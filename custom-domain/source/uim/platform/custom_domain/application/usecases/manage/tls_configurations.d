@@ -42,7 +42,7 @@ class ManageTlsConfigurationsUseCase { // TODO: UIMUseCase {
     }
 
     TlsConfiguration getTlsConfiguration(TenantId tenantId, TlsConfigurationId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     TlsConfiguration[] listTlsConfigurations(TenantId tenantId) {
@@ -68,7 +68,7 @@ class ManageTlsConfigurationsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteTlsConfiguration(TenantId tenantId, TlsConfigurationId id) {
-        auto config = repo.findById(tenantId, id);
+        auto config = repo.find(tenantId, id);
         if (config.isNull)
             return CommandResult(false, "", "TLS configuration not found");
 

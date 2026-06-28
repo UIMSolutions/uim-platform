@@ -13,7 +13,7 @@ import uim.platform.ui_flexibility;
 class MemoryFlexApplicationRepository : TenantRepository!(FlexApplication, FlexApplicationId), FlexApplicationRepository {
 
   bool existsById(TenantId tenantId, FlexApplicationId id) {
-    return !findById(tenantId, id).isNull;
+    return !find(tenantId, id).isNull;
   }
 
   FlexApplication findById(TenantId tenantId, FlexApplicationId id) {

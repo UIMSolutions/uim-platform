@@ -59,7 +59,7 @@ class ManageMedicationsUseCase {
   }
 
   Medication getMedication(TenantId tenantId, MedicationId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   Medication[] listMedications(TenantId tenantId) {
@@ -67,7 +67,7 @@ class ManageMedicationsUseCase {
   }
 
   CommandResult deleteMedication(TenantId tenantId, MedicationId id) {
-    auto entity = repo.findById(tenantId, id);
+    auto entity = repo.find(tenantId, id);
     if (entity.isNull)
       return CommandResult(false, "", "Medication not found");
     repo.remove(entity);

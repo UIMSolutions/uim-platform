@@ -18,7 +18,7 @@ class ManageServiceBrokersUseCase { // TODO: UIMUseCase {
     }
 
     ServiceBroker getBroker(TenantId tenantId, ServiceBrokerId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     CommandResult createBroker(CreateServiceBrokerRequest dto) {
@@ -57,7 +57,7 @@ class ManageServiceBrokersUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteBroker(TenantId tenantId, ServiceBrokerId id) {
-        auto broker = repo.findById(tenantId, id);
+        auto broker = repo.find(tenantId, id);
         if (broker.isNull)
             return CommandResult(false, "", "Service broker not found");
 

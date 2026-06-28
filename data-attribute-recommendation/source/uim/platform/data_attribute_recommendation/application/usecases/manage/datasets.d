@@ -45,7 +45,7 @@ class ManageDatasetsUseCase { // TODO: UIMUseCase {
   }
 
   Dataset getDataset(TenantId tenantId, DatasetId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   Dataset[] listDatasets(TenantId tenantId) {
@@ -81,7 +81,7 @@ class ManageDatasetsUseCase { // TODO: UIMUseCase {
 
   /// Validate a dataset and transition it to 'ready' status.
   CommandResult validateDataset(TenantId tenantId, DatasetId id) {
-    auto ds = repo.findById(tenantId, id);
+    auto ds = repo.find(tenantId, id);
     if (ds.isNull)
       return CommandResult(false, "", "Dataset not found");
 
@@ -103,7 +103,7 @@ class ManageDatasetsUseCase { // TODO: UIMUseCase {
 
   /// Process a dataset (simulate data preparation).
   CommandResult processDataset(TenantId tenantId, DatasetId id) {
-    auto ds = repo.findById(tenantId, id);
+    auto ds = repo.find(tenantId, id);
     if (ds.isNull)
       return CommandResult(false, "", "Dataset not found");
 
@@ -119,7 +119,7 @@ class ManageDatasetsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteDataset(TenantId tenantId, DatasetId id) {
-    auto existing = repo.findById(tenantId, id);
+    auto existing = repo.find(tenantId, id);
     if (existing.isNull)
       return CommandResult(false, "", "Dataset not found");
 

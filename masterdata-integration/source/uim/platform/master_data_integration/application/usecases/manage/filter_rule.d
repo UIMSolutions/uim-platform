@@ -60,7 +60,7 @@ class ManageFilterRulesUseCase { // TODO: UIMUseCase {
   }
 
   FilterRule getRule(TenantId tenantId, FilterRuleId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   FilterRule[] listRules(TenantId tenantId) {
@@ -76,7 +76,7 @@ class ManageFilterRulesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteRule(TenantId tenantId, FilterRuleId id) {
-    auto rule = repo.findById(tenantId, id);
+    auto rule = repo.find(tenantId, id);
     if (rule.isNull)
       return CommandResult(false, "", "Filter rule not found");
       

@@ -94,7 +94,7 @@ class FileBrokerServiceRepository : MemoryBrokerServiceRepository {
 
     override BrokerService findById(TenantId tenantId, BrokerServiceId id) {
         ensureLoaded(tenantId);
-        return super.findById(tenantId, id);
+        return super.find(tenantId, id);
     }
 
     override void save(BrokerService item) {

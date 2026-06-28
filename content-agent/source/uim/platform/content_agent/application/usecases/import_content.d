@@ -75,7 +75,7 @@ class ImportContentUseCase { // TODO: UIMUseCase {
   }
 
   ImportJob getImportJob(TenantId tenantId, ImportJobId id) {
-    return importRepo.findById(tenantId, id);
+    return importRepo.find(tenantId, id);
   }
 
   ImportJob[] listImportJobs(TenantId tenantId) {

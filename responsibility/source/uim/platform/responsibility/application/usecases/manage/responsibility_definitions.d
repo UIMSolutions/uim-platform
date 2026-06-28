@@ -17,7 +17,7 @@ class ManageResponsibilityDefinitionsUseCase {
     this(ResponsibilityDefinitionRepository repo) { this.repo = repo; }
 
     ResponsibilityDefinition getDefinition(TenantId tenantId, ResponsibilityDefinitionId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     ResponsibilityDefinition[] listDefinitions(TenantId tenantId) {
@@ -62,7 +62,7 @@ class ManageResponsibilityDefinitionsUseCase {
     }
 
     CommandResult deleteDefinition(TenantId tenantId, ResponsibilityDefinitionId id) {
-        auto e = repo.findById(tenantId, id);
+        auto e = repo.find(tenantId, id);
         if (e.isNull)
             return CommandResult(false, "", "Definition not found");
         repo.remove(e);

@@ -63,7 +63,7 @@ class ManageHtmlAppsUseCase { // TODO: UIMUseCase {
     }
 
     HtmlApp getHtmlAppById(TenantId tenantId, HtmlAppId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     HtmlApp[] listHtmlAppsByTenant(TenantId tenantId) {
@@ -75,7 +75,7 @@ class ManageHtmlAppsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteHtmlApp(TenantId tenantId, HtmlAppId id) {
-        auto entity = repo.findById(tenantId, id);
+        auto entity = repo.find(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "App not found");
             

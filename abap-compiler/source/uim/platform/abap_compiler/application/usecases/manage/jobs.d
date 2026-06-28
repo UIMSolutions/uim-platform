@@ -19,7 +19,7 @@ class ManageJobsUseCase {
     }
 
     CompilationJob getJob(TenantId tenantId, CompilationJobId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     CompilationJob[] listJobs(TenantId tenantId) {
@@ -33,7 +33,7 @@ class ManageJobsUseCase {
     }
 
     CommandResult deleteJob(TenantId tenantId, CompilationJobId id) {
-        auto job = repo.findById(tenantId, id);
+        auto job = repo.find(tenantId, id);
         if (job.isNull)
             return CommandResult(false, "", "Job '" ~ id.toString ~ "' not found");
         repo.remove(job);

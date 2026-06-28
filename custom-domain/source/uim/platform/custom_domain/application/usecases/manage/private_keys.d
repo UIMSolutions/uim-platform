@@ -41,7 +41,7 @@ class ManagePrivateKeysUseCase { // TODO: UIMUseCase {
     }
 
     PrivateKey getPrivateKey(TenantId tenantId, PrivateKeyId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     PrivateKey[] listPrivateKeys(TenantId tenantId) {
@@ -49,7 +49,7 @@ class ManagePrivateKeysUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deletePrivateKey(TenantId tenantId, PrivateKeyId id) {
-        auto key = repo.findById(tenantId, id);
+        auto key = repo.find(tenantId, id);
         if (key.isNull)
             return CommandResult(false, "", "Key not found");
 

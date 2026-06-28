@@ -43,7 +43,7 @@ class ManageProcessingPurposesUseCase { // TODO: UIMUseCase {
     }
 
     ProcessingPurpose getProcessingPurpose(TenantId tenantId, ProcessingPurposeId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     ProcessingPurpose[] listProcessingPurposes(TenantId tenantId) {
@@ -71,7 +71,7 @@ class ManageProcessingPurposesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteProcessingPurpose(TenantId tenantId, ProcessingPurposeId id) {
-        auto purpose = repo.findById(tenantId, id);
+        auto purpose = repo.find(tenantId, id);
         if (purpose.isNull)
             return CommandResult(false, "", "Processing purpose not found");
 

@@ -47,7 +47,7 @@ class ManageWorkspacesUseCase { // TODO: UIMUseCase {
   }
 
   Workspace getWorkspace(TenantId tenantId, WorkspaceId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   Workspace[] listWorkspaces(TenantId tenantId) {
@@ -114,7 +114,7 @@ class ManageWorkspacesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult archiveWorkspace(TenantId tenantId, WorkspaceId id) {
-    auto ws = repo.findById(tenantId, id);
+    auto ws = repo.find(tenantId, id);
     if (ws.isNull)
       return CommandResult(false, "", "Workspace not found");
     ws.status = WorkspaceStatus.archived;
@@ -124,7 +124,7 @@ class ManageWorkspacesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteWorkspace(TenantId tenantId, WorkspaceId id) {
-    auto workspace = repo.findById(tenantId, id);
+    auto workspace = repo.find(tenantId, id);
     if (workspace.isNull)
       return CommandResult(false, "", "Workspace not found");
 

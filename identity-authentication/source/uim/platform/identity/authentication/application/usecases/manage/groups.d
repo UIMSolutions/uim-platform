@@ -38,7 +38,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
   }
 
   IdaGroup getGroup(TenantId tenantId, GroupId id) {
-    return groupRepo.findById(tenantId, id);
+    return groupRepo.find(tenantId, id);
   }
 
   IdaGroup[] listGroups(TenantId tenantId, size_t offset = 0, size_t limit = 100) {
@@ -87,7 +87,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteGroup(TenantId tenantId, GroupId id) {
-    auto group = groupRepo.findById(tenantId, id);
+    auto group = groupRepo.find(tenantId, id);
     if (group.isNull)
       return CommandResult(false, "", "IdaGroup not found");  
 

@@ -35,7 +35,7 @@ class ManageLegalGroundsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateLegalGround(LegalGroundId id, UpdateLegalGroundRequest req) {
-        auto lg = repo.findById(tenantId, id);
+        auto lg = repo.find(tenantId, id);
         if (lg.isNull)
             return CommandResult(false, "", "Legal ground not found");
 
@@ -58,7 +58,7 @@ class ManageLegalGroundsUseCase { // TODO: UIMUseCase {
     }
 
     LegalGround getLegalGround(LegalGroundId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     LegalGround[] listLegalGrounds(TenantId tenantId) {
@@ -70,7 +70,7 @@ class ManageLegalGroundsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteLegalGround(LegalGroundId id) {
-        auto entity = repo.findById(tenantId, id);
+        auto entity = repo.find(tenantId, id);
         if (entity.isNull)            
             return CommandResult(false, "", "Legal ground not found");
 

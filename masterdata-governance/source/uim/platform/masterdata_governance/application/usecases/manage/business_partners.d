@@ -19,7 +19,7 @@ class ManageBusinessPartnersUseCase {
     }
 
     BusinessPartner getBusinessPartner(TenantId tenantId, BusinessPartnerId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     BusinessPartner[] listBusinessPartners(TenantId tenantId) {
@@ -121,7 +121,7 @@ class ManageBusinessPartnersUseCase {
     }
 
     CommandResult deleteBusinessPartner(TenantId tenantId, BusinessPartnerId id) {
-        auto bp = repo.findById(tenantId, id);
+        auto bp = repo.find(tenantId, id);
         if (bp.isNull)
             return CommandResult(false, "", "Business partner not found");
 

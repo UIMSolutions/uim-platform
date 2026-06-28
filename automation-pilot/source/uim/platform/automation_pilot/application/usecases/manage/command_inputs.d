@@ -19,7 +19,7 @@ class ManageCommandInputsUseCase { // TODO: UIMUseCase {
     }
 
     CommandInput getCommandInput(TenantId tenantId, CommandInputId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     CommandInput[] listCommandInputs(TenantId tenantId) {
@@ -60,7 +60,7 @@ class ManageCommandInputsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteCommandInput(TenantId tenantId, CommandInputId id) {
-        auto entity = repo.findById(tenantId, id);
+        auto entity = repo.find(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Command input not found");
             

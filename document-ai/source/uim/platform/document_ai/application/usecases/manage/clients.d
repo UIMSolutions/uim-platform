@@ -83,7 +83,7 @@ class ManageClientsUseCase { // TODO: UIMUseCase {
   }
 
   Client getClient(TenantId tenantId, ClientId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   Client[] listClients(TenantId tenantId) {
@@ -93,7 +93,7 @@ class ManageClientsUseCase { // TODO: UIMUseCase {
     return repo.count(tenantId);
   }
   CommandResult deleteClient(TenantId tenantId, ClientId id) {
-    auto client = repo.findById(tenantId, id);
+    auto client = repo.find(tenantId, id);
     if (client.isNull)
       return CommandResult(false, "", "Client not found");
 

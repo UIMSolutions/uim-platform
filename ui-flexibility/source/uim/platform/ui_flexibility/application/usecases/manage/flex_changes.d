@@ -59,7 +59,7 @@ class ManageFlexChangesUseCase {
   }
 
   FlexChange getChange(TenantId tenantId, FlexChangeId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   FlexChange[] listChanges(TenantId tenantId) {
@@ -75,7 +75,7 @@ class ManageFlexChangesUseCase {
   }
 
   CommandResult deleteChange(TenantId tenantId, FlexChangeId id) {
-    auto existing = repo.findById(tenantId, id);
+    auto existing = repo.find(tenantId, id);
     if (existing.isNull)
       return CommandResult(false, null, "FlexChange not found");
 

@@ -73,7 +73,7 @@ class ManageAuditConfigUseCase { // } { // TODO: UIMUseCase {
   }
 
   CommandResult deleteAuditConfig(TenantId tenantId, AuditConfigId id) {
-    auto entity = configs.findById(tenantId, id);
+    auto entity = configs.find(tenantId, id);
     if (entity.isNull)
       return CommandResult(false, "", "Audit config not found");
 

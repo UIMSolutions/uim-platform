@@ -136,7 +136,7 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
   }
 
   Destination getDestination(TenantId tenantId, DestinationId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   Destination[] listDestinations(TenantId tenantId, SubaccountId subaccountId) {
@@ -152,7 +152,7 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteDestination(TenantId tenantId, DestinationId id) {
-    auto entity = repo.findById(tenantId, id);
+    auto entity = repo.find(tenantId, id);
     if (entity.isNull)
       return CommandResult(false, "", "Destination not found");
 

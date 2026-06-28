@@ -114,7 +114,7 @@ class MongoServiceInstanceRepository : ServiceInstanceRepository {
     ServiceInstance[] findAllById(TenantId tenantId, ServiceInstanceId[] ids) {
         ServiceInstance[] result;
         foreach (id; ids) {
-            auto e = findById(tenantId, id);
+            auto e = find(tenantId, id);
             if (e.id.value.length > 0) result ~= e;
         }
         return result;

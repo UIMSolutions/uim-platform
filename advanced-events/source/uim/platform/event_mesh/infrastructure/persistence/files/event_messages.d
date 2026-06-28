@@ -87,7 +87,7 @@ class FileEventMessageRepository : MemoryEventMessageRepository {
 
     override EventMessage findById(TenantId tenantId, EventMessageId id) {
         ensureLoaded(tenantId);
-        return super.findById(tenantId, id);
+        return super.find(tenantId, id);
     }
 
     override void save(EventMessage item) {

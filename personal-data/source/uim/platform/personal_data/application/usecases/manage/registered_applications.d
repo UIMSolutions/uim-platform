@@ -42,7 +42,7 @@ class ManageRegisteredApplicationsUseCase { // TODO: UIMUseCase {
     }
 
     RegisteredApplication getApplication(RegisteredApplicationId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     RegisteredApplication[] listApplications(TenantId tenantId) {
@@ -68,7 +68,7 @@ class ManageRegisteredApplicationsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult activateApplication(RegisteredApplicationId id) {
-        auto existing = repo.findById(tenantId, id);
+        auto existing = repo.find(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Application not found");
         existing.status = ApplicationStatus.active;
@@ -78,7 +78,7 @@ class ManageRegisteredApplicationsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult suspendApplication(RegisteredApplicationId id) {
-        auto existing = repo.findById(tenantId, id);
+        auto existing = repo.find(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Application not found");
         existing.status = ApplicationStatus.suspended;
@@ -88,7 +88,7 @@ class ManageRegisteredApplicationsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteApplication(RegisteredApplicationId id) {
-        auto application = repo.findById(tenantId, id);
+        auto application = repo.find(tenantId, id);
         if (application.isNull)
             return CommandResult(false, "", "Application not found");
 

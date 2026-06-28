@@ -54,7 +54,7 @@ class ManageEnvironmentsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateEnvironment(TenantId tenantId, KymaEnvironmentId id, UpdateEnvironmentRequest req) {
-    auto env = repo.findById(tenantId, id);
+    auto env = repo.find(tenantId, id);
     if (env.isNull)
       return CommandResult(false, "", "Environment not found");
 
@@ -85,7 +85,7 @@ class ManageEnvironmentsUseCase { // TODO: UIMUseCase {
   }
 
   KymaEnvironment getEnvironment(TenantId tenantId, KymaEnvironmentId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   KymaEnvironment[] listEnvironments(TenantId tenantId) {
@@ -97,7 +97,7 @@ class ManageEnvironmentsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteEnvironment(TenantId tenantId, KymaEnvironmentId id) {
-    auto env = repo.findById(tenantId, id);
+    auto env = repo.find(tenantId, id);
     if (env.isNull)
       return CommandResult(false, "", "Environment not found");
 

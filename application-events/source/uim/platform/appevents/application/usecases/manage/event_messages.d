@@ -20,7 +20,7 @@ class ManageEventMessagesUseCase {
     this(EventMessageRepository repo) { this.repo = repo; }
 
     EventMessage getEventMessage(TenantId tenantId, EventMessageId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     EventMessage[] listEventMessages(TenantId tenantId) {
@@ -47,7 +47,7 @@ class ManageEventMessagesUseCase {
     }
 
     CommandResult deleteEventMessage(TenantId tenantId, EventMessageId id) {
-        auto msg = repo.findById(tenantId, id);
+        auto msg = repo.find(tenantId, id);
         if (msg.isNull) return CommandResult(false, "", "Message not found");
 
         repo.remove(msg);

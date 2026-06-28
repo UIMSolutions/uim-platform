@@ -38,7 +38,7 @@ class ManageProvidersUseCase {
   }
 
   Provider getById(TenantId tenantId, ProviderId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   Provider[] list(TenantId tenantId) {
@@ -65,7 +65,7 @@ class ManageProvidersUseCase {
   }
 
   CommandResult deleteProvider(TenantId tenantId, ProviderId id) {
-    auto p = repo.findById(tenantId, id);
+    auto p = repo.find(tenantId, id);
     if (p.isNull)
       return CommandResult(false, "", "Provider not found");
 

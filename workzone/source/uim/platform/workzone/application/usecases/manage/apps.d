@@ -45,7 +45,7 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
   }
 
   AppRegistration getApp(TenantId tenantId, AppId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   AppRegistration[] listApps(TenantId tenantId) {
@@ -78,7 +78,7 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteApp(TenantId tenantId, AppId id) {
-    auto entity = repo.findById(tenantId, id);
+    auto entity = repo.find(tenantId, id);
     if (entity.isNull)
       return CommandResult(false, "", "App not found");
 

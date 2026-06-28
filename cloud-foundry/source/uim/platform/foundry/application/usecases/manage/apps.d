@@ -61,7 +61,7 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
   }
 
   Application getApp(TenantId tenantId, AppId id) {
-    return apps.findById(tenantId, id);
+    return apps.find(tenantId, id);
   }
 
   Application[] listApps(TenantId tenantId) {
@@ -113,7 +113,7 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
 
   /// Start an application (stage then start).
   CommandResult startApp(TenantId tenantId, AppId id) {
-    auto app = apps.findById(tenantId, id);
+    auto app = apps.find(tenantId, id);
     if (app.isNull)
       return CommandResult(false, "", "Application not found");
       
@@ -128,7 +128,7 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult stopApp(TenantId tenantId, AppId id) {
-    auto app = apps.findById(tenantId, id);
+    auto app = apps.find(tenantId, id);
     if (app.isNull)
       return CommandResult(false, "", "Application not found");
     if (app.state == AppState.stopped)
@@ -159,7 +159,7 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
 
   /// Get environment variables for an application.
   string getEnvironment(TenantId tenantId, AppId id) {
-    auto app = apps.findById(tenantId, id);
+    auto app = apps.find(tenantId, id);
     if (app.isNull)
       return "{}";
     return app.environmentVariables.length > 0 ? app.environmentVariables : "{}";
@@ -170,7 +170,7 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
     if (!apps.existsById(tenantId, id))
       return CommandResult(false, "", "Application not found");
 
-    auto app = apps.findById(tenantId, id);
+    auto app = apps.find(tenantId, id);
     app.environmentVariables = envJson;
     app.updatedAt = currentTimestamp();
     apps.update(app);

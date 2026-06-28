@@ -78,7 +78,7 @@ class ManageApiRulesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateApiRule(ApiRuleId id, UpdateApiRuleRequest req) {
-    auto rule = ruleRepository.findById(tenantId, id);
+    auto rule = ruleRepository.find(tenantId, id);
     if (rule.isNull)
       return CommandResult(false, "", "API rule not found");
 
@@ -138,7 +138,7 @@ class ManageApiRulesUseCase { // TODO: UIMUseCase {
   }
 
   ApiRule getApiRule(ApiRuleId id) {
-    return ruleRepository.findById(tenantId, id);
+    return ruleRepository.find(tenantId, id);
   }
 
   ApiRule[] listByNamespace(string nsId) {
@@ -162,7 +162,7 @@ class ManageApiRulesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteApiRule(ApiRuleId id) {
-    auto rule = ruleRepository.findById(tenantId, id);
+    auto rule = ruleRepository.find(tenantId, id);
     if (rule.isNull)
       return CommandResult(false, "", "API rule not found");
 

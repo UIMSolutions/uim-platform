@@ -51,7 +51,7 @@ class ManageScopesUseCase {
   }
 
   CommandResult deleteScope(TenantId tenantId, ScopeId id) {
-    auto s = repo.findById(tenantId, id);
+    auto s = repo.find(tenantId, id);
     if (s.isNull)
       return CommandResult(false, "", "Scope not found");
 
@@ -60,7 +60,7 @@ class ManageScopesUseCase {
   }
 
   ScopeEntity getScope(TenantId tenantId, ScopeId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   ScopeEntity[] listScopes(TenantId tenantId) {

@@ -32,7 +32,7 @@ class ManageAppSubscriptionsUseCase {
     }
 
     AppSubscription getSubscription(TenantId tenantId, AppSubscriptionId id) {
-        return subRepo.findById(tenantId, id);
+        return subRepo.find(tenantId, id);
     }
 
     /// Subscribe a consumer tenant to an application via the SubscriptionEngine.
@@ -54,7 +54,7 @@ class ManageAppSubscriptionsUseCase {
 
     CommandResult updateSubscription(TenantId tenantId, AppSubscriptionId id,
                                       UpdateSubscriptionRequest req) {
-        auto sub = subRepo.findById(tenantId, id);
+        auto sub = subRepo.find(tenantId, id);
         if (sub.isNull) return CommandResult(false, "", "Subscription not found");
 
         long now  = MonoTime.currTime.ticks;

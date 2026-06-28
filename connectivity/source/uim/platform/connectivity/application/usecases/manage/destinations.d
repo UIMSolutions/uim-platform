@@ -125,7 +125,7 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
   }
 
   Destination getDestination(TenantId tenantId, DestinationId id) {
-    return destinations.findById(tenantId, id);
+    return destinations.find(tenantId, id);
   }
 
   Destination getByName(TenantId tenantId, string name) {
@@ -137,7 +137,7 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteDestination(TenantId tenantId, DestinationId id) {
-    auto dest = destinations.findById(tenantId, id);
+    auto dest = destinations.find(tenantId, id);
     if (dest.isNull)
       return CommandResult(false, "", "Destination not found");
 

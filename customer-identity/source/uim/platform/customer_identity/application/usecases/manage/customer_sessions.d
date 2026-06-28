@@ -19,7 +19,7 @@ class ManageCustomerSessionsUseCase {
     }
 
     CustomerSession getSession(TenantId tenantId, CustomerSessionId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     CustomerSession[] listSessions(TenantId tenantId) {
@@ -49,7 +49,7 @@ class ManageCustomerSessionsUseCase {
     }
 
     CommandResult revokeSession(TenantId tenantId, CustomerSessionId id) {
-        auto existing = repo.findById(tenantId, id);
+        auto existing = repo.find(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Session not found");
 
@@ -64,7 +64,7 @@ class ManageCustomerSessionsUseCase {
     }
 
     CommandResult deleteSession(TenantId tenantId, CustomerSessionId id) {
-        auto existing = repo.findById(tenantId, id);
+        auto existing = repo.find(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Session not found");
 

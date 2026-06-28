@@ -37,7 +37,7 @@ class GetAuditLogsUseCase { // TODO: UIMUseCase {
   }
 
   AuditLogEntry getLog(TenantId tenantId, AuditLogEntryId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   size_t countLogs(TenantId tenantId) {

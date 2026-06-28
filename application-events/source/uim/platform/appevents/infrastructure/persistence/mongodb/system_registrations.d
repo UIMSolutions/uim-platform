@@ -94,7 +94,7 @@ class MongoSystemRegistrationRepository : SystemRegistrationRepository {
     SystemRegistration[] findAllById(TenantId tenantId, SystemRegistrationId[] ids) {
         SystemRegistration[] result;
         foreach (id; ids) {
-            auto e = findById(tenantId, id);
+            auto e = find(tenantId, id);
             if (!e.isNull) result ~= e;
         }
         return result;

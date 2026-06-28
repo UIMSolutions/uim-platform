@@ -19,7 +19,7 @@ class ManageContentConnectorsUseCase { // TODO: UIMUseCase {
     }
 
     ContentConnector getContentConnector(TenantId tenantId, ContentConnectorId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     ContentConnector[] listContentConnectors(TenantId tenantId) {
@@ -65,7 +65,7 @@ class ManageContentConnectorsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteContentConnector(TenantId tenantId, ContentConnectorId id) {
-        auto entity = repo.findById(tenantId, id);
+        auto entity = repo.find(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Content connector not found");
             

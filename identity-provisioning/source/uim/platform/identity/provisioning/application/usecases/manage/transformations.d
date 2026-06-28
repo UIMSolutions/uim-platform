@@ -50,7 +50,7 @@ class ManageTransformationsUseCase { // TODO: UIMUseCase {
   }
 
   Transformation getTransformation(TenantId tenantId, TransformationId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   Transformation[] listTransformations(TenantId tenantId) {
@@ -93,7 +93,7 @@ class ManageTransformationsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteTransformation(TenantId tenantId, TransformationId id) {
-    auto existing = repo.findById(tenantId, id);
+    auto existing = repo.find(tenantId, id);
     if (existing.isNull)
       return CommandResult(false, "", "Transformation not found");
 

@@ -19,7 +19,7 @@ class ManageBuildsUseCase {
     }
 
     Build getBuild(TenantId tenantId, BuildId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     Build[] listBuilds(TenantId tenantId) {
@@ -58,7 +58,7 @@ class ManageBuildsUseCase {
     }
 
     CommandResult updateBuildStatus(TenantId tenantId, BuildId id, BuildStatus status, string errorMessage = "") {
-        auto existing = repo.findById(tenantId, id);
+        auto existing = repo.find(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Build not found");
 
@@ -71,7 +71,7 @@ class ManageBuildsUseCase {
     }
 
     CommandResult cancelBuild(TenantId tenantId, BuildId id) {
-        auto existing = repo.findById(tenantId, id);
+        auto existing = repo.find(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Build not found");
         if (existing.status != BuildStatus.running && existing.status != BuildStatus.pending)
@@ -83,7 +83,7 @@ class ManageBuildsUseCase {
     }
 
     CommandResult deleteBuild(TenantId tenantId, BuildId id) {
-        auto existing = repo.findById(tenantId, id);
+        auto existing = repo.find(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Build not found");
         repo.remove(tenantId, id);

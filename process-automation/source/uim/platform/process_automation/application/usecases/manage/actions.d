@@ -45,7 +45,7 @@ class ManageActionsUseCase { // TODO: UIMUseCase {
     }
 
     Action getAction(TenantId tenantId, ActionId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     Action[] listActions(TenantId tenantId) {

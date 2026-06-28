@@ -17,7 +17,7 @@ class ManageCacheEntriesUseCase {
     this(CacheEntryRepository repo) { this.repo = repo; }
 
     CacheEntry getCacheEntry(TenantId tenantId, CacheEntryId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     CacheEntry[] listCacheEntries(TenantId tenantId) {
@@ -66,7 +66,7 @@ class ManageCacheEntriesUseCase {
     }
 
     CommandResult deleteCacheEntry(TenantId tenantId, CacheEntryId id) {
-        auto existing = repo.findById(tenantId, id);
+        auto existing = repo.find(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Cache entry not found");
         repo.remove(tenantId, id);

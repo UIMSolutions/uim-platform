@@ -165,7 +165,7 @@ participant "DeliveryRepository" as repo
 
 op -> ctrl : PUT /api/v1/deliveries/{id}\n{ "status": "picking" }
 ctrl -> uc  : updateDeliveryStatus(tenantId, id, req)
-uc -> repo  : findById(tenantId, id)
+uc -> repo  : find(tenantId, id)
 repo --> uc : Delivery(status=created)
 uc -> planner : canTransitionDelivery(created, picking)
 planner --> uc : true
@@ -190,7 +190,7 @@ participant "WarehouseTaskRepository" as repo
 
 worker -> ctrl : POST /api/v1/warehouse-tasks/{id}/confirm\n{ assignedTo, confirmedAt }
 ctrl -> uc : confirmTask(tenantId, id, req)
-uc -> repo : findById(tenantId, id)
+uc -> repo : find(tenantId, id)
 repo --> uc : WarehouseTask(status=inProgress)
 uc -> planner : canTransitionTask(inProgress, confirmed)
 planner --> uc : true

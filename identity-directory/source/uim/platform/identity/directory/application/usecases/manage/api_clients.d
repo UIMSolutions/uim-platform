@@ -57,7 +57,7 @@ class ManageApiClientsUseCase { // TODO: UIMUseCase {
 
   /// Get client by ID.
   ApiClient getClient(ApiClientId id) {
-    return clientRepo.findById(tenantId, id);
+    return clientRepo.find(tenantId, id);
   }
 
   /// List clients for a tenant.
@@ -67,7 +67,7 @@ class ManageApiClientsUseCase { // TODO: UIMUseCase {
 
   /// Revoke an API client.
   CommandResult revokeClient(ApiClientId id) {
-    auto client = clientRepo.findById(tenantId, id);
+    auto client = clientRepo.find(tenantId, id);
     if (client.isNull)
       return CommandResult(false, "", "API client not found");
 

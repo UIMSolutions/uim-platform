@@ -45,7 +45,7 @@ class ManageExternalContentProvidersUseCase { // TODO: UIMUseCase {
   }
 
   ExternalContentProvider getProvider(TenantId tenantId, ExternalContentProviderId id) {
-    return repo.findById(tenantId, id);
+    return repo.find(tenantId, id);
   }
 
   ExternalContentProvider[] listProviders(TenantId tenantId) {
@@ -71,7 +71,7 @@ class ManageExternalContentProvidersUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteProvider(TenantId tenantId, ExternalContentProviderId id) {
-    auto p = repo.findById(tenantId, id);
+    auto p = repo.find(tenantId, id);
     if (p.isNull)
       return CommandResult(false, "", "Provider not found");
 

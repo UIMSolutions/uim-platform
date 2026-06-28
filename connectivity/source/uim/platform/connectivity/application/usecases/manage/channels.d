@@ -59,7 +59,7 @@ class ManageChannelsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult openChannel(TenantId tenantId, ChannelId id) {
-    auto channel = channels.findById(tenantId, id);
+    auto channel = channels.find(tenantId, id);
     if (channel.isNull)
       return CommandResult(false, "", "Channel not found");
 
@@ -80,7 +80,7 @@ class ManageChannelsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult closeChannel(TenantId tenantId, ChannelId id) {
-    auto channel = channels.findById(tenantId, id);
+    auto channel = channels.find(tenantId, id);
     if (channel.isNull)
       return CommandResult(false, "", "Channel not found");
 
@@ -94,7 +94,7 @@ class ManageChannelsUseCase { // TODO: UIMUseCase {
   }
 
   ServiceChannel getChannel(TenantId tenantId, ChannelId id) {
-    return channels.findById(tenantId, id);
+    return channels.find(tenantId, id);
   }
 
   ServiceChannel[] listByConnector(TenantId tenantId, ConnectorId connectorId) {
@@ -106,7 +106,7 @@ class ManageChannelsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteChannel(TenantId tenantId, ChannelId id) {
-    auto channel = channels.findById(tenantId, id);
+    auto channel = channels.find(tenantId, id);
     if (channel.isNull)
       return CommandResult(false, "", "Channel not found");
 

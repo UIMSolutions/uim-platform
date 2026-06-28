@@ -19,7 +19,7 @@ class ManageSubscriptionsUseCase { // TODO: UIMUseCase {
     }
 
     EventSubscription getSubscription(TenantId tenantId, EventSubscriptionId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     EventSubscription[] listSubscriptions(TenantId tenantId) {
@@ -72,7 +72,7 @@ class ManageSubscriptionsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteSubscription(TenantId tenantId, EventSubscriptionId id) {
-        auto subscription = repo.findById(tenantId, id);
+        auto subscription = repo.find(tenantId, id);
         if (subscription.isNull)
             return CommandResult(false, "", "Subscription not found");
 

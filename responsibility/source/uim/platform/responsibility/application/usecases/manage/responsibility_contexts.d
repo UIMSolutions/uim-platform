@@ -17,7 +17,7 @@ class ManageResponsibilityContextsUseCase {
     this(ResponsibilityContextRepository repo) { this.repo = repo; }
 
     ResponsibilityContext getContext(TenantId tenantId, ResponsibilityContextId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     ResponsibilityContext[] listContexts(TenantId tenantId) {
@@ -51,7 +51,7 @@ class ManageResponsibilityContextsUseCase {
     }
 
     CommandResult deleteContext(TenantId tenantId, ResponsibilityContextId id) {
-        auto e = repo.findById(tenantId, id);
+        auto e = repo.find(tenantId, id);
         if (e.isNull)
             return CommandResult(false, "", "Context not found");
         repo.remove(e);

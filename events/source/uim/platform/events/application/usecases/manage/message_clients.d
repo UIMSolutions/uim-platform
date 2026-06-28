@@ -17,7 +17,7 @@ class ManageMessageClientsUseCase {
     this(MessageClientRepository repo) { this.repo = repo; }
 
     MessageClient getClient(TenantId tenantId, MessageClientId id) {
-        return repo.findById(tenantId, id);
+        return repo.find(tenantId, id);
     }
 
     MessageClient[] listClients(TenantId tenantId) {
@@ -58,7 +58,7 @@ class ManageMessageClientsUseCase {
     }
 
     CommandResult deleteClient(TenantId tenantId, MessageClientId id) {
-        auto c = repo.findById(tenantId, id);
+        auto c = repo.find(tenantId, id);
         if (c.isNull) return CommandResult(false, "", "Message client not found");
         repo.remove(c);
         return CommandResult(true, c.id.value, "");
