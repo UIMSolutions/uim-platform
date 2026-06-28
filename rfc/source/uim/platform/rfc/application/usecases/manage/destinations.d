@@ -43,7 +43,7 @@ class ManageDestinationsUseCase {
     }
 
     Destination[] listDestinations(TenantId tenantId) {
-        return _repo.findByTenant(tenantId);
+        return _repo.find(tenantId);
     }
 
     CommandResult updateDestination(UpdateDestinationRequest req) {
@@ -75,6 +75,6 @@ class ManageDestinationsUseCase {
     }
 
     size_t countDestinations(TenantId tenantId) {
-        return _repo.countByTenant(tenantId);
+        return _repo.count(tenantId);
     }
 }

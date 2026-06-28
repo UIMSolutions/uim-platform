@@ -87,10 +87,10 @@ class ManageClientsUseCase { // TODO: UIMUseCase {
   }
 
   Client[] listClients(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
   size_t countClients(TenantId tenantId) {
-    return repo.countByTenant(tenantId);
+    return repo.count(tenantId);
   }
   CommandResult deleteClient(TenantId tenantId, ClientId id) {
     auto client = repo.findById(tenantId, id);

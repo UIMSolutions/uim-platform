@@ -37,7 +37,7 @@ class ManageFunctionModulesUseCase {
     }
 
     FunctionModule[] listFunctionModules(TenantId tenantId) {
-        return _repo.findByTenant(tenantId);
+        return _repo.find(tenantId);
     }
 
     FunctionModule[] listByFunctionGroup(TenantId tenantId, string functionGroup) {
@@ -73,6 +73,6 @@ class ManageFunctionModulesUseCase {
     }
 
     size_t countFunctionModules(TenantId tenantId) {
-        return _repo.countByTenant(tenantId);
+        return _repo.count(tenantId);
     }
 }

@@ -63,7 +63,7 @@ class ManageNamespacesUseCase { // TODO: UIMUseCase {
   }
 
   Namespace[] listNamespaces(TenantId tenantId) {
-    return namespaces.findByTenant(tenantId);
+    return namespaces.find(tenantId);
   }
 
   CommandResult deleteNamespace(TenantId tenantId, NamespaceId namespaceId) {
@@ -76,7 +76,7 @@ class ManageNamespacesUseCase { // TODO: UIMUseCase {
   }
 
   size_t countNamespaces(TenantId tenantId) {
-    return namespaces.countByTenant(tenantId);
+    return namespaces.count(tenantId);
   }
 
 }

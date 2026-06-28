@@ -60,7 +60,7 @@ class ManageServiceInstancesUseCase { // TODO: UIMUseCase {
     }
 
     ServiceInstance[] listServiceInstances(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     CommandResult deleteServiceInstance(ServiceInstanceId id) {
@@ -73,7 +73,7 @@ class ManageServiceInstancesUseCase { // TODO: UIMUseCase {
     }
 
     size_t countServiceInstances(TenantId tenantId) {
-        return repo.countByTenant(tenantId);
+        return repo.count(tenantId);
     }
 
     private static ServicePlan parsePlan(string p) {

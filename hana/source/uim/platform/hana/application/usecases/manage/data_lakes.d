@@ -47,7 +47,7 @@ class ManageDataLakesUseCase { // TODO: UIMUseCase {
   }
 
   DataLake[] listDataLakes(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   CommandResult updateDataLake(UpdateDataLakeRequest r) {
@@ -76,6 +76,6 @@ class ManageDataLakesUseCase { // TODO: UIMUseCase {
   }
 
   size_t countDataLakes(TenantId tenantId) {
-    return repo.countByTenant(tenantId);
+    return repo.count(tenantId);
   }
 }

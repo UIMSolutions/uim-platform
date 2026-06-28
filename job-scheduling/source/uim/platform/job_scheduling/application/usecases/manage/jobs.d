@@ -55,7 +55,7 @@ class ManageJobsUseCase { // TODO: UIMUseCase {
     }
 
     Job[] listJobs(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     Job[] searchJobs(TenantId tenantId, string query) {
@@ -98,7 +98,7 @@ class ManageJobsUseCase { // TODO: UIMUseCase {
     }
 
     size_t countJobs(TenantId tenantId) {
-        return repo.countByTenant(tenantId);
+        return repo.count(tenantId);
     }
 
     size_t countActiveJobs(TenantId tenantId) {

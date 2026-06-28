@@ -67,7 +67,7 @@ class ManageHtmlAppsUseCase { // TODO: UIMUseCase {
     }
 
     HtmlApp[] listHtmlAppsByTenant(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     HtmlApp[] listPublicHtmlApps(TenantId tenantId) {
@@ -84,7 +84,7 @@ class ManageHtmlAppsUseCase { // TODO: UIMUseCase {
     }
 
     size_t countHtmlAppsByTenant(TenantId tenantId) {
-        return repo.countByTenant(tenantId);
+        return repo.count(tenantId);
     }
 
     private static AppVisibility parseVisibility(string v) {

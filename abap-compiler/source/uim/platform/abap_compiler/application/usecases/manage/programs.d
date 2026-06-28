@@ -70,6 +70,6 @@ class ManageProgramsUseCase {
     }
 
     size_t countPrograms(TenantId tenantId) {
-        return repo.countByTenant(tenantId);
+        return repo.count(tenantId);
     }
 }

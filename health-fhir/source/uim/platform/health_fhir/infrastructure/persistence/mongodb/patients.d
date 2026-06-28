@@ -36,11 +36,11 @@ class MongoPatientRepository : PatientRepository {
   void save(Patient p) { fallback.save(p); }
   void update(Patient p) { fallback.update(p); }
   void remove(Patient p) { fallback.remove(p); }
-  Patient[] findByTenant(TenantId tenantId) { return fallback.findByTenant(tenantId); }
+  Patient[] findByTenant(TenantId tenantId) { return fallback.find(tenantId); }
   bool existsById(TenantId tenantId, PatientId id) { return fallback.existsById(tenantId, id); }
   Patient findById(TenantId tenantId, PatientId id) { return fallback.findById(tenantId, id); }
   void removeById(TenantId tenantId, PatientId id) { fallback.removeById(tenantId, id); }
-  size_t countByTenant(TenantId tenantId) { return fallback.countByTenant(tenantId); }
+  size_t countByTenant(TenantId tenantId) { return fallback.count(tenantId); }
   Patient[] findByTenantAll(TenantId tenantId) { return fallback.findByTenantAll(tenantId); }
   Patient[] searchByName(TenantId tenantId, string namePart) { return fallback.searchByName(tenantId, namePart); }
 }

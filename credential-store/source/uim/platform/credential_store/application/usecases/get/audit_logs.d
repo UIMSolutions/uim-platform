@@ -21,7 +21,7 @@ class GetAuditLogsUseCase { // TODO: UIMUseCase {
   }
 
   AuditLogEntry[] listLogs(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   AuditLogEntry[] listLogs(TenantId tenantId, NamespaceId namespaceId) {
@@ -41,7 +41,7 @@ class GetAuditLogsUseCase { // TODO: UIMUseCase {
   }
 
   size_t countLogs(TenantId tenantId) {
-    return repo.countByTenant(tenantId);
+    return repo.count(tenantId);
   }
 
 }

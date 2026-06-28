@@ -149,22 +149,22 @@ classDiagram
     class AbapProgramRepository {
         <<interface>>
         +AbapProgram findById(tenantId, id)
-        +AbapProgram[] findByTenant(tenantId)
+        +AbapProgram[] find(tenantId)
         +void save(AbapProgram)
         +void update(AbapProgram)
         +void remove(AbapProgram)
-        +size_t countByTenant(tenantId)
+        +size_t count(tenantId)
     }
 
     class CompilationJobRepository {
         <<interface>>
         +CompilationJob findById(tenantId, id)
         +CompilationJob[] findByProgram(tenantId, pid)
-        +CompilationJob[] findByTenant(tenantId)
+        +CompilationJob[] find(tenantId)
         +void save(CompilationJob)
         +void update(CompilationJob)
         +void remove(CompilationJob)
-        +size_t countByTenant(tenantId)
+        +size_t count(tenantId)
     }
 
     class MemoryAbapProgramRepository {

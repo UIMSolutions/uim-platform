@@ -54,7 +54,7 @@ class ManageDatabaseConnectionsUseCase { // TODO: UIMUseCase {
   }
 
   DatabaseConnection[] listDatabaseConnections(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   CommandResult updateDatabaseConnection(UpdateDatabaseConnectionRequest r) {
@@ -91,6 +91,6 @@ class ManageDatabaseConnectionsUseCase { // TODO: UIMUseCase {
   }
 
   size_t countDatabaseConnections(TenantId tenantId) {
-    return repo.countByTenant(tenantId);
+    return repo.count(tenantId);
   }
 }

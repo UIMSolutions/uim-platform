@@ -31,11 +31,11 @@ class GetOverviewUseCase { // TODO: UIMUseCase {
 
   OverviewSummary getSummary(TenantId tenantId) {
     OverviewSummary s;
-    s.totalNamespaces = nsRepo.countByTenant(tenantId);
-    s.totalCredentials = credRepo.countByTenant(tenantId);
+    s.totalNamespaces = nsRepo.count(tenantId);
+    s.totalCredentials = credRepo.count(tenantId);
 
     // Count by type
-    auto allCreds = credRepo.findByTenant(tenantId);
+    auto allCreds = credRepo.find(tenantId);
     foreach (c; allCreds) {
       final switch (c.type) {
       case CredentialType.password:
@@ -50,8 +50,8 @@ class GetOverviewUseCase { // TODO: UIMUseCase {
       }
     }
 
-    s.totalBindings = bindingRepo.countByTenant(tenantId);
-    s.totalAuditEntries = auditRepo.countByTenant(tenantId);
+    s.totalBindings = bindingRepo.count(tenantId);
+    s.totalAuditEntries = auditRepo.count(tenantId);
     return s;
   }
 }

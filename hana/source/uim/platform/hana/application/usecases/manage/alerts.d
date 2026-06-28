@@ -52,7 +52,7 @@ class ManageAlertsUseCase { // TODO: UIMUseCase {
   }
 
   Alert[] listAlerts(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   Alert[] listActiveAlerts(TenantId tenantId) {
@@ -99,6 +99,6 @@ class ManageAlertsUseCase { // TODO: UIMUseCase {
   }
 
   size_t countAlerts(TenantId tenantId) {
-    return repo.countByTenant(tenantId);
+    return repo.count(tenantId);
   }
 }

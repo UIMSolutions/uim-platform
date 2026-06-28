@@ -45,7 +45,7 @@ class ManageSchemasUseCase { // TODO: UIMUseCase {
   }
 
   Schema[] listSchemas(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   CommandResult updateSchema(UpdateSchemaRequest r) {
@@ -72,6 +72,6 @@ class ManageSchemasUseCase { // TODO: UIMUseCase {
   }
 
   size_t countSchemas(TenantId tenantId) {
-    return repo.countByTenant(tenantId);
+    return repo.count(tenantId);
   }
 }

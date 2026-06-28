@@ -47,7 +47,7 @@ class ManageHDIContainersUseCase { // TODO: UIMUseCase {
   }
 
   HDIContainer[] listHDIContainers(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   CommandResult updateHDIContainer(UpdateHDIContainerRequest r) {
@@ -76,6 +76,6 @@ class ManageHDIContainersUseCase { // TODO: UIMUseCase {
   }
 
   size_t countHDIContainers(TenantId tenantId) {
-    return repo.countByTenant(tenantId);
+    return repo.count(tenantId);
   }
 }

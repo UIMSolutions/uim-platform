@@ -202,7 +202,7 @@ unittest {
       reqDelete.params["id"] = providerId;
       auto resDelete = controller.deleteHandler(reqDelete);
        // TODO: assert(resDelete.getString("status") == "success");
-       // TODO: assert(repo.countByTenant(tenantId) == 0);
+       // TODO: assert(repo.count(tenantId) == 0);
     }
   }
 

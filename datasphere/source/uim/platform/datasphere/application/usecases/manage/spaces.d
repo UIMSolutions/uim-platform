@@ -46,7 +46,7 @@ class ManageSpacesUseCase { // TODO: UIMUseCase {
   }
 
   Space[] listSpaces(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   CommandResult updateSpace(UpdateSpaceRequest r) {
@@ -76,6 +76,6 @@ class ManageSpacesUseCase { // TODO: UIMUseCase {
   }
 
   size_t countSpaces(TenantId tenantId) {
-    return repo.countByTenant(tenantId);
+    return repo.count(tenantId);
   }
 }

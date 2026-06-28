@@ -58,7 +58,7 @@ class ManageInstancesUseCase { // TODO: UIMUseCase {
   }
 
   DatabaseInstance[] listDatabaseInstances(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   CommandResult updateDatabaseInstance(UpdateInstanceRequest r) {
@@ -119,6 +119,6 @@ class ManageInstancesUseCase { // TODO: UIMUseCase {
   }
 
   size_t countDatabaseInstances(TenantId tenantId) {
-    return repo.countByTenant(tenantId);
+    return repo.count(tenantId);
   }
 }

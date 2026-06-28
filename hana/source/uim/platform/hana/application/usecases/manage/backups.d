@@ -52,7 +52,7 @@ class ManageBackupsUseCase { // TODO: UIMUseCase {
   }
 
   Backup[] listBackups(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   CommandResult updateBackup(UpdateBackupRequest r) {
@@ -79,6 +79,6 @@ class ManageBackupsUseCase { // TODO: UIMUseCase {
   }
 
   size_t countBackups(TenantId tenantId) {
-    return repo.countByTenant(tenantId);
+    return repo.count(tenantId);
   }
 }

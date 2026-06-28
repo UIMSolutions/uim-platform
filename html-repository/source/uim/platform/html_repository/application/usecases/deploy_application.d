@@ -77,11 +77,11 @@ class DeployApplicationUseCase { // TODO: UIMUseCase {
     }
 
     DeploymentRecord[] listByTenant(TenantId tenantId) {
-        return deploymentRepo.findByTenant(tenantId);
+        return deploymentRepo.find(tenantId);
     }
 
     size_t countByTenant(TenantId tenantId) {
-        return deploymentRepo.countByTenant(tenantId);
+        return deploymentRepo.count(tenantId);
     }
 
     private static DeploymentOperation parseOperation(string op) {

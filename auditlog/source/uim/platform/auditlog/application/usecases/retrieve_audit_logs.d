@@ -47,6 +47,6 @@ class RetrieveAuditLogsUseCase { // TODO: UIMUseCase {
   }
 
   size_t countAuditLogs(TenantId tenantId) {
-    return repository.countByTenant(tenantId);
+    return repository.count(tenantId);
   }
 }

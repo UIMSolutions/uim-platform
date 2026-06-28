@@ -21,7 +21,7 @@ class ManageCallsUseCase {
     }
 
     RfcCall[] listCalls(TenantId tenantId) {
-        return _repo.findByTenant(tenantId);
+        return _repo.find(tenantId);
     }
 
     RfcCall[] listCallsByDestination(TenantId tenantId, DestinationId destId) {
@@ -46,6 +46,6 @@ class ManageCallsUseCase {
     }
 
     size_t countCalls(TenantId tenantId) {
-        return _repo.countByTenant(tenantId);
+        return _repo.count(tenantId);
     }
 }

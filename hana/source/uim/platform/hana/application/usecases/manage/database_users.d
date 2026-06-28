@@ -47,7 +47,7 @@ class ManageDatabaseUsersUseCase { // TODO: UIMUseCase {
   }
 
   DatabaseUser[] listDatabaseUsers(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   CommandResult updateDatabaseUser(UpdateDatabaseUserRequest r) {
@@ -76,6 +76,6 @@ class ManageDatabaseUsersUseCase { // TODO: UIMUseCase {
   }
 
   size_t countDatabaseUsers(TenantId tenantId) {
-    return repo.countByTenant(tenantId);
+    return repo.count(tenantId);
   }
 }

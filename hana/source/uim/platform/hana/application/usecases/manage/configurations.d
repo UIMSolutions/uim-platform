@@ -50,7 +50,7 @@ class ManageConfigurationsUseCase { // TODO: UIMUseCase {
   }
 
   Configuration[] listConfigurations(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   Configuration[] listConfigurations(DatabaseInstanceId instanceId, string section) {
@@ -84,6 +84,6 @@ class ManageConfigurationsUseCase { // TODO: UIMUseCase {
   }
 
   size_t countConfigurations(TenantId tenantId) {
-    return repo.countByTenant(tenantId);
+    return repo.count(tenantId);
   }
 }

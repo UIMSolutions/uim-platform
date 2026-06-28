@@ -36,10 +36,10 @@ class MongoDbServiceInstanceRepository : ServiceInstanceRepository {
     }
 
     ServiceInstance[] findByTenant(TenantId tenantId) {
-        return fallback.findByTenant(tenantId);
+        return fallback.find(tenantId);
     }
 
     size_t countByTenant(TenantId tenantId) {
-        return fallback.countByTenant(tenantId);
+        return fallback.count(tenantId);
     }
 }

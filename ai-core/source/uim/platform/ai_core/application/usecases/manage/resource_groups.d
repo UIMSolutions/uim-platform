@@ -73,11 +73,11 @@ class ManageResourceGroupsUseCase { // TODO: UIMUseCase {
   }
 
   ResourceGroup[] listResourceGroups(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   size_t count(TenantId tenantId) {
-    return repo.countByTenant(tenantId);
+    return repo.count(tenantId);
   }
 
   CommandResult deleteResourceGroup(TenantId tenantId, ResourceGroupId resourceGroupId) {

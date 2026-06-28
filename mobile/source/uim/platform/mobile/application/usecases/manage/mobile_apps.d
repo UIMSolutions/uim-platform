@@ -65,7 +65,7 @@ class ManageMobileAppsUseCase { // TODO: UIMUseCase {
     }
 
     MobileApp[] listMobileAppsByTenant(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     CommandResult deleteMobileApp(MobileAppId id) {
@@ -78,7 +78,7 @@ class ManageMobileAppsUseCase { // TODO: UIMUseCase {
     }
 
     size_t countMobileAppsByTenant(TenantId tenantId) {
-        return repo.countByTenant(tenantId);
+        return repo.count(tenantId);
     }
 
     private static AppPlatform parsePlatform(string s) {

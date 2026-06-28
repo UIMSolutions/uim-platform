@@ -48,7 +48,7 @@ class ManageReplicationTasksUseCase { // TODO: UIMUseCase {
   }
 
   ReplicationTask[] listReplicationTasks(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   CommandResult updateReplicationTask(UpdateReplicationTaskRequest r) {
@@ -77,6 +77,6 @@ class ManageReplicationTasksUseCase { // TODO: UIMUseCase {
   }
 
   size_t countReplicationTasks(TenantId tenantId) {
-    return repo.countByTenant(tenantId);
+    return repo.count(tenantId);
   }
 }

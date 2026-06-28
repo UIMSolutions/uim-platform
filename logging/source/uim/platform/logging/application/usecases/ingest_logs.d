@@ -89,7 +89,7 @@ unittest {
   auto result = usecase.ingest(req);
   assert(result.success);
   assert(!result.id.isEmpty);
-  assert(logRepo.countByTenant(tenantId) == 1);
+  assert(logRepo.count(tenantId) == 1);
 
   // Test batch ingestion
   IngestLogBatchRequest batch;
@@ -99,5 +99,5 @@ unittest {
   
   auto batchResult = usecase.ingestBatch(batch);
   assert(batchResult.success);
-  assert(logRepo.countByTenant(tenantId) == 3); // 1 + 2
+  assert(logRepo.count(tenantId) == 3); // 1 + 2
 }
