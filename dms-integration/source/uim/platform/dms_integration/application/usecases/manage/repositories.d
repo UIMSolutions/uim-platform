@@ -23,7 +23,7 @@ class ManageRepositoriesUseCase {
     }
 
     Repository_[] listRepositories(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     Repository_[] listRepositoriesByStatus(TenantId tenantId, RepositoryStatus status) {

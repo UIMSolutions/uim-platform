@@ -54,7 +54,7 @@ class ManageUserProfilesUseCase { // TODO: UIMUseCase {
   }
 
   UserProfile[] listUserProfiles(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   CommandResult updateUserProfile(UpdateUserProfileRequest req) {

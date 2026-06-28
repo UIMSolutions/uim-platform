@@ -19,7 +19,7 @@ class MemoryAnonymizationConfigRepository : TenantRepository!(AnonymizationConfi
   }
 
   AnonymizationConfig[] findByStatus(TenantId tenantId, AnonymizationConfigStatus status) {
-    return findByTenant(tenantId).filter!(config => config.status == status).array;
+    return find(tenantId).filter!(config => config.status == status).array;
   }
 
   void removeByStatus(TenantId tenantId, AnonymizationConfigStatus status) {

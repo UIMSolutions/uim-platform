@@ -51,14 +51,14 @@ class FileProviderRepository : ProviderRepository {
   }
 
   override Provider findByCode(TenantId tenantId, string code) {
-    foreach (p; findByTenant(tenantId)) {
+    foreach (p; find(tenantId)) {
       if (p.code == code) return p;
     }
     return Provider.init;
   }
 
   override Provider[] findActive(TenantId tenantId) {
-    return findByTenant(tenantId).filter!(p => p.isActive).array;
+    return find(tenantId).filter!(p => p.isActive).array;
   }
 
   override bool codeExists(TenantId tenantId, string code) {

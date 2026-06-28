@@ -23,7 +23,7 @@ class MemorySituationActionRepository : TenantRepository!(SituationAction, Situa
     }
 
     SituationAction[] findByType(TenantId tenantId, ActionType type) {
-        return filterByType(findByTenant(tenantId), type);
+        return filterByType(find(tenantId), type);
     }
 
     void removeByType(TenantId tenantId, ActionType type) {

@@ -16,11 +16,11 @@ import uim.platform.identity.authentication;
 class MemoryGroupRepository : TenantRepository!(IdaGroup, GroupId), GroupRepository {
 
     bool existsByName(TenantId tenantId, string name) {
-        return findByTenant(tenantId).any!(e => e.name == name);
+        return find(tenantId).any!(e => e.name == name);
     }
 
     IdaGroup findByName(TenantId tenantId, string name) {
-        foreach (e; findByTenant(tenantId)) {
+        foreach (e; find(tenantId)) {
             if (e.name == name) {
                 return e;
             }
@@ -29,7 +29,7 @@ class MemoryGroupRepository : TenantRepository!(IdaGroup, GroupId), GroupReposit
     }
 
     void removeByName(TenantId tenantId, string name) {
-        foreach (e; findByTenant(tenantId)) {
+        foreach (e; find(tenantId)) {
             if (e.name == name) {
                 remove(e);
                 return;

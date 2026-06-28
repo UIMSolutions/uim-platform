@@ -70,7 +70,7 @@ class ManageRoutesUseCase { // TODO: UIMUseCase {
   }
 
   Route[] listRoutes(TenantId tenantId) {
-    return routes.findByTenant(tenantId);
+    return routes.find(tenantId);
   }
 
   Route[] listBySpace(TenantId tenantId, SpaceId spaceId) {
@@ -136,7 +136,7 @@ class ManageRoutesUseCase { // TODO: UIMUseCase {
   }
 
   CfDomain[] listDomains(TenantId tenantId) {
-    return domains.findByTenant(tenantId);
+    return domains.find(tenantId);
   }
 
   CommandResult deleteDomain(TenantId tenantId, CfDomainId domainId) {

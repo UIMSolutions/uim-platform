@@ -17,11 +17,11 @@ import uim.platform.auditlog;
 @safe:
 class MemoryRetentionPolicyRepository : TenantRepository!(RetentionPolicy, RetentionPolicyId), RetentionPolicyRepository {
   bool existsDefault(TenantId tenantId) {
-    return findByTenant(tenantId).any!(p => p.isDefault && p.status == RetentionStatus.active);
+    return find(tenantId).any!(p => p.isDefault && p.status == RetentionStatus.active);
   }
 
   RetentionPolicy findDefault(TenantId tenantId) {
-    foreach (p; findByTenant(tenantId))
+    foreach (p; find(tenantId))
       if (p.isDefault && p.status == RetentionStatus.active)
         return p;
     return RetentionPolicy.init;

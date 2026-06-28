@@ -23,7 +23,7 @@ class ManageSkillsUseCase { // TODO: UIMUseCase {
     }
 
     Skill[] listSkills(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     Skill[] listSkills(TenantId tenantId, TechnicianId technicianId) {

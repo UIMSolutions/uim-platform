@@ -22,7 +22,7 @@ class MemoryAuditRepository : TenantRepository!(AuditEvent, AuditEventId), Audit
     return events.filter!(e => e.actorId == actorId).array;
   }
   AuditEvent[] findByActor(string actorId) {
-    return filterByActor(findByTenant(tenantId), actorId);
+    return filterByActor(find(tenantId), actorId);
   }
   void removeByActor(string actorId) {
     findByActor(actorId).each!(e => remove(e));
@@ -35,7 +35,7 @@ class MemoryAuditRepository : TenantRepository!(AuditEvent, AuditEventId), Audit
     return events.filter!(e => e.targetId == targetId).array;
   }
   AuditEvent[] findByTarget(string targetId) {
-    return filterByTarget(findByTenant(tenantId), targetId);
+    return filterByTarget(find(tenantId), targetId);
   }
   void removeByTarget(string targetId) {
     findByTarget(targetId).each!(e => remove(e));
@@ -48,7 +48,7 @@ class MemoryAuditRepository : TenantRepository!(AuditEvent, AuditEventId), Audit
     return events.filter!(e => e.tenantId == tenantId && e.eventType == eventType).array;
   }
   AuditEvent[] findByType(TenantId tenantId, AuditEventType eventType) {
-    return filterByType(tenantId, findByTenant(tenantId), eventType);
+    return filterByType(tenantId, find(tenantId), eventType);
   }
   void removeByType(TenantId tenantId, AuditEventType eventType) {
     findByType(tenantId, eventType).each!(e => remove(e));
@@ -61,7 +61,7 @@ class MemoryAuditRepository : TenantRepository!(AuditEvent, AuditEventId), Audit
     return events.filter!(e => e.timestamp >= from && e.timestamp <= to).array;
   }
   AuditEvent[] findByTimeRange(TenantId tenantId, long from, long to) {
-    return filterByTimeRange(findByTenant(tenantId), from, to);
+    return filterByTimeRange(find(tenantId), from, to);
   }
   void removeByTimeRange(TenantId tenantId, long from, long to) {
     findByTimeRange(tenantId, from, to).each!(e => remove(e));

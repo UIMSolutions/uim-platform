@@ -35,7 +35,7 @@ public:
   }
 
   UseCaseResult!(Workspace[]) list(TenantId tenantId) {
-    return UseCaseResult!(Workspace[])(true, "", _repo.findByTenant(tenantId));
+    return UseCaseResult!(Workspace[])(true, "", _repo.find(tenantId));
   }
 
   UseCaseResult!Workspace get(TenantId tenantId, WorkspaceId id) {

@@ -71,7 +71,7 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
   }
 
   ModelDeployment[] listDeployments(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   /// Activate a deploying or inactive deployment.

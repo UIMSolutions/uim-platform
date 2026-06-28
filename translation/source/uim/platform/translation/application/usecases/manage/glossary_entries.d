@@ -41,7 +41,7 @@ class ManageGlossaryEntriesUseCase {
     }
 
     GlossaryEntry[] listEntries(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     GlossaryEntry getEntry(TenantId tenantId, GlossaryEntryId id) {
@@ -49,7 +49,7 @@ class ManageGlossaryEntriesUseCase {
     }
 
     CommandResult updateEntry(UpdateGlossaryEntryRequest r) {
-        auto existing = repo.findById(r.tenantId, r.entryId);
+        auto existing = repo.find(r.tenantId, r.entryId);
         if (existing.isNull)
             return CommandResult(false, "", "Glossary entry not found");
 

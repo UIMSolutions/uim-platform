@@ -82,7 +82,7 @@ class FileBrokerServiceRepository : MemoryBrokerServiceRepository {
         auto fp = filePath(tenantId);
         mkdirRecurse(dirName(fp));
         Json arr = Json.emptyArray;
-        foreach (item; super.findByTenant(tenantId))
+        foreach (item; super.find(tenantId))
             arr ~= item.toJson;
         write(fp, arr.toString());
     }

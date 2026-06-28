@@ -16,7 +16,7 @@ class MemoryDataProviderRepository
 
   DataProvider[] findByStatus(TenantId tenantId, DataProviderStatus status) {
     DataProvider[] result;
-    foreach (item; findByTenant(tenantId)) {
+    foreach (item; find(tenantId)) {
       if (item.status == status) result ~= item;
     }
     return result;

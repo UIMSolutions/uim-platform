@@ -76,7 +76,7 @@ class ManageAppRoutesUseCase { // TODO: UIMUseCase {
     }
 
     AppRoute[] listAppRoutes(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     CommandResult deleteAppRoute(AppRouteId id) {

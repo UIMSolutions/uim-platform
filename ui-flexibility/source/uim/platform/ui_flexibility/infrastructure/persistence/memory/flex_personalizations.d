@@ -17,7 +17,7 @@ class MemoryFlexPersonalizationRepository : TenantRepository!(FlexPersonalizatio
   }
 
   FlexPersonalization findById(TenantId tenantId, FlexPersonalizationId id) {
-    foreach (p; findByTenant(tenantId))
+    foreach (p; find(tenantId))
       if (p.id_ == id) return p;
     return FlexPersonalization.init;
   }
@@ -27,22 +27,22 @@ class MemoryFlexPersonalizationRepository : TenantRepository!(FlexPersonalizatio
   }
 
   long countByTenant(TenantId tenantId) {
-    return cast(long) findByTenant(tenantId).length;
+    return cast(long) find(tenantId).length;
   }
 
   FlexPersonalization[] findByTenantAll(TenantId tenantId) {
-    return findByTenant(tenantId);
+    return find(tenantId);
   }
 
   FlexPersonalization[] findByUser(TenantId tenantId, string appId, string userId) {
     FlexPersonalization[] result;
-    foreach (p; findByTenant(tenantId))
+    foreach (p; find(tenantId))
       if (p.appId_ == appId && p.userId_ == userId) result ~= p;
     return result;
   }
 
   FlexPersonalization findByControl(TenantId tenantId, string appId, string userId, string controlId) {
-    foreach (p; findByTenant(tenantId))
+    foreach (p; find(tenantId))
       if (p.appId_ == appId && p.userId_ == userId && p.controlId_ == controlId) return p;
     return FlexPersonalization.init;
   }

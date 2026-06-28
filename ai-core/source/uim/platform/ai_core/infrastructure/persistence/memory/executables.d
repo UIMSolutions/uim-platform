@@ -39,7 +39,7 @@ class MemoryExecutableRepository : TenantRepository!(Executable, ExecutableId), 
   }
 
   Executable[] findByResourceGroup(TenantId tenantId, ResourceGroupId rgId) {
-    return filterByResourceGroup(findByTenant(tenantId), rgId);
+    return filterByResourceGroup(find(tenantId), rgId);
   }
 
   void removeByResourceGroup(TenantId tenantId, ResourceGroupId rgId) {

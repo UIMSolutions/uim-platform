@@ -23,7 +23,7 @@ class MemoryChannelRepository : TenantRepository!(Channel, ChannelId), ChannelRe
   }
 
   Channel[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
-    return findByTenant(tenantId).filter!(c => c.workspaceId == workspaceId).array;
+    return find(tenantId).filter!(c => c.workspaceId == workspaceId).array;
   }
 
   void removeByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {

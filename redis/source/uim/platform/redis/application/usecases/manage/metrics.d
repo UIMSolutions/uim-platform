@@ -21,7 +21,7 @@ class ManageMetricsUseCase {
     }
 
     Metric[] listMetrics(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     Metric[] listByInstance(TenantId tenantId, ServiceInstanceId instanceId) {

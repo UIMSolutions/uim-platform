@@ -21,7 +21,7 @@ class ManageCacheEntriesUseCase {
     }
 
     CacheEntry[] listCacheEntries(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     CacheEntry[] listByInstance(TenantId tenantId, ServiceInstanceId instanceId) {

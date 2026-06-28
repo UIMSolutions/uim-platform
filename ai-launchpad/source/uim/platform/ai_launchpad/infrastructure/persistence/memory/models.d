@@ -34,7 +34,7 @@ class MemoryModelRepository : TenantRepository!(Model, ModelId), IModelRepositor
     return findByConnection(tenantId, connectionId).length;
   }
   Model[] findByConnection(TenantId tenantId, ConnectionId connectionId) {
-    return filterByConnection(findByTenant(tenantId), connectionId);
+    return filterByConnection(find(tenantId), connectionId);
   }
   void removeByConnection(TenantId tenantId, ConnectionId connectionId) {
     findByConnection(tenantId, connectionId).each!(m => remove(m));

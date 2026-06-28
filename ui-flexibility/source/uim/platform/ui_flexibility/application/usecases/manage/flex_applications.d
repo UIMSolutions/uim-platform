@@ -38,7 +38,7 @@ class ManageFlexApplicationsUseCase {
   }
 
   CommandResult updateApplication(UpdateFlexApplicationRequest r) {
-    auto a = repo.findById(r.tenantId, r.applicationId);
+    auto a = repo.find(r.tenantId, r.applicationId);
     if (a.isNull) return CommandResult(false, null, "FlexApplication not found");
     a.description_ = r.description_;
     a.isActive_    = r.isActive_;

@@ -21,7 +21,7 @@ class ManageResponsibilityContextsUseCase {
     }
 
     ResponsibilityContext[] listContexts(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     CommandResult createContext(ResponsibilityContextDTO dto) {

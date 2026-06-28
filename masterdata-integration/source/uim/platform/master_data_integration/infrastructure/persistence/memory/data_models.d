@@ -22,7 +22,7 @@ class MemoryDataModelRepository : TenantRepository!(DataModel, DataModelId), Dat
     * @return `true` if a data model with the specified name exists, `false` otherwise.
     */
   bool existsByName(TenantId tenantId, string name) {
-    return findByTenant(tenantId).any!((e) => e.name == name);
+    return find(tenantId).any!((e) => e.name == name);
   }
 
   /**
@@ -33,7 +33,7 @@ class MemoryDataModelRepository : TenantRepository!(DataModel, DataModelId), Dat
     * @return The data model with the specified name, or an initialized data model if not found.
     */
   DataModel findByName(TenantId tenantId, string name) {
-    foreach (m; findByTenant(tenantId)) {
+    foreach (m; find(tenantId)) {
       if (m.name == name)
         return m;
     }
@@ -82,7 +82,7 @@ class MemoryDataModelRepository : TenantRepository!(DataModel, DataModelId), Dat
     * @return An array of data models that belong to the specified category.
     */
   DataModel[] findByCategory(TenantId tenantId, MasterDataCategory category) {
-    return filterByCategory(findByTenant(tenantId), category);
+    return filterByCategory(find(tenantId), category);
   }
 
   /**

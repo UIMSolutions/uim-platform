@@ -22,7 +22,7 @@ class MemoryContentRepository : TenantRepository!(ContentItem, ContentId), Conte
   }
 
   ContentItem[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
-    return findByTenant(tenantId).filter!(c => c.workspaceId == workspaceId).array;
+    return find(tenantId).filter!(c => c.workspaceId == workspaceId).array;
   }
 
   void removeByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
@@ -34,7 +34,7 @@ class MemoryContentRepository : TenantRepository!(ContentItem, ContentId), Conte
   }
 
   ContentItem[] findByAuthor(TenantId tenantId, UserId authorId) {
-    return findByTenant(tenantId).filter!(c => c.authorId == authorId).array;
+    return find(tenantId).filter!(c => c.authorId == authorId).array;
   }
 
   void removeByAuthor(TenantId tenantId, UserId authorId) {
@@ -46,7 +46,7 @@ class MemoryContentRepository : TenantRepository!(ContentItem, ContentId), Conte
   }
 
   ContentItem[] findByType(TenantId tenantId, ContentType contentType, WorkspaceId workspaceId) {
-    return findByTenant(tenantId).filter!(c => c.workspaceId == workspaceId && c.contentType == contentType)
+    return find(tenantId).filter!(c => c.workspaceId == workspaceId && c.contentType == contentType)
       .array;
   }
 
@@ -59,7 +59,7 @@ class MemoryContentRepository : TenantRepository!(ContentItem, ContentId), Conte
   }
 
   ContentItem[] findByTag(TenantId tenantId, string tag) {
-    return findByTenant(tenantId).filter!(c => c.tags.canFind(tag)).array;
+    return find(tenantId).filter!(c => c.tags.canFind(tag)).array;
   }
 
   void removeByTag(TenantId tenantId, string tag) {
@@ -71,7 +71,7 @@ class MemoryContentRepository : TenantRepository!(ContentItem, ContentId), Conte
   }
 
   ContentItem[] findByStatus(TenantId tenantId, ContentStatus status, WorkspaceId workspaceId) {
-    return findByTenant(tenantId).filter!(c => c.workspaceId == workspaceId && c.status == status)
+    return find(tenantId).filter!(c => c.workspaceId == workspaceId && c.status == status)
       .array;
   }
 

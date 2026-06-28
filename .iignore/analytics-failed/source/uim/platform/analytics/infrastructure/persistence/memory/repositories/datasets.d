@@ -23,7 +23,7 @@ class MemoryDatasetRepository : TenantRepository!(Dataset, DatasetId), DatasetRe
   }
 
   Dataset[] findByDataSource(TenantId tenantId, DataSourceId dataSourceId) {
-    return filterByDataSource(findByTenant(tenantId), dataSourceId);
+    return filterByDataSource(find(tenantId), dataSourceId);
   }
 
   void removeByDataSource(TenantId tenantId, DataSourceId dataSourceId) {

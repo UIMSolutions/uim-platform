@@ -22,7 +22,7 @@ class ManageSaasApplicationsUseCase {
     }
 
     SaasApplication[] listApplications(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     SaasApplication getApplication(TenantId tenantId, SaasApplicationId id) {

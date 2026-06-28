@@ -38,7 +38,7 @@ class ManageFlexPersonalizationsUseCase {
   }
 
   CommandResult updatePersonalization(UpdateFlexPersonalizationRequest r) {
-    auto p = repo.findById(r.tenantId, r.personalizationId);
+    auto p = repo.find(r.tenantId, r.personalizationId);
     if (p.isNull) return CommandResult(false, null, "FlexPersonalization not found");
     p.content_  = r.content_;
     p.isSynced_ = r.isSynced_;

@@ -66,7 +66,7 @@ class ManageTranslationJobsUseCase {
     }
 
     TranslationJob[] listJobs(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     TranslationJob getJob(TenantId tenantId, TranslationJobId id) {

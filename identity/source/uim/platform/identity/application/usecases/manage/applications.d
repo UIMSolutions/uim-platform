@@ -17,7 +17,7 @@ class ManageApplicationsUseCase {
     this(ApplicationRepository repo) { this.repo = repo; }
 
     Application getApplication(TenantId tenantId, ApplicationId id) { return repo.findById(tenantId, id); }
-    Application[] listApplications(TenantId tenantId) { return repo.findByTenant(tenantId); }
+    Application[] listApplications(TenantId tenantId) { return repo.find(tenantId); }
     Application[] listByProtocol(TenantId tenantId, AppProtocol protocol) { return repo.findByProtocol(tenantId, protocol); }
 
     CommandResult createApplication(ApplicationDTO dto) {

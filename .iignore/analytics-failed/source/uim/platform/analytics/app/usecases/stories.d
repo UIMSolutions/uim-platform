@@ -31,19 +31,19 @@ class StoryUseCases {
   }
 
   StoryResponse getStory(TenantId tenantId, StoryId id) {
-    auto found = repo.findByTenant(tenantId).filter!(e => e.id == id).array;
+    auto found = repo.find(tenantId).filter!(e => e.id == id).array;
     return StoryResponse.fromEntity(found.empty ? Story.init : found[0]);
   }
 
   StoryResponse[] listStories(TenantId tenantId) {
     StoryResponse[] result;
-    foreach (s; repo.findByTenant(tenantId))
+    foreach (s; repo.find(tenantId))
       result ~= StoryResponse.fromEntity(s);
     return result;
   }
 
   StoryResponse addSectionToStory(TenantId tenantId, StoryId storyId, string heading, string narrative) {
-    auto found = repo.findByTenant(tenantId).filter!(e => e.id == storyId).array;
+    auto found = repo.find(tenantId).filter!(e => e.id == storyId).array;
     auto s = found.empty ? Story.init : found[0];
     if (s.isNull)
       return StoryResponse.init;
@@ -53,7 +53,7 @@ class StoryUseCases {
   }
 
   StoryResponse publishStory(TenantId tenantId, StoryId storyId) {
-    auto found = repo.findByTenant(tenantId).filter!(e => e.id == storyId).array;
+    auto found = repo.find(tenantId).filter!(e => e.id == storyId).array;
     auto s = found.empty ? Story.init : found[0];
     if (s.isNull)
       return StoryResponse.init;
@@ -63,7 +63,7 @@ class StoryUseCases {
   }
 
   CommandResult deleteStory(TenantId tenantId, StoryId storyId) {
-    auto found = repo.findByTenant(tenantId).filter!(e => e.id == storyId).array;
+    auto found = repo.find(tenantId).filter!(e => e.id == storyId).array;
     auto s = found.empty ? Story.init : found[0];
     if (s.isNull)
       return CommandResult(false, "", "Story not found");

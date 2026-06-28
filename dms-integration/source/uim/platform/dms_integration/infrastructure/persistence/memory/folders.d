@@ -17,14 +17,14 @@ class MemoryFolderRepository : TenantRepository!(Folder, FolderId), FolderReposi
         return findByRepository(tenantId, repositoryId).length;
     }
     Folder[] findByRepository(TenantId tenantId, RepositoryId repositoryId) {
-        return findByTenant(tenantId).filter!(e => e.repositoryId == repositoryId).array;
+        return find(tenantId).filter!(e => e.repositoryId == repositoryId).array;
     }
     void removeByRepository(TenantId tenantId, RepositoryId repositoryId) {
         findByRepository(tenantId, repositoryId).each!(e => remove(e));
     }
 
     Folder[] findByParent(TenantId tenantId, FolderId parentFolderId) {
-        return findByTenant(tenantId).filter!(e => e.parentFolderId == parentFolderId).array;
+        return find(tenantId).filter!(e => e.parentFolderId == parentFolderId).array;
     }
 
     Folder[] findByPath(TenantId tenantId, RepositoryId repositoryId, string path) {

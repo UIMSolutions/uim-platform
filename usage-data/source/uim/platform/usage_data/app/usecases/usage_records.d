@@ -38,7 +38,7 @@ class UsageRecordUseCases {
 
   UsageRecordResponse[] listRecords(TenantId tenantId) {
     UsageRecordResponse[] result;
-    foreach (r; repo.findByTenant(tenantId))
+    foreach (r; repo.find(tenantId))
       result ~= UsageRecordResponse.fromEntity(r);
     return result;
   }

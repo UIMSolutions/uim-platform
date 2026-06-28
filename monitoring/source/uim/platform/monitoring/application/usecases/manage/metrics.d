@@ -73,7 +73,7 @@ class ManageMetricsUseCase { // TODO: UIMUseCase {
   }
 
   MetricDefinition[] listDefinitions(TenantId tenantId) {
-    return definitions.findByTenant(tenantId);
+    return definitions.find(tenantId);
   }
 
   CommandResult deleteMetricDefinition(TenantId tenantId, MetricDefinitionId id) {

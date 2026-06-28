@@ -70,7 +70,7 @@ class ManageDataModelsUseCase { // TODO: UIMUseCase {
   }
 
   DataModel[] listModelsByTenant(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   DataModel[] listModelsByCategory(TenantId tenantId, string category) {

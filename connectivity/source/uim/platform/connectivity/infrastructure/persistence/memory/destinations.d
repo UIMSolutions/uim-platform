@@ -16,11 +16,11 @@ class MemoryDestinationRepository : TenantRepository!(Destination, DestinationId
 
   // #region ByName
   bool existsByName(TenantId tenantId, string name) {
-    return findByTenant(tenantId).any!(e => e.name == name);
+    return find(tenantId).any!(e => e.name == name);
   }
 
   Destination findByName(TenantId tenantId, string name) {
-    foreach (e; findByTenant(tenantId)) {
+    foreach (e; find(tenantId)) {
       if (e.name == name)
         return e;
     }
@@ -28,7 +28,7 @@ class MemoryDestinationRepository : TenantRepository!(Destination, DestinationId
   }
 
   void removeByName(TenantId tenantId, string name) {
-    foreach (e; findByTenant(tenantId)) {
+    foreach (e; find(tenantId)) {
       if (e.name == name)
         return remove(e);
     }
@@ -41,7 +41,7 @@ class MemoryDestinationRepository : TenantRepository!(Destination, DestinationId
   }
 
   Destination[] findByProxyType(TenantId tenantId, ProxyType proxyType) {
-    return findByTenant(tenantId).filter!(e => e.proxyType == proxyType).array;
+    return find(tenantId).filter!(e => e.proxyType == proxyType).array;
   }
 
   void removeByProxyType(TenantId tenantId, ProxyType proxyType) {

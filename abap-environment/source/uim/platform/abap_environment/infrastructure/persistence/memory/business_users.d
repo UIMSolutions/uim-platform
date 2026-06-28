@@ -57,7 +57,7 @@ class MemoryBusinessUserRepository : TenantRepository!(BusinessUser, BusinessUse
   }
 
   BusinessUser[] findBySystem(TenantId tenantId, SystemInstanceId systemId) {
-    return filterBySystem(findByTenant(tenantId), systemId);
+    return filterBySystem(find(tenantId), systemId);
   }
 
   void removeBySystem(TenantId tenantId, SystemInstanceId systemId) {

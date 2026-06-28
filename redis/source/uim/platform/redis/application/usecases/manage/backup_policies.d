@@ -21,7 +21,7 @@ class ManageBackupPoliciesUseCase {
     }
 
     BackupPolicy[] listBackupPolicies(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     BackupPolicy getByInstance(TenantId tenantId, ServiceInstanceId instanceId) {

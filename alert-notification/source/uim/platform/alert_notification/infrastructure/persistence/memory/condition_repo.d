@@ -16,7 +16,7 @@ class MemoryConditionRepository
       ConditionRepository
 {
     Condition findByName(TenantId tenantId, string name) {
-        foreach (c; findByTenant(tenantId))
+        foreach (c; find(tenantId))
             if (c.name == name) return c;
         return null;
     }

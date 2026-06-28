@@ -82,7 +82,7 @@ class ManageAccessRulesUseCase { // TODO: UIMUseCase {
   }
 
   AccessRule[] listAccessRules(TenantId tenantId) {
-    return rules.findByTenant(tenantId);
+    return rules.find(tenantId);
   }
 
   CommandResult deleteAccessRule(TenantId tenantId, RuleId id) {

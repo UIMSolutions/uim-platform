@@ -23,7 +23,7 @@ class ManageProjectMembersUseCase { // TODO: UIMUseCase {
     }
 
     ProjectMember[] listProjectMembers(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     ProjectMember[] listByApplication(ApplicationId applicationId) {

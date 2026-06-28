@@ -58,11 +58,11 @@ class MongoEventTopicRepository : EventTopicRepository {
         ]);
     }
 
-    bool isTenantEmpty(TenantId tenantId)  { return findByTenant(tenantId).length == 0; }
+    bool isTenantEmpty(TenantId tenantId)  { return find(tenantId).length == 0; }
     void createTenant(TenantId tenantId)    {}
     TenantId[] findAllTenants()             { return []; }
     bool existsByTenant(TenantId tenantId)  { return !isTenantEmpty(tenantId); }
-    size_t countByTenant(TenantId tenantId) { return findByTenant(tenantId).length; }
+    size_t countByTenant(TenantId tenantId) { return find(tenantId).length; }
     EventTopic[] filterByTenant(EventTopic[] items, TenantId tenantId) {
         return items.filter!(e => e.tenantId == tenantId).array;
     }
@@ -130,14 +130,14 @@ class MongoEventTopicRepository : EventTopicRepository {
     void removeAll() @trusted { _collection.remove(Bson.emptyObject); }
 
     override EventTopic[] findByStatus(TenantId tenantId, TopicStatus status) {
-        return findByTenant(tenantId).filter!(e => e.status == status).array;
+        return find(tenantId).filter!(e => e.status == status).array;
     }
 
     override EventTopic[] findByNamespace(TenantId tenantId, string namespace) {
-        return findByTenant(tenantId).filter!(e => e.namespace == namespace).array;
+        return find(tenantId).filter!(e => e.namespace == namespace).array;
     }
 
     override bool nameExists(TenantId tenantId, string name) {
-        return findByTenant(tenantId).any!(e => e.name == name);
+        return find(tenantId).any!(e => e.name == name);
     }
 }

@@ -103,7 +103,7 @@ class ManageReplicationJobsUseCase { // TODO: UIMUseCase {
   }
 
   ReplicationJob[] listJobs(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   ReplicationJob[] listJobs(TenantId tenantId, string status) {

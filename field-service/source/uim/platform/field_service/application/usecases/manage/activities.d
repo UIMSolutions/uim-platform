@@ -23,7 +23,7 @@ class ManageActivitiesUseCase { // TODO: UIMUseCase {
     }
 
     Activity[] listActivities(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     Activity[] listActivities(TenantId tenantId, ServiceCallId serviceCallId) {

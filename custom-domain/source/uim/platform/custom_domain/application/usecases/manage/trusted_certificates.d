@@ -26,7 +26,7 @@ class ManageTrustedCertificatesUseCase { // TODO: UIMUseCase {
         if (r.customDomainId.isEmpty)
             return CommandResult(false, "", "Custom domain ID is required");
 
-        auto existing = repo.findById(r.tenantId, r.trustedCertificateId);
+        auto existing = repo.find(r.tenantId, r.trustedCertificateId);
         if (!existing.isNull)
             return CommandResult(false, "", "Trusted certificate already exists");
 
@@ -47,7 +47,7 @@ class ManageTrustedCertificatesUseCase { // TODO: UIMUseCase {
     }
 
     TrustedCertificate[] listCertificates(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     TrustedCertificate[] listCertificates(TenantId tenantId, CustomDomainId domainId) {

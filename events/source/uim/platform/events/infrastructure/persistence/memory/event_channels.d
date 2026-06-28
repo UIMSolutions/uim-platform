@@ -19,15 +19,15 @@ class MemoryEventChannelRepository
     }
 
     EventChannel[] findByService(TenantId tenantId, MessagingServiceId serviceId) {
-        return findByTenant(tenantId).filter!(e => e.serviceId == serviceId).array;
+        return find(tenantId).filter!(e => e.serviceId == serviceId).array;
     }
 
     EventChannel[] findByNamespace(TenantId tenantId, string namespace) {
-        return findByTenant(tenantId).filter!(e => e.namespace == namespace).array;
+        return find(tenantId).filter!(e => e.namespace == namespace).array;
     }
 
     EventChannel[] findByStatus(TenantId tenantId, EventChannelStatus status) {
-        return findByTenant(tenantId).filter!(e => e.status == status).array;
+        return find(tenantId).filter!(e => e.status == status).array;
     }
 
     void removeByService(TenantId tenantId, MessagingServiceId serviceId) {

@@ -37,15 +37,15 @@ class FilePrintTaskRepository : PrintTaskRepository {
     }
 
     PrintTask[] findByQueue(TenantId tenantId, PrintQueueId queueId) {
-        return findByTenant(tenantId).filter!(t => t.queueId == queueId).array;
+        return find(tenantId).filter!(t => t.queueId == queueId).array;
     }
 
     PrintTask[] findByStatus(TenantId tenantId, PrintTaskStatus status) {
-        return findByTenant(tenantId).filter!(t => t.status == status).array;
+        return find(tenantId).filter!(t => t.status == status).array;
     }
 
     PrintTask[] findPendingByQueue(TenantId tenantId, PrintQueueId queueId) {
-        return findByTenant(tenantId)
+        return find(tenantId)
             .filter!(t => t.queueId == queueId && t.status == PrintTaskStatus.pending).array;
     }
 

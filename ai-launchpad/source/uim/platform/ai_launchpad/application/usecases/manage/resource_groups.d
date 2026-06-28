@@ -50,11 +50,11 @@ class ManageResourceGroupsUseCase { // TODO: UIMUseCase {
   }
 
   ResourceGroup[] listResourceGroups(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   CommandResult patchResourceGroup(PatchResourceGroupRequest r) {
-    auto rg = repo.findById(r.tenantId, r.connectionId, r.resourceGroupId);
+    auto rg = repo.find(r.tenantId, r.connectionId, r.resourceGroupId);
     if (rg.isNull)
       return CommandResult(false, "", "Resource group not found");
 

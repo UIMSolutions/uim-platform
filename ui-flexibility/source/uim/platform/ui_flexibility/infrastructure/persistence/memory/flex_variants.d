@@ -17,7 +17,7 @@ class MemoryFlexVariantRepository : TenantRepository!(FlexVariant, FlexVariantId
   }
 
   FlexVariant findById(TenantId tenantId, FlexVariantId id) {
-    foreach (v; findByTenant(tenantId))
+    foreach (v; find(tenantId))
       if (v.id_ == id) return v;
     return FlexVariant.init;
   }
@@ -27,36 +27,36 @@ class MemoryFlexVariantRepository : TenantRepository!(FlexVariant, FlexVariantId
   }
 
   long countByTenant(TenantId tenantId) {
-    return cast(long) findByTenant(tenantId).length;
+    return cast(long) find(tenantId).length;
   }
 
   FlexVariant[] findByTenantAll(TenantId tenantId) {
-    return findByTenant(tenantId);
+    return find(tenantId);
   }
 
   FlexVariant[] findByApp(TenantId tenantId, string appId) {
     FlexVariant[] result;
-    foreach (v; findByTenant(tenantId))
+    foreach (v; find(tenantId))
       if (v.appId_ == appId) result ~= v;
     return result;
   }
 
   FlexVariant[] findByType(TenantId tenantId, string appId, VariantType variantType) {
     FlexVariant[] result;
-    foreach (v; findByTenant(tenantId))
+    foreach (v; find(tenantId))
       if (v.appId_ == appId && v.variantType_ == variantType) result ~= v;
     return result;
   }
 
   FlexVariant[] findPublicByApp(TenantId tenantId, string appId) {
     FlexVariant[] result;
-    foreach (v; findByTenant(tenantId))
+    foreach (v; find(tenantId))
       if (v.appId_ == appId && v.isPublic_) result ~= v;
     return result;
   }
 
   FlexVariant findDefaultByApp(TenantId tenantId, string appId, VariantType variantType) {
-    foreach (v; findByTenant(tenantId))
+    foreach (v; find(tenantId))
       if (v.appId_ == appId && v.variantType_ == variantType && v.isDefault_) return v;
     return FlexVariant.init;
   }

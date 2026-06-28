@@ -51,7 +51,7 @@ class ManageTargetSystemsUseCase { // TODO: UIMUseCase {
   }
 
   TargetSystem[] listTargetSystems(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   CommandResult updateTargetSystem(UpdateTargetSystemRequest req) {

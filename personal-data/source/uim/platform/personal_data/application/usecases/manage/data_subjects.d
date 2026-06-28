@@ -51,7 +51,7 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
     }
 
     DataSubject[] listDataSubjects(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     DataSubject[] searchDataSubjectsByName(TenantId tenantId, string firstName, string lastName) {
@@ -63,7 +63,7 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateDataSubject(UpdateDataSubjectRequest r) {
-        auto existing = repo.findById(r.tenantId, r.subjectId);
+        auto existing = repo.find(r.tenantId, r.subjectId);
         if (existing.isNull)
             return CommandResult(false, "", "Data subject not found");
 

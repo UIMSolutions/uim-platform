@@ -9,18 +9,18 @@ class MemoryClusterRepository : TenantRepository!(Cluster, ClusterId), ClusterRe
   Cluster[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
     import std.algorithm : filter;
     import std.array : array;
-    return findByTenant(tenantId).filter!(c => c.workspaceId == workspaceId).array;
+    return find(tenantId).filter!(c => c.workspaceId == workspaceId).array;
   }
 
   Cluster[] findByState(TenantId tenantId, ClusterState state) {
     import std.algorithm : filter;
     import std.array : array;
-    return findByTenant(tenantId).filter!(c => c.state == state).array;
+    return find(tenantId).filter!(c => c.state == state).array;
   }
 
   Cluster[] findByType(TenantId tenantId, ClusterType clusterType) {
     import std.algorithm : filter;
     import std.array : array;
-    return findByTenant(tenantId).filter!(c => c.clusterType == clusterType).array;
+    return find(tenantId).filter!(c => c.clusterType == clusterType).array;
   }
 }

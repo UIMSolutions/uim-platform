@@ -24,7 +24,7 @@ class MemoryReplicationTaskRepository : TenantRepository!(ReplicationTask, Repli
     return tasks.filter!(t => t.instanceId == instanceId).array;
   }
   ReplicationTask[] findByInstance(TenantId tenantId, DatabaseInstanceId instanceId) {
-    return filterByInstance(findByTenant(tenantId), instanceId);
+    return filterByInstance(find(tenantId), instanceId);
   }
   void removeByInstance(TenantId tenantId, DatabaseInstanceId instanceId) {
     findByInstance(tenantId, instanceId).each!(t => remove(t));

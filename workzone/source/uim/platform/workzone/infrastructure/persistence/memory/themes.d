@@ -18,18 +18,18 @@ import uim.platform.workzone;
 class MemoryThemeRepository : TenantRepository!(Theme, ThemeId), ThemeRepository {
 
   bool existsDefault(TenantId tenantId) {
-    return findByTenant(tenantId).any!(t => t.isDefault);
+    return find(tenantId).any!(t => t.isDefault);
   }
 
   Theme findDefault(TenantId tenantId) {
-    foreach (t; findByTenant(tenantId))
+    foreach (t; find(tenantId))
       if (t.isDefault)
         return t;
     return Theme.init;
   }
 
   void removeDefault(TenantId tenantId) {
-    foreach (t; findByTenant(tenantId))
+    foreach (t; find(tenantId))
       if (t.isDefault) {
         remove(t);
         break;

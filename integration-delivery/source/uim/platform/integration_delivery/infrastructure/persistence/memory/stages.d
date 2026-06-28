@@ -15,11 +15,11 @@ import std.array : array;
 
 class MemoryStageRepository : TenantRepository!(Stage, StageId), StageRepository {
     Stage[] findByBuild(TenantId tenantId, BuildId buildId) {
-        return findByTenant(tenantId).filter!(s => s.buildId == buildId).array;
+        return find(tenantId).filter!(s => s.buildId == buildId).array;
     }
 
     Stage[] findByStatus(TenantId tenantId, StageStatus status) {
-        return findByTenant(tenantId).filter!(s => s.status == status).array;
+        return find(tenantId).filter!(s => s.status == status).array;
     }
 
     Stage[] findByBuildOrdered(TenantId tenantId, BuildId buildId) {

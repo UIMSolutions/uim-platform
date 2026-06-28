@@ -40,7 +40,7 @@ class ManageSubscriptionsUseCase {
     }
 
     QueryResult listSubscriptions(TenantId tenantId) {
-        auto items = repo.findByTenant(tenantId);
+        auto items = repo.find(tenantId);
         auto arr   = Json.emptyArray;
         foreach (s; items) arr ~= s.toJson();
         return QueryResult(true, "", arr);

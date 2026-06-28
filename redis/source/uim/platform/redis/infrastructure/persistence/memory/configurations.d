@@ -18,7 +18,7 @@ class MemoryConfigurationRepository
     , ConfigurationRepository
 {
     override Configuration findByInstance(TenantId tenantId, ServiceInstanceId instanceId) {
-        auto results = findByTenant(tenantId).filter!(e => e.instanceId == instanceId).array;
+        auto results = find(tenantId).filter!(e => e.instanceId == instanceId).array;
         return results.length > 0 ? results[0] : Configuration.init;
     }
 }

@@ -40,11 +40,11 @@ class MemoryServiceBindingRepository : ServiceBindingRepository {
   }
 
   ServiceBinding[] findByNamespace(NamespaceId nsId) {
-    return findByTenant(tenantId).filter!(e => e.namespaceId == nsId).array;
+    return find(tenantId).filter!(e => e.namespaceId == nsId).array;
   }
 
   ServiceBinding[] findByServiceInstance(ServiceInstanceId instanceId) {
-    return findByTenant(tenantId).filter!(e => e.serviceInstanceId == instanceId).array;
+    return find(tenantId).filter!(e => e.serviceInstanceId == instanceId).array;
   }
 
   void save(ServiceBinding binding) {

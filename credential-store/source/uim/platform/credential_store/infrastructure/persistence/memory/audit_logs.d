@@ -22,7 +22,7 @@ class MemoryAuditLogRepository : TenantRepository!(AuditLogEntry, AuditLogEntryI
     return findByNamespace(tenantId, namespaceId).length;
   }
   AuditLogEntry[] findByNamespace(TenantId tenantId, NamespaceId namespaceId) {
-    return findByTenant(tenantId).filter!(e => e.namespaceId == namespaceId).array;
+    return find(tenantId).filter!(e => e.namespaceId == namespaceId).array;
   }
   void removeByNamespace(TenantId tenantId, NamespaceId namespaceId) {
     findByNamespace(tenantId, namespaceId).each!(e => remove(e));
@@ -32,7 +32,7 @@ class MemoryAuditLogRepository : TenantRepository!(AuditLogEntry, AuditLogEntryI
     return findByResourceType(tenantId, resourceType).length;
   }
   AuditLogEntry[] findByResourceType(TenantId tenantId, ResourceType resourceType) {
-    return findByTenant(tenantId).filter!(e => e.resourceType == resourceType).array;
+    return find(tenantId).filter!(e => e.resourceType == resourceType).array;
   }
   void removeByResourceType(TenantId tenantId, ResourceType resourceType) {
     findByResourceType(tenantId, resourceType).each!(e => remove(e));
@@ -42,7 +42,7 @@ class MemoryAuditLogRepository : TenantRepository!(AuditLogEntry, AuditLogEntryI
     return findByTimeRange(tenantId, startTime, endTime).length;
   }
   AuditLogEntry[] findByTimeRange(TenantId tenantId, long startTime, long endTime) {
-    return findByTenant(tenantId).filter!(e => e.timestamp >= startTime && e.timestamp <= endTime)
+    return find(tenantId).filter!(e => e.timestamp >= startTime && e.timestamp <= endTime)
       .array;
   }
   void removeByTimeRange(TenantId tenantId, long startTime, long endTime) {

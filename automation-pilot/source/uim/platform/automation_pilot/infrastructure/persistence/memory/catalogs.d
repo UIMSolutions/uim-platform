@@ -18,7 +18,7 @@ class MemoryCatalogRepository : TenantRepository!(Catalog, CatalogId), CatalogRe
     }
 
     Catalog[] findByStatus(TenantId tenantId, CatalogStatus status) {
-        return filterByStatus(findByTenant(tenantId), status);
+        return filterByStatus(find(tenantId), status);
     }
 
     Catalog[] filterByStatus(Catalog[] catalogs, CatalogStatus status) {
@@ -34,7 +34,7 @@ class MemoryCatalogRepository : TenantRepository!(Catalog, CatalogId), CatalogRe
     }
 
     Catalog[] findByType(TenantId tenantId, CatalogType catalogType) {
-        return filterByType(findByTenant(tenantId), catalogType);
+        return filterByType(find(tenantId), catalogType);
     }
 
     Catalog[] filterByType(Catalog[] catalogs, CatalogType catalogType) {

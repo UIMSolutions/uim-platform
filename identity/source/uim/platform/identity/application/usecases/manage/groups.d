@@ -17,7 +17,7 @@ class ManageGroupsUseCase {
     this(GroupRepository repo) { this.repo = repo; }
 
     IDMGroup getGroup(TenantId tenantId, IDMGroupId id) { return repo.findById(tenantId, id); }
-    IDMGroup[] listGroups(TenantId tenantId) { return repo.findByTenant(tenantId); }
+    IDMGroup[] listGroups(TenantId tenantId) { return repo.find(tenantId); }
     IDMGroup[] listByType(TenantId tenantId, GroupType type_) { return repo.findByType(tenantId, type_); }
 
     CommandResult createGroup(GroupDTO dto) {

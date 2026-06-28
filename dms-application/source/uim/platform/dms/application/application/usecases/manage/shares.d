@@ -30,7 +30,7 @@ class ManageSharesUseCase { // TODO: UIMUseCase {
     if (r.documentId.isEmpty)
       return CommandResult(false, "", "Document ID is required");
 
-    auto doc = docs.findById(r.tenantId, r.documentId);
+    auto doc = docs.find(r.tenantId, r.documentId);
     if (doc.isNull)
       return CommandResult(false, "", "Document not found");
 
@@ -48,7 +48,7 @@ class ManageSharesUseCase { // TODO: UIMUseCase {
   }
 
   Share[] listShares(TenantId tenantId) {
-    return shares.findByTenant(tenantId);
+    return shares.find(tenantId);
   }
 
   Share[] listByDocument(TenantId tenantId, DocumentId documentId) {

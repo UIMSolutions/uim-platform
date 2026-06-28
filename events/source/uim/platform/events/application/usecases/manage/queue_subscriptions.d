@@ -17,7 +17,7 @@ class ManageQueueSubscriptionsUseCase {
     this(QueueSubscriptionRepository repo) { this.repo = repo; }
 
     QueueSubscription getSubscription(TenantId tenantId, QueueSubscriptionId id) { return repo.findById(tenantId, id); }
-    QueueSubscription[] listSubscriptions(TenantId tenantId) { return repo.findByTenant(tenantId); }
+    QueueSubscription[] listSubscriptions(TenantId tenantId) { return repo.find(tenantId); }
     QueueSubscription[] listByQueue(TenantId tenantId, QueueId queueId) { return repo.findByQueue(tenantId, queueId); }
     QueueSubscription[] listByService(TenantId tenantId, MessagingServiceId serviceId) { return repo.findByService(tenantId, serviceId); }
 

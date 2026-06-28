@@ -43,7 +43,7 @@ class ManageAssetsUseCase {
   }
 
   InsightAsset[] listAssets(TenantId tenantId) {
-    return repository.findByTenant(tenantId);
+    return repository.find(tenantId);
   }
 
   InsightAsset getAsset(TenantId tenantId, AssetId id) {

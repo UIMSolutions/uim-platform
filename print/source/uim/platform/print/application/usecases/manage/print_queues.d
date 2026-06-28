@@ -23,7 +23,7 @@ class ManagePrintQueuesUseCase {
     }
 
     PrintQueue[] listPrintQueues(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     PrintQueue[] listByStatus(TenantId tenantId, PrintQueueStatus status) {

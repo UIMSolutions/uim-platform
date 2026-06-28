@@ -23,7 +23,7 @@ class ManageTransportRequestsUseCase {
     }
 
     TransportRequest[] listRequests(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     TransportRequest[] listRequestsByStatus(TenantId tenantId, RequestStatus status) {

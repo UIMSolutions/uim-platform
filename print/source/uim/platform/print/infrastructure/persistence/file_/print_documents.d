@@ -37,11 +37,11 @@ class FilePrintDocumentRepository : PrintDocumentRepository {
     }
 
     PrintDocument[] findByFormat(TenantId tenantId, DocumentFormat format) {
-        return findByTenant(tenantId).filter!(d => d.format == format).array;
+        return find(tenantId).filter!(d => d.format == format).array;
     }
 
     PrintDocument[] findExpired(TenantId tenantId, long nowTimestamp) {
-        return findByTenant(tenantId)
+        return find(tenantId)
             .filter!(d => d.expiresAt > 0 && d.expiresAt < nowTimestamp).array;
     }
 

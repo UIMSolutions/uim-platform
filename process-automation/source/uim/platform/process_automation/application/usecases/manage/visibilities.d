@@ -44,11 +44,11 @@ class ManageVisibilitiesUseCase { // TODO: UIMUseCase {
     }
 
     Visibility[] listVisibilities(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     CommandResult updateVisibility(UpdateVisibilityRequest r) {
-        auto existing = repo.findById(r.tenantId, r.visibilityId);
+        auto existing = repo.find(r.tenantId, r.visibilityId);
         if (existing.isNull)
             return CommandResult(false, "", "Visibility dashboard not found");
 

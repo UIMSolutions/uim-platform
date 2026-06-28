@@ -24,7 +24,7 @@ class MemoryBusinessSubprocessRepository : TenantRepository!(BusinessSubprocess,
   // }
 
   // BusinessSubprocess[] findByParentProcess(TenantId tenantId, BusinessProcessId parentId) {
-  //   return filterByParentProcess(findByTenant(tenantId), parentId);
+  //   return filterByParentProcess(find(tenantId), parentId);
   // }
 
   // void removeByParentProcess(TenantId tenantId, BusinessProcessId parentId) {
@@ -32,10 +32,10 @@ class MemoryBusinessSubprocessRepository : TenantRepository!(BusinessSubprocess,
   // }
 
   bool existsByParentProcess(TenantId tenantId, BusinessProcessId parentId) {
-    return findByTenant(tenantId).any!(s => s.parentProcessId == parentId);
+    return find(tenantId).any!(s => s.parentProcessId == parentId);
   }
   BusinessSubprocess[] findByParentProcess(TenantId tenantId, BusinessProcessId parentId) {
-    return findByTenant(tenantId).filter!(s => s.parentProcessId == parentId).array;
+    return find(tenantId).filter!(s => s.parentProcessId == parentId).array;
   }
   void removeByParentProcess(TenantId tenantId, BusinessProcessId parentId) {
     findByParentProcess(tenantId, parentId).each!(entity => remove(entity));

@@ -24,7 +24,7 @@ class MemoryBusinessContextRepository : TenantRepository!(BusinessContext, Busin
   }
 
   BusinessContext[] findByStatus(TenantId tenantId, BusinessContextStatus status) {
-    return filterByStatus(findByTenant(tenantId), status);
+    return filterByStatus(find(tenantId), status);
   }
 
   void removeByStatus(TenantId tenantId, BusinessContextStatus status) {
@@ -42,7 +42,7 @@ class MemoryBusinessContextRepository : TenantRepository!(BusinessContext, Busin
   }
 
   BusinessContext[] findByControllerGroup(TenantId tenantId, DataControllerGroupId groupId) {
-    return filterByControllerGroup(findByTenant(tenantId), groupId);
+    return filterByControllerGroup(find(tenantId), groupId);
   }
 
   void removeByControllerGroup(TenantId tenantId, DataControllerGroupId groupId) {

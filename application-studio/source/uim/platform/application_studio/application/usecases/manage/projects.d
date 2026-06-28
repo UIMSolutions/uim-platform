@@ -23,7 +23,7 @@ class ManageProjectsUseCase { // TODO: UIMUseCase {
     }
 
     Project[] listProjects(TenantId tenantId) {
-        return projects.findByTenant(tenantId);
+        return projects.find(tenantId);
     }
 
     Project[] listProjects(TenantId tenantId, DevSpaceId devSpaceId) {

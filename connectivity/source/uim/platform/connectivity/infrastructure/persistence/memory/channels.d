@@ -21,7 +21,7 @@ class MemoryChannelRepository : TenantRepository!(ServiceChannel, ChannelId), Ch
   }
 
   ServiceChannel[] findByConnector(TenantId tenantId, ConnectorId connectorId) {
-    return findByTenant(tenantId).filter!(e => e.connectorId == connectorId).array;
+    return find(tenantId).filter!(e => e.connectorId == connectorId).array;
   }
 
   void removeByConnector(TenantId tenantId, ConnectorId connectorId) {
@@ -33,7 +33,7 @@ class MemoryChannelRepository : TenantRepository!(ServiceChannel, ChannelId), Ch
   }
 
   ServiceChannel[] findByStatus(TenantId tenantId, ChannelStatus status) {
-    return findByTenant(tenantId).filter!(e => e.status == status).array;
+    return find(tenantId).filter!(e => e.status == status).array;
   }
 
   void removeByStatus(TenantId tenantId, ChannelStatus status) {

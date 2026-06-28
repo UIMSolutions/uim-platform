@@ -23,7 +23,7 @@ class MemoryAlertRuleRepository : TenantRepository!(AlertRule, AlertRuleId), Ale
   }
 
   AlertRule[] findEnabled(TenantId tenantId) {
-    return filterEnabled(findByTenant(tenantId));
+    return filterEnabled(find(tenantId));
   }
 
   void removeEnabled(TenantId tenantId) {

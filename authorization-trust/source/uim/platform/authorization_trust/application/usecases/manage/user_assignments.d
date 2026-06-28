@@ -59,7 +59,7 @@ class ManageUserAssignmentsUseCase {
   }
 
   UserAssignment[] listAssignments(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   UserAssignment[] listAssignments(TenantId tenantId, UserId userId) {

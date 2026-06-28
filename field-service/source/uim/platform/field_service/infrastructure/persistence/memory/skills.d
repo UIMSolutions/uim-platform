@@ -21,7 +21,7 @@ class MemorySkillRepository : TenantRepository!(Skill, SkillId), SkillRepository
         return skills.filter!(e => e.technicianId == technicianId).array;
     }
     Skill[] findByTechnician(TenantId tenantId, TechnicianId technicianId) {
-        return filterByTechnician(findByTenant(tenantId), technicianId);
+        return filterByTechnician(find(tenantId), technicianId);
     }
     void removeByTechnician(TenantId tenantId, TechnicianId technicianId) {
         findByTechnician(tenantId, technicianId).each!(e => remove(e));
@@ -34,7 +34,7 @@ class MemorySkillRepository : TenantRepository!(Skill, SkillId), SkillRepository
         return skills.filter!(e => e.category == category).array;
     }
     Skill[] findByCategory(TenantId tenantId, SkillCategory category) {
-        return filterByCategory(findByTenant(tenantId), category);
+        return filterByCategory(find(tenantId), category);
     }
     void removeByCategory(TenantId tenantId, SkillCategory category) {
         findByCategory(tenantId, category).each!(e => remove(e));

@@ -23,7 +23,7 @@ class ManageBuildsUseCase {
     }
 
     Build[] listBuilds(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     Build[] listByJob(TenantId tenantId, JobId jobId) {

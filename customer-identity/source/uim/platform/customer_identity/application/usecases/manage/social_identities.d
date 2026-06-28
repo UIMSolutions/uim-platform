@@ -23,7 +23,7 @@ class ManageSocialIdentitiesUseCase {
     }
 
     SocialIdentity[] listSocialIdentities(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     SocialIdentity[] listByCustomer(TenantId tenantId, CustomerId customerId) {

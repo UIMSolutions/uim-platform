@@ -37,7 +37,7 @@ class MonitorExecutionsUseCase { // TODO: UIMUseCase {
   }
 
   ExecutionLog[] getAllLogs(TenantId tenantId) {
-    return logRepo.findByTenant(tenantId);
+    return logRepo.find(tenantId);
   }
 
   ExecutionLog[] getFailures(TenantId tenantId) {

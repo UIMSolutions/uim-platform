@@ -21,14 +21,14 @@ class MemorySystemRegistrationRepository
     , SystemRegistrationRepository
 {
     override SystemRegistration[] findByFormation(TenantId tenantId, FormationId formationId) {
-        return findByTenant(tenantId).filter!(r => r.formationId.value == formationId.value).array;
+        return find(tenantId).filter!(r => r.formationId.value == formationId.value).array;
     }
 
     override SystemRegistration[] findBySystemType(TenantId tenantId, SystemType systemType) {
-        return findByTenant(tenantId).filter!(r => r.systemType == systemType).array;
+        return find(tenantId).filter!(r => r.systemType == systemType).array;
     }
 
     override SystemRegistration[] findByStatus(TenantId tenantId, SystemStatus status) {
-        return findByTenant(tenantId).filter!(r => r.status == status).array;
+        return find(tenantId).filter!(r => r.status == status).array;
     }
 }

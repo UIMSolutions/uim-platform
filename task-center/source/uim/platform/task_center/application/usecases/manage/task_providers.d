@@ -23,7 +23,7 @@ class ManageTaskProvidersUseCase { // TODO: UIMUseCase {
     }
 
     TaskProvider[] listProviders(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     TaskProvider[] listProviders(TenantId tenantId, ProviderStatus byStatus) {

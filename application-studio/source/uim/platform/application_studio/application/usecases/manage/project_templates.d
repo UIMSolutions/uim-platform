@@ -23,7 +23,7 @@ class ManageProjectTemplatesUseCase { // TODO: UIMUseCase {
     }
 
     ProjectTemplate[] listProjectTemplates(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     CommandResult createProjectTemplate(ProjectTemplateDTO dto) {

@@ -55,7 +55,7 @@ class ManagePointsOfInterestUseCase {
   }
 
   CommandResult update(UpdatePoiRequest r) {
-    auto existing = repo.findById(r.tenantId, PointOfInterestId(r.id));
+    auto existing = repo.find(r.tenantId, PointOfInterestId(r.id));
     if (existing.isNull)
       return CommandResult(false, "", "POI not found");
 
@@ -79,7 +79,7 @@ class ManagePointsOfInterestUseCase {
   }
 
   PointOfInterest[] list(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   CommandResult remove(TenantId tenantId, string id) {

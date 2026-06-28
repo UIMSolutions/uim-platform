@@ -19,7 +19,7 @@ class MemoryReplicationRepository
     }
 
     Replication[] findByStatus(TenantId tenantId, ReplicationStatus status) {
-        return findByTenant(tenantId).filter!(e => e.status == status).array;
+        return find(tenantId).filter!(e => e.status == status).array;
     }
 
     void removeByStatus(TenantId tenantId, ReplicationStatus status) {
@@ -27,14 +27,14 @@ class MemoryReplicationRepository
     }
 
     Replication[] findByBusinessPartner(TenantId tenantId, BusinessPartnerId bpId) {
-        return findByTenant(tenantId).filter!(e => e.businessPartnerId.value == bpId.value).array;
+        return find(tenantId).filter!(e => e.businessPartnerId.value == bpId.value).array;
     }
 
     Replication[] findByTargetSystem(TenantId tenantId, string targetSystem) {
-        return findByTenant(tenantId).filter!(e => e.targetSystem == targetSystem).array;
+        return find(tenantId).filter!(e => e.targetSystem == targetSystem).array;
     }
 
     Replication[] findByBatchId(TenantId tenantId, string batchId) {
-        return findByTenant(tenantId).filter!(e => e.batchId == batchId).array;
+        return find(tenantId).filter!(e => e.batchId == batchId).array;
     }
 }

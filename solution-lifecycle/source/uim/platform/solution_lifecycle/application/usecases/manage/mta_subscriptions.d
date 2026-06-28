@@ -23,11 +23,11 @@ class ManageMtaSubscriptionsUseCase {
     }
 
     MtaSubscription[] listSubscriptions(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     MtaSubscription getSubscription(TenantId tenantId, MtaSubscriptionId id) {
-        auto subs = repo.findByTenant(tenantId);
+        auto subs = repo.find(tenantId);
         foreach (s; subs)
             if (s.id.value == id.value) return s;
         return new MtaSubscription();

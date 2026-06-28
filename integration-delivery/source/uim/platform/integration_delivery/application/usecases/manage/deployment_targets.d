@@ -23,7 +23,7 @@ class ManageDeploymentTargetsUseCase {
     }
 
     DeploymentTarget[] listDeploymentTargets(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     DeploymentTarget[] listActive(TenantId tenantId) {

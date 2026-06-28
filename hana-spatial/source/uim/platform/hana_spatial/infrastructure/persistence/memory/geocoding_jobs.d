@@ -16,7 +16,7 @@ class MemoryGeocodingJobRepository
 
   GeocodingJob[] findByStatus(TenantId tenantId, SpatialJobStatus status) {
     GeocodingJob[] results;
-    foreach (item; findByTenant(tenantId)) {
+    foreach (item; find(tenantId)) {
       if (item.status == status) results ~= item;
     }
     return results;
@@ -24,7 +24,7 @@ class MemoryGeocodingJobRepository
 
   GeocodingJob[] findByProvider(TenantId tenantId, string providerId) {
     GeocodingJob[] results;
-    foreach (item; findByTenant(tenantId)) {
+    foreach (item; find(tenantId)) {
       if (item.providerId == providerId) results ~= item;
     }
     return results;

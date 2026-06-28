@@ -19,7 +19,7 @@ class MemoryDatabaseConnectionRepository : TenantRepository!(DatabaseConnection,
 
 
   DatabaseConnection[] findByInstance(DatabaseInstanceId instanceId) {
-    return findByTenant(tenantId).filter!(c => c.instanceId == instanceId).array;
+    return find(tenantId).filter!(c => c.instanceId == instanceId).array;
   }
 
 }

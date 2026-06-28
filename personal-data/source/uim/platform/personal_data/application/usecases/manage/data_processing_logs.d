@@ -51,7 +51,7 @@ class ManageDataProcessingLogsUseCase { // TODO: UIMUseCase {
     }
 
     DataProcessingLog[] listProcessingLogs(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     DataProcessingLog[] listProcessingLogs(TenantId tenantId, DataSubjectId dataSubjectId) {

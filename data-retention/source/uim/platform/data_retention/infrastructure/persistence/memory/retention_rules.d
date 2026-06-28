@@ -11,7 +11,7 @@ class MemoryRetentionRuleRepository : TenantRepository!(RetentionRule, Retention
         return findByBusinessPurpose(tenantId, purposeId).length;
     }
     RetentionRule[] findByBusinessPurpose(TenantId tenantId, BusinessPurposeId purposeId) {
-        return findByTenant(tenantId).filter!(a => a.businessPurposeId == purposeId).array;
+        return find(tenantId).filter!(a => a.businessPurposeId == purposeId).array;
     }
     void removeByBusinessPurpose(TenantId tenantId, BusinessPurposeId purposeId) {
         findByBusinessPurpose(tenantId, purposeId).each!(entity => remove(entity));
@@ -26,7 +26,7 @@ class MemoryRetentionRuleRepository : TenantRepository!(RetentionRule, Retention
     }
     
     RetentionRule[] findByLegalGround(TenantId tenantId, LegalGroundId groundId) {
-        return findByTenant(tenantId).filterByLegalGround(groundId);
+        return find(tenantId).filterByLegalGround(groundId);
     }
     void removeByLegalGround(TenantId tenantId, LegalGroundId groundId) {
         findByLegalGround(tenantId, groundId).removeAll;

@@ -22,7 +22,7 @@ class MemoryAddressRepository : MemoryTenantRepository!(AddressRecord, AddressId
   }
 
   AddressRecord[] findBySourceRecord(TenantId tenantId, RecordId sourceRecordId) {
-    return findByTenant(tenantId).filter!(r => r.sourceRecordId == sourceRecordId).array;
+    return find(tenantId).filter!(r => r.sourceRecordId == sourceRecordId).array;
   }
 
   void removeBySourceRecord(TenantId tenantId, RecordId sourceRecordId) {
@@ -30,7 +30,7 @@ class MemoryAddressRepository : MemoryTenantRepository!(AddressRecord, AddressId
   }
 
   AddressRecord[] findByQuality(TenantId tenantId, AddressQuality quality) {
-    return findByTenant(tenantId).filter!(r => r.quality == quality).array;
+    return find(tenantId).filter!(r => r.quality == quality).array;
   }
 
 }

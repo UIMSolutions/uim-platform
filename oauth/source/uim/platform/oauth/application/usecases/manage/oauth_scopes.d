@@ -23,7 +23,7 @@ class ManageOAuthScopesUseCase { // TODO: UIMUseCase {
     }
 
     OAuthScope[] listScopes(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     OAuthScope[] listScopes(TenantId tenantId, string applicationId) {

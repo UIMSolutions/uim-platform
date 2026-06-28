@@ -15,11 +15,11 @@ import uim.platform.ai_launchpad;
 class MemoryPromptRepository : TenantRepository!(Prompt, PromptId), IPromptRepository {
 
   // bool existsById(TenantId tenantId, PromptId id) {
-  //   return findByTenant(tenantId).any!(p => p.id == id);
+  //   return find(tenantId).any!(p => p.id == id);
   // }
 
   // Prompt findById(TenantId tenantId, PromptId id) {
-  //   foreach (p; findByTenant(tenantId)) {
+  //   foreach (p; find(tenantId)) {
   //     if (p.id == id)
   //       return p;
   //   }
@@ -38,7 +38,7 @@ class MemoryPromptRepository : TenantRepository!(Prompt, PromptId), IPromptRepos
     return prompts.filter!(p => p.collectionId == collectionId).array;
   }
   Prompt[] findByCollection(TenantId tenantId, PromptCollectionId collectionId) {
-    return filterByCollection(findByTenant(tenantId), collectionId);
+    return filterByCollection(find(tenantId), collectionId);
   }
 
   void removeByCollection(TenantId tenantId, PromptCollectionId collectionId) {
@@ -54,7 +54,7 @@ class MemoryPromptRepository : TenantRepository!(Prompt, PromptId), IPromptRepos
   }
 
   Prompt[] findByStatus(TenantId tenantId, PromptStatus status) {
-    return filterByStatus(findByTenant(tenantId), status);
+    return filterByStatus(find(tenantId), status);
   }
 
   void removeByStatus(TenantId tenantId, PromptStatus status) {

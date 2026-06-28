@@ -21,7 +21,7 @@ class ManageDeterminationLogsUseCase {
     }
 
     DeterminationLog[] listLogs(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     DeterminationLog[] listLogsByContext(TenantId tenantId, string contextId) {

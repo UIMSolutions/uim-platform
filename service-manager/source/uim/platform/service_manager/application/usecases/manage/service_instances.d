@@ -14,7 +14,7 @@ class ManageServiceInstancesUseCase { // TODO: UIMUseCase {
     }
 
     ServiceInstance[] listInstances(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     ServiceInstance getInstance(TenantId tenantId, ServiceInstanceId id) {

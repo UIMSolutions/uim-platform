@@ -16,18 +16,18 @@ class MemoryTeamMemberRepository
       TeamMemberRepository {
 
     TeamMember[] findByTeam(TenantId tenantId, string teamId) {
-        return findByTenant(tenantId).filter!(m => m.teamId == teamId).array;
+        return find(tenantId).filter!(m => m.teamId == teamId).array;
     }
 
     TeamMember[] findByUser(TenantId tenantId, string userId) {
-        return findByTenant(tenantId).filter!(m => m.userId == userId).array;
+        return find(tenantId).filter!(m => m.userId == userId).array;
     }
 
     TeamMember[] findByFunction(TenantId tenantId, string functionId) {
-        return findByTenant(tenantId).filter!(m => m.functionId == functionId).array;
+        return find(tenantId).filter!(m => m.functionId == functionId).array;
     }
 
     TeamMember[] findByRole(TenantId tenantId, MemberRole role) {
-        return findByTenant(tenantId).filter!(m => m.role == role).array;
+        return find(tenantId).filter!(m => m.role == role).array;
     }
 }

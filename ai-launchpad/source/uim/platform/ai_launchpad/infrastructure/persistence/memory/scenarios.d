@@ -34,7 +34,7 @@ class MemoryScenarioRepository : TenantRepository!(Scenario, ScenarioId), IScena
     return findByConnection(tenantId, connectionId).length;
   }
   Scenario[] findByConnection(TenantId tenantId, ConnectionId connectionId) {
-    return filterByConnection(findByTenant(tenantId), connectionId);
+    return filterByConnection(find(tenantId), connectionId);
   }
   void removeByConnection(TenantId tenantId, ConnectionId connectionId) {
     findByConnection(tenantId, connectionId).each!(s => remove(s));

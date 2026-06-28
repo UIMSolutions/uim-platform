@@ -22,7 +22,7 @@ class MemoryTranslationJobRepository
         return findByStatus(tenantId, status).length;
     }
     TranslationJob[] findByStatus(TenantId tenantId, JobStatus status) {
-        return findByTenant(tenantId).filter!(j => j.status == status).array;
+        return find(tenantId).filter!(j => j.status == status).array;
     }
     void removeByStatus(TenantId tenantId, JobStatus status) {
         findByStatus(tenantId, status).each!((j) => remove(j));

@@ -11,7 +11,7 @@ class MemoryDataSubjectRepository : TenantRepository!(DataSubject, DataSubjectId
             return findByApplicationGroup(tenantId, groupId).length;
         }
     DataSubject[] findByApplicationGroup(TenantId tenantId, ApplicationGroupId groupId) {
-        return findByTenant(tenantId).filter!(a => a.applicationGroupId == groupId).array;
+        return find(tenantId).filter!(a => a.applicationGroupId == groupId).array;
     }
     void removeByApplicationGroup(TenantId tenantId, ApplicationGroupId groupId) {
         findByApplicationGroup(tenantId, groupId).each!(entity => remove(entity));
@@ -26,7 +26,7 @@ class MemoryDataSubjectRepository : TenantRepository!(DataSubject, DataSubjectId
     }
 
     DataSubject[] findByLifecycleStatus(TenantId tenantId, DataLifecycleStatus status) {
-        return filterByLifecycleStatus(findByTenant(tenantId), status);
+        return filterByLifecycleStatus(find(tenantId), status);
     }
 
     void removeByLifecycleStatus(TenantId tenantId, DataLifecycleStatus status) {
@@ -38,7 +38,7 @@ class MemoryDataSubjectRepository : TenantRepository!(DataSubject, DataSubjectId
     }
 
     DataSubject[] findByRole(TenantId tenantId, DataSubjectRoleId roleId) {
-        return findByTenant(tenantId).filter!(a => a.roleId == roleId).array;
+        return find(tenantId).filter!(a => a.roleId == roleId).array;
     }
 
     void removeByRole(TenantId tenantId, DataSubjectRoleId roleId) {

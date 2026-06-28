@@ -17,7 +17,7 @@ class ManageMessageBindingsUseCase {
     this(MessageBindingRepository repo) { this.repo = repo; }
 
     MessageBinding getBinding(TenantId tenantId, MessageBindingId id) { return repo.findById(tenantId, id); }
-    MessageBinding[] listBindings(TenantId tenantId) { return repo.findByTenant(tenantId); }
+    MessageBinding[] listBindings(TenantId tenantId) { return repo.find(tenantId); }
     MessageBinding[] listByClient(TenantId tenantId, MessageClientId clientId) { return repo.findByClient(tenantId, clientId); }
     MessageBinding[] listByService(TenantId tenantId, MessagingServiceId serviceId) { return repo.findByService(tenantId, serviceId); }
 

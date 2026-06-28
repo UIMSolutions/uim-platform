@@ -23,7 +23,7 @@ class ManagePrintClientsUseCase {
     }
 
     PrintClient[] listPrintClients(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     CommandResult registerPrintClient(PrintClientDTO dto) {

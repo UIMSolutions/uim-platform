@@ -19,11 +19,11 @@ mixin(ShowModule!());
 class MemoryBucketRepository : TenantRepository!(Bucket, BucketId), BucketRepository {
 
   bool existsByName(TenantId tenantId, string name) {
-    return findByTenant(tenantId).any!(e => e.name == name);
+    return find(tenantId).any!(e => e.name == name);
   }
   
   Bucket findByName(TenantId tenantId, string name) {
-    foreach (e; findByTenant(tenantId))
+    foreach (e; find(tenantId))
       if (e.tenantId == tenantId && e.name == name)
         return e;
     return Bucket.init;

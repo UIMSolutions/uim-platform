@@ -19,11 +19,11 @@ class MemorySubaccountRepository : TenantRepository!(Subaccount, SubaccountId), 
 
   // #region BySubdomain
   bool existsBySubdomain(TenantId tenantId, string subdomain) {
-    return findByTenant(tenantId).any!(s => s.subdomain == subdomain);
+    return find(tenantId).any!(s => s.subdomain == subdomain);
   }
 
   Subaccount findBySubdomain(TenantId tenantId, string subdomain) {
-    foreach (s; findByTenant(tenantId)) {
+    foreach (s; find(tenantId)) {
       if (s.subdomain == subdomain)
         return s;
     }
@@ -41,7 +41,7 @@ class MemorySubaccountRepository : TenantRepository!(Subaccount, SubaccountId), 
   }
 
   Subaccount[] findByGlobalAccount(TenantId tenantId, GlobalAccountId globalAccountId) {
-    return filterByGlobalAccount(findByTenant(tenantId), globalAccountId);
+    return filterByGlobalAccount(find(tenantId), globalAccountId);
   }
 
   void removeByGlobalAccount(TenantId tenantId, GlobalAccountId globalAccountId) {
@@ -59,7 +59,7 @@ class MemorySubaccountRepository : TenantRepository!(Subaccount, SubaccountId), 
   } 
   
   Subaccount[] findByDirectory(TenantId tenantId, DirectoryId directoryId) {
-    return filterByDirectory(findByTenant(tenantId), directoryId);
+    return filterByDirectory(find(tenantId), directoryId);
   }
 
   void removeByDirectory(TenantId tenantId, DirectoryId directoryId) {
@@ -76,7 +76,7 @@ class MemorySubaccountRepository : TenantRepository!(Subaccount, SubaccountId), 
   }
 
   Subaccount[] findByRegion(TenantId tenantId, GlobalAccountId globalAccountId, string region) {
-    return filterByRegion(filterByGlobalAccount(findByTenant(tenantId), globalAccountId), region);
+    return filterByRegion(filterByGlobalAccount(find(tenantId), globalAccountId), region);
   }
 
   void removeByRegion(TenantId tenantId, GlobalAccountId globalAccountId, string region) {
@@ -94,7 +94,7 @@ class MemorySubaccountRepository : TenantRepository!(Subaccount, SubaccountId), 
   }
 
   Subaccount[] findByStatus(TenantId tenantId, GlobalAccountId globalAccountId, SubaccountStatus status) {
-    return filterByStatus(filterByGlobalAccount(findByTenant(tenantId), globalAccountId), status);
+    return filterByStatus(filterByGlobalAccount(find(tenantId), globalAccountId), status);
   }
 
   void removeByStatus(TenantId tenantId, GlobalAccountId globalAccountId, SubaccountStatus status) {

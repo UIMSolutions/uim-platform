@@ -80,7 +80,7 @@ class ManageDocumentsUseCase { // TODO: UIMUseCase {
   }
 
   Document[] listDocuments(TenantId tenantId) {
-    return docs.findByTenant(tenantId);
+    return docs.find(tenantId);
   }
 
   Document[] listByFolder(TenantId tenantId, FolderId folderId) {

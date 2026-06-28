@@ -24,7 +24,7 @@ class MemoryDeletionRequestRepository : TenantRepository!(DeletionRequest, Delet
   }
 
   DeletionRequest[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
-    return filterByDataSubject(findByTenant(tenantId), dataSubjectId);
+    return filterByDataSubject(find(tenantId), dataSubjectId);
   }
 
   void removeByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
@@ -42,7 +42,7 @@ class MemoryDeletionRequestRepository : TenantRepository!(DeletionRequest, Delet
   }
 
   DeletionRequest[] findByStatus(TenantId tenantId, DeletionStatus status) {
-    return filterByStatus(findByTenant(tenantId), status);
+    return filterByStatus(find(tenantId), status);
   }
 
   void removeByStatus(TenantId tenantId, DeletionStatus status) {

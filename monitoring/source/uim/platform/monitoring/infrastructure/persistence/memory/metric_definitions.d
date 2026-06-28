@@ -18,11 +18,11 @@ import uim.platform.monitoring;
 class MemoryMetricDefinitionRepository : TenantRepository!(MetricDefinition, MetricDefinitionId), MetricDefinitionRepository {
 
   bool existsByName(TenantId tenantId, string name) {
-    return findByTenant(tenantId).any!(e => e.name == name);
+    return find(tenantId).any!(e => e.name == name);
   }
 
   MetricDefinition findByName(TenantId tenantId, string name) {
-    foreach (e; findByTenant(tenantId)) {
+    foreach (e; find(tenantId)) {
       if (e.name == name)
         return e;
     }
@@ -30,7 +30,7 @@ class MemoryMetricDefinitionRepository : TenantRepository!(MetricDefinition, Met
   }
 
   void removeByName(TenantId tenantId, string name) {
-    foreach (e; findByTenant(tenantId)) {
+    foreach (e; find(tenantId)) {
       if (e.name == name) {
         remove(e);
         return;
@@ -47,7 +47,7 @@ class MemoryMetricDefinitionRepository : TenantRepository!(MetricDefinition, Met
   }
 
   MetricDefinition[] findByCategory(TenantId tenantId, MetricCategory category) {
-    return filterByCategory(findByTenant(tenantId), category);
+    return filterByCategory(find(tenantId), category);
   }
 
   void removeByCategory(TenantId tenantId, MetricCategory category) {

@@ -14,19 +14,19 @@ class MemoryServiceMetricRepository
     : TenantRepository!(ServiceMetric, ServiceMetricId), ServiceMetricRepository {
 
   ServiceMetric[] findByService(TenantId tenantId, string serviceId) {
-    return findByTenant(tenantId).filter!(m => m.serviceId == serviceId).array;
+    return find(tenantId).filter!(m => m.serviceId == serviceId).array;
   }
 
   ServiceMetric[] findByPlan(TenantId tenantId, string planId) {
-    return findByTenant(tenantId).filter!(m => m.planId == planId).array;
+    return find(tenantId).filter!(m => m.planId == planId).array;
   }
 
   ServiceMetric[] findBillable(TenantId tenantId) {
-    return findByTenant(tenantId).filter!(m => m.isBillable).array;
+    return find(tenantId).filter!(m => m.isBillable).array;
   }
 
   ServiceMetric[] findByCommercialModel(TenantId tenantId, CommercialModel model) {
-    return findByTenant(tenantId).filter!(m => m.commercialModel == model).array;
+    return find(tenantId).filter!(m => m.commercialModel == model).array;
   }
 
   size_t countByService(TenantId tenantId, string serviceId) {

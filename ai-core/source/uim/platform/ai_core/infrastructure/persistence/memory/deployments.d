@@ -39,7 +39,7 @@ class MemoryDeploymentRepository : TenantRepository!(Deployment, DeploymentId), 
   }
 
   Deployment[] findByResourceGroup(TenantId tenantId, ResourceGroupId rgId) {
-    return filterByResourceGroup(findByTenant(tenantId), rgId);
+    return filterByResourceGroup(find(tenantId), rgId);
   }
 
   void removeByResourceGroup(TenantId tenantId, ResourceGroupId rgId) {

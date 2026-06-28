@@ -24,7 +24,7 @@ class MemoryEnvironmentRepository : TenantRepository!(KymaEnvironment, KymaEnvir
     return envs.filter!(e => e.subaccountId == subaccountId).array;
   }
   KymaEnvironment[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
-    return filterBySubaccount(findByTenant(tenantId), subaccountId);
+    return filterBySubaccount(find(tenantId), subaccountId);
   }
   void removeBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
     findBySubaccount(tenantId, subaccountId).each!(e => remove(e));
@@ -37,7 +37,7 @@ class MemoryEnvironmentRepository : TenantRepository!(KymaEnvironment, KymaEnvir
     return envs.filter!(e => e.status == status).array;
   }
   KymaEnvironment[] findByStatus(EnvironmentStatus status) {
-    return filterByStatus(findByTenant(tenantId), status);
+    return filterByStatus(find(tenantId), status);
   }
   void removeByStatus(EnvironmentStatus status) {
     findByStatus(status).each!(e => remove(e));

@@ -23,7 +23,7 @@ class MemoryTaskRepository : TenantRepository!(WZTask, TaskId), TaskRepository {
   }
 
   WZTask[] findByAssignee(TenantId tenantId, UserId assigneeId) {
-    return findByTenant(tenantId).filter!(t => t.assigneeId == assigneeId).array;
+    return find(tenantId).filter!(t => t.assigneeId == assigneeId).array;
   }
 
   void removeByAssignee(TenantId tenantId, UserId assigneeId) {
@@ -37,7 +37,7 @@ class MemoryTaskRepository : TenantRepository!(WZTask, TaskId), TaskRepository {
   }
 
   WZTask[] findByStatus(TenantId tenantId, TaskStatus status, UserId assigneeId) {
-    return findByTenant(tenantId).filter!(t => t.assigneeId == assigneeId && t.status == status).array;
+    return find(tenantId).filter!(t => t.assigneeId == assigneeId && t.status == status).array;
   }
 
   void removeByStatus(TenantId tenantId, TaskStatus status, UserId assigneeId) {

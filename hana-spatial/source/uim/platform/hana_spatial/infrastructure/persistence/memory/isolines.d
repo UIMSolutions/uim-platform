@@ -16,7 +16,7 @@ class MemoryIsolineRepository
 
   Isoline[] findByMode(TenantId tenantId, IsolineMode mode) {
     Isoline[] results;
-    foreach (item; findByTenant(tenantId)) {
+    foreach (item; find(tenantId)) {
       if (item.mode == mode) results ~= item;
     }
     return results;
@@ -24,7 +24,7 @@ class MemoryIsolineRepository
 
   Isoline[] findByProvider(TenantId tenantId, string providerId) {
     Isoline[] results;
-    foreach (item; findByTenant(tenantId)) {
+    foreach (item; find(tenantId)) {
       if (item.providerId == providerId) results ~= item;
     }
     return results;

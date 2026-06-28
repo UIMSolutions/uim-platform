@@ -16,14 +16,14 @@ import uim.platform.credential_store;
 class MemoryKeyringVersionRepository : TenantRepository!(KeyringVersion, KeyringVersionId), KeyringVersionRepository {
 
   KeyringVersion findActiveVersion(TenantId tenantId, CredentialId keyringId) {
-    foreach (v; findByTenant(tenantId))
+    foreach (v; find(tenantId))
       if (v.keyringId == keyringId && v.isActive)
         return v;
     return KeyringVersion.init;
   }
 
   KeyringVersion findByVersion(TenantId tenantId, CredentialId keyringId, long versionNumber) {
-    foreach (v; findByTenant(tenantId))
+    foreach (v; find(tenantId))
       if (v.keyringId == keyringId && v.versionNumber == versionNumber)
         return v;
     return KeyringVersion.init;
@@ -34,7 +34,7 @@ class MemoryKeyringVersionRepository : TenantRepository!(KeyringVersion, Keyring
   }
 
   KeyringVersion[] findByKeyring(TenantId tenantId, CredentialId keyringId) {
-    return findByTenant(tenantId).filter!(v => v.keyringId == keyringId).array;
+    return find(tenantId).filter!(v => v.keyringId == keyringId).array;
   }
 
   void removeByKeyring(TenantId tenantId, CredentialId keyringId) {

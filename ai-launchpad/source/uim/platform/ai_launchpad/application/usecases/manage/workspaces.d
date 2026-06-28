@@ -44,11 +44,11 @@ class ManageWorkspacesUseCase { // TODO: UIMUseCase {
   }
 
   Workspace[] listWorkspaces(TenantId tenantId) {
-    return workspaces.findByTenant(tenantId);
+    return workspaces.find(tenantId);
   }
 
   CommandResult patchWorkspace(PatchWorkspaceRequest r) {
-    auto w = workspaces.findById(r.tenantId, r.workspaceId);
+    auto w = workspaces.find(r.tenantId, r.workspaceId);
     if (w.isNull)
       return CommandResult(false, "", "Workspace not found");
     if (r.name.length > 0)

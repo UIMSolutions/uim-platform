@@ -14,11 +14,11 @@ import uim.platform.authorization_trust;
 class MemoryIdentityProviderRepository : TenantRepository!(IdentityProvider, IdentityProviderId), IdentityProviderRepository {
 
   bool existsByAlias(TenantId tenantId, string alias_) {
-    return findByTenant(tenantId).any!(idp => idp.alias_ == alias_);
+    return find(tenantId).any!(idp => idp.alias_ == alias_);
   }
 
   IdentityProvider findByAlias(TenantId tenantId, string alias_) {
-    foreach (idp; findByTenant(tenantId))
+    foreach (idp; find(tenantId))
       if (idp.alias_ == alias_)
         return idp;
     return IdentityProvider.init;
@@ -28,13 +28,13 @@ class MemoryIdentityProviderRepository : TenantRepository!(IdentityProvider, Ide
   }
 
   bool existsDefault(TenantId tenantId) {
-    foreach (idp; findByTenant(tenantId))
+    foreach (idp; find(tenantId))
       if (idp.isDefault)
         return true;
     return false;
   }
   IdentityProvider findDefault(TenantId tenantId) {
-    foreach (idp; findByTenant(tenantId))
+    foreach (idp; find(tenantId))
       if (idp.isDefault)
         return idp;
     return IdentityProvider.init;

@@ -14,15 +14,15 @@ import uim.platform.customer_identity;
 class MemoryScreenSetRepository : TenantRepository!(ScreenSet, ScreenSetId), ScreenSetRepository {
 
     ScreenSet[] findByFlowType(TenantId tenantId, ScreenSetFlowType flowType) {
-        return findByTenant(tenantId).filter!(ss => ss.flowType == flowType).array;
+        return find(tenantId).filter!(ss => ss.flowType == flowType).array;
     }
 
     ScreenSet[] findActive(TenantId tenantId) {
-        return findByTenant(tenantId).filter!(ss => ss.status == ScreenSetStatus.active).array;
+        return find(tenantId).filter!(ss => ss.status == ScreenSetStatus.active).array;
     }
 
     ScreenSet findByNameAndLocale(TenantId tenantId, string name, string locale) {
-        auto items = findByTenant(tenantId).filter!(ss => ss.name == name && ss.locale == locale).array;
+        auto items = find(tenantId).filter!(ss => ss.name == name && ss.locale == locale).array;
         return items.length > 0 ? items[0] : ScreenSet.init;
     }
 }

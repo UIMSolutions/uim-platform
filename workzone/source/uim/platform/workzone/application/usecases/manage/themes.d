@@ -47,7 +47,7 @@ class ManageThemesUseCase { // TODO: UIMUseCase {
   }
 
   Theme[] listThemes(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   CommandResult updateTheme(UpdateThemeRequest req) {

@@ -15,10 +15,10 @@ import std.array : array;
 
 class MemoryPipelineRepository : TenantRepository!(Pipeline, PipelineId), PipelineRepository {
     Pipeline[] findByStatus(TenantId tenantId, PipelineStatus status) {
-        return findByTenant(tenantId).filter!(p => p.status == status).array;
+        return find(tenantId).filter!(p => p.status == status).array;
     }
 
     Pipeline[] findByType(TenantId tenantId, PipelineType type) {
-        return findByTenant(tenantId).filter!(p => p.pipelineType == type).array;
+        return find(tenantId).filter!(p => p.pipelineType == type).array;
     }
 }

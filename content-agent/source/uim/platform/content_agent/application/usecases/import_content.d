@@ -79,7 +79,7 @@ class ImportContentUseCase { // TODO: UIMUseCase {
   }
 
   ImportJob[] listImportJobs(TenantId tenantId) {
-    return importRepo.findByTenant(tenantId);
+    return importRepo.find(tenantId);
   }
 
   ImportJob[] listByPackage(TenantId tenantId, ContentPackageId packageId) {

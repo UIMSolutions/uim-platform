@@ -21,7 +21,7 @@ class ManageConfigurationsUseCase {
     }
 
     Configuration[] listConfigurations(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     Configuration getByInstance(TenantId tenantId, ServiceInstanceId instanceId) {

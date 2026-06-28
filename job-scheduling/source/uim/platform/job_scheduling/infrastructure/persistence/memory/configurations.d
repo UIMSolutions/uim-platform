@@ -15,7 +15,7 @@ import uim.platform.job_scheduling;
 @safe:
 class MemoryConfigurationRepository : TenantRepository!(Configuration, ConfigurationId), ConfigurationRepository {
     Configuration get(TenantId tenantId) {
-        auto configs = findByTenant(tenantId);
+        auto configs = find(tenantId);
         if (configs.length > 0) {
             return configs[0];
         }

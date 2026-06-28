@@ -23,7 +23,7 @@ class ManageCustomersUseCase {
     }
 
     Customer[] listCustomers(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     Customer findByEmail(TenantId tenantId, string email) {

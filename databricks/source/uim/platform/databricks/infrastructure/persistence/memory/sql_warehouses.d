@@ -9,19 +9,19 @@ class MemorySqlWarehouseRepository : TenantRepository!(SqlWarehouse, SqlWarehous
   SqlWarehouse[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
     import std.algorithm : filter;
     import std.array : array;
-    return findByTenant(tenantId).filter!(w => w.workspaceId == workspaceId).array;
+    return find(tenantId).filter!(w => w.workspaceId == workspaceId).array;
   }
 
   SqlWarehouse[] findByState(TenantId tenantId, WarehouseState state) {
     import std.algorithm : filter;
     import std.array : array;
-    return findByTenant(tenantId).filter!(w => w.state == state).array;
+    return find(tenantId).filter!(w => w.state == state).array;
   }
 
   SqlWarehouse[] findByType(TenantId tenantId, WarehouseType warehouseType) {
     import std.algorithm : filter;
     import std.array : array;
-    return findByTenant(tenantId).filter!(w => w.warehouseType == warehouseType).array;
+    return find(tenantId).filter!(w => w.warehouseType == warehouseType).array;
   }
 
   SqlWarehouse[] findRunning(TenantId tenantId) {

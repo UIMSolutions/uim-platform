@@ -23,7 +23,7 @@ class ManageScreenSetsUseCase {
     }
 
     ScreenSet[] listScreenSets(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     ScreenSet[] listActive(TenantId tenantId) {

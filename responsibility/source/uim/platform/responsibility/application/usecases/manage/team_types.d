@@ -21,7 +21,7 @@ class ManageTeamTypesUseCase {
     }
 
     TeamType[] listTypes(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     TeamType[] listTypesByCategory(TenantId tenantId, string categoryId) {

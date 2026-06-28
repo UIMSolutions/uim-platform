@@ -31,14 +31,14 @@ import std.json;
 //         return store.values.filter!(a => a.tenantId == tenantId).array;
 //     }
 //     Application findByClient(TenantId tenantId, string clientId) {
-//         foreach (a; findByTenant(tenantId)) if (a.clientId == clientId) return a;
+//         foreach (a; find(tenantId)) if (a.clientId == clientId) return a;
 //         return Application.init;
 //     }
 //     Application[] findByStatus(TenantId tenantId, AppStatus status) {
-//         return findByTenant(tenantId).filter!(a => a.status == status).array;
+//         return find(tenantId).filter!(a => a.status == status).array;
 //     }
 //     Application[] findByProtocol(TenantId tenantId, AppProtocol protocol) {
-//         return findByTenant(tenantId).filter!(a => a.protocol == protocol).array;
+//         return find(tenantId).filter!(a => a.protocol == protocol).array;
 //     }
 
 //     private string filePath() { return dataDir ~ "/identity_applications.json"; }

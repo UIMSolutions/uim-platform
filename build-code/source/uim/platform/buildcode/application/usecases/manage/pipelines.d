@@ -54,7 +54,7 @@ class ManagePipelinesUseCase {
   }
 
   Pipeline[] list(TenantId tenantId) {
-    return _repo.findByTenant(tenantId);
+    return _repo.find(tenantId);
   }
 
   Pipeline[] listByProject(TenantId tenantId, string projectId) {

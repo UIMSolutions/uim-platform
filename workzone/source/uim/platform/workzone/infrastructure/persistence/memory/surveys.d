@@ -23,7 +23,7 @@ class MemorySurveyRepository : TenantRepository!(Survey, SurveyId), SurveyReposi
   }
 
   Survey[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
-    return findByTenant(tenantId).filter!(s => s.workspaceId == workspaceId).array;
+    return find(tenantId).filter!(s => s.workspaceId == workspaceId).array;
   }
 
   void removeByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
@@ -37,7 +37,7 @@ class MemorySurveyRepository : TenantRepository!(Survey, SurveyId), SurveyReposi
   }
 
   Survey[] findByOrganizer(TenantId tenantId, UserId organizerId) {
-    return findByTenant(tenantId).filter!(s => s.creatorId == organizerId).array;
+    return find(tenantId).filter!(s => s.creatorId == organizerId).array;
   }
 
   void removeByOrganizer(TenantId tenantId, UserId organizerId) {
@@ -51,7 +51,7 @@ class MemorySurveyRepository : TenantRepository!(Survey, SurveyId), SurveyReposi
   }
 
   Survey[] findByStatus(TenantId tenantId, SurveyStatus status) {
-    return findByTenant(tenantId).filter!(s => s.tenantId == tenantId && s.status == status).array;
+    return find(tenantId).filter!(s => s.tenantId == tenantId && s.status == status).array;
   }
 
   void removeByStatus(TenantId tenantId, SurveyStatus status) {

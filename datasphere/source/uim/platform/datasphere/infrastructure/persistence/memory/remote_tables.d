@@ -38,7 +38,7 @@ class MemoryRemoteTableRepository : TenantRepository!(RemoteTable, RemoteTableId
     return findBySpace(tenantId, spaceId).length;
   }
   RemoteTable[] findBySpace(TenantId tenantId, SpaceId spaceId) {
-    return filterBySpace(findByTenant(tenantId), spaceId);
+    return filterBySpace(find(tenantId), spaceId);
   }
   void removeBySpace(TenantId tenantId, SpaceId spaceId) {
     findBySpace(tenantId, spaceId).each!(rt => remove(rt));
@@ -46,7 +46,7 @@ class MemoryRemoteTableRepository : TenantRepository!(RemoteTable, RemoteTableId
   // #endregion BySpace
 
   RemoteTable[] findByConnection(TenantId tenantId, SpaceId spaceId, ConnectionId connId) {
-    return findByTenant(tenantId).filter!(rt => rt.spaceId == spaceId && rt.connectionId == connId)
+    return find(tenantId).filter!(rt => rt.spaceId == spaceId && rt.connectionId == connId)
       .array;
   }
 

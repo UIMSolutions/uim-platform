@@ -16,21 +16,21 @@ class MemoryRetentionRuleRepository : TenantRepository!(RetentionRule, Retention
 
   // #region ByDefault 
   bool existsDefault(TenantId tenantId) {
-    foreach (r; findByTenant(tenantId))
+    foreach (r; find(tenantId))
       if (r.isDefault && r.status == RetentionRuleStatus.active)
         return true;
     return false;
   }
 
   RetentionRule findDefault(TenantId tenantId) {
-    foreach (r; findByTenant(tenantId))
+    foreach (r; find(tenantId))
       if (r.isDefault && r.status == RetentionRuleStatus.active)
         return r;
     return RetentionRule.init;
   }
 
   void removeDefault(TenantId tenantId) {
-    foreach (r; findByTenant(tenantId))
+    foreach (r; find(tenantId))
       if (r.isDefault)
         remove(r);
   }
@@ -46,7 +46,7 @@ class MemoryRetentionRuleRepository : TenantRepository!(RetentionRule, Retention
   }
 
   RetentionRule[] findByPurpose(TenantId tenantId, ProcessingPurpose purpose) {
-    return filterByPurpose(findByTenant(tenantId), purpose);
+    return filterByPurpose(find(tenantId), purpose);
   }
 
   void removeByPurpose(TenantId tenantId, ProcessingPurpose purpose) {

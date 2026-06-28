@@ -17,14 +17,14 @@ import uim.platform.destination;
 class MemoryCertificateRepository : TenantRepository!(Certificate, CertificateId), CertificateRepository {
 
   bool existsByName(TenantId tenantId, SubaccountId subaccountId, string name) {
-    foreach (e; findByTenant(tenantId))
+    foreach (e; find(tenantId))
       if (e.subaccountId == subaccountId && e.name == name)
         return true;
     return false;
   }
 
   Certificate findByName(TenantId tenantId, SubaccountId subaccountId, string name) {
-    foreach (e; findByTenant(tenantId))
+    foreach (e; find(tenantId))
       if (e.subaccountId == subaccountId && e.name == name)
         return e;
     return Certificate.init;
@@ -40,7 +40,7 @@ class MemoryCertificateRepository : TenantRepository!(Certificate, CertificateId
     return certs.filter!(e => e.subaccountId == subaccountId).array;
   }
   Certificate[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
-    return filterBySubaccount(findByTenant(tenantId), subaccountId);
+    return filterBySubaccount(find(tenantId), subaccountId);
   }
   void removeBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
     findBySubaccount(tenantId, subaccountId).each!(e => remove(e));
@@ -67,7 +67,7 @@ class MemoryCertificateRepository : TenantRepository!(Certificate, CertificateId
   }
 
   Certificate[] findExpiring(TenantId tenantId, long beforeTimestamp) {
-    return findByTenant(tenantId).filter!(e => e.validTo > 0 && e.validTo <= beforeTimestamp).array;
+    return find(tenantId).filter!(e => e.validTo > 0 && e.validTo <= beforeTimestamp).array;
   }
   void removeExpiring(TenantId tenantId, long beforeTimestamp) {
     findExpiring(tenantId, beforeTimestamp).each!(e => remove(e));

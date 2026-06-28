@@ -23,7 +23,7 @@ class ManageBusinessPartnersUseCase {
     }
 
     BusinessPartner[] listBusinessPartners(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     BusinessPartner[] listByCategory(TenantId tenantId, BPCategory category) {

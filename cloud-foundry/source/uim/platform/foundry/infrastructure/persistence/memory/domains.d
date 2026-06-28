@@ -24,14 +24,14 @@ class MemoryDomainRepository : TenantRepository!(CfDomain, CfDomainId), IDomainR
   }
 
   CfDomain findByName(TenantId tenantId, string name) {
-    foreach (e; findByTenant(tenantId))
+    foreach (e; find(tenantId))
       if (e.name == name)
         return e;
     return CfDomain.init;
   }
 
   void removeByName(TenantId tenantId, string name) {
-    foreach (e; findByTenant(tenantId))
+    foreach (e; find(tenantId))
       if (e.name == name)
         return remove(e);
   }
@@ -47,7 +47,7 @@ class MemoryDomainRepository : TenantRepository!(CfDomain, CfDomainId), IDomainR
   }
 
   CfDomain[] findByOrg(TenantId tenantId, OrgId orgId) {
-    return filterByOrg(findByTenant(tenantId), orgId);
+    return filterByOrg(find(tenantId), orgId);
   }
 
   void removeByOrg(TenantId tenantId, OrgId orgId) {
@@ -65,7 +65,7 @@ class MemoryDomainRepository : TenantRepository!(CfDomain, CfDomainId), IDomainR
   }
 
   CfDomain[] findShared(TenantId tenantId) {
-    return filterShared(findByTenant(tenantId));
+    return filterShared(find(tenantId));
   }
 
   void removeShared(TenantId tenantId) {

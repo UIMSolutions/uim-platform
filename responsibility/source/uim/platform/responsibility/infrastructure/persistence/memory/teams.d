@@ -16,14 +16,14 @@ class MemoryTeamRepository
       TeamRepository {
 
     Team[] findByStatus(TenantId tenantId, TeamStatus status) {
-        return findByTenant(tenantId).filter!(t => t.status == status).array;
+        return find(tenantId).filter!(t => t.status == status).array;
     }
 
     Team[] findByType(TenantId tenantId, string teamTypeId) {
-        return findByTenant(tenantId).filter!(t => t.teamTypeId == teamTypeId).array;
+        return find(tenantId).filter!(t => t.teamTypeId == teamTypeId).array;
     }
 
     Team[] findByCategory(TenantId tenantId, string categoryId) {
-        return findByTenant(tenantId).filter!(t => t.categoryId == categoryId).array;
+        return find(tenantId).filter!(t => t.categoryId == categoryId).array;
     }
 }

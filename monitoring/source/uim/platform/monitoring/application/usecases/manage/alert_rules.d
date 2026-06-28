@@ -81,7 +81,7 @@ class ManageAlertRulesUseCase { // TODO: UIMUseCase {
   }
 
   AlertRule[] listRules(TenantId tenantId) {
-    return alertRules.findByTenant(tenantId);
+    return alertRules.find(tenantId);
   }
 
   AlertRule[] listByResource(TenantId tenantId, MonitoredResourceId resourceId) {

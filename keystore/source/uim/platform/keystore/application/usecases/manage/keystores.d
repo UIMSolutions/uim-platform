@@ -52,7 +52,7 @@ class ManageKeystoresUseCase {
 
   // Update description and/or content of an existing keystore.
   CommandResult updateKeystore(UpdateKeystoreRequest r) {
-    auto ks = repo.findById(r.tenantId, r.keystoreId);
+    auto ks = repo.find(r.tenantId, r.keystoreId);
     if (ks.isNull)
       return CommandResult(false, "", "Keystore not found");
 

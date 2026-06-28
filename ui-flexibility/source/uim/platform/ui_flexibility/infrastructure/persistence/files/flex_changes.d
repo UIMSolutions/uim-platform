@@ -52,7 +52,7 @@ class FileFlexChangeRepository : TenantRepository!(FlexChange, FlexChangeId), Fl
   }
 
   FlexChange findById(TenantId tenantId, FlexChangeId id) {
-    foreach (c; findByTenant(tenantId))
+    foreach (c; find(tenantId))
       if (c.id_ == id) return c;
     return FlexChange.init;
   }
@@ -62,30 +62,30 @@ class FileFlexChangeRepository : TenantRepository!(FlexChange, FlexChangeId), Fl
   }
 
   long countByTenant(TenantId tenantId) {
-    return cast(long) findByTenant(tenantId).length;
+    return cast(long) find(tenantId).length;
   }
 
   FlexChange[] findByTenantAll(TenantId tenantId) {
-    return findByTenant(tenantId);
+    return find(tenantId);
   }
 
   FlexChange[] findByApp(TenantId tenantId, string appId) {
     FlexChange[] result;
-    foreach (c; findByTenant(tenantId))
+    foreach (c; find(tenantId))
       if (c.appId_ == appId) result ~= c;
     return result;
   }
 
   FlexChange[] findByLayer(TenantId tenantId, string appId, ChangeLayer layer) {
     FlexChange[] result;
-    foreach (c; findByTenant(tenantId))
+    foreach (c; find(tenantId))
       if (c.appId_ == appId && c.layer_ == layer) result ~= c;
     return result;
   }
 
   FlexChange[] findByChangeType(TenantId tenantId, string appId, ChangeType changeType) {
     FlexChange[] result;
-    foreach (c; findByTenant(tenantId))
+    foreach (c; find(tenantId))
       if (c.appId_ == appId && c.changeType_ == changeType) result ~= c;
     return result;
   }

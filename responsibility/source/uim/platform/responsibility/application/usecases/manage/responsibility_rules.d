@@ -23,7 +23,7 @@ class ManageResponsibilityRulesUseCase {
     }
 
     ResponsibilityRule[] listRules(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     ResponsibilityRule[] listRulesByContext(TenantId tenantId, string contextId) {

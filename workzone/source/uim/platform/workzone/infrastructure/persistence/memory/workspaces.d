@@ -18,11 +18,11 @@ import uim.platform.workzone;
 class MemoryWorkspaceRepository : TenantRepository!(Workspace, WorkspaceId), WorkspaceRepository {
 
   bool existsByAlias(TenantId tenantId, string alias_) {
-    return findByTenant(tenantId).any!(w => w.alias_ == alias_);
+    return find(tenantId).any!(w => w.alias_ == alias_);
   }
 
   Workspace findByAlias(TenantId tenantId, string alias_) {
-    foreach (w; findByTenant(tenantId))
+    foreach (w; find(tenantId))
       if (w.alias_ == alias_)
         return w;
     return Workspace.init;
@@ -38,7 +38,7 @@ class MemoryWorkspaceRepository : TenantRepository!(Workspace, WorkspaceId), Wor
   
   Workspace[] findByMember(TenantId tenantId, UserId userId) {
     Workspace[] result;
-    foreach (w; findByTenant(tenantId)) {
+    foreach (w; find(tenantId)) {
       foreach (m; w.members)
         if (m.userId == userId) {
           result ~= w;

@@ -32,7 +32,7 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
     if (r.resourceGroupId.isEmpty)
       return CommandResult(false, "", "Resource group ID is required");
 
-    auto conf = configurations.findById(r.tenantId, r.resourceGroupId, r.configurationId);
+    auto conf = configurations.find(r.tenantId, r.resourceGroupId, r.configurationId);
     if (conf.isNull)
       return CommandResult(false, "", "Configuration not found");
 

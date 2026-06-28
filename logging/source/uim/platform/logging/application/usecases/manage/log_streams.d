@@ -83,7 +83,7 @@ class ManageLogStreamsUseCase { // TODO: UIMUseCase {
   }
 
   LogStream[] listStreams(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   CommandResult deleteStream(TenantId tenantId, LogStreamId id) {

@@ -27,7 +27,7 @@ class MemoryCorsRuleRepository : TenantRepository!(CorsRule, CorsRuleId), CorsRu
   }
 
   CorsRule[] findByBucket(TenantId tenantId, BucketId bucketId) {
-    return filterByBucket(findByTenant(tenantId), bucketId);
+    return filterByBucket(find(tenantId), bucketId);
   }
 
   void removeByBucket(TenantId tenantId, BucketId bucketId) {

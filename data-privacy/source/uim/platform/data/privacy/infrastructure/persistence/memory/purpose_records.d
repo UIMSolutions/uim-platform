@@ -23,7 +23,7 @@ class MemoryPurposeRecordRepository : TenantRepository!(PurposeRecord, PurposeRe
   }
 
   PurposeRecord[] findByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
-    return filterByDataSubject(findByTenant(tenantId), subjectId);
+    return filterByDataSubject(find(tenantId), subjectId);
   }
 
   void removeByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
@@ -36,7 +36,7 @@ class MemoryPurposeRecordRepository : TenantRepository!(PurposeRecord, PurposeRe
 
   PurposeRecord[] findByStatus(TenantId tenantId, PurposeRecordStatus status) {
     PurposeRecord[] result;
-    foreach (s; findByTenant(tenantId))
+    foreach (s; find(tenantId))
       if (s.status == status)
         result ~= s;
     return result;
@@ -52,7 +52,7 @@ class MemoryPurposeRecordRepository : TenantRepository!(PurposeRecord, PurposeRe
 
   PurposeRecord[] findByBusinessContext(TenantId tenantId, BusinessContextId contextId) {
     PurposeRecord[] result;
-    foreach (s; findByTenant(tenantId))
+    foreach (s; find(tenantId))
       if (s.businessContextId == contextId)
         result ~= s;
     return result;

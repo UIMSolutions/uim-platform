@@ -21,21 +21,21 @@ class MemoryContentProviderRepository :
 
   // #region byName
   bool existsByName(TenantId tenantId, string name) {
-    foreach (e; findByTenant(tenantId))
+    foreach (e; find(tenantId))
       if (e.name == name)
         return true;
     return false;
   }
 
   ContentProvider findByName(TenantId tenantId, string name) {
-    foreach (e; findByTenant(tenantId))
+    foreach (e; find(tenantId))
       if (e.name == name)
         return e;
     return ContentProvider.init;
   }
 
   void removeByName(TenantId tenantId, string name) {
-    foreach (e; findByTenant(tenantId))
+    foreach (e; find(tenantId))
       if (e.name == name) {
         remove(e.id);
         return;
@@ -49,7 +49,7 @@ class MemoryContentProviderRepository :
   }
 
   ContentProvider[] findByStatus(TenantId tenantId, ProviderStatus status) {
-    return findByTenant(tenantId).filter!(e => e.status == status).array;
+    return find(tenantId).filter!(e => e.status == status).array;
   }
 
   void removeByStatus(TenantId tenantId, ProviderStatus status) {

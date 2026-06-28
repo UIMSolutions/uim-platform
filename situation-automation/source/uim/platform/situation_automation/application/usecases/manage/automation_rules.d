@@ -22,7 +22,7 @@ class ManageAutomationRulesUseCase { // TODO: UIMUseCase {
         if (err.length > 0)
             return CommandResult(false, "", err);
 
-        auto existing = repo.findById(r.tenantId, r.automationRuleId);
+        auto existing = repo.find(r.tenantId, r.automationRuleId);
         if (!existing.isNull)
             return CommandResult(false, "", "Automation rule already exists");
 
@@ -44,7 +44,7 @@ class ManageAutomationRulesUseCase { // TODO: UIMUseCase {
     }
 
     AutomationRule[] listAutomationRules(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     AutomationRule[] listAutomationRules(TenantId tenantId, SituationTemplateId templateId) {
@@ -56,7 +56,7 @@ class ManageAutomationRulesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateAutomationRule(UpdateAutomationRuleRequest r) {
-        auto rule = repo.findById(r.tenantId, r.automationRuleId);
+        auto rule = repo.find(r.tenantId, r.automationRuleId);
         if (rule.isNull)
             return CommandResult(false, "", "Automation rule not found");
 

@@ -23,7 +23,7 @@ class ManageLogicFlowsUseCase { // TODO: UIMUseCase {
     }
 
     LogicFlow[] listLogicFlows(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     LogicFlow[] listLogicFlows(TenantId tenantId, ApplicationId applicationId) {

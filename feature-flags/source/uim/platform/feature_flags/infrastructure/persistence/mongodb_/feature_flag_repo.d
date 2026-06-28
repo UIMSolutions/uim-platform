@@ -54,7 +54,7 @@ class MongoDbFeatureFlagRepository : FeatureFlagRepository {
     }
 
     FeatureFlag[] findByTenant(TenantId tenantId) {
-        return fallback.findByTenant(tenantId);
+        return fallback.find(tenantId);
     }
 
     FeatureFlag[] findByInstance(TenantId tenantId, ServiceInstanceId instanceId) {

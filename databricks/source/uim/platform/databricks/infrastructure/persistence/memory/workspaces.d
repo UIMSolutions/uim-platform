@@ -9,18 +9,18 @@ class MemoryWorkspaceRepository : TenantRepository!(Workspace, WorkspaceId), Wor
   Workspace[] findByStatus(TenantId tenantId, WorkspaceStatus status) {
     import std.algorithm : filter;
     import std.array : array;
-    return findByTenant(tenantId).filter!(w => w.status == status).array;
+    return find(tenantId).filter!(w => w.status == status).array;
   }
 
   Workspace[] findByRegion(TenantId tenantId, string region) {
     import std.algorithm : filter;
     import std.array : array;
-    return findByTenant(tenantId).filter!(w => w.region == region).array;
+    return find(tenantId).filter!(w => w.region == region).array;
   }
 
   Workspace[] findByTier(TenantId tenantId, WorkspaceTier tier) {
     import std.algorithm : filter;
     import std.array : array;
-    return findByTenant(tenantId).filter!(w => w.tier == tier).array;
+    return find(tenantId).filter!(w => w.tier == tier).array;
   }
 }

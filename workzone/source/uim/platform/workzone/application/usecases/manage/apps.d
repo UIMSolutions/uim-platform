@@ -49,7 +49,7 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
   }
 
   AppRegistration[] listApps(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   AppRegistration[] listByStatus(TenantId tenantId, AppStatus status) {

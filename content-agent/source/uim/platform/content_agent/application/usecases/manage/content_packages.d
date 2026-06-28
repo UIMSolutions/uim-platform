@@ -116,7 +116,7 @@ class ManageContentPackagesUseCase { // TODO: UIMUseCase {
   }
 
   ContentPackage[] listPackages(TenantId tenantId) {
-    return packages.findByTenant(tenantId);
+    return packages.find(tenantId);
   }
 
   ContentPackage[] listByStatus(TenantId tenantId, string statusStr) {

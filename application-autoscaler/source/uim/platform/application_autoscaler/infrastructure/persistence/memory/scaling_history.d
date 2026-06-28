@@ -22,7 +22,7 @@ class MemoryScalingHistoryRepository : TenantRepository!(ScalingHistory, Scaling
   }
 
   ScalingHistory[] findByApp(TenantId tenantId, AppBindingId appId) {
-    return findByTenant(tenantId).filter!(e => e.appId == appId).array;
+    return find(tenantId).filter!(e => e.appId == appId).array;
   }
 
   void removeByApp(TenantId tenantId, AppBindingId appId) {

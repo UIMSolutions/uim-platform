@@ -36,7 +36,7 @@ class ManagePoliciesUseCase { // TODO: UIMUseCase {
   }
 
   AuthorizationPolicy[] listPolicies(TenantId tenantId) {
-    return policyRepo.findByTenant(tenantId);
+    return policyRepo.find(tenantId);
   }
 
   CommandResult deletePolicy(TenantId tenantId, PolicyId id) {

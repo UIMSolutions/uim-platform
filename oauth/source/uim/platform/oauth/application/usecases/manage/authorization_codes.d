@@ -23,7 +23,7 @@ class ManageAuthorizationCodesUseCase { // TODO: UIMUseCase {
     }
 
     AuthorizationCode[] listCodes(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     CommandResult createCode(AuthorizationCodeDTO dto) {

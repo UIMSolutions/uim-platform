@@ -40,15 +40,15 @@ class MemoryServiceInstanceRepository : ServiceInstanceRepository {
   }
 
   ServiceInstance[] findByNamespace(NamespaceId nsId) {
-    return findByTenant(tenantId).filter!(e => e.namespaceId == nsId).array;
+    return find(tenantId).filter!(e => e.namespaceId == nsId).array;
   }
 
   ServiceInstance[] findByEnvironment(KymaEnvironmentId envId) {
-    return findByTenant(tenantId).filter!(e => e.environmentId == envId).array;
+    return find(tenantId).filter!(e => e.environmentId == envId).array;
   }
 
   ServiceInstance[] findByOffering(string offeringName) {
-    return findByTenant(tenantId).filter!(e => e.serviceOfferingName == offeringName).array;
+    return find(tenantId).filter!(e => e.serviceOfferingName == offeringName).array;
   }
 
   void save(ServiceInstance inst) {

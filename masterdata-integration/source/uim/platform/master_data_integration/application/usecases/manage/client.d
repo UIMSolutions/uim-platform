@@ -109,7 +109,7 @@ class ManageClientsUseCase { // TODO: UIMUseCase {
   }
 
   Client[] listClients(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   Client[] listClientsByStatus(TenantId tenantId, string status) {

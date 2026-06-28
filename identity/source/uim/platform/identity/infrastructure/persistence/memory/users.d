@@ -13,27 +13,27 @@ import uim.platform.identity;
 
 class MemoryUserRepository : TenantRepository!(User, UserId), UserRepository {
     User findByUserName(TenantId tenantId, string userName) {
-        foreach (u; findByTenant(tenantId))
+        foreach (u; find(tenantId))
             if (u.userName == userName) return u;
         return User.init;
     }
 
     User findByEmail(TenantId tenantId, string email) {
-        foreach (u; findByTenant(tenantId))
+        foreach (u; find(tenantId))
             if (u.email == email) return u;
         return User.init;
     }
 
     User[] findByStatus(TenantId tenantId, UserStatus status) {
-        return findByTenant(tenantId).filter!(u => u.status == status).array;
+        return find(tenantId).filter!(u => u.status == status).array;
     }
 
     User[] findByType(TenantId tenantId, UserType type_) {
-        return findByTenant(tenantId).filter!(u => u.type_ == type_).array;
+        return find(tenantId).filter!(u => u.type_ == type_).array;
     }
 
     User[] findByGroup(TenantId tenantId, IDMGroupId groupId) {
         import std.algorithm : canFind;
-        return findByTenant(tenantId).filter!(u => u.groups.canFind(groupId.value)).array;
+        return find(tenantId).filter!(u => u.groups.canFind(groupId.value)).array;
     }
 }

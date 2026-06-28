@@ -23,7 +23,7 @@ class ManageAppBuildsUseCase { // TODO: UIMUseCase {
     }
 
     AppBuild[] listAppBuilds(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     AppBuild[] listAppBuilds(TenantId tenantId, ApplicationId applicationId) {

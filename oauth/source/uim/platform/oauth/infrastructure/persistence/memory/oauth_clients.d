@@ -18,12 +18,12 @@ class MemoryOAuthClientRepository : TenantRepository!(OAuthClient, OAuthClientId
         return findByClient(tenantId, clientId).id != OAuthClientId.init;
     }
     OAuthClient findByClient(TenantId tenantId, string clientId) {
-        foreach (e; findByTenant(tenantId))
+        foreach (e; find(tenantId))
             if (e.clientId == clientId) return e;
         return OAuthClient.init;
     }
     void removeByClient(TenantId tenantId, string clientId) {
-        foreach (e; findByTenant(tenantId))
+        foreach (e; find(tenantId))
             if (e.clientId == clientId) {
                 remove(e);
                 return;
@@ -41,7 +41,7 @@ class MemoryOAuthClientRepository : TenantRepository!(OAuthClient, OAuthClientId
     }
 
     OAuthClient[] findByStatus(TenantId tenantId, ClientStatus status) {
-        return filterByStatus(findByTenant(tenantId), status);
+        return filterByStatus(find(tenantId), status);
     }
     void removeByStatus(TenantId tenantId, ClientStatus status) {
         findByStatus(tenantId, status).each!(entity => remove(entity));

@@ -23,7 +23,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
     }
 
     UIMTask[] listTasks(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     UIMTask[] listTasks(TenantId tenantId, string byAssignee) {

@@ -61,7 +61,7 @@ class ManageSpacesUseCase { // TODO: UIMUseCase {
   }
 
   Space[] listSpaces(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   Space[] listByOrg(TenantId tenantId, OrgId orgId) {

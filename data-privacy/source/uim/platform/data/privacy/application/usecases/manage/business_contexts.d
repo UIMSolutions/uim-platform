@@ -45,7 +45,7 @@ class ManageBusinessContextsUseCase { // TODO: UIMUseCase {
   }
 
   BusinessContext[] listContexts(TenantId tenantId) {
-    return businessContexts.findByTenant(tenantId);
+    return businessContexts.find(tenantId);
   }
 
   BusinessContext[] listByStatus(TenantId tenantId, BusinessContextStatus status) {

@@ -15,10 +15,10 @@ import uim.platform.logging;
 class MemoryDashboardRepository : TenantRepository!(Dashboard, DashboardId), DashboardRepository {
 
   bool existsDefault(TenantId tenantId) {
-    return findByTenant(tenantId).any!(d => d.isDefault);
+    return find(tenantId).any!(d => d.isDefault);
   }
   Dashboard findDefault(TenantId tenantId) {
-    foreach (d; findByTenant(tenantId))
+    foreach (d; find(tenantId))
       if (d.isDefault)
         return d;
     return Dashboard.init;

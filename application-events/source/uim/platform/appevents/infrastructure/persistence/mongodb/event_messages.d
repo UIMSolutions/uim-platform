@@ -58,11 +58,11 @@ class MongoEventMessageRepository : EventMessageRepository {
         ]);
     }
 
-    bool isTenantEmpty(TenantId tenantId)  { return findByTenant(tenantId).length == 0; }
+    bool isTenantEmpty(TenantId tenantId)  { return find(tenantId).length == 0; }
     void createTenant(TenantId tenantId)    {}
     TenantId[] findAllTenants()             { return []; }
     bool existsByTenant(TenantId tenantId)  { return !isTenantEmpty(tenantId); }
-    size_t countByTenant(TenantId tenantId) { return findByTenant(tenantId).length; }
+    size_t countByTenant(TenantId tenantId) { return find(tenantId).length; }
     EventMessage[] filterByTenant(EventMessage[] items, TenantId tenantId) {
         return items.filter!(e => e.tenantId == tenantId).array;
     }
@@ -130,14 +130,14 @@ class MongoEventMessageRepository : EventMessageRepository {
     void removeAll() @trusted { _collection.remove(Bson.emptyObject); }
 
     override EventMessage[] findByChannel(TenantId tenantId, EventChannelId channelId) {
-        return findByTenant(tenantId).filter!(e => e.channelId.value == channelId.value).array;
+        return find(tenantId).filter!(e => e.channelId.value == channelId.value).array;
     }
 
     override EventMessage[] findByStatus(TenantId tenantId, MessageStatus status) {
-        return findByTenant(tenantId).filter!(e => e.status == status).array;
+        return find(tenantId).filter!(e => e.status == status).array;
     }
 
     override EventMessage[] findBySourceSystem(TenantId tenantId, string sourceSystemId) {
-        return findByTenant(tenantId).filter!(e => e.sourceSystemId == sourceSystemId).array;
+        return find(tenantId).filter!(e => e.sourceSystemId == sourceSystemId).array;
     }
 }

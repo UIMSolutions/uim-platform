@@ -18,18 +18,18 @@ import uim.platform.foundry;
 class MemoryAppRepository : TenantRepository!(Application, AppId), IAppRepository {
 
   bool existsByName(TenantId tenantId, SpaceId spaceId, string name) {
-    return findByTenant(tenantId).any!(e => e.spaceId == spaceId && e.name == name);
+    return find(tenantId).any!(e => e.spaceId == spaceId && e.name == name);
   }
 
   Application findByName(TenantId tenantId, SpaceId spaceId, string name) {
-    foreach (e; findByTenant(tenantId))
+    foreach (e; find(tenantId))
       if (e.spaceId == spaceId && e.name == name)
         return e;
     return Application.init;
   }
 
   void removeByName(TenantId tenantId, SpaceId spaceId, string name) {
-    foreach (e; findByTenant(tenantId))
+    foreach (e; find(tenantId))
       if (e.spaceId == spaceId && e.name == name)
         return remove(e);
   }
@@ -44,7 +44,7 @@ class MemoryAppRepository : TenantRepository!(Application, AppId), IAppRepositor
   }
 
   Application[] findBySpace(TenantId tenantId, SpaceId spaceId) {
-    return filterBySpace(findByTenant(tenantId), spaceId);
+    return filterBySpace(find(tenantId), spaceId);
   }
 
   void removeBySpace(TenantId tenantId, SpaceId spaceId) {
@@ -62,7 +62,7 @@ class MemoryAppRepository : TenantRepository!(Application, AppId), IAppRepositor
   }
 
   Application[] findByState(TenantId tenantId, SpaceId spaceId, AppState state) {
-    return filterByState(findByTenant(tenantId), spaceId, state);
+    return filterByState(find(tenantId), spaceId, state);
   }
 
   void removeByState(TenantId tenantId, SpaceId spaceId, AppState state) {

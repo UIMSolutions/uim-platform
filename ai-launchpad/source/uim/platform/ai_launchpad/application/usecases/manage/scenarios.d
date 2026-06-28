@@ -43,7 +43,7 @@ class ManageScenariosUseCase { // TODO: UIMUseCase {
   }
 
   Scenario[] listScenarios(TenantId tenantId) {
-    return scenarios.findByTenant(tenantId);
+    return scenarios.find(tenantId);
   }
 
   CommandResult deleteScenario(TenantId tenantId, ConnectionId connectionId, ScenarioId id) {

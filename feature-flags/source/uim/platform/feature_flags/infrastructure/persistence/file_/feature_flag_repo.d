@@ -47,7 +47,7 @@ class FileFeatureFlagRepository : FeatureFlagRepository {
     }
 
     FeatureFlag findByName(TenantId tenantId, ServiceInstanceId instanceId, string name) {
-        foreach (f; findByTenant(tenantId))
+        foreach (f; find(tenantId))
             if (f.instanceId == instanceId && f.name == name) return f;
         return FeatureFlag.init;
     }
@@ -62,7 +62,7 @@ class FileFeatureFlagRepository : FeatureFlagRepository {
     }
 
     FeatureFlag[] findByInstance(TenantId tenantId, ServiceInstanceId instanceId) {
-        return findByTenant(tenantId).filter!(f => f.instanceId == instanceId).array;
+        return find(tenantId).filter!(f => f.instanceId == instanceId).array;
     }
 
     FeatureFlag[] findByState(TenantId tenantId, ServiceInstanceId instanceId, FlagState state_) {

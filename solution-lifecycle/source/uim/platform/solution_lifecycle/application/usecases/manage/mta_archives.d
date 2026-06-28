@@ -45,11 +45,11 @@ class ManageMtaArchivesUseCase {
     }
 
     MtaArchive[] listArchives(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     MtaArchive getArchive(TenantId tenantId, MtaArchiveId id) {
-        auto results = repo.findByTenant(tenantId);
+        auto results = repo.find(tenantId);
         foreach (a; results)
             if (a.id.value == id.value) return a;
         return new MtaArchive();

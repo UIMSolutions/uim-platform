@@ -14,7 +14,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
     }
 
     ServiceBinding[] listBindings(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     ServiceBinding getBinding(TenantId tenantId, ServiceBindingId id) {

@@ -18,41 +18,41 @@ import uim.platform.content_agent;
 class MemoryTransportQueueRepository : TenantRepository!(TransportQueue, TransportQueueId) {
 
   bool existsDefault(TenantId tenantId) {
-    foreach (e; findByTenant(tenantId))
+    foreach (e; find(tenantId))
       if (e.isDefault)
         return true;
     return false;
   }
 
   TransportQueue findDefault(TenantId tenantId) {
-    foreach (e; findByTenant(tenantId))
+    foreach (e; find(tenantId))
       if (e.isDefault)
         return e;
     return TransportQueue.init;
   }
 
   void removeDefault(TenantId tenantId) {
-    foreach (e; findByTenant(tenantId))
+    foreach (e; find(tenantId))
       if (e.isDefault)
         remove(e);
   }
 
   bool existsByName(TenantId tenantId, string name) {
-    foreach (e; findByTenant(tenantId))
+    foreach (e; find(tenantId))
       if (e.name == name)
         return true;
     return false;
   }
 
   TransportQueue findByName(TenantId tenantId, string name) {
-    foreach (e; findByTenant(tenantId))
+    foreach (e; find(tenantId))
       if (e.name == name)
         return e;
     return TransportQueue.init;
   }
 
   void removeByName(TenantId tenantId, string name) {
-    foreach (e; findByTenant(tenantId))
+    foreach (e; find(tenantId))
       if (e.name == name)
         remove(e);
   }

@@ -40,19 +40,19 @@ class MemoryEventSubscriptionRepository : EventSubscriptionRepository {
   }
 
   EventSubscription[] findByNamespace(NamespaceId nsId) {
-    return findByTenant(tenantId).filter!(e => e.namespaceId == nsId).array;
+    return find(tenantId).filter!(e => e.namespaceId == nsId).array;
   }
 
   EventSubscription[] findByEnvironment(KymaEnvironmentId envId) {
-    return findByTenant(tenantId).filter!(e => e.environmentId == envId).array;
+    return find(tenantId).filter!(e => e.environmentId == envId).array;
   }
 
   EventSubscription[] findBySource(string source) {
-    return findByTenant(tenantId).filter!(e => e.source == source).array;
+    return find(tenantId).filter!(e => e.source == source).array;
   }
 
   EventSubscription[] findByStatus(SubscriptionStatus status) {
-    return findByTenant(tenantId).filter!(e => e.status == status).array;
+    return find(tenantId).filter!(e => e.status == status).array;
   }
 
   void save(EventSubscription sub) {

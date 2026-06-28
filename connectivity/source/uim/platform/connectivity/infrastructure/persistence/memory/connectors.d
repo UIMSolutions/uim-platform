@@ -15,18 +15,18 @@ import uim.platform.connectivity;
 class MemoryConnectorRepository : TenantRepository!(CloudConnector, ConnectorId), ConnectorRepository {
  
   bool existsByLocation(TenantId tenantId, SubaccountId subaccountId, string locationId) {
-    return findByTenant(tenantId).any!(e => e.subaccountId == subaccountId && e.locationId == locationId);
+    return find(tenantId).any!(e => e.subaccountId == subaccountId && e.locationId == locationId);
   }
 
   CloudConnector findByLocation(TenantId tenantId, SubaccountId subaccountId, string locationId) {
-    foreach (e; findByTenant(tenantId))
+    foreach (e; find(tenantId))
       if (e.subaccountId == subaccountId && e.locationId == locationId)
         return e;
     return CloudConnector.init;
   }
 
   void removeByLocation(TenantId tenantId, SubaccountId subaccountId, string locationId) {
-    foreach (e; findByTenant(tenantId))
+    foreach (e; find(tenantId))
       if (e.subaccountId == subaccountId && e.locationId == locationId)
          return remove(e);
   }
@@ -36,7 +36,7 @@ class MemoryConnectorRepository : TenantRepository!(CloudConnector, ConnectorId)
   }
 
   CloudConnector[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
-    return findByTenant(tenantId).filter!(e => e.subaccountId == subaccountId).array;
+    return find(tenantId).filter!(e => e.subaccountId == subaccountId).array;
   }
 
   void removeBySubaccount(TenantId tenantId, SubaccountId subaccountId) {

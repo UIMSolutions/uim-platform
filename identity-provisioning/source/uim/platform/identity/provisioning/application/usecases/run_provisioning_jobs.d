@@ -98,7 +98,7 @@ class RunProvisioningJobsUseCase { // TODO: UIMUseCase {
   }
 
   ProvisioningJob[] listJobs(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   ProvisioningJob[] listByStatus(TenantId tenantId, JobStatus status) {

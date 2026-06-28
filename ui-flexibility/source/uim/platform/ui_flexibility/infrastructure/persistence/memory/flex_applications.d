@@ -17,7 +17,7 @@ class MemoryFlexApplicationRepository : TenantRepository!(FlexApplication, FlexA
   }
 
   FlexApplication findById(TenantId tenantId, FlexApplicationId id) {
-    foreach (a; findByTenant(tenantId))
+    foreach (a; find(tenantId))
       if (a.id_ == id) return a;
     return FlexApplication.init;
   }
@@ -27,29 +27,29 @@ class MemoryFlexApplicationRepository : TenantRepository!(FlexApplication, FlexA
   }
 
   long countByTenant(TenantId tenantId) {
-    return cast(long) findByTenant(tenantId).length;
+    return cast(long) find(tenantId).length;
   }
 
   FlexApplication[] findByTenantAll(TenantId tenantId) {
-    return findByTenant(tenantId);
+    return find(tenantId);
   }
 
   FlexApplication findByApp(TenantId tenantId, string appId) {
-    foreach (a; findByTenant(tenantId))
+    foreach (a; find(tenantId))
       if (a.appId_ == appId) return a;
     return FlexApplication.init;
   }
 
   FlexApplication[] findActiveByTenant(TenantId tenantId) {
     FlexApplication[] result;
-    foreach (a; findByTenant(tenantId))
+    foreach (a; find(tenantId))
       if (a.isActive_) result ~= a;
     return result;
   }
 
   FlexApplication[] findByNamespace(TenantId tenantId, string ns) {
     FlexApplication[] result;
-    foreach (a; findByTenant(tenantId))
+    foreach (a; find(tenantId))
       if (a.namespace_ == ns) result ~= a;
     return result;
   }

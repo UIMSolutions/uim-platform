@@ -83,7 +83,7 @@ class ManageDataRetrievalsUseCase { // TODO: UIMUseCase {
   }
 
   DataRetrievalRequest[] listRequests(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   DataRetrievalRequest[] listByStatus(TenantId tenantId, RetrievalStatus status) {

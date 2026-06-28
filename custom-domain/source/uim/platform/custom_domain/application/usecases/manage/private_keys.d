@@ -45,7 +45,7 @@ class ManagePrivateKeysUseCase { // TODO: UIMUseCase {
     }
 
     PrivateKey[] listPrivateKeys(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     CommandResult deletePrivateKey(TenantId tenantId, PrivateKeyId id) {

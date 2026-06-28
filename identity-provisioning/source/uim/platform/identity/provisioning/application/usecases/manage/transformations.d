@@ -54,7 +54,7 @@ class ManageTransformationsUseCase { // TODO: UIMUseCase {
   }
 
   Transformation[] listTransformations(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   Transformation[] listBySystem(TenantId tenantId, string systemId) {

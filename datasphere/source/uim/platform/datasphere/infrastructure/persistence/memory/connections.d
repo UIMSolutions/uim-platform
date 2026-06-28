@@ -40,7 +40,7 @@ class MemoryConnectionRepository : TenantRepository!(Connection, ConnectionId), 
     return findBySpace(tenantId, spaceId).length;
   }
   Connection[] findBySpace(TenantId tenantId, SpaceId spaceId) {
-    return filterBySpace(findByTenant(tenantId), spaceId);
+    return filterBySpace(find(tenantId), spaceId);
   }
   void removeBySpace(TenantId tenantId, SpaceId spaceId) {
     findBySpace(tenantId, spaceId).each!(c => remove(c));

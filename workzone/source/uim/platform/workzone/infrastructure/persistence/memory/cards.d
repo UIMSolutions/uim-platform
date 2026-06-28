@@ -22,7 +22,7 @@ class MemoryCardRepository : TenantRepository!(Card, CardId), CardRepository {
   }
 
   Card[] findByType(TenantId tenantId, CardType cardType) {
-    return findByTenant(tenantId).filter!(c => c.cardType == cardType).array;
+    return find(tenantId).filter!(c => c.cardType == cardType).array;
   }
 
   void removeByType(TenantId tenantId, CardType cardType) {

@@ -23,7 +23,7 @@ class ManagePrintersUseCase {
     }
 
     Printer[] listPrinters(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     Printer[] listByStatus(TenantId tenantId, PrinterStatus status) {

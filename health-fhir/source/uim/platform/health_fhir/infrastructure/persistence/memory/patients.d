@@ -17,7 +17,7 @@ class MemoryPatientRepository : TenantRepository!(Patient, PatientId), PatientRe
   }
 
   Patient findById(TenantId tenantId, PatientId id) {
-    foreach (p; findByTenant(tenantId)) {
+    foreach (p; find(tenantId)) {
       if (p.id == id) return p;
     }
     return Patient.init;
@@ -29,18 +29,18 @@ class MemoryPatientRepository : TenantRepository!(Patient, PatientId), PatientRe
   }
 
   size_t countByTenant(TenantId tenantId) {
-    return findByTenant(tenantId).length;
+    return find(tenantId).length;
   }
 
   Patient[] findByTenantAll(TenantId tenantId) {
-    return findByTenant(tenantId);
+    return find(tenantId);
   }
 
   Patient[] searchByName(TenantId tenantId, string namePart) {
     import std.string : toLower, indexOf;
     auto lower = namePart.toLower;
     Patient[] results;
-    foreach (p; findByTenant(tenantId)) {
+    foreach (p; find(tenantId)) {
       foreach (n; p.name_) {
         if (n.family_.toLower.indexOf(lower) >= 0) {
           results ~= p;

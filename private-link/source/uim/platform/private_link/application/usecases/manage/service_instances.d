@@ -80,7 +80,7 @@ class ManageServiceInstancesUseCase {
   }
 
   ServiceInstance[] listInstances(TenantId tenantId) {
-    return instances.findByTenant(tenantId);
+    return instances.find(tenantId);
   }
 
   ServiceInstance[] listByStatus(TenantId tenantId, InstanceStatus status) {

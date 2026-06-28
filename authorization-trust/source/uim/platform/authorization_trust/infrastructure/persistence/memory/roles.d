@@ -14,11 +14,11 @@ import uim.platform.authorization_trust;
 class MemoryRoleRepository : TenantRepository!(RoleEntity, RoleId), RoleRepository {
 
   bool existsByName(TenantId tenantId, string name, string appId) {
-    return findByTenant(tenantId).any!(r => r.name == name && r.appId == appId);
+    return find(tenantId).any!(r => r.name == name && r.appId == appId);
   }
 
   RoleEntity findByName(TenantId tenantId, string name, string appId) {
-    foreach (r; findByTenant(tenantId))
+    foreach (r; find(tenantId))
       if (r.name == name && r.appId == appId)
         return r;
     return RoleEntity.init;
@@ -29,7 +29,7 @@ class MemoryRoleRepository : TenantRepository!(RoleEntity, RoleId), RoleReposito
   }
 
   size_t countByApp(TenantId tenantId, string appId) {
-    return findByTenant(tenantId).count!(r => r.appId == appId);
+    return find(tenantId).count!(r => r.appId == appId);
   }
 
   RoleEntity[] filterByApp(TenantId tenantId, RoleEntity[] roles, string appId) {
@@ -37,7 +37,7 @@ class MemoryRoleRepository : TenantRepository!(RoleEntity, RoleId), RoleReposito
   }
 
   RoleEntity[] findByApp(TenantId tenantId, string appId) {
-    return findByTenant(tenantId).filter!(r => r.appId == appId).array;
+    return find(tenantId).filter!(r => r.appId == appId).array;
   }
 
   void removeByApp(TenantId tenantId, string appId) {

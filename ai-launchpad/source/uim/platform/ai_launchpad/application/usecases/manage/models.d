@@ -57,7 +57,7 @@ class ManageModelsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult patchModel(PatchModelRequest r) {
-    auto m = models.findById(r.tenantId, r.connectionId, r.modelId);
+    auto m = models.find(r.tenantId, r.connectionId, r.modelId);
 
     if (m.isNull)
       return CommandResult(false, "", "Model not found");

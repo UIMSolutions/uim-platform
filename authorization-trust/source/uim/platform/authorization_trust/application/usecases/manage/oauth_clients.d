@@ -48,7 +48,7 @@ class ManageOAuthClientsUseCase {
   }
 
   CommandResult updateClient(UpdateOAuthClientRequest r) {
-    auto c = repo.findById(r.tenantId, r.clientId);
+    auto c = repo.find(r.tenantId, r.clientId);
     if (c.isNull)
       return CommandResult(false, "", "OAuth client not found");
 
@@ -79,7 +79,7 @@ class ManageOAuthClientsUseCase {
   }
 
   OAuthClient[] listClients(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   OAuthClient[] listClients(TenantId tenantId, string appId) {

@@ -17,7 +17,7 @@ class MemoryStoryRepository : TenantRepository!(Story, StoryId), StoryRepository
   }
 
   Story[] findByOwner(TenantId tenantId, EntityId ownerId) {
-    return findByTenant(tenantId).filter!(s => s.ownerId == ownerId).array;
+    return find(tenantId).filter!(s => s.ownerId == ownerId).array;
   }
 
   void removeByOwner(TenantId tenantId, EntityId ownerId) {

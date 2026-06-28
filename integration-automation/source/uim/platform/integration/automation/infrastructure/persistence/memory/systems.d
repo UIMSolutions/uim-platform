@@ -24,7 +24,7 @@ class MemorySystemRepository : TenantRepository!(SystemConnection, SystemConnect
   }
 
   SystemConnection[] findByType(TenantId tenantId, SystemType systemType) {
-    return filterByType(findByTenant(tenantId), systemType);
+    return filterByType(find(tenantId), systemType);
   }
 
   void removeByType(TenantId tenantId, SystemType systemType) {
@@ -40,7 +40,7 @@ class MemorySystemRepository : TenantRepository!(SystemConnection, SystemConnect
   }
 
   SystemConnection[] findByStatus(TenantId tenantId, ConnectionStatus status) {
-    return filterByStatus(findByTenant(tenantId), status);
+    return filterByStatus(find(tenantId), status);
   }
 
   void removeByStatus(TenantId tenantId, ConnectionStatus status) {

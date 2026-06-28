@@ -104,7 +104,7 @@ class ManageCleansingRulesUseCase { // TODO: UIMUseCase {
   }
 
   CleansingRule[] listCleansingRules(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   CleansingRule[] listActiveCleansingRules(TenantId tenantId) {

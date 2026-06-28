@@ -14,11 +14,11 @@ class MemoryPrivateEndpointRepository
       PrivateEndpointRepository {
 
   PrivateEndpoint[] findByServiceInstance(TenantId tenantId, ServiceInstanceId instanceId) {
-    return findByTenant(tenantId).filter!(e => e.serviceInstanceId.value == instanceId.value).array;
+    return find(tenantId).filter!(e => e.serviceInstanceId.value == instanceId.value).array;
   }
 
   PrivateEndpoint[] findByStatus(TenantId tenantId, EndpointStatus status) {
-    return findByTenant(tenantId).filter!(e => e.status == status).array;
+    return find(tenantId).filter!(e => e.status == status).array;
   }
 
   void removeByServiceInstance(TenantId tenantId, ServiceInstanceId instanceId) {

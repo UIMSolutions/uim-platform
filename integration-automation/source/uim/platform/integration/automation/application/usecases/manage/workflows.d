@@ -105,7 +105,7 @@ class ManageWorkflowsUseCase { // TODO: UIMUseCase {
   }
 
   Workflow[] listWorkflows(TenantId tenantId) {
-    return workflowRepo.findByTenant(tenantId);
+    return workflowRepo.find(tenantId);
   }
 
   Workflow[] listByStatus(TenantId tenantId, WorkflowStatus status) {

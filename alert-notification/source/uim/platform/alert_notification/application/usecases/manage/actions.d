@@ -42,7 +42,7 @@ class ManageActionsUseCase {
     }
 
     QueryResult listActions(TenantId tenantId) {
-        auto items = repo.findByTenant(tenantId);
+        auto items = repo.find(tenantId);
         auto arr   = items.map!(a => a.toJson).array.toJson;
 
         return QueryResult(true, "", arr);

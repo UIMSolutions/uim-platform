@@ -23,7 +23,7 @@ class ManageReplicationsUseCase {
     }
 
     Replication[] listReplications(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     Replication[] listByStatus(TenantId tenantId, ReplicationStatus status) {

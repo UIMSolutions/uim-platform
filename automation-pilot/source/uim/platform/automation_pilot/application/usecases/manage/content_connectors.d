@@ -23,7 +23,7 @@ class ManageContentConnectorsUseCase { // TODO: UIMUseCase {
     }
 
     ContentConnector[] listContentConnectors(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     CommandResult createContentConnector(ContentConnectorDTO dto) {

@@ -79,7 +79,7 @@ class ManageMonitoredResourcesUseCase { // TODO: UIMUseCase {
   }
 
   MonitoredResource[] listResources(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   MonitoredResource[] listByType(TenantId tenantId, string typeStr) {

@@ -66,7 +66,7 @@ class ManageModelsUseCase { // TODO: UIMUseCase {
   }
 
   ModelConfiguration[] listModelConfigs(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   CommandResult updateModelConfig(UpdateModelConfigRequest req) {

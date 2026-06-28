@@ -23,7 +23,7 @@ class ManageStagesUseCase {
     }
 
     Stage[] listStages(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     Stage[] listByBuild(TenantId tenantId, BuildId buildId) {

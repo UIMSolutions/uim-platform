@@ -18,7 +18,7 @@ class MemoryExtensionRepository : TenantRepository!(Extension, ExtensionId), Ext
     }
 
     Extension[] findByScope(TenantId tenantId, ExtensionScope scope_) {
-        return findByTenant(tenantId).filter!(e => e.scope_ == scope_).array;
+        return find(tenantId).filter!(e => e.scope_ == scope_).array;
     }
 
     void removeByScope(TenantId tenantId, ExtensionScope scope_) {
@@ -30,7 +30,7 @@ class MemoryExtensionRepository : TenantRepository!(Extension, ExtensionId), Ext
     }
 
     Extension[] findByStatus(TenantId tenantId, ExtensionStatus status) {
-        return findByTenant(tenantId).filter!(e => e.status == status).array;
+        return find(tenantId).filter!(e => e.status == status).array;
     }
 
     void removeByStatus(TenantId tenantId, ExtensionStatus status) {

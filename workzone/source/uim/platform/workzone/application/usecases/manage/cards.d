@@ -46,7 +46,7 @@ class ManageCardsUseCase { // TODO: UIMUseCase {
   }
 
   Card[] listCards(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   Card[] listByType(TenantId tenantId, CardType cardType) {

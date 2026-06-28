@@ -23,7 +23,7 @@ class ManageWebhooksUseCase {
     }
 
     Webhook[] listWebhooks(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     Webhook[] listByRepository(TenantId tenantId, CicdRepositoryId repositoryId) {

@@ -21,7 +21,7 @@ class ManageServiceInstancesUseCase {
     }
 
     ServiceInstance[] listServiceInstances(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     ServiceInstance[] listByStatus(TenantId tenantId, InstanceStatus status) {

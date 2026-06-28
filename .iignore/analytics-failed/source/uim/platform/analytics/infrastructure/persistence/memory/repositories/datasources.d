@@ -17,7 +17,7 @@ class MemoryDataSourceRepository : TenantRepository!(DataSource, DataSourceId), 
   }
 
   DataSource[] findBySourceType(TenantId tenantId, DataSourceType sourceType) {
-    return findByTenant(tenantId).filter!(ds => ds.sourceType == sourceType).array;
+    return find(tenantId).filter!(ds => ds.sourceType == sourceType).array;
   }
 
   void removeBySourceType(TenantId tenantId, DataSourceType sourceType) {

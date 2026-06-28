@@ -66,7 +66,7 @@ class FileEventSchemaRepository : MemoryEventSchemaRepository {
     private void persistTenant(TenantId tenantId) @trusted {
         auto fp = filePath(tenantId);
         mkdirRecurse(dirName(fp));
-        Json arr = super.findByTenant(tenantId).map!(item => item.toJson).array.toJson;
+        Json arr = super.find(tenantId).map!(item => item.toJson).array.toJson;
         write(fp, arr.toString());
     }
 

@@ -20,7 +20,7 @@ class MemoryEventApplicationRepository : TenantRepository!(EventApplication, Eve
         return apps.filter!(e => e.brokerServiceId == brokerServiceId).array;
     }
     EventApplication[] findByBrokerService(TenantId tenantId, BrokerServiceId brokerServiceId) {
-        return filterByBrokerService(findByTenant(tenantId), brokerServiceId);
+        return filterByBrokerService(find(tenantId), brokerServiceId);
     }
     void removeByBrokerService(TenantId tenantId, BrokerServiceId brokerServiceId) {
         findByBrokerService(tenantId, brokerServiceId).each!(e => remove(e));
@@ -33,7 +33,7 @@ class MemoryEventApplicationRepository : TenantRepository!(EventApplication, Eve
         return apps.filter!(e => e.status == status).array;
     }
     EventApplication[] findByStatus(TenantId tenantId, EventApplicationStatus status) {
-        return filterByStatus(findByTenant(tenantId), status);
+        return filterByStatus(find(tenantId), status);
     }
     void removeByStatus(TenantId tenantId, EventApplicationStatus status) {
         findByStatus(tenantId, status).each!(e => remove(e));
@@ -46,7 +46,7 @@ class MemoryEventApplicationRepository : TenantRepository!(EventApplication, Eve
         return apps.filter!(e => e.applicationType == appType).array;
     }
     EventApplication[] findByType(TenantId tenantId, EventApplicationType appType) {
-        return filterByType(findByTenant(tenantId), appType);
+        return filterByType(find(tenantId), appType);
     }
     void removeByType(TenantId tenantId, EventApplicationType appType) {
         findByType(tenantId, appType).each!(e => remove(e));

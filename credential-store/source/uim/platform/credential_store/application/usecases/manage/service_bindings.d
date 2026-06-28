@@ -52,7 +52,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateServiceBinding(UpdateServiceBindingRequest r) {
-    auto binding = bindings.findById(r.tenantId, r.serviceBindingId);
+    auto binding = bindings.find(r.tenantId, r.serviceBindingId);
     if (binding.isNull)
       return CommandResult(false, "", "Service binding not found");
 

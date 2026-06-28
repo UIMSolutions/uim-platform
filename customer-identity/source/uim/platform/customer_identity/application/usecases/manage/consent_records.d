@@ -23,7 +23,7 @@ class ManageConsentRecordsUseCase {
     }
 
     ConsentRecord[] listConsentRecords(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     ConsentRecord[] listByCustomer(TenantId tenantId, CustomerId customerId) {

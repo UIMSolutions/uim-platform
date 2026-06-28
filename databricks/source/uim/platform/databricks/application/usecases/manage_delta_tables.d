@@ -40,7 +40,7 @@ public:
   }
 
   UseCaseResult!(DeltaTable[]) list(TenantId tenantId) {
-    return UseCaseResult!(DeltaTable[])(true, "", _repo.findByTenant(tenantId));
+    return UseCaseResult!(DeltaTable[])(true, "", _repo.find(tenantId));
   }
 
   UseCaseResult!DeltaTable get(TenantId tenantId, DeltaTableId id) {

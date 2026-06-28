@@ -31,7 +31,7 @@ class FileConfigurationRepository
         auto path = filePath(tenantId);
         mkdirRecurse(path[0 .. path.lastIndexOf('/')]);
         Json arr = Json.emptyArray;
-        foreach (i; findByTenant(tenantId)) arr ~= i.toJson();
+        foreach (i; find(tenantId)) arr ~= i.toJson();
         write(path, arr.toString());
     }
 
@@ -64,7 +64,7 @@ class FileConfigurationRepository
     override void removeById(TenantId tenantId, ConfigurationId id) { super.removeById(tenantId, id); persistTenant(tenantId); }
 
     override Configuration findByInstance(TenantId tenantId, ServiceInstanceId instanceId) {
-        auto results = findByTenant(tenantId).filter!(e => e.instanceId == instanceId).array;
+        auto results = find(tenantId).filter!(e => e.instanceId == instanceId).array;
         return results.length > 0 ? results[0] : Configuration.init;
     }
 }

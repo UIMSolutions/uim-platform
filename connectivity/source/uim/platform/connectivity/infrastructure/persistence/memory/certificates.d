@@ -16,18 +16,18 @@ import uim.platform.connectivity;
 class MemoryCertificateRepository : TenantRepository!(Certificate, CertificateId), CertificateRepository {
 
   bool existsByName(TenantId tenantId, string name) {
-    return findByTenant(tenantId).any!(e => e.name == name);
+    return find(tenantId).any!(e => e.name == name);
   }
 
   Certificate findByName(TenantId tenantId, string name) {
-    foreach (e; findByTenant(tenantId))
+    foreach (e; find(tenantId))
       if (e.name == name)
         return e;
     return Certificate.init;
   }
 
   void removeByName(TenantId tenantId, string name) {
-    foreach (e; findByTenant(tenantId))
+    foreach (e; find(tenantId))
       if (e.name == name)
         return remove(e);
   }
@@ -37,7 +37,7 @@ class MemoryCertificateRepository : TenantRepository!(Certificate, CertificateId
   }
 
   Certificate[] findExpiring(TenantId tenantId, long now, size_t withinDays) {
-    return findByTenant(tenantId).filter!(e => e.expiresWithinDays(now, withinDays)).array;
+    return find(tenantId).filter!(e => e.expiresWithinDays(now, withinDays)).array;
   }
 
   void removeExpiring(TenantId tenantId, long now, size_t withinDays) {

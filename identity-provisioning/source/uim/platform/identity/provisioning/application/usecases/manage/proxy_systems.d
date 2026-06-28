@@ -71,7 +71,7 @@ class ManageProxySystemsUseCase { // TODO: UIMUseCase {
   }
 
   ProxySystem[] listProxySystems(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   CommandResult updateProxySystem(UpdateProxySystemRequest req) {

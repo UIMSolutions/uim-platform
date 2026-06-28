@@ -83,7 +83,7 @@ class ManageAlertRulesUseCase { // TODO: UIMUseCase {
   }
 
   AlertRule[] listRules(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   AlertRule[] listEnabledRules(TenantId tenantId) {

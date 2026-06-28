@@ -37,7 +37,7 @@ class MemoryKeyEntryRepository : TenantRepository!(KeyEntry, KeyEntryId), KeyEnt
   }
   
   KeyEntry[] findByKeystore(TenantId tenantId, KeystoreId keystoreId) {
-    return filterByKeystore(findByTenant(tenantId), keystoreId);
+    return filterByKeystore(find(tenantId), keystoreId);
   }
   
   void removeByKeystore(TenantId tenantId, KeystoreId keystoreId) {

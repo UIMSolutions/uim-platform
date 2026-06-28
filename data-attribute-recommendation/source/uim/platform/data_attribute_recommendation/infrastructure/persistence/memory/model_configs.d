@@ -15,10 +15,10 @@ import uim.platform.data_attribute_recommendation;
 @safe:
 class MemoryModelConfigRepository : TenantRepository!(ModelConfiguration, ModelConfigurationId), ModelConfigRepository {
   bool existsByName(TenantId tenantId, string name) {
-    return findByTenant(tenantId).any!(e => e.name == name);
+    return find(tenantId).any!(e => e.name == name);
   }
   ModelConfiguration findByName(TenantId tenantId, string name) {
-    foreach (e; findByTenant(tenantId))
+    foreach (e; find(tenantId))
       if (e.name == name)
         return e;
     return ModelConfiguration.init;
@@ -34,7 +34,7 @@ class MemoryModelConfigRepository : TenantRepository!(ModelConfiguration, ModelC
     return configs.filter!(e => e.datasetId == datasetId).array;
   }
   ModelConfiguration[] findByDataset(TenantId tenantId, DatasetId datasetId) {
-    return filterByDataset(findByTenant(tenantId), datasetId);
+    return filterByDataset(find(tenantId), datasetId);
   }
   void removeByDataset(TenantId tenantId, DatasetId datasetId) {
     findByDataset(tenantId, datasetId).each!(e => remove(e));
@@ -47,7 +47,7 @@ class MemoryModelConfigRepository : TenantRepository!(ModelConfiguration, ModelC
     return configs.filter!(e => e.status == status).array;
   }
   ModelConfiguration[] findByStatus(TenantId tenantId, ModelConfigStatus status) {
-    return filterByStatus(findByTenant(tenantId), status);
+    return filterByStatus(find(tenantId), status);
   }
   void removeByStatus(TenantId tenantId, ModelConfigStatus status) {
     findByStatus(tenantId, status).each!(e => remove(e));

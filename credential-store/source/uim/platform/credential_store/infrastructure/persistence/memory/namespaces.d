@@ -20,7 +20,7 @@ class MemoryNamespaceRepository : TenantRepository!(Namespace, NamespaceId), Nam
   }
 
   Namespace findByName(TenantId tenantId, string name) {
-    foreach (ns; findByTenant(tenantId)) {
+    foreach (ns; find(tenantId)) {
       if (ns.name == name)
         return ns;
     }

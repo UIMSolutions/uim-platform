@@ -21,7 +21,7 @@ class ManageDatabaseExtensionsUseCase {
     }
 
     DatabaseExtension[] listDatabaseExtensions(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     DatabaseExtension[] listByInstance(TenantId tenantId, ServiceInstanceId instanceId) {

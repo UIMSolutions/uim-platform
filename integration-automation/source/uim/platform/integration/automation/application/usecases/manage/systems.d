@@ -55,7 +55,7 @@ class ManageSystemsUseCase { // TODO: UIMUseCase {
   }
 
   SystemConnection[] listSystems(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   SystemConnection[] listByType(TenantId tenantId, SystemType systemType) {

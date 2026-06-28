@@ -27,7 +27,7 @@ class MemoryCleansingJobRepository : TenantRepository!(CleansingJob, CleansingJo
   }
 
   CleansingJob[] findByDataset(TenantId tenantId, DatasetId datasetId) {
-    return filterByDataset(findByTenant(tenantId), datasetId);
+    return filterByDataset(find(tenantId), datasetId);
   }
 
   void removeByDataset(TenantId tenantId, DatasetId datasetId) {
@@ -45,7 +45,7 @@ class MemoryCleansingJobRepository : TenantRepository!(CleansingJob, CleansingJo
   }
 
   CleansingJob[] findByStatus(TenantId tenantId, JobStatus status) {
-    return filterByStatus(findByTenant(tenantId), status);
+    return filterByStatus(find(tenantId), status);
   }
 
   void removeByStatus(TenantId tenantId, JobStatus status) {

@@ -8,14 +8,14 @@ class MemorySnowflakeTenantUserRepository
 
   SnowflakeTenantUser[] findByRole(TenantId tenantId, TenantUserRole role) {
     SnowflakeTenantUser[] result;
-    foreach (item; findByTenant(tenantId))
+    foreach (item; find(tenantId))
       if (item.role == role) result ~= item;
     return result;
   }
 
   SnowflakeTenantUser[] findByEmail(TenantId tenantId, string email) {
     SnowflakeTenantUser[] result;
-    foreach (item; findByTenant(tenantId))
+    foreach (item; find(tenantId))
       if (item.email == email) result ~= item;
     return result;
   }

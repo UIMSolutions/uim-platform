@@ -22,7 +22,7 @@ class MemoryDnsRecordRepository : TenantRepository!(DnsRecord, DnsRecordId), Dns
     }
 
     DnsRecord[] findByDomain(TenantId tenantId, CustomDomainId domainId) {
-        return filterByDomain(findByTenant(tenantId), domainId);
+        return filterByDomain(find(tenantId), domainId);
     }
 
     void removeByDomain(TenantId tenantId, CustomDomainId domainId) {

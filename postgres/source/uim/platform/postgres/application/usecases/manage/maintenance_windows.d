@@ -25,7 +25,7 @@ class ManageMaintenanceWindowsUseCase {
     }
 
     MaintenanceWindow[] listMaintenanceWindows(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     CommandResult createMaintenanceWindow(MaintenanceWindowDTO dto) {

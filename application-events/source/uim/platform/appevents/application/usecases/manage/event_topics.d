@@ -25,7 +25,7 @@ class ManageEventTopicsUseCase {
     }
 
     EventTopic[] listEventTopics(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     CommandResult createEventTopic(EventTopicDTO dto) {

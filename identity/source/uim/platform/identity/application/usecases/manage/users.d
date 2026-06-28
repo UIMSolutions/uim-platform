@@ -17,7 +17,7 @@ class ManageUsersUseCase {
     this(UserRepository repo) { this.repo = repo; }
 
     User getUser(TenantId tenantId, UserId id) { return repo.findById(tenantId, id); }
-    User[] listUsers(TenantId tenantId) { return repo.findByTenant(tenantId); }
+    User[] listUsers(TenantId tenantId) { return repo.find(tenantId); }
     User[] listByStatus(TenantId tenantId, UserStatus status) { return repo.findByStatus(tenantId, status); }
     User findByEmail(TenantId tenantId, string email) { return repo.findByEmail(tenantId, email); }
 

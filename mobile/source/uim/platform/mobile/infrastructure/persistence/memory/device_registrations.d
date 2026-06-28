@@ -21,7 +21,7 @@ class MemoryDeviceRegistrationRepository : TenantRepository!(DeviceRegistration,
   }
 
   DeviceRegistration findByDeviceToken(TenantId tenantId, string deviceToken) {
-    foreach (r; findByTenant(tenantId)) {
+    foreach (r; find(tenantId)) {
       if (r.deviceToken == deviceToken)
         return r;
     }
@@ -29,7 +29,7 @@ class MemoryDeviceRegistrationRepository : TenantRepository!(DeviceRegistration,
   }
 
   void removeByDeviceToken(TenantId tenantId, string deviceToken) {
-    foreach (r; findByTenant(tenantId)) {
+    foreach (r; find(tenantId)) {
       if (r.deviceToken == deviceToken)
         remove(r);
     }
@@ -40,7 +40,7 @@ class MemoryDeviceRegistrationRepository : TenantRepository!(DeviceRegistration,
   }
 
   DeviceRegistration[] findByApp(TenantId tenantId, MobileAppId appId) {
-    return findByTenant(tenantId).filter!(r => r.appId == appId).array;
+    return find(tenantId).filter!(r => r.appId == appId).array;
   }
 
   void removeByApp(TenantId tenantId, MobileAppId appId) {
@@ -56,7 +56,7 @@ class MemoryDeviceRegistrationRepository : TenantRepository!(DeviceRegistration,
   }
 
   DeviceRegistration[] findByUser(TenantId tenantId, UserId userId) {
-    return findByTenant(tenantId).filter!(r => r.userId == userId).array;
+    return find(tenantId).filter!(r => r.userId == userId).array;
   }
 
   void removeByUser(TenantId tenantId, UserId userId) {

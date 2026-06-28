@@ -50,7 +50,7 @@ class ManageDestructionRequestsUseCase { // TODO: UIMUseCase {
   }
 
   DestructionRequest[] listRequests(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   DestructionRequest[] listByDataSubject(TenantId tenantId, DataSubjectId subjectId) {

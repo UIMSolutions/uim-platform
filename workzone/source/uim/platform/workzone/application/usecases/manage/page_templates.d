@@ -45,7 +45,7 @@ class ManagePageTemplatesUseCase { // TODO: UIMUseCase {
   }
 
   PageTemplate[] listTemplates(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   CommandResult updateTemplate(UpdatePageTemplateRequest req) {

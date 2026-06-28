@@ -14,7 +14,7 @@ class ManageLabelsUseCase { // TODO: UIMUseCase {
     }
 
     Label[] listLabels(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     Label getLabel(TenantId tenantId, LabelId id) {

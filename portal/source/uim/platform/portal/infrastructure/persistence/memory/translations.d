@@ -19,7 +19,7 @@ class MemoryTranslationRepository : TenantRepository!(Translation, TranslationId
   }
   Translation[] findByResource(string resourceType, string resourceId, string language = "") {
     Translation[] result;
-    foreach (t; findByTenant(tenantId))
+    foreach (t; find(tenantId))
       if (t.resourceType == resourceType && t.resourceId == resourceId) {
         if (language.length == 0 || t.language == language)
           result ~= t;
@@ -37,7 +37,7 @@ class MemoryTranslationRepository : TenantRepository!(Translation, TranslationId
   Translation[] findByLanguage(TenantId tenantId, string language, size_t offset = 0, size_t limit = 100) {
     Translation[] result;
     size_t idx;
-    foreach (t; findByTenant(tenantId)) {
+    foreach (t; find(tenantId)) {
       if (t.language == language) {
         if (idx >= offset && result.length < limit)
           result ~= t;

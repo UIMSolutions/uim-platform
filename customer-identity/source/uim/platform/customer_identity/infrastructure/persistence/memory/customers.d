@@ -14,17 +14,17 @@ import uim.platform.customer_identity;
 class MemoryCustomerRepository : TenantRepository!(Customer, CustomerId), CustomerRepository {
 
     Customer findByEmail(TenantId tenantId, string email) {
-        auto items = findByTenant(tenantId).filter!(c => c.email == email).array;
+        auto items = find(tenantId).filter!(c => c.email == email).array;
         return items.length > 0 ? items[0] : Customer.init;
     }
 
     Customer findByPhone(TenantId tenantId, string phone) {
-        auto items = findByTenant(tenantId).filter!(c => c.phone == phone).array;
+        auto items = find(tenantId).filter!(c => c.phone == phone).array;
         return items.length > 0 ? items[0] : Customer.init;
     }
 
     Customer[] findByStatus(TenantId tenantId, CustomerStatus status) {
-        return findByTenant(tenantId).filter!(c => c.status == status).array;
+        return find(tenantId).filter!(c => c.status == status).array;
     }
 
     size_t countByStatus(TenantId tenantId, CustomerStatus status) {
@@ -32,6 +32,6 @@ class MemoryCustomerRepository : TenantRepository!(Customer, CustomerId), Custom
     }
 
     bool emailExists(TenantId tenantId, string email) {
-        return findByTenant(tenantId).any!(c => c.email == email);
+        return find(tenantId).any!(c => c.email == email);
     }
 }

@@ -16,7 +16,7 @@ class MemoryGeocodingResultRepository
 
   GeocodingResult[] findByType(TenantId tenantId, GeocodingType type) {
     GeocodingResult[] results;
-    foreach (item; findByTenant(tenantId)) {
+    foreach (item; find(tenantId)) {
       if (item.type == type) results ~= item;
     }
     return results;
@@ -24,7 +24,7 @@ class MemoryGeocodingResultRepository
 
   GeocodingResult[] findByProvider(TenantId tenantId, string providerId) {
     GeocodingResult[] results;
-    foreach (item; findByTenant(tenantId)) {
+    foreach (item; find(tenantId)) {
       if (item.providerId == providerId) results ~= item;
     }
     return results;

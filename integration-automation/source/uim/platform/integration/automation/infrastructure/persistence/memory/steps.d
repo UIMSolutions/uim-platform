@@ -21,7 +21,7 @@ class MemoryStepRepository : TenantRepository!(WorkflowStep, StepId), StepReposi
     return findByWorkflow(tenantId, workflowId).length;
   }
   WorkflowStep[] findByWorkflow(TenantId tenantId, WorkflowId workflowId) {
-    auto result = findByTenant(tenantId).filter!(e => e.workflowId == workflowId
+    auto result = find(tenantId).filter!(e => e.workflowId == workflowId
         && e.tenantId == tenantId).array;
     result.sort!((a, b) => a.sequenceNumber < b.sequenceNumber);
     return result;
@@ -38,21 +38,21 @@ class MemoryStepRepository : TenantRepository!(WorkflowStep, StepId), StepReposi
   }
 
   WorkflowStep[] findByAssignee(TenantId tenantId, UserId assignedTo) {
-    return findByTenant(tenantId).filter!(e => e.tenantId == tenantId && e.assignedTo == assignedTo).array;
+    return find(tenantId).filter!(e => e.tenantId == tenantId && e.assignedTo == assignedTo).array;
   }
 
   WorkflowStep[] findByRole(TenantId tenantId, string assignedRole) {
-    return findByTenant(tenantId).filter!(e => e.tenantId == tenantId
+    return find(tenantId).filter!(e => e.tenantId == tenantId
         && e.assignedRole == assignedRole).array;
   }
 
   WorkflowStep[] findByStatus(TenantId tenantId, WorkflowId workflowId, StepStatus status) {
-    return findByTenant(tenantId).filter!(e => e.workflowId == workflowId
+    return find(tenantId).filter!(e => e.workflowId == workflowId
         && e.tenantId == tenantId && e.status == status).array;
   }
 
   WorkflowStep findBySequence(TenantId tenantId, WorkflowId workflowId, int sequenceNumber) {
-    foreach (s; findByTenant(tenantId))
+    foreach (s; find(tenantId))
       if (s.workflowId == workflowId && s.tenantId == tenantId && s.sequenceNumber == sequenceNumber)
         return &s;
     return null;

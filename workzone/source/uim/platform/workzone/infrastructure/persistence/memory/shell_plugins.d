@@ -24,7 +24,7 @@ class MemoryShellPluginRepository : TenantRepository!(ShellPlugin, ShellPluginId
 
   ShellPlugin[] findBySite(TenantId tenantId, SiteId siteId) {
     ShellPlugin[] result;
-    foreach (p; findByTenant(tenantId)) {
+    foreach (p; find(tenantId)) {
       foreach (sid; p.assignedSiteIds)
         if (sid == siteId) {
           result ~= p;
@@ -45,7 +45,7 @@ class MemoryShellPluginRepository : TenantRepository!(ShellPlugin, ShellPluginId
   }
 
   ShellPlugin[] findByStatus(TenantId tenantId, PluginStatus status) {
-    return findByTenant(tenantId).filter!(p => p.status == status).array;
+    return find(tenantId).filter!(p => p.status == status).array;
   }
 
   void removeByStatus(TenantId tenantId, PluginStatus status) {

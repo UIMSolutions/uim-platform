@@ -23,7 +23,7 @@ class ManageArtifactsUseCase { // TODO: UIMUseCase {
         if (r.name.length == 0)
             return CommandResult(false, "", "Artifact name is required");
 
-        auto existing = repo.findById(r.tenantId, r.artifactId);
+        auto existing = repo.find(r.tenantId, r.artifactId);
         if (!existing.isNull)
             return CommandResult(false, "", "Artifact already exists");
 
@@ -49,7 +49,7 @@ class ManageArtifactsUseCase { // TODO: UIMUseCase {
     }
 
     Artifact[] listArtifacts(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     Artifact[] listArtifacts(TenantId tenantId, ArtifactType type) {
@@ -57,7 +57,7 @@ class ManageArtifactsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateArtifact(UpdateArtifactRequest r) {
-        auto artifact = repo.findById(r.tenantId, r.artifactId);
+        auto artifact = repo.find(r.tenantId, r.artifactId);
         if (artifact.isNull)
             return CommandResult(false, "", "Artifact not found");
 

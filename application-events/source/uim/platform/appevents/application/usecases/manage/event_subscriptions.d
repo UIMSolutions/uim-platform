@@ -24,7 +24,7 @@ class ManageEventSubscriptionsUseCase {
     }
 
     EventSubscription[] listEventSubscriptions(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     EventSubscription[] listByStatus(TenantId tenantId, SubscriptionStatus status) {

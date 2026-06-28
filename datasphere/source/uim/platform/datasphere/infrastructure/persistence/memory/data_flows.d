@@ -40,7 +40,7 @@ class MemoryDataFlowRepository : TenantRepository!(DataFlow, DataFlowId), DataFl
     return findBySpace(tenantId, spaceId).length;
   }
   DataFlow[] findBySpace(TenantId tenantId, SpaceId spaceId) {
-    return filterBySpace(findByTenant(tenantId), spaceId);
+    return filterBySpace(find(tenantId), spaceId);
   }
   void removeBySpace(TenantId tenantId, SpaceId spaceId) {
     findBySpace(tenantId, spaceId).each!(df => remove(df));

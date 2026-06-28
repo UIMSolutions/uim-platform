@@ -64,7 +64,7 @@ class ManageKeyringsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult rotateKeyring(RotateKeyringRequest r) {
-    auto cred = credRepo.findById(r.tenantId, r.keyringId);
+    auto cred = credRepo.find(r.tenantId, r.keyringId);
     if (cred.isNull)
       return CommandResult(false, "", "Keyring not found");
     if (cred.type != CredentialType.keyring)

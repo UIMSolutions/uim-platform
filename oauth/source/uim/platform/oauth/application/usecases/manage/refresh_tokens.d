@@ -19,7 +19,7 @@ class ManageRefreshTokensUseCase { // TODO: UIMUseCase {
     }
 
     RefreshToken[] listTokens(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     RefreshToken getToken(TenantId tenantId, RefreshTokenId id) {

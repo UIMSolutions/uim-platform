@@ -16,7 +16,7 @@ class MemorySpatialLayerRepository
 
   SpatialLayer[] findByType(TenantId tenantId, SpatialLayerType type) {
     SpatialLayer[] results;
-    foreach (item; findByTenant(tenantId)) {
+    foreach (item; find(tenantId)) {
       if (item.type == type) results ~= item;
     }
     return results;
@@ -24,7 +24,7 @@ class MemorySpatialLayerRepository
 
   SpatialLayer[] findPublic(TenantId tenantId) {
     SpatialLayer[] results;
-    foreach (item; findByTenant(tenantId)) {
+    foreach (item; find(tenantId)) {
       if (item.isPublic) results ~= item;
     }
     return results;

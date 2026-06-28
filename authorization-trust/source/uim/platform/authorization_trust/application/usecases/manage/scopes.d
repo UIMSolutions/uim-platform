@@ -39,7 +39,7 @@ class ManageScopesUseCase {
   }
 
   CommandResult updateScope(UpdateScopeRequest r) {
-    auto s = repo.findById(r.tenantId, r.scopeId);
+    auto s = repo.find(r.tenantId, r.scopeId);
     if (s.isNull)
       return CommandResult(false, "", "Scope not found");
 
@@ -64,6 +64,6 @@ class ManageScopesUseCase {
   }
 
   ScopeEntity[] listScopes(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 }

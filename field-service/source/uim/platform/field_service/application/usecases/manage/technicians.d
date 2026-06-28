@@ -23,7 +23,7 @@ class ManageTechniciansUseCase { // TODO: UIMUseCase {
     }
 
     Technician[] listTechnicians(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     Technician[] listTechnicians(TenantId tenantId, TechnicianStatus status) {

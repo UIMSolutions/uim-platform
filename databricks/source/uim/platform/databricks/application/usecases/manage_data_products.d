@@ -39,7 +39,7 @@ public:
   }
 
   UseCaseResult!(DataProduct[]) list(TenantId tenantId) {
-    return UseCaseResult!(DataProduct[])(true, "", _repo.findByTenant(tenantId));
+    return UseCaseResult!(DataProduct[])(true, "", _repo.find(tenantId));
   }
 
   UseCaseResult!DataProduct get(TenantId tenantId, DataProductId id) {

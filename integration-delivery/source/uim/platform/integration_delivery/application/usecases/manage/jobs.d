@@ -23,7 +23,7 @@ class ManageJobsUseCase {
     }
 
     Job[] listJobs(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     Job[] listByPipeline(TenantId tenantId, PipelineId pipelineId) {

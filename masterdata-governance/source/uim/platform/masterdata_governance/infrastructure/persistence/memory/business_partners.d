@@ -15,7 +15,7 @@ class MemoryBusinessPartnerRepository
     : TenantRepository!(BusinessPartner, BusinessPartnerId), BusinessPartnerRepository {
 
     BusinessPartner findByBpNumber(TenantId tenantId, string bpNumber) {
-        auto all = findByTenant(tenantId);
+        auto all = find(tenantId);
         foreach (bp; all)
             if (bp.bpNumber == bpNumber) return bp;
         return BusinessPartner.init;
@@ -26,7 +26,7 @@ class MemoryBusinessPartnerRepository
     }
 
     BusinessPartner[] findByCategory(TenantId tenantId, BPCategory category) {
-        return findByTenant(tenantId).filter!(e => e.category == category).array;
+        return find(tenantId).filter!(e => e.category == category).array;
     }
 
     void removeByCategory(TenantId tenantId, BPCategory category) {
@@ -38,7 +38,7 @@ class MemoryBusinessPartnerRepository
     }
 
     BusinessPartner[] findByStatus(TenantId tenantId, BPStatus status) {
-        return findByTenant(tenantId).filter!(e => e.status == status).array;
+        return find(tenantId).filter!(e => e.status == status).array;
     }
 
     void removeByStatus(TenantId tenantId, BPStatus status) {
@@ -46,17 +46,17 @@ class MemoryBusinessPartnerRepository
     }
 
     BusinessPartner[] findByValidationStatus(TenantId tenantId, ValidationStatus validationStatus) {
-        return findByTenant(tenantId).filter!(e => e.validationStatus == validationStatus).array;
+        return find(tenantId).filter!(e => e.validationStatus == validationStatus).array;
     }
 
     BusinessPartner[] findByCountry(TenantId tenantId, string country) {
-        return findByTenant(tenantId).filter!(e => e.country == country).array;
+        return find(tenantId).filter!(e => e.country == country).array;
     }
 
     BusinessPartner[] searchByName(TenantId tenantId, string searchTerm) {
         import std.string : toLower, indexOf;
         auto term = searchTerm.toLower;
-        return findByTenant(tenantId).filter!(e =>
+        return find(tenantId).filter!(e =>
             e.organizationName.toLower.indexOf(term) >= 0 ||
             e.firstName.toLower.indexOf(term) >= 0 ||
             e.lastName.toLower.indexOf(term) >= 0 ||

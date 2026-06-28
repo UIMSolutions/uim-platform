@@ -13,16 +13,16 @@ import uim.platform.identity;
 
 class MemoryApplicationRepository : TenantRepository!(Application, ApplicationId), ApplicationRepository {
     Application findByClient(TenantId tenantId, string clientId) {
-        foreach (a; findByTenant(tenantId))
+        foreach (a; find(tenantId))
             if (a.clientId == clientId) return a;
         return Application.init;
     }
 
     Application[] findByStatus(TenantId tenantId, AppStatus status) {
-        return findByTenant(tenantId).filter!(a => a.status == status).array;
+        return find(tenantId).filter!(a => a.status == status).array;
     }
 
     Application[] findByProtocol(TenantId tenantId, AppProtocol protocol) {
-        return findByTenant(tenantId).filter!(a => a.protocol == protocol).array;
+        return find(tenantId).filter!(a => a.protocol == protocol).array;
     }
 }

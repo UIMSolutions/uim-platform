@@ -32,7 +32,7 @@ class MemoryExecutionRepository : TenantRepository!(Execution, ExecutionId), IEx
     return findByConnection(tenantId, connectionId).length;
   }
   Execution[] findByConnection(TenantId tenantId, ConnectionId connectionId) {
-    return filterByConnection(findByTenant(tenantId), connectionId);
+    return filterByConnection(find(tenantId), connectionId);
   }
   void removeByConnection(TenantId tenantId, ConnectionId connectionId) {
     findByConnection(tenantId, connectionId).each!(e => remove(e));

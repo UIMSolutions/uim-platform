@@ -51,7 +51,7 @@ class ManageWorkspacesUseCase { // TODO: UIMUseCase {
   }
 
   Workspace[] listWorkspaces(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   Workspace[] listWorkspaces(TenantId tenantId, UserId userId) {

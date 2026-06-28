@@ -23,7 +23,7 @@ class ManageCicdRepositoriesUseCase {
     }
 
     CicdRepository[] listCicdRepositories(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     CicdRepository[] listByStatus(TenantId tenantId, RepositoryStatus status) {

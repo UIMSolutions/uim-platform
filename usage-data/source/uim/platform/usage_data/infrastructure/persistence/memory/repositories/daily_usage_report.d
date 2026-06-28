@@ -15,19 +15,19 @@ class MemoryDailyUsageReportRepository
       DailyUsageReportRepository {
 
   DailyUsageReport[] findBySubaccount(TenantId tenantId, string subaccountId) {
-    return findByTenant(tenantId).filter!(r => r.subaccountId == subaccountId).array;
+    return find(tenantId).filter!(r => r.subaccountId == subaccountId).array;
   }
 
   DailyUsageReport[] findByDate(TenantId tenantId, string reportDate) {
-    return findByTenant(tenantId).filter!(r => r.reportDate == reportDate).array;
+    return find(tenantId).filter!(r => r.reportDate == reportDate).array;
   }
 
   DailyUsageReport[] findByStatus(TenantId tenantId, ReportStatus status) {
-    return findByTenant(tenantId).filter!(r => r.status == status).array;
+    return find(tenantId).filter!(r => r.status == status).array;
   }
 
   DailyUsageReport[] findByGlobalAccount(TenantId tenantId, string globalAccountId) {
-    return findByTenant(tenantId).filter!(r => r.globalAccountId == globalAccountId).array;
+    return find(tenantId).filter!(r => r.globalAccountId == globalAccountId).array;
   }
 
   size_t countBySubaccount(TenantId tenantId, string subaccountId) {

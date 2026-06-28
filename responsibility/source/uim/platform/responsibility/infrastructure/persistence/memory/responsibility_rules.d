@@ -16,14 +16,14 @@ class MemoryResponsibilityRuleRepository
       ResponsibilityRuleRepository {
 
     ResponsibilityRule[] findByStatus(TenantId tenantId, RuleStatus status) {
-        return findByTenant(tenantId).filter!(r => r.status == status).array;
+        return find(tenantId).filter!(r => r.status == status).array;
     }
 
     ResponsibilityRule[] findByType(TenantId tenantId, RuleType ruleType) {
-        return findByTenant(tenantId).filter!(r => r.ruleType == ruleType).array;
+        return find(tenantId).filter!(r => r.ruleType == ruleType).array;
     }
 
     ResponsibilityRule[] findByContext(TenantId tenantId, string contextId) {
-        return findByTenant(tenantId).filter!(r => r.contextId == contextId).array;
+        return find(tenantId).filter!(r => r.contextId == contextId).array;
     }
 }

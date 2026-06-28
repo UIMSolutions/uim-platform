@@ -23,7 +23,7 @@ class ManagePrintTasksUseCase {
     }
 
     PrintTask[] listPrintTasks(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     PrintTask[] listByQueue(TenantId tenantId, PrintQueueId queueId) {

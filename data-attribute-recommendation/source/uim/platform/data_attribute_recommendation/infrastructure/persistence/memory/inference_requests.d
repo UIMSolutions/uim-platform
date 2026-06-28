@@ -23,7 +23,7 @@ class MemoryInferenceRequestRepository : TenantRepository!(InferenceRequest, Inf
     return requests.filter!(e => e.deploymentId == deploymentId).array;
   }
   InferenceRequest[] findByDeployment(TenantId tenantId, DeploymentId deploymentId) {
-    return filterByDeployment(findByTenant(tenantId), deploymentId);
+    return filterByDeployment(find(tenantId), deploymentId);
   }
   void removeByDeployment(TenantId tenantId, DeploymentId deploymentId) {
     findByDeployment(tenantId, deploymentId).each!(e => remove(e));
@@ -39,7 +39,7 @@ class MemoryInferenceRequestRepository : TenantRepository!(InferenceRequest, Inf
   } 
 
   InferenceRequest[] findByStatus(TenantId tenantId, InferenceStatus status) {
-    return filterByStatus(findByTenant(tenantId), status);
+    return filterByStatus(find(tenantId), status);
   } 
   void removeByStatus(TenantId tenantId, InferenceStatus status) {
     findByStatus(tenantId, status).each!(e => remove(e));

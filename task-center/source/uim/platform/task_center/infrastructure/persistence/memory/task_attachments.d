@@ -20,7 +20,7 @@ class MemoryTaskAttachmentRepository : TenantRepository!(TaskAttachment, TaskAtt
         return attachments.filter!(a => a.taskId == taskId).array;
     }
     TaskAttachment[] findByTask(TenantId tenantId, TaskId taskId) {
-        return filterByTask(findByTenant(tenantId), taskId);
+        return filterByTask(find(tenantId), taskId);
     }
     void removeByTask(TenantId tenantId, TaskId taskId) {
         findByTask(tenantId, taskId).each!(a => remove(a));

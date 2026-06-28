@@ -64,7 +64,7 @@ class ManageFilterRulesUseCase { // TODO: UIMUseCase {
   }
 
   FilterRule[] listRules(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   FilterRule[] listRulesByCategory(TenantId tenantId, string category) {

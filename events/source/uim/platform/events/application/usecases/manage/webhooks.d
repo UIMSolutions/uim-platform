@@ -17,7 +17,7 @@ class ManageWebhooksUseCase {
     this(WebhookRepository repo) { this.repo = repo; }
 
     Webhook getWebhook(TenantId tenantId, WebhookId id) { return repo.findById(tenantId, id); }
-    Webhook[] listWebhooks(TenantId tenantId) { return repo.findByTenant(tenantId); }
+    Webhook[] listWebhooks(TenantId tenantId) { return repo.find(tenantId); }
     Webhook[] listByService(TenantId tenantId, MessagingServiceId serviceId) { return repo.findByService(tenantId, serviceId); }
     Webhook[] listBySubscription(TenantId tenantId, QueueSubscriptionId subscriptionId) { return repo.findBySubscription(tenantId, subscriptionId); }
 

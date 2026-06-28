@@ -19,7 +19,7 @@ class MemoryMessagingServiceRepository
     }
 
     MessagingService[] findByStatus(TenantId tenantId, MessagingServiceStatus status) {
-        return findByTenant(tenantId).filter!(e => e.status == status).array;
+        return find(tenantId).filter!(e => e.status == status).array;
     }
 
     void removeByStatus(TenantId tenantId, MessagingServiceStatus status) {
@@ -27,6 +27,6 @@ class MemoryMessagingServiceRepository
     }
 
     MessagingService[] findByNamespace(TenantId tenantId, string namespace) {
-        return findByTenant(tenantId).filter!(e => e.namespace == namespace).array;
+        return find(tenantId).filter!(e => e.namespace == namespace).array;
     }
 }

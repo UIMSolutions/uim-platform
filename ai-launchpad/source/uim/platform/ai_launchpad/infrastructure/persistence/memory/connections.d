@@ -24,7 +24,7 @@ class MemoryConnectionRepository : TenantRepository!(Connection, ConnectionId), 
   }
   
   Connection[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
-    return filterByWorkspace(findByTenant(tenantId), workspaceId);
+    return filterByWorkspace(find(tenantId), workspaceId);
   }
 
   void removeByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {

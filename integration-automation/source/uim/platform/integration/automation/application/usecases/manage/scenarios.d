@@ -51,7 +51,7 @@ class ManageScenariosUseCase { // TODO: UIMUseCase {
   }
 
   IntegrationScenario[] listScenarios(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   IntegrationScenario[] listByCategory(TenantId tenantId, ScenarioCategory category) {

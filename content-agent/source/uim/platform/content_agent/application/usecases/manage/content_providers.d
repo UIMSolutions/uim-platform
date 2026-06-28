@@ -103,7 +103,7 @@ class ManageContentProvidersUseCase { // TODO: UIMUseCase {
   }
 
   ContentProvider[] listProviders(TenantId tenantId) {
-    return providerRepo.findByTenant(tenantId);
+    return providerRepo.find(tenantId);
   }
 
   ContentProvider[] listActiveProviders(TenantId tenantId) {

@@ -18,15 +18,15 @@ class MemoryServiceInstanceRepository
     , ServiceInstanceRepository
 {
     override ServiceInstance[] findByStatus(TenantId tenantId, InstanceStatus status) {
-        return findByTenant(tenantId).filter!(e => e.status == status).array;
+        return find(tenantId).filter!(e => e.status == status).array;
     }
     override ServiceInstance[] findByPlan(TenantId tenantId, ServicePlanId planId) {
-        return findByTenant(tenantId).filter!(e => e.planId == planId).array;
+        return find(tenantId).filter!(e => e.planId == planId).array;
     }
     override ServiceInstance[] findByHyperscaler(TenantId tenantId, Hyperscaler hs) {
-        return findByTenant(tenantId).filter!(e => e.hyperscaler == hs).array;
+        return find(tenantId).filter!(e => e.hyperscaler == hs).array;
     }
     override bool nameExists(TenantId tenantId, string name) {
-        return findByTenant(tenantId).any!(e => e.name == name);
+        return find(tenantId).any!(e => e.name == name);
     }
 }

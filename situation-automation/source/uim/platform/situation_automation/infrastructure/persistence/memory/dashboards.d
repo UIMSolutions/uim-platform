@@ -20,7 +20,7 @@ class MemoryDashboardRepository : TenantRepository!(Dashboard, DashboardId), Das
         return dashboards.filter!(d => d.type == type).array;
     }
     Dashboard[] findByType(TenantId tenantId, DashboardType type) {
-        return filterByType(findByTenant(tenantId), type);
+        return filterByType(find(tenantId), type);
     }
     void removeByType(TenantId tenantId, DashboardType type) {
         findByType(tenantId, type).each!(d => remove(d));

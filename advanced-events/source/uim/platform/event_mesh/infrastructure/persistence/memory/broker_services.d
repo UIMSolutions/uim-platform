@@ -20,7 +20,7 @@ class MemoryBrokerServiceRepository : TenantRepository!(BrokerService, BrokerSer
         return services.filter!(e => e.status == status).array;
     }    
     BrokerService[] findByStatus(TenantId tenantId, BrokerServiceStatus status) {
-        return filterByStatus(findByTenant(tenantId), status);
+        return filterByStatus(find(tenantId), status);
     }
     void removeByStatus(TenantId tenantId, BrokerServiceStatus status) {
         findByStatus(tenantId, status).each!(e => remove(e));
@@ -35,7 +35,7 @@ class MemoryBrokerServiceRepository : TenantRepository!(BrokerService, BrokerSer
     }
 
     BrokerService[] findByCloudProvider(TenantId tenantId, CloudProvider provider) {
-        return filterByCloudProvider(findByTenant(tenantId), provider);
+        return filterByCloudProvider(find(tenantId), provider);
     }
 
     void removeByCloudProvider(TenantId tenantId, CloudProvider provider) {
@@ -82,12 +82,12 @@ unittest {
     // Test removeByStatus
     repo.removeByStatus(tenantId, BrokerServiceStatus.provisioning);
     assert(repo.countByStatus(tenantId, BrokerServiceStatus.provisioning) == 0);
-    assert(repo.findByTenant(tenantId).length == 2);
+    assert(repo.find(tenantId).length == 2);
 
     // Test removeByCloudProvider
     repo.removeByCloudProvider(tenantId, CloudProvider.aws);
     assert(repo.countByCloudProvider(tenantId, CloudProvider.aws) == 0);
     
     // Final check for the tenant
-    assert(repo.findByTenant(tenantId).length == 0);
+    assert(repo.find(tenantId).length == 0);
 }

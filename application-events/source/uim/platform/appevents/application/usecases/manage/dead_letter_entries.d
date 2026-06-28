@@ -25,7 +25,7 @@ class ManageDeadLetterEntriesUseCase {
     }
 
     DeadLetterEntry[] listDeadLetterEntries(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     DeadLetterEntry[] listByStatus(TenantId tenantId, DeadLetterStatus status) {

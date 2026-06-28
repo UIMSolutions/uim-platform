@@ -18,11 +18,11 @@ class MemoryBackupPolicyRepository
     , BackupPolicyRepository
 {
     override BackupPolicy findByInstance(TenantId tenantId, ServiceInstanceId instanceId) {
-        auto results = findByTenant(tenantId).filter!(e => e.instanceId == instanceId).array;
+        auto results = find(tenantId).filter!(e => e.instanceId == instanceId).array;
         return results.length > 0 ? results[0] : BackupPolicy.init;
     }
 
     override BackupPolicy[] findByStatus(TenantId tenantId, BackupStatus status) {
-        return findByTenant(tenantId).filter!(e => e.status == status).array;
+        return find(tenantId).filter!(e => e.status == status).array;
     }
 }

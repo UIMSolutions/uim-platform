@@ -26,7 +26,7 @@ class MemoryAlertRepository : TenantRepository!(Alert, AlertId), AlertRepository
   }
 
   Alert[] findByResource(TenantId tenantId, MonitoredResourceId resourceId) {
-    return filterByResource(findByTenant(tenantId), resourceId);
+    return filterByResource(find(tenantId), resourceId);
   }
 
   void removeByResource(TenantId tenantId, MonitoredResourceId resourceId) {
@@ -42,7 +42,7 @@ class MemoryAlertRepository : TenantRepository!(Alert, AlertId), AlertRepository
   }
 
   Alert[] findByState(TenantId tenantId, AlertState state) {
-    return filterByState(findByTenant(tenantId), state);
+    return filterByState(find(tenantId), state);
   }
 
   void removeByState(TenantId tenantId, AlertState state) {
@@ -58,7 +58,7 @@ class MemoryAlertRepository : TenantRepository!(Alert, AlertId), AlertRepository
   }
 
   Alert[] findBySeverity(TenantId tenantId, AlertSeverity severity) {
-    return filterBySeverity(findByTenant(tenantId), severity);
+    return filterBySeverity(find(tenantId), severity);
   }
 
   void removeBySeverity(TenantId tenantId, AlertSeverity severity) {
@@ -74,7 +74,7 @@ class MemoryAlertRepository : TenantRepository!(Alert, AlertId), AlertRepository
   }
 
   Alert[] findByRule(TenantId tenantId, AlertRuleId ruleId) {
-    return filterByRule(findByTenant(tenantId), ruleId);
+    return filterByRule(find(tenantId), ruleId);
   }
 
   void removeByRule(TenantId tenantId, AlertRuleId ruleId) {

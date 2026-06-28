@@ -19,7 +19,7 @@ class MemoryCertificateRepository : TenantRepository!(Certificate, CertificateId
     }
 
     Certificate[] findByKey(TenantId tenantId, PrivateKeyId keyId) {
-        // TODO: return findByTenant(tenantId).filter!(c => c.keyId == keyId).array;
+        // TODO: return find(tenantId).filter!(c => c.keyId == keyId).array;
         return null;
     }
 
@@ -34,7 +34,7 @@ class MemoryCertificateRepository : TenantRepository!(Certificate, CertificateId
     }
 
     Certificate[] findExpiring(TenantId tenantId, long beforeTimestamp) {
-        return findByTenant(tenantId).filter!(c => c.validTo > 0 && c.validTo <= beforeTimestamp)
+        return find(tenantId).filter!(c => c.validTo > 0 && c.validTo <= beforeTimestamp)
             .array;
     }
 

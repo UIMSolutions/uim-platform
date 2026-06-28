@@ -77,7 +77,7 @@ class ManageKeyMappingsUseCase { // TODO: UIMUseCase {
   }
 
   KeyMapping[] listMappings(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   KeyMapping[] listMappings(TenantId tenantId, MasterDataObjectId objectId) {

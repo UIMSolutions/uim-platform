@@ -84,7 +84,7 @@ class ManageConnectorsUseCase { // TODO: UIMUseCase {
     return repo.findBySubaccount(tenantId, subaccountId);
   }
   CloudConnector[] listByTenant(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   CommandResult unregister(TenantId tenantId, ConnectorId id) {

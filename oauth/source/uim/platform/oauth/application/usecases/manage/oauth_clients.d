@@ -23,7 +23,7 @@ class ManageOAuthClientsUseCase { // TODO: UIMUseCase {
     }
 
     OAuthClient[] listClients(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     CommandResult createClient(OAuthClientDTO dto) {

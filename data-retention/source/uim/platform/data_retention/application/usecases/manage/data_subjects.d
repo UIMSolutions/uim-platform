@@ -65,7 +65,7 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
     }
 
     DataSubject[] listDataSubjects(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     DataSubject[] listDataSubjects(TenantId tenantId, DataLifecycleStatus status) {

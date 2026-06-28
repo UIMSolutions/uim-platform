@@ -18,11 +18,11 @@ class MemoryMetricRepository
     , MetricRepository
 {
     override Metric[] findByInstance(TenantId tenantId, ServiceInstanceId instanceId) {
-        return findByTenant(tenantId).filter!(e => e.instanceId == instanceId).array;
+        return find(tenantId).filter!(e => e.instanceId == instanceId).array;
     }
 
     override Metric[] findByInstanceAndTimeRange(TenantId tenantId, ServiceInstanceId instanceId, long from, long to) {
-        return findByTenant(tenantId)
+        return find(tenantId)
             .filter!(e => e.instanceId == instanceId && e.timestamp_ >= from && e.timestamp_ <= to)
             .array;
     }

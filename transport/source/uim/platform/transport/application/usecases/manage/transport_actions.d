@@ -23,7 +23,7 @@ class ManageTransportActionsUseCase {
     }
 
     TransportAction[] listActions(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     TransportAction[] listActionsByNode(TenantId tenantId, TransportNodeId nodeId) {

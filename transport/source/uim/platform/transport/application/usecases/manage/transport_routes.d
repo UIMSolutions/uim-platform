@@ -23,7 +23,7 @@ class ManageTransportRoutesUseCase {
     }
 
     TransportRoute[] listRoutes(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     TransportRoute[] listRoutesBySourceNode(TenantId tenantId, TransportNodeId nodeId) {

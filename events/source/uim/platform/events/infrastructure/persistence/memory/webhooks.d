@@ -19,15 +19,15 @@ class MemoryWebhookRepository
     }
 
     Webhook[] findByService(TenantId tenantId, MessagingServiceId serviceId) {
-        return findByTenant(tenantId).filter!(e => e.serviceId == serviceId).array;
+        return find(tenantId).filter!(e => e.serviceId == serviceId).array;
     }
 
     Webhook[] findByStatus(TenantId tenantId, WebhookStatus status) {
-        return findByTenant(tenantId).filter!(e => e.status == status).array;
+        return find(tenantId).filter!(e => e.status == status).array;
     }
 
     Webhook[] findBySubscription(TenantId tenantId, QueueSubscriptionId subscriptionId) {
-        return findByTenant(tenantId).filter!(e => e.subscriptionId == subscriptionId).array;
+        return find(tenantId).filter!(e => e.subscriptionId == subscriptionId).array;
     }
 
     void removeByService(TenantId tenantId, MessagingServiceId serviceId) {

@@ -49,7 +49,7 @@ class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
   }
 
   RetentionRule[] listRules(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   RetentionRule[] listRules(TenantId tenantId, ProcessingPurpose purpose) {

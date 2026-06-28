@@ -31,7 +31,7 @@ class ManageAlertsUseCase { // TODO: UIMUseCase {
   }
 
   Alert[] listAlerts(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   Alert[] listByState(TenantId tenantId, AlertState state) {

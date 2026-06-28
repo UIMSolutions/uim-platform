@@ -12,7 +12,7 @@ class MemoryLegalEntityRepository : TenantRepository!(LegalEntity, LegalEntityId
         }
 
     LegalEntity[] findActive(TenantId tenantId) {
-        return findByTenant(tenantId).filter!(a => a.isActive).array;
+        return find(tenantId).filter!(a => a.isActive).array;
     }
 
     void removeActive(TenantId tenantId) {

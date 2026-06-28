@@ -59,7 +59,7 @@ class ManageDeletionRequestsUseCase { // TODO: UIMUseCase {
   }
 
   DeletionRequest[] listRequests(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   DeletionRequest[] listByStatus(TenantId tenantId, DeletionStatus status) {

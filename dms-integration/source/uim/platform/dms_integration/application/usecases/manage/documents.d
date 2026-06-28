@@ -23,7 +23,7 @@ class ManageDocumentsUseCase {
     }
 
     Document[] listDocuments(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     Document[] listDocumentsByRepository(TenantId tenantId, RepositoryId repositoryId) {

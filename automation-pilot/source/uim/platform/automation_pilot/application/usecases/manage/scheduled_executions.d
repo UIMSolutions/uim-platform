@@ -23,7 +23,7 @@ class ManageScheduledExecutionsUseCase { // TODO: UIMUseCase {
     }
 
     ScheduledExecution[] listScheduledExecutions(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     ScheduledExecution[] listScheduledExecutions(TenantId tenantId, CommandId commandId) {

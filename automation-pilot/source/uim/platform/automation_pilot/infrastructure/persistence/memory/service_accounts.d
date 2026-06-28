@@ -22,7 +22,7 @@ class MemoryServiceAccountRepository : TenantRepository!(ServiceAccount, Service
     }
 
     ServiceAccount[] findByStatus(TenantId tenantId, ServiceAccountStatus status) {
-        return filterByStatus(findByTenant(tenantId), status);
+        return filterByStatus(find(tenantId), status);
     }
 
     void removeByStatus(TenantId tenantId, ServiceAccountStatus status) {

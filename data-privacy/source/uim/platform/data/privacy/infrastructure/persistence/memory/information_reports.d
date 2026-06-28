@@ -24,7 +24,7 @@ class MemoryInformationReportRepository : TenantRepository!(InformationReport, I
   }
 
   InformationReport[] findByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
-    return filterByDataSubject(findByTenant(tenantId), subjectId);
+    return filterByDataSubject(find(tenantId), subjectId);
   }
 
   void removeByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
@@ -42,7 +42,7 @@ class MemoryInformationReportRepository : TenantRepository!(InformationReport, I
   }
 
   InformationReport[] findByStatus(TenantId tenantId, InformationReportStatus status) {
-    return filterByStatus(findByTenant(tenantId), status);
+    return filterByStatus(find(tenantId), status);
   }
 
   void removeByStatus(TenantId tenantId, InformationReportStatus status) {

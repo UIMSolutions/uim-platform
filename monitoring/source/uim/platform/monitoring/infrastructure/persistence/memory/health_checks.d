@@ -24,7 +24,7 @@ class MemoryHealthCheckRepository : TenantRepository!(HealthCheck, HealthCheckId
     return checks.filter!(e => e.resourceId == resourceId).array;
   }
   HealthCheck[] findByResource(TenantId tenantId, MonitoredResourceId resourceId) {
-    return findByTenant(tenantId).filter!(e => e.resourceId == resourceId).array;
+    return find(tenantId).filter!(e => e.resourceId == resourceId).array;
   }
   void removeByResource(TenantId tenantId, MonitoredResourceId resourceId) {
     findByResource(tenantId, resourceId).each!(e => remove(e));
@@ -37,7 +37,7 @@ class MemoryHealthCheckRepository : TenantRepository!(HealthCheck, HealthCheckId
     return checks.filter!(e => e.checkType == checkType).array;
   }
   HealthCheck[] findByType(TenantId tenantId, CheckType checkType) {
-    return findByTenant(tenantId).filter!(e => e.checkType == checkType).array;
+    return find(tenantId).filter!(e => e.checkType == checkType).array;
   }
   void removeByType(TenantId tenantId, CheckType checkType) {
     findByType(tenantId, checkType).each!(e => remove(e));

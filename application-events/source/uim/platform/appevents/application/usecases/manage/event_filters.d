@@ -23,7 +23,7 @@ class ManageEventFiltersUseCase {
     }
 
     EventFilter[] listEventFilters(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     CommandResult createEventFilter(EventFilterDTO dto) {

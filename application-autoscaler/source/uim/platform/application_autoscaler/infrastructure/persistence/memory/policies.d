@@ -18,7 +18,7 @@ class MemoryScalingPolicyRepository : TenantRepository!(ScalingPolicyEntity, Sca
   }
 
   ScalingPolicyEntity findByApp(TenantId tenantId, AppBindingId appId) {
-    foreach (p; findByTenant(tenantId))
+    foreach (p; find(tenantId))
       if (p.appId == appId && p.status == PolicyStatus.active) return p;
     return ScalingPolicyEntity.init;
   }

@@ -8,14 +8,14 @@ class MemorySnowflakeAccountRepository
 
   SnowflakeAccount[] findByStatus(TenantId tenantId, AccountStatus status) {
     SnowflakeAccount[] result;
-    foreach (item; findByTenant(tenantId))
+    foreach (item; find(tenantId))
       if (item.status == status) result ~= item;
     return result;
   }
 
   SnowflakeAccount[] findByRegion(TenantId tenantId, string region) {
     SnowflakeAccount[] result;
-    foreach (item; findByTenant(tenantId))
+    foreach (item; find(tenantId))
       if (item.region == region) result ~= item;
     return result;
   }

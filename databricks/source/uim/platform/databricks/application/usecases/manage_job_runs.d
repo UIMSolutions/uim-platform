@@ -34,7 +34,7 @@ public:
   }
 
   UseCaseResult!(JobRun[]) list(TenantId tenantId) {
-    return UseCaseResult!(JobRun[])(true, "", _repo.findByTenant(tenantId));
+    return UseCaseResult!(JobRun[])(true, "", _repo.find(tenantId));
   }
 
   UseCaseResult!JobRun get(TenantId tenantId, JobRunId id) {

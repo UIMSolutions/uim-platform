@@ -23,7 +23,7 @@ class ManageDataQualityRulesUseCase {
     }
 
     DataQualityRule[] listDataQualityRules(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     DataQualityRule[] listActive(TenantId tenantId) {

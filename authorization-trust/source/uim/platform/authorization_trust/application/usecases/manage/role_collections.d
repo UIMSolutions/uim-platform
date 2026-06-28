@@ -37,7 +37,7 @@ class ManageRoleCollectionsUseCase {
   }
 
   CommandResult updateRoleCollection(UpdateRoleCollectionRequest r) {
-    auto rc = repo.findById(r.tenantId, r.collectionId);
+    auto rc = repo.find(r.tenantId, r.collectionId);
     if (rc.isNull)
       return CommandResult(false, "", "Role collection not found");
 
@@ -65,6 +65,6 @@ class ManageRoleCollectionsUseCase {
   }
 
   RoleCollectionEntity[] listRoleCollections(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 }

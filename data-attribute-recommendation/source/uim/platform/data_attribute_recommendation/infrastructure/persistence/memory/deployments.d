@@ -16,11 +16,11 @@ import uim.platform.data_attribute_recommendation;
 class MemoryDeploymentRepository : TenantRepository!(ModelDeployment, DeploymentId), DeploymentRepository {
 
   bool existsByTrainingJob(TenantId tenantId, TrainingJobId jobId) {
-    return findByTenant(tenantId).any!(e => e.trainingJobId == jobId);
+    return find(tenantId).any!(e => e.trainingJobId == jobId);
   }
 
   ModelDeployment findByTrainingJob(TenantId tenantId, TrainingJobId jobId) {
-    foreach (e; findByTenant(tenantId))
+    foreach (e; find(tenantId))
       if (e.trainingJobId == jobId)
         return e;
     return ModelDeployment.init;
@@ -39,7 +39,7 @@ class MemoryDeploymentRepository : TenantRepository!(ModelDeployment, Deployment
   }
 
   ModelDeployment[] findByModelConfig(TenantId tenantId, ModelConfigurationId configId) {
-    return filterByModelConfig(findByTenant(tenantId), configId);
+    return filterByModelConfig(find(tenantId), configId);
   }
 
   void removeByModelConfig(TenantId tenantId, ModelConfigurationId configId) {
@@ -55,7 +55,7 @@ class MemoryDeploymentRepository : TenantRepository!(ModelDeployment, Deployment
   }
 
   ModelDeployment[] findByStatus(TenantId tenantId, DeploymentStatus status) {
-    return filterByStatus(findByTenant(tenantId), status);
+    return filterByStatus(find(tenantId), status);
   }
 
   void removeByStatus(TenantId tenantId, DeploymentStatus status) {

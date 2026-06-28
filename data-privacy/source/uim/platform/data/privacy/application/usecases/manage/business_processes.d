@@ -43,7 +43,7 @@ class ManageBusinessProcessesUseCase { // TODO: UIMUseCase {
   }
 
   BusinessProcess[] listProcesses(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   CommandResult updateProcess(UpdateBusinessProcessRequest req) {

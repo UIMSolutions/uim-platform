@@ -19,11 +19,11 @@ import uim.platform.auditlog;
 class MemoryConfigChangeLogRepository : TenantRepository!(ConfigChangeLog, ConfigChangeLogId), ConfigChangeLogRepository {
 
   bool existsByAuditLogId(TenantId tenantId, AuditLogId auditLogId) {
-    return findByTenant(tenantId).any!(e => e.auditLogId == auditLogId);
+    return find(tenantId).any!(e => e.auditLogId == auditLogId);
   }
 
   ConfigChangeLog findByAuditLogId(TenantId tenantId, AuditLogId auditLogId) {
-    foreach (e; findByTenant(tenantId))
+    foreach (e; find(tenantId))
       if (e.auditLogId == auditLogId)
         return e;
     return ConfigChangeLog.init;
@@ -42,7 +42,7 @@ class MemoryConfigChangeLogRepository : TenantRepository!(ConfigChangeLog, Confi
     return logs.filter!(e => e.changedBy == changedBy).array;
   }
   ConfigChangeLog[] findByUser(TenantId tenantId, UserId changedBy) {
-    return findByTenant(tenantId).filter!(e => e.changedBy == changedBy).array;
+    return find(tenantId).filter!(e => e.changedBy == changedBy).array;
   }
   void removeByUser(TenantId tenantId, UserId changedBy) {
     findByUser(tenantId, changedBy).each!(e => remove(e));
@@ -55,7 +55,7 @@ class MemoryConfigChangeLogRepository : TenantRepository!(ConfigChangeLog, Confi
     return logs.filter!(e => e.configType == configType).array;
   }
   ConfigChangeLog[] findByConfigType(TenantId tenantId, string configType) {
-    return findByTenant(tenantId).filter!(e => e.configType == configType).array;
+    return find(tenantId).filter!(e => e.configType == configType).array;
   }
   void removeByConfigType(TenantId tenantId, string configType) {
     findByConfigType(tenantId, configType).each!(e => remove(e));
@@ -68,7 +68,7 @@ class MemoryConfigChangeLogRepository : TenantRepository!(ConfigChangeLog, Confi
     return logs.filter!(e => e.timestamp >= timeFrom && e.timestamp <= timeTo).array;
   }
   ConfigChangeLog[] findByTimeRange(TenantId tenantId, long timeFrom, long timeTo) {
-    return findByTenant(tenantId).filter!(e => e.timestamp >= timeFrom && e.timestamp <= timeTo)
+    return find(tenantId).filter!(e => e.timestamp >= timeFrom && e.timestamp <= timeTo)
       .array;
   }
   void removeByTimeRange(TenantId tenantId, long timeFrom, long timeTo) {
@@ -76,7 +76,7 @@ class MemoryConfigChangeLogRepository : TenantRepository!(ConfigChangeLog, Confi
   }
 
   void removeOlderThan(TenantId tenantId, long beforeTimestamp) {
-    findByTenant(tenantId).filter!(e => e.timestamp < beforeTimestamp)
+    find(tenantId).filter!(e => e.timestamp < beforeTimestamp)
       .each!(e => remove(e));
   }
 }

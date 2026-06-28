@@ -14,7 +14,7 @@ class ManageServiceOfferingsUseCase { // TODO: UIMUseCase {
     }
 
     ServiceOffering[] listOfferings(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     ServiceOffering getOffering(TenantId tenantId, ServiceOfferingId id) {

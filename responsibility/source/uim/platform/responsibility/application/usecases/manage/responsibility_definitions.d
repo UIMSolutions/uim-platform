@@ -21,7 +21,7 @@ class ManageResponsibilityDefinitionsUseCase {
     }
 
     ResponsibilityDefinition[] listDefinitions(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     ResponsibilityDefinition[] listDefinitionsByContext(TenantId tenantId, string contextId) {

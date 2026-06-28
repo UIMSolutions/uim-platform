@@ -21,7 +21,7 @@ class MemoryValidationResultRepository : TenantRepository!(ValidationResult, Val
   }
 
   ValidationResult[] findByDataset(TenantId tenantId, DatasetId datasetId) {
-    return filterByDataset(findByTenant(tenantId), datasetId);
+    return filterByDataset(find(tenantId), datasetId);
   }
 
   void removeByDataset(TenantId tenantId, DatasetId datasetId) {

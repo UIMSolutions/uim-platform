@@ -23,7 +23,7 @@ class ManagePipelinesUseCase {
     }
 
     Pipeline[] listPipelines(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     Pipeline[] listActive(TenantId tenantId) {

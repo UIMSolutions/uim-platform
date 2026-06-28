@@ -21,7 +21,7 @@ class ManageAccessControlsUseCase {
     }
 
     AccessControl[] listAccessControls(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     AccessControl[] listByInstance(TenantId tenantId, ServiceInstanceId instanceId) {

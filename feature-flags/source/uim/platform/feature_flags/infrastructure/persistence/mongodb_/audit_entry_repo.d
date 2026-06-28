@@ -24,7 +24,7 @@ class MongoDbAuditEntryRepository : AuditEntryRepository {
     }
 
     void append(AuditEntry entry)                              { fallback.append(entry);               }
-    AuditEntry[] findByTenant(TenantId tenantId)               { return fallback.findByTenant(tenantId); }
+    AuditEntry[] findByTenant(TenantId tenantId)               { return fallback.find(tenantId); }
     AuditEntry[] findByEntity(TenantId tenantId, string entityId) { return fallback.findByEntity(tenantId, entityId); }
     AuditEntry[] findByTenantPaged(TenantId tenantId, size_t offset, size_t limit) {
         return fallback.findByTenantPaged(tenantId, offset, limit);

@@ -23,7 +23,7 @@ class ManageCustomersUseCase { // TODO: UIMUseCase {
     }
 
     Customer[] listCustomers(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     Customer[] listCustomers(TenantId tenantId, CustomerType customerType) {

@@ -25,7 +25,7 @@ class ManageServiceInstancesUseCase {
     }
 
     ServiceInstance[] listInstances(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     FlagResult createInstance(CreateServiceInstanceRequest req) {

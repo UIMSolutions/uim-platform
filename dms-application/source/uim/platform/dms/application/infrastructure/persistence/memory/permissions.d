@@ -23,7 +23,7 @@ Permission[] filterByResource(Permission[] permissions, string resourceId, Resou
       .array;
   }
   Permission[] findByResource(TenantId tenantId, string resourceId, ResourceType resourceType) {
-    return filterByResource(findByTenant(tenantId), resourceId, resourceType);
+    return filterByResource(find(tenantId), resourceId, resourceType);
   }
 
   void removeByResource(TenantId tenantId, string resourceId, ResourceType resourceType) {
@@ -40,7 +40,7 @@ Permission[] filterByUser(Permission[] permissions, UserId userId) {
     return permissions.filter!(e => e.userId == userId).array;
   }
   Permission[] findByUser(TenantId tenantId, UserId userId) {
-    return filterByUser(findByTenant(tenantId), userId);
+    return filterByUser(find(tenantId), userId);
   }
 
   void removeByUser(TenantId tenantId, UserId userId) {
@@ -50,12 +50,12 @@ Permission[] filterByUser(Permission[] permissions, UserId userId) {
 
   bool existsByResourceAndUser(TenantId tenantId, string resourceId, ResourceType resourceType,
     UserId userId) {
-    return filterByResource(findByTenant(tenantId), resourceId, resourceType).any!(e => e.userId == userId);
+    return filterByResource(find(tenantId), resourceId, resourceType).any!(e => e.userId == userId);
   }
 
   Permission findByResourceAndUser(TenantId tenantId, string resourceId, ResourceType resourceType,
     UserId userId) {
-    foreach (e; filterByResource(findByTenant(tenantId), resourceId, resourceType))
+    foreach (e; filterByResource(find(tenantId), resourceId, resourceType))
       if (e.userId == userId)
         return e;
     return Permission.init;

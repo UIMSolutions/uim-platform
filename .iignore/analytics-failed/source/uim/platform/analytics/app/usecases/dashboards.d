@@ -33,7 +33,7 @@ class DashboardUseCases {
 
   DashboardResponse[] listDashboards(TenantId tenantId) {
     DashboardResponse[] result;
-    foreach (d; repo.findByTenant(tenantId))
+    foreach (d; repo.find(tenantId))
       result ~= DashboardResponse.fromEntity(d);
     return result;
   }

@@ -17,12 +17,12 @@ class MemoryBrandingConfigRepository : TenantRepository!(BrandingConfig, Brandin
         return findByName(tenantId, name).id != BrandingConfigId.init;
     }
     BrandingConfig findByName(TenantId tenantId, string name) {
-        foreach (e; findByTenant(tenantId))
+        foreach (e; find(tenantId))
             if (e.name == name) return e;
         return BrandingConfig.init;
     }
     void removeByName(TenantId tenantId, string name) {
-        foreach (e; findByTenant(tenantId))
+        foreach (e; find(tenantId))
             if (e.name == name) {
                 remove(e);
                 return;

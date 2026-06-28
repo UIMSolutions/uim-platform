@@ -21,7 +21,7 @@ class MemoryClientLogRepository : TenantRepository!(ClientLogEntry, ClientLogEnt
   }
 
   ClientLogEntry[] findByApp(TenantId tenantId, MobileAppId appId) {
-    return filterByApp(findByTenant(tenantId), appId);
+    return filterByApp(find(tenantId), appId);
   }
 
   void removeByApp(TenantId tenantId, MobileAppId appId) {
@@ -37,7 +37,7 @@ class MemoryClientLogRepository : TenantRepository!(ClientLogEntry, ClientLogEnt
   }
 
   ClientLogEntry[] findByDevice(TenantId tenantId, DeviceRegistrationId deviceId) {
-    return filterByDevice(findByTenant(tenantId), deviceId);
+    return filterByDevice(find(tenantId), deviceId);
   }
 
   void removeByDevice(TenantId tenantId, DeviceRegistrationId deviceId) {

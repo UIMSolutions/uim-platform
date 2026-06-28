@@ -133,7 +133,7 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
   }
 
   Destination[] listDestinations(TenantId tenantId) {
-    return destinations.findByTenant(tenantId);
+    return destinations.find(tenantId);
   }
 
   CommandResult deleteDestination(TenantId tenantId, DestinationId id) {

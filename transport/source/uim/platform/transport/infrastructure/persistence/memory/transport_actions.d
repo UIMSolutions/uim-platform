@@ -14,18 +14,18 @@ import uim.platform.transport;
 class MemoryTransportActionRepository : TenantRepository!(TransportAction, TransportActionId), TransportActionRepository {
 
     TransportAction[] findByNode(TenantId tenantId, TransportNodeId nodeId) {
-        return findByTenant(tenantId).filter!(e => e.nodeId.value == nodeId.value).array;
+        return find(tenantId).filter!(e => e.nodeId.value == nodeId.value).array;
     }
 
     TransportAction[] findByRequest(TenantId tenantId, TransportRequestId requestId) {
-        return findByTenant(tenantId).filter!(e => e.requestId.value == requestId.value).array;
+        return find(tenantId).filter!(e => e.requestId.value == requestId.value).array;
     }
 
     TransportAction[] findByType(TenantId tenantId, ActionType actionType) {
-        return findByTenant(tenantId).filter!(e => e.actionType == actionType).array;
+        return find(tenantId).filter!(e => e.actionType == actionType).array;
     }
 
     TransportAction[] findByStatus(TenantId tenantId, ActionStatus actionStatus) {
-        return findByTenant(tenantId).filter!(e => e.actionStatus == actionStatus).array;
+        return find(tenantId).filter!(e => e.actionStatus == actionStatus).array;
     }
 }

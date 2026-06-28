@@ -22,7 +22,7 @@ class MemoryTrustedCertificateRepository : TenantRepository!(TrustedCertificate,
     }
 
     TrustedCertificate[] findByCustomDomain(TenantId tenantId, CustomDomainId domainId) {
-        return filterByCustomDomain(findByTenant(tenantId), domainId);
+        return filterByCustomDomain(find(tenantId), domainId);
     }
 
     void removeByCustomDomain(TenantId tenantId, CustomDomainId domainId) {

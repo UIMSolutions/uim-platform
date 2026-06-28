@@ -31,7 +31,7 @@ class MonthlyCostReportUseCases {
 
   MonthlyCostReportResponse[] listReports(TenantId tenantId) {
     MonthlyCostReportResponse[] result;
-    foreach (r; repo.findByTenant(tenantId))
+    foreach (r; repo.find(tenantId))
       result ~= MonthlyCostReportResponse.fromEntity(r);
     return result;
   }

@@ -52,7 +52,7 @@ class ManagePersonalDataModelsUseCase { // TODO: UIMUseCase {
   }
 
   PersonalDataModel[] listModels(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   PersonalDataModel[] listModels(TenantId tenantId, PersonalDataCategory category) {

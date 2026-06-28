@@ -23,7 +23,7 @@ class MemoryBusinessProcessRepository : TenantRepository!(BusinessProcess, Busin
   }
 
   BusinessProcess[] findByController(TenantId tenantId, DataControllerId controllerId) {
-    return filterByController(findByTenant(tenantId), controllerId);
+    return filterByController(find(tenantId), controllerId);
   }
 
   void removeByController(TenantId tenantId, DataControllerId controllerId) {

@@ -27,7 +27,7 @@ class MemoryModuleRepository : ModuleRepository {
   }
 
   bool existsByName(KymaEnvironmentId environmentId, string name) {
-    return findByTenant(tenantId)e => e.environmentId == environmentId && e.name == name);
+    return find(tenantId)e => e.environmentId == environmentId && e.name == name);
   }
 
   KymaModule findByName(KymaEnvironmentId environmentId, string name) {
@@ -38,15 +38,15 @@ class MemoryModuleRepository : ModuleRepository {
   }
 
   KymaModule[] findByEnvironment(KymaEnvironmentId environmentId) {
-    return findByTenant(tenantId).filter!(enviroment => enviroment.environmentId == environmentId).array;
+    return find(tenantId).filter!(enviroment => enviroment.environmentId == environmentId).array;
   }
 
   KymaModule[] findByStatus(ModuleStatus status) {
-    return findByTenant(tenantId).filter!(enviroment => enviroment.status == status).array;
+    return find(tenantId).filter!(enviroment => enviroment.status == status).array;
   }
 
   KymaModule[] findByType(ModuleType moduleType) {
-    return findByTenant(tenantId).filter!(enviroment => enviroment.moduleType == moduleType).array;
+    return find(tenantId).filter!(enviroment => enviroment.moduleType == moduleType).array;
   }
 
   void save(KymaModule mod) {

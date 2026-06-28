@@ -16,11 +16,11 @@ import uim.platform.dms.application;
 class MemoryDocumentRepository : TenantRepository!(Document, DocumentId), IDocumentRepository {
 
   size_t countByRepository(TenantId tenantId, RepositoryId repositoryId) {
-    return findByTenant(tenantId).filter!(e => e.repositoryId == repositoryId).count;
+    return find(tenantId).filter!(e => e.repositoryId == repositoryId).count;
   }
 
   Document[] findByRepository(TenantId tenantId, RepositoryId repositoryId) {
-    return findByTenant(tenantId).filter!(e => e.repositoryId == repositoryId).array;
+    return find(tenantId).filter!(e => e.repositoryId == repositoryId).array;
   }
 
   void removeByRepository(TenantId tenantId, RepositoryId repositoryId) {
@@ -57,7 +57,7 @@ class MemoryDocumentRepository : TenantRepository!(Document, DocumentId), IDocum
 
   Document[] findByName(TenantId tenantId, string name) {
     auto lowerName = name.toLower();
-    return findByTenant(tenantId).filter!(e => e.name.toLower().canFind(lowerName)).array;
+    return find(tenantId).filter!(e => e.name.toLower().canFind(lowerName)).array;
   }
 
   void removeByName(TenantId tenantId, string name) {

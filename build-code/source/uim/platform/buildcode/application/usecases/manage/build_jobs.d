@@ -49,7 +49,7 @@ class ManageBuildJobsUseCase {
   }
 
   BuildJob[] list(TenantId tenantId) {
-    return _repo.findByTenant(tenantId);
+    return _repo.find(tenantId);
   }
 
   BuildJob[] listByPipeline(TenantId tenantId, string pipelineId) {

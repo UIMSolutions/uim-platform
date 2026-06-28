@@ -21,7 +21,7 @@ class MemoryValidationRuleRepository : TenantRepository!(ValidationRule, Validat
   }
 
   ValidationRule[] findByDataset(TenantId tenantId, string datasetPattern) {
-    return findByTenant(tenantId).filter!(r => r.datasetPattern == datasetPattern).array;
+    return find(tenantId).filter!(r => r.datasetPattern == datasetPattern).array;
   }
 
   void removeByDataset(TenantId tenantId, string datasetPattern) {
@@ -33,7 +33,7 @@ class MemoryValidationRuleRepository : TenantRepository!(ValidationRule, Validat
   } 
 
   ValidationRule[] findByField(TenantId tenantId, string fieldName) {
-    return findByTenant(tenantId).filter!(r => r.fieldName == fieldName).array;
+    return find(tenantId).filter!(r => r.fieldName == fieldName).array;
   }
 
   void removeByField(TenantId tenantId, string fieldName) {
@@ -45,7 +45,7 @@ class MemoryValidationRuleRepository : TenantRepository!(ValidationRule, Validat
   }
 
   ValidationRule[] findActive(TenantId tenantId) {
-    return findByTenant(tenantId).filter!(r => r.status == RuleStatus.active).array;
+    return find(tenantId).filter!(r => r.status == RuleStatus.active).array;
   }
 
   void removeActive(TenantId tenantId) {

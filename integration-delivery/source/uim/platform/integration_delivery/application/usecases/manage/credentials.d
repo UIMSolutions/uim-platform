@@ -23,7 +23,7 @@ class ManageCredentialsUseCase {
     }
 
     Credential[] listCredentials(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     Credential[] listByStatus(TenantId tenantId, CredentialStatus status) {

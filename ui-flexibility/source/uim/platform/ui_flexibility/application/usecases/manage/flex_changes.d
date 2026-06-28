@@ -45,7 +45,7 @@ class ManageFlexChangesUseCase {
   }
 
   CommandResult updateChange(UpdateFlexChangeRequest r) {
-    auto existing = repo.findById(r.tenantId, r.changeId);
+    auto existing = repo.find(r.tenantId, r.changeId);
     if (existing.isNull)
       return CommandResult(false, null, "FlexChange not found");
     existing.selector_ = r.selector_;

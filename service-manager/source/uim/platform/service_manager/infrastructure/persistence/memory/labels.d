@@ -17,7 +17,7 @@ class MemoryLabelRepository : TenantRepository!(Label, LabelId), LabelRepository
     }
 
     Label[] findByResource(TenantId tenantId, string resourceType, string resourceId) {
-        return filterByResource(findByTenant(tenantId), resourceType, resourceId);
+        return filterByResource(find(tenantId), resourceType, resourceId);
     }
 
     void removeByResource(TenantId tenantId, string resourceType, string resourceId) {

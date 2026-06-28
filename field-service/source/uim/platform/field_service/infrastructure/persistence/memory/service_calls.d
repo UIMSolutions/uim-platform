@@ -20,7 +20,7 @@ class MemoryServiceCallRepository : TenantRepository!(ServiceCall, ServiceCallId
         return serviceCalls.filter!(e => e.status == status).array;
     }
     ServiceCall[] findByStatus(TenantId tenantId, ServiceCallStatus status) {
-        return filterByStatus(findByTenant(tenantId), status);
+        return filterByStatus(find(tenantId), status);
     }
     void removeByStatus(TenantId tenantId, ServiceCallStatus status) {
         findByStatus(tenantId, status).each!(entity => remove(entity));
@@ -33,7 +33,7 @@ class MemoryServiceCallRepository : TenantRepository!(ServiceCall, ServiceCallId
         return serviceCalls.filter!(e => e.priority == priority).array;
     }
     ServiceCall[] findByPriority(TenantId tenantId, ServiceCallPriority priority) {
-        return filterByPriority(findByTenant(tenantId), priority);
+        return filterByPriority(find(tenantId), priority);
     }
     void removeByPriority(TenantId tenantId, ServiceCallPriority priority) {
         findByPriority(tenantId, priority).each!(entity => remove(entity));
@@ -46,7 +46,7 @@ class MemoryServiceCallRepository : TenantRepository!(ServiceCall, ServiceCallId
         return serviceCalls.filter!(e => e.customerId == customerId).array;
     }
     ServiceCall[] findByCustomer(TenantId tenantId, CustomerId customerId) {
-        return filterByCustomer(findByTenant(tenantId), customerId);
+        return filterByCustomer(find(tenantId), customerId);
     }
     void removeByCustomer(TenantId tenantId, CustomerId customerId) {
         findByCustomer(tenantId, customerId).each!(entity => remove(entity));

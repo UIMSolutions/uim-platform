@@ -37,7 +37,7 @@ public:
   }
 
   UseCaseResult!(MlModel[]) list(TenantId tenantId) {
-    return UseCaseResult!(MlModel[])(true, "", _repo.findByTenant(tenantId));
+    return UseCaseResult!(MlModel[])(true, "", _repo.find(tenantId));
   }
 
   UseCaseResult!MlModel get(TenantId tenantId, MlModelId id) {

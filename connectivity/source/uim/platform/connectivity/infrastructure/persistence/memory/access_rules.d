@@ -20,7 +20,7 @@ class MemoryAccessRuleRepository : TenantRepository!(AccessRule, RuleId), Access
   }
 
   AccessRule[] findByConnector(TenantId tenantId, ConnectorId connectorId) {
-    return findByTenant(tenantId).filter!(e => e.connectorId == connectorId).array;
+    return find(tenantId).filter!(e => e.connectorId == connectorId).array;
   }
 
   void removeByConnector(TenantId tenantId, ConnectorId connectorId) {

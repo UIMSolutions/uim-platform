@@ -65,7 +65,7 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
   }
 
   Application[] listApps(TenantId tenantId) {
-    return apps.findByTenant(tenantId);
+    return apps.find(tenantId);
   }
 
   Application[] listBySpace(TenantId tenantId, SpaceId spaceId) {

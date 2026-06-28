@@ -20,7 +20,7 @@ class MemoryProcessingPurposeRepository : TenantRepository!(ProcessingPurpose, P
         return purposes.filter!(v => v.legalBasis == basis).array;
     }
     ProcessingPurpose[] findByLegalBasis(TenantId tenantId, LegalBasis basis) {
-        return filterByLegalBasis(findByTenant(tenantId), basis);
+        return filterByLegalBasis(find(tenantId), basis);
     }
     void removeByLegalBasis(TenantId tenantId, LegalBasis basis) {
         findByLegalBasis(tenantId, basis).each!(v => remove(v.id));
@@ -33,7 +33,7 @@ class MemoryProcessingPurposeRepository : TenantRepository!(ProcessingPurpose, P
         return purposes.filter!(v => v.applicationIds.canFind(applicationId)).array;
     }
     ProcessingPurpose[] findByApplication(TenantId tenantId, RegisteredApplicationId applicationId) {
-        return filterByApplication(findByTenant(tenantId), applicationId);
+        return filterByApplication(find(tenantId), applicationId);
     }
     void removeByApplication(TenantId tenantId, RegisteredApplicationId applicationId) {
         findByApplication(applicationId).each!(v => remove(v.id));

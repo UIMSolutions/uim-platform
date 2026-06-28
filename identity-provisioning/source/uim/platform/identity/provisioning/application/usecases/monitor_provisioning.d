@@ -77,7 +77,7 @@ class MonitorProvisioningUseCase { // TODO: UIMUseCase {
   }
 
   JobSummary[] listJobSummaries(TenantId tenantId) {
-    auto jobs = jobRepo.findByTenant(tenantId);
+    auto jobs = jobRepo.find(tenantId);
     JobSummary[] result;
     foreach (j; jobs)
       result ~= buildJobSummary(j, tenantId);
@@ -97,7 +97,7 @@ class MonitorProvisioningUseCase { // TODO: UIMUseCase {
   }
 
   ProvisionedEntity[] listProvisionedEntities(TenantId tenantId) {
-    return entityRepo.findByTenant(tenantId);
+    return entityRepo.find(tenantId);
   }
 
   ProvisionedEntity[] listByTarget(TenantId tenantId, TargetSystemId systemId) {
@@ -107,19 +107,19 @@ class MonitorProvisioningUseCase { // TODO: UIMUseCase {
   ProvisioningSummary getPipelineSummary(TenantId tenantId) {
     ProvisioningSummary s;
 
-    auto sources = sourceRepo.findByTenant(tenantId);
+    auto sources = sourceRepo.find(tenantId);
     s.totalSourceSystems = cast(int) sources.length;
     foreach (src; sources)
       if (src.status == SystemStatus.active)
         s.activeSourceSystems++;
 
-    auto targets = targetRepo.findByTenant(tenantId);
+    auto targets = targetRepo.find(tenantId);
     s.totalTargetSystems = cast(int) targets.length;
     foreach (tgt; targets)
       if (tgt.status == SystemStatus.active)
         s.activeTargetSystems++;
 
-    auto jobs = jobRepo.findByTenant(tenantId);
+    auto jobs = jobRepo.find(tenantId);
     s.totalJobs = jobs.length;
     foreach (j; jobs) {
       if (j.status == JobStatus.completed)
@@ -130,7 +130,7 @@ class MonitorProvisioningUseCase { // TODO: UIMUseCase {
         s.runningJobs++;
     }
 
-    auto entities = entityRepo.findByTenant(tenantId);
+    auto entities = entityRepo.find(tenantId);
     s.totalProvisionedEntities = entities.length;
 
     return s;

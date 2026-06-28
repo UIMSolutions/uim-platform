@@ -21,7 +21,7 @@ class MemoryFeedRepository : TenantRepository!(FeedEntry, FeedEntryId), FeedRepo
     return findByWorkspace(tenantId, workspaceId).length;
   }
   FeedEntry[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
-    return findByTenant(tenantId).filter!(e => e.workspaceId == workspaceId).array;
+    return find(tenantId).filter!(e => e.workspaceId == workspaceId).array;
   }
   void removeByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
     findByWorkspace(tenantId, workspaceId).each!(e => remove(e));
@@ -31,7 +31,7 @@ class MemoryFeedRepository : TenantRepository!(FeedEntry, FeedEntryId), FeedRepo
     return findByActor(tenantId, actorId).length;
   }
   FeedEntry[] findByActor(TenantId tenantId, UserId actorId) {
-    return findByTenant(tenantId).filter!(e => e.actorId == actorId).array;
+    return find(tenantId).filter!(e => e.actorId == actorId).array;
   }
   void removeByActor(TenantId tenantId, UserId actorId) {
     findByActor(tenantId, actorId).each!(e => remove(e));

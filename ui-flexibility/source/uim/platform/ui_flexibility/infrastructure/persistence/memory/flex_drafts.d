@@ -17,7 +17,7 @@ class MemoryFlexDraftRepository : TenantRepository!(FlexDraft, FlexDraftId), Fle
   }
 
   FlexDraft findById(TenantId tenantId, FlexDraftId id) {
-    foreach (d; findByTenant(tenantId))
+    foreach (d; find(tenantId))
       if (d.id_ == id) return d;
     return FlexDraft.init;
   }
@@ -27,21 +27,21 @@ class MemoryFlexDraftRepository : TenantRepository!(FlexDraft, FlexDraftId), Fle
   }
 
   long countByTenant(TenantId tenantId) {
-    return cast(long) findByTenant(tenantId).length;
+    return cast(long) find(tenantId).length;
   }
 
   FlexDraft[] findByTenantAll(TenantId tenantId) {
-    return findByTenant(tenantId);
+    return find(tenantId);
   }
 
   FlexDraft findByApp(TenantId tenantId, string appId) {
-    foreach (d; findByTenant(tenantId))
+    foreach (d; find(tenantId))
       if (d.appId_ == appId) return d;
     return FlexDraft.init;
   }
 
   bool hasDraft(TenantId tenantId, string appId) {
-    foreach (d; findByTenant(tenantId))
+    foreach (d; find(tenantId))
       if (d.appId_ == appId) return true;
     return false;
   }

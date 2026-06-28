@@ -23,7 +23,7 @@ class ManageRunConfigurationsUseCase { // TODO: UIMUseCase {
     }
 
     RunConfiguration[] listRunConfigurations(TenantId tenantId) {
-        return configurations.findByTenant(tenantId);
+        return configurations.find(tenantId);
     }
 
     RunConfiguration[] listRunConfigurations(TenantId tenantId, ProjectId projectId) {

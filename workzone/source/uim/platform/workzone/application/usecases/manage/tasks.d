@@ -54,7 +54,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
   }
 
   WZTask[] listTasks(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   WZTask[] listByAssignee(TenantId tenantId, UserId assigneeId) {

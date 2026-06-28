@@ -17,7 +17,7 @@ class MemoryConditionRepository : TenantRepository!(Condition, ConditionId), Con
   }
 
   Condition findById(TenantId tenantId, ConditionId id) {
-    foreach (c; findByTenant(tenantId)) {
+    foreach (c; find(tenantId)) {
       if (c.id == id) return c;
     }
     return Condition.init;
@@ -29,16 +29,16 @@ class MemoryConditionRepository : TenantRepository!(Condition, ConditionId), Con
   }
 
   size_t countByTenant(TenantId tenantId) {
-    return findByTenant(tenantId).length;
+    return find(tenantId).length;
   }
 
   Condition[] findByTenantAll(TenantId tenantId) {
-    return findByTenant(tenantId);
+    return find(tenantId);
   }
 
   Condition[] findByPatient(TenantId tenantId, string patientRef) {
     Condition[] results;
-    foreach (c; findByTenant(tenantId)) {
+    foreach (c; find(tenantId)) {
       if (c.subject_.reference_ == patientRef) results ~= c;
     }
     return results;

@@ -21,7 +21,7 @@ class ManagePractitionersUseCase {
     auto err = FhirValidator.validatePractitioner(r.practitionerId.value);
     if (err.length > 0) return CommandResult(false, "", err);
 
-    if (!repo.findById(r.tenantId, r.practitionerId).isNull)
+    if (!repo.find(r.tenantId, r.practitionerId).isNull)
       return CommandResult(false, "", "Practitioner already exists");
 
     Practitioner p;
@@ -40,7 +40,7 @@ class ManagePractitionersUseCase {
   }
 
   CommandResult updatePractitioner(UpdatePractitionerRequest r) {
-    auto existing = repo.findById(r.tenantId, r.practitionerId);
+    auto existing = repo.find(r.tenantId, r.practitionerId);
     if (existing.isNull)
       return CommandResult(false, "", "Practitioner not found");
 

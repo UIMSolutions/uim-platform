@@ -73,11 +73,11 @@ class MongoServiceInstanceRepository : ServiceInstanceRepository {
     }
 
     // --- ITenantRepository stub implementations ---
-    bool isTenantEmpty(TenantId tenantId)      { return findByTenant(tenantId).length == 0; }
+    bool isTenantEmpty(TenantId tenantId)      { return find(tenantId).length == 0; }
     void createTenant(TenantId tenantId)        {}
     TenantId[] findAllTenants()                 { return []; }
     bool existsByTenant(TenantId tenantId)      { return !isTenantEmpty(tenantId); }
-    size_t countByTenant(TenantId tenantId)     { return findByTenant(tenantId).length; }
+    size_t countByTenant(TenantId tenantId)     { return find(tenantId).length; }
     ServiceInstance[] filterByTenant(ServiceInstance[] items, TenantId tenantId) {
         return items.filter!(e => e.tenantId == tenantId).array;
     }
@@ -151,18 +151,18 @@ class MongoServiceInstanceRepository : ServiceInstanceRepository {
 
     // --- ServiceInstanceRepository ---
     override ServiceInstance[] findByStatus(TenantId tenantId, InstanceStatus status) {
-        return findByTenant(tenantId).filter!(e => e.status == status).array;
+        return find(tenantId).filter!(e => e.status == status).array;
     }
 
     override ServiceInstance[] findByPlan(TenantId tenantId, ServicePlanId planId) {
-        return findByTenant(tenantId).filter!(e => e.planId == planId).array;
+        return find(tenantId).filter!(e => e.planId == planId).array;
     }
 
     override ServiceInstance[] findByHyperscaler(TenantId tenantId, Hyperscaler hs) {
-        return findByTenant(tenantId).filter!(e => e.hyperscaler == hs).array;
+        return find(tenantId).filter!(e => e.hyperscaler == hs).array;
     }
 
     override bool nameExists(TenantId tenantId, string name) {
-        return findByTenant(tenantId).any!(e => e.name == name);
+        return find(tenantId).any!(e => e.name == name);
     }
 }

@@ -23,7 +23,7 @@ class ManageDevSpacesUseCase { // TODO: UIMUseCase {
     }
 
     DevSpace[] listDevSpaces(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     DevSpace[] listDevSpaces(TenantId tenantId, string owner) {

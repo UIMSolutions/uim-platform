@@ -56,7 +56,7 @@ class ManageRoutesUseCase {
   }
 
   Route[] list(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   CommandResult remove(TenantId tenantId, string id) {

@@ -88,7 +88,7 @@ class ManageValidationRulesUseCase { // TODO: UIMUseCase {
   }
 
   ValidationRule[] listValidationRules(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   ValidationRule[] listActive(TenantId tenantId) {

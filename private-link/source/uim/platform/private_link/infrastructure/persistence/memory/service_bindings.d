@@ -14,11 +14,11 @@ class MemoryServiceBindingRepository
       ServiceBindingRepository {
 
   ServiceBinding[] findByServiceInstance(TenantId tenantId, ServiceInstanceId instanceId) {
-    return findByTenant(tenantId).filter!(b => b.serviceInstanceId.value == instanceId.value).array;
+    return find(tenantId).filter!(b => b.serviceInstanceId.value == instanceId.value).array;
   }
 
   ServiceBinding[] findByApplication(TenantId tenantId, string applicationId) {
-    return findByTenant(tenantId).filter!(b => b.applicationId == applicationId).array;
+    return find(tenantId).filter!(b => b.applicationId == applicationId).array;
   }
 
   void removeByServiceInstance(TenantId tenantId, ServiceInstanceId instanceId) {

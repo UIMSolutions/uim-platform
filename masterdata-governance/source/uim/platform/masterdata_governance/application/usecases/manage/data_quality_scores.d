@@ -23,7 +23,7 @@ class ManageDataQualityScoresUseCase {
     }
 
     DataQualityScore[] listDataQualityScores(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     DataQualityScore getScoreByBusinessPartner(TenantId tenantId, BusinessPartnerId bpId) {

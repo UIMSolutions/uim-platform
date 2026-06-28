@@ -15,14 +15,14 @@ class MemoryPrinterRepository
     : TenantRepository!(Printer, PrinterId), PrinterRepository {
 
     Printer[] findByStatus(TenantId tenantId, PrinterStatus status) {
-        return findByTenant(tenantId).filter!(p => p.status == status).array;
+        return find(tenantId).filter!(p => p.status == status).array;
     }
 
     Printer[] findByClient(TenantId tenantId, PrintClientId clientId) {
-        return findByTenant(tenantId).filter!(p => p.clientId == clientId).array;
+        return find(tenantId).filter!(p => p.clientId == clientId).array;
     }
 
     Printer[] findByProtocol(TenantId tenantId, PrinterProtocol protocol) {
-        return findByTenant(tenantId).filter!(p => p.protocol == protocol).array;
+        return find(tenantId).filter!(p => p.protocol == protocol).array;
     }
 }

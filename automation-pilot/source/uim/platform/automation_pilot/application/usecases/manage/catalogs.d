@@ -23,7 +23,7 @@ class ManageCatalogsUseCase { // TODO: UIMUseCase {
     }
 
     Catalog[] listCatalogs(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     Catalog[] listCatalogs(TenantId tenantId, CatalogStatus status) {

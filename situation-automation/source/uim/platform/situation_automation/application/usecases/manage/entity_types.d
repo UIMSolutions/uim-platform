@@ -22,7 +22,7 @@ class ManageEntityTypesUseCase { // TODO: UIMUseCase {
         if (err.length > 0)
             return CommandResult(false, "", err);
 
-        auto existing = repo.findById(r.tenantId, r.entityTypeId);
+        auto existing = repo.find(r.tenantId, r.entityTypeId);
         if (!existing.isNull)
             return CommandResult(false, "", "Entity type already exists");
 
@@ -42,11 +42,11 @@ class ManageEntityTypesUseCase { // TODO: UIMUseCase {
     }
 
     EntityType[] listEntityTypes(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     CommandResult updateEntityType(UpdateEntityTypeRequest r) {
-        auto existing = repo.findById(r.tenantId, r.entityTypeId);
+        auto existing = repo.find(r.tenantId, r.entityTypeId);
         if (existing.isNull)
             return CommandResult(false, "", "Entity type not found");
 

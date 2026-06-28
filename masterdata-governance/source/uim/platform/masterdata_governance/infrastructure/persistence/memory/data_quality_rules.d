@@ -15,23 +15,23 @@ class MemoryDataQualityRuleRepository
     : TenantRepository!(DataQualityRule, DataQualityRuleId), DataQualityRuleRepository {
 
     DataQualityRule[] findByFieldName(TenantId tenantId, string fieldName) {
-        return findByTenant(tenantId).filter!(e => e.fieldName == fieldName).array;
+        return find(tenantId).filter!(e => e.fieldName == fieldName).array;
     }
 
     DataQualityRule[] findByRuleType(TenantId tenantId, RuleType ruleType) {
-        return findByTenant(tenantId).filter!(e => e.ruleType == ruleType).array;
+        return find(tenantId).filter!(e => e.ruleType == ruleType).array;
     }
 
     DataQualityRule[] findBySeverity(TenantId tenantId, RuleSeverity severity) {
-        return findByTenant(tenantId).filter!(e => e.severity == severity).array;
+        return find(tenantId).filter!(e => e.severity == severity).array;
     }
 
     DataQualityRule[] findActive(TenantId tenantId) {
-        return findByTenant(tenantId).filter!(e => e.isActive).array;
+        return find(tenantId).filter!(e => e.isActive).array;
     }
 
     DataQualityRule[] findByBpCategory(TenantId tenantId, string bpCategory) {
-        return findByTenant(tenantId).filter!(e => e.bpCategory == bpCategory || e.bpCategory == "all").array;
+        return find(tenantId).filter!(e => e.bpCategory == bpCategory || e.bpCategory == "all").array;
     }
 
     void removeByRuleType(TenantId tenantId, RuleType ruleType) {

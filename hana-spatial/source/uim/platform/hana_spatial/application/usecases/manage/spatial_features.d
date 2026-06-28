@@ -43,7 +43,7 @@ class ManageSpatialFeaturesUseCase {
   }
 
   CommandResult update(UpdateSpatialFeatureRequest r) {
-    auto existing = repo.findById(r.tenantId, SpatialFeatureId(r.id));
+    auto existing = repo.find(r.tenantId, SpatialFeatureId(r.id));
     if (existing.isNull)
       return CommandResult(false, "", "Spatial feature not found");
 
@@ -62,7 +62,7 @@ class ManageSpatialFeaturesUseCase {
   }
 
   SpatialFeature[] list(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   SpatialFeature[] listByLayer(TenantId tenantId, string layerId) {

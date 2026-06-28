@@ -55,7 +55,7 @@ class ManageCorrectionRequestsUseCase { // TODO: UIMUseCase {
   }
 
   CorrectionRequest[] listRequests(TenantId tenantId) {
-    return crRepo.findByTenant(tenantId);
+    return crRepo.find(tenantId);
   }
 
   CorrectionRequest[] listByDataSubject(TenantId tenantId, DataSubjectId subjectId) {

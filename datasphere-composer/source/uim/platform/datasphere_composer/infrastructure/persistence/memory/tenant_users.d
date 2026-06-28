@@ -16,7 +16,7 @@ class MemoryTenantUserRepository
 
   TenantUser[] findByRole(TenantId tenantId, TenantUserRole role) {
     TenantUser[] result;
-    foreach (item; findByTenant(tenantId)) {
+    foreach (item; find(tenantId)) {
       if (item.role == role) result ~= item;
     }
     return result;
@@ -24,7 +24,7 @@ class MemoryTenantUserRepository
 
   TenantUser[] findByEmail(TenantId tenantId, string email) {
     TenantUser[] result;
-    foreach (item; findByTenant(tenantId)) {
+    foreach (item; find(tenantId)) {
       if (item.email == email) result ~= item;
     }
     return result;

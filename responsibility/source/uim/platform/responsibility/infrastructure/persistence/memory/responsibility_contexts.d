@@ -16,11 +16,11 @@ class MemoryResponsibilityContextRepository
       ResponsibilityContextRepository {
 
     ResponsibilityContext[] findByStatus(TenantId tenantId, ContextStatus status) {
-        return findByTenant(tenantId).filter!(c => c.status == status).array;
+        return find(tenantId).filter!(c => c.status == status).array;
     }
 
     ResponsibilityContext findByObjectType(TenantId tenantId, string objectType) {
-        auto items = findByTenant(tenantId).filter!(c => c.objectType == objectType).array;
+        auto items = find(tenantId).filter!(c => c.objectType == objectType).array;
         return items.length > 0 ? items[0] : ResponsibilityContext.init;
     }
 }

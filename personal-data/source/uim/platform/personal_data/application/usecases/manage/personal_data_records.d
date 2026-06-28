@@ -49,7 +49,7 @@ class ManagePersonalDataRecordsUseCase { // TODO: UIMUseCase {
     }
 
     PersonalDataRecord[] listPersonalDataRecords(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     PersonalDataRecord[] listPersonalDataRecords(TenantId tenantId, DataSubjectId dataSubjectId) {

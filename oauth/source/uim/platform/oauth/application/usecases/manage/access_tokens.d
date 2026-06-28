@@ -27,7 +27,7 @@ class ManageAccessTokensUseCase { // TODO: UIMUseCase {
     }
 
     AccessToken[] listTokens(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     AccessToken[] listTokens(TenantId tenantId, string clientId) {

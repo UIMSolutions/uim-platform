@@ -15,18 +15,18 @@ class MemoryTranslationProjectRepository : TenantRepository!(TranslationProject,
 TranslationProjectRepository {
     
     bool existsByName(TenantId tenantId, string name) {
-        return findByTenant(tenantId).any!(p => p.name == name);
+        return find(tenantId).any!(p => p.name == name);
     }
 
     TranslationProject findByName(TenantId tenantId, string name) {
-        foreach (p; findByTenant(tenantId))
+        foreach (p; find(tenantId))
             if (p.name == name)
                 return p;
         return TranslationProject.init;
     }
 
     void removeByName(TenantId tenantId, string name) {
-        foreach (p; findByTenant(tenantId))
+        foreach (p; find(tenantId))
             if (p.name == name) {
                 super.remove(p.id);
                 return;

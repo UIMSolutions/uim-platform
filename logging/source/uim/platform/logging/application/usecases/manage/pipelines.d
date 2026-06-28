@@ -147,7 +147,7 @@ class ManagePipelinesUseCase { // TODO: UIMUseCase {
   }
 
   Pipeline[] listPipelines(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   Pipeline[] listActivePipelines(TenantId tenantId) {

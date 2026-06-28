@@ -23,7 +23,7 @@ class ManageTransportNodesUseCase {
     }
 
     TransportNode[] listNodes(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     TransportNode[] listNodesByStatus(TenantId tenantId, NodeStatus status) {

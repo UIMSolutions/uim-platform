@@ -9,19 +9,19 @@ class MemoryMlExperimentRepository : TenantRepository!(MlExperiment, MlExperimen
   MlExperiment[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
     import std.algorithm : filter;
     import std.array : array;
-    return findByTenant(tenantId).filter!(e => e.workspaceId == workspaceId).array;
+    return find(tenantId).filter!(e => e.workspaceId == workspaceId).array;
   }
 
   MlExperiment[] findActive(TenantId tenantId) {
     import std.algorithm : filter;
     import std.array : array;
-    return findByTenant(tenantId).filter!(e => e.lifecycleStage == "active").array;
+    return find(tenantId).filter!(e => e.lifecycleStage == "active").array;
   }
 
   MlExperiment findByName(TenantId tenantId, string name) {
     import std.algorithm : find;
     import std.array : empty, front;
-    auto results = findByTenant(tenantId).find!(e => e.name == name);
+    auto results = find(tenantId).find!(e => e.name == name);
     return results.empty ? MlExperiment.init : results.front;
   }
 }

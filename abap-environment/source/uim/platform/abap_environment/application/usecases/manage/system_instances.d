@@ -97,7 +97,7 @@ class ManageSystemInstancesUseCase { // TODO: UIMUseCase {
   }
 
   SystemInstance[] listInstances(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   CommandResult deleteInstance(TenantId tenantId, SystemInstanceId id) {

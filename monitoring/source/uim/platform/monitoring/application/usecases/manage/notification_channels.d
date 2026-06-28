@@ -94,7 +94,7 @@ class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
   }
 
   NotificationChannel[] listChannels(TenantId tenantId) {
-    return channels.findByTenant(tenantId);
+    return channels.find(tenantId);
   }
 
   NotificationChannel[] listActive(TenantId tenantId) {

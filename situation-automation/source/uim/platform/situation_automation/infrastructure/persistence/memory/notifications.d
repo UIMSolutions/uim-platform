@@ -22,7 +22,7 @@ class MemoryNotificationRepository : TenantRepository!(Notification, Notificatio
     }
 
     Notification[] findByRecipient(TenantId tenantId, string recipientId) {
-        return filterByRecipient(findByTenant(tenantId), recipientId);
+        return filterByRecipient(find(tenantId), recipientId);
     }
 
     void removeByRecipient(TenantId tenantId, string recipientId) {
@@ -40,7 +40,7 @@ class MemoryNotificationRepository : TenantRepository!(Notification, Notificatio
     }
 
     Notification[] findByInstance(TenantId tenantId, SituationInstanceId instanceId) {
-        return filterByInstance(findByTenant(tenantId), instanceId);
+        return filterByInstance(find(tenantId), instanceId);
     }
 
     void removeByInstance(TenantId tenantId, SituationInstanceId instanceId) {
@@ -58,7 +58,7 @@ class MemoryNotificationRepository : TenantRepository!(Notification, Notificatio
     }
 
     Notification[] findByStatus(TenantId tenantId, NotificationStatus status) {
-        return filterByStatus(findByTenant(tenantId), status);
+        return filterByStatus(find(tenantId), status);
     }
 
     void removeByStatus(TenantId tenantId, NotificationStatus status) {

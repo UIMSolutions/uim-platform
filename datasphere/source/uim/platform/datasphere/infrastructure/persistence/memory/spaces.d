@@ -16,11 +16,11 @@ import uim.platform.datasphere;
 
 class MemorySpaceRepository : TenantRepository!(Space, SpaceId), SpaceRepository {
   bool existsByName(TenantId tenantId, string name) {
-    return findByTenant(tenantId).any!(e => e.name == name);
+    return find(tenantId).any!(e => e.name == name);
   }
 
   Space findByName(TenantId tenantId, string name) {
-    foreach (e; findByTenant(tenantId))
+    foreach (e; find(tenantId))
       if (e.name == name)
         return e;
     return Space.init;

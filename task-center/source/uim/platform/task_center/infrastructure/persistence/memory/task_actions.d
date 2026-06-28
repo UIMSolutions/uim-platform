@@ -17,7 +17,7 @@ class MemoryTaskActionRepository : TenantRepository!(TaskAction, TaskActionId), 
         return findByTask(tenantId, taskId).length;
     }
     TaskAction[] findByTask(TenantId tenantId, TaskId taskId) {
-        return findByTenant(tenantId).filter!(a => a.taskId == taskId).array;
+        return find(tenantId).filter!(a => a.taskId == taskId).array;
     }
     void removeByTask(TenantId tenantId, TaskId taskId) {
         findByTask(tenantId, taskId).each!(a => remove(a));
@@ -27,7 +27,7 @@ class MemoryTaskActionRepository : TenantRepository!(TaskAction, TaskActionId), 
         return findByPerformer(tenantId, performerId).length;
     }
     TaskAction[] findByPerformer(TenantId tenantId, UserId performerId) {
-        return findByTenant(tenantId).filter!(a => a.performedBy == performerId).array;
+        return find(tenantId).filter!(a => a.performedBy == performerId).array;
     }
     void removeByPerformer(TenantId tenantId, UserId performerId) {
         findByPerformer(tenantId, performerId).each!(a => remove(a));

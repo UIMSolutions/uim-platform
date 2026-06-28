@@ -21,7 +21,7 @@ class ManageServicePlansUseCase {
     }
 
     ServicePlan[] listServicePlans(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     ServicePlan[] listAvailable(TenantId tenantId) {

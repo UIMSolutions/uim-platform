@@ -26,7 +26,7 @@ class MemoryNotificationChannelRepository : TenantRepository!(NotificationChanne
   }
 
   NotificationChannel[] findByType(TenantId tenantId, NotificationChannelType channelType) {
-    return findByTenant(tenantId).filter!(e => e.channelType == channelType).array;
+    return find(tenantId).filter!(e => e.channelType == channelType).array;
   }
 
   void removeByType(TenantId tenantId, NotificationChannelType channelType) {
@@ -42,7 +42,7 @@ class MemoryNotificationChannelRepository : TenantRepository!(NotificationChanne
   }
 
   NotificationChannel[] findActive(TenantId tenantId) {
-    return findByTenant(tenantId).filter!(e => e.state == ChannelState.active).array;
+    return find(tenantId).filter!(e => e.state == ChannelState.active).array;
   }
 
   void removeActive(TenantId tenantId) {

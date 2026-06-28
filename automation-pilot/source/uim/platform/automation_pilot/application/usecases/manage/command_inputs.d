@@ -23,7 +23,7 @@ class ManageCommandInputsUseCase { // TODO: UIMUseCase {
     }
 
     CommandInput[] listCommandInputs(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     CommandResult createCommandInput(CommandInputDTO dto) {

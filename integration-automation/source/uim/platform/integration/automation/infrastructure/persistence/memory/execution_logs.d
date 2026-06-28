@@ -27,10 +27,10 @@ class MemoryExecutionLogRepository : TenantRepository!(ExecutionLog, ExecutionLo
         : logs.filter!(e => e.workflowId == workflowId).skip(offset).take(limit).array;
   }
   ExecutionLog[] findByWorkflow(TenantId tenantId, WorkflowId workflowId) {
-    return findByTenant(tenantId).filter!(e => e.workflowId == workflowId).array;
+    return find(tenantId).filter!(e => e.workflowId == workflowId).array;
   }
   void removeByWorkflow(TenantId tenantId, WorkflowId workflowId) {
-    store = findByTenant(tenantId).filter!(e => !(e.workflowId == workflowId && e.tenantId == tenantId)).array;
+    store = find(tenantId).filter!(e => !(e.workflowId == workflowId && e.tenantId == tenantId)).array;
   }
 
   size_t countByStep(TenantId tenantId, StepId stepId) {
@@ -42,10 +42,10 @@ class MemoryExecutionLogRepository : TenantRepository!(ExecutionLog, ExecutionLo
         : logs.filter!(e => e.stepId == stepId).skip(offset).take(limit).array;
   }
   ExecutionLog[] findByStep(TenantId tenantId, StepId stepId) {
-    return findByTenant(tenantId).filter!(e => e.stepId == stepId).array;
+    return find(tenantId).filter!(e => e.stepId == stepId).array;
   }
   void removeByStep(TenantId tenantId, StepId stepId) {
-    findByTenant(tenantId).filter!(e => !(e.stepId == stepId)).each!(e => remove(e));
+    find(tenantId).filter!(e => !(e.stepId == stepId)).each!(e => remove(e));
   }
   
   size_t countByOutcome(TenantId tenantId, ExecutionOutcome outcome) {
@@ -57,10 +57,10 @@ class MemoryExecutionLogRepository : TenantRepository!(ExecutionLog, ExecutionLo
         : logs.filter!(e => e.outcome == outcome).skip(offset).take(limit).array;
   }
   ExecutionLog[] findByOutcome(TenantId tenantId, ExecutionOutcome outcome) {
-    return findByTenant(tenantId).filter!(e => e.outcome == outcome).array;
+    return find(tenantId).filter!(e => e.outcome == outcome).array;
   }
   void removeByOutcome(TenantId tenantId, ExecutionOutcome outcome) {
-    findByTenant(tenantId).filter!(e => !(e.outcome == outcome)).each!(e => remove(e));
+    find(tenantId).filter!(e => !(e.outcome == outcome)).each!(e => remove(e));
   }
 
   size_t countByTimeRange(TenantId tenantId, long timeFrom, long timeTo) {
@@ -88,7 +88,7 @@ class MemoryExecutionLogRepository : TenantRepository!(ExecutionLog, ExecutionLo
         }).skip(offset).take(limit).array;
   }
   ExecutionLog[] findByTimeRange(TenantId tenantId, long timeFrom, long timeTo) {
-    return findByTenant(tenantId).filter!((e) {
+    return find(tenantId).filter!((e) {
       if (e.tenantId != tenantId)
         return false;
       if (timeFrom > 0 && e.timestamp < timeFrom)
@@ -101,6 +101,6 @@ class MemoryExecutionLogRepository : TenantRepository!(ExecutionLog, ExecutionLo
 
 
   void removeOlderThan(TenantId tenantId, long beforeTimestamp) {
-    findByTenant(tenantId).filter!(e => !(e.timestamp < beforeTimestamp)).each!(e => remove(e));
+    find(tenantId).filter!(e => !(e.timestamp < beforeTimestamp)).each!(e => remove(e));
   }
 }

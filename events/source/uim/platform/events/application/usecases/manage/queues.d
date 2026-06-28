@@ -17,7 +17,7 @@ class ManageQueuesUseCase {
     this(QueueRepository repo) { this.repo = repo; }
 
     Queue getQueue(TenantId tenantId, QueueId id) { return repo.findById(tenantId, id); }
-    Queue[] listQueues(TenantId tenantId) { return repo.findByTenant(tenantId); }
+    Queue[] listQueues(TenantId tenantId) { return repo.find(tenantId); }
     Queue[] listByService(TenantId tenantId, MessagingServiceId serviceId) { return repo.findByService(tenantId, serviceId); }
 
     CommandResult createQueue(QueueDTO dto) {

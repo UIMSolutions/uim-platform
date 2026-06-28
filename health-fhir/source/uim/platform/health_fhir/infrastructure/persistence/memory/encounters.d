@@ -17,7 +17,7 @@ class MemoryEncounterRepository : TenantRepository!(Encounter, EncounterId), Enc
   }
 
   Encounter findById(TenantId tenantId, EncounterId id) {
-    foreach (e; findByTenant(tenantId)) {
+    foreach (e; find(tenantId)) {
       if (e.id == id) return e;
     }
     return Encounter.init;
@@ -29,16 +29,16 @@ class MemoryEncounterRepository : TenantRepository!(Encounter, EncounterId), Enc
   }
 
   size_t countByTenant(TenantId tenantId) {
-    return findByTenant(tenantId).length;
+    return find(tenantId).length;
   }
 
   Encounter[] findByTenantAll(TenantId tenantId) {
-    return findByTenant(tenantId);
+    return find(tenantId);
   }
 
   Encounter[] findByPatient(TenantId tenantId, string patientRef) {
     Encounter[] results;
-    foreach (e; findByTenant(tenantId)) {
+    foreach (e; find(tenantId)) {
       if (e.subject_.reference_ == patientRef) results ~= e;
     }
     return results;

@@ -18,7 +18,7 @@ class MemoryServiceBindingRepository : TenantRepository!(ServiceBinding, Service
     }
 
     ServiceBinding[] findByDevSpace(TenantId tenantId, DevSpaceId devSpaceId) {
-        return findByTenant(tenantId).filter!(e => e.devSpaceId == devSpaceId).array;
+        return find(tenantId).filter!(e => e.devSpaceId == devSpaceId).array;
     }
     
     void removeByDevSpace(TenantId tenantId, DevSpaceId devSpaceId) {
@@ -30,7 +30,7 @@ class MemoryServiceBindingRepository : TenantRepository!(ServiceBinding, Service
     }
 
     ServiceBinding[] findByStatus(TenantId tenantId, BindingStatus status) {
-        return findByTenant(tenantId).filter!(e => e.status == status).array;
+        return find(tenantId).filter!(e => e.status == status).array;
     }
 
     void removeByStatus(TenantId tenantId, BindingStatus status) {

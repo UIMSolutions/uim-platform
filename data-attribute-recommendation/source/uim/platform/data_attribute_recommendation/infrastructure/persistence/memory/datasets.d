@@ -14,11 +14,11 @@ import uim.platform.data_attribute_recommendation;
 class MemoryDatasetRepository : TenantRepository!(Dataset, DatasetId), DatasetRepository {
 
   bool existsByName(TenantId tenantId, string name) {
-    return findByTenant(tenantId).any!(e => e.name == name);
+    return find(tenantId).any!(e => e.name == name);
   }
 
   Dataset findByName(TenantId tenantId, string name) {
-    foreach (e; findByTenant(tenantId))
+    foreach (e; find(tenantId))
       if (e.name == name)
         return e;
     return Dataset.init;
@@ -37,7 +37,7 @@ class MemoryDatasetRepository : TenantRepository!(Dataset, DatasetId), DatasetRe
   }
 
   Dataset[] findByStatus(TenantId tenantId, DatasetStatus status) {
-    return filterByStatus(findByTenant(tenantId), status);
+    return filterByStatus(find(tenantId), status);
   }
 
   void removeByStatus(TenantId tenantId, DatasetStatus status) {
@@ -53,7 +53,7 @@ class MemoryDatasetRepository : TenantRepository!(Dataset, DatasetId), DatasetRe
   }
 
   Dataset[] findByDataType(TenantId tenantId, DataType dataType) {
-    return filterByDataType(findByTenant(tenantId), dataType);
+    return filterByDataType(find(tenantId), dataType);
   }
 
   void removeByDataType(TenantId tenantId, DataType dataType) {

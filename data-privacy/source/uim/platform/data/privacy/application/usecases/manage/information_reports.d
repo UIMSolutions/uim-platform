@@ -51,7 +51,7 @@ class ManageInformationReportsUseCase { // TODO: UIMUseCase {
   }
 
   InformationReport[] listReports(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   InformationReport[] listReports(TenantId tenantId, DataSubjectId subjectId) {

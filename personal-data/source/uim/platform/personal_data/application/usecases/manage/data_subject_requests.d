@@ -49,7 +49,7 @@ class ManageDataSubjectRequestsUseCase { // TODO: UIMUseCase {
     }
 
     DataSubjectRequest[] listDataSubjectRequests(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     DataSubjectRequest[] listDataSubjectRequestsByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {

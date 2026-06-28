@@ -56,7 +56,7 @@ class ManageOrgsUseCase { // TODO: UIMUseCase {
   }
 
   Organization[] listOrgs(TenantId tenantId) {
-    return orgs.findByTenant(tenantId);
+    return orgs.find(tenantId);
   }
 
   CommandResult updateOrg(UpdateOrgRequest req) {

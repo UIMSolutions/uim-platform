@@ -36,7 +36,7 @@ class MemoryHealthCheckResultRepository : TenantRepository!(HealthCheckResult, H
   }
 
   HealthCheckResult[] findByCheck(TenantId tenantId, HealthCheckId checkId) {
-    return findByTenant(tenantId).filter!(r => r.checkId == checkId).array;
+    return find(tenantId).filter!(r => r.checkId == checkId).array;
   }
 
   void removeByCheck(TenantId tenantId, HealthCheckId checkId) {
@@ -54,7 +54,7 @@ class MemoryHealthCheckResultRepository : TenantRepository!(HealthCheckResult, H
   }
 
   HealthCheckResult[] findByResource(TenantId tenantId, MonitoredResourceId resourceId) {
-    return findByTenant(tenantId).filter!(r => r.resourceId == resourceId).array;
+    return find(tenantId).filter!(r => r.resourceId == resourceId).array;
   }
 
   void removeByResource(TenantId tenantId, MonitoredResourceId resourceId) {
@@ -82,7 +82,7 @@ class MemoryHealthCheckResultRepository : TenantRepository!(HealthCheckResult, H
   }
 
   void removeOlderThan(TenantId tenantId, long beforeTimestamp) {
-    findByTenant(tenantId).filter!(r => r.executedAt < beforeTimestamp).each!(r => remove(r));
+    find(tenantId).filter!(r => r.executedAt < beforeTimestamp).each!(r => remove(r));
   }
 
   // size_t countByType(TenantId tenantId, CheckType checkType) {
@@ -90,7 +90,7 @@ class MemoryHealthCheckResultRepository : TenantRepository!(HealthCheckResult, H
   // }
 
   // HealthCheckResult[] findByType(TenantId tenantId, CheckType checkType) {
-  //   return findByTenant(tenantId).filter!(r => r.checkType == checkType).array;
+  //   return find(tenantId).filter!(r => r.checkType == checkType).array;
   // }
 
   // void removeByType(TenantId tenantId, CheckType checkType) {

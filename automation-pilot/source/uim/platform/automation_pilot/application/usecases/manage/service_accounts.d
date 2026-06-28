@@ -23,7 +23,7 @@ class ManageServiceAccountsUseCase { // TODO: UIMUseCase {
     }
 
     ServiceAccount[] listServiceAccounts(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     CommandResult createServiceAccount(ServiceAccountDTO dto) {

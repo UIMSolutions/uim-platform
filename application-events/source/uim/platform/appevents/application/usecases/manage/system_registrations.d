@@ -24,7 +24,7 @@ class ManageSystemRegistrationsUseCase {
     }
 
     SystemRegistration[] listSystemRegistrations(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     SystemRegistration[] listByFormation(TenantId tenantId, FormationId formationId) {

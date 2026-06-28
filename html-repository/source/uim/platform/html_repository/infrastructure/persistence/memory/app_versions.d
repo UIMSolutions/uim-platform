@@ -18,7 +18,7 @@ class AppVersionMemoryRepository : TenantRepository!(AppVersion, AppVersionId), 
   AppVersion findLatest(HtmlAppId appId) {
     AppVersion latest = AppVersion.init;
     bool found = false;
-    foreach (e; findByTenant(tenantId)) {
+    foreach (e; find(tenantId)) {
       if (e.appId == appId) {
         if (!found || e.createdAt > latest.createdAt) {
           latest = e;
@@ -31,7 +31,7 @@ class AppVersionMemoryRepository : TenantRepository!(AppVersion, AppVersionId), 
 
   size_t countByApp(HtmlAppId appId) {
     size_t count = 0;
-    foreach (e; findByTenant(tenantId)) {
+    foreach (e; find(tenantId)) {
       if (e.appId == appId) count++;
     }
     return count;
@@ -48,7 +48,7 @@ class AppVersionMemoryRepository : TenantRepository!(AppVersion, AppVersionId), 
 
   size_t countByStatus(HtmlAppId appId, VersionStatus status) {
     size_t count = 0;
-    foreach (e; findByTenant(tenantId)) {
+    foreach (e; find(tenantId)) {
       if (e.appId == appId && e.status == status) count++;
     }
     return count;

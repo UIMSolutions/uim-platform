@@ -18,23 +18,23 @@ class MemoryCacheEntryRepository
     , CacheEntryRepository
 {
     override CacheEntry[] findByInstance(TenantId tenantId, ServiceInstanceId instanceId) {
-        return findByTenant(tenantId).filter!(e => e.instanceId == instanceId).array;
+        return find(tenantId).filter!(e => e.instanceId == instanceId).array;
     }
 
     override CacheEntry findByKey(TenantId tenantId, ServiceInstanceId instanceId, string key) {
-        auto results = findByTenant(tenantId).filter!(e => e.instanceId == instanceId && e.key == key).array;
+        auto results = find(tenantId).filter!(e => e.instanceId == instanceId && e.key == key).array;
         return results.length > 0 ? results[0] : CacheEntry.init;
     }
 
     override CacheEntry[] findByType(TenantId tenantId, ServiceInstanceId instanceId, CacheEntryType entryType) {
-        return findByTenant(tenantId).filter!(e => e.instanceId == instanceId && e.entryType == entryType).array;
+        return find(tenantId).filter!(e => e.instanceId == instanceId && e.entryType == entryType).array;
     }
 
     override bool keyExists(TenantId tenantId, ServiceInstanceId instanceId, string key) {
-        return findByTenant(tenantId).any!(e => e.instanceId == instanceId && e.key == key);
+        return find(tenantId).any!(e => e.instanceId == instanceId && e.key == key);
     }
 
     override long countByInstance(TenantId tenantId, ServiceInstanceId instanceId) {
-        return findByTenant(tenantId).filter!(e => e.instanceId == instanceId).array.length;
+        return find(tenantId).filter!(e => e.instanceId == instanceId).array.length;
     }
 }

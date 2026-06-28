@@ -106,7 +106,7 @@ class ManageMasterDataObjectsUseCase { // TODO: UIMUseCase {
   }
 
   MasterDataObject[] listObjects(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   MasterDataObject[] listObjects(TenantId tenantId, string category) {

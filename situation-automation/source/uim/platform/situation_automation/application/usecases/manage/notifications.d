@@ -23,7 +23,7 @@ class ManageNotificationsUseCase { // TODO: UIMUseCase {
         if (r.recipientId.isEmpty)
             return CommandResult(false, "", "Recipient ID is required");
 
-        auto existing = repo.findById(r.tenantId, r.notificationId);
+        auto existing = repo.find(r.tenantId, r.notificationId);
         if (!existing.isNull)
             return CommandResult(false, "", "Notification already exists");
 
@@ -46,7 +46,7 @@ class ManageNotificationsUseCase { // TODO: UIMUseCase {
     }
 
     Notification[] listNotifications(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     Notification[] listNotifications(TenantId tenantId, string recipientId) {
@@ -58,7 +58,7 @@ class ManageNotificationsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateNotification(UpdateNotificationRequest r) {
-        auto notification = repo.findById(r.tenantId, r.notificationId);
+        auto notification = repo.find(r.tenantId, r.notificationId);
         if (notification.isNull)
             return CommandResult(false, "", "Notification not found");
 

@@ -44,7 +44,7 @@ class ManageRepositoriesUseCase { // TODO: UIMUseCase {
   }
 
   Repository[] listRepositories(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   Repository getRepository(TenantId tenantId, RepositoryId repositoryId) {
@@ -52,7 +52,7 @@ class ManageRepositoriesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateRepository(UpdateRepositoryRequest r) {
-    auto entity = repo.findById(r.tenantId, r.repositoryId);
+    auto entity = repo.find(r.tenantId, r.repositoryId);
     if (entity.isNull)
       return CommandResult(false, "", "Repository not found");
 

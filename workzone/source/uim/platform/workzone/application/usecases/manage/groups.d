@@ -44,7 +44,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
   }
 
   WZGroup[] listGroups(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   CommandResult updateGroup(UpdateGroupRequest req) {

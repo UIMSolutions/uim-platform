@@ -121,7 +121,7 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
   }
 
   TransportRequest[] listTransportRequests(TenantId tenantId) {
-    return requestRepo.findByTenant(tenantId);
+    return requestRepo.find(tenantId);
   }
 
   TransportRequest[] listByStatus(TenantId tenantId, string statusStr) {

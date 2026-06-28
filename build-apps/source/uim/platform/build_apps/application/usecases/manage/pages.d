@@ -23,7 +23,7 @@ class ManagePagesUseCase { // TODO: UIMUseCase {
     }
 
     Page[] listPages(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     Page[] listPages(TenantId tenantId, ApplicationId applicationId) {

@@ -21,7 +21,7 @@ class ManageTeamCategoriesUseCase {
     }
 
     TeamCategory[] listCategories(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     CommandResult createCategory(TeamCategoryDTO dto) {

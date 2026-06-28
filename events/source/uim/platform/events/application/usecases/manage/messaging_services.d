@@ -21,7 +21,7 @@ class ManageMessagingServicesUseCase {
     }
 
     MessagingService[] listServices(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     MessagingService[] listByStatus(TenantId tenantId, MessagingServiceStatus status) {

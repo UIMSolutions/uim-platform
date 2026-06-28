@@ -40,15 +40,15 @@ class MemoryApiRuleRepository : ApiRuleRepository {
   }
 
   ApiRule[] findByNamespace(NamespaceId nsId) {
-    return findByTenant(tenantId).filter!(e => e.namespaceId == nsId).array;
+    return find(tenantId).filter!(e => e.namespaceId == nsId).array;
   }
 
   ApiRule[] findByEnvironment(KymaEnvironmentId envId) {
-    return findByTenant(tenantId).filter!(e => e.environmentId == envId).array;
+    return find(tenantId).filter!(e => e.environmentId == envId).array;
   }
 
   ApiRule[] findByStatus(ApiRuleStatus status) {
-    return findByTenant(tenantId).filter!(e => e.status == status).array;
+    return find(tenantId).filter!(e => e.status == status).array;
   }
 
   void save(ApiRule rule) {

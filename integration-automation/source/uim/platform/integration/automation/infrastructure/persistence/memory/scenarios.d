@@ -27,11 +27,11 @@ class MemoryScenarioRepository : TenantRepository!(IntegrationScenario, Scenario
   }
 
   IntegrationScenario[] findByCategory(TenantId tenantId, ScenarioCategory category) {
-    return findByTenant(tenantId).filter!(e => e.category == category).array;
+    return find(tenantId).filter!(e => e.category == category).array;
   }
 
   void removeByCategory(TenantId tenantId, ScenarioCategory category) {
-    filterByCategory(findByTenant(tenantId), category).each!(e => remove(e));
+    filterByCategory(find(tenantId), category).each!(e => remove(e));
   }
 
   size_t countByStatus(TenantId tenantId, ScenarioStatus status) {
@@ -45,11 +45,11 @@ class MemoryScenarioRepository : TenantRepository!(IntegrationScenario, Scenario
   }
 
   IntegrationScenario[] findByStatus(TenantId tenantId, ScenarioStatus status) {
-    return filterByStatus(findByTenant(tenantId), status);
+    return filterByStatus(find(tenantId), status);
   }
 
   void removeByStatus(TenantId tenantId, ScenarioStatus status) {
-    filterByStatus(findByTenant(tenantId), status).each!(e => remove(e));
+    filterByStatus(find(tenantId), status).each!(e => remove(e));
   }
 
   size_t countBySystemType(TenantId tenantId, SystemType systemType) {
@@ -64,11 +64,11 @@ class MemoryScenarioRepository : TenantRepository!(IntegrationScenario, Scenario
   }
 
   IntegrationScenario[] findBySystemType(TenantId tenantId, SystemType systemType) {
-    return filterBySystemType(findByTenant(tenantId), systemType);
+    return filterBySystemType(find(tenantId), systemType);
   }
 
   void removeBySystemType(TenantId tenantId, SystemType systemType) {
-    filterBySystemType(findByTenant(tenantId), systemType).each!(e => remove(e));
+    filterBySystemType(find(tenantId), systemType).each!(e => remove(e));
   }
 
 }

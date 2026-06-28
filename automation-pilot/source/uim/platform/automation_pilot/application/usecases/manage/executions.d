@@ -23,7 +23,7 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
     }
 
     Execution[] listExecutions(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     Execution[] listExecutions(TenantId tenantId, CommandId commandId) {

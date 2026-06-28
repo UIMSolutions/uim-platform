@@ -21,7 +21,7 @@ class ManageDatabaseUsersUseCase {
     }
 
     DatabaseUser[] listDatabaseUsers(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     DatabaseUser[] listByInstance(TenantId tenantId, ServiceInstanceId instanceId) {

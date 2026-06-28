@@ -22,7 +22,7 @@ class MemoryExportJobRepository : TenantRepository!(ExportJob, ExportJobId), Exp
   }
 
   ExportJob[] findByPackage(TenantId tenantId, ContentPackageId packageId) {
-    return findByTenant(tenantId).filter!(e => e.packageId == packageId).array;
+    return find(tenantId).filter!(e => e.packageId == packageId).array;
   }
 
   void removeByPackage(TenantId tenantId, ContentPackageId packageId) {
@@ -34,7 +34,7 @@ class MemoryExportJobRepository : TenantRepository!(ExportJob, ExportJobId), Exp
   }
 
   ExportJob[] findByStatus(TenantId tenantId, ExportStatus status) {
-    return findByTenant(tenantId).filter!(e => e.status == status).array;
+    return find(tenantId).filter!(e => e.status == status).array;
   }
 
   void removeByStatus(TenantId tenantId, ExportStatus status) {

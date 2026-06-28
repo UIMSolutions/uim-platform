@@ -20,14 +20,14 @@ class MemoryFormationRepository
     , FormationRepository
 {
     override Formation[] findByStatus(TenantId tenantId, FormationStatus status) {
-        return findByTenant(tenantId).filter!(f => f.status == status).array;
+        return find(tenantId).filter!(f => f.status == status).array;
     }
 
     override Formation[] findByGlobalAccount(TenantId tenantId, string globalAccountId) {
-        return findByTenant(tenantId).filter!(f => f.globalAccountId == globalAccountId).array;
+        return find(tenantId).filter!(f => f.globalAccountId == globalAccountId).array;
     }
 
     override bool nameExists(TenantId tenantId, string name) {
-        return findByTenant(tenantId).filter!(f => f.name == name).array.length > 0;
+        return find(tenantId).filter!(f => f.name == name).array.length > 0;
     }
 }

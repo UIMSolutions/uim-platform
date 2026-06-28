@@ -46,7 +46,7 @@ class ManageDataControllersUseCase { // TODO: UIMUseCase {
   }
 
   DataController[] listControllers(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   CommandResult updateController(UpdateDataControllerRequest req) {

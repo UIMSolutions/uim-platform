@@ -103,7 +103,7 @@ class MonitorTrainingUseCase { // TODO: UIMUseCase {
   }
 
   TrainingJobSummary[] listTrainingJobs(TenantId tenantId) {
-    auto jobs = jobRepo.findByTenant(tenantId);
+    auto jobs = jobRepo.find(tenantId);
     TrainingJobSummary[] result;
     foreach (job; jobs)
       result ~= buildJobSummary(job);
@@ -118,7 +118,7 @@ class MonitorTrainingUseCase { // TODO: UIMUseCase {
   }
 
   DeploymentSummary[] listDeploymentSummaries(TenantId tenantId) {
-    auto deps = deploymentRepo.findByTenant(tenantId);
+    auto deps = deploymentRepo.find(tenantId);
     DeploymentSummary[] result;
     foreach (d; deps)
       result ~= buildDeploymentSummary(d);
@@ -128,18 +128,18 @@ class MonitorTrainingUseCase { // TODO: UIMUseCase {
   PipelineSummary getPipelineSummary(TenantId tenantId) {
     PipelineSummary s;
 
-    auto configs = configRepo.findByTenant(tenantId);
+    auto configs = configRepo.find(tenantId);
     s.totalModels = cast(int)configs.length;
     foreach (c; configs)
       if (c.status == ModelConfigStatus.trained)
         s.trainedModels++;
 
-    auto deps = deploymentRepo.findByTenant(tenantId);
+    auto deps = deploymentRepo.find(tenantId);
     foreach (d; deps)
       if (d.status == DeploymentStatus.active)
         s.activeDeployments++;
 
-    auto jobs = jobRepo.findByTenant(tenantId);
+    auto jobs = jobRepo.find(tenantId);
     s.totalTrainingJobs = cast(int)jobs.length;
     foreach (j; jobs) {
       if (j.status == JobStatus.completed)
@@ -148,7 +148,7 @@ class MonitorTrainingUseCase { // TODO: UIMUseCase {
         s.failedJobs++;
     }
 
-    auto inferences = inferenceRepo.findByTenant(tenantId);
+    auto inferences = inferenceRepo.find(tenantId);
     s.totalInferenceRequests = inferences.length;
 
     return s;

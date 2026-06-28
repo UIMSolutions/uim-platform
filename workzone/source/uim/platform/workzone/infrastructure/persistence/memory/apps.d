@@ -22,7 +22,7 @@ class MemoryAppRepository : TenantRepository!(AppRegistration, AppId), AppReposi
   }
 
   AppRegistration[] findByStatus(TenantId tenantId, AppStatus status) {
-    return findByTenant(tenantId).filter!(a => a.status == status).array;
+    return find(tenantId).filter!(a => a.status == status).array;
   }
 
   void removeByStatus(TenantId tenantId, AppStatus status) {

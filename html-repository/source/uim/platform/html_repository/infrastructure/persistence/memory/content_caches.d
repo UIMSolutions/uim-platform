@@ -16,13 +16,13 @@ import uim.platform.html_repository;
 class ContentCacheMemoryRepository : TenantRepository!(ContentCache, ContentCacheId), ContentCacheRepository {
 
   bool existsByFileId(AppFileId fileId) {
-    foreach (e; findByTenant(tenantId)) {
+    foreach (e; find(tenantId)) {
       if (e.fileId == fileId) return true;
     }
     return false;
   }
   ContentCache findByFileId(AppFileId fileId) {
-    foreach (e; findByTenant(tenantId)) {
+    foreach (e; find(tenantId)) {
       if (e.fileId == fileId) return e;
     }
     return ContentCache.init;
@@ -35,7 +35,7 @@ class ContentCacheMemoryRepository : TenantRepository!(ContentCache, ContentCach
     return caches.filter!(c => c.status == status).array;
   }
   ContentCache[] findByStatus(CacheStatus status) {
-    return filterByStatus(findByTenant(tenantId), status);
+    return filterByStatus(find(tenantId), status);
   }
   void removeByStatus(CacheStatus status) {
     findByStatus(status).each!(c => remove(c.id));
@@ -48,7 +48,7 @@ class ContentCacheMemoryRepository : TenantRepository!(ContentCache, ContentCach
     return caches.filter!(c => c.expiresAt < currentTime).array;
   }
   ContentCache[] findExpired(long currentTime) {
-    return filterByExpiration(findByTenant(tenantId), currentTime);
+    return filterByExpiration(find(tenantId), currentTime);
   }
   void removeByExpiration(long currentTime) {
     findExpired(currentTime).each!(c => remove(c.id));
@@ -56,7 +56,7 @@ class ContentCacheMemoryRepository : TenantRepository!(ContentCache, ContentCach
 
   long totalSizeByTenant(TenantId tenantId) {
     long total = 0;
-    foreach (e; findByTenant(tenantId)) {
+    foreach (e; find(tenantId)) {
       if (e.tenantId == tenantId) total += e.sizeBytes;
     }
     return total;

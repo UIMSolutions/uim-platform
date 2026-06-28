@@ -20,7 +20,7 @@ class MemoryEventSchemaRepository : TenantRepository!(EventSchema, EventSchemaId
         return schemas.filter!(e => e.format == format).array;
     }
     EventSchema[] findByFormat(TenantId tenantId, SchemaFormat format) {
-        return filterByFormat(findByTenant(tenantId), format);
+        return filterByFormat(find(tenantId), format);
     }
     void removeByFormat(TenantId tenantId, SchemaFormat format) {
         findByFormat(tenantId, format).each!(e => remove(e));
@@ -33,7 +33,7 @@ class MemoryEventSchemaRepository : TenantRepository!(EventSchema, EventSchemaId
         return schemas.filter!(e => e.status == status).array;
     }
     EventSchema[] findByStatus(TenantId tenantId, SchemaStatus status) {
-        return filterByStatus(findByTenant(tenantId), status);
+        return filterByStatus(find(tenantId), status);
     }
     
     void removeByStatus(TenantId tenantId, SchemaStatus status) {

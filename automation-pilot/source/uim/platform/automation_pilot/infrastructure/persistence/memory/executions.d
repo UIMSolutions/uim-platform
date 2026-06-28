@@ -23,7 +23,7 @@ class MemoryExecutionRepository : TenantRepository!(Execution, ExecutionId), Exe
     }
 
     Execution[] findByCommand(TenantId tenantId, CommandId commandId) {
-        return filterByCommand(findByTenant(tenantId), commandId);
+        return filterByCommand(find(tenantId), commandId);
     }
 
     void removeByCommand(TenantId tenantId, CommandId commandId) {
@@ -41,7 +41,7 @@ class MemoryExecutionRepository : TenantRepository!(Execution, ExecutionId), Exe
     }
 
     Execution[] findByStatus(TenantId tenantId, ExecutionStatus status) {
-        return filterByStatus(findByTenant(tenantId), status);
+        return filterByStatus(find(tenantId), status);
     }
 
     void removeByStatus(TenantId tenantId, ExecutionStatus status) {

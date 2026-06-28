@@ -21,7 +21,7 @@ class MemoryUserAssignmentRepository : TenantRepository!(UserAssignment, UserAss
     return uas.filter!(ua => ua.userId == userId).array;
   }
   UserAssignment[] findByUser(TenantId tenantId, UserId userId) {
-    return filterByUser(findByTenant(tenantId), userId);
+    return filterByUser(find(tenantId), userId);
   }
 
   void removeByUser(TenantId tenantId, UserId userId) {
@@ -35,7 +35,7 @@ class MemoryUserAssignmentRepository : TenantRepository!(UserAssignment, UserAss
     return uas.filter!(ua => ua.roleCollectionId == rcId).array;
   }
   UserAssignment[] findByRoleCollection(TenantId tenantId, RoleCollectionId rcId) {
-    return filterByRoleCollection(findByTenant(tenantId), rcId);
+    return filterByRoleCollection(find(tenantId), rcId);
   }
   void removeByRoleCollection(TenantId tenantId, RoleCollectionId rcId) {
     findByRoleCollection(tenantId, rcId).each!(ua => remove(ua));

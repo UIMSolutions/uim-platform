@@ -23,7 +23,7 @@ class ManageEventChannelsUseCase {
     }
 
     EventChannel[] listEventChannels(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     CommandResult createEventChannel(EventChannelDTO dto) {

@@ -48,11 +48,11 @@ class ManageCustomDomainsUseCase { // TODO: UIMUseCase {
     }
 
     CustomDomain[] listDomains(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     CommandResult updateDomain(UpdateCustomDomainRequest r) {
-        auto domain = repo.findById(r.tenantId, r.customDomainId);
+        auto domain = repo.find(r.tenantId, r.customDomainId);
         if (domain.isNull)
             return CommandResult(false, "", "Custom domain not found");
 

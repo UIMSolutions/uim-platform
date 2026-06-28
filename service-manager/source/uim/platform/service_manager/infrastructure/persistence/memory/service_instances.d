@@ -17,7 +17,7 @@ class MemoryServiceInstanceRepository : TenantRepository!(ServiceInstance, Servi
     }
 
     ServiceInstance[] findByStatus(TenantId tenantId, ServiceInstanceStatus status) {
-        return this.filterByStatus(this.findByTenant(tenantId), status);
+        return this.filterByStatus(this.find(tenantId), status);
     }
 
     void removeByStatus(TenantId tenantId, ServiceInstanceStatus status) {

@@ -15,11 +15,11 @@ import uim.platform.dms.application;
 class MemoryRepositoryRepository : TenantRepository!(Repository, RepositoryId), IRepositoryRepository {
   // #region byName
   bool existsByName(TenantId tenantId, string name) {
-    return findByTenant(tenantId).any!(e => e.name == name);
+    return find(tenantId).any!(e => e.name == name);
   }
 
   Repository findByName(TenantId tenantId, string name) {
-    foreach (e; findByTenant(tenantId))
+    foreach (e; find(tenantId))
       if (e.name == name)
         return e;
     return Repository.init;
@@ -39,7 +39,7 @@ class MemoryRepositoryRepository : TenantRepository!(Repository, RepositoryId), 
     return repositories.filter!(e => e.status == status).array;
   }
   Repository[] findByStatus(TenantId tenantId, RepositoryStatus status) {
-    return filterByStatus(findByTenant(tenantId), status);
+    return filterByStatus(find(tenantId), status);
   }
 
   void removeByStatus(TenantId tenantId, RepositoryStatus status) {

@@ -20,14 +20,14 @@ class MemoryDeadLetterEntryRepository
     , DeadLetterEntryRepository
 {
     override DeadLetterEntry[] findByChannel(TenantId tenantId, EventChannelId channelId) {
-        return findByTenant(tenantId).filter!(e => e.channelId.value == channelId.value).array;
+        return find(tenantId).filter!(e => e.channelId.value == channelId.value).array;
     }
 
     override DeadLetterEntry[] findByStatus(TenantId tenantId, DeadLetterStatus status) {
-        return findByTenant(tenantId).filter!(e => e.status == status).array;
+        return find(tenantId).filter!(e => e.status == status).array;
     }
 
     override DeadLetterEntry[] findByOriginalMessage(TenantId tenantId, EventMessageId messageId) {
-        return findByTenant(tenantId).filter!(e => e.originalMessageId.value == messageId.value).array;
+        return find(tenantId).filter!(e => e.originalMessageId.value == messageId.value).array;
     }
 }

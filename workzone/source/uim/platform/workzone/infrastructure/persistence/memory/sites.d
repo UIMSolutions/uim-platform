@@ -19,18 +19,18 @@ class MemorySiteRepository : TenantRepository!(Site, SiteId), SiteRepository {
 
   // #region ByAlias
   bool existsByAlias(TenantId tenantId, string alias_) {
-    return findByTenant(tenantId).any!(s => s.alias_ == alias_);
+    return find(tenantId).any!(s => s.alias_ == alias_);
   }
 
   Site findByAlias(TenantId tenantId, string alias_) {
-    foreach (s; findByTenant(tenantId))
+    foreach (s; find(tenantId))
       if (s.alias_ == alias_)
         return s;
     return Site.init;
   }
 
   void removeByAlias(TenantId tenantId, string alias_) {
-    foreach (s; findByTenant(tenantId))
+    foreach (s; find(tenantId))
       if (s.alias_ == alias_)
         remove(s);
   }

@@ -23,7 +23,7 @@ class ManageDevSpaceTypesUseCase { // TODO: UIMUseCase {
     }
 
     DevSpaceType[] listDevSpaceTypes(TenantId tenantId) {
-        return spaceTypes.findByTenant(tenantId);
+        return spaceTypes.find(tenantId);
     }
 
     CommandResult createDevSpaceType(DevSpaceTypeDTO dto) {

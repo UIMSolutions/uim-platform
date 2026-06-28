@@ -14,11 +14,11 @@ import uim.platform.customer_identity;
 class MemorySocialIdentityRepository : TenantRepository!(SocialIdentity, SocialIdentityId), SocialIdentityRepository {
 
     SocialIdentity[] findByCustomer(TenantId tenantId, CustomerId customerId) {
-        return findByTenant(tenantId).filter!(si => si.customerId.value == customerId.value).array;
+        return find(tenantId).filter!(si => si.customerId.value == customerId.value).array;
     }
 
     SocialIdentity findByProvider(TenantId tenantId, LoginProvider provider, string providerUserId) {
-        auto items = findByTenant(tenantId).filter!(si => si.provider == provider && si.providerUserId == providerUserId).array;
+        auto items = find(tenantId).filter!(si => si.provider == provider && si.providerUserId == providerUserId).array;
         return items.length > 0 ? items[0] : SocialIdentity.init;
     }
 

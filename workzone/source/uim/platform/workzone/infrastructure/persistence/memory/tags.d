@@ -19,18 +19,18 @@ class MemoryTagRepository : TenantRepository!(Tag, TagId), TagRepository {
 
   // #region ByName
   bool existsByName(TenantId tenantId, string name) {
-    return findByTenant(tenantId).any!(t => t.name == name);
+    return find(tenantId).any!(t => t.name == name);
   }
 
   Tag findByName(TenantId tenantId, string name) {
-    foreach (t; findByTenant(tenantId))
+    foreach (t; find(tenantId))
       if (t.name == name)
         return t;
     return Tag.init;
   }
 
   void removeByName(TenantId tenantId, string name) {
-    foreach (t; findByTenant(tenantId))
+    foreach (t; find(tenantId))
       if (t.name == name) {
         remove(t);
         break;
@@ -44,7 +44,7 @@ class MemoryTagRepository : TenantRepository!(Tag, TagId), TagRepository {
   }
 
   Tag[] findByParent(TenantId tenantId, TagId parentTagId) {
-    return findByTenant(tenantId).filter!(t => t.parentTagId == parentTagId.value).array;
+    return find(tenantId).filter!(t => t.parentTagId == parentTagId.value).array;
   }
 
   void removeByParent(TenantId tenantId, TagId parentTagId) {

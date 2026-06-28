@@ -15,20 +15,20 @@ class MemoryMonthlyCostReportRepository
       MonthlyCostReportRepository {
 
   MonthlyCostReport[] findByGlobalAccount(TenantId tenantId, string globalAccountId) {
-    return findByTenant(tenantId).filter!(r => r.globalAccountId == globalAccountId).array;
+    return find(tenantId).filter!(r => r.globalAccountId == globalAccountId).array;
   }
 
   MonthlyCostReport[] findBySubaccount(TenantId tenantId, string subaccountId) {
-    return findByTenant(tenantId).filter!(r => r.subaccountId == subaccountId).array;
+    return find(tenantId).filter!(r => r.subaccountId == subaccountId).array;
   }
 
   MonthlyCostReport[] findByPeriod(TenantId tenantId, int year, int month) {
-    return findByTenant(tenantId)
+    return find(tenantId)
       .filter!(r => r.reportingYear == year && r.reportingMonth == month).array;
   }
 
   MonthlyCostReport[] findByStatus(TenantId tenantId, ReportStatus status) {
-    return findByTenant(tenantId).filter!(r => r.status == status).array;
+    return find(tenantId).filter!(r => r.status == status).array;
   }
 
   size_t countBySubaccount(TenantId tenantId, string subaccountId) {

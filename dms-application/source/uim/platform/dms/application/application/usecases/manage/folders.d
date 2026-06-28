@@ -33,14 +33,14 @@ class ManageFoldersUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Repository ID is required");
 
     // Validate repository exists
-    auto repository = repoRepo.findById(r.tenantId, r.repositoryId);
+    auto repository = repoRepo.find(r.tenantId, r.repositoryId);
     if (repository.isNull)
       return CommandResult(false, "", "Repository not found");
 
     // Build path
     string path = "/" ~ r.name;
     if (r.parentFolderId.value.length > 0) {
-      auto parent = folders.findById(r.tenantId, r.parentFolderId);
+      auto parent = folders.find(r.tenantId, r.parentFolderId);
       if (parent.isNull)
         return CommandResult(false, "", "Parent folder not found");
       path = parent.path ~ "/" ~ r.name;
@@ -60,7 +60,7 @@ class ManageFoldersUseCase { // TODO: UIMUseCase {
   }
 
   Folder[] listFolders(TenantId tenantId) {
-    return folders.findByTenant(tenantId);
+    return folders.find(tenantId);
   }
 
   Folder[] listByRepository(TenantId tenantId, RepositoryId repositoryId) {
@@ -76,7 +76,7 @@ class ManageFoldersUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateFolder(UpdateFolderRequest r) {
-    auto folder = folders.findById(r.tenantId, r.folderId);
+    auto folder = folders.find(r.tenantId, r.folderId);
     if (folder.isNull)
       return CommandResult(false, "", "Folder not found");
 
@@ -96,12 +96,12 @@ class ManageFoldersUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult moveFolder(MoveFolderRequest r) {
-    auto folder = folders.findById(r.tenantId, r.folderId);
+    auto folder = folders.find(r.tenantId, r.folderId);
     if (folder.isNull)
       return CommandResult(false, "", "Folder not found");
 
     if (r.newParentFolderId.value.length > 0) {
-      auto newParent = folders.findById(r.tenantId, r.newParentFolderId);
+      auto newParent = folders.find(r.tenantId, r.newParentFolderId);
       if (newParent.isNull)
         return CommandResult(false, "", "New parent folder not found");
       folder.parentFolderId = r.newParentFolderId;

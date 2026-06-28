@@ -17,7 +17,7 @@ class MemoryOrganizationRepository : TenantRepository!(Organization, Organizatio
   }
 
   Organization findById(TenantId tenantId, OrganizationId id) {
-    foreach (o; findByTenant(tenantId)) {
+    foreach (o; find(tenantId)) {
       if (o.id == id) return o;
     }
     return Organization.init;
@@ -29,10 +29,10 @@ class MemoryOrganizationRepository : TenantRepository!(Organization, Organizatio
   }
 
   size_t countByTenant(TenantId tenantId) {
-    return findByTenant(tenantId).length;
+    return find(tenantId).length;
   }
 
   Organization[] findByTenantAll(TenantId tenantId) {
-    return findByTenant(tenantId);
+    return find(tenantId);
   }
 }

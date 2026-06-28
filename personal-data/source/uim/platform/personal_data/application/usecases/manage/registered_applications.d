@@ -46,7 +46,7 @@ class ManageRegisteredApplicationsUseCase { // TODO: UIMUseCase {
     }
 
     RegisteredApplication[] listApplications(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     CommandResult updateApplication(UpdateRegisteredApplicationRequest r) {

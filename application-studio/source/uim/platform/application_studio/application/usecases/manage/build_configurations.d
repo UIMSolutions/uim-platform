@@ -23,7 +23,7 @@ class ManageBuildConfigurationsUseCase { // TODO: UIMUseCase {
     }
 
     BuildConfiguration[] listBuildConfigurations(TenantId tenantId) {
-        return configurations.findByTenant(tenantId);
+        return configurations.find(tenantId);
     }
 
     BuildConfiguration[] listBuildConfigurations(TenantId tenantId, ProjectId projectId) {

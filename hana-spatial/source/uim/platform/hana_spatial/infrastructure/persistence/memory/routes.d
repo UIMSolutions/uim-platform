@@ -16,7 +16,7 @@ class MemoryRouteRepository
 
   Route[] findByTravelMode(TenantId tenantId, TravelMode mode) {
     Route[] results;
-    foreach (item; findByTenant(tenantId)) {
+    foreach (item; find(tenantId)) {
       if (item.travelMode == mode) results ~= item;
     }
     return results;
@@ -24,7 +24,7 @@ class MemoryRouteRepository
 
   Route[] findByProvider(TenantId tenantId, string providerId) {
     Route[] results;
-    foreach (item; findByTenant(tenantId)) {
+    foreach (item; find(tenantId)) {
       if (item.providerId == providerId) results ~= item;
     }
     return results;

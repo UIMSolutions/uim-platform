@@ -53,11 +53,11 @@ class MongoSystemRegistrationRepository : SystemRegistrationRepository {
         ]);
     }
 
-    bool isTenantEmpty(TenantId tenantId)  { return findByTenant(tenantId).length == 0; }
+    bool isTenantEmpty(TenantId tenantId)  { return find(tenantId).length == 0; }
     void createTenant(TenantId tenantId)    {}
     TenantId[] findAllTenants()             { return []; }
     bool existsByTenant(TenantId tenantId)  { return !isTenantEmpty(tenantId); }
-    size_t countByTenant(TenantId tenantId) { return findByTenant(tenantId).length; }
+    size_t countByTenant(TenantId tenantId) { return find(tenantId).length; }
     SystemRegistration[] filterByTenant(SystemRegistration[] items, TenantId tenantId) {
         return items.filter!(e => e.tenantId == tenantId).array;
     }
@@ -125,14 +125,14 @@ class MongoSystemRegistrationRepository : SystemRegistrationRepository {
     void removeAll() @trusted { _collection.remove(Bson.emptyObject); }
 
     override SystemRegistration[] findByFormation(TenantId tenantId, FormationId formationId) {
-        return findByTenant(tenantId).filter!(e => e.formationId.value == formationId.value).array;
+        return find(tenantId).filter!(e => e.formationId.value == formationId.value).array;
     }
 
     override SystemRegistration[] findBySystemType(TenantId tenantId, SystemType systemType) {
-        return findByTenant(tenantId).filter!(e => e.systemType == systemType).array;
+        return find(tenantId).filter!(e => e.systemType == systemType).array;
     }
 
     override SystemRegistration[] findByStatus(TenantId tenantId, SystemStatus status) {
-        return findByTenant(tenantId).filter!(e => e.status == status).array;
+        return find(tenantId).filter!(e => e.status == status).array;
     }
 }

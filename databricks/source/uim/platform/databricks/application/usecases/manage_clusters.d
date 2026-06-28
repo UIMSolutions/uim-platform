@@ -37,7 +37,7 @@ public:
   }
 
   UseCaseResult!(Cluster[]) list(TenantId tenantId) {
-    return UseCaseResult!(Cluster[])(true, "", _repo.findByTenant(tenantId));
+    return UseCaseResult!(Cluster[])(true, "", _repo.find(tenantId));
   }
 
   UseCaseResult!Cluster get(TenantId tenantId, ClusterId id) {

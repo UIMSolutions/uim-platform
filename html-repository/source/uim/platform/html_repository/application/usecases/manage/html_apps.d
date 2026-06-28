@@ -49,7 +49,7 @@ class ManageHtmlAppsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateHtmlApp(UpdateHtmlAppRequest r) {
-        auto app = repo.findById(r.tenantId, r.id);
+        auto app = repo.find(r.tenantId, r.id);
         if (app.isNull)
             return CommandResult(false, "", "App not found");
 

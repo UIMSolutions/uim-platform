@@ -23,7 +23,7 @@ class ManageServiceCallsUseCase { // TODO: UIMUseCase {
     }
 
     ServiceCall[] listServiceCalls(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     ServiceCall[] listServiceCalls(TenantId tenantId, ServiceCallStatus status) {

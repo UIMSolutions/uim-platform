@@ -62,7 +62,7 @@ class ManageInstancesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateDatabaseInstance(UpdateInstanceRequest r) {
-    auto existing = repo.findById(r.tenantId, r.id);
+    auto existing = repo.find(r.tenantId, r.id);
     if (existing.isNull)
       return CommandResult(false, "", "Instance not found");
 
@@ -84,7 +84,7 @@ class ManageInstancesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult performInstanceAction(InstanceActionRequest r) {
-    auto existing = repo.findById(r.tenantId, r.id);
+    auto existing = repo.find(r.tenantId, r.id);
     if (existing.isNull)
       return CommandResult(false, "", "Instance not found");
 

@@ -68,7 +68,7 @@ class ManagePermissionsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updatePermission(UpdatePermissionRequest r) {
-    auto permission = permissions.findById(r.tenantId, r.id);
+    auto permission = permissions.find(r.tenantId, r.id);
     if (permission.isNull)
       return CommandResult(false, "", "Permission not found");
 

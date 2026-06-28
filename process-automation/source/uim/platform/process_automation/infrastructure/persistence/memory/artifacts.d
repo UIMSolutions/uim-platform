@@ -21,7 +21,7 @@ class MemoryArtifactRepository : TenantRepository!(Artifact, ArtifactId), Artifa
     }
 
     Artifact[] findByType(TenantId tenantId, ArtifactType type) {
-        return filterByType(findByTenant(tenantId), type);
+        return filterByType(find(tenantId), type);
     }
 
     void removeByType(TenantId tenantId, ArtifactType type) {
@@ -37,7 +37,7 @@ class MemoryArtifactRepository : TenantRepository!(Artifact, ArtifactId), Artifa
     }
 
     Artifact[] findByCategory(TenantId tenantId, string category) {
-        return filterByCategory(findByTenant(tenantId), category);
+        return filterByCategory(find(tenantId), category);
     }
 
     void removeByCategory(TenantId tenantId, string category) {

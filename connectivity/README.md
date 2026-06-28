@@ -445,7 +445,7 @@ package "Domain Layer  «business logic»" as DOMAIN <<Rectangle>> {
     interface DestinationRepository << (P,#42A5F5) >> {
       + findById(id) : Destination
       + findByName(tenantId, name) : Destination
-      + findByTenant(tenantId) : Destination[]
+      + find(tenantId) : Destination[]
       + findByProxyType(tenantId, type) : Destination[]
       + save(entity) : void
       + update(entity) : void
@@ -456,7 +456,7 @@ package "Domain Layer  «business logic»" as DOMAIN <<Rectangle>> {
       + findById(id) : CloudConnector
       + findByLocation(subaccountId, locationId) : CloudConnector
       + findBySubaccount(subaccountId) : CloudConnector[]
-      + findByTenant(tenantId) : CloudConnector[]
+      + find(tenantId) : CloudConnector[]
       + save(entity) : void
       + update(entity) : void
       + removeById(id) : void
@@ -465,7 +465,7 @@ package "Domain Layer  «business logic»" as DOMAIN <<Rectangle>> {
     interface ChannelRepository << (P,#42A5F5) >> {
       + findById(id) : ServiceChannel
       + findByConnector(connectorId) : ServiceChannel[]
-      + findByTenant(tenantId) : ServiceChannel[]
+      + find(tenantId) : ServiceChannel[]
       + findByStatus(tenantId, status) : ServiceChannel[]
       + save(entity) : void
       + update(entity) : void
@@ -475,7 +475,7 @@ package "Domain Layer  «business logic»" as DOMAIN <<Rectangle>> {
     interface AccessRuleRepository << (P,#42A5F5) >> {
       + findById(id) : AccessRule
       + findByConnector(connectorId) : AccessRule[]
-      + findByTenant(tenantId) : AccessRule[]
+      + find(tenantId) : AccessRule[]
       + save(entity) : void
       + update(entity) : void
       + removeById(id) : void
@@ -484,7 +484,7 @@ package "Domain Layer  «business logic»" as DOMAIN <<Rectangle>> {
     interface CertificateRepository << (P,#42A5F5) >> {
       + findById(id) : Certificate
       + findByName(tenantId, name) : Certificate
-      + findByTenant(tenantId) : Certificate[]
+      + find(tenantId) : Certificate[]
       + findExpiring(tenantId, now, days) : Certificate[]
       + save(entity) : void
       + update(entity) : void
@@ -492,7 +492,7 @@ package "Domain Layer  «business logic»" as DOMAIN <<Rectangle>> {
     }
 
     interface ConnectivityLogRepository << (P,#42A5F5) >> {
-      + findByTenant(tenantId) : ConnectivityLog[]
+      + find(tenantId) : ConnectivityLog[]
       + findBySeverity(tenantId, sev) : ConnectivityLog[]
       + findBySource(sourceId) : ConnectivityLog[]
       + save(entry) : void

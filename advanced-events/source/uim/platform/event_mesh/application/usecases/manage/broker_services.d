@@ -23,7 +23,7 @@ class ManageBrokerServicesUseCase { // TODO: UIMUseCase {
     }
 
     BrokerService[] listServices(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     BrokerService[] listServices(TenantId tenantId, BrokerServiceStatus status) {

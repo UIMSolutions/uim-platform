@@ -17,7 +17,7 @@ class MemoryPractitionerRepository : TenantRepository!(Practitioner, Practitione
   }
 
   Practitioner findById(TenantId tenantId, PractitionerId id) {
-    foreach (p; findByTenant(tenantId)) {
+    foreach (p; find(tenantId)) {
       if (p.id == id) return p;
     }
     return Practitioner.init;
@@ -29,10 +29,10 @@ class MemoryPractitionerRepository : TenantRepository!(Practitioner, Practitione
   }
 
   size_t countByTenant(TenantId tenantId) {
-    return findByTenant(tenantId).length;
+    return find(tenantId).length;
   }
 
   Practitioner[] findByTenantAll(TenantId tenantId) {
-    return findByTenant(tenantId);
+    return find(tenantId);
   }
 }

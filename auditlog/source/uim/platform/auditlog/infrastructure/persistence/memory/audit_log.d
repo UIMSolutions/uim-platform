@@ -27,7 +27,7 @@ class MemoryAuditLogRepository : TenantRepository!(AuditLogEntry, AuditLogId), A
   }
 
   AuditLogEntry[] findByCategory(TenantId tenantId, AuditCategory category) {
-    return findByTenant(tenantId).filter!(e => e.category == category).array;
+    return find(tenantId).filter!(e => e.category == category).array;
   }
 
   void removeByCategory(TenantId tenantId, AuditCategory category) {
@@ -43,7 +43,7 @@ class MemoryAuditLogRepository : TenantRepository!(AuditLogEntry, AuditLogId), A
   }
 
   AuditLogEntry[] findByTimeRange(TenantId tenantId, long timeFrom, long timeTo) {
-    return findByTenant(tenantId).filter!(e => e.timestamp >= timeFrom && e.timestamp <= timeTo)
+    return find(tenantId).filter!(e => e.timestamp >= timeFrom && e.timestamp <= timeTo)
       .array;
   }
 
@@ -60,7 +60,7 @@ class MemoryAuditLogRepository : TenantRepository!(AuditLogEntry, AuditLogId), A
   }
 
   AuditLogEntry[] findByUser(TenantId tenantId, UserId userId) {
-    return findByTenant(tenantId).filter!(e => e.userId == userId).array;
+    return find(tenantId).filter!(e => e.userId == userId).array;
   }
 
   void removeByUser(TenantId tenantId, UserId userId) {
@@ -76,7 +76,7 @@ class MemoryAuditLogRepository : TenantRepository!(AuditLogEntry, AuditLogId), A
   }
 
   AuditLogEntry[] findByService(TenantId tenantId, ServiceId serviceId) {
-    return findByTenant(tenantId).filter!(e => e.serviceId == serviceId).array;
+    return find(tenantId).filter!(e => e.serviceId == serviceId).array;
   }
 
   void removeByService(TenantId tenantId, ServiceId serviceId) {
@@ -92,7 +92,7 @@ class MemoryAuditLogRepository : TenantRepository!(AuditLogEntry, AuditLogId), A
   }
 
   AuditLogEntry[] findByCorrelation(TenantId tenantId, string correlationId) {
-    return findByTenant(tenantId).filter!(e => e.correlationId == correlationId).array;
+    return find(tenantId).filter!(e => e.correlationId == correlationId).array;
   }
 
   void removeByCorrelation(TenantId tenantId, string correlationId) {
@@ -101,7 +101,7 @@ class MemoryAuditLogRepository : TenantRepository!(AuditLogEntry, AuditLogId), A
 
   AuditLogEntry[] search(TenantId tenantId, AuditCategory[] categories,
     long timeFrom, long timeTo, int limit, int offset) {
-    auto filtered = findByTenant(tenantId)
+    auto filtered = find(tenantId)
       .filter!((e) {
         if (timeFrom > 0 && e.timestamp < timeFrom)
           return false;
@@ -134,7 +134,7 @@ class MemoryAuditLogRepository : TenantRepository!(AuditLogEntry, AuditLogId), A
   }
 
   void removeOlderThan(TenantId tenantId, long beforeTimestamp) {
-    findByTenant(tenantId).filter!(e => e.timestamp < beforeTimestamp)
+    find(tenantId).filter!(e => e.timestamp < beforeTimestamp)
       .each!(e => remove(e));
   }
 }

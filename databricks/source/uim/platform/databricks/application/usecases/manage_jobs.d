@@ -40,7 +40,7 @@ public:
   }
 
   UseCaseResult!(Job[]) list(TenantId tenantId) {
-    return UseCaseResult!(Job[])(true, "", _repo.findByTenant(tenantId));
+    return UseCaseResult!(Job[])(true, "", _repo.find(tenantId));
   }
 
   UseCaseResult!Job get(TenantId tenantId, JobId id) {

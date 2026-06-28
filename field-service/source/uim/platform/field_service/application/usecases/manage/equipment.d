@@ -23,7 +23,7 @@ class ManageEquipmentUseCase { // TODO: UIMUseCase {
     }
 
     Equipment[] listEquipments(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     Equipment[] listEquipments(TenantId tenantId, CustomerId customerId) {

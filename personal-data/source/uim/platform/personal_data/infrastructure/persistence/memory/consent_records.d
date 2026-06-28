@@ -20,7 +20,7 @@ class MemoryConsentRecordRepository : TenantRepository!(ConsentRecord, ConsentRe
         return records.filter!(v => v.dataSubjectId == dataSubjectId).array;
     }   
     ConsentRecord[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
-        return filterByDataSubject(findByTenant(tenantId), dataSubjectId);
+        return filterByDataSubject(find(tenantId), dataSubjectId);
     }
     void removeByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
         findByDataSubject(tenantId, dataSubjectId).each!(v => remove(v));
@@ -34,14 +34,14 @@ class MemoryConsentRecordRepository : TenantRepository!(ConsentRecord, ConsentRe
         return records.filter!(v => v.purposeId == purposeId).array;
     }
     ConsentRecord[] findByPurpose(TenantId tenantId, ProcessingPurposeId purposeId) {
-        return filterByPurpose(findByTenant(tenantId), purposeId);
+        return filterByPurpose(find(tenantId), purposeId);
     }
     void removeByPurpose(TenantId tenantId, ProcessingPurposeId purposeId) {
         findByPurpose(tenantId, purposeId).each!(v => remove(v));
     }
 
     bool existsByDataSubjectAndPurpose(TenantId tenantId, DataSubjectId dataSubjectId, ProcessingPurposeId purposeId) {
-        foreach (v; findByTenant(tenantId))
+        foreach (v; find(tenantId))
             if (v.dataSubjectId == dataSubjectId && v.purposeId == purposeId) return true;
         return false;
     }

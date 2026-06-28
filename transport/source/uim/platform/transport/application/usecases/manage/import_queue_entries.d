@@ -23,7 +23,7 @@ class ManageImportQueueEntriesUseCase {
     }
 
     ImportQueueEntry[] listEntries(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     ImportQueueEntry[] listEntriesByNode(TenantId tenantId, TransportNodeId nodeId) {

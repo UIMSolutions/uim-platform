@@ -16,11 +16,11 @@ import uim.platform.portal;
 class MemorySiteRepository : TenantRepository!(Site, SiteId), SiteRepository {
 
   bool existsByAlias(TenantId tenantId, string alias_) {
-    return findByTenant(tenantId).any!(s => s.alias_ == alias_);
+    return find(tenantId).any!(s => s.alias_ == alias_);
   }
 
   Site findByAlias(TenantId tenantId, string alias_) {
-    foreach (s; findByTenant(tenantId)) {
+    foreach (s; find(tenantId)) {
       if (s.alias_ == alias_)
         return s;
     }
@@ -36,7 +36,7 @@ class MemorySiteRepository : TenantRepository!(Site, SiteId), SiteRepository {
   Site[] findByStatus(TenantId tenantId, SiteStatus status, size_t offset = 0, size_t limit = 100) {
     Site[] result;
     size_t idx;
-    foreach (s; findByTenant(tenantId)) {
+    foreach (s; find(tenantId)) {
       if (s.status == status) {
         if (idx >= offset && result.length < limit)
           result ~= s;

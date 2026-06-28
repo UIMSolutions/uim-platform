@@ -22,7 +22,7 @@ class MemoryNotificationRepository : TenantRepository!(Notification, Notificatio
   }
 
   Notification[] findByRecipient(TenantId tenantId, UserId recipientId) {
-    return findByTenant(tenantId).filter!(n => n.recipientId == recipientId).array;
+    return find(tenantId).filter!(n => n.recipientId == recipientId).array;
   }
 
   void removeByRecipient(TenantId tenantId, UserId recipientId) {
@@ -34,7 +34,7 @@ class MemoryNotificationRepository : TenantRepository!(Notification, Notificatio
   }
 
   Notification[] findUnread(TenantId tenantId, UserId recipientId) {
-    return findByTenant(tenantId).filter!(n => n.recipientId == recipientId && n.status == NotificationStatus.unread).array;
+    return find(tenantId).filter!(n => n.recipientId == recipientId && n.status == NotificationStatus.unread).array;
   }
 
   void removeUnread(TenantId tenantId, UserId recipientId) {

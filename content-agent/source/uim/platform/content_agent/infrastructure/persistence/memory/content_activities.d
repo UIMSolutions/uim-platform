@@ -24,7 +24,7 @@ class MemoryContentActivityRepository :
   }  
 
   ContentActivity[] findByEntity(TenantId tenantId, string entityId) {
-    return findByTenant(tenantId).filter!(e => e.entityId == entityId).array;
+    return find(tenantId).filter!(e => e.entityId == entityId).array;
   }
 
   void removeByEntity(TenantId tenantId, string entityId) {
@@ -38,7 +38,7 @@ class MemoryContentActivityRepository :
   }
 
   ContentActivity[] findByType(TenantId tenantId, ActivityType activityType) {
-    return findByTenant(tenantId).filter!(e => e.activityType == activityType).array;
+    return find(tenantId).filter!(e => e.activityType == activityType).array;
   }
 
   void removeByType(TenantId tenantId, ActivityType activityType) {
@@ -53,7 +53,7 @@ class MemoryContentActivityRepository :
   }
 
   ContentActivity[] findRecent(TenantId tenantId, int limit) {
-    auto filtered = findByTenant(tenantId).sort!((a, b) => a.timestamp > b.timestamp);
+    auto filtered = find(tenantId).sort!((a, b) => a.timestamp > b.timestamp);
     if (filtered.length > limit)
       return filtered[0 .. limit];
     return filtered;

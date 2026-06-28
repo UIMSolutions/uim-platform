@@ -21,7 +21,7 @@ class MemoryVisibilityRepository : TenantRepository!(Visibility, VisibilityId), 
     }
 
     Visibility[] findByProcess(TenantId tenantId, ProcessId processId) {
-        return filterByProcess(findByTenant(tenantId), processId);
+        return filterByProcess(find(tenantId), processId);
     }
 
     void removeByProcess(TenantId tenantId, ProcessId processId) {

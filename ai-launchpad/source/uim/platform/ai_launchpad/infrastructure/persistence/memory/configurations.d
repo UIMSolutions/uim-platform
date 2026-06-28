@@ -32,7 +32,7 @@ class MemoryConfigurationRepository : TenantRepository!(Configuration, Configura
     return findByConnection(tenantId, connectionId).length;
   }
   Configuration[] findByConnection(TenantId tenantId, ConnectionId connectionId) {
-    return filterByConnection(findByTenant(tenantId), connectionId);
+    return filterByConnection(find(tenantId), connectionId);
   }
   void removeByConnection(TenantId tenantId, ConnectionId connectionId) {
     findByConnection(tenantId, connectionId).each!(c => remove(c));

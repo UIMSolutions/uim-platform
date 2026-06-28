@@ -19,7 +19,7 @@ class ManageIdentityProvidersUseCase {
     IdentityProvider getIdentityProvider(TenantId tenantId, IdentityProviderId id) {
         return repo.findById(tenantId, id);
     }
-    IdentityProvider[] listIdentityProviders(TenantId tenantId) { return repo.findByTenant(tenantId); }
+    IdentityProvider[] listIdentityProviders(TenantId tenantId) { return repo.find(tenantId); }
     IdentityProvider findDefault(TenantId tenantId) { return repo.findDefault(tenantId); }
 
     CommandResult createIdentityProvider(IdentityProviderDTO dto) {

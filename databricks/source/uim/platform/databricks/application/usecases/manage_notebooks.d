@@ -37,7 +37,7 @@ public:
   }
 
   UseCaseResult!(Notebook[]) list(TenantId tenantId) {
-    return UseCaseResult!(Notebook[])(true, "", _repo.findByTenant(tenantId));
+    return UseCaseResult!(Notebook[])(true, "", _repo.find(tenantId));
   }
 
   UseCaseResult!Notebook get(TenantId tenantId, NotebookId id) {

@@ -47,7 +47,7 @@ class ManageWidgetsUseCase { // TODO: UIMUseCase {
 
   Widget[] listWidgets(TenantId tenantId, WorkpageId pageId) {
     Widget[] result;
-    foreach (w; repo.findByTenant(tenantId)) {
+    foreach (w; repo.find(tenantId)) {
       if (w.pageId == pageId)
         result ~= w;
     }

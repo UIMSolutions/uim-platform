@@ -16,7 +16,7 @@ class MemoryCompositionRunRepository
 
   CompositionRun[] findByStatus(TenantId tenantId, CompositionRunStatus status) {
     CompositionRun[] result;
-    foreach (item; findByTenant(tenantId)) {
+    foreach (item; find(tenantId)) {
       if (item.status == status) result ~= item;
     }
     return result;
@@ -24,7 +24,7 @@ class MemoryCompositionRunRepository
 
   CompositionRun[] findRecent(TenantId tenantId, int limit) {
     import std.algorithm : sort;
-    auto items = findByTenant(tenantId);
+    auto items = find(tenantId);
     items.sort!((a, b) => a.createdAt > b.createdAt);
     if (items.length > limit) return items[0 .. limit];
     return items;

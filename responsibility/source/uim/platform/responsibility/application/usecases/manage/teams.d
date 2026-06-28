@@ -21,7 +21,7 @@ class ManageTeamsUseCase {
     }
 
     Team[] listTeams(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     Team[] listTeamsByStatus(TenantId tenantId, TeamStatus status) {

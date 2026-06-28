@@ -41,7 +41,7 @@ class MemorySoftwareComponentRepository : TenantRepository!(SoftwareComponent, S
       .array;
   }
   SoftwareComponent[] findBySystem(TenantId tenantId, SystemInstanceId systemId) {
-    return filterBySystem(findByTenant(tenantId), systemId);
+    return filterBySystem(find(tenantId), systemId);
   }
 
   void removeBySystem(TenantId tenantId, SystemInstanceId systemId) {

@@ -38,7 +38,7 @@ class MemoryMetricRepository : TenantRepository!(Metric, MetricId), MetricReposi
   }
 
   Metric[] findByResourceGroup(TenantId tenantId, ResourceGroupId rgId) {
-    return filterByResourceGroup(findByTenant(tenantId), rgId);
+    return filterByResourceGroup(find(tenantId), rgId);
   }
 
   void removeByResourceGroup(TenantId tenantId, ResourceGroupId rgId) {

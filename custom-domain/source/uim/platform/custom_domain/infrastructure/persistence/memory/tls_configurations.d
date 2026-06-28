@@ -22,7 +22,7 @@ class MemoryTlsConfigurationRepository : TenantRepository!(TlsConfiguration, Tls
     }
 
     TlsConfiguration[] findByCustomDomain(TenantId tenantId, CustomDomainId customDomainId) {
-        return filterByCustomDomain(findByTenant(tenantId), customDomainId);
+        return filterByCustomDomain(find(tenantId), customDomainId);
     }
 
     void removeByCustomDomain(TenantId tenantId, CustomDomainId customDomainId) {

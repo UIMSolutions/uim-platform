@@ -23,7 +23,7 @@ class ManageAssignmentsUseCase { // TODO: UIMUseCase {
     }
 
     Assignment[] listAssignments(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     Assignment[] listAssignments(TenantId tenantId, ActivityId activityId) {

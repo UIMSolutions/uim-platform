@@ -50,7 +50,7 @@ class ManageSpacesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateSpace(UpdateSpaceRequest r) {
-    auto existing = repo.findById(r.tenantId, r.spaceId);
+    auto existing = repo.find(r.tenantId, r.spaceId);
     if (existing.isNull)
       return CommandResult(false, "", "Space not found");
 

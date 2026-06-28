@@ -19,11 +19,11 @@ mixin(ShowModule!());
 class MemoryStorageObjectRepository : TenantRepository!(StorageObject, StorageObjectId), StorageObjectRepository {
 
   bool existsByKey(TenantId tenantId, BucketId bucketId, string key) {
-    return findByTenant(tenantId).any!(e => e.bucketId == bucketId && e.key == key);
+    return find(tenantId).any!(e => e.bucketId == bucketId && e.key == key);
   }
 
   StorageObject findByKey(TenantId tenantId, BucketId bucketId, string key) {
-    foreach (e; findByTenant(tenantId))
+    foreach (e; find(tenantId))
       if (e.bucketId == bucketId && e.key == key)
         return e;
     return StorageObject.init;
@@ -38,7 +38,7 @@ class MemoryStorageObjectRepository : TenantRepository!(StorageObject, StorageOb
   }
 
   StorageObject[] findByBucket(TenantId tenantId, BucketId bucketId) {
-    return findByTenant(tenantId).filter!(e => e.bucketId == bucketId).array;
+    return find(tenantId).filter!(e => e.bucketId == bucketId).array;
   }
 
   void removeByBucket(TenantId tenantId, BucketId bucketId) {

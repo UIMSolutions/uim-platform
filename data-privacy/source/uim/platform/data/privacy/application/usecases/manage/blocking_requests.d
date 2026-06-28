@@ -54,7 +54,7 @@ class ManageBlockingRequestsUseCase { // TODO: UIMUseCase {
   }
 
   BlockingRequest[] listRequests(TenantId tenantId) {
-    return blockingRequests.findByTenant(tenantId);
+    return blockingRequests.find(tenantId);
   }
 
   BlockingRequest[] listByStatus(TenantId tenantId, BlockingStatus status) {

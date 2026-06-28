@@ -28,7 +28,7 @@ class ManageAppSubscriptionsUseCase {
     }
 
     AppSubscription[] listAll(TenantId tenantId) {
-        return subRepo.findByTenant(tenantId);
+        return subRepo.find(tenantId);
     }
 
     AppSubscription getSubscription(TenantId tenantId, AppSubscriptionId id) {

@@ -84,7 +84,7 @@ class ManageTransportQueuesUseCase { // TODO: UIMUseCase {
   }
 
   TransportQueue[] listQueues(TenantId tenantId) {
-    return queueRepo.findByTenant(tenantId);
+    return queueRepo.find(tenantId);
   }
 
   TransportQueue getDefaultQueue(TenantId tenantId) {

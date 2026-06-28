@@ -20,7 +20,7 @@ class MemoryDataContextRepository : TenantRepository!(DataContext, DataContextId
         return contexts.filter!(d => d.instanceId == instanceId).array;
     }
     DataContext[] findByInstance(TenantId tenantId, SituationInstanceId instanceId) {
-        return filterByInstance(findByTenant(tenantId), instanceId);
+        return filterByInstance(find(tenantId), instanceId);
     }
     void removeByInstance(TenantId tenantId, SituationInstanceId instanceId) {
         findByInstance(tenantId, instanceId).each!(d => remove(d));
@@ -35,7 +35,7 @@ class MemoryDataContextRepository : TenantRepository!(DataContext, DataContextId
         return contexts.filter!(d => d.containsPersonalData).array;
     }
     DataContext[] findByPersonalData(TenantId tenantId) {
-        return filterByPersonalData(findByTenant(tenantId));
+        return filterByPersonalData(find(tenantId));
     }
     void removeByPersonalData(TenantId tenantId) {
         findByPersonalData(tenantId).each!(d => remove(d));

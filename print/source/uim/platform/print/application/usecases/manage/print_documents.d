@@ -23,7 +23,7 @@ class ManagePrintDocumentsUseCase {
     }
 
     PrintDocument[] listPrintDocuments(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     CommandResult createPrintDocument(PrintDocumentDTO dto) {

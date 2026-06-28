@@ -40,15 +40,15 @@ class MemoryFunctionRepository : FunctionRepository {
   }
 
   ServerlessFunction[] findByNamespace(NamespaceId namespaceId) {
-    return findByTenant(tenantId).filter!(e => e.namespaceId == namespaceId).array;
+    return find(tenantId).filter!(e => e.namespaceId == namespaceId).array;
   }
 
   ServerlessFunction[] findByEnvironment(KymaEnvironmentId environmentId) {
-    return findByTenant(tenantId).filter!(e => e.environmentId == environmentId).array;
+    return find(tenantId).filter!(e => e.environmentId == environmentId).array;
   }
 
   ServerlessFunction[] findByStatus(FunctionStatus status) {
-    return findByTenant(tenantId).filter!(e => e.status == status).array;
+    return find(tenantId).filter!(e => e.status == status).array;
   }
 
   void save(ServerlessFunction fn) {

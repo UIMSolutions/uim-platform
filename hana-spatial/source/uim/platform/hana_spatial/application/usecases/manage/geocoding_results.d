@@ -68,7 +68,7 @@ class ManageGeocodingResultsUseCase {
   }
 
   GeocodingResult[] list(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   CommandResult remove(TenantId tenantId, string id) {

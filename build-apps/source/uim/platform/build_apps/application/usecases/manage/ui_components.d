@@ -23,7 +23,7 @@ class ManageUIComponentsUseCase { // TODO: UIMUseCase {
     }
 
     UIComponent[] listUIComponents(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     CommandResult createUIComponent(UIComponentDTO dto) {

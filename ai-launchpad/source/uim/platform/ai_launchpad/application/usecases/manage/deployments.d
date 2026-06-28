@@ -48,7 +48,7 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult patchDeployment(PatchDeploymentRequest r) {
-    auto d = repo.findById(r.tenantId, r.connectionId, r.deploymentId);
+    auto d = repo.find(r.tenantId, r.connectionId, r.deploymentId);
     if (d.isNull)
       return CommandResult(false, "", "Deployment not found");
 

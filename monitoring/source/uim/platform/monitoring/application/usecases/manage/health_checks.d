@@ -114,7 +114,7 @@ class ManageHealthChecksUseCase { // TODO: UIMUseCase {
   }
 
   HealthCheck[] listChecks(TenantId tenantId) {
-    return checkRepo.findByTenant(tenantId);
+    return checkRepo.find(tenantId);
   }
 
   HealthCheck[] listByResource(TenantId tenantId, MonitoredResourceId resourceId) {

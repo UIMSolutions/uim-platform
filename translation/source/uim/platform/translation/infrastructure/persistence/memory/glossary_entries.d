@@ -21,7 +21,7 @@ GlossaryEntryRepository {
     }
 
     GlossaryEntry[] findByLanguagePair(TenantId tenantId, string sourceLang, string targetLang) {
-        return findByTenant(tenantId)
+        return find(tenantId)
             .filter!(e => e.sourceLanguage == sourceLang && e.targetLanguage == targetLang)
             .array;
     }
@@ -35,7 +35,7 @@ GlossaryEntryRepository {
     }
 
     GlossaryEntry[] findByDomain(TenantId tenantId, string domainName) {
-        return findByTenant(tenantId)
+        return find(tenantId)
             .filter!(e => e.domainName == domainName)
             .array;
     }

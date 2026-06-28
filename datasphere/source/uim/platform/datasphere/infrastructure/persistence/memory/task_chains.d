@@ -40,7 +40,7 @@ class MemoryTaskChainRepository : TenantRepository!(TaskChain, TaskChainId), Tas
     return findBySpace(tenantId, spaceId).length;
   }
   TaskChain[] findBySpace(TenantId tenantId, SpaceId spaceId) {
-    return filterBySpace(findByTenant(tenantId), spaceId);
+    return filterBySpace(find(tenantId), spaceId);
   }
   void removeBySpace(TenantId tenantId, SpaceId spaceId) {
     findBySpace(tenantId, spaceId).each!(tc => remove(tc));

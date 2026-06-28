@@ -24,7 +24,7 @@ class ManageEventMessagesUseCase {
     }
 
     EventMessage[] listEventMessages(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     EventMessage[] listByChannel(TenantId tenantId, EventChannelId channelId) {

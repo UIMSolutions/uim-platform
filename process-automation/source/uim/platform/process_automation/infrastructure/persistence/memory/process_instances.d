@@ -16,7 +16,7 @@ class MemoryProcessInstanceRepository : TenantRepository!(ProcessInstance, Proce
         return findByProcess(tenantId, processId).length;
     }
     ProcessInstance[] findByProcess(TenantId tenantId, ProcessId processId) {
-        return filterByProcess(findByTenant(tenantId), processId);
+        return filterByProcess(find(tenantId), processId);
     }
     ProcessInstance[] filterByProcess(ProcessInstance[] instances, ProcessId processId) {
         return instances.filter!(i => i.processId == processId).array;
@@ -32,7 +32,7 @@ class MemoryProcessInstanceRepository : TenantRepository!(ProcessInstance, Proce
         return instances.filter!(i => i.status == status).array;
     }   
     ProcessInstance[] findByStatus(TenantId tenantId, InstanceStatus status) {
-        return filterByStatus(findByTenant(tenantId), status);
+        return filterByStatus(find(tenantId), status);
     }
     void removeByStatus(TenantId tenantId, InstanceStatus status) {
         findByStatus(tenantId, status).each!(i => remove(i));

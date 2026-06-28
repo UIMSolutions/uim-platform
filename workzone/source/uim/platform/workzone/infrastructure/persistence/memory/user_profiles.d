@@ -19,18 +19,18 @@ class MemoryUserProfileRepository : TenantRepository!(UserProfile, UserProfileId
 
   // #region ByUserId
   bool existsByUser(TenantId tenantId, UserId userId) {
-    return findByTenant(tenantId).any!(p => p.userId == userId);
+    return find(tenantId).any!(p => p.userId == userId);
   }
 
   UserProfile findByUser(TenantId tenantId, UserId userId) {
-    foreach (p; findByTenant(tenantId))
+    foreach (p; find(tenantId))
       if (p.userId == userId)
         return p;
     return UserProfile.init;
   }
 
   void removeByUser(TenantId tenantId, UserId userId) {
-    foreach (p; findByTenant(tenantId))
+    foreach (p; find(tenantId))
       if (p.userId == userId) {
         remove(p);
         break;
@@ -45,7 +45,7 @@ class MemoryUserProfileRepository : TenantRepository!(UserProfile, UserProfileId
 
   UserProfile[] findByGroup(TenantId tenantId, GroupId groupId) {
     UserProfile[] result;
-    foreach (p; findByTenant(tenantId)) {
+    foreach (p; find(tenantId)) {
       foreach (gid; p.groupIds)
         if (gid == groupId)
         {

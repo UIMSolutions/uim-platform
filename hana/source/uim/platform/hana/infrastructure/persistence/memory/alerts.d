@@ -24,7 +24,7 @@ class MemoryAlertRepository : MemoryTenantRepository!(Alert, AlertId), AlertRepo
     return alerts.filter!(a => a.instanceId == instanceId).array;
   }
   Alert[] findByInstance(DatabaseInstanceId instanceId) {
-    return findByTenant(tenantId).map!(tenantId => findByInstance(tenantId, instanceId)).array.chain;          
+    return find(tenantId).map!(tenantId => findByInstance(tenantId, instanceId)).array.chain;          
   }
   void removeByInstance(DatabaseInstanceId instanceId) {
     findByInstance(instanceId).each!(entity => remove(entity));
@@ -37,7 +37,7 @@ class MemoryAlertRepository : MemoryTenantRepository!(Alert, AlertId), AlertRepo
     return alerts.filter!(a => a.status == AlertStatus.active).array;
   }
   Alert[] findActive(TenantId tenantId) {
-    return findByTenant(tenantId).filter!(a => a.status == AlertStatus.active).array;
+    return find(tenantId).filter!(a => a.status == AlertStatus.active).array;
   }
   void removeActive(TenantId tenantId) {
     findActive(tenantId).each!(entity => remove(entity));

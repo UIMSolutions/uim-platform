@@ -81,7 +81,7 @@ class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
   }
 
   NotificationChannel[] listChannels(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   CommandResult deleteChannel(TenantId tenantId, NotificationChannelId id) {

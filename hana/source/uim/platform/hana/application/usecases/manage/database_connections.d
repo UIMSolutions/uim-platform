@@ -58,7 +58,7 @@ class ManageDatabaseConnectionsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateDatabaseConnection(UpdateDatabaseConnectionRequest r) {
-    auto existing = repo.findById(r.tenantId, r.id);
+    auto existing = repo.find(r.tenantId, r.id);
     if (existing.isNull)
       return CommandResult(false, "", "Database connection not found");
 

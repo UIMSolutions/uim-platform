@@ -24,11 +24,11 @@ class MemoryClientRepository : TenantRepository!(Client, ClientId), ClientReposi
   }
 
   Client[] findByStatus(TenantId tenantId, ClientStatus status) {
-    return filterByStatus(findByTenant(tenantId), status, 0, 0);
+    return filterByStatus(find(tenantId), status, 0, 0);
   }
 
   void removeByStatus(TenantId tenantId, ClientStatus status) {
-    filterByStatus(findByTenant(tenantId), status, 0, 0).each!(e => remove(e));
+    filterByStatus(find(tenantId), status, 0, 0).each!(e => remove(e));
   }
 
   size_t countByType(TenantId tenantId, ClientType clientType) {
@@ -43,11 +43,11 @@ class MemoryClientRepository : TenantRepository!(Client, ClientId), ClientReposi
   }
 
   Client[] findByType(TenantId tenantId, ClientType clientType) {
-    return filterByType(findByTenant(tenantId), clientType, 0, 0);
+    return filterByType(find(tenantId), clientType, 0, 0);
   }
 
   void removeByType(TenantId tenantId, ClientType clientType) {
-    filterByType(findByTenant(tenantId), clientType, 0, 0).each!(e => remove(e));
+    filterByType(find(tenantId), clientType, 0, 0).each!(e => remove(e));
   }
 
 }

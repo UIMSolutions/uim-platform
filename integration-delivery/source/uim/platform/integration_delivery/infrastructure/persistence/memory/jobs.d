@@ -15,14 +15,14 @@ import std.array : array;
 
 class MemoryJobRepository : TenantRepository!(Job, JobId), JobRepository {
     Job[] findByPipeline(TenantId tenantId, PipelineId pipelineId) {
-        return findByTenant(tenantId).filter!(j => j.pipelineId == pipelineId).array;
+        return find(tenantId).filter!(j => j.pipelineId == pipelineId).array;
     }
 
     Job[] findByRepository(TenantId tenantId, CicdRepositoryId repositoryId) {
-        return findByTenant(tenantId).filter!(j => j.repositoryId == repositoryId).array;
+        return find(tenantId).filter!(j => j.repositoryId == repositoryId).array;
     }
 
     Job[] findByStatus(TenantId tenantId, JobStatus status) {
-        return findByTenant(tenantId).filter!(j => j.status == status).array;
+        return find(tenantId).filter!(j => j.status == status).array;
     }
 }

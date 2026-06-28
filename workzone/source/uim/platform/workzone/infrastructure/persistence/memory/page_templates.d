@@ -18,18 +18,18 @@ import uim.platform.workzone;
 class MemoryPageTemplateRepository : TenantRepository!(PageTemplate, PageTemplateId), PageTemplateRepository {
 
   bool existsDefault(TenantId tenantId) {
-    return findByTenant(tenantId).any!(t => t.isDefault);
+    return find(tenantId).any!(t => t.isDefault);
   }
 
   PageTemplate findDefault(TenantId tenantId) {
-    foreach (t; findByTenant(tenantId))
+    foreach (t; find(tenantId))
       if (t.isDefault)
         return t;
     return PageTemplate.init;
   }
 
   void removeDefault(TenantId tenantId) {
-    foreach (t; findByTenant(tenantId))
+    foreach (t; find(tenantId))
       if (t.isDefault) {
         remove(t);
         break;

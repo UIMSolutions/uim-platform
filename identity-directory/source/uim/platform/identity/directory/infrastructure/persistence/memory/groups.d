@@ -16,11 +16,11 @@ import uim.platform.identity.directory;
 class MemoryGroupRepository : TenantRepository!(IAMGroup, IAMGroupId), GroupRepository {
 
   bool existsByDisplayName(TenantId tenantId, string displayName) {
-    return findByTenant(tenantId).any!(g => g.tenantId == tenantId && g.displayName == displayName);
+    return find(tenantId).any!(g => g.tenantId == tenantId && g.displayName == displayName);
   }
   
   IAMGroup findByDisplayName(TenantId tenantId, string displayName) {
-    foreach (g; findByTenant(tenantId)) {
+    foreach (g; find(tenantId)) {
       if (g.tenantId == tenantId && g.displayName == displayName)
         return g;
     }
@@ -34,7 +34,7 @@ class MemoryGroupRepository : TenantRepository!(IAMGroup, IAMGroupId), GroupRepo
     return groups.filter!(g => g.hasMember(memberId)).array;
   }
   IAMGroup[] findByMember(string memberId) {
-    return findByTenant(tenantId).filter!(g => g.hasMember(memberId)).array;
+    return find(tenantId).filter!(g => g.hasMember(memberId)).array;
   }
 
   void removeByMember(string memberId) {

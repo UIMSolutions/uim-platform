@@ -50,7 +50,7 @@ class ManageProvidersUseCase {
   }
 
   CommandResult update(UpdateProviderRequest r) {
-    auto existing = repo.findById(r.tenantId, ProviderId(r.id));
+    auto existing = repo.find(r.tenantId, ProviderId(r.id));
     if (existing.isNull)
       return CommandResult(false, "", "Provider not found");
 
@@ -77,7 +77,7 @@ class ManageProvidersUseCase {
   }
 
   Provider[] list(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   CommandResult remove(TenantId tenantId, string id) {

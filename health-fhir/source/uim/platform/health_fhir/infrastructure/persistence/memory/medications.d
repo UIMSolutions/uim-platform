@@ -17,7 +17,7 @@ class MemoryMedicationRepository : TenantRepository!(Medication, MedicationId), 
   }
 
   Medication findById(TenantId tenantId, MedicationId id) {
-    foreach (m; findByTenant(tenantId)) {
+    foreach (m; find(tenantId)) {
       if (m.id == id) return m;
     }
     return Medication.init;
@@ -29,10 +29,10 @@ class MemoryMedicationRepository : TenantRepository!(Medication, MedicationId), 
   }
 
   size_t countByTenant(TenantId tenantId) {
-    return findByTenant(tenantId).length;
+    return find(tenantId).length;
   }
 
   Medication[] findByTenantAll(TenantId tenantId) {
-    return findByTenant(tenantId);
+    return find(tenantId);
   }
 }

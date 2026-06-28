@@ -17,7 +17,7 @@ class MemoryFlexVersionRepository : TenantRepository!(FlexVersion, FlexVersionId
   }
 
   FlexVersion findById(TenantId tenantId, FlexVersionId id) {
-    foreach (v; findByTenant(tenantId))
+    foreach (v; find(tenantId))
       if (v.id_ == id) return v;
     return FlexVersion.init;
   }
@@ -27,28 +27,28 @@ class MemoryFlexVersionRepository : TenantRepository!(FlexVersion, FlexVersionId
   }
 
   long countByTenant(TenantId tenantId) {
-    return cast(long) findByTenant(tenantId).length;
+    return cast(long) find(tenantId).length;
   }
 
   FlexVersion[] findByTenantAll(TenantId tenantId) {
-    return findByTenant(tenantId);
+    return find(tenantId);
   }
 
   FlexVersion[] findByApp(TenantId tenantId, string appId) {
     FlexVersion[] result;
-    foreach (v; findByTenant(tenantId))
+    foreach (v; find(tenantId))
       if (v.appId_ == appId) result ~= v;
     return result;
   }
 
   FlexVersion findActiveByApp(TenantId tenantId, string appId) {
-    foreach (v; findByTenant(tenantId))
+    foreach (v; find(tenantId))
       if (v.appId_ == appId && v.status_ == VersionStatus.active_) return v;
     return FlexVersion.init;
   }
 
   FlexVersion findByNumber(TenantId tenantId, string appId, long versionNumber) {
-    foreach (v; findByTenant(tenantId))
+    foreach (v; find(tenantId))
       if (v.appId_ == appId && v.versionNumber_ == versionNumber) return v;
     return FlexVersion.init;
   }

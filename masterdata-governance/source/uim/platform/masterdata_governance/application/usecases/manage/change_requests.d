@@ -23,7 +23,7 @@ class ManageChangeRequestsUseCase {
     }
 
     ChangeRequest[] listChangeRequests(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     ChangeRequest[] listByStatus(TenantId tenantId, ChangeRequestStatus status) {

@@ -46,7 +46,7 @@ class ManageConsentPurposesUseCase { // TODO: UIMUseCase {
   }
 
   ConsentPurpose[] listPurposes(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   ConsentPurpose[] listByController(TenantId tenantId, DataControllerId controllerId) {

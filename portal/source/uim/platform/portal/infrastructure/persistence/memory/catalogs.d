@@ -25,7 +25,7 @@ class MemoryCatalogRepository : TenantRepository!(Catalog, CatalogId), CatalogRe
   }
 
   Catalog[] findByProvider(ProviderId providerId) {
-    return findByTenant(tenantId).filter!(c => c.providerId == providerId).array;
+    return find(tenantId).filter!(c => c.providerId == providerId).array;
   }
 
   void removeByProvider(ProviderId providerId) {

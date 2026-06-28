@@ -20,14 +20,14 @@ class MemoryEventMessageRepository
     , EventMessageRepository
 {
     override EventMessage[] findByChannel(TenantId tenantId, EventChannelId channelId) {
-        return findByTenant(tenantId).filter!(m => m.channelId.value == channelId.value).array;
+        return find(tenantId).filter!(m => m.channelId.value == channelId.value).array;
     }
 
     override EventMessage[] findByStatus(TenantId tenantId, MessageStatus status) {
-        return findByTenant(tenantId).filter!(m => m.status == status).array;
+        return find(tenantId).filter!(m => m.status == status).array;
     }
 
     override EventMessage[] findBySourceSystem(TenantId tenantId, string sourceSystemId) {
-        return findByTenant(tenantId).filter!(m => m.sourceSystemId == sourceSystemId).array;
+        return find(tenantId).filter!(m => m.sourceSystemId == sourceSystemId).array;
     }
 }

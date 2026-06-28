@@ -27,7 +27,7 @@ class MemoryHDIContainerRepository : TenantRepository!(HDIContainer, HDIContaine
   }
 
   HDIContainer[] findByInstance(DatabaseInstanceId instanceId) {
-    return filterByInstance(findByTenant(tenantId), instanceId);
+    return filterByInstance(find(tenantId), instanceId);
   }
 
   void removeByInstance(DatabaseInstanceId instanceId) {

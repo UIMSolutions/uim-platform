@@ -42,7 +42,7 @@ class ManageProvidersUseCase {
   }
 
   Provider[] list(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   Provider[] listActive(TenantId tenantId) {

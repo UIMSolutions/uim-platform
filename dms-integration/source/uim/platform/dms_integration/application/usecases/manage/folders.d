@@ -23,7 +23,7 @@ class ManageFoldersUseCase {
     }
 
     Folder[] listFolders(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     Folder[] listFoldersByRepository(TenantId tenantId, RepositoryId repositoryId) {

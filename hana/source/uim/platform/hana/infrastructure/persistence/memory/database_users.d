@@ -26,7 +26,7 @@ class MemoryDatabaseUserRepository : TenantRepository!(DatabaseUser, DatabaseUse
   }
 
   DatabaseUser[] findByInstance(DatabaseInstanceId instanceId) {
-    return filterByInstance(findByTenant(tenantId), instanceId);
+    return filterByInstance(find(tenantId), instanceId);
   }
 
   void removeByInstance(DatabaseInstanceId instanceId) {

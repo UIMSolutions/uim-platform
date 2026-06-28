@@ -19,10 +19,10 @@ class MemoryEventFilterRepository
     , EventFilterRepository
 {
     override EventFilter[] findBySubscription(TenantId tenantId, EventSubscriptionId subscriptionId) {
-        return findByTenant(tenantId).filter!(f => f.subscriptionId.value == subscriptionId.value).array;
+        return find(tenantId).filter!(f => f.subscriptionId.value == subscriptionId.value).array;
     }
 
     override EventFilter[] findActive(TenantId tenantId) {
-        return findByTenant(tenantId).filter!(f => f.active).array;
+        return find(tenantId).filter!(f => f.active).array;
     }
 }

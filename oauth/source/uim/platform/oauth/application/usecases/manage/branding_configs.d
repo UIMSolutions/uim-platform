@@ -23,7 +23,7 @@ class ManageBrandingConfigsUseCase { // TODO: UIMUseCase {
     }
 
     BrandingConfig[] listConfigs(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     CommandResult createConfig(BrandingConfigDTO dto) {

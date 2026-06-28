@@ -20,7 +20,7 @@ class MemoryTopicRepository : TenantRepository!(Topic, TopicId), TopicRepository
         return topics.filter!(e => e.serviceId == serviceId).array;
     }
     Topic[] findByBrokerService(TenantId tenantId, BrokerServiceId serviceId) {
-        return filterByBrokerService(findByTenant(tenantId), serviceId);
+        return filterByBrokerService(find(tenantId), serviceId);
     }
     void removeByBrokerService(TenantId tenantId, BrokerServiceId serviceId) {
         findByBrokerService(tenantId, serviceId).each!(e => remove(e));
@@ -33,7 +33,7 @@ class MemoryTopicRepository : TenantRepository!(Topic, TopicId), TopicRepository
         return topics.filter!(e => e.status == status).array;
     }
     Topic[] findByStatus(TenantId tenantId, TopicStatus status) {
-        return filterByStatus(findByTenant(tenantId), status);
+        return filterByStatus(find(tenantId), status);
     }
     void removeByStatus(TenantId tenantId, TopicStatus status) {
         findByStatus(tenantId, status).each!(e => remove(e));

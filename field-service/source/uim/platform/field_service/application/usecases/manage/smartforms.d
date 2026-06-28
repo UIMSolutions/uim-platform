@@ -23,7 +23,7 @@ class ManageSmartformsUseCase { // TODO: UIMUseCase {
     }
 
     Smartform[] listSmartforms(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     Smartform[] listSmartforms(TenantId tenantId, ServiceCallId serviceCallId) {

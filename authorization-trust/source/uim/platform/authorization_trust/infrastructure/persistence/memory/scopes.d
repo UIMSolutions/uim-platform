@@ -14,11 +14,11 @@ import uim.platform.authorization_trust;
 class MemoryScopeRepository : TenantRepository!(ScopeEntity, ScopeId), ScopeRepository {
 
   bool existsByName(TenantId tenantId, string name) {
-    return findByTenant(tenantId).any!(s => s.name == name);
+    return find(tenantId).any!(s => s.name == name);
   }
 
   ScopeEntity findByName(TenantId tenantId, string name) {
-    foreach (s; findByTenant(tenantId))
+    foreach (s; find(tenantId))
       if (s.name == name)
         return s;
     return ScopeEntity.init;
@@ -34,7 +34,7 @@ class MemoryScopeRepository : TenantRepository!(ScopeEntity, ScopeId), ScopeRepo
     return scopes.filter!(s => s.appId == appId).array;
   }
   ScopeEntity[] findByApp(TenantId tenantId, string appId) {
-    return filterByApp(findByTenant(tenantId), appId);
+    return filterByApp(find(tenantId), appId);
   }
   void removeByApp(TenantId tenantId, string appId) {
     findByApp(tenantId, appId).each!(s => remove(s));

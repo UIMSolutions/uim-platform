@@ -9,19 +9,19 @@ class MemoryMlModelRepository : TenantRepository!(MlModel, MlModelId), MlModelRe
   MlModel[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
     import std.algorithm : filter;
     import std.array : array;
-    return findByTenant(tenantId).filter!(m => m.workspaceId == workspaceId).array;
+    return find(tenantId).filter!(m => m.workspaceId == workspaceId).array;
   }
 
   MlModel[] findByStage(TenantId tenantId, ModelStage stage) {
     import std.algorithm : filter;
     import std.array : array;
-    return findByTenant(tenantId).filter!(m => m.latestStage == stage).array;
+    return find(tenantId).filter!(m => m.latestStage == stage).array;
   }
 
   MlModel findByName(TenantId tenantId, string name) {
     import std.algorithm : find;
     import std.array : empty, front;
-    auto results = findByTenant(tenantId).find!(m => m.name == name);
+    auto results = find(tenantId).find!(m => m.name == name);
     return results.empty ? MlModel.init : results.front;
   }
 }

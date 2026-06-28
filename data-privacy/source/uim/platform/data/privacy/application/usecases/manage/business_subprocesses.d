@@ -47,7 +47,7 @@ class ManageBusinessSubprocessesUseCase { // TODO: UIMUseCase {
   }
 
   BusinessSubprocess[] listSubprocesses(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   BusinessSubprocess[] listByParentProcess(TenantId tenantId, BusinessProcessId parentId) {

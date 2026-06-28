@@ -33,7 +33,7 @@ class ManageProjectsUseCase {
     if (_repo.nameExists(tenantId, req.name))
       return CommandResult(false, "", "A project with that name already exists");
 
-    auto existing = _repo.findByTenant(tenantId);
+    auto existing = _repo.find(tenantId);
     auto quotaError = _quota.checkProjectQuota(existing.length);
     if (quotaError !is null)
       return CommandResult(false, "", quotaError);
@@ -70,7 +70,7 @@ class ManageProjectsUseCase {
   }
 
   Project[] list(TenantId tenantId) {
-    return _repo.findByTenant(tenantId);
+    return _repo.find(tenantId);
   }
 
   Project[] listByStatus(TenantId tenantId, string statusStr) {

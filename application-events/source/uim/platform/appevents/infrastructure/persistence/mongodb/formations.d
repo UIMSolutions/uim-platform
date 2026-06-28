@@ -54,11 +54,11 @@ class MongoFormationRepository : FormationRepository {
         ]);
     }
 
-    bool isTenantEmpty(TenantId tenantId)  { return findByTenant(tenantId).length == 0; }
+    bool isTenantEmpty(TenantId tenantId)  { return find(tenantId).length == 0; }
     void createTenant(TenantId tenantId)    {}
     TenantId[] findAllTenants()             { return []; }
     bool existsByTenant(TenantId tenantId)  { return !isTenantEmpty(tenantId); }
-    size_t countByTenant(TenantId tenantId) { return findByTenant(tenantId).length; }
+    size_t countByTenant(TenantId tenantId) { return find(tenantId).length; }
     Formation[] filterByTenant(Formation[] items, TenantId tenantId) {
         return items.filter!(e => e.tenantId == tenantId).array;
     }
@@ -126,14 +126,14 @@ class MongoFormationRepository : FormationRepository {
     void removeAll() @trusted { _collection.remove(Bson.emptyObject); }
 
     override Formation[] findByStatus(TenantId tenantId, FormationStatus status) {
-        return findByTenant(tenantId).filter!(e => e.status == status).array;
+        return find(tenantId).filter!(e => e.status == status).array;
     }
 
     override Formation[] findByGlobalAccount(TenantId tenantId, string globalAccountId) {
-        return findByTenant(tenantId).filter!(e => e.globalAccountId == globalAccountId).array;
+        return find(tenantId).filter!(e => e.globalAccountId == globalAccountId).array;
     }
 
     override bool nameExists(TenantId tenantId, string name) {
-        return findByTenant(tenantId).any!(e => e.name == name);
+        return find(tenantId).any!(e => e.name == name);
     }
 }

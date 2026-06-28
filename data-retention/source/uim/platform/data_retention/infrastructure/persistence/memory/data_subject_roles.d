@@ -12,7 +12,7 @@ class MemoryDataSubjectRoleRepository : TenantRepository!(DataSubjectRole, DataS
     }
 
     DataSubjectRole[] findActive(TenantId tenantId) {
-        return findByTenant(tenantId).filter!(a => a.isActive).array;
+        return find(tenantId).filter!(a => a.isActive).array;
     }
 
     void removeActive(TenantId tenantId) {

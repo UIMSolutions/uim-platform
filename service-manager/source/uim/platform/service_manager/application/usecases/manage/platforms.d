@@ -14,7 +14,7 @@ class ManagePlatformsUseCase { // TODO: UIMUseCase {
     }
 
     Platform[] listPlatforms(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     Platform getPlatform(TenantId tenantId, PlatformId id) {

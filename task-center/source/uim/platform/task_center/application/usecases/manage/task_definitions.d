@@ -23,7 +23,7 @@ class ManageTaskDefinitionsUseCase { // TODO: UIMUseCase {
     }
 
     TaskDefinition[] listDefinitions(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     TaskDefinition[] listDefinitions(TenantId tenantId, TaskProviderId byProviderId) {

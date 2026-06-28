@@ -41,7 +41,7 @@ class ManageRuleSetsUseCase { // TODO: UIMUseCase {
   }
 
   RuleSet[] listRuleSets(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   RuleSet[] listByBusinessContext(TenantId tenantId, BusinessContextId contextId) {

@@ -21,7 +21,7 @@ class MemorySubstitutionRuleRepository : TenantRepository!(SubstitutionRule, Sub
         return rules.filter!(r => r.userId == userId).array;
     }
     SubstitutionRule[] findByUser(TenantId tenantId, UserId userId) {
-        return filterByUser(findByTenant(tenantId), userId);
+        return filterByUser(find(tenantId), userId);
     }
 
     void removeByUser(TenantId tenantId, UserId userId) {
@@ -33,7 +33,7 @@ class MemorySubstitutionRuleRepository : TenantRepository!(SubstitutionRule, Sub
     }
 
     SubstitutionRule[] findBySubstitute(TenantId tenantId, UserId substituteId) {
-        return findByTenant(tenantId).filter!(r => r.substituteId == substituteId).array;
+        return find(tenantId).filter!(r => r.substituteId == substituteId).array;
     }
 
     void removeBySubstitute(TenantId tenantId, UserId substituteId) {
@@ -45,7 +45,7 @@ class MemorySubstitutionRuleRepository : TenantRepository!(SubstitutionRule, Sub
     }
 
     SubstitutionRule[] findByStatus(TenantId tenantId, SubstitutionStatus status) {
-        return findByTenant(tenantId).filter!(r => r.status == status).array;
+        return find(tenantId).filter!(r => r.status == status).array;
     }
 
     void removeByStatus(TenantId tenantId, SubstitutionStatus status) {

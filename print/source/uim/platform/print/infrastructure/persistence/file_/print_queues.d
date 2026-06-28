@@ -54,15 +54,15 @@ class FilePrintQueueRepository : PrintQueueRepository {
     // --- PrintQueueRepository extra methods ---
 
     PrintQueue[] findByStatus(TenantId tenantId, PrintQueueStatus status) {
-        return findByTenant(tenantId).filter!(q => q.status == status).array;
+        return find(tenantId).filter!(q => q.status == status).array;
     }
 
     PrintQueue[] findByPrinter(TenantId tenantId, PrinterId printerId) {
-        return findByTenant(tenantId).filter!(q => q.printerId == printerId).array;
+        return find(tenantId).filter!(q => q.printerId == printerId).array;
     }
 
     PrintQueue findDefault(TenantId tenantId) {
-        auto defaults = findByTenant(tenantId).filter!(q => q.isDefault).array;
+        auto defaults = find(tenantId).filter!(q => q.isDefault).array;
         return defaults.length > 0 ? defaults[0] : PrintQueue.init;
     }
 

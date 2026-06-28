@@ -27,7 +27,7 @@ class MemoryMatchGroupRepository : TenantRepository!(MatchGroup, MatchGroupId), 
   }
 
   MatchGroup[] findByDataset(TenantId tenantId, DatasetId datasetId) {
-    return filterByDataset(findByTenant(tenantId), datasetId);
+    return filterByDataset(find(tenantId), datasetId);
   }
 
   void removeByDataset(TenantId tenantId, DatasetId datasetId) {
@@ -45,7 +45,7 @@ class MemoryMatchGroupRepository : TenantRepository!(MatchGroup, MatchGroupId), 
   }
 
   MatchGroup[] findUnresolved(TenantId tenantId) {
-    return filterUnresolved(findByTenant(tenantId));
+    return filterUnresolved(find(tenantId));
   }
 
   void removeUnresolved(TenantId tenantId) {

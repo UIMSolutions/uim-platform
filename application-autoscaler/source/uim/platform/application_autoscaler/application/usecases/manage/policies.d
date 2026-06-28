@@ -81,7 +81,7 @@ class ManageScalingPoliciesUseCase {
 
   CommandResult updatePolicy(UpdateScalingPolicyRequest r) {
     
-    auto existing = repo.findById(r.tenantId, r.policyId);
+    auto existing = repo.find(r.tenantId, r.policyId);
     if (existing.isNull)
       return CommandResult(false, "", "Policy not found");
 
@@ -131,7 +131,7 @@ class ManageScalingPoliciesUseCase {
   }
 
   ScalingPolicyEntity[] listPolicies(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   private string generateId() @safe {

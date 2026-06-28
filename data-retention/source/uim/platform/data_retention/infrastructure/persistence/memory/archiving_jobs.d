@@ -17,7 +17,7 @@ class MemoryArchivingJobRepository : TenantRepository!(ArchivingJob, ArchivingJo
     }
 
     ArchivingJob[] findByApplicationGroup(TenantId tenantId, ApplicationGroupId groupId) {
-        return filterByApplicationGroup(findByTenant(tenantId), groupId);
+        return filterByApplicationGroup(find(tenantId), groupId);
     }
 
     void removeByApplicationGroup(TenantId tenantId, ApplicationGroupId groupId) {
@@ -35,7 +35,7 @@ class MemoryArchivingJobRepository : TenantRepository!(ArchivingJob, ArchivingJo
     }
 
     ArchivingJob[] findByStatus(TenantId tenantId, ArchivingJobStatus status) {
-        return filterByStatus(findByTenant(tenantId), status);
+        return filterByStatus(find(tenantId), status);
     }
 
     void removeByStatus(TenantId tenantId, ArchivingJobStatus status) {

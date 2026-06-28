@@ -38,7 +38,7 @@ public:
   }
 
   UseCaseResult!(SqlWarehouse[]) list(TenantId tenantId) {
-    return UseCaseResult!(SqlWarehouse[])(true, "", _repo.findByTenant(tenantId));
+    return UseCaseResult!(SqlWarehouse[])(true, "", _repo.find(tenantId));
   }
 
   UseCaseResult!SqlWarehouse get(TenantId tenantId, SqlWarehouseId id) {

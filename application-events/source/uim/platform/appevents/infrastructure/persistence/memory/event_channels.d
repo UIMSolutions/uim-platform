@@ -20,14 +20,14 @@ class MemoryEventChannelRepository
     , EventChannelRepository
 {
     override EventChannel[] findByTopic(TenantId tenantId, EventTopicId topicId) {
-        return findByTenant(tenantId).filter!(c => c.topicId.value == topicId.value).array;
+        return find(tenantId).filter!(c => c.topicId.value == topicId.value).array;
     }
 
     override EventChannel[] findByStatus(TenantId tenantId, ChannelStatus status) {
-        return findByTenant(tenantId).filter!(c => c.status == status).array;
+        return find(tenantId).filter!(c => c.status == status).array;
     }
 
     override bool nameExists(TenantId tenantId, string name) {
-        return findByTenant(tenantId).filter!(c => c.name == name).array.length > 0;
+        return find(tenantId).filter!(c => c.name == name).array.length > 0;
     }
 }

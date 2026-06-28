@@ -23,7 +23,7 @@ class ManageExtensionsUseCase { // TODO: UIMUseCase {
     }
 
     Extension[] listExtensions(TenantId tenantId) {
-        return extensions.findByTenant(tenantId);
+        return extensions.find(tenantId);
     }
 
     CommandResult createExtension(ExtensionDTO dto) {

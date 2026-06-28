@@ -23,7 +23,7 @@ class ManageSubscriptionsUseCase { // TODO: UIMUseCase {
     }
 
     EventSubscription[] listSubscriptions(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     EventSubscription[] listSubscriptions(TenantId tenantId, TopicId topicId) {

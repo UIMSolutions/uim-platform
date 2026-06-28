@@ -44,7 +44,7 @@ class ManageRolesUseCase { // TODO: UIMUseCase {
   }
 
   Role[] listRoles(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   CommandResult updateRole(UpdateRoleRequest req) {

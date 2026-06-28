@@ -46,7 +46,7 @@ class ManageGeofenceZonesUseCase {
   }
 
   CommandResult update(UpdateGeofenceZoneRequest r) {
-    auto existing = repo.findById(r.tenantId, GeofenceZoneId(r.id));
+    auto existing = repo.find(r.tenantId, GeofenceZoneId(r.id));
     if (existing.isNull)
       return CommandResult(false, "", "Geofence zone not found");
 
@@ -63,7 +63,7 @@ class ManageGeofenceZonesUseCase {
 
   // Simple Haversine-based point-in-circle check
   GeofenceCheckResult checkPoint(GeofenceCheckRequest r) {
-    auto zone = repo.findById(r.tenantId, GeofenceZoneId(r.zoneId));
+    auto zone = repo.find(r.tenantId, GeofenceZoneId(r.zoneId));
     if (zone.isNull)
       return GeofenceCheckResult(false, r.zoneId, "");
 
@@ -83,7 +83,7 @@ class ManageGeofenceZonesUseCase {
   }
 
   GeofenceZone[] list(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   CommandResult remove(TenantId tenantId, string id) {

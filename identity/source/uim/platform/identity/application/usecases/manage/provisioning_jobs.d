@@ -17,7 +17,7 @@ class ManageProvisioningJobsUseCase {
     this(ProvisioningJobRepository repo) { this.repo = repo; }
 
     ProvisioningJob getJob(TenantId tenantId, ProvisioningJobId id) { return repo.findById(tenantId, id); }
-    ProvisioningJob[] listJobs(TenantId tenantId) { return repo.findByTenant(tenantId); }
+    ProvisioningJob[] listJobs(TenantId tenantId) { return repo.find(tenantId); }
     ProvisioningJob[] listByStatus(TenantId tenantId, JobStatus status) { return repo.findByStatus(tenantId, status); }
 
     CommandResult createJob(ProvisioningJobDTO dto) {

@@ -22,7 +22,7 @@ class MemoryForumTopicRepository : TenantRepository!(ForumTopic, ForumTopicId), 
   }
 
   ForumTopic[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
-    return findByTenant(tenantId).filter!(t => t.workspaceId == workspaceId).array;
+    return find(tenantId).filter!(t => t.workspaceId == workspaceId).array;
   }
 
   void removeByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
@@ -34,7 +34,7 @@ class MemoryForumTopicRepository : TenantRepository!(ForumTopic, ForumTopicId), 
   }
 
   ForumTopic[] findByAuthor(TenantId tenantId, UserId authorId) {
-    return findByTenant(tenantId).filter!(t => t.authorId == authorId).array;
+    return find(tenantId).filter!(t => t.authorId == authorId).array;
   }
 
   void removeByAuthor(TenantId tenantId, UserId authorId) {

@@ -63,7 +63,7 @@ class ManageJobsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateJob(UpdateJobRequest r) {
-        auto existing = repo.findById(r.tenantId, r.jobId);
+        auto existing = repo.find(r.tenantId, r.jobId);
         if (existing.isNull)
             return CommandResult(false, "", "Job not found");
 

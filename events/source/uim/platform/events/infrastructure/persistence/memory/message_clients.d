@@ -19,10 +19,10 @@ class MemoryMessageClientRepository
     }
 
     MessageClient[] findByService(TenantId tenantId, MessagingServiceId serviceId) {
-        return findByTenant(tenantId).filter!(e => e.serviceId == serviceId).array;
+        return find(tenantId).filter!(e => e.serviceId == serviceId).array;
     }
 
     MessageClient[] findByStatus(TenantId tenantId, MessageClientStatus status) {
-        return findByTenant(tenantId).filter!(e => e.status == status).array;
+        return find(tenantId).filter!(e => e.status == status).array;
     }
 }

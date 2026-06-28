@@ -25,7 +25,7 @@ class ManageFormationsUseCase {
     }
 
     Formation[] listFormations(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     CommandResult createFormation(FormationDTO dto) {

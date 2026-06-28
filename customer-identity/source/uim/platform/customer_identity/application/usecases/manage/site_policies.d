@@ -23,7 +23,7 @@ class ManageSitePoliciesUseCase {
     }
 
     SitePolicy[] listSitePolicies(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     CommandResult createSitePolicy(SitePolicyDTO dto) {

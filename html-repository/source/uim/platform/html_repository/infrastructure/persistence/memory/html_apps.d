@@ -23,7 +23,7 @@ class HtmlAppMemoryRepository : TenantRepository!(HtmlApp, HtmlAppId), HtmlAppRe
     return apps.filter!(a => a.spaceId == spaceId).array;
   }
   HtmlApp[] findBySpace(SpaceId spaceId) {
-    return filterBySpace(findByTenant(tenantId), spaceId);
+    return filterBySpace(find(tenantId), spaceId);
   }
   void removeBySpace(SpaceId spaceId) {
     findBySpace(spaceId).each!(a => remove(a));
@@ -36,7 +36,7 @@ class HtmlAppMemoryRepository : TenantRepository!(HtmlApp, HtmlAppId), HtmlAppRe
     return apps.filter!(a => a.serviceInstanceId == instanceId).array;
   }
   HtmlApp[] findByServiceInstance(ServiceInstanceId instanceId) {
-    return filterByServiceInstance(findByTenant(tenantId), instanceId);
+    return filterByServiceInstance(find(tenantId), instanceId);
   }
   void removeByServiceInstance(ServiceInstanceId instanceId) {
     findByServiceInstance(instanceId).each!(a => remove(a));
@@ -49,7 +49,7 @@ class HtmlAppMemoryRepository : TenantRepository!(HtmlApp, HtmlAppId), HtmlAppRe
     return apps.filter!(a => a.visibility == AppVisibility.public_).array;
   }
   HtmlApp[] findPublic(TenantId tenantId) {
-    return filterPublic(findByTenant(tenantId));
+    return filterPublic(find(tenantId));
   }
   void removePublic(TenantId tenantId) {
     findPublic(tenantId).each!(a => remove(a));

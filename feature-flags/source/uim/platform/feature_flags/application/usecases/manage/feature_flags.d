@@ -33,7 +33,7 @@ class ManageFeatureFlagsUseCase {
     }
 
     FeatureFlag[] listFlags(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     FeatureFlag[] listFlagsByInstance(TenantId tenantId, ServiceInstanceId instanceId) {

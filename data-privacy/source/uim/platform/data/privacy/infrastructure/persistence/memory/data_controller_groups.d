@@ -19,7 +19,7 @@ class MemoryDataControllerGroupRepository : TenantRepository!(DataControllerGrou
   }
 
   DataControllerGroup[] findByName(TenantId tenantId, string name) {
-    return findByTenant(tenantId).filter!(g => g.name == name).array;
+    return find(tenantId).filter!(g => g.name == name).array;
   }
 
   void removeByName(TenantId tenantId, string name) {

@@ -21,7 +21,7 @@ class ManageMedicationRequestsUseCase {
     auto err = FhirValidator.validateMedicationRequest(r.medicationRequestId.value);
     if (err.length > 0) return CommandResult(false, "", err);
 
-    if (!repo.findById(r.tenantId, r.medicationRequestId).isNull)
+    if (!repo.find(r.tenantId, r.medicationRequestId).isNull)
       return CommandResult(false, "", "MedicationRequest already exists");
 
     MedicationRequest mr;
@@ -45,7 +45,7 @@ class ManageMedicationRequestsUseCase {
   }
 
   CommandResult updateMedicationRequest(UpdateMedicationOrderRequest r) {
-    auto existing = repo.findById(r.tenantId, r.medicationRequestId);
+    auto existing = repo.find(r.tenantId, r.medicationRequestId);
     if (existing.isNull)
       return CommandResult(false, "", "MedicationRequest not found");
 

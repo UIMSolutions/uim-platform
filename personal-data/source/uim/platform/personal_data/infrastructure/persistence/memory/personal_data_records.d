@@ -26,7 +26,7 @@ class MemoryPersonalDataRecordRepository : TenantRepository!(PersonalDataRecord,
     }
 
     PersonalDataRecord[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
-        return filterByDataSubject(findByTenant(tenantId), dataSubjectId, 0, 0);
+        return filterByDataSubject(find(tenantId), dataSubjectId, 0, 0);
     }
 
     void removeByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
@@ -47,7 +47,7 @@ class MemoryPersonalDataRecordRepository : TenantRepository!(PersonalDataRecord,
     }
 
     PersonalDataRecord[] findByApplication(TenantId tenantId, RegisteredApplicationId applicationId) {
-        return filterByApplication(findByTenant(tenantId), applicationId, 0, 0);
+        return filterByApplication(find(tenantId), applicationId, 0, 0);
     }
 
     void removeByApplication(TenantId tenantId, RegisteredApplicationId applicationId) {
@@ -69,7 +69,7 @@ class MemoryPersonalDataRecordRepository : TenantRepository!(PersonalDataRecord,
     }
 
     PersonalDataRecord[] findByDataSubjectAndApplication(TenantId tenantId, DataSubjectId dataSubjectId, RegisteredApplicationId applicationId) {
-        return filterByDataSubjectAndApplication(findByTenant(tenantId), dataSubjectId, applicationId, 0, 0);
+        return filterByDataSubjectAndApplication(find(tenantId), dataSubjectId, applicationId, 0, 0);
     }
 
     void removeByDataSubjectAndApplication(TenantId tenantId, DataSubjectId dataSubjectId, RegisteredApplicationId applicationId) {

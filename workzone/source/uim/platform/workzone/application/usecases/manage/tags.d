@@ -46,7 +46,7 @@ class ManageTagsUseCase { // TODO: UIMUseCase {
   }
 
   Tag[] listTags(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   CommandResult updateTag(UpdateTagRequest req) {

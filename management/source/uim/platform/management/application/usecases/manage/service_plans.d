@@ -80,7 +80,7 @@ class ManageServicePlansUseCase { // TODO: UIMUseCase {
   }
 
   ServicePlan[] listPlans(TenantId tenantId) {
-    return servicePlans.findByTenant(tenantId);
+    return servicePlans.find(tenantId);
   }
 
   ServicePlan[] listPlansByService(TenantId tenantId, string serviceName) {

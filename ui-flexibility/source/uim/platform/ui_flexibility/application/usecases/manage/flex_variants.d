@@ -41,7 +41,7 @@ class ManageFlexVariantsUseCase {
   }
 
   CommandResult updateVariant(UpdateFlexVariantRequest r) {
-    auto existing = repo.findById(r.tenantId, r.variantId);
+    auto existing = repo.find(r.tenantId, r.variantId);
     if (existing.isNull)
       return CommandResult(false, null, "FlexVariant not found");
 

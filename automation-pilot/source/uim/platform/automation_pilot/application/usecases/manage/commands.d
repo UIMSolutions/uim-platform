@@ -23,7 +23,7 @@ class ManageCommandsUseCase { // TODO: UIMUseCase {
     }
 
     Command[] listCommands(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     Command[] listCommands(TenantId tenantId, CatalogId catalogId) {

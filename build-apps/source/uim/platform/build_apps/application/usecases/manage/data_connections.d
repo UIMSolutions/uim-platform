@@ -23,7 +23,7 @@ class ManageDataConnectionsUseCase { // TODO: UIMUseCase {
     }
 
     DataConnection[] listDataConnections(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     DataConnection[] listConnections(TenantId tenantId) {

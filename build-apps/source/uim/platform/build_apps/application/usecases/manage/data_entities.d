@@ -23,7 +23,7 @@ class ManageDataEntitiesUseCase { // TODO: UIMUseCase {
     }
 
     DataEntity[] listDataEntities(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     DataEntity[] listDataEntities(TenantId tenantId, ApplicationId applicationId) {

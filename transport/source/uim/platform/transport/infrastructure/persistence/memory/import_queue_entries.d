@@ -14,18 +14,18 @@ import uim.platform.transport;
 class MemoryImportQueueEntryRepository : TenantRepository!(ImportQueueEntry, ImportQueueEntryId), ImportQueueEntryRepository {
 
     ImportQueueEntry[] findByNode(TenantId tenantId, TransportNodeId nodeId) {
-        return findByTenant(tenantId).filter!(e => e.nodeId.value == nodeId.value).array;
+        return find(tenantId).filter!(e => e.nodeId.value == nodeId.value).array;
     }
 
     ImportQueueEntry[] findByRequest(TenantId tenantId, TransportRequestId requestId) {
-        return findByTenant(tenantId).filter!(e => e.requestId.value == requestId.value).array;
+        return find(tenantId).filter!(e => e.requestId.value == requestId.value).array;
     }
 
     ImportQueueEntry[] findByStatus(TenantId tenantId, ImportStatus status) {
-        return findByTenant(tenantId).filter!(e => e.status == status).array;
+        return find(tenantId).filter!(e => e.status == status).array;
     }
 
     ImportQueueEntry[] findByNodeAndStatus(TenantId tenantId, TransportNodeId nodeId, ImportStatus status) {
-        return findByTenant(tenantId).filter!(e => e.nodeId.value == nodeId.value && e.status == status).array;
+        return find(tenantId).filter!(e => e.nodeId.value == nodeId.value && e.status == status).array;
     }
 }

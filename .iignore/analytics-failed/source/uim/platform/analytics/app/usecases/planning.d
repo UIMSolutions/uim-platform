@@ -36,16 +36,16 @@ class PlanningUseCases {
   }
 
   PlanningModelResponse getById(TenantId tenantId, PlanningModelId id) {
-    auto found = repo.findByTenant(tenantId).filter!(e => e.id == id).array;
+    auto found = repo.find(tenantId).filter!(e => e.id == id).array;
     return PlanningModelResponse.fromEntity(found.empty ? PlanningModel.init : found[0]);
   }
 
   PlanningModelResponse[] listPlanningModels(TenantId tenantId) {
-    return repo.findByTenant(tenantId).map!(pm => PlanningModelResponse.fromEntity(pm)).array;
+    return repo.find(tenantId).map!(pm => PlanningModelResponse.fromEntity(pm)).array;
   }
 
   PlanningModelResponse lockPlanningModel(TenantId tenantId, PlanningModelId id) {
-    auto found = repo.findByTenant(tenantId).filter!(e => e.id == id).array;
+    auto found = repo.find(tenantId).filter!(e => e.id == id).array;
     auto pm = found.empty ? PlanningModel.init : found[0];
     if (pm.isNull)
       return PlanningModelResponse.init;
@@ -55,7 +55,7 @@ class PlanningUseCases {
   }
 
   PlanningModelResponse approvePlanningModel(TenantId tenantId, PlanningModelId id) {
-    auto found = repo.findByTenant(tenantId).filter!(e => e.id == id).array;
+    auto found = repo.find(tenantId).filter!(e => e.id == id).array;
     auto pm = found.empty ? PlanningModel.init : found[0];
     if (pm.isNull)
       return PlanningModelResponse.init;
@@ -65,7 +65,7 @@ class PlanningUseCases {
   }
 
   CommandResult deletePlanningModel(TenantId tenantId, PlanningModelId id) {
-    auto found = repo.findByTenant(tenantId).filter!(e => e.id == id).array;
+    auto found = repo.find(tenantId).filter!(e => e.id == id).array;
     if (!found.empty) repo.remove(found[0]);
     return CommandResult(true, id.value, "");
   }

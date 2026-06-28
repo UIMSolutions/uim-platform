@@ -33,7 +33,7 @@ class FileEventSubscriptionRepository : MemoryEventSubscriptionRepository, Event
     private void persistTenant(TenantId tenantId) @trusted {
         auto fp = filePath(tenantId);
         mkdirRecurse(dirName(fp));
-        auto items = findByTenant(tenantId);
+        auto items = find(tenantId);
         Json arr = Json.emptyArray;
         foreach (item; items)
             arr ~= item.toJson();

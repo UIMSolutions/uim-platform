@@ -54,7 +54,7 @@ class ManageDomainMappingsUseCase { // TODO: UIMUseCase {
     }
 
     DomainMapping[] listDomainMappings(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     DomainMapping[] listDomainMappings(TenantId tenantId, CustomDomainId domainId) {

@@ -43,7 +43,7 @@ class ManageSpatialLayersUseCase {
   }
 
   CommandResult update(UpdateSpatialLayerRequest r) {
-    auto existing = repo.findById(r.tenantId, SpatialLayerId(r.id));
+    auto existing = repo.find(r.tenantId, SpatialLayerId(r.id));
     if (existing.isNull)
       return CommandResult(false, "", "Spatial layer not found");
 
@@ -61,7 +61,7 @@ class ManageSpatialLayersUseCase {
   }
 
   SpatialLayer[] list(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   CommandResult remove(TenantId tenantId, string id) {

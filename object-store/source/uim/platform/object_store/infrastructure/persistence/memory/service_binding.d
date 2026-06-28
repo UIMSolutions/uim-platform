@@ -27,7 +27,7 @@ class MemoryServiceBindingRepository : TenantRepository!(ServiceBinding, Service
   }
 
   ServiceBinding[] findByBucket(TenantId tenantId, BucketId bucketId) {
-    return filterByBucket(findByTenant(tenantId), bucketId);
+    return filterByBucket(find(tenantId), bucketId);
   }
   void removeByBucket(TenantId tenantId, BucketId bucketId) {
     findByBucket(tenantId, bucketId).each!(e => remove(e));

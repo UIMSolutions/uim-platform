@@ -12,7 +12,7 @@ class MemoryBusinessPurposeRepository : TenantRepository!(BusinessPurpose, Busin
     }
 
     BusinessPurpose[] findByApplicationGroup(TenantId tenantId, ApplicationGroupId groupId) {
-        return findByTenant(tenantId).filter!(a => a.applicationGroupId == groupId).array;
+        return find(tenantId).filter!(a => a.applicationGroupId == groupId).array;
     }
 
     void removeByApplicationGroup(TenantId tenantId, ApplicationGroupId groupId) {
@@ -24,7 +24,7 @@ class MemoryBusinessPurposeRepository : TenantRepository!(BusinessPurpose, Busin
     }
 
     BusinessPurpose[] findByStatus(TenantId tenantId, BusinessPurposeStatus status) {
-        return findByTenant(tenantId).filter!(a => a.status == status).array;
+        return find(tenantId).filter!(a => a.status == status).array;
     }
 
     void removeByStatus(TenantId tenantId, BusinessPurposeStatus status) {

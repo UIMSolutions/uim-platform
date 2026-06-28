@@ -27,7 +27,7 @@ class MemoryScheduleRepository : TenantRepository!(Schedule, ScheduleId), Schedu
     }
 
     Schedule[] findByJob(TenantId tenantId, JobId jobId) {
-        return filterByJob(findByTenant(tenantId), jobId);
+        return filterByJob(find(tenantId), jobId);
     }
 
     void removeByJob(TenantId tenantId, JobId jobId) {
@@ -45,7 +45,7 @@ class MemoryScheduleRepository : TenantRepository!(Schedule, ScheduleId), Schedu
     }
 
     Schedule[] findByStatus(TenantId tenantId, JobScheduleStatus status) {
-        return filterByStatus(findByTenant(tenantId), status);
+        return filterByStatus(find(tenantId), status);
     }
 
     void removeByStatus(TenantId tenantId, JobScheduleStatus status) {
@@ -61,7 +61,7 @@ class MemoryScheduleRepository : TenantRepository!(Schedule, ScheduleId), Schedu
         return items.filter!(s => s.active).array;
     }
     Schedule[] findActive(TenantId tenantId) {
-        return filterActive(findByTenant(tenantId));
+        return filterActive(find(tenantId));
     }
     void removeActive(TenantId tenantId) {
         findActive(tenantId).each!(s => remove(s));
@@ -70,7 +70,7 @@ class MemoryScheduleRepository : TenantRepository!(Schedule, ScheduleId), Schedu
 
     Schedule[] search(TenantId tenantId, string query) {
         auto q = query.toLower;
-        return findByTenant(tenantId).filter!(s => s.description.toLower.canFind(q) || s.jobId.value.toLower.canFind(
+        return find(tenantId).filter!(s => s.description.toLower.canFind(q) || s.jobId.value.toLower.canFind(
                 q)).array;
     }
 

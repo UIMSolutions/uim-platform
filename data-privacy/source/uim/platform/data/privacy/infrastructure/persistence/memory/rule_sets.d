@@ -24,7 +24,7 @@ class MemoryRuleSetRepository : TenantRepository!(RuleSet, RuleSetId), RuleSetRe
   }
 
   RuleSet[] findByBusinessContext(TenantId tenantId, BusinessContextId contextId) {
-    return filterByBusinessContext(findByTenant(tenantId), contextId);
+    return filterByBusinessContext(find(tenantId), contextId);
   }
 
   void removeByBusinessContext(TenantId tenantId, BusinessContextId contextId) {
@@ -42,7 +42,7 @@ class MemoryRuleSetRepository : TenantRepository!(RuleSet, RuleSetId), RuleSetRe
   }
 
   RuleSet[] findByStatus(TenantId tenantId, RuleSetStatus status) {
-    return findByTenant(tenantId).filter!(s => s.status == status).array;
+    return find(tenantId).filter!(s => s.status == status).array;
   }
 
   void removeByStatus(TenantId tenantId, RuleSetStatus status) {

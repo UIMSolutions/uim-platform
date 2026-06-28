@@ -38,11 +38,11 @@ class FileAuditEntryRepository : AuditEntryRepository {
     }
 
     AuditEntry[] findByEntity(TenantId tenantId, string entityId) {
-        return findByTenant(tenantId).filter!(e => e.entityId == entityId).array;
+        return find(tenantId).filter!(e => e.entityId == entityId).array;
     }
 
     AuditEntry[] findByTenantPaged(TenantId tenantId, size_t offset, size_t limit) {
-        auto all = findByTenant(tenantId);
+        auto all = find(tenantId);
         if (offset >= all.length) return [];
         auto end = offset + limit;
         if (end > all.length) end = all.length;

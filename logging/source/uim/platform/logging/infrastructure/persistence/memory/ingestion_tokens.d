@@ -15,11 +15,11 @@ import uim.platform.logging;
 class MemoryIngestionTokenRepository : TenantRepository!(IngestionToken, IngestionTokenId), IngestionTokenRepository {
 
   bool existsByHash(TenantId tenantId, string tokenHash) {
-    return findByTenant(tenantId).any!(t => t.tokenHash == tokenHash);
+    return find(tenantId).any!(t => t.tokenHash == tokenHash);
   }
 
   IngestionToken findByHash(TenantId tenantId, string tokenHash) {
-    foreach (t; findByTenant(tenantId))
+    foreach (t; find(tenantId))
       if (t.tokenHash == tokenHash)
         return t;
     return IngestionToken.init;

@@ -36,7 +36,7 @@ class ManageServiceBindingsUseCase {
   }
 
   ServiceBinding[] list(TenantId tenantId) {
-    return _repo.findByTenant(tenantId);
+    return _repo.find(tenantId);
   }
 
   ServiceBinding[] listByProject(TenantId tenantId, string projectId) {

@@ -35,7 +35,7 @@ public:
   }
 
   UseCaseResult!(MlExperiment[]) list(TenantId tenantId) {
-    return UseCaseResult!(MlExperiment[])(true, "", _repo.findByTenant(tenantId));
+    return UseCaseResult!(MlExperiment[])(true, "", _repo.find(tenantId));
   }
 
   UseCaseResult!MlExperiment get(TenantId tenantId, MlExperimentId id) {

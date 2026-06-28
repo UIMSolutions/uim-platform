@@ -109,7 +109,7 @@ class ManagePrivateEndpointsUseCase {
   }
 
   PrivateEndpoint[] listEndpoints(TenantId tenantId) {
-    return endpoints.findByTenant(tenantId);
+    return endpoints.find(tenantId);
   }
 
   PrivateEndpoint[] listByInstance(TenantId tenantId, ServiceInstanceId instanceId) {

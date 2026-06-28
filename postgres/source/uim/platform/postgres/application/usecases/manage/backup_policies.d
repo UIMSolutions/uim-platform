@@ -25,7 +25,7 @@ class ManageBackupPoliciesUseCase {
     }
 
     BackupPolicy[] listBackupPolicies(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     CommandResult createBackupPolicy(BackupPolicyDTO dto) {

@@ -51,7 +51,7 @@ class ManageSourceSystemsUseCase { // TODO: UIMUseCase {
   }
 
   SourceSystem[] listSourceSystems(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   CommandResult updateSourceSystem(UpdateSourceSystemRequest req) {

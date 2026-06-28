@@ -23,7 +23,7 @@ class ManageIdentityProvidersUseCase {
     }
 
     IdentityProvider[] listIdentityProviders(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     IdentityProvider[] listActive(TenantId tenantId) {

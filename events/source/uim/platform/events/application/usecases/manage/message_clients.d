@@ -21,7 +21,7 @@ class ManageMessageClientsUseCase {
     }
 
     MessageClient[] listClients(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     MessageClient[] listByService(TenantId tenantId, MessagingServiceId serviceId) {

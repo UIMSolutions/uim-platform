@@ -102,7 +102,7 @@ class ManageChannelsUseCase { // TODO: UIMUseCase {
   }
 
   ServiceChannel[] listByTenant(TenantId tenantId) {
-    return channels.findByTenant(tenantId);
+    return channels.find(tenantId);
   }
 
   CommandResult deleteChannel(TenantId tenantId, ChannelId id) {

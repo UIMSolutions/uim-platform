@@ -20,7 +20,7 @@ class BrokerServiceRepository : TenantRepository!(BrokerService, BrokerServiceId
         return services.filter!(e => e.status == status).array;
     }    
     BrokerService[] findByStatus(TenantId tenantId, BrokerServiceStatus status) {
-        return filterByStatus(findByTenant(tenantId), status);
+        return filterByStatus(find(tenantId), status);
     }
     void removeByStatus(TenantId tenantId, BrokerServiceStatus status) {
         findByStatus(tenantId, status).each!(e => remove(e));
@@ -35,7 +35,7 @@ class BrokerServiceRepository : TenantRepository!(BrokerService, BrokerServiceId
     }
 
     BrokerService[] findByCloudProvider(TenantId tenantId, CloudProvider provider) {
-        return filterByCloudProvider(findByTenant(tenantId), provider);
+        return filterByCloudProvider(find(tenantId), provider);
     }
 
     void removeByCloudProvider(TenantId tenantId, CloudProvider provider) {

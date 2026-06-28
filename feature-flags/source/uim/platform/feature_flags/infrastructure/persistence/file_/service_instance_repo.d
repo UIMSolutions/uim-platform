@@ -42,7 +42,7 @@ class FileServiceInstanceRepository : ServiceInstanceRepository {
     }
 
     ServiceInstance findByName(TenantId tenantId, string name) {
-        foreach (inst; findByTenant(tenantId))
+        foreach (inst; find(tenantId))
             if (inst.name == name) return inst;
         return ServiceInstance.init;
     }
@@ -57,7 +57,7 @@ class FileServiceInstanceRepository : ServiceInstanceRepository {
     }
 
     size_t countByTenant(TenantId tenantId) {
-        return findByTenant(tenantId).length;
+        return find(tenantId).length;
     }
 
     private:

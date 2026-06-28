@@ -23,7 +23,7 @@ class ManageCustomerSessionsUseCase {
     }
 
     CustomerSession[] listSessions(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     CustomerSession[] listByCustomer(TenantId tenantId, CustomerId customerId) {

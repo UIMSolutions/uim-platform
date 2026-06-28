@@ -60,11 +60,11 @@ class MongoEventChannelRepository : EventChannelRepository {
         ]);
     }
 
-    bool isTenantEmpty(TenantId tenantId)  { return findByTenant(tenantId).length == 0; }
+    bool isTenantEmpty(TenantId tenantId)  { return find(tenantId).length == 0; }
     void createTenant(TenantId tenantId)    {}
     TenantId[] findAllTenants()             { return []; }
     bool existsByTenant(TenantId tenantId)  { return !isTenantEmpty(tenantId); }
-    size_t countByTenant(TenantId tenantId) { return findByTenant(tenantId).length; }
+    size_t countByTenant(TenantId tenantId) { return find(tenantId).length; }
     EventChannel[] filterByTenant(EventChannel[] items, TenantId tenantId) {
         return items.filter!(e => e.tenantId == tenantId).array;
     }
@@ -132,14 +132,14 @@ class MongoEventChannelRepository : EventChannelRepository {
     void removeAll() @trusted { _collection.remove(Bson.emptyObject); }
 
     override EventChannel[] findByTopic(TenantId tenantId, EventTopicId topicId) {
-        return findByTenant(tenantId).filter!(e => e.topicId.value == topicId.value).array;
+        return find(tenantId).filter!(e => e.topicId.value == topicId.value).array;
     }
 
     override EventChannel[] findByStatus(TenantId tenantId, ChannelStatus status) {
-        return findByTenant(tenantId).filter!(e => e.status == status).array;
+        return find(tenantId).filter!(e => e.status == status).array;
     }
 
     override bool nameExists(TenantId tenantId, string name) {
-        return findByTenant(tenantId).any!(e => e.name == name);
+        return find(tenantId).any!(e => e.name == name);
     }
 }

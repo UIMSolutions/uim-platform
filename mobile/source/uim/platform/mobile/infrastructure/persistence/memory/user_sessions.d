@@ -20,7 +20,7 @@ class MemoryUserSessionRepository : TenantRepository!(UserSession, UserSessionId
     return findByUser(tenantId, userId).length;
   }
   UserSession[] findByUser(TenantId tenantId, UserId userId) {
-    return findByTenant(tenantId).filter!(s => s.tenantId == tenantId && s.userId == userId).array;
+    return find(tenantId).filter!(s => s.tenantId == tenantId && s.userId == userId).array;
   }
   void removeByUser(TenantId tenantId, UserId userId) {
     findByUser(tenantId, userId).each!(s => store.remove(s));
@@ -30,7 +30,7 @@ class MemoryUserSessionRepository : TenantRepository!(UserSession, UserSessionId
     return findByDevice(tenantId, deviceId).length;
   }
   UserSession[] findByDevice(TenantId tenantId, DeviceRegistrationId deviceId) {
-    return findByTenant(tenantId).filter!(s => s.tenantId == tenantId && s.deviceId == deviceId).array;
+    return find(tenantId).filter!(s => s.tenantId == tenantId && s.deviceId == deviceId).array;
   }
   void removeByDevice(TenantId tenantId, DeviceRegistrationId deviceId) {
     findByDevice(tenantId, deviceId).each!(s => store.remove(s));
@@ -40,7 +40,7 @@ class MemoryUserSessionRepository : TenantRepository!(UserSession, UserSessionId
     return findByApp(tenantId, appId).length;
   }
   UserSession[] findByApp(TenantId tenantId, MobileAppId appId) {
-    return findByTenant(tenantId).filter!(s => s.tenantId == tenantId && s.appId == appId).array;
+    return find(tenantId).filter!(s => s.tenantId == tenantId && s.appId == appId).array;
   }
   void removeByApp(TenantId tenantId, MobileAppId appId) {
     findByApp(tenantId, appId).each!(s => store.remove(s));

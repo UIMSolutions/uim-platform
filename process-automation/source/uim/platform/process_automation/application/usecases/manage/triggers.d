@@ -23,7 +23,7 @@ class ManageTriggersUseCase { // TODO: UIMUseCase {
         if (r.name.length == 0)
             return CommandResult(false, "", "Trigger name is required");
 
-        auto existing = repo.findById(r.tenantId, r.triggerId);
+        auto existing = repo.find(r.tenantId, r.triggerId);
         if (!existing.isNull)
             return CommandResult(false, "", "Trigger already exists");
 
@@ -47,7 +47,7 @@ class ManageTriggersUseCase { // TODO: UIMUseCase {
     }
 
     Trigger[] listTriggers(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     Trigger[] listTriggers(TenantId tenantId, ProcessId processId) {
@@ -55,7 +55,7 @@ class ManageTriggersUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateTrigger(UpdateTriggerRequest r) {
-        auto existing = repo.findById(r.tenantId, r.triggerId);
+        auto existing = repo.find(r.tenantId, r.triggerId);
         if (existing.isNull)
             return CommandResult(false, "", "Trigger not found");
 

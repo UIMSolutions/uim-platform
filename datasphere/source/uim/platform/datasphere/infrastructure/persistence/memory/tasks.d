@@ -40,7 +40,7 @@ class MemoryTaskRepository : TenantRepository!(Task, TaskId), TaskRepository {
     return findBySpace(tenantId, spaceId).length;
   }
   DSTask[] findBySpace(TenantId tenantId, SpaceId spaceId) {
-    return filterBySpace(findByTenant(tenantId), spaceId);
+    return filterBySpace(find(tenantId), spaceId);
   }
   void removeBySpace(TenantId tenantId, SpaceId spaceId) {
     findBySpace(tenantId, spaceId).each!(t => remove(t));

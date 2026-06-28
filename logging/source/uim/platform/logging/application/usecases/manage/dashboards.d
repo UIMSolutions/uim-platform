@@ -92,7 +92,7 @@ class ManageDashboardsUseCase { // TODO: UIMUseCase {
   }
 
   Dashboard[] listDashboards(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   Dashboard getDefaultDashboard(TenantId tenantId) {

@@ -28,7 +28,7 @@ class GetDeploymentHistoryUseCase { // TODO: UIMUseCase {
     }
 
     DeploymentRecord[] getByTenant(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     DeploymentRecord getById(DeploymentRecordId id) {

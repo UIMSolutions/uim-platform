@@ -17,7 +17,7 @@ class ConsumeUndeliveredEventsUseCase {
     this(UndeliveredEventRepository repo) { this.repo = repo; }
 
     QueryResult listUndeliveredEvents(TenantId tenantId) {
-        auto items = repo.findByTenant(tenantId);
+        auto items = repo.find(tenantId);
         auto arr   = Json.emptyArray;
         foreach (e; items) arr ~= e.toJson();
         return QueryResult(true, "", arr);

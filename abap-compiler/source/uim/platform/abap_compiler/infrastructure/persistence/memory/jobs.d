@@ -22,7 +22,7 @@ class MemoryCompilationJobRepository : TenantRepository!(CompilationJob, Compila
     }
 
     CompilationJob[] findByProgram(TenantId tenantId, AbapProgramId pid) {
-        return filterByProgram(findByTenant(tenantId), pid);
+        return filterByProgram(find(tenantId), pid);
     }
 
     void removeByProgram(TenantId tenantId, AbapProgramId pid) {

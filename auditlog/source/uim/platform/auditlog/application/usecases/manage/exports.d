@@ -65,7 +65,7 @@ class ManageExportsUseCase { // TODO: UIMUseCase {
   }
 
   ExportJob[] listExports(TenantId tenantId) {
-    return jobs.findByTenant(tenantId);
+    return jobs.find(tenantId);
   }
 
   CommandResult deleteExport(TenantId tenantId, ExportJobId id) {

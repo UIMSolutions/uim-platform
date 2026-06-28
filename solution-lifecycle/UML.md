@@ -86,25 +86,25 @@ classDiagram
 
     class MtaArchiveRepository {
         <<interface>>
-        +findByTenant(tenantId) MtaArchive[]
+        +find(tenantId) MtaArchive[]
         +save(archive)
         +remove(id)
     }
     class MtaRepository {
         <<interface>>
-        +findByTenant(tenantId) Mta[]
+        +find(tenantId) Mta[]
         +save(mta)
         +update(mta)
     }
     class MtaOperationRepository {
         <<interface>>
-        +findByTenant(tenantId) MtaOperation[]
+        +find(tenantId) MtaOperation[]
         +save(op)
         +update(op)
     }
     class MtaSubscriptionRepository {
         <<interface>>
-        +findByTenant(tenantId) MtaSubscription[]
+        +find(tenantId) MtaSubscription[]
         +save(sub)
         +update(sub)
     }
@@ -209,7 +209,7 @@ sequenceDiagram
 
     Client->>MtaController: POST /api/v1/slm/mtas {archiveId, solutionType, ...}
     MtaController->>ManageMtasUseCase: deployMta(DeployMtaRequest)
-    ManageMtasUseCase->>MtaArchiveRepository: findByTenant(tenantId)
+    ManageMtasUseCase->>MtaArchiveRepository: find(tenantId)
     MtaArchiveRepository-->>ManageMtasUseCase: MtaArchive[]
     ManageMtasUseCase->>DeploymentEngine: beginDeploy(archiveId, mtaId, version, tenantId)
     DeploymentEngine-->>ManageMtasUseCase: DeploymentResult{success, operationId}

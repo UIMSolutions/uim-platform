@@ -17,7 +17,7 @@ class MemoryMedicationRequestRepository : TenantRepository!(MedicationRequest, M
   }
 
   MedicationRequest findById(TenantId tenantId, MedicationRequestId id) {
-    foreach (mr; findByTenant(tenantId)) {
+    foreach (mr; find(tenantId)) {
       if (mr.id == id) return mr;
     }
     return MedicationRequest.init;
@@ -29,16 +29,16 @@ class MemoryMedicationRequestRepository : TenantRepository!(MedicationRequest, M
   }
 
   size_t countByTenant(TenantId tenantId) {
-    return findByTenant(tenantId).length;
+    return find(tenantId).length;
   }
 
   MedicationRequest[] findByTenantAll(TenantId tenantId) {
-    return findByTenant(tenantId);
+    return find(tenantId);
   }
 
   MedicationRequest[] findByPatient(TenantId tenantId, string patientRef) {
     MedicationRequest[] results;
-    foreach (mr; findByTenant(tenantId)) {
+    foreach (mr; find(tenantId)) {
       if (mr.subject_.reference_ == patientRef) results ~= mr;
     }
     return results;

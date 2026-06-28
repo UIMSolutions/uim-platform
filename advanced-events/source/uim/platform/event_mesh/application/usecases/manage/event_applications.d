@@ -23,7 +23,7 @@ class ManageEventApplicationsUseCase { // TODO: UIMUseCase {
     }
 
     EventApplication[] listApplications(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     EventApplication[] listApplications(TenantId tenantId, BrokerServiceId serviceId) {

@@ -23,7 +23,7 @@ class ManageQueuesUseCase { // TODO: UIMUseCase {
     }
 
     Queue[] listQueues(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return repo.find(tenantId);
     }
 
     Queue[] listQueues(TenantId tenantId, BrokerServiceId serviceId) {

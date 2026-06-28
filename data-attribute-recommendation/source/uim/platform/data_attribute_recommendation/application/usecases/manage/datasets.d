@@ -49,7 +49,7 @@ class ManageDatasetsUseCase { // TODO: UIMUseCase {
   }
 
   Dataset[] listDatasets(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return repo.find(tenantId);
   }
 
   CommandResult updateDataset(UpdateDatasetRequest req) {

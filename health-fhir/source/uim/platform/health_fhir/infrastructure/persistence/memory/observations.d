@@ -17,7 +17,7 @@ class MemoryObservationRepository : TenantRepository!(Observation, ObservationId
   }
 
   Observation findById(TenantId tenantId, ObservationId id) {
-    foreach (o; findByTenant(tenantId)) {
+    foreach (o; find(tenantId)) {
       if (o.id == id) return o;
     }
     return Observation.init;
@@ -29,16 +29,16 @@ class MemoryObservationRepository : TenantRepository!(Observation, ObservationId
   }
 
   size_t countByTenant(TenantId tenantId) {
-    return findByTenant(tenantId).length;
+    return find(tenantId).length;
   }
 
   Observation[] findByTenantAll(TenantId tenantId) {
-    return findByTenant(tenantId);
+    return find(tenantId);
   }
 
   Observation[] findByPatient(TenantId tenantId, string patientRef) {
     Observation[] results;
-    foreach (o; findByTenant(tenantId)) {
+    foreach (o; find(tenantId)) {
       if (o.subject_.reference_ == patientRef) results ~= o;
     }
     return results;

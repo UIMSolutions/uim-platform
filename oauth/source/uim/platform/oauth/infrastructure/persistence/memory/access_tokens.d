@@ -14,20 +14,20 @@ import uim.platform.oauth;
 class MemoryAccessTokenRepository : TenantRepository!(AccessToken, AccessTokenId), AccessTokenRepository {
 
     bool existsByTokenValue(TenantId tenantId, string tokenValue) {
-        foreach (e; findByTenant(tenantId))
+        foreach (e; find(tenantId))
             if (e.tokenValue == tokenValue)
                 return true;
         return false;
     }
 
     AccessToken findByTokenValue(TenantId tenantId, string tokenValue) {
-        foreach (e; findByTenant(tenantId))
+        foreach (e; find(tenantId))
             if (e.tokenValue == tokenValue)
                 return e;
         return AccessToken.init;
     }
     void removeByTokenValue(TenantId tenantId, string tokenValue) {
-        foreach (e; findByTenant(tenantId))
+        foreach (e; find(tenantId))
             if (e.tokenValue == tokenValue) {
                 remove(e);
                 return;
@@ -43,7 +43,7 @@ class MemoryAccessTokenRepository : TenantRepository!(AccessToken, AccessTokenId
     }
 
     AccessToken[] findByClient(TenantId tenantId, string clientId) {
-        return filterByClient(findByTenant(tenantId), clientId);
+        return filterByClient(find(tenantId), clientId);
     }
 
     void removeByClient(TenantId tenantId, string clientId) {
@@ -59,7 +59,7 @@ class MemoryAccessTokenRepository : TenantRepository!(AccessToken, AccessTokenId
     }
 
     AccessToken[] findByUser(TenantId tenantId, UserId userId) {
-        return filterByUser(findByTenant(tenantId), userId);
+        return filterByUser(find(tenantId), userId);
     }
 
     void removeByUser(TenantId tenantId, UserId userId) {
@@ -75,7 +75,7 @@ class MemoryAccessTokenRepository : TenantRepository!(AccessToken, AccessTokenId
     }
 
     AccessToken[] findByStatus(TenantId tenantId, TokenStatus status) {
-        return filterByStatus(findByTenant(tenantId), status);
+        return filterByStatus(find(tenantId), status);
     }
 
     void removeByStatus(TenantId tenantId, TokenStatus status) {

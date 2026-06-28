@@ -54,7 +54,7 @@ class ManageBuildpacksUseCase { // TODO: UIMUseCase {
   }
 
   Buildpack[] listBuildpacks(TenantId tenantId) {
-    return buildpacks.findByTenant(tenantId);
+    return buildpacks.find(tenantId);
   }
 
   Buildpack[] listEnabled(TenantId tenantId) {
