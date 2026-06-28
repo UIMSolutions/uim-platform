@@ -126,7 +126,7 @@ sequenceDiagram
     participant DC as DeviceController
     participant UC as ManageDevicesUseCase
     participant V as AgentryValidator
-    participant R as MemoryDeviceRepository
+    participant R as DeviceRepository
 
     Client->>DC: POST /api/v1/agentry/devices
     DC->>UC: enrollDevice(DeviceDTO)
@@ -145,7 +145,7 @@ sequenceDiagram
     actor MobileApp
     participant SC as SyncSessionController
     participant UC as ManageSyncSessionsUseCase
-    participant R as MemorySyncSessionRepository
+    participant R as SyncSessionRepository
     participant BC as BackendConnection
 
     MobileApp->>SC: POST /api/v1/agentry/sync-sessions

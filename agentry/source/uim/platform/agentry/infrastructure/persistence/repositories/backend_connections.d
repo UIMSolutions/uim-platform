@@ -11,8 +11,8 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryBackendConnectionRepository : TenantRepository!(BackendConnection, BackendConnectionId), IBackendConnectionRepository {
-    mixin TenantRepositoryTemplate!(MemoryBackendConnectionRepository, BackendConnection, BackendConnectionId);
+class BackendConnectionRepository : TenantRepository!(BackendConnection, BackendConnectionId), IBackendConnectionRepository {
+    mixin TenantRepositoryTemplate!(BackendConnectionRepository, BackendConnection, BackendConnectionId);
 
     // #region ByBackendType 
     size_t countByBackendType(TenantId tenantId, BackendType backendType) {
@@ -52,5 +52,5 @@ class MemoryBackendConnectionRepository : TenantRepository!(BackendConnection, B
 }
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryBackendConnectionRepository));
+    assert(tenantRepositoryTest(new BackendConnectionRepository));
 }

@@ -11,10 +11,10 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryAppDefinitionRepository
+class AppDefinitionRepository
     : TenantRepository!(AppDefinition, AppDefinitionId), IAppDefinitionRepository {
 
-    mixin TenantRepositoryTemplate!(MemoryAppDefinitionRepository, AppDefinition, AppDefinitionId);
+    mixin TenantRepositoryTemplate!(AppDefinitionRepository, AppDefinition, AppDefinitionId);
 
     size_t countByStatus(TenantId tenantId, DefinitionStatus status) {
         return findByStatus(tenantId, status).length;
@@ -46,5 +46,5 @@ class MemoryAppDefinitionRepository
 }
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryAppDefinitionRepository));
+    assert(tenantRepositoryTest(new AppDefinitionRepository));
 }

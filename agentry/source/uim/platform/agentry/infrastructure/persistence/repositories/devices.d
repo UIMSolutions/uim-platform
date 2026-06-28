@@ -11,8 +11,8 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryDeviceRepository : TenantRepository!(Device, DeviceId), DeviceRepository {
-    mixin TenantRepositoryTemplate!(MemoryDeviceRepository, Device, DeviceId);
+class DeviceRepository : TenantRepository!(Device, DeviceId), IDeviceRepository {
+    mixin TenantRepositoryTemplate!(DeviceRepository, Device, DeviceId);
 
     size_t countByMobileApplication(TenantId tenantId, MobileApplicationId appId) {
         return findByMobileApplication(tenantId, appId).length;
@@ -81,9 +81,9 @@ class MemoryDeviceRepository : TenantRepository!(Device, DeviceId), DeviceReposi
 }
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryDeviceRepository));
+    assert(tenantRepositoryTest(new DeviceRepository));
 
-    // auto repo = new MemoryDeviceRepository();
+    // auto repo = new DeviceRepository();
     // auto tenantId = TenantId("tenant1");
     // auto deviceId = DeviceId("device1");
     // auto userId = UserId("user1");

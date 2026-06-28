@@ -11,9 +11,9 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryMobileApplicationRepository
-    : TenantRepository!(MobileApplication, MobileApplicationId), MobileApplicationRepository {
-    mixin TenantRepositoryTemplate!(MemoryMobileApplicationRepository, MobileApplication, MobileApplicationId);
+class MobileApplicationRepository
+    : TenantRepository!(MobileApplication, MobileApplicationId), IMobileApplicationRepository {
+    mixin TenantRepositoryTemplate!(MobileApplicationRepository, MobileApplication, MobileApplicationId);
 
     size_t countByStatus(TenantId tenantId, AppStatus status) {
         return findByStatus(tenantId, status).length;
@@ -48,5 +48,5 @@ class MemoryMobileApplicationRepository
 }
 ///
 unittest {  
-    assert(tenantRepositoryTest(new MemoryMobileApplicationRepository));
+    assert(tenantRepositoryTest(new MobileApplicationRepository));
 }

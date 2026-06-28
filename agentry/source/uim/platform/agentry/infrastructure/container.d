@@ -34,13 +34,13 @@ Container buildContainer(SrvConfig config) {
     Container c;
 
     // Repositories
-    auto mobileApplicationRepo = new MemoryMobileApplicationRepository();
-    auto appDefinitionRepo = new MemoryAppDefinitionRepository();
+    auto mobileApplicationRepo = new MobileApplicationRepository();
+    auto appDefinitionRepo = new AppDefinitionRepository();
     auto appVersionRepo = new AppVersionRepository();
-    auto deviceRepo = new MemoryDeviceRepository();
-    auto syncSessionRepo = new MemorySyncSessionRepository();
-    auto backendConnectionRepo = new MemoryBackendConnectionRepository();
-    auto deploymentRepo = new MemoryDeploymentRepository();
+    auto deviceRepo = new DeviceRepository();
+    auto syncSessionRepo = new SyncSessionRepository();
+    auto backendConnectionRepo = new BackendConnectionRepository();
+    auto deploymentRepo = new DeploymentRepository();
 
     // Use Cases
     c.manageMobileApplicationsUseCase = new ManageMobileApplicationsUseCase(mobileApplicationRepo);

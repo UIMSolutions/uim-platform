@@ -11,8 +11,8 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemorySyncSessionRepository : TenantRepository!(SyncSession, SyncSessionId), SyncSessionRepository {
-    mixin TenantRepositoryTemplate!(MemorySyncSessionRepository, SyncSession, SyncSessionId);
+class SyncSessionRepository : TenantRepository!(SyncSession, SyncSessionId), ISyncSessionRepository {
+    mixin TenantRepositoryTemplate!(SyncSessionRepository, SyncSession, SyncSessionId);
 
     size_t countByDevice(TenantId tenantId, DeviceId deviceId) {
         return findByDevice(tenantId, deviceId).length;
@@ -58,5 +58,5 @@ class MemorySyncSessionRepository : TenantRepository!(SyncSession, SyncSessionId
 }
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemorySyncSessionRepository));
+    assert(tenantRepositoryTest(new SyncSessionRepository));
 }
