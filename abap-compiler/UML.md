@@ -153,7 +153,7 @@ classDiagram
         +void save(AbapProgram)
         +void update(AbapProgram)
         +void remove(AbapProgram)
-        +size_t count(tenantId)
+        +size_t countByTenant(tenantId)
     }
 
     class CompilationJobRepository {
@@ -164,7 +164,7 @@ classDiagram
         +void save(CompilationJob)
         +void update(CompilationJob)
         +void remove(CompilationJob)
-        +size_t count(tenantId)
+        +size_t countByTenant(tenantId)
     }
 
     class MemoryAbapProgramRepository {

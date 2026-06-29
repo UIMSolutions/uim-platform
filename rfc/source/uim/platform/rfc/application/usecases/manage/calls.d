@@ -46,6 +46,6 @@ class ManageCallsUseCase {
     }
 
     size_t countCalls(TenantId tenantId) {
-        return _repo.count(tenantId);
+        return _repo.countByTenant(tenantId);
     }
 }

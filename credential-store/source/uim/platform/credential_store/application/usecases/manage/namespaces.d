@@ -76,7 +76,7 @@ class ManageNamespacesUseCase { // TODO: UIMUseCase {
   }
 
   size_t countNamespaces(TenantId tenantId) {
-    return namespaces.count(tenantId);
+    return namespaces.countByTenant(tenantId);
   }
 
 }

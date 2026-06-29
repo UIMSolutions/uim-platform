@@ -77,6 +77,6 @@ class ManageReplicationTasksUseCase { // TODO: UIMUseCase {
   }
 
   size_t countReplicationTasks(TenantId tenantId) {
-    return repo.count(tenantId);
+    return repo.countByTenant(tenantId);
   }
 }

@@ -76,6 +76,6 @@ class ManageSpacesUseCase { // TODO: UIMUseCase {
   }
 
   size_t countSpaces(TenantId tenantId) {
-    return repo.count(tenantId);
+    return repo.countByTenant(tenantId);
   }
 }

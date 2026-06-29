@@ -73,7 +73,7 @@ class ManageServiceInstancesUseCase { // TODO: UIMUseCase {
     }
 
     size_t countServiceInstances(TenantId tenantId) {
-        return repo.count(tenantId);
+        return repo.countByTenant(tenantId);
     }
 
     private static ServicePlan parsePlan(string p) {

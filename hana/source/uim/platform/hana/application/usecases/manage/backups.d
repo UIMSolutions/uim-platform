@@ -79,6 +79,6 @@ class ManageBackupsUseCase { // TODO: UIMUseCase {
   }
 
   size_t countBackups(TenantId tenantId) {
-    return repo.count(tenantId);
+    return repo.countByTenant(tenantId);
   }
 }

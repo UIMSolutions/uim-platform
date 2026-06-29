@@ -84,6 +84,6 @@ class ManageConfigurationsUseCase { // TODO: UIMUseCase {
   }
 
   size_t countConfigurations(TenantId tenantId) {
-    return repo.count(tenantId);
+    return repo.countByTenant(tenantId);
   }
 }

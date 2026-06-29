@@ -31,8 +31,8 @@ class GetOverviewUseCase { // TODO: UIMUseCase {
 
   OverviewSummary getSummary(TenantId tenantId) {
     OverviewSummary s;
-    s.totalNamespaces = nsRepo.count(tenantId);
-    s.totalCredentials = credRepo.count(tenantId);
+    s.totalNamespaces = nsRepo.countByTenant(tenantId);
+    s.totalCredentials = credRepo.countByTenant(tenantId);
 
     // Count by type
     auto allCreds = credRepo.findByTenant(tenantId);
@@ -50,8 +50,8 @@ class GetOverviewUseCase { // TODO: UIMUseCase {
       }
     }
 
-    s.totalBindings = bindingRepo.count(tenantId);
-    s.totalAuditEntries = auditRepo.count(tenantId);
+    s.totalBindings = bindingRepo.countByTenant(tenantId);
+    s.totalAuditEntries = auditRepo.countByTenant(tenantId);
     return s;
   }
 }

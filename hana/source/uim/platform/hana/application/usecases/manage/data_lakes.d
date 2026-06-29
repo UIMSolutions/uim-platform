@@ -76,6 +76,6 @@ class ManageDataLakesUseCase { // TODO: UIMUseCase {
   }
 
   size_t countDataLakes(TenantId tenantId) {
-    return repo.count(tenantId);
+    return repo.countByTenant(tenantId);
   }
 }

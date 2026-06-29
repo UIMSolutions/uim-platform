@@ -84,6 +84,6 @@ class ManageFlexChangesUseCase {
   }
 
   long countChanges(TenantId tenantId) {
-    return repo.count(tenantId);
+    return repo.countByTenant(tenantId);
   }
 }

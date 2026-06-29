@@ -47,13 +47,13 @@ class GetOverviewUseCase { // TODO: UIMUseCase {
 
     OverviewSummary getSummary(TenantId tenantId) {
         OverviewSummary s;
-        s.totalApps = appRepo.count(tenantId);
-        s.totalVersions = versionRepo.count(tenantId);
-        s.totalFiles = fileRepo.count(tenantId);
-        s.totalServiceInstances = instanceRepo.count(tenantId);
-        s.totalDeployments = deploymentRepo.count(tenantId);
-        s.totalRoutes = routeRepo.count(tenantId);
-        s.totalCacheEntries = cacheRepo.count(tenantId);
+        s.totalApps = appRepo.countByTenant(tenantId);
+        s.totalVersions = versionRepo.countByTenant(tenantId);
+        s.totalFiles = fileRepo.countByTenant(tenantId);
+        s.totalServiceInstances = instanceRepo.countByTenant(tenantId);
+        s.totalDeployments = deploymentRepo.countByTenant(tenantId);
+        s.totalRoutes = routeRepo.countByTenant(tenantId);
+        s.totalCacheEntries = cacheRepo.countByTenant(tenantId);
         s.totalStorageBytesUsed = cacheRepo.totalSizeByTenant(tenantId);
         return s;
     }

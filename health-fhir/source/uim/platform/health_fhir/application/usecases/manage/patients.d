@@ -82,6 +82,6 @@ class ManagePatientsUseCase {
   }
 
   size_t countPatients(TenantId tenantId) {
-    return repo.count(tenantId);
+    return repo.countByTenant(tenantId);
   }
 }

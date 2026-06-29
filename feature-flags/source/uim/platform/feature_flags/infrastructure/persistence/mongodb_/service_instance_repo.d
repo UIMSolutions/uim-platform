@@ -40,6 +40,6 @@ class MongoDbServiceInstanceRepository : ServiceInstanceRepository {
     }
 
     size_t countByTenant(TenantId tenantId) {
-        return fallback.count(tenantId);
+        return fallback.countByTenant(tenantId);
     }
 }

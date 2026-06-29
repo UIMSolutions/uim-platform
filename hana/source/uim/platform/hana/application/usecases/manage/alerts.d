@@ -99,6 +99,6 @@ class ManageAlertsUseCase { // TODO: UIMUseCase {
   }
 
   size_t countAlerts(TenantId tenantId) {
-    return repo.count(tenantId);
+    return repo.countByTenant(tenantId);
   }
 }

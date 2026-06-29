@@ -81,7 +81,7 @@ class DeployApplicationUseCase { // TODO: UIMUseCase {
     }
 
     size_t countByTenant(TenantId tenantId) {
-        return deploymentRepo.count(tenantId);
+        return deploymentRepo.countByTenant(tenantId);
     }
 
     private static DeploymentOperation parseOperation(string op) {

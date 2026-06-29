@@ -98,7 +98,7 @@ class ManageJobsUseCase { // TODO: UIMUseCase {
     }
 
     size_t countJobs(TenantId tenantId) {
-        return repo.count(tenantId);
+        return repo.countByTenant(tenantId);
     }
 
     size_t countActiveJobs(TenantId tenantId) {

@@ -18,6 +18,7 @@ import uim.platform.auditlog;
 @safe:
 class MemoryAuditLogRepository : TenantRepository!(AuditLogEntry, AuditLogId), AuditLogRepository {
 
+  // #region ByCategory
   size_t countByCategory(TenantId tenantId, AuditCategory category) {
     return findByCategory(tenantId, category).length;
   }
@@ -33,7 +34,9 @@ class MemoryAuditLogRepository : TenantRepository!(AuditLogEntry, AuditLogId), A
   void removeByCategory(TenantId tenantId, AuditCategory category) {
     findByCategory(tenantId, category).each!(e => remove(e));
   }
+  // #endregion ByCategory
 
+  // #region ByTimeRange
   size_t countByTimeRange(TenantId tenantId, long timeFrom, long timeTo) {
     return findByTimeRange(tenantId, timeFrom, timeTo).length;
   }
@@ -50,7 +53,9 @@ class MemoryAuditLogRepository : TenantRepository!(AuditLogEntry, AuditLogId), A
   void removeByTimeRange(TenantId tenantId, long timeFrom, long timeTo) {
     findByTimeRange(tenantId, timeFrom, timeTo).each!(e => remove(e));
   }
+  // #region ByTimeRange
 
+  // #region ByUser
   size_t countByUser(TenantId tenantId, UserId userId) {
     return findByUser(tenantId, userId).length;
   }
@@ -66,7 +71,9 @@ class MemoryAuditLogRepository : TenantRepository!(AuditLogEntry, AuditLogId), A
   void removeByUser(TenantId tenantId, UserId userId) {
     findByUser(tenantId, userId).each!(e => remove(e));
   }
+  // #endregion ByUser
 
+  // #region ByService
   size_t countByService(TenantId tenantId, ServiceId serviceId) {
     return findByService(tenantId, serviceId).length;
   }
@@ -82,7 +89,9 @@ class MemoryAuditLogRepository : TenantRepository!(AuditLogEntry, AuditLogId), A
   void removeByService(TenantId tenantId, ServiceId serviceId) {
     findByService(tenantId, serviceId).each!(e => remove(e));
   }
+  // #endregion ByService
 
+  // #region ByCorrelation
   size_t countByCorrelation(TenantId tenantId, string correlationId) {
     return findByCorrelation(tenantId, correlationId).length;
   }
@@ -98,6 +107,7 @@ class MemoryAuditLogRepository : TenantRepository!(AuditLogEntry, AuditLogId), A
   void removeByCorrelation(TenantId tenantId, string correlationId) {
     findByCorrelation(tenantId, correlationId).each!(e => remove(e));
   }
+  // #endregion ByCorrelation
 
   AuditLogEntry[] search(TenantId tenantId, AuditCategory[] categories,
     long timeFrom, long timeTo, int limit, int offset) {

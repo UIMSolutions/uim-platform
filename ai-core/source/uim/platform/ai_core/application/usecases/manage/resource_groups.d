@@ -77,7 +77,7 @@ class ManageResourceGroupsUseCase { // TODO: UIMUseCase {
   }
 
   size_t count(TenantId tenantId) {
-    return repo.count(tenantId);
+    return repo.countByTenant(tenantId);
   }
 
   CommandResult deleteResourceGroup(TenantId tenantId, ResourceGroupId resourceGroupId) {

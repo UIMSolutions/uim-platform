@@ -127,7 +127,7 @@ class ManageCredentialsUseCase { // TODO: UIMUseCase {
   }
 
   size_t countCredentialsByTenant(TenantId tenantId) {
-    return credentials.count(tenantId);
+    return credentials.countByTenant(tenantId);
   }
 
   private static CredentialType parseCredentialType(string t) {

@@ -84,7 +84,7 @@ class ManageHtmlAppsUseCase { // TODO: UIMUseCase {
     }
 
     size_t countHtmlAppsByTenant(TenantId tenantId) {
-        return repo.count(tenantId);
+        return repo.countByTenant(tenantId);
     }
 
     private static AppVisibility parseVisibility(string v) {

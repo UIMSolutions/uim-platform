@@ -78,7 +78,7 @@ class ManageMobileAppsUseCase { // TODO: UIMUseCase {
     }
 
     size_t countMobileAppsByTenant(TenantId tenantId) {
-        return repo.count(tenantId);
+        return repo.countByTenant(tenantId);
     }
 
     private static AppPlatform parsePlatform(string s) {

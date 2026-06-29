@@ -87,7 +87,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
   }
 
   size_t countServiceBindings(TenantId tenantId) {
-    return bindings.count(tenantId);
+    return bindings.countByTenant(tenantId);
   }
 
 }

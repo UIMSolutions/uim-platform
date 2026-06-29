@@ -76,6 +76,6 @@ class ManageDatabaseUsersUseCase { // TODO: UIMUseCase {
   }
 
   size_t countDatabaseUsers(TenantId tenantId) {
-    return repo.count(tenantId);
+    return repo.countByTenant(tenantId);
   }
 }

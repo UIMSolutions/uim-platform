@@ -72,6 +72,6 @@ class ManageSchemasUseCase { // TODO: UIMUseCase {
   }
 
   size_t countSchemas(TenantId tenantId) {
-    return repo.count(tenantId);
+    return repo.countByTenant(tenantId);
   }
 }

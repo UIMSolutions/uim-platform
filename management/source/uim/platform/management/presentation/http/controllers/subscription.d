@@ -182,7 +182,7 @@ unittest {
       assert(resCreate.getInteger("code") == 201);
       auto createdId = resCreate["data"].getString("id");
       assert(createdId.length > 0);
-      assert(repo.count(tenantId) == 1);
+      assert(repo.countByTenant(tenantId) == 1);
       assert(repo.countBySubaccount(tenantId, SubaccountId("sub-1")) == 1);
 
       auto reqList = createMockRequest("GET", "/api/v1/subscriptions", tenantId);

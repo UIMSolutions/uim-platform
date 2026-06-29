@@ -40,7 +40,7 @@ class MongoPatientRepository : PatientRepository {
   bool existsById(TenantId tenantId, PatientId id) { return fallback.existsById(tenantId, id); }
   Patient findById(TenantId tenantId, PatientId id) { return fallback.findById(tenantId, id); }
   void removeById(TenantId tenantId, PatientId id) { fallback.removeById(tenantId, id); }
-  size_t countByTenant(TenantId tenantId) { return fallback.count(tenantId); }
+  size_t countByTenant(TenantId tenantId) { return fallback.countByTenant(tenantId); }
   Patient[] findByTenantAll(TenantId tenantId) { return fallback.findByTenantAll(tenantId); }
   Patient[] searchByName(TenantId tenantId, string namePart) { return fallback.searchByName(tenantId, namePart); }
 }

@@ -73,6 +73,6 @@ class ManageFunctionModulesUseCase {
     }
 
     size_t countFunctionModules(TenantId tenantId) {
-        return _repo.count(tenantId);
+        return _repo.countByTenant(tenantId);
     }
 }

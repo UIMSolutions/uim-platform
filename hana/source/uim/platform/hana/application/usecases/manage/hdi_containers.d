@@ -76,6 +76,6 @@ class ManageHDIContainersUseCase { // TODO: UIMUseCase {
   }
 
   size_t countHDIContainers(TenantId tenantId) {
-    return repo.count(tenantId);
+    return repo.countByTenant(tenantId);
   }
 }

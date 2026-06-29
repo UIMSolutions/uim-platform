@@ -51,7 +51,7 @@ class MongoFlexChangeRepository : FlexChangeRepository {
   }
 
   long countByTenant(TenantId tenantId) {
-    return delegate_.count(tenantId);
+    return delegate_.countByTenant(tenantId);
   }
 
   FlexChange[] findByTenantAll(TenantId tenantId) {

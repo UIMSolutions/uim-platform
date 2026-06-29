@@ -75,6 +75,6 @@ class ManageDestinationsUseCase {
     }
 
     size_t countDestinations(TenantId tenantId) {
-        return _repo.count(tenantId);
+        return _repo.countByTenant(tenantId);
     }
 }

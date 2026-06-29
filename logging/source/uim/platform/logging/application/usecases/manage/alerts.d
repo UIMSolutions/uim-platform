@@ -22,7 +22,7 @@ class ManageAlertsUseCase : TenantUseCase!(AlertRepository, Alert, AlertId) {
   }
 
   size_t countByTenant(TenantId tenantId) {
-    return repository.count(tenantId);
+    return repository.countByTenant(tenantId);
   }
 
   Alert[] listAlerts(TenantId tenantId, AlertState state) {
@@ -97,7 +97,7 @@ unittest {
   usecase.triggerAlert(tenantId, AlertRuleId("rule-1"), "High CPU", 
     AlertSeverity.critical, "CPU usage over 90%", 1, LogEntryId("log-123"));
 
-  assert(usecase.count(tenantId) == 1);
+  assert(usecase.countByTenant(tenantId) == 1);
   assert(usecase.countOpen(tenantId) == 1);
 
   auto alerts = usecase.listAlerts(tenantId, AlertState.open);

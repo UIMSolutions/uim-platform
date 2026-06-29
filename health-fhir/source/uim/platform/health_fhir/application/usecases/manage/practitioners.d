@@ -77,6 +77,6 @@ class ManagePractitionersUseCase {
   }
 
   size_t countPractitioners(TenantId tenantId) {
-    return repo.count(tenantId);
+    return repo.countByTenant(tenantId);
   }
 }

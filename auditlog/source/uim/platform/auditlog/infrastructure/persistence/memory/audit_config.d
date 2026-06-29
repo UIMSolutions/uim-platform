@@ -14,18 +14,16 @@ import uim.platform.auditlog;
 
 @safe:
 class MemoryAuditConfigRepository : TenantRepository!(AuditConfig, AuditConfigId), AuditConfigRepository {
-  override AuditConfig[] findAll(size_t offset = 0, size_t limit = 0) {
-    return limit == 0 
-      ? store.byKeyValue.map!(kv => getByTenant(kv.key)).array.skip(offset)
-      : store.byKeyValue.map!(kv => getByTenant(kv.key)).array.skip(offset).take(limit);
-  }
+  // override AuditConfig[] findBy(size_t offset = 0, size_t limit = 0) {
+  //   return limit == 0 
+  //     ? store.byKeyValue.map!(kv => getByTenant(kv.key)).array.skip(offset)
+  //     : store.byKeyValue.map!(kv => getByTenant(kv.key)).array.skip(offset).take(limit);
+  // }
 
   AuditConfig getByTenant(TenantId tenantId) {
-    if (!existsByTenant(tenantId))
-      return AuditConfig.init;
-
-    foreach (config; store[tenantId])
-        return config;
+    auto configs = findByTenant(tenantId);
+    if (configs.length > 0)
+      return configs[0];
 
     return AuditConfig.init;
   }

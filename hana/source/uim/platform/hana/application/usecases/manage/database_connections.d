@@ -91,6 +91,6 @@ class ManageDatabaseConnectionsUseCase { // TODO: UIMUseCase {
   }
 
   size_t countDatabaseConnections(TenantId tenantId) {
-    return repo.count(tenantId);
+    return repo.countByTenant(tenantId);
   }
 }

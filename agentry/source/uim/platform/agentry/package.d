@@ -11,4 +11,5 @@ public {
     import uim.platform.agentry.domain;
     import uim.platform.agentry.application;
     import uim.platform.agentry.infrastructure;
+    import uim.platform.agentry.presentation;
 }

@@ -300,7 +300,7 @@ package "Application Layer  «use cases»" as APP <<Rectangle>> {
     + getByCategory(tenantId, cat) : AuditLogEntry[]
     + getByUser(tenantId, userId) : AuditLogEntry[]
     + getByCorrelation(corrId) : AuditLogEntry[]
-    + count(tenantId) : long
+    + countByTenant(tenantId) : long
   }
 
   @safe: class ManageRetentionUseCase << (U,#FF7043) >> {
@@ -429,7 +429,7 @@ package "Domain Layer  «core business logic»" as DOM <<Rectangle>> {
       + findByTenant(tenantId) : AuditLogEntry[]
       + findById(tenantId, id) : AuditLogEntry*
       + search(tenantId, categories, from, to, limit, offset) : AuditLogEntry[]
-      + count(tenantId) : long
+      + countByTenant(tenantId) : long
       + save(entry) : void
       + removeOlderThan(tenantId, before) : void
     }

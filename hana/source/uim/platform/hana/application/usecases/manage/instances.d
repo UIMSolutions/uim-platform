@@ -119,6 +119,6 @@ class ManageInstancesUseCase { // TODO: UIMUseCase {
   }
 
   size_t countDatabaseInstances(TenantId tenantId) {
-    return repo.count(tenantId);
+    return repo.countByTenant(tenantId);
   }
 }
