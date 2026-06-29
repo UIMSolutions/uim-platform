@@ -20,7 +20,7 @@ class MemoryQueueRepository : TenantRepository!(Queue, QueueId), QueueRepository
         return queues.filter!(e => e.serviceId == serviceId).array;
     }
     Queue[] findByBrokerService(TenantId tenantId, BrokerServiceId serviceId) {
-        return filterByBrokerService(find(tenantId), serviceId);
+        return filterByBrokerService(findByTenant(tenantId), serviceId);
     }
     void removeByBrokerService(TenantId tenantId, BrokerServiceId serviceId) {
         findByBrokerService(tenantId, serviceId).each!(e => remove(e));
@@ -33,7 +33,7 @@ class MemoryQueueRepository : TenantRepository!(Queue, QueueId), QueueRepository
         return queues.filter!(e => e.status == status).array;
     }
     Queue[] findByStatus(TenantId tenantId, QueueStatus status) {
-        return filterByStatus(find(tenantId), status);
+        return filterByStatus(findByTenant(tenantId), status);
     }
     void removeByStatus(TenantId tenantId, QueueStatus status) {
         findByStatus(tenantId, status).each!(e => remove(e));

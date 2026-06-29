@@ -59,7 +59,7 @@ class ManageAuditConfigUseCase { // } { // TODO: UIMUseCase {
   }
 
   AuditConfig[] listAuditConfigs(TenantId tenantId) {
-    return configs.find(tenantId);
+    return configs.findByTenant(tenantId);
   }
 
   CommandResult updateAuditConfig(UpdateAuditConfigRequest req) {
@@ -73,7 +73,7 @@ class ManageAuditConfigUseCase { // } { // TODO: UIMUseCase {
   }
 
   CommandResult deleteAuditConfig(TenantId tenantId, AuditConfigId id) {
-    auto entity = configs.find(tenantId, id);
+    auto entity = configs.findById(tenantId, id);
     if (entity.isNull)
       return CommandResult(false, "", "Audit config not found");
 

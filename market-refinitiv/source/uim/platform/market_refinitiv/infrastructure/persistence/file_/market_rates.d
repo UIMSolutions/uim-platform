@@ -55,26 +55,26 @@ class FileMarketRateRepository : MarketRateRepository {
   }
 
   override MarketRate[] findByProvider(TenantId tenantId, string providerCode) {
-    return find(tenantId).filter!(r => r.providerCode == providerCode).array;
+    return findByTenant(tenantId).filter!(r => r.providerCode == providerCode).array;
   }
 
   override MarketRate[] findByCategory(TenantId tenantId, MarketDataCategory category) {
-    return find(tenantId).filter!(r => r.category == category).array;
+    return findByTenant(tenantId).filter!(r => r.category == category).array;
   }
 
   override MarketRate[] findByDateRange(TenantId tenantId, string fromDate, string toDate) {
-    return find(tenantId).filter!(r =>
+    return findByTenant(tenantId).filter!(r =>
       r.effectiveDate >= fromDate &&
       (toDate.length == 0 || r.effectiveDate <= toDate)
     ).array;
   }
 
   override MarketRate[] findByProviderAndCategory(TenantId tenantId, string providerCode, MarketDataCategory category) {
-    return find(tenantId).filter!(r => r.providerCode == providerCode && r.category == category).array;
+    return findByTenant(tenantId).filter!(r => r.providerCode == providerCode && r.category == category).array;
   }
 
   override MarketRate[] findByKey(TenantId tenantId, string key1, string key2, MarketDataCategory category) {
-    return find(tenantId).filter!(r =>
+    return findByTenant(tenantId).filter!(r =>
       r.key1 == key1 && r.key2 == key2 && r.category == category
     ).array;
   }
@@ -103,7 +103,7 @@ class FileMarketRateRepository : MarketRateRepository {
   }
 
   override size_t countByTenant(TenantId tenantId) {
-    return find(tenantId).length;
+    return findByTenant(tenantId).length;
   }
 
   override size_t countByProvider(TenantId tenantId, string providerCode) {

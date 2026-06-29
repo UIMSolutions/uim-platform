@@ -66,7 +66,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
 
   /// Get group by ID.
   IAMGroup getGroup(IAMGroupId id) {
-    return groupRepo.find(tenantId, id);
+    return groupRepo.findById(tenantId, id);
   }
 
   /// List groups for a tenant.
@@ -155,7 +155,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
 
   /// Delete a group.
   CommandResult deleteGroup(IAMGroupId id) {
-    auto group = groupRepo.find(tenantId, id);
+    auto group = groupRepo.findById(tenantId, id);
     if (group.isNull)
       return CommandResult(false, "", "IAMGroup not found");
 

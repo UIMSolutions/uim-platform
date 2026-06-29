@@ -23,7 +23,7 @@ class DeviceRepository : TenantRepository!(Device, DeviceId), IDeviceRepository 
     }
 
     Device[] findByMobileApplication(TenantId tenantId, MobileApplicationId appId) {
-        return filterByMobileApplication(find(tenantId), appId);
+        return filterByMobileApplication(findByTenant(tenantId), appId);
     }
 
     void removeByMobileApplication(TenantId tenantId, MobileApplicationId appId) {
@@ -39,7 +39,7 @@ class DeviceRepository : TenantRepository!(Device, DeviceId), IDeviceRepository 
     }
 
     Device[] findByStatus(TenantId tenantId, DeviceStatus status) {
-        return filterByStatus(find(tenantId), status);
+        return filterByStatus(findByTenant(tenantId), status);
     }
 
     void removeByStatus(TenantId tenantId, DeviceStatus status) {
@@ -55,7 +55,7 @@ class DeviceRepository : TenantRepository!(Device, DeviceId), IDeviceRepository 
     }
 
     Device[] findByPlatform(TenantId tenantId, AppPlatform platform) {
-        return filterByPlatform(find(tenantId), platform);
+        return filterByPlatform(findByTenant(tenantId), platform);
     }
 
     void removeByPlatform(TenantId tenantId, AppPlatform platform) {
@@ -71,7 +71,7 @@ class DeviceRepository : TenantRepository!(Device, DeviceId), IDeviceRepository 
     }
 
     Device[] findByGroup(TenantId tenantId, string groupName) {
-        return filterByGroup(find(tenantId), groupName);
+        return filterByGroup(findByTenant(tenantId), groupName);
     }
 
     void removeByGroup(TenantId tenantId, string groupName) {

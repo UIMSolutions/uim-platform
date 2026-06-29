@@ -16,8 +16,8 @@ class ManageGroupsUseCase {
 
     this(GroupRepository repo) { this.repo = repo; }
 
-    IDMGroup getGroup(TenantId tenantId, IDMGroupId id) { return repo.find(tenantId, id); }
-    IDMGroup[] listGroups(TenantId tenantId) { return repo.find(tenantId); }
+    IDMGroup getGroup(TenantId tenantId, IDMGroupId id) { return repo.findById(tenantId, id); }
+    IDMGroup[] listGroups(TenantId tenantId) { return repo.findByTenant(tenantId); }
     IDMGroup[] listByType(TenantId tenantId, GroupType type_) { return repo.findByType(tenantId, type_); }
 
     CommandResult createGroup(GroupDTO dto) {
@@ -72,7 +72,7 @@ class ManageGroupsUseCase {
     }
 
     CommandResult deleteGroup(TenantId tenantId, IDMGroupId id) {
-        auto entity = repo.find(tenantId, id);
+        auto entity = repo.findById(tenantId, id);
         if (entity.isNull) return CommandResult(false, "", "Group not found");
         repo.remove(entity);
         return CommandResult(true, id.value, "");

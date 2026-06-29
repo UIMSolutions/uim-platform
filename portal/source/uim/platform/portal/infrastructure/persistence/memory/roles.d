@@ -17,18 +17,18 @@ import uim.platform.portal;
 class MemoryRoleRepository : TenantRepository!(Role, RoleId), RoleRepository {
 
   bool existsByName(TenantId tenantId, string name) {
-    return find(tenantId).any!(r => r.name == name);
+    return findByTenant(tenantId).any!(r => r.name == name);
   }
 
   Role findByName(TenantId tenantId, string name) {
-    foreach (r; find(tenantId))
+    foreach (r; findByTenant(tenantId))
       if (r.name == name)
         return r;
     return Role.init;
   }
 
   void removeByName(TenantId tenantId, string name) {
-    foreach (r; find(tenantId))
+    foreach (r; findByTenant(tenantId))
       if (r.name == name) {
         store.remove(r.id);
         return;
@@ -41,14 +41,14 @@ class MemoryRoleRepository : TenantRepository!(Role, RoleId), RoleRepository {
 
   Role[] findByUser(UserId userId) {
     Role[] result;
-    foreach (r; find(tenantId))
+    foreach (r; findByTenant(tenantId))
       if (r.userIds.canFind(userId))
         result ~= r;
     return result;
   }
 
   void removeByUser(UserId userId) {
-    foreach (r; find(tenantId))
+    foreach (r; findByTenant(tenantId))
       if (r.userIds.canFind(userId))
         store.remove(r.id);
   }

@@ -124,7 +124,7 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteObject(TenantId tenantId, StorageObjectId id) {
-    auto obj = objectRepo.find(tenantId, id);
+    auto obj = objectRepo.findById(tenantId, id);
     if (obj.isNull)
       return CommandResult(false, "", "Object not found");
 

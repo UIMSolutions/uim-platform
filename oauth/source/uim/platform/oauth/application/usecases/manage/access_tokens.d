@@ -19,7 +19,7 @@ class ManageAccessTokensUseCase { // TODO: UIMUseCase {
     }
 
     AccessToken getToken(TenantId tenantId, AccessTokenId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     AccessToken getByTokenValue(TenantId tenantId, string tokenValue) {
@@ -27,7 +27,7 @@ class ManageAccessTokensUseCase { // TODO: UIMUseCase {
     }
 
     AccessToken[] listTokens(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     AccessToken[] listTokens(TenantId tenantId, string clientId) {
@@ -52,7 +52,7 @@ class ManageAccessTokensUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult revokeToken(TenantId tenantId, AccessTokenId id) {
-        auto token = repo.find(tenantId, id);
+        auto token = repo.findById(tenantId, id);
         if (token.isNull)
             return CommandResult(false, "", "Access token not found");
             
@@ -62,7 +62,7 @@ class ManageAccessTokensUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteToken(TenantId tenantId, AccessTokenId id) {
-        auto token = repo.find(tenantId, id);
+        auto token = repo.findById(tenantId, id);
         if (token.isNull)            
             return CommandResult(false, "", "Access token not found");
 

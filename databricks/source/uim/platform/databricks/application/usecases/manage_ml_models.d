@@ -37,11 +37,11 @@ public:
   }
 
   UseCaseResult!(MlModel[]) list(TenantId tenantId) {
-    return UseCaseResult!(MlModel[])(true, "", _repo.find(tenantId));
+    return UseCaseResult!(MlModel[])(true, "", _repo.findByTenant(tenantId));
   }
 
   UseCaseResult!MlModel get(TenantId tenantId, MlModelId id) {
-    auto m = _repo.find(tenantId, id);
+    auto m = _repo.findById(tenantId, id);
     if (m.isNull)
       return UseCaseResult!MlModel(false, "ML model not found", MlModel.init);
     return UseCaseResult!MlModel(true, "", m);
@@ -61,7 +61,7 @@ public:
   }
 
   UseCaseResult!bool remove(TenantId tenantId, MlModelId id) {
-    auto m = _repo.find(tenantId, id);
+    auto m = _repo.findById(tenantId, id);
     if (m.isNull)
       return UseCaseResult!bool(false, "ML model not found", false);
     _repo.remove(m);

@@ -17,11 +17,11 @@ class MemoryDataAccessLogRepository : TenantRepository!(DataAccessLog, DataAcces
 
   // #region ByAuditLogId
   bool existsByAuditLogId(TenantId tenantId, AuditLogId auditLogId) {
-    return find(tenantId).any!(e => e.auditLogId == auditLogId);
+    return findByTenant(tenantId).any!(e => e.auditLogId == auditLogId);
   }
 
   DataAccessLog findByAuditLogId(TenantId tenantId, AuditLogId auditLogId) {
-    foreach (e; find(tenantId))
+    foreach (e; findByTenant(tenantId))
       if (e.auditLogId == auditLogId)
         return e;
     return DataAccessLog.init;
@@ -40,7 +40,7 @@ class MemoryDataAccessLogRepository : TenantRepository!(DataAccessLog, DataAcces
   }
 
   DataAccessLog[] findByAccessor(TenantId tenantId, UserId accessedBy) {
-    return find(tenantId).filter!(e => e.accessedBy == accessedBy).array;
+    return findByTenant(tenantId).filter!(e => e.accessedBy == accessedBy).array;
   }
 
   void removeByAccessor(TenantId tenantId, UserId accessedBy) {
@@ -54,7 +54,7 @@ class MemoryDataAccessLogRepository : TenantRepository!(DataAccessLog, DataAcces
   }
 
   DataAccessLog[] findByDataSubject(TenantId tenantId, string dataSubject) {
-    return find(tenantId).filter!(e => e.dataSubject == dataSubject).array;
+    return findByTenant(tenantId).filter!(e => e.dataSubject == dataSubject).array;
   }
 
   void removeByDataSubject(TenantId tenantId, string dataSubject) {
@@ -68,7 +68,7 @@ class MemoryDataAccessLogRepository : TenantRepository!(DataAccessLog, DataAcces
   }
 
   DataAccessLog[] findByTimeRange(TenantId tenantId, long timeFrom, long timeTo) {
-    return find(tenantId).filter!(e => e.timestamp >= timeFrom && e.timestamp <= timeTo)
+    return findByTenant(tenantId).filter!(e => e.timestamp >= timeFrom && e.timestamp <= timeTo)
       .array;
   }
 
@@ -78,6 +78,6 @@ class MemoryDataAccessLogRepository : TenantRepository!(DataAccessLog, DataAcces
   // #endregion ByTimeRange
 
   void removeOlderThan(TenantId tenantId, long beforeTimestamp) {
-    find(tenantId).filter!(e => e.timestamp < beforeTimestamp).each!(e => remove(e));
+    findByTenant(tenantId).filter!(e => e.timestamp < beforeTimestamp).each!(e => remove(e));
   }
 }

@@ -23,7 +23,7 @@ class MemoryPersonalDataModelRepository : TenantRepository!(PersonalDataModel, P
   }
 
   PersonalDataModel[] findByCategory(TenantId tenantId, PersonalDataCategory category) {
-    return filterByCategory(find(tenantId), category);
+    return filterByCategory(findByTenant(tenantId), category);
   }
 
   void removeByCategory(TenantId tenantId, PersonalDataCategory category) {
@@ -39,7 +39,7 @@ class MemoryPersonalDataModelRepository : TenantRepository!(PersonalDataModel, P
   }
 
   PersonalDataModel[] findBySourceSystem(TenantId tenantId, string sourceSystem) {
-    return filterBySourceSystem(find(tenantId), sourceSystem);
+    return filterBySourceSystem(findByTenant(tenantId), sourceSystem);
   }
 
   void removeBySourceSystem(TenantId tenantId, string sourceSystem) {
@@ -55,7 +55,7 @@ class MemoryPersonalDataModelRepository : TenantRepository!(PersonalDataModel, P
   }
 
   PersonalDataModel[] findBySubjectType(TenantId tenantId, DataSubjectType subjectType) {
-    return filterBySubjectType(find(tenantId), subjectType);
+    return filterBySubjectType(findByTenant(tenantId), subjectType);
   }
 
   void removeBySubjectType(TenantId tenantId, DataSubjectType subjectType) {
@@ -71,7 +71,7 @@ class MemoryPersonalDataModelRepository : TenantRepository!(PersonalDataModel, P
   }
 
   PersonalDataModel[] findSpecialCategories(TenantId tenantId) {
-    return filterSpecialCategories(find(tenantId));
+    return filterSpecialCategories(findByTenant(tenantId));
   }
 
   void removeSpecialCategories(TenantId tenantId) {

@@ -8,7 +8,7 @@ import uim.platform.data_retention;
 class MemoryLegalGroundRepository : TenantRepository!(LegalGround, LegalGroundId), LegalGroundRepository {
 
     LegalGround[] findAll(TenantId tenantId) {
-        return find(tenantId);
+        return findByTenant(tenantId);
     }
 
     size_t countByBusinessPurpose(TenantId tenantId, BusinessPurposeId purposeId) {
@@ -18,7 +18,7 @@ class MemoryLegalGroundRepository : TenantRepository!(LegalGround, LegalGroundId
         return grounds.filter!(a => a.businessPurposeId == purposeId).array;
     }
     LegalGround[] findByBusinessPurpose(TenantId tenantId, BusinessPurposeId purposeId) {
-        return filterByBusinessPurpose(find(tenantId), purposeId);
+        return filterByBusinessPurpose(findByTenant(tenantId), purposeId);
     }
     void removeByBusinessPurpose(TenantId tenantId, BusinessPurposeId purposeId) {
         findByBusinessPurpose(tenantId, purposeId).each!(a => remove(a));
@@ -31,7 +31,7 @@ class MemoryLegalGroundRepository : TenantRepository!(LegalGround, LegalGroundId
         return grounds.filter!(a => a.type == type).array;
     }
     LegalGround[] findByType(TenantId tenantId, LegalGroundType type) {
-        return filterByType(find(tenantId), type);
+        return filterByType(findByTenant(tenantId), type);
     }
     void removeByType(TenantId tenantId, LegalGroundType type) {
         findByType(tenantId, type).each!(a => remove(a));

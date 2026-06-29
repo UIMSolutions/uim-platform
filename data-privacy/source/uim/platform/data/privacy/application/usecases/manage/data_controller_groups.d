@@ -37,11 +37,11 @@ class ManageDataControllerGroupsUseCase { // TODO: UIMUseCase {
   }
 
   DataControllerGroup getGroup(TenantId tenantId, DataControllerGroupId id) {
-    return repo.find(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 
   DataControllerGroup[] listGroups(TenantId tenantId) {
-    return repo.find(tenantId);
+    return repo.findByTenant(tenantId);
   }
 
   CommandResult updateGroup(UpdateDataControllerGroupRequest req) {

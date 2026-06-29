@@ -19,11 +19,11 @@ class ManageJobsUseCase {
     }
 
     Job getJob(TenantId tenantId, JobId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     Job[] listJobs(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     Job[] listByPipeline(TenantId tenantId, PipelineId pipelineId) {
@@ -77,7 +77,7 @@ class ManageJobsUseCase {
     }
 
     CommandResult deleteJob(TenantId tenantId, JobId id) {
-        auto existing = repo.find(tenantId, id);
+        auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Job not found");
         repo.remove(tenantId, id);

@@ -22,7 +22,7 @@ class MemoryAbapProgramRepository : TenantRepository!(AbapProgram, AbapProgramId
     }
 
     AbapProgram[] findByProgramType(TenantId tenantId, ProgramType programType) {
-        return filterByProgramType(find(tenantId), programType);
+        return filterByProgramType(findByTenant(tenantId), programType);
     }
 
     void removeByProgramType(TenantId tenantId, ProgramType programType) {
@@ -38,7 +38,7 @@ class MemoryAbapProgramRepository : TenantRepository!(AbapProgram, AbapProgramId
     }
 
     AbapProgram[] findByLanguage(TenantId tenantId, string language) {
-        return filterByLanguage(find(tenantId), language);
+        return filterByLanguage(findByTenant(tenantId), language);
     }
 
     void removeByLanguage(TenantId tenantId, string language) {

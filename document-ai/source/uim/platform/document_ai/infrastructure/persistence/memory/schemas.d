@@ -19,7 +19,7 @@ class MemorySchemaRepository : TenantRepository!(Schema, SchemaId), SchemaReposi
   
   
   Schema[] findByClient(ClientId clientId) {
-    foreach (s; find(tenantId))
+    foreach (s; findByTenant(tenantId))
       if (s.clientId == clientId)   
       return cl;
     return null;

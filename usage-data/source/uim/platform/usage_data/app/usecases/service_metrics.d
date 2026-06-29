@@ -29,13 +29,13 @@ class ServiceMetricUseCases {
   }
 
   ServiceMetricResponse getMetric(TenantId tenantId, ServiceMetricId id) {
-    auto m = repo.find(tenantId, id);
+    auto m = repo.findById(tenantId, id);
     return ServiceMetricResponse.fromEntity(m);
   }
 
   ServiceMetricResponse[] listMetrics(TenantId tenantId) {
     ServiceMetricResponse[] result;
-    foreach (m; repo.find(tenantId))
+    foreach (m; repo.findByTenant(tenantId))
       result ~= ServiceMetricResponse.fromEntity(m);
     return result;
   }
@@ -55,7 +55,7 @@ class ServiceMetricUseCases {
   }
 
   CommandResult deleteMetric(TenantId tenantId, ServiceMetricId id) {
-    auto m = repo.find(tenantId, id);
+    auto m = repo.findById(tenantId, id);
     if (m.isNull) return CommandResult(false, "", "Service metric not found");
     repo.remove(m);
     return CommandResult(true, m.id.value, "");

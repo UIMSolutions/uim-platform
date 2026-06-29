@@ -32,7 +32,7 @@ class MemoryUsageStatisticRepository : TenantRepository!(UsageStatistic, UsageSt
     return findByConnection(tenantId, connectionId).length;
   }
   UsageStatistic[] findByConnection(TenantId tenantId, ConnectionId connectionId) {
-    return filterByConnection(find(tenantId), connectionId);
+    return filterByConnection(findByTenant(tenantId), connectionId);
   }
   void removeByConnection(TenantId tenantId, ConnectionId connectionId) {
     findByConnection(tenantId, connectionId).each!(s => remove(s));
@@ -45,7 +45,7 @@ class MemoryUsageStatisticRepository : TenantRepository!(UsageStatistic, UsageSt
     return stats.filter!(s => s.period == period).array;
   }
   UsageStatistic[] findByPeriod(TenantId tenantId, StatisticsPeriod period) {
-    return filterByPeriod(find(tenantId), period);
+    return filterByPeriod(findByTenant(tenantId), period);
   }
   void removeByPeriod(TenantId tenantId, StatisticsPeriod period) {
     findByPeriod(tenantId, period).each!(s => remove(s));

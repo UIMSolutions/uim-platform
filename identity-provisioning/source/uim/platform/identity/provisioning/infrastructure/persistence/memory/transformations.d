@@ -25,7 +25,7 @@ class MemoryTransformationRepository : TenantRepository!(Transformation, Transfo
   }
 
   Transformation[] findBySystem(TenantId tenantId, string systemId) {
-    return filterBySystem(find(tenantId), systemId);
+    return filterBySystem(findByTenant(tenantId), systemId);
   }
 
   void removeBySystem(TenantId tenantId, string systemId) {
@@ -43,7 +43,7 @@ class MemoryTransformationRepository : TenantRepository!(Transformation, Transfo
   }
 
   Transformation[] findBySystemRole(TenantId tenantId, SystemRole role) {
-    return filterBySystemRole(find(tenantId), role);
+    return filterBySystemRole(findByTenant(tenantId), role);
   }
 
   void removeBySystemRole(TenantId tenantId, SystemRole role) {

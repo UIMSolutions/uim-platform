@@ -70,7 +70,7 @@ class ManageCredentialsUseCase { // TODO: UIMUseCase {
 
   // Update with conditional support via ifMatch header
   CommandResult updateCredential(TenantId tenantId, CredentialId id, UpdateCredentialRequest r) {
-    auto cred = credentials.find(tenantId, id);
+    auto cred = credentials.findById(tenantId, id);
     if (cred.isNull)
       return CommandResult(false, "", "Credential not found");
 
@@ -98,7 +98,7 @@ class ManageCredentialsUseCase { // TODO: UIMUseCase {
   }
 
   Credential getCredential(TenantId tenantId, CredentialId id) {
-    return credentials.find(tenantId, id);
+    return credentials.findById(tenantId, id);
   }
 
   Credential getCredentialByName(TenantId tenantId, NamespaceId namespaceId, string name, string type) {
@@ -114,7 +114,7 @@ class ManageCredentialsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteCredential(TenantId tenantId, CredentialId id) {
-    auto credential = credentials.find(tenantId, id);
+    auto credential = credentials.findById(tenantId, id);
     if (credential.isNull)
       return CommandResult(false, "", "Credential not found");
 

@@ -18,7 +18,7 @@ class MemoryMtaRepository
     /// Find all MTAs for a tenant with a given MTA application ID
     Mta[] findByMtaId(TenantId tenantId, string mtaId) {
         Mta[] result;
-        foreach (m; find(tenantId))
+        foreach (m; findByTenant(tenantId))
             if (m.mtaId == mtaId) result ~= m;
         return result;
     }
@@ -26,7 +26,7 @@ class MemoryMtaRepository
     /// Find all MTAs for a tenant by solution type
     Mta[] findBySolutionType(TenantId tenantId, SolutionType solType) {
         Mta[] result;
-        foreach (m; find(tenantId))
+        foreach (m; findByTenant(tenantId))
             if (m.solutionType == solType) result ~= m;
         return result;
     }

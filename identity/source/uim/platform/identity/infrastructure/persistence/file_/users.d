@@ -32,22 +32,22 @@ import std.json;
 //         return store.values.filter!(u => u.tenantId == tenantId).array;
 //     }
 //     User findByUserName(TenantId tenantId, string userName) {
-//         foreach (u; find(tenantId)) if (u.userName == userName) return u;
+//         foreach (u; findByTenant(tenantId)) if (u.userName == userName) return u;
 //         return User.init;
 //     }
 //     User findByEmail(TenantId tenantId, string email) {
-//         foreach (u; find(tenantId)) if (u.email == email) return u;
+//         foreach (u; findByTenant(tenantId)) if (u.email == email) return u;
 //         return User.init;
 //     }
 //     User[] findByStatus(TenantId tenantId, UserStatus status) {
-//         return find(tenantId).filter!(u => u.status == status).array;
+//         return findByTenant(tenantId).filter!(u => u.status == status).array;
 //     }
 //     User[] findByType(TenantId tenantId, UserType type_) {
-//         return find(tenantId).filter!(u => u.type_ == type_).array;
+//         return findByTenant(tenantId).filter!(u => u.type_ == type_).array;
 //     }
 //     User[] findByGroup(TenantId tenantId, IDMGroupId groupId) {
 //         import std.algorithm : canFind;
-//         return find(tenantId).filter!(u => u.groups.canFind(groupId.value)).array;
+//         return findByTenant(tenantId).filter!(u => u.groups.canFind(groupId.value)).array;
 //     }
 
 //     private string filePath() { return dataDir ~ "/identity_users.json"; }

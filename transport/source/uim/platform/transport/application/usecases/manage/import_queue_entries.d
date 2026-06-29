@@ -19,11 +19,11 @@ class ManageImportQueueEntriesUseCase {
     }
 
     ImportQueueEntry getEntry(TenantId tenantId, ImportQueueEntryId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     ImportQueueEntry[] listEntries(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     ImportQueueEntry[] listEntriesByNode(TenantId tenantId, TransportNodeId nodeId) {
@@ -57,7 +57,7 @@ class ManageImportQueueEntriesUseCase {
     }
 
     CommandResult updateEntryStatus(TenantId tenantId, ImportQueueEntryId id, ImportStatus status, string errorMessage = "") {
-        auto existing = repo.find(tenantId, id);
+        auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Import queue entry not found");
         existing.status = status;
@@ -68,7 +68,7 @@ class ManageImportQueueEntriesUseCase {
     }
 
     CommandResult resetEntry(TenantId tenantId, ImportQueueEntryId id) {
-        auto existing = repo.find(tenantId, id);
+        auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Import queue entry not found");
         existing.status = ImportStatus.initial;
@@ -81,7 +81,7 @@ class ManageImportQueueEntriesUseCase {
     }
 
     CommandResult deleteEntry(TenantId tenantId, ImportQueueEntryId id) {
-        auto existing = repo.find(tenantId, id);
+        auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Import queue entry not found");
 

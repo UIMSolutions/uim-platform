@@ -13,34 +13,34 @@ import uim.platform.health_fhir;
 class MemoryPatientRepository : TenantRepository!(Patient, PatientId), PatientRepository {
 
   bool existsById(TenantId tenantId, PatientId id) {
-    return !find(tenantId, id).isNull;
+    return !findById(tenantId, id).isNull;
   }
 
   Patient findById(TenantId tenantId, PatientId id) {
-    foreach (p; find(tenantId)) {
+    foreach (p; findByTenant(tenantId)) {
       if (p.id == id) return p;
     }
     return Patient.init;
   }
 
   void removeById(TenantId tenantId, PatientId id) {
-    auto p = find(tenantId, id);
+    auto p = findById(tenantId, id);
     if (!p.isNull) remove(p);
   }
 
   size_t countByTenant(TenantId tenantId) {
-    return find(tenantId).length;
+    return findByTenant(tenantId).length;
   }
 
   Patient[] findByTenantAll(TenantId tenantId) {
-    return find(tenantId);
+    return findByTenant(tenantId);
   }
 
   Patient[] searchByName(TenantId tenantId, string namePart) {
     import std.string : toLower, indexOf;
     auto lower = namePart.toLower;
     Patient[] results;
-    foreach (p; find(tenantId)) {
+    foreach (p; findByTenant(tenantId)) {
       foreach (n; p.name_) {
         if (n.family_.toLower.indexOf(lower) >= 0) {
           results ~= p;

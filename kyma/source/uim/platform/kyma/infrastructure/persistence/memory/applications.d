@@ -35,7 +35,7 @@ size_t countByEnvironment(KymaEnvironmentId envId) {
     return apps.filter!(e => e.environmentId == envId).array;
   }
   Application[] findByEnvironment(KymaEnvironmentId envId) {
-    return filterByEnvironment(find(tenantId).array, envId);
+    return filterByEnvironment(findByTenant(tenantId).array, envId);
   }
   void removeByEnvironment(KymaEnvironmentId envId) {
     findByEnvironment(envId).each!(entity => remove(entity));
@@ -48,7 +48,7 @@ size_t countByEnvironment(KymaEnvironmentId envId) {
     return apps.filter!(e => e.status == status).array;
   }
   Application[] findByStatus(AppConnectivityStatus status) {
-    return filterByStatus(find(tenantId).array, status);
+    return filterByStatus(findByTenant(tenantId).array, status);
   }
   void removeByStatus(AppConnectivityStatus status) {
     findByStatus(status).each!(entity => remove(entity));

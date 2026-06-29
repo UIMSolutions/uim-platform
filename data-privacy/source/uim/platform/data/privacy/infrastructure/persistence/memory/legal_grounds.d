@@ -23,7 +23,7 @@ class MemoryLegalGroundRepository : TenantRepository!(LegalGround, LegalGroundId
   } 
 
   LegalGround[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
-    return filterByDataSubject(find(tenantId), dataSubjectId);
+    return filterByDataSubject(findByTenant(tenantId), dataSubjectId);
   }
 
   void removeByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
@@ -39,7 +39,7 @@ class MemoryLegalGroundRepository : TenantRepository!(LegalGround, LegalGroundId
   }
 
   LegalGround[] findByBasis(TenantId tenantId, LegalBasis basis) {
-    return filterByBasis(find(tenantId), basis);
+    return filterByBasis(findByTenant(tenantId), basis);
   }
 
   void removeByBasis(TenantId tenantId, LegalBasis basis) {
@@ -55,7 +55,7 @@ class MemoryLegalGroundRepository : TenantRepository!(LegalGround, LegalGroundId
   }
 
   LegalGround[] findByPurpose(TenantId tenantId, ProcessingPurpose purpose) {
-    return filterByPurpose(find(tenantId), purpose);
+    return filterByPurpose(findByTenant(tenantId), purpose);
   }
 
   void removeByPurpose(TenantId tenantId, ProcessingPurpose purpose) {
@@ -71,7 +71,7 @@ class MemoryLegalGroundRepository : TenantRepository!(LegalGround, LegalGroundId
   } 
 
   LegalGround[] findActive(TenantId tenantId, DataSubjectId dataSubjectId) {
-    return filterActive(find(tenantId), dataSubjectId);
+    return filterActive(findByTenant(tenantId), dataSubjectId);
   }
 
   void removeActive(TenantId tenantId, DataSubjectId dataSubjectId) {

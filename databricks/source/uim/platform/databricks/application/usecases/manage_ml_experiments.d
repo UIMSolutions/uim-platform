@@ -35,11 +35,11 @@ public:
   }
 
   UseCaseResult!(MlExperiment[]) list(TenantId tenantId) {
-    return UseCaseResult!(MlExperiment[])(true, "", _repo.find(tenantId));
+    return UseCaseResult!(MlExperiment[])(true, "", _repo.findByTenant(tenantId));
   }
 
   UseCaseResult!MlExperiment get(TenantId tenantId, MlExperimentId id) {
-    auto e = _repo.find(tenantId, id);
+    auto e = _repo.findById(tenantId, id);
     if (e.isNull)
       return UseCaseResult!MlExperiment(false, "ML experiment not found", MlExperiment.init);
 
@@ -59,7 +59,7 @@ public:
   }
 
   UseCaseResult!bool remove(TenantId tenantId, MlExperimentId id) {
-    auto e = _repo.find(tenantId, id);
+    auto e = _repo.findById(tenantId, id);
     if (e.isNull)
       return UseCaseResult!bool(false, "ML experiment not found", false);
     e.lifecycleStage = "deleted";

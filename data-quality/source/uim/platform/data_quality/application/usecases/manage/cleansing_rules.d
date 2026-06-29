@@ -88,7 +88,7 @@ class ManageCleansingRulesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteCleansingRule(TenantId tenantId, CleansingRuleId id) {
-    auto rule = repo.find(tenantId, id);
+    auto rule = repo.findById(tenantId, id);
     if (rule.isNull)
       return CommandResult(false, "", "Cleansing rule not found");
 
@@ -100,11 +100,11 @@ class ManageCleansingRulesUseCase { // TODO: UIMUseCase {
   }
 
   CleansingRule getCleansingRule(TenantId tenantId, CleansingRuleId id) {
-    return repo.find(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 
   CleansingRule[] listCleansingRules(TenantId tenantId) {
-    return repo.find(tenantId);
+    return repo.findByTenant(tenantId);
   }
 
   CleansingRule[] listActiveCleansingRules(TenantId tenantId) {

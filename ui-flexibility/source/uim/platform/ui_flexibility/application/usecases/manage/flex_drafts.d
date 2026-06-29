@@ -51,7 +51,7 @@ class ManageFlexDraftsUseCase {
   }
 
   FlexDraft getDraft(TenantId tenantId, FlexDraftId id) {
-    return repo.find(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 
   FlexDraft getDraftByApp(TenantId tenantId, string appId) {
@@ -63,7 +63,7 @@ class ManageFlexDraftsUseCase {
   }
 
   CommandResult discardDraft(TenantId tenantId, FlexDraftId id) {
-    auto draft = repo.find(tenantId, id);
+    auto draft = repo.findById(tenantId, id);
     if (draft.isNull)
       return CommandResult(false, null, "FlexDraft not found");
 

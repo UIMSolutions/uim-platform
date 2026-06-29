@@ -47,11 +47,11 @@ class ManageDataProcessingLogsUseCase { // TODO: UIMUseCase {
     }
 
     DataProcessingLog getProcessingLog(TenantId tenantId, DataProcessingLogId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     DataProcessingLog[] listProcessingLogs(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     DataProcessingLog[] listProcessingLogs(TenantId tenantId, DataSubjectId dataSubjectId) {
@@ -63,7 +63,7 @@ class ManageDataProcessingLogsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteProcessingLog(TenantId tenantId, DataProcessingLogId id) {
-        auto log = repo.find(tenantId, id);
+        auto log = repo.findById(tenantId, id);
         if (log.isNull)
             return CommandResult(false, "", "Log entry not found");
 

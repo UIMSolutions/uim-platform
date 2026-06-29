@@ -40,7 +40,7 @@ class ManageChannelsUseCase { // TODO: UIMUseCase {
   }
 
   Channel getChannel(TenantId tenantId, ChannelId id) {
-    return repo.find(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 
   Channel[] listByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
@@ -65,7 +65,7 @@ class ManageChannelsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteChannel(TenantId tenantId, ChannelId id) {
-    auto entity = repo.find(tenantId, id);
+    auto entity = repo.findById(tenantId, id);
     if (entity.isNull)
       return CommandResult(false, "", "Channel not found");
 

@@ -8,13 +8,13 @@ class MemoryProvisioningRequestRepository
 
   ProvisioningRequest[] findByStatus(TenantId tenantId, ProvisioningStatus status) {
     ProvisioningRequest[] result;
-    foreach (item; find(tenantId))
+    foreach (item; findByTenant(tenantId))
       if (item.status == status) result ~= item;
     return result;
   }
 
   ProvisioningRequest[] findRecent(TenantId tenantId, int limit) {
-    auto all = find(tenantId);
+    auto all = findByTenant(tenantId);
     if (all.length <= limit) return all;
     return all[$ - limit .. $];
   }

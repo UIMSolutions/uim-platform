@@ -15,7 +15,7 @@ import uim.platform.html_repository;
 class AppRouteMemoryRepository : TenantRepository!(AppRoute, AppRouteId), AppRouteRepository {
 
   AppRoute findByPathPrefix(TenantId tenantId, string pathPrefix) {
-    foreach (e; find(tenantId)) {
+    foreach (e; findByTenant(tenantId)) {
       if (e.tenantId == tenantId && e.pathPrefix == pathPrefix) return e;
     }
     return AppRoute.init;
@@ -28,7 +28,7 @@ class AppRouteMemoryRepository : TenantRepository!(AppRoute, AppRouteId), AppRou
     return routes.filter!(r => r.appId == appId).array;
   }
   AppRoute[] findByApp(HtmlAppId appId) {
-    return filterByApp(find(tenantId), appId);
+    return filterByApp(findByTenant(tenantId), appId);
   }
   void removeByApp(HtmlAppId appId) {
     findByApp(appId).each!(r => remove(r.id));

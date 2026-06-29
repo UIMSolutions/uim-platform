@@ -77,11 +77,11 @@ class ManageAlertRulesUseCase { // TODO: UIMUseCase {
   }
 
   AlertRule getRule(TenantId tenantId, AlertRuleId id) {
-    return alertRules.find(tenantId, id);
+    return alertRules.findById(tenantId, id);
   }
 
   AlertRule[] listRules(TenantId tenantId) {
-    return alertRules.find(tenantId);
+    return alertRules.findByTenant(tenantId);
   }
 
   AlertRule[] listByResource(TenantId tenantId, MonitoredResourceId resourceId) {
@@ -93,7 +93,7 @@ class ManageAlertRulesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteRule(TenantId tenantId, AlertRuleId id) {
-    auto rule = alertRules.find(tenantId, id);
+    auto rule = alertRules.findById(tenantId, id);
     if (rule.isNull)
       return CommandResult(false, "", "Alert rule not found");
 

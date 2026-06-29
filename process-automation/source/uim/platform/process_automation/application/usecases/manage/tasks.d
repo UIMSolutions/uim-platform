@@ -40,11 +40,11 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
     }
 
     PATask getTask(TenantId tenantId, TaskId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     PATask[] listTasks(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     PATask[] listTasksByAssignee(TenantId tenantId, string assignee) {

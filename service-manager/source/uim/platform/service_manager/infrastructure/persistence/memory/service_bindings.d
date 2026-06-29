@@ -15,7 +15,7 @@ class MemoryServiceBindingRepository : TenantRepository!(ServiceBinding, Service
         return bindings.filter!(b => b.status == status).array;
     }
     ServiceBinding[] findByStatus(TenantId tenantId, ServiceBindingStatus status) {
-        return this.filterByStatus(this.find(tenantId), status);
+        return this.filterByStatus(this.findByTenant(tenantId), status);
     }
     void removeByStatus(TenantId tenantId, ServiceBindingStatus status)     {
         this.removeAll(this.findByStatus(tenantId, status));

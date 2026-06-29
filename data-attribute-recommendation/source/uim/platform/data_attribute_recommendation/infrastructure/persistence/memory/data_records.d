@@ -23,7 +23,7 @@ class MemoryDataRecordRepository : TenantRepository!(DataRecord, DataRecordId), 
     return records.filter!(e => e.datasetId == datasetId).array;
   }
   DataRecord[] findByDataset(TenantId tenantId, DatasetId datasetId) {
-    return filterByDataset(find(tenantId), datasetId);
+    return filterByDataset(findByTenant(tenantId), datasetId);
   }
 
   void removeByDataset(TenantId tenantId, DatasetId datasetId) {

@@ -41,11 +41,11 @@ class ManageGlossaryEntriesUseCase {
     }
 
     GlossaryEntry[] listEntries(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     GlossaryEntry getEntry(TenantId tenantId, GlossaryEntryId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     CommandResult updateEntry(UpdateGlossaryEntryRequest r) {
@@ -63,7 +63,7 @@ class ManageGlossaryEntriesUseCase {
     }
 
     CommandResult deleteEntry(TenantId tenantId, GlossaryEntryId id) {
-        auto existing = repo.find(tenantId, id);
+        auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Glossary entry not found");
 

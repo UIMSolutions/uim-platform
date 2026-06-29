@@ -38,11 +38,11 @@ public:
   }
 
   UseCaseResult!(SqlWarehouse[]) list(TenantId tenantId) {
-    return UseCaseResult!(SqlWarehouse[])(true, "", _repo.find(tenantId));
+    return UseCaseResult!(SqlWarehouse[])(true, "", _repo.findByTenant(tenantId));
   }
 
   UseCaseResult!SqlWarehouse get(TenantId tenantId, SqlWarehouseId id) {
-    auto w = _repo.find(tenantId, id);
+    auto w = _repo.findById(tenantId, id);
     if (w.isNull)
       return UseCaseResult!SqlWarehouse(false, "SQL warehouse not found", SqlWarehouse.init);
     return UseCaseResult!SqlWarehouse(true, "", w);
@@ -62,7 +62,7 @@ public:
   }
 
   UseCaseResult!bool remove(TenantId tenantId, SqlWarehouseId id) {
-    auto w = _repo.find(tenantId, id);
+    auto w = _repo.findById(tenantId, id);
     if (w.isNull)
       return UseCaseResult!bool(false, "SQL warehouse not found", false);
     w.state = WarehouseState.deleted;

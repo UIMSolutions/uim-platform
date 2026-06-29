@@ -54,7 +54,7 @@ class ManageConnectionsUseCase { // TODO: UIMUseCase {
   }
 
   Connection getConnection(TenantId tenantId, ConnectionId id) {
-    return repo.find(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 
   Connection[] listConnections(TenantId tenantId, WorkspaceId workspaceId) {
@@ -62,7 +62,7 @@ class ManageConnectionsUseCase { // TODO: UIMUseCase {
   }
 
   Connection[] listConnections(TenantId tenantId) {
-    return repo.find(tenantId);
+    return repo.findByTenant(tenantId);
   }
 
   CommandResult patchConnection(PatchConnectionRequest r) {
@@ -82,7 +82,7 @@ class ManageConnectionsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteConnection(TenantId tenantId, ConnectionId id) {
-    auto connection = repo.find(tenantId, id);
+    auto connection = repo.findById(tenantId, id);
     if (connection.isNull)
       return CommandResult(false, "", "Connection not found");
 

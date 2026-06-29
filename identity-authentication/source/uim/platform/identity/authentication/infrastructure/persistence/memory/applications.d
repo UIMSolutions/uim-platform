@@ -16,11 +16,11 @@ import uim.platform.identity.authentication;
 class MemoryApplicationRepository : TenantRepository!(Application, ApplicationId), ApplicationRepository {
   
   bool existsByClient(TenantId tenantId, string clientId) {
-    return find(tenantId).any!(item => item.clientId == clientId);
+    return findByTenant(tenantId).any!(item => item.clientId == clientId);
   }
 
   Application findByClient(TenantId tenantId, string clientId) {
-    foreach (a; find(tenantId)) {
+    foreach (a; findByTenant(tenantId)) {
       if (a.clientId == clientId)
         return a;
     }

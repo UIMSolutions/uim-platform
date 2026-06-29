@@ -16,8 +16,8 @@ class ManageUsersUseCase {
 
     this(UserRepository repo) { this.repo = repo; }
 
-    User getUser(TenantId tenantId, UserId id) { return repo.find(tenantId, id); }
-    User[] listUsers(TenantId tenantId) { return repo.find(tenantId); }
+    User getUser(TenantId tenantId, UserId id) { return repo.findById(tenantId, id); }
+    User[] listUsers(TenantId tenantId) { return repo.findByTenant(tenantId); }
     User[] listByStatus(TenantId tenantId, UserStatus status) { return repo.findByStatus(tenantId, status); }
     User findByEmail(TenantId tenantId, string email) { return repo.findByEmail(tenantId, email); }
 
@@ -77,7 +77,7 @@ class ManageUsersUseCase {
     }
 
     CommandResult deleteUser(TenantId tenantId, UserId id) {
-        auto entity = repo.find(tenantId, id);
+        auto entity = repo.findById(tenantId, id);
         if (entity.isNull) return CommandResult(false, "", "User not found");
         repo.remove(entity);
         return CommandResult(true, id.value, "");

@@ -45,7 +45,7 @@ class ManageDeploymentsUseCase {
   }
 
   Deployment[] list(TenantId tenantId) {
-    return _repo.find(tenantId);
+    return _repo.findByTenant(tenantId);
   }
 
   Deployment[] listByProject(TenantId tenantId, string projectId) {

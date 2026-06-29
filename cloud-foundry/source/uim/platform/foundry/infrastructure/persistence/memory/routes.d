@@ -23,14 +23,14 @@ class MemoryRouteRepository : TenantRepository!(Route, RouteId), IRouteRepositor
   }
 
   Route findByHostAndDomain(TenantId tenantId, string host, CfDomainId domainId) {
-    foreach (e; find(tenantId))
+    foreach (e; findByTenant(tenantId))
       if (e.host == host && e.domainId == domainId)
         return e;
     return Route.init;
   }
 
   void removeByHostAndDomain(TenantId tenantId, string host, CfDomainId domainId) {
-    foreach (e; find(tenantId))
+    foreach (e; findByTenant(tenantId))
       if (e.host == host && e.domainId == domainId)
         return remove(e);
   }
@@ -45,7 +45,7 @@ class MemoryRouteRepository : TenantRepository!(Route, RouteId), IRouteRepositor
   }
 
   Route[] findByDomain(TenantId tenantId, CfDomainId domainId) {
-    return filterByDomain(find(tenantId), domainId);
+    return filterByDomain(findByTenant(tenantId), domainId);
   }
 
   void removeByDomain(TenantId tenantId, CfDomainId domainId) {
@@ -63,7 +63,7 @@ class MemoryRouteRepository : TenantRepository!(Route, RouteId), IRouteRepositor
   }
 
   Route[] findByApp(TenantId tenantId, AppId appId) {
-    return filterByApp(find(tenantId), appId);
+    return filterByApp(findByTenant(tenantId), appId);
   }
 
   void removeByApp(TenantId tenantId, AppId appId) {
@@ -82,7 +82,7 @@ class MemoryRouteRepository : TenantRepository!(Route, RouteId), IRouteRepositor
   }
 
   Route[] findBySpace(TenantId tenantId, SpaceId spaceId) {
-    return filterBySpace(find(tenantId), spaceId);
+    return filterBySpace(findByTenant(tenantId), spaceId);
   }
 
   void removeBySpace(TenantId tenantId, SpaceId spaceId) {

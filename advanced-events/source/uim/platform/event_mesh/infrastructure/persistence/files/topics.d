@@ -68,7 +68,7 @@ class FileTopicRepository : MemoryTopicRepository {
     private void persistTenant(TenantId tenantId) @trusted {
         auto fp = filePath(tenantId);
         mkdirRecurse(dirName(fp));
-        Json arr = super.find(tenantId).map!(item => item.toJson).array.toJson;
+        Json arr = super.findByTenant(tenantId).map!(item => item.toJson).array.toJson;
         write(fp, arr.toString());
     }
 
@@ -79,7 +79,7 @@ class FileTopicRepository : MemoryTopicRepository {
 
     override Topic findById(TenantId tenantId, TopicId id) {
         ensureLoaded(tenantId);
-        return super.find(tenantId, id);
+        return super.findById(tenantId, id);
     }
 
     override void save(Topic item) {

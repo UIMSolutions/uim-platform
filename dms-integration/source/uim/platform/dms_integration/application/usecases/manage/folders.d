@@ -19,11 +19,11 @@ class ManageFoldersUseCase {
     }
 
     Folder getFolder(TenantId tenantId, FolderId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     Folder[] listFolders(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     Folder[] listFoldersByRepository(TenantId tenantId, RepositoryId repositoryId) {
@@ -81,7 +81,7 @@ class ManageFoldersUseCase {
     }
 
     CommandResult moveFolder(TenantId tenantId, FolderId id, FolderId targetParentId, UserId userId) {
-        auto existing = repo.find(tenantId, id);
+        auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Folder not found");
         if (existing.isSystemFolder)
@@ -93,7 +93,7 @@ class ManageFoldersUseCase {
     }
 
     CommandResult deleteFolder(TenantId tenantId, FolderId id) {
-        auto existing = repo.find(tenantId, id);
+        auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Folder not found");
         if (existing.isSystemFolder)

@@ -32,15 +32,15 @@ class ManagePoliciesUseCase { // TODO: UIMUseCase {
   }
 
   AuthorizationPolicy getPolicy(TenantId tenantId, PolicyId id) {
-    return policyRepo.find(tenantId, id);
+    return policyRepo.findById(tenantId, id);
   }
 
   AuthorizationPolicy[] listPolicies(TenantId tenantId) {
-    return policyRepo.find(tenantId);
+    return policyRepo.findByTenant(tenantId);
   }
 
   CommandResult deletePolicy(TenantId tenantId, PolicyId id) {
-    auto policy = policyRepo.find(tenantId, id);
+    auto policy = policyRepo.findById(tenantId, id);
     if (policy.isNull)
       return CommandResult(false, "", "Policy not found.");
 

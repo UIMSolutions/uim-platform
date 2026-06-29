@@ -15,7 +15,7 @@ class MemoryPlatformRepository : TenantRepository!(Platform, PlatformId), Platfo
         return platforms.filter!(p => p.type == type).array;
     }
     Platform[] findByType(TenantId tenantId, PlatformType type) {
-        return this.filterByType(this.find(tenantId), type);
+        return this.filterByType(this.findByTenant(tenantId), type);
     }
     void removeByType(TenantId tenantId, PlatformType type) {
         this.removeAll(this.findByType(tenantId, type));
@@ -28,7 +28,7 @@ class MemoryPlatformRepository : TenantRepository!(Platform, PlatformId), Platfo
         return platforms.filter!(p => p.status == status).array;
     }
     Platform[] findByStatus(TenantId tenantId, PlatformStatus status) {
-        return this.filterByStatus(this.find(tenantId), status);
+        return this.filterByStatus(this.findByTenant(tenantId), status);
     }
     void removeByStatus(TenantId tenantId, PlatformStatus status) {
         this.removeAll(this.findByStatus(tenantId, status));

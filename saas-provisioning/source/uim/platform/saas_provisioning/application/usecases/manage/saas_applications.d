@@ -22,11 +22,11 @@ class ManageSaasApplicationsUseCase {
     }
 
     SaasApplication[] listApplications(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     SaasApplication getApplication(TenantId tenantId, SaasApplicationId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     SaasApplication getApplicationByName(TenantId tenantId, string appName) {
@@ -60,7 +60,7 @@ class ManageSaasApplicationsUseCase {
     }
 
     CommandResult updateApplication(TenantId tenantId, SaasApplicationId id, UpdateAppRequest req) {
-        auto app = repo.find(tenantId, id);
+        auto app = repo.findById(tenantId, id);
         if (app.isNull) return CommandResult(false, "", "Application not found");
 
         long now = MonoTime.currTime.ticks;
@@ -79,7 +79,7 @@ class ManageSaasApplicationsUseCase {
     }
 
     CommandResult deregisterApplication(TenantId tenantId, SaasApplicationId id) {
-        auto app = repo.find(tenantId, id);
+        auto app = repo.findById(tenantId, id);
         if (app.isNull) return CommandResult(false, "", "Application not found");
         repo.remove(tenantId, id);
         return CommandResult(true, id.value, "");

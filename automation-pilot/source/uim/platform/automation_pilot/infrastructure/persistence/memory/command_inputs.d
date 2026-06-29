@@ -18,7 +18,7 @@ class MemoryCommandInputRepository : TenantRepository!(CommandInput, CommandInpu
     }
 
     CommandInput[] findByType(TenantId tenantId, InputType inputType) {
-        return filterByType(find(tenantId), inputType);
+        return filterByType(findByTenant(tenantId), inputType);
     }
 
     CommandInput[] filterByType(CommandInput[] inputs, InputType inputType) {

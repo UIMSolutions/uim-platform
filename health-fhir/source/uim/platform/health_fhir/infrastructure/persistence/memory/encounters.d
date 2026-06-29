@@ -13,32 +13,32 @@ import uim.platform.health_fhir;
 class MemoryEncounterRepository : TenantRepository!(Encounter, EncounterId), EncounterRepository {
 
   bool existsById(TenantId tenantId, EncounterId id) {
-    return !find(tenantId, id).isNull;
+    return !findById(tenantId, id).isNull;
   }
 
   Encounter findById(TenantId tenantId, EncounterId id) {
-    foreach (e; find(tenantId)) {
+    foreach (e; findByTenant(tenantId)) {
       if (e.id == id) return e;
     }
     return Encounter.init;
   }
 
   void removeById(TenantId tenantId, EncounterId id) {
-    auto e = find(tenantId, id);
+    auto e = findById(tenantId, id);
     if (!e.isNull) remove(e);
   }
 
   size_t countByTenant(TenantId tenantId) {
-    return find(tenantId).length;
+    return findByTenant(tenantId).length;
   }
 
   Encounter[] findByTenantAll(TenantId tenantId) {
-    return find(tenantId);
+    return findByTenant(tenantId);
   }
 
   Encounter[] findByPatient(TenantId tenantId, string patientRef) {
     Encounter[] results;
-    foreach (e; find(tenantId)) {
+    foreach (e; findByTenant(tenantId)) {
       if (e.subject_.reference_ == patientRef) results ~= e;
     }
     return results;

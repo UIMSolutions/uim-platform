@@ -33,7 +33,7 @@ class MemoryOfflineStoreRepository : TenantRepository!(OfflineStore, OfflineStor
   }
 
   OfflineStore[] findByApp(TenantId tenantId, MobileAppId appId) {
-    return filterByApp(find(tenantId), appId);
+    return filterByApp(findByTenant(tenantId), appId);
   }
 
   void removeByApp(TenantId tenantId, MobileAppId appId) {

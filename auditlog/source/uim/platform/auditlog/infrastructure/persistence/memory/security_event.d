@@ -19,11 +19,11 @@ class MemorySecurityEventRepository : TenantRepository!(SecurityEvent, SecurityE
 
   // #region ByAuditLogId
   bool existsByAuditLogId(TenantId tenantId, AuditLogId auditLogId) {
-    return find(tenantId).any!(e => e.auditLogId == auditLogId);
+    return findByTenant(tenantId).any!(e => e.auditLogId == auditLogId);
   }
 
   SecurityEvent findByAuditLogId(TenantId tenantId, AuditLogId auditLogId) {
-    foreach (e; find(tenantId))
+    foreach (e; findByTenant(tenantId))
       if (e.auditLogId == auditLogId)
         return e;
     return SecurityEvent.init;
@@ -42,7 +42,7 @@ class MemorySecurityEventRepository : TenantRepository!(SecurityEvent, SecurityE
   }
 
   SecurityEvent[] findByUser(TenantId tenantId, UserId userId) {
-    return find(tenantId).filter!(e => e.userId == userId).array;
+    return findByTenant(tenantId).filter!(e => e.userId == userId).array;
   }
 
   void removeByUser(TenantId tenantId, UserId userId) {
@@ -56,7 +56,7 @@ class MemorySecurityEventRepository : TenantRepository!(SecurityEvent, SecurityE
   }
 
   SecurityEvent[] findByOutcome(TenantId tenantId, AuditOutcome outcome) {
-    return find(tenantId).filter!(e => e.outcome == outcome).array;
+    return findByTenant(tenantId).filter!(e => e.outcome == outcome).array;
   }
 
   void removeByOutcome(TenantId tenantId, AuditOutcome outcome) {
@@ -70,7 +70,7 @@ class MemorySecurityEventRepository : TenantRepository!(SecurityEvent, SecurityE
   }
 
   SecurityEvent[] findByTimeRange(TenantId tenantId, long timeFrom, long timeTo) {
-    return find(tenantId).filter!(e => e.timestamp >= timeFrom && e.timestamp <= timeTo)
+    return findByTenant(tenantId).filter!(e => e.timestamp >= timeFrom && e.timestamp <= timeTo)
       .array;
   }
 
@@ -81,6 +81,6 @@ class MemorySecurityEventRepository : TenantRepository!(SecurityEvent, SecurityE
 
 
   void removeOlderThan(TenantId tenantId, long beforeTimestamp) {
-    find(tenantId).filter!(e => e.timestamp < beforeTimestamp).each!(e => remove(e));
+    findByTenant(tenantId).filter!(e => e.timestamp < beforeTimestamp).each!(e => remove(e));
   }
 }

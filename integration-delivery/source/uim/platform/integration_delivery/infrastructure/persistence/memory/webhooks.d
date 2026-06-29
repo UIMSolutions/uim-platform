@@ -15,14 +15,14 @@ import std.array : array;
 
 class MemoryWebhookRepository : TenantRepository!(Webhook, WebhookId), WebhookRepository {
     Webhook[] findByRepository(TenantId tenantId, CicdRepositoryId repositoryId) {
-        return find(tenantId).filter!(w => w.repositoryId == repositoryId).array;
+        return findByTenant(tenantId).filter!(w => w.repositoryId == repositoryId).array;
     }
 
     Webhook[] findByJob(TenantId tenantId, JobId jobId) {
-        return find(tenantId).filter!(w => w.jobId == jobId).array;
+        return findByTenant(tenantId).filter!(w => w.jobId == jobId).array;
     }
 
     Webhook[] findByStatus(TenantId tenantId, WebhookStatus status) {
-        return find(tenantId).filter!(w => w.status == status).array;
+        return findByTenant(tenantId).filter!(w => w.status == status).array;
     }
 }

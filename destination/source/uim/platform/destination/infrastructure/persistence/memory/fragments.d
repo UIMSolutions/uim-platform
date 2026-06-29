@@ -17,10 +17,10 @@ import uim.platform.destination;
 class MemoryFragmentRepository : TenantRepository!(DestinationFragment, DestinationFragmentId), FragmentRepository {
 
   bool existsByName(TenantId tenantId, SubaccountId subaccountId, string name) {
-    return find(tenantId).any!(e => e.tenantId == tenantId && e.subaccountId == subaccountId && e.name == name);
+    return findByTenant(tenantId).any!(e => e.tenantId == tenantId && e.subaccountId == subaccountId && e.name == name);
   }
   DestinationFragment findByName(TenantId tenantId, SubaccountId subaccountId, string name) {
-    foreach (e; find(tenantId))
+    foreach (e; findByTenant(tenantId))
       if (e.subaccountId == subaccountId && e.name == name)
         return e;
     return DestinationFragment.init;
@@ -39,7 +39,7 @@ class MemoryFragmentRepository : TenantRepository!(DestinationFragment, Destinat
   }
 
   DestinationFragment[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
-    return filterBySubaccount(find(tenantId), subaccountId);
+    return filterBySubaccount(findByTenant(tenantId), subaccountId);
   }
 
   void removeBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
@@ -55,7 +55,7 @@ class MemoryFragmentRepository : TenantRepository!(DestinationFragment, Destinat
   } 
 
   DestinationFragment[] findByLevel(TenantId tenantId, DestinationLevel level) {
-    return filterByLevel(find(tenantId), level);
+    return filterByLevel(findByTenant(tenantId), level);
   }
 
    void removeByLevel(TenantId tenantId, DestinationLevel level) {

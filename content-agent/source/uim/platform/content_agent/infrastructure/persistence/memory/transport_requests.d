@@ -22,7 +22,7 @@ class MemoryTransportRequestRepository : TenantRepository!(TransportRequest, Tra
   }
 
   TransportRequest[] findByStatus(TenantId tenantId, TransportStatus status) {
-    return find(tenantId).filter!(e => e.status == status).array;
+    return findByTenant(tenantId).filter!(e => e.status == status).array;
   }
 
   void removeByStatus(TenantId tenantId, TransportStatus status) {

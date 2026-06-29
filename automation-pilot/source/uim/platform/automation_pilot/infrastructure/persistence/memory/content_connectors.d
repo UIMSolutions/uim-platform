@@ -22,7 +22,7 @@ class MemoryContentConnectorRepository : TenantRepository!(ContentConnector, Con
     }
 
     ContentConnector[] findByType(TenantId tenantId, ConnectorType connectorType) {
-        return filterByType(find(tenantId), connectorType);
+        return filterByType(findByTenant(tenantId), connectorType);
     }
 
     void removeByType(TenantId tenantId, ConnectorType connectorType) {
@@ -38,7 +38,7 @@ class MemoryContentConnectorRepository : TenantRepository!(ContentConnector, Con
     }
 
     ContentConnector[] findByStatus(TenantId tenantId, ConnectorStatus status) {
-        return filterByStatus(find(tenantId), status);
+        return filterByStatus(findByTenant(tenantId), status);
     }
 
     void removeByStatus(TenantId tenantId, ConnectorStatus status) {

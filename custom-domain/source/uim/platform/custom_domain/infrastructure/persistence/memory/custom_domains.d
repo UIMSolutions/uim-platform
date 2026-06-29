@@ -14,21 +14,21 @@ mixin(ShowModule!());
 class MemoryCustomDomainRepository : TenantRepository!(CustomDomain, CustomDomainId), CustomDomainRepository {
 
     bool existsByDomainName(TenantId tenantId, string domainName) {
-        foreach (d; find(tenantId)) {
+        foreach (d; findByTenant(tenantId)) {
             if (d.domainName == domainName)
                 return true;
         }
         return false;
     }
     CustomDomain findByDomainName(TenantId tenantId, string domainName) {
-        foreach (d; find(tenantId)) {
+        foreach (d; findByTenant(tenantId)) {
             if (d.domainName == domainName)
                 return d;
         }
         return CustomDomain.init;
     }
     void removeByDomainName(TenantId tenantId, string domainName) {
-        foreach (d; find(tenantId)) {
+        foreach (d; findByTenant(tenantId)) {
             if (d.domainName == domainName) {
                 remove(d);
                 return;
@@ -47,7 +47,7 @@ class MemoryCustomDomainRepository : TenantRepository!(CustomDomain, CustomDomai
     }
 
     CustomDomain[] findByOrganization(TenantId tenantId, string organizationId) {
-        return filterByOrganization(find(tenantId), organizationId);
+        return filterByOrganization(findByTenant(tenantId), organizationId);
     }
 
     void removeByOrganization(TenantId tenantId, string organizationId) {

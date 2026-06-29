@@ -13,11 +13,11 @@ import uim.platform.ui_flexibility;
 class MemoryFlexDraftRepository : TenantRepository!(FlexDraft, FlexDraftId), FlexDraftRepository {
 
   bool existsById(TenantId tenantId, FlexDraftId id) {
-    return !find(tenantId, id).isNull;
+    return !findById(tenantId, id).isNull;
   }
 
   FlexDraft findById(TenantId tenantId, FlexDraftId id) {
-    foreach (d; find(tenantId))
+    foreach (d; findByTenant(tenantId))
       if (d.id_ == id) return d;
     return FlexDraft.init;
   }
@@ -27,21 +27,21 @@ class MemoryFlexDraftRepository : TenantRepository!(FlexDraft, FlexDraftId), Fle
   }
 
   long countByTenant(TenantId tenantId) {
-    return cast(long) find(tenantId).length;
+    return cast(long) findByTenant(tenantId).length;
   }
 
   FlexDraft[] findByTenantAll(TenantId tenantId) {
-    return find(tenantId);
+    return findByTenant(tenantId);
   }
 
   FlexDraft findByApp(TenantId tenantId, string appId) {
-    foreach (d; find(tenantId))
+    foreach (d; findByTenant(tenantId))
       if (d.appId_ == appId) return d;
     return FlexDraft.init;
   }
 
   bool hasDraft(TenantId tenantId, string appId) {
-    foreach (d; find(tenantId))
+    foreach (d; findByTenant(tenantId))
       if (d.appId_ == appId) return true;
     return false;
   }

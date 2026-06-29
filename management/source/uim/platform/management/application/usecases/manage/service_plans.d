@@ -76,11 +76,11 @@ class ManageServicePlansUseCase { // TODO: UIMUseCase {
   }
 
   ServicePlan getPlan(TenantId tenantId, ServicePlanId id) {
-    return servicePlans.find(tenantId, id);
+    return servicePlans.findById(tenantId, id);
   }
 
   ServicePlan[] listPlans(TenantId tenantId) {
-    return servicePlans.find(tenantId);
+    return servicePlans.findByTenant(tenantId);
   }
 
   ServicePlan[] listPlansByService(TenantId tenantId, string serviceName) {
@@ -96,7 +96,7 @@ class ManageServicePlansUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deletePlan(TenantId tenantId, ServicePlanId id) {
-    auto entity = servicePlans.find(tenantId, id);
+    auto entity = servicePlans.findById(tenantId, id);
     if (entity.isNull)
       return CommandResult(false, "", "Service plan not found");
 

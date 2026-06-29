@@ -14,15 +14,15 @@ import uim.platform.customer_identity;
 class MemoryIdentityProviderRepository : TenantRepository!(IdentityProvider, IdentityProviderId), IdentityProviderRepository {
 
     IdentityProvider[] findByType(TenantId tenantId, IdentityProviderType providerType) {
-        return find(tenantId).filter!(ip => ip.providerType == providerType).array;
+        return findByTenant(tenantId).filter!(ip => ip.providerType == providerType).array;
     }
 
     IdentityProvider[] findActive(TenantId tenantId) {
-        return find(tenantId).filter!(ip => ip.status == IdentityProviderStatus.active).array;
+        return findByTenant(tenantId).filter!(ip => ip.status == IdentityProviderStatus.active).array;
     }
 
     IdentityProvider findByClient(TenantId tenantId, string clientId) {
-        auto items = find(tenantId).filter!(ip => ip.clientId == clientId).array;
+        auto items = findByTenant(tenantId).filter!(ip => ip.clientId == clientId).array;
         return items.length > 0 ? items[0] : IdentityProvider.init;
     }
 }

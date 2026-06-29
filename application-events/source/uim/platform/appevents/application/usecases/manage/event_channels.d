@@ -19,11 +19,11 @@ class ManageEventChannelsUseCase {
     this(EventChannelRepository repo) { this.repo = repo; }
 
     EventChannel getEventChannel(TenantId tenantId, EventChannelId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     EventChannel[] listEventChannels(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     CommandResult createEventChannel(EventChannelDTO dto) {
@@ -59,7 +59,7 @@ class ManageEventChannelsUseCase {
     }
 
     CommandResult deleteEventChannel(TenantId tenantId, EventChannelId id) {
-        auto ch = repo.find(tenantId, id);
+        auto ch = repo.findById(tenantId, id);
         if (ch.isNull) return CommandResult(false, "", "Channel not found");
 
         repo.remove(ch);

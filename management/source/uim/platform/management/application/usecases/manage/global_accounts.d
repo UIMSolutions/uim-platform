@@ -115,7 +115,7 @@ class ManageGlobalAccountsUseCase { // TODO: UIMUseCase {
   }
 
   GlobalAccount[] listAccounts(TenantId tenantId) {
-    return repo.find(tenantId);
+    return repo.findByTenant(tenantId);
   }
 
   GlobalAccount[] listAccounts(TenantId tenantId, string status) {

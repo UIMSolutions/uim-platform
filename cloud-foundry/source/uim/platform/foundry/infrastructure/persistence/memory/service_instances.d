@@ -23,14 +23,14 @@ class MemoryServiceInstanceRepository : TenantRepository!(ServiceInstance, Servi
   }
 
   ServiceInstance findByName(TenantId tenantId, SpaceId spaceId, string name) {
-    foreach (e; find(tenantId))
+    foreach (e; findByTenant(tenantId))
       if (e.spaceId == spaceId && e.name == name)
         return e;
     return ServiceInstance.init;
   }
 
   void removeByName(TenantId tenantId, SpaceId spaceId, string name) {
-    foreach (e; find(tenantId))
+    foreach (e; findByTenant(tenantId))
       if (e.spaceId == spaceId && e.name == name)
         return remove(e);
   }
@@ -44,7 +44,7 @@ class MemoryServiceInstanceRepository : TenantRepository!(ServiceInstance, Servi
   }
 
   ServiceInstance[] findBySpace(TenantId tenantId, SpaceId spaceId) {
-    return filterBySpace(find(tenantId), spaceId);
+    return filterBySpace(findByTenant(tenantId), spaceId);
   }
 
   void removeBySpace(TenantId tenantId, SpaceId spaceId) {

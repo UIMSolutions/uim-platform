@@ -13,11 +13,11 @@ import uim.platform.ui_flexibility;
 class MemoryFlexPersonalizationRepository : TenantRepository!(FlexPersonalization, FlexPersonalizationId), FlexPersonalizationRepository {
 
   bool existsById(TenantId tenantId, FlexPersonalizationId id) {
-    return !find(tenantId, id).isNull;
+    return !findById(tenantId, id).isNull;
   }
 
   FlexPersonalization findById(TenantId tenantId, FlexPersonalizationId id) {
-    foreach (p; find(tenantId))
+    foreach (p; findByTenant(tenantId))
       if (p.id_ == id) return p;
     return FlexPersonalization.init;
   }
@@ -27,22 +27,22 @@ class MemoryFlexPersonalizationRepository : TenantRepository!(FlexPersonalizatio
   }
 
   long countByTenant(TenantId tenantId) {
-    return cast(long) find(tenantId).length;
+    return cast(long) findByTenant(tenantId).length;
   }
 
   FlexPersonalization[] findByTenantAll(TenantId tenantId) {
-    return find(tenantId);
+    return findByTenant(tenantId);
   }
 
   FlexPersonalization[] findByUser(TenantId tenantId, string appId, string userId) {
     FlexPersonalization[] result;
-    foreach (p; find(tenantId))
+    foreach (p; findByTenant(tenantId))
       if (p.appId_ == appId && p.userId_ == userId) result ~= p;
     return result;
   }
 
   FlexPersonalization findByControl(TenantId tenantId, string appId, string userId, string controlId) {
-    foreach (p; find(tenantId))
+    foreach (p; findByTenant(tenantId))
       if (p.appId_ == appId && p.userId_ == userId && p.controlId_ == controlId) return p;
     return FlexPersonalization.init;
   }

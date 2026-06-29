@@ -53,7 +53,7 @@ class ManageAIRequestsUseCase {
   }
 
   AIRequest[] list(TenantId tenantId) {
-    return _repo.find(tenantId);
+    return _repo.findByTenant(tenantId);
   }
 
   AIRequest[] listByProject(TenantId tenantId, string projectId) {

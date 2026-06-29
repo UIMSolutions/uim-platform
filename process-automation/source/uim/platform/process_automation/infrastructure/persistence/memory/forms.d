@@ -16,7 +16,7 @@ class MemoryFormRepository : TenantRepository!(Form, FormId), FormRepository {
         return findByProject(tenantId, projectId).length;
     }
     Form[] findByProject(TenantId tenantId, ProjectId projectId) {
-        return filterByProject(find(tenantId), projectId);
+        return filterByProject(findByTenant(tenantId), projectId);
     }
     Form[] filterByProject(Form[] forms, ProjectId projectId) {
         return forms.filter!(f => f.projectId == projectId).array;

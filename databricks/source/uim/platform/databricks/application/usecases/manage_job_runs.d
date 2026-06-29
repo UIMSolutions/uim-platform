@@ -34,11 +34,11 @@ public:
   }
 
   UseCaseResult!(JobRun[]) list(TenantId tenantId) {
-    return UseCaseResult!(JobRun[])(true, "", _repo.find(tenantId));
+    return UseCaseResult!(JobRun[])(true, "", _repo.findByTenant(tenantId));
   }
 
   UseCaseResult!JobRun get(TenantId tenantId, JobRunId id) {
-    auto run = _repo.find(tenantId, id);
+    auto run = _repo.findById(tenantId, id);
     if (run.isNull)
       return UseCaseResult!JobRun(false, "Job run not found", JobRun.init);
     return UseCaseResult!JobRun(true, "", run);
@@ -57,7 +57,7 @@ public:
   }
 
   UseCaseResult!bool remove(TenantId tenantId, JobRunId id) {
-    auto run = _repo.find(tenantId, id);
+    auto run = _repo.findById(tenantId, id);
     if (run.isNull)
       return UseCaseResult!bool(false, "Job run not found", false);
     _repo.remove(run);

@@ -37,18 +37,18 @@ class DataSourceUseCases {
   }
 
   DataSourceResponse getSource(TenantId tenantId, DataSourceId id) {
-    return DataSourceResponse.fromEntity(repo.find(tenantId, id));
+    return DataSourceResponse.fromEntity(repo.findById(tenantId, id));
   }
 
   DataSourceResponse[] listSources(TenantId tenantId) {
     DataSourceResponse[] result;
-    foreach (ds; repo.find(tenantId))
+    foreach (ds; repo.findByTenant(tenantId))
       result ~= DataSourceResponse.fromEntity(ds);
     return result;
   }
 
   DataSourceResponse testConnection(TenantId tenantId, DataSourceId id) {
-    auto ds = repo.find(tenantId, id);
+    auto ds = repo.findById(tenantId, id);
     if (ds.isNull)
       return DataSourceResponse.init;
 
@@ -63,7 +63,7 @@ class DataSourceUseCases {
   }
 
   CommandResult deleteSource(TenantId tenantId, DataSourceId id) {
-    auto ds = repo.find(tenantId, id);
+    auto ds = repo.findById(tenantId, id);
     if (ds.isNull)
       return CommandResult(false, "", "Data source not found");
 

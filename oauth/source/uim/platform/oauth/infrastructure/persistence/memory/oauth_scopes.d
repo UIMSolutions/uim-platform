@@ -14,15 +14,15 @@ import uim.platform.oauth;
 class MemoryOAuthScopeRepository : TenantRepository!(OAuthScope, OAuthScopeId), OAuthScopeRepository {
 
     bool existsByName(TenantId tenantId, string name) {
-        return find(tenantId).any!(e => e.name == name);
+        return findByTenant(tenantId).any!(e => e.name == name);
     }
     OAuthScope findByName(TenantId tenantId, string name) {
-        foreach (e; find(tenantId))
+        foreach (e; findByTenant(tenantId))
             if (e.name == name) return e;
         return OAuthScope.init;
     }
     void removeByName(TenantId tenantId, string name) {
-        foreach (e; find(tenantId))
+        foreach (e; findByTenant(tenantId))
             if (e.name == name) {
                 remove(e);
                 return;
@@ -36,7 +36,7 @@ class MemoryOAuthScopeRepository : TenantRepository!(OAuthScope, OAuthScopeId), 
         return scopes.filter!(e => e.applicationId == applicationId).array;
     }
     OAuthScope[] findByApplication(TenantId tenantId, string applicationId) {
-        return filterByApplication(find(tenantId), applicationId);
+        return filterByApplication(findByTenant(tenantId), applicationId);
     }
     void removeByApplication(TenantId tenantId, string applicationId) {
         findByApplication(tenantId, applicationId).each!(e => remove(e));
@@ -49,7 +49,7 @@ class MemoryOAuthScopeRepository : TenantRepository!(OAuthScope, OAuthScopeId), 
         return scopes.filter!(e => e.status == status).array;
     }
     OAuthScope[] findByStatus(TenantId tenantId, ScopeStatus status) {
-        return filterByStatus(find(tenantId), status);
+        return filterByStatus(findByTenant(tenantId), status);
     }
     void removeByStatus(TenantId tenantId, ScopeStatus status) {
         findByStatus(tenantId, status).each!(e => remove(e));

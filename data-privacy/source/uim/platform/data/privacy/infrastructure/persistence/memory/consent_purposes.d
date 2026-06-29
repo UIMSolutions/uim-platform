@@ -24,7 +24,7 @@ class MemoryConsentPurposeRepository : TenantRepository!(ConsentPurpose, Consent
   }
 
   ConsentPurpose[] findByController(TenantId tenantId, DataControllerId controllerId) {
-    return filterByController(find(tenantId), controllerId);
+    return filterByController(findByTenant(tenantId), controllerId);
   }
 
   void removeByController(TenantId tenantId, DataControllerId controllerId) {
@@ -42,7 +42,7 @@ class MemoryConsentPurposeRepository : TenantRepository!(ConsentPurpose, Consent
   }
 
   ConsentPurpose[] findByStatus(TenantId tenantId, ConsentPurposeStatus status) {
-    return filterByStatus(find(tenantId), status);
+    return filterByStatus(findByTenant(tenantId), status);
   }
 
   void removeByStatus(TenantId tenantId, ConsentPurposeStatus status) {

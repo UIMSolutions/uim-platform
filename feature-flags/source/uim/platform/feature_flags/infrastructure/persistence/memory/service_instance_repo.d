@@ -46,7 +46,7 @@ class MemoryServiceInstanceRepository : ServiceInstanceRepository {
     }
 
     size_t countByTenant(TenantId tenantId) {
-        return find(tenantId).length;
+        return findByTenant(tenantId).length;
     }
 
     private string key(TenantId tenantId, string id) const {

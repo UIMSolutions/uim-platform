@@ -17,11 +17,11 @@ import uim.platform.mobile;
 class MemoryClientResourceRepository : TenantRepository!(ClientResource, ClientResourceId), ClientResourceRepository {
   
   bool existsByName(TenantId tenantId, MobileAppId appId, string name) {
-    return find(tenantId).any!(r => r.appId == appId && r.name == name);
+    return findByTenant(tenantId).any!(r => r.appId == appId && r.name == name);
   }
 
   ClientResource findByName(TenantId tenantId, MobileAppId appId, string name) {
-      foreach (r; find(tenantId)) {
+      foreach (r; findByTenant(tenantId)) {
         if (r.appId == appId && r.name == name)
         return r;
     }
@@ -35,7 +35,7 @@ class MemoryClientResourceRepository : TenantRepository!(ClientResource, ClientR
     return findByApp(tenantId, appId).length;
   }
   ClientResource[] findByApp(TenantId tenantId, MobileAppId appId) {
-    return filterByApp(find(tenantId).values.array, appId);
+    return filterByApp(findByTenant(tenantId).values.array, appId);
   }
   void removeByApp(TenantId tenantId, MobileAppId appId) {
     findByApp(tenantId, appId).each!(r => remove(r));

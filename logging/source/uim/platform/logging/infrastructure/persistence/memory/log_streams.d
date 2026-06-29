@@ -14,11 +14,11 @@ import uim.platform.logging;
 @safe:
 class MemoryLogStreamRepository : TenantRepository!(LogStream, LogStreamId), LogStreamRepository {
   bool existsByName(TenantId tenantId, string name) {
-    return find(tenantId).any!(s => s.name == name);
+    return findByTenant(tenantId).any!(s => s.name == name);
   }
 
   LogStream findByName(TenantId tenantId, string name) {
-    foreach (s; find(tenantId))
+    foreach (s; findByTenant(tenantId))
       if (s.name == name)
         return s;
     return LogStream.init;

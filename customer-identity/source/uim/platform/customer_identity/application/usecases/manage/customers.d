@@ -19,11 +19,11 @@ class ManageCustomersUseCase {
     }
 
     Customer getCustomer(TenantId tenantId, CustomerId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     Customer[] listCustomers(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     Customer findByEmail(TenantId tenantId, string email) {
@@ -75,7 +75,7 @@ class ManageCustomersUseCase {
     }
 
     CommandResult activateCustomer(TenantId tenantId, CustomerId id) {
-        auto existing = repo.find(tenantId, id);
+        auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Customer not found");
 
@@ -86,7 +86,7 @@ class ManageCustomersUseCase {
     }
 
     CommandResult lockCustomer(TenantId tenantId, CustomerId id) {
-        auto existing = repo.find(tenantId, id);
+        auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Customer not found");
 
@@ -96,7 +96,7 @@ class ManageCustomersUseCase {
     }
 
     CommandResult deleteCustomer(TenantId tenantId, CustomerId id) {
-        auto existing = repo.find(tenantId, id);
+        auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Customer not found");
 

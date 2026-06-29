@@ -22,7 +22,7 @@ class MemoryProvisioningLogRepository : TenantRepository!(ProvisioningLog, Provi
     return logs.filter!(e => e.jobId == jobId).array;
   }
   ProvisioningLog[] findByJob(TenantId tenantId, ProvisioningJobId jobId) {
-    return filterByJob(find(tenantId), jobId);
+    return filterByJob(findByTenant(tenantId), jobId);
   }
   void removeByJob(TenantId tenantId, ProvisioningJobId jobId) {
     findByJob(tenantId, jobId).each!(e => remove(e));
@@ -35,7 +35,7 @@ class MemoryProvisioningLogRepository : TenantRepository!(ProvisioningLog, Provi
     return logs.filter!(e => e.entityId == entityId).array;
   }
   ProvisioningLog[] findByEntity(TenantId tenantId, string entityId) {
-    return filterByEntity(find(tenantId), entityId);
+    return filterByEntity(findByTenant(tenantId), entityId);
   }
   void removeByEntity(TenantId tenantId, string entityId) {
     findByEntity(tenantId, entityId).each!(e => remove(e)); 
@@ -48,7 +48,7 @@ class MemoryProvisioningLogRepository : TenantRepository!(ProvisioningLog, Provi
     return logs.filter!(e => e.status == status).array;
   }
   ProvisioningLog[] findByStatus(TenantId tenantId, LogStatus status) {
-    return filterByStatus(find(tenantId), status);
+    return filterByStatus(findByTenant(tenantId), status);
   }
   void removeByStatus(TenantId tenantId, LogStatus status) {
     findByStatus(tenantId, status).each!(e => remove(e));

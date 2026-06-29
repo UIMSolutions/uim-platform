@@ -21,7 +21,7 @@ class MemoryWidgetRepository : TenantRepository!(Widget, WidgetId), WidgetReposi
     return findByPage(tenantId, pageId).length;
   }
   Widget[] findByPage(TenantId tenantId, WorkpageId pageId) {
-    return find(tenantId).filter!(w => w.tenantId == tenantId && w.pageId == pageId).array;
+    return findByTenant(tenantId).filter!(w => w.tenantId == tenantId && w.pageId == pageId).array;
   }
   void removeByPage(TenantId tenantId, WorkpageId pageId) {
     findByPage(tenantId, pageId).each!(w => remove(w));

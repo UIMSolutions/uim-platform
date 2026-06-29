@@ -51,7 +51,7 @@ class ManageTemplatesUseCase {
   }
 
   ProjectTemplate[] list(TenantId tenantId) {
-    return _repo.find(tenantId);
+    return _repo.findByTenant(tenantId);
   }
 
   ProjectTemplate[] listByProjectType(TenantId tenantId, string typeStr) {

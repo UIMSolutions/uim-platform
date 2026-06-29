@@ -18,7 +18,7 @@ class MemoryMtaArchiveRepository
     /// Find archives by MTA application ID
     MtaArchive[] findByMtaId(TenantId tenantId, string mtaId) {
         MtaArchive[] result;
-        foreach (a; find(tenantId))
+        foreach (a; findByTenant(tenantId))
             if (a.mtaId == mtaId) result ~= a;
         return result;
     }

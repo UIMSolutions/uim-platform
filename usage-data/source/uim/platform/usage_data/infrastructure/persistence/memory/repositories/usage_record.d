@@ -14,23 +14,23 @@ class MemoryUsageRecordRepository
     : TenantRepository!(UsageRecord, UsageRecordId), UsageRecordRepository {
 
   UsageRecord[] findByGlobalAccount(TenantId tenantId, string globalAccountId) {
-    return find(tenantId).filter!(r => r.globalAccountId == globalAccountId).array;
+    return findByTenant(tenantId).filter!(r => r.globalAccountId == globalAccountId).array;
   }
 
   UsageRecord[] findBySubaccount(TenantId tenantId, string subaccountId) {
-    return find(tenantId).filter!(r => r.subaccountId == subaccountId).array;
+    return findByTenant(tenantId).filter!(r => r.subaccountId == subaccountId).array;
   }
 
   UsageRecord[] findByService(TenantId tenantId, string serviceId) {
-    return find(tenantId).filter!(r => r.serviceId == serviceId).array;
+    return findByTenant(tenantId).filter!(r => r.serviceId == serviceId).array;
   }
 
   UsageRecord[] findByEnvironment(TenantId tenantId, Environment env) {
-    return find(tenantId).filter!(r => r.environment == env).array;
+    return findByTenant(tenantId).filter!(r => r.environment == env).array;
   }
 
   UsageRecord[] findByChargebackPeriod(TenantId tenantId, string chargebackPeriod) {
-    return find(tenantId).filter!(r => r.chargebackPeriod == chargebackPeriod).array;
+    return findByTenant(tenantId).filter!(r => r.chargebackPeriod == chargebackPeriod).array;
   }
 
   size_t countByGlobalAccount(TenantId tenantId, string globalAccountId) {

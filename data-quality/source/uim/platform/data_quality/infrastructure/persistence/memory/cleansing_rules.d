@@ -26,7 +26,7 @@ class MemoryCleansingRuleRepository : TenantRepository!(CleansingRule, Cleansing
   }
 
   CleansingRule[] findByDataset(TenantId tenantId, string datasetPattern) {
-    return filterByDataset(find(tenantId), datasetPattern);
+    return filterByDataset(findByTenant(tenantId), datasetPattern);
   }
 
   void removeByDataset(TenantId tenantId, string datasetPattern) {
@@ -42,7 +42,7 @@ class MemoryCleansingRuleRepository : TenantRepository!(CleansingRule, Cleansing
   }
 
   CleansingRule[] findActive(TenantId tenantId) {
-    return filterActive(find(tenantId));
+    return filterActive(findByTenant(tenantId));
   }
 
   void removeActive(TenantId tenantId) {

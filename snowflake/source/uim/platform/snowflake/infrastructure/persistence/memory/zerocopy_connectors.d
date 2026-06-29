@@ -8,14 +8,14 @@ class MemoryZerocopyConnectorRepository
 
   ZerocopyConnector[] findByAccount(TenantId tenantId, SnowflakeAccountId accountId) {
     ZerocopyConnector[] result;
-    foreach (item; find(tenantId))
+    foreach (item; findByTenant(tenantId))
       if (item.accountId.value == accountId.value) result ~= item;
     return result;
   }
 
   ZerocopyConnector[] findByStatus(TenantId tenantId, ConnectorStatus status) {
     ZerocopyConnector[] result;
-    foreach (item; find(tenantId))
+    foreach (item; findByTenant(tenantId))
       if (item.status == status) result ~= item;
     return result;
   }

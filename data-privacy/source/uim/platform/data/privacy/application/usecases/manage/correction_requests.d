@@ -51,11 +51,11 @@ class ManageCorrectionRequestsUseCase { // TODO: UIMUseCase {
   }
 
   CorrectionRequest getRequest(TenantId tenantId, CorrectionRequestId id) {
-    return crRepo.find(tenantId, id);
+    return crRepo.findById(tenantId, id);
   }
 
   CorrectionRequest[] listRequests(TenantId tenantId) {
-    return crRepo.find(tenantId);
+    return crRepo.findByTenant(tenantId);
   }
 
   CorrectionRequest[] listByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
@@ -76,7 +76,7 @@ class ManageCorrectionRequestsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteRequest(TenantId tenantId, CorrectionRequestId id) {
-    auto entity = crRepo.find(tenantId, id);
+    auto entity = crRepo.findById(tenantId, id);
     if (entity.isNull)
       return CommandResult(false, "", "Correction request not found");
 

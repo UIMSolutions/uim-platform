@@ -19,11 +19,11 @@ class ManageBrandingConfigsUseCase { // TODO: UIMUseCase {
     }
 
     BrandingConfig getConfig(TenantId tenantId, BrandingConfigId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     BrandingConfig[] listConfigs(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     CommandResult createConfig(BrandingConfigDTO dto) {
@@ -68,7 +68,7 @@ class ManageBrandingConfigsUseCase { // TODO: UIMUseCase {
 
 
     CommandResult deleteConfig(TenantId tenantId, BrandingConfigId id) {
-        auto config = repo.find(tenantId, id);
+        auto config = repo.findById(tenantId, id);
         if (config.isNull)            
             return CommandResult(false, "", "Branding config not found");
 

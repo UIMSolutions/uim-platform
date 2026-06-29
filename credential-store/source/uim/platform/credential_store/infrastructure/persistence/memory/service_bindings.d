@@ -20,7 +20,7 @@ class MemoryServiceBindingRepository : TenantRepository!(ServiceBinding, Service
   }
 
   ServiceBinding[] findByClient(TenantId tenantId, string clientId) {
-    return find(tenantId).filter!(b => b.clientId == clientId).array; 
+    return findByTenant(tenantId).filter!(b => b.clientId == clientId).array; 
   }
 
   void removeByClient(TenantId tenantId, string clientId) {
@@ -32,7 +32,7 @@ class MemoryServiceBindingRepository : TenantRepository!(ServiceBinding, Service
         return findByStatus(tenantId, status).length;
     }
     ServiceBinding[] findByStatus(TenantId tenantId, BindingStatus status) {
-        return find(tenantId).filter!(b => b.status == status).array;
+        return findByTenant(tenantId).filter!(b => b.status == status).array;
     }
     void removeByStatus(TenantId tenantId, BindingStatus status) {
         findByStatus(tenantId, status).each!(b => remove(b));

@@ -73,7 +73,7 @@ class ManageResourceGroupsUseCase { // TODO: UIMUseCase {
   }
 
   ResourceGroup[] listResourceGroups(TenantId tenantId) {
-    return repo.find(tenantId);
+    return repo.findByTenant(tenantId);
   }
 
   size_t count(TenantId tenantId) {

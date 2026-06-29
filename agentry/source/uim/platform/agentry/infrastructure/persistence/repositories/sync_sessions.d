@@ -23,7 +23,7 @@ class SyncSessionRepository : TenantRepository!(SyncSession, SyncSessionId), ISy
     }
 
     SyncSession[] findByDevice(TenantId tenantId, DeviceId deviceId) {
-        return filterByDevice(find(tenantId), deviceId);
+        return filterByDevice(findByTenant(tenantId), deviceId);
     }
     void removeByDevice(TenantId tenantId, DeviceId deviceId) {
         findByDevice(tenantId, deviceId).each!(e => remove(e));
@@ -36,7 +36,7 @@ class SyncSessionRepository : TenantRepository!(SyncSession, SyncSessionId), ISy
         return sessions.filter!(s => s.applicationId == appId).array;
     }
     SyncSession[] findByMobileApplication(TenantId tenantId, MobileApplicationId appId) {
-        return filterByMobileApplication(find(tenantId), appId);
+        return filterByMobileApplication(findByTenant(tenantId), appId);
     }
     void removeByMobileApplication(TenantId tenantId, MobileApplicationId appId) {
         findByMobileApplication(tenantId, appId).each!(e => remove(e));
@@ -49,7 +49,7 @@ class SyncSessionRepository : TenantRepository!(SyncSession, SyncSessionId), ISy
         return sessions.filter!(s => s.status == status).array;
     }
     SyncSession[] findByStatus(TenantId tenantId, SyncStatus status) {
-        return filterByStatus(find(tenantId), status);
+        return filterByStatus(findByTenant(tenantId), status);
     }
     void removeByStatus(TenantId tenantId, SyncStatus status) {
         findByStatus(tenantId, status).each!(e => remove(e));

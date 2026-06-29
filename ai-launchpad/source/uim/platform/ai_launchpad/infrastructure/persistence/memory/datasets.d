@@ -31,7 +31,7 @@ class MemoryDatasetRepository : TenantRepository!(Dataset, DatasetId), IDatasetR
     return findByConnection(tenantId, connectionId).length;
   }
   Dataset[] findByConnection(TenantId tenantId, ConnectionId connectionId) {
-    return filterByConnection(find(tenantId), connectionId);
+    return filterByConnection(findByTenant(tenantId), connectionId);
   }
   void removeByConnection(TenantId tenantId, ConnectionId connectionId) {
     foreach(d; findByConnection(tenantId, connectionId)) {

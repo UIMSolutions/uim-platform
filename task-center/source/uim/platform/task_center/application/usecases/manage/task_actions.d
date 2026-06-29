@@ -45,7 +45,7 @@ class ManageTaskActionsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteAction(TenantId tenantId, TaskActionId id) {
-        auto action = repo.find(tenantId, id);
+        auto action = repo.findById(tenantId, id);
         if (action.isNull)
             return CommandResult(false, "", "Task action not found");
 

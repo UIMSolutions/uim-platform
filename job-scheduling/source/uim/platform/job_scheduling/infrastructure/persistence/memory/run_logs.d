@@ -28,7 +28,7 @@ class MemoryRunLogRepository : TenantRepository!(RunLog, RunLogId), RunLogReposi
     }
 
     RunLog[] findByJob(TenantId tenantId, JobId jobId) {
-        return filterByJob(find(tenantId), jobId);
+        return filterByJob(findByTenant(tenantId), jobId);
     }
 
     void removeByJob(TenantId tenantId, JobId jobId) {
@@ -46,7 +46,7 @@ class MemoryRunLogRepository : TenantRepository!(RunLog, RunLogId), RunLogReposi
     }
 
     RunLog[] findByStatus(TenantId tenantId, RunStatus status) {
-        return filterByStatus(find(tenantId), status);
+        return filterByStatus(findByTenant(tenantId), status);
     }
 
     void removeByStatus(TenantId tenantId, RunStatus status) {
@@ -64,7 +64,7 @@ class MemoryRunLogRepository : TenantRepository!(RunLog, RunLogId), RunLogReposi
     }
 
     RunLog[] findBySchedule(TenantId tenantId, ScheduleId scheduleId) {
-        return filterBySchedule(find(tenantId), scheduleId);
+        return filterBySchedule(findByTenant(tenantId), scheduleId);
     }
 
     void removeBySchedule(TenantId tenantId, ScheduleId scheduleId) {

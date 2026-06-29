@@ -37,11 +37,11 @@ class FilePrintClientRepository : PrintClientRepository {
     }
 
     PrintClient[] findByStatus(TenantId tenantId, PrintClientStatus status) {
-        return find(tenantId).filter!(c => c.status == status).array;
+        return findByTenant(tenantId).filter!(c => c.status == status).array;
     }
 
     PrintClient findByToken(TenantId tenantId, string authToken) {
-        auto matches = find(tenantId).filter!(c => c.authToken == authToken).array;
+        auto matches = findByTenant(tenantId).filter!(c => c.authToken == authToken).array;
         return matches.length > 0 ? matches[0] : PrintClient.init;
     }
 

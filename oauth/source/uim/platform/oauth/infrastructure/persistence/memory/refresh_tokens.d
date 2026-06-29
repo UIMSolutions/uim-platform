@@ -19,14 +19,14 @@ class MemoryRefreshTokenRepository : TenantRepository!(RefreshToken, RefreshToke
     }
 
     RefreshToken findByTokenValue(TenantId tenantId, string tokenValue) {
-        foreach (e; find(tenantId))
+        foreach (e; findByTenant(tenantId))
             if (e.tokenValue == tokenValue)
                 return e;
         return RefreshToken.init;
     }
 
     void removeByTokenValue(TenantId tenantId, string tokenValue) {
-        foreach (e; find(tenantId))
+        foreach (e; findByTenant(tenantId))
             if (e.tokenValue == tokenValue) {
                 remove(e);
                 return;
@@ -40,7 +40,7 @@ class MemoryRefreshTokenRepository : TenantRepository!(RefreshToken, RefreshToke
     }
 
     RefreshToken[] filterByClient(TenantId tenantId, string clientId) {
-        return find(tenantId).filter!(e => e.clientId == clientId).array;
+        return findByTenant(tenantId).filter!(e => e.clientId == clientId).array;
     }
 
     RefreshToken[] findByClient(TenantId tenantId, string clientId) {
@@ -58,7 +58,7 @@ class MemoryRefreshTokenRepository : TenantRepository!(RefreshToken, RefreshToke
     }
 
     RefreshToken[] filterByStatus(TenantId tenantId, TokenStatus status) {
-        return find(tenantId).filter!(e => e.status == status).array;
+        return findByTenant(tenantId).filter!(e => e.status == status).array;
     }
 
     RefreshToken[] findByStatus(TenantId tenantId, TokenStatus status) {

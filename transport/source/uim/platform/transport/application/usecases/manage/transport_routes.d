@@ -19,11 +19,11 @@ class ManageTransportRoutesUseCase {
     }
 
     TransportRoute getRoute(TenantId tenantId, TransportRouteId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     TransportRoute[] listRoutes(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     TransportRoute[] listRoutesBySourceNode(TenantId tenantId, TransportNodeId nodeId) {
@@ -69,7 +69,7 @@ class ManageTransportRoutesUseCase {
     }
 
     CommandResult enableRoute(TenantId tenantId, TransportRouteId id) {
-        auto existing = repo.find(tenantId, id);
+        auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Transport route not found");
         existing.status = RouteStatus.enabled;
@@ -78,7 +78,7 @@ class ManageTransportRoutesUseCase {
     }
 
     CommandResult disableRoute(TenantId tenantId, TransportRouteId id) {
-        auto existing = repo.find(tenantId, id);
+        auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Transport route not found");
         existing.status = RouteStatus.disabled;
@@ -87,7 +87,7 @@ class ManageTransportRoutesUseCase {
     }
 
     CommandResult deleteRoute(TenantId tenantId, TransportRouteId id) {
-        auto existing = repo.find(tenantId, id);
+        auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Transport route not found");
         repo.remove(existing);

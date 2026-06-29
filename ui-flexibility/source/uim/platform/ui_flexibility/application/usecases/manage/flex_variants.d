@@ -56,7 +56,7 @@ class ManageFlexVariantsUseCase {
   }
 
   FlexVariant getVariant(TenantId tenantId, FlexVariantId id) {
-    return repo.find(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 
   FlexVariant[] listVariants(TenantId tenantId) {
@@ -76,7 +76,7 @@ class ManageFlexVariantsUseCase {
   }
 
   CommandResult deleteVariant(TenantId tenantId, FlexVariantId id) {
-    auto existing = repo.find(tenantId, id);
+    auto existing = repo.findById(tenantId, id);
     if (existing.isNull)
       return CommandResult(false, null, "FlexVariant not found");
 

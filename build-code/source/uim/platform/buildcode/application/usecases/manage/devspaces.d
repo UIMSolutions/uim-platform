@@ -49,7 +49,7 @@ class ManageDevSpacesUseCase {
   }
 
   DevSpace[] list(TenantId tenantId) {
-    return _repo.find(tenantId);
+    return _repo.findByTenant(tenantId);
   }
 
   CommandResult setStatus(TenantId tenantId, string id, string statusStr) {

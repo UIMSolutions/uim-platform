@@ -152,7 +152,7 @@ class ManageMarketRatesUseCase {
   }
 
   MarketRate getById(TenantId tenantId, MarketRateId id) {
-    return rateRepo.find(tenantId, id);
+    return rateRepo.findById(tenantId, id);
   }
 
   CommandResult deleteRate(DeleteRatesRequest req) {

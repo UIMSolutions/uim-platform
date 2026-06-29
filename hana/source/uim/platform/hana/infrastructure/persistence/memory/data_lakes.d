@@ -26,7 +26,7 @@ class MemoryDataLakeRepository : TenantRepository!(DataLake, DataLakeId), DataLa
     return dataLakes.filter!(d => d.instanceId == instanceId).array;
   }
   DataLake[] findByInstance(DatabaseInstanceId instanceId) {
-    return filterByInstance(find(tenantId), instanceId);
+    return filterByInstance(findByTenant(tenantId), instanceId);
   }
   void removeByInstance(DatabaseInstanceId instanceId) {
     findByInstance(instanceId).each!(d => remove(d.id));

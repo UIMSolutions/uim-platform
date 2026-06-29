@@ -21,7 +21,7 @@ class MemoryAutomationRepository : TenantRepository!(Automation, AutomationId), 
     }
 
     Automation[] findByProject(TenantId tenantId, ProjectId projectId) {
-        return filterByProject(find(tenantId), projectId);
+        return filterByProject(findByTenant(tenantId), projectId);
     }
     void removeByProject(TenantId tenantId, ProjectId projectId) {
         findByProject(tenantId, projectId).each!(a => remove(a));

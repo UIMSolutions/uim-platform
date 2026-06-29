@@ -41,7 +41,7 @@ class ManageWorkpagesUseCase { // TODO: UIMUseCase {
   }
 
   Workpage getWorkpage(TenantId tenantId, WorkpageId id) {
-    return repo.find(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 
   Workpage[] listByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
@@ -66,7 +66,7 @@ class ManageWorkpagesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteWorkpage(TenantId tenantId, WorkpageId id) {
-    auto entity = repo.find(tenantId, id);
+    auto entity = repo.findById(tenantId, id);
     if (entity.isNull)
       return CommandResult(false, "", "Page not found");
 

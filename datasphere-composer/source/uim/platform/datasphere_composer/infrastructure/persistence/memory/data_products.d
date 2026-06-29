@@ -16,7 +16,7 @@ class MemoryDataProductRepository
 
   DataProduct[] findByProvider(TenantId tenantId, DataProviderId providerId) {
     DataProduct[] result;
-    foreach (item; find(tenantId)) {
+    foreach (item; findByTenant(tenantId)) {
       if (item.providerId.value == providerId.value) result ~= item;
     }
     return result;
@@ -24,7 +24,7 @@ class MemoryDataProductRepository
 
   DataProduct[] findEnabled(TenantId tenantId) {
     DataProduct[] result;
-    foreach (item; find(tenantId)) {
+    foreach (item; findByTenant(tenantId)) {
       if (item.enabled) result ~= item;
     }
     return result;

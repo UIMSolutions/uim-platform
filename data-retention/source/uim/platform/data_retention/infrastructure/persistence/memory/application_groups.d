@@ -12,7 +12,7 @@ class MemoryApplicationGroupRepository : TenantRepository!(ApplicationGroup, App
     }
 
     ApplicationGroup[] findActive(TenantId tenantId) {
-        return find(tenantId).filter!(a => a.isActive).array;
+        return findByTenant(tenantId).filter!(a => a.isActive).array;
     }
 
     void removeActive(TenantId tenantId) {

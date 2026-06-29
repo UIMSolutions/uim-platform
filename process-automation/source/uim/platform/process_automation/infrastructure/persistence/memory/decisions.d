@@ -17,7 +17,7 @@ class MemoryDecisionRepository : TenantRepository!(Decision, DecisionId), Decisi
     }
 
     Decision[] findByProject(TenantId tenantId, ProjectId projectId) {
-        return filterByProject(find(tenantId), projectId);
+        return filterByProject(findByTenant(tenantId), projectId);
     }
 
     Decision[] filterByProject(Decision[] decisions, ProjectId projectId) {

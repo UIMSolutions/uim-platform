@@ -37,11 +37,11 @@ class ManageAssetsUseCase {
   }
 
   InsightAsset[] listAssets(TenantId tenantId) {
-    return repository.find(tenantId);
+    return repository.findByTenant(tenantId);
   }
 
   InsightAsset getAsset(TenantId tenantId, AssetId id) {
-    return repository.find(tenantId, id);
+    return repository.findById(tenantId, id);
   }
 
   CommandResult updateAsset(UpdateAssetRequest req) {
@@ -71,7 +71,7 @@ class ManageAssetsUseCase {
   }
 
   CommandResult publishAsset(TenantId tenantId, AssetId id) {
-    auto existing = repository.find(tenantId, id);
+    auto existing = repository.findById(tenantId, id);
     if (existing.isNull) return CommandResult(false, "", "Asset not found");
 
     existing.published = true;

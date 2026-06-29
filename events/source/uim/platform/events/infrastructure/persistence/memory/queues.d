@@ -19,11 +19,11 @@ class MemoryQueueRepository
     }
 
     Queue[] findByService(TenantId tenantId, MessagingServiceId serviceId) {
-        return find(tenantId).filter!(e => e.serviceId == serviceId).array;
+        return findByTenant(tenantId).filter!(e => e.serviceId == serviceId).array;
     }
 
     Queue[] findByStatus(TenantId tenantId, QueueStatus status) {
-        return find(tenantId).filter!(e => e.status == status).array;
+        return findByTenant(tenantId).filter!(e => e.status == status).array;
     }
 
     void removeByService(TenantId tenantId, MessagingServiceId serviceId) {

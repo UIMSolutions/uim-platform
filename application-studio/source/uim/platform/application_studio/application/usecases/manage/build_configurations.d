@@ -19,11 +19,11 @@ class ManageBuildConfigurationsUseCase { // TODO: UIMUseCase {
     }
 
     BuildConfiguration getBuildConfiguration(TenantId tenantId, BuildConfigurationId id) {
-        return configurations.find(tenantId, id);
+        return configurations.findById(tenantId, id);
     }
 
     BuildConfiguration[] listBuildConfigurations(TenantId tenantId) {
-        return configurations.find(tenantId);
+        return configurations.findByTenant(tenantId);
     }
 
     BuildConfiguration[] listBuildConfigurations(TenantId tenantId, ProjectId projectId) {
@@ -64,7 +64,7 @@ class ManageBuildConfigurationsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteBuildConfiguration(TenantId tenantId, BuildConfigurationId id) {
-        auto config = configurations.find(tenantId, id);
+        auto config = configurations.findById(tenantId, id);
         if (config.isNull)
             return CommandResult(false, "", "Build configuration not found");
 

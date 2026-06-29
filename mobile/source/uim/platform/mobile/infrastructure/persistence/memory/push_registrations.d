@@ -21,14 +21,14 @@ class MemoryPushRegistrationRepository : TenantRepository!(PushRegistration, Pus
   }
 
   PushRegistration findByDeviceAndApp(TenantId tenantId, DeviceRegistrationId deviceId, MobileAppId appId) {
-    foreach (r; find(tenantId)) {
+    foreach (r; findByTenant(tenantId)) {
       if (r.deviceId == deviceId && r.appId == appId)
         return r;
     }
     return PushRegistration.init;
   }
   void removeByDeviceAndApp(TenantId tenantId, DeviceRegistrationId deviceId, MobileAppId appId) {
-    foreach (r; find(tenantId)) {
+    foreach (r; findByTenant(tenantId)) {
       if (r.deviceId == deviceId && r.appId == appId)
         remove(r);
     }
@@ -39,7 +39,7 @@ class MemoryPushRegistrationRepository : TenantRepository!(PushRegistration, Pus
   }
 
   PushRegistration[] findByApp(TenantId tenantId, MobileAppId appId) {
-    return filterByApp(find(tenantId)().values.array, appId);
+    return filterByApp(findByTenant(tenantId)().values.array, appId);
   }
 
   void removeByApp(TenantId tenantId, MobileAppId appId) {
@@ -55,7 +55,7 @@ class MemoryPushRegistrationRepository : TenantRepository!(PushRegistration, Pus
   }
 
   PushRegistration[] findByDevice(TenantId tenantId, DeviceRegistrationId deviceId) {
-    return filterByDevice(find(tenantId)().values.array, deviceId);
+    return filterByDevice(findByTenant(tenantId)().values.array, deviceId);
   }
 
   void removeByDevice(TenantId tenantId, DeviceRegistrationId deviceId) {

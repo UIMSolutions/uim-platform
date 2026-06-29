@@ -103,7 +103,7 @@ class MonitorTrainingUseCase { // TODO: UIMUseCase {
   }
 
   TrainingJobSummary[] listTrainingJobs(TenantId tenantId) {
-    auto jobs = jobRepo.find(tenantId);
+    auto jobs = jobRepo.findByTenant(tenantId);
     TrainingJobSummary[] result;
     foreach (job; jobs)
       result ~= buildJobSummary(job);
@@ -111,14 +111,14 @@ class MonitorTrainingUseCase { // TODO: UIMUseCase {
   }
 
   TrainingJobSummary getTrainingJob(TenantId tenantId, TrainingJobId id) {
-    auto job = jobRepo.find(tenantId, id);
+    auto job = jobRepo.findById(tenantId, id);
     if (job.isNull)
       return TrainingJobSummary.init;
     return buildJobSummary(job);
   }
 
   DeploymentSummary[] listDeploymentSummaries(TenantId tenantId) {
-    auto deps = deploymentRepo.find(tenantId);
+    auto deps = deploymentRepo.findByTenant(tenantId);
     DeploymentSummary[] result;
     foreach (d; deps)
       result ~= buildDeploymentSummary(d);
@@ -128,18 +128,18 @@ class MonitorTrainingUseCase { // TODO: UIMUseCase {
   PipelineSummary getPipelineSummary(TenantId tenantId) {
     PipelineSummary s;
 
-    auto configs = configRepo.find(tenantId);
+    auto configs = configRepo.findByTenant(tenantId);
     s.totalModels = cast(int)configs.length;
     foreach (c; configs)
       if (c.status == ModelConfigStatus.trained)
         s.trainedModels++;
 
-    auto deps = deploymentRepo.find(tenantId);
+    auto deps = deploymentRepo.findByTenant(tenantId);
     foreach (d; deps)
       if (d.status == DeploymentStatus.active)
         s.activeDeployments++;
 
-    auto jobs = jobRepo.find(tenantId);
+    auto jobs = jobRepo.findByTenant(tenantId);
     s.totalTrainingJobs = cast(int)jobs.length;
     foreach (j; jobs) {
       if (j.status == JobStatus.completed)
@@ -148,7 +148,7 @@ class MonitorTrainingUseCase { // TODO: UIMUseCase {
         s.failedJobs++;
     }
 
-    auto inferences = inferenceRepo.find(tenantId);
+    auto inferences = inferenceRepo.findByTenant(tenantId);
     s.totalInferenceRequests = inferences.length;
 
     return s;

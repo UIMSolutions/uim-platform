@@ -35,7 +35,7 @@ class MongoFlexChangeRepository : FlexChangeRepository {
   }
 
   FlexChange[] findByTenant(TenantId tenantId) {
-    return delegate_.find(tenantId);
+    return delegate_.findByTenant(tenantId);
   }
 
   bool existsById(TenantId tenantId, FlexChangeId id) {
@@ -43,7 +43,7 @@ class MongoFlexChangeRepository : FlexChangeRepository {
   }
 
   FlexChange findById(TenantId tenantId, FlexChangeId id) {
-    return delegate_.find(tenantId, id);
+    return delegate_.findById(tenantId, id);
   }
 
   bool removeById(TenantId tenantId, FlexChangeId id) {

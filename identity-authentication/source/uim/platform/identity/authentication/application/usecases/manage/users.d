@@ -53,7 +53,7 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
 
   /// Get user by ID.
   User getUser(UserId id) {
-    return userRepo.find(tenantId, id);
+    return userRepo.findById(tenantId, id);
   }
 
   /// List users for a tenant.
@@ -81,7 +81,7 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
 
   /// Deactivate (soft-delete) a user.
   CommandResult deactivateUser(UserId id) {
-    auto user = userRepo.find(tenantId, id);
+    auto user = userRepo.findById(tenantId, id);
     if (user.isNull)
       return CommandResult(false, "", "User not found");
 
@@ -93,7 +93,7 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
 
   /// Change password.
   CommandResult changePassword(UserId id, string oldPassword, string newPassword) {
-    auto user = userRepo.find(tenantId, id);
+    auto user = userRepo.findById(tenantId, id);
     if (user.isNull)
       return CommandResult(false, "", "User not found");
 

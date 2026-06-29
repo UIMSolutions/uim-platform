@@ -39,11 +39,11 @@ class ManageBusinessProcessesUseCase { // TODO: UIMUseCase {
   }
 
   BusinessProcess getProcess(TenantId tenantId, BusinessProcessId id) {
-    return repo.find(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 
   BusinessProcess[] listProcesses(TenantId tenantId) {
-    return repo.find(tenantId);
+    return repo.findByTenant(tenantId);
   }
 
   CommandResult updateProcess(UpdateBusinessProcessRequest req) {
@@ -68,7 +68,7 @@ class ManageBusinessProcessesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteProcess(TenantId tenantId, BusinessProcessId id) {
-    auto entity = repo.find(tenantId, id);
+    auto entity = repo.findById(tenantId, id);
     if (entity.isNull)
       return CommandResult(false, "", "Business process not found");
 

@@ -69,7 +69,7 @@ class ManageDirectoriesUseCase { // TODO: UIMUseCase {
   }
 
   Directory getDirectory(TenantId tenantId, DirectoryId id) {
-    return directories.find(tenantId, id);
+    return directories.findById(tenantId, id);
   }
 
   Directory[] listDirectories(TenantId tenantId, GlobalAccountId gaId) {
@@ -81,7 +81,7 @@ class ManageDirectoriesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteDirectory(TenantId tenantId, DirectoryId id) {
-    auto directory = directories.find(tenantId, id);
+    auto directory = directories.findById(tenantId, id);
     if (directory.isNull)
       return CommandResult(false, "", "Directory not found");
 

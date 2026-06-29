@@ -31,7 +31,7 @@ class RetrieveAuditLogsUseCase { // TODO: UIMUseCase {
   }
 
   AuditLogEntry getAuditLog(TenantId tenantId, AuditLogId id) {
-    return repository.find(tenantId, id);
+    return repository.findById(tenantId, id);
   }
 
   AuditLogEntry[] listAuditLogs(TenantId tenantId, AuditCategory category) {

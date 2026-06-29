@@ -16,11 +16,11 @@ import uim.platform.credential_store;
 class MemoryCredentialRepository : TenantRepository!(Credential, CredentialId), CredentialRepository {
 
   bool existsByName(TenantId tenantId, NamespaceId namespaceId, string name, CredentialType type) {
-    return find(tenantId).any!(c => c.namespaceId == namespaceId && c.name == name && c.type == type); 
+    return findByTenant(tenantId).any!(c => c.namespaceId == namespaceId && c.name == name && c.type == type); 
   }
 
   Credential findByName(TenantId tenantId, NamespaceId namespaceId, string name, CredentialType type) {
-    foreach (c; find(tenantId)) {
+    foreach (c; findByTenant(tenantId)) {
       if (c.namespaceId == namespaceId && c.name == name && c.type == type)
         return c;
     }
@@ -38,7 +38,7 @@ class MemoryCredentialRepository : TenantRepository!(Credential, CredentialId), 
   }
 
   Credential[] findByNamespace(TenantId tenantId, NamespaceId namespaceId) {
-    return find(tenantId).filter!(c => c.namespaceId == namespaceId).array;
+    return findByTenant(tenantId).filter!(c => c.namespaceId == namespaceId).array;
   }
 
   void removeByNamespace(TenantId tenantId, NamespaceId namespaceId) {

@@ -20,11 +20,11 @@ class ManageSubscriptionJobsUseCase {
     }
 
     SubscriptionJob[] listJobs(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     SubscriptionJob getJob(TenantId tenantId, SubscriptionJobId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     SubscriptionJob[] listJobsForSubscription(TenantId tenantId, string subscriptionId) {

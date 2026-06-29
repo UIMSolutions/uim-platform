@@ -20,22 +20,22 @@ class MemoryEventSubscriptionRepository
     , EventSubscriptionRepository
 {
     override EventSubscription[] findByStatus(TenantId tenantId, SubscriptionStatus status) {
-        return find(tenantId).filter!(s => s.status == status).array;
+        return findByTenant(tenantId).filter!(s => s.status == status).array;
     }
 
     override EventSubscription[] findByProducerSystem(TenantId tenantId, string producerSystemId) {
-        return find(tenantId).filter!(s => s.producerSystemId == producerSystemId).array;
+        return findByTenant(tenantId).filter!(s => s.producerSystemId == producerSystemId).array;
     }
 
     override EventSubscription[] findByConsumerSystem(TenantId tenantId, string consumerSystemId) {
-        return find(tenantId).filter!(s => s.consumerSystemId == consumerSystemId).array;
+        return findByTenant(tenantId).filter!(s => s.consumerSystemId == consumerSystemId).array;
     }
 
     override EventSubscription[] findByFormation(TenantId tenantId, FormationId formationId) {
-        return find(tenantId).filter!(s => s.formationId.value == formationId.value).array;
+        return findByTenant(tenantId).filter!(s => s.formationId.value == formationId.value).array;
     }
 
     override bool nameExists(TenantId tenantId, string name) {
-        return find(tenantId).filter!(s => s.name == name).array.length > 0;
+        return findByTenant(tenantId).filter!(s => s.name == name).array.length > 0;
     }
 }

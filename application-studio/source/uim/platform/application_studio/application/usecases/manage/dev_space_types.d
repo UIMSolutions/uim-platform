@@ -19,11 +19,11 @@ class ManageDevSpaceTypesUseCase { // TODO: UIMUseCase {
     }
 
     DevSpaceType getDevSpaceType(TenantId tenantId, DevSpaceTypeId id) {
-        return spaceTypes.find(tenantId, id);
+        return spaceTypes.findById(tenantId, id);
     }
 
     DevSpaceType[] listDevSpaceTypes(TenantId tenantId) {
-        return spaceTypes.find(tenantId);
+        return spaceTypes.findByTenant(tenantId);
     }
 
     CommandResult createDevSpaceType(DevSpaceTypeDTO dto) {
@@ -58,7 +58,7 @@ class ManageDevSpaceTypesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteDevSpaceType(TenantId tenantId, DevSpaceTypeId id) {
-        auto type = spaceTypes.find(tenantId, id);
+        auto type = spaceTypes.findById(tenantId, id);
         if (type.isNull)
             return CommandResult(false, "", "Dev space type not found");
 

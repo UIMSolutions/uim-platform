@@ -14,11 +14,11 @@ import uim.platform.customer_identity;
 class MemoryConsentRecordRepository : TenantRepository!(ConsentRecord, ConsentRecordId), ConsentRecordRepository {
 
     ConsentRecord[] findByCustomer(TenantId tenantId, CustomerId customerId) {
-        return find(tenantId).filter!(cr => cr.customerId.value == customerId.value).array;
+        return findByTenant(tenantId).filter!(cr => cr.customerId.value == customerId.value).array;
     }
 
     ConsentRecord[] findByType(TenantId tenantId, ConsentType consentType) {
-        return find(tenantId).filter!(cr => cr.consentType == consentType).array;
+        return findByTenant(tenantId).filter!(cr => cr.consentType == consentType).array;
     }
 
     ConsentRecord[] findGrantedByCustomer(TenantId tenantId, CustomerId customerId) {

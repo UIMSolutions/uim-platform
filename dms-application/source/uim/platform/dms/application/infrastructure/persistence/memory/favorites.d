@@ -15,21 +15,21 @@ import uim.platform.dms.application;
 
 class MemoryFavoriteRepository : TenantRepository!(Favorite, FavoriteId), IFavoriteRepository {
   bool existsByUserAndResource(TenantId tenantId, UserId userId, string resourceId) {
-    foreach (e; find(tenantId))
+    foreach (e; findByTenant(tenantId))
       if (e.userId == userId && e.resourceId == resourceId)
         return true;
     return false;
   }
 
   Favorite findByUserAndResource(TenantId tenantId, UserId userId, string resourceId) {
-    foreach (e; find(tenantId))
+    foreach (e; findByTenant(tenantId))
       if (e.userId == userId && e.resourceId == resourceId)
         return e;
     return Favorite.init;
   }
 
   void removeByUserAndResource(TenantId tenantId, UserId userId, string resourceId) {
-    foreach (e; find(tenantId))
+    foreach (e; findByTenant(tenantId))
       if (e.userId == userId && e.resourceId == resourceId) {
         remove(e);
         return;
@@ -45,7 +45,7 @@ class MemoryFavoriteRepository : TenantRepository!(Favorite, FavoriteId), IFavor
   }
 
   Favorite[] findByUser(TenantId tenantId, UserId userId) {
-    return filterByUser(find(tenantId), userId);
+    return filterByUser(findByTenant(tenantId), userId);
   }
 
   void removeByUser(TenantId tenantId, UserId userId) {
@@ -61,7 +61,7 @@ class MemoryFavoriteRepository : TenantRepository!(Favorite, FavoriteId), IFavor
   }
 
   Favorite[] findByResource(TenantId tenantId, string resourceId) {
-    return filterByResource(find(tenantId), resourceId);
+    return filterByResource(findByTenant(tenantId), resourceId);
   }
 
   void removeByResource(TenantId tenantId, string resourceId) {

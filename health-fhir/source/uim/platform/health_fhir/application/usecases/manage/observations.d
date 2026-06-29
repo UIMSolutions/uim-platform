@@ -67,7 +67,7 @@ class ManageObservationsUseCase {
   }
 
   Observation getObservation(TenantId tenantId, ObservationId id) {
-    return repo.find(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 
   Observation[] listObservations(TenantId tenantId) {
@@ -79,7 +79,7 @@ class ManageObservationsUseCase {
   }
 
   CommandResult deleteObservation(TenantId tenantId, ObservationId id) {
-    auto entity = repo.find(tenantId, id);
+    auto entity = repo.findById(tenantId, id);
     if (entity.isNull)
       return CommandResult(false, "", "Observation not found");
     repo.remove(entity);

@@ -19,11 +19,11 @@ class ManagePagesUseCase { // TODO: UIMUseCase {
     }
 
     Page getPage(TenantId tenantId, PageId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     Page[] listPages(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     Page[] listPages(TenantId tenantId, ApplicationId applicationId) {
@@ -71,7 +71,7 @@ class ManagePagesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deletePage(TenantId tenantId, PageId id) {
-        auto entity = repo.find(tenantId, id);
+        auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Page not found");
             

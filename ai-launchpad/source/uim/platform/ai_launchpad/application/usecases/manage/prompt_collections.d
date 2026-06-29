@@ -40,7 +40,7 @@ class ManagePromptCollectionsUseCase { // TODO: UIMUseCase {
   }
 
   PromptCollection getCollection(TenantId tenantId, PromptCollectionId id) {
-    return collections.find(tenantId, id);
+    return collections.findById(tenantId, id);
   }
 
   PromptCollection[] listCollections(TenantId tenantId, WorkspaceId workspaceId) {
@@ -48,7 +48,7 @@ class ManagePromptCollectionsUseCase { // TODO: UIMUseCase {
   }
 
   PromptCollection[] listCollections(TenantId tenantId) {
-    return collections.find(tenantId);
+    return collections.findByTenant(tenantId);
   }
 
   CommandResult patchCollection(PatchPromptCollectionRequest r) {
@@ -67,7 +67,7 @@ class ManagePromptCollectionsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteCollection(TenantId tenantId, PromptCollectionId id) {
-    auto collection = collections.find(tenantId, id);
+    auto collection = collections.findById(tenantId, id);
     if (collection.isNull)
       return CommandResult(false, "", "Prompt collection not found");
 

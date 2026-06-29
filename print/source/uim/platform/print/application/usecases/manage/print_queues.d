@@ -19,11 +19,11 @@ class ManagePrintQueuesUseCase {
     }
 
     PrintQueue getPrintQueue(TenantId tenantId, PrintQueueId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     PrintQueue[] listPrintQueues(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     PrintQueue[] listByStatus(TenantId tenantId, PrintQueueStatus status) {
@@ -70,7 +70,7 @@ class ManagePrintQueuesUseCase {
     }
 
     CommandResult deletePrintQueue(TenantId tenantId, PrintQueueId id) {
-        auto entity = repo.find(tenantId, id);
+        auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Print queue not found");
         repo.remove(entity);

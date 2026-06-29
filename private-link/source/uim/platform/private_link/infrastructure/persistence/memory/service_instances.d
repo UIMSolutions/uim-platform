@@ -14,11 +14,11 @@ class MemoryServiceInstanceRepository
       ServiceInstanceRepository {
 
   bool existsByName(TenantId tenantId, string name) {
-    return find(tenantId).any!(i => i.name == name);
+    return findByTenant(tenantId).any!(i => i.name == name);
   }
 
   ServiceInstance findByName(TenantId tenantId, string name) {
-    foreach (i; find(tenantId)) {
+    foreach (i; findByTenant(tenantId)) {
       if (i.name == name)
         return i;
     }
@@ -26,10 +26,10 @@ class MemoryServiceInstanceRepository
   }
 
   ServiceInstance[] findByStatus(TenantId tenantId, InstanceStatus status) {
-    return find(tenantId).filter!(i => i.status == status).array;
+    return findByTenant(tenantId).filter!(i => i.status == status).array;
   }
 
   ServiceInstance[] findByIaasProvider(TenantId tenantId, IaasProvider provider) {
-    return find(tenantId).filter!(i => i.iaasProvider == provider).array;
+    return findByTenant(tenantId).filter!(i => i.iaasProvider == provider).array;
   }
 }

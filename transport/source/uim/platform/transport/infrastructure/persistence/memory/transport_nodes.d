@@ -18,10 +18,10 @@ class MemoryTransportNodeRepository : TenantRepository!(TransportNode, Transport
     }
 
     TransportNode[] findByStatus(TenantId tenantId, NodeStatus status) {
-        return find(tenantId).filter!(e => e.status == status).array;
+        return findByTenant(tenantId).filter!(e => e.status == status).array;
     }
 
     TransportNode[] findByType(TenantId tenantId, NodeType nodeType) {
-        return find(tenantId).filter!(e => e.nodeType == nodeType).array;
+        return findByTenant(tenantId).filter!(e => e.nodeType == nodeType).array;
     }
 }

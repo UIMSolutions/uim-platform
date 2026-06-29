@@ -37,11 +37,11 @@ public:
   }
 
   UseCaseResult!(Cluster[]) list(TenantId tenantId) {
-    return UseCaseResult!(Cluster[])(true, "", _repo.find(tenantId));
+    return UseCaseResult!(Cluster[])(true, "", _repo.findByTenant(tenantId));
   }
 
   UseCaseResult!Cluster get(TenantId tenantId, ClusterId id) {
-    auto c = _repo.find(tenantId, id);
+    auto c = _repo.findById(tenantId, id);
     if (c.isNull)
       return UseCaseResult!Cluster(false, "Cluster not found", Cluster.init);
     return UseCaseResult!Cluster(true, "", c);
@@ -62,7 +62,7 @@ public:
   }
 
   UseCaseResult!bool remove(TenantId tenantId, ClusterId id) {
-    auto c = _repo.find(tenantId, id);
+    auto c = _repo.findById(tenantId, id);
     if (c.isNull)
       return UseCaseResult!bool(false, "Cluster not found", false);
     c.state = ClusterState.terminated;

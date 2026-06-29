@@ -73,7 +73,7 @@ class ManageApplicationJobsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult cancelApplicationJob(TenantId tenantId, ApplicationJobId id) {
-    auto job = jobs.find(tenantId, id);
+    auto job = jobs.findById(tenantId, id);
     if (job.isNull)
       return CommandResult(false, "", "Application job not found");
 
@@ -91,7 +91,7 @@ class ManageApplicationJobsUseCase { // TODO: UIMUseCase {
   }
 
   ApplicationJob getApplicationJob(TenantId tenantId, ApplicationJobId id) {
-    return jobs.find(tenantId, id);
+    return jobs.findById(tenantId, id);
   }
 
   ApplicationJob[] listApplicationJobs(TenantId tenantId, SystemInstanceId systemId) {
@@ -99,7 +99,7 @@ class ManageApplicationJobsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteApplicationJob(TenantId tenantId, ApplicationJobId id) {
-    auto job = jobs.find(tenantId, id);
+    auto job = jobs.findById(tenantId, id);
     if (job.isNull)
       return CommandResult(false, "", "Application job not found");
 

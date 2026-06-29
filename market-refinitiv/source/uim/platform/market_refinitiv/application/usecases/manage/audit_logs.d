@@ -18,7 +18,7 @@ class ManageAuditLogsUseCase {
   }
 
   AuditLog[] list(TenantId tenantId) {
-    return repo.find(tenantId);
+    return repo.findByTenant(tenantId);
   }
 
   AuditLog[] listByOperation(TenantId tenantId, AuditOperation op) {
@@ -34,6 +34,6 @@ class ManageAuditLogsUseCase {
   }
 
   AuditLog getById(TenantId tenantId, AuditLogId id) {
-    return repo.find(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 }

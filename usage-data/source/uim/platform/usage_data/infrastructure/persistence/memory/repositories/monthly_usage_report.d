@@ -15,16 +15,16 @@ class MemoryMonthlyUsageReportRepository
       MonthlyUsageReportRepository {
 
   MonthlyUsageReport[] findByGlobalAccount(TenantId tenantId, string globalAccountId) {
-    return find(tenantId).filter!(r => r.globalAccountId == globalAccountId).array;
+    return findByTenant(tenantId).filter!(r => r.globalAccountId == globalAccountId).array;
   }
 
   MonthlyUsageReport[] findByPeriod(TenantId tenantId, int year, int month) {
-    return find(tenantId)
+    return findByTenant(tenantId)
       .filter!(r => r.reportingYear == year && r.reportingMonth == month).array;
   }
 
   MonthlyUsageReport[] findByStatus(TenantId tenantId, ReportStatus status) {
-    return find(tenantId).filter!(r => r.status == status).array;
+    return findByTenant(tenantId).filter!(r => r.status == status).array;
   }
 
   size_t countByGlobalAccount(TenantId tenantId, string globalAccountId) {

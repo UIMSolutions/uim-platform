@@ -17,7 +17,7 @@ class MemoryTaskRepository : TenantRepository!(PATask, TaskId), TaskRepository {
     }
 
     PATask[] findByAssignee(TenantId tenantId, string assignee) {
-        return filterByAssignee(find(tenantId), assignee);
+        return filterByAssignee(findByTenant(tenantId), assignee);
     }
 
     PATask[] filterByAssignee(PATask[] tasks, string assignee) {
@@ -33,7 +33,7 @@ class MemoryTaskRepository : TenantRepository!(PATask, TaskId), TaskRepository {
     }
 
     PATask[] findByProcessInstance(TenantId tenantId, ProcessInstanceId instanceId) {
-        return filterByProcessInstance(find(tenantId), instanceId);
+        return filterByProcessInstance(findByTenant(tenantId), instanceId);
     }
 
     PATask[] filterByProcessInstance(PATask[] tasks, ProcessInstanceId instanceId) {
@@ -49,7 +49,7 @@ class MemoryTaskRepository : TenantRepository!(PATask, TaskId), TaskRepository {
     }
 
     PATask[] findByStatus(TenantId tenantId, TaskStatus status) {
-        return filterByStatus(find(tenantId), status);
+        return filterByStatus(findByTenant(tenantId), status);
     }
 
     PATask[] filterByStatus(PATask[] tasks, TaskStatus status) {

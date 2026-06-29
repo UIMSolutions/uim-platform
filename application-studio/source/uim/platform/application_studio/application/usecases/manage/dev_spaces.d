@@ -19,11 +19,11 @@ class ManageDevSpacesUseCase { // TODO: UIMUseCase {
     }
 
     DevSpace getDevSpace(TenantId tenantId, DevSpaceId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     DevSpace[] listDevSpaces(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     DevSpace[] listDevSpaces(TenantId tenantId, string owner) {
@@ -65,7 +65,7 @@ class ManageDevSpacesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteDevSpace(TenantId tenantId, DevSpaceId id) {
-        auto entity = repo.find(tenantId, id);
+        auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Dev space not found");
 

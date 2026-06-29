@@ -24,7 +24,7 @@ class MemoryResourceGroupRepository : TenantRepository!(ResourceGroup, ResourceG
   }
 
   ResourceGroup[] findByStatus(TenantId tenantId, string status) {
-    return filterByStatus(find(tenantId), status);
+    return filterByStatus(findByTenant(tenantId), status);
   }
 
   void removeByStatus(TenantId tenantId, string status) {

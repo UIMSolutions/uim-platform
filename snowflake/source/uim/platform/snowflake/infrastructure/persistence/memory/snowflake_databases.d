@@ -8,14 +8,14 @@ class MemorySnowflakeDatabaseRepository
 
   SnowflakeDatabase[] findByAccount(TenantId tenantId, SnowflakeAccountId accountId) {
     SnowflakeDatabase[] result;
-    foreach (item; find(tenantId))
+    foreach (item; findByTenant(tenantId))
       if (item.accountId.value == accountId.value) result ~= item;
     return result;
   }
 
   SnowflakeDatabase[] findByStatus(TenantId tenantId, DatabaseStatus status) {
     SnowflakeDatabase[] result;
-    foreach (item; find(tenantId))
+    foreach (item; findByTenant(tenantId))
       if (item.status == status) result ~= item;
     return result;
   }

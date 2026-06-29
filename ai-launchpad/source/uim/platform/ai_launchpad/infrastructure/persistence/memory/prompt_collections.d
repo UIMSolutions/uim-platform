@@ -15,16 +15,16 @@ import uim.platform.ai_launchpad;
 class MemoryPromptCollectionRepository : TenantRepository!(PromptCollection, PromptCollectionId), IPromptCollectionRepository {
 
   // bool existsById(TenantId tenantId, PromptCollectionId id) {
-  //   return find(tenantId).any!(pc => pc.id == id);
+  //   return findByTenant(tenantId).any!(pc => pc.id == id);
   // }
   // PromptCollection findById(TenantId tenantId, PromptCollectionId id) {
-  //   foreach(pc; find(tenantId)) {
+  //   foreach(pc; findByTenant(tenantId)) {
   //     if (pc.id == id) return pc;
   //   }
   //   return PromptCollection.init;
   // }
   // void removeById(TenantId tenantId, PromptCollectionId id) {
-  //   remove(find(tenantId, id));
+  //   remove(findById(tenantId, id));
   // }
 
   size_t countByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
@@ -34,7 +34,7 @@ class MemoryPromptCollectionRepository : TenantRepository!(PromptCollection, Pro
     return collections.filter!(pc => pc.workspaceId == workspaceId).array;
   }
   PromptCollection[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
-    return filterByWorkspace(find(tenantId), workspaceId);
+    return filterByWorkspace(findByTenant(tenantId), workspaceId);
   }
   void removeByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
     findByWorkspace(tenantId, workspaceId).each!(pc => remove(pc));

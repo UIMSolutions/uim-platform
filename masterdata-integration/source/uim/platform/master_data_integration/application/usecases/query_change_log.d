@@ -22,7 +22,7 @@ class QueryChangeLogUseCase { // TODO: UIMUseCase {
   }
 
   ChangeLogEntry getEntry(TenantId tenantId, ChangeLogEntryId id) {
-    return repo.find(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 
   ChangeLogEntry[] query(ChangeLogQueryRequest req) {
@@ -38,7 +38,7 @@ class QueryChangeLogUseCase { // TODO: UIMUseCase {
   }
 
   ChangeLogEntry[] listByTenant(TenantId tenantId) {
-    return repo.find(tenantId);
+    return repo.findByTenant(tenantId);
   }
 
   ChangeLogEntry[] listByObject(TenantId tenantId, MasterDataObjectId objectId) {

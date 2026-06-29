@@ -77,7 +77,7 @@ class ManageDistributionModelsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult activateModel(TenantId tenantId, DistributionModelId id) {
-    auto model = repo.find(tenantId, id);
+    auto model = repo.findById(tenantId, id);
     if (model.isNull)
       return CommandResult(false, "", "Distribution model not found");
     model.status = DistributionModelStatus.active;
@@ -87,7 +87,7 @@ class ManageDistributionModelsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deactivateModel(TenantId tenantId, DistributionModelId id) {
-    auto model = repo.find(tenantId, id);
+    auto model = repo.findById(tenantId, id);
     if (model.isNull)
       return CommandResult(false, "", "Distribution model not found");
     model.status = DistributionModelStatus.inactive;
@@ -97,11 +97,11 @@ class ManageDistributionModelsUseCase { // TODO: UIMUseCase {
   }
 
   DistributionModel getModel(TenantId tenantId, DistributionModelId id) {
-    return repo.find(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 
   DistributionModel[] listModels(TenantId tenantId) {
-    return repo.find(tenantId);
+    return repo.findByTenant(tenantId);
   }
 
   DistributionModel[] listModels(TenantId tenantId, string status) {
@@ -109,7 +109,7 @@ class ManageDistributionModelsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteModel(TenantId tenantId, DistributionModelId id) {
-    auto model = repo.find(tenantId, id);
+    auto model = repo.findById(tenantId, id);
     if (model.isNull)
       return CommandResult(false, "", "Distribution model not found");
 

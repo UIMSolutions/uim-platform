@@ -44,7 +44,7 @@ class ManageProcessesUseCase { // TODO: UIMUseCase {
     }
 
     Process[] listProcesses(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     Process[] listProcesses(TenantId tenantId, ProjectId projectId) {

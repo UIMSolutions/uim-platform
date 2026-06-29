@@ -22,7 +22,7 @@ class MemoryEntityTypeRepository : TenantRepository!(EntityType, EntityTypeId), 
     }
 
     EntityType[] findByCategory(TenantId tenantId, EntityCategory category) {
-        return filterByCategory(find(tenantId), category);
+        return filterByCategory(findByTenant(tenantId), category);
     }
 
     void removeByCategory(TenantId tenantId, EntityCategory category) {

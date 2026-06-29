@@ -25,11 +25,11 @@ class MemoryMenuItemRepository : MenuItemRepository {
   }
 
   MenuItem[] findBySite(SiteId siteId) {
-    return find(tenantId).filter!(m => m.siteId == siteId).array;
+    return findByTenant(tenantId).filter!(m => m.siteId == siteId).array;
   }
 
   MenuItem[] findChildren(MenuItemId parentId) {
-    return find(tenantId).filter!(m => m.parentId == parentId).array;
+    return findByTenant(tenantId).filter!(m => m.parentId == parentId).array;
   }
 
   void save(MenuItem item) {

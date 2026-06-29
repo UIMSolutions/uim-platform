@@ -44,7 +44,7 @@ class ManageRepositoriesUseCase { // TODO: UIMUseCase {
   }
 
   Repository[] listRepositories(TenantId tenantId) {
-    return repo.find(tenantId);
+    return repo.findByTenant(tenantId);
   }
 
   Repository getRepository(TenantId tenantId, RepositoryId repositoryId) {

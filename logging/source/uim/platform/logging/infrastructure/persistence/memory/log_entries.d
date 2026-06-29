@@ -23,7 +23,7 @@ class MemoryLogEntryRepository : TenantRepository!(LogEntry, LogEntryId), LogEnt
     return entries.filter!(e => e.streamId == streamId).array;
   }
   LogEntry[] findByStream(TenantId tenantId, LogStreamId streamId) {
-    return find(tenantId).filter!(e => e.streamId == streamId).array;
+    return findByTenant(tenantId).filter!(e => e.streamId == streamId).array;
   }
   void removeByStream(TenantId tenantId, LogStreamId streamId) {
     findByStream(tenantId, streamId).each!(e => remove(e));
@@ -36,7 +36,7 @@ class MemoryLogEntryRepository : TenantRepository!(LogEntry, LogEntryId), LogEnt
     return entries.filter!(e => e.level == level).array;
   }
   LogEntry[] findByLevel(TenantId tenantId, LoggingLevel level) {
-    return filterByLevel(find(tenantId), level);
+    return filterByLevel(findByTenant(tenantId), level);
   }
   void removeByLevel(TenantId tenantId, LoggingLevel level) {
     findByLevel(tenantId, level).each!(e => remove(e));
@@ -49,7 +49,7 @@ class MemoryLogEntryRepository : TenantRepository!(LogEntry, LogEntryId), LogEnt
     return entries.filter!(e => e.timestamp >= startTime && e.timestamp <= endTime).array;
   }
   LogEntry[] findByTimeRange(TenantId tenantId, long startTime, long endTime) {
-    return filterByTimeRange(find(tenantId), startTime, endTime);
+    return filterByTimeRange(findByTenant(tenantId), startTime, endTime);
   }
   void removeByTimeRange(TenantId tenantId, long startTime, long endTime) {
     findByTimeRange(tenantId, startTime, endTime).each!(e => remove(e));
@@ -62,7 +62,7 @@ class MemoryLogEntryRepository : TenantRepository!(LogEntry, LogEntryId), LogEnt
     return entries.filter!(e => e.traceId == traceId).array;
   }
   LogEntry[] findByTrace(TenantId tenantId, TraceId traceId) {
-    return filterByTrace(find(tenantId), traceId);
+    return filterByTrace(findByTenant(tenantId), traceId);
   }
   void removeByTrace(TenantId tenantId, TraceId traceId) {
     findByTrace(tenantId, traceId).each!(e => remove(e));
@@ -75,7 +75,7 @@ class MemoryLogEntryRepository : TenantRepository!(LogEntry, LogEntryId), LogEnt
     return entries.filter!(e => e.correlationId == correlationId).array;
   }
   LogEntry[] findByCorrelation(TenantId tenantId, string correlationId) {
-    return filterByCorrelation(find(tenantId), correlationId);
+    return filterByCorrelation(findByTenant(tenantId), correlationId);
   }
   void removeByCorrelation(TenantId tenantId, string correlationId) {
     findByCorrelation(tenantId, correlationId).each!(e => remove(e));
@@ -85,14 +85,14 @@ class MemoryLogEntryRepository : TenantRepository!(LogEntry, LogEntryId), LogEnt
     return search(tenantId, query).length;
   }
   LogEntry[] search(TenantId tenantId, string query) {
-    return find(tenantId).filter!(e => e.message.indexOf(query) >= 0).array;
+    return findByTenant(tenantId).filter!(e => e.message.indexOf(query) >= 0).array;
   }
   void removeBySearch(TenantId tenantId, string query) {
     search(tenantId, query).each!(e => remove(e));
   }
 
   void removeOlderThan(TenantId tenantId, long beforeTimestamp) {
-    find(tenantId).filter!(e => e.timestamp < beforeTimestamp).each!(e => remove(e));
+    findByTenant(tenantId).filter!(e => e.timestamp < beforeTimestamp).each!(e => remove(e));
   }
 
 }

@@ -19,11 +19,11 @@ import uim.platform.foundry;
 class MemorySpaceRepository : TenantRepository!(Space, SpaceId), ISpaceRepository {
 
   bool existsByName(TenantId tenantId, OrgId orgId, string name) {
-    return find(tenantId).any!(e => e.orgId == orgId && e.name == name);
+    return findByTenant(tenantId).any!(e => e.orgId == orgId && e.name == name);
   }
 
   Space findByName(TenantId tenantId, OrgId orgId, string name) {
-    foreach (e; find(tenantId))
+    foreach (e; findByTenant(tenantId))
       if (e.orgId == orgId && e.name == name)
         return e;
     return Space.init;
@@ -44,7 +44,7 @@ class MemorySpaceRepository : TenantRepository!(Space, SpaceId), ISpaceRepositor
   }
 
   Space[] findByOrg(TenantId tenantId, OrgId orgId) {
-    return filterByOrg(find(tenantId), orgId);
+    return filterByOrg(findByTenant(tenantId), orgId);
   }
 
   void removeByOrg(TenantId tenantId, OrgId orgId) {

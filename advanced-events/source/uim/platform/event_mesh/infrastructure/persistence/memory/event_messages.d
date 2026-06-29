@@ -22,7 +22,7 @@ class MemoryEventMessageRepository : TenantRepository!(EventMessage, EventMessag
     }
 
     EventMessage[] findByBrokerService(TenantId tenantId, BrokerServiceId serviceId) {
-        return filterByBrokerService(find(tenantId), serviceId);
+        return filterByBrokerService(findByTenant(tenantId), serviceId);
     }
 
     void removeByBrokerService(TenantId tenantId, BrokerServiceId serviceId) {
@@ -38,7 +38,7 @@ class MemoryEventMessageRepository : TenantRepository!(EventMessage, EventMessag
     }
 
     EventMessage[] findByTopic(TenantId tenantId, TopicId topicId) {
-        return filterByTopic(find(tenantId), topicId);
+        return filterByTopic(findByTenant(tenantId), topicId);
     }
 
     void removeByTopic(TenantId tenantId, TopicId topicId) {
@@ -54,7 +54,7 @@ class MemoryEventMessageRepository : TenantRepository!(EventMessage, EventMessag
     }
 
     EventMessage[] findByQueue(TenantId tenantId, QueueId queueId) {
-        return filterByQueue(find(tenantId), queueId);
+        return filterByQueue(findByTenant(tenantId), queueId);
     }
 
     void removeByQueue(TenantId tenantId, QueueId queueId) {
@@ -70,7 +70,7 @@ class MemoryEventMessageRepository : TenantRepository!(EventMessage, EventMessag
     }
 
     EventMessage[] findByStatus(TenantId tenantId, MessageStatus status) {
-        return filterByStatus(find(tenantId), status);
+        return filterByStatus(findByTenant(tenantId), status);
     }
 
     void removeByStatus(TenantId tenantId, MessageStatus status) {

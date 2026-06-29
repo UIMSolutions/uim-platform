@@ -18,7 +18,7 @@ class MemoryCustomMetricRepository : TenantRepository!(CustomMetricEntity, Custo
   }
 
   CustomMetricEntity[] findByApp(TenantId tenantId, AppBindingId appId) {
-    return find(tenantId).filter!(m => m.appId == appId).array;
+    return findByTenant(tenantId).filter!(m => m.appId == appId).array;
   }
 
   void removeByApp(TenantId tenantId, AppBindingId appId) {

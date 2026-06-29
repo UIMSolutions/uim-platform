@@ -19,11 +19,11 @@ class ManageDevicesUseCase {
     }
 
     Device getDevice(TenantId tenantId, DeviceId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     Device[] listDevices(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     Device[] listByMobileApplication(TenantId tenantId, MobileApplicationId appId) {
@@ -76,7 +76,7 @@ class ManageDevicesUseCase {
     }
 
     CommandResult removeDevice(TenantId tenantId, DeviceId id) {
-        auto entity = repo.find(tenantId, id);
+        auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Device not found");
 

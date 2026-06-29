@@ -19,11 +19,11 @@ class ManageOAuthScopesUseCase { // TODO: UIMUseCase {
     }
 
     OAuthScope getScope(TenantId tenantId, OAuthScopeId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     OAuthScope[] listScopes(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     OAuthScope[] listScopes(TenantId tenantId, string applicationId) {
@@ -60,7 +60,7 @@ class ManageOAuthScopesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteOAuthScope(TenantId tenantId, OAuthScopeId id) {
-        auto scope_ = repo.find(tenantId, id);
+        auto scope_ = repo.findById(tenantId, id);
         if (scope_.isNull)
             return CommandResult(false, "", "OAuth scope not found");
 

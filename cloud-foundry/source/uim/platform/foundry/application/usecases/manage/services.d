@@ -67,7 +67,7 @@ class ManageServicesUseCase { // TODO: UIMUseCase {
   }
 
   ServiceInstance[] listInstances(TenantId tenantId) {
-    return instances.find(tenantId);
+    return instances.findByTenant(tenantId);
   }
 
   ServiceInstance[] listBySpace(TenantId tenantId, SpaceId spaceId) {
@@ -139,7 +139,7 @@ class ManageServicesUseCase { // TODO: UIMUseCase {
   }
 
   ServiceBinding[] listBindings(TenantId tenantId) {
-    return bindings.find(tenantId);
+    return bindings.findByTenant(tenantId);
   }
 
   ServiceBinding[] listBindingsByApp(TenantId tenantId, AppId appId) {

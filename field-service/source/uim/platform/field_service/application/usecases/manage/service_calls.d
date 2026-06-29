@@ -19,11 +19,11 @@ class ManageServiceCallsUseCase { // TODO: UIMUseCase {
     }
 
     ServiceCall getServiceCall(TenantId tenantId, ServiceCallId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     ServiceCall[] listServiceCalls(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     ServiceCall[] listServiceCalls(TenantId tenantId, ServiceCallStatus status) {
@@ -74,7 +74,7 @@ class ManageServiceCallsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteServiceCall(TenantId tenantId, ServiceCallId id) {
-        auto entity = repo.find(tenantId, id);
+        auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Service call not found");
 

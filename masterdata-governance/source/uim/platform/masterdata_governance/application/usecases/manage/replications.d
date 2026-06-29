@@ -19,11 +19,11 @@ class ManageReplicationsUseCase {
     }
 
     Replication getReplication(TenantId tenantId, ReplicationId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     Replication[] listReplications(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     Replication[] listByStatus(TenantId tenantId, ReplicationStatus status) {
@@ -62,7 +62,7 @@ class ManageReplicationsUseCase {
     }
 
     CommandResult cancelReplication(TenantId tenantId, ReplicationId id) {
-        auto rep = repo.find(tenantId, id);
+        auto rep = repo.findById(tenantId, id);
         if (rep.isNull)
             return CommandResult(false, "", "Replication not found");
         if (rep.status == ReplicationStatus.completed || rep.status == ReplicationStatus.cancelled)
@@ -74,7 +74,7 @@ class ManageReplicationsUseCase {
     }
 
     CommandResult deleteReplication(TenantId tenantId, ReplicationId id) {
-        auto rep = repo.find(tenantId, id);
+        auto rep = repo.findById(tenantId, id);
         if (rep.isNull)
             return CommandResult(false, "", "Replication not found");
 

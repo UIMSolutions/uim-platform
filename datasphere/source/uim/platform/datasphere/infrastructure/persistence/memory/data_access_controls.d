@@ -39,7 +39,7 @@ class MemoryDataAccessControlRepository : TenantRepository!(DataAccessControl, D
     return findBySpace(tenantId, spaceId).length;
   }
   DataAccessControl[] findBySpace(TenantId tenantId, SpaceId spaceId) {
-    return filterBySpace(find(tenantId), spaceId);
+    return filterBySpace(findByTenant(tenantId), spaceId);
   }
   void removeBySpace(TenantId tenantId, SpaceId spaceId) {
     findBySpace(tenantId, spaceId).each!(dac => remove(dac));

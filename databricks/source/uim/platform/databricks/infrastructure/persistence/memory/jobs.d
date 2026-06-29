@@ -9,18 +9,18 @@ class MemoryJobRepository : TenantRepository!(Job, JobId), JobRepository {
   Job[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
     import std.algorithm : filter;
     import std.array : array;
-    return find(tenantId).filter!(j => j.workspaceId == workspaceId).array;
+    return findByTenant(tenantId).filter!(j => j.workspaceId == workspaceId).array;
   }
 
   Job[] findByStatus(TenantId tenantId, JobStatus status) {
     import std.algorithm : filter;
     import std.array : array;
-    return find(tenantId).filter!(j => j.status == status).array;
+    return findByTenant(tenantId).filter!(j => j.status == status).array;
   }
 
   Job[] findByCreator(TenantId tenantId, string creatorId) {
     import std.algorithm : filter;
     import std.array : array;
-    return find(tenantId).filter!(j => j.creatorId == creatorId).array;
+    return findByTenant(tenantId).filter!(j => j.creatorId == creatorId).array;
   }
 }

@@ -19,11 +19,11 @@ class ManageExtensionsUseCase { // TODO: UIMUseCase {
     }
 
     Extension getExtension(TenantId tenantId, ExtensionId id) {
-        return extensions.find(tenantId, id);
+        return extensions.findById(tenantId, id);
     }
 
     Extension[] listExtensions(TenantId tenantId) {
-        return extensions.find(tenantId);
+        return extensions.findByTenant(tenantId);
     }
 
     CommandResult createExtension(ExtensionDTO dto) {
@@ -60,7 +60,7 @@ class ManageExtensionsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteExtension(TenantId tenantId, ExtensionId id) {
-        auto extension = extensions.find(tenantId, id);
+        auto extension = extensions.findById(tenantId, id);
         if (extension.isNull)
             return CommandResult(false, "", "Extension not found");
 

@@ -19,7 +19,7 @@ class MemoryShareRepository : TenantRepository!(Share, ShareId), IShareRepositor
   }
 
   Share[] findByDocument(TenantId tenantId, DocumentId documentId) {
-    return find(tenantId).filter!(e => e.documentId == documentId).array;
+    return findByTenant(tenantId).filter!(e => e.documentId == documentId).array;
   }
 
   void removeByDocument(TenantId tenantId, DocumentId documentId) {
@@ -31,7 +31,7 @@ class MemoryShareRepository : TenantRepository!(Share, ShareId), IShareRepositor
   }
 
   Share[] findBySharedWith(TenantId tenantId, string sharedWith) {
-    return find(tenantId).filter!(e => e.sharedWith == sharedWith).array;
+    return findByTenant(tenantId).filter!(e => e.sharedWith == sharedWith).array;
   }
 
   void removeBySharedWith(TenantId tenantId, string sharedWith) {
@@ -43,7 +43,7 @@ class MemoryShareRepository : TenantRepository!(Share, ShareId), IShareRepositor
   }
 
   Share[] findByStatus(TenantId tenantId, ShareStatus status) {
-    return find(tenantId).filter!(e => e.status == status).array;
+    return findByTenant(tenantId).filter!(e => e.status == status).array;
   }
 
   void removeByStatus(TenantId tenantId, ShareStatus status) {

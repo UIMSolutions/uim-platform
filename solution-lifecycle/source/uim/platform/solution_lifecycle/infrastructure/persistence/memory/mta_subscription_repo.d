@@ -18,7 +18,7 @@ class MemoryMtaSubscriptionRepository
     /// Find all subscriptions for a given provider MTA ID
     MtaSubscription[] findByProviderMtaId(TenantId tenantId, string mtaId) {
         MtaSubscription[] result;
-        foreach (s; find(tenantId))
+        foreach (s; findByTenant(tenantId))
             if (s.mtaId == mtaId) result ~= s;
         return result;
     }

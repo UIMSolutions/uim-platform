@@ -25,7 +25,7 @@ class MemoryReplicationJobRepository : TenantRepository!(ReplicationJob, Replica
   }
 
   ReplicationJob[] findByStatus(TenantId tenantId, ReplicationJobStatus status) {
-    return filterByStatus(find(tenantId), status);
+    return filterByStatus(findByTenant(tenantId), status);
   }
 
   void removeByStatus(TenantId tenantId, ReplicationJobStatus status) {
@@ -41,7 +41,7 @@ class MemoryReplicationJobRepository : TenantRepository!(ReplicationJob, Replica
   }
 
   ReplicationJob[] findByDistributionModel(TenantId tenantId, DistributionModelId modelId) {
-    return filterByDistributionModel(find(tenantId), modelId);
+    return filterByDistributionModel(findByTenant(tenantId), modelId);
   }
 
   void removeByDistributionModel(TenantId tenantId, DistributionModelId modelId) {

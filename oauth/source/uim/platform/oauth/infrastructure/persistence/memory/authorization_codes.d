@@ -18,12 +18,12 @@ class MemoryAuthorizationCodeRepository : TenantRepository!(AuthorizationCode, A
         return findByCode(tenantId, code).id != AuthorizationCodeId.init;
     }
     AuthorizationCode findByCode(TenantId tenantId, string code) {
-        foreach (e; find(tenantId))
+        foreach (e; findByTenant(tenantId))
             if (e.code == code) return e;
         return AuthorizationCode.init;
     }
     void removeByCode(TenantId tenantId, string code) {
-        foreach (e; find(tenantId))
+        foreach (e; findByTenant(tenantId))
             if (e.code == code) {
                 remove(e);
                 return;
@@ -39,7 +39,7 @@ class MemoryAuthorizationCodeRepository : TenantRepository!(AuthorizationCode, A
         return codes.filter!(e => e.clientId == clientId).array;
     }
     AuthorizationCode[] findByClient(TenantId tenantId, string clientId) {
-        return filterByClient(find(tenantId), clientId);
+        return filterByClient(findByTenant(tenantId), clientId);
     }
     void removeByClient(TenantId tenantId, string clientId) {
         findByClient(tenantId, clientId).each!(e => remove(e));
@@ -54,7 +54,7 @@ class MemoryAuthorizationCodeRepository : TenantRepository!(AuthorizationCode, A
         return codes.filter!(e => e.status == status).array;
     }
     AuthorizationCode[] findByStatus(TenantId tenantId, AuthCodeStatus status) {
-        return filterByStatus(find(tenantId), status);
+        return filterByStatus(findByTenant(tenantId), status);
     }
     void removeByStatus(TenantId tenantId, AuthCodeStatus status) {
         findByStatus(tenantId, status).each!(e => remove(e));

@@ -25,13 +25,13 @@ class MonthlyCostReportUseCases {
   }
 
   MonthlyCostReportResponse getReport(TenantId tenantId, MonthlyCostReportId id) {
-    auto r = repo.find(tenantId, id);
+    auto r = repo.findById(tenantId, id);
     return MonthlyCostReportResponse.fromEntity(r);
   }
 
   MonthlyCostReportResponse[] listReports(TenantId tenantId) {
     MonthlyCostReportResponse[] result;
-    foreach (r; repo.find(tenantId))
+    foreach (r; repo.findByTenant(tenantId))
       result ~= MonthlyCostReportResponse.fromEntity(r);
     return result;
   }
@@ -44,7 +44,7 @@ class MonthlyCostReportUseCases {
   }
 
   MonthlyCostReportResponse markReady(TenantId tenantId, MonthlyCostReportId id) {
-    auto r = repo.find(tenantId, id);
+    auto r = repo.findById(tenantId, id);
     if (r.isNull) return MonthlyCostReportResponse.init;
     r.status = ReportStatus.ready;
     repo.save(r);
@@ -52,7 +52,7 @@ class MonthlyCostReportUseCases {
   }
 
   CommandResult deleteReport(TenantId tenantId, MonthlyCostReportId id) {
-    auto r = repo.find(tenantId, id);
+    auto r = repo.findById(tenantId, id);
     if (r.isNull) return CommandResult(false, "", "Monthly cost report not found");
     repo.remove(r);
     return CommandResult(true, r.id.value, "");

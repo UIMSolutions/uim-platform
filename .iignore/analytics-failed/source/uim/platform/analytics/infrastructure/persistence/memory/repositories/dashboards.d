@@ -24,7 +24,7 @@ class MemoryDashboardRepository : TenantRepository!(Dashboard, DashboardId), Das
   }
 
   Dashboard[] findByOwner(TenantId tenantId, EntityId ownerId) {
-    return filterByOwner(find(tenantId), ownerId);
+    return filterByOwner(findByTenant(tenantId), ownerId);
   }
 
   void removeByOwner(TenantId tenantId, EntityId ownerId) {
@@ -41,7 +41,7 @@ class MemoryDashboardRepository : TenantRepository!(Dashboard, DashboardId), Das
   }
 
   Dashboard[] findByStatus(TenantId tenantId, ArtifactStatus status) {
-    return filterByStatus(find(tenantId), status);
+    return filterByStatus(findByTenant(tenantId), status);
   }
 
   void removeByStatus(TenantId tenantId, ArtifactStatus status) {

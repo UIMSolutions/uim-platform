@@ -71,7 +71,7 @@ class ManageMedicationRequestsUseCase {
   }
 
   MedicationRequest getMedicationRequest(TenantId tenantId, MedicationRequestId id) {
-    return repo.find(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 
   MedicationRequest[] listMedicationRequests(TenantId tenantId) {
@@ -83,7 +83,7 @@ class ManageMedicationRequestsUseCase {
   }
 
   CommandResult deleteMedicationRequest(TenantId tenantId, MedicationRequestId id) {
-    auto entity = repo.find(tenantId, id);
+    auto entity = repo.findById(tenantId, id);
     if (entity.isNull)
       return CommandResult(false, "", "MedicationRequest not found");
     repo.remove(entity);

@@ -31,7 +31,7 @@ class FileServicePlanRepository
         auto path = filePath(tenantId);
         mkdirRecurse(path[0 .. path.lastIndexOf('/')]);
         Json arr = Json.emptyArray;
-        foreach (i; find(tenantId)) arr ~= i.toJson();
+        foreach (i; findByTenant(tenantId)) arr ~= i.toJson();
         write(path, arr.toString());
     }
 
@@ -65,14 +65,14 @@ class FileServicePlanRepository
     override void removeById(TenantId tenantId, ServicePlanId id) { super.removeById(tenantId, id); persistTenant(tenantId); }
 
     override ServicePlan[] findByTier(TenantId tenantId, PlanTier tier) {
-        return find(tenantId).filter!(e => e.tier == tier).array;
+        return findByTenant(tenantId).filter!(e => e.tier == tier).array;
     }
 
     override ServicePlan[] findAvailable(TenantId tenantId) {
-        return find(tenantId).filter!(e => e.available).array;
+        return findByTenant(tenantId).filter!(e => e.available).array;
     }
 
     override bool nameExists(TenantId tenantId, string name) {
-        return find(tenantId).any!(e => e.name == name);
+        return findByTenant(tenantId).any!(e => e.name == name);
     }
 }

@@ -46,7 +46,7 @@ class ManageKnowledgeBaseArticlesUseCase { // TODO: UIMUseCase {
   }
 
   KnowledgeBaseArticle getArticle(TenantId tenantId, KBArticleId id) {
-    return repo.find(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 
   KnowledgeBaseArticle[] listArticles(TenantId tenantId, WorkspaceId workspaceId) {
@@ -79,7 +79,7 @@ class ManageKnowledgeBaseArticlesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteArticle(TenantId tenantId, KBArticleId id) {
-    auto a = repo.find(tenantId, id);
+    auto a = repo.findById(tenantId, id);
     if (a.isNull)
       return CommandResult(false, "", "Article not found");
 

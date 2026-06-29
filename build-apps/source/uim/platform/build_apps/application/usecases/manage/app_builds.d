@@ -19,11 +19,11 @@ class ManageAppBuildsUseCase { // TODO: UIMUseCase {
     }
 
     AppBuild getAppBuild(TenantId tenantId, AppBuildId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     AppBuild[] listAppBuilds(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     AppBuild[] listAppBuilds(TenantId tenantId, ApplicationId applicationId) {
@@ -67,7 +67,7 @@ class ManageAppBuildsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteAppBuild(TenantId tenantId, AppBuildId id) {
-        auto entity = repo.find(tenantId, id);
+        auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "App build not found");
 

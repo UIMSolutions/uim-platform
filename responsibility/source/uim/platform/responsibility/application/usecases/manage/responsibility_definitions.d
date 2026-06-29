@@ -17,11 +17,11 @@ class ManageResponsibilityDefinitionsUseCase {
     this(ResponsibilityDefinitionRepository repo) { this.repo = repo; }
 
     ResponsibilityDefinition getDefinition(TenantId tenantId, ResponsibilityDefinitionId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     ResponsibilityDefinition[] listDefinitions(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     ResponsibilityDefinition[] listDefinitionsByContext(TenantId tenantId, string contextId) {
@@ -62,7 +62,7 @@ class ManageResponsibilityDefinitionsUseCase {
     }
 
     CommandResult deleteDefinition(TenantId tenantId, ResponsibilityDefinitionId id) {
-        auto e = repo.find(tenantId, id);
+        auto e = repo.findById(tenantId, id);
         if (e.isNull)
             return CommandResult(false, "", "Definition not found");
         repo.remove(e);

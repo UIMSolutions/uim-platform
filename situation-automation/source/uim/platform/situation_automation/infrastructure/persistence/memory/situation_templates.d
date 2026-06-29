@@ -22,7 +22,7 @@ class MemorySituationTemplateRepository : TenantRepository!(SituationTemplate, S
     }
 
     SituationTemplate[] findByCategory(TenantId tenantId, SituationCategory category) {
-        return filterByCategory(find(tenantId), category);
+        return filterByCategory(findByTenant(tenantId), category);
     }
 
     void removeByCategory(TenantId tenantId, SituationCategory category) {
@@ -40,7 +40,7 @@ class MemorySituationTemplateRepository : TenantRepository!(SituationTemplate, S
     }
 
     SituationTemplate[] findByEntityType(TenantId tenantId, EntityTypeId entityTypeId) {
-        return filterByEntityType(find(tenantId), entityTypeId);
+        return filterByEntityType(findByTenant(tenantId), entityTypeId);
     }
 
     void removeByEntityType(TenantId tenantId, EntityTypeId entityTypeId) {

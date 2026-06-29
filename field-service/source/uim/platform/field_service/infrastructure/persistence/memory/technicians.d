@@ -20,7 +20,7 @@ class MemoryTechnicianRepository : TenantRepository!(Technician, TechnicianId), 
         return technicians.filter!(e => e.status == status).array;
     }
     Technician[] findByStatus(TenantId tenantId, TechnicianStatus status) {
-        return filterByStatus(find(tenantId), status);
+        return filterByStatus(findByTenant(tenantId), status);
     }
     void removeByStatus(TenantId tenantId, TechnicianStatus status) {
         findByStatus(tenantId, status).each!(entity => remove(entity));
@@ -33,7 +33,7 @@ class MemoryTechnicianRepository : TenantRepository!(Technician, TechnicianId), 
         return technicians.filter!(e => e.region == region).array;
     }
     Technician[] findByRegion(TenantId tenantId, string region) {
-        return filterByRegion(find(tenantId), region);
+        return filterByRegion(findByTenant(tenantId), region);
     }
     void removeByRegion(TenantId tenantId, string region) {
         findByRegion(tenantId, region).each!(entity => remove(entity));

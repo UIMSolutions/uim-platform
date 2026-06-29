@@ -19,11 +19,11 @@ class ManageSyncSessionsUseCase {
     }
 
     SyncSession getSyncSession(TenantId tenantId, SyncSessionId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     SyncSession[] listSyncSessions(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     SyncSession[] listByDevice(TenantId tenantId, DeviceId deviceId) {
@@ -65,7 +65,7 @@ class ManageSyncSessionsUseCase {
     }
 
     CommandResult deleteSyncSession(TenantId tenantId, SyncSessionId id) {
-        auto entity = repo.find(tenantId, id);
+        auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Sync session not found");
 

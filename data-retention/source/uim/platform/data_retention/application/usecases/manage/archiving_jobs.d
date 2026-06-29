@@ -32,7 +32,7 @@ class ManageArchivingJobsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateArchivingJob(TenantId tenantId, ArchivingJobId id, UpdateArchivingJobRequest req) {
-        auto aj = repo.find(tenantId, id);
+        auto aj = repo.findById(tenantId, id);
         if (aj.isNull)
             return CommandResult(false, "", "Archiving job not found");
 
@@ -60,7 +60,7 @@ class ManageArchivingJobsUseCase { // TODO: UIMUseCase {
     }
 
     ArchivingJob getArchivingJob(TenantId tenantId, ArchivingJobId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     ArchivingJob[] listArchivingJobs(TenantId tenantId) {
@@ -72,7 +72,7 @@ class ManageArchivingJobsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteArchivingJob(TenantId tenantId, ArchivingJobId id) {
-        auto job = repo.find(tenantId, id);
+        auto job = repo.findById(tenantId, id);
         if (job.isNull)
             return CommandResult(false, "", "Archiving job not found");
 

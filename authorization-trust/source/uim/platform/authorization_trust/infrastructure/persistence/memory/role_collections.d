@@ -14,11 +14,11 @@ import uim.platform.authorization_trust;
 class MemoryRoleCollectionRepository : TenantRepository!(RoleCollectionEntity, RoleCollectionId), RoleCollectionRepository {
 
   bool existsByName(TenantId tenantId, string name) {
-    return find(tenantId).any!(rc => rc.name == name);
+    return findByTenant(tenantId).any!(rc => rc.name == name);
   }
 
   RoleCollectionEntity findByName(TenantId tenantId, string name) {
-    foreach (rc; find(tenantId))
+    foreach (rc; findByTenant(tenantId))
       if (rc.name == name)
         return rc;
     return RoleCollectionEntity.init;

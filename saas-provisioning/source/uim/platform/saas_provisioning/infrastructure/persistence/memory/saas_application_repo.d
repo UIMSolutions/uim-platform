@@ -17,7 +17,7 @@ class MemorySaasApplicationRepository
       SaasApplicationRepository
 {
     SaasApplication findByAppName(TenantId tenantId, string appName) {
-        foreach (app; find(tenantId)) {
+        foreach (app; findByTenant(tenantId)) {
             if (app.appName == appName) return app;
         }
         return new SaasApplication();

@@ -82,7 +82,7 @@ class FileBrokerServiceRepository : MemoryBrokerServiceRepository {
         auto fp = filePath(tenantId);
         mkdirRecurse(dirName(fp));
         Json arr = Json.emptyArray;
-        foreach (item; super.find(tenantId))
+        foreach (item; super.findByTenant(tenantId))
             arr ~= item.toJson;
         write(fp, arr.toString());
     }
@@ -94,7 +94,7 @@ class FileBrokerServiceRepository : MemoryBrokerServiceRepository {
 
     override BrokerService findById(TenantId tenantId, BrokerServiceId id) {
         ensureLoaded(tenantId);
-        return super.find(tenantId, id);
+        return super.findById(tenantId, id);
     }
 
     override void save(BrokerService item) {

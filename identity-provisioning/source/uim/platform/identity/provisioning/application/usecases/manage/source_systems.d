@@ -47,11 +47,11 @@ class ManageSourceSystemsUseCase { // TODO: UIMUseCase {
   }
 
   SourceSystem getSourceSystem(TenantId tenantId, SourceSystemId id) {
-    return repo.find(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 
   SourceSystem[] listSourceSystems(TenantId tenantId) {
-    return repo.find(tenantId);
+    return repo.findByTenant(tenantId);
   }
 
   CommandResult updateSourceSystem(UpdateSourceSystemRequest req) {
@@ -79,7 +79,7 @@ class ManageSourceSystemsUseCase { // TODO: UIMUseCase {
 
   /// Activate a source system for provisioning.
   CommandResult activateSystem(TenantId tenantId, SourceSystemId id) {
-    auto sys = repo.find(tenantId, id);
+    auto sys = repo.findById(tenantId, id);
     if (sys.isNull)
       return CommandResult(false, "", "Source system not found");
 
@@ -94,7 +94,7 @@ class ManageSourceSystemsUseCase { // TODO: UIMUseCase {
 
   /// Deactivate a source system.
   CommandResult deactivateSystem(TenantId tenantId, SourceSystemId id) {
-    auto sys = repo.find(tenantId, id);
+    auto sys = repo.findById(tenantId, id);
     if (sys.isNull)
       return CommandResult(false, "", "Source system not found");
 
@@ -105,7 +105,7 @@ class ManageSourceSystemsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteSourceSystem(TenantId tenantId, SourceSystemId id) {
-    auto existing = repo.find(tenantId, id);
+    auto existing = repo.findById(tenantId, id);
     if (existing.isNull)
       return CommandResult(false, "", "Source system not found");
 

@@ -18,7 +18,7 @@ class MemoryTaskDefinitionRepository : TenantRepository!(TaskDefinition, TaskDef
     }
 
     TaskDefinition findByName(TenantId tenantId, string name) {
-        foreach (d; find(tenantId))
+        foreach (d; findByTenant(tenantId))
             if (d.name == name)
                 return d;
                 
@@ -26,7 +26,7 @@ class MemoryTaskDefinitionRepository : TenantRepository!(TaskDefinition, TaskDef
     }
 
     void removeByName(TenantId tenantId, string name) {
-        foreach (d; find(tenantId))
+        foreach (d; findByTenant(tenantId))
             if (d.name == name)
                 remove(d);
     }
@@ -41,7 +41,7 @@ class MemoryTaskDefinitionRepository : TenantRepository!(TaskDefinition, TaskDef
     }
 
     TaskDefinition[] findByProvider(TenantId tenantId, TaskProviderId providerId) {
-        return filterByProvider(find(tenantId), providerId);
+        return filterByProvider(findByTenant(tenantId), providerId);
     }
 
     void removeByProvider(TenantId tenantId, TaskProviderId providerId) {
@@ -58,7 +58,7 @@ class MemoryTaskDefinitionRepository : TenantRepository!(TaskDefinition, TaskDef
     }
 
     TaskDefinition[] findByCategory(TenantId tenantId, TaskCategory category) {
-        return filterByCategory(find(tenantId), category);
+        return filterByCategory(findByTenant(tenantId), category);
     }
 
     void removeByCategory(TenantId tenantId, TaskCategory category) {
@@ -76,7 +76,7 @@ class MemoryTaskDefinitionRepository : TenantRepository!(TaskDefinition, TaskDef
     // }
 
     // TaskDefinition[] findByPriority(TenantId tenantId, TaskPriority priority) {
-    //     return filterByPriority(find(tenantId), priority);
+    //     return filterByPriority(findByTenant(tenantId), priority);
     // }
 
     // void removeByPriority(TenantId tenantId, TaskPriority priority) {

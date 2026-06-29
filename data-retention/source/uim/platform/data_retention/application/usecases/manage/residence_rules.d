@@ -51,7 +51,7 @@ class ManageResidenceRulesUseCase { // TODO: UIMUseCase {
     }
 
     ResidenceRule getResidenceRule(TenantId tenantId, ResidenceRuleId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     ResidenceRule[] listResidenceRules(TenantId tenantId) {
@@ -63,7 +63,7 @@ class ManageResidenceRulesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteResidenceRule(TenantId tenantId, ResidenceRuleId id) {
-        auto rule = repo.find(tenantId, id);
+        auto rule = repo.findById(tenantId, id);
         if (rule.isNull)
             return CommandResult(false, "", "Residence rule not found");
 

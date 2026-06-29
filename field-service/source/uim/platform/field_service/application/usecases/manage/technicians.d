@@ -19,11 +19,11 @@ class ManageTechniciansUseCase { // TODO: UIMUseCase {
     }
 
     Technician getTechnician(TenantId tenantId, TechnicianId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     Technician[] listTechnicians(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     Technician[] listTechnicians(TenantId tenantId, TechnicianStatus status) {
@@ -73,7 +73,7 @@ class ManageTechniciansUseCase { // TODO: UIMUseCase {
         }
 
     CommandResult deleteTechnician(TenantId tenantId, TechnicianId id) {
-        auto technician = repo.find(tenantId, id);
+        auto technician = repo.findById(tenantId, id);
         if (technician.isNull)
             return CommandResult(false, "", "Technician not found");
 

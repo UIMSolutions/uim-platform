@@ -37,7 +37,7 @@ class MemoryResourceGroupRepository : TenantRepository!(ResourceGroup, ResourceG
   }
 
   ResourceGroup[] findByConnection(TenantId tenantId, ConnectionId connectionId) {
-    return filterByConnection(find(tenantId), connectionId);
+    return filterByConnection(findByTenant(tenantId), connectionId);
   }
 
   void removeByConnection(TenantId tenantId, ConnectionId connectionId) {

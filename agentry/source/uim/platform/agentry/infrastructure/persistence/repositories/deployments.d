@@ -22,7 +22,7 @@ class DeploymentRepository
         return deployments.filter!(d => d.mobileApplicationId == appId).array;
     }
     Deployment[] findByMobileApplication(TenantId tenantId, MobileApplicationId appId) {
-        return filterByMobileApplication(find(tenantId), appId);
+        return filterByMobileApplication(findByTenant(tenantId), appId);
     }
     void removeByMobileApplication(TenantId tenantId, MobileApplicationId appId) {
         findByMobileApplication(tenantId, appId).each!(e => remove(e));
@@ -37,7 +37,7 @@ class DeploymentRepository
     }
 
     Deployment[] findByStatus(TenantId tenantId, DeploymentStatus status) {
-        return filterByStatus(find(tenantId), status);
+        return filterByStatus(findByTenant(tenantId), status);
     }
     void removeByStatus(TenantId tenantId, DeploymentStatus status) {
         findByStatus(tenantId, status).each!(e => remove(e));
@@ -50,7 +50,7 @@ class DeploymentRepository
         return deployments.filter!(d => d.appVersionId == versionId).array;
     }
     Deployment[] findByAppVersion(TenantId tenantId, AppVersionId versionId) {
-        return filterByAppVersion(find(tenantId), versionId);
+        return filterByAppVersion(findByTenant(tenantId), versionId);
     }
     void removeByAppVersion(TenantId tenantId, AppVersionId versionId) {
         findByAppVersion(tenantId, versionId).each!(e => remove(e));

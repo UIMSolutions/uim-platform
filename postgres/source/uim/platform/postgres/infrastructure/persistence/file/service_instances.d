@@ -32,7 +32,7 @@ class FileServiceInstanceRepository
         auto path = filePath(tenantId);
         mkdirRecurse(path[0 .. path.lastIndexOf('/')]);
         Json arr = Json.emptyArray;
-        foreach (i; find(tenantId)) arr ~= i.toJson();
+        foreach (i; findByTenant(tenantId)) arr ~= i.toJson();
         write(path, arr.toString());
     }
 

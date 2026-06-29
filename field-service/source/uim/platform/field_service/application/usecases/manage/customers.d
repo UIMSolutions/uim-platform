@@ -19,11 +19,11 @@ class ManageCustomersUseCase { // TODO: UIMUseCase {
     }
 
     Customer getCustomer(TenantId tenantId, CustomerId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     Customer[] listCustomers(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     Customer[] listCustomers(TenantId tenantId, CustomerType customerType) {
@@ -75,7 +75,7 @@ class ManageCustomersUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteCustomer(TenantId tenantId, CustomerId id) {
-        auto customer = repo.find(tenantId, id);
+        auto customer = repo.findById(tenantId, id);
         if (customer.isNull)
             return CommandResult(false, "", "Customer not found");
 

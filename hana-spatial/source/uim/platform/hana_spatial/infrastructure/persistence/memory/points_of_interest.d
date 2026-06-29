@@ -16,7 +16,7 @@ class MemoryPointOfInterestRepository
 
   PointOfInterest[] findByCategory(TenantId tenantId, PoiCategory category) {
     PointOfInterest[] results;
-    foreach (item; find(tenantId)) {
+    foreach (item; findByTenant(tenantId)) {
       if (item.category == category) results ~= item;
     }
     return results;
@@ -24,7 +24,7 @@ class MemoryPointOfInterestRepository
 
   PointOfInterest[] findByProvider(TenantId tenantId, string providerId) {
     PointOfInterest[] results;
-    foreach (item; find(tenantId)) {
+    foreach (item; findByTenant(tenantId)) {
       if (item.providerId == providerId) results ~= item;
     }
     return results;

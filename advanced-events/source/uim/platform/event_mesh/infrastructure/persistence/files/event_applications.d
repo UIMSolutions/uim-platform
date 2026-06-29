@@ -74,7 +74,7 @@ class FileEventApplicationRepository : MemoryEventApplicationRepository {
         auto fp = filePath(tenantId);
         mkdirRecurse(dirName(fp));
         Json arr = Json.emptyArray;
-        foreach (item; super.find(tenantId))
+        foreach (item; super.findByTenant(tenantId))
             arr ~= item.toJson;
         write(fp, arr.toString());
     }
@@ -86,7 +86,7 @@ class FileEventApplicationRepository : MemoryEventApplicationRepository {
 
     override EventApplication findById(TenantId tenantId, EventApplicationId id) {
         ensureLoaded(tenantId);
-        return super.find(tenantId, id);
+        return super.findById(tenantId, id);
     }
 
     override void save(EventApplication item) {

@@ -61,7 +61,7 @@ class ManageDeletionRequestsUseCase { // TODO: UIMUseCase {
     }
 
     DeletionRequest getDeletionRequest(TenantId tenantId, DeletionRequestId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     DeletionRequest[] listDeletionRequests(TenantId tenantId) {
@@ -73,7 +73,7 @@ class ManageDeletionRequestsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteDeletionRequest(TenantId tenantId, DeletionRequestId id) {
-        auto request = repo.find(tenantId, id);
+        auto request = repo.findById(tenantId, id);
         if (request.isNull)
             return CommandResult(false, "", "Deletion request not found");
 

@@ -19,11 +19,11 @@ class ManageCommandsUseCase { // TODO: UIMUseCase {
     }
 
     Command getCommand(TenantId tenantId, CommandId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     Command[] listCommands(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     Command[] listCommands(TenantId tenantId, CatalogId catalogId) {
@@ -69,7 +69,7 @@ class ManageCommandsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteCommand(TenantId tenantId, CommandId id) {
-        auto entity = repo.find(tenantId, id);
+        auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Command not found");
             

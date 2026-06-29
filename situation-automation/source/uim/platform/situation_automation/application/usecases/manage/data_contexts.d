@@ -46,11 +46,11 @@ class ManageDataContextsUseCase { // TODO: UIMUseCase {
     }
 
     DataContext getDataContext(TenantId tenantId, DataContextId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     DataContext[] listDataContexts(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     DataContext[] listDataContexts(TenantId tenantId, SituationInstanceId instanceId) {
@@ -58,7 +58,7 @@ class ManageDataContextsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteDataContext(TenantId tenantId, DataContextId id) {
-        auto context = repo.find(tenantId, id);
+        auto context = repo.findById(tenantId, id);
         if (context.isNull)
             return CommandResult(false, "", "Data context not found");
 

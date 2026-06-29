@@ -83,7 +83,7 @@ class ManageAlertRulesUseCase { // TODO: UIMUseCase {
   }
 
   AlertRule[] listRules(TenantId tenantId) {
-    return repo.find(tenantId);
+    return repo.findByTenant(tenantId);
   }
 
   AlertRule[] listEnabledRules(TenantId tenantId) {
@@ -91,7 +91,7 @@ class ManageAlertRulesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteAlertRule(TenantId tenantId, AlertRuleId id) {
-    auto rule = repo.find(tenantId, id);
+    auto rule = repo.findById(tenantId, id);
     if (rule.isNull)
       return CommandResult(false, "", "Alert rule not found");
 

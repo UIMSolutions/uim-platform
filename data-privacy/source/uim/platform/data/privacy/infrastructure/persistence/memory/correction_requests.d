@@ -23,7 +23,7 @@ class MemoryCorrectionRequestRepository : TenantRepository!(CorrectionRequest, C
   }
 
   CorrectionRequest[] findByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
-    return filterByDataSubject(find(tenantId), subjectId);
+    return filterByDataSubject(findByTenant(tenantId), subjectId);
   }
 
   void removeByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
@@ -39,7 +39,7 @@ class MemoryCorrectionRequestRepository : TenantRepository!(CorrectionRequest, C
   }
 
   CorrectionRequest[] findByStatus(TenantId tenantId, CorrectionStatus status) {
-    return filterByStatus(find(tenantId), status);
+    return filterByStatus(findByTenant(tenantId), status);
   }
 
   void removeByStatus(TenantId tenantId, CorrectionStatus status) {

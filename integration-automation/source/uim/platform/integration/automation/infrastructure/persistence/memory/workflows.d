@@ -22,7 +22,7 @@ class MemoryWorkflowRepository : TenantRepository!(Workflow, WorkflowId), Workfl
     return workflows.filter!(e => e.scenarioId == scenarioId).array;
   }
   Workflow[] findByScenario(TenantId tenantId, ScenarioId scenarioId) {
-    return filterByScenario(find(tenantId), scenarioId);
+    return filterByScenario(findByTenant(tenantId), scenarioId);
   }
   void removeByScenario(TenantId tenantId, ScenarioId scenarioId) {
     findByScenario(tenantId, scenarioId).each!(entity => remove(entity));
@@ -35,7 +35,7 @@ class MemoryWorkflowRepository : TenantRepository!(Workflow, WorkflowId), Workfl
     return workflows.filter!(e => e.status == status).array;
   }
   Workflow[] findByStatus(TenantId tenantId, WorkflowStatus status) {
-    return filterByStatus(find(tenantId), status);
+    return filterByStatus(findByTenant(tenantId), status);
   }
   void removeByStatus(TenantId tenantId, WorkflowStatus status) {
     findByStatus(tenantId, status).each!(entity => remove(entity));
@@ -48,14 +48,14 @@ class MemoryWorkflowRepository : TenantRepository!(Workflow, WorkflowId), Workfl
     return workflows.filter!(e => e.createdBy == createdBy).array;
   }
   Workflow[] findByCreator(TenantId tenantId, UserId createdBy) {
-    return filterByCreator(find(tenantId), createdBy);
+    return filterByCreator(findByTenant(tenantId), createdBy);
   }
   void removeByCreator(TenantId tenantId, UserId createdBy) {
     findByCreator(tenantId, createdBy).each!(entity => remove(entity));
   }
 
   size_t countActiveByTenant(TenantId tenantId) {
-    return find(tenantId).filter!(e => e.tenantId == tenantId
+    return findByTenant(tenantId).filter!(e => e.tenantId == tenantId
         && (e.status == WorkflowStatus.inProgress
           || e.status == WorkflowStatus.planned || e.status == WorkflowStatus.suspended))
       .array.length;

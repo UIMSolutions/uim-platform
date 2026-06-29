@@ -71,7 +71,7 @@ class ManageFlexVersionsUseCase {
   }
 
   FlexVersion getVersion(TenantId tenantId, FlexVersionId id) {
-    return repo.find(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 
   FlexVersion[] listVersions(TenantId tenantId) {
@@ -87,7 +87,7 @@ class ManageFlexVersionsUseCase {
   }
 
   CommandResult deleteVersion(TenantId tenantId, FlexVersionId id) {
-    auto existing = repo.find(tenantId, id);
+    auto existing = repo.findById(tenantId, id);
     if (existing.isNull)
       return CommandResult(false, null, "FlexVersion not found");
 

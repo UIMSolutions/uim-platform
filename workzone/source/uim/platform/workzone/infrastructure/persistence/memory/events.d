@@ -23,7 +23,7 @@ class MemoryEventRepository : TenantRepository!(Event, EventId), EventRepository
   }
 
   Event[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
-    return find(tenantId).filter!(e => e.workspaceId == workspaceId).array;
+    return findByTenant(tenantId).filter!(e => e.workspaceId == workspaceId).array;
   }
 
   void removeByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
@@ -37,7 +37,7 @@ class MemoryEventRepository : TenantRepository!(Event, EventId), EventRepository
   }
 
   Event[] findByOrganizer(TenantId tenantId, UserId organizerId) {
-    return find(tenantId).filter!(e => e.organizerId == organizerId).array;
+    return findByTenant(tenantId).filter!(e => e.organizerId == organizerId).array;
   }
 
   void removeByOrganizer(TenantId tenantId, UserId organizerId) {

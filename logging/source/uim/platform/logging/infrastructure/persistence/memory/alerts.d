@@ -23,7 +23,7 @@ class MemoryAlertRepository : TenantRepository!(Alert, AlertId), AlertRepository
   }
 
   Alert[] findByState(TenantId tenantId, AlertState state) {
-    return filterByState(find(tenantId), state);
+    return filterByState(findByTenant(tenantId), state);
   }
 
   void removeByState(TenantId tenantId, AlertState state) {
@@ -39,7 +39,7 @@ class MemoryAlertRepository : TenantRepository!(Alert, AlertId), AlertRepository
   }
 
   Alert[] findBySeverity(TenantId tenantId, AlertSeverity severity) {
-    return find(tenantId).filter!(a => a.severity == severity).array;
+    return findByTenant(tenantId).filter!(a => a.severity == severity).array;
   }
 
   void removeBySeverity(TenantId tenantId, AlertSeverity severity) {
@@ -55,7 +55,7 @@ class MemoryAlertRepository : TenantRepository!(Alert, AlertId), AlertRepository
   }
 
   Alert[] findByRule(TenantId tenantId, AlertRuleId ruleId) {
-    return filterByRule(find(tenantId), ruleId);
+    return filterByRule(findByTenant(tenantId), ruleId);
   }
 
   void removeByRule(TenantId tenantId, AlertRuleId ruleId) {

@@ -43,11 +43,11 @@ class ManageTrustedCertificatesUseCase { // TODO: UIMUseCase {
     }
 
     TrustedCertificate getCertificate(TenantId tenantId, TrustedCertificateId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     TrustedCertificate[] listCertificates(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     TrustedCertificate[] listCertificates(TenantId tenantId, CustomDomainId domainId) {
@@ -55,7 +55,7 @@ class ManageTrustedCertificatesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteCertificate(TenantId tenantId, TrustedCertificateId id) {
-        auto certificate = repo.find(tenantId, id);
+        auto certificate = repo.findById(tenantId, id);
         if (certificate.isNull)
             return CommandResult(false, "", "Trusted certificate not found");
 

@@ -15,16 +15,16 @@ import uim.platform.data.privacy;
 class MemoryDataSubjectRepository : TenantRepository!(DataSubject, DataSubjectId), DataSubjectRepository {
 
   bool existsByExternalId(TenantId tenantId, string externalId) {
-    return find(tenantId).any!(s => s.externalId == externalId);
+    return findByTenant(tenantId).any!(s => s.externalId == externalId);
   }
   DataSubject findByExternalId(TenantId tenantId, string externalId) {
-    foreach (s; find(tenantId))
+    foreach (s; findByTenant(tenantId))
       if (s.externalId == externalId)
         return s;
     return DataSubject.init;
   }
   void removeByExternalId(TenantId tenantId, string externalId) {
-    foreach (s; find(tenantId))
+    foreach (s; findByTenant(tenantId))
       if (s.externalId == externalId)
         remove(s);
   }
@@ -38,7 +38,7 @@ class MemoryDataSubjectRepository : TenantRepository!(DataSubject, DataSubjectId
   }
 
   DataSubject[] findByType(TenantId tenantId, DataSubjectType subjectType) {
-    return filterByType(find(tenantId), subjectType);
+    return filterByType(findByTenant(tenantId), subjectType);
   }
   
   void removeByType(TenantId tenantId, DataSubjectType subjectType) {
@@ -54,7 +54,7 @@ class MemoryDataSubjectRepository : TenantRepository!(DataSubject, DataSubjectId
   }
 
   DataSubject[] findBySourceSystem(TenantId tenantId, string sourceSystem) {
-    return filterBySourceSystem(find(tenantId), sourceSystem);
+    return filterBySourceSystem(findByTenant(tenantId), sourceSystem);
   }
 
   void removeBySourceSystem(TenantId tenantId, string sourceSystem) {

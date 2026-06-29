@@ -29,7 +29,7 @@ class MemoryAuditEntryRepository : AuditEntryRepository {
     }
 
     AuditEntry[] findByTenantPaged(TenantId tenantId, size_t offset, size_t limit) {
-        auto all = find(tenantId);
+        auto all = findByTenant(tenantId);
         if (offset >= all.length) return [];
         auto end = offset + limit;
         if (end > all.length) end = all.length;

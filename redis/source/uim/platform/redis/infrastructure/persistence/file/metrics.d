@@ -31,7 +31,7 @@ class FileMetricRepository
         auto path = filePath(tenantId);
         mkdirRecurse(path[0 .. path.lastIndexOf('/')]);
         Json arr = Json.emptyArray;
-        foreach (i; find(tenantId)) arr ~= i.toJson();
+        foreach (i; findByTenant(tenantId)) arr ~= i.toJson();
         write(path, arr.toString());
     }
 
@@ -68,11 +68,11 @@ class FileMetricRepository
     override void removeById(TenantId tenantId, MetricId id) { super.removeById(tenantId, id); persistTenant(tenantId); }
 
     override Metric[] findByInstance(TenantId tenantId, ServiceInstanceId instanceId) {
-        return find(tenantId).filter!(e => e.instanceId == instanceId).array;
+        return findByTenant(tenantId).filter!(e => e.instanceId == instanceId).array;
     }
 
     override Metric[] findByInstanceAndTimeRange(TenantId tenantId, ServiceInstanceId instanceId, long from, long to_) {
-        return find(tenantId).filter!(e => e.instanceId == instanceId && e.timestamp_ >= from && e.timestamp_ <= to_).array;
+        return findByTenant(tenantId).filter!(e => e.instanceId == instanceId && e.timestamp_ >= from && e.timestamp_ <= to_).array;
     }
 
     override Metric findLatestByInstance(TenantId tenantId, ServiceInstanceId instanceId) {

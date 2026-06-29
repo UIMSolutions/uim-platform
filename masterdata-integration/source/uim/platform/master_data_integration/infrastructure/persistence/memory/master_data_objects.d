@@ -27,7 +27,7 @@ class MemoryMasterDataObjectRepository : TenantRepository!(MasterDataObject, Mas
   }
 
   MasterDataObject[] findByCategory(TenantId tenantId, MasterDataCategory category) {
-    return find(tenantId).filter!(e => e.category == category).array;
+    return findByTenant(tenantId).filter!(e => e.category == category).array;
   }
 
   void removeByCategory(TenantId tenantId, MasterDataCategory category) {
@@ -43,7 +43,7 @@ class MemoryMasterDataObjectRepository : TenantRepository!(MasterDataObject, Mas
   }
 
   MasterDataObject[] findByDataModel(TenantId tenantId, DataModelId modelId) {
-    return find(tenantId).filter!(e => e.modelId == modelId).array;
+    return findByTenant(tenantId).filter!(e => e.modelId == modelId).array;
   }
 
   void removeByDataModel(TenantId tenantId, DataModelId modelId) {
@@ -59,7 +59,7 @@ class MemoryMasterDataObjectRepository : TenantRepository!(MasterDataObject, Mas
   }
 
   MasterDataObject[] findBySourceSystem(TenantId tenantId, string sourceSystem) {
-    return find(tenantId).filter!(e => e.sourceSystem == sourceSystem).array;
+    return findByTenant(tenantId).filter!(e => e.sourceSystem == sourceSystem).array;
   }
 
   void removeBySourceSystem(TenantId tenantId, string sourceSystem) {
@@ -71,7 +71,7 @@ class MemoryMasterDataObjectRepository : TenantRepository!(MasterDataObject, Mas
   }
 
   MasterDataObject findByGlobal(TenantId tenantId, string globalId) {
-    foreach (obj; find(tenantId)) {
+    foreach (obj; findByTenant(tenantId)) {
       if (obj.globalId == globalId)
         return obj;
     }

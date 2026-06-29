@@ -22,7 +22,7 @@ class MemoryExternalContentProviderRepository : TenantRepository!(ExternalConten
   }
 
   ExternalContentProvider[] findByStatus(TenantId tenantId, ProviderStatus status) {
-    return find(tenantId).filter!(p => p.status == status).array;
+    return findByTenant(tenantId).filter!(p => p.status == status).array;
   }
 
   void removeByStatus(TenantId tenantId, ProviderStatus status) {

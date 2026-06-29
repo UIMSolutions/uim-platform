@@ -70,7 +70,7 @@ class ManagePromptsUseCase { // TODO: UIMUseCase {
   }
 
   Prompt getPrompt(TenantId tenantId, PromptId id) {
-    return repo.find(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 
   Prompt[] listPrompts(TenantId tenantId, PromptCollectionId collectionId) {
@@ -78,7 +78,7 @@ class ManagePromptsUseCase { // TODO: UIMUseCase {
   }
 
   Prompt[] listPrompts(TenantId tenantId) {
-    return repo.find(tenantId);
+    return repo.findByTenant(tenantId);
   }
 
   CommandResult patchPrompt(PatchPromptRequest r) {
@@ -116,7 +116,7 @@ class ManagePromptsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deletePrompt(TenantId tenantId, PromptId id) {
-    auto prompt = repo.find(tenantId, id);
+    auto prompt = repo.findById(tenantId, id);
     if (prompt.isNull)
       return CommandResult(false, "", "Prompt not found");
 

@@ -46,7 +46,7 @@ class ManageUserProfilesUseCase { // TODO: UIMUseCase {
   }
 
   UserProfile getUserProfile(TenantId tenantId, UserProfileId id) {
-    return repo.find(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 
   UserProfile getUserProfile(TenantId tenantId, UserId id) {
@@ -54,7 +54,7 @@ class ManageUserProfilesUseCase { // TODO: UIMUseCase {
   }
 
   UserProfile[] listUserProfiles(TenantId tenantId) {
-    return repo.find(tenantId);
+    return repo.findByTenant(tenantId);
   }
 
   CommandResult updateUserProfile(UpdateUserProfileRequest req) {
@@ -77,7 +77,7 @@ class ManageUserProfilesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteUserProfile(TenantId tenantId, UserProfileId id) {
-    auto p = repo.find(tenantId, id);
+    auto p = repo.findById(tenantId, id);
     if (p.isNull)
       return CommandResult(false, "", "User profile not found");
 

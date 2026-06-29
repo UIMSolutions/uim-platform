@@ -24,7 +24,7 @@ class MemoryAlertRuleRepository : TenantRepository!(AlertRule, AlertRuleId), Ale
     return rules.filter!(e => e.resourceId == resourceId).array;
   }
   AlertRule[] findByResource(TenantId tenantId, MonitoredResourceId resourceId) {
-    return filterByResource(find(tenantId), resourceId);
+    return filterByResource(findByTenant(tenantId), resourceId);
   }
   void removeByResource(TenantId tenantId, MonitoredResourceId resourceId) {
     findByResource(tenantId, resourceId).each!(e => remove(e));
@@ -37,7 +37,7 @@ class MemoryAlertRuleRepository : TenantRepository!(AlertRule, AlertRuleId), Ale
     return rules.filter!(e => e.metricName == metricName).array;
   }
   AlertRule[] findByMetric(TenantId tenantId, string metricName) {
-    return filterByMetric(find(tenantId), metricName);
+    return filterByMetric(findByTenant(tenantId), metricName);
   }
   void removeByMetric(TenantId tenantId, string metricName) {
     findByMetric(tenantId, metricName).each!(e => remove(e));
@@ -50,7 +50,7 @@ class MemoryAlertRuleRepository : TenantRepository!(AlertRule, AlertRuleId), Ale
     return rules.filter!(e => e.isEnabled).array;
   }
   AlertRule[] findEnabled(TenantId tenantId) {
-    return filterEnabled(find(tenantId));
+    return filterEnabled(findByTenant(tenantId));
   }
   void removeEnabled(TenantId tenantId) {
     findEnabled(tenantId).each!(e => remove(e));

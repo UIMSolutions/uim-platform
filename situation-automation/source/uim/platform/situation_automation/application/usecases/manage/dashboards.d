@@ -37,11 +37,11 @@ class ManageDashboardsUseCase { // TODO: UIMUseCase {
     }
 
     Dashboard getDashboard(TenantId tenantId, DashboardId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     Dashboard[] listDashboards(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     CommandResult updateDashboard(UpdateDashboardRequest r) {
@@ -59,7 +59,7 @@ class ManageDashboardsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteDashboard(TenantId tenantId, DashboardId id) {
-        auto dashboard = repo.find(tenantId, id);
+        auto dashboard = repo.findById(tenantId, id);
         if (dashboard.isNull)
             return CommandResult(false, "", "Dashboard not found");
 

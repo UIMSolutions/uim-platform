@@ -23,7 +23,7 @@ class MemoryNavigationItemRepository : TenantRepository!(NavigationItem, Navigat
   }
 
   NavigationItem[] findBySite(TenantId tenantId, SiteId siteId) {
-    return find(tenantId).filter!(n => n.siteId == siteId).array;
+    return findByTenant(tenantId).filter!(n => n.siteId == siteId).array;
   }
 
   void removeBySite(TenantId tenantId, SiteId siteId) {
@@ -37,7 +37,7 @@ class MemoryNavigationItemRepository : TenantRepository!(NavigationItem, Navigat
   }
 
   NavigationItem[] findByParent(TenantId tenantId, NavigationItemId parentId) {
-    return find(tenantId).filter!(n => n.parentId == parentId).array;
+    return findByTenant(tenantId).filter!(n => n.parentId == parentId).array;
   }
 
   void removeByParent(TenantId tenantId, NavigationItemId parentId) {

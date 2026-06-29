@@ -17,7 +17,7 @@ class MemoryServiceOfferingRepository : TenantRepository!(ServiceOffering, Servi
     }
 
     ServiceOffering[] findByStatus(TenantId tenantId, ServiceOfferingStatus status) {
-        return this.filterByStatus(this.find(tenantId), status);
+        return this.filterByStatus(this.findByTenant(tenantId), status);
     }
 
     void removeByStatus(TenantId tenantId, ServiceOfferingStatus status) {

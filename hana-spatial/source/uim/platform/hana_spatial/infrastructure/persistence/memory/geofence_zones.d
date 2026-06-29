@@ -16,7 +16,7 @@ class MemoryGeofenceZoneRepository
 
   GeofenceZone[] findActive(TenantId tenantId) {
     GeofenceZone[] results;
-    foreach (item; find(tenantId)) {
+    foreach (item; findByTenant(tenantId)) {
       if (item.active) results ~= item;
     }
     return results;
@@ -24,7 +24,7 @@ class MemoryGeofenceZoneRepository
 
   GeofenceZone[] findByShape(TenantId tenantId, GeofenceShapeType shape) {
     GeofenceZone[] results;
-    foreach (item; find(tenantId)) {
+    foreach (item; findByTenant(tenantId)) {
       if (item.shapeType == shape) results ~= item;
     }
     return results;

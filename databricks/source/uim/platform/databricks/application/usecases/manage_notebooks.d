@@ -37,11 +37,11 @@ public:
   }
 
   UseCaseResult!(Notebook[]) list(TenantId tenantId) {
-    return UseCaseResult!(Notebook[])(true, "", _repo.find(tenantId));
+    return UseCaseResult!(Notebook[])(true, "", _repo.findByTenant(tenantId));
   }
 
   UseCaseResult!Notebook get(TenantId tenantId, NotebookId id) {
-    auto n = _repo.find(tenantId, id);
+    auto n = _repo.findById(tenantId, id);
     if (n.isNull)
       return UseCaseResult!Notebook(false, "Notebook not found", Notebook.init);
     return UseCaseResult!Notebook(true, "", n);
@@ -61,7 +61,7 @@ public:
   }
 
   UseCaseResult!bool remove(TenantId tenantId, NotebookId id) {
-    auto n = _repo.find(tenantId, id);
+    auto n = _repo.findById(tenantId, id);
     if (n.isNull)
       return UseCaseResult!bool(false, "Notebook not found", false);
     n.status = NotebookStatus.deleted;

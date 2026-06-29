@@ -20,7 +20,7 @@ class MemoryTileRepository : TenantRepository!(Tile, TileId), TileRepository {
   }
 
   Tile[] findByCatalog(CatalogId catalogId) {
-    return find(tenantId).filter!(t => t.catalogId == catalogId).array;
+    return findByTenant(tenantId).filter!(t => t.catalogId == catalogId).array;
   }
 
   void removeByCatalog(CatalogId catalogId) {
@@ -31,7 +31,7 @@ class MemoryTileRepository : TenantRepository!(Tile, TileId), TileRepository {
     Tile[] result;
     auto lowerQuery = query.toLower();
     size_t idx;
-    foreach (t; find(tenantId))
+    foreach (t; findByTenant(tenantId))
       if (t.tenantId != tenantId)
         continue;
 

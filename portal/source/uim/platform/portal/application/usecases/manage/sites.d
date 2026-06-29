@@ -49,7 +49,7 @@ class ManageSitesUseCase { // TODO: UIMUseCase {
   }
 
   Site getSite(TenantId tenantId, SiteId id) {
-    return siteRepo.find(tenantId, id);
+    return siteRepo.findById(tenantId, id);
   }
 
   Site[] listSites(TenantId tenantId, size_t offset = 0, size_t limit = 100) {
@@ -76,7 +76,7 @@ class ManageSitesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult publishSite(TenantId tenantId, SiteId id) {
-    auto site = siteRepo.find(tenantId, id);
+    auto site = siteRepo.findById(tenantId, id);
     if (site.isNull)
       return CommandResult(false, "", "Site not found");
 
@@ -94,7 +94,7 @@ class ManageSitesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult unpublishSite(TenantId tenantId, SiteId id) {
-    auto site = siteRepo.find(tenantId, id);
+    auto site = siteRepo.findById(tenantId, id);
     if (site.isNull)
       return CommandResult(false, "", "Site not found");
 
@@ -105,7 +105,7 @@ class ManageSitesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult archiveSite(TenantId tenantId, SiteId id) {
-    auto site = siteRepo.find(tenantId, id);
+    auto site = siteRepo.findById(tenantId, id);
     if (site.isNull)
       return CommandResult(false, "", "Site not found");
 
@@ -116,7 +116,7 @@ class ManageSitesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteSite(TenantId tenantId, SiteId id) {
-    auto site = siteRepo.find(tenantId, id);
+    auto site = siteRepo.findById(tenantId, id);
     if (site.isNull)
       return CommandResult(false, "", "Site not found");
 

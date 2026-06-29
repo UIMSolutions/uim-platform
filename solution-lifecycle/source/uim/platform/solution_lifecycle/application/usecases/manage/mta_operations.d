@@ -21,11 +21,11 @@ class ManageMtaOperationsUseCase {
     }
 
     MtaOperation[] listOperations(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     MtaOperation getOperation(TenantId tenantId, MtaOperationId id) {
-        auto ops = repo.find(tenantId);
+        auto ops = repo.findByTenant(tenantId);
         foreach (op; ops)
             if (op.id.value == id.value) return op;
         return new MtaOperation();

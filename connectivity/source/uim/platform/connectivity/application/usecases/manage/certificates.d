@@ -59,11 +59,11 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
   }
 
   Certificate getCertificate(TenantId tenantId, CertificateId id) {
-    return certificates.find(tenantId, id);
+    return certificates.findById(tenantId, id);
   }
 
   Certificate[] listCertificates(TenantId tenantId) {
-    return certificates.find(tenantId);
+    return certificates.findByTenant(tenantId);
   }
 
   Certificate[] listExpiring(TenantId tenantId, long now, size_t withinDays) {
@@ -71,7 +71,7 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteCertificate(TenantId tenantId, CertificateId id) {
-    auto cert = certificates.find(tenantId, id);
+    auto cert = certificates.findById(tenantId, id);
     if (cert.isNull)
       return CommandResult(false, "", "Certificate not found");
 

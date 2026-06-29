@@ -21,7 +21,7 @@ class MemoryPipelineRepository : TenantRepository!(Pipeline, PipelineId), Pipeli
     return pipelines.filter!(p => p.isActive).array;
   }
   Pipeline[] findActive(TenantId tenantId) {
-    return filterActive(find(tenantId));
+    return filterActive(findByTenant(tenantId));
   }
   void removeByActive(TenantId tenantId) {
     findActive(tenantId).each!(p => remove(p));
@@ -34,7 +34,7 @@ class MemoryPipelineRepository : TenantRepository!(Pipeline, PipelineId), Pipeli
     return pipelines.filter!(p => p.sourceType == sourceType).array;
   }
   Pipeline[] findBySource(TenantId tenantId, PipelineSourceType sourceType) {
-    return filterBySource(find(tenantId), sourceType);
+    return filterBySource(findByTenant(tenantId), sourceType);
   }
   void removeBySource(TenantId tenantId, PipelineSourceType sourceType) {
     findBySource(tenantId, sourceType).each!(p => remove(p));

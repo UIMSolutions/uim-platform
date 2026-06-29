@@ -50,11 +50,11 @@ class ManageBlockingRequestsUseCase { // TODO: UIMUseCase {
   }
 
   BlockingRequest getRequest(TenantId tenantId, BlockingRequestId id) {
-    return blockingRequests.find(tenantId, id);
+    return blockingRequests.findById(tenantId, id);
   }
 
   BlockingRequest[] listRequests(TenantId tenantId) {
-    return blockingRequests.find(tenantId);
+    return blockingRequests.findByTenant(tenantId);
   }
 
   BlockingRequest[] listByStatus(TenantId tenantId, BlockingStatus status) {
@@ -77,7 +77,7 @@ class ManageBlockingRequestsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteRequest(TenantId tenantId, BlockingRequestId id) {
-    auto request = blockingRequests.find(tenantId, id);
+    auto request = blockingRequests.findById(tenantId, id);
     if (request.isNull)
       return CommandResult(false, "", "Blocking request not found");
 

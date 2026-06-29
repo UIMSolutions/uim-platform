@@ -69,7 +69,7 @@ class DeployApplicationUseCase { // TODO: UIMUseCase {
     }
 
     DeploymentRecord getById(DeploymentRecordId id) {
-        return deploymentRepo.find(tenantId, id);
+        return deploymentRepo.findById(tenantId, id);
     }
 
     DeploymentRecord[] listByApp(HtmlAppId appId) {
@@ -77,7 +77,7 @@ class DeployApplicationUseCase { // TODO: UIMUseCase {
     }
 
     DeploymentRecord[] listByTenant(TenantId tenantId) {
-        return deploymentRepo.find(tenantId);
+        return deploymentRepo.findByTenant(tenantId);
     }
 
     size_t countByTenant(TenantId tenantId) {

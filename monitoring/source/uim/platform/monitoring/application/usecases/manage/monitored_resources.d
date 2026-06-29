@@ -75,11 +75,11 @@ class ManageMonitoredResourcesUseCase { // TODO: UIMUseCase {
   }
 
   MonitoredResource getResource(TenantId tenantId, MonitoredResourceId id) {
-    return repo.find(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 
   MonitoredResource[] listResources(TenantId tenantId) {
-    return repo.find(tenantId);
+    return repo.findByTenant(tenantId);
   }
 
   MonitoredResource[] listByType(TenantId tenantId, string typeStr) {
@@ -87,7 +87,7 @@ class ManageMonitoredResourcesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteMonitoredResource(TenantId tenantId, MonitoredResourceId id) {
-    auto resource = repo.find(tenantId, id);
+    auto resource = repo.findById(tenantId, id);
     if (resource.isNull)
       return CommandResult(false, "", "Resource not found");
 

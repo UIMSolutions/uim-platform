@@ -44,11 +44,11 @@ class ManageReplicationTasksUseCase { // TODO: UIMUseCase {
   }
 
   ReplicationTask getReplicationTask(ReplicationTaskId id) {
-    return repo.find(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 
   ReplicationTask[] listReplicationTasks(TenantId tenantId) {
-    return repo.find(tenantId);
+    return repo.findByTenant(tenantId);
   }
 
   CommandResult updateReplicationTask(UpdateReplicationTaskRequest r) {
@@ -68,7 +68,7 @@ class ManageReplicationTasksUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteReplicationTask(ReplicationTaskId id) {
-    auto entity = repo.find(tenantId, id);
+    auto entity = repo.findById(tenantId, id);
     if (entity.isNull)
       return CommandResult(false, "", "Replication task not found");
 

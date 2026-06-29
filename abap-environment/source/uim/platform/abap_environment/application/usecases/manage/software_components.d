@@ -121,7 +121,7 @@ class ManageSoftwareComponentsUseCase { // TODO: UIMUseCase {
   }
 
   SoftwareComponent getSoftwareComponent(TenantId tenantId, SoftwareComponentId id) {
-    return repo.find(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 
   SoftwareComponent[] listSoftwareComponents(TenantId tenantId, SystemInstanceId systemId) {
@@ -129,7 +129,7 @@ class ManageSoftwareComponentsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteSoftwareComponent(TenantId tenantId, SoftwareComponentId id) {
-    auto comp = repo.find(tenantId, id);
+    auto comp = repo.findById(tenantId, id);
     if (comp.isNull)
       return CommandResult(false, "", "Software component not found");
 

@@ -16,14 +16,14 @@ import uim.platform.identity.provisioning;
 class MemoryProvisionedEntityRepository : TenantRepository!(ProvisionedEntity, ProvisionedEntityId), ProvisionedEntityRepository {
 
   bool existsByExternalId(TenantId tenantId, string externalId, TargetSystemId targetId) {
-    foreach (e; find(tenantId))
+    foreach (e; findByTenant(tenantId))
       if (e.externalId == externalId && e.targetSystemId == targetId && e.tenantId == tenantId)
         return true;
     return false;
   }
 
   ProvisionedEntity findByExternalId(TenantId tenantId, string externalId, TargetSystemId targetId) {
-    foreach (e; find(tenantId))
+    foreach (e; findByTenant(tenantId))
       if (e.externalId == externalId && e.targetSystemId == targetId && e.tenantId == tenantId)
         return e;
     return ProvisionedEntity.init;
@@ -38,7 +38,7 @@ class MemoryProvisionedEntityRepository : TenantRepository!(ProvisionedEntity, P
   }
 
   ProvisionedEntity[] findBySource(TenantId tenantId, SourceSystemId sourceId) {
-    return filterBySource(find(tenantId), sourceId);
+    return filterBySource(findByTenant(tenantId), sourceId);
   }
 
   void removeBySource(TenantId tenantId, SourceSystemId sourceId) {
@@ -54,7 +54,7 @@ class MemoryProvisionedEntityRepository : TenantRepository!(ProvisionedEntity, P
   }
 
   ProvisionedEntity[] findByTarget(TenantId tenantId, TargetSystemId targetId) {
-    return filterByTarget(find(tenantId), targetId);
+    return filterByTarget(findByTenant(tenantId), targetId);
   }
 
   void removeByTarget(TenantId tenantId, TargetSystemId targetId) {
@@ -70,7 +70,7 @@ class MemoryProvisionedEntityRepository : TenantRepository!(ProvisionedEntity, P
   }
 
   ProvisionedEntity[] findByStatus(TenantId tenantId, EntityStatus status) {
-    return filterByStatus(find(tenantId), status);
+    return filterByStatus(findByTenant(tenantId), status);
   }
 
   void removeByStatus(TenantId tenantId, EntityStatus status) {
@@ -86,7 +86,7 @@ class MemoryProvisionedEntityRepository : TenantRepository!(ProvisionedEntity, P
   }
 
   ProvisionedEntity[] findByType(TenantId tenantId, EntityType entityType) {
-    return filterByType(find(tenantId), entityType);
+    return filterByType(findByTenant(tenantId), entityType);
   }
 
   void removeByType(TenantId tenantId, EntityType entityType) {

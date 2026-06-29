@@ -52,7 +52,7 @@ class ManageRoleCollectionsUseCase {
   }
 
   CommandResult deleteRoleCollection(TenantId tenantId, RoleCollectionId id) {
-    auto rc = repo.find(tenantId, id);
+    auto rc = repo.findById(tenantId, id);
     if (rc.isNull)
       return CommandResult(false, "", "Role collection not found");
 
@@ -61,10 +61,10 @@ class ManageRoleCollectionsUseCase {
   }
 
   RoleCollectionEntity getRoleCollection(TenantId tenantId, RoleCollectionId id) {
-    return repo.find(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 
   RoleCollectionEntity[] listRoleCollections(TenantId tenantId) {
-    return repo.find(tenantId);
+    return repo.findByTenant(tenantId);
   }
 }

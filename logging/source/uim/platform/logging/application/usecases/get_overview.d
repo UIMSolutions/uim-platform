@@ -45,12 +45,12 @@ class GetOverviewUseCase { // TODO: UIMUseCase {
 
     s.totalLogEntries = logRepo.count(tenantId);
     s.totalSpans = spanRepo.count(tenantId);
-    s.totalStreams = streamRepo.find(tenantId).length;
+    s.totalStreams = streamRepo.findByTenant(tenantId).length;
     s.totalDashboards = dashboardRepo.count(tenantId);
     s.totalAlerts = alertRepo.count(tenantId);
     s.openAlerts = alertRepo.countByState(tenantId, AlertState.open);
     s.criticalAlerts = alertRepo.findBySeverity(tenantId, AlertSeverity.critical).length;
-    s.totalPipelines = pipelineRepo.find(tenantId).length;
+    s.totalPipelines = pipelineRepo.findByTenant(tenantId).length;
     s.activePipelines = pipelineRepo.findActive(tenantId).length;
     s.totalChannels = channelRepo.count(tenantId);
 

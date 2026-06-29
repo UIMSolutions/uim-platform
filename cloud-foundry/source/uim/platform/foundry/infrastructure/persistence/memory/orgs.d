@@ -23,14 +23,14 @@ class MemoryOrgRepository : TenantRepository!(Organization, OrgId), IOrgReposito
   }
 
   Organization findByName(TenantId tenantId, string name) {
-    foreach (e; find(tenantId))
+    foreach (e; findByTenant(tenantId))
       if (e.name == name)
         return e;
     return Organization.init;
   }
 
   void removeByName(TenantId tenantId, string name) {
-    foreach (e; find(tenantId))
+    foreach (e; findByTenant(tenantId))
       if (e.name == name)
          return remove(e);
   }

@@ -47,10 +47,10 @@ class TenantRepository(TEntity, TId) : ITenantRepository!(TEntity, TId) {
   // }
 
     // #region exists
-    bool exists(TenantId tenantId) {
+    bool existsByTenant(TenantId tenantId) {
         return _store.exists(tenantId);
     }
-    bool exists(TenantId tenantId, TId id) {
+    bool existsById(TenantId tenantId, TId id) {
         return _store.exists(tenantId, id);
     }
     bool exists(TEntity entity) {
@@ -59,10 +59,10 @@ class TenantRepository(TEntity, TId) : ITenantRepository!(TEntity, TId) {
     // #endregion exists
 
      // #region count
-    size_t count(TenantId tenantId) {
+    size_t countByTenant(TenantId tenantId) {
         return _store.count(tenantId);
     }
-    size_t count(TenantId tenantId, bool delegate(TEntity) @safe predicate) {
+    size_t countByTenant(TenantId tenantId, bool delegate(TEntity) @safe predicate) {
         return _store.count(tenantId, predicate);
     }
     // #endregion count
@@ -78,10 +78,10 @@ class TenantRepository(TEntity, TId) : ITenantRepository!(TEntity, TId) {
     // #endregion filter
 
     // #region find
-    TEntity[] find(TenantId tenantId, size_t offset = 0, size_t limit = 0) {
+    TEntity[] findByTenant(TenantId tenantId, size_t offset = 0, size_t limit = 0) {
         return _store.find(tenantId, offset, limit);
     }
-    TEntity find(TenantId tenantId, TId id) {
+    TEntity findById(TenantId tenantId, TId id) {
         return _store.find(tenantId, id);
     }
     // #endregion find
@@ -109,9 +109,14 @@ class TenantRepository(TEntity, TId) : ITenantRepository!(TEntity, TId) {
     // #endregion update
 
     // #region remove
-    void remove(TenantId tenantId, TId id) {
+    void removeByTenant(TenantId tenantId) {
+        _store.remove(tenantId);
+    }
+
+    void removeById(TenantId tenantId, TId id) {
         _store.remove(tenantId, id);
     }
+    
     void remove(TEntity entity) {
         _store.remove(entity);
     }

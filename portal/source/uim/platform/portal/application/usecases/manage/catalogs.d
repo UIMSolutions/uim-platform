@@ -43,7 +43,7 @@ class ManageCatalogsUseCase { // TODO: UIMUseCase {
   }
 
   Catalog getCatalog(TenantId tenantId, CatalogId id) {
-    return catalogRepo.find(tenantId, id);
+    return catalogRepo.findById(tenantId, id);
   }
 
   Catalog[] listCatalogs(TenantId tenantId, size_t offset = 0, size_t limit = 100) {
@@ -67,7 +67,7 @@ class ManageCatalogsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteCatalog(TenantId tenantId, CatalogId id) {
-    auto catalog = catalogRepo.find(tenantId, id);
+    auto catalog = catalogRepo.findById(tenantId, id);
     if (catalog.isNull)
       return CommandResult(false, "", "Catalog not found");
 

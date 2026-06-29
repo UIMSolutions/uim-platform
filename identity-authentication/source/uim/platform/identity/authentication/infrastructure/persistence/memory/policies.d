@@ -26,7 +26,7 @@ class MemoryPolicyRepository : TenantRepository!(AuthorizationPolicy, PolicyId),
   }
 
   AuthorizationPolicy[] findByApplication(TenantId tenantId, ApplicationId appId) {
-    return filterByApplication(find(tenantId), appId);
+    return filterByApplication(findByTenant(tenantId), appId);
   }
 
   void removeByApplication(TenantId tenantId, ApplicationId appId) {

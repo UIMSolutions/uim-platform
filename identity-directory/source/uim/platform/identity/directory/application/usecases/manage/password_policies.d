@@ -69,12 +69,12 @@ class ManagePasswordPoliciesUseCase { // TODO: UIMUseCase {
 
   /// Get policy by ID.
   PasswordPolicy getPolicy(string id) {
-    return policyRepo.find(tenantId, id);
+    return policyRepo.findById(tenantId, id);
   }
 
   /// List policies for a tenant.
   PasswordPolicy[] listPolicies(TenantId tenantId) {
-    return policyRepo.find(tenantId);
+    return policyRepo.findByTenant(tenantId);
   }
 
   /// Get active policy for tenant.

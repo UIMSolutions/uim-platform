@@ -59,7 +59,7 @@ class ManageClientResourcesUseCase { // TODO: UIMUseCase {
     }
 
     ClientResource getClientResource(TenantId tenantId, ClientResourceId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     ClientResource[] listClientResourcesByApp(TenantId tenantId, MobileAppId appId) {
@@ -67,7 +67,7 @@ class ManageClientResourcesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteClientResource(TenantId tenantId, ClientResourceId id) {
-        auto resource = repo.find(tenantId, id);
+        auto resource = repo.findById(tenantId, id);
         if (resource.isNull)
             return CommandResult(false, "", "Client resource not found");
 

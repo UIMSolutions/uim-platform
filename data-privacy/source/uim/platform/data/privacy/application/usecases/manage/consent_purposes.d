@@ -42,11 +42,11 @@ class ManageConsentPurposesUseCase { // TODO: UIMUseCase {
   }
 
   ConsentPurpose getPurpose(TenantId tenantId, ConsentPurposeId id) {
-    return repo.find(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 
   ConsentPurpose[] listPurposes(TenantId tenantId) {
-    return repo.find(tenantId);
+    return repo.findByTenant(tenantId);
   }
 
   ConsentPurpose[] listByController(TenantId tenantId, DataControllerId controllerId) {
@@ -74,7 +74,7 @@ class ManageConsentPurposesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deletePurpose(TenantId tenantId, ConsentPurposeId id) {
-    auto cp = repo.find(tenantId, id);
+    auto cp = repo.findById(tenantId, id);
     if (cp.isNull)
       return CommandResult(false, "", "Consent purpose not found");
 

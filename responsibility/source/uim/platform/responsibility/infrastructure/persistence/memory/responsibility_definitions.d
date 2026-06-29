@@ -16,18 +16,18 @@ class MemoryResponsibilityDefinitionRepository
       ResponsibilityDefinitionRepository {
 
     ResponsibilityDefinition[] findByContext(TenantId tenantId, string contextId) {
-        return find(tenantId).filter!(d => d.contextId == contextId).array;
+        return findByTenant(tenantId).filter!(d => d.contextId == contextId).array;
     }
 
     ResponsibilityDefinition[] findByTeam(TenantId tenantId, string teamId) {
-        return find(tenantId).filter!(d => d.teamId == teamId).array;
+        return findByTenant(tenantId).filter!(d => d.teamId == teamId).array;
     }
 
     ResponsibilityDefinition[] findByRule(TenantId tenantId, string ruleId) {
-        return find(tenantId).filter!(d => d.ruleId == ruleId).array;
+        return findByTenant(tenantId).filter!(d => d.ruleId == ruleId).array;
     }
 
     ResponsibilityDefinition[] findByStatus(TenantId tenantId, DefinitionStatus status) {
-        return find(tenantId).filter!(d => d.status == status).array;
+        return findByTenant(tenantId).filter!(d => d.status == status).array;
     }
 }

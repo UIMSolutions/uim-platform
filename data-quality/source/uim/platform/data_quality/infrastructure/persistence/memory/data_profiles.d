@@ -20,7 +20,7 @@ class MemoryDataProfileRepository : TenantRepository!(DataProfile, DataProfileId
   DataProfile findLatestByDataset(TenantId tenantId, DatasetId datasetId) {
     DataProfile latest;
     long latestTime = 0;
-    foreach (p; find(tenantId)) {
+    foreach (p; findByTenant(tenantId)) {
       if (p.datasetId == datasetId && p.profiledAt > latestTime) {
         latest = p;
         latestTime = p.profiledAt;
@@ -39,7 +39,7 @@ class MemoryDataProfileRepository : TenantRepository!(DataProfile, DataProfileId
   }
 
   DataProfile[] findByDataset(TenantId tenantId, DatasetId datasetId) {
-    return find(tenantId).filter!(p => p.datasetId == datasetId).array;
+    return findByTenant(tenantId).filter!(p => p.datasetId == datasetId).array;
   }
 
   void removeByDataset(TenantId tenantId, DatasetId datasetId) {

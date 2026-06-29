@@ -30,7 +30,7 @@ class FileServiceBindingRepository
     private void persistTenant(TenantId tenantId) @trusted {
         auto path = filePath(tenantId);
         mkdirRecurse(path[0 .. path.lastIndexOf('/')]);
-        auto items = find(tenantId);
+        auto items = findByTenant(tenantId);
         Json arr = Json.emptyArray;
         foreach (i; items) arr ~= i.toJson();
         write(path, arr.toString());
@@ -63,15 +63,15 @@ class FileServiceBindingRepository
     override void removeById(TenantId tenantId, ServiceBindingId id) { super.removeById(tenantId, id); persistTenant(tenantId); }
 
     override ServiceBinding[] findByInstance(TenantId tenantId, ServiceInstanceId instanceId) {
-        return find(tenantId).filter!(e => e.instanceId == instanceId).array;
+        return findByTenant(tenantId).filter!(e => e.instanceId == instanceId).array;
     }
 
     override ServiceBinding[] findByStatus(TenantId tenantId, BindingStatus status) {
-        return find(tenantId).filter!(e => e.status == status).array;
+        return findByTenant(tenantId).filter!(e => e.status == status).array;
     }
 
     override ServiceBinding findByInstanceAndApp(TenantId tenantId, ServiceInstanceId instanceId, string appId) {
-        auto results = find(tenantId).filter!(e => e.instanceId == instanceId && e.appId == appId).array;
+        auto results = findByTenant(tenantId).filter!(e => e.instanceId == instanceId && e.appId == appId).array;
         return results.length > 0 ? results[0] : ServiceBinding.init;
     }
 }

@@ -51,7 +51,7 @@ public:
   }
 
   CommandResult confirmTask(TenantId tenantId, WarehouseTaskId id, ConfirmWarehouseTaskRequest req) {
-    auto wt = _repo.find(tenantId, id);
+    auto wt = _repo.findById(tenantId, id);
     if (wt.isNull) return CommandResult(false, "Warehouse task not found");
     if (!_planner.canTransitionTask(wt.status, WarehouseTaskStatus.confirmed))
       return CommandResult(false, "Task cannot be confirmed from its current status");
@@ -79,7 +79,7 @@ public:
   }
 
   CommandResult deleteWarehouseTask(TenantId tenantId, WarehouseTaskId id) {
-    auto wt = _repo.find(tenantId, id);
+    auto wt = _repo.findById(tenantId, id);
     if (wt.isNull) return CommandResult(false, "Warehouse task not found");
     if (wt.status == WarehouseTaskStatus.confirmed)
       return CommandResult(false, "Cannot delete a confirmed warehouse task");
@@ -88,7 +88,7 @@ public:
   }
 
   WarehouseTask getWarehouseTask(TenantId tenantId, WarehouseTaskId id) {
-    return _repo.find(tenantId, id);
+    return _repo.findById(tenantId, id);
   }
 
   WarehouseTask[] listWarehouseTasks(TenantId tenantId) {

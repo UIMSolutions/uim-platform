@@ -17,7 +17,7 @@ class MemoryRepositoryRepository : TenantRepository!(Repository_, RepositoryId),
         return findByStatus(tenantId, status).length;
     }
     Repository_[] findByStatus(TenantId tenantId, RepositoryStatus status) {
-        return find(tenantId).filter!(e => e.status == status).array;
+        return findByTenant(tenantId).filter!(e => e.status == status).array;
     }
     void removeByStatus(TenantId tenantId, RepositoryStatus status) {
         findByStatus(tenantId, status).each!(e => remove(e));
@@ -27,10 +27,10 @@ class MemoryRepositoryRepository : TenantRepository!(Repository_, RepositoryId),
         return findByType(tenantId, repositoryType).length;
     }
     Repository_[] findByType(TenantId tenantId, RepositoryType repositoryType) {
-        return find(tenantId).filter!(e => e.repositoryType == repositoryType).array;
+        return findByTenant(tenantId).filter!(e => e.repositoryType == repositoryType).array;
     }
 
     Repository_[] findDefault(TenantId tenantId) {
-        return find(tenantId).filter!(e => e.isDefault).array;
+        return findByTenant(tenantId).filter!(e => e.isDefault).array;
     }
 }

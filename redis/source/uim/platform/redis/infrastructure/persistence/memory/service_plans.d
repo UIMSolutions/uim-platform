@@ -18,14 +18,14 @@ class MemoryServicePlanRepository
     , ServicePlanRepository
 {
     override ServicePlan[] findByTier(TenantId tenantId, PlanTier tier) {
-        return find(tenantId).filter!(e => e.tier == tier).array;
+        return findByTenant(tenantId).filter!(e => e.tier == tier).array;
     }
 
     override ServicePlan[] findAvailable(TenantId tenantId) {
-        return find(tenantId).filter!(e => e.available).array;
+        return findByTenant(tenantId).filter!(e => e.available).array;
     }
 
     override bool nameExists(TenantId tenantId, string name) {
-        return find(tenantId).any!(e => e.name == name);
+        return findByTenant(tenantId).any!(e => e.name == name);
     }
 }

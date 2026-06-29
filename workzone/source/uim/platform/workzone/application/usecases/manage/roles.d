@@ -40,11 +40,11 @@ class ManageRolesUseCase { // TODO: UIMUseCase {
   }
 
   Role getRole(TenantId tenantId, RoleId id) {
-    return repo.find(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 
   Role[] listRoles(TenantId tenantId) {
-    return repo.find(tenantId);
+    return repo.findByTenant(tenantId);
   }
 
   CommandResult updateRole(UpdateRoleRequest req) {
@@ -64,7 +64,7 @@ class ManageRolesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteRole(TenantId tenantId, RoleId id) {
-    auto r = repo.find(tenantId, id);
+    auto r = repo.findById(tenantId, id);
     if (r.isNull)
       return CommandResult(false, "", "Role not found");
 

@@ -62,7 +62,7 @@ class ManageSpatialFeaturesUseCase {
   }
 
   SpatialFeature[] list(TenantId tenantId) {
-    return repo.find(tenantId);
+    return repo.findByTenant(tenantId);
   }
 
   SpatialFeature[] listByLayer(TenantId tenantId, string layerId) {

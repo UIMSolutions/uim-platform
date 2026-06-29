@@ -19,11 +19,11 @@ class ManageTransportNodesUseCase {
     }
 
     TransportNode getNode(TenantId tenantId, TransportNodeId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     TransportNode[] listNodes(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     TransportNode[] listNodesByStatus(TenantId tenantId, NodeStatus status) {
@@ -78,7 +78,7 @@ class ManageTransportNodesUseCase {
     }
 
     CommandResult enableNode(TenantId tenantId, TransportNodeId id) {
-        auto existing = repo.find(tenantId, id);
+        auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Transport node not found");
         existing.status = NodeStatus.enabled;
@@ -87,7 +87,7 @@ class ManageTransportNodesUseCase {
     }
 
     CommandResult disableNode(TenantId tenantId, TransportNodeId id) {
-        auto existing = repo.find(tenantId, id);
+        auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Transport node not found");
         existing.status = NodeStatus.disabled;
@@ -96,7 +96,7 @@ class ManageTransportNodesUseCase {
     }
 
     CommandResult deleteNode(TenantId tenantId, TransportNodeId id) {
-        auto existing = repo.find(tenantId, id);
+        auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Transport node not found");
         repo.remove(existing);

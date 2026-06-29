@@ -18,7 +18,7 @@ class CatalogAggregator {
 
     /// Get all available offerings with their plans for a tenant
     ServiceOffering[] getAvailableOfferings(TenantId tenantId) {
-        auto offerings = offeringRepo.find(tenantId);
+        auto offerings = offeringRepo.findByTenant(tenantId);
         ServiceOffering[] available;
         foreach (o; offerings) {
             if (o.status == ServiceOfferingStatus.available) {
@@ -30,7 +30,7 @@ class CatalogAggregator {
 
     /// Find plans for a specific offering
     ServicePlan[] getPlansForOffering(TenantId tenantId, ServiceOfferingId offeringId) {
-        auto plans = planRepo.find(tenantId);
+        auto plans = planRepo.findByTenant(tenantId);
         ServicePlan[] matching;
         foreach (p; plans) {
             if (p.offeringId == offeringId) {

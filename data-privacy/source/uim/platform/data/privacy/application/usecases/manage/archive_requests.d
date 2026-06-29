@@ -52,7 +52,7 @@ class ManageArchiveRequestsUseCase { // TODO: UIMUseCase {
   }
 
   ArchiveRequest[] listRequests(TenantId tenantId) {
-    return repo.find(tenantId);
+    return repo.findByTenant(tenantId);
   }
 
   ArchiveRequest[] listByDataSubject(TenantId tenantId, DataSubjectId subjectId) {

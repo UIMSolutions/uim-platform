@@ -35,7 +35,7 @@ void removeByKey(TenantId tenantId, MobileAppId appId, string key) {
   }
 
   AppConfiguration[] findByApp(TenantId tenantId, MobileAppId appId) {
-    return filterByApp(find(tenantId), appId);
+    return filterByApp(findByTenant(tenantId), appId);
   }
 
   void removeByApp(TenantId tenantId, MobileAppId appId) {

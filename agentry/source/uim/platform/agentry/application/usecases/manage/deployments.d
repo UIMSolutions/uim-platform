@@ -19,11 +19,11 @@ class ManageDeploymentsUseCase {
     }
 
     Deployment getDeployment(TenantId tenantId, DeploymentId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     Deployment[] listDeployments(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     Deployment[] listByMobileApplication(TenantId tenantId, MobileApplicationId appId) {
@@ -65,7 +65,7 @@ class ManageDeploymentsUseCase {
     }
 
     CommandResult deleteDeployment(TenantId tenantId, DeploymentId id) {
-        auto entity = repo.find(tenantId, id);
+        auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Deployment not found");
 

@@ -28,7 +28,7 @@ class MemoryEntitlementRepository : TenantRepository!(Entitlement, EntitlementId
   }
 
   Entitlement[] findByGlobalAccount(TenantId tenantId, GlobalAccountId globalAccountId) {
-    return filterByGlobalAccount(find(tenantId), globalAccountId);
+    return filterByGlobalAccount(findByTenant(tenantId), globalAccountId);
   }
 
   void removeByGlobalAccount(TenantId tenantId, GlobalAccountId globalAccountId) {
@@ -46,7 +46,7 @@ class MemoryEntitlementRepository : TenantRepository!(Entitlement, EntitlementId
   }
 
   Entitlement[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
-    return filterBySubaccount(find(tenantId), subaccountId);
+    return filterBySubaccount(findByTenant(tenantId), subaccountId);
   }
 
   void removeBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
@@ -64,7 +64,7 @@ Entitlement[] filterByDirectory(Entitlement[] items, DirectoryId directoryId) {
   }
 
   Entitlement[] findByDirectory(TenantId tenantId, DirectoryId directoryId) {
-    return filterByDirectory(find(tenantId), directoryId);
+    return filterByDirectory(findByTenant(tenantId), directoryId);
   }
 
   void removeByDirectory(TenantId tenantId, DirectoryId directoryId) {
@@ -82,7 +82,7 @@ Entitlement[] filterByDirectory(Entitlement[] items, DirectoryId directoryId) {
   }
 
   Entitlement[] findByServicePlan(TenantId tenantId, GlobalAccountId globalAccountId, ServicePlanId planId) {
-    return filterByServicePlan(filterByGlobalAccount(find(tenantId), globalAccountId), planId);
+    return filterByServicePlan(filterByGlobalAccount(findByTenant(tenantId), globalAccountId), planId);
   }
 
   void removeByServicePlan(TenantId tenantId, GlobalAccountId globalAccountId, ServicePlanId planId) {

@@ -18,18 +18,18 @@ import uim.platform.monitoring;
 class MemoryMonitoredResourceRepository : TenantRepository!(MonitoredResource, MonitoredResourceId), MonitoredResourceRepository {
 
   bool existsByName(TenantId tenantId, string name) {
-    return (find(tenantId).any!(e => e.name == name));
+    return (findByTenant(tenantId).any!(e => e.name == name));
   }
 
   MonitoredResource findByName(TenantId tenantId, string name) {
-    foreach (e; find(tenantId))
+    foreach (e; findByTenant(tenantId))
       if (e.name == name)
         return e;
     return MonitoredResource.init;
   }
 
   void removeByName(TenantId tenantId, string name) {
-    foreach (e; find(tenantId))
+    foreach (e; findByTenant(tenantId))
       if (e.name == name) {
         remove(e);
         return;
@@ -45,7 +45,7 @@ class MemoryMonitoredResourceRepository : TenantRepository!(MonitoredResource, M
   }
 
   MonitoredResource[] findByType(TenantId tenantId, ResourceType type) {
-    return filterByType(find(tenantId), type);
+    return filterByType(findByTenant(tenantId), type);
   }
 
   void removeByType(TenantId tenantId, ResourceType type) {

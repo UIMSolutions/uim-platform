@@ -40,11 +40,11 @@ class ManageWorkspacesUseCase { // TODO: UIMUseCase {
   }
 
   Workspace getWorkspace(TenantId tenantId, WorkspaceId id) {
-    return workspaces.find(tenantId, id);
+    return workspaces.findById(tenantId, id);
   }
 
   Workspace[] listWorkspaces(TenantId tenantId) {
-    return workspaces.find(tenantId);
+    return workspaces.findByTenant(tenantId);
   }
 
   CommandResult patchWorkspace(PatchWorkspaceRequest r) {
@@ -62,7 +62,7 @@ class ManageWorkspacesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteWorkspace(TenantId tenantId, WorkspaceId id) {
-    auto workspace = workspaces.find(tenantId, id);
+    auto workspace = workspaces.findById(tenantId, id);
     if (workspace.isNull)
       return CommandResult(false, "", "Workspace not found");
       

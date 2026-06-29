@@ -13,32 +13,32 @@ import uim.platform.health_fhir;
 class MemoryObservationRepository : TenantRepository!(Observation, ObservationId), ObservationRepository {
 
   bool existsById(TenantId tenantId, ObservationId id) {
-    return !find(tenantId, id).isNull;
+    return !findById(tenantId, id).isNull;
   }
 
   Observation findById(TenantId tenantId, ObservationId id) {
-    foreach (o; find(tenantId)) {
+    foreach (o; findByTenant(tenantId)) {
       if (o.id == id) return o;
     }
     return Observation.init;
   }
 
   void removeById(TenantId tenantId, ObservationId id) {
-    auto o = find(tenantId, id);
+    auto o = findById(tenantId, id);
     if (!o.isNull) remove(o);
   }
 
   size_t countByTenant(TenantId tenantId) {
-    return find(tenantId).length;
+    return findByTenant(tenantId).length;
   }
 
   Observation[] findByTenantAll(TenantId tenantId) {
-    return find(tenantId);
+    return findByTenant(tenantId);
   }
 
   Observation[] findByPatient(TenantId tenantId, string patientRef) {
     Observation[] results;
-    foreach (o; find(tenantId)) {
+    foreach (o; findByTenant(tenantId)) {
       if (o.subject_.reference_ == patientRef) results ~= o;
     }
     return results;

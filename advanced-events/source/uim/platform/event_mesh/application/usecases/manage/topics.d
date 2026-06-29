@@ -23,7 +23,7 @@ class ManageTopicsUseCase { // TODO: UIMUseCase {
     }
 
     Topic[] listTopics(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     Topic[] listTopics(TenantId tenantId, BrokerServiceId serviceId) {

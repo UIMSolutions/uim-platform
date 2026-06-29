@@ -18,15 +18,15 @@ class MemoryServiceBindingRepository
     , ServiceBindingRepository
 {
     override ServiceBinding[] findByInstance(TenantId tenantId, ServiceInstanceId instanceId) {
-        return find(tenantId).filter!(e => e.instanceId == instanceId).array;
+        return findByTenant(tenantId).filter!(e => e.instanceId == instanceId).array;
     }
 
     override ServiceBinding[] findByStatus(TenantId tenantId, BindingStatus status) {
-        return find(tenantId).filter!(e => e.status == status).array;
+        return findByTenant(tenantId).filter!(e => e.status == status).array;
     }
 
     override ServiceBinding findByInstanceAndApp(TenantId tenantId, ServiceInstanceId instanceId, string appId) {
-        auto results = find(tenantId).filter!(e => e.instanceId == instanceId && e.appId == appId).array;
+        auto results = findByTenant(tenantId).filter!(e => e.instanceId == instanceId && e.appId == appId).array;
         return results.length > 0 ? results[0] : ServiceBinding.init;
     }
 }

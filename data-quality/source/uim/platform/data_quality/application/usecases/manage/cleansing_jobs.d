@@ -43,7 +43,7 @@ class ManageCleansingJobsUseCase { // TODO: UIMUseCase {
   }
 
   CleansingJob[] listCleansingJobs(TenantId tenantId) {
-    return repo.find(tenantId);
+    return repo.findByTenant(tenantId);
   }
 
   CleansingJob[] listCleansingJobs(TenantId tenantId, DatasetId datasetId) {

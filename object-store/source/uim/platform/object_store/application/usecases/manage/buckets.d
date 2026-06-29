@@ -75,11 +75,11 @@ class ManageBucketsUseCase { // TODO: UIMUseCase {
   }
 
   Bucket getBucket(TenantId tenantId, BucketId id) {
-    return repo.find(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 
   Bucket[] listBuckets(TenantId tenantId) {
-    return repo.find(tenantId);
+    return repo.findByTenant(tenantId);
   }
 
   CommandResult deleteBucket(TenantId tenantId, BucketId bucketId) {

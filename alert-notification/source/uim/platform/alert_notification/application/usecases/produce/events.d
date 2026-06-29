@@ -60,7 +60,7 @@ class ProduceEventsUseCase {
 
         // Walk all enabled subscriptions and dispatch matching ones
         auto enabledSubs = subscriptions.findEnabled(tenantId);
-        auto allConds    = conditions.find(tenantId);
+        auto allConds    = conditions.findByTenant(tenantId);
 
         foreach (sub; enabledSubs) {
             if (!matcher.subscriptionMatches(event, sub, allConds)) continue;

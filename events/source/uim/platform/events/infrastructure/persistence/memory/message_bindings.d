@@ -19,19 +19,19 @@ class MemoryMessageBindingRepository
     }
 
     MessageBinding[] findByClient(TenantId tenantId, MessageClientId clientId) {
-        return find(tenantId).filter!(e => e.clientId == clientId).array;
+        return findByTenant(tenantId).filter!(e => e.clientId == clientId).array;
     }
 
     MessageBinding[] findByService(TenantId tenantId, MessagingServiceId serviceId) {
-        return find(tenantId).filter!(e => e.serviceId == serviceId).array;
+        return findByTenant(tenantId).filter!(e => e.serviceId == serviceId).array;
     }
 
     MessageBinding[] findByQueue(TenantId tenantId, QueueId queueId) {
-        return find(tenantId).filter!(e => e.queueId == queueId).array;
+        return findByTenant(tenantId).filter!(e => e.queueId == queueId).array;
     }
 
     MessageBinding[] findByChannel(TenantId tenantId, EventChannelId channelId) {
-        return find(tenantId).filter!(e => e.channelId == channelId).array;
+        return findByTenant(tenantId).filter!(e => e.channelId == channelId).array;
     }
 
     void removeByService(TenantId tenantId, MessagingServiceId serviceId) {

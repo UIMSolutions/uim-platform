@@ -16,7 +16,7 @@ class MemoryProcessRepository : TenantRepository!(Process, ProcessId), ProcessRe
     }
 
     Process[] findByProject(TenantId tenantId, ProjectId projectId) {
-        return filterByProject(find(tenantId), projectId);
+        return filterByProject(findByTenant(tenantId), projectId);
     }
     Process[] filterByProject(Process[] processes, ProjectId projectId) {
         return processes.filter!(p => p.projectId == projectId).array;
@@ -29,7 +29,7 @@ class MemoryProcessRepository : TenantRepository!(Process, ProcessId), ProcessRe
         return findByCategory(tenantId, category).length;
     }
     Process[] findByCategory(TenantId tenantId, ProcessCategory category) {
-        return filterByCategory(find(tenantId), category);
+        return filterByCategory(findByTenant(tenantId), category);
     }
     Process[] filterByCategory(Process[] processes, ProcessCategory category) {
         return processes.filter!(p => p.category == category).array;

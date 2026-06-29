@@ -17,11 +17,11 @@ class ManageServicePlansUseCase {
     this(ServicePlanRepository repo) { this.repo = repo; }
 
     ServicePlan getServicePlan(TenantId tenantId, ServicePlanId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     ServicePlan[] listServicePlans(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     ServicePlan[] listAvailable(TenantId tenantId) {
@@ -65,7 +65,7 @@ class ManageServicePlansUseCase {
     }
 
     CommandResult deleteServicePlan(TenantId tenantId, ServicePlanId id) {
-        auto existing = repo.find(tenantId, id);
+        auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Plan not found");
         repo.removeById(tenantId, id);

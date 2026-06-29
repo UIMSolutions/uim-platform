@@ -14,20 +14,20 @@ import uim.platform.customer_identity;
 class MemoryAuditLogRepository : TenantRepository!(AuditLog, AuditLogId), AuditLogRepository {
 
     AuditLog[] findByActor(TenantId tenantId, string actorId) {
-        return find(tenantId).filter!(al => al.actorId == actorId).array;
+        return findByTenant(tenantId).filter!(al => al.actorId == actorId).array;
     }
 
     AuditLog[] findByAction(TenantId tenantId, AuditAction action) {
-        return find(tenantId).filter!(al => al.action == action).array;
+        return findByTenant(tenantId).filter!(al => al.action == action).array;
     }
 
     AuditLog[] findByResource(TenantId tenantId, ResourceType resourceType, string resourceId) {
-        return find(tenantId)
+        return findByTenant(tenantId)
             .filter!(al => al.resourceType == resourceType && al.resourceId == resourceId).array;
     }
 
     AuditLog[] findByTimeRange(TenantId tenantId, long fromTimestamp, long toTimestamp) {
-        return find(tenantId)
+        return findByTenant(tenantId)
             .filter!(al => al.timestamp >= fromTimestamp && al.timestamp <= toTimestamp).array;
     }
 }

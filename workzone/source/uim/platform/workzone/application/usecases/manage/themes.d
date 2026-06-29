@@ -43,11 +43,11 @@ class ManageThemesUseCase { // TODO: UIMUseCase {
   }
 
   Theme getTheme(TenantId tenantId, ThemeId id) {
-    return repo.find(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 
   Theme[] listThemes(TenantId tenantId) {
-    return repo.find(tenantId);
+    return repo.findByTenant(tenantId);
   }
 
   CommandResult updateTheme(UpdateThemeRequest req) {
@@ -70,7 +70,7 @@ class ManageThemesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteTheme(TenantId tenantId, ThemeId id) {
-    auto t = repo.find(tenantId, id);
+    auto t = repo.findById(tenantId, id);
     if (t.isNull)
       return CommandResult(false, "", "Theme not found");
 

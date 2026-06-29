@@ -47,7 +47,7 @@ class ManageJobsUseCase { // TODO: UIMUseCase {
     }
 
     Job getJob(TenantId tenantId, JobId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     Job getJob(TenantId tenantId, string name) {
@@ -55,7 +55,7 @@ class ManageJobsUseCase { // TODO: UIMUseCase {
     }
 
     Job[] listJobs(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     Job[] searchJobs(TenantId tenantId, string query) {
@@ -89,7 +89,7 @@ class ManageJobsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteJob(TenantId tenantId, JobId id) {
-        auto entity = repo.find(tenantId, id);
+        auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Job not found");
 

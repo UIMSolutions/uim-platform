@@ -42,7 +42,7 @@ class ManageTranslationsUseCase { // TODO: UIMUseCase {
   }
 
   Translation getTranslation(TenantId tenantId, TranslationId id) {
-    return translationRepo.find(tenantId, id);
+    return translationRepo.findById(tenantId, id);
   }
 
   Translation[] getTranslationsForResource(TenantId tenantId, string resourceType,
@@ -68,7 +68,7 @@ class ManageTranslationsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteTranslation(TenantId tenantId, TranslationId id) {
-    auto trans = translationRepo.find(tenantId, id);
+    auto trans = translationRepo.findById(tenantId, id);
     if (trans.isNull)
       return CommandResult(false, "", "Translation not found");
 

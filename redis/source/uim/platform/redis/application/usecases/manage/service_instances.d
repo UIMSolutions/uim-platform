@@ -17,11 +17,11 @@ class ManageServiceInstancesUseCase {
     this(ServiceInstanceRepository repo) { this.repo = repo; }
 
     ServiceInstance getServiceInstance(TenantId tenantId, ServiceInstanceId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     ServiceInstance[] listServiceInstances(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     ServiceInstance[] listByStatus(TenantId tenantId, InstanceStatus status) {
@@ -75,7 +75,7 @@ class ManageServiceInstancesUseCase {
     }
 
     CommandResult deleteServiceInstance(TenantId tenantId, ServiceInstanceId id) {
-        auto existing = repo.find(tenantId, id);
+        auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Service instance not found");
         repo.remove(tenantId, id);

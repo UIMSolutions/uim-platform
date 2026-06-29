@@ -51,11 +51,11 @@ class ManageConsentRecordsUseCase { // TODO: UIMUseCase {
     }
 
     ConsentRecord getConsentRecord(ConsentRecordId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     ConsentRecord[] listConsentRecordsByTenant(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     ConsentRecord[] listConsentRecords(TenantId tenantId, DataSubjectId dataSubjectId) {
@@ -76,7 +76,7 @@ class ManageConsentRecordsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteConsentRecord(TenantId tenantId, ConsentRecordId id) {
-        auto record = repo.find(tenantId, id);
+        auto record = repo.findById(tenantId, id);
         if (record.isNull)
             return CommandResult(false, "", "Consent record not found");
 

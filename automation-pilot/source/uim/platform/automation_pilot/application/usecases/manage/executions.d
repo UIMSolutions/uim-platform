@@ -23,7 +23,7 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
     }
 
     Execution[] listExecutions(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     Execution[] listExecutions(TenantId tenantId, CommandId commandId) {
@@ -59,7 +59,7 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteExecution(TenantId tenantId, ExecutionId id) {
-        auto entity = repo.find(tenantId, id);
+        auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Execution not found");
             

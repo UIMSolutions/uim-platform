@@ -17,11 +17,11 @@ class ManageTeamCategoriesUseCase {
     this(TeamCategoryRepository repo) { this.repo = repo; }
 
     TeamCategory getCategory(TenantId tenantId, TeamCategoryId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     TeamCategory[] listCategories(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     CommandResult createCategory(TeamCategoryDTO dto) {
@@ -49,7 +49,7 @@ class ManageTeamCategoriesUseCase {
     }
 
     CommandResult deleteCategory(TenantId tenantId, TeamCategoryId id) {
-        auto e = repo.find(tenantId, id);
+        auto e = repo.findById(tenantId, id);
         if (e.isNull)
             return CommandResult(false, "", "Category not found");
         repo.remove(e);

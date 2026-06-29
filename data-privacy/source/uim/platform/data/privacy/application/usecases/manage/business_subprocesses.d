@@ -43,11 +43,11 @@ class ManageBusinessSubprocessesUseCase { // TODO: UIMUseCase {
   }
 
   BusinessSubprocess getSubprocess(TenantId tenantId, BusinessSubprocessId id) {
-    return repo.find(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 
   BusinessSubprocess[] listSubprocesses(TenantId tenantId) {
-    return repo.find(tenantId);
+    return repo.findByTenant(tenantId);
   }
 
   BusinessSubprocess[] listByParentProcess(TenantId tenantId, BusinessProcessId parentId) {
@@ -76,7 +76,7 @@ class ManageBusinessSubprocessesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteSubprocess(TenantId tenantId, BusinessSubprocessId id) {
-    auto entity = repo.find(tenantId, id);
+    auto entity = repo.findById(tenantId, id);
     if (entity.isNull)
       return CommandResult(false, "", "Business subprocess not found");
 

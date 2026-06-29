@@ -61,7 +61,7 @@ class ManageSpatialLayersUseCase {
   }
 
   SpatialLayer[] list(TenantId tenantId) {
-    return repo.find(tenantId);
+    return repo.findByTenant(tenantId);
   }
 
   CommandResult remove(TenantId tenantId, string id) {

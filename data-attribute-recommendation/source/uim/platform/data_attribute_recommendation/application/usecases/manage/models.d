@@ -62,11 +62,11 @@ class ManageModelsUseCase { // TODO: UIMUseCase {
   }
 
   ModelConfiguration getModelConfig(TenantId tenantId, ModelConfigurationId id) {
-    return repo.find(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 
   ModelConfiguration[] listModelConfigs(TenantId tenantId) {
-    return repo.find(tenantId);
+    return repo.findByTenant(tenantId);
   }
 
   CommandResult updateModelConfig(UpdateModelConfigRequest req) {
@@ -102,7 +102,7 @@ class ManageModelsUseCase { // TODO: UIMUseCase {
 
   /// Mark a model configuration as ready for training.
   CommandResult activateConfig(TenantId tenantId, ModelConfigurationId id) {
-    auto config = repo.find(tenantId, id);
+    auto config = repo.findById(tenantId, id);
     if (config.isNull)
       return CommandResult(false, "", "Model configuration not found");
 
@@ -134,7 +134,7 @@ class ManageModelsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteModelConfig(TenantId tenantId, ModelConfigurationId id) {
-    auto existing = repo.find(tenantId, id);
+    auto existing = repo.findById(tenantId, id);
     if (existing.isNull)
       return CommandResult(false, "", "Model configuration not found");
 

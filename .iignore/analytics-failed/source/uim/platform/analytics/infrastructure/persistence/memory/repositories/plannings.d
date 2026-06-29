@@ -20,7 +20,7 @@ class MemoryPlanningRepository : TenantRepository!(PlanningModel, PlanningModelI
     return models.filter!(m => m.datasetId == datasetId).array;
   }
   PlanningModel[] findByDataset(TenantId tenantId, DatasetId datasetId) {
-    return filterByDataset(find(tenantId), datasetId);
+    return filterByDataset(findByTenant(tenantId), datasetId);
   }
   void removeByDataset(TenantId tenantId, DatasetId datasetId) {
     findByDataset(tenantId, datasetId).each!(m => remove(m));
@@ -35,7 +35,7 @@ class MemoryPlanningRepository : TenantRepository!(PlanningModel, PlanningModelI
     return models.filter!(m => m.planStatus == status).array;
   }
   PlanningModel[] findByStatus(TenantId tenantId, PlanningStatus status) {
-    return filterByStatus(find(tenantId), status);
+    return filterByStatus(findByTenant(tenantId), status);
   } 
   void removeByStatus(TenantId tenantId, PlanningStatus status) {
     findByStatus(tenantId, status).each!(m => remove(m));
@@ -50,7 +50,7 @@ class MemoryPlanningRepository : TenantRepository!(PlanningModel, PlanningModelI
     return models.filter!(m => m.versions.any!(v => v.id == version_.id)).array;
   }
   PlanningModel[] findByVersion(TenantId tenantId, PlanningVersion version_) {
-    return filterByVersion(find(tenantId), version_);
+    return filterByVersion(findByTenant(tenantId), version_);
   }
   void removeByVersion(TenantId tenantId, PlanningVersion version_) {
     findByVersion(tenantId, version_).each!(m => remove(m));
@@ -65,7 +65,7 @@ class MemoryPlanningRepository : TenantRepository!(PlanningModel, PlanningModelI
     return models.filter!(m => m.versions.any!(v => v.versionType == versionType)).array;
   }
   PlanningModel[] findByVersionType(TenantId tenantId, PlanningVersionType versionType) {
-    return filterByVersionType(find(tenantId), versionType);
+    return filterByVersionType(findByTenant(tenantId), versionType);
   }
   void removeByVersionType(TenantId tenantId, PlanningVersionType versionType) {
     findByVersionType(tenantId, versionType).each!(m => remove(m));

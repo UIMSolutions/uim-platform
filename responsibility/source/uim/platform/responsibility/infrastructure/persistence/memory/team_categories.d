@@ -16,7 +16,7 @@ class MemoryTeamCategoryRepository
       TeamCategoryRepository {
 
     TeamCategory findByCode(TenantId tenantId, string code) {
-        auto items = find(tenantId).filter!(c => c.code == code).array;
+        auto items = findByTenant(tenantId).filter!(c => c.code == code).array;
         return items.length > 0 ? items[0] : TeamCategory.init;
     }
 }

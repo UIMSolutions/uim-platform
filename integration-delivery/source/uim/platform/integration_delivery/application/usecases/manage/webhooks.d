@@ -19,11 +19,11 @@ class ManageWebhooksUseCase {
     }
 
     Webhook getWebhook(TenantId tenantId, WebhookId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     Webhook[] listWebhooks(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     Webhook[] listByRepository(TenantId tenantId, CicdRepositoryId repositoryId) {
@@ -62,7 +62,7 @@ class ManageWebhooksUseCase {
     }
 
     CommandResult deleteWebhook(TenantId tenantId, WebhookId id) {
-        auto existing = repo.find(tenantId, id);
+        auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Webhook not found");
         repo.remove(tenantId, id);

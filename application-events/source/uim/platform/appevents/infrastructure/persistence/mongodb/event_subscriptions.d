@@ -62,11 +62,11 @@ class MongoEventSubscriptionRepository : EventSubscriptionRepository {
         ]);
     }
 
-    bool isTenantEmpty(TenantId tenantId)   { return find(tenantId).length == 0; }
+    bool isTenantEmpty(TenantId tenantId)   { return findByTenant(tenantId).length == 0; }
     void createTenant(TenantId tenantId)     {}
     TenantId[] findAllTenants()              { return []; }
     bool existsByTenant(TenantId tenantId)   { return !isTenantEmpty(tenantId); }
-    size_t countByTenant(TenantId tenantId)  { return find(tenantId).length; }
+    size_t countByTenant(TenantId tenantId)  { return findByTenant(tenantId).length; }
     EventSubscription[] filterByTenant(EventSubscription[] items, TenantId tenantId) {
         return items.filter!(e => e.tenantId == tenantId).array;
     }
@@ -103,7 +103,7 @@ class MongoEventSubscriptionRepository : EventSubscriptionRepository {
     EventSubscription[] findAllById(TenantId tenantId, EventSubscriptionId[] ids) {
         EventSubscription[] result;
         foreach (id; ids) {
-            auto e = find(tenantId, id);
+            auto e = findById(tenantId, id);
             if (!e.isNull) result ~= e;
         }
         return result;
@@ -136,22 +136,22 @@ class MongoEventSubscriptionRepository : EventSubscriptionRepository {
     void removeAll() @trusted { _collection.remove(Bson.emptyObject); }
 
     override EventSubscription[] findByStatus(TenantId tenantId, SubscriptionStatus status) {
-        return find(tenantId).filter!(e => e.status == status).array;
+        return findByTenant(tenantId).filter!(e => e.status == status).array;
     }
 
     override EventSubscription[] findByProducerSystem(TenantId tenantId, string producerSystemId) {
-        return find(tenantId).filter!(e => e.producerSystemId == producerSystemId).array;
+        return findByTenant(tenantId).filter!(e => e.producerSystemId == producerSystemId).array;
     }
 
     override EventSubscription[] findByConsumerSystem(TenantId tenantId, string consumerSystemId) {
-        return find(tenantId).filter!(e => e.consumerSystemId == consumerSystemId).array;
+        return findByTenant(tenantId).filter!(e => e.consumerSystemId == consumerSystemId).array;
     }
 
     override EventSubscription[] findByFormation(TenantId tenantId, FormationId formationId) {
-        return find(tenantId).filter!(e => e.formationId.value == formationId.value).array;
+        return findByTenant(tenantId).filter!(e => e.formationId.value == formationId.value).array;
     }
 
     override bool nameExists(TenantId tenantId, string name) {
-        return find(tenantId).any!(e => e.name == name);
+        return findByTenant(tenantId).any!(e => e.name == name);
     }
 }

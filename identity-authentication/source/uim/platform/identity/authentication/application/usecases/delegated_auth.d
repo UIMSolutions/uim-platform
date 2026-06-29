@@ -50,6 +50,6 @@ class DelegatedAuthUseCase { // TODO: UIMUseCase {
 
   /// List all configured IdPs for a tenant.
   IdpConfig[] listIdps(TenantId tenantId) {
-    return idpRepo.find(tenantId);
+    return idpRepo.findByTenant(tenantId);
   }
 }

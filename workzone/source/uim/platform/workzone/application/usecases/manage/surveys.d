@@ -47,7 +47,7 @@ class ManageSurveysUseCase { // TODO: UIMUseCase {
   }
 
   Survey getSurvey(TenantId tenantId, SurveyId id) {
-    return repo.find(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 
   Survey[] listSurveys(TenantId tenantId, WorkspaceId workspaceId) {
@@ -71,7 +71,7 @@ class ManageSurveysUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteSurvey(TenantId tenantId, SurveyId id) {
-    auto s = repo.find(tenantId, id);
+    auto s = repo.findById(tenantId, id);
     if (s.isNull)
       return CommandResult(false, "", "Survey not found");
 

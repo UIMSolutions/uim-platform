@@ -46,19 +46,19 @@ class MongoDbAuditLogRepository : AuditLogRepository {
   }
 
   override AuditLog[] findByOperation(TenantId tenantId, AuditOperation op) {
-    return find(tenantId).filter!(e => e.operation == op).array;
+    return findByTenant(tenantId).filter!(e => e.operation == op).array;
   }
 
   override AuditLog[] findByProvider(TenantId tenantId, string providerCode) {
-    return find(tenantId).filter!(e => e.providerCode == providerCode).array;
+    return findByTenant(tenantId).filter!(e => e.providerCode == providerCode).array;
   }
 
   override AuditLog[] findByStatus(TenantId tenantId, OperationStatus status) {
-    return find(tenantId).filter!(e => e.status == status).array;
+    return findByTenant(tenantId).filter!(e => e.status == status).array;
   }
 
   override AuditLog[] findByDateRange(TenantId tenantId, string fromDate, string toDate) {
-    return find(tenantId).filter!(e =>
+    return findByTenant(tenantId).filter!(e =>
       e.fromDate >= fromDate &&
       (toDate.length == 0 || e.toDate <= toDate)
     ).array;

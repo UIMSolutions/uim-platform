@@ -36,19 +36,19 @@ class WidgetUseCases {
   }
 
   WidgetResponse getWidget(TenantId tenantId, WidgetId id) {
-    auto found = repo.find(tenantId).filter!(e => e.id == id).array;
+    auto found = repo.findByTenant(tenantId).filter!(e => e.id == id).array;
     return WidgetResponse.fromEntity(found.empty ? Widget.init : found[0]);
   }
 
   WidgetResponse[] listWidgets(TenantId tenantId) {
     WidgetResponse[] result;
-    foreach (w; repo.find(tenantId))
+    foreach (w; repo.findByTenant(tenantId))
       result ~= WidgetResponse.fromEntity(w);
     return result;
   }
 
   CommandResult deleteWidget(TenantId tenantId, WidgetId id) {
-    auto found = repo.find(tenantId).filter!(e => e.id == id).array;
+    auto found = repo.findByTenant(tenantId).filter!(e => e.id == id).array;
     if (!found.empty) repo.remove(found[0]);
     return CommandResult(true, id.value, "");
   }

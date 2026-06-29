@@ -84,11 +84,11 @@ class ManageValidationRulesUseCase { // TODO: UIMUseCase {
   }
 
   ValidationRule getValidationRule(TenantId tenantId, ValidationRuleId id) {
-    return repo.find(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 
   ValidationRule[] listValidationRules(TenantId tenantId) {
-    return repo.find(tenantId);
+    return repo.findByTenant(tenantId);
   }
 
   ValidationRule[] listActive(TenantId tenantId) {
@@ -96,7 +96,7 @@ class ManageValidationRulesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteValidationRule(TenantId tenantId, ValidationRuleId id) {
-    auto rule = repo.find(tenantId, id);
+    auto rule = repo.findById(tenantId, id);
     if (rule.isNull)
       return CommandResult(false, "", "Validation rule not found");
 

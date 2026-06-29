@@ -54,11 +54,11 @@ class ManageInstancesUseCase { // TODO: UIMUseCase {
   }
 
   DatabaseInstance getDatabaseInstance(TenantId tenantId, DatabaseInstanceId id) {
-    return repo.find(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 
   DatabaseInstance[] listDatabaseInstances(TenantId tenantId) {
-    return repo.find(tenantId);
+    return repo.findByTenant(tenantId);
   }
 
   CommandResult updateDatabaseInstance(UpdateInstanceRequest r) {
@@ -110,7 +110,7 @@ class ManageInstancesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteDatabaseInstance(TenantId tenantId, DatabaseInstanceId id) {
-    auto entity = repo.find(tenantId, id);
+    auto entity = repo.findById(tenantId, id);
     if (entity.isNull)
       return CommandResult(false, "", "Instance not found");
 

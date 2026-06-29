@@ -69,12 +69,12 @@ class ProfileDataUseCase { // TODO: UIMUseCase {
 
   /// Get profile by ID.
   DataProfile getById(TenantId tenantId, DataProfileId id) {
-    return repo.find(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 
   /// Get all profiles for a tenant.
   DataProfile[] listByTenant(TenantId tenantId) {
-    return repo.find(tenantId);
+    return repo.findByTenant(tenantId);
   }
 
   private ColumnProfile profileColumn(string fieldName, ProfileRecordInput[] records) {

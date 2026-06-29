@@ -19,11 +19,11 @@ class ManageAppDefinitionsUseCase {
     }
 
     AppDefinition getDefinition(TenantId tenantId, AppDefinitionId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     AppDefinition[] listDefinitions(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     AppDefinition[] listDefinitions(TenantId tenantId, MobileApplicationId appId) {
@@ -70,7 +70,7 @@ class ManageAppDefinitionsUseCase {
     }
 
     CommandResult deleteDefinition(TenantId tenantId, AppDefinitionId id) {
-        auto entity = repo.find(tenantId, id);
+        auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "App definition not found");
 

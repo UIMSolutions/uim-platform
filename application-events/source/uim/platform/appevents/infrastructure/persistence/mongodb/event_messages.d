@@ -58,11 +58,11 @@ class MongoEventMessageRepository : EventMessageRepository {
         ]);
     }
 
-    bool isTenantEmpty(TenantId tenantId)  { return find(tenantId).length == 0; }
+    bool isTenantEmpty(TenantId tenantId)  { return findByTenant(tenantId).length == 0; }
     void createTenant(TenantId tenantId)    {}
     TenantId[] findAllTenants()             { return []; }
     bool existsByTenant(TenantId tenantId)  { return !isTenantEmpty(tenantId); }
-    size_t countByTenant(TenantId tenantId) { return find(tenantId).length; }
+    size_t countByTenant(TenantId tenantId) { return findByTenant(tenantId).length; }
     EventMessage[] filterByTenant(EventMessage[] items, TenantId tenantId) {
         return items.filter!(e => e.tenantId == tenantId).array;
     }
@@ -99,7 +99,7 @@ class MongoEventMessageRepository : EventMessageRepository {
     EventMessage[] findAllById(TenantId tenantId, EventMessageId[] ids) {
         EventMessage[] result;
         foreach (id; ids) {
-            auto e = find(tenantId, id);
+            auto e = findById(tenantId, id);
             if (!e.isNull) result ~= e;
         }
         return result;
@@ -130,14 +130,14 @@ class MongoEventMessageRepository : EventMessageRepository {
     void removeAll() @trusted { _collection.remove(Bson.emptyObject); }
 
     override EventMessage[] findByChannel(TenantId tenantId, EventChannelId channelId) {
-        return find(tenantId).filter!(e => e.channelId.value == channelId.value).array;
+        return findByTenant(tenantId).filter!(e => e.channelId.value == channelId.value).array;
     }
 
     override EventMessage[] findByStatus(TenantId tenantId, MessageStatus status) {
-        return find(tenantId).filter!(e => e.status == status).array;
+        return findByTenant(tenantId).filter!(e => e.status == status).array;
     }
 
     override EventMessage[] findBySourceSystem(TenantId tenantId, string sourceSystemId) {
-        return find(tenantId).filter!(e => e.sourceSystemId == sourceSystemId).array;
+        return findByTenant(tenantId).filter!(e => e.sourceSystemId == sourceSystemId).array;
     }
 }

@@ -37,15 +37,15 @@ class FilePrinterRepository : PrinterRepository {
     }
 
     Printer[] findByStatus(TenantId tenantId, PrinterStatus status) {
-        return find(tenantId).filter!(p => p.status == status).array;
+        return findByTenant(tenantId).filter!(p => p.status == status).array;
     }
 
     Printer[] findByClient(TenantId tenantId, PrintClientId clientId) {
-        return find(tenantId).filter!(p => p.clientId == clientId).array;
+        return findByTenant(tenantId).filter!(p => p.clientId == clientId).array;
     }
 
     Printer[] findByProtocol(TenantId tenantId, PrinterProtocol protocol) {
-        return find(tenantId).filter!(p => p.protocol == protocol).array;
+        return findByTenant(tenantId).filter!(p => p.protocol == protocol).array;
     }
 
     private string filePath() { return dataDir ~ "/printers.json"; }

@@ -14,14 +14,14 @@ import uim.platform.transport;
 class MemoryTransportRouteRepository : TenantRepository!(TransportRoute, TransportRouteId), TransportRouteRepository {
 
     TransportRoute[] findBySourceNode(TenantId tenantId, TransportNodeId sourceNodeId) {
-        return find(tenantId).filter!(e => e.sourceNodeId.value == sourceNodeId.value).array;
+        return findByTenant(tenantId).filter!(e => e.sourceNodeId.value == sourceNodeId.value).array;
     }
 
     TransportRoute[] findByDestinationNode(TenantId tenantId, TransportNodeId destNodeId) {
-        return find(tenantId).filter!(e => e.destinationNodeId.value == destNodeId.value).array;
+        return findByTenant(tenantId).filter!(e => e.destinationNodeId.value == destNodeId.value).array;
     }
 
     TransportRoute[] findByStatus(TenantId tenantId, RouteStatus status) {
-        return find(tenantId).filter!(e => e.status == status).array;
+        return findByTenant(tenantId).filter!(e => e.status == status).array;
     }
 }

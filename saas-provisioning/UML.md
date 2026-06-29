@@ -273,7 +273,7 @@ sequenceDiagram
     Client->>AppSubController: DELETE /api/v1/saas-provisioning/subscriptions/:id
     AppSubController->>SubUC: unsubscribeConsumer(tenantId, id, requestedBy)
     SubUC->>Engine: beginUnsubscribe(tenantId, id, requestedBy)
-    Engine->>SubRepo: find(tenantId, id)
+    Engine->>SubRepo: findById(tenantId, id)
     SubRepo-->>Engine: AppSubscription
     Engine->>SubRepo: save(updatedSubscription [state=in_process])
     Engine->>JobRepo: save(newJob [type=unsubscribe])
@@ -310,7 +310,7 @@ sequenceDiagram
 
     Client->>JobCtrl: GET /api/v1/saas-provisioning/jobs/:id
     JobCtrl->>UC: getJob(tenantId, id)
-    UC->>Repo: find(tenantId, id)
+    UC->>Repo: findById(tenantId, id)
     Repo-->>UC: SubscriptionJob
     UC-->>JobCtrl: SubscriptionJob
     JobCtrl-->>Client: 200 OK { id, jobType, jobStatus, progress, ... }

@@ -17,11 +17,11 @@ class ManageMemberFunctionsUseCase {
     this(MemberFunctionRepository repo) { this.repo = repo; }
 
     MemberFunction getFunction(TenantId tenantId, MemberFunctionId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     MemberFunction[] listFunctions(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     CommandResult createFunction(MemberFunctionDTO dto) {
@@ -50,7 +50,7 @@ class ManageMemberFunctionsUseCase {
     }
 
     CommandResult deleteFunction(TenantId tenantId, MemberFunctionId id) {
-        auto e = repo.find(tenantId, id);
+        auto e = repo.findById(tenantId, id);
         if (e.isNull)
             return CommandResult(false, "", "Function not found");
         repo.remove(e);

@@ -41,11 +41,11 @@ class ManageSchemasUseCase { // TODO: UIMUseCase {
   }
 
   Schema getSchemaById(TenantId tenantId, SchemaId id) {
-    return repo.find(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 
   Schema[] listSchemas(TenantId tenantId) {
-    return repo.find(tenantId);
+    return repo.findByTenant(tenantId);
   }
 
   CommandResult updateSchema(UpdateSchemaRequest r) {

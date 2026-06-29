@@ -19,7 +19,7 @@ class MemoryChangeRequestRepository
     }
 
     ChangeRequest[] findByStatus(TenantId tenantId, ChangeRequestStatus status) {
-        return find(tenantId).filter!(e => e.status == status).array;
+        return findByTenant(tenantId).filter!(e => e.status == status).array;
     }
 
     void removeByStatus(TenantId tenantId, ChangeRequestStatus status) {
@@ -27,18 +27,18 @@ class MemoryChangeRequestRepository
     }
 
     ChangeRequest[] findByBusinessPartner(TenantId tenantId, BusinessPartnerId bpId) {
-        return find(tenantId).filter!(e => e.businessPartnerId.value == bpId.value).array;
+        return findByTenant(tenantId).filter!(e => e.businessPartnerId.value == bpId.value).array;
     }
 
     ChangeRequest[] findByRequestedBy(TenantId tenantId, UserId userId) {
-        return find(tenantId).filter!(e => e.requestedBy.value == userId.value).array;
+        return findByTenant(tenantId).filter!(e => e.requestedBy.value == userId.value).array;
     }
 
     ChangeRequest[] findByReviewedBy(TenantId tenantId, UserId userId) {
-        return find(tenantId).filter!(e => e.reviewedBy.value == userId.value).array;
+        return findByTenant(tenantId).filter!(e => e.reviewedBy.value == userId.value).array;
     }
 
     ChangeRequest[] findByType(TenantId tenantId, ChangeRequestType requestType) {
-        return find(tenantId).filter!(e => e.requestType == requestType).array;
+        return findByTenant(tenantId).filter!(e => e.requestType == requestType).array;
     }
 }

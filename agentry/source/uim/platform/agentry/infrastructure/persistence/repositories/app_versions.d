@@ -23,7 +23,7 @@ class AppVersionRepository : TenantRepository!(AppVersion, AppVersionId), IAppVe
     }
 
     AppVersion[] findByMobileApplication(TenantId tenantId, MobileApplicationId appId) {
-        return filterByMobileApplication(find(tenantId), appId);
+        return filterByMobileApplication(findByTenant(tenantId), appId);
     }
 
     void removeByMobileApplication(TenantId tenantId, MobileApplicationId appId) {
@@ -39,7 +39,7 @@ class AppVersionRepository : TenantRepository!(AppVersion, AppVersionId), IAppVe
     }
 
     AppVersion[] findByStatus(TenantId tenantId, AppVersionStatus status) {
-        return filterByStatus(find(tenantId), status);
+        return filterByStatus(findByTenant(tenantId), status);
     }
 
     void removeByStatus(TenantId tenantId, AppVersionStatus status) {
@@ -55,7 +55,7 @@ class AppVersionRepository : TenantRepository!(AppVersion, AppVersionId), IAppVe
     }
 
     AppVersion[] findByDefinition(TenantId tenantId, AppDefinitionId definitionId) {
-        return filterByDefinition(find(tenantId), definitionId);
+        return filterByDefinition(findByTenant(tenantId), definitionId);
     }
 
     void removeByDefinition(TenantId tenantId, AppDefinitionId definitionId) {

@@ -25,11 +25,11 @@ class MemoryConnectivityLogRepository : TenantRepository!(ConnectivityLog, Conne
   }
 
   ConnectivityLog[] findBySeverity(TenantId tenantId, LogSeverity severity) {
-    return filterBySeverity(find(tenantId), severity);
+    return filterBySeverity(findByTenant(tenantId), severity);
   }
 
   void removeBySeverity(TenantId tenantId, LogSeverity severity) {
-    find(tenantId).filter!(e => e.severity == severity).each!(e => remove(e));
+    findByTenant(tenantId).filter!(e => e.severity == severity).each!(e => remove(e));
   }
   // #endregion BySeverity
 
@@ -39,11 +39,11 @@ class MemoryConnectivityLogRepository : TenantRepository!(ConnectivityLog, Conne
   }
 
   ConnectivityLog[] findBySource(TenantId tenantId, string sourceId) {
-    return find(tenantId).filter!(e => e.sourceId == sourceId).array;
+    return findByTenant(tenantId).filter!(e => e.sourceId == sourceId).array;
   }
 
   void removeBySource(TenantId tenantId, string sourceId) {
-    find(tenantId).filter!(e => e.sourceId == sourceId).each!(e => remove(e));
+    findByTenant(tenantId).filter!(e => e.sourceId == sourceId).each!(e => remove(e));
   }
   // #endregion BySource
 

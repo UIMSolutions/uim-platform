@@ -19,7 +19,7 @@ class MemoryCommandRepository : TenantRepository!(Command, CommandId), CommandRe
     }
 
     Command[] findByCatalog(TenantId tenantId, CatalogId catalogId) {
-        return filterByCatalog(find(tenantId), catalogId);
+        return filterByCatalog(findByTenant(tenantId), catalogId);
     }
 
     Command[] filterByCatalog(Command[] commands, CatalogId catalogId) {
@@ -37,7 +37,7 @@ class MemoryCommandRepository : TenantRepository!(Command, CommandId), CommandRe
     }
 
     Command[] findByStatus(TenantId tenantId, CommandStatus status) {
-        return filterByStatus(find(tenantId), status);
+        return filterByStatus(findByTenant(tenantId), status);
     }
 
     Command[] filterByStatus(Command[] commands, CommandStatus status) {

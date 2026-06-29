@@ -23,7 +23,7 @@ class MemoryRoleRepository : TenantRepository!(Role, RoleId), RoleRepository {
 
   Role[] findByUser(TenantId tenantId, UserId userId) {
     Role[] result;
-    foreach (r; find(tenantId)) {
+    foreach (r; findByTenant(tenantId)) {
       foreach (uid; r.assignedUserIds)
         if (uid == userId) {
           result ~= r;

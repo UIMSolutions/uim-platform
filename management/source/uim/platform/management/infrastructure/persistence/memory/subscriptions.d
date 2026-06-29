@@ -27,7 +27,7 @@ class MemorySubscriptionRepository : TenantRepository!(Subscription, Subscriptio
   }
 
   Subscription[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
-    return filterBySubaccount(find(tenantId), subaccountId);
+    return filterBySubaccount(findByTenant(tenantId), subaccountId);
   }
 
   void removeBySubaccount(TenantId tenantId, SubaccountId subaccountId) {

@@ -15,11 +15,11 @@ class MemoryPrintDocumentRepository
     : TenantRepository!(PrintDocument, PrintDocumentId), PrintDocumentRepository {
 
     PrintDocument[] findByFormat(TenantId tenantId, DocumentFormat format) {
-        return find(tenantId).filter!(d => d.format == format).array;
+        return findByTenant(tenantId).filter!(d => d.format == format).array;
     }
 
     PrintDocument[] findExpired(TenantId tenantId, long nowTimestamp) {
-        return find(tenantId)
+        return findByTenant(tenantId)
             .filter!(d => d.expiresAt > 0 && d.expiresAt < nowTimestamp)
             .array;
     }

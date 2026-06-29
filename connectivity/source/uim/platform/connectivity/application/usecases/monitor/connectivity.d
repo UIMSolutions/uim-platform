@@ -30,7 +30,7 @@ class MonitorConnectivityUseCase { // TODO: UIMUseCase {
   }
 
   ConnectivityLog[] listLogs(TenantId tenantId) {
-    return logRepo.find(tenantId);
+    return logRepo.findByTenant(tenantId);
   }
 
   ConnectivityLog[] listBySeverity(TenantId tenantId, LogSeverity severity) {
@@ -42,7 +42,7 @@ class MonitorConnectivityUseCase { // TODO: UIMUseCase {
   }
 
   ConnectivitySummary getSummary(TenantId tenantId) {
-    auto logs = logRepo.find(tenantId);
+    auto logs = logRepo.findByTenant(tenantId);
     ConnectivitySummary summary;
     summary.totalEvents = logs.length;
 

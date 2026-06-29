@@ -16,7 +16,7 @@ class MemoryProviderRepository
 
   Provider[] findByType(TenantId tenantId, ProviderType type) {
     Provider[] results;
-    foreach (item; find(tenantId)) {
+    foreach (item; findByTenant(tenantId)) {
       if (item.type == type) results ~= item;
     }
     return results;
@@ -24,7 +24,7 @@ class MemoryProviderRepository
 
   Provider[] findActive(TenantId tenantId) {
     Provider[] results;
-    foreach (item; find(tenantId)) {
+    foreach (item; findByTenant(tenantId)) {
       if (item.status == ProviderStatus.active) results ~= item;
     }
     return results;
@@ -32,7 +32,7 @@ class MemoryProviderRepository
 
   Provider[] findByStatus(TenantId tenantId, ProviderStatus status) {
     Provider[] results;
-    foreach (item; find(tenantId)) {
+    foreach (item; findByTenant(tenantId)) {
       if (item.status == status) results ~= item;
     }
     return results;

@@ -19,11 +19,11 @@ class ManageIdentityProvidersUseCase {
     }
 
     IdentityProvider getIdentityProvider(TenantId tenantId, IdentityProviderId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     IdentityProvider[] listIdentityProviders(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     IdentityProvider[] listActive(TenantId tenantId) {
@@ -74,7 +74,7 @@ class ManageIdentityProvidersUseCase {
     }
 
     CommandResult deleteIdentityProvider(TenantId tenantId, IdentityProviderId id) {
-        auto existing = repo.find(tenantId, id);
+        auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Identity provider not found");
 

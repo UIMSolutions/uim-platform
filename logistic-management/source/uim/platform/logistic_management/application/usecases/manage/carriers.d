@@ -50,7 +50,7 @@ public:
   }
 
   CommandResult updateCarrier(TenantId tenantId, CarrierId id, UpdateCarrierRequest req) {
-    auto c = _repo.find(tenantId, id);
+    auto c = _repo.findById(tenantId, id);
     if (c.isNull)
       return CommandResult(false, "Carrier not found");
 
@@ -92,7 +92,7 @@ public:
   }
 
   CommandResult deleteCarrier(TenantId tenantId, CarrierId id) {
-    auto c = _repo.find(tenantId, id);
+    auto c = _repo.findById(tenantId, id);
     if (c.isNull)
       return CommandResult(false, "Carrier not found");
     _repo.remove(tenantId, id);
@@ -100,7 +100,7 @@ public:
   }
 
   Carrier getCarrier(TenantId tenantId, CarrierId id) {
-    return _repo.find(tenantId, id);
+    return _repo.findById(tenantId, id);
   }
 
   Carrier[] listCarriers(TenantId tenantId) {

@@ -18,11 +18,11 @@ import uim.platform.monitoring;
 class MemoryMetricRepository : TenantRepository!(Metric, MetricId), MetricRepository {
 
   bool existsByName(TenantId tenantId, string metricName) {
-    return find(tenantId).any!(m => m.name == metricName);
+    return findByTenant(tenantId).any!(m => m.name == metricName);
   }
 
   Metric findByName(TenantId tenantId, string metricName) {
-    foreach (metric; find(tenantId)) {
+    foreach (metric; findByTenant(tenantId)) {
       if (metric.name == metricName)
         return metric;
     }
@@ -42,7 +42,7 @@ class MemoryMetricRepository : TenantRepository!(Metric, MetricId), MetricReposi
   }
 
   Metric[] findByResource(TenantId tenantId, MonitoredResourceId resourceId) {
-    return filterByResource(find(tenantId), resourceId);
+    return filterByResource(findByTenant(tenantId), resourceId);
   }
 
   void removeByResource(TenantId tenantId, MonitoredResourceId resourceId) {
@@ -58,7 +58,7 @@ class MemoryMetricRepository : TenantRepository!(Metric, MetricId), MetricReposi
   }
 
   Metric[] findByResourceAndName(TenantId tenantId, MonitoredResourceId resourceId, string metricName) {
-    return filterByResourceAndName(find(tenantId), resourceId, metricName);
+    return filterByResourceAndName(findByTenant(tenantId), resourceId, metricName);
   }
 
   void removeByResourceAndName(TenantId tenantId, MonitoredResourceId resourceId, string metricName) {
@@ -88,7 +88,7 @@ class MemoryMetricRepository : TenantRepository!(Metric, MetricId), MetricReposi
     if (!existsByTenant(tenantId))
       return;
 
-    find(tenantId).filter!(m => m.timestamp < beforeTimestamp)
+    findByTenant(tenantId).filter!(m => m.timestamp < beforeTimestamp)
       .each!(metric => remove(metric));
   }
 }

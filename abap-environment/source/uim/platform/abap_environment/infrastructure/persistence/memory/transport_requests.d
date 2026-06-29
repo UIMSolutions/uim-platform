@@ -25,7 +25,7 @@ class MemoryTransportRequestRepository : TenantRepository!(TransportRequest, Tra
   }
 
   TransportRequest[] findBySystem(TenantId tenantId, SystemInstanceId systemId) {
-    return filterBySystem(find(tenantId), systemId);
+    return filterBySystem(findByTenant(tenantId), systemId);
   }
 
   void removeBySystem(TenantId tenantId, SystemInstanceId systemId) {
@@ -43,7 +43,7 @@ TransportRequest[] filterByStatus(  TransportRequest[] requests, TransportStatus
   }
 
   TransportRequest[] findByStatus(TenantId tenantId, SystemInstanceId systemId, TransportStatus status) {
-    return filterByStatus(filterBySystem(find(tenantId), systemId), status);
+    return filterByStatus(filterBySystem(findByTenant(tenantId), systemId), status);
   }
 
   void removeByStatus(TenantId tenantId, SystemInstanceId systemId, TransportStatus status) {

@@ -76,7 +76,7 @@ class FileQueueRepository : MemoryQueueRepository {
         auto fp = filePath(tenantId);
         mkdirRecurse(dirName(fp));
         Json arr = Json.emptyArray;
-        foreach (item; super.find(tenantId))
+        foreach (item; super.findByTenant(tenantId))
             arr ~= item.toJson();
         write(fp, arr.toString());
     }
@@ -88,7 +88,7 @@ class FileQueueRepository : MemoryQueueRepository {
 
     override Queue findById(TenantId tenantId, QueueId id) {
         ensureLoaded(tenantId);
-        return super.find(tenantId, id);
+        return super.findById(tenantId, id);
     }
 
     override void save(Queue item) {

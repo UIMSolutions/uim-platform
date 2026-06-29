@@ -46,7 +46,7 @@ class ManageAppFilesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult update(AppFileId id, UpdateAppFileRequest r) {
-        auto file = repo.find(tenantId, id);
+        auto file = repo.findById(tenantId, id);
         if (file.isNull)
             return CommandResult(false, "", "File not found");
 
@@ -64,20 +64,20 @@ class ManageAppFilesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, file.id.value, "");
     }
 
-    AppFile getById(AppFileId id) {
-        return repo.find(tenantId, id);
+    AppFile getFile(TenantId tenantId, AppFileId id) {
+        return repo.findById(tenantId, id);
     }
 
-    AppFile getByPath(AppVersionId versionId, string filePath) {
-        return repo.findByPath(versionId, filePath);
+    AppFile getFile(TenantId tenantId, AppVersionId versionId, string filePath) {
+        return repo.findByPath(tenantId, versionId, filePath);
     }
 
-    AppFile[] listByVersion(AppVersionId versionId) {
-        return repo.findByVersion(versionId);
+    AppFile[] listByVersion(TenantId tenantId, AppVersionId versionId) {
+        return repo.findByVersion(tenantId, versionId);
     }
 
-    CommandResult delete(AppFileId id) {
-        auto file = repo.find(tenantId, id);
+    CommandResult deleteFile(TenantId tenantId, AppFileId id) {
+        auto file = repo.findById(tenantId, id);
         if (file.isNull)
             return CommandResult(false, "", "File not found");
 
@@ -85,12 +85,12 @@ class ManageAppFilesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, file.id.value, "");
     }
 
-    size_t countByVersion(AppVersionId versionId) {
-        return repo.countByVersion(versionId);
+    size_t countFiles(TenantId tenantId, AppVersionId versionId) {
+        return repo.countByVersion(tenantId, versionId);
     }
 
-    long totalSizeByVersion(AppVersionId versionId) {
-        return repo.totalSizeByVersion(versionId);
+    long totalSizeByVersion(TenantId tenantId, AppVersionId versionId) {
+        return repo.totalSizeByVersion(tenantId, versionId);
     }
 
     private static FileCategory categorizeFile(string filePath) {

@@ -25,17 +25,17 @@ class MemoryPageRepository : PageRepository {
   }
 
   bool existsByAlias(SiteId siteId, string alias_) {
-    return find(tenantId)p => p.siteId == siteId && p.alias_ == alias_);
+    return findByTenant(tenantId)p => p.siteId == siteId && p.alias_ == alias_);
   }
 
   Page findByAlias(SiteId siteId, string alias_) {
-    return find(tenantId).filter!(p => p.siteId == siteId && p.alias_ == alias_).array;
+    return findByTenant(tenantId).filter!(p => p.siteId == siteId && p.alias_ == alias_).array;
   }
 
   Page[] findBySite(SiteId siteId, size_t offset = 0, size_t limit = 100) {
     Page[] result;
     size_t idx;
-    foreach (p; find(tenantId)
+    foreach (p; findByTenant(tenantId)) {
       if (p.siteId == siteId) {
         if (idx >= offset && result.length < limit)
           result ~= p;

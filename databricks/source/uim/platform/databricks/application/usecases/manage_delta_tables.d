@@ -40,11 +40,11 @@ public:
   }
 
   UseCaseResult!(DeltaTable[]) list(TenantId tenantId) {
-    return UseCaseResult!(DeltaTable[])(true, "", _repo.find(tenantId));
+    return UseCaseResult!(DeltaTable[])(true, "", _repo.findByTenant(tenantId));
   }
 
   UseCaseResult!DeltaTable get(TenantId tenantId, DeltaTableId id) {
-    auto t = _repo.find(tenantId, id);
+    auto t = _repo.findById(tenantId, id);
     if (t.isNull)
       return UseCaseResult!DeltaTable(false, "Delta table not found", DeltaTable.init);
     return UseCaseResult!DeltaTable(true, "", t);
@@ -63,7 +63,7 @@ public:
   }
 
   UseCaseResult!bool remove(TenantId tenantId, DeltaTableId id) {
-    auto t = _repo.find(tenantId, id);
+    auto t = _repo.findById(tenantId, id);
     if (t.isNull)
       return UseCaseResult!bool(false, "Delta table not found", false);
     t.status = TableStatus.deleted;

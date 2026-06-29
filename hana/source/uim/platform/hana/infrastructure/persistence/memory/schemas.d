@@ -24,7 +24,7 @@ class MemorySchemaRepository : TenantRepository!(Schema, SchemaId), SchemaReposi
     return schemas.filter!(s => s.instanceId == instanceId).array;
   }
   Schema[] findByInstance(DatabaseInstanceId instanceId) {
-    return filterByInstance(find(tenantId), instanceId);
+    return filterByInstance(findByTenant(tenantId), instanceId);
   }
   void removeByInstance(DatabaseInstanceId instanceId) {
     findByInstance(instanceId).each!(entity => remove(entity));

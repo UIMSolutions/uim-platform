@@ -25,7 +25,7 @@ class MemoryExportJobRepository : TenantRepository!(ExportJob, ExportJobId), Exp
     return jobs.filter!(e => e.requestedBy == requestedBy).array;
   }
   ExportJob[] findByRequestedBy(TenantId tenantId, UserId requestedBy) {
-    return filterByRequestedBy(find(tenantId), requestedBy);
+    return filterByRequestedBy(findByTenant(tenantId), requestedBy);
   }
   void removeByRequestedBy(TenantId tenantId, UserId requestedBy) {
     findByRequestedBy(tenantId, requestedBy).each!(e => remove(e));
@@ -39,7 +39,7 @@ class MemoryExportJobRepository : TenantRepository!(ExportJob, ExportJobId), Exp
     return logs.filter!(e => e.format_ == format).array;
   }
   ExportJob[] findByFormat(TenantId tenantId, ExportFormat format) {
-    return filterByFormat(find(tenantId), format);
+    return filterByFormat(findByTenant(tenantId), format);
   }
   void removeByFormat(TenantId tenantId, ExportFormat format) {
     findByFormat(tenantId, format).each!(e => remove(e));
@@ -52,7 +52,7 @@ class MemoryExportJobRepository : TenantRepository!(ExportJob, ExportJobId), Exp
     return logs.filter!(e => e.status == status).array;
   }
   ExportJob[] findByStatus(TenantId tenantId, ExportStatus status) {
-    return filterByStatus(find(tenantId), status);
+    return filterByStatus(findByTenant(tenantId), status);
   }
   void removeByStatus(TenantId tenantId, ExportStatus status) {
     findByStatus(tenantId, status).each!(e => remove(e));

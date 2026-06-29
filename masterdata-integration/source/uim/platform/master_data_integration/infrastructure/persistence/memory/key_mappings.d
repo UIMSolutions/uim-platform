@@ -22,7 +22,7 @@ class MemoryKeyMappingRepository : TenantRepository!(KeyMapping, KeyMappingId), 
   }
 
   KeyMapping findByClientKey(TenantId tenantId, ClientId clientId, string localKey) {
-    foreach (mapping; find(tenantId)) {
+    foreach (mapping; findByTenant(tenantId)) {
       foreach (entry; mapping.entries) {
         if (entry.clientId == clientId && entry.localKey == localKey)
           return mapping;
@@ -42,7 +42,7 @@ class MemoryKeyMappingRepository : TenantRepository!(KeyMapping, KeyMappingId), 
     return mappings.filter!(e => e.masterDataObjectId == objectId).array;
   }
   KeyMapping[] findByObject(TenantId tenantId, MasterDataObjectId objectId) {
-    return filterByObject(find(tenantId), objectId);
+    return filterByObject(findByTenant(tenantId), objectId);
   }
   void removeByObject(TenantId tenantId, MasterDataObjectId objectId) {
     findByObject(tenantId, objectId).each!(entity => remove(entity));
@@ -57,7 +57,7 @@ class MemoryKeyMappingRepository : TenantRepository!(KeyMapping, KeyMappingId), 
   }
 
   KeyMapping[] findByCategory(TenantId tenantId, MasterDataCategory category) {
-    return filterByCategory(find(tenantId), category);
+    return filterByCategory(findByTenant(tenantId), category);
   }
   void removeByCategory(TenantId tenantId, MasterDataCategory category) {
     findByCategory(tenantId, category).each!(entity => remove(entity));

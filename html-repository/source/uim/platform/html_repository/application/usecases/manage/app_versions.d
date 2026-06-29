@@ -40,7 +40,7 @@ class ManageAppVersionsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateAppVersion(TenantId tenantId, AppVersionId id, UpdateAppVersionRequest r) {
-        auto ver = repo.find(tenantId, id);
+        auto ver = repo.findById(tenantId, id);
         if (ver.isNull)
             return CommandResult(false, "", "Version not found");
 
@@ -54,7 +54,7 @@ class ManageAppVersionsUseCase { // TODO: UIMUseCase {
     }
 
     AppVersion getAppVersionById(TenantId tenantId, AppVersionId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     AppVersion getLatestAppVersion(TenantId tenantId, HtmlAppId appId) {
@@ -66,7 +66,7 @@ class ManageAppVersionsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteAppVersion(TenantId tenantId, AppVersionId id) {
-        auto entity = repo.find(tenantId, id);
+        auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Version not found");
 

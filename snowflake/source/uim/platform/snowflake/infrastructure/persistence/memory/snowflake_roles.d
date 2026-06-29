@@ -8,14 +8,14 @@ class MemorySnowflakeRoleRepository
 
   SnowflakeRole[] findByAccount(TenantId tenantId, SnowflakeAccountId accountId) {
     SnowflakeRole[] result;
-    foreach (item; find(tenantId))
+    foreach (item; findByTenant(tenantId))
       if (item.accountId.value == accountId.value) result ~= item;
     return result;
   }
 
   SnowflakeRole[] findActive(TenantId tenantId) {
     SnowflakeRole[] result;
-    foreach (item; find(tenantId))
+    foreach (item; findByTenant(tenantId))
       if (item.active) result ~= item;
     return result;
   }

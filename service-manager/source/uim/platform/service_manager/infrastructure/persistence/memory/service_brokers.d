@@ -17,7 +17,7 @@ class MemoryServiceBrokerRepository : TenantRepository!(ServiceBroker, ServiceBr
     }
 
     ServiceBroker[] findByStatus(TenantId tenantId, ServiceBrokerStatus status) {
-        return filterByStatus(find(tenantId), status);
+        return filterByStatus(findByTenant(tenantId), status);
     }
 
     void removeByStatus(TenantId tenantId, ServiceBrokerStatus status) {

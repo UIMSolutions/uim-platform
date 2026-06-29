@@ -48,7 +48,7 @@ class ManageSharesUseCase { // TODO: UIMUseCase {
   }
 
   Share[] listShares(TenantId tenantId) {
-    return shares.find(tenantId);
+    return shares.findByTenant(tenantId);
   }
 
   Share[] listByDocument(TenantId tenantId, DocumentId documentId) {
@@ -56,7 +56,7 @@ class ManageSharesUseCase { // TODO: UIMUseCase {
   }
 
   Share getShare(TenantId tenantId, ShareId id) {
-    return shares.find(tenantId, id);
+    return shares.findById(tenantId, id);
   }
 
   CommandResult revokeShare(TenantId tenantId, ShareId shareId) {

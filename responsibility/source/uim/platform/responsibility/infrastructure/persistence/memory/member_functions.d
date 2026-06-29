@@ -16,11 +16,11 @@ class MemoryMemberFunctionRepository
       MemberFunctionRepository {
 
     MemberFunction[] findByStatus(TenantId tenantId, FunctionStatus status) {
-        return find(tenantId).filter!(f => f.status == status).array;
+        return findByTenant(tenantId).filter!(f => f.status == status).array;
     }
 
     MemberFunction findByCode(TenantId tenantId, string code) {
-        auto items = find(tenantId).filter!(f => f.code == code).array;
+        auto items = findByTenant(tenantId).filter!(f => f.code == code).array;
         return items.length > 0 ? items[0] : MemberFunction.init;
     }
 }

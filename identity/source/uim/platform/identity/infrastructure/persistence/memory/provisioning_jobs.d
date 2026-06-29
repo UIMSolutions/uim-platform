@@ -13,14 +13,14 @@ import uim.platform.identity;
 
 class MemoryProvisioningJobRepository : TenantRepository!(ProvisioningJob, ProvisioningJobId), ProvisioningJobRepository {
     ProvisioningJob[] findByStatus(TenantId tenantId, JobStatus status) {
-        return find(tenantId).filter!(j => j.status == status).array;
+        return findByTenant(tenantId).filter!(j => j.status == status).array;
     }
 
     ProvisioningJob[] findByType(TenantId tenantId, JobType type_) {
-        return find(tenantId).filter!(j => j.type_ == type_).array;
+        return findByTenant(tenantId).filter!(j => j.type_ == type_).array;
     }
 
     ProvisioningJob[] findByTargetSystem(TenantId tenantId, string targetSystem) {
-        return find(tenantId).filter!(j => j.targetSystem == targetSystem).array;
+        return findByTenant(tenantId).filter!(j => j.targetSystem == targetSystem).array;
     }
 }

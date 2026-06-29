@@ -19,11 +19,11 @@ class ManagePrintTasksUseCase {
     }
 
     PrintTask getPrintTask(TenantId tenantId, PrintTaskId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     PrintTask[] listPrintTasks(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     PrintTask[] listByQueue(TenantId tenantId, PrintQueueId queueId) {
@@ -57,7 +57,7 @@ class ManagePrintTasksUseCase {
     }
 
     CommandResult updatePrintTask(TenantId tenantId, PrintTaskId id, string status, string errorMessage) {
-        auto existing = repo.find(tenantId, id);
+        auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Print task not found");
 
@@ -72,7 +72,7 @@ class ManagePrintTasksUseCase {
     }
 
     CommandResult deletePrintTask(TenantId tenantId, PrintTaskId id) {
-        auto entity = repo.find(tenantId, id);
+        auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Print task not found");
         repo.remove(entity);

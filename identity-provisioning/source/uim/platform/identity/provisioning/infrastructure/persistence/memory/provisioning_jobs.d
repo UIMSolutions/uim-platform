@@ -22,7 +22,7 @@ class MemoryProvisioningJobRepository : TenantRepository!(ProvisioningJob, Provi
     return jobs.filter!(e => e.sourceSystemId == sourceId).array;
   }
   ProvisioningJob[] findBySource(TenantId tenantId, SourceSystemId sourceId) {
-    return filterBySource(findVyTenant(tenantId), sourceId)
+    return filterBySource(findByTenant(tenantId), sourceId);
   }
   void removeBySource(TenantId tenantId, SourceSystemId sourceId) {
     findBySource(tenantId, sourceId).each!(e => remove(e));
@@ -35,7 +35,7 @@ class MemoryProvisioningJobRepository : TenantRepository!(ProvisioningJob, Provi
     return jobs.filter!(e => e.targetSystemId == targetId).array;
   }
   ProvisioningJob[] findByTarget(TenantId tenantId, TargetSystemId targetId) {
-    return filterByTarget(find(tenantId), targetId);
+    return filterByTarget(findByTenant(tenantId), targetId);
   }
   void removeByTarget(TenantId tenantId, TargetSystemId targetId) {
     findByTarget(tenantId, targetId).each!(e => remove(e));
@@ -48,7 +48,7 @@ class MemoryProvisioningJobRepository : TenantRepository!(ProvisioningJob, Provi
     return jobs.filter!(e => e.status == status).array;
   }
   ProvisioningJob[] findByStatus(TenantId tenantId, JobStatus status) {
-    return filterByStatus(find(tenantId), status);
+    return filterByStatus(findByTenant(tenantId), status);
   }
   void removeByStatus(TenantId tenantId, JobStatus status) {
     findByStatus(tenantId, status).each!(e => remove(e));

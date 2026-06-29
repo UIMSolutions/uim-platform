@@ -27,11 +27,11 @@ class ManageAlertsUseCase { // TODO: UIMUseCase {
   }
 
   Alert getAlert(TenantId tenantId, AlertId id) {
-    return repo.find(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 
   Alert[] listAlerts(TenantId tenantId) {
-    return repo.find(tenantId);
+    return repo.findByTenant(tenantId);
   }
 
   Alert[] listByState(TenantId tenantId, AlertState state) {
@@ -79,7 +79,7 @@ class ManageAlertsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteAlert(TenantId tenantId, AlertId id) {
-    auto alert = repo.find(tenantId, id);
+    auto alert = repo.findById(tenantId, id);
     if (alert.isNull)
       return CommandResult(false, "", "Alert not found");
 

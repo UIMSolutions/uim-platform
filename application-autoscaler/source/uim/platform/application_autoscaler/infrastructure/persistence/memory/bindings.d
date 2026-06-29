@@ -17,7 +17,7 @@ class MemoryAppBindingRepository : TenantRepository!(AppBinding, AppBindingId), 
   }
 
   AppBinding findByAppGuid(TenantId tenantId, string appGuid) {
-    foreach (b; find(tenantId))
+    foreach (b; findByTenant(tenantId))
       if (b.appGuid == appGuid) return b;
     return AppBinding.init;
   }

@@ -27,7 +27,7 @@ class MemoryServiceBindingRepository : TenantRepository!(ServiceBinding, Service
   }
 
   ServiceBinding[] findByApp(TenantId tenantId, AppId appId) {
-    return filterByApp(find(tenantId), appId);
+    return filterByApp(findByTenant(tenantId), appId);
   }
 
   void removeByApp(TenantId tenantId, AppId appId) {
@@ -43,7 +43,7 @@ class MemoryServiceBindingRepository : TenantRepository!(ServiceBinding, Service
   }
 
   ServiceBinding[] findByServiceInstance(TenantId tenantId, ServiceInstanceId instanceId) {
-    return filterByServiceInstance(find(tenantId), instanceId);
+    return filterByServiceInstance(findByTenant(tenantId), instanceId);
   }
 
   void removeByServiceInstance(TenantId tenantId, ServiceInstanceId instanceId) {

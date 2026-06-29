@@ -22,7 +22,7 @@ class MemoryWorkpageRepository : TenantRepository!(Workpage, WorkpageId), Workpa
   }
 
   Workpage[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
-    return find(tenantId).filter!(p => p.workspaceId == workspaceId).array;
+    return findByTenant(tenantId).filter!(p => p.workspaceId == workspaceId).array;
   }
 
   void removeByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {

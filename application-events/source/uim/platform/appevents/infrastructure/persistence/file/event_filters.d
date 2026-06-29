@@ -33,7 +33,7 @@ class FileEventFilterRepository
     private void persistTenant(TenantId tenantId) @trusted {
         auto fp = filePath(tenantId);
         mkdirRecurse(dirName(fp));
-        auto items = find(tenantId);
+        auto items = findByTenant(tenantId);
         Json arr = Json.emptyArray;
         foreach (item; items) arr ~= item.toJson();
         write(fp, arr.toString());

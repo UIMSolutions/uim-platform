@@ -55,7 +55,7 @@ class ManageDataRecordsUseCase { // TODO: UIMUseCase {
   }
 
   DataRecord getDataRecord(TenantId tenantId, DataRecordId id) {
-    return repo.find(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 
   DataRecord[] listDataRecords(TenantId tenantId, DatasetId datasetId) {
@@ -63,7 +63,7 @@ class ManageDataRecordsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult validateDataRecord(TenantId tenantId, DataRecordId id) {
-    auto record = repo.find(tenantId, id);
+    auto record = repo.findById(tenantId, id);
     if (record.isNull)
       return CommandResult(false, "", "Record not found");
 
@@ -73,7 +73,7 @@ class ManageDataRecordsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult rejectDataRecord(TenantId tenantId, DataRecordId id) {
-    auto record = repo.find(tenantId, id);
+    auto record = repo.findById(tenantId, id);
     if (record.isNull)
       return CommandResult(false, "", "Record not found");
 
@@ -83,7 +83,7 @@ class ManageDataRecordsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteDataRecord(TenantId tenantId, DataRecordId id) {
-    auto existing = repo.find(tenantId, id);
+    auto existing = repo.findById(tenantId, id);
     if (existing.isNull)
       return CommandResult(false, "", "Record not found");
 

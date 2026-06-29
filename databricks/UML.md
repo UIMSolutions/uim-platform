@@ -169,7 +169,7 @@ sequenceDiagram
   Client->>MlModelController: PUT /api/v1/databricks/models/{id}
   Note right of Client: body: {"latestStage": "production"}
   MlModelController->>ManageMlModelsUseCase: update(UpdateMlModelRequest)
-  ManageMlModelsUseCase->>MemoryMlModelRepository: find(tenantId, id)
+  ManageMlModelsUseCase->>MemoryMlModelRepository: findById(tenantId, id)
   MemoryMlModelRepository-->>ManageMlModelsUseCase: MlModel
   ManageMlModelsUseCase->>MemoryMlModelRepository: save(updated)
   MemoryMlModelRepository-->>ManageMlModelsUseCase: MlModel

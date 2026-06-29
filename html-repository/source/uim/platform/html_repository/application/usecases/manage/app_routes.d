@@ -50,7 +50,7 @@ class ManageAppRoutesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateAppRoute(AppRouteId id, UpdateAppRouteRequest request) {
-        auto route = repo.find(tenantId, id);
+        auto route = repo.findById(tenantId, id);
         if (route.isNull)
             return CommandResult(false, "", "Route not found");
 
@@ -68,7 +68,7 @@ class ManageAppRoutesUseCase { // TODO: UIMUseCase {
     }
 
     AppRoute getAppRoute(AppRouteId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     AppRoute[] listAppRoutes(HtmlAppId appId) {
@@ -76,11 +76,11 @@ class ManageAppRoutesUseCase { // TODO: UIMUseCase {
     }
 
     AppRoute[] listAppRoutes(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     CommandResult deleteAppRoute(AppRouteId id) {
-        auto route = repo.find(tenantId, id);
+        auto route = repo.findById(tenantId, id);
         if (route.isNull)          
             return CommandResult(false, "", "Route not found");
 

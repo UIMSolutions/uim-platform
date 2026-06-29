@@ -14,17 +14,17 @@ import uim.platform.personal_data;
 class MemoryRegisteredApplicationRepository : TenantRepository!(RegisteredApplication, RegisteredApplicationId), RegisteredApplicationRepository {
 
     bool existsByName(TenantId tenantId, string name) {
-        return find(tenantId).any!(v => v.name == name);
+        return findByTenant(tenantId).any!(v => v.name == name);
     }
 
     RegisteredApplication findByName(TenantId tenantId, string name) {
-        foreach (v; find(tenantId))
+        foreach (v; findByTenant(tenantId))
             if (v.name == name)
                 return v;
         return RegisteredApplication.init;
     }
     void removeByName(TenantId tenantId, string name) {
-        foreach (v; find(tenantId))
+        foreach (v; findByTenant(tenantId))
             if (v.name == name) {
                 store.remove(v.id);
                 return;
@@ -32,7 +32,7 @@ class MemoryRegisteredApplicationRepository : TenantRepository!(RegisteredApplic
     }
 
     size_t countByStatus(TenantId tenantId, ApplicationStatus status) {
-        return find(tenantId).count!(v => v.status == status);
+        return findByTenant(tenantId).count!(v => v.status == status);
     }
 
     RegisteredApplication[] filterByStatus(RegisteredApplication[] applications, ApplicationStatus status) {
@@ -40,7 +40,7 @@ class MemoryRegisteredApplicationRepository : TenantRepository!(RegisteredApplic
     }
 
     RegisteredApplication[] findByStatus(TenantId tenantId, ApplicationStatus status) {
-        return filterByStatus(find(tenantId), status);
+        return filterByStatus(findByTenant(tenantId), status);
     }
 
     void removeByStatus(TenantId tenantId, ApplicationStatus status) {

@@ -18,7 +18,7 @@ class MemoryDevSpaceRepository : TenantRepository!(DevSpace, DevSpaceId), DevSpa
     }
 
     DevSpace[] findByOwner(TenantId tenantId, string owner) {
-        return find(tenantId).filter!(e => e.owner == owner).array;
+        return findByTenant(tenantId).filter!(e => e.owner == owner).array;
     }
 
     void removeByOwner(TenantId tenantId, string owner) {
@@ -30,7 +30,7 @@ class MemoryDevSpaceRepository : TenantRepository!(DevSpace, DevSpaceId), DevSpa
     }
 
     DevSpace[] findByStatus(TenantId tenantId, DevSpaceStatus status) {
-        return find(tenantId).filter!(e => e.status == status).array;
+        return findByTenant(tenantId).filter!(e => e.status == status).array;
     }
 
     void removeByStatus(TenantId tenantId, DevSpaceStatus status) {

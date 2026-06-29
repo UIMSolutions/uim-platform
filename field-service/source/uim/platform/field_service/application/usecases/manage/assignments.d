@@ -19,11 +19,11 @@ class ManageAssignmentsUseCase { // TODO: UIMUseCase {
     }
 
     Assignment getAssignment(TenantId tenantId, AssignmentId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     Assignment[] listAssignments(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     Assignment[] listAssignments(TenantId tenantId, ActivityId activityId) {
@@ -66,7 +66,7 @@ class ManageAssignmentsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteAssignment(TenantId tenantId, AssignmentId id) {
-        auto assignment = repo.find(tenantId, id);
+        auto assignment = repo.findById(tenantId, id);
         if (assignment.isNull)
             return CommandResult(false, "", "Assignment not found");
 

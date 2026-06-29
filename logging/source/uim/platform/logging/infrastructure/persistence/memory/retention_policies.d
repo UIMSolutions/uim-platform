@@ -16,10 +16,10 @@ import uim.platform.logging;
 class MemoryRetentionPolicyRepository : TenantRepository!(RetentionPolicy, RetentionPolicyId), RetentionPolicyRepository {
 
   bool existsDefault(TenantId tenantId) {
-    return find(tenantId).any!(p => p.isDefault);
+    return findByTenant(tenantId).any!(p => p.isDefault);
   }
   RetentionPolicy findDefault(TenantId tenantId) {
-    foreach (p; find(tenantId))
+    foreach (p; findByTenant(tenantId))
       if (p.isDefault)
         return p;
     return RetentionPolicy.init;
@@ -35,7 +35,7 @@ class MemoryRetentionPolicyRepository : TenantRepository!(RetentionPolicy, Reten
     return policies.filter!(p => p.dataType == dt || p.dataType == DataType.all).array;
   }
   RetentionPolicy[] findByDataType(TenantId tenantId, DataType dt) {
-    return filterByDataType(find(tenantId), dt);
+    return filterByDataType(findByTenant(tenantId), dt);
   }
   void removeByDataType(TenantId tenantId, DataType dt) {
     findByDataType(tenantId, dt).each!(entity => remove(entity));

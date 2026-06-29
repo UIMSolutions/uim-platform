@@ -19,11 +19,11 @@ class ManageTransportRequestsUseCase {
     }
 
     TransportRequest getRequest(TenantId tenantId, TransportRequestId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     TransportRequest[] listRequests(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     TransportRequest[] listRequestsByStatus(TenantId tenantId, RequestStatus status) {
@@ -61,7 +61,7 @@ class ManageTransportRequestsUseCase {
     }
 
     CommandResult updateRequestStatus(TenantId tenantId, TransportRequestId id, RequestStatus status) {
-        auto existing = repo.find(tenantId, id);
+        auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Transport request not found");
         existing.status = status;
@@ -70,7 +70,7 @@ class ManageTransportRequestsUseCase {
     }
 
     CommandResult deleteRequest(TenantId tenantId, TransportRequestId id) {
-        auto existing = repo.find(tenantId, id);
+        auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Transport request not found");
         repo.remove(existing);

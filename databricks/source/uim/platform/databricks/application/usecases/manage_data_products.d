@@ -39,11 +39,11 @@ public:
   }
 
   UseCaseResult!(DataProduct[]) list(TenantId tenantId) {
-    return UseCaseResult!(DataProduct[])(true, "", _repo.find(tenantId));
+    return UseCaseResult!(DataProduct[])(true, "", _repo.findByTenant(tenantId));
   }
 
   UseCaseResult!DataProduct get(TenantId tenantId, DataProductId id) {
-    auto dp = _repo.find(tenantId, id);
+    auto dp = _repo.findById(tenantId, id);
     if (dp.isNull)
       return UseCaseResult!DataProduct(false, "Data product not found", DataProduct.init);
     return UseCaseResult!DataProduct(true, "", dp);
@@ -64,7 +64,7 @@ public:
   }
 
   UseCaseResult!bool remove(TenantId tenantId, DataProductId id) {
-    auto dp = _repo.find(tenantId, id);
+    auto dp = _repo.findById(tenantId, id);
     if (dp.isNull)
       return UseCaseResult!bool(false, "Data product not found", false);
     dp.status = DataProductStatus.unavailable;

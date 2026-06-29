@@ -19,24 +19,24 @@ import uim.platform.logging;
 class MemorySpanRepository : TenantRepository!(Span, SpanId), SpanRepository {
 
   Span[] findByTrace(TenantId tenantId, TraceId traceId) {
-    return find(tenantId).filter!(s => s.traceId == traceId).array;
+    return findByTenant(tenantId).filter!(s => s.traceId == traceId).array;
   }
 
   Span[] findByService(TenantId tenantId, string serviceName) {
-    return find(tenantId).filter!(s => s.serviceName == serviceName).array;
+    return findByTenant(tenantId).filter!(s => s.serviceName == serviceName).array;
   }
 
   Span[] findByTimeRange(TenantId tenantId, long startTime, long endTime) {
-    return find(tenantId).filter!(s => s.startTime >= startTime && s.startTime <= endTime).array;
+    return findByTenant(tenantId).filter!(s => s.startTime >= startTime && s.startTime <= endTime).array;
   }
 
   Span[] findByOperation(TenantId tenantId, string serviceName, string operationName) {
-    return find(tenantId).filter!(
+    return findByTenant(tenantId).filter!(
         s => s.serviceName == serviceName && s.operationName == operationName).array;
   }
 
   void removeOlderThan(TenantId tenantId, long beforeTimestamp) {
-    find(tenantId).filter!(s => s.startTime >= beforeTimestamp).each!(s => remove(s));
+    findByTenant(tenantId).filter!(s => s.startTime >= beforeTimestamp).each!(s => remove(s));
   }
 
 }

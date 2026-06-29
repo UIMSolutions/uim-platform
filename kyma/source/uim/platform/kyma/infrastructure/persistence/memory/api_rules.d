@@ -15,18 +15,9 @@ import uim.platform.kyma;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryApiRuleRepository : ApiRuleRepository {
-  private ApiRule[ApiRuleId] store;
+class MemoryApiRuleRepository : TenantRepository!(ApiRule, ApiRuleId), ApiRuleRepository {
 
-  bool existsById(ApiRuleId id) {
-    return (id in store) ? true : false;
-  }
 
-  ApiRule findById(ApiRuleId id) {
-    if (existsById(id))
-      return store[id];
-    return ApiRule.init;
-  }
 
   bool existsByName(NamespaceId nsId, string name) {
     return findByNamespace(nsId).any!(e => e.name == name);
@@ -40,15 +31,15 @@ class MemoryApiRuleRepository : ApiRuleRepository {
   }
 
   ApiRule[] findByNamespace(NamespaceId nsId) {
-    return find(tenantId).filter!(e => e.namespaceId == nsId).array;
+    return findByTenant(tenantId).filter!(e => e.namespaceId == nsId).array;
   }
 
   ApiRule[] findByEnvironment(KymaEnvironmentId envId) {
-    return find(tenantId).filter!(e => e.environmentId == envId).array;
+    return findByTenant(tenantId).filter!(e => e.environmentId == envId).array;
   }
 
   ApiRule[] findByStatus(ApiRuleStatus status) {
-    return find(tenantId).filter!(e => e.status == status).array;
+    return findByTenant(tenantId).filter!(e => e.status == status).array;
   }
 
   void save(ApiRule rule) {

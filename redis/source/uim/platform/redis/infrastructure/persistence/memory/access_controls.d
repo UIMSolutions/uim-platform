@@ -18,14 +18,14 @@ class MemoryAccessControlRepository
     , AccessControlRepository
 {
     override AccessControl[] findByInstance(TenantId tenantId, ServiceInstanceId instanceId) {
-        return find(tenantId).filter!(e => e.instanceId == instanceId).array;
+        return findByTenant(tenantId).filter!(e => e.instanceId == instanceId).array;
     }
 
     override AccessControl[] findByStatus(TenantId tenantId, AccessControlStatus status) {
-        return find(tenantId).filter!(e => e.status == status).array;
+        return findByTenant(tenantId).filter!(e => e.status == status).array;
     }
 
     override bool cidrExists(TenantId tenantId, ServiceInstanceId instanceId, string cidr) {
-        return find(tenantId).any!(e => e.instanceId == instanceId && e.cidr == cidr);
+        return findByTenant(tenantId).any!(e => e.instanceId == instanceId && e.cidr == cidr);
     }
 }

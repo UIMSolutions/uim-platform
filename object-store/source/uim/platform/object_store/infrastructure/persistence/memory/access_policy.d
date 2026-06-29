@@ -25,7 +25,7 @@ class MemoryAccessPolicyRepository : TenantRepository!(AccessPolicy, AccessPolic
   }
 
   AccessPolicy[] findByBucket(TenantId tenantId, BucketId bucketId) {
-    return filterByBucket(find(tenantId), bucketId);
+    return filterByBucket(findByTenant(tenantId), bucketId);
   }
 
   void removeByBucket(TenantId tenantId, BucketId bucketId) {

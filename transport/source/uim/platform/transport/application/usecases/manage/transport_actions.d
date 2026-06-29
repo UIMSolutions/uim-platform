@@ -19,11 +19,11 @@ class ManageTransportActionsUseCase {
     }
 
     TransportAction getAction(TenantId tenantId, TransportActionId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     TransportAction[] listActions(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     TransportAction[] listActionsByNode(TenantId tenantId, TransportNodeId nodeId) {
@@ -60,7 +60,7 @@ class ManageTransportActionsUseCase {
     }
 
     CommandResult updateActionStatus(TenantId tenantId, TransportActionId id, ActionStatus status, string errorMessage = "") {
-        auto existing = repo.find(tenantId, id);
+        auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Transport action not found");
         existing.actionStatus = status;

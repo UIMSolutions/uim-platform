@@ -22,7 +22,7 @@ class MemoryScheduledExecutionRepository : TenantRepository!(ScheduledExecution,
     }
 
     ScheduledExecution[] findByCommand(TenantId tenantId, CommandId commandId) {
-        return filterByCommand(find(tenantId), commandId);
+        return filterByCommand(findByTenant(tenantId), commandId);
     }
 
     void removeByCommand(TenantId tenantId, CommandId commandId) {
@@ -38,7 +38,7 @@ class MemoryScheduledExecutionRepository : TenantRepository!(ScheduledExecution,
     }
 
     ScheduledExecution[] findByStatus(TenantId tenantId, ScheduleStatus status) {
-        return filterByStatus(find(tenantId), status);
+        return filterByStatus(findByTenant(tenantId), status);
     }
 
     void removeByStatus(TenantId tenantId, ScheduleStatus status) {

@@ -46,7 +46,7 @@ class ManageNavigationItemsUseCase { // TODO: UIMUseCase {
   }
 
   NavigationItem getNavigationItem(TenantId tenantId, NavigationItemId id) {
-    return repo.find(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 
   NavigationItem[] listNavigationItems(TenantId tenantId, SiteId siteId) {
@@ -72,7 +72,7 @@ class ManageNavigationItemsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteNavigationItem(TenantId tenantId, NavigationItemId id) {
-    auto n = repo.find(tenantId, id);
+    auto n = repo.findById(tenantId, id);
     if (n.isNull)
       return CommandResult(false, "", "Navigation item not found");
 

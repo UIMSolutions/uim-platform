@@ -23,7 +23,7 @@ class MemoryConsentRecordRepository : TenantRepository!(ConsentRecord, ConsentRe
   }
 
   ConsentRecord[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
-    return filterByDataSubject(find(tenantId), dataSubjectId);
+    return filterByDataSubject(findByTenant(tenantId), dataSubjectId);
   }
 
   void removeByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
@@ -39,7 +39,7 @@ class MemoryConsentRecordRepository : TenantRepository!(ConsentRecord, ConsentRe
   }
 
   ConsentRecord[] findByPurpose(TenantId tenantId, ProcessingPurpose purpose) {
-    return filterByPurpose(find(tenantId), purpose);
+    return filterByPurpose(findByTenant(tenantId), purpose);
   }
 
   void removeByPurpose(TenantId tenantId, ProcessingPurpose purpose) {
@@ -55,7 +55,7 @@ class MemoryConsentRecordRepository : TenantRepository!(ConsentRecord, ConsentRe
   }
 
   ConsentRecord[] findByStatus(TenantId tenantId, ConsentStatus status) {
-    return filterByStatus(find(tenantId), status);
+    return filterByStatus(findByTenant(tenantId), status);
   }
 
   void removeByStatus(TenantId tenantId, ConsentStatus status) {
@@ -71,7 +71,7 @@ size_t countActiveConsents(TenantId tenantId) {
   }
 
   ConsentRecord[] findActiveConsents(TenantId tenantId  ) {
-    return filterActiveConsents(find(tenantId));
+    return filterActiveConsents(findByTenant(tenantId));
   }
 
   void removeActiveConsents(TenantId tenantId) {
@@ -87,7 +87,7 @@ size_t countActiveConsents(TenantId tenantId) {
   }
 
   ConsentRecord[] findActiveConsents(TenantId tenantId, DataSubjectId dataSubjectId) {
-    return filterActiveConsents(find(tenantId), dataSubjectId);
+    return filterActiveConsents(findByTenant(tenantId), dataSubjectId);
   }
 
   void removeActiveConsents(TenantId tenantId, DataSubjectId dataSubjectId) {

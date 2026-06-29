@@ -17,7 +17,7 @@ class MemoryWidgetRepository : TenantRepository!(Widget, WidgetId), WidgetReposi
   }
 
   Widget[] findByDataset(TenantId tenantId, EntityId datasetId) {
-    return find(tenantId).filter!(w => w.datasetId == datasetId).array;
+    return findByTenant(tenantId).filter!(w => w.datasetId == datasetId).array;
   }
 
   void removeByDataset(TenantId tenantId, EntityId datasetId) {

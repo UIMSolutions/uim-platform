@@ -13,11 +13,11 @@ import uim.platform.ui_flexibility;
 class MemoryFlexChangeRepository : TenantRepository!(FlexChange, FlexChangeId), FlexChangeRepository {
 
   bool existsById(TenantId tenantId, FlexChangeId id) {
-    return !find(tenantId, id).isNull;
+    return !findById(tenantId, id).isNull;
   }
 
   FlexChange findById(TenantId tenantId, FlexChangeId id) {
-    foreach (c; find(tenantId))
+    foreach (c; findByTenant(tenantId))
       if (c.id_ == id) return c;
     return FlexChange.init;
   }
@@ -27,30 +27,30 @@ class MemoryFlexChangeRepository : TenantRepository!(FlexChange, FlexChangeId), 
   }
 
   long countByTenant(TenantId tenantId) {
-    return cast(long) find(tenantId).length;
+    return cast(long) findByTenant(tenantId).length;
   }
 
   FlexChange[] findByTenantAll(TenantId tenantId) {
-    return find(tenantId);
+    return findByTenant(tenantId);
   }
 
   FlexChange[] findByApp(TenantId tenantId, string appId) {
     FlexChange[] result;
-    foreach (c; find(tenantId))
+    foreach (c; findByTenant(tenantId))
       if (c.appId_ == appId) result ~= c;
     return result;
   }
 
   FlexChange[] findByLayer(TenantId tenantId, string appId, ChangeLayer layer) {
     FlexChange[] result;
-    foreach (c; find(tenantId))
+    foreach (c; findByTenant(tenantId))
       if (c.appId_ == appId && c.layer_ == layer) result ~= c;
     return result;
   }
 
   FlexChange[] findByChangeType(TenantId tenantId, string appId, ChangeType changeType) {
     FlexChange[] result;
-    foreach (c; find(tenantId))
+    foreach (c; findByTenant(tenantId))
       if (c.appId_ == appId && c.changeType_ == changeType) result ~= c;
     return result;
   }

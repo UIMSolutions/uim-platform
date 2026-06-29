@@ -74,7 +74,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
   }
 
   ServiceBinding[] listServiceBindings(TenantId tenantId) {
-    return bindings.find(tenantId);
+    return bindings.findByTenant(tenantId);
   }
 
   CommandResult deleteServiceBinding(TenantId tenantId, ServiceBindingId serviceBindingId) {

@@ -23,7 +23,7 @@ class ManageMeshBridgesUseCase { // TODO: UIMUseCase {
     }
 
     MeshBridge[] listBridges(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     MeshBridge[] listBridges(TenantId tenantId, BrokerServiceId serviceId) {

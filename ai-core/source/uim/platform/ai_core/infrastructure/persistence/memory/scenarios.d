@@ -40,7 +40,7 @@ class MemoryScenarioRepository : TenantRepository!(Scenario, ScenarioId), Scenar
   }
 
   Scenario[] findByResourceGroup(TenantId tenantId, ResourceGroupId rgId) {
-    return filterByResourceGroup(find(tenantId), rgId);
+    return filterByResourceGroup(findByTenant(tenantId), rgId);
   }
 
   void removeByResourceGroup(TenantId tenantId, ResourceGroupId rgId) {

@@ -14,7 +14,7 @@ import uim.platform.customer_identity;
 class MemorySitePolicyRepository : TenantRepository!(SitePolicy, SitePolicyId), SitePolicyRepository {
 
     SitePolicy[] findByType(TenantId tenantId, PolicyType policyType) {
-        return find(tenantId).filter!(sp => sp.policyType == policyType).array;
+        return findByTenant(tenantId).filter!(sp => sp.policyType == policyType).array;
     }
 
     SitePolicy findActiveByType(TenantId tenantId, PolicyType policyType) {

@@ -22,7 +22,7 @@ Project[] filterByType(Project[] projects, ProjectType projectType) {
     }
 
     Project[] findByType(TenantId tenantId, ProjectType projectType) {
-        return filterByType(find(tenantId), projectType);
+        return filterByType(findByTenant(tenantId), projectType);
     }
 
     void removeByType(TenantId tenantId, ProjectType projectType) {
@@ -39,7 +39,7 @@ Project[] filterByType(Project[] projects, ProjectType projectType) {
     }
 
     Project[] findByDevSpace(TenantId tenantId, DevSpaceId devSpaceId) {
-        return filterByDevSpace(find(tenantId), devSpaceId);
+        return filterByDevSpace(findByTenant(tenantId), devSpaceId);
     }
 
     void removeByDevSpace(TenantId tenantId, DevSpaceId devSpaceId) {

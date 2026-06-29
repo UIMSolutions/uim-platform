@@ -16,11 +16,11 @@ import uim.platform.identity.directory;
 class MemoryPasswordPolicyRepository : TenantRepository!(PasswordPolicy, PasswordPolicyId), PasswordPolicyRepository {
 
   bool existsActiveForTenant(TenantId tenantId) {
-    return find(tenantId).any!(p => p.active);
+    return findByTenant(tenantId).any!(p => p.active);
   }
 
   PasswordPolicy findActiveForTenant(TenantId tenantId) {
-    foreach (p; find(tenantId)) {
+    foreach (p; findByTenant(tenantId)) {
       if (p.active)
         return p;
     }

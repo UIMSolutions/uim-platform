@@ -16,19 +16,19 @@ class MemoryDeterminationLogRepository
       DeterminationLogRepository {
 
     DeterminationLog[] findByContext(TenantId tenantId, string contextId) {
-        return find(tenantId).filter!(l => l.contextId == contextId).array;
+        return findByTenant(tenantId).filter!(l => l.contextId == contextId).array;
     }
 
     DeterminationLog[] findByObject(TenantId tenantId, string objectType, string objectId) {
-        return find(tenantId)
+        return findByTenant(tenantId)
             .filter!(l => l.objectType == objectType && l.objectId == objectId).array;
     }
 
     DeterminationLog[] findByStatus(TenantId tenantId, DeterminationStatus status) {
-        return find(tenantId).filter!(l => l.status == status).array;
+        return findByTenant(tenantId).filter!(l => l.status == status).array;
     }
 
     void removeByTenant(TenantId tenantId) {
-        find(tenantId).each!(l => remove(l));
+        findByTenant(tenantId).each!(l => remove(l));
     }
 }

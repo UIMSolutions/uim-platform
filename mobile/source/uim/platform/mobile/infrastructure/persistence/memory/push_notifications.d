@@ -21,7 +21,7 @@ class MemoryPushNotificationRepository : TenantRepository!(PushNotification, Pus
   }
 
   PushNotification[] findByApp(TenantId tenantId, MobileAppId appId) {
-    return filterByApp(find(tenantId).array, appId);
+    return filterByApp(findByTenant(tenantId).array, appId);
   }
 
   void removeByApp(TenantId tenantId, MobileAppId appId) {

@@ -19,11 +19,11 @@ class ManageAppVersionsUseCase {
     }
 
     AppVersion getAppVersion(TenantId tenantId, AppVersionId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     AppVersion[] listAppVersions(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     AppVersion[] listByMobileApplication(TenantId tenantId, MobileApplicationId appId) {
@@ -68,7 +68,7 @@ class ManageAppVersionsUseCase {
     }
 
     CommandResult deleteAppVersion(TenantId tenantId, AppVersionId id) {
-        auto entity = repo.find(tenantId, id);
+        auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "App version not found");
 

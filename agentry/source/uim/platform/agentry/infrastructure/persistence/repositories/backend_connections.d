@@ -24,7 +24,7 @@ class BackendConnectionRepository : TenantRepository!(BackendConnection, Backend
     }
 
     BackendConnection[] findByBackendType(TenantId tenantId, BackendType backendType) {
-        return filterByBackendType(find(tenantId), backendType);
+        return filterByBackendType(findByTenant(tenantId), backendType);
     }
 
     void removeByBackendType(TenantId tenantId, BackendType backendType) {
@@ -42,7 +42,7 @@ class BackendConnectionRepository : TenantRepository!(BackendConnection, Backend
     }
 
     BackendConnection[] findByStatus(TenantId tenantId, ConnectionStatus status) {
-        return filterByStatus(find(tenantId), status);
+        return filterByStatus(findByTenant(tenantId), status);
     }
 
     void removeByStatus(TenantId tenantId, ConnectionStatus status) {

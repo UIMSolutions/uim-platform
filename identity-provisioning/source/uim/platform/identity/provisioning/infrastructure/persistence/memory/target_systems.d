@@ -16,10 +16,10 @@ import uim.platform.identity.provisioning;
 class MemoryTargetSystemRepository : TargetSystemRepository {
 
   bool existsByName(TenantId tenantId, string name) {
-    return find(tenantId).any!(e => e.name == name);
+    return findByTenant(tenantId).any!(e => e.name == name);
   }
   TargetSystem findByName(TenantId tenantId, string name) {
-    foreach (e; find(tenantId))
+    foreach (e; findByTenant(tenantId))
       if (e.name == name)
         return e;
     return TargetSystem.init;
@@ -32,7 +32,7 @@ class MemoryTargetSystemRepository : TargetSystemRepository {
     return systems.filter!(s => s.systemType == systemType).array;
   }
   TargetSystem[] findByType(TenantId tenantId, SystemType systemType) {
-    return filterByType(find(tenantId), systemType);
+    return filterByType(findByTenant(tenantId), systemType);
   }
   
   void removeByType(TenantId tenantId, SystemType systemType) {
@@ -45,7 +45,7 @@ class MemoryTargetSystemRepository : TargetSystemRepository {
     return systems.filter!(s => s.status == status).array;
   }
   TargetSystem[] findByStatus(TenantId tenantId, SystemStatus status) {
-    return filterByStatus(find(tenantId), status);
+    return filterByStatus(findByTenant(tenantId), status);
   }
   void removeByStatus(TenantId tenantId, SystemStatus status) {
     findByStatus(tenantId, status).each!(e => remove(e));

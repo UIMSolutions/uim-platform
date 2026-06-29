@@ -26,7 +26,7 @@ class MemoryFilterRuleRepository : TenantRepository!(FilterRule, FilterRuleId), 
   }
 
   FilterRule[] findByCategory(TenantId tenantId, MasterDataCategory category) {
-    return filterByCategory(find(tenantId), category);
+    return filterByCategory(findByTenant(tenantId), category);
   }
 
   void removeByCategory(TenantId tenantId, MasterDataCategory category) {
@@ -42,7 +42,7 @@ class MemoryFilterRuleRepository : TenantRepository!(FilterRule, FilterRuleId), 
   }
 
   FilterRule[] findActive(TenantId tenantId) {
-    return filterActive(find(tenantId));
+    return filterActive(findByTenant(tenantId));
   }
 
   void removeActive(TenantId tenantId) {

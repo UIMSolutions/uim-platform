@@ -23,7 +23,7 @@ class MemoryDataControllerRepository : TenantRepository!(DataController, DataCon
   }
 
   DataController[] findByCountry(TenantId tenantId, string country) {
-    return filterByCountry(find(tenantId), country);
+    return filterByCountry(findByTenant(tenantId), country);
   }
 
   void removeByCountry(TenantId tenantId, string country) {

@@ -15,18 +15,18 @@ import uim.platform.ai_launchpad;
 class MemoryWorkspaceRepository : TenantRepository!(Workspace, WorkspaceId), IWorkspaceRepository {
 
   bool existsByName(TenantId tenantId, string name) {
-    return find(tenantId).any!(w => w.name == name);
+    return findByTenant(tenantId).any!(w => w.name == name);
   }
 
   Workspace findByName(TenantId tenantId, string name) {
-    foreach (w; find(tenantId))
+    foreach (w; findByTenant(tenantId))
       if (w.name == name)
         return w;
     return Workspace.init;
   }
 
   void removeByName(TenantId tenantId, string name) {
-    foreach (w; find(tenantId))
+    foreach (w; findByTenant(tenantId))
       if (w.name == name) {
         remove(w);
         return;
@@ -38,7 +38,7 @@ class MemoryWorkspaceRepository : TenantRepository!(Workspace, WorkspaceId), IWo
   }
 
   Workspace[] findByStatus(TenantId tenantId, WorkspaceStatus status) {
-    return find(tenantId).filter!(w => w.status == status).array;
+    return findByTenant(tenantId).filter!(w => w.status == status).array;
   }
 
   void removeByStatus(TenantId tenantId, WorkspaceStatus status) {

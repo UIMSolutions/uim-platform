@@ -47,7 +47,7 @@ class ManageContentUseCase { // TODO: UIMUseCase {
   }
 
   ContentItem getContent(TenantId tenantId, ContentId id) {
-    return repo.find(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 
   ContentItem[] listByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
@@ -84,7 +84,7 @@ class ManageContentUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult publishContent(TenantId tenantId, ContentId id) {
-    auto item = repo.find(tenantId, id);
+    auto item = repo.findById(tenantId, id);
     if (item.isNull)
       return CommandResult(false, "", "Content not found");
 
@@ -96,7 +96,7 @@ class ManageContentUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteContent(TenantId tenantId, ContentId id) {
-    auto item = repo.find(tenantId, id);
+    auto item = repo.findById(tenantId, id);
     if (item.isNull)
       return CommandResult(false, "", "Content not found");
 

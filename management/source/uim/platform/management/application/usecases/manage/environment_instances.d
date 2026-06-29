@@ -99,7 +99,7 @@ class ManageEnvironmentsUseCase { // TODO: UIMUseCase {
   }
   
   CommandResult deprovisionEnvironment(TenantId tenantId, EnvironmentId id) {
-    auto instance = repo.find(tenantId, id);
+    auto instance = repo.findById(tenantId, id);
     if (instance.isNull)
       return CommandResult(false, "", "Environment instance not found");
     if (!provisioner.canDelete(instance))
@@ -115,7 +115,7 @@ class ManageEnvironmentsUseCase { // TODO: UIMUseCase {
   }
 
   Environment getEnvironment(TenantId tenantId, EnvironmentId id) {
-    return repo.find(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 
   Environment[] listEnvironments(TenantId tenantId, SubaccountId subId) {

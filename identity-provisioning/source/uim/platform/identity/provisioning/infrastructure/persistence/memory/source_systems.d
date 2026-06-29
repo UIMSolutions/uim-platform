@@ -16,10 +16,10 @@ import uim.platform.identity.provisioning;
 class MemorySourceSystemRepository : TenantRepository!(SourceSystem, SourceSystemId), SourceSystemRepository {
 
   bool existsByName(TenantId tenantId, string name) {
-    return find(tenantId).any!((e) => e.name == name);
+    return findByTenant(tenantId).any!((e) => e.name == name);
   }
   SourceSystem findByName(TenantId tenantId, string name) {
-    foreach (e; find(tenantId))
+    foreach (e; findByTenant(tenantId))
       if (e.name == name)
         return e;
     return SourceSystem.init; // Return an empty SourceSystem if not found
@@ -35,10 +35,10 @@ class MemorySourceSystemRepository : TenantRepository!(SourceSystem, SourceSyste
         : entries.filter!(e => e.systemType == systemType).skip(offset).take(limit).array;
   }
   SourceSystem[] findByType(TenantId tenantId, SystemType systemType) {
-    return filterByType(find(tenantId), systemType);
+    return filterByType(findByTenant(tenantId), systemType);
   }
   void removeByType(TenantId tenantId, SystemType systemType) {
-    filterByType(find(tenantId), systemType).each!(e => remove(e));
+    filterByType(findByTenant(tenantId), systemType).each!(e => remove(e));
   }
 
   size_t countByStatus(TenantId tenantId, SystemStatus status) {
@@ -50,10 +50,10 @@ class MemorySourceSystemRepository : TenantRepository!(SourceSystem, SourceSyste
         : entries.filter!(e => e.status == status).skip(offset).take(limit).array;
   }
   SourceSystem[] findByStatus(TenantId tenantId, SystemStatus status) {
-    return filterByStatus(find(tenantId), status);
+    return filterByStatus(findByTenant(tenantId), status);
   }
   void removeByStatus(TenantId tenantId, SystemStatus status) {
-    filterByStatus(find(tenantId), status).each!(e => remove(e));
+    filterByStatus(findByTenant(tenantId), status).each!(e => remove(e));
   }
   
 }

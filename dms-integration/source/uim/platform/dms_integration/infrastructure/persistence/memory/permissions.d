@@ -14,24 +14,24 @@ import uim.platform.dms_integration;
 class MemoryPermissionRepository : TenantRepository!(Permission, PermissionId), PermissionRepository {
 
     Permission[] findByDocument(TenantId tenantId, DocumentId documentId) {
-        return find(tenantId).filter!(e => e.documentId == documentId).array;
+        return findByTenant(tenantId).filter!(e => e.documentId == documentId).array;
     }
     void removeByDocument(TenantId tenantId, DocumentId documentId) {
         findByDocument(tenantId, documentId).each!(e => remove(e));
     }
 
     Permission[] findByFolder(TenantId tenantId, FolderId folderId) {
-        return find(tenantId).filter!(e => e.folderId == folderId).array;
+        return findByTenant(tenantId).filter!(e => e.folderId == folderId).array;
     }
     void removeByFolder(TenantId tenantId, FolderId folderId) {
         findByFolder(tenantId, folderId).each!(e => remove(e));
     }
 
     Permission[] findByPrincipal(TenantId tenantId, string principalId) {
-        return find(tenantId).filter!(e => e.principalId == principalId).array;
+        return findByTenant(tenantId).filter!(e => e.principalId == principalId).array;
     }
 
     Permission[] findByRepository(TenantId tenantId, RepositoryId repositoryId) {
-        return find(tenantId).filter!(e => e.repositoryId == repositoryId).array;
+        return findByTenant(tenantId).filter!(e => e.repositoryId == repositoryId).array;
     }
 }

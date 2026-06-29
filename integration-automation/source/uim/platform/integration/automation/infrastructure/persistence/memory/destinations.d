@@ -24,17 +24,17 @@ class MemoryDestinationRepository : TenantRepository!(Destination, DestinationId
     return destinations.filter!(d => d.systemId == systemId).array;
   }
   Destination[] findBySystem(TenantId tenantId, SystemConnectionId systemId) {
-    return filterBySystem(find(tenantId), systemId);
+    return filterBySystem(findByTenant(tenantId), systemId);
   }
   void removeBySystem(TenantId tenantId, SystemConnectionId systemId) {
     findBySystem(tenantId, systemId).each!(d => remove(d));
   }
 
   bool existsByName(TenantId tenantId, string name) {
-    return find(tenantId).any!(d => d.name == name);
+    return findByTenant(tenantId).any!(d => d.name == name);
   }
   Destination findByName(TenantId tenantId, string name) {
-    foreach (d; find(tenantId))
+    foreach (d; findByTenant(tenantId))
       if (d.name == name)
         return d;
     return Destination.init;
@@ -47,7 +47,7 @@ class MemoryDestinationRepository : TenantRepository!(Destination, DestinationId
     return destinations.filter!(d => d.isEnabled).array;
   }
   Destination[] findEnabled(TenantId tenantId) {
-    return find(tenantId).filter!(d => d.isEnabled).array;
+    return findByTenant(tenantId).filter!(d => d.isEnabled).array;
   }
   void removeByEnabled(TenantId tenantId) {
     findEnabled(tenantId).each!(d => remove(d));

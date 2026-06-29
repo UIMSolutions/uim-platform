@@ -22,7 +22,7 @@ class MemoryDirectoryRepository : TenantRepository!(Directory, DirectoryId), Dir
   }
 
   Directory[] findByGlobalAccount(TenantId tenantId, GlobalAccountId globalAccountId) {
-    return filterByGlobalAccount(find(tenantId), globalAccountId);
+    return filterByGlobalAccount(findByTenant(tenantId), globalAccountId);
   }
 
   void removeByGlobalAccount(TenantId tenantId, GlobalAccountId globalAccountId) {
@@ -40,7 +40,7 @@ class MemoryDirectoryRepository : TenantRepository!(Directory, DirectoryId), Dir
   }
 
   Directory[] findByParent(TenantId tenantId, DirectoryId parentDirectoryId) {
-    return filterByParent(find(tenantId), parentDirectoryId);
+    return filterByParent(findByTenant(tenantId), parentDirectoryId);
   }
 
   void removeByParent(TenantId tenantId, DirectoryId parentDirectoryId) {

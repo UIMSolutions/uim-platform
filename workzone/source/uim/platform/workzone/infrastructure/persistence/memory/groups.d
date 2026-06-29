@@ -23,7 +23,7 @@ class MemoryGroupRepository : TenantRepository!(WZGroup, GroupId), GroupReposito
 
   WZGroup[] findByMember(TenantId tenantId, UserId userId) {
     WZGroup[] result;
-    foreach (g; find(tenantId)) {
+    foreach (g; findByTenant(tenantId)) {
       foreach (mid; g.memberIds)
         if (mid == userId) {
           result ~= g;

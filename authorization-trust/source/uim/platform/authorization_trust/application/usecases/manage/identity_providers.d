@@ -63,7 +63,7 @@ class ManageIdentityProvidersUseCase {
   }
 
   CommandResult deleteProvider(TenantId tenantId, IdentityProviderId id) {
-    auto provider = repo.find(tenantId, id);
+    auto provider = repo.findById(tenantId, id);
     if (provider.isNull)
       return CommandResult(false, "", "Identity provider not found");
       
@@ -72,10 +72,10 @@ class ManageIdentityProvidersUseCase {
   }
 
   IdentityProvider getProvider(TenantId tenantId, IdentityProviderId id) {
-    return repo.find(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 
   IdentityProvider[] listProviders(TenantId tenantId) {
-    return repo.find(tenantId);
+    return repo.findByTenant(tenantId);
   }
 }

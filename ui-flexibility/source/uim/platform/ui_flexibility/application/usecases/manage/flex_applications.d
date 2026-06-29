@@ -51,7 +51,7 @@ class ManageFlexApplicationsUseCase {
   }
 
   FlexApplication getApplication(TenantId tenantId, FlexApplicationId id) {
-    return repo.find(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 
   FlexApplication getApplicationByApp(TenantId tenantId, string appId) {
@@ -67,7 +67,7 @@ class ManageFlexApplicationsUseCase {
   }
 
   CommandResult deleteApplication(TenantId tenantId, FlexApplicationId id) {
-    auto app = repo.find(tenantId, id);
+    auto app = repo.findById(tenantId, id);
     if (app.isNull) 
       return CommandResult(false, null, "FlexApplication not found");
  

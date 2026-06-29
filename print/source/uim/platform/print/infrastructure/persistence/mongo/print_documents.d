@@ -46,7 +46,7 @@ class MongoPrintDocumentRepository : PrintDocumentRepository {
     }
 
     PrintDocument[] findExpired(TenantId tenantId, long nowTimestamp) {
-        return find(tenantId)
+        return findByTenant(tenantId)
             .filter!(d => d.expiresAt > 0 && d.expiresAt < nowTimestamp).array;
     }
 

@@ -45,11 +45,11 @@ class ManageArtifactsUseCase { // TODO: UIMUseCase {
     }
 
     Artifact getArtifact(TenantId tenantId, ArtifactId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     Artifact[] listArtifacts(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     Artifact[] listArtifacts(TenantId tenantId, ArtifactType type) {
@@ -74,7 +74,7 @@ class ManageArtifactsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteArtifact(TenantId tenantId, ArtifactId id) {
-        auto artifact = repo.find(tenantId, id);
+        auto artifact = repo.findById(tenantId, id);
         if (artifact.isNull)
             return CommandResult(false, "", "Artifact not found");
 

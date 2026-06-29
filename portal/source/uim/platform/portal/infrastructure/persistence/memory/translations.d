@@ -17,9 +17,10 @@ class MemoryTranslationRepository : TenantRepository!(Translation, TranslationId
   size_t countByResource(string resourceType, string resourceId) {
     return findByResource(resourceType, resourceId).length;
   }
+
   Translation[] findByResource(string resourceType, string resourceId, string language = "") {
     Translation[] result;
-    foreach (t; find(tenantId))
+    foreach (t; findByTenant(tenantId)) {
       if (t.resourceType == resourceType && t.resourceId == resourceId) {
         if (language.length == 0 || t.language == language)
           result ~= t;
@@ -27,6 +28,7 @@ class MemoryTranslationRepository : TenantRepository!(Translation, TranslationId
     }
     return result;
   }
+  
   void removeByResource(string resourceType, string resourceId) {
     findByResource(resourceType, resourceId).each!(t => remove(t));
   }
@@ -37,7 +39,7 @@ class MemoryTranslationRepository : TenantRepository!(Translation, TranslationId
   Translation[] findByLanguage(TenantId tenantId, string language, size_t offset = 0, size_t limit = 100) {
     Translation[] result;
     size_t idx;
-    foreach (t; find(tenantId)) {
+    foreach (t; findByTenant(tenantId)) {
       if (t.language == language) {
         if (idx >= offset && result.length < limit)
           result ~= t;

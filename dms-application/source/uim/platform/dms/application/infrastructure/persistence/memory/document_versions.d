@@ -23,7 +23,7 @@ class MemoryDocumentVersionRepository : TenantRepository!(DocumentVersion, Docum
   }
 
   DocumentVersion[] findByDocument(TenantId tenantId, DocumentId documentId) {
-    return filterByDocument(find(tenantId), documentId);
+    return filterByDocument(findByTenant(tenantId), documentId);
   }
 
   void removeByDocument(TenantId tenantId, DocumentId documentId) {

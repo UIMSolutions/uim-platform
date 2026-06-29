@@ -16,14 +16,14 @@ class MemoryUnificationRuleRepository
 
   UnificationRule[] findByPriority(TenantId tenantId) {
     import std.algorithm : sort;
-    auto items = find(tenantId);
+    auto items = findByTenant(tenantId);
     items.sort!((a, b) => a.priority < b.priority);
     return items;
   }
 
   UnificationRule[] findActive(TenantId tenantId) {
     UnificationRule[] result;
-    foreach (item; find(tenantId)) {
+    foreach (item; findByTenant(tenantId)) {
       if (item.active) result ~= item;
     }
     return result;

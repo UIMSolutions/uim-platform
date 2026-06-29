@@ -20,7 +20,7 @@ class MemoryProxySystemRepository : TenantRepository!(ProxySystem, ProxySystemId
   }
 
   ProxySystem findByName(TenantId tenantId, string name) {
-    foreach (e; find(tenantId))
+    foreach (e; findByTenant(tenantId))
       if (e.name == name)
         return e;
     return ProxySystem.init; // null object pattern
@@ -35,7 +35,7 @@ class MemoryProxySystemRepository : TenantRepository!(ProxySystem, ProxySystemId
   }
 
   ProxySystem[] findBySource(TenantId tenantId, SourceSystemId sourceId) {
-    return filterBySource(find(tenantId), sourceId);
+    return filterBySource(findByTenant(tenantId), sourceId);
   }
 
   void removeBySource(TenantId tenantId, SourceSystemId sourceId) {
@@ -51,7 +51,7 @@ class MemoryProxySystemRepository : TenantRepository!(ProxySystem, ProxySystemId
   }
 
   ProxySystem[] findByTarget(TenantId tenantId, TargetSystemId targetId) {
-    return filterByTarget(find(tenantId), targetId);
+    return filterByTarget(findByTenant(tenantId), targetId);
   }
 
   void removeByTarget(TenantId tenantId, TargetSystemId targetId) {

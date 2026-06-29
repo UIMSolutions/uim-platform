@@ -35,21 +35,21 @@ class ManageActionsUseCase {
     }
 
     QueryResult getAction(TenantId tenantId, ActionId id) {
-        auto action = repo.find(tenantId, id);
+        auto action = repo.findById(tenantId, id);
         if (action is null || action.isNull())
             return QueryResult(false, "Action not found", Json.emptyObject);
         return QueryResult(true, "", action.toJson());
     }
 
     QueryResult listActions(TenantId tenantId) {
-        auto items = repo.find(tenantId);
+        auto items = repo.findByTenant(tenantId);
         auto arr   = items.map!(a => a.toJson).array.toJson;
 
         return QueryResult(true, "", arr);
     }
 
     CommandResult updateAction(TenantId tenantId, ActionId id, UpdateActionRequest req) {
-        auto action = repo.find(tenantId, id);
+        auto action = repo.findById(tenantId, id);
         if (action is null || action.isNull())
             return CommandResult(false, "", "Action not found");
 
@@ -65,7 +65,7 @@ class ManageActionsUseCase {
     }
 
     CommandResult deleteAction(TenantId tenantId, ActionId id) {
-        auto action = repo.find(tenantId, id);
+        auto action = repo.findById(tenantId, id);
         if (action is null || action.isNull())
             return CommandResult(false, "", "Action not found");
 

@@ -22,7 +22,7 @@ class MemoryServiceBindingRepository : TenantRepository!(ServiceBinding, Service
     return bindings.filter!(e => e.systemInstanceId == systemId).array;
   }
   ServiceBinding[] findBySystem(TenantId tenantId, SystemInstanceId systemId) {
-    return filterBySystem(find(tenantId), systemId);
+    return filterBySystem(findByTenant(tenantId), systemId);
   }
   void removeBySystem(TenantId tenantId, SystemInstanceId systemId) {
     findBySystem(tenantId, systemId).each!(e => remove(e));

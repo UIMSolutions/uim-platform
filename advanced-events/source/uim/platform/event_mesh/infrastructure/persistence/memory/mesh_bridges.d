@@ -20,7 +20,7 @@ class MemoryMeshBridgeRepository : TenantRepository!(MeshBridge, MeshBridgeId), 
         return bridges.filter!(e => e.sourceServiceId == sourceServiceId).array;
     }
     MeshBridge[] findBySourceBrokerService(TenantId tenantId, BrokerServiceId sourceServiceId) {
-        return filterBySourceBrokerService(find(tenantId), sourceServiceId);
+        return filterBySourceBrokerService(findByTenant(tenantId), sourceServiceId);
     }
     void removeBySourceBrokerService(TenantId tenantId, BrokerServiceId sourceServiceId) {
         findBySourceBrokerService(tenantId, sourceServiceId).each!(e => remove(e));
@@ -33,7 +33,7 @@ class MemoryMeshBridgeRepository : TenantRepository!(MeshBridge, MeshBridgeId), 
         return bridges.filter!(e => e.targetServiceId == targetServiceId).array;
     }
     MeshBridge[] findByTargetBrokerService(TenantId tenantId, BrokerServiceId targetServiceId) {
-        return filterByTargetBrokerService(find(tenantId), targetServiceId);
+        return filterByTargetBrokerService(findByTenant(tenantId), targetServiceId);
     }
     void removeByTargetBrokerService(TenantId tenantId, BrokerServiceId targetServiceId) {
         findByTargetBrokerService(tenantId, targetServiceId).each!(e => remove(e));
@@ -46,7 +46,7 @@ class MemoryMeshBridgeRepository : TenantRepository!(MeshBridge, MeshBridgeId), 
         return bridges.filter!(e => e.status == status).array;
     }
     MeshBridge[] findByStatus(TenantId tenantId, BridgeStatus status) {
-        return filterByStatus(find(tenantId), status);
+        return filterByStatus(findByTenant(tenantId), status);
     }
     void removeByStatus(TenantId tenantId, BridgeStatus status) {
         findByStatus(tenantId, status).each!(e => remove(e));

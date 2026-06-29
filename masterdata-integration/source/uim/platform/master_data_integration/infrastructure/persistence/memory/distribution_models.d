@@ -26,7 +26,7 @@ class MemoryDistributionModelRepository :
     return models.filter!(e => e.status == status).array;
   }
   DistributionModel[] findByStatus(TenantId tenantId, DistributionModelStatus status) {
-    return filterByStatus(find(tenantId), status);
+    return filterByStatus(findByTenant(tenantId), status);
   }
   void removeByStatus(TenantId tenantId, DistributionModelStatus status) {
     findByStatus(tenantId, status).each!(entity => remove(entity));
@@ -39,7 +39,7 @@ class MemoryDistributionModelRepository :
     return models.filter!(e => e.sourceClientId == sourceClientId).array;
   }
   DistributionModel[] findBySourceClient(TenantId tenantId, ClientId sourceClientId) {
-    return filterBySourceClient(find(tenantId), sourceClientId);
+    return filterBySourceClient(findByTenant(tenantId), sourceClientId);
   }
   void removeBySourceClient(TenantId tenantId, ClientId sourceClientId) {
     findBySourceClient(tenantId, sourceClientId).each!(entity => remove(entity));

@@ -21,7 +21,7 @@ class MemoryActivityRepository : TenantRepository!(Activity, ActivityId), Activi
         return activities.filter!(e => e.serviceCallId == serviceCallId).array;
     }
     Activity[] findByServiceCall(TenantId tenantId, ServiceCallId serviceCallId) {
-        return filterByServiceCall(find(tenantId), serviceCallId);
+        return filterByServiceCall(findByTenant(tenantId), serviceCallId);
     }
     void removeByServiceCall(TenantId tenantId, ServiceCallId serviceCallId) {
         findByServiceCall(tenantId, serviceCallId).each!(e => remove(e));
@@ -34,14 +34,14 @@ class MemoryActivityRepository : TenantRepository!(Activity, ActivityId), Activi
         return activities.filter!(e => e.technicianId == technicianId).array;
     }
     Activity[] findByTechnician(TenantId tenantId, TechnicianId technicianId) {
-        return filterByTechnician(find(tenantId), technicianId);
+        return filterByTechnician(findByTenant(tenantId), technicianId);
     }
     void removeByTechnician(TenantId tenantId, TechnicianId technicianId) {
         findByTechnician(tenantId, technicianId).each!(e => remove(e));
     }
 
     Activity[] findByStatus(TenantId tenantId, ActivityStatus status) {
-        return filterByStatus(find(tenantId), status);
+        return filterByStatus(findByTenant(tenantId), status);
     }
     Activity[] filterByStatus(Activity[] activities, ActivityStatus status) {
         return activities.filter!(e => e.status == status).array;

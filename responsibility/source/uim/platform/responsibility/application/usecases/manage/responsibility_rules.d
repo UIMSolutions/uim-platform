@@ -19,11 +19,11 @@ class ManageResponsibilityRulesUseCase {
     }
 
     ResponsibilityRule getRule(TenantId tenantId, ResponsibilityRuleId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     ResponsibilityRule[] listRules(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     ResponsibilityRule[] listRulesByContext(TenantId tenantId, string contextId) {
@@ -68,7 +68,7 @@ class ManageResponsibilityRulesUseCase {
     }
 
     CommandResult deleteRule(TenantId tenantId, ResponsibilityRuleId id) {
-        auto e = repo.find(tenantId, id);
+        auto e = repo.findById(tenantId, id);
         if (e.isNull)
             return CommandResult(false, "", "Rule not found");
         repo.remove(e);

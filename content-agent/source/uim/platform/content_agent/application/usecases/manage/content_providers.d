@@ -69,7 +69,7 @@ class ManageContentProvidersUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deregisterProvider(TenantId tenantId, ContentProviderId id) {
-    auto provider = providerRepo.find(tenantId, id);
+    auto provider = providerRepo.findById(tenantId, id);
     if (provider.isNull)
       return CommandResult(false, "", "Provider not found");
 
@@ -83,7 +83,7 @@ class ManageContentProvidersUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult syncProvider(TenantId tenantId, ContentProviderId id) {
-    auto provider = providerRepo.find(tenantId, id);
+    auto provider = providerRepo.findById(tenantId, id);
     if (provider.isNull)
       return CommandResult(false, "", "Provider not found");
 
@@ -99,11 +99,11 @@ class ManageContentProvidersUseCase { // TODO: UIMUseCase {
   }
 
   ContentProvider getProvider(TenantId tenantId, ContentProviderId id) {
-    return providerRepo.find(tenantId, id);
+    return providerRepo.findById(tenantId, id);
   }
 
   ContentProvider[] listProviders(TenantId tenantId) {
-    return providerRepo.find(tenantId);
+    return providerRepo.findByTenant(tenantId);
   }
 
   ContentProvider[] listActiveProviders(TenantId tenantId) {

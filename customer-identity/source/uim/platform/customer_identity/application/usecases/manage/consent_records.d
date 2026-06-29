@@ -19,11 +19,11 @@ class ManageConsentRecordsUseCase {
     }
 
     ConsentRecord getConsentRecord(TenantId tenantId, ConsentRecordId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     ConsentRecord[] listConsentRecords(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     ConsentRecord[] listByCustomer(TenantId tenantId, CustomerId customerId) {
@@ -58,7 +58,7 @@ class ManageConsentRecordsUseCase {
 
     CommandResult revokeConsent(TenantId tenantId, ConsentRecordId id) {
         
-        auto existing = repo.find(tenantId, id);
+        auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Consent record not found");
 
@@ -74,7 +74,7 @@ class ManageConsentRecordsUseCase {
     }
 
     CommandResult deleteConsentRecord(TenantId tenantId, ConsentRecordId id) {
-        auto existing = repo.find(tenantId, id);
+        auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Consent record not found");
 

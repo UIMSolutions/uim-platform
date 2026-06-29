@@ -17,7 +17,7 @@ class MemoryPredictionRepository : TenantRepository!(Prediction, PredictionId), 
   }
 
   Prediction[] findByDataset(TenantId tenantId, EntityId datasetId) {
-    return find(tenantId).filter!(p => p.datasetId.value == datasetId.value).array;
+    return findByTenant(tenantId).filter!(p => p.datasetId.value == datasetId.value).array;
   }
 
   void removeByDataset(TenantId tenantId, EntityId datasetId) {

@@ -20,7 +20,7 @@ class MemoryAssignmentRepository : TenantRepository!(Assignment, AssignmentId), 
         return assignments.filter!(e => e.activityId == activityId).array;
     }
     Assignment[] findByActivity(TenantId tenantId, ActivityId activityId) {
-        return filterByActivity(find(tenantId), activityId);
+        return filterByActivity(findByTenant(tenantId), activityId);
     }
     void removeByActivity(TenantId tenantId, ActivityId activityId) {
         findByActivity(tenantId, activityId).each!(e => remove(e));
@@ -33,7 +33,7 @@ class MemoryAssignmentRepository : TenantRepository!(Assignment, AssignmentId), 
         return assignments.filter!(e => e.technicianId == technicianId).array;
     }
     Assignment[] findByTechnician(TenantId tenantId, TechnicianId technicianId) {
-        return filterByTechnician(find(tenantId), technicianId);
+        return filterByTechnician(findByTenant(tenantId), technicianId);
     }
     void removeByTechnician(TenantId tenantId, TechnicianId technicianId) {
         findByTechnician(tenantId, technicianId).each!(e => remove(e));
@@ -46,7 +46,7 @@ class MemoryAssignmentRepository : TenantRepository!(Assignment, AssignmentId), 
         return assignments.filter!(e => e.status == status).array;
     }
     Assignment[] findByStatus(TenantId tenantId, AssignmentStatus status) {
-        return filterByStatus(find(tenantId), status);
+        return filterByStatus(findByTenant(tenantId), status);
     }
     void removeByStatus(TenantId tenantId, AssignmentStatus status) {
         findByStatus(tenantId, status).each!(e => remove(e));

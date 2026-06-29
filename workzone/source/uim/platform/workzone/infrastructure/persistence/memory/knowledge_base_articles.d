@@ -22,7 +22,7 @@ class MemoryKnowledgeBaseArticleRepository : TenantRepository!(KnowledgeBaseArti
   }
 
   KnowledgeBaseArticle[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
-    return find(tenantId).filter!(a => a.workspaceId == workspaceId).array;
+    return findByTenant(tenantId).filter!(a => a.workspaceId == workspaceId).array;
   }
 
   void removeByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
@@ -34,7 +34,7 @@ class MemoryKnowledgeBaseArticleRepository : TenantRepository!(KnowledgeBaseArti
   }
 
   KnowledgeBaseArticle[] findByCategory(TenantId tenantId, string category) {
-    return find(tenantId).filter!(a => a.category == category).array;
+    return findByTenant(tenantId).filter!(a => a.category == category).array;
   }
 
   void removeByCategory(TenantId tenantId, string category) {

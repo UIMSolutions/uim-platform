@@ -66,11 +66,11 @@ class ManageRoutesUseCase { // TODO: UIMUseCase {
   }
 
   Route getRoute(TenantId tenantId, RouteId id) {
-    return routes.find(tenantId, id);
+    return routes.findById(tenantId, id);
   }
 
   Route[] listRoutes(TenantId tenantId) {
-    return routes.find(tenantId);
+    return routes.findByTenant(tenantId);
   }
 
   Route[] listBySpace(TenantId tenantId, SpaceId spaceId) {
@@ -78,7 +78,7 @@ class ManageRoutesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteRoute(TenantId tenantId, RouteId id) {
-    auto route = routes.find(tenantId, id);
+    auto route = routes.findById(tenantId, id);
     if (route.isNull)
       return CommandResult(false, "", "Route not found");
 
@@ -136,7 +136,7 @@ class ManageRoutesUseCase { // TODO: UIMUseCase {
   }
 
   CfDomain[] listDomains(TenantId tenantId) {
-    return domains.find(tenantId);
+    return domains.findByTenant(tenantId);
   }
 
   CommandResult deleteDomain(TenantId tenantId, CfDomainId domainId) {

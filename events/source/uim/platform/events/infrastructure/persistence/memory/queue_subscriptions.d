@@ -19,15 +19,15 @@ class MemoryQueueSubscriptionRepository
     }
 
     QueueSubscription[] findByQueue(TenantId tenantId, QueueId queueId) {
-        return find(tenantId).filter!(e => e.queueId == queueId).array;
+        return findByTenant(tenantId).filter!(e => e.queueId == queueId).array;
     }
 
     QueueSubscription[] findByService(TenantId tenantId, MessagingServiceId serviceId) {
-        return find(tenantId).filter!(e => e.serviceId == serviceId).array;
+        return findByTenant(tenantId).filter!(e => e.serviceId == serviceId).array;
     }
 
     QueueSubscription[] findByTopicPattern(TenantId tenantId, string topicPattern) {
-        return find(tenantId).filter!(e => e.topicPattern == topicPattern).array;
+        return findByTenant(tenantId).filter!(e => e.topicPattern == topicPattern).array;
     }
 
     void removeByQueue(TenantId tenantId, QueueId queueId) {

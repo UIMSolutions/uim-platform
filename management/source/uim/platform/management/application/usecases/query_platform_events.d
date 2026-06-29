@@ -23,7 +23,7 @@ class QueryEnvironmentEventsUseCase { // TODO: UIMUseCase {
   }
 
   EnvironmentEvent getEvent(TenantId tenantId, EnvironmentEventId id) {
-    return repo.find(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 
   EnvironmentEvent[] listEvents(TenantId tenantId, GlobalAccountId gaId) {

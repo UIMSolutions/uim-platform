@@ -16,8 +16,8 @@ class ManageApplicationsUseCase {
 
     this(ApplicationRepository repo) { this.repo = repo; }
 
-    Application getApplication(TenantId tenantId, ApplicationId id) { return repo.find(tenantId, id); }
-    Application[] listApplications(TenantId tenantId) { return repo.find(tenantId); }
+    Application getApplication(TenantId tenantId, ApplicationId id) { return repo.findById(tenantId, id); }
+    Application[] listApplications(TenantId tenantId) { return repo.findByTenant(tenantId); }
     Application[] listByProtocol(TenantId tenantId, AppProtocol protocol) { return repo.findByProtocol(tenantId, protocol); }
 
     CommandResult createApplication(ApplicationDTO dto) {
@@ -83,7 +83,7 @@ class ManageApplicationsUseCase {
     }
 
     CommandResult deleteApplication(TenantId tenantId, ApplicationId id) {
-        auto entity = repo.find(tenantId, id);
+        auto entity = repo.findById(tenantId, id);
         if (entity.isNull) return CommandResult(false, "", "Application not found");
         repo.remove(entity);
         return CommandResult(true, id.value, "");

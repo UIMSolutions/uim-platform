@@ -13,22 +13,22 @@ import uim.platform.identity;
 
 class MemoryIdentityProviderRepository : TenantRepository!(IdentityProvider, IdentityProviderId), IdentityProviderRepository {
     IdentityProvider findByEntityId(TenantId tenantId, string entityId) {
-        foreach (idp; find(tenantId))
+        foreach (idp; findByTenant(tenantId))
             if (idp.entityId == entityId) return idp;
         return IdentityProvider.init;
     }
 
     IdentityProvider findDefault(TenantId tenantId) {
-        foreach (idp; find(tenantId))
+        foreach (idp; findByTenant(tenantId))
             if (idp.isDefault) return idp;
         return IdentityProvider.init;
     }
 
     IdentityProvider[] findByStatus(TenantId tenantId, IdpStatus status) {
-        return find(tenantId).filter!(idp => idp.status == status).array;
+        return findByTenant(tenantId).filter!(idp => idp.status == status).array;
     }
 
     IdentityProvider[] findByType(TenantId tenantId, IdpType type_) {
-        return find(tenantId).filter!(idp => idp.type_ == type_).array;
+        return findByTenant(tenantId).filter!(idp => idp.type_ == type_).array;
     }
 }

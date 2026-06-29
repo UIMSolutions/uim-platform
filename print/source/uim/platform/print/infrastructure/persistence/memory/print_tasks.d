@@ -15,15 +15,15 @@ class MemoryPrintTaskRepository
     : TenantRepository!(PrintTask, PrintTaskId), PrintTaskRepository {
 
     PrintTask[] findByQueue(TenantId tenantId, PrintQueueId queueId) {
-        return find(tenantId).filter!(t => t.queueId == queueId).array;
+        return findByTenant(tenantId).filter!(t => t.queueId == queueId).array;
     }
 
     PrintTask[] findByStatus(TenantId tenantId, PrintTaskStatus status) {
-        return find(tenantId).filter!(t => t.status == status).array;
+        return findByTenant(tenantId).filter!(t => t.status == status).array;
     }
 
     PrintTask[] findPendingByQueue(TenantId tenantId, PrintQueueId queueId) {
-        return find(tenantId)
+        return findByTenant(tenantId)
             .filter!(t => t.queueId == queueId && t.status == PrintTaskStatus.pending)
             .array;
     }

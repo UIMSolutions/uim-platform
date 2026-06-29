@@ -51,7 +51,7 @@ class MemoryKeyPasswordRepository : TenantRepository!(KeyPassword, KeyPasswordId
   }
 
   KeyPassword[] findByApplication(TenantId tenantId, string accountId, string applicationId) {
-    return filterByApplication(filterByAccount(find(tenantId), accountId), applicationId);
+    return filterByApplication(filterByAccount(findByTenant(tenantId), accountId), applicationId);
   }
 
   void removeByApplication(TenantId tenantId, string accountId, string applicationId) {

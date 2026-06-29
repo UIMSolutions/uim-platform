@@ -37,11 +37,11 @@ class ManageRuleSetsUseCase { // TODO: UIMUseCase {
   }
 
   RuleSet getRuleSet(TenantId tenantId, RuleSetId id) {
-    return repo.find(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 
   RuleSet[] listRuleSets(TenantId tenantId) {
-    return repo.find(tenantId);
+    return repo.findByTenant(tenantId);
   }
 
   RuleSet[] listByBusinessContext(TenantId tenantId, BusinessContextId contextId) {
@@ -63,7 +63,7 @@ class ManageRuleSetsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult activateRuleSet(TenantId tenantId, RuleSetId id) {
-    auto rs = repo.find(tenantId, id);
+    auto rs = repo.findById(tenantId, id);
     if (rs.isNull)
       return CommandResult(false, "", "Rule set not found");
 
@@ -76,7 +76,7 @@ class ManageRuleSetsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteRuleSet(TenantId tenantId, RuleSetId id) {
-    auto rs = repo.find(tenantId, id);
+    auto rs = repo.findById(tenantId, id);
     if (rs.isNull)
       return CommandResult(false, "", "Rule set not found");
 

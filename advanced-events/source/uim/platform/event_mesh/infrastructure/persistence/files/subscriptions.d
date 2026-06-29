@@ -71,7 +71,7 @@ class FileSubscriptionRepository : MemorySubscriptionRepository {
     private void persistTenant(TenantId tenantId) @trusted {
         auto fp = filePath(tenantId);
         mkdirRecurse(dirName(fp));
-        Json arr = super.find(tenantId).map!(item => item.toJson).array.toJson;
+        Json arr = super.findByTenant(tenantId).map!(item => item.toJson).array.toJson;
         write(fp, arr.toString());
     }
 
@@ -82,7 +82,7 @@ class FileSubscriptionRepository : MemorySubscriptionRepository {
 
     override EventSubscription findById(TenantId tenantId, EventSubscriptionId id) {
         ensureLoaded(tenantId);
-        return super.find(tenantId, id);
+        return super.findById(tenantId, id);
     }
 
     override void save(EventSubscription item) {

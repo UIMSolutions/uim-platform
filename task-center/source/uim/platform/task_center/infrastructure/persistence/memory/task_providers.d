@@ -17,7 +17,7 @@ class MemoryTaskProviderRepository : TenantRepository!(TaskProvider, TaskProvide
         return findByName(tenantId, name).id != TaskProviderId.init;
     }
     TaskProvider findByName(TenantId tenantId, string name) {
-        foreach (p; find(tenantId))
+        foreach (p; findByTenant(tenantId))
             if (p.name == name) return p;
         return TaskProvider.init;
     }
@@ -31,7 +31,7 @@ class MemoryTaskProviderRepository : TenantRepository!(TaskProvider, TaskProvide
     }
 
     TaskProvider[] findByStatus(TenantId tenantId, ProviderStatus status) {
-        return find(tenantId).filter!(p => p.status == status).array;
+        return findByTenant(tenantId).filter!(p => p.status == status).array;
     }
 
     void removeByStatus(TenantId tenantId, ProviderStatus status) {
@@ -42,7 +42,7 @@ class MemoryTaskProviderRepository : TenantRepository!(TaskProvider, TaskProvide
         return findByType(tenantId, ptype).length;
     }
     TaskProvider[] findByType(TenantId tenantId, ProviderType ptype) {
-        return find(tenantId).filter!(p => p.providerType == ptype).array;
+        return findByTenant(tenantId).filter!(p => p.providerType == ptype).array;
     }
 
     void removeByType(TenantId tenantId, ProviderType ptype) {

@@ -22,7 +22,7 @@ class MemoryTriggerRepository : TenantRepository!(Trigger, TriggerId), TriggerRe
     }
 
     Trigger[] findByCommand(TenantId tenantId, CommandId commandId) {
-        return filterByCommand(find(tenantId), commandId);
+        return filterByCommand(findByTenant(tenantId), commandId);
     }
 
     void removeByCommand(TenantId tenantId, CommandId commandId) {
@@ -38,7 +38,7 @@ class MemoryTriggerRepository : TenantRepository!(Trigger, TriggerId), TriggerRe
     }
 
     Trigger[] findByStatus(TenantId tenantId, TriggerStatus status) {
-        return filterByStatus(find(tenantId), status);
+        return filterByStatus(findByTenant(tenantId), status);
     }
 
     void removeByStatus(TenantId tenantId, TriggerStatus status) {

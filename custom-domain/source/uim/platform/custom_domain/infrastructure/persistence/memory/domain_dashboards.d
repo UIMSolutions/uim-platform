@@ -14,7 +14,7 @@ mixin(ShowModule!());
 class MemoryDomainDashboardRepository : TenantRepository!(DomainDashboard, DomainDashboardId), DomainDashboardRepository {
 
     DomainDashboard get(TenantId tenantId) {
-        auto dashboards = find(tenantId);
+        auto dashboards = findByTenant(tenantId);
         if (dashboards.length > 0)
             return dashboards[0];
             
@@ -30,7 +30,7 @@ class MemoryDomainDashboardRepository : TenantRepository!(DomainDashboard, Domai
     }
 
     DomainDashboard[] findByMetricType(TenantId tenantId, DashboardMetricType metricType) {
-        return filterByMetricType(find(tenantId), metricType);
+        return filterByMetricType(findByTenant(tenantId), metricType);
     }
 
     void removeByMetricType(TenantId tenantId, DashboardMetricType metricType) {

@@ -15,21 +15,21 @@ class MemoryDomainMappingRepository : TenantRepository!(DomainMapping, DomainMap
 
     // #region ByCustomRoute
     DomainMapping findByCustomRoute(TenantId tenantId, string customRoute) {
-        foreach (m; find(tenantId)) {
+        foreach (m; findByTenant(tenantId)) {
             if (m.customRoute == customRoute)
                 return m;
         }
         return DomainMapping.init;
     }
     bool existsByCustomRoute(TenantId tenantId, string customRoute) {
-        foreach (m; find(tenantId)) {
+        foreach (m; findByTenant(tenantId)) {
             if (m.customRoute == customRoute)
                 return true;
         }
         return false;
     }
     void removeByCustomRoute(TenantId tenantId, string customRoute) {
-        foreach (m; find(tenantId)) {
+        foreach (m; findByTenant(tenantId)) {
             if (m.customRoute == customRoute) {
                 remove(m);
                 return;
@@ -48,7 +48,7 @@ class MemoryDomainMappingRepository : TenantRepository!(DomainMapping, DomainMap
     }
 
     DomainMapping[] findByDomain(TenantId tenantId, CustomDomainId domainId) {
-        return filterByDomain(find(tenantId), domainId);
+        return filterByDomain(findByTenant(tenantId), domainId);
     }
 
     void removeByDomain(TenantId tenantId, CustomDomainId domainId) {

@@ -43,7 +43,7 @@ class ManageProgramsUseCase {
     }
 
     AbapProgram[] listPrograms(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     CommandResult updateProgram(UpdateProgramRequest r) {

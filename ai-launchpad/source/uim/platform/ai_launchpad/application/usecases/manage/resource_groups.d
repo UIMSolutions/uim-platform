@@ -50,7 +50,7 @@ class ManageResourceGroupsUseCase { // TODO: UIMUseCase {
   }
 
   ResourceGroup[] listResourceGroups(TenantId tenantId) {
-    return repo.find(tenantId);
+    return repo.findByTenant(tenantId);
   }
 
   CommandResult patchResourceGroup(PatchResourceGroupRequest r) {

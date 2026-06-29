@@ -40,11 +40,11 @@ public:
   }
 
   UseCaseResult!(Job[]) list(TenantId tenantId) {
-    return UseCaseResult!(Job[])(true, "", _repo.find(tenantId));
+    return UseCaseResult!(Job[])(true, "", _repo.findByTenant(tenantId));
   }
 
   UseCaseResult!Job get(TenantId tenantId, JobId id) {
-    auto j = _repo.find(tenantId, id);
+    auto j = _repo.findById(tenantId, id);
     if (j.isNull)
       return UseCaseResult!Job(false, "Job not found", Job.init);
     return UseCaseResult!Job(true, "", j);
@@ -65,7 +65,7 @@ public:
   }
 
   UseCaseResult!bool remove(TenantId tenantId, JobId id) {
-    auto j = _repo.find(tenantId, id);
+    auto j = _repo.findById(tenantId, id);
     if (j.isNull)
       return UseCaseResult!bool(false, "Job not found", false);
     j.status = JobStatus.deleted;

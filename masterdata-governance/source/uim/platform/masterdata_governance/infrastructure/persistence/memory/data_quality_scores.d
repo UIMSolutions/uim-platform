@@ -15,17 +15,17 @@ class MemoryDataQualityScoreRepository
     : TenantRepository!(DataQualityScore, DataQualityScoreId), DataQualityScoreRepository {
 
     DataQualityScore findByBusinessPartner(TenantId tenantId, BusinessPartnerId bpId) {
-        auto all = find(tenantId);
+        auto all = findByTenant(tenantId);
         foreach (score; all)
             if (score.businessPartnerId.value == bpId.value) return score;
         return DataQualityScore.init;
     }
 
     DataQualityScore[] findByQualityStatus(TenantId tenantId, QualityStatus status) {
-        return find(tenantId).filter!(e => e.qualityStatus == status).array;
+        return findByTenant(tenantId).filter!(e => e.qualityStatus == status).array;
     }
 
     DataQualityScore[] findBelowScore(TenantId tenantId, int threshold) {
-        return find(tenantId).filter!(e => e.overallScore < threshold).array;
+        return findByTenant(tenantId).filter!(e => e.overallScore < threshold).array;
     }
 }

@@ -96,7 +96,7 @@ class ManageSubaccountsUseCase { // TODO: UIMUseCase {
     if (!repository.existsById(tenantId, id))
       return CommandResult(false, "", "Subaccount not found");
 
-    auto subaccount = repository.find(tenantId, id);
+    auto subaccount = repository.findById(tenantId, id);
     if (subaccount.status != SubaccountStatus.active)
       return CommandResult(false, "", "Subaccount must be active to move");
 
@@ -115,7 +115,7 @@ class ManageSubaccountsUseCase { // TODO: UIMUseCase {
     if (!repository.existsById(tenantId, id))
       return CommandResult(false, "", "Subaccount not found");
 
-    auto subaccount = repository.find(tenantId, id);
+    auto subaccount = repository.findById(tenantId, id);
     if (subaccount.status != SubaccountStatus.active)
       return CommandResult(false, "", "Only active subaccounts can be suspended");
 
@@ -129,7 +129,7 @@ class ManageSubaccountsUseCase { // TODO: UIMUseCase {
     if (!repository.existsById(tenantId, id))
       return CommandResult(false, "", "Subaccount not found");
 
-    auto subaccount = repository.find(tenantId, id);
+    auto subaccount = repository.findById(tenantId, id);
     if (subaccount.status != SubaccountStatus.suspended)
       return CommandResult(false, "", "Only suspended subaccounts can be reactivated");
 
@@ -140,7 +140,7 @@ class ManageSubaccountsUseCase { // TODO: UIMUseCase {
   }
 
   Subaccount getSubaccount(TenantId tenantId, SubaccountId id) {
-    return repository.find(tenantId, id);
+    return repository.findById(tenantId, id);
   }
 
   Subaccount[] listSubaccounts(TenantId tenantId, GlobalAccountId gaId) {
@@ -156,7 +156,7 @@ class ManageSubaccountsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteSubaccount(TenantId tenantId, SubaccountId id) {
-    auto subaccount = repository.find(tenantId, id);
+    auto subaccount = repository.findById(tenantId, id);
     if (subaccount.isNull)
       return CommandResult(false, "", "Subaccount not found");
 

@@ -20,7 +20,7 @@ class MemorySmartformRepository : TenantRepository!(Smartform, SmartformId), Sma
         return smartforms.filter!(e => e.serviceCallId == serviceCallId).array;
     }
     Smartform[] findByServiceCall(TenantId tenantId, ServiceCallId serviceCallId) {
-        return find(tenantId).filter!(e => e.tenantId == tenantId && e.serviceCallId == serviceCallId).array;
+        return findByTenant(tenantId).filter!(e => e.tenantId == tenantId && e.serviceCallId == serviceCallId).array;
     }
     void removeByServiceCall(TenantId tenantId, ServiceCallId serviceCallId) {
         findByServiceCall(tenantId, serviceCallId).each!(entity => remove(entity));
@@ -33,7 +33,7 @@ class MemorySmartformRepository : TenantRepository!(Smartform, SmartformId), Sma
         return smartforms.filter!(e => e.activityId == activityId).array;
     }
     Smartform[] findByActivity(TenantId tenantId, ActivityId activityId) {
-        return find(tenantId).filter!(e => e.tenantId == tenantId && e.activityId == activityId).array;
+        return findByTenant(tenantId).filter!(e => e.tenantId == tenantId && e.activityId == activityId).array;
     }
     void removeByActivity(TenantId tenantId, ActivityId activityId) {
         findByActivity(tenantId, activityId).each!(entity => remove(entity));
@@ -46,7 +46,7 @@ class MemorySmartformRepository : TenantRepository!(Smartform, SmartformId), Sma
         return smartforms.filter!(e => e.status == status).array;
     }   
     Smartform[] findByStatus(TenantId tenantId, SmartformStatus status) {
-        return find(tenantId).filter!(e => e.tenantId == tenantId && e.status == status).array;
+        return findByTenant(tenantId).filter!(e => e.tenantId == tenantId && e.status == status).array;
     }
     void removeByStatus(TenantId tenantId, SmartformStatus status) {
         findByStatus(tenantId, status).each!(entity => remove(entity));

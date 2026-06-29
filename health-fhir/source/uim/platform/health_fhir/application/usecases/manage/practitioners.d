@@ -61,7 +61,7 @@ class ManagePractitionersUseCase {
   }
 
   Practitioner getPractitioner(TenantId tenantId, PractitionerId id) {
-    return repo.find(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 
   Practitioner[] listPractitioners(TenantId tenantId) {
@@ -69,7 +69,7 @@ class ManagePractitionersUseCase {
   }
 
   CommandResult deletePractitioner(TenantId tenantId, PractitionerId id) {
-    auto entity = repo.find(tenantId, id);
+    auto entity = repo.findById(tenantId, id);
     if (entity.isNull)
       return CommandResult(false, "", "Practitioner not found");
     repo.remove(entity);

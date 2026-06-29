@@ -46,7 +46,7 @@ class MemoryKeystoreRepository : TenantRepository!(Keystore, KeystoreId), Keysto
   }
 
   Keystore[] findByAccount(TenantId tenantId, string accountId) {
-    return filterByAccount(find(tenantId), accountId);
+    return filterByAccount(findByTenant(tenantId), accountId);
   }
 
   void removeByAccount(TenantId tenantId, string accountId) {

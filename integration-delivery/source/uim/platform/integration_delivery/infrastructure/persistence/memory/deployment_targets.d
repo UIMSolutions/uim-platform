@@ -15,14 +15,14 @@ import std.array : array;
 
 class MemoryDeploymentTargetRepository : TenantRepository!(DeploymentTarget, DeploymentTargetId), DeploymentTargetRepository {
     DeploymentTarget[] findByStatus(TenantId tenantId, DeploymentTargetStatus status) {
-        return find(tenantId).filter!(d => d.status == status).array;
+        return findByTenant(tenantId).filter!(d => d.status == status).array;
     }
 
     DeploymentTarget[] findByType(TenantId tenantId, DeploymentTargetType type) {
-        return find(tenantId).filter!(d => d.targetType == type).array;
+        return findByTenant(tenantId).filter!(d => d.targetType == type).array;
     }
 
     bool nameExists(TenantId tenantId, string name) {
-        return find(tenantId).any!(d => d.name == name);
+        return findByTenant(tenantId).any!(d => d.name == name);
     }
 }

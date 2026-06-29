@@ -16,11 +16,11 @@ class MemoryTeamTypeRepository
       TeamTypeRepository {
 
     TeamType[] findByCategory(TenantId tenantId, string categoryId) {
-        return find(tenantId).filter!(t => t.categoryId == categoryId).array;
+        return findByTenant(tenantId).filter!(t => t.categoryId == categoryId).array;
     }
 
     TeamType findByCode(TenantId tenantId, string code) {
-        auto items = find(tenantId).filter!(t => t.code == code).array;
+        auto items = findByTenant(tenantId).filter!(t => t.code == code).array;
         return items.length > 0 ? items[0] : TeamType.init;
     }
 }

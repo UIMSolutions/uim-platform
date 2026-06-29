@@ -53,11 +53,11 @@ class MongoEventFilterRepository : EventFilterRepository {
         ]);
     }
 
-    bool isTenantEmpty(TenantId tenantId)  { return find(tenantId).length == 0; }
+    bool isTenantEmpty(TenantId tenantId)  { return findByTenant(tenantId).length == 0; }
     void createTenant(TenantId tenantId)    {}
     TenantId[] findAllTenants()             { return []; }
     bool existsByTenant(TenantId tenantId)  { return !isTenantEmpty(tenantId); }
-    size_t countByTenant(TenantId tenantId) { return find(tenantId).length; }
+    size_t countByTenant(TenantId tenantId) { return findByTenant(tenantId).length; }
     EventFilter[] filterByTenant(EventFilter[] items, TenantId tenantId) {
         return items.filter!(e => e.tenantId == tenantId).array;
     }
@@ -94,7 +94,7 @@ class MongoEventFilterRepository : EventFilterRepository {
     EventFilter[] findAllById(TenantId tenantId, EventFilterId[] ids) {
         EventFilter[] result;
         foreach (id; ids) {
-            auto e = find(tenantId, id);
+            auto e = findById(tenantId, id);
             if (!e.isNull) result ~= e;
         }
         return result;
@@ -125,10 +125,10 @@ class MongoEventFilterRepository : EventFilterRepository {
     void removeAll() @trusted { _collection.remove(Bson.emptyObject); }
 
     override EventFilter[] findBySubscription(TenantId tenantId, EventSubscriptionId subscriptionId) {
-        return find(tenantId).filter!(e => e.subscriptionId.value == subscriptionId.value).array;
+        return findByTenant(tenantId).filter!(e => e.subscriptionId.value == subscriptionId.value).array;
     }
 
     override EventFilter[] findActive(TenantId tenantId) {
-        return find(tenantId).filter!(e => e.active).array;
+        return findByTenant(tenantId).filter!(e => e.active).array;
     }
 }

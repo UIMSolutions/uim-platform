@@ -78,7 +78,7 @@ class ManageAlertsUseCase : TenantUseCase!(AlertRepository, Alert, AlertId) {
   }
 
   CommandResult deleteAlert(TenantId tenantId, AlertId id) {
-    auto alert = repository.find(tenantId, id);
+    auto alert = repository.findById(tenantId, id);
     if (alert.isNull)
       return CommandResult(false, "", "Alert not found");
 

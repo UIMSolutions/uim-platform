@@ -27,7 +27,7 @@ class MemoryEnvironmentEventRepository : TenantRepository!(EnvironmentEvent, Env
   }
 
   EnvironmentEvent[] findByGlobalAccount(TenantId tenantId, GlobalAccountId globalAccountId) {
-    return filterByGlobalAccount(find(tenantId), globalAccountId);
+    return filterByGlobalAccount(findByTenant(tenantId), globalAccountId);
   }
 
   void removeByGlobalAccount(TenantId tenantId, GlobalAccountId globalAccountId) {
@@ -45,7 +45,7 @@ class MemoryEnvironmentEventRepository : TenantRepository!(EnvironmentEvent, Env
   }
 
   EnvironmentEvent[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
-    return filterBySubaccount(find(tenantId), subaccountId);
+    return filterBySubaccount(findByTenant(tenantId), subaccountId);
   }
 
   void removeBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
@@ -63,7 +63,7 @@ class MemoryEnvironmentEventRepository : TenantRepository!(EnvironmentEvent, Env
   }
 
   EnvironmentEvent[] findByCategory(TenantId tenantId, GlobalAccountId globalAccountId, EnvironmentEventCategory category) {
-    return filterByCategory(filterByGlobalAccount(find(tenantId), globalAccountId), category);
+    return filterByCategory(filterByGlobalAccount(findByTenant(tenantId), globalAccountId), category);
   }
 
   void removeByCategory(TenantId tenantId, GlobalAccountId globalAccountId, EnvironmentEventCategory category) {
@@ -81,7 +81,7 @@ class MemoryEnvironmentEventRepository : TenantRepository!(EnvironmentEvent, Env
   }
 
   EnvironmentEvent[] findBySeverity(TenantId tenantId, GlobalAccountId globalAccountId, EnvironmentEventSeverity severity) {
-    return filterBySeverity(filterByGlobalAccount(find(tenantId), globalAccountId), severity);
+    return filterBySeverity(filterByGlobalAccount(findByTenant(tenantId), globalAccountId), severity);
   }
   
   void removeBySeverity(TenantId tenantId, GlobalAccountId globalAccountId, EnvironmentEventSeverity severity) {
@@ -99,7 +99,7 @@ class MemoryEnvironmentEventRepository : TenantRepository!(EnvironmentEvent, Env
   }
 
   EnvironmentEvent[] findSince(TenantId tenantId, GlobalAccountId globalAccountId, long sinceTimestamp) {
-    return filterSince(filterByGlobalAccount(find(tenantId), globalAccountId), sinceTimestamp);
+    return filterSince(filterByGlobalAccount(findByTenant(tenantId), globalAccountId), sinceTimestamp);
   }
 
   void removeSince(TenantId tenantId, GlobalAccountId globalAccountId, long sinceTimestamp) {

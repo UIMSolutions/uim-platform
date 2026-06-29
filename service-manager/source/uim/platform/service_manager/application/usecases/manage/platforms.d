@@ -14,11 +14,11 @@ class ManagePlatformsUseCase { // TODO: UIMUseCase {
     }
 
     Platform[] listPlatforms(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     Platform getPlatform(TenantId tenantId, PlatformId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     CommandResult createPlatform(CreatePlatformRequest dto) {
@@ -64,7 +64,7 @@ class ManagePlatformsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deletePlatform(TenantId tenantId, PlatformId id) {
-        auto platform = repo.find(tenantId, id);
+        auto platform = repo.findById(tenantId, id);
         if (platform.isNull)
             return CommandResult(false, "", "Platform not found");
 

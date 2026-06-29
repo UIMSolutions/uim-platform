@@ -22,7 +22,7 @@ class MemoryCustomerRepository : TenantRepository!(Customer, CustomerId), Custom
     }
 
     Customer[] findByType(TenantId tenantId, CustomerType customerType) {
-        return filterByType(find(tenantId), customerType);
+        return filterByType(findByTenant(tenantId), customerType);
     }
 
     void removeByType(TenantId tenantId, CustomerType customerType) {
@@ -38,7 +38,7 @@ class MemoryCustomerRepository : TenantRepository!(Customer, CustomerId), Custom
     }
 
     Customer[] findByStatus(TenantId tenantId, CustomerStatus status) {
-        return filterByStatus(find(tenantId), status);
+        return filterByStatus(findByTenant(tenantId), status);
     }
 
     void removeByStatus(TenantId tenantId, CustomerStatus status) {

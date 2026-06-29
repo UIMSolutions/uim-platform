@@ -24,7 +24,7 @@ bool existsLatest(TenantId tenantId, MobileAppId appId, AppPlatform platform) {
   AppVersion findLatest(TenantId tenantId, MobileAppId appId, AppPlatform platform) {
     AppVersion latest = AppVersion.init;
     bool found = false;
-    foreach (v; find(tenantId)) {
+    foreach (v; findByTenant(tenantId)) {
       if (v.appId == appId && v.platform == platform) {
         if (!found || v.publishedAt > latest.publishedAt) {
           latest = v;
@@ -48,7 +48,7 @@ bool existsLatest(TenantId tenantId, MobileAppId appId, AppPlatform platform) {
   }
 
   AppVersion[] findByApp(TenantId tenantId, MobileAppId appId) {
-    return filterByApp(find(tenantId), appId);
+    return filterByApp(findByTenant(tenantId), appId);
   }
 
   void removeByApp(TenantId tenantId, MobileAppId appId) {

@@ -19,21 +19,21 @@ import uim.platform.foundry;
 class MemoryBuildpackRepository : TenantRepository!(Buildpack, BuildpackId), IBuildpackRepository {
 
   bool existsByName(TenantId tenantId, string name) {
-    foreach (e; find(tenantId))
+    foreach (e; findByTenant(tenantId))
       if (e.name == name)
         return true;
     return false;
   }
 
   Buildpack findByName(TenantId tenantId, string name) {
-    foreach (e; find(tenantId))
+    foreach (e; findByTenant(tenantId))
       if (e.name == name)
         return e;
     return Buildpack.init;
   }
 
   void removeByName(TenantId tenantId, string name) {
-    foreach (e; find(tenantId))
+    foreach (e; findByTenant(tenantId))
       if (e.name == name)
         return remove(e);
   }
@@ -49,7 +49,7 @@ class MemoryBuildpackRepository : TenantRepository!(Buildpack, BuildpackId), IBu
   }
 
   Buildpack[] findEnabled(TenantId tenantId) {
-    return filterEnabled(find(tenantId));
+    return filterEnabled(findByTenant(tenantId));
   }
 
   void removeEnabled(TenantId tenantId) {
@@ -67,7 +67,7 @@ class MemoryBuildpackRepository : TenantRepository!(Buildpack, BuildpackId), IBu
   }
 
   Buildpack[] findByStack(TenantId tenantId, string stack) {
-    return filterByStack(find(tenantId), stack);
+    return filterByStack(findByTenant(tenantId), stack);
   }
 
   void removeByStack(TenantId tenantId, string stack) {

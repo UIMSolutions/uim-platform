@@ -15,18 +15,18 @@ import uim.platform.dms.application;
 @safe:
 class MemoryFolderRepository : TenantRepository!(Folder, FolderId), IFolderRepository {
   bool existsByPath(TenantId tenantId, RepositoryId repositoryId, string path) {
-    return find(tenantId).any!(e => e.repositoryId == repositoryId && e.path == path);
+    return findByTenant(tenantId).any!(e => e.repositoryId == repositoryId && e.path == path);
   }
 
   Folder findByPath(TenantId tenantId, RepositoryId repositoryId, string path) {
-    foreach (e; find(tenantId))
+    foreach (e; findByTenant(tenantId))
       if (e.repositoryId == repositoryId && e.path == path)
         return e;
     return Folder.init;
   }
 
   void removeByPath(TenantId tenantId, RepositoryId repositoryId, string path) {
-    foreach (e; find(tenantId))
+    foreach (e; findByTenant(tenantId))
       if (e.repositoryId == repositoryId && e.path == path)
         remove(e);
   }
@@ -36,7 +36,7 @@ class MemoryFolderRepository : TenantRepository!(Folder, FolderId), IFolderRepos
   }
 
   Folder[] findByRepository(TenantId tenantId, RepositoryId repositoryId) {
-    return find(tenantId).filter!(e => e.repositoryId == repositoryId).array;
+    return findByTenant(tenantId).filter!(e => e.repositoryId == repositoryId).array;
   }
 
   void removeByRepository(TenantId tenantId, RepositoryId repositoryId) {
@@ -48,7 +48,7 @@ class MemoryFolderRepository : TenantRepository!(Folder, FolderId), IFolderRepos
   }
 
   Folder[] findByParent(TenantId tenantId, FolderId parentFolderId) {
-    return find(tenantId).filter!(e => e.parentFolderId == parentFolderId).array;
+    return findByTenant(tenantId).filter!(e => e.parentFolderId == parentFolderId).array;
   }
 
   void removeByParent(TenantId tenantId, FolderId parentFolderId) {

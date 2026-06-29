@@ -53,7 +53,7 @@ class CleanseAddressesUseCase { // TODO: UIMUseCase {
 
   /// Retrieve cleansed addresses by tenant.
   AddressRecord[] getByTenant(TenantId tenantId) {
-    return repo.find(tenantId);
+    return repo.findByTenant(tenantId);
   }
 
   /// Retrieve by source record.

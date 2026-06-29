@@ -19,7 +19,7 @@ class ManageDocumentVersionsUseCase {
     }
 
     DocumentVersion getDocumentVersion(TenantId tenantId, DocumentVersionId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     DocumentVersion[] listVersionsByDocument(TenantId tenantId, DocumentId documentId) {
@@ -59,7 +59,7 @@ class ManageDocumentVersionsUseCase {
     }
 
     CommandResult deleteDocumentVersion(TenantId tenantId, DocumentVersionId id) {
-        auto existing = repo.find(tenantId, id);
+        auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Document version not found");
         if (existing.isLatestVersion)

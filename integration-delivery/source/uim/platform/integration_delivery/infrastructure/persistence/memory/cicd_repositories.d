@@ -15,15 +15,15 @@ import std.array : array;
 
 class MemoryCicdRepositoryRepository : TenantRepository!(CicdRepository, CicdRepositoryId), CicdRepositoryRepository {
     CicdRepository[] findByStatus(TenantId tenantId, RepositoryStatus status) {
-        return find(tenantId).filter!(r => r.status == status).array;
+        return findByTenant(tenantId).filter!(r => r.status == status).array;
     }
 
     CicdRepository[] findByType(TenantId tenantId, RepositoryType type) {
-        return find(tenantId).filter!(r => r.repositoryType == type).array;
+        return findByTenant(tenantId).filter!(r => r.repositoryType == type).array;
     }
 
     CicdRepository findByUrl(TenantId tenantId, string url) {
-        auto results = find(tenantId).filter!(r => r.url == url).array;
+        auto results = findByTenant(tenantId).filter!(r => r.url == url).array;
         return results.length > 0 ? results[0] : CicdRepository.init;
     }
 }

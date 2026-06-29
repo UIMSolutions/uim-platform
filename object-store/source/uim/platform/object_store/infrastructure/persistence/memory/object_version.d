@@ -19,11 +19,11 @@ mixin(ShowModule!());
 class MemoryObjectVersionRepository : TenantRepository!(ObjectVersion, ObjectVersionId),  ObjectVersionRepository {
 
   bool existsLatest(TenantId tenantId, StorageObjectId objectId) {
-    return find(tenantId).any!(e => e.objectId == objectId && e.isLatest);
+    return findByTenant(tenantId).any!(e => e.objectId == objectId && e.isLatest);
   }
 
   ObjectVersion findLatest(TenantId tenantId, StorageObjectId objectId) {
-    foreach (e; find(tenantId))
+    foreach (e; findByTenant(tenantId))
       if (e.objectId == objectId && e.isLatest)
         return e;
     return ObjectVersion.init;
@@ -42,7 +42,7 @@ class MemoryObjectVersionRepository : TenantRepository!(ObjectVersion, ObjectVer
   }
 
   ObjectVersion[] findByObject(TenantId tenantId, StorageObjectId objectId) {
-    return find(tenantId).filter!(e => e.objectId == objectId).array;
+    return findByTenant(tenantId).filter!(e => e.objectId == objectId).array;
   }
 
   void removeByObject(TenantId tenantId, StorageObjectId objectId) {

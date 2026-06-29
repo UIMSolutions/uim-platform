@@ -22,7 +22,7 @@ class MemoryRetentionRuleRepository : TenantRepository!(RetentionRule, Retention
     RetentionRule[] findByApplication(TenantId tenantId, RegisteredApplicationId applicationId) {
         import std.algorithm : canFind;
         RetentionRule[] result;
-        foreach (v; find(tenantId))
+        foreach (v; findByTenant(tenantId))
             if (v.applicationIds.canFind(applicationId)) result ~= v;
         return result;
     }
@@ -37,7 +37,7 @@ class MemoryRetentionRuleRepository : TenantRepository!(RetentionRule, Retention
         return rules.filter!(v => v.status == status).array;
     }
     RetentionRule[] findByStatus(TenantId tenantId, RetentionRuleStatus status) {
-        return filterByStatus(find(tenantId), status);
+        return filterByStatus(findByTenant(tenantId), status);
     }
     void removeByStatus(TenantId tenantId, RetentionRuleStatus status) {
         findByStatus(tenantId,status).each!(v => store.remove(v));

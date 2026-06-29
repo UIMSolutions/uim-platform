@@ -21,7 +21,7 @@ class MemoryEquipmentRepository : TenantRepository!(Equipment, EquipmentId), Equ
     }
 
     Equipment[] findByCustomer(TenantId tenantId, CustomerId customerId) {
-        return filterByCustomer(find(tenantId), customerId);
+        return filterByCustomer(findByTenant(tenantId), customerId);
     }
     void removeByCustomer(TenantId tenantId, CustomerId customerId) {
         findByCustomer(tenantId, customerId).each!(e => remove(e));
@@ -36,7 +36,7 @@ class MemoryEquipmentRepository : TenantRepository!(Equipment, EquipmentId), Equ
         }
 
     Equipment[] findByType(TenantId tenantId, EquipmentType equipmentType) {
-        return filterByType(find(tenantId), equipmentType);
+        return filterByType(findByTenant(tenantId), equipmentType);
     }
     void removeByType(TenantId tenantId, EquipmentType equipmentType) {
         findByType(tenantId, equipmentType).each!(e => remove(e));
@@ -49,7 +49,7 @@ class MemoryEquipmentRepository : TenantRepository!(Equipment, EquipmentId), Equ
         return equipment.filter!(e => e.status == status).array;
     }
     Equipment[] findByStatus(TenantId tenantId, EquipmentStatus status) {
-        return filterByStatus(find(tenantId), status);
+        return filterByStatus(findByTenant(tenantId), status);
     }
     void removeByStatus(TenantId tenantId, EquipmentStatus status) {
         findByStatus(tenantId, status).each!(e => remove(e));

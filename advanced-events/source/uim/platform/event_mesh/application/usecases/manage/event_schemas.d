@@ -23,7 +23,7 @@ class ManageEventSchemasUseCase { // TODO: UIMUseCase {
     }
 
     EventSchema[] listSchemas(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     EventSchema[] listSchemas(TenantId tenantId, SchemaFormat format) {

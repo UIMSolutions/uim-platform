@@ -47,11 +47,11 @@ class ManageLegalGroundsUseCase { // TODO: UIMUseCase {
   }
 
   LegalGround getGround(TenantId tenantId, LegalGroundId id) {
-    return legalGrounds.find(tenantId, id);
+    return legalGrounds.findById(tenantId, id);
   }
 
   LegalGround[] listGrounds(TenantId tenantId) {
-    return legalGrounds.find(tenantId);
+    return legalGrounds.findByTenant(tenantId);
   }
 
   LegalGround[] listGrounds(TenantId tenantId, DataSubjectId subjectId) {
@@ -86,7 +86,7 @@ class ManageLegalGroundsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteGround(TenantId tenantId, LegalGroundId id) {
-    auto ground = legalGrounds.find(tenantId, id);
+    auto ground = legalGrounds.findById(tenantId, id);
     if (ground.isNull)
       return CommandResult(false, "", "Legal ground not found");
 

@@ -68,7 +68,7 @@ class ManageBusinessRolesUseCase { // TODO: UIMUseCase {
   }
 
   BusinessRole getBusinessRole(TenantId tenantId, BusinessRoleId id) {
-    return repo.find(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 
   BusinessRole[] listBusinessRoles(TenantId tenantId, SystemInstanceId systemId) {
@@ -76,7 +76,7 @@ class ManageBusinessRolesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteBusinessRole(TenantId tenantId, BusinessRoleId id) {
-    auto role = repo.find(tenantId, id);
+    auto role = repo.findById(tenantId, id);
     if (role.isNull)
       return CommandResult(false, "", "Business role not found");
 

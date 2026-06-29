@@ -50,11 +50,11 @@ class ManageTranslationProjectsUseCase {
     }
 
     TranslationProject[] listProjects(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     TranslationProject getProject(TenantId tenantId, TranslationProjectId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     CommandResult updateProject(UpdateTranslationProjectRequest r) {
@@ -82,7 +82,7 @@ class ManageTranslationProjectsUseCase {
     }
 
     CommandResult deleteProject(TenantId tenantId, TranslationProjectId id) {
-        auto existing = repo.find(tenantId, id);
+        auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Translation project not found");
 

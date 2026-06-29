@@ -16,7 +16,7 @@ class MemoryDataSourceConfigRepository
 
   DataSourceConfig[] findByProduct(TenantId tenantId, DataProductId productId) {
     DataSourceConfig[] result;
-    foreach (item; find(tenantId)) {
+    foreach (item; findByTenant(tenantId)) {
       if (item.dataProductId.value == productId.value) result ~= item;
     }
     return result;
@@ -24,7 +24,7 @@ class MemoryDataSourceConfigRepository
 
   DataSourceConfig[] findEnabled(TenantId tenantId) {
     DataSourceConfig[] result;
-    foreach (item; find(tenantId)) {
+    foreach (item; findByTenant(tenantId)) {
       if (item.enabled) result ~= item;
     }
     return result;

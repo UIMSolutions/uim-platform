@@ -14,10 +14,10 @@ import uim.platform.abap_environment;
 class MemorySystemInstanceRepository : TenantRepository!(SystemInstance, SystemInstanceId), SystemInstanceRepository {
 
   bool existsByName(TenantId tenantId, string name) {
-    return find(tenantId).any!(e => e.tenantId == tenantId && e.name == name);
+    return findByTenant(tenantId).any!(e => e.tenantId == tenantId && e.name == name);
   }
   SystemInstance findByName(TenantId tenantId, string name) {
-    foreach (e; find(tenantId))
+    foreach (e; findByTenant(tenantId))
       if (e.tenantId == tenantId && e.name == name)
         return e;
     return SystemInstance.init;
@@ -38,7 +38,7 @@ class MemorySystemInstanceRepository : TenantRepository!(SystemInstance, SystemI
   }
 
   SystemInstance[] findByStatus(TenantId tenantId, SystemStatus status) {
-    return filterByStatus(find(tenantId), status);
+    return filterByStatus(findByTenant(tenantId), status);
   }
 
   void removeByStatus(TenantId tenantId, SystemStatus status) {

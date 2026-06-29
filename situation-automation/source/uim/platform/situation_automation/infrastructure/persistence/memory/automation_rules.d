@@ -20,7 +20,7 @@ class MemoryAutomationRuleRepository : TenantRepository!(AutomationRule, Automat
         return rules.filter!(r => r.situationTemplateId == templateId).array;
     }
     AutomationRule[] findByTemplate(TenantId tenantId, SituationTemplateId templateId) {
-        return filterByTemplate(find(tenantId), templateId);
+        return filterByTemplate(findByTenant(tenantId), templateId);
     }
     void removeByTemplate(TenantId tenantId, SituationTemplateId templateId) {
         findByTemplate(tenantId, templateId).each!(r => remove(r));
@@ -35,7 +35,7 @@ class MemoryAutomationRuleRepository : TenantRepository!(AutomationRule, Automat
         return rules.filter!(r => r.enabled && r.status == RuleStatus.active).array;
     }
     AutomationRule[] findActive(TenantId tenantId) {
-        return filterActive(find(tenantId));
+        return filterActive(findByTenant(tenantId));
     }
     void removeActive(TenantId tenantId) {
         findActive(tenantId).each!(r => remove(r));

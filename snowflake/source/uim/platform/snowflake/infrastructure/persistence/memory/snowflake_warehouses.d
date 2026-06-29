@@ -8,14 +8,14 @@ class MemorySnowflakeWarehouseRepository
 
   SnowflakeWarehouse[] findByAccount(TenantId tenantId, SnowflakeAccountId accountId) {
     SnowflakeWarehouse[] result;
-    foreach (item; find(tenantId))
+    foreach (item; findByTenant(tenantId))
       if (item.accountId.value == accountId.value) result ~= item;
     return result;
   }
 
   SnowflakeWarehouse[] findByStatus(TenantId tenantId, WarehouseStatus status) {
     SnowflakeWarehouse[] result;
-    foreach (item; find(tenantId))
+    foreach (item; findByTenant(tenantId))
       if (item.status == status) result ~= item;
     return result;
   }

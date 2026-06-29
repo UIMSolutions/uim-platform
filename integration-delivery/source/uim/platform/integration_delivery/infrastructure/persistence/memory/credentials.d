@@ -15,14 +15,14 @@ import std.array : array;
 
 class MemoryCredentialRepository : TenantRepository!(Credential, CredentialId), CredentialRepository {
     Credential[] findByStatus(TenantId tenantId, CredentialStatus status) {
-        return find(tenantId).filter!(c => c.status == status).array;
+        return findByTenant(tenantId).filter!(c => c.status == status).array;
     }
 
     Credential[] findByType(TenantId tenantId, CredentialType type) {
-        return find(tenantId).filter!(c => c.credentialType == type).array;
+        return findByTenant(tenantId).filter!(c => c.credentialType == type).array;
     }
 
     bool nameExists(TenantId tenantId, string name) {
-        return find(tenantId).any!(c => c.name == name);
+        return findByTenant(tenantId).any!(c => c.name == name);
     }
 }

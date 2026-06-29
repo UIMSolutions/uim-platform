@@ -161,7 +161,7 @@ class ManageApplicationsUseCase { // TODO: UIMUseCase {
   }
 
   Application[] listByTenant(TenantId tenantId) {
-    return appRepository.find(tenantId);
+    return appRepository.findByTenant(tenantId);
   }
 
   CommandResult deleteApplication(TenantId tenantId, string appId) {

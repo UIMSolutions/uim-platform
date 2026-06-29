@@ -77,15 +77,15 @@ class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
   }
 
   NotificationChannel getChannel(TenantId tenantId, NotificationChannelId id) {
-    return repo.find(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 
   NotificationChannel[] listChannels(TenantId tenantId) {
-    return repo.find(tenantId);
+    return repo.findByTenant(tenantId);
   }
 
   CommandResult deleteChannel(TenantId tenantId, NotificationChannelId id) {
-    auto channel = repo.find(tenantId, id);
+    auto channel = repo.findById(tenantId, id);
     if (channel.isNull)
       return CommandResult(false, "", "Notification channel not found");
 

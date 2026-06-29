@@ -14,16 +14,16 @@ import uim.platform.customer_identity;
 class MemoryCustomerSessionRepository : TenantRepository!(CustomerSession, CustomerSessionId), CustomerSessionRepository {
 
     CustomerSession findByToken(TenantId tenantId, string token) {
-        auto items = find(tenantId).filter!(s => s.token == token).array;
+        auto items = findByTenant(tenantId).filter!(s => s.token == token).array;
         return items.length > 0 ? items[0] : CustomerSession.init;
     }
 
     CustomerSession[] findByCustomer(TenantId tenantId, CustomerId customerId) {
-        return find(tenantId).filter!(s => s.customerId.value == customerId.value).array;
+        return findByTenant(tenantId).filter!(s => s.customerId.value == customerId.value).array;
     }
 
     CustomerSession[] findActive(TenantId tenantId) {
-        return find(tenantId).filter!(s => s.status == SessionStatus.active).array;
+        return findByTenant(tenantId).filter!(s => s.status == SessionStatus.active).array;
     }
 
     void revokeByCustomer(TenantId tenantId, CustomerId customerId) {

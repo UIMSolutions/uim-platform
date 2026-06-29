@@ -18,7 +18,7 @@ class MemoryDataSubjectRequestRepository : TenantRepository!(DataSubjectRequest,
     }
     DataSubjectRequest[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
         DataSubjectRequest[] result;
-        foreach (v; find(tenantId))
+        foreach (v; findByTenant(tenantId))
             if (v.dataSubjectId == dataSubjectId) result ~= v;
         return result;
     }
@@ -33,7 +33,7 @@ class MemoryDataSubjectRequestRepository : TenantRepository!(DataSubjectRequest,
         return requests.filter!(v => v.status == status).array;
     }
     DataSubjectRequest[] findByStatus(TenantId tenantId, RequestStatus status) {
-        return filterByStatus(find(tenantId), status);
+        return filterByStatus(findByTenant(tenantId), status);
     }
 
     void removeByStatus(TenantId tenantId, RequestStatus status) {
@@ -45,7 +45,7 @@ class MemoryDataSubjectRequestRepository : TenantRepository!(DataSubjectRequest,
     }
     DataSubjectRequest[] findByAssignee(TenantId tenantId, string assignedTo) {
         DataSubjectRequest[] result;
-        foreach (v; find(tenantId))
+        foreach (v; findByTenant(tenantId))
             if (v.assignedTo == assignedTo) result ~= v;
         return result;
     }

@@ -47,7 +47,7 @@ class ManageTriggersUseCase { // TODO: UIMUseCase {
     }
 
     Trigger[] listTriggers(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     Trigger[] listTriggers(TenantId tenantId, ProcessId processId) {

@@ -18,7 +18,7 @@ class MemoryMtaOperationRepository
     /// Find all operations for a given MTA application ID
     MtaOperation[] findByMtaId(TenantId tenantId, string mtaId) {
         MtaOperation[] result;
-        foreach (op; find(tenantId))
+        foreach (op; findByTenant(tenantId))
             if (op.mtaId == mtaId) result ~= op;
         return result;
     }
@@ -26,7 +26,7 @@ class MemoryMtaOperationRepository
     /// Find all operations with a given status
     MtaOperation[] findByStatus(TenantId tenantId, OperationStatus status) {
         MtaOperation[] result;
-        foreach (op; find(tenantId))
+        foreach (op; findByTenant(tenantId))
             if (op.operationStatus == status) result ~= op;
         return result;
     }

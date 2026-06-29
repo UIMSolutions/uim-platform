@@ -19,11 +19,11 @@ class ManageSocialIdentitiesUseCase {
     }
 
     SocialIdentity getSocialIdentity(TenantId tenantId, SocialIdentityId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     SocialIdentity[] listSocialIdentities(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     SocialIdentity[] listByCustomer(TenantId tenantId, CustomerId customerId) {
@@ -55,7 +55,7 @@ class ManageSocialIdentitiesUseCase {
     }
 
     CommandResult unlinkSocialIdentity(TenantId tenantId, SocialIdentityId id) {
-        auto existing = repo.find(tenantId, id);
+        auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Social identity not found");
 
@@ -65,7 +65,7 @@ class ManageSocialIdentitiesUseCase {
     }
 
     CommandResult deleteSocialIdentity(TenantId tenantId, SocialIdentityId id) {
-        auto existing = repo.find(tenantId, id);
+        auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Social identity not found");
 

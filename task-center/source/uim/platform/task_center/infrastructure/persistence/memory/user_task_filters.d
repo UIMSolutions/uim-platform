@@ -17,7 +17,7 @@ class MemoryUserTaskFilterRepository : TenantRepository!(UserTaskFilter, UserTas
     //     return findDefault(tenantId, userId).id != UserTaskFilterId.init;
     // }
     // UserTaskFilter findDefault(TenantId tenantId, UserId userId) {
-    //     foreach (f; find(tenantId))
+    //     foreach (f; findByTenant(tenantId))
     //         if (f.isDefault) return f;
     //     return UserTaskFilter.init;
     // }
@@ -33,7 +33,7 @@ class MemoryUserTaskFilterRepository : TenantRepository!(UserTaskFilter, UserTas
     }
 
     UserTaskFilter[] findByUser(TenantId tenantId, UserId userId) {
-        return find(tenantId).filter!(f => f.userId == userId).array;
+        return findByTenant(tenantId).filter!(f => f.userId == userId).array;
     }
     
     void removeByUser(TenantId tenantId, UserId userId) {

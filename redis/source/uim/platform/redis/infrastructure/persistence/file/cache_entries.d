@@ -31,7 +31,7 @@ class FileCacheEntryRepository
         auto path = filePath(tenantId);
         mkdirRecurse(path[0 .. path.lastIndexOf('/')]);
         Json arr = Json.emptyArray;
-        foreach (i; find(tenantId)) arr ~= i.toJson();
+        foreach (i; findByTenant(tenantId)) arr ~= i.toJson();
         write(path, arr.toString());
     }
 
@@ -63,23 +63,23 @@ class FileCacheEntryRepository
     override void removeById(TenantId tenantId, CacheEntryId id) { super.removeById(tenantId, id); persistTenant(tenantId); }
 
     override CacheEntry[] findByInstance(TenantId tenantId, ServiceInstanceId instanceId) {
-        return find(tenantId).filter!(e => e.instanceId == instanceId).array;
+        return findByTenant(tenantId).filter!(e => e.instanceId == instanceId).array;
     }
 
     override CacheEntry findByKey(TenantId tenantId, ServiceInstanceId instanceId, string key) {
-        auto results = find(tenantId).filter!(e => e.instanceId == instanceId && e.key == key).array;
+        auto results = findByTenant(tenantId).filter!(e => e.instanceId == instanceId && e.key == key).array;
         return results.length > 0 ? results[0] : CacheEntry.init;
     }
 
     override CacheEntry[] findByType(TenantId tenantId, ServiceInstanceId instanceId, CacheEntryType entryType) {
-        return find(tenantId).filter!(e => e.instanceId == instanceId && e.entryType == entryType).array;
+        return findByTenant(tenantId).filter!(e => e.instanceId == instanceId && e.entryType == entryType).array;
     }
 
     override bool keyExists(TenantId tenantId, ServiceInstanceId instanceId, string key) {
-        return find(tenantId).any!(e => e.instanceId == instanceId && e.key == key);
+        return findByTenant(tenantId).any!(e => e.instanceId == instanceId && e.key == key);
     }
 
     override long countByInstance(TenantId tenantId, ServiceInstanceId instanceId) {
-        return cast(long) find(tenantId).filter!(e => e.instanceId == instanceId).array.length;
+        return cast(long) findByTenant(tenantId).filter!(e => e.instanceId == instanceId).array.length;
     }
 }

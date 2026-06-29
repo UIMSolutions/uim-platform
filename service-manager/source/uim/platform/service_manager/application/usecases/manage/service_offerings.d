@@ -14,11 +14,11 @@ class ManageServiceOfferingsUseCase { // TODO: UIMUseCase {
     }
 
     ServiceOffering[] listOfferings(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     ServiceOffering getOffering(TenantId tenantId, ServiceOfferingId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     CommandResult createOffering(CreateServiceOfferingRequest dto) {
@@ -57,7 +57,7 @@ class ManageServiceOfferingsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteOffering(TenantId tenantId, ServiceOfferingId id) {
-        auto offering = repo.find(tenantId, id);
+        auto offering = repo.findById(tenantId, id);
         if (offering.isNull)
             return CommandResult(false, "", "Service offering not found");
 

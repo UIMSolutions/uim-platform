@@ -15,11 +15,11 @@ import uim.platform.portal;
 class MemoryThemeRepository : TenantRepository!(Theme, ThemeId), ThemeRepository {
 
   bool existsDefault(TenantId tenantId) {
-    return find(tenantId).any!(t => t.isDefault);
+    return findByTenant(tenantId).any!(t => t.isDefault);
   }
 
   Theme findDefault(TenantId tenantId) {
-    foreach (t; find(tenantId)) {
+    foreach (t; findByTenant(tenantId)) {
       if (t.tenantId == tenantId && t.isDefault)
         return t;
     }

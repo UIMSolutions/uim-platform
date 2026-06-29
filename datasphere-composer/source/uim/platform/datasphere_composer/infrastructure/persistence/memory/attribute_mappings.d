@@ -16,7 +16,7 @@ class MemoryAttributeMappingRepository
 
   AttributeMapping[] findByConfig(TenantId tenantId, DataSourceConfigId configId) {
     AttributeMapping[] result;
-    foreach (item; find(tenantId)) {
+    foreach (item; findByTenant(tenantId)) {
       if (item.configId.value == configId.value) result ~= item;
     }
     return result;
@@ -24,7 +24,7 @@ class MemoryAttributeMappingRepository
 
   AttributeMapping[] findByTarget(TenantId tenantId, string targetAttributeName) {
     AttributeMapping[] result;
-    foreach (item; find(tenantId)) {
+    foreach (item; findByTenant(tenantId)) {
       if (item.targetAttributeName == targetAttributeName) result ~= item;
     }
     return result;

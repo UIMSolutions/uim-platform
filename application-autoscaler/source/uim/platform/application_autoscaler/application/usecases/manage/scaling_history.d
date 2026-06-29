@@ -27,6 +27,6 @@ class ManageScalingHistoryUseCase {
   }
 
   ScalingHistory getEvent(TenantId tenantId, ScalingHistoryId id) {
-    return repo.find(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 }

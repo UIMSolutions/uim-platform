@@ -17,14 +17,14 @@ import uim.platform.data_attribute_recommendation;
 class MemoryInferenceResultRepository : TenantRepository!(InferenceResult, InferenceResultId), InferenceResultRepository {
 
   bool existsByRequest(TenantId tenantId, InferenceRequestId requestId) {
-    foreach (e; find(tenantId))
+    foreach (e; findByTenant(tenantId))
       if (e.requestId == requestId && e.tenantId == tenantId)
         return true;
     return false;
   }
 
   InferenceResult findByRequest(TenantId tenantId, InferenceRequestId requestId) {
-    foreach (e; find(tenantId))
+    foreach (e; findByTenant(tenantId))
       if (e.requestId == requestId && e.tenantId == tenantId)
         return e;
     return InferenceResult.init;
@@ -43,7 +43,7 @@ class MemoryInferenceResultRepository : TenantRepository!(InferenceResult, Infer
   }
 
   InferenceResult[] findByPredictions(TenantId tenantId, string predictions) {
-    return filterByPredictions(find(tenantId), predictions);
+    return filterByPredictions(findByTenant(tenantId), predictions);
   }
 
   void removeByPredictions(TenantId tenantId, string predictions) {

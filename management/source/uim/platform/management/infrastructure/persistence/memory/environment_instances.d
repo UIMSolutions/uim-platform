@@ -27,7 +27,7 @@ class MemoryEnvironmentRepository : TenantRepository!(Environment, EnvironmentId
   }
 
   Environment[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
-    return filterBySubaccount(find(tenantId), subaccountId);
+    return filterBySubaccount(findByTenant(tenantId), subaccountId);
   }
 
   void removeBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
@@ -43,7 +43,7 @@ class MemoryEnvironmentRepository : TenantRepository!(Environment, EnvironmentId
   }
   
   Environment[] findByType(TenantId tenantId, SubaccountId subaccountId, EnvironmentType envType) {
-    return filterByType(find(tenantId), subaccountId, envType);
+    return filterByType(findByTenant(tenantId), subaccountId, envType);
   }
 
   void removeByType(TenantId tenantId, SubaccountId subaccountId, EnvironmentType envType) {
@@ -59,7 +59,7 @@ class MemoryEnvironmentRepository : TenantRepository!(Environment, EnvironmentId
   }
 
   Environment[] findByStatus(TenantId tenantId, SubaccountId subaccountId, EnvironmentStatus status) {
-    return filterByStatus(find(tenantId), subaccountId, status);
+    return filterByStatus(findByTenant(tenantId), subaccountId, status);
   }
 
   void removeByStatus(TenantId tenantId, SubaccountId subaccountId, EnvironmentStatus status) {

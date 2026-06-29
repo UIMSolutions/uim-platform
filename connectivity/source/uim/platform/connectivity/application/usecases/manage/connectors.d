@@ -50,7 +50,7 @@ class ManageConnectorsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult heartbeat(TenantId tenantId, ConnectorId id, HeartbeatRequest req) {
-    auto cc = repo.find(tenantId, id);
+    auto cc = repo.findById(tenantId, id);
     if (cc.isNull)
       return CommandResult(false, "", "Connector not found");
 
@@ -63,7 +63,7 @@ class ManageConnectorsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult disconnect(TenantId tenantId, ConnectorId id) {
-    auto connector = repo.find(tenantId, id);
+    auto connector = repo.findById(tenantId, id);
     if (connector.isNull)
       return CommandResult(false, "", "Connector not found");
 
@@ -77,18 +77,18 @@ class ManageConnectorsUseCase { // TODO: UIMUseCase {
   }
   
   CloudConnector getConnector(TenantId tenantId, ConnectorId id) {
-    return repo.find(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 
   CloudConnector[] listBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
     return repo.findBySubaccount(tenantId, subaccountId);
   }
   CloudConnector[] listByTenant(TenantId tenantId) {
-    return repo.find(tenantId);
+    return repo.findByTenant(tenantId);
   }
 
   CommandResult unregister(TenantId tenantId, ConnectorId id) {
-    auto connector = repo.find(tenantId, id);
+    auto connector = repo.findById(tenantId, id);
     if (connector.isNull)
       return CommandResult(false, "", "Connector not found");
 

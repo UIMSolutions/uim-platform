@@ -44,7 +44,7 @@ class ManageVisibilitiesUseCase { // TODO: UIMUseCase {
     }
 
     Visibility[] listVisibilities(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     CommandResult updateVisibility(UpdateVisibilityRequest r) {

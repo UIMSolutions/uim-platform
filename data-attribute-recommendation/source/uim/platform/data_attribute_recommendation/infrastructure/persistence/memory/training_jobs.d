@@ -24,7 +24,7 @@ class MemoryTrainingJobRepository : TenantRepository!(TrainingJob, TrainingJobId
   }
 
   TrainingJob[] findByModelConfig(TenantId tenantId, ModelConfigurationId configId) {
-    return filterByModelConfig(find(tenantId), configId);
+    return filterByModelConfig(findByTenant(tenantId), configId);
   }
 
   void removeByModelConfig(TenantId tenantId, ModelConfigurationId configId) {
@@ -40,7 +40,7 @@ class MemoryTrainingJobRepository : TenantRepository!(TrainingJob, TrainingJobId
   }
   
   TrainingJob[] findByStatus(TenantId tenantId, JobStatus status) {
-    return filterByStatus(find(tenantId), status);
+    return filterByStatus(findByTenant(tenantId), status);
   }
   
   void removeByStatus(TenantId tenantId, JobStatus status) {

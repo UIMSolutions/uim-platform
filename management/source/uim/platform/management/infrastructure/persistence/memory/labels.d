@@ -28,7 +28,7 @@ class MemoryLabelRepository : TenantRepository!(Label, LabelId), LabelRepository
   }
 
   Label[] findByResourceType(TenantId tenantId, LabeledResourceType resourceType) {
-    return filterByResourceType(find(tenantId), resourceType);
+    return filterByResourceType(findByTenant(tenantId), resourceType);
   }
 
   void removeByResourceType(TenantId tenantId, LabeledResourceType resourceType) {
@@ -46,7 +46,7 @@ class MemoryLabelRepository : TenantRepository!(Label, LabelId), LabelRepository
   }
 
   Label[] findByResource(TenantId tenantId, LabeledResourceType resourceType, string resourceId) {
-    return filterByResource(find(tenantId), resourceType, resourceId);
+    return filterByResource(findByTenant(tenantId), resourceType, resourceId);
   }
 
   void removeByResource(TenantId tenantId, LabeledResourceType resourceType, string resourceId) {
@@ -64,7 +64,7 @@ class MemoryLabelRepository : TenantRepository!(Label, LabelId), LabelRepository
   }
 
   Label[] findByKey(TenantId tenantId, LabeledResourceType resourceType, string key) {
-    return filterByResourceType(find(tenantId), resourceType).filter!(e => e.key == key).array;
+    return filterByResourceType(findByTenant(tenantId), resourceType).filter!(e => e.key == key).array;
   }
 
   void removeByKey(TenantId tenantId, LabeledResourceType resourceType, string key) {
@@ -82,7 +82,7 @@ class MemoryLabelRepository : TenantRepository!(Label, LabelId), LabelRepository
   }
   
   Label[] findByKeyValue(TenantId tenantId, LabeledResourceType resourceType, string key, string value) {
-    return filterByKeyValue(find(tenantId), resourceType, key, value);
+    return filterByKeyValue(findByTenant(tenantId), resourceType, key, value);
   }
 
   void removeByKeyValue(TenantId tenantId, LabeledResourceType resourceType, string key, string value) {

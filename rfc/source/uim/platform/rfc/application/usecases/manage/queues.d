@@ -53,7 +53,7 @@ class ManageQueuesUseCase {
     }
 
     CommandResult deleteQueueEntry(TenantId tenantId, string id) {
-        auto entry = _queueRepo.find(tenantId, id);
+        auto entry = _queueRepo.findById(tenantId, id);
         if (entry.isNull())
             return CommandResult(false, id, "Queue entry not found: " ~ id);
         if (!_queueRepo.remove(tenantId, id))

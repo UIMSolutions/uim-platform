@@ -19,11 +19,11 @@ class ManageDataQualityScoresUseCase {
     }
 
     DataQualityScore getDataQualityScore(TenantId tenantId, DataQualityScoreId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     DataQualityScore[] listDataQualityScores(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     DataQualityScore getScoreByBusinessPartner(TenantId tenantId, BusinessPartnerId bpId) {
@@ -85,7 +85,7 @@ class ManageDataQualityScoresUseCase {
     }
 
     CommandResult deleteDataQualityScore(TenantId tenantId, DataQualityScoreId id) {
-        auto score = repo.find(tenantId, id);
+        auto score = repo.findById(tenantId, id);
         if (score.isNull)
             return CommandResult(false, "", "Data quality score not found");
 

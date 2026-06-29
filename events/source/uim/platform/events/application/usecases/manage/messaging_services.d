@@ -17,11 +17,11 @@ class ManageMessagingServicesUseCase {
     this(MessagingServiceRepository repo) { this.repo = repo; }
 
     MessagingService getService(TenantId tenantId, MessagingServiceId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     MessagingService[] listServices(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     MessagingService[] listByStatus(TenantId tenantId, MessagingServiceStatus status) {
@@ -69,7 +69,7 @@ class ManageMessagingServicesUseCase {
     }
 
     CommandResult deleteService(TenantId tenantId, MessagingServiceId id) {
-        auto s = repo.find(tenantId, id);
+        auto s = repo.findById(tenantId, id);
         if (s.isNull) return CommandResult(false, "", "Messaging service not found");
         repo.remove(s);
         return CommandResult(true, s.id.value, "");

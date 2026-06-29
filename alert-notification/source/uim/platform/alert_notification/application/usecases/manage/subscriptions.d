@@ -40,14 +40,14 @@ class ManageSubscriptionsUseCase {
     }
 
     QueryResult listSubscriptions(TenantId tenantId) {
-        auto items = repo.find(tenantId);
+        auto items = repo.findByTenant(tenantId);
         auto arr   = Json.emptyArray;
         foreach (s; items) arr ~= s.toJson();
         return QueryResult(true, "", arr);
     }
 
     CommandResult updateSubscription(TenantId tenantId, SubscriptionId id, UpdateSubscriptionRequest req) {
-        auto sub = repo.find(tenantId, id);
+        auto sub = repo.findById(tenantId, id);
         if (sub is null || sub.isNull())
             return CommandResult(false, "", "Subscription not found");
 
@@ -62,7 +62,7 @@ class ManageSubscriptionsUseCase {
     }
 
     CommandResult deleteSubscription(TenantId tenantId, SubscriptionId id) {
-        auto sub = repo.find(tenantId, id);
+        auto sub = repo.findById(tenantId, id);
         if (sub is null || sub.isNull())
             return CommandResult(false, "", "Subscription not found");
 

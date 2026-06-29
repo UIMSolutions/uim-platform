@@ -52,11 +52,11 @@ class MongoDeadLetterEntryRepository : DeadLetterEntryRepository {
         ]);
     }
 
-    bool isTenantEmpty(TenantId tenantId)  { return find(tenantId).length == 0; }
+    bool isTenantEmpty(TenantId tenantId)  { return findByTenant(tenantId).length == 0; }
     void createTenant(TenantId tenantId)    {}
     TenantId[] findAllTenants()             { return []; }
     bool existsByTenant(TenantId tenantId)  { return !isTenantEmpty(tenantId); }
-    size_t countByTenant(TenantId tenantId) { return find(tenantId).length; }
+    size_t countByTenant(TenantId tenantId) { return findByTenant(tenantId).length; }
     DeadLetterEntry[] filterByTenant(DeadLetterEntry[] items, TenantId tenantId) {
         return items.filter!(e => e.tenantId == tenantId).array;
     }
@@ -93,7 +93,7 @@ class MongoDeadLetterEntryRepository : DeadLetterEntryRepository {
     DeadLetterEntry[] findAllById(TenantId tenantId, DeadLetterEntryId[] ids) {
         DeadLetterEntry[] result;
         foreach (id; ids) {
-            auto e = find(tenantId, id);
+            auto e = findById(tenantId, id);
             if (!e.isNull) result ~= e;
         }
         return result;
@@ -124,14 +124,14 @@ class MongoDeadLetterEntryRepository : DeadLetterEntryRepository {
     void removeAll() @trusted { _collection.remove(Bson.emptyObject); }
 
     override DeadLetterEntry[] findByChannel(TenantId tenantId, EventChannelId channelId) {
-        return find(tenantId).filter!(e => e.channelId.value == channelId.value).array;
+        return findByTenant(tenantId).filter!(e => e.channelId.value == channelId.value).array;
     }
 
     override DeadLetterEntry[] findByStatus(TenantId tenantId, DeadLetterStatus status) {
-        return find(tenantId).filter!(e => e.status == status).array;
+        return findByTenant(tenantId).filter!(e => e.status == status).array;
     }
 
     override DeadLetterEntry[] findByOriginalMessage(TenantId tenantId, EventMessageId messageId) {
-        return find(tenantId).filter!(e => e.originalMessageId.value == messageId.value).array;
+        return findByTenant(tenantId).filter!(e => e.originalMessageId.value == messageId.value).array;
     }
 }

@@ -21,11 +21,11 @@ class ManageEventTopicsUseCase {
     }
 
     EventTopic getEventTopic(TenantId tenantId, EventTopicId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     EventTopic[] listEventTopics(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     CommandResult createEventTopic(EventTopicDTO dto) {
@@ -69,7 +69,7 @@ class ManageEventTopicsUseCase {
     }
 
     CommandResult deleteEventTopic(TenantId tenantId, EventTopicId id) {
-        auto t = repo.find(tenantId, id);
+        auto t = repo.findById(tenantId, id);
         if (t.isNull)
             return CommandResult(false, "", "Topic not found");
 

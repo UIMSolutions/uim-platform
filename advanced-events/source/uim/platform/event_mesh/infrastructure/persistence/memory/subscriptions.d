@@ -21,7 +21,7 @@ class MemorySubscriptionRepository : TenantRepository!(EventSubscription, EventS
         return subscriptions.filter!(e => e.serviceId == serviceId).array;
     }   
     EventSubscription[] findByBrokerService(TenantId tenantId, BrokerServiceId serviceId) {
-        return filterByBrokerService(find(tenantId), serviceId);
+        return filterByBrokerService(findByTenant(tenantId), serviceId);
     }
     void removeByBrokerService(TenantId tenantId, BrokerServiceId serviceId) {
         findByBrokerService(tenantId, serviceId).each!(e => remove(e));
@@ -36,7 +36,7 @@ class MemorySubscriptionRepository : TenantRepository!(EventSubscription, EventS
         return subscriptions.filter!(e => e.topicId == topicId).array;
     }
     EventSubscription[] findByTopic(TenantId tenantId, TopicId topicId) {
-        return filterByTopic(find(tenantId), topicId);
+        return filterByTopic(findByTenant(tenantId), topicId);
     }
     void removeByTopic(TenantId tenantId, TopicId topicId) {
         findByTopic(tenantId, topicId).each!(e => remove(e));
@@ -51,7 +51,7 @@ class MemorySubscriptionRepository : TenantRepository!(EventSubscription, EventS
         return subscriptions.filter!(e => e.applicationId == applicationId).array;
     }
     EventSubscription[] findByApplication(TenantId tenantId, EventApplicationId applicationId) {
-        return filterByApplication(find(tenantId), applicationId);
+        return filterByApplication(findByTenant(tenantId), applicationId);
     }
     void removeByApplication(TenantId tenantId, EventApplicationId applicationId) {
         findByApplication(tenantId, applicationId).each!(e => remove(e));
@@ -66,7 +66,7 @@ class MemorySubscriptionRepository : TenantRepository!(EventSubscription, EventS
         return subscriptions.filter!(e => e.status == status).array;
     } 
     EventSubscription[] findByStatus(TenantId tenantId, SubscriptionStatus status) {
-        return filterByStatus(find(tenantId), status);
+        return filterByStatus(findByTenant(tenantId), status);
     }
     void removeByStatus(TenantId tenantId, SubscriptionStatus status) {
         findByStatus(tenantId, status).each!(e => remove(e));

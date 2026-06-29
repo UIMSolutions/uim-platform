@@ -8,7 +8,6 @@ module uim.platform.kyma.application.usecases.manage.service_bindings;
 // /* import uim.platform.kyma.application.dto;
 // import uim.platform.kyma.domain.entities.service_binding;
 // import uim.platform.kyma.domain.ports.repositories.service_bindings;
- */
 import uim.platform.kyma;
 
 // mixin(ShowModule!());
@@ -72,7 +71,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
   }
 
   ServiceBinding getServiceBinding(TenantId tenantId, ServiceBindingId id) {
-    return repo.find(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 
   ServiceBinding[] listServiceBindingsByNamespace(TenantId tenantId, NamespaceId nsId) {
@@ -84,7 +83,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteServiceBinding(TenantId tenantId, ServiceBindingId id) {
-    auto binding = repo.find(tenantId, id);
+    auto binding = repo.findById(tenantId, id);
     if (binding.isNull)
       return CommandResult(false, "", "Service binding not found");
 

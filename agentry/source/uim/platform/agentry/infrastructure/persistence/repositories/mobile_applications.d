@@ -24,7 +24,7 @@ class MobileApplicationRepository
     }
 
     MobileApplication[] findByStatus(TenantId tenantId, AppStatus status) {
-        return filterByStatus(find(tenantId), status);
+        return filterByStatus(findByTenant(tenantId), status);
     }
 
     void removeByStatus(TenantId tenantId, AppStatus status) {
@@ -40,7 +40,7 @@ class MobileApplicationRepository
     }
 
     MobileApplication[] findByPlatform(TenantId tenantId, AppPlatform platform) {
-        return filterByPlatform(find(tenantId), platform);
+        return filterByPlatform(findByTenant(tenantId), platform);
     }
     void removeByPlatform(TenantId tenantId, AppPlatform platform) {
         findByPlatform(tenantId, platform).each!(e => remove(e));

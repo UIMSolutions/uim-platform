@@ -16,7 +16,7 @@ class MemoryCustomerProfileRepository
 
   CustomerProfile[] findByEmail(TenantId tenantId, string email) {
     CustomerProfile[] result;
-    foreach (item; find(tenantId)) {
+    foreach (item; findByTenant(tenantId)) {
       if (item.email == email) result ~= item;
     }
     return result;
@@ -24,7 +24,7 @@ class MemoryCustomerProfileRepository
 
   CustomerProfile[] findByExternalId(TenantId tenantId, string externalId) {
     CustomerProfile[] result;
-    foreach (item; find(tenantId)) {
+    foreach (item; findByTenant(tenantId)) {
       if (item.externalId == externalId) result ~= item;
     }
     return result;

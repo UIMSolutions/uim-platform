@@ -19,11 +19,11 @@ class ManagePipelinesUseCase {
     }
 
     Pipeline getPipeline(TenantId tenantId, PipelineId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     Pipeline[] listPipelines(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     Pipeline[] listActive(TenantId tenantId) {
@@ -63,7 +63,7 @@ class ManagePipelinesUseCase {
     }
 
     CommandResult deletePipeline(TenantId tenantId, PipelineId id) {
-        auto existing = repo.find(tenantId, id);
+        auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Pipeline not found");
         repo.remove(tenantId, id);

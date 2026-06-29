@@ -16,7 +16,7 @@ class MemorySpatialFeatureRepository
 
   SpatialFeature[] findByLayer(TenantId tenantId, SpatialLayerId layerId) {
     SpatialFeature[] results;
-    foreach (item; find(tenantId)) {
+    foreach (item; findByTenant(tenantId)) {
       if (item.layerId.value == layerId.value) results ~= item;
     }
     return results;
@@ -24,7 +24,7 @@ class MemorySpatialFeatureRepository
 
   SpatialFeature[] findByGeometryType(TenantId tenantId, GeometryType geometryType) {
     SpatialFeature[] results;
-    foreach (item; find(tenantId)) {
+    foreach (item; findByTenant(tenantId)) {
       if (item.geometryType == geometryType) results ~= item;
     }
     return results;

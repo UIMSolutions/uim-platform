@@ -17,11 +17,11 @@ class ManageServiceBindingsUseCase {
     this(ServiceBindingRepository repo) { this.repo = repo; }
 
     ServiceBinding getServiceBinding(TenantId tenantId, ServiceBindingId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     ServiceBinding[] listServiceBindings(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     ServiceBinding[] listByInstance(TenantId tenantId, ServiceInstanceId instanceId) {
@@ -49,7 +49,7 @@ class ManageServiceBindingsUseCase {
     }
 
     CommandResult deleteServiceBinding(TenantId tenantId, ServiceBindingId id) {
-        auto existing = repo.find(tenantId, id);
+        auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Service binding not found");
         repo.remove(tenantId, id);

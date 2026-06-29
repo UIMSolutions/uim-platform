@@ -426,8 +426,8 @@ package "Domain Layer  «core business logic»" as DOM <<Rectangle>> {
 
   package "Ports  «interfaces»" as PORTS {
     @safe: interface  AuditLogRepository << (P,#42A5F5) >> {
-      + find(tenantId) : AuditLogEntry[]
-      + find(tenantId, id) : AuditLogEntry*
+      + findByTenant(tenantId) : AuditLogEntry[]
+      + findById(tenantId, id) : AuditLogEntry*
       + search(tenantId, categories, from, to, limit, offset) : AuditLogEntry[]
       + count(tenantId) : long
       + save(entry) : void
@@ -436,7 +436,7 @@ package "Domain Layer  «core business logic»" as DOM <<Rectangle>> {
 
     @safe: interface  AuditConfigRepository << (P,#42A5F5) >> {
       + findAll() : AuditConfig[]
-      + find(tenantId) : AuditConfig*
+      + findByTenant(tenantId) : AuditConfig*
       + findById(id) : AuditConfig*
       + save(config) : void
       + update(config) : void
@@ -444,8 +444,8 @@ package "Domain Layer  «core business logic»" as DOM <<Rectangle>> {
     }
 
     @safe: interface  RetentionPolicyRepository << (P,#42A5F5) >> {
-      + find(tenantId) : RetentionPolicy[]
-      + find(tenantId, id) : RetentionPolicy*
+      + findByTenant(tenantId) : RetentionPolicy[]
+      + findById(tenantId, id) : RetentionPolicy*
       + findDefault(tenantId) : RetentionPolicy*
       + save(policy) : void
       + update(policy) : void
@@ -453,15 +453,15 @@ package "Domain Layer  «core business logic»" as DOM <<Rectangle>> {
     }
 
     @safe: interface  ExportJobRepository << (P,#42A5F5) >> {
-      + find(tenantId) : ExportJob[]
-      + find(tenantId, id) : ExportJob*
+      + findByTenant(tenantId) : ExportJob[]
+      + findById(tenantId, id) : ExportJob*
       + save(job) : void
       + update(job) : void
       + removeById(tenantId, id) : void
     }
 
     @safe: interface  SecurityEventRepository << (P,#42A5F5) >> {
-      + find(tenantId) : SecurityEvent[]
+      + findByTenant(tenantId) : SecurityEvent[]
       + findByUser(tenantId, userId) : SecurityEvent[]
       + findByOutcome(tenantId, outcome) : SecurityEvent[]
       + save(event) : void
@@ -469,7 +469,7 @@ package "Domain Layer  «core business logic»" as DOM <<Rectangle>> {
     }
 
     @safe: interface  DataAccessLogRepository << (P,#42A5F5) >> {
-      + find(tenantId) : DataAccessLog[]
+      + findByTenant(tenantId) : DataAccessLog[]
       + findByAccessor(tenantId, userId) : DataAccessLog[]
       + findByDataSubject(tenantId, subject) : DataAccessLog[]
       + save(log) : void
@@ -477,7 +477,7 @@ package "Domain Layer  «core business logic»" as DOM <<Rectangle>> {
     }
 
     @safe: interface  ConfigChangeLogRepository << (P,#42A5F5) >> {
-      + find(tenantId) : ConfigChangeLog[]
+      + findByTenant(tenantId) : ConfigChangeLog[]
       + findByUser(tenantId, userId) : ConfigChangeLog[]
       + findByConfigType(tenantId, type) : ConfigChangeLog[]
       + save(log) : void

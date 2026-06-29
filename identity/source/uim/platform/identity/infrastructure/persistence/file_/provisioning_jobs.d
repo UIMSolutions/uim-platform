@@ -31,13 +31,13 @@ import std.json;
 //         return store.values.filter!(j => j.tenantId == tenantId).array;
 //     }
 //     ProvisioningJob[] findByStatus(TenantId tenantId, JobStatus status) {
-//         return find(tenantId).filter!(j => j.status == status).array;
+//         return findByTenant(tenantId).filter!(j => j.status == status).array;
 //     }
 //     ProvisioningJob[] findByType(TenantId tenantId, JobType type_) {
-//         return find(tenantId).filter!(j => j.type_ == type_).array;
+//         return findByTenant(tenantId).filter!(j => j.type_ == type_).array;
 //     }
 //     ProvisioningJob[] findByTargetSystem(TenantId tenantId, string targetSystem) {
-//         return find(tenantId).filter!(j => j.targetSystem == targetSystem).array;
+//         return findByTenant(tenantId).filter!(j => j.targetSystem == targetSystem).array;
 //     }
 
 //     private string filePath() { return dataDir ~ "/provisioning_jobs.json"; }

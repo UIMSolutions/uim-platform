@@ -20,11 +20,11 @@ class ManageSystemRegistrationsUseCase {
     this(SystemRegistrationRepository repo) { this.repo = repo; }
 
     SystemRegistration getSystemRegistration(TenantId tenantId, SystemRegistrationId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     SystemRegistration[] listSystemRegistrations(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     SystemRegistration[] listByFormation(TenantId tenantId, FormationId formationId) {
@@ -46,7 +46,7 @@ class ManageSystemRegistrationsUseCase {
     }
 
     CommandResult deleteSystemRegistration(TenantId tenantId, SystemRegistrationId id) {
-        auto reg = repo.find(tenantId, id);
+        auto reg = repo.findById(tenantId, id);
         if (reg.isNull) return CommandResult(false, "", "System registration not found");
         repo.removeById(tenantId, id);
         return CommandResult(true, id.value, "");

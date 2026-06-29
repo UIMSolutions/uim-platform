@@ -80,7 +80,7 @@ class ManageDocumentsUseCase { // TODO: UIMUseCase {
   }
 
   Document[] listDocuments(TenantId tenantId) {
-    return docs.find(tenantId);
+    return docs.findByTenant(tenantId);
   }
 
   Document[] listByFolder(TenantId tenantId, FolderId folderId) {
@@ -92,7 +92,7 @@ class ManageDocumentsUseCase { // TODO: UIMUseCase {
   }
 
   Document getDocument(TenantId tenantId, DocumentId id) {
-    return docs.find(tenantId, id);
+    return docs.findById(tenantId, id);
   }
 
   Document[] searchByName(TenantId tenantId, string name) {

@@ -25,7 +25,7 @@ class ManageFeatureFlagsUseCase {
     }
 
     FeatureFlag getFlag(TenantId tenantId, FlagId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     FeatureFlag getFlagByName(TenantId tenantId, ServiceInstanceId instanceId, string name) {
@@ -33,7 +33,7 @@ class ManageFeatureFlagsUseCase {
     }
 
     FeatureFlag[] listFlags(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     FeatureFlag[] listFlagsByInstance(TenantId tenantId, ServiceInstanceId instanceId) {
@@ -76,7 +76,7 @@ class ManageFeatureFlagsUseCase {
     }
 
     FlagResult updateFlag(TenantId tenantId, FlagId id, UpdateFeatureFlagRequest req) {
-        auto flag_ = repo.find(tenantId, id);
+        auto flag_ = repo.findById(tenantId, id);
         if (flag_.isNull)
             return FlagResult(false, "", "Feature flag not found");
 
@@ -94,7 +94,7 @@ class ManageFeatureFlagsUseCase {
     }
 
     FlagResult patchFlagState(TenantId tenantId, FlagId id, PatchFeatureFlagRequest req) {
-        auto flag_ = repo.find(tenantId, id);
+        auto flag_ = repo.findById(tenantId, id);
         if (flag_.isNull)
             return FlagResult(false, "", "Feature flag not found");
 
@@ -115,7 +115,7 @@ class ManageFeatureFlagsUseCase {
     }
 
     FlagResult deleteFlag(TenantId tenantId, FlagId id, string deletedBy = "") {
-        auto flag_ = repo.find(tenantId, id);
+        auto flag_ = repo.findById(tenantId, id);
         if (flag_.isNull)
             return FlagResult(false, "", "Feature flag not found");
 

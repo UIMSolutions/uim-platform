@@ -19,11 +19,11 @@ class ManageDocumentsUseCase {
     }
 
     Document getDocument(TenantId tenantId, DocumentId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     Document[] listDocuments(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     Document[] listDocumentsByRepository(TenantId tenantId, RepositoryId repositoryId) {
@@ -100,7 +100,7 @@ class ManageDocumentsUseCase {
     }
 
     CommandResult checkoutDocument(TenantId tenantId, DocumentId id, UserId userId) {
-        auto existing = repo.find(tenantId, id);
+        auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Document not found");
         if (existing.checkoutStatus == CheckoutStatus.checkedOut)
@@ -116,7 +116,7 @@ class ManageDocumentsUseCase {
     }
 
     CommandResult checkinDocument(TenantId tenantId, DocumentId id, UserId userId, bool isMajor, string comment) {
-        auto existing = repo.find(tenantId, id);
+        auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Document not found");
         if (existing.checkoutStatus != CheckoutStatus.checkedOut)
@@ -133,7 +133,7 @@ class ManageDocumentsUseCase {
     }
 
     CommandResult cancelCheckout(TenantId tenantId, DocumentId id, UserId userId) {
-        auto existing = repo.find(tenantId, id);
+        auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Document not found");
         if (existing.checkoutStatus != CheckoutStatus.checkedOut)
@@ -147,7 +147,7 @@ class ManageDocumentsUseCase {
     }
 
     CommandResult moveDocument(TenantId tenantId, DocumentId id, FolderId targetFolderId, UserId userId) {
-        auto existing = repo.find(tenantId, id);
+        auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Document not found");
         existing.folderId = targetFolderId;
@@ -157,7 +157,7 @@ class ManageDocumentsUseCase {
     }
 
     CommandResult publishDocument(TenantId tenantId, DocumentId id) {
-        auto existing = repo.find(tenantId, id);
+        auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Document not found");
         existing.documentStatus = DocumentStatus.active;
@@ -167,7 +167,7 @@ class ManageDocumentsUseCase {
     }
 
     CommandResult archiveDocument(TenantId tenantId, DocumentId id) {
-        auto existing = repo.find(tenantId, id);
+        auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Document not found");
         existing.documentStatus = DocumentStatus.archived;
@@ -177,7 +177,7 @@ class ManageDocumentsUseCase {
     }
 
     CommandResult deleteDocument(TenantId tenantId, DocumentId id) {
-        auto existing = repo.find(tenantId, id);
+        auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Document not found");
         if (existing.checkoutStatus == CheckoutStatus.checkedOut)

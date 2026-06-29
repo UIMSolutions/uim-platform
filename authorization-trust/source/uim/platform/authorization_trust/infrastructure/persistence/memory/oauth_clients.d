@@ -14,13 +14,13 @@ import uim.platform.authorization_trust;
 class MemoryOAuthClientRepository : TenantRepository!(OAuthClient, OAuthClientId), OAuthClientRepository {
   
   size_t countByApp(TenantId tenantId, string appId) {
-    return filterByApp(find(tenantId), appId).length;
+    return filterByApp(findByTenant(tenantId), appId).length;
   }
   OAuthClient[] filterByApp(OAuthClient[] clients, string appId) {
     return clients.filter!(c => c.appId == appId).array;
   }
   OAuthClient[] findByApp(TenantId tenantId, string  appId) {
-    return filterByApp(find(tenantId), appId);
+    return filterByApp(findByTenant(tenantId), appId);
   }
   void removeByApp(TenantId tenantId, string appId) {
     findByApp(tenantId, appId).each!(c => remove(c));

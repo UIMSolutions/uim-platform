@@ -19,11 +19,11 @@ class ManageTaskProvidersUseCase { // TODO: UIMUseCase {
     }
 
     TaskProvider getProvider(TenantId tenantId, TaskProviderId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     TaskProvider[] listProviders(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     TaskProvider[] listProviders(TenantId tenantId, ProviderStatus byStatus) {
@@ -66,7 +66,7 @@ class ManageTaskProvidersUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult activateProvider(TenantId tenantId, TaskProviderId id) {
-        auto provider = repo.find(tenantId, id);
+        auto provider = repo.findById(tenantId, id);
         if (provider.isNull)
             return CommandResult(false, "", "Provider not found");
         provider.status = ProviderStatus.active;
@@ -76,7 +76,7 @@ class ManageTaskProvidersUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deactivateProvider(TenantId tenantId, TaskProviderId id) {
-        auto provider = repo.find(tenantId, id);
+        auto provider = repo.findById(tenantId, id);
         if (provider.isNull)
             return CommandResult(false, "", "Provider not found");
 
@@ -86,7 +86,7 @@ class ManageTaskProvidersUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult syncProvider(TenantId tenantId, TaskProviderId id) {
-        auto provider = repo.find(tenantId, id);
+        auto provider = repo.findById(tenantId, id);
         if (provider.isNull)
             return CommandResult(false, "", "Provider not found");
 
@@ -96,7 +96,7 @@ class ManageTaskProvidersUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteProvider(TenantId tenantId, TaskProviderId id) {
-        auto provider = repo.find(tenantId, id);
+        auto provider = repo.findById(tenantId, id);
         if (provider.isNull)
             return CommandResult(false, "", "Provider not found");
 

@@ -44,11 +44,11 @@ class ManageSituationTemplatesUseCase { // TODO: UIMUseCase {
     }
 
     SituationTemplate getSituationTemplate(TenantId tenantId, SituationTemplateId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     SituationTemplate[] listSituationTemplates(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     SituationTemplate[] listSituationTemplates(TenantId tenantId, EntityTypeId entityTypeId) {
@@ -73,7 +73,7 @@ class ManageSituationTemplatesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteSituationTemplate(TenantId tenantId, SituationTemplateId id) {
-        auto templ = repo.find(tenantId, id);
+        auto templ = repo.findById(tenantId, id);
         if (templ.isNull)
             return CommandResult(false, "", "Situation template not found");
 

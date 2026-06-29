@@ -23,7 +23,7 @@ class AppDefinitionRepository
         return defs.filter!(d => d.status == status).array;
     }
     AppDefinition[] findByStatus(TenantId tenantId, DefinitionStatus status) {
-        return filterByStatus(find(tenantId), status);
+        return filterByStatus(findByTenant(tenantId), status);
     }
     void removeByStatus(TenantId tenantId, DefinitionStatus status) {
         findByStatus(tenantId, status).each!(e => remove(e));
@@ -37,7 +37,7 @@ class AppDefinitionRepository
     }
 
     AppDefinition[] findByMobileApplication(TenantId tenantId, MobileApplicationId appId) {
-        return filterByMobileApplication(find(tenantId), appId);
+        return filterByMobileApplication(findByTenant(tenantId), appId);
     }
 
     void removeByMobileApplication(TenantId tenantId, MobileApplicationId appId) {

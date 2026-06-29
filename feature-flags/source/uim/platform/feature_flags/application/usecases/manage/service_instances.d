@@ -21,11 +21,11 @@ class ManageServiceInstancesUseCase {
     }
 
     ServiceInstance getInstance(TenantId tenantId, ServiceInstanceId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     ServiceInstance[] listInstances(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     FlagResult createInstance(CreateServiceInstanceRequest req) {
@@ -49,7 +49,7 @@ class ManageServiceInstancesUseCase {
     }
 
     FlagResult updateInstance(TenantId tenantId, ServiceInstanceId id, UpdateServiceInstanceRequest req) {
-        auto inst = repo.find(tenantId, id);
+        auto inst = repo.findById(tenantId, id);
         if (inst.isNull)
             return FlagResult(false, "", "Service instance not found");
 
@@ -64,7 +64,7 @@ class ManageServiceInstancesUseCase {
     }
 
     FlagResult deleteInstance(TenantId tenantId, ServiceInstanceId id, string deletedBy = "") {
-        auto inst = repo.find(tenantId, id);
+        auto inst = repo.findById(tenantId, id);
         if (inst.isNull)
             return FlagResult(false, "", "Service instance not found");
 

@@ -54,7 +54,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
   }
 
   ServiceBinding getBinding(TenantId tenantId, ServiceBindingId id) {
-    return bindingRepo.find(tenantId, id);
+    return bindingRepo.findById(tenantId, id);
   }
 
   ServiceBinding[] listBindings(TenantId tenantId, BucketId bucketId) {
@@ -62,7 +62,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult revokeBinding(TenantId tenantId, ServiceBindingId id) {
-    auto binding = bindingRepo.find(tenantId, id);
+    auto binding = bindingRepo.findById(tenantId, id);
     if (binding.isNull)
       return CommandResult(false, "", "Binding not found");
 
@@ -72,7 +72,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteBinding(TenantId tenantId, ServiceBindingId id) {
-    auto binding = bindingRepo.find(tenantId, id);
+    auto binding = bindingRepo.findById(tenantId, id);
     if (binding.isNull)
       return CommandResult(false, "", "Binding not found");
 

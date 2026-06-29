@@ -21,7 +21,7 @@ class MemoryActionRepository : TenantRepository!(Action, ActionId), ActionReposi
     }
 
     Action[] findByProject(TenantId tenantId, ProjectId projectId) {
-        return filterByProject(find(tenantId), projectId);
+        return filterByProject(findByTenant(tenantId), projectId);
     }
 
     void removeByProject(TenantId tenantId, ProjectId projectId) {

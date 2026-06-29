@@ -34,7 +34,7 @@ class MemoryDeploymentRepository : TenantRepository!(Deployment, DeploymentId), 
   }
 
   Deployment[] findByConnection(TenantId tenantId, ConnectionId connectionId) {
-    return filterByConnection(find(tenantId), connectionId);
+    return filterByConnection(findByTenant(tenantId), connectionId);
   }
 
   void removeByConnection(TenantId tenantId, ConnectionId connectionId) {

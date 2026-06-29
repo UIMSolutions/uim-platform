@@ -15,21 +15,21 @@ class MemoryDataSubjectRepository : TenantRepository!(DataSubject, DataSubjectId
 
     // #region ByEmail
     bool existsByEmail(TenantId tenantId, string email) {
-        foreach (v; find(tenantId))
+        foreach (v; findByTenant(tenantId))
             if (v.email == email)
                 return true;
         return false;
     }
 
     DataSubject findByEmail(TenantId tenantId, string email) {
-        foreach (v; find(tenantId))
+        foreach (v; findByTenant(tenantId))
             if (v.email == email)
                 return v;
         return DataSubject.init;
     }
 
     void removeByEmail(TenantId tenantId, string email) {
-        foreach (v; find(tenantId))
+        foreach (v; findByTenant(tenantId))
             if (v.email == email) {
                 store.remove(v.id);
                 return;
@@ -57,7 +57,7 @@ class MemoryDataSubjectRepository : TenantRepository!(DataSubject, DataSubjectId
     }
 
     DataSubject[] findByName(TenantId tenantId, string firstName, string lastName) {
-        return filterByName(find(tenantId), firstName, lastName);
+        return filterByName(findByTenant(tenantId), firstName, lastName);
     }
     void removeByName(TenantId tenantId, string firstName, string lastName) {
         findByName(tenantId, firstName, lastName).each!(v => store.remove(v.id));
@@ -74,7 +74,7 @@ class MemoryDataSubjectRepository : TenantRepository!(DataSubject, DataSubjectId
     }
 
     DataSubject[] findByOrganization(TenantId tenantId, string organizationId) {
-        return filterByOrganization(find(tenantId), organizationId);
+        return filterByOrganization(findByTenant(tenantId), organizationId);
     }
 
     void removeByOrganization(TenantId tenantId, string organizationId) {

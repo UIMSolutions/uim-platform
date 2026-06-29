@@ -18,17 +18,17 @@ import uim.platform.job_scheduling;
 class MemoryJobRepository : TenantRepository!(Job, JobId), JobRepository {
 
     bool existsByName(TenantId tenantId, string name) {
-        return find(tenantId).canFind!(j => j.name == name);
+        return findByTenant(tenantId).canFind!(j => j.name == name);
     }
     Job findByName(TenantId tenantId, string name) {
-        foreach (j; find(tenantId)) {
+        foreach (j; findByTenant(tenantId)) {
             if (j.name == name)
                 return j;
         }
         return Job.init;
     }
     void removeByName(TenantId tenantId, string name) {
-        foreach (j; find(tenantId)) {
+        foreach (j; findByTenant(tenantId)) {
             if (j.name == name) {
                 removeById(tenantId, j.id);
                 return;
@@ -43,7 +43,7 @@ class MemoryJobRepository : TenantRepository!(Job, JobId), JobRepository {
         return jobs.filter!(j => j.status == status).array;
     }
     Job[] findByStatus(TenantId tenantId, JobStatus status) {
-        return filterByStatus(find(tenantId), status);
+        return filterByStatus(findByTenant(tenantId), status);
     }
     void removeByStatus(TenantId tenantId, JobStatus status) {
         findByStatus(tenantId, status).each!(j => removeById(tenantId, j.id));
@@ -54,15 +54,15 @@ class MemoryJobRepository : TenantRepository!(Job, JobId), JobRepository {
             return null;
         }
         auto q = query.toLower;
-        return find(tenantId).filter!(j => j.name.toLower.canFind(q) || j.description.toLower.canFind(q))
+        return findByTenant(tenantId).filter!(j => j.name.toLower.canFind(q) || j.description.toLower.canFind(q))
             .array;
     }
 
     size_t countActiveByTenant(TenantId tenantId) {
-        return find(tenantId).filter!(j => j.active).array.length;
+        return findByTenant(tenantId).filter!(j => j.active).array.length;
     }
 
     size_t countInactiveByTenant(TenantId tenantId) {
-        return find(tenantId).filter!(j => !j.active).array.length;
+        return findByTenant(tenantId).filter!(j => !j.active).array.length;
     }
 }

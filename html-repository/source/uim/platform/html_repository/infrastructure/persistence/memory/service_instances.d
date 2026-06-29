@@ -16,14 +16,14 @@ import uim.platform.html_repository;
 class ServiceInstanceMemoryRepository : TenantRepository!(ServiceInstance, ServiceInstanceId), ServiceInstanceRepository {
 
   bool existsByName(TenantId tenantId, string name) {
-    foreach (e; find(tenantId)) {
+    foreach (e; findByTenant(tenantId)) {
       if (e.tenantId == tenantId && e.name == name) return true;
     }
     return false;
   }
 
   ServiceInstance findByName(TenantId tenantId, string name) {
-    foreach (e; find(tenantId)) {
+    foreach (e; findByTenant(tenantId)) {
       if (e.tenantId == tenantId && e.name == name) return e;
     }
     return ServiceInstance.init;
@@ -37,7 +37,7 @@ class ServiceInstanceMemoryRepository : TenantRepository!(ServiceInstance, Servi
     return instances.filter!(i => i.spaceId == spaceId).array;
   }
   ServiceInstance[] findBySpace(SpaceId spaceId) {
-    return filterBySpace(find(tenantId), spaceId);
+    return filterBySpace(findByTenant(tenantId), spaceId);
   }
   void removeBySpace(SpaceId spaceId) {
     findBySpace(spaceId).each!(i => remove(i.id));
@@ -50,7 +50,7 @@ class ServiceInstanceMemoryRepository : TenantRepository!(ServiceInstance, Servi
     return instances.filter!(i => i.plan == plan).array;
   }
   ServiceInstance[] findByPlan(TenantId tenantId, ServicePlan plan) {
-    return filterByPlan(find(tenantId), plan);
+    return filterByPlan(findByTenant(tenantId), plan);
   }
   void removeByPlan(TenantId tenantId, ServicePlan plan) {
     findByPlan(tenantId, plan).each!(i => remove(i.id));

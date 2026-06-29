@@ -32,7 +32,7 @@ class ManageDataSubjectRolesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateDataSubjectRole(TenantId tenantId, DataSubjectRoleId id, UpdateDataSubjectRoleRequest req) {
-        auto dsr = repo.find(tenantId, id);
+        auto dsr = repo.findById(tenantId, id);
         if (dsr.isNull)
             return CommandResult(false, "", "Data subject role not found");
 
@@ -52,7 +52,7 @@ class ManageDataSubjectRolesUseCase { // TODO: UIMUseCase {
     }
 
     DataSubjectRole getDataSubjectRoles(TenantId tenantId, DataSubjectRoleId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     DataSubjectRole[] listDataSubjectRoles(TenantId tenantId) {
@@ -60,7 +60,7 @@ class ManageDataSubjectRolesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteDataSubjectRole(TenantId tenantId, DataSubjectRoleId id) {
-        auto entity = repo.find(tenantId, id);
+        auto entity = repo.findById(tenantId, id);
         if (entity.isNull)
             return CommandResult(false, "", "Data subject role not found");
 

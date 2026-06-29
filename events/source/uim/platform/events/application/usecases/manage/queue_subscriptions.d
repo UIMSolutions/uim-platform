@@ -16,8 +16,8 @@ class ManageQueueSubscriptionsUseCase {
 
     this(QueueSubscriptionRepository repo) { this.repo = repo; }
 
-    QueueSubscription getSubscription(TenantId tenantId, QueueSubscriptionId id) { return repo.find(tenantId, id); }
-    QueueSubscription[] listSubscriptions(TenantId tenantId) { return repo.find(tenantId); }
+    QueueSubscription getSubscription(TenantId tenantId, QueueSubscriptionId id) { return repo.findById(tenantId, id); }
+    QueueSubscription[] listSubscriptions(TenantId tenantId) { return repo.findByTenant(tenantId); }
     QueueSubscription[] listByQueue(TenantId tenantId, QueueId queueId) { return repo.findByQueue(tenantId, queueId); }
     QueueSubscription[] listByService(TenantId tenantId, MessagingServiceId serviceId) { return repo.findByService(tenantId, serviceId); }
 
@@ -50,7 +50,7 @@ class ManageQueueSubscriptionsUseCase {
     }
 
     CommandResult deleteSubscription(TenantId tenantId, QueueSubscriptionId id) {
-        auto qs = repo.find(tenantId, id);
+        auto qs = repo.findById(tenantId, id);
         if (qs.isNull) return CommandResult(false, "", "Queue subscription not found");
         repo.remove(qs);
         return CommandResult(true, qs.id.value, "");

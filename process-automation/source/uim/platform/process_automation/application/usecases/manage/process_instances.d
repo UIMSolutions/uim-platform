@@ -38,11 +38,11 @@ class ManageProcessInstancesUseCase { // TODO: UIMUseCase {
     }
 
     ProcessInstance getProcessInstance(TenantId tenantId, ProcessInstanceId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     ProcessInstance[] listProcessInstances(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     ProcessInstance[] listProcessInstances(TenantId tenantId, ProcessId processId) {
@@ -83,7 +83,7 @@ class ManageProcessInstancesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteProcessInstance(TenantId tenantId, ProcessInstanceId id) {
-        auto instance = repo.find(tenantId, id);
+        auto instance = repo.findById(tenantId, id);
         if (instance.isNull)
             return CommandResult(false, "", "Process instance not found");
 

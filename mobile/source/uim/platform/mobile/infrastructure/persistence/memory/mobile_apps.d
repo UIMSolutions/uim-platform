@@ -24,14 +24,14 @@ class MemoryMobileAppRepository : TenantRepository!(MobileApp, MobileAppId), Mob
     return findByBundleId(tenantId, bundleId).id != MobileAppId.init;
   }
   MobileApp findByBundleId(TenantId tenantId, string bundleId) {
-    foreach (a; find(tenantId)) {
+    foreach (a; findByTenant(tenantId)) {
       if (a.bundleId == bundleId)
         return a;
     }
     return MobileApp.init;
   }
   void removeByBundleId(TenantId tenantId, string bundleId) {
-    foreach (a; find(tenantId)) {
+    foreach (a; findByTenant(tenantId)) {
       if (a.bundleId == bundleId)
         remove(a);
     }
@@ -44,7 +44,7 @@ class MemoryMobileAppRepository : TenantRepository!(MobileApp, MobileAppId), Mob
     return apps.filter!(e => e.platform == platform).array;
   }
   MobileApp[] findByPlatform(TenantId tenantId, AppPlatform platform) {
-    return filterByPlatform(find(tenantId), platform);
+    return filterByPlatform(findByTenant(tenantId), platform);
   }
   void removeByPlatform(TenantId tenantId, AppPlatform platform) {
     findByPlatform(tenantId, platform).each!(a => remove(a));

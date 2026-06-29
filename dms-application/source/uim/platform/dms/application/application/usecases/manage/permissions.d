@@ -78,7 +78,7 @@ class ManagePermissionsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult revokePermission(TenantId tenantId, PermissionId id) {
-    auto permission = permissions.find(tenantId, id);
+    auto permission = permissions.findById(tenantId, id);
     if (permission.isNull)
       return CommandResult(false, "", "Permission not found");
 

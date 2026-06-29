@@ -33,7 +33,7 @@ class ManageBusinessPurposesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateBusinessPurpose(BusinessPurposeId id, UpdateBusinessPurposeRequest req) {
-        auto bp = repo.find(tenantId, id);
+        auto bp = repo.findById(tenantId, id);
         if (bp.isNull)
             return CommandResult(false, "", "Business purpose not found");
 
@@ -57,7 +57,7 @@ class ManageBusinessPurposesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult activateBusinessPurpose(BusinessPurposeId id) {
-        auto bp = repo.find(tenantId, id);
+        auto bp = repo.findById(tenantId, id);
         if (bp.isNull)
             return CommandResult(false, "", "Business purpose not found");
 
@@ -72,7 +72,7 @@ class ManageBusinessPurposesUseCase { // TODO: UIMUseCase {
     }
 
     BusinessPurpose getBusinessPurpose(BusinessPurposeId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     BusinessPurpose[] listBusinessPurposes(TenantId tenantId) {
@@ -84,7 +84,7 @@ class ManageBusinessPurposesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteBusinessPurpose(BusinessPurposeId id) {
-        auto purpose = repo.find(tenantId, id);
+        auto purpose = repo.findById(tenantId, id);
         if (purpose.isNull)
             return CommandResult(false, "", "Business purpose not found");
         

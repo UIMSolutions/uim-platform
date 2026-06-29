@@ -22,7 +22,7 @@ class MemorySituationInstanceRepository : TenantRepository!(SituationInstance, S
     }
 
     SituationInstance[] findByTemplate(TenantId tenantId, SituationTemplateId templateId) {
-        return filterByTemplate(find(tenantId), templateId);
+        return filterByTemplate(findByTenant(tenantId), templateId);
     }
 
     void removeByTemplate(TenantId tenantId, SituationTemplateId templateId) {
@@ -40,7 +40,7 @@ class MemorySituationInstanceRepository : TenantRepository!(SituationInstance, S
     }
 
     SituationInstance[] findByStatus(TenantId tenantId, InstanceStatus status) {
-        return filterByStatus(find(tenantId), status);
+        return filterByStatus(findByTenant(tenantId), status);
     }
 
     void removeByStatus(TenantId tenantId, InstanceStatus status) {
@@ -58,7 +58,7 @@ class MemorySituationInstanceRepository : TenantRepository!(SituationInstance, S
     }
 
     SituationInstance[] findByEntity(TenantId tenantId, string entityId) {
-        return filterByEntity(find(tenantId), entityId);
+        return filterByEntity(findByTenant(tenantId), entityId);
     }
 
     void removeByEntity(TenantId tenantId, string entityId) {

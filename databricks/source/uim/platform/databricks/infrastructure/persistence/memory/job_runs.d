@@ -9,19 +9,19 @@ class MemoryJobRunRepository : TenantRepository!(JobRun, JobRunId), JobRunReposi
   JobRun[] findByJob(TenantId tenantId, JobId jobId) {
     import std.algorithm : filter;
     import std.array : array;
-    return find(tenantId).filter!(r => r.jobId == jobId).array;
+    return findByTenant(tenantId).filter!(r => r.jobId == jobId).array;
   }
 
   JobRun[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
     import std.algorithm : filter;
     import std.array : array;
-    return find(tenantId).filter!(r => r.workspaceId == workspaceId).array;
+    return findByTenant(tenantId).filter!(r => r.workspaceId == workspaceId).array;
   }
 
   JobRun[] findByState(TenantId tenantId, RunState state) {
     import std.algorithm : filter;
     import std.array : array;
-    return find(tenantId).filter!(r => r.state == state).array;
+    return findByTenant(tenantId).filter!(r => r.state == state).array;
   }
 
   JobRun[] findActiveRuns(TenantId tenantId) {

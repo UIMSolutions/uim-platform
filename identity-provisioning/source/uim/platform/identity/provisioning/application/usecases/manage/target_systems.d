@@ -47,11 +47,11 @@ class ManageTargetSystemsUseCase { // TODO: UIMUseCase {
   }
 
   TargetSystem getTargetSystem(TenantId tenantId, TargetSystemId id) {
-    return repo.find(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 
   TargetSystem[] listTargetSystems(TenantId tenantId) {
-    return repo.find(tenantId);
+    return repo.findByTenant(tenantId);
   }
 
   CommandResult updateTargetSystem(UpdateTargetSystemRequest req) {
@@ -79,7 +79,7 @@ class ManageTargetSystemsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult activateSystem(TenantId tenantId, TargetSystemId id) {
-    auto sys = repo.find(tenantId, id);
+    auto sys = repo.findById(tenantId, id);
     if (sys.isNull)
       return CommandResult(false, "", "Target system not found");
 
@@ -93,7 +93,7 @@ class ManageTargetSystemsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deactivateSystem(TenantId tenantId, TargetSystemId id) {
-    auto sys = repo.find(tenantId, id);
+    auto sys = repo.findById(tenantId, id);
     if (sys.isNull)
       return CommandResult(false, "", "Target system not found");
 
@@ -104,7 +104,7 @@ class ManageTargetSystemsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteTargetSystem(TenantId tenantId, TargetSystemId id) {
-    auto existing = repo.find(tenantId, id);
+    auto existing = repo.findById(tenantId, id);
     if (existing.isNull)
       return CommandResult(false, "", "Target system not found");
 

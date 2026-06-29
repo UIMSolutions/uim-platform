@@ -35,19 +35,19 @@ class PredictionUseCases {
   }
 
   PredictionResponse getPrediction(TenantId tenantId, string id) {
-    auto found = repo.find(tenantId).filter!(e => e.id.value == id).array;
+    auto found = repo.findByTenant(tenantId).filter!(e => e.id.value == id).array;
     return PredictionResponse.fromEntity(found.empty ? Prediction.init : found[0]);
   }
 
   PredictionResponse[] listPredictions(TenantId tenantId) {
     PredictionResponse[] result;
-    foreach (p; repo.find(tenantId))
+    foreach (p; repo.findByTenant(tenantId))
       result ~= PredictionResponse.fromEntity(p);
     return result;
   }
 
   PredictionResponse trainPrediction(TenantId tenantId, string id) {
-    auto found = repo.find(tenantId).filter!(e => e.id.value == id).array;
+    auto found = repo.findByTenant(tenantId).filter!(e => e.id.value == id).array;
     auto p = found.empty ? Prediction.init : found[0];
     if (p.isNull)
       return PredictionResponse.init;
@@ -59,7 +59,7 @@ class PredictionUseCases {
   }
 
   CommandResult deletePrediction(TenantId tenantId, string id) {
-    auto found = repo.find(tenantId).filter!(e => e.id.value == id).array;
+    auto found = repo.findByTenant(tenantId).filter!(e => e.id.value == id).array;
     if (!found.empty) repo.remove(found[0]);
     return CommandResult(true, id, "");
   }

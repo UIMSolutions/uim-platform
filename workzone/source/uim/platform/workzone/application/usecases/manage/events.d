@@ -49,7 +49,7 @@ class ManageEventsUseCase { // TODO: UIMUseCase {
   }
 
   Event getEvent(TenantId tenantId, EventId id) {
-    return repo.find(tenantId, id);
+    return repo.findById(tenantId, id);
   }
 
   Event[] listByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
@@ -77,7 +77,7 @@ class ManageEventsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteEvent(TenantId tenantId, EventId id) {
-    auto e = repo.find(tenantId, id);
+    auto e = repo.findById(tenantId, id);
     if (e.isNull)
       return CommandResult(false, "", "Event not found");
 

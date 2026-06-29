@@ -13,11 +13,11 @@ import uim.platform.ui_flexibility;
 class MemoryFlexVersionRepository : TenantRepository!(FlexVersion, FlexVersionId), FlexVersionRepository {
 
   bool existsById(TenantId tenantId, FlexVersionId id) {
-    return !find(tenantId, id).isNull;
+    return !findById(tenantId, id).isNull;
   }
 
   FlexVersion findById(TenantId tenantId, FlexVersionId id) {
-    foreach (v; find(tenantId))
+    foreach (v; findByTenant(tenantId))
       if (v.id_ == id) return v;
     return FlexVersion.init;
   }
@@ -27,28 +27,28 @@ class MemoryFlexVersionRepository : TenantRepository!(FlexVersion, FlexVersionId
   }
 
   long countByTenant(TenantId tenantId) {
-    return cast(long) find(tenantId).length;
+    return cast(long) findByTenant(tenantId).length;
   }
 
   FlexVersion[] findByTenantAll(TenantId tenantId) {
-    return find(tenantId);
+    return findByTenant(tenantId);
   }
 
   FlexVersion[] findByApp(TenantId tenantId, string appId) {
     FlexVersion[] result;
-    foreach (v; find(tenantId))
+    foreach (v; findByTenant(tenantId))
       if (v.appId_ == appId) result ~= v;
     return result;
   }
 
   FlexVersion findActiveByApp(TenantId tenantId, string appId) {
-    foreach (v; find(tenantId))
+    foreach (v; findByTenant(tenantId))
       if (v.appId_ == appId && v.status_ == VersionStatus.active_) return v;
     return FlexVersion.init;
   }
 
   FlexVersion findByNumber(TenantId tenantId, string appId, long versionNumber) {
-    foreach (v; find(tenantId))
+    foreach (v; findByTenant(tenantId))
       if (v.appId_ == appId && v.versionNumber_ == versionNumber) return v;
     return FlexVersion.init;
   }

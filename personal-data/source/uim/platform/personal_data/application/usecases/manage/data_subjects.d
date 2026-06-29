@@ -47,11 +47,11 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
     }
 
     DataSubject getDataSubject(TenantId tenantId, DataSubjectId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     DataSubject[] listDataSubjects(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     DataSubject[] searchDataSubjectsByName(TenantId tenantId, string firstName, string lastName) {
@@ -80,7 +80,7 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult blockDataSubject(TenantId tenantId, DataSubjectId id) {
-        auto existing = repo.find(tenantId, id);
+        auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Data subject not found");
 
@@ -91,7 +91,7 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult eraseDataSubject(TenantId tenantId, DataSubjectId id) {
-        auto existing = repo.find(tenantId, id);
+        auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Data subject not found");
 
@@ -107,7 +107,7 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deleteDataSubject(TenantId tenantId, DataSubjectId id) {
-        auto existing = repo.find(tenantId, id);
+        auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Data subject not found");
 

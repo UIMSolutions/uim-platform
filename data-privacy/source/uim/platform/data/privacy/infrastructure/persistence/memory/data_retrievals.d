@@ -24,7 +24,7 @@ class MemoryDataRetrievalRequestRepository : TenantRepository!(DataRetrievalRequ
   }
 
   DataRetrievalRequest[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
-    return filterByDataSubject(find(tenantId), dataSubjectId);
+    return filterByDataSubject(findByTenant(tenantId), dataSubjectId);
   }
 
   void removeByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
@@ -42,7 +42,7 @@ class MemoryDataRetrievalRequestRepository : TenantRepository!(DataRetrievalRequ
   }
 
   DataRetrievalRequest[] findByStatus(TenantId tenantId, RetrievalStatus status) {
-    return filterByStatus(find(tenantId), status);
+    return filterByStatus(findByTenant(tenantId), status);
   }
 
   void removeByStatus(TenantId tenantId, RetrievalStatus status) {

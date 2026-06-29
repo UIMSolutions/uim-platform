@@ -19,11 +19,11 @@ class ManageSitePoliciesUseCase {
     }
 
     SitePolicy getSitePolicy(TenantId tenantId, SitePolicyId id) {
-        return repo.find(tenantId, id);
+        return repo.findById(tenantId, id);
     }
 
     SitePolicy[] listSitePolicies(TenantId tenantId) {
-        return repo.find(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     CommandResult createSitePolicy(SitePolicyDTO dto) {
@@ -78,7 +78,7 @@ class ManageSitePoliciesUseCase {
     }
 
     CommandResult deleteSitePolicy(TenantId tenantId, SitePolicyId id) {
-        auto existing = repo.find(tenantId, id);
+        auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Site policy not found");
 

@@ -14,14 +14,14 @@ import uim.platform.dms_integration;
 class MemoryDocumentVersionRepository : TenantRepository!(DocumentVersion, DocumentVersionId), DocumentVersionRepository {
 
     DocumentVersion[] findByDocument(TenantId tenantId, DocumentId documentId) {
-        return find(tenantId).filter!(e => e.documentId == documentId).array;
+        return findByTenant(tenantId).filter!(e => e.documentId == documentId).array;
     }
     void removeByDocument(TenantId tenantId, DocumentId documentId) {
         findByDocument(tenantId, documentId).each!(e => remove(e));
     }
 
     DocumentVersion[] findByRepository(TenantId tenantId, RepositoryId repositoryId) {
-        return find(tenantId).filter!(e => e.repositoryId == repositoryId).array;
+        return findByTenant(tenantId).filter!(e => e.repositoryId == repositoryId).array;
     }
 
     DocumentVersion[] findLatestVersions(TenantId tenantId, DocumentId documentId) {

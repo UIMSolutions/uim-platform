@@ -35,7 +35,7 @@ class FileServiceInstanceRepository
     private void persistTenant(TenantId tenantId) @trusted {
         auto path = filePath(tenantId);
         mkdirRecurse(path[0 .. path.lastIndexOf('/')]);
-        auto items = find(tenantId);
+        auto items = findByTenant(tenantId);
         Json arr = Json.emptyArray;
         foreach (i; items) arr ~= i.toJson();
         write(path, arr.toString());
@@ -93,18 +93,18 @@ class FileServiceInstanceRepository
     }
 
     override ServiceInstance[] findByStatus(TenantId tenantId, InstanceStatus status) {
-        return find(tenantId).filter!(e => e.status == status).array;
+        return findByTenant(tenantId).filter!(e => e.status == status).array;
     }
 
     override ServiceInstance[] findByPlan(TenantId tenantId, ServicePlanId planId) {
-        return find(tenantId).filter!(e => e.planId == planId).array;
+        return findByTenant(tenantId).filter!(e => e.planId == planId).array;
     }
 
     override ServiceInstance[] findByHyperscaler(TenantId tenantId, Hyperscaler hs) {
-        return find(tenantId).filter!(e => e.hyperscaler == hs).array;
+        return findByTenant(tenantId).filter!(e => e.hyperscaler == hs).array;
     }
 
     override bool nameExists(TenantId tenantId, string name) {
-        return find(tenantId).any!(e => e.name == name);
+        return findByTenant(tenantId).any!(e => e.name == name);
     }
 }

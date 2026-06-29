@@ -60,7 +60,7 @@ class ManageFoldersUseCase { // TODO: UIMUseCase {
   }
 
   Folder[] listFolders(TenantId tenantId) {
-    return folders.find(tenantId);
+    return folders.findByTenant(tenantId);
   }
 
   Folder[] listByRepository(TenantId tenantId, RepositoryId repositoryId) {
@@ -72,7 +72,7 @@ class ManageFoldersUseCase { // TODO: UIMUseCase {
   }
 
   Folder getFolder(TenantId tenantId, FolderId id) {
-    return folders.find(tenantId, id);
+    return folders.findById(tenantId, id);
   }
 
   CommandResult updateFolder(UpdateFolderRequest r) {
@@ -117,7 +117,7 @@ class ManageFoldersUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult deleteFolder(TenantId tenantId, FolderId id) {
-    auto folder = folders.find(tenantId, id);
+    auto folder = folders.findById(tenantId, id);
     if (folder.isNull)
       return CommandResult(false, "", "Folder not found");
 
