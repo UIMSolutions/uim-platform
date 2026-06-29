@@ -12,25 +12,25 @@ mixin(ShowModule!());
 @safe:
 interface ITenantStore(TEntity, TId) {
     // #region exists
-    bool existsByTenant(TenantId tenantId);
-    bool existsById(TenantId tenantId, TId id);
+    bool exists(TenantId tenantId);
+    bool exists(TenantId tenantId, TId id);
     bool exists(TEntity entity);
     // #endregion exists
 
     // #region count
-    size_t countByTenant(TenantId tenantId);
-    size_t countByTenant(TenantId tenantId, bool delegate(TEntity) @safe predicate);
+    size_t count(TenantId tenantId);
+    size_t count(TenantId tenantId, bool delegate(TEntity) @safe predicate);
     // #endregion count
 
     bool isEmpty(TenantId tenantId);
 
     // #region filter
-    TEntity[] filterEntities(TEntity[] entities, bool delegate(TEntity) @safe predicate);
+    TEntity[] filter(TEntity[] entities, bool delegate(TEntity) @safe predicate);
     // #endregion filter
 
     // #region find
-    TEntity[] findByTenant(TenantId tenantId, size_t offset = 0, size_t limit = 0);
-    TEntity findById(TenantId tenantId, TId id);
+    TEntity[] find(TenantId tenantId, size_t offset = 0, size_t limit = 0);
+    TEntity find(TenantId tenantId, TId id);
     // #endregion find
 
     // #region save
@@ -44,8 +44,8 @@ interface ITenantStore(TEntity, TId) {
     // #endregion update
 
     // #region remove
-    void removeByTenant(TenantId tenantId);
-    void removeById(TenantId tenantId, TId id);
+    void remove(TenantId tenantId);
+    void remove(TenantId tenantId, TId id);
     void remove(TEntity entity);
     void remove(TEntity[] entities);
     // #endregion remove

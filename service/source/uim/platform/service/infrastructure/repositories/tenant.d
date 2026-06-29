@@ -72,7 +72,7 @@ class TenantRepository(TEntity, TId) : ITenantRepository!(TEntity, TId) {
     }
 
     // #region filter
-    TEntity[] filter(TEntity[] entities, bool delegate(TEntity) @safe predicate) {
+    TEntity[] filterEntities(TEntity[] entities, bool delegate(TEntity) @safe predicate) {
         return _store.filter(entities, predicate);
     }
     // #endregion filter
@@ -161,11 +161,11 @@ unittest {
   repo.save(entity2);
 
   assert(repo.exists(entity1));
-  assert(repo.exists(entity1.tenantId, entity1.id));
-  assert(repo.count(entity1.tenantId) == 2);
+  assert(repo.existsById(entity1.tenantId, entity1.id));
+  assert(repo.countByTenant(entity1.tenantId) == 2);
 
   repo.remove(entity1);
   assert(!repo.exists(entity1));
   // writeln("Count after removal: ", repo.countAll());
-  assert(repo.count(entity1.tenantId) == 1);
+  assert(repo.countByTenant(entity1.tenantId) == 1);
 }

@@ -53,12 +53,19 @@ public:
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto result = _usecase.list(req.getTenantId);
-    res.writeJsonBody(serializeToJson(result.data));
-  }
- catch (Exception e) {
-    writeError(res, 500, "Internal server error");
-  }
+    auto result = _usecase.list(tenantId);
+    
+    return successResponse("ML models retrieved successfully", 200, result.map!(m => Json.emptyObject
+      .set("id", m.id)
+      .set("workspaceId", m.workspaceId)
+      .set("name", m.name)
+      .set("description", m.description)
+      .set("ownerId", m.ownerId)
+      .set("source", m.source)
+      .set("tags", m.tags)
+      .set("latestStage", m.latestStage.to!string)
+      .set("createdAt", m.createdAt)
+      .set("updatedAt", m.updatedAt)));
 }
 
 override protected Json getHandler(HTTPServerRequest req) {
@@ -84,7 +91,7 @@ override protected Json getHandler(HTTPServerRequest req) {
     .set("latestStage", result.data.latestStage.to!string)
     .set("createdAt", result.data.createdAt)
     .set("updatedAt", result.data.updatedAt);
-    
+
   return successResponse("ML model retrieved successfully", 200, responseData);
 }
 

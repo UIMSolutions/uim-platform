@@ -57,11 +57,11 @@ class MemoryTenantStore(TEntity, TId) : ITenantStore!(TEntity, TId) {
         return count(tenantId) == 0;
     }
 
-    // #region find
+    // #region filter
     TEntity[] filter(TEntity[] entities, bool delegate(TEntity) @safe predicate) {
         return entities.filter!((TEntity entity) => predicate(entity)).array;
     }
-    // #endregion find
+    // #endregion filter
 
     // #region find
     TEntity[] find(TenantId tenantId, size_t offset = 0, size_t limit = 0) {
@@ -107,6 +107,12 @@ class MemoryTenantStore(TEntity, TId) : ITenantStore!(TEntity, TId) {
     }
 
     // #region remove
+    void remove(TenantId tenantId) {
+        if (exists(tenantId)) {
+            _entities.remove(tenantId);
+        }
+    }
+
     void remove(TenantId tenantId, TId id) {
         if (exists(tenantId, id)) {
             _entities[tenantId].remove(id);

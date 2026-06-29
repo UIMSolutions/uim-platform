@@ -13,26 +13,17 @@ import uim.platform.portal;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryPageRepository : PageRepository {
-  private Page[PageId] store;
+class MemoryPageRepository : TenantRepository!(Page, PageId), PageRepository {
 
-  bool existsById(PageId id) {
-    return (id in store) ? true : false;
+  bool existsByAlias(TenantId tenantId, SiteId siteId, string alias_) {
+    return findByTenant(tenantId).filter!(p => p.siteId == siteId && p.alias_ == alias_).length > 0;
   }
 
-  Page findById(PageId id) {
-    return existsById(id) ? store[id] : Page.init;
-  }
-
-  bool existsByAlias(SiteId siteId, string alias_) {
-    return findByTenant(tenantId)p => p.siteId == siteId && p.alias_ == alias_);
-  }
-
-  Page findByAlias(SiteId siteId, string alias_) {
+  Page findByAlias(TenantId tenantId, SiteId siteId, string alias_) {
     return findByTenant(tenantId).filter!(p => p.siteId == siteId && p.alias_ == alias_).array;
   }
 
-  Page[] findBySite(SiteId siteId, size_t offset = 0, size_t limit = 100) {
+  Page[] findBySite(TenantId tenantId, SiteId siteId, size_t offset = 0, size_t limit = 100) {
     Page[] result;
     size_t idx;
     foreach (p; findByTenant(tenantId)) {
@@ -43,17 +34,5 @@ class MemoryPageRepository : PageRepository {
       }
     }
     return result;
-  }
-
-  void save(Page page) {
-    store[page.id] = page;
-  }
-
-  void update(Page page) {
-    store[page.id] = page;
-  }
-
-  void remove(PageId id) {
-    removeById(id);
   }
 }

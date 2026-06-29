@@ -23,8 +23,8 @@ bool tenantRepositoryTest(TEntity, TId)(ITenantRepository!(TEntity, TId) repo) {
     repo.save(entity1);
     repo.save(entity2);
 
-    assert(repo.exists(tenantId1, entity1.id));
-    assert(repo.exists(tenantId2, entity2.id));
+    assert(repo.existsById(tenantId1, entity1.id));
+    assert(repo.existsById(tenantId2, entity2.id));
 
     return true;
 }
