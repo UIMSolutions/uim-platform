@@ -23,7 +23,7 @@ class ManageDecisionsUseCase { // TODO: UIMUseCase {
         if (r.name.length == 0)
             return CommandResult(false, "", "Decision name is required");
 
-        auto existing = repo.find(r.tenantId, r.decisionId);
+        auto existing = repo.findById(r.tenantId, r.decisionId);
         if (!existing.isNull)
             return CommandResult(false, "", "Decision already exists");
 
@@ -50,7 +50,7 @@ class ManageDecisionsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateDecision(UpdateDecisionRequest r) {
-        auto decision = repo.find(r.tenantId, r.decisionId);
+        auto decision = repo.findById(r.tenantId, r.decisionId);
         if (decision.isNull)
             return CommandResult(false, "", "Decision not found");
 

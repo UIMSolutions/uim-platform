@@ -54,7 +54,7 @@ class ManageAppVersionsUseCase {
     }
 
     CommandResult updateAppVersion(AppVersionDTO dto) {
-        auto existing = repo.find(dto.tenantId, dto.versionId);
+        auto existing = repo.findById(dto.tenantId, dto.versionId);
         if (existing.isNull)
             return CommandResult(false, "", "App version not found");
 

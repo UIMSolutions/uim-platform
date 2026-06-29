@@ -22,7 +22,7 @@ class ManageSituationActionsUseCase { // TODO: UIMUseCase {
         if (err.length > 0)
             return CommandResult(false, "", err);
 
-        auto existing = repo.find(r.tenantId, r.situationActionId);
+        auto existing = repo.findById(r.tenantId, r.situationActionId);
         if (!existing.isNull)
             return CommandResult(false, "", "Situation action already exists");
 
@@ -53,7 +53,7 @@ class ManageSituationActionsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateSituationAction(UpdateSituationActionRequest r) {
-        auto action = repo.find(r.tenantId, r.situationActionId);
+        auto action = repo.findById(r.tenantId, r.situationActionId);
         if (action.isNull)
             return CommandResult(false, "", "Situation action not found");
 

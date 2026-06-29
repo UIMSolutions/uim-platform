@@ -52,7 +52,7 @@ class ManageRepositoriesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateRepository(UpdateRepositoryRequest r) {
-    auto entity = repo.find(r.tenantId, r.repositoryId);
+    auto entity = repo.findById(r.tenantId, r.repositoryId);
     if (entity.isNull)
       return CommandResult(false, "", "Repository not found");
 

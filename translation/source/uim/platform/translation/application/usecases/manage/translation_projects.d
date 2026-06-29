@@ -58,7 +58,7 @@ class ManageTranslationProjectsUseCase {
     }
 
     CommandResult updateProject(UpdateTranslationProjectRequest r) {
-        auto existing = repo.find(r.tenantId, r.projectId);
+        auto existing = repo.findById(r.tenantId, r.projectId);
         if (existing.isNull)
             return CommandResult(false, "", "Translation project not found");
 

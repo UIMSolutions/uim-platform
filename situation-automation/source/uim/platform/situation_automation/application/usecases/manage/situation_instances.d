@@ -23,7 +23,7 @@ class ManageSituationInstancesUseCase { // TODO: UIMUseCase {
         if (r.situationTemplateId.isEmpty)
             return CommandResult(false, "", "Template ID is required");
 
-        auto existing = repo.find(r.tenantId, r.situationInstanceId);
+        auto existing = repo.findById(r.tenantId, r.situationInstanceId);
         if (!existing.isNull)
             return CommandResult(false, "", "Situation instance already exists");
 
@@ -63,7 +63,7 @@ class ManageSituationInstancesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateSituationInstance(UpdateSituationInstanceRequest r) {
-        auto existing = repo.find(r.tenantId, r.situationInstanceId);
+        auto existing = repo.findById(r.tenantId, r.situationInstanceId);
         if (existing.isNull)
             return CommandResult(false, "", "Situation instance not found");
 
@@ -78,7 +78,7 @@ class ManageSituationInstancesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult resolveSituationInstance(ResolveSituationRequest r) {
-        auto existing = repo.find(r.tenantId, r.situationInstanceId);
+        auto existing = repo.findById(r.tenantId, r.situationInstanceId);
         if (existing.isNull)
             return CommandResult(false, "", "Situation instance not found");
         

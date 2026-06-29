@@ -48,7 +48,7 @@ class ManageVisibilitiesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateVisibility(UpdateVisibilityRequest r) {
-        auto existing = repo.find(r.tenantId, r.visibilityId);
+        auto existing = repo.findById(r.tenantId, r.visibilityId);
         if (existing.isNull)
             return CommandResult(false, "", "Visibility dashboard not found");
 

@@ -24,7 +24,7 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
         if (r.keyId.isEmpty)
             return CommandResult(false, "", "Key ID is required");
 
-        auto existing = repo.find(r.tenantId, r.certificateId);
+        auto existing = repo.findById(r.tenantId, r.certificateId);
         if (!existing.isNull)
             return CommandResult(false, "", "Certificate already exists");
 
@@ -43,7 +43,7 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult uploadCertificateChain(UploadCertificateChainRequest r) {
-        auto existing = repo.find(r.tenantId, r.certificateId);
+        auto existing = repo.findById(r.tenantId, r.certificateId);
         if (existing.isNull)
             return CommandResult(false, "", "Certificate not found");
         if (r.certificatePem.length == 0)
@@ -55,7 +55,7 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult activateCertificate(ActivateCertificateRequest r) {
-        auto existing = repo.find(r.tenantId, r.certificateId);
+        auto existing = repo.findById(r.tenantId, r.certificateId);
          if (existing.isNull)
             return CommandResult(false, "", "Certificate not found");
         if (existing.certificatePem.length == 0)

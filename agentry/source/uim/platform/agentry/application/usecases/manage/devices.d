@@ -61,7 +61,7 @@ class ManageDevicesUseCase {
     }
 
     CommandResult updateDevice(DeviceDTO dto) {
-        auto existing = repo.find(dto.tenantId, dto.deviceId);
+        auto existing = repo.findById(dto.tenantId, dto.deviceId);
         if (existing.isNull)
             return CommandResult(false, "", "Device not found");
 

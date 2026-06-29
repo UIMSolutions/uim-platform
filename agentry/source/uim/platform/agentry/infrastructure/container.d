@@ -6,6 +6,7 @@
 module uim.platform.agentry.infrastructure.container;
 
 import uim.platform.agentry;
+import uim.platform.agentry.presentation.http;
 
 mixin(ShowModule!());
 

@@ -47,7 +47,7 @@ class ManageProgramsUseCase {
     }
 
     CommandResult updateProgram(UpdateProgramRequest r) {
-        auto program = repo.find(r.tenantId, r.programId);
+        auto program = repo.findById(r.tenantId, r.programId);
         if (program.isNull)
             return CommandResult(false, "", "Program '" ~ r.programId.value ~ "' not found");
         

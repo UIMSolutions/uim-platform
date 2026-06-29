@@ -24,7 +24,7 @@ class ManagePatientsUseCase {
     );
     if (err.length > 0) return CommandResult(false, "", err);
 
-    if (!repo.find(r.tenantId, r.patientId).isNull)
+    if (!repo.findById(r.tenantId, r.patientId).isNull)
       return CommandResult(false, "", "Patient already exists");
 
     Patient p;
@@ -42,7 +42,7 @@ class ManagePatientsUseCase {
   }
 
   CommandResult updatePatient(UpdatePatientRequest r) {
-    auto existing = repo.find(r.tenantId, r.patientId);
+    auto existing = repo.findById(r.tenantId, r.patientId);
     if (existing.isNull)
       return CommandResult(false, "", "Patient not found");
 

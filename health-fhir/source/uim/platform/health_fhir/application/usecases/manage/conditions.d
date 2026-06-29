@@ -21,7 +21,7 @@ class ManageConditionsUseCase {
     auto err = FhirValidator.validateCondition(r.conditionId.value);
     if (err.length > 0) return CommandResult(false, "", err);
 
-    if (!repo.find(r.tenantId, r.conditionId).isNull)
+    if (!repo.findById(r.tenantId, r.conditionId).isNull)
       return CommandResult(false, "", "Condition already exists");
 
     Condition c;
@@ -45,7 +45,7 @@ class ManageConditionsUseCase {
   }
 
   CommandResult updateCondition(UpdateConditionRequest r) {
-    auto existing = repo.find(r.tenantId, r.conditionId);
+    auto existing = repo.findById(r.tenantId, r.conditionId);
     if (existing.isNull)
       return CommandResult(false, "", "Condition not found");
 

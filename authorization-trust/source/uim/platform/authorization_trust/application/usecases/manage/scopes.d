@@ -39,7 +39,7 @@ class ManageScopesUseCase {
   }
 
   CommandResult updateScope(UpdateScopeRequest r) {
-    auto s = repo.find(r.tenantId, r.scopeId);
+    auto s = repo.findById(r.tenantId, r.scopeId);
     if (s.isNull)
       return CommandResult(false, "", "Scope not found");
 

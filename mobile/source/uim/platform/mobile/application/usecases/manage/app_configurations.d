@@ -41,7 +41,7 @@ class ManageAppConfigurationsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateAppConfiguration(UpdateAppConfigRequest r) {
-        auto config = repo.find(r.tenantId, r.id);
+        auto config = repo.findById(r.tenantId, r.id);
         if (config.isNull)
             return CommandResult(false, "", "Configuration not found");
         if (r.value.length > 0)

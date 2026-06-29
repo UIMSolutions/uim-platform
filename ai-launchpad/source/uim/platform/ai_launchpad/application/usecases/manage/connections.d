@@ -66,7 +66,7 @@ class ManageConnectionsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult patchConnection(PatchConnectionRequest r) {
-    auto c = repo.find(r.tenantId, r.connectionId);
+    auto c = repo.findById(r.tenantId, r.connectionId);
     if (c.isNull)
       return CommandResult(false, "", "Connection not found");
     if (r.name.length > 0)

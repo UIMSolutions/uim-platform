@@ -50,7 +50,7 @@ class ManageTlsConfigurationsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateTlsConfiguration(UpdateTlsConfigurationRequest r) {
-        auto config = repo.find(r.tenantId, r.tlsConfigurationId);
+        auto config = repo.findById(r.tenantId, r.tlsConfigurationId);
         if (config.isNull)
             return CommandResult(false, "", "TLS configuration not found");
 

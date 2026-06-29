@@ -43,7 +43,7 @@ class ManageSpatialFeaturesUseCase {
   }
 
   CommandResult update(UpdateSpatialFeatureRequest r) {
-    auto existing = repo.find(r.tenantId, SpatialFeatureId(r.id));
+    auto existing = repo.findById(r.tenantId, SpatialFeatureId(r.id));
     if (existing.isNull)
       return CommandResult(false, "", "Spatial feature not found");
 

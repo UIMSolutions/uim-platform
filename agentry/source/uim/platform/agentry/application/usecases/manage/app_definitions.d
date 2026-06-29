@@ -54,7 +54,7 @@ class ManageAppDefinitionsUseCase {
     }
 
     CommandResult updateDefinition(AppDefinitionDTO dto) {
-        auto existing = repo.find(dto.tenantId, dto.definitionId);
+        auto existing = repo.findById(dto.tenantId, dto.definitionId);
         if (existing.isNull)
             return CommandResult(false, "", "App definition not found");
 

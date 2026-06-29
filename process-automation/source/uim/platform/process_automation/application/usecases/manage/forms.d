@@ -23,7 +23,7 @@ class ManageFormsUseCase { // TODO: UIMUseCase {
         if (r.name.length == 0)
             return CommandResult(false, "", "Form name is required");
 
-        auto existing = repo.find(r.tenantId, r.formId);
+        auto existing = repo.findById(r.tenantId, r.formId);
         if (!existing.isNull)
             return CommandResult(false, "", "Form already exists");
 
@@ -50,7 +50,7 @@ class ManageFormsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateForm(UpdateFormRequest r) {
-        auto form = repo.find(r.tenantId, r.formId);
+        auto form = repo.findById(r.tenantId, r.formId);
         if (form.isNull)
             return CommandResult(false, "", "Form not found");
 

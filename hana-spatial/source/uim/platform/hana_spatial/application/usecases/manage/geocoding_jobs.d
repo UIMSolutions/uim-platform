@@ -50,7 +50,7 @@ class ManageGeocodingJobsUseCase {
   }
 
   CommandResult performAction(GeocodingJobActionRequest r) {
-    auto existing = repo.find(r.tenantId, GeocodingJobId(r.id));
+    auto existing = repo.findById(r.tenantId, GeocodingJobId(r.id));
     if (existing.isNull)
       return CommandResult(false, "", "Geocoding job not found");
 

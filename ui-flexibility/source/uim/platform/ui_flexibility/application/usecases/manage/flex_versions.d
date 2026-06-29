@@ -39,7 +39,7 @@ class ManageFlexVersionsUseCase {
   }
 
   CommandResult activateVersion(ActivateVersionRequest r) {
-    auto v = repo.find(r.tenantId, r.versionId);
+    auto v = repo.findById(r.tenantId, r.versionId);
     if (v.isNull)
       return CommandResult(false, null, "FlexVersion not found");
 
@@ -59,7 +59,7 @@ class ManageFlexVersionsUseCase {
   }
 
   CommandResult updateVersion(UpdateFlexVersionRequest r) {
-    auto v = repo.find(r.tenantId, r.versionId);
+    auto v = repo.findById(r.tenantId, r.versionId);
     if (v.isNull)
       return CommandResult(false, null, "FlexVersion not found");
 

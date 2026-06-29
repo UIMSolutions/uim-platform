@@ -57,7 +57,7 @@ class ManageBackendConnectionsUseCase {
     }
 
     CommandResult updateBackendConnection(BackendConnectionDTO dto) {
-        auto existing = repo.find(dto.tenantId, dto.connectionId);
+        auto existing = repo.findById(dto.tenantId, dto.connectionId);
         if (existing.isNull)
             return CommandResult(false, "", "Backend connection not found");
 

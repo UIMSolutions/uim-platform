@@ -56,7 +56,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult claimTask(ClaimTaskRequest r) {
-        auto existing = repo.find(r.tenantId, r.taskId);
+        auto existing = repo.findById(r.tenantId, r.taskId);
         if (existing.isNull)
             return CommandResult(false, "", "Task not found");
 
@@ -71,7 +71,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult completeTask(CompleteTaskRequest r) {
-        auto existing = repo.find(r.tenantId, r.taskId);
+        auto existing = repo.findById(r.tenantId, r.taskId);
         if (existing.isNull)
             return CommandResult(false, "", "Task not found");
 
@@ -88,7 +88,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateTask(UpdateTaskRequest r) {
-        auto task = repo.find(r.tenantId, r.taskId);
+        auto task = repo.findById(r.tenantId, r.taskId);
         if (task.isNull)
             return CommandResult(false, "", "Task not found");
 

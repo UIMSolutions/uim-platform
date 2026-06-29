@@ -25,7 +25,7 @@ class ManageSchemasUseCase { // TODO: UIMUseCase {
     if (r.schemaId.isEmpty || r.name.length == 0)
       return CommandResult(false, "", "Schema ID and name are required");
 
-    auto existing = repo.find(r.tenantId, r.schemaId);
+    auto existing = repo.findById(r.tenantId, r.schemaId);
     if (!existing.isNull)
       return CommandResult(false, "", "Schema already exists");
 
@@ -49,7 +49,7 @@ class ManageSchemasUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateSchema(UpdateSchemaRequest r) {
-    auto schema = repo.find(r.tenantId, r.schemaId);
+    auto schema = repo.findById(r.tenantId, r.schemaId);
     if (schema.isNull)
       return CommandResult(false, "", "Schema not found");
 

@@ -23,7 +23,7 @@ class ManageDataContextsUseCase { // TODO: UIMUseCase {
         if (r.situationInstanceId.isEmpty)
             return CommandResult(false, "", "Instance ID is required");
 
-        auto existing = repo.find(r.tenantId, r.dataContextId);
+        auto existing = repo.findById(r.tenantId, r.dataContextId);
         if (!existing.isNull)
             return CommandResult(false, "", "Data context already exists");
 

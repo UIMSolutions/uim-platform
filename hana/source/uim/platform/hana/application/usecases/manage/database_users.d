@@ -51,7 +51,7 @@ class ManageDatabaseUsersUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateDatabaseUser(UpdateDatabaseUserRequest r) {
-    auto user = repo.find(r.tenantId, r.id);
+    auto user = repo.findById(r.tenantId, r.id);
     if (user.isNull)
       return CommandResult(false, "", "Database user not found");
 

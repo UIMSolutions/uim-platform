@@ -43,7 +43,7 @@ class ManageSpatialLayersUseCase {
   }
 
   CommandResult update(UpdateSpatialLayerRequest r) {
-    auto existing = repo.find(r.tenantId, SpatialLayerId(r.id));
+    auto existing = repo.findById(r.tenantId, SpatialLayerId(r.id));
     if (existing.isNull)
       return CommandResult(false, "", "Spatial layer not found");
 

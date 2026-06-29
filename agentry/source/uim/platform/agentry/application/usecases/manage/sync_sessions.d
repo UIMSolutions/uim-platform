@@ -50,7 +50,7 @@ class ManageSyncSessionsUseCase {
     }
 
     CommandResult updateSyncSession(SyncSessionDTO dto) {
-        auto existing = repo.find(dto.tenantId, dto.sessionId);
+        auto existing = repo.findById(dto.tenantId, dto.sessionId);
         if (existing.isNull)
             return CommandResult(false, "", "Sync session not found");
 

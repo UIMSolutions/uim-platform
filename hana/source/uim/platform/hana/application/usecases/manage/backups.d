@@ -25,7 +25,7 @@ class ManageBackupsUseCase { // TODO: UIMUseCase {
     if (r.isNull || r.name.length == 0)
       return CommandResult(false, "", "Backup ID and name are required");
 
-    auto existing = repo.find(r.tenantId, r.id);
+    auto existing = repo.findById(r.tenantId, r.id);
     if (!existing.isNull)
       return CommandResult(false, "", "Backup already exists");
 
@@ -56,7 +56,7 @@ class ManageBackupsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateBackup(UpdateBackupRequest r) {
-    auto existing = repo.find(r.tenantId, r.id);
+    auto existing = repo.findById(r.tenantId, r.id);
     if (existing.isNull)
       return CommandResult(false, "", "Backup not found");
 

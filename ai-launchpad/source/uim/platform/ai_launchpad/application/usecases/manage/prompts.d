@@ -82,7 +82,7 @@ class ManagePromptsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult patchPrompt(PatchPromptRequest r) {
-    auto p = repo.find(r.tenantId, r.promptId);
+    auto p = repo.findById(r.tenantId, r.promptId);
     if (p.isNull)
       return CommandResult(false, "", "Prompt not found");
     if (r.name.length > 0)

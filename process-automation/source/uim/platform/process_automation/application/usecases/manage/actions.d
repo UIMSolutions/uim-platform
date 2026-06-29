@@ -53,7 +53,7 @@ class ManageActionsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateAction(UpdateActionRequest r) {
-        auto action = repo.find(r.tenantId, r.actionId);
+        auto action = repo.findById(r.tenantId, r.actionId);
         if (action.isNull)
             return CommandResult(false, "", "Action not found");
 

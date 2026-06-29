@@ -52,7 +52,7 @@ class ManageDeploymentsUseCase {
     }
 
     CommandResult updateDeployment(DeploymentDTO dto) {
-        auto existing = repo.find(dto.tenantId, dto.deploymentId);
+        auto existing = repo.findById(dto.tenantId, dto.deploymentId);
         if (existing.isNull)
             return CommandResult(false, "", "Deployment not found");
 

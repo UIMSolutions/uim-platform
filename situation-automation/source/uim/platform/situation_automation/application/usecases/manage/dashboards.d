@@ -22,7 +22,7 @@ class ManageDashboardsUseCase { // TODO: UIMUseCase {
         if (err.length > 0)
             return CommandResult(false, "", err);
 
-        auto existing = repo.find(r.tenantId, r.dashboardId);
+        auto existing = repo.findById(r.tenantId, r.dashboardId);
         if (!existing.isNull)
             return CommandResult(false, "", "Dashboard already exists");
 
@@ -45,7 +45,7 @@ class ManageDashboardsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateDashboard(UpdateDashboardRequest r) {
-        auto dashboard = repo.find(r.tenantId, r.dashboardId);
+        auto dashboard = repo.findById(r.tenantId, r.dashboardId);
         if (dashboard.isNull)
             return CommandResult(false, "", "Dashboard not found");
 

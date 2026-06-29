@@ -21,7 +21,7 @@ class ManageEncountersUseCase {
     auto err = FhirValidator.validateEncounter(r.encounterId.value);
     if (err.length > 0) return CommandResult(false, "", err);
 
-    if (!repo.find(r.tenantId, r.encounterId).isNull)
+    if (!repo.findById(r.tenantId, r.encounterId).isNull)
       return CommandResult(false, "", "Encounter already exists");
 
     Encounter e;
@@ -43,7 +43,7 @@ class ManageEncountersUseCase {
   }
 
   CommandResult updateEncounter(UpdateEncounterRequest r) {
-    auto existing = repo.find(r.tenantId, r.encounterId);
+    auto existing = repo.findById(r.tenantId, r.encounterId);
     if (existing.isNull)
       return CommandResult(false, "", "Encounter not found");
 

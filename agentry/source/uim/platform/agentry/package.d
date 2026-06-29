@@ -7,8 +7,8 @@ module uim.platform.agentry;
 
 public {
     import uim.platform.service;
+    
     import uim.platform.agentry.domain;
     import uim.platform.agentry.application;
     import uim.platform.agentry.infrastructure;
-    import uim.platform.agentry.presentation;
 }

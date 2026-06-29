@@ -63,7 +63,7 @@ class ManageConsentRecordsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult withdrawConsentRecord(WithdrawConsentRequest r) {
-        auto existing = repo.find(r.tenantId, r.id);
+        auto existing = repo.findById(r.tenantId, r.id);
         if (existing.isNull)
             return CommandResult(false, "", "Consent record not found");
 

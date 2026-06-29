@@ -25,7 +25,7 @@ class ManageAlertsUseCase { // TODO: UIMUseCase {
     if (r.isNull || r.name.length == 0)
       return CommandResult(false, "", "Alert ID and name are required");
 
-    auto existing = repo.find(r.tenantId, r.id);
+    auto existing = repo.findById(r.tenantId, r.id);
     if (!existing.isNull)
       return CommandResult(false, "", "Alert already exists");
 
@@ -60,7 +60,7 @@ class ManageAlertsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult acknowledgeAlert(AcknowledgeAlertRequest r) {
-    auto existing = repo.find(r.tenantId, r.alertId);
+    auto existing = repo.findById(r.tenantId, r.alertId);
     if (existing.isNull)
       return CommandResult(false, "", "Alert not found");
 
@@ -76,7 +76,7 @@ class ManageAlertsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateAlert(UpdateAlertRequest r) {
-    auto existing = repo.find(r.tenantId, r.alertId);
+    auto existing = repo.findById(r.tenantId, r.alertId);
     if (existing.isNull)
       return CommandResult(false, "", "Alert not found");
 

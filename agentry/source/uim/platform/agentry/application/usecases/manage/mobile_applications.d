@@ -56,7 +56,7 @@ class ManageMobileApplicationsUseCase {
     }
 
     CommandResult updateMobileApplication(MobileApplicationDTO dto) {
-        auto existing = repo.find(dto.tenantId, dto.applicationId);
+        auto existing = repo.findById(dto.tenantId, dto.applicationId);
         if (existing.isNull)
             return CommandResult(false, "", "Mobile application not found");
 

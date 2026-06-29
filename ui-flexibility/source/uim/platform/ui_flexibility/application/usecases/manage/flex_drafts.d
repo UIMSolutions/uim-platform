@@ -40,7 +40,7 @@ class ManageFlexDraftsUseCase {
   }
 
   CommandResult updateDraft(UpdateFlexDraftRequest r) {
-    auto d = repo.find(r.tenantId, r.draftId);
+    auto d = repo.findById(r.tenantId, r.draftId);
     if (d.isNull) return CommandResult(false, null, "FlexDraft not found");
     d.changeIds_   = r.changeIds_.dup;
     d.changeCount_ = cast(long) r.changeIds_.length;

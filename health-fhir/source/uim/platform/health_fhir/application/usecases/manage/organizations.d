@@ -21,7 +21,7 @@ class ManageOrganizationsUseCase {
     auto err = FhirValidator.validateOrganization(r.organizationId.value, r.name_);
     if (err.length > 0) return CommandResult(false, "", err);
 
-    if (!repo.find(r.tenantId, r.organizationId).isNull)
+    if (!repo.findById(r.tenantId, r.organizationId).isNull)
       return CommandResult(false, "", "Organization already exists");
 
     Organization o;
@@ -40,7 +40,7 @@ class ManageOrganizationsUseCase {
   }
 
   CommandResult updateOrganization(UpdateOrganizationRequest r) {
-    auto existing = repo.find(r.tenantId, r.organizationId);
+    auto existing = repo.findById(r.tenantId, r.organizationId);
     if (existing.isNull)
       return CommandResult(false, "", "Organization not found");
 

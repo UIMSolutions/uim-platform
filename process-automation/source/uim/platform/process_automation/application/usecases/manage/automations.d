@@ -23,7 +23,7 @@ class ManageAutomationsUseCase { // TODO: UIMUseCase {
         if (r.name.length == 0)
             return CommandResult(false, "", "Automation name is required");
 
-        auto existing = repo.find(r.tenantId, r.automationId);
+        auto existing = repo.findById(r.tenantId, r.automationId);
         if (!existing.isNull)
             return CommandResult(false, "", "Automation already exists");
 
@@ -50,7 +50,7 @@ class ManageAutomationsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateAutomation(UpdateAutomationRequest r) {
-        auto existing = repo.find(r.tenantId, r.automationId);
+        auto existing = repo.findById(r.tenantId, r.automationId);
         if (existing.isNull)
             return CommandResult(false, "", "Automation not found");
 

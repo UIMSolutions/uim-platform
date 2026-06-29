@@ -35,7 +35,7 @@ class ManageRolesUseCase {
   }
 
   CommandResult updateRole(UpdateRoleRequest r) {
-    auto role = repo.find(r.tenantId, r.roleId);
+    auto role = repo.findById(r.tenantId, r.roleId);
     if (role.isNull )
       return CommandResult(false, "", "Role not found");
 

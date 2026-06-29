@@ -21,7 +21,7 @@ class ManageObservationsUseCase {
     auto err = FhirValidator.validateObservation(r.observationId.value, r.status_.to!string);
     if (err.length > 0) return CommandResult(false, "", err);
 
-    if (!repo.find(r.tenantId, r.observationId).isNull)
+    if (!repo.findById(r.tenantId, r.observationId).isNull)
       return CommandResult(false, "", "Observation already exists");
 
     Observation o;
@@ -43,7 +43,7 @@ class ManageObservationsUseCase {
   }
 
   CommandResult updateObservation(UpdateObservationRequest r) {
-    auto existing = repo.find(r.tenantId, r.observationId);
+    auto existing = repo.findById(r.tenantId, r.observationId);
     if (existing.isNull)
       return CommandResult(false, "", "Observation not found");
 

@@ -22,7 +22,7 @@ class ManageProcessesUseCase { // TODO: UIMUseCase {
         if (err.length > 0)
             return CommandResult(false, "", err);
 
-        auto existing = repo.find(r.tenantId, r.processId);
+        auto existing = repo.findById(r.tenantId, r.processId);
         if (!existing.isNull)
             return CommandResult(false, "", "Process already exists");
 
@@ -52,7 +52,7 @@ class ManageProcessesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateProcess(UpdateProcessRequest r) {
-        auto process = repo.find(r.tenantId, r.processId);
+        auto process = repo.findById(r.tenantId, r.processId);
         if (process.isNull)
             return CommandResult(false, "", "Process not found");
 
@@ -69,7 +69,7 @@ class ManageProcessesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult deployProcess(DeployProcessRequest r) {
-        auto process = repo.find(r.tenantId, r.processId);
+        auto process = repo.findById(r.tenantId, r.processId);
         if (process.isNull)
             return CommandResult(false, "", "Process not found");
 

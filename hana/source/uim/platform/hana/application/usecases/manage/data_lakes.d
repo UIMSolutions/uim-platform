@@ -25,7 +25,7 @@ class ManageDataLakesUseCase { // TODO: UIMUseCase {
     if (r.isNull || r.name.length == 0)
       return CommandResult(false, "", "Data lake ID and name are required");
 
-    auto datalake = repo.find(r.tenantId, r.id);
+    auto datalake = repo.findById(r.tenantId, r.id);
     if (!datalake.isNull)
       return CommandResult(false, "", "Data lake already exists");
 

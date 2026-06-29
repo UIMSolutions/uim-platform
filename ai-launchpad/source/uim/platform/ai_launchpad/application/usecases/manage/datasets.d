@@ -55,7 +55,7 @@ class ManageDatasetsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult patchDataset(PatchDatasetRequest r) {
-    auto d = repo.find(r.tenantId, r.connectionId, r.datasetId);
+    auto d = repo.findById(r.tenantId, r.connectionId, r.datasetId);
     if (d.isNull)
       return CommandResult(false, "", "Dataset not found");
     if (r.description.length > 0)

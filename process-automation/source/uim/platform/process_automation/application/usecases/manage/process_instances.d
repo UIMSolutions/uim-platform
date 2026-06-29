@@ -54,7 +54,7 @@ class ManageProcessInstancesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult performProcessInstanceAction(ProcessInstanceActionRequest r) {
-        auto existing = repo.find(r.tenantId, r.processInstanceId);
+        auto existing = repo.findById(r.tenantId, r.processInstanceId);
         if (existing.isNull)
             return CommandResult(false, "", "Process instance not found");
 

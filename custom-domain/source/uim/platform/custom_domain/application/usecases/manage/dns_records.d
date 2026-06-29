@@ -56,7 +56,7 @@ class ManageDnsRecordsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateDnsRecord(UpdateDnsRecordRequest r) {
-        auto record = repo.find(r.tenantId, r.dnsRecordId);
+        auto record = repo.findById(r.tenantId, r.dnsRecordId);
         if (record.isNull)
             return CommandResult(false, "", "DNS record not found");
 
