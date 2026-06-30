@@ -15,7 +15,7 @@ enum LogisticsDirection {
   inbound,
 }
 LogisticsDirection toLogisticsDirection(string value) {
-  mixin(toEnumSwitch("LogisticsDirection", "LogisticsDirection.outbound"));
+  mixin(EnumSwitch("LogisticsDirection", "LogisticsDirection.outbound"));
 }
 LogisticsDirection[] toLogisticsDirection(string[] values) {
   return values.map!(v => v.toLogisticsDirection).array;
@@ -50,7 +50,7 @@ enum FreightOrderStatus {
   cancelled,
 }
 FreightOrderStatus toFreightOrderStatus(string value) {
-  mixin(toEnumSwitch("FreightOrderStatus", "FreightOrderStatus.draft"));
+  mixin(EnumSwitch("FreightOrderStatus", "FreightOrderStatus.draft"));
 }
 FreightOrderStatus[] toFreightOrderStatus(string[] values) {
   return values.map!(v => v.toFreightOrderStatus).array;
@@ -91,7 +91,7 @@ enum ShipmentStatus {
   cancelled,
 }
 ShipmentStatus toShipmentStatus(string value) {
-  mixin(toEnumSwitch("ShipmentStatus", "ShipmentStatus.created"));
+  mixin(EnumSwitch("ShipmentStatus", "ShipmentStatus.created"));
 }
 ShipmentStatus[] toShipmentStatus(string[] values) {
   return values.map!(v => v.toShipmentStatus).array;
@@ -133,7 +133,7 @@ enum DeliveryStatus {
   cancelled,
 }
 DeliveryStatus toDeliveryStatus(string value) {
-  mixin(toEnumSwitch("DeliveryStatus", "DeliveryStatus.created"));
+  mixin(EnumSwitch("DeliveryStatus", "DeliveryStatus.created"));
 }
 DeliveryStatus[] toDeliveryStatus(string[] values) {
   return values.map!(v => v.toDeliveryStatus).array;
@@ -176,7 +176,7 @@ enum WarehouseTaskType {
   counting,
 }
 WarehouseTaskType toWarehouseTaskType(string value) {
-  mixin(toEnumSwitch("WarehouseTaskType", "WarehouseTaskType.picking"));
+  mixin(EnumSwitch("WarehouseTaskType", "WarehouseTaskType.picking"));
 }
 WarehouseTaskType[] toWarehouseTaskType(string[] values) {
   return values.map!(v => v.toWarehouseTaskType).array;
@@ -216,7 +216,7 @@ enum WarehouseTaskStatus {
   cancelled,
 }
 WarehouseTaskStatus toWarehouseTaskStatus(string value) {
-  mixin(toEnumSwitch("WarehouseTaskStatus", "WarehouseTaskStatus.created"));
+  mixin(EnumSwitch("WarehouseTaskStatus", "WarehouseTaskStatus.created"));
 }
 WarehouseTaskStatus[] toWarehouseTaskStatus(string[] values) {
   return values.map!(v => v.toWarehouseTaskStatus).array;
@@ -257,7 +257,7 @@ enum WarehouseOrderStatus {
   cancelled,
 }
 WarehouseOrderStatus toWarehouseOrderStatus(string value) {
-  mixin(toEnumSwitch("WarehouseOrderStatus", "WarehouseOrderStatus.created"));
+  mixin(EnumSwitch("WarehouseOrderStatus", "WarehouseOrderStatus.created"));
 }
 WarehouseOrderStatus[] toWarehouseOrderStatus(string[] values) {
   return values.map!(v => v.toWarehouseOrderStatus).array;
@@ -296,7 +296,7 @@ enum CarrierStatus {
   suspended,
 }
 CarrierStatus toCarrierStatus(string value) {
-  mixin(toEnumSwitch("CarrierStatus", "CarrierStatus.active"));
+  mixin(EnumSwitch("CarrierStatus", "CarrierStatus.active"));
 } 
 CarrierStatus[] toCarrierStatus(string[] values) {
   return values.map!(v => v.toCarrierStatus).array;
@@ -333,7 +333,7 @@ enum TransportMode {
   multimodal,
 }
 TransportMode toTransportMode(string value) {
-  mixin(toEnumSwitch("TransportMode", "TransportMode.road"));
+  mixin(EnumSwitch("TransportMode", "TransportMode.road"));
 }
 TransportMode[] toTransportMode(string[] values) {
   return values.map!(v => v.toTransportMode).array;
@@ -374,7 +374,7 @@ enum HandlingUnitType {
   drum,
 }
 HandlingUnitType toHandlingUnitType(string value) {
-  mixin(toEnumSwitch("HandlingUnitType", "HandlingUnitType.pallet"));
+  mixin(EnumSwitch("HandlingUnitType", "HandlingUnitType.pallet"));
 }
 HandlingUnitType[] toHandlingUnitType(string[] values) {
   return values.map!(v => v.toHandlingUnitType).array;

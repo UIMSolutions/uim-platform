@@ -23,12 +23,12 @@ class ManageJobsUseCase {
     }
 
     CompilationJob[] listJobs(TenantId tenantId) {
-        return repo.findAll().filter!(job => job.tenantId.value == tenantId.value).array;
+        return repo.findByTenantId(tenantId).array;
     }
 
     CompilationJob[] listJobsForProgram(TenantId tenantId, AbapProgramId pid) {
-        return repo.findAll()
-            .filter!(job => job.tenantId.value == tenantId.value && job.programId.value == pid.value)
+        return repo.findByTenantId(tenantId)
+            .filter!(job => job.programId.value == pid.value)
             .array;
     }
 

@@ -17,7 +17,7 @@ enum BrokerServiceStatus {
 }
 
 BrokerServiceStatus toBrokerServiceStatus(string value) {
-    mixin(toEnumSwitch("BrokerServiceStatus", "failed"));
+    mixin(EnumSwitch("BrokerServiceStatus", "failed"));
 }
 BrokerServiceStatus[] toBrokerServiceStatus(string[] values) {
     return values.map!(v => toBrokerServiceStatus(v)).array;
@@ -60,7 +60,7 @@ enum BrokerServiceType {
     premium
 }
 BrokerServiceType toBrokerServiceType(string value) {
-    mixin(toEnumSwitch("BrokerServiceType", "standard"));
+    mixin(EnumSwitch("BrokerServiceType", "standard"));
 }
 BrokerServiceType[] toBrokerServiceType(string[] values) {
     return values.map!(v => toBrokerServiceType(v)).array;
@@ -99,7 +99,7 @@ enum BrokerServiceClass {
     standardMega
 }
 BrokerServiceClass toBrokerServiceClass(string value) {
-    mixin(toEnumSwitch("BrokerServiceClass", "standardKilo"));
+    mixin(EnumSwitch("BrokerServiceClass", "standardKilo"));
 }
 BrokerServiceClass[] toBrokerServiceClass(string[] values) {
     return values.map!(v => toBrokerServiceClass(v)).array;
@@ -141,7 +141,7 @@ enum CloudProvider {
     onPremise
 }
 CloudProvider toCloudProvider(string provider) {
-    mixin(toEnumSwitch("CloudProvider", "sap"));
+    mixin(EnumSwitch("CloudProvider", "sap"));
 }
 CloudProvider[] toCloudProvider(string[] providers) {
     return providers.map!(p => toCloudProvider(p)).array;
@@ -178,7 +178,7 @@ enum QueueAccessType {
     nonExclusive
 }
 QueueAccessType toQueueAccessType(string value) {
-    mixin(toEnumSwitch("QueueAccessType", "exclusive"));
+    mixin(EnumSwitch("QueueAccessType", "exclusive"));
 }
 QueueAccessType[] toQueueAccessType(string[] values) {
     return values.map!(v => toQueueAccessType(v)).array;
@@ -211,7 +211,7 @@ enum QueueStatus {
     pendingDelete
 }
 QueueStatus toQueueStatus(string status) {
-    mixin(toEnumSwitch("QueueStatus", "inactive"));
+    mixin(EnumSwitch("QueueStatus", "inactive"));
 }
 QueueStatus[] toQueueStatus(string[] statuses) {
     return statuses.map!(s => toQueueStatus(s)).array;
@@ -247,7 +247,7 @@ enum QueueType {
     temporary
 }
 QueueType toQueueType(string type) {
-    mixin(toEnumSwitch("QueueType", "durable"));
+    mixin(EnumSwitch("QueueType", "durable"));
 }
 QueueType[] toQueueType(string[] types) {
     return types.map!(t => toQueueType(t)).array;
@@ -281,7 +281,7 @@ enum TopicStatus {
     pendingDelete
 }
 TopicStatus toTopicStatus(string status) {
-    mixin(toEnumSwitch("TopicStatus", "inactive"));
+    mixin(EnumSwitch("TopicStatus", "inactive"));
 }
 TopicStatus[] toTopicStatus(string[] statuses) {
     return statuses.map!(s => toTopicStatus(s)).array;
@@ -315,7 +315,7 @@ enum SubscriptionStatus {
     pendingDelete
 }
 SubscriptionStatus toSubscriptionStatus(string status) {
-    mixin(toEnumSwitch("SubscriptionStatus", "suspended"));
+    mixin(EnumSwitch("SubscriptionStatus", "suspended"));
 }
 SubscriptionStatus[] toSubscriptionStatus(string[] statuses) {
     return statuses.map!(s => toSubscriptionStatus(s)).array;
@@ -350,7 +350,7 @@ enum SubscriptionType {
 }
 
 SubscriptionType toSubscriptionType(string value) {
-    mixin(toEnumSwitch("SubscriptionType", "direct"));
+    mixin(EnumSwitch("SubscriptionType", "direct"));
 }
 SubscriptionType[] toSubscriptionType(string[] values) {
     return values.map!(v => toSubscriptionType(v)).array;
@@ -385,7 +385,7 @@ enum DeliveryMode {
 }
 
 DeliveryMode toDeliveryMode(string value) {
-    mixin(toEnumSwitch("DeliveryMode", "direct"));
+    mixin(EnumSwitch("DeliveryMode", "direct"));
 }
 DeliveryMode[] toDeliveryMode(string[] values) {
     return values.map!(v => toDeliveryMode(v)).array;
@@ -423,7 +423,7 @@ enum MessageStatus {
 }
 
 MessageStatus toMessageStatus(string value) {
-    mixin(toEnumSwitch("MessageStatus", "pending"));
+    mixin(EnumSwitch("MessageStatus", "pending"));
 }
 MessageStatus[] toMessageStatus(string[] values) {
     return values.map!(v => toMessageStatus(v)).array;
@@ -465,7 +465,7 @@ enum MessagePriority {
 }
 
 MessagePriority toMessagePriority(string value) {
-    mixin(toEnumSwitch("MessagePriority", "normal"));
+    mixin(EnumSwitch("MessagePriority", "normal"));
 }
 MessagePriority[] toMessagePriority(string[] values) {
     return values.map!(v => toMessagePriority(v)).array;
@@ -504,7 +504,7 @@ enum SchemaFormat {
 }
 
 SchemaFormat toSchemaFormat(string format) {
-    mixin(toEnumSwitch("SchemaFormat", "json"));
+    mixin(EnumSwitch("SchemaFormat", "json"));
 }
 SchemaFormat[] toSchemaFormat(string[] formats) {
     return formats.map!(f => toSchemaFormat(f)).array;
@@ -588,7 +588,7 @@ enum EventApplicationStatus {
 }
 
 EventApplicationStatus toEventApplicationStatus(string value) {
-    mixin(toEnumSwitch("EventApplicationStatus", "registered"));
+    mixin(EnumSwitch("EventApplicationStatus", "registered"));
 }
 EventApplicationStatus[] toEventApplicationStatus(string[] values) {
     return values.map!(v => toEventApplicationStatus(v)).array;
@@ -625,7 +625,7 @@ enum EventApplicationType {
 }
 
 EventApplicationType toEventApplicationType(string value) {
-    mixin(toEnumSwitch("EventApplicationType", "both"));
+    mixin(EnumSwitch("EventApplicationType", "both"));
 }
 EventApplicationType[] toEventApplicationType(string[] values) {
     return values.map!(v => toEventApplicationType(v)).array;
@@ -662,7 +662,7 @@ enum BridgeStatus {
 }
 
 BridgeStatus toBridgeStatus(string value) {
-    mixin(toEnumSwitch("BridgeStatus", "failed"));
+    mixin(EnumSwitch("BridgeStatus", "failed"));
 }
 BridgeStatus[] toBridgeStatus(string[] values) {
     return values.map!(v => toBridgeStatus(v)).array;
@@ -702,7 +702,7 @@ enum BridgeType {
 }
 
 BridgeType toBridgeType(string value) {
-    mixin(toEnumSwitch("BridgeType", "mesh"));
+    mixin(EnumSwitch("BridgeType", "mesh"));
 }
 BridgeType[] toBridgeType(string[] values) {
     return values.map!(v => toBridgeType(v)).array;
@@ -744,7 +744,7 @@ enum ProtocolType {
 }
 
 ProtocolType toProtocolType(string value) {
-    mixin(toEnumSwitch("ProtocolType", "mqtt"));
+    mixin(EnumSwitch("ProtocolType", "mqtt"));
 }
 ProtocolType[] toProtocolType(string[] values) {
     return values.map!(v => toProtocolType(v)).array;

@@ -34,9 +34,7 @@ class WriteConfigChangeUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Config type is required");
 
     // Create parent audit log entry
-    AuditLogEntry entry;
-    entry.initEntity(req.tenantId, req.changedBy);
-
+    auto entry = AuditLogEntry(req.tenantId, AuditLogId(""), req.changedBy);
     entry.category = AuditCategory.configuration;
     entry.severity = AuditSeverity.info;
     entry.action = AuditAction.configChange;
@@ -50,9 +48,7 @@ class WriteConfigChangeUseCase { // TODO: UIMUseCase {
     auditRepo.save(entry);
 
     // Create config change record
-    ConfigChangeLog ccLog;
-    ccLog.initEntity(req.tenantId, req.changedBy);
-
+    auto ccLog = ConfigChangeLog(req.tenantId, ConfigChangeLogId(""), req.changedBy);
     ccLog.auditLogId = entry.id;
     ccLog.configType = req.configType;
     ccLog.configObjectId = req.configObjectId;

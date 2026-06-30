@@ -25,7 +25,7 @@ enum ProjectType : string {
   other    = "other"
 }
 ProjektType toProjectType(string value) {
-  mixin(toEnumSwitch("ProjectType", "ProjectType.other"));
+  mixin(EnumSwitch("ProjectType", "ProjectType.other"));
 }
 ProjectType[] toProjectType(string[] values) {
   return values.map!(v => v.toProjectType).array;
@@ -73,7 +73,7 @@ enum TechStack : string {
   other     = "other"
 }
 TechStack toTechStack(string value) {
-  mixin(toEnumSwitch("TechStack", "TechStack.other"));
+  mixin(EnumSwitch("TechStack", "TechStack.other"));
 }
 TechStack[] toTechStack(string[] values) {
   return values.map!(v => v.toTechStack).array;
@@ -118,7 +118,7 @@ enum ProjectStatus : string {
   archived  = "archived"
 }
 ProjectStatus toProjectStatus(string value) {
-  mixin(toEnumSwitch("ProjectStatus", "ProjectStatus.inactive"));
+  mixin(EnumSwitch("ProjectStatus", "ProjectStatus.inactive"));
 }
 ProjectStatus[] toProjectStatus(string[] values) {
   return values.map!(v => v.toProjectStatus).array;
@@ -155,7 +155,7 @@ enum DevSpaceStatus : string {
   error_     = "error" 
 }
 DevSpaceStatus toDevSpaceStatus(string value) {
-  mixin(toEnumSwitch("DevSpaceStatus", "DevSpaceStatus.stopped"));
+  mixin(EnumSwitch("DevSpaceStatus", "DevSpaceStatus.stopped"));
 }
 DevSpaceStatus[] toDevSpaceStatus(string[] values) {
   return values.map!(v => v.toDevSpaceStatus).array;
@@ -195,7 +195,7 @@ enum PipelineStage : string {
   full    = "full"
 }
 PipelineStage toPipelineStage(string value) {
-  mixin(toEnumSwitch("PipelineStage", "PipelineStage.build"));
+  mixin(EnumSwitch("PipelineStage", "PipelineStage.build"));
 }
 PipelineStage[] toPipelineStage(string[] values) {
   return values.map!(v => v.toPipelineStage).array;
@@ -234,7 +234,7 @@ enum JobStatus : string {
   cancelled  = "cancelled"
 }
 JobStatus toJobStatus(string value) {
-  mixin(toEnumSwitch("JobStatus", "JobStatus.queued"));
+  mixin(EnumSwitch("JobStatus", "JobStatus.queued"));
 }
 JobStatus[] toJobStatus(string[] values) {
   return values.map!(v => v.toJobStatus).array;
@@ -275,7 +275,7 @@ enum DeploymentEnvironment : string {
   other        = "other"
 }
 DeploymentEnvironment toDeploymentEnvironment(string value) {
-  mixin(toEnumSwitch("DeploymentEnvironment", "DeploymentEnvironment.other"));
+  mixin(EnumSwitch("DeploymentEnvironment", "DeploymentEnvironment.other"));
 }
 DeploymentEnvironment[] toDeploymentEnvironment(string[] values) {
   return values.map!(v => v.toDeploymentEnvironment).array;
@@ -316,7 +316,7 @@ enum DeploymentStatus : string {
   rolling_back = "rolling-back"
 }
 DeploymentStatus toDeploymentStatus(string value) {
-  mixin(toEnumSwitch("DeploymentStatus", "DeploymentStatus.pending"));
+  mixin(EnumSwitch("DeploymentStatus", "DeploymentStatus.pending"));
 }
 DeploymentStatus[] toDeploymentStatus(string[] values) {
   return values.map!(v => v.toDeploymentStatus).array;
@@ -356,7 +356,7 @@ enum AIRequestStatus : string {
   failed     = "failed"
 }
 AIRequestStatus toAIRequestStatus(string value) {
-  mixin(toEnumSwitch("AIRequestStatus", "AIRequestStatus.pending"));
+  mixin(EnumSwitch("AIRequestStatus", "AIRequestStatus.pending"));
 }
 AIRequestStatus[] toAIRequestStatus(string[] values) {
   return values.map!(v => v.toAIRequestStatus).array;
@@ -396,7 +396,7 @@ enum AIGenerationType : string {
   fullApp      = "full-app"
 }
 AIGenerationType toAIGenerationType(string value) {
-  mixin(toEnumSwitch("AIGenerationType", "AIGenerationType.codeFragment"));
+  mixin(EnumSwitch("AIGenerationType", "AIGenerationType.codeFragment"));
 }
 AIGenerationType[] toAIGenerationType(string[] values) {
   return values.map!(v => v.toAIGenerationType).array;
@@ -437,7 +437,7 @@ enum BindingStatus : string {
   error_    = "error"
 }
 BindingStatus toBindingStatus(string value) {
-  mixin(toEnumSwitch("BindingStatus", "BindingStatus.inactive_"));
+  mixin(EnumSwitch("BindingStatus", "BindingStatus.inactive_"));
 }
 BindingStatus[] toBindingStatus(string[] values) {
   return values.map!(v => v.toBindingStatus).array;

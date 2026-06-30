@@ -13,7 +13,7 @@ enum StorageClass {
 }
 
 StorageClass toStorageClass(string value) {
-  mixin(toEnumSwitch("StorageClass", "StorageClass.standard"));
+  mixin(EnumSwitch("StorageClass", "StorageClass.standard"));
 }
 StorageClass[] toStorageClass(string[] values) {
   return values.map!(v => v.toStorageClass).array;
@@ -49,7 +49,7 @@ enum BucketStatus {
 }
 
 BucketStatus toBucketStatus(string value) {
-  mixin(toEnumSwitch("BucketStatus", "BucketStatus.active"));
+  mixin(EnumSwitch("BucketStatus", "BucketStatus.active"));
 }
 BucketStatus[] toBucketStatus(string[] values) {
   return values.map!(v => v.toBucketStatus).array;
@@ -85,7 +85,7 @@ enum ObjectStatus {
 }
 
 ObjectStatus toObjectStatus(string value) {
-  mixin(toEnumSwitch("ObjectStatus", "ObjectStatus.active"));
+  mixin(EnumSwitch("ObjectStatus", "ObjectStatus.active"));
 }
 ObjectStatus[] toObjectStatus(string[] values) {
   return values.map!(v => v.toObjectStatus).array;
@@ -121,7 +121,7 @@ enum EncryptionType {
 }
 
 EncryptionType toEncryptionType(string value) {
-  mixin(toEnumSwitch("EncryptionType", "EncryptionType.none"));
+  mixin(EnumSwitch("EncryptionType", "EncryptionType.none"));
 }
 EncryptionType[] toEncryptionType(string[] values) {
   return values.map!(v => v.toEncryptionType).array;
@@ -158,7 +158,7 @@ enum PolicyEffect {
 }
 
 PolicyEffect toPolicyEffect(string value) {
-  mixin(toEnumSwitch("PolicyEffect", "PolicyEffect.allow"));
+  mixin(EnumSwitch("PolicyEffect", "PolicyEffect.allow"));
 }
 PolicyEffect[] toPolicyEffect(string[] values) {
   return values.map!(v => v.toPolicyEffect).array;
@@ -192,7 +192,7 @@ enum BindingPermission {
 }
 
 BindingPermission toBindingPermission(string value) {
-  mixin(toEnumSwitch("BindingPermission", "BindingPermission.readOnly"));
+  mixin(EnumSwitch("BindingPermission", "BindingPermission.readOnly"));
 }
 BindingPermission[] toBindingPermission(string[] values) {
   return values.map!(v => v.toBindingPermission).array;
@@ -228,7 +228,7 @@ enum BindingStatus {
 }
 
 BindingStatus toBindingStatus(string value) {
-  mixin(toEnumSwitch("BindingStatus", "BindingStatus.active"));
+  mixin(EnumSwitch("BindingStatus", "BindingStatus.active"));
 }
 BindingStatus[] toBindingStatus(string[] values) {
   return values.map!(v => v.toBindingStatus).array;
@@ -263,7 +263,7 @@ enum RuleStatus {
 }
 
 RuleStatus toRuleStatus(string value) {
-  mixin(toEnumSwitch("RuleStatus", "RuleStatus.disabled"));
+  mixin(EnumSwitch("RuleStatus", "RuleStatus.disabled"));
 }
 RuleStatus[] toRuleStatus(string[] values) {
   return values.map!(v => v.toRuleStatus).array;

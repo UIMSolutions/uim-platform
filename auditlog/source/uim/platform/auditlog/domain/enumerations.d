@@ -67,7 +67,7 @@ enum AuditSeverity {
   critical,
 }
 AuditSeverity toAuditSeverity(string value) {
-  mixin(toEnumSwitch("AuditSeverity", "AuditSeverity.info"));
+  mixin(EnumSwitch("AuditSeverity", "info"));
 }
 AuditSeverity[] toAuditSeverity(string[] values) {
   return values.map!(v => toAuditSeverity(v)).array;
@@ -208,7 +208,7 @@ enum AuditOutcome {
   error,
 }
 AuditOutcome toAuditOutcome(string value) {
-  mixin(toEnumSwitch("AuditOutcome", "AuditOutcome.success"));
+  mixin(EnumSwitch("AuditOutcome", "success"));
 }
 AuditOutcome[] toAuditOutcome(string[] values) {
   return values.map!(v => toAuditOutcome(v)).array;
@@ -244,7 +244,7 @@ enum RetentionStatus {
   expired,
 }
 RetentionStatus toRetentionStatus(string value) {
-  mixin(toEnumSwitch("RetentionStatus", "RetentionStatus.active"));
+  mixin(EnumSwitch("RetentionStatus", "active"));
 }
 RetentionStatus[] toRetentionStatus(string[] values) {
   return values.map!(v => toRetentionStatus(v)).array;
@@ -279,7 +279,7 @@ enum ExportStatus {
   failed,
 }
 ExportStatus toExportStatus(string value) {
-  mixin(toEnumSwitch("ExportStatus", "ExportStatus.pending"));
+  mixin(EnumSwitch("ExportStatus", "pending"));
 }
 ExportStatus[] toExportStatus(string[] values) {
   return values.map!(v => toExportStatus(v)).array;
@@ -314,7 +314,7 @@ enum ExportFormat {
   csv,
 }
 ExportFormat toExportFormat(string value) {
-  mixin(toEnumSwitch("ExportFormat", "ExportFormat.json"));
+  mixin(EnumSwitch("ExportFormat", "json"));
 }
 ExportFormat[] toExportFormat(string[] values) {
   return values.map!(v => toExportFormat(v)).array;
@@ -345,7 +345,7 @@ enum ConfigStatus {
   disabled,
 }
 ConfigStatus toConfigStatus(string value) {
-  mixin(toEnumSwitch("ConfigStatus", "ConfigStatus.enabled"));
+  mixin(EnumSwitch("ConfigStatus", "enabled"));
 }
 ConfigStatus[] toConfigStatus(string[] values) {
   return values.map!(v => toConfigStatus(v)).array;

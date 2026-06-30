@@ -5,43 +5,58 @@ import uim.platform.analytics;
 @safe:
 enum PlanningStatus {
   // Used for plans that are still being developed and have not yet been finalized or approved
-  Draft, 
+  draft, 
   // Used for plans that are currently being executed or implemented, but may still be subject to change
-  InProgress, 
+  inProgress, 
   // Used for plans that have been finalized and approved, and are now locked from further editing or changes
-  Locked, 
+  locked, 
   // Used for plans that have been reviewed and approved by the necessary stakeholders, but may not yet be published or implemented
-  Approved, 
+  approved, 
   // Used for plans that have been finalized, approved, and published for use by the organization or external stakeholders
-  Published, 
+  published, 
 }
 PlanningStatus toPlanningStatus(string status) {
-  const map = [
-    "draft": PlanningStatus.Draft,
-    "inprogress": PlanningStatus.InProgress,
-    "locked": PlanningStatus.Locked,
-    "approved": PlanningStatus.Approved,
-    "published": PlanningStatus.Published,
-  ];
-  return map.get(status.toLower, PlanningStatus.Draft);
+  mixin(EnumSwitch("PlanningStatus", "draft"));
 }
 
 enum PlanningVersionType {
   // Used for versions that represent actual historical data or results, which can be used for analysis and comparison against plans and forecasts
-  Actual, 
+  actual, 
   // Plan, Used for versions that represent planned or target values, which can be used for setting goals and measuring performance against those goals
-  Plan,
+  plan,
   // Used for versions that represent planned or target values, which can be used for setting goals and measuring performance against those goals
-  Forecast,
+  forecast,
   // Used for versions that represent hypothetical scenarios or what-if analyses, which can be used for exploring potential outcomes and making informed decisions
-  WhatIf
+  whatIf
 }
 PlanningVersionType toPlanningVersionType(string type) {
-  const map = [
-    "actual": PlanningVersionType.Actual,
-    "plan": PlanningVersionType.Plan,
-    "forecast": PlanningVersionType.Forecast,
-    "whatif": PlanningVersionType.WhatIf
-  ];
-  return map.get(type.toLower, PlanningVersionType.Plan);
+  mixin(EnumSwitch("PlanningVersionType", "actual"));
+}
+PlanningVersionType[] toPlanningVersionTypes(string[] types) {
+  return types.map!(toPlanningVersionType).array;
+}
+string toString(PlanningVersionType type) {
+  return type.to!string;
+}
+string[] toString(PlanningVersionType[] types) {
+  return types.map!(toString).array;
+}
+///
+unittest {
+  mixin(ShowTest!("PlanningVersionType"));
+
+  assert(PlanningVersionType.actual.toString == "actual");
+  assert(PlanningVersionType.plan.toString == "plan");
+  assert(PlanningVersionType.forecast.toString == "forecast");
+  assert(PlanningVersionType.whatIf.toString == "whatIf");
+
+  assert("actual".toPlanningVersionType == PlanningVersionType.actual);
+  assert("plan".toPlanningVersionType == PlanningVersionType.plan);
+  assert("forecast".toPlanningVersionType == PlanningVersionType.forecast);
+  assert("whatIf".toPlanningVersionType == PlanningVersionType.whatIf);
+
+  assert(["actual", "plan", "forecast", "whatIf"].toPlanningVersionTypes ==
+         [PlanningVersionType.actual, PlanningVersionType.plan, PlanningVersionType.forecast, PlanningVersionType.whatIf]);
+  assert(toString([PlanningVersionType.actual, PlanningVersionType.plan, PlanningVersionType.forecast, PlanningVersionType.whatIf]) ==
+         ["actual", "plan", "forecast", "whatIf"]);
 }

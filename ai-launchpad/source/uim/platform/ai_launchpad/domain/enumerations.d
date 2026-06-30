@@ -19,7 +19,7 @@ enum ConnectionStatus {
   pending
 }
 ConnectionStatus toConnectionStatus(string value) {
-  mixin(toEnumSwitch("ConnectionStatus", "inactive"));
+  mixin(EnumSwitch("ConnectionStatus", "inactive"));
 }
 ConnectionStatus[] toConnectionStatus(string[] values) {
   return values.map!(v => toConnectionStatus(v)).array;
@@ -55,7 +55,7 @@ enum ConnectionType {
   custom
 }
 ConnectionType toConnectionType(string type) {
-  mixin(toEnumSwitch("ConnectionType", "custom"));
+  mixin(EnumSwitch("ConnectionType", "custom"));
 }
 ConnectionType[] toConnectionType(string[] types) {
   return types.map!(t => toConnectionType(t)).array;
@@ -92,7 +92,7 @@ enum ExecutionStatus {
   dead
 }
 ExecutionStatus toExecutionStatus(string value) {
-  mixin(toEnumSwitch("ExecutionStatus", "unknown"));
+  mixin(EnumSwitch("ExecutionStatus", "unknown"));
 }
 ExecutionStatus[] toExecutionStatus(string[] values) {
   return values.map!(v => toExecutionStatus(v)).array;
@@ -137,7 +137,7 @@ enum DeploymentStatus {
   unknown
 }
 DeploymentStatus toDeploymentStatus(string value) {
-  mixin(toEnumSwitch("DeploymentStatus", "unknown"));
+  mixin(EnumSwitch("DeploymentStatus", "unknown"));
 }
 DeploymentStatus[] toDeploymentStatus(string[] values) {
   return values.map!(v => toDeploymentStatus(v)).array;
@@ -217,7 +217,7 @@ enum DatasetStatus {
   archived
 }
 DatasetStatus toDatasetStatus(string value) {
-  mixin(toEnumSwitch("DatasetStatus", "available"));
+  mixin(EnumSwitch("DatasetStatus", "available"));
 }
 DatasetStatus[] toDatasetStatus(string[] values) {
   return values.map!(v => toDatasetStatus(v)).array;
@@ -253,7 +253,7 @@ enum WorkspaceStatus {
   inactive
 }
 WorkspaceStatus toWorkspaceStatus(string value) {
-  mixin(toEnumSwitch("WorkspaceStatus", "inactive"));
+  mixin(EnumSwitch("WorkspaceStatus", "inactive"));
 }
 WorkspaceStatus[] toWorkspaceStatus(string[] values) {
   return values.map!(v => toWorkspaceStatus(v)).array;
@@ -286,7 +286,7 @@ enum PromptRole {
   assistant
 }
 PromptRole toPromptRole(string role) {
-  mixin(toEnumSwitch("PromptRole", "user"));
+  mixin(EnumSwitch("PromptRole", "user"));
 }
 PromptRole[] toPromptRole(string[] roles) {
   return roles.map!(r => toPromptRole(r)).array;
@@ -319,7 +319,7 @@ enum PromptStatus {
   archived
 }
 PromptStatus toPromptStatus(string value) {
-  mixin(toEnumSwitch("PromptStatus", "draft"));
+  mixin(EnumSwitch("PromptStatus", "draft"));
 }
 PromptStatus[] toPromptStatus(string[] values) {
   return values.map!(v => toPromptStatus(v)).array;
@@ -355,7 +355,7 @@ enum ArtifactKind {
   other
 }
 ArtifactKind toArtifactKind(string kind) {
-  mixin(toEnumSwitch("ArtifactKind", "other"));
+  mixin(EnumSwitch("ArtifactKind", "other"));
 }
 ArtifactKind[] toArtifactKind(string[] kinds) {
   return kinds.map!(k => toArtifactKind(k)).array;
@@ -484,7 +484,7 @@ enum StatisticsPeriod {
   monthly
 }
 StatisticsPeriod toStatisticsPeriod(string period) {
-  mixin(toEnumSwitch("StatisticsPeriod", "daily"));
+  mixin(EnumSwitch("StatisticsPeriod", "daily"));
 }
 StatisticsPeriod[] toStatisticsPeriod(string[] periods) {
   return periods.map!(p => toStatisticsPeriod(p)).array;
@@ -519,7 +519,7 @@ enum LogSeverity {
   error
 }
 LogSeverity toLogSeverity(string severity) {
-  mixin(toEnumSwitch("LogSeverity", "info"));
+  mixin(EnumSwitch("LogSeverity", "info"));
 }
 LogSeverity[] toLogSeverity(string[] severities) {
   return severities.map!(s => toLogSeverity(s)).array;
@@ -553,7 +553,7 @@ enum ScheduleStatus {
   inactive
 }
 ScheduleStatus toScheduleStatus(string value) {
-  mixin(toEnumSwitch("ScheduleStatus", "inactive"));
+  mixin(EnumSwitch("ScheduleStatus", "inactive"));
 }
 ScheduleStatus[] toScheduleStatus(string[] values) {
   return values.map!(v => toScheduleStatus(v)).array;

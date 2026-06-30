@@ -14,7 +14,7 @@ enum DomainStatus {
 }
 
 DomainStatus toDomainStatus(string value) {
-    mixin(toEnumSwitch("DomainStatus", "pending"));
+    mixin(EnumSwitch("DomainStatus", "pending"));
 }
 
 DomainStatus[] toDomainStatus(string[] values) {
@@ -60,7 +60,7 @@ enum DomainEnvironment {
 }
 
 DomainEnvironment toDomainEnvironment(string value) {
-    mixin(toEnumSwitch("DomainEnvironment", "cloudFoundry"));
+    mixin(EnumSwitch("DomainEnvironment", "cloudFoundry"));
 }
 
 DomainEnvironment[] toDomainEnvironment(string[] values) {
@@ -105,7 +105,7 @@ enum KeyAlgorithm {
 }
 
 KeyAlgorithm toKeyAlgorithm(string value) {
-    mixin(toEnumSwitch("KeyAlgorithm", "rsa2048"));
+    mixin(EnumSwitch("KeyAlgorithm", "rsa2048"));
 }
 
 KeyAlgorithm[] toKeyAlgorithm(string[] values) {
@@ -149,7 +149,7 @@ enum KeyStatus {
 }
 
 KeyStatus toKeyStatus(string value) {
-    mixin(toEnumSwitch("KeyStatus", "active"));
+    mixin(EnumSwitch("KeyStatus", "active"));
 }
 
 KeyStatus[] toKeyStatus(string[] values) {
@@ -195,7 +195,7 @@ enum CertificateStatus {
 }
 
 CertificateStatus toCertificateStatus(string value) {
-    mixin(toEnumSwitch("CertificateStatus", "pending"));
+    mixin(EnumSwitch("CertificateStatus", "pending"));
 }
 
 CertificateStatus[] toCertificateStatus(string[] values) {
@@ -241,7 +241,7 @@ enum CertificateType {
 }
 
 CertificateType toCertificateType(string value) {
-    mixin(toEnumSwitch("CertificateType", "standard"));
+    mixin(EnumSwitch("CertificateType", "standard"));
 }
 
 CertificateType[] toCertificateType(string[] values) {
@@ -286,7 +286,7 @@ enum TlsProtocolVersion {
 }
 
 TlsProtocolVersion toTlsProtocolVersion(string value) {
-    mixin(toEnumSwitch("TlsProtocolVersion", "tls1_2"));
+    mixin(EnumSwitch("TlsProtocolVersion", "tls1_2"));
 }
 
 TlsProtocolVersion[] toTlsProtocolVersion(string[] values) {
@@ -330,7 +330,7 @@ enum CipherSuiteStrength {
 }
 
 CipherSuiteStrength toCipherSuiteStrength(string value) {
-    mixin(toEnumSwitch("CipherSuiteStrength", "strong"));
+    mixin(EnumSwitch("CipherSuiteStrength", "strong"));
 }
 
 CipherSuiteStrength[] toCipherSuiteStrength(string[] values) {
@@ -375,7 +375,7 @@ enum MappingStatus {
 }
 
 MappingStatus toMappingStatus(string value) {
-    mixin(toEnumSwitch("MappingStatus", "active"));
+    mixin(EnumSwitch("MappingStatus", "active"));
 }
 
 MappingStatus[] toMappingStatus(string[] values) {
@@ -419,7 +419,7 @@ enum MappingType {
 }
 
 MappingType toMappingType(string value) {
-    mixin(toEnumSwitch("MappingType", "applicationRoute"));
+    mixin(EnumSwitch("MappingType", "applicationRoute"));
 }
 
 MappingType[] toMappingType(string[] values) {
@@ -463,7 +463,7 @@ enum TrustedCertificateStatus {
 }
 
 TrustedCertificateStatus toTrustedCertificateStatus(string value) {
-    mixin(toEnumSwitch("TrustedCertificateStatus", "active"));
+    mixin(EnumSwitch("TrustedCertificateStatus", "active"));
 }
 
 TrustedCertificateStatus[] toTrustedCertificateStatus(string[] values) {
@@ -505,7 +505,7 @@ enum ClientAuthMode {
 }
 
 ClientAuthMode toClientAuthMode(string value) {
-    mixin(toEnumSwitch("ClientAuthMode", "required"));
+    mixin(EnumSwitch("ClientAuthMode", "required"));
 }
 
 ClientAuthMode[] toClientAuthMode(string[] values) {
@@ -551,7 +551,7 @@ enum DnsRecordType {
 }
 
 DnsRecordType toDnsRecordType(string value) {
-    mixin(toEnumSwitch("DnsRecordType", "aRecord"));
+    mixin(EnumSwitch("DnsRecordType", "aRecord"));
 }
 DnsRecordType[] toDnsRecordType(string[] values) {
     return values.map!(v => v.toDnsRecordType).array;
@@ -598,7 +598,7 @@ enum DnsValidationStatus {
 }
 
 DnsValidationStatus toDnsValidationStatus(string value) {
-    mixin(toEnumSwitch("DnsValidationStatus", "pending"));
+    mixin(EnumSwitch("DnsValidationStatus", "pending"));
 }
 
 DnsValidationStatus[] toDnsValidationStatus(string[] values) {
@@ -649,7 +649,7 @@ enum DashboardMetricType {
 }
 
 DashboardMetricType toDashboardMetricType(string value) {
-    mixin(toEnumSwitch("DashboardMetricType", "certificateExpiration"));
+    mixin(EnumSwitch("DashboardMetricType", "certificateExpiration"));
 }
 
 DashboardMetricType[] toDashboardMetricType(string[] values) {
@@ -705,7 +705,7 @@ enum HealthStatus {
 }
 
 HealthStatus toHealthStatus(string value) {
-    mixin(toEnumSwitch("HealthStatus", "unknown"));
+    mixin(EnumSwitch("HealthStatus", "unknown"));
 }
 
 HealthStatus[] toHealthStatus(string[] values) {
@@ -751,7 +751,7 @@ enum ExpirationSeverity {
 }
 
 ExpirationSeverity toExpirationSeverity(string value) {
-    mixin(toEnumSwitch("ExpirationSeverity", "none"));
+    mixin(EnumSwitch("ExpirationSeverity", "none"));
 }
 
 ExpirationSeverity[] toExpirationSeverity(string[] values) {

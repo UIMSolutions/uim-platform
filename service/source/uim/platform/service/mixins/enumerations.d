@@ -20,7 +20,7 @@ mixin(ShowModule!());
 //     throw new Exception("Invalid value '" ~ s ~ "' for enumeration " ~ fullName);
 // }
 
-string toEnumSwitch(string enumType, string defaultValue, bool ignoreCase = true) {
+string EnumSwitch(string enumType, string defaultValue, bool ignoreCase = true) {
     return `
     switch (`
         ~ (ignoreCase ? "value.toLower()" : "value") ~ `) {
@@ -44,10 +44,10 @@ unittest {
         three
     }
 
-    // Example usage of toEnumSwitch mixin
+    // Example usage of EnumSwitch mixin
     {
         TestEnum toTestEnum(string value) {
-            mixin(toEnumSwitch("TestEnum", "one"));
+            mixin(EnumSwitch("TestEnum", "one"));
         }
 
         assert(toTestEnum("two") == TestEnum.two);
@@ -58,7 +58,7 @@ unittest {
     // Case-sensitive example
     {
         TestEnum toTestEnum(string value) {
-            mixin(toEnumSwitch("TestEnum", "one", false));
+            mixin(EnumSwitch("TestEnum", "one", false));
         }
 
         assert(toTestEnum("two") == TestEnum.two);

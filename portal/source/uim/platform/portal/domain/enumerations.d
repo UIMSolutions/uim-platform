@@ -20,7 +20,7 @@ enum SiteStatus {
   archived,
 }
 SiteStatus toSiteStatus(string value) {
-  mixin(toEnumSwitch("SiteStatus", "draft"));
+  mixin(EnumSwitch("SiteStatus", "draft"));
 }
 SiteStatus[] toSiteStatus(string[] values) {
   return values.map!(v => toSiteStatus(v));
@@ -59,7 +59,7 @@ enum PageLayout {
   dashboard,
 }
 PageLayout toPageLayout(string value) {
-  mixin(toEnumSwitch("PageLayout", "freeform"));
+  mixin(EnumSwitch("PageLayout", "freeform"));
 }
 PageLayout[] toPageLayout(string[] values) {
   return values.map!(v => toPageLayout(v));
@@ -149,7 +149,7 @@ enum AppType {
   native,
 }
 AppType toAppType(string value) {
-  mixin(toEnumSwitch("AppType", "sapui5"));
+  mixin(EnumSwitch("AppType", "sapui5"));
 }
 AppType[] toAppType(string[] values) {
   return values.map!(v => toAppType(v));
@@ -190,7 +190,7 @@ enum ProviderType {
   federated,
 }
 ProviderType toProviderType(string value) {
-  mixin(toEnumSwitch("ProviderType", "local"));
+  mixin(EnumSwitch("ProviderType", "local"));
 }
 ProviderType[] toProviderType(string[] values) {
   return values.map!(v => toProviderType(v));
@@ -226,7 +226,7 @@ enum ThemeMode {
   highContrastDark,
 }
 ThemeMode toThemeMode(string value) {
-  mixin(toEnumSwitch("ThemeMode", "light"));
+  mixin(EnumSwitch("ThemeMode", "light"));
 }
 ThemeMode[] toThemeMode(string[] values) {
   return values.map!(v => toThemeMode(v));
@@ -263,7 +263,7 @@ enum NavigationTarget {
   embedded,
 }
 NavigationTarget toNavigationTarget(string value) {
-  mixin(toEnumSwitch("NavigationTarget", "inPlace"));
+  mixin(EnumSwitch("NavigationTarget", "inPlace"));
 }
 NavigationTarget[] toNavigationTarget(string[] values) {
   return values.map!(v => toNavigationTarget(v));
@@ -299,7 +299,7 @@ enum TransportStatus {
   failed,
 }
 TransportStatus toTransportStatus(string value) {
-  mixin(toEnumSwitch("TransportStatus", "pending"));
+  mixin(EnumSwitch("TransportStatus", "pending"));
 }
 TransportStatus[] toTransportStatus(string[] values) {
   return values.map!(v => toTransportStatus(v));
@@ -337,7 +337,7 @@ enum RoleScope {
   page,
 }
 RoleScope toRoleScope(string value) {
-  mixin(toEnumSwitch("RoleScope", "site"));
+  mixin(EnumSwitch("RoleScope", "site"));
 }
 RoleScope[] toRoleScope(string[] values) {
   return values.map!(v => toRoleScope(v));

@@ -11,7 +11,7 @@ enum JobType {
     cloudFoundryTask,
 }
 JobType toJobType(string s) @safe {
-    mixin(toEnumSwitch("JobType", "JobType.httpEndpoint"));
+    mixin(EnumSwitch("JobType", "JobType.httpEndpoint"));
 }
 JobType[] toJobType(string[] values) @safe {
     return values.map!(v => v.toJobType).array;
@@ -41,7 +41,7 @@ enum JobTriggerType {
     eventBased,
 }
 JobTriggerType toJobTriggerType(string s) @safe {
-    mixin(toEnumSwitch("JobTriggerType", "JobTriggerType.timeBased"));
+    mixin(EnumSwitch("JobTriggerType", "JobTriggerType.timeBased"));
 }
 JobTriggerType[] toJobTriggerType(string[] values) @safe {
     return values.map!(v => v.toJobTriggerType).array;
@@ -71,7 +71,7 @@ enum JobStatus {
     inactive,
 }
 JobStatus toJobStatus(string s) @safe {
-    mixin(toEnumSwitch("JobStatus", "JobStatus.active"));
+    mixin(EnumSwitch("JobStatus", "JobStatus.active"));
 }
 JobStatus[] toJobStatus(string[] values) @safe {
     return values.map!(v => v.toJobStatus).array;
@@ -101,7 +101,7 @@ enum ScheduleType {
     recurring,
 }
 ScheduleType toScheduleType(string s) @safe {
-    mixin(toEnumSwitch("ScheduleType", "ScheduleType.oneTime"));
+    mixin(EnumSwitch("ScheduleType", "ScheduleType.oneTime"));
 }
 ScheduleType[] toScheduleType(string[] values) @safe {
     return values.map!(v => v.toScheduleType).array;
@@ -133,7 +133,7 @@ enum ScheduleFormat {
     repeatAt,
 }
 ScheduleFormat toScheduleFormat(string s) @safe {
-    mixin(toEnumSwitch("ScheduleFormat", "ScheduleFormat.cron"));
+    mixin(EnumSwitch("ScheduleFormat", "ScheduleFormat.cron"));
 }
 ScheduleFormat[] toScheduleFormat(string[] values) @safe {
     return values.map!(v => v.toScheduleFormat).array;
@@ -168,7 +168,7 @@ enum JobScheduleStatus {
     inactive,
 }
 JobScheduleStatus toJobScheduleStatus(string s) @safe {
-    mixin(toEnumSwitch("JobScheduleStatus", "JobScheduleStatus.active"));
+    mixin(EnumSwitch("JobScheduleStatus", "JobScheduleStatus.active"));
 }
 JobScheduleStatus[] toJobScheduleStatus(string[] values) @safe {
     return values.map!(v => v.toJobScheduleStatus).array;
@@ -202,7 +202,7 @@ enum RunStatus {
     deadLettered,
 }
 RunStatus toRunStatus(string s) @safe {
-    mixin(toEnumSwitch("RunStatus", "RunStatus.scheduled"));
+    mixin(EnumSwitch("RunStatus", "RunStatus.scheduled"));
 }
 RunStatus[] toRunStatus(string[] values) @safe {
     return values.map!(v => v.toRunStatus).array;

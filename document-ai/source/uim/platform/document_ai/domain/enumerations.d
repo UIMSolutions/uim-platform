@@ -20,7 +20,7 @@ enum DocumentStatus {
   confirmed,
 }
 DocumentStatus toDocumentStatus(string value) {
-    mixin(toEnumSwitch("DocumentStatus", "DocumentStatus.pending"));
+    mixin(EnumSwitch("DocumentStatus", "DocumentStatus.pending"));
 }
 DocumentStatus[] toDocumentStatus(string[] values) {
     return values.map!(v => toDocumentStatus(v)).array;
@@ -38,7 +38,7 @@ enum TrainingJobStatus {
   cancelled,
 }
 TrainingJobStatus toTrainingJobStatus(string value) {
-    mixin(toEnumSwitch("TrainingJobStatus", "TrainingJobStatus.pending"));
+    mixin(EnumSwitch("TrainingJobStatus", "TrainingJobStatus.pending"));
 }
 TrainingJobStatus[] toTrainingJobStatus(string[] values) {
     return values.map!(v => toTrainingJobStatus(v)).array;
@@ -78,7 +78,7 @@ enum ExtractionMethod {
   hybrid,
 }
 ExtractionMethod toExtractionMethod(string s) {
-    mixin(toEnumSwitch("ExtractionMethod", "ExtractionMethod.ml_model"));
+    mixin(EnumSwitch("ExtractionMethod", "ExtractionMethod.ml_model"));
 }
 ExtractionMethod[] toExtractionMethod(string[] values) {
     return values.map!(v => toExtractionMethod(v)).array;
@@ -125,7 +125,7 @@ enum DocumentCategory {
   custom,
 }
 DocumentCategory toDocumentCategory(string s) {
-    mixin(toEnumSwitch("DocumentCategory", "DocumentCategory.general"));
+    mixin(EnumSwitch("DocumentCategory", "DocumentCategory.general"));
 }
 DocumentCategory[] toDocumentCategory(string[] values) {
     return values.map!(v => toDocumentCategory(v)).array;
@@ -242,7 +242,7 @@ enum ConfidenceLevel {
   low,
 }
 ConfidenceLevel toConfidenceLevel(string s) {
-    mixin(toEnumSwitch("ConfidenceLevel", "ConfidenceLevel.medium"));
+    mixin(EnumSwitch("ConfidenceLevel", "ConfidenceLevel.medium"));
 }
 ConfidenceLevel[] toConfidenceLevel(string[] values) {
     return values.map!(v => toConfidenceLevel(v)).array;
@@ -277,7 +277,7 @@ enum EnrichmentMatchStatus {
   ambiguous,
 }
 EnrichmentMatchStatus toEnrichmentMatchStatus(string s) {
-    mixin(toEnumSwitch("EnrichmentMatchStatus", "EnrichmentMatchStatus.unmatched"));
+    mixin(EnumSwitch("EnrichmentMatchStatus", "EnrichmentMatchStatus.unmatched"));
 }   
 EnrichmentMatchStatus[] toEnrichmentMatchStatus(string[] values) {
     return values.map!(v => toEnrichmentMatchStatus(v)).array;
@@ -315,7 +315,7 @@ enum FileType {
   docx,
 }
 FileType toFileType(string s) {
-    mixin(toEnumSwitch("FileType", "FileType.pdf"));
+    mixin(EnumSwitch("FileType", "FileType.pdf"));
 }   
 FileType[] toFileType(string[] values) {
     return values.map!(v => toFileType(v)).array;
@@ -356,7 +356,7 @@ enum SchemaStatus {
   draft,
 }
 SchemaStatus toSchemaStatus(string s) {
-    mixin(toEnumSwitch("SchemaStatus", "SchemaStatus.active"));
+    mixin(EnumSwitch("SchemaStatus", "SchemaStatus.active"));
 }
 SchemaStatus[] toSchemaStatus(string[] values) {
     return values.map!(v => toSchemaStatus(v)).array;
@@ -391,7 +391,7 @@ enum TemplateStatus {
   draft,
 }
 TemplateStatus toTemplateStatus(string s) {
-    mixin(toEnumSwitch("TemplateStatus", "TemplateStatus.active"));
+    mixin(EnumSwitch("TemplateStatus", "TemplateStatus.active"));
 }
 TemplateStatus[] toTemplateStatus(string[] values) {
     return values.map!(v => toTemplateStatus(v)).array;

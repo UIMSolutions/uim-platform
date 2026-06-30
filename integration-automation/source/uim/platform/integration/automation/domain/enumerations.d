@@ -70,7 +70,7 @@ enum WorkflowStatus {
   suspended,
 }
 WorkflowStatus toWorkflowStatus(string value) {
-  mixin(toEnumSwitch("WorkflowStatus", "WorkflowStatus.planned"));
+  mixin(EnumSwitch("WorkflowStatus", "WorkflowStatus.planned"));
 }
 WorkflowStatus[] toWorkflowStatus(string[] values) {
   return values.map!(v => v.toWorkflowStatus).array;
@@ -111,7 +111,7 @@ enum StepType {
   notification,
 }
 StepType toStepType(string value) {
-  mixin(toEnumSwitch("StepType", "StepType.manual"));
+  mixin(EnumSwitch("StepType", "StepType.manual"));
 }
 StepType[] toStepType(string[] values) {
   return values.map!(v => v.toStepType).array;
@@ -151,7 +151,7 @@ enum StepStatus {
   blocked,
 }
 StepStatus toStepStatus(string s) {
-  mixin(toEnumSwitch("StepStatus", "StepStatus.pending"));
+  mixin(EnumSwitch("StepStatus", "StepStatus.pending"));
 }
 StepStatus[] toStepStatus(string[] values) {
   return values.map!(v => v.toStepStatus).array;
@@ -193,7 +193,7 @@ enum StepPriority {
   critical,
 }
 StepPriority toStepPriority(string s) {
-  mixin(toEnumSwitch("StepPriority", "StepPriority.low"));
+  mixin(EnumSwitch("StepPriority", "StepPriority.low"));
 }
 StepPriority[] toStepPriority(string[] values) {
   return values.map!(v => v.toStepPriority).array;
@@ -238,7 +238,7 @@ enum SystemType {
   thirdParty,
 }
 SystemType toSystemType(string s) {
-  mixin(toEnumSwitch("SystemType", "SystemType.sapS4Hana"));
+  mixin(EnumSwitch("SystemType", "SystemType.sapS4Hana"));
 }
 SystemType[] toSystemType(string[] values) {
   return values.map!(v => v.toSystemType).array;
@@ -290,7 +290,7 @@ enum ConnectionStatus {
   testing,
 }
 ConnectionStatus toConnectionStatus(string s) {
-  mixin(toEnumSwitch("ConnectionStatus", "ConnectionStatus.active"));
+  mixin(EnumSwitch("ConnectionStatus", "ConnectionStatus.active"));
 }
 ConnectionStatus[] toConnectionStatus(string[] values) {
   return values.map!(v => v.toConnectionStatus).array;
@@ -329,7 +329,7 @@ enum DestinationType {
   restApi,
 }
 DestinationType toDestinationType(string s) {
-  mixin(toEnumSwitch("DestinationType", "DestinationType.http"));
+  mixin(EnumSwitch("DestinationType", "DestinationType.http"));
 }
 DestinationType[] toDestinationType(string[] values) {
   return values.map!(v => v.toDestinationType).array;
@@ -372,7 +372,7 @@ enum AuthenticationType {
   noAuthentication,
 }
 AuthenticationType toAuthenticationType(string s) {
-  mixin(toEnumSwitch("AuthenticationType", "AuthenticationType.basic"));
+  mixin(EnumSwitch("AuthenticationType", "AuthenticationType.basic"));
 }
 AuthenticationType[] toAuthenticationType(string[] values) {
   return values.map!(v => v.toAuthenticationType).array;
@@ -415,7 +415,7 @@ enum ProxyType {
   privateLink,
 }
 ProxyType toProxyType(string value) {
-  mixin(toEnumSwitch("ProxyType", "ProxyType.internet"));
+  mixin(EnumSwitch("ProxyType", "ProxyType.internet"));
 }
 ProxyType[] toProxyType(string[] values) {
   return values.map!(v => v.toProxyType).array;
@@ -452,7 +452,7 @@ enum ExecutionOutcome {
   error,
 }
 ExecutionOutcome toExecutionOutcome(string s) {
-  mixin(toEnumSwitch("ExecutionOutcome", "ExecutionOutcome.success"));
+  mixin(EnumSwitch("ExecutionOutcome", "ExecutionOutcome.success"));
 }
 ExecutionOutcome[] toExecutionOutcome(string[] values) {
   return values.map!(v => v.toExecutionOutcome).array;
@@ -496,7 +496,7 @@ enum ScenarioCategory {
   custom,
 }
 ScenarioCategory toScenarioCategory(string s) {
-  mixin(toEnumSwitch("ScenarioCategory", "ScenarioCategory.custom"));
+  mixin(EnumSwitch("ScenarioCategory", "ScenarioCategory.custom"));
 }
 ScenarioCategory[] toScenarioCategory(string[] values) {
   return values.map!(v => v.toScenarioCategory).array;
@@ -539,7 +539,7 @@ enum ScenarioType {
   custom,
 }
 ScenarioType toScenarioType(string s) { 
-  mixin(toEnumSwitch("ScenarioType", "ScenarioType.custom"));
+  mixin(EnumSwitch("ScenarioType", "ScenarioType.custom"));
 }
 ScenarioType[] toScenarioType(string[] values) {
   return values.map!(v => v.toScenarioType).array;

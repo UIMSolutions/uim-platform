@@ -23,7 +23,7 @@ enum AppPlatform {
     cross
 }
 AppPlatform toAppPlatform(string value) {
-    mixin(toEnumSwitch("AppPlatform", "cross"));
+    mixin(EnumSwitch("AppPlatform", "cross"));
 }
 string toString(AppPlatform value) {
     return value.to!string; // This will return the enum member name as a string, e.g. "ios", "android", etc
@@ -91,7 +91,7 @@ enum DefinitionStatus {
     archived 
 }
 DefinitionStatus toDefinitionStatus(string value) {
-    mixin(toEnumSwitch("DefinitionStatus", "draft"));
+    mixin(EnumSwitch("DefinitionStatus", "draft"));
 }
 string toString(DefinitionStatus value) {
     return value.to!string; // This will return the enum member name as a string, e.g. "draft", "published", etc
@@ -157,7 +157,7 @@ enum DeviceStatus {
     removed 
 }
 DeviceStatus toDeviceStatus(string value) {
-    mixin(toEnumSwitch("DeviceStatus", "enrolled"));
+    mixin(EnumSwitch("DeviceStatus", "enrolled"));
 }
 string toString(DeviceStatus value) {
     return value.to!string; // This will return the enum member name as a string, e.g. "enrolled", "active", etc
@@ -190,7 +190,7 @@ enum SyncStatus {
     cancelled
 }
 SyncStatus toSyncStatus(string value) {
-    mixin(toEnumSwitch("SyncStatus", "pending"));
+    mixin(EnumSwitch("SyncStatus", "pending"));
 }
 string toString(SyncStatus value) {
     return value.to!string; // This will return the enum member name as a string, e.g. "pending", "inProgress", etc
@@ -221,7 +221,7 @@ enum SyncDirection {
     bidirectional
 }
 SyncDirection toSyncDirection(string value) {
-    mixin(toEnumSwitch("SyncDirection", "bidirectional"));
+    mixin(EnumSwitch("SyncDirection", "bidirectional"));
 }
 string toString(SyncDirection value) {
     return value.to!string; // This will return the enum member name as a string, e.g. "upload", "download", etc
@@ -252,7 +252,7 @@ enum BackendType {
     custom
 }
 BackendType toBackendType(string value) {
-    mixin(toEnumSwitch("BackendType", "custom"));
+    mixin(EnumSwitch("BackendType", "custom"));
 }
 string toString(BackendType value) {
     return value.to!string; // This will return the enum member name as a string, e.g. "s4hana", "ecc", etc
@@ -284,7 +284,7 @@ enum ConnectionStatus {
     testing
 }
 ConnectionStatus toConnectionStatus(string value) {
-    mixin(toEnumSwitch("ConnectionStatus", "inactive"));
+    mixin(EnumSwitch("ConnectionStatus", "inactive"));
 }
 string toString(ConnectionStatus value) {
     return value.to!string; // This will return the enum member name as a string, e.g. "active", "inactive", etc
@@ -317,7 +317,7 @@ enum DeploymentStatus {
     rolledBack
 }
 DeploymentStatus toDeploymentStatus(string value) {
-    mixin(toEnumSwitch("DeploymentStatus", "pending"));
+    mixin(EnumSwitch("DeploymentStatus", "pending"));
 }
 string toString(DeploymentStatus value) {
     return value.to!string; // This will return the enum member name as a string, e.g. "pending", "deploying", etc
@@ -348,7 +348,7 @@ enum DeploymentScope {
     tenant
 }
 DeploymentScope toDeploymentScope(string value) {
-    mixin(toEnumSwitch("DeploymentScope", "tenant"));
+    mixin(EnumSwitch("DeploymentScope", "tenant"));
 }
 string toString(DeploymentScope value) {
     return value.to!string; // This will return the enum member name as a string, e.g. "device", "group", etc

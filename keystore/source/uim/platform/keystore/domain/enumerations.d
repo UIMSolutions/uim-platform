@@ -19,7 +19,7 @@ enum KeystoreFormat {
   pem,
 }
 KeystoreFormat toKeystoreFormat(string value) {
-  mixin(toEnumSwitch("KeystoreFormat", "KeystoreFormat.jks"));
+  mixin(EnumSwitch("KeystoreFormat", "KeystoreFormat.jks"));
 }
 KeystoreFormat[] toKeystoreFormat(string[] values) {
   return values.map!(v => v.toKeystoreFormat).array;
@@ -56,7 +56,7 @@ enum KeystoreLevel {
   subscription,
 }
 KeystoreLevel toKeystoreLevel(string value) {
- mixin(toEnumSwitch("KeystoreLevel", "KeystoreLevel.account"));
+ mixin(EnumSwitch("KeystoreLevel", "KeystoreLevel.account"));
 }
 KeystoreLevel[] toKeystoreLevel(string[] values) {
   return values.map!(v => v.toKeystoreLevel).array;
@@ -92,7 +92,7 @@ enum KeyEntryType {
   secretKey,
 }
 KeyEntryType toKeyEntryType(string value) {
-  mixin(toEnumSwitch("KeyEntryType", "KeyEntryType.trustedCertificate"));
+  mixin(EnumSwitch("KeyEntryType", "KeyEntryType.trustedCertificate"));
 }
 KeyEntryType[] toKeyEntryType(string[] values) {
   return values.map!(v => v.toKeyEntryType).array;

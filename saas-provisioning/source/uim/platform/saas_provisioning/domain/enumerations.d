@@ -18,7 +18,7 @@ enum AppRegistrationStatus : string {
 }
 
 AppRegistrationStatus toAppRegistrationStatus(string s) {
-  mixin(toEnumSwitch("AppRegistrationStatus", "AppRegistrationStatus.registered"));
+  mixin(EnumSwitch("AppRegistrationStatus", "AppRegistrationStatus.registered"));
 }
 ///
 unittest {
@@ -41,7 +41,7 @@ enum SubscriptionState : string {
 }
 
 SubscriptionState toSubscriptionState(string s) {
-  mixin(toEnumSwitch("SubscriptionState", "SubscriptionState.subscribed"));
+  mixin(EnumSwitch("SubscriptionState", "SubscriptionState.subscribed"));
 }
 ///
 unittest {
@@ -60,7 +60,7 @@ enum JobType : string {
 }
 
 JobType toJobType(string s) {
-  mixin(toEnumSwitch("JobType", "JobType.subscribe"));
+  mixin(EnumSwitch("JobType", "JobType.subscribe"));
 }
 /// 
 unittest {
@@ -78,7 +78,7 @@ enum JobStatus : string {
     failed    = "FAILED"
 }
 JobStatus toJobStatus(string s) {
-  mixin(toEnumSwitch("JobStatus", "JobStatus.queued"));
+  mixin(EnumSwitch("JobStatus", "JobStatus.queued"));
 }
 ///
 unittest {
@@ -98,7 +98,7 @@ enum AppPlan : string {
     enterprise   = "enterprise"
 }
 AppPlan toAppPlan(string s) {
-  mixin(toEnumSwitch("AppPlan", "AppPlan.application"));
+  mixin(EnumSwitch("AppPlan", "AppPlan.application"));
 }
 ///
 unittest {

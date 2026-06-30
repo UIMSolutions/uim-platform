@@ -13,7 +13,7 @@ enum MessagingServiceStatus {
     failed
 }
 MessagingServiceStatus toMessagingServiceStatus(string value) {
-    mixin(toEnumSwitch("MessagingServiceStatus", "MessagingServiceStatus.creating"));
+    mixin(EnumSwitch("MessagingServiceStatus", "MessagingServiceStatus.creating"));
 }
 MessagingServiceStatus[] toMessagingServiceStatus(string[] values) {
     return values.map!(v => v.toMessagingServiceStatus).array;
@@ -52,7 +52,7 @@ enum MessagingServicePlan {
     premium
 }
 MessagingServicePlan toMessagingServicePlan(string value) {
-    mixin(toEnumSwitch("MessagingServicePlan", "MessagingServicePlan.dev"));
+    mixin(EnumSwitch("MessagingServicePlan", "MessagingServicePlan.dev"));
 }
 MessagingServicePlan[] toMessagingServicePlan(string[] values) {
     return values.map!(v => v.toMessagingServicePlan).array;
@@ -86,7 +86,7 @@ enum MessageClientStatus {
     suspended
 }
 MessageClientStatus toMessageClientStatus(string value) {
-    mixin(toEnumSwitch("MessageClientStatus", "MessageClientStatus.active"));
+    mixin(EnumSwitch("MessageClientStatus", "MessageClientStatus.active"));
 }
 MessageClientStatus[] toMessageClientStatus(string[] values) {
     return values.map!(v => v.toMessageClientStatus).array;
@@ -121,7 +121,7 @@ enum MessageClientProtocol {
     httprest
 }
 MessageClientProtocol toMessageClientProtocol(string value) {
-    mixin(toEnumSwitch("MessageClientProtocol", "MessageClientProtocol.amqp10"));
+    mixin(EnumSwitch("MessageClientProtocol", "MessageClientProtocol.amqp10"));
 }
 MessageClientProtocol[] toMessageClientProtocol(string[] values) {
     return values.map!(v => v.toMessageClientProtocol).array;
@@ -157,7 +157,7 @@ enum QueueStatus {
     pendingDelete
 }
 QueueStatus toQueueStatus(string value) {
-    mixin(toEnumSwitch("QueueStatus", "QueueStatus.active"));
+    mixin(EnumSwitch("QueueStatus", "QueueStatus.active"));
 }
 QueueStatus[] toQueueStatus(string[] values) {
     return values.map!(v => v.toQueueStatus).array;
@@ -190,7 +190,7 @@ enum QueueAccessType {
     nonExclusive
 }
 QueueAccessType toQueueAccessType(string value) {
-    mixin(toEnumSwitch("QueueAccessType", "QueueAccessType.exclusive"));
+    mixin(EnumSwitch("QueueAccessType", "QueueAccessType.exclusive"));
 }
 QueueAccessType[] toQueueAccessType(string[] values) {
     return values.map!(v => v.toQueueAccessType).array;
@@ -222,7 +222,7 @@ enum QueueSubscriptionStatus {
     pendingDelete
 }
 QueueSubscriptionStatus toQueueSubscriptionStatus(string value) {
-    mixin(toEnumSwitch("QueueSubscriptionStatus", "QueueSubscriptionStatus.active"));
+    mixin(EnumSwitch("QueueSubscriptionStatus", "QueueSubscriptionStatus.active"));
 }
 QueueSubscriptionStatus[] toQueueSubscriptionStatus(string[] values) {
     return values.map!(v => v.toQueueSubscriptionStatus).array;
@@ -257,7 +257,7 @@ enum WebhookStatus {
     failed
 }
 WebhookStatus toWebhookStatus(string value) {
-    mixin(toEnumSwitch("WebhookStatus", "WebhookStatus.active"));
+    mixin(EnumSwitch("WebhookStatus", "WebhookStatus.active"));
 }
 WebhookStatus[] toWebhookStatus(string[] values) {
     return values.map!(v => v.toWebhookStatus).array;
@@ -294,7 +294,7 @@ enum WebhookAuthType {
     apiKey
 }
 WebhookAuthType toWebhookAuthType(string value) {
-    mixin(toEnumSwitch("WebhookAuthType", "WebhookAuthType.none_"));
+    mixin(EnumSwitch("WebhookAuthType", "WebhookAuthType.none_"));
 }
 WebhookAuthType[] toWebhookAuthType(string[] values) {
     return values.map!(v => v.toWebhookAuthType).array;
@@ -329,7 +329,7 @@ enum WebhookDeliveryMode {
     atMostOnce
 }
 WebhookDeliveryMode toWebhookDeliveryMode(string value) {
-    mixin(toEnumSwitch("WebhookDeliveryMode", "WebhookDeliveryMode.atLeastOnce"));
+    mixin(EnumSwitch("WebhookDeliveryMode", "WebhookDeliveryMode.atLeastOnce"));
 }
 WebhookDeliveryMode[] toWebhookDeliveryMode(string[] values) {
     return values.map!(v => v.toWebhookDeliveryMode).array;
@@ -361,7 +361,7 @@ enum EventChannelStatus {
     deprecated_
 }
 EventChannelStatus toEventChannelStatus(string value) {
-    mixin(toEnumSwitch("EventChannelStatus", "EventChannelStatus.active"));
+    mixin(EnumSwitch("EventChannelStatus", "EventChannelStatus.active"));
 }
 EventChannelStatus[] toEventChannelStatus(string[] values) {
     return values.map!(v => v.toEventChannelStatus).array;
@@ -395,7 +395,7 @@ enum EventChannelType {
     eventChannel
 }
 EventChannelType toEventChannelType(string value) {
-    mixin(toEnumSwitch("EventChannelType", "EventChannelType.queue"));
+    mixin(EnumSwitch("EventChannelType", "EventChannelType.queue"));
 }
 EventChannelType[] toEventChannelType(string[] values) {
     return values.map!(v => v.toEventChannelType).array;
@@ -428,7 +428,7 @@ enum MessageBindingStatus {
     inactive
 }
 MessageBindingStatus toMessageBindingStatus(string value) {
-    mixin(toEnumSwitch("MessageBindingStatus", "MessageBindingStatus.active"));
+    mixin(EnumSwitch("MessageBindingStatus", "MessageBindingStatus.active"));
 }
 MessageBindingStatus[] toMessageBindingStatus(string[] values) {
     return values.map!(v => v.toMessageBindingStatus).array;
@@ -461,7 +461,7 @@ enum MessageBindingPermission {
     publishSubscribe
 }
 MessageBindingPermission toMessageBindingPermission(string value) {
-    mixin(toEnumSwitch("MessageBindingPermission", "MessageBindingPermission.publish"));
+    mixin(EnumSwitch("MessageBindingPermission", "MessageBindingPermission.publish"));
 }
 MessageBindingPermission[] toMessageBindingPermission(string[] values) {
     return values.map!(v => v.toMessageBindingPermission).array;

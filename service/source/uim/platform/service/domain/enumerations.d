@@ -11,16 +11,18 @@ enum SsoProtocol {
   oidc,
 }
 
-SsoProtocol toSsoProtocol(string s) {
-  switch (s.toLower) {
-    // The compiler generates all cases here at compile time!
-    static foreach (member; EnumMembers!SsoProtocol) {
-  case __traits(identifier, member):
-      return member;
-    }
-  default:
-    return SsoProtocol.saml; // Default case
-  }
+SsoProtocol toSsoProtocol(string value) {
+  mixin(EnumSwitch("SsoProtocol", "saml"));
+}
+SsoProtocol[] toSsoProtocol(string[] values) {
+  return values.map!(toSsoProtocol).array;
+}
+
+string toString(SsoProtocol protocol) {
+  return protocol.to!string;
+}
+string[] toString(SsoProtocol[] protocols) {
+  return protocols.map!(toString).array;
 }
 /// 
 unittest {
@@ -34,6 +36,12 @@ unittest {
   assert("oidc".toSsoProtocol == SsoProtocol.oidc);
   assert("noexists".toSsoProtocol == SsoProtocol.saml); // Default case
   assert("".toSsoProtocol == SsoProtocol.saml); // Default case
+
+  assert(toString(SsoProtocol.saml) == "saml");
+  assert(toString(SsoProtocol.oidc) == "oidc");
+
+  assert(["saml", "oidc"].toSsoProtocol == [SsoProtocol.saml, SsoProtocol.oidc]);
+  assert(toString([SsoProtocol.saml, SsoProtocol.oidc]) == ["saml", "oidc"]);
 }
 
 /// Authentication method supported by the platform.
@@ -47,27 +55,18 @@ enum AuthMethod {
   apiKey,
 }
 
-AuthMethod toAuthMethod(string s) {
-  switch (s.toLower) {
-  case "form":
-    return AuthMethod.form;
-  case "spnego":
-    return AuthMethod.spnego;
-  case "social":
-    return AuthMethod.social;
-  case "certificate":
-    return AuthMethod.certificate;
-  case "saml":
-    return AuthMethod.saml;
-  case "oidc":
-    return AuthMethod.oidc;
-  case "apikey":
-    return AuthMethod.apiKey;
-  default:
-    return AuthMethod.form; // Default case);
-  }
+AuthMethod toAuthMethod(string value) {
+  mixin(EnumSwitch("AuthMethod", "form"));
 }
-///
+AuthMethod[] toAuthMethod(string[] values) {
+  return values.map!(toAuthMethod).array;
+}
+string toString(AuthMethod method) {
+  return method.to!string;
+}
+string[] toString(AuthMethod[] methods) {
+  return methods.map!(toString).array;
+}
 unittest {
   assert(AuthMethod.form.to!string == "form");
   assert(AuthMethod.spnego.to!string == "spnego");
@@ -94,6 +93,17 @@ unittest {
   assert("apiKey".toAuthMethod == AuthMethod.apiKey);
   assert("noexists".toAuthMethod == AuthMethod.form); // Default case
   assert("".toAuthMethod == AuthMethod.form); // Default case
+
+  assert(toString(AuthMethod.form) == "form");
+  assert(toString(AuthMethod.spnego) == "spnego");
+  assert(toString(AuthMethod.social) == "social");
+  assert(toString(AuthMethod.certificate) == "certificate");
+  assert(toString(AuthMethod.saml) == "saml");
+  assert(toString(AuthMethod.oidc) == "oidc");
+  assert(toString(AuthMethod.apiKey) == "apiKey");  
+
+  assert(["form", "spnego", "social", "certificate", "saml", "oidc", "apiKey"].toAuthMethod == [AuthMethod.form, AuthMethod.spnego, AuthMethod.social, AuthMethod.certificate, AuthMethod.saml, AuthMethod.oidc, AuthMethod.apiKey]);
+  assert(toString([AuthMethod.form, AuthMethod.spnego, AuthMethod.social, AuthMethod.certificate, AuthMethod.saml, AuthMethod.oidc, AuthMethod.apiKey]) == ["form", "spnego", "social", "certificate", "saml", "oidc", "apiKey"]);
 }
 
 enum PersistenceType {
@@ -103,19 +113,17 @@ enum PersistenceType {
   file,
 }
 
-PersistenceType toPersistenceType(string s) {
-  switch (s.toLower()) {
-  case "sql":
-    return PersistenceType.sql;
-  case "nosql":
-    return PersistenceType.nosql;
-  case "memory":
-    return PersistenceType.memory;
-  case "file":
-    return PersistenceType.file;
-  default:
-    return PersistenceType.memory; // Default case
-  }
+PersistenceType toPersistenceType(string value) {
+  mixin(EnumSwitch("PersistenceType", "memory"));
+}
+PersistenceType[] toPersistenceType(string[] values) {
+  return values.map!(toPersistenceType).array;
+}
+string toString(PersistenceType type) {
+  return type.to!string;
+}
+string[] toString(PersistenceType[] types) {
+  return types.map!(toString).array;
 }
 ///
 unittest {
@@ -135,30 +143,14 @@ unittest {
   assert("file".toPersistenceType == PersistenceType.file);
   assert("noexists".toPersistenceType == PersistenceType.memory); // Default case
   assert("".toPersistenceType == PersistenceType.memory); // Default case
-}
 
-import std.traits : EnumMembers;
+  assert(toString(PersistenceType.sql) == "sql");
+  assert(toString(PersistenceType.nosql) == "nosql");
+  assert(toString(PersistenceType.memory) == "memory");
+  assert(toString(PersistenceType.file) == "file");
 
-PersistenceType toPersistenceType2(string s) {
-  switch (s.toLower) {
-    // The compiler generates all cases here at compile time!
-    static foreach (member; EnumMembers!PersistenceType) {
-  case __traits(identifier, member):
-      return member;
-    }
-  default:
-    return PersistenceType.memory; // Default case
-  }
-}
-
-unittest {
-  // Test toPersistenceType
-  assert("sql".toPersistenceType2 == PersistenceType.sql);
-  assert("nosql".toPersistenceType2 == PersistenceType.nosql);
-  assert("memory".toPersistenceType2 == PersistenceType.memory);
-  assert("file".toPersistenceType2 == PersistenceType.file);
-  assert("noexists".toPersistenceType2 == PersistenceType.memory); // Default case
-  assert("".toPersistenceType2 == PersistenceType.memory); // Default case
+  assert(["sql", "nosql", "memory", "file"].toPersistenceType == [PersistenceType.sql, PersistenceType.nosql, PersistenceType.memory, PersistenceType.file]);
+  assert(toString([PersistenceType.sql, PersistenceType.nosql, PersistenceType.memory, PersistenceType.file]) == ["sql", "nosql", "memory", "file"]);   
 }
 
 // Alert severity
@@ -170,24 +162,48 @@ enum AlertSeverity {
   fatal
 }
 
-AlertSeverity toAlertSeverity(string s) {
-  switch (s.toLower()) {
-    case "info": return AlertSeverity.info;
-    case "warning": return AlertSeverity.warning;
-    case "critical": return AlertSeverity.critical;
-    case "fatal": return AlertSeverity.fatal;
-    default: return AlertSeverity.info; // default
-  }
+AlertSeverity toAlertSeverity(string value) {
+  mixin(EnumSwitch("AlertSeverity", "info"));
+}
+AlertSeverity[] toAlertSeverity(string[] values) {
+  return values.map!(toAlertSeverity).array;
+}
+string toString(AlertSeverity severity) {
+  return severity.to!string;
+}
+string[] toString(AlertSeverity[] severities) {
+  return severities.map!(toString).array;
+}
+///
+unittest {
+  mixin(ShowTest!("AlertSeverity Enum"));
+
+  assert(AlertSeverity.info.to!string == "info");
+  assert(AlertSeverity.warning.to!string == "warning");
+  assert(AlertSeverity.error.to!string == "error");
+  assert(AlertSeverity.critical.to!string == "critical");
+  assert(AlertSeverity.fatal.to!string == "fatal");
+
+  assert("info".toAlertSeverity == AlertSeverity.info);
+  assert("warning".toAlertSeverity == AlertSeverity.warning);
+  assert("error".toAlertSeverity == AlertSeverity.error);
+  assert("critical".toAlertSeverity == AlertSeverity.critical);
+  assert("fatal".toAlertSeverity == AlertSeverity.fatal);
+
+  assert("noexists".toAlertSeverity == AlertSeverity.info); // Default case
+  assert("".toAlertSeverity == AlertSeverity.info); // Default case
+
+  
 }
 
 // Log level
-enum LoggingLevel {
-  info,
-  debug_,
-  warning,
-  error,
-  fatal,
-  trace
+enum LoggingLevel : string {
+  info = "info",
+  debug_ = "debug",
+  warning = "warning",
+  error = "error",
+  fatal = "fatal",
+  trace = "trace"
 }
 LoggingLevel toLoggingLevel(string s) {
   switch (s.toLower()) {

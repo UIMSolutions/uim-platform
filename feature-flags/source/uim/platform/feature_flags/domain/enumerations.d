@@ -19,7 +19,7 @@ enum FlagType : string {
     number_    = "NUMBER"     /// Numeric flag (integer or float)
 }
 FlagType toFlagType(string value) {
-    mixin(toEnumSwitch("FlagType", "FlagType.boolean_"));
+    mixin(EnumSwitch("FlagType", "FlagType.boolean_"));
 }
 FlagType[] toFlagType(string[] values) {
     return values.map!(v => v.toFlagType).array;
@@ -55,7 +55,7 @@ enum FlagState : string {
     archived_  = "ARCHIVED"   /// Flag is retired, read-only
 }
 FlagState toFlagState(string value) {
-    mixin(toEnumSwitch("FlagState", "FlagState.enabled_"));
+    mixin(EnumSwitch("FlagState", "FlagState.enabled_"));
 }
 FlagState[] toFlagState(string[] values) {
     return values.map!(v => v.toFlagState).array;
@@ -91,7 +91,7 @@ enum RuleType : string {
     attributeMatch   = "ATTRIBUTE_MATCH"     /// Match on custom context attributes
 }
 RuleType toRuleType(string value) {
-    mixin(toEnumSwitch("RuleType", "RuleType.userMatch"));
+    mixin(EnumSwitch("RuleType", "RuleType.userMatch"));
 }
 RuleType[] toRuleType(string[] values) {
     return values.map!(v => v.toRuleType).array;
@@ -129,7 +129,7 @@ enum EvaluationKind : string {
     number_  = "NUMBER"
 }
 EvaluationKind toEvaluationKind(string value) {
-    mixin(toEnumSwitch("EvaluationKind", "EvaluationKind.boolean_"));
+    mixin(EnumSwitch("EvaluationKind", "EvaluationKind.boolean_"));
 }
 EvaluationKind[] toEvaluationKind(string[] values) {
     return values.map!(v => v.toEvaluationKind).array;
@@ -169,7 +169,7 @@ enum AuditAction : string {
     archived_ = "ARCHIVED"
 }
 AuditAction toAuditAction(string value) {
-    mixin(toEnumSwitch("AuditAction", "AuditAction.created_"));
+    mixin(EnumSwitch("AuditAction", "AuditAction.created_"));
 }
 AuditAction[] toAuditAction(string[] values) {
     return values.map!(v => v.toAuditAction).array;
@@ -210,7 +210,7 @@ enum StorageBackend : string {
     mongodb_ = "MONGODB"
 }
 StorageBackend toStorageBackend(string value) {
-    mixin(toEnumSwitch("StorageBackend", "StorageBackend.memory_"));
+    mixin(EnumSwitch("StorageBackend", "StorageBackend.memory_"));
 }
 StorageBackend[] toStorageBackend(string[] values) {
     return values.map!(v => v.toStorageBackend).array;

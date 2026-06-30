@@ -21,7 +21,7 @@ enum RepositoryType {
     other
 }
 RepositoryType toRepositoryType(string value) {
-  mixin(toEnumSwitch("RepositoryType", "managed"));
+  mixin(EnumSwitch("RepositoryType", "managed"));
 }
 string toString(RepositoryType rt) {
     return rt.to!string; // This will return the enum member name as a string, e.g. "managed", "external", etc.
@@ -88,7 +88,7 @@ enum DocumentStatus {
     archived
 }
 DocumentStatus toDocumentStatus(string value) {
-  mixin(toEnumSwitch("DocumentStatus", "draft"));
+  mixin(EnumSwitch("DocumentStatus", "draft"));
 }
 string toString(DocumentStatus ds) {
     return ds.to!string; // This will return the enum member name as a string, e.g. "draft", "active", etc.
@@ -147,7 +147,7 @@ enum VersioningState {
     checkedOut
 }
 VersioningState toVersioningState(string value) {
-  mixin(toEnumSwitch("VersioningState", "none"));
+  mixin(EnumSwitch("VersioningState", "none"));
 }
 string toString(VersioningState vs) {
     return vs.to!string; // This will return the enum member name as a string, e.g. "none", "major", etc.
@@ -171,7 +171,7 @@ enum CheckoutStatus {
     checkedOut
 }
 CheckoutStatus toCheckoutStatus(string value) {
-  mixin(toEnumSwitch("CheckoutStatus", "available"));
+  mixin(EnumSwitch("CheckoutStatus", "available"));
 }
 string toString(CheckoutStatus cs) {
     return cs.to!string; // This will return the enum member name as a string, e.g. "available", "checkedOut"
@@ -228,7 +228,7 @@ enum PrincipalType {
     everyone
 }
 PrincipalType toPrincipalType(string value) {
-  mixin(toEnumSwitch("PrincipalType", "user"));
+  mixin(EnumSwitch("PrincipalType", "user"));
 }
 string toString(PrincipalType pt) {
     return pt.to!string; // This will return the enum member name as a string, e.g. "user", "group", "everyone"
@@ -253,7 +253,7 @@ enum FolderType {
     archive
 }
 FolderType toFolderType(string value) {
-  mixin(toEnumSwitch("FolderType", "standard"));
+  mixin(EnumSwitch("FolderType", "standard"));
 }
 string toString(FolderType ft) {
     return ft.to!string; // This will return the enum member name as a string, e.g. "standard", "root", etc

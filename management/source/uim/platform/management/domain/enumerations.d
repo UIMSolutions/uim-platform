@@ -14,7 +14,7 @@ enum GlobalAccountStatus {
 }
 
 GlobalAccountStatus toGlobalAccountStatus(string value) {
-  mixin(toEnumSwitch("GlobalAccountStatus", "active"));
+  mixin(EnumSwitch("GlobalAccountStatus", "active"));
 }
 
 GlobalAccountStatus[] toGlobalAccountStatus(string[] values) {
@@ -59,7 +59,7 @@ enum LicenseType {
 }
 
 LicenseType toLicenseType(string value) {
-  mixin(toEnumSwitch("LicenseType", "enterprise"));
+  mixin(EnumSwitch("LicenseType", "enterprise"));
 }
 
 LicenseType[] toLicenseType(string[] values) {
@@ -103,7 +103,7 @@ enum DirectoryStatus {
 }
 
 DirectoryStatus toDirectoryStatus(string value) {
-  mixin(toEnumSwitch("DirectoryStatus", "active"));
+  mixin(EnumSwitch("DirectoryStatus", "active"));
 }
 
 DirectoryStatus[] toDirectoryStatus(string[] values) {
@@ -259,7 +259,7 @@ enum SubaccountStatus {
 }
 
 SubaccountStatus toSubaccountStatus(string value) {
-  mixin(toEnumSwitch("SubaccountStatus", "active"));
+  mixin(EnumSwitch("SubaccountStatus", "active"));
 }
 
 SubaccountStatus[] toSubaccountStatus(string[] values) {
@@ -313,7 +313,7 @@ enum SubaccountUsage {
 }
 
 SubaccountUsage toSubaccountUsage(string value) {
-  mixin(toEnumSwitch("SubaccountUsage", "unset"));
+  mixin(EnumSwitch("SubaccountUsage", "unset"));
 }
 
 SubaccountUsage[] toSubaccountUsage(string[] values) {
@@ -363,7 +363,7 @@ enum EntitlementStatus {
 }
 
 EntitlementStatus toEntitlementStatus(string value) {
-  mixin(toEnumSwitch("EntitlementStatus", "active"));
+  mixin(EnumSwitch("EntitlementStatus", "active"));
 }
 
 EntitlementStatus[] toEntitlementStatus(string[] values) {
@@ -409,7 +409,7 @@ enum ServicePlanCategory {
 }
 
 ServicePlanCategory toServicePlanCategory(string value) {
-  mixin(toEnumSwitch("ServicePlanCategory", "service"));
+  mixin(EnumSwitch("ServicePlanCategory", "service"));
 }
 
 ServicePlanCategory[] toServicePlanCategory(string[] values) {
@@ -507,7 +507,7 @@ enum PricingModel {
 }
 
 PricingModel toPricingModel(string value) {
-  mixin(toEnumSwitch("PricingModel", "free"));
+  mixin(EnumSwitch("PricingModel", "free"));
 }
 
 PricingModel[] toPricingModel(string[] values) {
@@ -607,7 +607,7 @@ enum EnvironmentStatus {
 }
 
 EnvironmentStatus toEnvironmentStatus(string value) {
-  mixin(toEnumSwitch("EnvironmentStatus", "creating"));
+  mixin(EnumSwitch("EnvironmentStatus", "creating"));
 }
 /// Status of a subscription.
 enum SubscriptionStatus {
@@ -620,7 +620,7 @@ enum SubscriptionStatus {
 }
 
 SubscriptionStatus toSubscriptionStatus(string value) {
-  mixin(toEnumSwitch("SubscriptionStatus", "subscribed"));
+  mixin(EnumSwitch("SubscriptionStatus", "subscribed"));
 }
 
 SubscriptionStatus[] toSubscriptionStatus(string[] values) {
@@ -671,7 +671,7 @@ enum ServiceInstanceStatus {
 }
 
 ServiceInstanceStatus toServiceInstanceStatus(string value) {
-  mixin(toEnumSwitch("ServiceInstanceStatus", "creating"));
+  mixin(EnumSwitch("ServiceInstanceStatus", "creating"));
 }
 ServiceInstanceStatus[] toServiceInstanceStatus(string[] values) {
   return values.map!(v => v.toServiceInstanceStatus).array;
@@ -716,7 +716,7 @@ enum EnvironmentType {
 }
 
 EnvironmentType toEnvironmentType(string value) {
-  mixin(toEnumSwitch("EnvironmentType", "cloudFoundry"));
+  mixin(EnumSwitch("EnvironmentType", "cloudFoundry"));
 }
 EnvironmentType[] toEnvironmentType(string[] values) {
   return values.map!(v => v.toEnvironmentType).array;
@@ -763,7 +763,7 @@ enum EnvironmentEventCategory {
 }
 
 EnvironmentEventCategory toEnvironmentEventCategory(string value) {
-  mixin(toEnumSwitch("EnvironmentEventCategory", "subaccountLifecycle"));
+  mixin(EnumSwitch("EnvironmentEventCategory", "subaccountLifecycle"));
 }
 EnvironmentEventCategory[] toEnvironmentEventCategory(string[] values) {
   return values.map!(v => v.toEnvironmentEventCategory).array;
@@ -815,7 +815,7 @@ enum EnvironmentEventSeverity {
 }
 
 EnvironmentEventSeverity toEnvironmentEventSeverity(string value) {
-  mixin(toEnumSwitch("EnvironmentEventSeverity", "info"));
+  mixin(EnumSwitch("EnvironmentEventSeverity", "info"));
 }
 EnvironmentEventSeverity[] toEnvironmentEventSeverity(string[] values) {
   return values.map!(v => v.toEnvironmentEventSeverity).array;
@@ -859,7 +859,7 @@ enum LabeledResourceType {
 }
 
 LabeledResourceType toLabeledResourceType(string value) {
-  mixin(toEnumSwitch("LabeledResourceType", "subaccount"));
+  mixin(EnumSwitch("LabeledResourceType", "subaccount"));
 }
 LabeledResourceType[] toLabeledResourceType(string[] values) {
   return values.map!(v => v.toLabeledResourceType).array;

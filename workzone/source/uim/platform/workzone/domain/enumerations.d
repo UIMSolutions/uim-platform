@@ -41,7 +41,7 @@ enum WorkspaceStatus {
   suspended,
 }
 WorkspaceStatus toWorkspaceStatus(string value) {
-  mixin(toEnumSwitch("WorkspaceStatus", "WorkspaceStatus.active"));
+  mixin(EnumSwitch("WorkspaceStatus", "WorkspaceStatus.active"));
 }
 /// 
 unittest {
@@ -98,7 +98,7 @@ enum ContentType {
   document,
 }
 ContentType toContentType(string value) {
-  mixin(toEnumSwitch("ContentType", "ContentType.blogPost"));
+  mixin(EnumSwitch("ContentType", "ContentType.blogPost"));
 }
 /// 
 unittest {
@@ -119,7 +119,7 @@ enum ContentStatus {
   deleted,
 }
 ContentStatus toContentStatus(string value) {
-  mixin(toEnumSwitch("ContentStatus", "ContentStatus.draft"));
+  mixin(EnumSwitch("ContentStatus", "ContentStatus.draft"));
 }
 ///
 unittest {
@@ -138,7 +138,7 @@ enum NotificationPriority {
   critical,
 }
 NotificationPriority toNotificationPriority(string value) {
-  mixin(toEnumSwitch("NotificationPriority", "NotificationPriority.medium"));
+  mixin(EnumSwitch("NotificationPriority", "NotificationPriority.medium"));
 }
 ///
 unittest {
@@ -158,7 +158,7 @@ enum TaskStatus {
   overdue,
 }
 TaskStatus toTaskStatus(string value) {
-  mixin(toEnumSwitch("TaskStatus", "TaskStatus.open"));
+  mixin(EnumSwitch("TaskStatus", "TaskStatus.open"));
 }
 ///
 unittest {
@@ -178,7 +178,7 @@ enum TaskPriority {
   veryHigh,
 }
 TaskPriority toTaskPriority(string value) {
-  mixin(toEnumSwitch("TaskPriority", "TaskPriority.medium"));
+  mixin(EnumSwitch("TaskPriority", "TaskPriority.medium"));
 }
 ///
 unittest {
@@ -197,7 +197,7 @@ enum ChannelType {
   external,
 }
 ChannelType toChannelType(string value) {
-  mixin(toEnumSwitch("ChannelType", "ChannelType.custom"));
+  mixin(EnumSwitch("ChannelType", "ChannelType.custom"));
 }
 ///
 unittest {
@@ -238,7 +238,7 @@ enum WidgetSize {
   fullWidth,
 }
 WidgetSize toWidgetSize(string value) {
-  mixin(toEnumSwitch("WidgetSize", "WidgetSize.medium"));
+  mixin(EnumSwitch("WidgetSize", "WidgetSize.medium"));
 }
 ///
 unittest {
@@ -257,7 +257,7 @@ enum MemberRole {
   owner,
 }
 MemberRole toMemberRole(string value) {
-  mixin(toEnumSwitch("MemberRole", "MemberRole.contributor"));
+  mixin(EnumSwitch("MemberRole", "MemberRole.contributor"));
 }
 ///
 unittest {
@@ -276,7 +276,7 @@ enum SiteStatus {
   archived,
 }
 SiteStatus toSiteStatus(string value) { 
-  mixin(toEnumSwitch("SiteStatus", "SiteStatus.draft"));
+  mixin(EnumSwitch("SiteStatus", "SiteStatus.draft"));
 }
 ///
 unittest {
@@ -295,7 +295,7 @@ enum EventStatus {
   cancelled,
 }
 EventStatus toEventStatus(string value) {
-  mixin(toEnumSwitch("EventStatus", "EventStatus.scheduled"));
+  mixin(EnumSwitch("EventStatus", "EventStatus.scheduled"));
 }
 /// 
 unittest {
@@ -314,7 +314,7 @@ enum SurveyStatus {
   archived,
 }
 SurveyStatus toSurveyStatus(string value) {
-  mixin(toEnumSwitch("SurveyStatus", "SurveyStatus.draft"));
+  mixin(EnumSwitch("SurveyStatus", "SurveyStatus.draft"));
 }
 ///
 unittest {
@@ -334,7 +334,7 @@ enum QuestionType {
   scale,
 }
 QuestionType toQuestionType(string value) {
-  mixin(toEnumSwitch("QuestionType", "QuestionType.singleChoice"));
+  mixin(EnumSwitch("QuestionType", "QuestionType.singleChoice"));
 }
 ///
 unittest {
@@ -354,7 +354,7 @@ enum ForumTopicStatus {
   archived,
 }
 ForumTopicStatus toForumTopicStatus(string value) {
-  mixin(toEnumSwitch("ForumTopicStatus", "ForumTopicStatus.open"));
+  mixin(EnumSwitch("ForumTopicStatus", "ForumTopicStatus.open"));
 } 
 ///
 unittest {
@@ -399,7 +399,7 @@ enum KBArticleStatus {
 }
 
 KBArticleStatus toKBArticleStatus(string value) {
-  mixin(toEnumSwitch("KBArticleStatus", "KBArticleStatus.draft"));
+  mixin(EnumSwitch("KBArticleStatus", "KBArticleStatus.draft"));
   }
   ///
 unittest {
@@ -418,7 +418,7 @@ enum GroupType {
 }
 
 GroupType toGroupType(string value) {
-  mixin(toEnumSwitch("GroupType", "GroupType.security"));
+  mixin(EnumSwitch("GroupType", "GroupType.security"));
 }
 /// 
 unittest {
@@ -437,7 +437,7 @@ enum NavigationItemType {
   externalLink,
 }
 NavigationItemType toNavigationItemType(string value) {
-  mixin(toEnumSwitch("NavigationItemType", "NavigationItemType.link"));
+  mixin(EnumSwitch("NavigationItemType", "NavigationItemType.link"));
 }
 ///
 unittest {
