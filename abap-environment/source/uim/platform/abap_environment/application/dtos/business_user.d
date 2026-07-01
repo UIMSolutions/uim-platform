@@ -2,7 +2,7 @@ module uim.platform.abap_environment.application.dtos.business_user;
 
 import uim.platform.abap_environment;
 
-// // mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

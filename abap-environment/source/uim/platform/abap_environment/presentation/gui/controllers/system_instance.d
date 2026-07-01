@@ -9,7 +9,7 @@ import uim.platform.abap_environment;
 import uim.platform.abap_environment.presentation.gui.views.system_instance;
 import uim.platform.abap_environment.presentation.gui.models.system_instance;
 
-// // mixin(ShowModule!());
+// mixin(ShowModule!());
 
 class SystemInstanceGuiController {
   private ManageSystemInstancesUseCase usecase;

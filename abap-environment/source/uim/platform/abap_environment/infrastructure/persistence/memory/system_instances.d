@@ -9,7 +9,7 @@ module uim.platform.abap_environment.infrastructure.persistence.memory.system_in
 // import uim.platform.abap_environment.domain.ports.repositories.system_instances;
 import uim.platform.abap_environment;
 
-// // mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 class MemorySystemInstanceRepository : TenantRepository!(SystemInstance, SystemInstanceId), SystemInstanceRepository {
 

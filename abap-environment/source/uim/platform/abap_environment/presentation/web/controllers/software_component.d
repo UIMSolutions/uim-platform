@@ -7,7 +7,7 @@ module uim.platform.abap_environment.presentation.web.controllers.software_compo
 
 import uim.platform.abap_environment;
 
-// // mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 class SoftwareComponentWebController : ManageHttpController {

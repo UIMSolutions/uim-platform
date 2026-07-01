@@ -7,7 +7,7 @@ module uim.platform.abap_environment.domain.entities.business_user;
 
 import uim.platform.abap_environment;
 
-// // mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 /// Business role assignment carried by a user.
 struct RoleAssignment {

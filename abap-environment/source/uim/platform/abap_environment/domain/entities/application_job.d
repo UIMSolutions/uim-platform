@@ -8,7 +8,7 @@ module uim.platform.abap_environment.domain.entities.application_job;
 /// Execution log entry for a job run.
 import uim.platform.abap_environment;
 
-// // mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 /// Application job definition and schedule.
 struct ApplicationJob {

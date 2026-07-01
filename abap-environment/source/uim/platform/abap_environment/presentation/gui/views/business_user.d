@@ -17,7 +17,7 @@ import gtk.CellRendererText;
 import gtk.Toolbar;
 import gtk.ToolButton;
 
-// // mixin(ShowModule!());
+// mixin(ShowModule!());
 
 class BusinessUserWindow : ApplicationWindow {
   private ManageBusinessUsersUseCase usecase;

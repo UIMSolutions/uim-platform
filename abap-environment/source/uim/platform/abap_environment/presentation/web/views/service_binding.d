@@ -8,7 +8,7 @@ module uim.platform.abap_environment.presentation.web.views.service_binding;
 import uim.platform.abap_environment;
 import uim.platform.abap_environment.presentation.web.models.service_binding;
 
-// // mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 class ServiceBindingHtmlView {

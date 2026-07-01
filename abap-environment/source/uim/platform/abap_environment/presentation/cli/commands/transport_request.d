@@ -7,7 +7,7 @@ module uim.platform.abap_environment.presentation.cli.commands.transport_request
 
 import uim.platform.abap_environment;
 
-// // mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 class TransportRequestCommand : ManageCommand {

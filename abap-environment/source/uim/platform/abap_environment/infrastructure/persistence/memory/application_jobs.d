@@ -10,7 +10,7 @@ module uim.platform.abap_environment.infrastructure.persistence.memory.applicati
 
 import uim.platform.abap_environment;
 
-// // mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

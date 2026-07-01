@@ -17,12 +17,43 @@ enum ApplicationType {
     webAndMobile
 }
 ApplicationType toApplicationType(string s) {
-    const map = [
-        "web": ApplicationType.web,
-        "mobile": ApplicationType.mobile,
-        "webAndMobile": ApplicationType.webAndMobile
-    ];
-    return map.get(s, ApplicationType.web);
+    mixin(EnumSwitch("ApplicationType", "web"));
+}
+ApplicationType[] toApplicationTypes(string[] values) {
+    return values.map!(toApplicationType).array;
+}
+string toString(ApplicationType type) {
+    return type.to!string;
+}
+string[] toString(ApplicationType[] types) {
+    return types.map!(toString).array;
+}
+///
+unittest {
+    mixin(ShowTest!("ApplicationType enumeration"));
+
+    assert(ApplicationType.web.to!string == "web");
+    assert(ApplicationType.mobile.to!string == "mobile");
+    assert(ApplicationType.webAndMobile.to!string == "webAndMobile");
+
+    assert("web".to!ApplicationType == ApplicationType.web);
+    assert("mobile".to!ApplicationType == ApplicationType.mobile);
+    assert("webAndMobile".to!ApplicationType == ApplicationType.webAndMobile);
+
+    assert("web".toApplicationType == ApplicationType.web);
+    assert("mobile".toApplicationType == ApplicationType.mobile);
+    assert("webAndMobile".toApplicationType == ApplicationType.webAndMobile);
+    assert("noexists".toApplicationType == ApplicationType.web); // Default case
+    assert("".toApplicationType == ApplicationType.web); // Default case
+
+    assert(toString(ApplicationType.web) == "web");
+    assert(toString(ApplicationType.mobile) == "mobile");
+    assert(toString(ApplicationType.webAndMobile) == "webAndMobile");
+
+    assert(["web", "mobile", "webAndMobile"].toApplicationTypes ==
+           [ApplicationType.web, ApplicationType.mobile, ApplicationType.webAndMobile]);
+    assert(toString([ApplicationType.web, ApplicationType.mobile, ApplicationType.webAndMobile]) ==
+           ["web", "mobile", "webAndMobile"]);
 }
 
 enum ApplicationStatus {
@@ -33,15 +64,51 @@ enum ApplicationStatus {
     error
 }
 ApplicationStatus toApplicationStatus(string s) {
-    const map = [
-        "draft": ApplicationStatus.draft,
-        "active": ApplicationStatus.active,
-        "published": ApplicationStatus.published,
-        "archived": ApplicationStatus.archived,
-        "error": ApplicationStatus.error
-    ];
-    return map.get(s, ApplicationStatus.draft);
+    mixin(EnumSwitch("ApplicationStatus", "draft"));
 }
+ApplicationStatus[] toApplicationStatuses(string[] values) {
+    return values.map!(toApplicationStatus).array;
+}
+string toString(ApplicationStatus status) {
+    return status.to!string;
+}
+string[] toString(ApplicationStatus[] statuses) {
+    return statuses.map!(toString).array;
+}
+/// 
+unittest {
+    mixin(ShowTest!("ApplicationStatus enumeration"));
+
+    assert(ApplicationStatus.draft.to!string == "draft");
+    assert(ApplicationStatus.active.to!string == "active");
+    assert(ApplicationStatus.published.to!string == "published");
+    assert(ApplicationStatus.archived.to!string == "archived");
+    assert(ApplicationStatus.error.to!string == "error");
+
+    assert("draft".to!ApplicationStatus == ApplicationStatus.draft);
+    assert("active".to!ApplicationStatus == ApplicationStatus.active);
+    assert("published".to!ApplicationStatus == ApplicationStatus.published);
+    assert("archived".to!ApplicationStatus == ApplicationStatus.archived);
+    assert("error".to!ApplicationStatus == ApplicationStatus.error);
+
+    assert("draft".toApplicationStatus == ApplicationStatus.draft);
+    assert("active".toApplicationStatus == ApplicationStatus.active);
+    assert("published".toApplicationStatus == ApplicationStatus.published);
+    assert("archived".toApplicationStatus == ApplicationStatus.archived);
+    assert("error".toApplicationStatus == ApplicationStatus.error);
+    assert("noexists".toApplicationStatus == ApplicationStatus.draft); // Default case
+    assert("".toApplicationStatus == ApplicationStatus.draft); // Default case
+
+    assert(toString(ApplicationStatus.draft) == "draft");
+    assert(toString(ApplicationStatus.active) == "active");
+    assert(toString(ApplicationStatus.published) == "published");
+    assert(toString(ApplicationStatus.archived) == "archived");
+    assert(toString(ApplicationStatus.error) == "error");
+
+    assert(["draft", "active", "published", "archived", "error"].toApplicationStatuses ==
+           [ApplicationStatus.draft, ApplicationStatus.active, ApplicationStatus.published, ApplicationStatus.archived, ApplicationStatus.error]);
+    assert(toString([ApplicationStatus.draft, ApplicationStatus.active, ApplicationStatus.published, ApplicationStatus.archived, ApplicationStatus.error]) ==
+           ["draft", "active", "published",}
 
 enum PageType {
     blank,
@@ -54,17 +121,7 @@ enum PageType {
     custom
 }
 PageType toPageType(string s) {
-    const map = [
-        "blank": PageType.blank,
-        "list": PageType.list,
-        "detail": PageType.detail,
-        "form": PageType.form,
-        "dashboard": PageType.dashboard,
-        "login": PageType.login,
-        "settings": PageType.settings,
-        "custom": PageType.custom
-    ];
-    return map.get(s, PageType.blank);
+    mixin(EnumSwitch("PageType", "blank"));
 }
 
 enum PageStatus {
@@ -74,15 +131,54 @@ enum PageStatus {
     archived,
     error
 }
-PageStatus toPageStatus(string s) {
-    const map = [
-        "draft": PageStatus.draft,
-        "active": PageStatus.active,
-        "published": PageStatus.published,
-        "archived": PageStatus.archived,
-        "error": PageStatus.error
-    ];
-    return map.get(s, PageStatus.draft);
+PageStatus toPageStatus(string value) {
+    mixin(EnumSwitch("PageStatus", "draft"));
+}
+PageStatus[] toPageStatuses(string[] values) {
+    return values.map!(toPageStatus).array;
+}   
+string toString(PageStatus status) {
+    return status.to!string;
+}
+string[] toString(PageStatus[] statuses) {  
+    return statuses.map!(toString).array;
+}
+///
+unittest {
+    mixin(ShowTest!("PageStatus enumeration"));
+
+    assert(PageStatus.draft.to!string == "draft");
+    assert(PageStatus.active.to!string == "active");
+    assert(PageStatus.published.to!string == "published");
+    assert(PageStatus.archived.to!string == "archived");
+    assert(PageStatus.error.to!string == "error");
+
+    assert("draft".to!PageStatus == PageStatus.draft);
+    assert("active".to!PageStatus == PageStatus.active);
+    assert("published".to!PageStatus == PageStatus.published);
+    assert("archived".to!PageStatus == PageStatus.archived);
+    assert("error".to!PageStatus == PageStatus.error);
+
+    assert("draft".toPageStatus == PageStatus.draft);
+    assert("active".toPageStatus == PageStatus.active);
+    assert("published".toPageStatus == PageStatus.published);
+    assert("archived".toPageStatus == PageStatus.archived);
+    assert("error".toPageStatus == PageStatus.error);
+    assert("noexists".toPageStatus == PageStatus.draft); // Default case
+
+    assert("some".toPageStatus == PageStatus.draft); // Default case
+    assert("".toPageStatus == PageStatus.draft); // Default case
+
+    assert(toString(PageStatus.draft) == "draft");
+    assert(toString(PageStatus.active) == "active");
+    assert(toString(PageStatus.published) == "published");
+    assert(toString(PageStatus.archived) == "archived");
+    assert(toString(PageStatus.error) == "error");
+
+    assert(["draft", "active", "published", "archived", "error"].toPageStatuses ==
+           [PageStatus.draft, PageStatus.active, PageStatus.published, PageStatus.archived, PageStatus.error]);
+    assert(toString([PageStatus.draft, PageStatus.active, PageStatus.published, PageStatus.archived, PageStatus.error]) ==
+           ["draft", "active", "published", "archived", "error"]);  
 }
 
 enum ComponentCategory {
@@ -95,18 +191,17 @@ enum ComponentCategory {
     chart,
     custom
 }
-ComponentCategory toComponentCategory(string s) {
-    const map = [
-        "basic": ComponentCategory.basic,
-        "layout": ComponentCategory.layout,
-        "input": ComponentCategory.input,
-        "display": ComponentCategory.display,
-        "navigation": ComponentCategory.navigation,
-        "media": ComponentCategory.media,
-        "chart": ComponentCategory.chart,
-        "custom": ComponentCategory.custom
-    ];
-    return map.get(s, ComponentCategory.basic);
+ComponentCategory toComponentCategory(string value) {
+    mixin(EnumSwitch("ComponentCategory", "basic"));
+}
+ComponentCategory[] toComponentCategories(string[] values) {
+    return values.map!(toComponentCategory).array;
+}
+string toString(ComponentCategory category) {
+    return category.to!string;
+}
+string[] toString(ComponentCategory[] categories) {
+    return categories.map!(toString).array;
 }
 
 enum ComponentStatus {

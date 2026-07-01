@@ -18,25 +18,24 @@ import uim.platform.abap_compiler;
 ///   3. Semantic analysis  — validate structure (SemanticAnalyser)
 ///   4. Code generation    — emit IR (CodeGenerator)
 class CompileUseCase {
-    private AbapProgramRepository     programRepo;
-    private CompilationJobRepository  jobRepo;
+    private AbapProgramRepository programRepo;
+    private CompilationJobRepository jobRepo;
 
-    private AbapLexer         lexer;
-    private AbapParser        parser;
-    private SemanticAnalyser  analyser;
-    private CodeGenerator     codeGen;
+    private AbapLexer lexer;
+    private AbapParser parser;
+    private SemanticAnalyser analyser;
+    private CodeGenerator codeGen;
 
     this(AbapProgramRepository programRepo, CompilationJobRepository jobRepo) {
         this.programRepo = programRepo;
-        this.jobRepo     = jobRepo;
-        this.lexer       = AbapLexer();
-        this.parser      = AbapParser();
-        this.analyser    = SemanticAnalyser();
-        this.codeGen     = CodeGenerator();
+        this.jobRepo = jobRepo;
+        this.lexer = AbapLexer();
+        this.parser = AbapParser();
+        this.analyser = SemanticAnalyser();
+        this.codeGen = CodeGenerator();
     }
 
     CompileResponse compile(CompileRequest req) {
-        
 
         // Resolve source code
         string source = req.sourceCode;
@@ -44,7 +43,7 @@ class CompileUseCase {
             auto prog = programRepo.findById(req.tenantId, req.programId);
             if (prog.isNull)
                 return CompileResponse(
-                    CompilationJobId(""), CompilationStatus.failed, [], [], false,
+                    CompilationJobId(""), CompilationStatus.failed.toString, [], [], false,
                     "Program '" ~ req.programId.value ~ "' not found"
                 );
             source = prog.sourceCode;
@@ -72,25 +71,28 @@ class CompileUseCase {
 
         bool anyErrors = false;
         foreach (d; allDiags)
-            if (d.severity == DiagnosticSeverity.error) { anyErrors = true; break; }
+            if (d.severity == DiagnosticSeverity.error) {
+                anyErrors = true;
+                break;
+            }
 
         if (anyErrors) {
             finalStatus = CompilationStatus.failed;
         } else {
             // --- Stage 4: Code generation
-            irCode      = codeGen.generate(parsed.statements);
+            irCode = codeGen.generate(parsed.statements);
             finalStatus = CompilationStatus.succeeded;
         }
 
         // Persist result
-        job.status        = finalStatus;
-        job.diagnostics   = allDiags;
+        job.status = finalStatus;
+        job.diagnostics = allDiags;
         job.generatedCode = irCode;
-        job.finishedAt    = MonoTime.currTime.ticks;
+        job.finishedAt = MonoTime.currTime.ticks;
         jobRepo.update(job);
 
         return CompileResponse(
-            job.id, finalStatus, allDiags, irCode,
+            job.id, finalStatus.toString, allDiags, irCode,
             finalStatus == CompilationStatus.succeeded,
             anyErrors ? "Compilation failed with errors" : ""
         );

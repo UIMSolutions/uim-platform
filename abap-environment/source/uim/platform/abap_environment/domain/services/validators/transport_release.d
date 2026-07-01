@@ -8,7 +8,7 @@ module uim.platform.abap_environment.domain.services.validators.transport_releas
 
 import uim.platform.abap_environment;
 
-// // mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Validation result for transport operations.

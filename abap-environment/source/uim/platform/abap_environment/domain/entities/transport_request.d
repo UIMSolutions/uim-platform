@@ -7,7 +7,7 @@ module uim.platform.abap_environment.domain.entities.transport_request;
 
 import uim.platform.abap_environment;
 
-// // mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Individual task within a transport request.

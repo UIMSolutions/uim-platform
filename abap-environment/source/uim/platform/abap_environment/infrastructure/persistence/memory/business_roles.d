@@ -10,7 +10,7 @@ module uim.platform.abap_environment.infrastructure.persistence.memory.business_
 
 import uim.platform.abap_environment;
 
-// // mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 class MemoryBusinessRoleRepository : TenantRepository!(BusinessRole, BusinessRoleId), BusinessRoleRepository {

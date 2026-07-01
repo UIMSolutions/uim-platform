@@ -7,7 +7,7 @@ module uim.platform.abap_environment.presentation.web.controllers.application_jo
 
 import uim.platform.abap_environment;
 
-// // mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 class ApplicationJobWebController : ManageHttpController {

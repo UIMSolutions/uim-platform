@@ -11,7 +11,7 @@ module uim.platform.abap_environment.application.usecases.manage.application_job
 
 import uim.platform.abap_environment;
 
-// // mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Application service for application job scheduling and management.

@@ -51,16 +51,16 @@ string[] toString(FilterOperator[] operators) {
 }
 ///
 unittest {
-  assert(toFilterOperator("equals") == FilterOperator.equals);
-  assert(toFilterOperator("notEquals") == FilterOperator.notEquals);
-  assert(toFilterOperator("greaterThan") == FilterOperator.greaterThan);
-  assert(toFilterOperator("lessThan") == FilterOperator.lessThan);
-  assert(toFilterOperator("between") == FilterOperator.between);
-  assert(toFilterOperator("in") == FilterOperator.in_);
-  assert(toFilterOperator("notIn") == FilterOperator.notIn);
-  assert(toFilterOperator("contains") == FilterOperator.contains);
-  assert(toFilterOperator("isNull") == FilterOperator.isNull);
-  assert(toFilterOperator("isNotNull") == FilterOperator.isNotNull);
+  assert("equals".toFilterOperator == FilterOperator.equals);
+  assert("notEquals".toFilterOperator == FilterOperator.notEquals);
+  assert("greaterThan".toFilterOperator == FilterOperator.greaterThan);
+  assert("lessThan".toFilterOperator == FilterOperator.lessThan);
+  assert("between".toFilterOperator == FilterOperator.between);
+  assert("in".toFilterOperator == FilterOperator.in_);
+  assert("notIn".toFilterOperator == FilterOperator.notIn);
+  assert("contains".toFilterOperator == FilterOperator.contains);
+  assert("isNull".toFilterOperator == FilterOperator.isNull);
+  assert("isNotNull".toFilterOperator == FilterOperator.isNotNull);
 
   assert(FilterOperator.equals.toString == "equals");
   assert(FilterOperator.notEquals.toString == "notEquals");

@@ -7,7 +7,7 @@ module uim.platform.abap_environment.domain.entities.system_instance;
 
 import uim.platform.abap_environment;
 
-// // mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Provisioned ABAP Cloud system instance.

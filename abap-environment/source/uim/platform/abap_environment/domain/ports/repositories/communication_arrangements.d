@@ -8,7 +8,7 @@ module uim.platform.abap_environment.domain.ports.repositories.communication_arr
 
 import uim.platform.abap_environment;
 
-// // mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing - communication arrangement persistence.

@@ -14,7 +14,7 @@ module uim.platform.abap_environment.presentation.http.controllers.business_user
 
 import uim.platform.abap_environment;
 
-// // mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 class BusinessUserController : ManageHttpController {

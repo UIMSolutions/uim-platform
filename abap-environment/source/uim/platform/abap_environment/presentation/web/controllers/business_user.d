@@ -7,7 +7,7 @@ module uim.platform.abap_environment.presentation.web.controllers.business_user;
 
 import uim.platform.abap_environment;
 
-// // mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 class BusinessUserWebController : ManageHttpController {

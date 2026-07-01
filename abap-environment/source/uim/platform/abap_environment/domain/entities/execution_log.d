@@ -2,7 +2,7 @@ module uim.platform.abap_environment.domain.entities.execution_log;
 
 import uim.platform.abap_environment;
 
-// // mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

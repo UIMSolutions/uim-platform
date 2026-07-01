@@ -11,7 +11,7 @@ module uim.platform.abap_environment.presentation.http.controllers.business_role
 
 import uim.platform.abap_environment;
 
-// // mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 /**

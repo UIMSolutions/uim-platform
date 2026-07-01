@@ -9,7 +9,7 @@ import uim.platform.abap_environment;
 import uim.platform.abap_environment.presentation.gui.views.transport_request;
 import uim.platform.abap_environment.presentation.gui.models.transport_request;
 
-// // mixin(ShowModule!());
+// mixin(ShowModule!());
 
 class TransportRequestGuiController {
   private ManageTransportRequestsUseCase usecase;

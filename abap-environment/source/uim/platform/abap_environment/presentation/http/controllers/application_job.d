@@ -11,7 +11,8 @@ module uim.platform.abap_environment.presentation.http.controllers.application_j
 
 import uim.platform.abap_environment;
 
-// // mixin(ShowModule!());
+// mixin(ShowModule!());
+
 @safe:
 
 class ApplicationJobController : ManageHttpController {

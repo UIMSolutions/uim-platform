@@ -2,7 +2,7 @@ module uim.platform.abap_environment.application.dtos.service_binding;
 
 import uim.platform.abap_environment;
 
-// // mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 

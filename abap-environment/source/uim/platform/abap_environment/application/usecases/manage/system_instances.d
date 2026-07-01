@@ -12,7 +12,7 @@ module uim.platform.abap_environment.application.usecases.manage.system_instance
 
 import uim.platform.abap_environment;
 
-// // mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Application service for ABAP system instance lifecycle management.

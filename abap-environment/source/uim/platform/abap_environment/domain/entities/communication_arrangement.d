@@ -7,7 +7,7 @@ module uim.platform.abap_environment.domain.entities.communication_arrangement;
 
 import uim.platform.abap_environment;
 
-// // mixin(ShowModule!());
+// mixin(ShowModule!());
 
 @safe:
 /// Inbound/outbound communication endpoint configuration.

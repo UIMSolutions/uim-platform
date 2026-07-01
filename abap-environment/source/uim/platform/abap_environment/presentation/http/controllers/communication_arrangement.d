@@ -14,7 +14,7 @@ module uim.platform.abap_environment.presentation.http.controllers.communication
 
 import uim.platform.abap_environment;
 
-// // mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 class CommunicationArrangementController : ManageHttpController {

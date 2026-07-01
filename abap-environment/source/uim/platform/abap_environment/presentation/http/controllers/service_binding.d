@@ -12,7 +12,7 @@ module uim.platform.abap_environment.presentation.http.controllers.service_bindi
 
 import uim.platform.abap_environment;
 
-// // mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 class ServiceBindingController : ManageHttpController {

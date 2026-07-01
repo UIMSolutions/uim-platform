@@ -7,7 +7,7 @@ module uim.platform.abap_environment.presentation.cli.commands.communication_arr
 
 import uim.platform.abap_environment;
 
-// // mixin(ShowModule!());
+// mixin(ShowModule!());
 @safe:
 
 class CommunicationArrangementCommand : ManageCommand {

@@ -8,10 +8,14 @@ import uim.platform.analytics;
 
 // mixin(ShowModule!());
 @safe:
+/// Defines the role of a column in a dataset. This is used for categorizing columns and determining how they are used in analysis and reporting.
 enum ColumnRole {
-  dimension, // Used for grouping and filtering data
-  measure, // Used for aggregation and calculations
-  attribute, // Used for descriptive information that doesn't fit into dimension or measure
+  /// Used for grouping and filtering data
+  dimension,
+  /// Used for aggregation and calculations
+  measure,
+  /// Used for descriptive information that doesn't fit into dimension or measure
+  attribute,
 }
 
 ColumnRole toColumnRole(string value) {
@@ -52,6 +56,7 @@ unittest {
          ["dimension", "measure", "attribute"]);
 }
 
+/// Defines the data type of a column in a dataset. This is used for validation, formatting, and processing of the data.
 enum ColumnDataType : string {
   string_ = "string", // Used for textual data
   integer = "integer",  // Used for whole numbers
