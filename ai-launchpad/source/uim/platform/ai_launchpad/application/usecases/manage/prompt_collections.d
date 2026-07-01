@@ -55,7 +55,7 @@ class ManagePromptCollectionsUseCase { // TODO: UIMUseCase {
     if (!collections.existsById(r.tenantId, r.collectionId))
       return CommandResult(false, "", "Prompt collection not found");
       
-    auto pc = collections.find(r.tenantId, r.collectionId);
+    auto pc = collections.findById(r.tenantId, r.collectionId);
     if (r.name.length > 0)
       pc.name = r.name;
     if (r.description.length > 0)

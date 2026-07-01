@@ -48,7 +48,7 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult patchExecution(PatchExecutionRequest r) {
-    auto e = executions.find(r.tenantId, r.connectionId, r.executionId);
+    auto e = executions.findById(r.tenantId, r.connectionId, r.executionId);
     if (e.isNull)
       return CommandResult(false, "", "Execution not found");
     e.targetStatus = r.targetStatus;

@@ -34,21 +34,20 @@ string[] toString(ConnectionStatus[] statuses) {
 unittest {
   mixin(ShowTest!("ConnectionStatus enum conversion"));
 
-  assert(toConnectionStatus("active") == ConnectionStatus.active);
-  assert(toConnectionStatus("inactive") == ConnectionStatus.inactive);
-  assert(toConnectionStatus("error") == ConnectionStatus.error);
-  assert(toConnectionStatus("pending") == ConnectionStatus.pending);
-  assert(toConnectionStatus("unknown") == ConnectionStatus.inactive); // default case
+  assert("active".toConnectionStatus == ConnectionStatus.active);
+  assert("inactive".toConnectionStatus == ConnectionStatus.inactive);
+  assert("error".toConnectionStatus == ConnectionStatus.error);
+  assert("pending".toConnectionStatus == ConnectionStatus.pending);
+  assert("unknown".toConnectionStatus == ConnectionStatus.inactive); // default case
 
-  assert(toString(ConnectionStatus.active) == "active");
-  assert(toString(ConnectionStatus.inactive) == "inactive");
-  assert(toString(ConnectionStatus.error) == "error");
-  assert(toString(ConnectionStatus.pending) == "pending");
+  assert(ConnectionStatus.active.toString == "active");
+  assert(ConnectionStatus.inactive.toString == "inactive");
+  assert(ConnectionStatus.error.toString == "error");
+  assert(ConnectionStatus.pending.toString == "pending");
 
   assert(toConnectionStatus(["active", "error", "unknown"]) == [ConnectionStatus.active, ConnectionStatus.error, ConnectionStatus.inactive]);
   assert(toString([ConnectionStatus.active, ConnectionStatus.error]) == ["active", "error"]);
 }
-
 
 enum ConnectionType {
   ai_core,
@@ -58,13 +57,13 @@ ConnectionType toConnectionType(string type) {
   mixin(EnumSwitch("ConnectionType", "custom"));
 }
 ConnectionType[] toConnectionType(string[] types) {
-  return types.map!(t => toConnectionType(t)).array;
+  return types.map!(toConnectionType).array;
 }
 string toString(ConnectionType type) {
   return type.to!string;
 }
 string[] toString(ConnectionType[] types) {
-  return types.map!(t => toString(t)).array;
+  return types.map!(toString).array;
 }
 ///
 unittest {
@@ -95,13 +94,13 @@ ExecutionStatus toExecutionStatus(string value) {
   mixin(EnumSwitch("ExecutionStatus", "unknown"));
 }
 ExecutionStatus[] toExecutionStatus(string[] values) {
-  return values.map!(v => toExecutionStatus(v)).array;
+  return values.map!(toExecutionStatus).array;
 }
 string toString(ExecutionStatus status) {
   return status.to!string;
 }
 string[] toString(ExecutionStatus[] statuses) {
-  return statuses.map!(s => toString(s)).array;
+  return statuses.map!(toString).array;
 }
 ///
 unittest {
@@ -140,13 +139,13 @@ DeploymentStatus toDeploymentStatus(string value) {
   mixin(EnumSwitch("DeploymentStatus", "unknown"));
 }
 DeploymentStatus[] toDeploymentStatus(string[] values) {
-  return values.map!(v => toDeploymentStatus(v)).array;
+  return values.map!(toDeploymentStatus).array;
 }
 string toString(DeploymentStatus status) {
   return status.to!string;
 }
 string[] toString(DeploymentStatus[] statuses) {
-  return statuses.map!(s => toString(s)).array;
+  return statuses.map!(toString).array;
 }
 ///
 unittest {
@@ -184,13 +183,13 @@ ModelStatus toModelStatus(string value) {
   }
 }
 ModelStatus[] toModelStatus(string[] values) {
-  return values.map!(v => toModelStatus(v)).array;
+  return values.map!(toModelStatus).array;
 }
 string toString(ModelStatus status) {
   return cast(string) status;
 }
 string[] toString(ModelStatus[] statuses) {
-  return statuses.map!(s => toString(s)).array;
+  return statuses.map!(toString).array;
 }
 ///
 unittest {
@@ -220,13 +219,13 @@ DatasetStatus toDatasetStatus(string value) {
   mixin(EnumSwitch("DatasetStatus", "available"));
 }
 DatasetStatus[] toDatasetStatus(string[] values) {
-  return values.map!(v => toDatasetStatus(v)).array;
+  return values.map!(toDatasetStatus).array;
 }
 string toString(DatasetStatus status) {
   return status.to!string;
 }
 string[] toString(DatasetStatus[] statuses) {
-  return statuses.map!(s => toString(s)).array;
+  return statuses.map!(toString).array;
 }
 ///
 unittest {
@@ -256,13 +255,13 @@ WorkspaceStatus toWorkspaceStatus(string value) {
   mixin(EnumSwitch("WorkspaceStatus", "inactive"));
 }
 WorkspaceStatus[] toWorkspaceStatus(string[] values) {
-  return values.map!(v => toWorkspaceStatus(v)).array;
+  return values.map!(toWorkspaceStatus).array;
 }
 string toString(WorkspaceStatus status) {
   return status.to!string;
 }
 string[] toString(WorkspaceStatus[] statuses) {
-  return statuses.map!(s => toString(s)).array;
+  return statuses.map!(toString).array;
 }
 ///
 unittest {
@@ -289,12 +288,12 @@ PromptRole toPromptRole(string role) {
   mixin(EnumSwitch("PromptRole", "user"));
 }
 PromptRole[] toPromptRole(string[] roles) {
-  return roles.map!(r => toPromptRole(r)).array;
+  return roles.map!(toPromptRole).array;
 }
 string toString(PromptRole role) {  return role.to!string;
 }
 string[] toString(PromptRole[] roles) {
-  return roles.map!(r => toString(r)).array;
+  return roles.map!(toString).array;
 }
 ///
 unittest {
@@ -322,13 +321,13 @@ PromptStatus toPromptStatus(string value) {
   mixin(EnumSwitch("PromptStatus", "draft"));
 }
 PromptStatus[] toPromptStatus(string[] values) {
-  return values.map!(v => toPromptStatus(v)).array;
+  return values.map!(toPromptStatus).array;
 }
 string toString(PromptStatus status) {
   return status.to!string;
 }
 string[] toString(PromptStatus[] statuses) {
-  return statuses.map!(s => toString(s)).array;
+  return statuses.map!(toString).array;
 }
 ///
 unittest {
@@ -358,13 +357,13 @@ ArtifactKind toArtifactKind(string kind) {
   mixin(EnumSwitch("ArtifactKind", "other"));
 }
 ArtifactKind[] toArtifactKind(string[] kinds) {
-  return kinds.map!(k => toArtifactKind(k)).array;
+  return kinds.map!(toArtifactKind).array;
 }
 string toString(ArtifactKind kind) {
   return kind.to!string;
 }
 string[] toString(ArtifactKind[] kinds) {
-  return kinds.map!(k => toString(k)).array;
+  return kinds.map!(toString).array;
 }
 ///
 unittest {
@@ -385,34 +384,29 @@ unittest {
 }
 
 // Target status for lifecycle operations
-enum TargetStatus {
+enum TargetStatus : string {
   running,
   stopped,
-  deleted_,
+  deleted,
   completed
 }
 TargetStatus toTargetStatus(string value) {
   switch (value.toLower) {
     case "running": return TargetStatus.running;
     case "stopped": return TargetStatus.stopped;
-    case "deleted": return TargetStatus.deleted_;
+    case "deleted": return TargetStatus.deleted;
     case "completed": return TargetStatus.completed;
     default: return TargetStatus.stopped; // default to stopped if unknown
   }
 }
 TargetStatus[] toTargetStatus(string[] values) {
-  return values.map!(v => toTargetStatus(v)).array;
+  return values.map!(toTargetStatus).array;
 }
 string toString(TargetStatus status) {
-  switch (status) {
-    case TargetStatus.running: return "running";
-    case TargetStatus.stopped: return "stopped";
-    case TargetStatus.deleted_: return "deleted";
-    case TargetStatus.completed: return "completed";
-  }
+  return status.to!string;
 }
 string[] toString(TargetStatus[] statuses) {
-  return statuses.map!(s => toString(s)).array;
+  return statuses.map!(toString).array;
 }
 ///
 unittest {
@@ -434,10 +428,10 @@ unittest {
 }
 
 // Metric value types
-enum MetricValueType {
-  float_,
-  int_,
-  string_
+enum MetricValueType : string {
+  float_ = "float",
+  int_ = "int",
+  string_ = "string"
 }
 MetricValueType toMetricValueType(string type) {
   switch (type.toLower) {
@@ -448,17 +442,13 @@ MetricValueType toMetricValueType(string type) {
   }
 }
 MetricValueType[] toMetricValueType(string[] types) {
-  return types.map!(t => toMetricValueType(t)).array;
+  return types.map!(toMetricValueType).array;
 }
 string toString(MetricValueType type) {
-  switch (type) {
-    case MetricValueType.float_: return "float";
-    case MetricValueType.int_: return "int";
-    case MetricValueType.string_: return "string";
-  }
+  return cast(string)type;
 }
 string[] toString(MetricValueType[] types) {
-  return types.map!(t => toString(t)).array;
+  return types.map!(toString).array;
 }
 ///
 unittest {
@@ -487,13 +477,13 @@ StatisticsPeriod toStatisticsPeriod(string period) {
   mixin(EnumSwitch("StatisticsPeriod", "daily"));
 }
 StatisticsPeriod[] toStatisticsPeriod(string[] periods) {
-  return periods.map!(p => toStatisticsPeriod(p)).array;
+  return periods.map!(toStatisticsPeriod).array;
 }
 string toString(StatisticsPeriod period) {
   return period.to!string;
 }
 string[] toString(StatisticsPeriod[] periods) {
-  return periods.map!(p => toString(p)).array;
+  return periods.map!(toString).array;
 }
 ///
 unittest {
@@ -522,13 +512,13 @@ LogSeverity toLogSeverity(string severity) {
   mixin(EnumSwitch("LogSeverity", "info"));
 }
 LogSeverity[] toLogSeverity(string[] severities) {
-  return severities.map!(s => toLogSeverity(s)).array;
+  return severities.map!(toLogSeverity).array;
 }
 string toString(LogSeverity severity) {
   return severity.to!string;
 }
 string[] toString(LogSeverity[] severities) {
-  return severities.map!(s => toString(s)).array;
+  return severities.map!(toString).array;
 }
 ///
 unittest {
@@ -556,13 +546,13 @@ ScheduleStatus toScheduleStatus(string value) {
   mixin(EnumSwitch("ScheduleStatus", "inactive"));
 }
 ScheduleStatus[] toScheduleStatus(string[] values) {
-  return values.map!(v => toScheduleStatus(v)).array;
+  return values.map!(toScheduleStatus).array;
 }
 string toString(ScheduleStatus status) {
   return status.to!string;
 }
 string[] toString(ScheduleStatus[] statuses) {
-  return statuses.map!(s => toString(s)).array;
+  return statuses.map!(toString).array;
 }
 ///
 unittest {

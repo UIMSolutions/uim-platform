@@ -31,10 +31,7 @@ class ManagePromptsUseCase { // TODO: UIMUseCase {
     if (r.modelName.length == 0)
       return CommandResult(false, "", "Model name is required");
 
-    Prompt p;
-    p.initEntity(r.tenantId, r.createdBy);
-
-    p.tenantId = r.tenantId;
+    auto p = Prompt(r.tenantId, PromptId(""), r.createdBy);
     // p.connectionId = r.connectionId;
     // TODO: p.collectionId = r.collectionId;
     p.name = r.name;
