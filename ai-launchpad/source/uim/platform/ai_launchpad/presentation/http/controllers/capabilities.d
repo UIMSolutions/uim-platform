@@ -11,7 +11,7 @@ module uim.platform.ai_launchpad.presentation.http.controllers.capabilities;
 // import uim.platform.ai_launchpad;
 import uim.platform.ai_launchpad;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class CapabilitiesController : HttpController {

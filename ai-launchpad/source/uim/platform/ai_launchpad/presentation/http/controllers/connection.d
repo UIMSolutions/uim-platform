@@ -9,7 +9,7 @@ module uim.platform.ai_launchpad.presentation.http.controllers.connection;
 // import uim.platform.ai_launchpad.application.dto;
 import uim.platform.ai_launchpad;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

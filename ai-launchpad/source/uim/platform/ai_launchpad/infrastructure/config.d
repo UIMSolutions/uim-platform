@@ -8,7 +8,7 @@ module uim.platform.ai_launchpad.infrastructure.config;
 import std.process : environment;
 import uim.platform.ai_launchpad;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

@@ -9,7 +9,7 @@ module uim.platform.ai_launchpad.domain.entities.configuration;
 
 import uim.platform.ai_launchpad;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

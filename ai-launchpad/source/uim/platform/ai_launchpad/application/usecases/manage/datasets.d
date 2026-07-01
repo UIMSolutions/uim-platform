@@ -12,7 +12,7 @@ module uim.platform.ai_launchpad.application.usecases.manage.datasets;
 
 import uim.platform.ai_launchpad;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class ManageDatasetsUseCase { // TODO: UIMUseCase {

@@ -9,7 +9,7 @@ module uim.platform.ai_launchpad.domain.ports.repositories.workspaces;
 // import uim.platform.ai_launchpad.domain.entities.workspace : Workspace;
 import uim.platform.ai_launchpad;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

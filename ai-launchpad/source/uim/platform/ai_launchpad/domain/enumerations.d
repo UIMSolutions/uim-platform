@@ -7,7 +7,7 @@ module uim.platform.ai_launchpad.domain.enumerations;
 
 import uim.platform.ai_launchpad;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

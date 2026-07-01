@@ -53,7 +53,7 @@ import uim.platform.ai_launchpad.infrastructure.config;
 // import uim.platform.ai_launchpad.presentation.http.controllers.health;
 import uim.platform.ai_launchpad;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 struct Container {

@@ -9,7 +9,7 @@ module uim.platform.ai_launchpad.domain.ports.repositories.resource_groups;
 // import uim.platform.ai_launchpad.domain.entities.resource_group : ResourceGroup;
 import uim.platform.ai_launchpad;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

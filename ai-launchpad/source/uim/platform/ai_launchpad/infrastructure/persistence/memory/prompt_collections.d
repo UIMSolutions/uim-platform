@@ -9,7 +9,7 @@ module uim.platform.ai_launchpad.infrastructure.persistence.memory.prompt_collec
 // import uim.platform.ai_launchpad.domain.types;
 import uim.platform.ai_launchpad;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryPromptCollectionRepository : TenantRepository!(PromptCollection, PromptCollectionId), IPromptCollectionRepository {
