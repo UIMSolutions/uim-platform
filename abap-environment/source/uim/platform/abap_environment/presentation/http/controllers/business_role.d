@@ -8,7 +8,6 @@ module uim.platform.abap_environment.presentation.http.controllers.business_role
 // import uim.platform.abap_environment.application.dto;
 // import uim.platform.abap_environment.domain.entities.business_role;
 
-
 import uim.platform.abap_environment;
 
 // mixin(ShowModule!());
@@ -52,13 +51,18 @@ class BusinessRoleController : ManageHttpController {
     auto data = precheck.data;
     auto tenantId = TenantId(data.getString("tenantId"));
 
-    CreateBusinessRoleRequest r;
-    r.tenantId = tenantId;
-    r.instanceId = SystemInstanceId(data.getString("systemInstanceId"));
-    r.name = data.getString("name");
-    r.description = data.getString("description");
-    r.roleType = data.getString("roleType");
-    r.restrictionTypes = getStrings(data, "restrictionTypes");
+    auto r = CreateBusinessRoleRequest(
+  tenantId : tenantId,
+  instanceId:
+      SystemInstanceId(data.getString("systemInstanceId")),
+  name:
+      data.getString("name"),
+  description:
+      data.getString("description"),
+  roleType:
+      data.getString("roleType"),
+  restrictionTypes:
+      getStrings(data, "restrictionTypes"));
 
     auto result = usecase.createBusinessRole(r);
     if (result.hasError()) {
@@ -231,7 +235,7 @@ unittest {
   // Test getHandler with missing tenant ID
   auto getResponse = controller.getHandler(null);
   assert(getResponse.getString("status") == "error");
-  assert(getResponse.getString("message") == "Request is required");  
+  assert(getResponse.getString("message") == "Request is required");
 
   // Test updateHandler with missing tenant ID
   auto updateResponse = controller.updateHandler(null);
@@ -239,7 +243,7 @@ unittest {
   assert(updateResponse.getString("message") == "Request is required");
 
   // Test deleteHandler with missing tenant ID
-  auto deleteResponse = controller.deleteHandler(null); 
+  auto deleteResponse = controller.deleteHandler(null);
   assert(deleteResponse.getString("status") == "error");
   assert(deleteResponse.getString("message") == "Request is required");
 }

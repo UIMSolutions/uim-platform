@@ -13,12 +13,100 @@ enum WorkspaceStatus : string {
   failed       = "failed",
   deleted      = "deleted"
 }
+WorkspaceStatus toWorkspaceStatus(string s) {
+  mixin(EnumSwitch("WorkspaceStatus", "provisioning"));
+}
+WorkspaceStatus[] toWorkspaceStatuses(string[] values) {
+  return values.map!(toWorkspaceStatus).array;
+}
+string toString(WorkspaceStatus status) {
+  return status.to!string;
+}
+string[] toString(WorkspaceStatus[] statuses) {
+  return statuses.map!(toString).array;
+}
+/// 
+unittest {
+  mixin(ShowTest!("WorkspaceStatus"));
+
+  assert(WorkspaceStatus.provisioning.to!string == "provisioning");
+  assert(WorkspaceStatus.running.to!string == "running");
+  assert(WorkspaceStatus.stopped.to!string == "stopped");
+  assert(WorkspaceStatus.failed.to!string == "failed");
+  assert(WorkspaceStatus.deleted.to!string == "deleted");
+
+  assert("provisioning".to!WorkspaceStatus == WorkspaceStatus.provisioning);
+  assert("running".to!WorkspaceStatus == WorkspaceStatus.running);
+  assert("stopped".to!WorkspaceStatus == WorkspaceStatus.stopped);
+  assert("failed".to!WorkspaceStatus == WorkspaceStatus.failed);
+  assert("deleted".to!WorkspaceStatus == WorkspaceStatus.deleted);
+
+  assert("provisioning".toWorkspaceStatus == WorkspaceStatus.provisioning);
+  assert("running".toWorkspaceStatus == WorkspaceStatus.running);
+  assert("stopped".toWorkspaceStatus == WorkspaceStatus.stopped);
+  assert("failed".toWorkspaceStatus == WorkspaceStatus.failed);
+  assert("deleted".toWorkspaceStatus == WorkspaceStatus.deleted);
+  
+  assert("noexists".toWorkspaceStatus == WorkspaceStatus.provisioning); // Default case
+  assert("".toWorkspaceStatus == WorkspaceStatus.provisioning); // Default case
+
+  assert(WorkspaceStatus.provisioning.toString == "provisioning");
+  assert(WorkspaceStatus.running.toString == "running");
+  assert(WorkspaceStatus.stopped.toString == "stopped");
+  assert(WorkspaceStatus.failed.toString == "failed");
+  assert(WorkspaceStatus.deleted.toString == "deleted");
+
+  assert(["provisioning", "running", "stopped", "failed", "deleted"].toWorkspaceStatuses ==
+         [WorkspaceStatus.provisioning, WorkspaceStatus.running, WorkspaceStatus.stopped, WorkspaceStatus.failed, WorkspaceStatus.deleted]);
+  assert(toString([WorkspaceStatus.provisioning, WorkspaceStatus.running, WorkspaceStatus.stopped, WorkspaceStatus.failed, WorkspaceStatus.deleted]) ==
+         ["provisioning", "running", "stopped", "failed", "deleted"]);
+}
 
 /// Workspace service tier.
 enum WorkspaceTier : string {
   standard   = "standard",
   premium    = "premium",
   enterprise = "enterprise"
+}
+WorkspaceTier toWorkspaceTier(string s) {
+  mixin(EnumSwitch("WorkspaceTier", "standard"));
+}
+WorkspaceTier[] toWorkspaceTiers(string[] values) {
+  return values.map!(toWorkspaceTier).array;
+}
+string toString(WorkspaceTier tier) {
+  return tier.to!string;
+}
+string[] toString(WorkspaceTier[] tiers) {
+  return tiers.map!(toString).array;
+}
+/// 
+unittest {
+  mixin(ShowTest!("WorkspaceTier"));
+
+  assert(WorkspaceTier.standard.to!string == "standard");
+  assert(WorkspaceTier.premium.to!string == "premium");
+  assert(WorkspaceTier.enterprise.to!string == "enterprise");
+
+  assert("standard".to!WorkspaceTier == WorkspaceTier.standard);
+  assert("premium".to!WorkspaceTier == WorkspaceTier.premium);
+  assert("enterprise".to!WorkspaceTier == WorkspaceTier.enterprise);
+
+  assert("standard".toWorkspaceTier == WorkspaceTier.standard);
+  assert("premium".toWorkspaceTier == WorkspaceTier.premium);
+  assert("enterprise".toWorkspaceTier == WorkspaceTier.enterprise);
+  
+  assert("noexists".toWorkspaceTier == WorkspaceTier.standard); // Default case
+  assert("".toWorkspaceTier == WorkspaceTier.standard); // Default case
+
+  assert(WorkspaceTier.standard.toString == "standard");
+  assert(WorkspaceTier.premium.toString == "premium");
+  assert(WorkspaceTier.enterprise.toString == "enterprise");
+
+  assert(["standard", "premium", "enterprise"].toWorkspaceTiers ==
+         [WorkspaceTier.standard, WorkspaceTier.premium, WorkspaceTier.enterprise]);
+  assert(toString([WorkspaceTier.standard, WorkspaceTier.premium, WorkspaceTier.enterprise]) ==
+         ["standard", "premium", "enterprise"]);
 }
 
 /// Compute cluster runtime state.

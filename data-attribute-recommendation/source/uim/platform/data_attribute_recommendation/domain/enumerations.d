@@ -19,20 +19,52 @@ enum DatasetStatus {
   failed
 }
 DatasetStatus toDatasetStatus(string s) {
-  switch (s.lower) {
-  case "draft":
-    return DatasetStatus.draft;
-  case "ready":
-    return DatasetStatus.ready;
-  case "processing":
-    return DatasetStatus.processing;
-  case "completed":
-    return DatasetStatus.completed;
-  case "failed":
-    return DatasetStatus.failed;
-  default:
-    return DatasetStatus.draft;
-  }
+  mixin(EnumSwitch("DatasetStatus", "draft"));
+}
+DatasetStatus[] toDatasetStatuses(string[] values) {
+  return values.map!(toDatasetStatus).array;
+}
+string toString(DatasetStatus status) {
+  return status.to!string;
+}
+string[] toString(DatasetStatus[] statuses) {
+  return statuses.map!(toString).array;
+}
+/// 
+unittest {
+  mixin(ShowTest!("DatasetStatus"));
+
+  assert(DatasetStatus.draft.to!string == "draft");
+  assert(DatasetStatus.ready.to!string == "ready");
+  assert(DatasetStatus.processing.to!string == "processing");
+  assert(DatasetStatus.completed.to!string == "completed");
+  assert(DatasetStatus.failed.to!string == "failed");
+
+  assert("draft".to!DatasetStatus == DatasetStatus.draft);
+  assert("ready".to!DatasetStatus == DatasetStatus.ready);
+  assert("processing".to!DatasetStatus == DatasetStatus.processing);
+  assert("completed".to!DatasetStatus == DatasetStatus.completed);
+  assert("failed".to!DatasetStatus == DatasetStatus.failed);
+
+  assert("draft".toDatasetStatus == DatasetStatus.draft);
+  assert("ready".toDatasetStatus == DatasetStatus.ready);
+  assert("processing".toDatasetStatus == DatasetStatus.processing);
+  assert("completed".toDatasetStatus == DatasetStatus.completed);
+  assert("failed".toDatasetStatus == DatasetStatus.failed);
+  
+  assert("noexists".toDatasetStatus == DatasetStatus.draft); // Default case
+  assert("".toDatasetStatus == DatasetStatus.draft); // Default case
+
+  assert(DatasetStatus.draft.toString == "draft");
+  assert(DatasetStatus.ready.toString == "ready");
+  assert(DatasetStatus.processing.toString == "processing");
+  assert(DatasetStatus.completed.toString == "completed");
+  assert(DatasetStatus.failed.toString == "failed");
+
+  assert(["draft", "ready", "processing", "completed", "failed"].toDatasetStatuses ==
+         [DatasetStatus.draft, DatasetStatus.ready, DatasetStatus.processing, DatasetStatus.completed, DatasetStatus.failed]);
+  assert(toString([DatasetStatus.draft, DatasetStatus.ready, DatasetStatus.processing, DatasetStatus.completed, DatasetStatus.failed]) ==
+         ["draft", "ready", "processing", "completed", "failed"]);
 }
 
 enum DataType {

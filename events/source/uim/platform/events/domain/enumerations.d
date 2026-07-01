@@ -190,7 +190,7 @@ enum QueueAccessType {
     nonExclusive
 }
 QueueAccessType toQueueAccessType(string value) {
-    mixin(EnumSwitch("QueueAccessType", "QueueAccessType.exclusive"));
+    mixin(EnumSwitch("QueueAccessType", "exclusive"));
 }
 QueueAccessType[] toQueueAccessType(string[] values) {
     return values.map!(v => v.toQueueAccessType).array;
@@ -222,16 +222,16 @@ enum QueueSubscriptionStatus {
     pendingDelete
 }
 QueueSubscriptionStatus toQueueSubscriptionStatus(string value) {
-    mixin(EnumSwitch("QueueSubscriptionStatus", "QueueSubscriptionStatus.active"));
+    mixin(EnumSwitch("QueueSubscriptionStatus", "active"));
 }
 QueueSubscriptionStatus[] toQueueSubscriptionStatus(string[] values) {
-    return values.map!(v => v.toQueueSubscriptionStatus).array;
+    return values.map!(toQueueSubscriptionStatus).array;
 }
 string toString(QueueSubscriptionStatus value) {
     return value.to!string();
 }
 string[] toString(QueueSubscriptionStatus[] values) {
-    return values.map!(v => v.toString()).array;
+    return values.map!(toString).array;
 }
 ///
 unittest {
@@ -257,16 +257,16 @@ enum WebhookStatus {
     failed
 }
 WebhookStatus toWebhookStatus(string value) {
-    mixin(EnumSwitch("WebhookStatus", "WebhookStatus.active"));
+    mixin(EnumSwitch("WebhookStatus", "active"));
 }
 WebhookStatus[] toWebhookStatus(string[] values) {
-    return values.map!(v => v.toWebhookStatus).array;
+    return values.map!(toWebhookStatus).array;
 }
 string toString(WebhookStatus value) {
     return value.to!string();
 }
 string[] toString(WebhookStatus[] values) {
-    return values.map!(v => v.toString()).array;
+    return values.map!(toString).array;
 }
 ///
 unittest {
@@ -294,16 +294,16 @@ enum WebhookAuthType {
     apiKey
 }
 WebhookAuthType toWebhookAuthType(string value) {
-    mixin(EnumSwitch("WebhookAuthType", "WebhookAuthType.none_"));
+    mixin(EnumSwitch("WebhookAuthType", "none_"));
 }
 WebhookAuthType[] toWebhookAuthType(string[] values) {
-    return values.map!(v => v.toWebhookAuthType).array;
+    return values.map!(toWebhookAuthType).array;
 }
 string toString(WebhookAuthType value) {
     return value.to!string();
 }
 string[] toString(WebhookAuthType[] values) {
-    return values.map!(v => v.toString).array;
+    return values.map!(toString).array;
 }
 ///
 unittest {
@@ -329,16 +329,16 @@ enum WebhookDeliveryMode {
     atMostOnce
 }
 WebhookDeliveryMode toWebhookDeliveryMode(string value) {
-    mixin(EnumSwitch("WebhookDeliveryMode", "WebhookDeliveryMode.atLeastOnce"));
+    mixin(EnumSwitch("WebhookDeliveryMode", "atLeastOnce"));
 }
 WebhookDeliveryMode[] toWebhookDeliveryMode(string[] values) {
-    return values.map!(v => v.toWebhookDeliveryMode).array;
+    return values.map!(toWebhookDeliveryMode).array;
 }
 string toString(WebhookDeliveryMode value) {
     return value.to!string();
 }
 string[] toString(WebhookDeliveryMode[] values) {
-    return values.map!(v => v.toString).array;
+    return values.map!(toString).array;
 }
 ///
 unittest {
@@ -361,16 +361,16 @@ enum EventChannelStatus {
     deprecated_
 }
 EventChannelStatus toEventChannelStatus(string value) {
-    mixin(EnumSwitch("EventChannelStatus", "EventChannelStatus.active"));
+    mixin(EnumSwitch("EventChannelStatus", "active"));
 }
 EventChannelStatus[] toEventChannelStatus(string[] values) {
-    return values.map!(v => v.toEventChannelStatus).array;
+    return values.map!(toEventChannelStatus).array;
 }
 string toString(EventChannelStatus value) {
     return value.to!string();
 }
 string[] toString(EventChannelStatus[] values) {
-    return values.map!(v => v.toString).array;
+    return values.map!(toString).array;
 }
 ///
 unittest {
@@ -395,16 +395,16 @@ enum EventChannelType {
     eventChannel
 }
 EventChannelType toEventChannelType(string value) {
-    mixin(EnumSwitch("EventChannelType", "EventChannelType.queue"));
+    mixin(EnumSwitch("EventChannelType", "queue"));
 }
 EventChannelType[] toEventChannelType(string[] values) {
-    return values.map!(v => v.toEventChannelType).array;
+    return values.map!(toEventChannelType).array;
 }
 string toString(EventChannelType value) {
     return value.to!string();
 }
 string[] toString(EventChannelType[] values) {
-    return values.map!(v => v.toString()).array;
+    return values.map!(toString).array;
 }
 ///
 unittest {
@@ -428,16 +428,16 @@ enum MessageBindingStatus {
     inactive
 }
 MessageBindingStatus toMessageBindingStatus(string value) {
-    mixin(EnumSwitch("MessageBindingStatus", "MessageBindingStatus.active"));
+    mixin(EnumSwitch("MessageBindingStatus", "active"));
 }
 MessageBindingStatus[] toMessageBindingStatus(string[] values) {
-    return values.map!(v => v.toMessageBindingStatus).array;
+    return values.map!(toMessageBindingStatus).array;
 }
 string toString(MessageBindingStatus value) {
     return value.to!string();
 }
 string[] toString(MessageBindingStatus[] values) {
-    return values.map!(v => v.toString()).array;
+    return values.map!(toString).array;
 }
 ///
 unittest {
@@ -464,13 +464,13 @@ MessageBindingPermission toMessageBindingPermission(string value) {
     mixin(EnumSwitch("MessageBindingPermission", "MessageBindingPermission.publish"));
 }
 MessageBindingPermission[] toMessageBindingPermission(string[] values) {
-    return values.map!(v => v.toMessageBindingPermission).array;
+    return values.map!(toMessageBindingPermission).array;
 }
 string toString(MessageBindingPermission value) {
     return value.to!string();
 }
 string[] toString(MessageBindingPermission[] values) {
-    return values.map!(v => v.toString()).array;
+    return values.map!(toString).array;
 }
 ///
 unittest {

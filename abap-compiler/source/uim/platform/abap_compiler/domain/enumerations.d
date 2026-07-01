@@ -95,22 +95,22 @@ string[] toString(TokenType[] types) {
 }
 ///
 unittest {
-    assert(toTokenType("keyword") == TokenType.keyword);
-    assert(toTokenType("identifier") == TokenType.identifier);
-    assert(toTokenType("literal_integer") == TokenType.literal_integer);
-    assert(toTokenType("literal_string") == TokenType.literal_string);
-    assert(toTokenType("literal_char") == TokenType.literal_char);  
-    assert(toTokenType("operator") == TokenType.operator);
-    assert(toTokenType("comment") == TokenType.comment);
-    assert(toTokenType("period") == TokenType.period);
-    assert(toTokenType("comma") == TokenType.comma);
-    assert(toTokenType("colon") == TokenType.colon);
-    assert(toTokenType("lparen") == TokenType.lparen);
-    assert(toTokenType("rparen") == TokenType.rparen);
-    assert(toTokenType("whitespace") == TokenType.whitespace);
-    assert(toTokenType("newline") == TokenType.newline);
-    assert(toTokenType("eof") == TokenType.eof);
-    assert(toTokenType("unknown") == TokenType.unknown);
+    assert("keyword".toTokenType == TokenType.keyword);
+    assert("identifier".toTokenType == TokenType.identifier);
+    assert("literal_integer".toTokenType == TokenType.literal_integer);
+    assert("literal_string".toTokenType == TokenType.literal_string);
+    assert("literal_char".toTokenType == TokenType.literal_char);  
+    assert("operator".toTokenType == TokenType.operator);
+    assert("comment".toTokenType == TokenType.comment);
+    assert("period".toTokenType == TokenType.period);
+    assert("comma".toTokenType == TokenType.comma);
+    assert("colon".toTokenType == TokenType.colon);
+    assert("lparen".toTokenType == TokenType.lparen);
+    assert("rparen".toTokenType == TokenType.rparen);
+    assert("whitespace".toTokenType == TokenType.whitespace);
+    assert("newline".toTokenType == TokenType.newline);
+    assert("eof".toTokenType == TokenType.eof);
+    assert("unknown".toTokenType == TokenType.unknown);
 
     assert(toString(TokenType.keyword) == "keyword");
     assert(toString(TokenType.identifier) == "identifier");
