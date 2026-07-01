@@ -7,7 +7,7 @@ module uim.platform.authorization_trust.domain.entities.identity_provider;
 
 import uim.platform.authorization_trust;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// A trusted identity provider (SAML 2.0 or OIDC).

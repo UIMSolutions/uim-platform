@@ -7,7 +7,7 @@ module uim.platform.authorization_trust.domain.enumerations;
 
 import uim.platform.authorization_trust;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

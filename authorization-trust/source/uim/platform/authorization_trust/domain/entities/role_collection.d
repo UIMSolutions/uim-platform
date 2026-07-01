@@ -7,7 +7,7 @@ module uim.platform.authorization_trust.domain.entities.role_collection;
 
 import uim.platform.authorization_trust;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// A business-level grouping of roles, assigned as a whole to users.

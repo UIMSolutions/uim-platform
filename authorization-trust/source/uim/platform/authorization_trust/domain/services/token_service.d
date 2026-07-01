@@ -7,7 +7,7 @@ module uim.platform.authorization_trust.domain.services.token_service;
 
 import uim.platform.authorization_trust;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Simplified JWT token service for the Authorization and Trust Management Service.

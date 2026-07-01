@@ -8,7 +8,7 @@ module uim.platform.authorization_trust.infrastructure.config;
 import std.process : environment;
 import uim.platform.authorization_trust;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 struct SrvConfig {

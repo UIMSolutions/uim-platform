@@ -7,7 +7,7 @@ module uim.platform.authorization_trust.presentation.http.controllers.role_colle
 
 import uim.platform.authorization_trust;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

@@ -7,7 +7,7 @@ module uim.platform.authorization_trust.infrastructure.persistence.memory.scopes
 
 import uim.platform.authorization_trust;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

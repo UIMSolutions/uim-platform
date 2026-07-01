@@ -35,7 +35,7 @@ class ManageBuildpacksUseCase { // TODO: UIMUseCase {
 
     auto buildpack = Buildpack(req.tenantId, req.packId.isNull ? BuildpackId(createId()) : req.packId, req.createdBy);
     buildpack.name = req.name;
-    buildpack.type_ = req.type_;
+    buildpack.type_ = req.type_toBuildpackType;
     buildpack.position = req.position;
     buildpack.stack = req.stack.length > 0 ? req.stack : "cflinuxfs4";
     buildpack.filename = req.filename;

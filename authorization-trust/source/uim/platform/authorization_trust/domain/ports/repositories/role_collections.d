@@ -7,7 +7,7 @@ module uim.platform.authorization_trust.domain.ports.repositories.role_collectio
 
 import uim.platform.authorization_trust;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

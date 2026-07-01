@@ -7,7 +7,7 @@ module uim.platform.authorization_trust.domain.entities.user_assignment;
 
 import uim.platform.authorization_trust;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Assignment of a role collection to a specific user (or user group).

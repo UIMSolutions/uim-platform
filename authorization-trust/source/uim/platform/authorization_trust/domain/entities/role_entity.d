@@ -7,7 +7,7 @@ module uim.platform.authorization_trust.domain.entities.role_entity;
 
 import uim.platform.authorization_trust;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// A role template that bundles one or more scopes into a named authorization unit.

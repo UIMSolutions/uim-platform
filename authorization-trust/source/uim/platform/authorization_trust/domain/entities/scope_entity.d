@@ -7,7 +7,7 @@ module uim.platform.authorization_trust.domain.entities.scope_entity;
 
 import uim.platform.authorization_trust;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// A fine-grained authorization scope.

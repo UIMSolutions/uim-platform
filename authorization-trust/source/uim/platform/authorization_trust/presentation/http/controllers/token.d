@@ -7,7 +7,7 @@ module uim.platform.authorization_trust.presentation.http.controllers.token;
 
 import uim.platform.authorization_trust;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// OAuth 2.0 token endpoint.
