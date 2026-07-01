@@ -7,7 +7,7 @@ module uim.platform.automation_pilot.domain.services.automation_validator;
 
 import uim.platform.automation_pilot;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

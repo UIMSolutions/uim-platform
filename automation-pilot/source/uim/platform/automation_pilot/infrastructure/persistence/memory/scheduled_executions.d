@@ -7,7 +7,7 @@ module uim.platform.automation_pilot.infrastructure.persistence.memory.scheduled
 
 import uim.platform.automation_pilot;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

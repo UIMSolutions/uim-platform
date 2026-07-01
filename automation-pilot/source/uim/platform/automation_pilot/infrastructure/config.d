@@ -8,7 +8,7 @@ module uim.platform.automation_pilot.infrastructure.config;
 import std.process : environment;
 import uim.platform.automation_pilot;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

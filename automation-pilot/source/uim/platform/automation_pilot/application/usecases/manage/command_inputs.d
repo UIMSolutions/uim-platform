@@ -7,7 +7,7 @@ module uim.platform.automation_pilot.application.usecases.manage.command_inputs;
 
 import uim.platform.automation_pilot;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

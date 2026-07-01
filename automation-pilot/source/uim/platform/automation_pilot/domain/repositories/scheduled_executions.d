@@ -7,7 +7,7 @@ module uim.platform.automation_pilot.domain.repositories.scheduled_executions;
 
 import uim.platform.automation_pilot;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 
