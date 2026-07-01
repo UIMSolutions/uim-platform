@@ -7,7 +7,7 @@ module uim.platform.build_apps.presentation.http.controllers.ui_component;
 
 import uim.platform.build_apps;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

@@ -7,7 +7,7 @@ module uim.platform.build_apps.domain.services.build_apps_validator;
 
 import uim.platform.build_apps;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

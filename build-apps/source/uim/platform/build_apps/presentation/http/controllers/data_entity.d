@@ -7,7 +7,7 @@ module uim.platform.build_apps.presentation.http.controllers.data_entity;
 
 import uim.platform.build_apps;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

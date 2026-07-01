@@ -7,7 +7,7 @@ module uim.platform.build_apps.infrastructure.persistence.memory.app_builds;
 
 import uim.platform.build_apps;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 
