@@ -8,6 +8,8 @@ module uim.platform.foundry.application.dto.app;
 struct CreateAppRequest {
   SpaceId spaceId;
   TenantId tenantId;
+  AppId appId;
+
   UserId createdBy;
 
   string name;
@@ -25,8 +27,8 @@ struct CreateAppRequest {
 }
 
 struct UpdateAppRequest {
-  AppId appId;
   TenantId tenantId;
+  AppId appId;
   string name;
   int instances;
   int memoryMb;

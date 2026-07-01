@@ -76,6 +76,8 @@ struct GroupResponse {
 
 struct CreateAppRequest {
   TenantId tenantId;
+  ApplicationId applicationId;
+
   string name;
   string description;
   SsoProtocol protocol = SsoProtocol.oidc;

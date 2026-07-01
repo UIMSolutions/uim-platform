@@ -12,7 +12,7 @@ struct CreateRouteRequest {
   string host;
   string path;
   int port;
-  RouteProtocol protocol;
+  string protocol;
   UserId createdBy;
 }
 

@@ -35,9 +35,7 @@ class ManageTransportQueuesUseCase { // TODO: UIMUseCase {
     if (req.name.length == 0)
       return CommandResult(false, "", "Queue name is required");
 
-    TransportQueue queue;
-    queue.initEntity(req.tenantId, req.createdBy);
-
+    auto queue = TransportQueue(req.tenantId, req.queueId.isNull ? TransportQueueId(createId()) : req.queueId, req.createdBy);
     queue.name = req.name;
     queue.description = req.description;
     queue.queueType = toQueueType(req.queueType);
@@ -94,9 +92,7 @@ class ManageTransportQueuesUseCase { // TODO: UIMUseCase {
   private void recordActivity(TenantId tenantId, ActivityType actType,
       string entityId, string entityName, string desc, string by) {
    
-    ContentActivity activity;
-    activity.initEntity(tenantId);
-
+    auto activity = ContentActivity(tenantId, ContentActivityId(createId()), by);
     activity.activityType = actType;
     activity.severity = ActivitySeverity.info;
     activity.entityId = entityId;

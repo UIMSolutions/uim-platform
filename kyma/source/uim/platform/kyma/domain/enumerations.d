@@ -14,17 +14,43 @@ enum EnvironmentStatus {
     deprovisioning,
     error,
 }
-EnvironmentStatus toEnvironmentStatus(string s) {
-    switch (s.toLower()) {
-        case "provisioning": return EnvironmentStatus.provisioning;
-        case "running": return EnvironmentStatus.running;
-        case "updating": return EnvironmentStatus.updating;
-        case "stopping": return EnvironmentStatus.stopping;
-        case "stopped": return EnvironmentStatus.stopped;
-        case "deprovisioning": return EnvironmentStatus.deprovisioning;
-        case "error": return EnvironmentStatus.error;
-        default: return EnvironmentStatus.error; // default
-    }
+EnvironmentStatus toEnvironmentStatus(string value) {
+    mixin(EnumSwitch!"EnvironmentStatus", "error");
+}
+EnvironmentStatus[] toEnvironmentStatus(string[] values) {
+    return values.map!(v => toEnvironmentStatus(v)).array;
+}
+string toString(EnvironmentStatus value) {
+    return value.to!string;
+}
+string[] toString(EnvironmentStatus[] values) {
+    return values.map!(v => toString(v)).array;
+}
+///
+unittest {
+    mixin(ShowTest!"EnvironmentStatus");
+
+    assert("provisioning".toEnvironmentStatus == EnvironmentStatus.provisioning);
+    assert("running".toEnvironmentStatus == EnvironmentStatus.running);        
+    assert("updating".toEnvironmentStatus == EnvironmentStatus.updating);
+    assert("stopping".toEnvironmentStatus == EnvironmentStatus.stopping);
+    assert("stopped".toEnvironmentStatus == EnvironmentStatus.stopped);
+    assert("deprovisioning".toEnvironmentStatus == EnvironmentStatus.deprovisioning);
+    assert("error".toEnvironmentStatus == EnvironmentStatus.error);    
+
+    assert("".toEnvironmentStatus == EnvironmentStatus.error); // Default value for unknown strings is "error"
+    assert("unknown".toEnvironmentStatus == EnvironmentStatus.error); // Default value for unknown strings
+
+    assert(EnvironmentStatus.provisioning.toString == "provisioning");
+    assert(EnvironmentStatus.running.toString == "running");   
+    assert(EnvironmentStatus.updating.toString == "updating");
+    assert(EnvironmentStatus.stopping.toString == "stopping");
+    assert(EnvironmentStatus.stopped.toString == "stopped");
+    assert(EnvironmentStatus.deprovisioning.toString == "deprovisioning");
+    assert(EnvironmentStatus.error.toString == "error");   
+
+    assert(toStringArray([EnvironmentStatus.provisioning, EnvironmentStatus.running, EnvironmentStatus.updating, EnvironmentStatus.stopping, EnvironmentStatus.stopped, EnvironmentStatus.deprovisioning, EnvironmentStatus.error]) == ["provisioning", "running", "updating", "stopping", "stopped", "deprovisioning", "error"]);
+    assert(toEnvironmentStatusArray(["provisioning", "running", "updating", "stopping", "stopped", "deprovisioning", "error"]) == [EnvironmentStatus.provisioning, EnvironmentStatus.running, EnvironmentStatus.updating, EnvironmentStatus.stopping, EnvironmentStatus.stopped, EnvironmentStatus.deprovisioning, EnvironmentStatus.error]);
 }
 
 /// Kyma plan / machine type.
@@ -36,16 +62,41 @@ enum KymaPlan {
     free_,
     trial,
 }
-KymaPlan toKymaPlan(string s) {
-    switch (s.toLower()) {
-        case "azure": return KymaPlan.azure;
-        case "aws": return KymaPlan.aws;
-        case "gcp": return KymaPlan.gcp;
-        case "sapconvergedcloud": return KymaPlan.sapConvergedCloud;
-        case "free": return KymaPlan.free_;
-        case "trial": return KymaPlan.trial;
-        default: return KymaPlan.free_; // default
-    }
+KymaPlan toKymaPlan(string value) {
+    mixin(EnumSwitch!"KymaPlan", "free_");
+}
+KymaPlan[] toKymaPlan(string[] values) {
+    return values.map!(v => toKymaPlan(v)).array;
+}
+string toString(KymaPlan value) {
+    return value.to!string;
+}
+string[] toString(KymaPlan[] values) {
+    return values.map!(v => toString(v)).array;
+}
+///
+unittest {
+    mixin(ShowTest!"KymaPlan");
+    
+    assert("azure".toKymaPlan == KymaPlan.azure);
+    assert("aws".toKymaPlan == KymaPlan.aws);        
+    assert("gcp".toKymaPlan == KymaPlan.gcp);
+    assert("sapconvergedcloud".toKymaPlan == KymaPlan.sapConvergedCloud);
+    assert("free".toKymaPlan == KymaPlan.free_);
+    assert("trial".toKymaPlan == KymaPlan.trial);    
+
+    assert("".toKymaPlan == KymaPlan.free_); // Default value for unknown strings is "free"
+    assert("unknown".toKymaPlan == KymaPlan.free_); // Default value for unknown strings
+
+    assert(KymaPlan.azure.toString == "azure");
+    assert(KymaPlan.aws.toString == "aws");   
+    assert(KymaPlan.gcp.toString == "gcp");
+    assert(KymaPlan.sapConvergedCloud.toString == "sapConvergedCloud");
+    assert(KymaPlan.free_.toString == "free");
+    assert(KymaPlan.trial.toString == "trial");   
+
+    assert(toStringArray([KymaPlan.azure, KymaPlan.aws, KymaPlan.gcp, KymaPlan.sapConvergedCloud, KymaPlan.free_, KymaPlan.trial]) == ["azure", "aws", "gcp", "sapConvergedCloud", "free", "trial"]);
+    assert(toKymaPlanArray(["azure", "aws", "gcp", "sapConvergedCloud", "free", "trial"]) == [KymaPlan.azure, KymaPlan.aws, KymaPlan.gcp, KymaPlan.sapConvergedCloud, KymaPlan.free_, KymaPlan.trial]);
 }
 
 /// Status of a Kubernetes namespace.
@@ -53,12 +104,33 @@ enum NamespaceStatus {
     active,
     terminating,
 }
-NamespaceStatus toNamespaceStatus(string s) {
-    switch (s.toLower()) {
-        case "active": return NamespaceStatus.active;
-        case "terminating": return NamespaceStatus.terminating;
-        default: return NamespaceStatus.active; // default
-    }
+NamespaceStatus toNamespaceStatus(string value) {
+    mixin(EnumSwitch!"NamespaceStatus", "active");
+}
+NamespaceStatus[] toNamespaceStatus(string[] values) {
+    return values.map!(v => toNamespaceStatus(v)).array;
+}
+string toString(NamespaceStatus value) {
+    return value.to!string;
+}
+string[] toString(NamespaceStatus[] values) {   
+    return values.map!(v => toString(v)).array;
+}
+///
+unittest {
+    mixin(ShowTest!"NamespaceStatus");
+
+    assert("active".toNamespaceStatus == NamespaceStatus.active);
+    assert("terminating".toNamespaceStatus == NamespaceStatus.terminating);
+
+    assert("".toNamespaceStatus == NamespaceStatus.active); // Default value for unknown strings is "active"
+    assert("unknown".toNamespaceStatus == NamespaceStatus.active); // Default value for unknown strings is "active"
+
+    assert(NamespaceStatus.active.toString == "active");
+    assert(NamespaceStatus.terminating.toString == "terminating");
+
+    assert(toStringArray([NamespaceStatus.active, NamespaceStatus.terminating]) == ["active", "terminating"]);
+    assert(toNamespaceStatusArray(["active", "terminating"]) == [NamespaceStatus.active, NamespaceStatus.terminating]);
 }
 
 /// Serverless function runtime language.
@@ -70,13 +142,36 @@ enum FunctionRuntime {
 }
 
 FunctionRuntime toFunctionRuntime(string s) {
-    switch (s.toLower()) {
-        case "nodejs20": return FunctionRuntime.nodejs20;
-        case "nodejs18": return FunctionRuntime.nodejs18;
-        case "python39": return FunctionRuntime.python39;
-        case "python312": return FunctionRuntime.python312;
-        default: return FunctionRuntime.nodejs20; // default
-    }
+    mixin(EnumSwitch!"FunctionRuntime", "nodejs20");
+}
+FunctionRuntime[] toFunctionRuntimeArray(string[] values) {
+    return values.map!(v => toFunctionRuntime(v)).array;
+}
+string toString(FunctionRuntime value) {
+    return value.to!string;
+}
+string[] toStringArray(FunctionRuntime[] values) {
+    return values.map!(v => toString(v)).array;
+}
+///
+unittest {
+    mixin(ShowTest!"FunctionRuntime");
+
+    assert("nodejs20".toFunctionRuntime == FunctionRuntime.nodejs20);
+    assert("nodejs18".toFunctionRuntime == FunctionRuntime.nodejs18);
+    assert("python39".toFunctionRuntime == FunctionRuntime.python39);
+    assert("python312".toFunctionRuntime == FunctionRuntime.python312);
+
+    assert("".toFunctionRuntime == FunctionRuntime.nodejs20); // Default value for unknown strings is "nodejs20"
+    assert("unknown".toFunctionRuntime == FunctionRuntime.nodejs20); // Default value for unknown strings is "nodejs20"
+
+    assert(toString(FunctionRuntime.nodejs20) == "nodejs20");
+    assert(toString(FunctionRuntime.nodejs18) == "nodejs18");
+    assert(toString(FunctionRuntime.python39) == "python39");
+    assert(toString(FunctionRuntime.python312) == "python312");
+
+    assert(toFunctionRuntimeArray(["nodejs20", "python39", "invalid"]) == [FunctionRuntime.nodejs20, FunctionRuntime.python39, FunctionRuntime.nodejs20]);
+    assert(toStringArray([FunctionRuntime.nodejs20, FunctionRuntime.python312]) == ["nodejs20", "python312"]);
 }
 
 /// Status of a serverless function.
@@ -88,15 +183,39 @@ enum FunctionStatus {
     inactive,
 }
 FunctionStatus toFunctionStatus(string s) {
-    switch (s.toLower()) {
-        case "building": return FunctionStatus.building;
-        case "deploying": return FunctionStatus.deploying;
-        case "running": return FunctionStatus.running;
-        case "error": return FunctionStatus.error;
-        case "inactive": return FunctionStatus.inactive;
-        default: return FunctionStatus.error; // default
-    }
+    mixin(EnumSwitch!"FunctionStatus", "error");
 }   
+FunctionStatus[] toFunctionStatus(string[] values) {
+    return values.map!(v => toFunctionStatus(v)).array;
+}
+string toString(FunctionStatus value) {
+    return value.to!string;
+}
+string[] toString(FunctionStatus[] values) {
+    return values.map!(v => toString(v)).array;
+}
+///
+unittest {
+    mixin(ShowTest!"FunctionStatus");
+
+    assert("building".toFunctionStatus == FunctionStatus.building);
+    assert("deploying".toFunctionStatus == FunctionStatus.deploying);
+    assert("running".toFunctionStatus == FunctionStatus.running);
+    assert("error".toFunctionStatus == FunctionStatus.error);
+    assert("inactive".toFunctionStatus == FunctionStatus.inactive);
+
+    assert("".toFunctionStatus == FunctionStatus.error); // Default value for unknown strings is "error"
+    assert("unknown".toFunctionStatus == FunctionStatus.error); // Default value for unknown strings is "error"
+
+    assert(toString(FunctionStatus.building) == "building");
+    assert(toString(FunctionStatus.deploying) == "deploying");
+    assert(toString(FunctionStatus.running) == "running");
+    assert(toString(FunctionStatus.error) == "error");
+    assert(toString(FunctionStatus.inactive) == "inactive");
+
+    assert(toFunctionStatus(["building", "running", "invalid"]) == [FunctionStatus.building, FunctionStatus.running, FunctionStatus.error]);
+    assert(toString([FunctionStatus.building, FunctionStatus.inactive]) == ["building", "inactive"]);
+}
 
 /// Scaling type for serverless functions.
 enum ScalingType {
@@ -110,6 +229,31 @@ ScalingType toScalingType(string s) {
         default: return ScalingType.auto_; // default
     }
 }
+ScalingType[] toScalingType(string[] values) {
+    return values.map!(v => toScalingType(v)).array;
+}
+string toString(ScalingType value) {
+    return value.to!string;
+}
+string[] toString(ScalingType[] values) {
+    return values.map!(v => toString(v)).array;
+}
+///
+unittest {
+    mixin(ShowTest!"ScalingType");
+
+    assert("auto".toScalingType == ScalingType.auto_);
+    assert("fixed".toScalingType == ScalingType.fixed);
+
+    assert("".toScalingType == ScalingType.auto_); // Default value for unknown strings is "auto"
+    assert("unknown".toScalingType == ScalingType.auto_); // Default value for unknown strings is "auto"
+
+    assert(toString(ScalingType.auto_) == "auto");
+    assert(toString(ScalingType.fixed) == "fixed");
+
+    assert(toScalingType(["auto", "fixed", "invalid"]) == [ScalingType.auto_, ScalingType.fixed, ScalingType.auto_]);
+    assert(toString([ScalingType.auto_, ScalingType.fixed]) == ["auto", "fixed"]);
+}
 
 /// API rule access strategy.
 enum AccessStrategy {
@@ -118,14 +262,14 @@ enum AccessStrategy {
     jwt,
     allowAll,
 }
-AccessStrategy toAccessStrategy(string s) {
-    switch (s.toLower()) {
-        case "noauth": return AccessStrategy.noAuth;
-        case "oauth2introspection": return AccessStrategy.oauth2Introspection;
-        case "jwt": return AccessStrategy.jwt;
-        case "allowall": return AccessStrategy.allowAll;
-        default: return AccessStrategy.noAuth; // default
-    }
+AccessStrategy toAccessStrategy(string value) {
+    mixin(EnumSwitch!"AccessStrategy", "noAuth");
+}
+AccessStrategy[] toAccessStrategy(string[] values) {
+    return values.map!(v => toAccessStrategy(v)).array;
+}
+string toString(AccessStrategy value) {
+    return value.to!string;
 }
 
 /// API rule status.

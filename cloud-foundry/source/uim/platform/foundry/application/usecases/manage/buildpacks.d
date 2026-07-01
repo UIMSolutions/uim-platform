@@ -9,7 +9,7 @@ module uim.platform.foundry.application.usecases.manage.buildpacks;
 // import uim.platform.foundry.domain.types;
 // import uim.platform.foundry.domain.entities.buildpack;
 // import uim.platform.foundry.domain.ports.repositories.buildpack;
-// import uim.platform.foundry.domain.ports;
+
 // import uim.platform.foundry.application.dto;
 import uim.platform.foundry;
 
@@ -33,10 +33,7 @@ class ManageBuildpacksUseCase { // TODO: UIMUseCase {
     if (buildpacks.existsByName(req.tenantId, req.name))
       return CommandResult(false, "", "Buildpack with this name already exists");
 
-    auto now = currentTimestamp();
-    auto buildpack = Buildpack();
-    buildpack.initEntity(req.tenantId, req.createdBy);
-
+    auto buildpack = Buildpack(req.tenantId, req.packId.isNull ? BuildpackId(createId()) : req.packId, req.createdBy);
     buildpack.name = req.name;
     buildpack.type_ = req.type_;
     buildpack.position = req.position;

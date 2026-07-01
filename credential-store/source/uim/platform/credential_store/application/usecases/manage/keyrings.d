@@ -51,9 +51,7 @@ class ManageKeyringsUseCase { // TODO: UIMUseCase {
     credRepo.save(cred);
 
     // Create initial version with generated key material
-    KeyringVersion ver;
-    ver.initEntity(r.tenantId);
-
+    auto ver = KeyringVersion(r.tenantId);
     ver.keyringId = cred.id;
     ver.versionNumber = 1;
     ver.keyMaterial = KeyringManager.generateKeyMaterial();
@@ -80,9 +78,7 @@ class ManageKeyringsUseCase { // TODO: UIMUseCase {
     // Create new version
     auto versionCount = versionRepo.countByKeyring(cred.tenantId, cred.id);
 
-    KeyringVersion ver;
-    ver.initEntity(r.tenantId);
-
+    auto ver = KeyringVersion(r.tenantId);
     ver.keyringId = cred.id;
     ver.tenantId = r.tenantId;
     ver.versionNumber = versionCount + 1;

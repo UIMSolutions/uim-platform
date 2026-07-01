@@ -11,7 +11,7 @@ module uim.platform.foundry.application.usecases.manage.routes;
 // import uim.platform.foundry.domain.entities.cf_domain;
 // import uim.platform.foundry.domain.ports.repositories.route;
 // import uim.platform.foundry.domain.ports.repositories.domain;
-// import uim.platform.foundry.domain.ports;
+
 // import uim.platform.foundry.domain.services.route_resolver;
 // import uim.platform.foundry.application.dto;
 import uim.platform.foundry;
@@ -52,8 +52,7 @@ class ManageRoutesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Route host is already taken for this domain");
 
     auto now = currentTimestamp();
-    auto route = Route();
-    route.initEntity(req.tenantId, req.createdBy);
+    auto route = Route(req.tenantId, req.routeId.isNNull ? RouteId(createId) : req.routeId, req.createdBy);
     route.spaceId = req.spaceId;
     route.domainId = req.domainId;
     route.host = req.host;
@@ -117,15 +116,14 @@ class ManageRoutesUseCase { // TODO: UIMUseCase {
   CommandResult createDomain(CreateDomainRequest req) {
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
+      
     if (req.name.length == 0)
       return CommandResult(false, "", "Domain name is required");
 
     if (domains.existsByName(req.tenantId, req.name))
       return CommandResult(false, "", "Domain with this name already exists");
 
-    auto now = currentTimestamp();
-    auto d = CfDomain();
-    d.initEntity(req.tenantId, req.createdBy);
+    auto d = CfDomain(req.tenantId, req.domainId.isNull ? CfDomainId(createId) : req.domainId, req.createdBy);
     d.ownerOrgId = req.ownerOrgId;
     d.name = req.name;
     d.scope_ = req.scope_;

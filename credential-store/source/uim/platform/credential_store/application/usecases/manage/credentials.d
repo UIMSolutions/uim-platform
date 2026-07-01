@@ -50,8 +50,7 @@ class ManageCredentialsUseCase { // TODO: UIMUseCase {
       return CommandResult(true, existing.id.value, "");
     }
 
-    Credential cred;
-    cred.initEntity(r.tenantId);
+    auto cred = Credential(r.tenantId, r.credentialId.isNull ? CredentialId(createId()) : r.credentialId, r.createdBy);
     cred.namespaceId = r.namespaceId;
     cred.name = r.name;
     cred.type = credType;

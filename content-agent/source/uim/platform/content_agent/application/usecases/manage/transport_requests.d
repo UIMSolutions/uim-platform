@@ -55,9 +55,7 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
       ? queueRepo.findDefault(req.tenantId)
       : queueRepo.findById(req.queueId);
 
-    TransportRequest tr;
-    tr.initEntity(req.tenantId, req.createdBy);
-
+    auto tr = TransportRequest(req.tenantId, req.requestId.isNull ? TransportRequestId(createId()) : req.requestId, req.createdBy);
     tr.sourceSubaccount = req.sourceSubaccount;
     tr.targetSubaccount = req.targetSubaccount;
     tr.description = req.description;
@@ -132,9 +130,7 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
   private CommandResult recordActivity(TenantId tenantId, ActivityType actType,
     string entityId, string entityName, string desc, string by) {
    
-    ContentActivity activity;
-    activity.initEntity(tenantId);
-
+    auto activity = ContentActivity(tenantId);
     activity.activityType = actType;
     activity.severity = ActivitySeverity.info;
     activity.entityId = entityId;

@@ -27,7 +27,7 @@ KeyAlgorithm[] toKeyAlgorithm(string[] values) {
     return values.map!(toKeyAlgorithm).array;
 }
 string toString(KeyAlgorithm algorithm) {
-    mixin(toEnumToString!("KeyAlgorithm"));
+    return algorithm.to!string;
 }
 string[] toString(KeyAlgorithm[] algorithms) {
     return algorithms.map!(toString).array;
@@ -61,8 +61,8 @@ enum KeyStatus {
     /// The key has been deleted and is no longer available for use.
     deleted,
 }
-KeyStatus toKeyStatus(string s) {
-    mixin(EnumSwitch!("KeyStatus", "active"));
+KeyStatus toKeyStatus(string value) {
+    mixin(EnumSwitch("KeyStatus", "active"));
 }
 KeyStatus[] toKeyStatus(string[] values) {
     return values.map!(toKeyStatus).array;

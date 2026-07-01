@@ -36,8 +36,7 @@ class ImportContentUseCase { // TODO: UIMUseCase {
     if (pkg.isNull)
       return CommandResult(false, "", "Package not found");
 
-    ImportJob job;
-    job.initEntity(req.tenantId, req.startedBy);
+    auto job = ImportJob(req.tenantId, req.jobId.isNull ? ImportJobId(createId()) : req.jobId, req.startedBy);
     job.packageId = req.packageId;
     job.transportRequestId = req.requestId;
     job.sourceFilePath = req.sourceFilePath;

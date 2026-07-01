@@ -39,9 +39,7 @@ class ExportContentUseCase { // TODO: UIMUseCase {
     if (pkg.status != PackageStatus.assembled)
       return CommandResult(false, "", "Package must be assembled before export");
 
-    ExportJob job;
-    job.initEntity(req.tenantId, req.startedBy);
-    
+    auto job = ExportJob(req.tenantId, req.jobId.isNull ? ExportJobId(createId()) : req.jobId, req.startedBy);
     job.packageId = req.packageId;
     job.transportRequestId = req.requestId;
     job.queueId = req.queueId;
@@ -85,9 +83,7 @@ class ExportContentUseCase { // TODO: UIMUseCase {
 
   private void recordActivity(TenantId tenantId, ActivityType actType,
     string entityId, string entityName, string desc, string by) {
-    ContentActivity activity;
-    activity.initEntity(tenantId);
-
+    auto activity = ContentActivity(tenantId);
     activity.activityType = actType;
     activity.severity = ActivitySeverity.info;
     activity.entityId = entityId;

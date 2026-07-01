@@ -16,7 +16,7 @@ enum TlsProtocolVersion {
     tls1_3,
 }
 TlsProtocolVersion toTlsProtocolVersion(string s) {
-    mixin(EnumSwitch!("TlsProtocolVersion", "tls1_2"));
+    mixin(EnumSwitch("TlsProtocolVersion", "tls1_2"));
 }
 TlsProtocolVersion[] toTlsProtocolVersion(string[] values) {
     return values.map!(toTlsProtocolVersion).array;
@@ -53,14 +53,14 @@ enum CipherSuiteStrength {
     medium,
     weak,
 }
-CipherSuiteStrength toCipherSuiteStrength(string s) {
-    mixin(EnumSwitch!("CipherSuiteStrength", "strong"));
+CipherSuiteStrength toCipherSuiteStrength(string value) {
+    mixin(EnumSwitch("CipherSuiteStrength", "strong"));
 }
 CipherSuiteStrength[] toCipherSuiteStrength(string[] values) {
     return values.map!(toCipherSuiteStrength).array;
 }
 string toString(CipherSuiteStrength strength) {
-    mixin(toEnumToString!("CipherSuiteStrength"));
+    return strength.to!string;
 }
 string[] toString(CipherSuiteStrength[] strengths) {
     return strengths.map!(toString).array;

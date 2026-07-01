@@ -193,6 +193,8 @@ struct UpdateChannelRequest {
 
 struct CreateAppRequest {
   TenantId tenantId;
+  AppId appId;
+
   string name;
   string description;
   string launchUrl;
@@ -205,7 +207,7 @@ struct CreateAppRequest {
 }
 
 struct UpdateAppRequest {
-  AppId id;
+  AppId appId;
   TenantId tenantId;
   string name;
   string description;

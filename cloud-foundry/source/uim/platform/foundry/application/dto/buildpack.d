@@ -5,13 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.foundry.application.dto.buildpack;
 import uim.platform.foundry;
+
 // mixin(ShowModule!());
 @safe:
 
-
 struct CreateBuildpackRequest {
   TenantId tenantId;
-  
+  BuildpackId packId;
+
   string name;
   BuildpackType type_;
   int position;
@@ -30,4 +31,3 @@ struct UpdateBuildpackRequest {
   bool enabled;
   bool locked;
 }
-

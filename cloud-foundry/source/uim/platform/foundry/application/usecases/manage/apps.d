@@ -9,7 +9,7 @@ module uim.platform.foundry.application.usecases.manage.apps;
 // import uim.platform.foundry.domain.types;
 // import uim.platform.foundry.domain.entities.application;
 // import uim.platform.foundry.domain.ports.repositories.app;
-// import uim.platform.foundry.domain.ports;
+
 // import uim.platform.foundry.domain.services.app_lifecycle_manager;
 // import uim.platform.foundry.application.dto;
 import uim.platform.foundry;
@@ -39,8 +39,7 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Application with this name already exists in space");
 
     auto now = currentTimestamp();
-    Application app;
-    app.initEntity(req.tenantId, req.createdBy);
+    auto app = Application(req.tenantId, req.appId.isNull ? AppId(createId()) : req.appId, req.createdBy);
     app.spaceId = req.spaceId;
     app.name = req.name;
     app.state = AppState.stopped;
@@ -75,6 +74,7 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
   CommandResult updateApp(UpdateAppRequest req) {
     if (req.appId.isNull)
       return CommandResult(false, "", "Application ID is required");
+
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
 

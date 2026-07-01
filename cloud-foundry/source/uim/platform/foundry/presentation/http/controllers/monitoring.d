@@ -13,7 +13,7 @@ import uim.platform.foundry;
 
 @safe:
 
-class MonitoringController : HttpController {
+class MonitoringController : ManageHttpController {
   private MonitorAppsUseCase useCase;
 
   this(MonitorAppsUseCase useCase) {
@@ -98,13 +98,13 @@ class MonitoringController : HttpController {
 
   private static Json serializeHealth(const AppHealthSummary h) {
     return Json.emptyObject
-      .set("appId", Json(h.appId))
-      .set("appName", Json(h.appName))
-      .set("state", Json(h.state.to!string))
-      .set("requestedInstances", Json(h.requestedInstances))
-      .set("runningInstances", Json(h.runningInstances))
-      .set("crashedInstances", Json(h.crashedInstances))
-      .set("totalMemoryMb", Json(h.totalMemoryMb))
-      .set("totalDiskMb", Json(h.totalDiskMb));
+      .set("appId",   h.appId)
+      .set("appName", h.appName)
+      .set("state", h.state.to!string)
+      .set("requestedInstances", h.requestedInstances)
+      .set("runningInstances", h.runningInstances)
+      .set("crashedInstances", h.crashedInstances)
+      .set("totalMemoryMb", h.totalMemoryMb)
+      .set("totalDiskMb", h.totalDiskMb);
   }
 }

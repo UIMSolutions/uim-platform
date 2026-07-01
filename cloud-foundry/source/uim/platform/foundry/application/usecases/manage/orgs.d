@@ -10,7 +10,7 @@ module uim.platform.foundry.application.usecases.manage.orgs;
 // import uim.platform.foundry.domain.entities.organization;
 // import uim.platform.foundry.domain.ports.repositories.org;
 // import uim.platform.foundry.domain.ports.repositories.space;
-// import uim.platform.foundry.domain.ports;
+
 // import uim.platform.foundry.application.dto;
 import uim.platform.foundry;
 
@@ -29,6 +29,7 @@ class ManageOrgsUseCase { // TODO: UIMUseCase {
   CommandResult createOrg(CreateOrgRequest req) {
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
+      
     if (req.name.length == 0)
       return CommandResult(false, "", "Organization name is required");
 
@@ -36,9 +37,7 @@ class ManageOrgsUseCase { // TODO: UIMUseCase {
     if (orgs.existsByName(req.tenantId, req.name))
       return CommandResult(false, "", "Organization with this name already exists");
 
-    auto org = Organization();
-    org.initEntity(req.tenantId, req.createdBy);
-
+    auto org = Organization(req.tenantId, req.orgId.isNull ? OrgId(createId) : req.orgId, req.createdBy);
     org.name = req.name;
     org.status = OrgStatus.active;
     org.memoryQuotaMb = req.memoryQuotaMb > 0 ? req.memoryQuotaMb : 10_240;
@@ -62,6 +61,7 @@ class ManageOrgsUseCase { // TODO: UIMUseCase {
   CommandResult updateOrg(UpdateOrgRequest req) {
     if (req.orgId.isNull)
       return CommandResult(false, "", "Organization ID is required");
+
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
 
@@ -72,7 +72,7 @@ class ManageOrgsUseCase { // TODO: UIMUseCase {
     auto updated = org; 
     if (req.name.length > 0)
       updated.name = req.name;
-    updated.status = req.status;
+    updated.status = req.status.toOrgStatus;
     if (req.memoryQuotaMb > 0)
       updated.memoryQuotaMb = req.memoryQuotaMb;
     if (req.instanceMemoryLimitMb > 0)
@@ -97,6 +97,7 @@ class ManageOrgsUseCase { // TODO: UIMUseCase {
 
     org.status = OrgStatus.suspended;
     org.updatedAt = currentTimestamp();
+
     orgs.update(org);
     return CommandResult(true, id.value, "");
   }

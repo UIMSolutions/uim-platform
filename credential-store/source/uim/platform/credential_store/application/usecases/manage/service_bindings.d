@@ -23,9 +23,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
   }
 
   ServiceBindingResponse createServiceBinding(CreateServiceBindingRequest r) {
-    ServiceBinding binding;
-    binding.initEntity(r.tenantId);
-
+    auto binding = ServiceBinding(r.tenantId, r.serviceBindingId.isNull ? ServiceBindingId(createId()) : r.serviceBindingId, r.createdBy);
     binding.name = r.name;
     binding.description = r.description;
     binding.clientId = randomUUID().toString;

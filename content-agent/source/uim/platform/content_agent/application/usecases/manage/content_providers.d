@@ -113,8 +113,7 @@ class ManageContentProvidersUseCase { // TODO: UIMUseCase {
   private void recordActivity(TenantId tenantId, ActivityType actType,
     string entityId, string entityName, string desc, string by) {
    
-    ContentActivity activity;
-    activity.initEntity(tenantId);
+    auto activity = ContentActivity(tenantId);
     activity.activityType = actType;
     activity.severity = ActivitySeverity.info;
     activity.entityId = entityId;

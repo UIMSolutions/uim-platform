@@ -20,7 +20,7 @@ struct ServiceInstance {
   string name;
   string serviceName; // e.g. "xsuaa", "hana", "destination"
   string servicePlanName; // e.g. "lite", "standard", "application"
-  ServiceInstanceStatus status = ServiceInstanceStatus.creating;
+  string status = ServiceInstanceStatus.creating.toString;
   string parameters; // JSON string of creation parameters
   string dashboardUrl;
   string tags; // comma-separated tags
@@ -31,7 +31,7 @@ struct ServiceInstance {
       .set("name", name)
       .set("serviceName", serviceName)
       .set("servicePlanName", servicePlanName)
-      .set("status", status.to!string)
+      .set("status", status)
       .set("parameters", parameters)
       .set("dashboardUrl", dashboardUrl)
       .set("tags", tags);
