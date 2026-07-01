@@ -13,7 +13,7 @@ enum MessagingServiceStatus {
     failed
 }
 MessagingServiceStatus toMessagingServiceStatus(string value) {
-    mixin(EnumSwitch("MessagingServiceStatus", "MessagingServiceStatus.creating"));
+    mixin(EnumSwitch("MessagingServiceStatus", "creating"));
 }
 MessagingServiceStatus[] toMessagingServiceStatus(string[] values) {
     return values.map!(v => v.toMessagingServiceStatus).array;
@@ -52,7 +52,7 @@ enum MessagingServicePlan {
     premium
 }
 MessagingServicePlan toMessagingServicePlan(string value) {
-    mixin(EnumSwitch("MessagingServicePlan", "MessagingServicePlan.dev"));
+    mixin(EnumSwitch("MessagingServicePlan", "dev"));
 }
 MessagingServicePlan[] toMessagingServicePlan(string[] values) {
     return values.map!(v => v.toMessagingServicePlan).array;
@@ -86,7 +86,7 @@ enum MessageClientStatus {
     suspended
 }
 MessageClientStatus toMessageClientStatus(string value) {
-    mixin(EnumSwitch("MessageClientStatus", "MessageClientStatus.active"));
+    mixin(EnumSwitch("MessageClientStatus", "active"));
 }
 MessageClientStatus[] toMessageClientStatus(string[] values) {
     return values.map!(v => v.toMessageClientStatus).array;
@@ -121,7 +121,7 @@ enum MessageClientProtocol {
     httprest
 }
 MessageClientProtocol toMessageClientProtocol(string value) {
-    mixin(EnumSwitch("MessageClientProtocol", "MessageClientProtocol.amqp10"));
+    mixin(EnumSwitch("MessageClientProtocol", "amqp10"));
 }
 MessageClientProtocol[] toMessageClientProtocol(string[] values) {
     return values.map!(v => v.toMessageClientProtocol).array;
@@ -157,16 +157,16 @@ enum QueueStatus {
     pendingDelete
 }
 QueueStatus toQueueStatus(string value) {
-    mixin(EnumSwitch("QueueStatus", "QueueStatus.active"));
+    mixin(EnumSwitch("QueueStatus", "active"));
 }
 QueueStatus[] toQueueStatus(string[] values) {
-    return values.map!(v => v.toQueueStatus).array;
+    return values.map!(toQueueStatus).array;
 }
 string toString(QueueStatus value) {
     return value.to!string();
 }
 string[] toString(QueueStatus[] values) {
-    return values.map!(v => v.toString()).array;
+    return values.map!(toString).array;
 }
 ///
 unittest {
@@ -199,7 +199,7 @@ string toString(QueueAccessType value) {
     return value.to!string();
 }
 string[] toString(QueueAccessType[] values) {
-    return values.map!(v => v.toString()).array;
+    return values.map!(toString).array;
 }
 ///
 unittest {

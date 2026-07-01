@@ -174,7 +174,7 @@ enum CloudProvider {
   onPremise
 }
 
-CloudProvider toCloudProvider(string provider) {
+CloudProvider toCloudProvider(string value) {
   mixin(EnumSwitch("CloudProvider", "sap"));
 }
 
@@ -615,7 +615,7 @@ enum SchemaFormat {
   asyncapi
 }
 
-SchemaFormat toSchemaFormat(string format) {
+SchemaFormat toSchemaFormat(string value) {
   mixin(EnumSwitch("SchemaFormat", "json"));
 }
 
@@ -634,18 +634,18 @@ string[] toString(SchemaFormat[] formats) {
 unittest {
   mixin(ShowTest!("SchemaFormat Enum Conversion"));
 
-  assert(toSchemaFormat("json") == SchemaFormat.json);
-  assert(toSchemaFormat("avro") == SchemaFormat.avro);
-  assert(toSchemaFormat("protobuf") == SchemaFormat.protobuf);
-  assert(toSchemaFormat("xml") == SchemaFormat.xml);
-  assert(toSchemaFormat("asyncapi") == SchemaFormat.asyncapi);
-  assert(toSchemaFormat("unknown") == SchemaFormat.json); // default case
+  assert("json".toSchemaFormat == SchemaFormat.json);
+  assert("avro".toSchemaFormat == SchemaFormat.avro);
+  assert("protobuf".toSchemaFormat == SchemaFormat.protobuf);
+  assert("xml".toSchemaFormat == SchemaFormat.xml);
+  assert("asyncapi".toSchemaFormat == SchemaFormat.asyncapi);
+  assert("unknown".toSchemaFormat == SchemaFormat.json); // default case
 
-  assert(toString(SchemaFormat.json) == "json");
-  assert(toString(SchemaFormat.avro) == "avro");
-  assert(toString(SchemaFormat.protobuf) == "protobuf");
-  assert(toString(SchemaFormat.xml) == "xml");
-  assert(toString(SchemaFormat.asyncapi) == "asyncapi");
+  assert(SchemaFormat.json.toString == "json");
+  assert(SchemaFormat.avro.toString == "avro");
+  assert(SchemaFormat.protobuf.toString == "protobuf");
+  assert(SchemaFormat.xml.toString == "xml");
+  assert(SchemaFormat.asyncapi.toString == "asyncapi");
 
   assert(toSchemaFormat(["json", "unknown", "xml"]) == [
       SchemaFormat.json, SchemaFormat.json, SchemaFormat.xml
@@ -692,16 +692,18 @@ string[] toString(SchemaStatus[] statuses) {
 unittest {
   mixin(ShowTest!("SchemaStatus Enum Conversion"));
 
-  assert(toSchemaStatus("draft") == SchemaStatus.draft);
-  assert(toSchemaStatus("active") == SchemaStatus.active);
-  assert(toSchemaStatus("deprecated") == SchemaStatus.deprecated_);
-  assert(toSchemaStatus("retired") == SchemaStatus.retired);
-  assert(toSchemaStatus("unknown") == SchemaStatus.draft); // default case
+  assert("draft".toSchemaStatus == SchemaStatus.draft);
+  assert("active".toSchemaStatus == SchemaStatus.active);
+  assert("deprecated".toSchemaStatus == SchemaStatus.deprecated_);
+  assert("retired".toSchemaStatus == SchemaStatus.retired);
 
-  assert(toString(SchemaStatus.draft) == "draft");
-  assert(toString(SchemaStatus.active) == "active");
-  assert(toString(SchemaStatus.deprecated_) == "deprecated");
-  assert(toString(SchemaStatus.retired) == "retired");
+  assert("unknown".toSchemaStatus == SchemaStatus.draft); // default case
+  assert("".toSchemaStatus == SchemaStatus.draft); // default case
+
+  assert(SchemaStatus.draft.toString == "draft");
+  assert(SchemaStatus.active.toString == "active");
+  assert(SchemaStatus.deprecated_.toString == "deprecated");
+  assert(SchemaStatus.retired.toString == "retired");
 
   assert(toSchemaStatus(["draft", "unknown", "active"]) == [
       SchemaStatus.draft, SchemaStatus.draft, SchemaStatus.active
@@ -923,13 +925,15 @@ string[] toString(ProtocolType[] types) {
 unittest {
   mixin(ShowTest!("ProtocolType Enum Conversion"));
 
-  assert(toProtocolType("smf") == ProtocolType.smf);
-  assert(toProtocolType("mqtt") == ProtocolType.mqtt);
-  assert(toProtocolType("amqp") == ProtocolType.amqp);
-  assert(toProtocolType("rest") == ProtocolType.rest);
-  assert(toProtocolType("jms") == ProtocolType.jms);
-  assert(toProtocolType("websocket") == ProtocolType.websocket);
-  assert(toProtocolType("unknown") == ProtocolType.mqtt); // default case
+  assert("smf".toProtocolType == ProtocolType.smf);
+  assert("mqtt".toProtocolType == ProtocolType.mqtt);
+  assert("amqp".toProtocolType == ProtocolType.amqp);
+  assert("rest".toProtocolType == ProtocolType.rest);
+  assert("jms".toProtocolType == ProtocolType.jms);
+  assert("websocket".toProtocolType == ProtocolType.websocket);
+  
+  assert("unknown".toProtocolType == ProtocolType.mqtt); // default case
+  assert("".toProtocolType == ProtocolType.mqtt); // default case
 
   assert(toString(ProtocolType.smf) == "smf");
   assert(toString(ProtocolType.mqtt) == "mqtt");

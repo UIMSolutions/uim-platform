@@ -14,7 +14,7 @@ enum MfaType {
   email,
 } 
 MfaType toMfaType(string value) {
-  mixin(EnumSwitch("MfaType", "MfaType.none"));
+  mixin(EnumSwitch("MfaType", "none"));
 }
 MfaType[] toMfaType(string[] values) {
   return values.map!(v => v.toMfaType).array;
@@ -51,7 +51,7 @@ enum UserStatus {
   pendingVerification,
 }
 UserStatus toUserStatus(string value) {
-  mixin(EnumSwitch("UserStatus", "UserStatus.active"));
+  mixin(EnumSwitch("UserStatus", "active"));
 }
 UserStatus[] toUserStatus(string[] values) {
   return values.map!(v => v.toUserStatus).array;
@@ -83,13 +83,17 @@ unittest {
 
 /// Risk level determined by risk-based authentication.
 enum RiskLevel {
+  /// Low risk level. 
   low,
+  /// Medium risk level.
   medium,
+  /// High risk level.
   high,
+  /// Critical risk level.
   critical,
 }
 RiskLevel toRiskLevel(string value) {
-  mixin(EnumSwitch("RiskLevel", "RiskLevel.low"));
+  mixin(EnumSwitch("RiskLevel", "low"));
 }
 RiskLevel[] toRiskLevel(string[] values) {
   return values.map!(v => v.toRiskLevel).array;
@@ -108,7 +112,9 @@ unittest {
   assert("medium".toRiskLevel == RiskLevel.medium);
   assert("high".toRiskLevel == RiskLevel.high);
   assert("critical".toRiskLevel == RiskLevel.critical);
+
   assert("unknown".toRiskLevel == RiskLevel.low); // default
+  assert("".toRiskLevel == RiskLevel.low); // default
 
   assert(RiskLevel.low.toString == "low");
   assert(RiskLevel.medium.toString == "medium");
@@ -127,7 +133,7 @@ enum TokenType {
   samlAssertion,
 }
 TokenType toTokenType(string value) {
-  mixin(EnumSwitch("TokenType", "TokenType.access"));
+  mixin(EnumSwitch("TokenType", "access"));
 }
 TokenType[] toTokenType(string[] values) {
   return values.map!(v => v.toTokenType).array;
@@ -165,7 +171,7 @@ enum JobStatus {
   failed,
 }
 JobStatus toJobStatus(string value) {
-  mixin(EnumSwitch("JobStatus", "JobStatus.pending"));
+  mixin(EnumSwitch("JobStatus", "pending"));
 }
 JobStatus[] toJobStatus(string[] values) {
   return values.map!(v => v.toJobStatus).array;
@@ -204,7 +210,7 @@ enum IdpType {
   corporate,
 }
 IdpType toIdpType(string value) {
-  mixin(EnumSwitch("IdpType", "IdpType.local"));
+  mixin(EnumSwitch("IdpType", "local"));
 }
 IdpType[] toIdpType(string[] values) {
   return values.map!(v => v.toIdpType).array;
