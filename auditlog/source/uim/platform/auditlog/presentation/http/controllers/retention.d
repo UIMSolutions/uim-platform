@@ -13,7 +13,7 @@ module uim.platform.auditlog.presentation.http.controllers.retention;
 
 import uim.platform.auditlog;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class RetentionController : ManageHttpController {

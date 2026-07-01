@@ -1,7 +1,7 @@
 module uim.platform.auditlog.application.dtos.dataaccess;
 import uim.platform.auditlog;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 struct WriteDataAccessLogRequest {

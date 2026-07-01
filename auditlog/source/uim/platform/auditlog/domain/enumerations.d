@@ -1,7 +1,7 @@
 module uim.platform.auditlog.domain.enumerations;
 import uim.platform.auditlog;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 
 // #region AuditCategory

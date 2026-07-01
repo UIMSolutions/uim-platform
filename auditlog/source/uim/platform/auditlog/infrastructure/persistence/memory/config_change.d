@@ -13,7 +13,7 @@ module uim.platform.auditlog.infrastructure.persistence.memory.config_change;
 
 import uim.platform.auditlog;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryConfigChangeLogRepository : TenantRepository!(ConfigChangeLog, ConfigChangeLogId), ConfigChangeLogRepository {

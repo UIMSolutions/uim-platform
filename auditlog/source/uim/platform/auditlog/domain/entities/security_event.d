@@ -8,7 +8,7 @@ module uim.platform.auditlog.domain.entities.security_event;
 
 import uim.platform.auditlog;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 /// Enriched security event — login/logout, auth failures, privilege changes.
 @safe:
 struct SecurityEvent {

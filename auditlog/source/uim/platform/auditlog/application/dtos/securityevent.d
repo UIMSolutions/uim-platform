@@ -1,7 +1,7 @@
 module uim.platform.auditlog.application.dtos.securityevent;
 import uim.platform.auditlog;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 struct WriteSecurityEventRequest {

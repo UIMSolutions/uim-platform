@@ -11,7 +11,7 @@ module uim.platform.auditlog.application.usecases.retrieve_audit_logs;
 
 import uim.platform.auditlog; 
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class RetrieveAuditLogsUseCase { // TODO: UIMUseCase {

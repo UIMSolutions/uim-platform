@@ -15,7 +15,7 @@ module uim.platform.auditlog.application.usecases.write.data_access_log;
 
 import uim.platform.auditlog;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class WriteDataAccessLogUseCase { // TODO: UIMUseCase {

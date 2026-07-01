@@ -9,7 +9,7 @@ module uim.platform.auditlog.domain.ports.repositories.audit_logs;
 
 import uim.platform.auditlog;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 /// Port for persisting and querying audit log entries.
 @safe:
 interface AuditLogRepository : ITenantRepository!(AuditLogEntry, AuditLogId) {

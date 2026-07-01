@@ -35,7 +35,7 @@ module uim.platform.auditlog.infrastructure.container;
 
 import uim.platform.auditlog;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 /// Dependency injection container — wires all layers together.
 @safe:
 struct Container {

@@ -8,7 +8,7 @@ module uim.platform.auditlog.domain.entities.data_access_log;
 
 import uim.platform.auditlog;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 /// Tracks read-access to sensitive / personal data.
 @safe:
 struct DataAccessLog {

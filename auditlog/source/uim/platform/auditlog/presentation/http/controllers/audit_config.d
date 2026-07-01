@@ -13,7 +13,7 @@ module uim.platform.auditlog.presentation.http.controllers.audit_config;
 
 import uim.platform.auditlog;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 class AuditConfigController : ManageHttpController {
   private ManageAuditConfigUseCase useCase;

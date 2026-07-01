@@ -7,7 +7,7 @@ module uim.platform.auditlog.domain.entities.audit_config;
 // import uim.platform.auditlog.domain.types;
 import uim.platform.auditlog;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Tenant-level audit logging configuration.

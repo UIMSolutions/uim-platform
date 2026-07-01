@@ -13,7 +13,7 @@ module uim.platform.auditlog.infrastructure.persistence.memory.audit_log;
 
 import uim.platform.auditlog;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryAuditLogRepository : TenantRepository!(AuditLogEntry, AuditLogId), AuditLogRepository {

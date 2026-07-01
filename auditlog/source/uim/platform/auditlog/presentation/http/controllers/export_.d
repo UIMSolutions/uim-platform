@@ -13,7 +13,7 @@ module uim.platform.auditlog.presentation.http.controllers.export_;
 
 import uim.platform.auditlog;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class ExportController : ManageHttpController {

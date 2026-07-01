@@ -11,7 +11,7 @@ module uim.platform.auditlog.presentation.http.controllers.security_event;
 // import uim.platform.auditlog.domain.types;
 import uim.platform.auditlog;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class SecurityEventController : HttpController {

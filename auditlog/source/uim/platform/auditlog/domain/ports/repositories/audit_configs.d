@@ -9,7 +9,7 @@ module uim.platform.auditlog.domain.ports.repositories.audit_configs;
 
 import uim.platform.auditlog;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 /// Port for persisting tenant-level audit configurations.
 @safe:
 interface AuditConfigRepository : ITenantRepository!(AuditConfig, AuditConfigId) {

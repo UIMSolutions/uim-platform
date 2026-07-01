@@ -16,7 +16,7 @@ module uim.platform.auditlog.application.usecases.write.security_event;
 
 import uim.platform.auditlog;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 class WriteSecurityEventUseCase { // TODO: UIMUseCase {
   private AuditLogRepository auditRepo;

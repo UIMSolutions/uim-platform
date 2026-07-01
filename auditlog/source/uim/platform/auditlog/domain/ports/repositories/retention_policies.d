@@ -9,7 +9,7 @@ module uim.platform.auditlog.domain.ports.repositories.retention_policies;
 
 import uim.platform.auditlog;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 /// Port for persisting retention policies.
 @safe:
 interface RetentionPolicyRepository : ITenantRepository!(RetentionPolicy, RetentionPolicyId) {

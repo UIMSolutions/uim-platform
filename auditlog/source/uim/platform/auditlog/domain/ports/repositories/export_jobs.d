@@ -9,7 +9,7 @@ module uim.platform.auditlog.domain.ports.repositories.export_jobs;
 
 import uim.platform.auditlog;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 /// Port for persisting export job records.
 @safe:
 interface ExportJobRepository : ITenantRepository!(ExportJob,ExportJobId) {

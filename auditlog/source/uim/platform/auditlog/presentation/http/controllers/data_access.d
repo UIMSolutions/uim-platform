@@ -11,7 +11,7 @@ module uim.platform.auditlog.presentation.http.controllers.data_access;
 
 import uim.platform.auditlog;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class DataAccessController : HttpController {

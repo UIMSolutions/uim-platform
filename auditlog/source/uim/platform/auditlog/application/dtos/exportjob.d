@@ -1,7 +1,7 @@
 module uim.platform.auditlog.application.dtos.exportjob;
 import uim.platform.auditlog;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 struct CreateExportJobRequest {
