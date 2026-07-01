@@ -46,11 +46,9 @@ class ManageServicesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Service instance with this name already exists in space");
 
     auto now = currentTimestamp();
-    auto srvInstance = ServiceInstance();
-    srvInstance.initEntity(req.tenantId, req.createdBy);
+    auto srvInstance = ServiceInstance(req.tenantId, req.instanceId.isNull ? ServiceInstanceId(createId()) : req.instanceId, req.createdBy);
 
     srvInstance.spaceId = req.spaceId;
-    srvInstance.tenantId = req.tenantId;
     srvInstance.name = req.name;
     srvInstance.serviceName = req.serviceName;
     srvInstance.servicePlanName = req.servicePlanName;

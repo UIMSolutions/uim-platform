@@ -9,6 +9,8 @@ struct CreateRouteRequest {
   SpaceId spaceId;
   CfDomainId domainId;
   TenantId tenantId;
+  RouteId routeId;
+
   string host;
   string path;
   int port;

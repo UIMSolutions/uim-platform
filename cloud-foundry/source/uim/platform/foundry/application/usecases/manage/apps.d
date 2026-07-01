@@ -96,7 +96,7 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
       app.stack = req.stack;
     if (req.command.length > 0)
       app.command = req.command;
-    app.healthCheckType = req.healthCheckType;
+    app.healthCheckType = req.healthCheckType.toHealthCheckType;
     if (req.healthCheckEndpoint.length > 0)
       app.healthCheckEndpoint = req.healthCheckEndpoint;
     if (req.healthCheckTimeoutSec > 0)

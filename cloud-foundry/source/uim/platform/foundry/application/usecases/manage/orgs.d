@@ -37,14 +37,14 @@ class ManageOrgsUseCase { // TODO: UIMUseCase {
     if (orgs.existsByName(req.tenantId, req.name))
       return CommandResult(false, "", "Organization with this name already exists");
 
-    auto org = Organization(req.tenantId, req.orgId.isNull ? OrgId(createId) : req.orgId, req.createdBy);
+    auto org = Organization(req.tenantId, req.orgId.isNull ? OrgId(createId()) : req.orgId, req.createdBy);
     org.name = req.name;
     org.status = OrgStatus.active;
     org.memoryQuotaMb = req.memoryQuotaMb > 0 ? req.memoryQuotaMb : 10_240;
     org.instanceMemoryLimitMb = req.instanceMemoryLimitMb > 0 ? req.instanceMemoryLimitMb : 2048;
     org.totalRoutes = req.totalRoutes > 0 ? req.totalRoutes : 1000;
     org.totalServices = req.totalServices > 0 ? req.totalServices : 100;
-    org.totalAppInstances = req.totalAppInstances;
+    org.totalAppInstances = req.totalAppInstances > 0 ? req.totalAppInstances : 100;
 
     orgs.save(org);
     return CommandResult(true, org.id.value, "");
