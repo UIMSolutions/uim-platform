@@ -27,15 +27,14 @@ class ManageEventFiltersUseCase {
     }
 
     CommandResult createEventFilter(EventFilterDTO dto) {
-        EventFilter f;
-        f.initEntity(dto.tenantId, dto.createdBy);
-        if (!dto.filterId.isNull) f.id = dto.filterId;
+        auto f = EventFilter(dto.tenantId, dto.filterId.isNull ? EventFilterId(createId()) : dto.filterId, dto.createdBy);
         f.subscriptionId = dto.subscriptionId;
         f.filterType = dto.filterType;
         f.attribute = dto.attribute;
         f.operator_ = dto.operator_;
         f.value = dto.value;
         f.active = dto.active;
+        
         repo.save(f);
         return CommandResult(true, f.id.value, "");
     }

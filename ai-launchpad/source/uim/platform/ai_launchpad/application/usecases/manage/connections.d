@@ -25,9 +25,7 @@ class ManageConnectionsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createConnection(CreateConnectionRequest r) {
-    Connection c;
-    c.initEntity(r.tenantId);
-
+    auto c = Connection(r.tenantId, r.connectionId.isNull ? ConnectionId(createId()) : r.connectionId); // , r.createdBy);
     c.name = r.name;
     c.url = r.url;
     c.authUrl = r.authUrl;
@@ -37,11 +35,7 @@ class ManageConnectionsUseCase { // TODO: UIMUseCase {
     c.defaultResourceGroupId = r.defaultResourceGroupId;
     c.description = r.description;
     c.status = ConnectionStatus.pending;
-
-    if (r.type == "ai_core")
-      c.type = ConnectionType.ai_core;
-    else
-      c.type = ConnectionType.custom;
+    c.type = r.type == "ai_core" ? ConnectionType.ai_core : ConnectionType.custom;
 
     auto vr = validator.validate(c);
     if (!vr.valid)

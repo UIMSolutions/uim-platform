@@ -35,9 +35,7 @@ class ManageScenariosUseCase { // TODO: UIMUseCase {
     if (!existing.isNull)
       return CommandResult(false, "", "Scenario already exists");
 
-    Scenario s;
-    s.initEntity(r.tenantId);
-    s.id = r.scenarioId;
+    auto s = Scenario(r.tenantId, r.scenarioId.isNull ? ScenarioId(createId()) : r.scenarioId); // , r.createdBy);
     s.resourceGroupId = r.resourceGroupId;
     s.name = r.name;
     s.description = r.description;

@@ -21,8 +21,8 @@ TlsProtocolVersion toTlsProtocolVersion(string s) {
 TlsProtocolVersion[] toTlsProtocolVersion(string[] values) {
     return values.map!(toTlsProtocolVersion).array;
 }
-string toString(TlsProtocolVersion version) {
-    mixin(toEnumToString!("TlsProtocolVersion"));
+string toString(TlsProtocolVersion version_) {
+    return version_.to!string;
 }
 string[] toString(TlsProtocolVersion[] versions) {
     return versions.map!(toString).array;

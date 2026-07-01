@@ -31,9 +31,7 @@ class ManageApplicationsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createApplication(ApplicationDTO dto) {
-        Application e;
-        e.initEntity(dto.tenantId, dto.createdBy);
-        e.id = dto.applicationId;
+        auto e = Application(dto.tenantId, dto.applicationId.isNull ? ApplicationId(createId()) : dto.applicationId, dto.createdBy);
         e.name = dto.name;
         e.description = dto.description;
         e.version_ = dto.version_;

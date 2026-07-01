@@ -26,20 +26,18 @@ class ManageProjectMembersUseCase { // TODO: UIMUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    ProjectMember[] listByApplication(ApplicationId applicationId) {
-        return repo.findByApplication(applicationId);
+    ProjectMember[] listByApplication(TenantId tenantId, ApplicationId applicationId) {
+        return repo.findByApplication(tenantId, applicationId);
     }
 
     CommandResult createProjectMember(ProjectMemberDTO dto) {
-        auto member = ProjectMember(dto.tenantId);
-        member.id = dto.memberId;
+        auto member = ProjectMember(dto.tenantId, dto.memberId.isNull ? ProjectMemberId(createId()) : dto.memberId, dto.createdBy);
         member.applicationId = dto.applicationId;
         member.userId = dto.userId;
         member.displayName = dto.displayName;
         member.email = dto.email;
         member.role = toMemberRole(dto.role);
         member.permissions = dto.permissions;
-        member.createdBy = dto.createdBy;
 
         if (!BuildAppsValidator.isValidProjectMember(member))
             return CommandResult(false, "", "Invalid project member data");

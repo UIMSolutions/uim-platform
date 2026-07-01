@@ -31,9 +31,7 @@ class ManageBuildConfigurationsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createBuildConfiguration(BuildConfigurationDTO dto) {
-        BuildConfiguration e;
-        e.initEntity(dto.tenantId, dto.createdBy);
-        e.id = dto.configId;
+        auto e = BuildConfiguration(dto.tenantId, dto.configId.isNull ? BuildConfigurationId(createId()) : dto.configId, dto.createdBy);
         e.projectId = dto.projectId;
         e.name = dto.name;
         e.description = dto.description;

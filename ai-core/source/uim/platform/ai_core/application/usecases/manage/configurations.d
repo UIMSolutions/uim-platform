@@ -32,9 +32,7 @@ class ManageConfigurationsUseCase { // TODO: UIMUseCase {
     if (r.resourceGroupId.isEmpty)
       return CommandResult(false, "", "Resource group ID is required");
 
-    Configuration c;
-    c.initEntity(r.tenantId);
-
+    auto c = Configuration(r.tenantId, r.configurationId.isNull ? ConfigurationId(createId()) : r.configurationId); // , r.createdBy);
     c.resourceGroupId = r.resourceGroupId;
     c.scenarioId = r.scenarioId;
     c.executableId = r.executableId;
