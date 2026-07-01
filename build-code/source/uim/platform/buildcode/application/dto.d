@@ -71,7 +71,6 @@ struct CreateTemplateRequest {
 
 struct CreatePipelineRequest {
   TenantId tenantId;
-
   string   projectId;
   string   name;
   string   description;

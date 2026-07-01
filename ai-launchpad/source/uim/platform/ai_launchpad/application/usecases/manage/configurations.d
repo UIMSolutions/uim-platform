@@ -26,7 +26,7 @@ class ManageConfigurationsUseCase { // TODO: UIMUseCase {
     if (r.name.length == 0)
       return CommandResult(false, "", "Configuration name is required");
 
-    auto c = Configuration(r.tenantId, r.configurationId.isNull ? ConfigurationId(createId()) : r.configurationId, r.createdBy);
+    auto c = Configuration(r.tenantId, r.configurationId.isNull ? ConfigurationId(createId()) : r.configurationId); // , r.createdBy);
     c.connectionId = r.connectionId;
     c.scenarioId = r.scenarioId;
     // c.executableId = r.executableId;

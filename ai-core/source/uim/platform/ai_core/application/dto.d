@@ -61,6 +61,7 @@ struct CreateExecutableRequest {
 
 struct CreateConfigurationRequest {
   TenantId tenantId;
+  ConfigurationId configurationId;
   ResourceGroupId resourceGroupId;
   ScenarioId scenarioId;
   ExecutableId executableId;
@@ -84,27 +85,28 @@ struct CreateConfigurationRequest {
 
 struct CreateExecutionRequest {
   TenantId tenantId;
+  ExecutionId executionId;
   ResourceGroupId groupId;
   ConfigurationId configurationId;
 
   Json toJson() const {
     return Json.emptyObject
       .set("tenantId", tenantId.value)
-      .set("resourceGroupId", resourceGroupId.value)
+      .set("resourceGroupId", groupId.value)
       .set("configurationId", configurationId.value);
   }
 }
 
 struct PatchExecutionRequest {
   TenantId tenantId;
-  ResourceGroupId resourceGroupId;
+  ResourceGroupId groupId;
   ExecutionId executionId;
   string targetStatus;
 
   Json toJson() const {
     return Json.emptyObject
       .set("tenantId", tenantId.value)
-      .set("resourceGroupId", resourceGroupId.value)
+      .set("resourceGroupId", groupId.value)
       .set("executionId", executionId.value)
       .set("targetStatus", targetStatus);
   }

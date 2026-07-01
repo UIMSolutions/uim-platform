@@ -31,16 +31,11 @@ class ManageDataConnectionsUseCase { // TODO: UIMUseCase {
     }
 
     DataConnection[] listDataConnections(TenantId tenantId, ApplicationId applicationId) {
-        return repo.findByApplication(applicationId)
-            .filter!(e => e.tenantId.value == tenantId.value)
-            .array;
+        return repo.findByApplication(tenantId, applicationId);
     }
 
     CommandResult createDataConnection(DataConnectionDTO dto) {
-        DataConnection e;
-        e.initEntity(dto.tenantId, dto.createdBy);
-
-        e.id = dto.connectionId;
+        auto e = DataConnection(dto.tenantId, dto.connectionId.isNull ? DataConnectionId(createId()) : dto.connectionId, dto.createdBy);
         e.applicationId = dto.applicationId;
         e.name = dto.name;
         e.description = dto.description;

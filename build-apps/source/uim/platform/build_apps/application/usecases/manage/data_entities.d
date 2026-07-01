@@ -27,9 +27,7 @@ class ManageDataEntitiesUseCase { // TODO: UIMUseCase {
     }
 
     DataEntity[] listDataEntities(TenantId tenantId, ApplicationId applicationId) {
-        return repo.findByApplication(applicationId)
-            .filter!(e => e.tenantId.value == tenantId.value)
-            .array;
+        return repo.findByApplication(tenantId, applicationId);
     }
 
     CommandResult createDataEntity(DataEntityDTO dto) {

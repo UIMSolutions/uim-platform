@@ -9,7 +9,7 @@ module uim.platform.ai_core.application.usecases.manage.deployments;
 // import uim.platform.ai_core.domain.ports.repositories.deployments;
 // import uim.platform.ai_core.domain.ports.repositories.configurations;
 // import uim.platform.ai_core.domain.services.execution_scheduler;
-// import uim.platform.ai_core.application.dto;
+
 
 
 import uim.platform.ai_core;
@@ -36,7 +36,7 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
     if (conf.isNull)
       return CommandResult(false, "", "Configuration not found");
 
-    auto d = Deployment(r.tenantId, r.deploymentId.isNull ? DeploymentId(createId()) : r.deploymentId, r.createdBy);
+    auto d = Deployment(r.tenantId, r.deploymentId.isNull ? DeploymentId(createId()) : r.deploymentId); // , r.createdBy);
     d.resourceGroupId = r.resourceGroupId;
     d.configurationId = r.configurationId;
     d.scenarioId = conf.scenarioId;

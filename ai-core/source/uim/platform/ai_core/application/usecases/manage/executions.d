@@ -9,7 +9,7 @@ module uim.platform.ai_core.application.usecases.manage.executions;
 // import uim.platform.ai_core.domain.ports.repositories.execution;
 // import uim.platform.ai_core.domain.ports.repositories.configuration;
 // import uim.platform.ai_core.domain.services.execution_scheduler;
-// import uim.platform.ai_core.application.dto;
+
 
 
 import uim.platform.ai_core;
@@ -29,15 +29,16 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
   CommandResult createExecution(CreateExecutionRequest r) {
     if (r.configurationId.isEmpty)
       return CommandResult(false, "", "Configuration ID is required");
-    if (r.resourceGroupId.isEmpty)
+
+    if (r.groupId.isEmpty)
       return CommandResult(false, "", "Resource group ID is required");
 
-    auto conf = confRepo.findById(r.tenantId, r.resourceGroupId, r.configurationId);
+    auto conf = confRepo.findById(r.tenantId, r.groupId, r.configurationId);
     if (conf.isNull)
       return CommandResult(false, "", "Configuration not found");
 
-    auto e = Execution(r.tenantId, r.executionId.isNull ? ExecutionId(createId()) : r.executionId, r.createdBy);
-    e.resourceGroupId = r.resourceGroupId;
+    auto e = Execution(r.tenantId, r.executionId.isNull ? ExecutionId(createId()) : r.executionId); // , r.createdBy);
+    e.resourceGroupId = r.groupId;
     e.configurationId = r.configurationId;
     e.scenarioId = conf.scenarioId;
     e.executableId = conf.executableId;
@@ -49,7 +50,7 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult patchExecution(PatchExecutionRequest r) {
-    auto e = execRepo.findById(r.tenantId, r.resourceGroupId, r.executionId);
+    auto e = execRepo.findById(r.tenantId, r.groupId, r.executionId);
     if (e.isNull)
       return CommandResult(false, "", "Execution not found");
 

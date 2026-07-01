@@ -30,8 +30,8 @@ class ManageLogicFlowsUseCase { // TODO: UIMUseCase {
         return repo.findByApplication(tenantId, applicationId);
     }
 
-    LogicFlow[] listByPage(PageId pageId) {
-        return repo.findByPage(pageId);
+    LogicFlow[] listByPage(TenantId tenantId, PageId pageId) {
+        return repo.findByPage(tenantId, pageId);
     }
 
     CommandResult createLogicFlow(LogicFlowDTO dto) {

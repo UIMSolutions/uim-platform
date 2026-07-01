@@ -23,10 +23,10 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createExecution(CreateExecutionRequest r) {
-    auto e = Execution(r.tenantId, r.executionId.isNull ? ExecutionId(createId()) : r.executionId, r.createdBy);
+    auto e = Execution(r.tenantId, r.executionId.isNull ? ExecutionId(createId()) : r.executionId); // , r.createdBy);
     e.connectionId = r.connectionId;
     e.configurationId = r.configurationId;
-    e.resourceGroupId = r.resourceGroupId;
+    e.resourceGroupId = r.groupId;
     e.status = ExecutionStatus.pending;
 
     executions.save(e);

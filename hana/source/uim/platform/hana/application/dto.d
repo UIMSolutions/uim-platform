@@ -414,8 +414,8 @@ struct UpdateReplicationTaskRequest {
 
 struct CreateConfigurationRequest {
   TenantId tenantId;
-  DatabaseInstanceId instanceId;
   ConfigurationId configurationId;
+  DatabaseInstanceId instanceId;
   string section;
   string key;
   string value;

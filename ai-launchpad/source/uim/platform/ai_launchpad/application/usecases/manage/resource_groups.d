@@ -24,7 +24,7 @@ class ManageResourceGroupsUseCase { // TODO: UIMUseCase {
     if (r.resourceGroupId.isEmpty)
       return CommandResult(false, "", "Resource group ID is required");
 
-    auto rg = ResourceGroup(r.tenantId, r.resourceGroupId.isNull ? ResourceGroupId(createId()) : r.resourceGroupId, r.createdBy);
+    auto rg = ResourceGroup(r.tenantId, r.resourceGroupId.isNull ? ResourceGroupId(createId()) : r.resourceGroupId); // , r.createdBy);
     rg.connectionId = r.connectionId;
     rg.status = "active";
 

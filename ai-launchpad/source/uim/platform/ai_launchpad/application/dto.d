@@ -63,12 +63,14 @@ struct PatchConnectionRequest {
 // --- Workspace ---
 struct CreateWorkspaceRequest {
   TenantId tenantId;
+  WorkspaceId workspaceId; // optional for create, required for patch
   string name;
   string description;
 
   Json toJson() const {
     return Json.emptyObject
       .set("tenantId", tenantId.value)
+      .set("workspaceId", workspaceId)
       .set("name", name)
       .set("description", description);
   }
@@ -111,6 +113,7 @@ struct SyncScenarioRequest {
 // --- Configuration ---
 struct CreateConfigurationRequest {
   TenantId tenantId;
+  ConfigurationId configurationId;
   ConnectionId connectionId;
   ScenarioId scenarioId;
   // ExecutableId executableId;
@@ -141,7 +144,7 @@ struct CreateExecutionRequest {
       .set("tenantId", tenantId.value)
       .set("connectionId", connectionId.value)
       .set("configurationId", configurationId.value)
-      .set("resourceGroupId", resourceGroupId.value);
+      .set("resourceGroupId", groupId.value);
   }
 }
 
@@ -236,6 +239,7 @@ struct BulkPatchDeploymentRequest {
 // --- Model ---
 struct RegisterModelRequest {
   TenantId tenantId;
+  ModelId modelId; // optional for create, required for patch
   ConnectionId connectionId;
   string name;
   string version_;

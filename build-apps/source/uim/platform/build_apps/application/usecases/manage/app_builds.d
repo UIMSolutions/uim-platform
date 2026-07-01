@@ -27,16 +27,11 @@ class ManageAppBuildsUseCase { // TODO: UIMUseCase {
     }
 
     AppBuild[] listAppBuilds(TenantId tenantId, ApplicationId applicationId) {
-        return repo.findByApplication(applicationId)
-            .filter!(e => e.tenantId.value == tenantId.value)
-            .array;
+        return repo.findByApplication(tenantId, applicationId);
     }
 
     CommandResult createAppBuild(AppBuildDTO dto) {
-        AppBuild e;
-        e.initEntity(dto.tenantId, dto.createdBy);
-        if (!dto.buildId.isNull)
-            e.id = dto.buildId;
+        auto e = AppBuild(dto.tenantId, dto.buildId.isNull ? AppBuildId(createId()) : dto.buildId, dto.createdBy);
         e.applicationId = dto.applicationId;
         e.name = dto.name;
         e.description = dto.description;

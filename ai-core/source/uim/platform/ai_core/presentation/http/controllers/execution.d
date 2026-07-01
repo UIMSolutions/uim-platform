@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.ai_core.presentation.http.controllers.execution;
 // import uim.platform.ai_core.application.usecases.manage.executions;
-// import uim.platform.ai_core.application.dto;
+
 
 import uim.platform.ai_core;
 
@@ -40,7 +40,7 @@ class ExecutionController : ManageHttpController {
     auto data = precheck.data;
     CreateExecutionRequest r;
     r.tenantId = tenantId;
-    r.resourceGroupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
+    r.groupId = ResourceGroupId(req.headers.get("AI-Resource-Group", ""));
     r.configurationId = ConfigurationId(data.getString("configurationId"));
 
     auto result = usecase.createExecution(r);
@@ -104,7 +104,7 @@ class ExecutionController : ManageHttpController {
     auto data = precheck.data;
     PatchExecutionRequest r;
     r.tenantId = tenantId;
-    r.resourceGroupId = rgId;
+    r.groupId = rgId;
     r.executionId = id;
     r.targetStatus = data.getString("targetStatus");
 

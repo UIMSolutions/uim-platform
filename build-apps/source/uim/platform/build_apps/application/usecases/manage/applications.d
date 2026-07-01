@@ -27,9 +27,7 @@ class ManageApplicationsUseCase { // TODO: UIMUseCase {
     }
 
     Application[] listApplications(TenantId tenantId, string owner) {
-        return repo.findByOwner(owner)
-            .filter!(e => e.tenantId.value == tenantId.value)
-            .array;
+        return repo.findByOwner(tenantId, owner);
     }
 
     CommandResult createApplication(ApplicationDTO dto) {

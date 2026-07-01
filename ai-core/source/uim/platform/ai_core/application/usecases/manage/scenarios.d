@@ -8,7 +8,7 @@ module uim.platform.ai_core.application.usecases.manage.scenarios;
 // import uim.platform.ai_core.domain.entities.scenario;
 // import uim.platform.ai_core.domain.ports.repositories.scenarios;
 // import uim.platform.ai_core.domain.services.scenario_validator;
-// import uim.platform.ai_core.application.dto;
+
 
 
 import uim.platform.ai_core;
