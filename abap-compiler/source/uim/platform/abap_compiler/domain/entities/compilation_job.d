@@ -7,7 +7,7 @@ module uim.platform.abap_compiler.domain.entities.compilation_job;
 
 import uim.platform.abap_compiler;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 
 /// Tracks a single compilation request: input program -> status -> result.

@@ -8,7 +8,7 @@ module uim.platform.abap_compiler.infrastructure.config;
 import std.process : environment;
 import uim.platform.abap_compiler;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

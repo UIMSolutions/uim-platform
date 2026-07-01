@@ -2,7 +2,7 @@ module uim.platform.abap_compiler.domain.enumerations;
 
 import uim.platform.abap_compiler;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 // ---------------------------------------------------------------------------

@@ -7,7 +7,7 @@ module uim.platform.abap_compiler.domain.services.semantic_analyser;
 
 import uim.platform.abap_compiler;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 
 /// Performs static semantic checks on the parsed ABAP statement list.

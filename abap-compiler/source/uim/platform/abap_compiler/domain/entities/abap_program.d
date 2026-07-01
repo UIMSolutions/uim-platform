@@ -7,7 +7,7 @@ module uim.platform.abap_compiler.domain.entities.abap_program;
 
 import uim.platform.abap_compiler;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 
 /// Represents a single ABAP program source artefact managed by the compiler service.

@@ -7,7 +7,7 @@ module uim.platform.abap_compiler.presentation.http.controllers.compile;
 
 import uim.platform.abap_compiler;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 
 /// HTTP controller: trigger ABAP compilation.

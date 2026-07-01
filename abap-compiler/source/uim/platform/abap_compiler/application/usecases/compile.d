@@ -7,7 +7,7 @@ module uim.platform.abap_compiler.application.usecases.compile;
 
 import uim.platform.abap_compiler;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 
 /// Primary application use case: compile an ABAP program source.

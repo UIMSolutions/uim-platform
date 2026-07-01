@@ -7,7 +7,7 @@ module uim.platform.abap_compiler.application.usecases.manage.programs;
 
 import uim.platform.abap_compiler;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 
 /// Application use case: CRUD management of ABAP source programs in the repository.

@@ -7,7 +7,7 @@ module uim.platform.abap_compiler.domain.types;
 
 import uim.platform.abap_compiler;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

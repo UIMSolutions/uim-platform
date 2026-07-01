@@ -7,7 +7,7 @@ module uim.platform.abap_compiler.domain.entities.diagnostic;
 
 import uim.platform.abap_compiler;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 
 /// A compiler diagnostic (error, warning, info) emitted during lexing, parsing or
