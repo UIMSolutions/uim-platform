@@ -40,14 +40,13 @@ class CommandInputController : ManageHttpController {
 
         return successResponse("Command inputs retrieved successfully", "Retrieved", 200, Json.emptyObject
             .set("count", items.length)
-            .set("resources", list));
+            .set("resources", items));
     }
 
     override protected Json createHandler(HTTPServerRequest req) {
         auto precheck = super.createHandler(req);
         if (precheck.hasError) 
             return precheck;
-        
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;

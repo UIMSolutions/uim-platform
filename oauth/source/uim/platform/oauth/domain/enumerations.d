@@ -15,6 +15,39 @@ enum ClientType {
     confidential,
     public_
 }
+ClientType toClientType(string value) {
+    switch(value.toLower()) {
+        case "confidential": return ClientType.confidential;
+        case "public": return ClientType.public_;
+        default: return ClientType.confidential; // default
+    }
+}
+ClientType[] toClientType(string[] values) {
+    return values.map!(toClientType).array;
+}
+string toString(ClientType value) {
+    return value.to!string();
+}
+string[] toString(ClientType[] values) {
+    return values.map!(toString).array;
+}
+///
+unittest {
+    mixin(ShowTest!("ClientType"));
+
+    assert("confidential".toClientType == ClientType.confidential);
+    assert("public".toClientType == ClientType.public_);
+
+    assert("".toClientType == ClientType.public_);
+    assert("some".toClientType == ClientType.public_);
+
+    assert(ClientType.confidential.toString == "confidential");
+    assert(ClientType.public_.toString == "public_");
+
+    assert(["confidential", "public"].toClientType == [ClientType.confidential, ClientType.public_]);
+    assert([ClientType.confidential, ClientType.public_].toString == ["confidential", "public_"]);
+}
+
 /// OAuth client status
 enum ClientStatus {
     active,

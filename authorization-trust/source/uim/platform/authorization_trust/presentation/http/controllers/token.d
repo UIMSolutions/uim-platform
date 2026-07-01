@@ -62,7 +62,7 @@ class TokenController : HttpController {
       return errorResponse("client_id and client_secret are required", 400);
     }
 
-    auto grantedScopes = tokenService.validateClientCredentials(clientId, clientSecret);
+    auto grantedScopes = tokenService.validateClientCredentials(tenantId, clientId, clientSecret);
     if (grantedScopes.length == 0) {
       return errorResponse("Invalid client credentials", 401);
     }

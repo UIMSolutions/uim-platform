@@ -48,7 +48,7 @@ class ManageWorkspacesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult patchWorkspace(PatchWorkspaceRequest r) {
-    auto w = workspaces.find(r.tenantId, r.workspaceId);
+    auto w = workspaces.findById(r.tenantId, r.workspaceId);
     if (w.isNull)
       return CommandResult(false, "", "Workspace not found");
     if (r.name.length > 0)

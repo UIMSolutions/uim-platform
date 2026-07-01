@@ -53,7 +53,7 @@ enum ConnectionType {
   ai_core,
   custom
 }
-ConnectionType toConnectionType(string type) {
+ConnectionType toConnectionType(string value) {
   mixin(EnumSwitch("ConnectionType", "custom"));
 }
 ConnectionType[] toConnectionType(string[] types) {
@@ -175,7 +175,7 @@ enum ModelStatus {
   deprecated_ = "deprecated"
 }
 ModelStatus toModelStatus(string value) {
-  switch (status.toLower) {
+  switch (value.toLower) {
     case "available": return ModelStatus.available;
     case "archived": return ModelStatus.archived;
     case "deprecated": return ModelStatus.deprecated_;
@@ -284,7 +284,7 @@ enum PromptRole {
   user,
   assistant
 }
-PromptRole toPromptRole(string role) {
+PromptRole toPromptRole(string value) {
   mixin(EnumSwitch("PromptRole", "user"));
 }
 PromptRole[] toPromptRole(string[] roles) {
@@ -353,7 +353,7 @@ enum ArtifactKind {
   resultset,
   other
 }
-ArtifactKind toArtifactKind(string kind) {
+ArtifactKind toArtifactKind(string value) {
   mixin(EnumSwitch("ArtifactKind", "other"));
 }
 ArtifactKind[] toArtifactKind(string[] kinds) {
@@ -384,7 +384,7 @@ unittest {
 }
 
 // Target status for lifecycle operations
-enum TargetStatus : string {
+enum TargetStatus {
   running,
   stopped,
   deleted,
@@ -433,16 +433,16 @@ enum MetricValueType : string {
   int_ = "int",
   string_ = "string"
 }
-MetricValueType toMetricValueType(string type) {
-  switch (type.toLower) {
+MetricValueType toMetricValueType(string value) {
+  switch (value.toLower) {
     case "float": return MetricValueType.float_;
     case "int": return MetricValueType.int_;
     case "string": return MetricValueType.string_;
     default: return MetricValueType.string_; // default to string if unknown
   }
 }
-MetricValueType[] toMetricValueType(string[] types) {
-  return types.map!(toMetricValueType).array;
+MetricValueType[] toMetricValueType(string[] values) {
+  return values.map!(toMetricValueType).array;
 }
 string toString(MetricValueType type) {
   return cast(string)type;
@@ -473,11 +473,11 @@ enum StatisticsPeriod {
   weekly,
   monthly
 }
-StatisticsPeriod toStatisticsPeriod(string period) {
+StatisticsPeriod toStatisticsPeriod(string value) {
   mixin(EnumSwitch("StatisticsPeriod", "daily"));
 }
-StatisticsPeriod[] toStatisticsPeriod(string[] periods) {
-  return periods.map!(toStatisticsPeriod).array;
+StatisticsPeriod[] toStatisticsPeriod(string[] values) {
+  return values.map!(toStatisticsPeriod).array;
 }
 string toString(StatisticsPeriod period) {
   return period.to!string;
@@ -508,11 +508,11 @@ enum LogSeverity {
   warn,
   error
 }
-LogSeverity toLogSeverity(string severity) {
+LogSeverity toLogSeverity(string value) {
   mixin(EnumSwitch("LogSeverity", "info"));
 }
-LogSeverity[] toLogSeverity(string[] severities) {
-  return severities.map!(toLogSeverity).array;
+LogSeverity[] toLogSeverity(string[] values) {
+  return values.map!(toLogSeverity).array;
 }
 string toString(LogSeverity severity) {
   return severity.to!string;
