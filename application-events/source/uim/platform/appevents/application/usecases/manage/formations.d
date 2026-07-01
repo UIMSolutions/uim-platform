@@ -32,10 +32,7 @@ class ManageFormationsUseCase {
         if (repo.nameExists(dto.tenantId, dto.name))
             return CommandResult(false, "", "Formation name already exists");
             
-        Formation f;
-        f.initEntity(dto.tenantId, dto.createdBy);
-        if (!dto.formationId.isNull)
-            f.id = dto.formationId;
+        auto f = Formation(dto.tenantId, dto.formationId.isNull ? FormationId(createId()) : dto.formationId, dto.createdBy);
         f.name = dto.name;
         f.description = dto.description;
         f.globalAccountId = dto.globalAccountId;

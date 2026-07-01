@@ -26,9 +26,7 @@ class ManageModelsUseCase { // TODO: UIMUseCase {
     if (r.name.length == 0)
       return CommandResult(false, "", "Model name is required");
 
-    Model m;
-    m.initEntity(r.tenantId);
-
+    auto m = Model(r.tenantId, r.modelId.isNull ? ModelId(createId()) : r.modelId, r.createdBy);
     m.connectionId = r.connectionId;
     m.name = r.name;
     m.version_ = r.version_;

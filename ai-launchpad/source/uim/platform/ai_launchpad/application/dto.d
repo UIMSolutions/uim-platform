@@ -131,9 +131,10 @@ struct CreateConfigurationRequest {
 // --- Execution ---
 struct CreateExecutionRequest {
   TenantId tenantId;
+  ExecutionId executionId;
   ConnectionId connectionId;
   ConfigurationId configurationId;
-  ResourceGroupId resourceGroupId;
+  ResourceGroupId groupId;
 
   Json toJson() const {
     return Json.emptyObject
@@ -177,6 +178,8 @@ struct BulkPatchExecutionRequest {
 // --- Deployment ---
 struct CreateDeploymentRequest {
   TenantId tenantId;
+  DeploymentId deploymentId;
+
   ConnectionId connectionId;
   ConfigurationId configurationId;
   ResourceGroupId resourceGroupId;
@@ -194,10 +197,12 @@ struct CreateDeploymentRequest {
 
 struct PatchDeploymentRequest {
   TenantId tenantId;
-  ConnectionId connectionId;
   DeploymentId deploymentId;
-  string targetStatus;
+  
+  ConnectionId connectionId;
   ConfigurationId configurationId;
+  
+  string targetStatus;
   int ttl;
 
   Json toJson() const {
@@ -276,9 +281,10 @@ struct PatchModelRequest {
 struct RegisterDatasetRequest {
   TenantId tenantId;
   ConnectionId connectionId;
+  ScenarioId scenarioId;
+
   string name;
   string description;
-  ScenarioId scenarioId;
   string url;
   long size;
   string[] labels;

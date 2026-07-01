@@ -19,12 +19,8 @@ class ManageScalingPoliciesUseCase {
   }
 
   CommandResult createPolicy(CreateScalingPolicyRequest r) {
-    
     auto id = generateId();
-    auto now = currentTimestamp;
-
-    ScalingPolicyEntity policy;
-    policy.initEntity(r.tenantId, r.createdBy);
+    auto policy = ScalingPolicyEntity(r.tenantId, r.policyId.isNull ? ScalingPolicyId(id) : r.policyId, r.createdBy);
 
     policy.id               = id;
     policy.appId            = r.appId;

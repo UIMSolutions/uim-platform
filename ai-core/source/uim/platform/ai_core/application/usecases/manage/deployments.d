@@ -36,9 +36,7 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
     if (conf.isNull)
       return CommandResult(false, "", "Configuration not found");
 
-    Deployment d;
-    d.initEntity(r.tenantId);
-    
+    auto d = Deployment(r.tenantId, r.deploymentId.isNull ? DeploymentId(createId()) : r.deploymentId, r.createdBy);
     d.resourceGroupId = r.resourceGroupId;
     d.configurationId = r.configurationId;
     d.scenarioId = conf.scenarioId;

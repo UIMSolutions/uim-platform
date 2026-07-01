@@ -33,15 +33,14 @@ class ManageDeadLetterEntriesUseCase {
     }
 
     CommandResult createDeadLetterEntry(DeadLetterEntryDTO dto) {
-        DeadLetterEntry entry;
-        entry.initEntity(dto.tenantId, dto.createdBy);
-        if (!dto.entryId.isNull) entry.id = dto.entryId;
+        auto entry = DeadLetterEntry(dto.tenantId, dto.entryId.isNull ? DeadLetterEntryId(createId()) : dto.entryId, dto.createdBy);
         entry.originalMessageId = dto.originalMessageId;
         entry.channelId = dto.channelId;
         entry.errorMessage = dto.errorMessage;
         entry.failedAt = dto.failedAt > 0 ? dto.failedAt : Clock.currStdTime();
         entry.retryCount = 0;
         entry.status = DeadLetterStatus.pending;
+        
         repo.save(entry);
         return CommandResult(true, entry.id.value, "");
     }

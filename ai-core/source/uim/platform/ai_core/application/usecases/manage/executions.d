@@ -36,9 +36,7 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
     if (conf.isNull)
       return CommandResult(false, "", "Configuration not found");
 
-    Execution e;
-    e.initEntity(r.tenantId);
-
+    auto e = Execution(r.tenantId, r.executionId.isNull ? ExecutionId(createId()) : r.executionId, r.createdBy);
     e.resourceGroupId = r.resourceGroupId;
     e.configurationId = r.configurationId;
     e.scenarioId = conf.scenarioId;

@@ -14,6 +14,8 @@ import uim.platform.buildcode;
 // ── Project DTOs ─────────────────────────────────────────────────────────────
 
 struct CreateProjectRequest {
+  TenantId tenantId;
+
   string      name;
   string      description;
   string      type;        // ProjectType string value
@@ -25,6 +27,8 @@ struct CreateProjectRequest {
 }
 
 struct UpdateProjectRequest {
+  TenantId tenantId;
+
   string      description;
   string      ownerEmail;
   string      repositoryUrl;
@@ -36,6 +40,8 @@ struct UpdateProjectRequest {
 // ── DevSpace DTOs ─────────────────────────────────────────────────────────────
 
 struct CreateDevSpaceRequest {
+  TenantId tenantId;
+
   string   projectId;
   string   name;
   string   displayName;
@@ -47,6 +53,8 @@ struct CreateDevSpaceRequest {
 // ── Template DTOs ─────────────────────────────────────────────────────────────
 
 struct CreateTemplateRequest {
+  TenantId tenantId;
+
   string      name;
   string      displayName;
   string      description;
@@ -62,6 +70,8 @@ struct CreateTemplateRequest {
 // ── Pipeline DTOs ─────────────────────────────────────────────────────────────
 
 struct CreatePipelineRequest {
+  TenantId tenantId;
+
   string   projectId;
   string   name;
   string   description;
@@ -85,6 +95,8 @@ struct UpdatePipelineRequest {
 // ── BuildJob DTOs ─────────────────────────────────────────────────────────────
 
 struct TriggerBuildRequest {
+  TenantId tenantId;
+
   string   pipelineId;
   string   commitSha;
   string   branch;
@@ -94,6 +106,9 @@ struct TriggerBuildRequest {
 // ── Deployment DTOs ───────────────────────────────────────────────────────────
 
 struct CreateDeploymentRequest {
+  TenantId tenantId;
+  DeploymentId deploymentId;
+
   string   projectId;
   string   buildJobId;
   string   artifactVersion;
@@ -106,6 +121,8 @@ struct CreateDeploymentRequest {
 // ── AI Generation DTOs ────────────────────────────────────────────────────────
 
 struct AIGenerateRequest {
+  TenantId tenantId;
+
   string   projectId;
   string   requestedBy;
   string   generationType;
@@ -116,6 +133,8 @@ struct AIGenerateRequest {
 // ── ServiceBinding DTOs ───────────────────────────────────────────────────────
 
 struct CreateServiceBindingRequest {
+  TenantId tenantId;
+
   string   projectId;
   string   serviceName;
   string   servicePlan;

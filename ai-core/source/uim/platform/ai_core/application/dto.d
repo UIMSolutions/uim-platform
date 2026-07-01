@@ -84,7 +84,7 @@ struct CreateConfigurationRequest {
 
 struct CreateExecutionRequest {
   TenantId tenantId;
-  ResourceGroupId resourceGroupId;
+  ResourceGroupId groupId;
   ConfigurationId configurationId;
 
   Json toJson() const {
@@ -128,6 +128,8 @@ struct BulkPatchExecutionRequest {
 
 struct CreateDeploymentRequest {
   TenantId tenantId;
+  DeploymentId deploymentId;
+
   ResourceGroupId resourceGroupId;
   ConfigurationId configurationId;
   int ttl;

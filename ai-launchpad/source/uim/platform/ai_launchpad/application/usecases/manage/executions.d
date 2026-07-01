@@ -23,9 +23,7 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createExecution(CreateExecutionRequest r) {
-    Execution e;
-    e.initEntity(r.tenantId);
-    
+    auto e = Execution(r.tenantId, r.executionId.isNull ? ExecutionId(createId()) : r.executionId, r.createdBy);
     e.connectionId = r.connectionId;
     e.configurationId = r.configurationId;
     e.resourceGroupId = r.resourceGroupId;

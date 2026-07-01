@@ -18,16 +18,11 @@ class ManageAppBindingsUseCase {
     this.repo = repo;
   }
 
-  CommandResult createBinding(CreateAppBindingRequest r) {
-    
-    
+  CommandResult createBinding(CreateAppBindingRequest r) {    
     import std.random : uniform;
-
     auto id  = "bind-" ~ currentTimestamp.to!string ~ "-" ~ uniform(1000, 9999).to!string;
 
-    AppBinding binding;
-    binding.initEntity(r.tenantId);
-    binding.id                = id;
+    auto binding = AppBinding(r.tenantId, r.bindingId.isNull ? AppBindingId(id) : r.bindingId, r.createdBy);
     binding.appGuid           = r.appGuid;
     binding.appName           = r.appName;
     binding.serviceInstanceId = r.serviceInstanceId;
@@ -44,7 +39,6 @@ class ManageAppBindingsUseCase {
     if (existing.isNull)
       return CommandResult(false, "", "Binding not found");
 
-    
     existing.currentInstances = r.currentInstances;
     existing.updatedAt        = currentTimestamp;
 
