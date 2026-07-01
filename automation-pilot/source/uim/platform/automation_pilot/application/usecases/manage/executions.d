@@ -35,10 +35,7 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createExecution(ExecutionDTO dto) {
-        Execution e;
-        e.initEntity(dto.tenantId, dto.createdBy);
-
-        e.id = dto.executionId;
+        auto e = Execution(dto.tenantId, dto.executionId.isNull ? ExecutionId(createId) : dto.executionId, dto.triggeredBy);
         e.commandId = dto.commandId;
         e.inputValues = dto.inputValues;
         e.triggeredBy = dto.triggeredBy;

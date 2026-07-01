@@ -16,7 +16,7 @@ enum ApplicationType {
     mobile,
     webAndMobile
 }
-ApplicationType toApplicationType(string s) {
+ApplicationType toApplicationType(string value) {
     mixin(EnumSwitch("ApplicationType", "web"));
 }
 ApplicationType[] toApplicationTypes(string[] values) {
@@ -63,7 +63,7 @@ enum ApplicationStatus {
     archived,
     error
 }
-ApplicationStatus toApplicationStatus(string s) {
+ApplicationStatus toApplicationStatus(string value) {
     mixin(EnumSwitch("ApplicationStatus", "draft"));
 }
 ApplicationStatus[] toApplicationStatuses(string[] values) {
@@ -120,7 +120,7 @@ enum PageType {
     settings,
     custom
 }
-PageType toPageType(string s) {
+PageType toPageType(string value) {
     mixin(EnumSwitch("PageType", "blank"));
 }
 

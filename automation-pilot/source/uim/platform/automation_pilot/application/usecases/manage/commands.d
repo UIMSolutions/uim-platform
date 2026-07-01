@@ -31,10 +31,7 @@ class ManageCommandsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createCommand(CommandDTO dto) {
-        Command cmd;
-        cmd.initEntity(dto.tenantId, dto.createdBy);
-
-        cmd.id = dto.commandId;
+        auto cmd = Command(dto.tenantId, dto.commandId.isNull ? CommandId(createId) : dto.commandId, dto.createdBy);
         cmd.catalogId = dto.catalogId;
         cmd.name = dto.name;
         cmd.description = dto.description;

@@ -31,10 +31,7 @@ class ManageCatalogsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createCatalog(CatalogDTO dto) {
-        Catalog c;
-        c.initEntity(dto.tenantId, dto.createdBy);
-
-        c.id = dto.catalogId;
+        auto c = Catalog(dto.tenantId, dto.catalogId.isNull ? CatalogId(createId) : dto.catalogId, dto.createdBy);
         c.name = dto.name;
         c.description = dto.description;
         c.tags = dto.tags;

@@ -78,6 +78,13 @@ unittest {
     this(string value) {
       this.value = value;
     }
+
+    auto createIdIfNull() {
+      if (value.length == 0) {
+        value = randomUUID().toString;
+      }
+      return this;
+    }
   }
 
   TestId id = "test-id";

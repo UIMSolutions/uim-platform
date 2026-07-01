@@ -13,27 +13,35 @@ import uim.platform.build_apps;
 
 class MemoryLogicFlowRepository : TenantRepository!(LogicFlow, LogicFlowId), LogicFlowRepository {
 
-    size_t countByApplication(ApplicationId applicationId) {
-        return findByApplication(applicationId).length;
+    size_t countByApplication(TenantId tenantId, ApplicationId applicationId) {
+        return findByApplication(tenantId, applicationId).length;
     }
 
-    LogicFlow[] findByApplication(ApplicationId applicationId) {
-        return findAll().filter!(e => e.applicationId == applicationId).array;
+    LogicFlow[] filterByApplication(LogicFlow[] flows, ApplicationId applicationId) {
+        return flows.filter!(e => e.applicationId == applicationId).array;
     }
 
-    void removeByApplication(ApplicationId applicationId) {
-        findByApplication(applicationId).each!(e => remove(e));
+    LogicFlow[] findByApplication(TenantId tenantId, ApplicationId applicationId) {
+        return filterByApplication(findByTenant(tenantId), applicationId);
     }
 
-     size_t countByPage(PageId pageId) {
-        return findByPage(pageId).length;
+    void removeByApplication(TenantId tenantId, ApplicationId applicationId) {
+        findByApplication(tenantId, applicationId).each!(e => remove(e));
     }
 
-    LogicFlow[] findByPage(PageId pageId) {
-        return findAll().filter!(e => e.pageId == pageId).array;
+     size_t countByPage(TenantId tenantId, PageId pageId) {
+        return findByPage(tenantId, pageId).length;
     }
 
-    void removeByPage(PageId pageId) {
-        findByPage(pageId).each!(e => remove(e));
+    LogicFlow[] filterByPage(LogicFlow[] flows, PageId pageId) {
+        return flows.filter!(e => e.pageId == pageId).array;
+    }
+    
+    LogicFlow[] findByPage(TenantId tenantId, PageId pageId) {
+        return filterByPage(findByTenant(tenantId), pageId);
+    }
+
+    void removeByPage(TenantId tenantId, PageId pageId) {
+        findByPage(tenantId, pageId).each!(e => remove(e));
     }
 }

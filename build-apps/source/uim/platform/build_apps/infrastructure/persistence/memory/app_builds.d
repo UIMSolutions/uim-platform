@@ -13,28 +13,36 @@ import uim.platform.build_apps;
 
 class MemoryAppBuildRepository : TenantRepository!(AppBuild, AppBuildId), AppBuildRepository {
 
-    size_t countByApplication(ApplicationId applicationId) {
-        return findByApplication(applicationId).length;
-    }
+  size_t countByApplication(TenantId tenantId, ApplicationId applicationId) {
+    return findByApplication(tenantId, applicationId).length;
+  }
 
-    AppBuild[] findByApplication(ApplicationId applicationId) {
-        return findAll.filter!(e => e.applicationId == applicationId).array;
-    }
+  AppBuild[] filterByApplication(AppBuild[] builds, ApplicationId applicationId) {
+    return builds.filter!(e => e.applicationId == applicationId).array;
+  }
 
-    void removeByApplication(ApplicationId applicationId) {
-        findByApplication(applicationId).each!(e => remove(e));
-    }
+  AppBuild[] findByApplication(TenantId tenantId, ApplicationId applicationId) {
+    return filterByApplication(findByTenant(tenantId), applicationId);
+  }
 
-    size_t countByBuildStatus(BuildStatus status) {
-        return findByBuildStatus(status).length;
-    }
+  void removeByApplication(TenantId tenantId, ApplicationId applicationId) {
+    findByApplication(tenantId, applicationId).each!(e => remove(e));
+  }
 
-    AppBuild[] findByBuildStatus(BuildStatus status) {
-        return findAll.filter!(e => e.buildStatus == status).array;
-    }
+  size_t countByBuildStatus(TenantId tenantId, BuildStatus status) {
+    return findByBuildStatus(tenantId, status).length;
+  }
 
-    void removeByBuildStatus(BuildStatus status) {
-        findByBuildStatus(status).each!(e => remove(e));
-    }
+  AppBuild[] filterByBuildStatus(AppBuild[] builds, BuildStatus status) {
+    return builds.filter!(e => e.buildStatus == status).array;
+  }
+
+  AppBuild[] findByBuildStatus(TenantId tenantId, BuildStatus status) {
+    return filterByBuildStatus(findByTenant(tenantId), status);
+  }
+
+  void removeByBuildStatus(TenantId tenantId, BuildStatus status) {
+    findByBuildStatus(tenantId, status).each!(e => remove(e));
+  }
 
 }

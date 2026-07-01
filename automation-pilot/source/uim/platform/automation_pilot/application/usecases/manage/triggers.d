@@ -31,7 +31,7 @@ class ManageTriggersUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createTrigger(TriggerDTO dto) {
-        auto t = Trigger(dto.tenantId, dto.triggerId.isNull ? TriggerId(randomUUID()) : TriggerId(), dto.createdBy);
+        auto t = Trigger(dto.tenantId, dto.triggerId.isNull ? TriggerId(createId) : dto.triggerId, dto.createdBy);
         t.commandId = dto.commandId;
         t.name = dto.name;
         t.description = dto.description;

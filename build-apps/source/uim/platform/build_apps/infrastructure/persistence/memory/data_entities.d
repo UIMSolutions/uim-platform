@@ -13,16 +13,19 @@ import uim.platform.build_apps;
 
 class MemoryDataEntityRepository : TenantRepository!(DataEntity, DataEntityId), DataEntityRepository {
 
-    size_t countByApplication(ApplicationId applicationId) {
-        return findByApplication(applicationId).length;
+    size_t countByApplication(TenantId tenantId, ApplicationId applicationId) {
+        return findByApplication(tenantId, applicationId).length;
     }
 
-    DataEntity[] findByApplication(ApplicationId applicationId) {
-        return findAll.filter!(e => e.applicationId == applicationId).array;
+    DataEntity[] filterByApplication(DataEntity[] entities, ApplicationId applicationId) {
+        return entities.filter!(e => e.applicationId == applicationId).array;
+    }
+    DataEntity[] findByApplication(TenantId tenantId, ApplicationId applicationId) {
+        return findByTenant.filter!(e => e.tenantId == tenantId && e.applicationId == applicationId).array;
     }
 
-    void removeByApplication(ApplicationId applicationId) {
-        findByApplication(applicationId).each!(e => remove(e));
+    void removeByApplication(TenantId tenantId, ApplicationId applicationId) {
+        findByApplication(tenantId, applicationId).each!(e => remove(e));
     }
 
 }

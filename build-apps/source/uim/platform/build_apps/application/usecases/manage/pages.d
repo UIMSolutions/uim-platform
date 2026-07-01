@@ -33,10 +33,7 @@ class ManagePagesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createPage(PageDTO dto) {
-        Page e;
-        e.initEntity(dto.tenantId, dto.createdBy);
-        
-        e.id = dto.pageId;
+        auto e = Page(dto.tenantId, dto.pageId.isNull ? PageId.createId() : dto.pageId, dto.createdBy);
         e.applicationId = dto.applicationId;
         e.name = dto.name;
         e.description = dto.description;

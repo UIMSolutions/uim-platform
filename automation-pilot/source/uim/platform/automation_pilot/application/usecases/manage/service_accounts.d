@@ -27,7 +27,7 @@ class ManageServiceAccountsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createServiceAccount(ServiceAccountDTO dto) {
-        auto sa = ServiceAccount(dto.tenantId, dto.accountId.isNull ? ServiceAccountId(createId()) : dto.accountId, dto.createdBy);
+        auto sa = ServiceAccount(dto.tenantId, dto.accountId.isNull ? ServiceAccountId(createId) : dto.accountId, dto.createdBy);
         sa.name = dto.name;
         sa.description = dto.description;
         sa.clientId = dto.clientId;

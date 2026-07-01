@@ -27,10 +27,7 @@ class ManageCommandInputsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createCommandInput(CommandInputDTO dto) {
-        CommandInput ci;
-        ci.initEntity(dto.tenantId, dto.createdBy);
-
-        ci.id = dto.inputId;
+        auto ci = CommandInput(dto.tenantId, dto.inputId.isNull ? CommandInputId(createId) : dto.inputId, dto.createdBy);
         ci.name = dto.name;
         ci.description = dto.description;
         ci.keys = dto.keys;

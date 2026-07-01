@@ -116,6 +116,8 @@ mixin template TenantEntity(TId) {
   //    bool opEquals(string anId) const {
   //        return this.id.value == anId;
   //    }
+
+
 }
 ///
 unittest {

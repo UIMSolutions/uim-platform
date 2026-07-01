@@ -13,14 +13,19 @@ import uim.platform.build_apps;
 
 class MemoryPageRepository : TenantRepository!(Page, PageId), PageRepository {
 
-    size_t countByApplication(ApplicationId applicationId) {
-        return findByApplication(applicationId).length;
+    size_t countByApplication(TenantId tenantId, ApplicationId applicationId) {
+        return findByApplication(tenantId, applicationId).length;
     }
-    Page[] findByApplication(ApplicationId applicationId) {
-        return findAll().filter!(e => e.applicationId == applicationId).array;
+    Page[] filterByApplication(Page[] pages, ApplicationId applicationId) {
+        return pages.filter!(e => e.applicationId == applicationId).array;
     }
-    void removeByApplication(ApplicationId applicationId) {
-        findByApplication(applicationId).each!(e => remove(e));
+
+    Page[] findByApplication(TenantId tenantId, ApplicationId applicationId) {
+        return filterByApplication(findByTenant(tenantId), applicationId);
+    }
+    
+    void removeByApplication(TenantId tenantId, ApplicationId applicationId) {
+        findByApplication(tenantId, applicationId).each!(e => remove(e));
     }
 
 }

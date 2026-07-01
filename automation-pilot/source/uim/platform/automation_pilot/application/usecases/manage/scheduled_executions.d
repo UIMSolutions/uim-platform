@@ -31,10 +31,7 @@ class ManageScheduledExecutionsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createScheduledExecution(ScheduledExecutionDTO dto) {
-        ScheduledExecution se;
-        se.initEntity(dto.tenantId, dto.createdBy);
-
-        se.id = dto.executionId;
+        auto se = ScheduledExecution(dto.tenantId, dto.executionId.isNull ? ScheduledExecutionId(createId) : dto.executionId, dto.createdBy);
         se.commandId = dto.commandId;
         se.cronExpression = dto.cronExpression;
         se.scheduledAt = dto.scheduledAt;
