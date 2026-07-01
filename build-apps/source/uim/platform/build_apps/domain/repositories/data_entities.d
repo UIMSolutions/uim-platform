@@ -13,8 +13,8 @@ import uim.platform.build_apps;
 
 interface DataEntityRepository : ITenantRepository!(DataEntity, DataEntityId) {
 
-    size_t countByApplication(ApplicationId applicationId);
-    DataEntity[] findByApplication(ApplicationId applicationId);
-    void removeByApplication(ApplicationId applicationId);
+    size_t countByApplication(TenantId tenantId, ApplicationId applicationId);
+    DataEntity[] findByApplication(TenantId tenantId, ApplicationId applicationId);
+    void removeByApplication(TenantId tenantId, ApplicationId applicationId);
 
 }

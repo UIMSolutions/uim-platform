@@ -13,8 +13,8 @@ import uim.platform.build_apps;
 
 interface UIComponentRepository : ITenantRepository!(UIComponent, UIComponentId) {
 
-    size_t countByCategory(ComponentCategory category);
-    UIComponent[] findByCategory(ComponentCategory category);
-    void removeByCategory(ComponentCategory category);
+    size_t countByCategory(TenantId tenantId, ComponentCategory category);
+    UIComponent[] findByCategory(TenantId tenantId, ComponentCategory category);
+    void removeByCategory(TenantId tenantId, ComponentCategory category);
 
 }

@@ -27,9 +27,7 @@ class ManageLogicFlowsUseCase { // TODO: UIMUseCase {
     }
 
     LogicFlow[] listLogicFlows(TenantId tenantId, ApplicationId applicationId) {
-        return repo.findByApplication(applicationId)
-            .filter!(e => e.tenantId.value == tenantId.value)
-            .array;
+        return repo.findByApplication(tenantId, applicationId);
     }
 
     LogicFlow[] listByPage(PageId pageId) {
@@ -37,10 +35,7 @@ class ManageLogicFlowsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createLogicFlow(LogicFlowDTO dto) {
-        LogicFlow e;
-        e.initEntity(dto.tenantId, dto.createdBy);
-
-        e.id = dto.flowId;
+        auto e = LogicFlow(dto.tenantId, dto.flowId.isNull ? LogicFlowId(createId()) : dto.flowId, dto.createdBy);
         e.applicationId = dto.applicationId;
         e.pageId = dto.pageId;
         e.name = dto.name;

@@ -27,13 +27,11 @@ class ManagePagesUseCase { // TODO: UIMUseCase {
     }
 
     Page[] listPages(TenantId tenantId, ApplicationId applicationId) {
-        return repo.findByApplication(applicationId)
-            .filter!(e => e.tenantId.value == tenantId.value)
-            .array;
+        return repo.findByApplication(tenantId, applicationId);
     }
 
     CommandResult createPage(PageDTO dto) {
-        auto e = Page(dto.tenantId, dto.pageId.isNull ? PageId.createId() : dto.pageId, dto.createdBy);
+        auto e = Page(dto.tenantId, dto.pageId.isNull ? PageId(createId()) : dto.pageId, dto.createdBy);
         e.applicationId = dto.applicationId;
         e.name = dto.name;
         e.description = dto.description;

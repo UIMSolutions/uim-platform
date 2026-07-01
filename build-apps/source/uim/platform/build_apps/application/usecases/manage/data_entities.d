@@ -33,10 +33,7 @@ class ManageDataEntitiesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createDataEntity(DataEntityDTO dto) {
-        DataEntity e;
-        e.initEntity(dto.tenantId, dto.createdBy);
-
-        e.id = dto.entityId;
+        auto e = DataEntity(dto.tenantId, dto.entityId.isNull ? DataEntityId(createId()) : dto.entityId, dto.createdBy);
         e.applicationId = dto.applicationId;
         e.name = dto.name;
         e.description = dto.description;

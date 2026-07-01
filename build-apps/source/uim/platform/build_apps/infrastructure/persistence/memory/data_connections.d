@@ -13,39 +13,51 @@ import uim.platform.build_apps;
 
 class MemoryDataConnectionRepository : TenantRepository!(DataConnection, DataConnectionId), DataConnectionRepository {
 
-    size_t countByApplication(ApplicationId applicationId) {
-        return findByApplication(applicationId).length;
+    size_t countByApplication(TenantId tenantId, ApplicationId applicationId) {
+        return findByApplication(tenantId, applicationId).length;
     }
 
-    DataConnection[] findByApplication(ApplicationId applicationId) {
-        return findAll.filter!(e => e.applicationId == applicationId).array;
+    DataConnection[] filterByApplication(DataConnection[] connections, ApplicationId applicationId) {
+        return connections.filter!(e => e.applicationId == applicationId).array;
     }
 
-    void removeByApplication(ApplicationId applicationId) {
-        findByApplication(applicationId).each!(e => remove(e));
+    DataConnection[] findByApplication(TenantId tenantId, ApplicationId applicationId) {
+        return filterByApplication(findByTenant(tenantId), applicationId);
+    }
+
+    void removeByApplication(TenantId tenantId, ApplicationId applicationId) {
+        findByApplication(tenantId, applicationId).each!(e => remove(e));
     }
     
-    size_t countByType(ConnectionType type) {
-        return findByType(type).length;
+    size_t countByType(TenantId tenantId, ConnectionType type) {
+        return findByType(tenantId, type).length;
     }
 
-    DataConnection[] findByType(ConnectionType type) {
-        return findAll.filter!(e => e.connectionType == type).array;
+    DataConnection[] filterByType(DataConnection[] connections, ConnectionType type) {
+        return connections.filter!(e => e.connectionType == type).array;
+    }
+    
+    DataConnection[] findByType(TenantId tenantId, ConnectionType type) {
+        return findByTenant(tenantId).filter!(e => e.connectionType == type).array;
     }
 
-    void removeByType(ConnectionType type) {
-        findByType(type).each!(e => remove(e));
+    void removeByType(TenantId tenantId, ConnectionType type) {
+        findByType(tenantId, type).each!(e => remove(e));
     }
 
-    size_t countByStatus(ConnectionStatus status) {
-        return findByStatus(status).length;
+    size_t countByStatus(TenantId tenantId, ConnectionStatus status) {
+        return findByStatus(tenantId, status).length;
     }
 
-    DataConnection[] findByStatus(ConnectionStatus status) {
-        return findAll.filter!(e => e.status == status).array;
+    DataConnection[] filterByStatus(DataConnection[] connections, ConnectionStatus status) {
+        return connections.filter!(e => e.status == status).array;
     }
 
-    void removeByStatus(ConnectionStatus status) {
-        findByStatus(status).each!(e => remove(e));
+    DataConnection[] findByStatus(TenantId tenantId, ConnectionStatus status) {
+        return filterByStatus(findByTenant(tenantId), status);
+    }
+
+    void removeByStatus(TenantId tenantId, ConnectionStatus status) {
+        findByStatus(tenantId, status).each!(e => remove(e));
     }
 }

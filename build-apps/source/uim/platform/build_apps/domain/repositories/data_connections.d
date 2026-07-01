@@ -13,12 +13,12 @@ import uim.platform.build_apps;
 
 interface DataConnectionRepository : ITenantRepository!(DataConnection, DataConnectionId) {
 
-    size_t countByApplication(ApplicationId applicationId);
-    DataConnection[] findByApplication(ApplicationId applicationId);
-    void removeByApplication(ApplicationId applicationId);
+    size_t countByApplication(TenantId tenantId, ApplicationId applicationId);
+    DataConnection[] findByApplication(TenantId tenantId, ApplicationId applicationId);
+    void removeByApplication(TenantId tenantId, ApplicationId applicationId);
 
-    size_t countByStatus(ConnectionStatus status);
-    DataConnection[] findByStatus(ConnectionStatus status);
-    void removeByStatus(ConnectionStatus status);
+    size_t countByStatus(TenantId tenantId, ConnectionStatus status);
+    DataConnection[] findByStatus(TenantId tenantId, ConnectionStatus status);
+    void removeByStatus(TenantId tenantId, ConnectionStatus status);
 
 }

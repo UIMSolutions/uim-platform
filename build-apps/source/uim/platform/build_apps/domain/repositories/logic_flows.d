@@ -13,12 +13,12 @@ import uim.platform.build_apps;
 
 interface LogicFlowRepository : ITenantRepository!(LogicFlow, LogicFlowId) {
 
-    size_t countByApplication(ApplicationId applicationId);
-    LogicFlow[] findByApplication(ApplicationId applicationId);
-    void removeByApplication(ApplicationId applicationId);
+    size_t countByApplication(TenantId tenantId, ApplicationId applicationId);
+    LogicFlow[] findByApplication(TenantId tenantId, ApplicationId applicationId);
+    void removeByApplication(TenantId tenantId, ApplicationId applicationId);
 
-    size_t countByPage(PageId pageId);
-    LogicFlow[] findByPage(PageId pageId);
-    void removeByPage(PageId pageId);
+    size_t countByPage(TenantId tenantId, PageId pageId);
+    LogicFlow[] findByPage(TenantId tenantId, PageId pageId);
+    void removeByPage(TenantId tenantId, PageId pageId);
 
 }

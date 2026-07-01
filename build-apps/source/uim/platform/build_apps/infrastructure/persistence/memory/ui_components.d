@@ -13,16 +13,21 @@ import uim.platform.build_apps;
 
 class MemoryUIComponentRepository : TenantRepository!(UIComponent, UIComponentId), UIComponentRepository {
 
-    size_t countByCategory(ComponentCategory category) {
-        return findByCategory(category).length;
+    size_t countByCategory(TenantId tenantId, ComponentCategory category) {
+        return findByCategory(tenantId, category).length;
     }
 
-    UIComponent[] findByCategory(ComponentCategory category) {
-        return findAll.filter!(e => e.category == category).array;
+    UIComponent[] filterByCategory(UIComponent[] components, ComponentCategory category) {
+        return components.filter!(e => e.category == category).array;
     }
 
-    void removeByCategory(ComponentCategory category) {
-        findByCategory(category).each!(e => remove(e));
+    UIComponent[] findByCategory(TenantId tenantId, ComponentCategory category) {
+        return filterByCategory(findByTenant(tenantId), category);
+    }
+
+    void removeByCategory(TenantId tenantId, ComponentCategory category) {
+        findByCategory(tenantId, category).each!(e => remove(e));
     }
 
 }
+    

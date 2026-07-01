@@ -13,12 +13,12 @@ import uim.platform.build_apps;
 
 interface AppBuildRepository : ITenantRepository!(AppBuild, AppBuildId) {
     
-    size_t countByApplication(ApplicationId applicationId);
-    AppBuild[] findByApplication(ApplicationId applicationId);
-    void removeByApplication(ApplicationId applicationId);
+    size_t countByApplication(TenantId tenantId, ApplicationId applicationId);
+    AppBuild[] findByApplication(TenantId tenantId, ApplicationId applicationId);
+    void removeByApplication(TenantId tenantId, ApplicationId applicationId);
     
-    size_t countByBuildStatus(BuildStatus status);
-    AppBuild[] findByBuildStatus(BuildStatus status);
-    void removeByBuildStatus(BuildStatus status);
+    size_t countByBuildStatus(TenantId tenantId, BuildStatus status);
+    AppBuild[] findByBuildStatus(TenantId tenantId, BuildStatus status);
+    void removeByBuildStatus(TenantId tenantId, BuildStatus status);
 
 }

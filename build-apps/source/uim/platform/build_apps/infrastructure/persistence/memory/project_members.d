@@ -13,40 +13,52 @@ import uim.platform.build_apps;
 
 class MemoryProjectMemberRepository : TenantRepository!(ProjectMember, ProjectMemberId), ProjectMemberRepository {
 
-    size_t countByApplication(ApplicationId applicationId) {
-        return findByApplication(applicationId).length;
+    size_t countByApplication(TenantId tenantId, ApplicationId applicationId) {
+        return findByApplication(tenantId, applicationId).length;
     }
 
-    ProjectMember[] findByApplication(ApplicationId applicationId) {
-        return findAll.filter!(e => e.applicationId == applicationId).array;
+    ProjectMember[] filterByApplication(ProjectMember[] members, ApplicationId applicationId) {
+        return members.filter!(e => e.applicationId == applicationId).array;
     }
 
-    void removeByApplication(ApplicationId applicationId) {
-        findByApplication(applicationId).each!(e => remove(e));
+    ProjectMember[] findByApplication(TenantId tenantId, ApplicationId applicationId) {
+        return filterByApplication(findByTenant(tenantId), applicationId);
     }
 
-     size_t countByRole(MemberRole role) {
-        return findByRole(role).length;
+    void removeByApplication(TenantId tenantId, ApplicationId applicationId) {
+        findByApplication(tenantId, applicationId).each!(e => remove(e));
     }
 
-    ProjectMember[] findByRole(MemberRole role) {
-        return findAll.filter!(e => e.role == role).array;
+     size_t countByRole(TenantId tenantId, MemberRole role) {
+        return findByRole(tenantId, role).length;
     }
 
-    void removeByRole(MemberRole role) {
-        findByRole(role).each!(e => remove(e));
+    ProjectMember[] filterByRole(ProjectMember[] members, MemberRole role) {
+        return members.filter!(e => e.role == role).array;
     }
 
-     size_t countByUser(UserId userId) {
-        return findByUser(userId).length;
+    ProjectMember[] findByRole(TenantId tenantId, MemberRole role) {
+        return filterByRole(findByTenant(tenantId), role);
     }
 
-    ProjectMember[] findByUser(UserId userId) {
-        return findAll.filter!(e => e.userId == userId).array;
+    void removeByRole(TenantId tenantId, MemberRole role) {
+        findByRole(tenantId, role).each!(e => remove(e));
     }
 
-    void removeByUser(UserId userId) {
-        findByUser(userId).each!(e => remove(e));
+     size_t countByUser(TenantId tenantId, UserId userId) {
+        return findByUser(tenantId, userId).length;
+    }
+
+    ProjectMember[] filterByUser(ProjectMember[] members, UserId userId) {
+        return members.filter!(e => e.userId == userId).array;
+    }
+
+    ProjectMember[] findByUser(TenantId tenantId, UserId userId) {
+        return filterByUser(findByTenant(tenantId), userId);
+    }
+
+    void removeByUser(TenantId tenantId, UserId userId) {
+        findByUser(tenantId, userId).each!(e => remove(e));
     }
 
 }

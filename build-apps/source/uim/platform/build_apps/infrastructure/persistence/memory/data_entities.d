@@ -21,7 +21,7 @@ class MemoryDataEntityRepository : TenantRepository!(DataEntity, DataEntityId), 
         return entities.filter!(e => e.applicationId == applicationId).array;
     }
     DataEntity[] findByApplication(TenantId tenantId, ApplicationId applicationId) {
-        return findByTenant.filter!(e => e.tenantId == tenantId && e.applicationId == applicationId).array;
+        return filterByApplication(findByTenant(tenantId), applicationId);
     }
 
     void removeByApplication(TenantId tenantId, ApplicationId applicationId) {

@@ -13,12 +13,12 @@ import uim.platform.build_apps;
 
 interface ProjectMemberRepository : ITenantRepository!(ProjectMember, ProjectMemberId) {
 
-    size_t countByApplication(ApplicationId applicationId);
-    ProjectMember[] findByApplication(ApplicationId applicationId);
-    void removeByApplication(ApplicationId applicationId);
+    size_t countByApplication(TenantId tenantId, ApplicationId applicationId);
+    ProjectMember[] findByApplication(TenantId tenantId, ApplicationId applicationId);
+    void removeByApplication(TenantId tenantId, ApplicationId applicationId);
 
-    size_t countByUser(UserId userId);
-    ProjectMember[] findByUser(UserId userId);
-    void removeByUser(UserId userId);
+    size_t countByUser(TenantId tenantId, UserId userId);
+    ProjectMember[] findByUser(TenantId tenantId, UserId userId);
+    void removeByUser(TenantId tenantId, UserId userId);
 
 }

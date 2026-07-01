@@ -13,28 +13,36 @@ import uim.platform.build_apps;
 
 class MemoryApplicationRepository : TenantRepository!(Application, ApplicationId), ApplicationRepository {
 
-    size_t countByOwner(string owner) {
-        return findByOwner(owner).length;
+    size_t countByOwner(TenantId tenantId, string owner) {
+        return findByOwner(tenantId, owner).length;
     }
 
-    Application[] findByOwner(string owner) {
-        return findAll().filter!(e => e.owner == owner).array;
+    Application[] filterByOwner(Application[] applications, string owner) {
+        return applications.filter!(e => e.owner == owner).array;
     }
 
-    void removeByOwner(string owner) {
-        findByOwner(owner).each!(e => remove(e));
+    Application[] findByOwner(TenantId tenantId, string owner) {
+        return findByTenant(tenantId).filter!(e => e.owner == owner).array;
     }
 
-    size_t countByStatus(ApplicationStatus status) {
-        return findByStatus(status).length;
+    void removeByOwner(TenantId tenantId, string owner) {
+        findByOwner(tenantId, owner).each!(e => remove(e));
     }
 
-    Application[] findByStatus(ApplicationStatus status) {
-        return findAll().filter!(e => e.status == status).array;
+    size_t countByStatus(TenantId tenantId, ApplicationStatus status) {
+        return findByStatus(tenantId, status).length;
     }
 
-    void removeByStatus(ApplicationStatus status) {
-        findByStatus(status).each!(e => remove(e));
+    Application[] filterByStatus(Application[] applications, ApplicationStatus status) {
+        return applications.filter!(e => e.status == status).array;
+    }
+
+    Application[] findByStatus(TenantId tenantId, ApplicationStatus status) {
+        return findByTenant(tenantId).filter!(e => e.status == status).array;
+    }
+
+    void removeByStatus(TenantId tenantId, ApplicationStatus status) {
+        findByStatus(tenantId, status).each!(e => remove(e));
     }
 
 }

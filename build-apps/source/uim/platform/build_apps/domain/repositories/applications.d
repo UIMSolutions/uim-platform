@@ -13,12 +13,12 @@ import uim.platform.build_apps;
 
 interface ApplicationRepository : ITenantRepository!(Application, ApplicationId) {
 
-    size_t countByOwner(string owner);
-    Application[] findByOwner(string owner);
-    void removeByOwner(string owner);
+    size_t countByOwner(TenantId tenantId, string owner);
+    Application[] findByOwner(TenantId tenantId, string owner);
+    void removeByOwner(TenantId tenantId, string owner);
 
-    size_t countByStatus(ApplicationStatus status);
-    Application[] findByStatus(ApplicationStatus status);
-    void removeByStatus(ApplicationStatus status);
+    size_t countByStatus(TenantId tenantId, ApplicationStatus status);
+    Application[] findByStatus(TenantId tenantId, ApplicationStatus status);
+    void removeByStatus(TenantId tenantId, ApplicationStatus status);
 
 }

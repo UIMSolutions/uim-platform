@@ -13,8 +13,8 @@ import uim.platform.build_apps;
 
 interface PageRepository : ITenantRepository!(Page, PageId) {
 
-    size_t countByApplication(ApplicationId applicationId);
-    Page[] findByApplication(ApplicationId applicationId);
-    void removeByApplication(ApplicationId applicationId);
+    size_t countByApplication(TenantId tenantId, ApplicationId applicationId);
+    Page[] findByApplication(TenantId tenantId, ApplicationId applicationId);
+    void removeByApplication(TenantId tenantId, ApplicationId applicationId);
 
 }
