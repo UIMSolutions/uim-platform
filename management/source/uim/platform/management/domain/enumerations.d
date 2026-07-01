@@ -7,9 +7,13 @@ import uim.platform.management;
 @safe:
 /// Status of a global account.
 enum GlobalAccountStatus {
+  /// Default status when the global account status is unknown or not reported.
   active,
+  /// The global account is suspended and cannot be used to create subaccounts or access services.
   suspended,
+  /// The global account is terminated and cannot be used to create subaccounts or access services.
   terminated,
+  /// The global account is in the process of being migrated to a new system or platform.
   migrating,
 }
 
@@ -52,9 +56,13 @@ unittest {
 
 /// License type for a global account.
 enum LicenseType {
+  /// Default license type when the license type is unknown or not reported.
   enterprise,
+  /// Trial license type for a global account.
   trial,
+  /// Partner license type for a global account.
   partner,
+  /// Internal license type for a global account.
   internal,
 }
 
@@ -97,8 +105,11 @@ unittest {
 
 /// Status of a directory entity.
 enum DirectoryStatus {
+  /// The directory is active and operational.
   active,
+  /// The directory is inactive and not operational.
   inactive,
+  /// The directory is in the process of being deleted.
   deleting,
 }
 
@@ -140,9 +151,13 @@ unittest {
 
 /// Type of a directory.
 enum DirectoryType {
+  /// Default directory type.
   default_,
+  /// LDAP directory type.
   ldap,
+  /// SCIM directory type.
   scim,
+  /// Custom directory type.
   custom,
 }
 
@@ -197,8 +212,11 @@ unittest {
 
 /// Features enabled on a directory.
 enum DirectoryFeature {
+  /// Default feature when the feature is unknown or not reported.
   default_,
+  /// Entitlements feature.
   entitlements,
+  /// Authorizations feature.
   authorizations,
 }
 
@@ -249,12 +267,19 @@ unittest {
 
 /// Status of a subaccount.
 enum SubaccountStatus {
+  /// The subaccount is active and operational.
   active,
+  /// The subaccount is suspended and not operational.
   suspended,
+  /// The subaccount is in the process of being created.
   creating,
+  /// The subaccount is in the process of being updated.
   updating,
+  /// The subaccount is in the process of being deleted.
   deleting,
+  /// The subaccount is in the process of being moved.
   moveInProgress,
+  /// The subaccount move operation has failed.
   moveFailed,
 }
 
@@ -284,7 +309,9 @@ unittest {
   assert("deleting".toSubaccountStatus == SubaccountStatus.deleting);
   assert("moveInProgress".toSubaccountStatus == SubaccountStatus.moveInProgress);
   assert("moveFailed".toSubaccountStatus == SubaccountStatus.moveFailed);
+
   assert("unknown".toSubaccountStatus == SubaccountStatus.active); // default
+  assert("".toSubaccountStatus == SubaccountStatus.active); // default
 
   assert(SubaccountStatus.active.toString == "active");
   assert(SubaccountStatus.suspended.toString == "suspended");
@@ -304,11 +331,17 @@ unittest {
 
 /// Usage type of a subaccount.
 enum SubaccountUsage {
+  /// The usage type is not set.
   unset,
+  /// The subaccount is used for production purposes.
   production,
+  /// The subaccount is used for development purposes.
   development,
+  /// The subaccount is used for testing purposes.
   test,
+  /// The subaccount is used for staging purposes.
   staging,
+  /// The subaccount is used for demo purposes.
   demo,
 }
 
@@ -356,9 +389,13 @@ unittest {
 
 /// Status of an entitlement assignment.
 enum EntitlementStatus {
+  /// Default status when the entitlement status is unknown or not reported.
   active,
+  /// The entitlement is pending approval or activation.
   pending,
+  /// The entitlement has been revoked.
   revoked,
+  /// The entitlement has expired.
   expired,
 }
 
@@ -402,9 +439,13 @@ unittest {
 
 /// Category of a service plan.
 enum ServicePlanCategory {
+  /// Default category when the service plan category is unknown or not reported.
   service,
+  /// The service plan is categorized as an application.
   application,
+  /// The service plan is categorized as an environment.
   environment,
+  /// The service plan is categorized as an elastic service.
   elasticService,
 }
 
@@ -448,8 +489,11 @@ unittest {
 
 /// Status of a service plan. 
 enum ServicePlanStatus {
+  /// Default status when the service plan status is unknown or not reported.
   active,
+  /// The service plan is deprecated and may be removed in the future.
   deprecated_,
+  /// The service plan is deleted and no longer available.
   deleted,
 }
 
@@ -500,9 +544,13 @@ unittest {
 
 /// Pricing model for a service plan.
 enum PricingModel {
+  /// Default pricing model when the pricing model is unknown or not reported.
   free,
+  /// The service plan is based on a subscription model.
   subscription,
+  /// The service plan is based on a consumption model.
   consumption,
+  /// The service plan allows bringing your own license.
   byol, // bring your own license
 }
 
@@ -546,8 +594,11 @@ unittest {
 
 /// Status of a quota definition.
 enum QuotaStatus {
+  /// Default status when the quota status is unknown or not reported.
   active,
+  /// The quota is deprecated and may be removed in the future.
   deprecated_,
+  /// The quota is deleted and no longer available.
   deleted,
 }
 
@@ -598,11 +649,17 @@ unittest {
 
 /// Status of an environment instance.
 enum EnvironmentStatus {
+  /// Default status when the environment status is unknown or not reported.
   creating,
+  /// The environment is active and operational.
   active,
+  /// The environment is being updated.
   updating,
+  /// The environment is being deleted.
   deleting,
+  /// The environment has encountered an error and is not operational.
   error,
+  /// The environment is suspended and not operational.
   suspended,
 }
 
@@ -611,11 +668,17 @@ EnvironmentStatus toEnvironmentStatus(string value) {
 }
 /// Status of a subscription.
 enum SubscriptionStatus {
+  /// Default status when the subscription status is unknown or not reported.
   subscribed,
+  /// The subscription is in the process of being created.
   subscribing,
+  /// The subscription is in the process of being canceled.
   unsubscribing,
+  /// The subscription has been canceled.
   unsubscribed,
+  /// The subscription has encountered an error.
   error,
+  /// The subscription is suspended and not operational.
   suspended,
 }
 
@@ -663,10 +726,15 @@ unittest {
 
 /// Status of a service instance.
 enum ServiceInstanceStatus {
+  /// Default status when the service instance status is unknown or not reported.
   creating,
+  /// The service instance is ready and operational.
   ready,
+  /// The service instance has encountered an error and is not operational.
   failed,
+  /// The service instance is being deleted.
   deleting,
+  /// The service instance is being updated.
   updating,
 }
 
@@ -709,9 +777,13 @@ unittest {
 
 /// Type of environment.
 enum EnvironmentType {
+  /// Default type when the environment type is unknown or not reported.
   cloudFoundry,
+  /// The environment is based on Kyma.
   kyma,
+  /// The environment is based on ABAP.
   abap,
+  /// The environment is based on NEO.
   neo,
 }
 
@@ -752,13 +824,21 @@ unittest {
 
 /// Category of a platform event.
 enum EnvironmentEventCategory {
+  /// The event is related to the lifecycle of a subaccount.
   subaccountLifecycle,
+  /// The event is related to changes in entitlements.
   entitlementChange,
+  /// The event is related to the lifecycle of an environment.
   environmentLifecycle,
+  /// The event is related to the lifecycle of a subscription.
   subscriptionLifecycle,
+  /// The event is related to changes in the directory.
   directoryChange,
+  /// The event is related to changes in the global account.
   globalAccountChange,
+  /// The event is related to changes in quotas.
   quotaChange,
+  /// The event is related to security events.
   securityEvent,
 }
 
@@ -808,9 +888,13 @@ unittest {
 
 /// Severity of a platform event.
 enum EnvironmentEventSeverity {
+  /// The event is informational and does not indicate any issues.
   info,
+  /// The event indicates a warning that may require attention.
   warning,
+  /// The event indicates an error that needs to be addressed.
   error,
+  /// The event indicates a critical issue that requires immediate attention.
   critical,
 }
 
@@ -851,10 +935,15 @@ unittest {
 
 /// Type of labeled resource.
 enum LabeledResourceType {
+  /// The labeled resource is a subaccount.
   subaccount,
+  /// The labeled resource is a global account.
   globalAccount,
+  /// The labeled resource is a directory.
   directory,
-  Environment,
+  /// The labeled resource is an environment.
+  environment,
+  /// The labeled resource is a subscription.
   subscription
 }
 
@@ -877,14 +966,14 @@ unittest {
   assert("subaccount".toLabeledResourceType == LabeledResourceType.subaccount);
   assert("globalAccount".toLabeledResourceType == LabeledResourceType.globalAccount);
   assert("directory".toLabeledResourceType == LabeledResourceType.directory);
-  assert("environment".toLabeledResourceType == LabeledResourceType.Environment); 
+  assert("environment".toLabeledResourceType == LabeledResourceType.environment); 
   assert("subscription".toLabeledResourceType == LabeledResourceType.subscription);
   assert("unknown".toLabeledResourceType == LabeledResourceType.subaccount); //
 
   assert(LabeledResourceType.subaccount.toString == "subaccount");
   assert(LabeledResourceType.globalAccount.toString == "globalAccount");
   assert(LabeledResourceType.directory.toString == "directory");
-  assert(LabeledResourceType.Environment.toString == "Environment");
+  assert(LabeledResourceType.environment.toString == "environment");
   assert(LabeledResourceType.subscription.toString == "subscription");  
 
   assert(["subaccount", "globalAccount"].toLabeledResourceType == [

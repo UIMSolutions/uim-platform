@@ -16,13 +16,36 @@ enum TlsProtocolVersion {
     tls1_3,
 }
 TlsProtocolVersion toTlsProtocolVersion(string s) {
-    const map = [
-        "tls1_0": TlsProtocolVersion.tls1_0,
-        "tls1_1": TlsProtocolVersion.tls1_1,
-        "tls1_2": TlsProtocolVersion.tls1_2,
-        "tls1_3": TlsProtocolVersion.tls1_3
-    ];
-    return map.get(s, TlsProtocolVersion.tls1_2);
+    mixin(EnumSwitch!("TlsProtocolVersion", "tls1_2"));
+}
+TlsProtocolVersion[] toTlsProtocolVersion(string[] values) {
+    return values.map!(toTlsProtocolVersion).array;
+}
+string toString(TlsProtocolVersion version) {
+    mixin(toEnumToString!("TlsProtocolVersion"));
+}
+string[] toString(TlsProtocolVersion[] versions) {
+    return versions.map!(toString).array;
+}
+///
+unittest {
+    mixin(ShowTest!("TlsProtocolVersion"));
+
+    assert("tls1_0".toTlsProtocolVersion == TlsProtocolVersion.tls1_0);
+    assert("tls1_1".toTlsProtocolVersion == TlsProtocolVersion.tls1_1);
+    assert("tls1_2".toTlsProtocolVersion == TlsProtocolVersion.tls1_2);
+    assert("tls1_3".toTlsProtocolVersion == TlsProtocolVersion.tls1_3);
+    
+    assert("unknown".toTlsProtocolVersion == TlsProtocolVersion.tls1_2);
+    assert("".toTlsProtocolVersion == TlsProtocolVersion.tls1_2);
+    
+    assert(TlsProtocolVersion.tls1_0.toString == "tls1_0");
+    assert(TlsProtocolVersion.tls1_1.toString == "tls1_1");
+    assert(TlsProtocolVersion.tls1_2.toString == "tls1_2");
+    assert(TlsProtocolVersion.tls1_3.toString == "tls1_3");
+
+    assert(toString([TlsProtocolVersion.tls1_0, TlsProtocolVersion.tls1_3]) == ["tls1_0", "tls1_3"]);
+    assert(toTlsProtocolVersion(["tls1_0", "tls1_3"]) == [TlsProtocolVersion.tls1_0, TlsProtocolVersion.tls1_3]);
 }
 
 enum CipherSuiteStrength {
@@ -31,10 +54,32 @@ enum CipherSuiteStrength {
     weak,
 }
 CipherSuiteStrength toCipherSuiteStrength(string s) {
-    const map = [
-        "strong": CipherSuiteStrength.strong,
-        "medium": CipherSuiteStrength.medium,
-        "weak": CipherSuiteStrength.weak
-    ];
-    return map.get(s, CipherSuiteStrength.strong);
+    mixin(EnumSwitch!("CipherSuiteStrength", "strong"));
+}
+CipherSuiteStrength[] toCipherSuiteStrength(string[] values) {
+    return values.map!(toCipherSuiteStrength).array;
+}
+string toString(CipherSuiteStrength strength) {
+    mixin(toEnumToString!("CipherSuiteStrength"));
+}
+string[] toString(CipherSuiteStrength[] strengths) {
+    return strengths.map!(toString).array;
+}
+/// 
+unittest {
+    mixin(ShowTest!("CipherSuiteStrength"));
+
+    assert("strong".toCipherSuiteStrength == CipherSuiteStrength.strong);
+    assert("medium".toCipherSuiteStrength == CipherSuiteStrength.medium);
+    assert("weak".toCipherSuiteStrength == CipherSuiteStrength.weak);
+    
+    assert("unknown".toCipherSuiteStrength == CipherSuiteStrength.strong);
+    assert("".toCipherSuiteStrength == CipherSuiteStrength.strong);
+    
+    assert(CipherSuiteStrength.strong.toString == "strong");
+    assert(CipherSuiteStrength.medium.toString == "medium");
+    assert(CipherSuiteStrength.weak.toString == "weak");
+
+    assert(toString([CipherSuiteStrength.strong, CipherSuiteStrength.weak]) == ["strong", "weak"]);
+    assert(toCipherSuiteStrength(["strong", "weak"]) == [CipherSuiteStrength.strong, CipherSuiteStrength.weak]);
 }

@@ -7,12 +7,19 @@ import uim.platform.event_mesh;
 @safe:
 
 enum BrokerServiceStatus {
+    ///  The service is being provisioned and is not yet available for use.
     provisioning,
+    ///  The service is currently running and available for use.
     running,
+    ///  The service is currently stopped and not available for use.
     stopped,
+    ///  The service is being updated and may not be fully available.
     updating,
+    ///  The service is degraded and may have limited functionality.
     degraded,
+    ///  The service has failed and is not operational.
     failed,
+    ///  The service is being decommissioned and will no longer be available.
     decommissioned
 }
 

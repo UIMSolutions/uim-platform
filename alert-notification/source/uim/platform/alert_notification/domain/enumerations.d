@@ -15,31 +15,91 @@ enum EventCategory : string {
     alert        = "ALERT",         /// Something unusual that needs attention
     exception_   = "EXCEPTION"      /// Error that requires immediate action
 }
-EventCategory toEventCategory(string category) {
-    const map = [
-        "notification": EventCategory.notification,
-        "alert": EventCategory.alert,
-        "exception": EventCategory.exception_
-    ];
-    return map.get(category.toLower, EventCategory.notification);
+EventCategory toEventCategory(string value) {
+    switch (value.toLower) {
+        case "notification": return EventCategory.notification;
+        case "alert": return EventCategory.alert;
+        case "exception": return EventCategory.exception_;
+        default: return EventCategory.notification; // default
+    }
+}
+EventCategory[] toEventCategory(string[] categories) {
+    return categories.map!(toEventCategory).array;
+}
+string toString(EventCategory category) {
+    mixin(category.to!string);
+}
+string[] toString(EventCategory[] categories) {
+    return categories.map!(toString).array;
+}
+///
+unittest {
+    mixin(ShowTest!("EventCategory"));
+
+    assert("notification".toEventCategory == EventCategory.notification);
+    assert("alert".toEventCategory == EventCategory.alert);
+    assert("exception".toEventCategory == EventCategory.exception_);
+
+    assert("unknown".toEventCategory == EventCategory.notification);
+    assert("".toEventCategory == EventCategory.notification);
+
+    assert(EventCategory.notification.toString == "notification");
+    assert(EventCategory.alert.toString == "alert");
+    assert(EventCategory.exception_.toString == "exception");
+
+    assert(toString([EventCategory.notification, EventCategory.alert]) == ["notification", "alert"]);
+    assert(toEventCategory(["notification", "alert"]) == [EventCategory.notification, EventCategory.alert]);
 }
 
 /// Severity of an alert event
 enum EventSeverity : string {
+    /// Informational event, no action required
     info    = "INFO",
+    /// Something unusual that needs attention
     warning = "WARNING",
+    /// Error that requires immediate action
     error_  = "ERROR",
+    /// Critical error that requires immediate action
     fatal   = "FATAL"
 }
-EventSeverity toEventSeverity(string severity) {
-    const map = [
-        "info": EventSeverity.info,
-        "warning": EventSeverity.warning,
-        "error": EventSeverity.error_,
-        "fatal": EventSeverity.fatal
-    ];
-    return map.get(severity.toLower, EventSeverity.info);
+EventSeverity toEventSeverity(string value) {
+    switch (value.toLower) {
+        case "info": return EventSeverity.info;
+        case "warning": return EventSeverity.warning;
+        case "error": return EventSeverity.error_;
+        case "fatal": return EventSeverity.fatal;
+        default: return EventSeverity.info; // default
+    }
 }   
+EventSeverity[] toEventSeverity(string[] severities) {
+    return severities.map!(toEventSeverity).array;
+}
+string toString(EventSeverity severity) {
+    mixin(severity.to!string);
+}
+string[] toString(EventSeverity[] severities) {
+    return severities.map!(toString).array;
+}
+/// 
+unittest {
+    mixin(ShowTest!("EventSeverity"));
+
+    assert("info".toEventSeverity == EventSeverity.info);
+    assert("warning".toEventSeverity == EventSeverity.warning);
+    assert("error".toEventSeverity == EventSeverity.error_);
+    assert("fatal".toEventSeverity == EventSeverity.fatal);
+
+    assert("unknown".toEventSeverity == EventSeverity.info);
+    assert("".toEventSeverity == EventSeverity.info);
+
+    assert(EventSeverity.info.toString == "info");
+    assert(EventSeverity.warning.toString == "warning");
+    assert(EventSeverity.error_.toString == "error");
+    assert(EventSeverity.fatal.toString == "fatal");
+
+    assert(toString([EventSeverity.info, EventSeverity.warning]) == ["info", "warning"]);
+    assert(toEventSeverity(["info", "warning"]) == [EventSeverity.info, EventSeverity.warning]);
+}
 
 /// Lifecycle status of an alert event
 enum EventStatus : string {
@@ -48,14 +108,37 @@ enum EventStatus : string {
     undelivered = "UNDELIVERED",
     matched     = "MATCHED"
 }
-EventStatus toEventStatus(string status) {
-    const map = [
-        "sent": EventStatus.sent,
-        "buffered": EventStatus.buffered,
-        "undelivered": EventStatus.undelivered,
-        "matched": EventStatus.matched
-    ];
-    return map.get(status.toLower, EventStatus.sent);
+EventStatus toEventStatus(string value) {
+    mixin(EnumSwitch!("EventStatus", "sent"));
+}
+EventStatus[] toEventStatus(string[] values) {
+    return values.map!(toEventStatus).array;
+}
+string toString(EventStatus status) {
+    mixin(toEnumToString!("EventStatus"));
+}
+string[] toString(EventStatus[] statuses) {
+    return statuses.map!(toString).array;
+}
+///
+unittest {
+    mixin(ShowTest!("EventStatus"));
+
+    assert("sent".toEventStatus == EventStatus.sent);
+    assert("buffered".toEventStatus == EventStatus.buffered);
+    assert("undelivered".toEventStatus == EventStatus.undelivered);
+    assert("matched".toEventStatus == EventStatus.matched);
+
+    assert("unknown".toEventStatus == EventStatus.sent);
+    assert("".toEventStatus == EventStatus.sent);
+
+    assert(EventStatus.sent.toString == "sent");
+    assert(EventStatus.buffered.toString == "buffered");
+    assert(EventStatus.undelivered.toString == "undelivered");
+    assert(EventStatus.matched.toString == "matched");
+
+    assert(toString([EventStatus.sent, EventStatus.buffered]) == ["sent", "buffered"]);
+    assert(toEventStatus(["sent", "buffered"]) == [EventStatus.sent, EventStatus.buffered]);
 }
 
 /// The event property that a condition evaluates
@@ -68,36 +151,93 @@ enum PropertyKey : string {
     resourceInstance  = "resourceInstance",
     tags              = "tags"
 }
-PropertyKey toPropertyKey(string key) {
-    const map = [
-        "eventtype": PropertyKey.eventType,
-        "eventcategory": PropertyKey.eventCategory,
-        "eventseverity": PropertyKey.eventSeverity,
-        "resourcename": PropertyKey.resourceName,
-        "resourcetype": PropertyKey.resourceType,
-        "resourceinstance": PropertyKey.resourceInstance,
-        "tags": PropertyKey.tags
-    ];
-    return map.get(key.toLower, PropertyKey.eventType);
+PropertyKey toPropertyKey(string value) {
+    mixin(EnumSwitch!("PropertyKey", "eventType"));
+}
+PropertyKey[] toPropertyKey(string[] values) {
+    return values.map!(toPropertyKey).array;
+}
+string toString(PropertyKey key) {
+    mixin(toEnumToString!("PropertyKey"));
+}
+string[] toString(PropertyKey[] keys) {
+    return keys.map!(toString).array;
+}
+///
+unittest {
+    mixin(ShowTest!("PropertyKey"));
+
+    assert("eventType".toPropertyKey == PropertyKey.eventType);
+    assert("eventCategory".toPropertyKey == PropertyKey.eventCategory);
+    assert("eventSeverity".toPropertyKey == PropertyKey.eventSeverity);
+    assert("resourceName".toPropertyKey == PropertyKey.resourceName);
+    assert("resourceType".toPropertyKey == PropertyKey.resourceType);
+    assert("resourceInstance".toPropertyKey == PropertyKey.resourceInstance);
+    assert("tags".toPropertyKey == PropertyKey.tags);
+
+    assert("unknown".toPropertyKey == PropertyKey.eventType);
+    assert("".toPropertyKey == PropertyKey.eventType);
+
+    assert(PropertyKey.eventType.toString == "eventType");
+    assert(PropertyKey.eventCategory.toString == "eventCategory");
+    assert(PropertyKey.eventSeverity.toString == "eventSeverity");
+    assert(PropertyKey.resourceName.toString == "resourceName");
+    assert(PropertyKey.resourceType.toString == "resourceType");
+    assert(PropertyKey.resourceInstance.toString == "resourceInstance");
+    assert(PropertyKey.tags.toString == "tags");
+
+    assert(toString([PropertyKey.eventType, PropertyKey.tags]) == ["eventType", "tags"]);
+    assert(toPropertyKey(["eventType", "tags"]) == [PropertyKey.eventType, PropertyKey.tags]);
 }
 
 /// Comparison operator used in condition evaluation
 enum Predicate : string {
+    any_        = "ANY",
     equals      = "EQUALS",
     contains    = "CONTAINS",
     notEquals   = "NOT_EQUALS",
     notContains = "NOT_CONTAINS",
-    any_        = "ANY"
 }
-Predicate toPredicate(string predicate) {
-    const map = [
-        "equals": Predicate.equals,
-        "contains": Predicate.contains,
-        "not_equals": Predicate.notEquals,
-        "notcontains": Predicate.notContains,
-        "any": Predicate.any_
-    ];
-    return map.get(predicate.toLower, Predicate.equals);
+Predicate toPredicate(string value) {
+    switch (value.toLower) {
+        case "equals": return Predicate.equals;
+        case "contains": return Predicate.contains;
+        case "not_equals": return Predicate.notEquals;
+        case "not_contains": return Predicate.notContains;
+        case "any": return Predicate.any_;
+        default: return Predicate.any_; // default
+    }
+}
+Predicate[] toPredicate(string[] values) {
+    return values.map!(toPredicate).array;
+}
+string toString(Predicate predicate) {
+    mixin(toEnumToString!("Predicate"));
+}
+string[] toString(Predicate[] predicates) {
+    return predicates.map!(toString).array;
+}
+/// 
+unittest {
+    mixin(ShowTest!("Predicate"));
+
+    assert("any".toPredicate == Predicate.any_);
+    assert("equals".toPredicate == Predicate.equals);
+    assert("contains".toPredicate == Predicate.contains);
+    assert("not_equals".toPredicate == Predicate.notEquals);
+    assert("not_contains".toPredicate == Predicate.notContains);
+
+    assert("unknown".toPredicate == Predicate.any_);
+    assert("".toPredicate == Predicate.any_);
+
+    assert(Predicate.any_.toString == "any");
+    assert(Predicate.equals.toString == "equals");
+    assert(Predicate.contains.toString == "contains");
+    assert(Predicate.notEquals.toString == "notEquals");
+    assert(Predicate.notContains.toString == "notContains");
+
+    assert(toString([Predicate.any_, Predicate.equals]) == ["any", "equals"]);
+    assert(toPredicate(["any", "equals"]) == [Predicate.any_, Predicate.equals]);
 }
 
 /// Delivery channel / action type
@@ -111,18 +251,45 @@ enum ActionType : string {
     serviceNow = "SERVICE_NOW",
     siem       = "SIEM"
 }
-ActionType toActionType(string type) {
-    const map = [
-        "email": ActionType.email,
-        "slack": ActionType.slack,
-        "webhook": ActionType.webHook,
-        "store": ActionType.store,
-        "pagerduty": ActionType.pagerDuty,
-        "jira": ActionType.jira,
-        "servicenow": ActionType.serviceNow,
-        "siem": ActionType.siem
-    ];
-    return map.get(type.toLower, ActionType.email);
+ActionType toActionType(string value) {
+    mixin(EnumSwitch!("ActionType", "email"));
+}
+ActionType[] toActionType(string[] values) {
+    return values.map!(toActionType).array;
+}
+string toString(ActionType type) {
+    return type.to!string;
+}
+string[] toString(ActionType[] types) {
+    return types.map!(toString).array;
+}
+///
+unittest {
+    mixin(ShowTest!("ActionType"));
+
+    assert("email".toActionType == ActionType.email);
+    assert("slack".toActionType == ActionType.slack);
+    assert("web_hook".toActionType == ActionType.webHook);
+    assert("store".toActionType == ActionType.store);
+    assert("pager_duty".toActionType == ActionType.pagerDuty);
+    assert("jira".toActionType == ActionType.jira);
+    assert("service_now".toActionType == ActionType.serviceNow);
+    assert("siem".toActionType == ActionType.siem);
+
+    assert("unknown".toActionType == ActionType.email);
+    assert("".toActionType == ActionType.email);
+
+    assert(ActionType.email.toString == "email");
+    assert(ActionType.slack.toString == "slack");
+    assert(ActionType.webHook.toString == "webHook");
+    assert(ActionType.store.toString == "store");
+    assert(ActionType.pagerDuty.toString == "pagerDuty");
+    assert(ActionType.jira.toString == "jira");
+    assert(ActionType.serviceNow.toString == "serviceNow");
+    assert(ActionType.siem.toString == "siem");
+
+    assert(toString([ActionType.email, ActionType.slack]) == ["email", "slack"]);
+    assert(toActionType(["email", "slack"]) == [ActionType.email, ActionType.slack]);
 }
 
 /// Operational state of an action or subscription
@@ -130,10 +297,31 @@ enum ResourceState : string {
     enabled  = "ENABLED",
     disabled = "DISABLED"
 }
-ResourceState toResourceState(string state) {
-    const map = [
-        "enabled": ResourceState.enabled,
-        "disabled": ResourceState.disabled
-    ];
-    return map.get(state.toLower, ResourceState.enabled);
+ResourceState toResourceState(string value) {
+    mixin(EnumSwitch!("ResourceState", "enabled"));
+}
+ResourceState[] toResourceState(string[] values) {
+    return values.map!(toResourceState).array;
+}
+string toString(ResourceState state) {
+    mixin(toEnumToString!("ResourceState"));
+}
+string[] toString(ResourceState[] states) {
+    return states.map!(toString).array;
+}
+///
+unittest {
+    mixin(ShowTest!("ResourceState"));
+
+    assert("enabled".toResourceState == ResourceState.enabled);
+    assert("disabled".toResourceState == ResourceState.disabled);
+
+    assert("unknown".toResourceState == ResourceState.enabled);
+    assert("".toResourceState == ResourceState.enabled);
+
+    assert(ResourceState.enabled.toString == "enabled");
+    assert(ResourceState.disabled.toString == "disabled");
+
+    assert(toString([ResourceState.enabled, ResourceState.disabled]) == ["enabled", "disabled"]);
+    assert(toResourceState(["enabled", "disabled"]) == [ResourceState.enabled, ResourceState.disabled]);
 }

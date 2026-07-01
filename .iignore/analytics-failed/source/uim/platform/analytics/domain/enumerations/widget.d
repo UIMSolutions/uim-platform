@@ -3,40 +3,76 @@ import uim.platform.analytics;
 
 // mixin(ShowModule!());
 @safe:
-enum FilterOperator {
+enum FilterOperator : string {
   // Used for exact matches, where the value must be equal to the specified criteria
-  Equals,
+  equals = "equals",
   // Used for non-exact matches, where the value must not be equal to the specified criteria
-  NotEquals,
+  notEquals = "notEquals",
   // Used for greater than comparisons, where the value must be greater than the specified criteria
-  GreaterThan,
+  greaterThan = "greaterThan",
   // Used for less than comparisons, where the value must be less than the specified criteria
-  LessThan,
+  lessThan = "lessThan",
   // Used for range comparisons, where the value must be between two specified criteria (inclusive or exclusive based on implementation)
-  Between,
+  between = "between",
   // Used for membership comparisons, where the value must be one of a specified set of criteria
-  In,
+  in_ = "in",
   // Used for non-membership comparisons, where the value must not be one of a specified set of criteria
-  NotIn,
+  notIn = "notIn",
   // Used for string containment comparisons, where the value must contain a specified substring
-  Contains,
+  contains = "contains",
   // Used for null checks, where the value must be null or not null based on the operator
-  IsNull,
+  isNull = "isNull",
   // Used for not null checks, where the value must not be null
-  IsNotNull,
+  isNotNull = "isNotNull",
 }
 FilterOperator toFilterOperator(string operator) {
-  const map = [
-    "equals": FilterOperator.Equals,
-    "notequals": FilterOperator.NotEquals,
-    "greaterthan": FilterOperator.GreaterThan,
-    "lessthan": FilterOperator.LessThan,
-    "between": FilterOperator.Between,
-    "in": FilterOperator.In,
-    "notin": FilterOperator.NotIn,
-    "contains": FilterOperator.Contains,
-    "isnull": FilterOperator.IsNull,
-    "isnotnull": FilterOperator.IsNotNull
-  ];
-  return map.get(operator.toLower, FilterOperator.Equals);
+  switch (operator.toLower()) {
+    case "equals": return FilterOperator.equals;
+    case "notequals": return FilterOperator.notEquals;
+    case "greaterthan": return FilterOperator.greaterThan;
+    case "lessthan": return FilterOperator.lessThan;
+    case "between": return FilterOperator.between;
+    case "in": return FilterOperator.in_;
+    case "notin": return FilterOperator.notIn;
+    case "contains": return FilterOperator.contains;
+    case "isnull": return FilterOperator.isNull;
+    case "isnotnull": return FilterOperator.isNotNull;
+    default: throw new Exception("Invalid filter operator: " ~ operator);
+  }
+}
+FilterOperator[] toFilterOperator(string[] operators) {
+  return operators.map!(toFilterOperator).array;
+}
+string toString(FilterOperator operator) {
+  return cast(string)operator; // This will return the enum member name as a string,
+}
+string[] toString(FilterOperator[] operators) {
+  return operators.map!(toString).array;
+}
+///
+unittest {
+  assert(toFilterOperator("equals") == FilterOperator.equals);
+  assert(toFilterOperator("notEquals") == FilterOperator.notEquals);
+  assert(toFilterOperator("greaterThan") == FilterOperator.greaterThan);
+  assert(toFilterOperator("lessThan") == FilterOperator.lessThan);
+  assert(toFilterOperator("between") == FilterOperator.between);
+  assert(toFilterOperator("in") == FilterOperator.in_);
+  assert(toFilterOperator("notIn") == FilterOperator.notIn);
+  assert(toFilterOperator("contains") == FilterOperator.contains);
+  assert(toFilterOperator("isNull") == FilterOperator.isNull);
+  assert(toFilterOperator("isNotNull") == FilterOperator.isNotNull);
+
+  assert(FilterOperator.equals.toString == "equals");
+  assert(FilterOperator.notEquals.toString == "notEquals");
+  assert(FilterOperator.greaterThan.toString == "greaterThan");
+  assert(FilterOperator.lessThan.toString == "lessThan");
+  assert(FilterOperator.between.toString == "between");
+  assert(FilterOperator.in_.toString == "in");
+  assert(FilterOperator.notIn.toString == "notIn");
+  assert(FilterOperator.contains.toString == "contains");
+  assert(FilterOperator.isNull.toString == "isNull");
+  assert(FilterOperator.isNotNull.toString == "isNotNull");
+
+  assert(toFilterOperator(["equals", "notEquals", "greaterThan", "lessThan"]) == [FilterOperator.equals, FilterOperator.notEquals, FilterOperator.greaterThan, FilterOperator.lessThan]);
+  assert(toString([FilterOperator.equals, FilterOperator.notEquals, FilterOperator.greaterThan, FilterOperator.lessThan]) == ["equals", "notEquals", "greaterThan", "lessThan"]);
 }

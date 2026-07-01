@@ -16,13 +16,33 @@ enum ExecutableType {
   workflow,
   serving,
 }
-
 ExecutableType toExecutableType(string type) {
-  const map = [
-    "workflow": ExecutableType.workflow,
-    "serving": ExecutableType.serving
-  ];
-  return map.get(type.toLower, ExecutableType.workflow);
+  mixin(EnumSwitch("ExecutableType", "workflow"));
+}
+ExecutableType[] toExecutableType(string[] types) {
+  return types.map!(toExecutableType).array;
+}
+string toString(ExecutableType type) {
+  return type.to!string; // This will return the enum member name as a string, e.g. "workflow", "serving"
+} 
+string[] toString(ExecutableType[] types) {
+  return types.map!(toString).array;
+}
+///
+unittest {
+  assert("workflow".toExecutableType == ExecutableType.workflow);
+  assert("serving".toExecutableType == ExecutableType.serving);
+
+  assert("unknown".toExecutableType == ExecutableType.workflow);
+  assert("".toExecutableType == ExecutableType.workflow);
+
+  assert(ExecutableType.workflow.toString == "workflow");
+  assert(ExecutableType.serving.toString == "serving");
+
+  assert(toExecutableType(["workflow", "serving", "unknown"]) ==
+         [ExecutableType.workflow, ExecutableType.serving, ExecutableType.workflow]);
+  assert(toString([ExecutableType.workflow, ExecutableType.serving]) ==
+         ["workflow", "serving"]);
 }
 
 // Execution lifecycle states
@@ -36,17 +56,41 @@ enum ExecutionStatus {
   unknown,
 }
 
-ExecutionStatus toExecutionStatus(string status) {
-  const map = [
-    "pending": ExecutionStatus.pending,
-    "running": ExecutionStatus.running,
-    "completed": ExecutionStatus.completed,
-    "failed": ExecutionStatus.failed,
-    "stopped": ExecutionStatus.stopped,
-    "dead": ExecutionStatus.dead,
-    "unknown": ExecutionStatus.unknown
-  ];
-  return map.get(status.toLower, ExecutionStatus.unknown);
+ExecutionStatus toExecutionStatus(string value) {
+  mixin(EnumSwitch("ExecutionStatus", "pending"));
+}
+ExecutionStatus[] toExecutionStatus(string[] statuses) {
+  return statuses.map!(toExecutionStatus).array;
+}
+string toString(ExecutionStatus status) {
+  return status.to!string; // This will return the enum member name as a string, e.g. "pending", "running", etc
+}
+string[] toString(ExecutionStatus[] statuses) {
+  return statuses.map!(toString).array;
+}
+///
+unittest {
+  assert("pending".toExecutionStatus == ExecutionStatus.pending);
+  assert("running".toExecutionStatus == ExecutionStatus.running);
+  assert("completed".toExecutionStatus == ExecutionStatus.completed);
+  assert("failed".toExecutionStatus == ExecutionStatus.failed);
+  assert("stopped".toExecutionStatus == ExecutionStatus.stopped);
+  assert("dead".toExecutionStatus == ExecutionStatus.dead);
+
+  assert("unknown".toExecutionStatus == ExecutionStatus.pending);
+  assert("".toExecutionStatus == ExecutionStatus.pending);
+
+  assert(ExecutionStatus.pending.toString == "pending");
+  assert(ExecutionStatus.running.toString == "running");
+  assert(ExecutionStatus.completed.toString == "completed");
+  assert(ExecutionStatus.failed.toString == "failed");
+  assert(ExecutionStatus.stopped.toString == "stopped");
+  assert(ExecutionStatus.dead.toString == "dead");
+
+  assert(toExecutionStatus(["pending", "running", "completed", "failed", "stopped", "dead", "unknown"]) ==
+         [ExecutionStatus.pending, ExecutionStatus.running, ExecutionStatus.completed, ExecutionStatus.failed, ExecutionStatus.stopped, ExecutionStatus.dead, ExecutionStatus.pending]);
+  assert(toString([ExecutionStatus.pending, ExecutionStatus.running, ExecutionStatus.completed, ExecutionStatus.failed, ExecutionStatus.stopped, ExecutionStatus.dead]) ==
+         ["pending", "running", "completed", "failed", "stopped", "dead"]);
 }
 
 // Deployment lifecycle states
@@ -57,16 +101,37 @@ enum DeploymentStatus {
   dead,
   unknown,
 }
+DeploymentStatus toDeploymentStatus(string value) {
+  mixin(EnumSwitch("DeploymentStatus", "pending"));
+}
+DeploymentStatus[] toDeploymentStatus(string[] statuses) {
+  return statuses.map!(toDeploymentStatus).array;
+}
+string toString(DeploymentStatus status) {
+  return status.to!string; // This will return the enum member name as a string,  e.g. "pending", "running", etc
+}
+string[] toString(DeploymentStatus[] statuses) {
+  return statuses.map!(toString).array;
+}
+///
+unittest {
+  assert("pending".toDeploymentStatus == DeploymentStatus.pending);
+  assert("running".toDeploymentStatus == DeploymentStatus.running);
+  assert("stopped".toDeploymentStatus == DeploymentStatus.stopped);
+  assert("dead".toDeploymentStatus == DeploymentStatus.dead); 
 
-DeploymentStatus toDeploymentStatus(string status) {
-  const map = [
-    "pending": DeploymentStatus.pending,
-    "running": DeploymentStatus.running,
-    "stopped": DeploymentStatus.stopped,
-    "dead": DeploymentStatus.dead,
-    "unknown": DeploymentStatus.unknown
-  ];
-  return map.get(status.toLower, DeploymentStatus.unknown);
+  assert("unknown".toDeploymentStatus == DeploymentStatus.pending);
+  assert("".toDeploymentStatus == DeploymentStatus.pending);
+
+  assert(DeploymentStatus.pending.toString == "pending");
+  assert(DeploymentStatus.running.toString == "running");
+  assert(DeploymentStatus.stopped.toString == "stopped");
+  assert(DeploymentStatus.dead.toString == "dead");
+
+  assert(toDeploymentStatus(["pending", "running", "stopped", "dead", "unknown"]) ==
+         [DeploymentStatus.pending, DeploymentStatus.running, DeploymentStatus.stopped, DeploymentStatus.dead, DeploymentStatus.pending]);
+  assert(toString([DeploymentStatus.pending, DeploymentStatus.running, DeploymentStatus.stopped, DeploymentStatus.dead]) ==
+         ["pending", "running", "stopped", "dead"]);
 }
 
 // Artifact categories
@@ -78,47 +143,126 @@ enum ArtifactKind {
 }
 
 ArtifactKind toArtifactKind(string kind) {
-  const map = [
-    "model": ArtifactKind.model,
-    "dataset": ArtifactKind.dataset,
-    "resultset": ArtifactKind.resultset,
-    "other": ArtifactKind.other
-  ];
-  return map.get(kind.toLower, ArtifactKind.other);
+  mixin(EnumSwitch("ArtifactKind", "model"));
+}
+ArtifactKind[] toArtifactKind(string[] kinds) {
+  return kinds.map!(toArtifactKind).array;
+}
+string toString(ArtifactKind kind) {
+  return kind.to!string; // This will return the enum member name as a string, e.g. "model", "dataset", etc
+}
+string[] toString(ArtifactKind[] kinds) {
+  return kinds.map!(toString).array;
+}
+///
+unittest {
+  assert("model".toArtifactKind == ArtifactKind.model);
+  assert("dataset".toArtifactKind == ArtifactKind.dataset);
+  assert("resultset".toArtifactKind == ArtifactKind.resultset);
+  assert("other".toArtifactKind == ArtifactKind.other);
+
+  assert("unknown".toArtifactKind == ArtifactKind.model);
+  assert("".toArtifactKind == ArtifactKind.model);
+
+  assert(ArtifactKind.model.toString == "model");
+  assert(ArtifactKind.dataset.toString == "dataset");
+  assert(ArtifactKind.resultset.toString == "resultset");
+  assert(ArtifactKind.other.toString == "other"); 
+
+  assert(toArtifactKind(["model", "dataset", "resultset", "other", "unknown"]) ==
+         [ArtifactKind.model, ArtifactKind.dataset, ArtifactKind.resultset, ArtifactKind.other, ArtifactKind.model]);
+  assert(toString([ArtifactKind.model, ArtifactKind.dataset, ArtifactKind.resultset, ArtifactKind.other]) ==
+         ["model", "dataset", "resultset", "other"]);
 }
 
 // Target state for PATCH operations
-enum TargetStatus {
-  running,
-  stopped,
-  deleted_,
-  completed,
+enum TargetStatus : string {
+  running = "RUNNING",
+  stopped = "STOPPED",
+  deleted_ = "DELETED",
+  completed = "COMPLETED",
 }
 
 TargetStatus toTargetStatus(string status) {
-  const map = [
-    "running": TargetStatus.running,
-    "stopped": TargetStatus.stopped,
-    "deleted": TargetStatus.deleted_,
-    "completed": TargetStatus.completed
-  ];
-  return map.get(status.toLower, TargetStatus.stopped);
+  switch (status.toLower) {
+    case "running": return TargetStatus.running;
+    case "stopped": return TargetStatus.stopped;
+    case "deleted": return TargetStatus.deleted_;
+    case "completed": return TargetStatus.completed;
+    default: return TargetStatus.running; // Default to running if unknown
+  }
+}
+TargetStatus[] toTargetStatus(string[] statuses) {
+  return statuses.map!(toTargetStatus).array;
+} 
+string toString(TargetStatus status) {
+  return cast(string)status; // This will return the enum member name as a string, e.g. "running", "stopped", etc
+}
+string[] toString(TargetStatus[] statuses) {
+  return statuses.map!(toString).array;
+}
+///
+unittest {
+  assert("running".toTargetStatus == TargetStatus.running);
+  assert("stopped".toTargetStatus == TargetStatus.stopped);
+  assert("deleted".toTargetStatus == TargetStatus.deleted_);
+  assert("completed".toTargetStatus == TargetStatus.completed);
+
+  assert("unknown".toTargetStatus == TargetStatus.running);
+  assert("".toTargetStatus == TargetStatus.running);
+
+  assert(TargetStatus.running.toString == "RUNNING");
+  assert(TargetStatus.stopped.toString == "STOPPED");
+  assert(TargetStatus.deleted_.toString == "DELETED");
+  assert(TargetStatus.completed.toString == "COMPLETED");
+
+  assert(toTargetStatus(["running", "stopped", "deleted", "completed", "unknown"]) ==
+         [TargetStatus.running, TargetStatus.stopped, TargetStatus.deleted_, TargetStatus.completed, TargetStatus.running]);
+  assert(toString([TargetStatus.running, TargetStatus.stopped, TargetStatus.deleted_, TargetStatus.completed]) ==
+         ["RUNNING", "STOPPED", "DELETED", "COMPLETED"]);
 }
 
 // Metric value types
 enum MetricValueType {
+  string_,
   float_,
   int_,
-  string_,
 }
 
 MetricValueType toMetricValueType(string type) {
-  const map = [
-    "float": MetricValueType.float_,
-    "int": MetricValueType.int_,
-    "string": MetricValueType.string_
-  ];
-  return map.get(type.toLower, MetricValueType.string_);
+  switch (type.toLower) {
+    case "float": return MetricValueType.float_;
+    case "int": return MetricValueType.int_;
+    case "string": return MetricValueType.string_;
+    default: return MetricValueType.string_; // Default to string if unknown
+  }
+}
+MetricValueType[] toMetricValueType(string[] types) {
+  return types.map!(toMetricValueType).array;
+}
+string toString(MetricValueType type) {
+  return cast(string)type; // This will return the enum member name as a string, e.g. "string_", "float_", "int_"
+}
+string[] toString(MetricValueType[] types) {
+  return types.map!(toString).array;
+}
+///
+unittest {
+  assert("string".toMetricValueType == MetricValueType.string_);
+  assert("float".toMetricValueType == MetricValueType.float_);  
+  assert("int".toMetricValueType == MetricValueType.int_);
+
+  assert("unknown".toMetricValueType == MetricValueType.string_);
+  assert("".toMetricValueType == MetricValueType.string_);
+
+  assert(MetricValueType.string_.toString == "string_");
+  assert(MetricValueType.float_.toString == "float_");
+  assert(MetricValueType.int_.toString == "int_");
+
+  assert(toMetricValueType(["string", "float", "int", "unknown"]) ==
+         [MetricValueType.string_, MetricValueType.float_, MetricValueType.int_, MetricValueType.string_]);
+  assert(toString([MetricValueType.string_, MetricValueType.float_, MetricValueType.int_]) ==
+         ["string_", "float_", "int_"]);
 }
 
 // Log severity levels
@@ -129,12 +273,34 @@ enum LogSeverity {
 }
 
 LogSeverity toLogSeverity(string severity) {
-  const map = [
-    "info": LogSeverity.info,
-    "warn": LogSeverity.warn,
-    "error": LogSeverity.error
-  ];
-  return map.get(severity.toLower, LogSeverity.info);
+  mixin(EnumSwitch("LogSeverity", "info"));
+}
+LogSeverity[] toLogSeverity(string[] severities) {
+  return severities.map!(toLogSeverity).array;
+}
+string toString(LogSeverity severity) {
+  return severity.to!string; // This will return the enum member name as a string, e.g. "info", "warn", "error"
+}
+string[] toString(LogSeverity[] severities) {
+  return severities.map!(toString).array;
+}
+///
+unittest {
+  assert("info".toLogSeverity == LogSeverity.info);
+  assert("warn".toLogSeverity == LogSeverity.warn);
+  assert("error".toLogSeverity == LogSeverity.error);
+
+  assert("unknown".toLogSeverity == LogSeverity.info);
+  assert("".toLogSeverity == LogSeverity.info);
+
+  assert(LogSeverity.info.toString == "info");
+  assert(LogSeverity.warn.toString == "warn");
+  assert(LogSeverity.error.toString == "error");
+
+  assert(toLogSeverity(["info", "warn", "error", "unknown"]) ==
+         [LogSeverity.info, LogSeverity.warn, LogSeverity.error, LogSeverity.info]);
+  assert(toString([LogSeverity.info, LogSeverity.warn, LogSeverity.error]) ==
+         ["info", "warn", "error"]);
 }
 
 // Schedule status
@@ -188,25 +354,53 @@ enum ScheduleStatus {
   suspended_other,
 }
 
-ScheduleStatus toScheduleStatus(string status) {
-  const map = [
-    "active": ScheduleStatus.active,
-    "inactive": ScheduleStatus.inactive,
-    "deleted": ScheduleStatus.deleted,
-    "error": ScheduleStatus.error,
-    "completed": ScheduleStatus.completed,
-    "deleting": ScheduleStatus.deleting,
-    "deleted_retention": ScheduleStatus.deleted_retention,
-    "deleted_expired": ScheduleStatus.deleted_expired,
-    "restoring": ScheduleStatus.restoring,
-    "restored": ScheduleStatus.restored,
-    "suspended_security": ScheduleStatus.suspended_security,
-    "suspended_policy": ScheduleStatus.suspended_policy,
-    "suspended_other": ScheduleStatus.suspended_other,
-    "triggering": ScheduleStatus.triggering,
-    "executing": ScheduleStatus.executing,
-    "triggered_error": ScheduleStatus.triggered_error,
-    "triggered_completed": ScheduleStatus.triggered_completed
-  ];
-  return map.get(status.toLower, ScheduleStatus.inactive);
+ScheduleStatus toScheduleStatus(string value) {
+  mixin(EnumSwitch("ScheduleStatus", "active"));
+}
+ScheduleStatus[] toScheduleStatus(string[] statuses) {
+  return statuses.map!(toScheduleStatus).array;
+}
+string toString(ScheduleStatus status) {
+  return status.to!string; // This will return the enum member name as a string, e.g. "active", "inactive", etc
+}
+string[] toString(ScheduleStatus[] statuses) {
+  return statuses.map!(toString).array;
+}
+///
+unittest {
+  assert("active".toScheduleStatus == ScheduleStatus.active);
+  assert("inactive".toScheduleStatus == ScheduleStatus.inactive);
+  assert("deleted".toScheduleStatus == ScheduleStatus.deleted);
+  assert("error".toScheduleStatus == ScheduleStatus.error);
+  assert("completed".toScheduleStatus == ScheduleStatus.completed);
+  assert("deleting".toScheduleStatus == ScheduleStatus.deleting); 
+  assert("updated".toScheduleStatus == ScheduleStatus.updated);
+  assert("suspended_nonpayment".toScheduleStatus == ScheduleStatus.suspended_nonpayment);
+  assert("suspended_abuse".toScheduleStatus == ScheduleStatus.suspended_abuse);
+  assert("suspended_legal".toScheduleStatus == ScheduleStatus.suspended_legal);
+  assert("suspended_security".toScheduleStatus == ScheduleStatus.suspended_security);
+  assert("suspended_policy".toScheduleStatus == ScheduleStatus.suspended_policy);
+  assert("suspended_other".toScheduleStatus == ScheduleStatus.suspended_other);
+
+  assert("unknown".toScheduleStatus == ScheduleStatus.active);
+  assert("".toScheduleStatus == ScheduleStatus.active);
+
+  assert(ScheduleStatus.active.toString == "active");
+  assert(ScheduleStatus.inactive.toString == "inactive");
+  assert(ScheduleStatus.deleted.toString == "deleted");
+  assert(ScheduleStatus.error.toString == "error");
+  assert(ScheduleStatus.completed.toString == "completed");
+  assert(ScheduleStatus.deleting.toString == "deleting");
+  assert(ScheduleStatus.updated.toString == "updated");
+  assert(ScheduleStatus.suspended_nonpayment.toString == "suspended_nonpayment");
+  assert(ScheduleStatus.suspended_abuse.toString == "suspended_abuse");
+  assert(ScheduleStatus.suspended_legal.toString == "suspended_legal"); 
+  assert(ScheduleStatus.suspended_security.toString == "suspended_security");
+  assert(ScheduleStatus.suspended_policy.toString == "suspended_policy");
+  assert(ScheduleStatus.suspended_other.toString == "suspended_other"); 
+
+  assert(toScheduleStatus(["active", "inactive", "deleted", "error", "completed", "deleting", "updated", "suspended_nonpayment", "suspended_abuse", "suspended_legal", "suspended_security", "suspended_policy", "suspended_other", "unknown"]) ==
+         [ScheduleStatus.active, ScheduleStatus.inactive, ScheduleStatus.deleted, ScheduleStatus.error, ScheduleStatus.completed, ScheduleStatus.deleting, ScheduleStatus.updated, ScheduleStatus.suspended_nonpayment, ScheduleStatus.suspended_abuse, ScheduleStatus.suspended_legal, ScheduleStatus.suspended_security, ScheduleStatus.suspended_policy, ScheduleStatus.suspended_other, ScheduleStatus.active]);
+  assert(toString([ScheduleStatus.active, ScheduleStatus.inactive, ScheduleStatus.deleted, ScheduleStatus.error, ScheduleStatus.completed, ScheduleStatus.deleting, ScheduleStatus.updated, ScheduleStatus.suspended_nonpayment, ScheduleStatus.suspended_abuse, ScheduleStatus.suspended_legal, ScheduleStatus.suspended_security, ScheduleStatus.suspended_policy, ScheduleStatus.suspended_other]) ==
+         ["active", "inactive", "deleted", "error", "completed", "deleting", "updated", "suspended_nonpayment", "suspended_abuse", "suspended_legal", "suspended_security", "suspended_policy", "suspended_other"]);
 }
