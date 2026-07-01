@@ -5,7 +5,9 @@ import uim.platform.kyma;
 
 @safe:
 struct CreateServiceBindingRequest {
-  ServiceInstanceId serviceInstanceId;
+  TenantId tenantId;
+  ServiceBindingId bindingId;
+  ServiceInstanceId instanceId;
   NamespaceId namespaceId;
   KymaEnvironmentId environmentId;
   TenantId tenantId;
@@ -19,6 +21,8 @@ struct CreateServiceBindingRequest {
 }
 
 struct UpdateServiceBindingRequest {
+  TenantId tenantId;
+  ServiceBindingId bindingId;
   string description;
   string secretName;
   string parametersJson;

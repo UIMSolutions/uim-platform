@@ -28,8 +28,8 @@ struct ExposedEndpoint {
 /// Service binding that exposes CDS/RAP services via OData/REST/SOAP.
 struct ServiceBinding {
   mixin TenantEntity!(ServiceBindingId);
-  SystemInstanceId systemInstanceId;
-  ServiceDefinitionId serviceDefinitionId;
+  SystemInstanceId instanceId;
+  ServiceDefinitionId definitionId;
   string name;
   string description;
 
@@ -45,11 +45,11 @@ struct ServiceBinding {
   
   Json toJson() const {
     auto j = entityToJson
-      .set("systemInstanceId", systemInstanceId)
-      .set("serviceDefinitionId", serviceDefinitionId)
+      .set("systemInstanceId", instanceId)
+      .set("serviceDefinitionId", definitionId)
       .set("name", name)
       .set("description", description)
-      .set("bindingType", bindingType.to!string)
+      .set("bindingType", bindingType.toString)
       .set("status", status.to!string)
       .set("serviceUrl", serviceUrl)
       .set("metadataUrl", metadataUrl);

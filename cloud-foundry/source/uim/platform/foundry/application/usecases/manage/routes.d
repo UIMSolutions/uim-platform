@@ -51,8 +51,7 @@ class ManageRoutesUseCase { // TODO: UIMUseCase {
     if (!resolver.isRouteAvailable(req.tenantId, req.host, req.domainId))
       return CommandResult(false, "", "Route host is already taken for this domain");
 
-    auto now = currentTimestamp();
-    auto route = Route(req.tenantId, req.routeId.isNNull ? RouteId(createId) : req.routeId, req.createdBy);
+    auto route = Route(req.tenantId, req.routeId.isNull ? RouteId(createId) : req.routeId, req.createdBy);
     route.spaceId = req.spaceId;
     route.domainId = req.domainId;
     route.host = req.host;

@@ -45,8 +45,7 @@ class ManageSpacesUseCase { // TODO: UIMUseCase {
     if (repo.existsByName(req.tenantId, req.orgId, req.name))
       return CommandResult(false, "", "Space with this name already exists in org");
 
-    auto space = Space();
-    space.initEntity(req.tenantId, req.createdBy);
+    auto space = Space(req.tenantId, req.spaceId.isNull ? SpaceId(createId) : req.spaceId, req.createdBy);
     space.orgId = req.orgId;
     space.name = req.name;
     space.status = SpaceStatus.active;

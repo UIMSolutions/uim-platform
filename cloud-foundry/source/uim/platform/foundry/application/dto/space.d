@@ -6,8 +6,10 @@ import uim.platform.foundry;
 @safe:
 
 struct CreateSpaceRequest {
-  OrgId orgId;
   TenantId tenantId;
+  SpaceId spaceId;
+  OrgId orgId;
+
   string name;
   bool allowSsh;
   UserId createdBy;

@@ -7,7 +7,9 @@ import uim.platform.foundry;
 
 struct CreateServiceBindingRequest {
   AppId appId;
-  ServiceInstanceId serviceInstanceId;
+  ServiceInstanceId instanceId;
+  ServiceBindingId bindingId;
+  
   TenantId tenantId;
   string name;
   string bindingOptions;

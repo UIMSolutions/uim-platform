@@ -15,7 +15,7 @@ enum TlsProtocolVersion {
     tls1_2,
     tls1_3,
 }
-TlsProtocolVersion toTlsProtocolVersion(string s) {
+TlsProtocolVersion toTlsProtocolVersion(string value) {
     mixin(EnumSwitch("TlsProtocolVersion", "tls1_2"));
 }
 TlsProtocolVersion[] toTlsProtocolVersion(string[] values) {

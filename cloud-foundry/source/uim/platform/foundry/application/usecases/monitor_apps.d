@@ -27,6 +27,18 @@ struct AppHealthSummary {
   int crashedInstances;
   int totalMemoryMb;
   int totalDiskMb;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("appId", appId)
+      .set("appName", appName)
+      .set("state", state.to!string)
+      .set("requestedInstances", requestedInstances)
+      .set("runningInstances", runningInstances)
+      .set("crashedInstances", crashedInstances)
+      .set("totalMemoryMb", totalMemoryMb)
+      .set("totalDiskMb", totalDiskMb);
+  }
 }
 
 struct SpaceUsageSummary {
@@ -39,6 +51,19 @@ struct SpaceUsageSummary {
   long totalDiskUsedMb;
   int totalServiceInstances;
   int totalRoutes;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("spaceId", spaceId)
+      .set("totalApps", totalApps)
+      .set("runningApps", runningApps)
+      .set("stoppedApps", stoppedApps)
+      .set("crashedApps", crashedApps)
+      .set("totalMemoryUsedMb", totalMemoryUsedMb)
+      .set("totalDiskUsedMb", totalDiskUsedMb)
+      .set("totalServiceInstances", totalServiceInstances)
+      .set("totalRoutes", totalRoutes);
+  }
 }
 
 class MonitorAppsUseCase { // TODO: UIMUseCase {
@@ -59,7 +84,7 @@ class MonitorAppsUseCase { // TODO: UIMUseCase {
 
   /// Get health summary for a single application.
   AppHealthSummary getAppHealth(TenantId tenantId, AppId appId) {
-    return apps.findById(tenantId, appId) ? buildHealthSummary(apps.findById(tenantId, appId)) : AppHealthSummary.init;
+    return apps.existsById(tenantId, appId) ? buildHealthSummary(apps.findById(tenantId, appId)) : AppHealthSummary.init;
   }
 
   /// Get resource usage summary for a space.

@@ -54,7 +54,7 @@ class ManageServicesUseCase { // TODO: UIMUseCase {
     srvInstance.name = req.name;
     srvInstance.serviceName = req.serviceName;
     srvInstance.servicePlanName = req.servicePlanName;
-    srvInstance.status = ServiceInstanceStatus.active;
+    srvInstance.status = ServiceInstanceStatus.active.toString;
     srvInstance.parameters = req.parameters;
     srvInstance.tags = req.tags;
 
@@ -75,12 +75,12 @@ class ManageServicesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateInstance(UpdateServiceInstanceRequest req) {
-    if (req.serviceInstanceId.isEmpty)
+    if (req.instanceId.isEmpty)
       return CommandResult(false, "", "Service instance ID is required");
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
 
-    auto instance = instances.findById(req.tenantId, req.serviceInstanceId);
+    auto instance = instances.findById(req.tenantId, req.instanceId);
     if (instance.isNull)
       return CommandResult(false, "", "Service instance not found");
 
@@ -117,18 +117,17 @@ class ManageServicesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Tenant ID is required");
     if (request.appId.isEmpty)
       return CommandResult(false, "", "Application ID is required");
-    if (request.serviceInstanceId.isEmpty)
+    if (request.instanceId.isEmpty)
       return CommandResult(false, "", "Service instance ID is required");
 
     // Verify instance exists
-    auto instance = instances.findById(request.tenantId, request.serviceInstanceId);
+    auto instance = instances.findById(request.tenantId, request.instanceId);
     if (instance.isNull)
       return CommandResult(false, "", "Service instance not found");
 
-    auto binding = ServiceBinding();
-    binding.initEntity(request.tenantId, request.createdBy);
+    auto binding = ServiceBinding(request.tenantId, request.bindingId.isNull ? ServiceBindingId(createId) : request.bindingId, request.createdBy);
     binding.appId = request.appId;
-    binding.serviceInstanceId = request.serviceInstanceId;
+    binding.serviceInstanceId = request.instanceId;
     binding.name = request.name.length > 0 ? request.name : instance.serviceName ~ "-binding";
     binding.status = BindingStatus.active;
     binding.credentials = `{"uri":"` ~ instance.serviceName ~ `://localhost","username":"admin"}`;

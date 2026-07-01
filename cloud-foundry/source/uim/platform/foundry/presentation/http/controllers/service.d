@@ -117,8 +117,8 @@ class ServiceController : ManageHttpController {
 
     auto data = precheck.data;
     auto r = UpdateServiceInstanceRequest();
-    r.instanceId = id;
     r.tenantId = tenantId;
+    r.instanceId = id;
     r.name = data.getString("name");
     r.parameters = data.getString("parameters");
     r.tags = data.getString("tags");
@@ -161,7 +161,7 @@ class ServiceController : ManageHttpController {
     auto r = CreateServiceBindingRequest();
     r.tenantId = tenantId;
     r.appId = AppId(data.getString("appId"));
-    r.serviceInstanceId = ServiceInstanceId(data.getString("serviceInstanceId"));
+    r.instanceId = ServiceInstanceId(data.getString("serviceInstanceId"));
     r.name = data.getString("name");
     r.bindingOptions = data.getString("bindingOptions");
     r.createdBy = UserId(data.getString("createdBy"));

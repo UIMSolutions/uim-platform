@@ -12,18 +12,19 @@ import uim.platform.foundry;
 struct CreateBuildpackRequest {
   TenantId tenantId;
   BuildpackId packId;
+  UserId createdBy;
 
   string name;
-  BuildpackType type_;
+  string type_;
   int position;
   string stack;
   string filename;
-  UserId createdBy;
 }
 
 struct UpdateBuildpackRequest {
   TenantId tenantId;
   BuildpackId packId;
+  
   string name;
   int position;
   string stack;

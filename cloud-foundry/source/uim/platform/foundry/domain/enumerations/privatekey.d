@@ -21,7 +21,7 @@ enum KeyAlgorithm {
     ecdsaP384,
 }
 KeyAlgorithm toKeyAlgorithm(string value) {
-    mixin(EnumSwitch!("KeyAlgorithm", "rsa2048"));
+    mixin(EnumSwitch("KeyAlgorithm", "rsa2048"));
 }
 KeyAlgorithm[] toKeyAlgorithm(string[] values) {
     return values.map!(toKeyAlgorithm).array;

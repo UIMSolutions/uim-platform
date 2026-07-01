@@ -528,7 +528,7 @@ unittest {
 }
 
 /// Status of a service binding.
-enum BindingStatus {
+enum BindingStatus : string {
   active = "active",
   inactive = "inactive",
   deprecated_ = "deprecated",

@@ -52,7 +52,7 @@ class MonitoringController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = MonitoringId(precheck.id);
+    auto id = AppId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid application ID", 400);
 

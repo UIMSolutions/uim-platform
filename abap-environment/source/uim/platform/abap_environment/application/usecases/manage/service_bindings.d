@@ -25,16 +25,16 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
   CommandResult createServiceBinding(CreateServiceBindingRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Service binding name is required");
-    if (req.systemInstanceId.isEmpty)
+    
+    if (req.instanceId.isEmpty)
       return CommandResult(false, "", "System instance ID is required");
 
-    ServiceBinding binding;
-    binding.initEntity(req.tenantId);
-    binding.systemInstanceId = req.systemInstanceId;
-    binding.serviceDefinitionId = req.serviceDefinitionId;
+    auto binding = ServiceBinding(req.tenantId);
+    binding.instanceId = req.instanceId;
+    binding.definitionId = req.definitionId;
     binding.name = req.name;
     binding.description = req.description;
-    binding.bindingType =req.bindingType.to!BindingType;
+    binding.bindingType =req.bindingType.toBindingType;
     binding.status = BindingStatus.active;
     binding.endpoints = req.endpoints;
 

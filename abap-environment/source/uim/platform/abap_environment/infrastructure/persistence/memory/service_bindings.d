@@ -15,32 +15,32 @@ import uim.platform.abap_environment;
 class MemoryServiceBindingRepository : TenantRepository!(ServiceBinding, ServiceBindingId), ServiceBindingRepository {
 
   // #region BySystem
-  size_t countBySystem(TenantId tenantId, SystemInstanceId systemId) {
-    return findBySystem(tenantId, systemId).length;
+  size_t countBySystem(TenantId tenantId, SystemInstanceId instanceId) {
+    return findBySystem(tenantId, instanceId).length;
   }
-  ServiceBinding[] filterBySystem(ServiceBinding[] bindings, SystemInstanceId systemId) {
-    return bindings.filter!(e => e.systemInstanceId == systemId).array;
+  ServiceBinding[] filterBySystem(ServiceBinding[] bindings, SystemInstanceId instanceId) {
+    return bindings.filter!(e => e.instanceId == instanceId).array;
   }
-  ServiceBinding[] findBySystem(TenantId tenantId, SystemInstanceId systemId) {
-    return filterBySystem(findByTenant(tenantId), systemId);
+  ServiceBinding[] findBySystem(TenantId tenantId, SystemInstanceId instanceId) {
+    return filterBySystem(findByTenant(tenantId), instanceId);
   }
-  void removeBySystem(TenantId tenantId, SystemInstanceId systemId) {
-    findBySystem(tenantId, systemId).each!(e => remove(e));
+  void removeBySystem(TenantId tenantId, SystemInstanceId instanceId) {
+    findBySystem(tenantId, instanceId).each!(e => remove(e));
   }
   // #endregion BySystem
 
   // #region ByType
-  size_t countByType(TenantId tenantId, SystemInstanceId systemId, BindingType bindingType) {
-    return findByType(tenantId, systemId, bindingType).length;
+  size_t countByType(TenantId tenantId, SystemInstanceId instanceId, BindingType type) {
+    return findByType(tenantId, instanceId, type).length;
   }
-  ServiceBinding[] filterByType(ServiceBinding[] bindings, BindingType bindingType) {
-    return bindings.filter!(e => e.bindingType == bindingType).array;
+  ServiceBinding[] filterByType(ServiceBinding[] bindings, BindingType type) {
+    return bindings.filter!(e => e.bindingType == type).array;
   }
-  ServiceBinding[] findByType(TenantId tenantId, SystemInstanceId systemId, BindingType bindingType) {
-    return filterByType(findBySystem(tenantId, systemId), bindingType);
+  ServiceBinding[] findByType(TenantId tenantId, SystemInstanceId instanceId, BindingType type) {
+    return filterByType(findBySystem(tenantId, instanceId), type);
   }
-  void removeByType(TenantId tenantId, SystemInstanceId systemId, BindingType bindingType) {
-    findByType(tenantId, systemId, bindingType).each!(e => remove(e));
+  void removeByType(TenantId tenantId, SystemInstanceId instanceId, BindingType type) {
+    findByType(tenantId, instanceId, type).each!(e => remove(e));
   }
   // #endregion ByType
   

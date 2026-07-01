@@ -17,7 +17,7 @@ struct CreateServiceInstanceRequest {
 }
 
 struct UpdateServiceInstanceRequest {
-  ServiceInstanceId serviceInstanceId;
+  ServiceInstanceId instanceId;
   TenantId tenantId;
   string name;
   string servicePlanName;

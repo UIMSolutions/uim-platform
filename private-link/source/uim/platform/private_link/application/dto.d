@@ -63,7 +63,8 @@ struct UpdatePrivateEndpointStatusRequest {
 
 struct CreateServiceBindingRequest {
   TenantId tenantId;
-  ServiceInstanceId serviceInstanceId;
+  ServiceBindingId bindingId;
+  ServiceInstanceId nstanceId;
   string applicationId;
 }
 

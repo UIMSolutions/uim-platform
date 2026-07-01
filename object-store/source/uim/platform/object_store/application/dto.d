@@ -150,6 +150,7 @@ struct UpdateCorsRuleRequest {
 
 struct CreateServiceBindingRequest {
   TenantId tenantId;
+  ServiceBindingId bindingId;
   BucketId bucketId;
   string name;
   string permission; // "readOnly", "readWrite", "admin"

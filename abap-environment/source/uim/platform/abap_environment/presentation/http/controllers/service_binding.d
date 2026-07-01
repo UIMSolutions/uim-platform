@@ -60,8 +60,8 @@ class ServiceBindingController : ManageHttpController {
 
     CreateServiceBindingRequest r;
     r.tenantId = tenantId;
-    r.systemInstanceId = data.getString("systemInstanceId");
-    r.serviceDefinitionId = data.getString("serviceDefinitionId");
+    r.instanceId = data.getString("systemInstanceId");
+    r.definitionId = data.getString("serviceDefinitionId");
     r.name = data.getString("name");
     r.description = data.getString("description");
     r.bindingType = data.getString("bindingType");

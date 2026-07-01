@@ -8,8 +8,9 @@ import uim.platform.abap_environment;
 
 struct CreateServiceBindingRequest {
   TenantId tenantId;
-  SystemInstanceId systemInstanceId;
-  ServiceDefinitionId serviceDefinitionId;
+  ServiceBindingId bindingId;
+  SystemInstanceId instanceId;
+  ServiceDefinitionId definitionId;
   
   string name;
   string description;
@@ -19,8 +20,9 @@ struct CreateServiceBindingRequest {
   Json toJson() const {
     return Json.emptyObject
       .set("tenantId", tenantId.value)
-      .set("systemInstanceId", systemInstanceId.value)
-      .set("serviceDefinitionId", serviceDefinitionId.value)
+      .set("bindingId", bindingId.value)
+      .set("instanceId", instanceId.value)
+      .set("definitionId", definitionId.value)
       .set("name", name)
       .set("description", description)
       .set("bindingType", bindingType)
