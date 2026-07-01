@@ -7,7 +7,7 @@ module uim.platform.event_mesh.domain.repositories.mesh_bridges;
 
 import uim.platform.event_mesh;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

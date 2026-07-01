@@ -7,7 +7,7 @@ module uim.platform.event_mesh.domain.entities.event_message;
 
 import uim.platform.event_mesh;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

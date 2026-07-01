@@ -8,7 +8,7 @@ module uim.platform.event_mesh.infrastructure.config;
     import std.process : environment;
 import uim.platform.event_mesh;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

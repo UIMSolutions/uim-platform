@@ -7,7 +7,7 @@ module uim.platform.event_mesh.infrastructure.persistence.memory.event_schemas;
 
 import uim.platform.event_mesh;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 
