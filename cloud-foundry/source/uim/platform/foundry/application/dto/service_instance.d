@@ -6,8 +6,10 @@ import uim.platform.foundry;
 @safe:
 
 struct CreateServiceInstanceRequest {
+  ServiceInstanceId instanceId;
   SpaceId spaceId;
   TenantId tenantId;
+  
   string name;
   string serviceName;
   string servicePlanName;

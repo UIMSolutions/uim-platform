@@ -82,17 +82,16 @@ class ManageServicesUseCase { // TODO: UIMUseCase {
     if (instance.isNull)
       return CommandResult(false, "", "Service instance not found");
 
-    auto updated = *instance;
     if (req.name.length > 0)
-      updated.name = req.name;
+      instance.name = req.name;
     if (req.parameters.length > 0)
-      updated.parameters = req.parameters;
+      instance.parameters = req.parameters;
     if (req.tags.length > 0)
-      updated.tags = req.tags;
-    updated.updatedAt = currentTimestamp();
+      instance.tags = req.tags;
+    instance.updatedAt = currentTimestamp();
 
-    instances.update(updated);
-    return CommandResult(true, updated.id.value, "");
+    instances.update(instance);
+    return CommandResult(true, instance.id.value, "");
   }
 
   CommandResult deleteInstance(TenantId tenantId, ServiceInstanceId serviceInstanceId) {
