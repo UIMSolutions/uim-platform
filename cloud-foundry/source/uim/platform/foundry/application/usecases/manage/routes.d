@@ -60,7 +60,7 @@ class ManageRoutesUseCase { // TODO: UIMUseCase {
     route.host = req.host;
     route.path = req.path;
     route.port = req.port;
-    route.protocol = req.protocol;
+    route.protocol = req.protocol.toRouteProtocol;
 
     routes.save(route);
     return CommandResult(true, route.id.value, "");
@@ -128,7 +128,7 @@ class ManageRoutesUseCase { // TODO: UIMUseCase {
     auto d = CfDomain(req.tenantId, req.domainId.isNull ? CfDomainId(createId) : req.domainId, req.createdBy);
     d.ownerOrgId = req.ownerOrgId;
     d.name = req.name;
-    d.scope_ = req.scope_;
+    d.scope_ = req.scope_.toDomainScope;
     d.isInternal = req.isInternal;
 
     domains.save(d);

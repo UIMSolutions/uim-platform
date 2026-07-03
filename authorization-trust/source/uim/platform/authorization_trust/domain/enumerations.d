@@ -47,7 +47,7 @@ string toString(GrantType g) @safe {
   return cast(string)g;
 }
 
-string[] toStrings(GrantType[] g) @safe {
+string[] toString(GrantType[] g) @safe {
   return g.map!(toString).array;
 }
 /// 
@@ -68,7 +68,7 @@ unittest {
   assert(toString(GrantType.refreshToken) == "refresh_token");
   assert(toString(GrantType.implicit_) == "implicit");
   assert(toString(GrantType.clientCredentials) == "client_credentials");
-  assert(toStrings([GrantType.authorizationCode, GrantType.password_, GrantType.refreshToken, GrantType.implicit_, GrantType.clientCredentials]) == ["authorization_code", "password", "refresh_token", "implicit", "client_credentials"]);
+  assert(toString([GrantType.authorizationCode, GrantType.password_, GrantType.refreshToken, GrantType.implicit_, GrantType.clientCredentials]) == ["authorization_code", "password", "refresh_token", "implicit", "client_credentials"]);
 }
 // ---------------------------------------------------------------------------
 // OAuth 2.0 client types
@@ -88,7 +88,7 @@ ClientType[] toClientTypes(string[] s) @safe {
 string toString(ClientType c) @safe {
   return (c == ClientType.confidential) ? "confidential" : "public";
 }
-string[] toStrings(ClientType[] c) @safe {
+string[] toString(ClientType[] c) @safe {
   return c.map!(toString).array;
 }
 ///
@@ -104,7 +104,7 @@ unittest {
   assert(toString(ClientType.confidential) == "confidential");
   assert(toString(ClientType.public_) == "public");
 
-  assert(toStrings([ClientType.confidential, ClientType.public_]) == ["confidential", "public"]);
+  assert(toString([ClientType.confidential, ClientType.public_]) == ["confidential", "public"]);
 }
 // ---------------------------------------------------------------------------
 // Identity provider protocol types
@@ -122,7 +122,7 @@ IdpType[] toIdpTypes(string[] s) @safe {
 string toString(IdpType type) @safe {
   return type.to!string;
 }
-string[] toStrings(IdpType[] i) @safe {
+string[] toString(IdpType[] i) @safe {
   return i.map!(toString).array;
 }
 ///
@@ -138,5 +138,5 @@ unittest {
   assert(toString(IdpType.saml2) == "saml2");
   assert(toString(IdpType.oidc) == "oidc");
 
-  assert(toStrings([IdpType.saml2, IdpType.oidc]) == ["saml2", "oidc"]);
+  assert(toString([IdpType.saml2, IdpType.oidc]) == ["saml2", "oidc"]);
 }

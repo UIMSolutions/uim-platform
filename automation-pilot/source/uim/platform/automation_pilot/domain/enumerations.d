@@ -15,15 +15,19 @@ enum CatalogType {
     system,
     custom
 }
-CatalogType toCatalogType(string s) {
-    mixin("CatalogType", "custom");
+
+CatalogType toCatalogType(string value) {
+    mixin(EnumSwitch("CatalogType", "custom"));
 }
+
 CatalogType[] toCatalogTypes(string[] s) {
     return s.map!(toCatalogType).array;
 }
+
 string toString(CatalogType type) {
     return type.to!string;
 }
+
 string[] toString(CatalogType[] types) {
     return types.map!(toString).array;
 }
@@ -41,7 +45,7 @@ unittest {
     assert(toString(CatalogType.system) == "system");
     assert(toString(CatalogType.custom) == "custom");
 
-    assert(toStrings([CatalogType.system, CatalogType.custom]) == [
+    assert(toString([CatalogType.system, CatalogType.custom]) == [
             "system", "custom"
         ]);
 }
@@ -52,8 +56,8 @@ enum CatalogStatus {
     archived
 }
 
-CatalogStatus toCatalogStatus(string s) {
-    mixin("CatalogStatus", "active");
+CatalogStatus toCatalogStatus(string value) {
+    mixin(EnumSwitch("CatalogStatus", "active"));
 }
 
 CatalogStatus[] toCatalogStatuses(string[] s) {
@@ -86,6 +90,65 @@ unittest {
         ]) == ["active", "inactive", "archived"]);
 }
 
+enum CommandStatus : string {
+    active = "active",
+    inactive = "inactive",
+    draft = "draft",
+    deprecated_ = "deprecated"
+}
+
+CommandStatus toCommandStatus(string value) {
+    switch (value.toLower) {
+    case "active":
+        return CommandStatus.active;
+    case "inactive":
+        return CommandStatus.inactive;
+    case "draft":
+        return CommandStatus.draft;
+    case "deprecated":
+        return CommandStatus.deprecated_;
+    default:
+        return CommandStatus.active;
+    }
+}
+
+CommandStatus[] toCommandStatus(string[] s) {
+    return s.map!(toCommandStatus).array;
+}
+
+string toString(CommandStatus status) {
+    return cast(string)status;
+}
+
+string[] toString(CommandStatus[] statuses) {
+    return statuses.map!(toString).array;
+}
+///
+unittest {
+    assert(toCommandStatus("active") == CommandStatus.active);
+    assert(toCommandStatus("inactive") == CommandStatus.inactive);
+    assert(toCommandStatus("draft") == CommandStatus.draft);
+    assert(toCommandStatus("deprecated") == CommandStatus.deprecated_);
+
+    assert(toCommandStatus("") == CommandStatus.active);
+    assert(toCommandStatus("unknown") == CommandStatus.active);
+
+    assert(toCommandStatus(["active", "inactive", "deprecated", "unknown"]) == [
+            CommandStatus.active, CommandStatus.inactive,
+            CommandStatus.deprecated_,
+            CommandStatus.active
+        ]);
+
+    assert(toString(CommandStatus.active) == "active");
+    assert(toString(CommandStatus.inactive) == "inactive");
+    assert(toString(CommandStatus.deprecated_) == "deprecated");
+
+    assert(toString([
+            CommandStatus.active, CommandStatus.inactive,
+            CommandStatus.deprecated_
+        ]) == ["active", "inactive", "deprecated"]);
+}
+
 enum CommandType {
     simple,
     composite,
@@ -93,7 +156,7 @@ enum CommandType {
     script
 }
 
-CommandType toCommandType(string s) {
+CommandType toCommandType(string value) {
     mixin(EnumSwitch("CommandType", "simple"));
 }
 
@@ -145,7 +208,7 @@ enum ExecutionStatus {
     timedOut
 }
 
-ExecutionStatus toExecutionStatus(string s) {
+ExecutionStatus toExecutionStatus(string value) {
     mixin(EnumSwitch("ExecutionStatus", "pending"));
 }
 
@@ -205,7 +268,7 @@ enum ExecutionPriority {
     critical
 }
 
-ExecutionPriority toExecutionPriority(string s) {
+ExecutionPriority toExecutionPriority(string value) {
     mixin(EnumSwitch("ExecutionPriority", "medium"));
 }
 
@@ -254,7 +317,7 @@ enum ScheduleType {
     cron
 }
 
-ScheduleType toScheduleType(string s) {
+ScheduleType toScheduleType(string value) {
     mixin(EnumSwitch("ScheduleType", "oneTime"));
 }
 
@@ -299,7 +362,7 @@ enum ScheduleStatus {
     expired
 }
 
-ScheduleStatus toScheduleStatus(string s) {
+ScheduleStatus toScheduleStatus(string value) {
     mixin(EnumSwitch("ScheduleStatus", "active"));
 }
 
@@ -349,7 +412,7 @@ enum TriggerType {
     manual
 }
 
-TriggerType toTriggerType(string s) {
+TriggerType toTriggerType(string value) {
     mixin(EnumSwitch("TriggerType", "event"));
 }
 
@@ -395,9 +458,11 @@ enum TriggerStatus {
     inactive,
     disabled
 }
+
 TriggerStatus toTriggerStatus(string value) {
     mixin(EnumSwitch("TriggerStatus", "active"));
 }
+
 TriggerStatus[] toTriggerStatuses(string[] s) {
     return s.map!(toTriggerStatus).array;
 }
