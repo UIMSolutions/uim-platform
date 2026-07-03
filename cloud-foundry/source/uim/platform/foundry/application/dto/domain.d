@@ -8,7 +8,7 @@ module uim.platform.foundry.application.dto.domain;
 struct CreateDomainRequest {
   OrgId ownerOrgId;
   TenantId tenantId;
-  DomainId domainId;
+  CfDomainId domainId;
 
   string name;
   string scope_;
