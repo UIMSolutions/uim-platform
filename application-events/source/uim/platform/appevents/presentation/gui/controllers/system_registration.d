@@ -5,14 +5,19 @@
 *****************************************************************************************************************/
 module uim.platform.appevents.presentation.gui.controllers.system_registration;
 
-import uim.platform.service;
-import uim.platform.appevents.application.dto;
-import uim.platform.appevents.application.usecases.manage.system_registrations;
-import uim.platform.appevents.domain.valueobjects;
-import uim.platform.appevents.presentation.gui.models.system_registration;
-import uim.platform.appevents.presentation.gui.views.system_registration;
+// import uim.platform.service;
+// import uim.platform.appevents.application.dto;
+// import uim.platform.appevents.application.usecases.manage.system_registrations;
+// import uim.platform.appevents.domain.valueobjects;
+// import uim.platform.appevents.presentation.gui.models.system_registration;
+// import uim.platform.appevents.presentation.gui.views.system_registration;
+
+import uim.platform.appevents;
+
+// mixin(ShowModule!());
 
 @safe:
+
 
 class GuiSystemRegistrationController {
     private GuiSystemRegistrationModel        _model;

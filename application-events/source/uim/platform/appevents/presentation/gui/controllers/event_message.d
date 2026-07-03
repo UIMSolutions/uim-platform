@@ -5,14 +5,19 @@
 *****************************************************************************************************************/
 module uim.platform.appevents.presentation.gui.controllers.event_message;
 
-import uim.platform.service;
-import uim.platform.appevents.application.dto;
-import uim.platform.appevents.application.usecases.manage.event_messages;
-import uim.platform.appevents.domain.valueobjects;
-import uim.platform.appevents.presentation.gui.models.event_message;
-import uim.platform.appevents.presentation.gui.views.event_message;
+// import uim.platform.service;
+// import uim.platform.appevents.application.dto;
+// import uim.platform.appevents.application.usecases.manage.event_messages;
+// import uim.platform.appevents.domain.valueobjects;
+// import uim.platform.appevents.presentation.gui.models.event_message;
+// import uim.platform.appevents.presentation.gui.views.event_message;
+
+import uim.platform.appevents;
+
+// mixin(ShowModule!());
 
 @safe:
+
 
 class GuiEventMessageController {
     private GuiEventMessageModel        _model;

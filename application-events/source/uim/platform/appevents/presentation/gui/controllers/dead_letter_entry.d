@@ -5,14 +5,19 @@
 *****************************************************************************************************************/
 module uim.platform.appevents.presentation.gui.controllers.dead_letter_entry;
 
-import uim.platform.service;
-import uim.platform.appevents.application.dto;
-import uim.platform.appevents.application.usecases.manage.dead_letter_entries;
-import uim.platform.appevents.domain.valueobjects;
-import uim.platform.appevents.presentation.gui.models.dead_letter_entry;
-import uim.platform.appevents.presentation.gui.views.dead_letter_entry;
+// import uim.platform.service;
+// import uim.platform.appevents.application.dto;
+// import uim.platform.appevents.application.usecases.manage.dead_letter_entries;
+// import uim.platform.appevents.domain.valueobjects;
+// import uim.platform.appevents.presentation.gui.models.dead_letter_entry;
+// import uim.platform.appevents.presentation.gui.views.dead_letter_entry;
+
+import uim.platform.appevents;
+
+// mixin(ShowModule!());
 
 @safe:
+
 
 class GuiDeadLetterEntryController {
     private GuiDeadLetterEntryModel        _model;

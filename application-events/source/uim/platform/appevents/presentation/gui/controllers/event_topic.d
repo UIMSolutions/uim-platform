@@ -5,14 +5,19 @@
 *****************************************************************************************************************/
 module uim.platform.appevents.presentation.gui.controllers.event_topic;
 
-import uim.platform.service;
-import uim.platform.appevents.application.dto;
-import uim.platform.appevents.application.usecases.manage.event_topics;
-import uim.platform.appevents.domain.valueobjects;
-import uim.platform.appevents.presentation.gui.models.event_topic;
-import uim.platform.appevents.presentation.gui.views.event_topic;
+// import uim.platform.service;
+// import uim.platform.appevents.application.dto;
+// import uim.platform.appevents.application.usecases.manage.event_topics;
+// import uim.platform.appevents.domain.valueobjects;
+// import uim.platform.appevents.presentation.gui.models.event_topic;
+// import uim.platform.appevents.presentation.gui.views.event_topic;
+
+import uim.platform.appevents;
+
+// mixin(ShowModule!());
 
 @safe:
+
 
 class GuiEventTopicController {
     private GuiEventTopicModel       _model;

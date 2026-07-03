@@ -5,14 +5,19 @@
 *****************************************************************************************************************/
 module uim.platform.appevents.presentation.gui.controllers.formation;
 
-import uim.platform.service;
-import uim.platform.appevents.application.dto;
-import uim.platform.appevents.application.usecases.manage.formations;
-import uim.platform.appevents.domain.valueobjects;
-import uim.platform.appevents.presentation.gui.models.formation;
-import uim.platform.appevents.presentation.gui.views.formation;
+// import uim.platform.service;
+// import uim.platform.appevents.application.dto;
+// import uim.platform.appevents.application.usecases.manage.formations;
+// import uim.platform.appevents.domain.valueobjects;
+// import uim.platform.appevents.presentation.gui.models.formation;
+// import uim.platform.appevents.presentation.gui.views.formation;
+
+import uim.platform.appevents;
+
+// mixin(ShowModule!());
 
 @safe:
+
 
 class GuiFormationController {
     private GuiFormationModel        _model;

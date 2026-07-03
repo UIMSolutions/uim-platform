@@ -5,13 +5,18 @@
 *****************************************************************************************************************/
 module uim.platform.appevents.presentation.cli.views.formation;
 
-import uim.platform.appevents.domain.entities.formation;
-import uim.platform.appevents.presentation.cli.models.formation;
-import std.stdio  : writeln, writefln;
-import std.conv   : to;
-import std.string : replicate;
+// import uim.platform.appevents.domain.entities.formation;
+// import uim.platform.appevents.presentation.cli.models.formation;
+// import std.stdio  : writeln, writefln;
+// import std.conv   : to;
+// import std.string : replicate;
+
+import uim.platform.appevents;
+
+// mixin(ShowModule!());
 
 @safe:
+
 
 class CliFormationView {
     void renderList(CliFormationModel model) {

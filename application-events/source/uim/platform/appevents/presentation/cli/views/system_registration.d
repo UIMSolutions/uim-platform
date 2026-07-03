@@ -5,13 +5,18 @@
 *****************************************************************************************************************/
 module uim.platform.appevents.presentation.cli.views.system_registration;
 
-import uim.platform.appevents.domain.entities.system_registration;
-import uim.platform.appevents.presentation.cli.models.system_registration;
-import std.stdio  : writeln, writefln;
-import std.conv   : to;
-import std.string : replicate;
+// import uim.platform.appevents.domain.entities.system_registration;
+// import uim.platform.appevents.presentation.cli.models.system_registration;
+// import std.stdio  : writeln, writefln;
+// import std.conv   : to;
+// import std.string : replicate;
+
+import uim.platform.appevents;
+
+// mixin(ShowModule!());
 
 @safe:
+
 
 class CliSystemRegistrationView {
     void renderList(CliSystemRegistrationModel model) {

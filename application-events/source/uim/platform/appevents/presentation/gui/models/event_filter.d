@@ -5,10 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.appevents.presentation.gui.models.event_filter;
 
-import uim.platform.service;
-import uim.platform.appevents.domain.entities.event_filter;
+// import uim.platform.service;
+// import uim.platform.appevents.domain.entities.event_filter;
+
+import uim.platform.appevents;
+
+// mixin(ShowModule!());
 
 @safe:
+
 
 class GuiEventFilterModel {
     private EventFilter[] _items;

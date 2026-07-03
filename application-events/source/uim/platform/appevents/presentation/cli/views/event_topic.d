@@ -5,13 +5,18 @@
 *****************************************************************************************************************/
 module uim.platform.appevents.presentation.cli.views.event_topic;
 
-import uim.platform.appevents.domain.entities.event_topic;
-import uim.platform.appevents.presentation.cli.models.event_topic;
-import std.stdio  : writeln, writefln;
-import std.conv   : to;
-import std.string : replicate;
+// import uim.platform.appevents.domain.entities.event_topic;
+// import uim.platform.appevents.presentation.cli.models.event_topic;
+// import std.stdio  : writeln, writefln;
+// import std.conv   : to;
+// import std.string : replicate;
+
+import uim.platform.appevents;
+
+// mixin(ShowModule!());
 
 @safe:
+
 
 class CliEventTopicView {
     void renderList(CliEventTopicModel model) {

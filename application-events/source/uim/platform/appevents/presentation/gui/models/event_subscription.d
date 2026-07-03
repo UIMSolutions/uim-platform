@@ -5,10 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.appevents.presentation.gui.models.event_subscription;
 
-import uim.platform.service;
-import uim.platform.appevents.domain.entities.event_subscription;
+// import uim.platform.service;
+// import uim.platform.appevents.domain.entities.event_subscription;
+
+import uim.platform.appevents;
+
+// mixin(ShowModule!());
 
 @safe:
+
 
 class GuiEventSubscriptionModel {
     private EventSubscription[] _items;

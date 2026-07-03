@@ -5,10 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.appevents.presentation.gui.models.dead_letter_entry;
 
-import uim.platform.service;
-import uim.platform.appevents.domain.entities.dead_letter_entry;
+// import uim.platform.service;
+// import uim.platform.appevents.domain.entities.dead_letter_entry;
+
+import uim.platform.appevents;
+
+// mixin(ShowModule!());
 
 @safe:
+
 
 class GuiDeadLetterEntryModel {
     private DeadLetterEntry[] _items;

@@ -5,10 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.appevents.presentation.gui.models.event_message;
 
-import uim.platform.service;
-import uim.platform.appevents.domain.entities.event_message;
+// import uim.platform.service;
+// import uim.platform.appevents.domain.entities.event_message;
+
+import uim.platform.appevents;
+
+// mixin(ShowModule!());
 
 @safe:
+
 
 class GuiEventMessageModel {
     private EventMessage[] _items;
