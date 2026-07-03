@@ -8,7 +8,12 @@ module uim.platform.appevents.infrastructure.config;
 import std.process : environment;
 
 
+import uim.platform.appevents;
+
+// mixin(ShowModule!());
+
 @safe:
+
 
 struct SrvConfig {
     string host      = "0.0.0.0";

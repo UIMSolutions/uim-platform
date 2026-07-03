@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.appevents.infrastructure.persistence.memory.dead_letter_entries;
 
-import uim.platform.service;
-import uim.platform.appevents.domain.entities.dead_letter_entry;
-import uim.platform.appevents.domain.repositories.dead_letter_entries;
-import uim.platform.appevents.domain.valueobjects;
-import uim.platform.appevents.domain.enums.dead_letter_status;
-import std.algorithm : filter;
-import std.array : array;
+// import uim.platform.service;
+// import uim.platform.appevents.domain.entities.dead_letter_entry;
+// import uim.platform.appevents.domain.repositories.dead_letter_entries;
+// import uim.platform.appevents.domain.valueobjects;
+// import uim.platform.appevents.domain.enums.dead_letter_status;
+// import std.algorithm : filter;
+// import std.array : array;
+// 
+import uim.platform.appevents;
+
+// mixin(ShowModule!());
 
 @safe:
 

@@ -5,13 +5,18 @@
 *****************************************************************************************************************/
 module uim.platform.appevents.presentation.cli.views.event_filter;
 
-import uim.platform.appevents.domain.entities.event_filter;
-import uim.platform.appevents.presentation.cli.models.event_filter;
-import std.stdio  : writeln, writefln;
-import std.conv   : to;
-import std.string : replicate;
+// import uim.platform.appevents.domain.entities.event_filter;
+// import uim.platform.appevents.presentation.cli.models.event_filter;
+// import std.stdio  : writeln, writefln;
+// import std.conv   : to;
+// import std.string : replicate;
+
+import uim.platform.appevents;
+
+// mixin(ShowModule!());
 
 @safe:
+
 
 class CliEventFilterView {
     void renderList(CliEventFilterModel model) {

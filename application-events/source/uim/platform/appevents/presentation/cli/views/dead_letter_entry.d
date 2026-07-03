@@ -5,13 +5,18 @@
 *****************************************************************************************************************/
 module uim.platform.appevents.presentation.cli.views.dead_letter_entry;
 
-import uim.platform.appevents.domain.entities.dead_letter_entry;
-import uim.platform.appevents.presentation.cli.models.dead_letter_entry;
-import std.stdio  : writeln, writefln;
-import std.conv   : to;
-import std.string : replicate;
+// import uim.platform.appevents.domain.entities.dead_letter_entry;
+// import uim.platform.appevents.presentation.cli.models.dead_letter_entry;
+// import std.stdio  : writeln, writefln;
+// import std.conv   : to;
+// import std.string : replicate;
+
+import uim.platform.appevents;
+
+// mixin(ShowModule!());
 
 @safe:
+
 
 class CliDeadLetterEntryView {
     void renderList(CliDeadLetterEntryModel model) {

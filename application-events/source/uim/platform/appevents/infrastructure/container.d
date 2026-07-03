@@ -5,15 +5,20 @@
 *****************************************************************************************************************/
 module uim.platform.appevents.infrastructure.container;
 
-import uim.platform.service;
-import uim.platform.appevents.application.usecases.manage;
-import uim.platform.appevents.infrastructure.config;
-import uim.platform.appevents.infrastructure.persistence.memory;
-import uim.platform.appevents.infrastructure.persistence.file;
-import uim.platform.appevents.infrastructure.persistence.mongodb;
-import uim.platform.appevents.presentation.http.controllers;
+// import uim.platform.service;
+// import uim.platform.appevents.application.usecases.manage;
+// import uim.platform.appevents.infrastructure.config;
+// import uim.platform.appevents.infrastructure.persistence.memory;
+// import uim.platform.appevents.infrastructure.persistence.file;
+// import uim.platform.appevents.infrastructure.persistence.mongodb;
+// import uim.platform.appevents.presentation.http.controllers;
+
+import uim.platform.appevents;
+
+// mixin(ShowModule!());
 
 @safe:
+
 
 struct Container {
     ManageEventSubscriptionsUseCase  eventSubscriptions;

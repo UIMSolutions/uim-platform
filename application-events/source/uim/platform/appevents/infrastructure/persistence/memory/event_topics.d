@@ -5,15 +5,20 @@
 *****************************************************************************************************************/
 module uim.platform.appevents.infrastructure.persistence.memory.event_topics;
 
-import uim.platform.service;
-import uim.platform.appevents.domain.entities.event_topic;
-import uim.platform.appevents.domain.repositories.event_topics;
-import uim.platform.appevents.domain.valueobjects;
-import uim.platform.appevents.domain.enums.topic_status;
-import std.algorithm : filter;
-import std.array : array;
+// import uim.platform.service;
+// import uim.platform.appevents.domain.entities.event_topic;
+// import uim.platform.appevents.domain.repositories.event_topics;
+// import uim.platform.appevents.domain.valueobjects;
+// import uim.platform.appevents.domain.enums.topic_status;
+// import std.algorithm : filter;
+// import std.array : array;
+
+import uim.platform.appevents;
+
+// mixin(ShowModule!());
 
 @safe:
+
 
 class MemoryEventTopicRepository
     : TenantRepository!(EventTopic, EventTopicId)

@@ -7,15 +7,49 @@ module uim.platform.appevents.domain.valueobjects;
 
 import uim.platform.service;
 
+// mixin(ShowModule!());
+
 @safe:
 
 // TenantId and UserId are provided by uim.platform.service
 
-struct EventSubscriptionId  { string value; mixin DomainId; }
-struct EventTopicId         { string value; mixin DomainId; }
-struct EventChannelId       { string value; mixin DomainId; }
-struct EventMessageId       { string value; mixin DomainId; }
-struct EventFilterId        { string value; mixin DomainId; }
-struct DeadLetterEntryId    { string value; mixin DomainId; }
-struct FormationId          { string value; mixin DomainId; }
-struct SystemRegistrationId { string value; mixin DomainId; }
+struct EventSubscriptionId  {
+    string value;
+    this(string value) { this.value = value; }
+    mixin IdTemplate;
+}
+struct EventTopicId         {
+    string value;
+    this(string value) { this.value = value; }
+    mixin IdTemplate;
+}
+struct EventChannelId       {
+    string value;
+    this(string value) { this.value = value; }
+    mixin IdTemplate;
+}
+struct EventMessageId       {
+    string value;
+    this(string value) { this.value = value; }
+    mixin IdTemplate;
+}
+struct EventFilterId        {
+    string value;
+    this(string value) { this.value = value; }
+    mixin IdTemplate;
+}
+struct DeadLetterEntryId    {
+    string value;
+    this(string value) { this.value = value; }
+    mixin IdTemplate;
+}
+struct FormationId          {
+    string value;
+    this(string value) { this.value = value; }
+    mixin IdTemplate;
+}
+struct SystemRegistrationId {
+    string value;
+    this(string value) { this.value = value; }
+    mixin IdTemplate;
+}

@@ -5,17 +5,22 @@
 *****************************************************************************************************************/
 module uim.platform.appevents.infrastructure.persistence.file.dead_letter_entries;
 
-import uim.platform.service;
-import uim.platform.appevents.domain.entities.dead_letter_entry;
-import uim.platform.appevents.domain.repositories.dead_letter_entries;
-import uim.platform.appevents.domain.valueobjects;
-import uim.platform.appevents.domain.enums.dead_letter_status;
-import uim.platform.appevents.infrastructure.persistence.memory.dead_letter_entries;
-import std.file : mkdirRecurse, write, readText, exists;
-import std.path : buildPath, dirName;
-import std.conv : to;
+// import uim.platform.service;
+// import uim.platform.appevents.domain.entities.dead_letter_entry;
+// import uim.platform.appevents.domain.repositories.dead_letter_entries;
+// import uim.platform.appevents.domain.valueobjects;
+// import uim.platform.appevents.domain.enums.dead_letter_status;
+// import uim.platform.appevents.infrastructure.persistence.memory.dead_letter_entries;
+// import std.file : mkdirRecurse, write, readText, exists;
+// import std.path : buildPath, dirName;
+// import std.conv : to;
+
+import uim.platform.appevents;
+
+// mixin(ShowModule!());
 
 @safe:
+
 
 class FileDeadLetterEntryRepository : MemoryDeadLetterEntryRepository, DeadLetterEntryRepository {
     private string _basePath;

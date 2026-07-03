@@ -5,14 +5,18 @@
 *****************************************************************************************************************/
 module uim.platform.appevents.infrastructure.persistence.memory.system_registrations;
 
-import uim.platform.service;
-import uim.platform.appevents.domain.entities.system_registration;
-import uim.platform.appevents.domain.repositories.system_registrations;
-import uim.platform.appevents.domain.valueobjects;
-import uim.platform.appevents.domain.enums.system_type;
-import uim.platform.appevents.domain.enums.system_status;
-import std.algorithm : filter;
-import std.array : array;
+// import uim.platform.service;
+// import uim.platform.appevents.domain.entities.system_registration;
+// import uim.platform.appevents.domain.repositories.system_registrations;
+// import uim.platform.appevents.domain.valueobjects;
+// import uim.platform.appevents.domain.enums.system_type;
+// import uim.platform.appevents.domain.enums.system_status;
+// import std.algorithm : filter;
+// import std.array : array;
+
+import uim.platform.appevents;
+
+// mixin(ShowModule!());
 
 @safe:
 

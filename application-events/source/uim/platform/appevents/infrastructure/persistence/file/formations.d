@@ -5,15 +5,19 @@
 *****************************************************************************************************************/
 module uim.platform.appevents.infrastructure.persistence.file.formations;
 
-import uim.platform.service;
-import uim.platform.appevents.domain.entities.formation;
-import uim.platform.appevents.domain.repositories.formations;
-import uim.platform.appevents.domain.valueobjects;
-import uim.platform.appevents.domain.enums.formation_status;
-import uim.platform.appevents.infrastructure.persistence.memory.formations;
-import std.file  : mkdirRecurse, write, readText, exists;
-import std.path  : buildPath, dirName;
-import std.conv  : to;
+// import uim.platform.service;
+// import uim.platform.appevents.domain.entities.formation;
+// import uim.platform.appevents.domain.repositories.formations;
+// import uim.platform.appevents.domain.valueobjects;
+// import uim.platform.appevents.domain.enums.formation_status;
+// import uim.platform.appevents.infrastructure.persistence.memory.formations;
+// import std.file  : mkdirRecurse, write, readText, exists;
+// import std.path  : buildPath, dirName;
+// import std.conv  : to;
+
+import uim.platform.appevents;
+
+// mixin(ShowModule!());
 
 @safe:
 

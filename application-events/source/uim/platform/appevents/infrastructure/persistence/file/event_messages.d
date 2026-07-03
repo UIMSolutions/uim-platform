@@ -5,15 +5,19 @@
 *****************************************************************************************************************/
 module uim.platform.appevents.infrastructure.persistence.file.event_messages;
 
-import uim.platform.service;
-import uim.platform.appevents.domain.entities.event_message;
-import uim.platform.appevents.domain.repositories.event_messages;
-import uim.platform.appevents.domain.valueobjects;
-import uim.platform.appevents.domain.enums.message_status;
-import uim.platform.appevents.infrastructure.persistence.memory.event_messages;
-import std.file  : mkdirRecurse, write, readText, exists;
-import std.path  : buildPath, dirName;
-import std.conv  : to;
+// import uim.platform.service;
+// import uim.platform.appevents.domain.entities.event_message;
+// import uim.platform.appevents.domain.repositories.event_messages;
+// import uim.platform.appevents.domain.valueobjects;
+// import uim.platform.appevents.domain.enums.message_status;
+// import uim.platform.appevents.infrastructure.persistence.memory.event_messages;
+// import std.file  : mkdirRecurse, write, readText, exists;
+// import std.path  : buildPath, dirName;
+// import std.conv  : to;
+// 
+import uim.platform.appevents;
+
+// mixin(ShowModule!());
 
 @safe:
 

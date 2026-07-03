@@ -5,13 +5,18 @@
 *****************************************************************************************************************/
 module uim.platform.appevents.presentation.cli.views.event_message;
 
-import uim.platform.appevents.domain.entities.event_message;
-import uim.platform.appevents.presentation.cli.models.event_message;
-import std.stdio  : writeln, writefln;
-import std.conv   : to;
-import std.string : replicate;
+// import uim.platform.appevents.domain.entities.event_message;
+// import uim.platform.appevents.presentation.cli.models.event_message;
+// import std.stdio  : writeln, writefln;
+// import std.conv   : to;
+// import std.string : replicate;
+
+import uim.platform.appevents;
+
+// mixin(ShowModule!());
 
 @safe:
+
 
 class CliEventMessageView {
     void renderList(CliEventMessageModel model) {

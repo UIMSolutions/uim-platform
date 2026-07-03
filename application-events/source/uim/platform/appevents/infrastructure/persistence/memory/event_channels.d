@@ -5,15 +5,20 @@
 *****************************************************************************************************************/
 module uim.platform.appevents.infrastructure.persistence.memory.event_channels;
 
-import uim.platform.service;
-import uim.platform.appevents.domain.entities.event_channel;
-import uim.platform.appevents.domain.repositories.event_channels;
-import uim.platform.appevents.domain.valueobjects;
-import uim.platform.appevents.domain.enums.channel_status;
-import std.algorithm : filter;
-import std.array : array;
+// import uim.platform.service;
+// import uim.platform.appevents.domain.entities.event_channel;
+// import uim.platform.appevents.domain.repositories.event_channels;
+// import uim.platform.appevents.domain.valueobjects;
+// import uim.platform.appevents.domain.enums.channel_status;
+// import std.algorithm : filter;
+// import std.array : array;
+
+@safe:import uim.platform.appevents;
+
+// mixin(ShowModule!());
 
 @safe:
+
 
 class MemoryEventChannelRepository
     : TenantRepository!(EventChannel, EventChannelId)

@@ -5,17 +5,21 @@
 *****************************************************************************************************************/
 module uim.platform.appevents.infrastructure.persistence.file.event_subscriptions;
 
-import uim.platform.service;
-import uim.platform.appevents.domain.entities.event_subscription;
-import uim.platform.appevents.domain.repositories.event_subscriptions;
-import uim.platform.appevents.domain.valueobjects;
-import uim.platform.appevents.domain.enums.subscription_status;
-import uim.platform.appevents.infrastructure.persistence.memory.event_subscriptions;
-import std.file : mkdirRecurse, write, readText, exists;
-import std.path : buildPath, dirName;
+// import uim.platform.service;
+// import uim.platform.appevents.domain.entities.event_subscription;
+// import uim.platform.appevents.domain.repositories.event_subscriptions;
+// import uim.platform.appevents.domain.valueobjects;
+// import uim.platform.appevents.domain.enums.subscription_status;
+// import uim.platform.appevents.infrastructure.persistence.memory.event_subscriptions;
+// import std.file : mkdirRecurse, write, readText, exists;
+// import std.path : buildPath, dirName;
+// 
+// import std.array : array;
+// import std.algorithm : filter;
 
-import std.array : array;
-import std.algorithm : filter;
+import uim.platform.appevents;
+
+// mixin(ShowModule!());
 
 @safe:
 
