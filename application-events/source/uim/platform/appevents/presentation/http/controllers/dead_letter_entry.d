@@ -5,15 +5,20 @@
 *****************************************************************************************************************/
 module uim.platform.appevents.presentation.http.controllers.dead_letter_entry;
 
-import uim.platform.service;
-import uim.platform.appevents.application.dto;
-import uim.platform.appevents.application.usecases.manage.dead_letter_entries;
-import uim.platform.appevents.domain.valueobjects;
+// import uim.platform.service;
+// import uim.platform.appevents.application.dto;
+// import uim.platform.appevents.application.usecases.manage.dead_letter_entries;
+// import uim.platform.appevents.domain.valueobjects;
 
-import std.array : array;
-import std.algorithm : map;
+// import std.array : array;
+// import std.algorithm : map;
+
+import uim.platform.appevents;
+
+// mixin(ShowModule!());
 
 @safe:
+
 
 class DeadLetterEntryController : ManageHttpController {
     private ManageDeadLetterEntriesUseCase _useCase;

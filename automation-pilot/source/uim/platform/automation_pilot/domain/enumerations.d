@@ -11,25 +11,60 @@ mixin(ShowModule!());
 
 @safe:
 
+enum CatalogType {
+    system,
+    custom
+}
+CatalogType toCatalogType(string s) {
+    mixin("CatalogType", "custom");
+}
+CatalogType[] toCatalogTypes(string[] s) {
+    return s.map!(toCatalogType).array;
+}
+string toString(CatalogType type) {
+    return type.to!string;
+}
+string[] toString(CatalogType[] types) {
+    return types.map!(toString).array;
+}
+///
+unittest {
+    assert(toCatalogType("system") == CatalogType.system);
+    assert(toCatalogType("custom") == CatalogType.custom);
+    assert(toCatalogType("") == CatalogType.custom);
+    assert(toCatalogType("unknown") == CatalogType.custom);
+
+    assert(toCatalogTypes(["system", "custom", "unknown"]) == [
+            CatalogType.system, CatalogType.custom, CatalogType.custom
+        ]);
+
+    assert(toString(CatalogType.system) == "system");
+    assert(toString(CatalogType.custom) == "custom");
+
+    assert(toStrings([CatalogType.system, CatalogType.custom]) == [
+            "system", "custom"
+        ]);
+}
+
 enum CatalogStatus {
     active,
     inactive,
     archived
 }
 
-CatalogStatus toCatalogStatus(string s) @safe {
+CatalogStatus toCatalogStatus(string s) {
     mixin("CatalogStatus", "active");
 }
 
-CatalogStatus[] toCatalogStatuses(string[] s) @safe {
+CatalogStatus[] toCatalogStatuses(string[] s) {
     return s.map!(toCatalogStatus).array;
 }
 
-string toString(CatalogStatus status) @safe {
+string toString(CatalogStatus status) {
     return status.to!string;
 }
 
-string[] toString(CatalogStatus[] statuses) @safe {
+string[] toString(CatalogStatus[] statuses) {
     return statuses.map!(toString).array;
 }
 ///
@@ -58,19 +93,19 @@ enum CommandType {
     script
 }
 
-CommandType toCommandType(string s) @safe {
+CommandType toCommandType(string s) {
     mixin(EnumSwitch("CommandType", "simple"));
 }
 
-CommandType[] toCommandTypes(string[] s) @safe {
+CommandType[] toCommandTypes(string[] s) {
     return s.map!(toCommandType).array;
 }
 
-string toString(CommandType type) @safe {
+string toString(CommandType type) {
     return type.to!string;
 }
 
-string[] toString(CommandType[] types) @safe {
+string[] toString(CommandType[] types) {
     return types.map!(toString).array;
 }
 ///
@@ -110,19 +145,19 @@ enum ExecutionStatus {
     timedOut
 }
 
-ExecutionStatus toExecutionStatus(string s) @safe {
+ExecutionStatus toExecutionStatus(string s) {
     mixin(EnumSwitch("ExecutionStatus", "pending"));
 }
 
-ExecutionStatus[] toExecutionStatuses(string[] s) @safe {
+ExecutionStatus[] toExecutionStatuses(string[] s) {
     return s.map!(toExecutionStatus).array;
 }
 
-string toString(ExecutionStatus status) @safe {
+string toString(ExecutionStatus status) {
     return status.to!string;
 }
 
-string[] toString(ExecutionStatus[] statuses) @safe {
+string[] toString(ExecutionStatus[] statuses) {
     return statuses.map!(toString).array;
 }
 ///
@@ -170,19 +205,19 @@ enum ExecutionPriority {
     critical
 }
 
-ExecutionPriority toExecutionPriority(string s) @safe {
+ExecutionPriority toExecutionPriority(string s) {
     mixin(EnumSwitch("ExecutionPriority", "medium"));
 }
 
-ExecutionPriority[] toExecutionPriorities(string[] s) @safe {
+ExecutionPriority[] toExecutionPriorities(string[] s) {
     return s.map!(toExecutionPriority).array;
 }
 
-string toString(ExecutionPriority priority) @safe {
+string toString(ExecutionPriority priority) {
     return priority.to!string;
 }
 
-string[] toString(ExecutionPriority[] priorities) @safe {
+string[] toString(ExecutionPriority[] priorities) {
     return priorities.map!(toString).array;
 }
 ///
@@ -219,19 +254,19 @@ enum ScheduleType {
     cron
 }
 
-ScheduleType toScheduleType(string s) @safe {
+ScheduleType toScheduleType(string s) {
     mixin(EnumSwitch("ScheduleType", "oneTime"));
 }
 
-ScheduleType[] toScheduleTypes(string[] s) @safe {
+ScheduleType[] toScheduleTypes(string[] s) {
     return s.map!(toScheduleType).array;
 }
 
-string toString(ScheduleType type) @safe {
+string toString(ScheduleType type) {
     return type.to!string;
 }
 
-string[] toString(ScheduleType[] types) @safe {
+string[] toString(ScheduleType[] types) {
     return types.map!(toString).array;
 }
 ///
@@ -264,19 +299,19 @@ enum ScheduleStatus {
     expired
 }
 
-ScheduleStatus toScheduleStatus(string s) @safe {
+ScheduleStatus toScheduleStatus(string s) {
     mixin(EnumSwitch("ScheduleStatus", "active"));
 }
 
-ScheduleStatus[] toScheduleStatuses(string[] s) @safe {
+ScheduleStatus[] toScheduleStatuses(string[] s) {
     return s.map!(toScheduleStatus).array;
 }
 
-string toString(ScheduleStatus status) @safe {
+string toString(ScheduleStatus status) {
     return status.to!string;
 }
 
-string[] toString(ScheduleStatus[] statuses) @safe {
+string[] toString(ScheduleStatus[] statuses) {
     return statuses.map!(toString).array;
 }
 ///
@@ -314,19 +349,19 @@ enum TriggerType {
     manual
 }
 
-TriggerType toTriggerType(string s) @safe {
+TriggerType toTriggerType(string s) {
     mixin(EnumSwitch("TriggerType", "event"));
 }
 
-TriggerType[] toTriggerTypes(string[] s) @safe {
+TriggerType[] toTriggerTypes(string[] s) {
     return s.map!(toTriggerType).array;
 }
 
-string toString(TriggerType type) @safe {
+string toString(TriggerType type) {
     return type.to!string;
 }
 
-string[] toString(TriggerType[] types) @safe {
+string[] toString(TriggerType[] types) {
     return types.map!(toString).array;
 }
 ///
@@ -355,23 +390,23 @@ unittest {
     ].toStrings == ["event", "webhook", "alertNotification", "manual"]);
 }
 
-h enum TriggerStatus {
+enum TriggerStatus {
     active,
     inactive,
     disabled
 }
-TriggerStatus toTriggerStatus {
+TriggerStatus toTriggerStatus(string value) {
     mixin(EnumSwitch("TriggerStatus", "active"));
 }
-TriggerStatus[] toTriggerStatuses(string[] s) @safe {
+TriggerStatus[] toTriggerStatuses(string[] s) {
     return s.map!(toTriggerStatus).array;
 }
 
-string toString(TriggerStatus status) @safe {
+string toString(TriggerStatus status) {
     return status.to!string;
 }
 
-string[] toString(TriggerStatus[] statuses) @safe {
+string[] toString(TriggerStatus[] statuses) {
     return statuses.map!(toString).array;
 }
 

@@ -5,10 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.appevents.presentation.gui.models.event_topic;
 
-import uim.platform.service;
-import uim.platform.appevents.domain.entities.event_topic;
+// import uim.platform.service;
+// import uim.platform.appevents.domain.entities.event_topic;
+
+import uim.platform.appevents;
+
+// mixin(ShowModule!());
 
 @safe:
+
 
 class GuiEventTopicModel {
     private EventTopic[] _items;

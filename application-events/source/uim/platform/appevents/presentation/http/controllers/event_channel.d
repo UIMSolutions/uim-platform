@@ -5,18 +5,23 @@
 *****************************************************************************************************************/
 module uim.platform.appevents.presentation.http.controllers.event_channel;
 
-import uim.platform.service;
-import uim.platform.appevents.application.dto;
-import uim.platform.appevents.application.usecases.manage.event_channels;
-import uim.platform.appevents.domain.valueobjects;
-import uim.platform.appevents.domain.enums.channel_type;
-import uim.platform.appevents.domain.enums.channel_status;
-import uim.platform.appevents.domain.enums.delivery_mode;
-import std.conv  : to;
-import std.array : array;
-import std.algorithm : map;
+// import uim.platform.service;
+// import uim.platform.appevents.application.dto;
+// import uim.platform.appevents.application.usecases.manage.event_channels;
+// import uim.platform.appevents.domain.valueobjects;
+// import uim.platform.appevents.domain.enums.channel_type;
+// import uim.platform.appevents.domain.enums.channel_status;
+// import uim.platform.appevents.domain.enums.delivery_mode;
+// import std.conv  : to;
+// import std.array : array;
+// import std.algorithm : map;
+
+import uim.platform.appevents;
+
+// mixin(ShowModule!());
 
 @safe:
+
 
 class EventChannelController : ManageHttpController {
     private ManageEventChannelsUseCase _useCase;
@@ -25,6 +30,7 @@ class EventChannelController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/appevents/channels",       &handleList);
         router.get("/api/v1/appevents/channels/*",     &handleGet);
         router.post("/api/v1/appevents/channels",      &handleCreate);

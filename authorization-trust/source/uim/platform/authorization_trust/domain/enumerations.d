@@ -113,7 +113,7 @@ enum IdpType {
   saml2,
   oidc,
 }
-IdpType toIdpType(string s) @safe {
+IdpType toIdpType(string value) @safe {
   mixin(EnumSwitch("IdpType", "saml2"));
 }
 IdpType[] toIdpTypes(string[] s) @safe {

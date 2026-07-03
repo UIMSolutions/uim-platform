@@ -5,10 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.appevents.presentation.gui.models.system_registration;
 
-import uim.platform.service;
-import uim.platform.appevents.domain.entities.system_registration;
+// import uim.platform.service;
+// import uim.platform.appevents.domain.entities.system_registration;
+
+import uim.platform.appevents;
+
+// mixin(ShowModule!());
 
 @safe:
+
 
 class GuiSystemRegistrationModel {
     private SystemRegistration[] _items;

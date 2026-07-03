@@ -5,7 +5,10 @@
 *****************************************************************************************************************/
 module uim.platform.appevents;
 
-public import uim.platform.appevents.domain;
-public import uim.platform.appevents.application;
-public import uim.platform.appevents.infrastructure;
-public import uim.platform.appevents.presentation;
+public:
+    import uim.platform.service;
+    
+    import uim.platform.appevents.domain;
+    import uim.platform.appevents.application;
+    import uim.platform.appevents.infrastructure;
+    import uim.platform.appevents.presentation;
