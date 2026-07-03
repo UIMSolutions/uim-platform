@@ -34,12 +34,8 @@ class ManageKeyringsUseCase { // TODO: UIMUseCase {
     if (credRepo.existsByName(r.tenantId, r.namespaceId, r.name, CredentialType.keyring))
       return CommandResult(false, "", "Keyring already exists in this namespace");
 
-    auto now = currentTimestamp();
-
     // Create keyring credential entry
-    Credential cred;
-    cred.initEntity(r.tenantId, r.createdBy);
-
+    auto cred = Credential(r.tenantId, r.credentialId.isNull ? CredentialId(createId) : r.credentialId, r.createdBy);
     cred.namespaceId = r.namespaceId;
     cred.name = r.name;
     cred.type = CredentialType.keyring;
@@ -62,7 +58,7 @@ class ManageKeyringsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult rotateKeyring(RotateKeyringRequest r) {
-    auto cred = credRepo.find(r.tenantId, r.keyringId);
+    auto cred = credRepo.findById(r.tenantId, r.keyringId);
     if (cred.isNull)
       return CommandResult(false, "", "Keyring not found");
     if (cred.type != CredentialType.keyring)

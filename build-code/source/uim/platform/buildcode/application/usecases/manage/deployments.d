@@ -24,8 +24,7 @@ class ManageDeploymentsUseCase {
         env = mixin("DeploymentEnvironment." ~ member);
     }
 
-    Deployment d;
-    d.initEntity(tenantId);
+    auto d = Deployment(tenantId, DeploymentId(createId), req.createdBy);
     d.projectId         = ProjectId(req.projectId);
     d.buildJobId        = BuildJobId(req.buildJobId);
     d.artifactVersion   = req.artifactVersion;
@@ -40,8 +39,8 @@ class ManageDeploymentsUseCase {
     return CommandResult(true, d.id.value, "");
   }
 
-  Deployment getById(TenantId tenantId, string id) {
-    return _repo.findById(tenantId, DeploymentId(id));
+  Deployment getById(TenantId tenantId, DeploymentId id) {
+    return _repo.findById(tenantId, id);
   }
 
   Deployment[] list(TenantId tenantId) {

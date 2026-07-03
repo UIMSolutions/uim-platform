@@ -83,6 +83,7 @@ struct StartExportRequest {
   ContentPackageId packageId;
   TransportRequestId requestId;
   TransportQueueId queueId;
+  ExportJobId jobId;
   UserId startedBy;
 }
 /// --- Import Job DTOs ---
@@ -91,6 +92,7 @@ struct StartImportRequest {
   TenantId tenantId;
   ContentPackageId packageId;
   TransportRequestId requestId;
+  ImportJobId jobId;
   string sourceFilePath;
   UserId startedBy;
 }

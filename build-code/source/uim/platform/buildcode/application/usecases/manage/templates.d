@@ -29,8 +29,7 @@ class ManageTemplatesUseCase {
         tstack = mixin("TechStack." ~ member);
     }
 
-    ProjectTemplate t;
-    t.initEntity(tenantId);
+    auto t = ProjectTemplate(tenantId);
     t.name        = req.name;
     t.displayName = req.displayName;
     t.description = req.description;

@@ -66,9 +66,7 @@ class ModelTrainer {
     configRepo.update(config);
 
     // Create training job
-    TrainingJob job;
-    job.initEntity(tenantId, userId);
-
+    auto job = TrainingJob(tenantId, TrainingJob(createId), userId);
     job.modelConfigId = configId;
     job.status = JobStatus.running;
     job.totalEpochs = 10;

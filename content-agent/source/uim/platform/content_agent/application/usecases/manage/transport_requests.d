@@ -92,7 +92,7 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Transport request is not in a releasable state");
 
     tr.status = TransportStatus.released;
-    tr.releasedAt = clockSeconds();
+    tr.releasedAt = currentTimestamp;
     tr.updatedAt = tr.releasedAt;
 
     requestRepo.update(tr);

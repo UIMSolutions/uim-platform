@@ -29,8 +29,7 @@ class ManagePrivateKeysUseCase { // TODO: UIMUseCase {
         if (repo.existsById(r.tenantId, r.privateKeyId))
             return CommandResult(false, "", "Key already exists");
 
-        auto k = PrivateKey(r.tenantId, r.createdBy);
-        k.id = r.privateKeyId;
+        auto k = PrivateKey(r.tenantId, r.privateKeyId, r.createdBy);
         k.subject = r.subject;
         k.domains = r.domains;
         k.keySize = r.keySize > 0 ? r.keySize : 2048;

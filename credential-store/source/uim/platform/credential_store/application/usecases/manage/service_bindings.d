@@ -23,7 +23,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
   }
 
   ServiceBindingResponse createServiceBinding(CreateServiceBindingRequest r) {
-    auto binding = ServiceBinding(r.tenantId, r.serviceBindingId.isNull ? ServiceBindingId(createId()) : r.serviceBindingId, r.createdBy);
+    auto binding = ServiceBinding(r.tenantId, r.bindingId.isNull ? ServiceBindingId(createId()) : r.bindingId, r.createdBy);
     binding.name = r.name;
     binding.description = r.description;
     binding.clientId = randomUUID().toString;
@@ -37,7 +37,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
     bindings.save(binding);
 
     ServiceBindingResponse resp;
-    resp.serviceBindingId = binding.id;
+    resp.bindingId = binding.id;
     resp.name = binding.name;
     resp.clientId = binding.clientId;
     resp.clientSecret = binding.clientSecret; // only returned on creation
@@ -50,7 +50,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateServiceBinding(UpdateServiceBindingRequest r) {
-    auto binding = bindings.find(r.tenantId, r.serviceBindingId);
+    auto binding = bindings.findById(r.tenantId, r.bindingId);
     if (binding.isNull)
       return CommandResult(false, "", "Service binding not found");
 

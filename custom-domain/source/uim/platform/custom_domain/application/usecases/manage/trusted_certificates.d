@@ -30,10 +30,7 @@ class ManageTrustedCertificatesUseCase { // TODO: UIMUseCase {
         if (!existing.isNull)
             return CommandResult(false, "", "Trusted certificate already exists");
 
-        TrustedCertificate c;
-        c.initEntity(r.tenantId, r.createdBy);
-
-        c.id = r.trustedCertificateId;
+        auto c = TrustedCertificate(r.tenantId, r.trustedCertificateId, r.createdBy);
         c.customDomainId = r.customDomainId;
         c.certificatePem = r.certificatePem;
         c.status = TrustedCertificateStatus.active;

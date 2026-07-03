@@ -29,10 +29,10 @@ struct TransportValidator {
     if (request.packageIds.length == 0)
       errors ~= "Transport request must reference at least one package";
 
-    if (request.sourceSubaccount.length == 0)
+    if (request.sourceSubaccount.isNull)
       errors ~= "Source subaccount is required";
 
-    if (request.targetSubaccount.length == 0)
+    if (request.targetSubaccount.isNull)
       errors ~= "Target subaccount is required";
 
     if (request.sourceSubaccount == request.targetSubaccount)

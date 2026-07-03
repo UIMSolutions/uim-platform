@@ -75,13 +75,13 @@ class BindingController : ManageHttpController {
     r.createdBy = UserId(data.getString("createdBy"));
 
     auto binding = bindings.createServiceBinding(r);
-    if (binding.serviceBindingId.isNull)
+    if (binding.bindingId.isNull)
       return errorResponse("Failed to create service binding", 400);
 
     // Return binding credentials (only shown once at creation)
     auto resp = Json.emptyObject
       .set("entity", "ServiceBinding")
-      .set("id", binding.serviceBindingId)
+      .set("id", binding.bindingId)
       .set("name", binding.name)
       .set("clientId", binding.clientId)
       .set("clientSecret", binding.clientSecret)
@@ -134,7 +134,7 @@ class BindingController : ManageHttpController {
     auto data = precheck.data;
 
     UpdateServiceBindingRequest r;
-    r.serviceBindingId = id;
+    r.bindingId = id;
     r.tenantId = tenantId;
     r.description = data.getString("description");
     r.permission = data.getString("permission");

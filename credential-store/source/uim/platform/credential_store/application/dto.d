@@ -13,6 +13,7 @@ import uim.platform.credential_store;
 // Namespace DTOs
 struct CreateNamespaceRequest {
   TenantId tenantId;
+  NamespaceId namespaceId;
   string name;
   string description;
   UserId createdBy;
@@ -27,6 +28,8 @@ struct UpdateNamespaceRequest {
 struct CreateCredentialRequest {
   TenantId tenantId;
   NamespaceId namespaceId;
+  CredentialId credentialId;
+
   string name;
   string type;       // "password", "key", "keyring"
   string value;
@@ -66,6 +69,8 @@ struct CredentialResponse {
 struct CreateKeyringRequest {
   TenantId tenantId;
   NamespaceId namespaceId;
+  CredentialId credentialId;
+
   string name;
   string metadata;
   string format;
@@ -124,6 +129,8 @@ struct DecryptDekResponse {
 // Service Binding DTOs
 struct CreateServiceBindingRequest {
   TenantId tenantId;
+  ServiceBindingId bindingId;
+
   string name;
   string description;
   string permission;       // "readOnly", "readWrite", "admin"
@@ -133,7 +140,7 @@ struct CreateServiceBindingRequest {
 }
 
 struct UpdateServiceBindingRequest {
-  ServiceBindingId serviceBindingId;
+  ServiceBindingId bindingId;
   TenantId tenantId;
   
   string description;
@@ -143,7 +150,7 @@ struct UpdateServiceBindingRequest {
 }
 
 struct ServiceBindingResponse {
-  ServiceBindingId serviceBindingId;
+  ServiceBindingId bindingId;
   string name;
   string clientId;
   string clientSecret;     // only returned on creation

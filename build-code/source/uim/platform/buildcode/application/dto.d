@@ -133,6 +133,7 @@ struct AIGenerateRequest {
 
 struct CreateServiceBindingRequest {
   TenantId tenantId;
+  ServiceBindingId bindingId;
 
   string   projectId;
   string   serviceName;

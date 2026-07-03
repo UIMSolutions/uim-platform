@@ -30,7 +30,7 @@ class ManageNamespacesUseCase { // TODO: UIMUseCase {
     if (namespaces.existsByName(r.tenantId, r.name))
       return CommandResult(false, "", "Namespace already exists");
 
-    auto ns = Namespace(r.tenantId, r.createdBy);
+    auto ns = Namespace(r.tenantId, r.namespaceId.isNull ? NamespaceId(createId()) : r.namespaceId, r.createdBy);
     ns.name = r.name;
     ns.description = r.description;
 
@@ -39,7 +39,7 @@ class ManageNamespacesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateNamespace(UpdateNamespaceRequest r) {
-    auto ns = namespaces.find(r.tenantId, r.namespaceId);
+    auto ns = namespaces.findById(r.tenantId, r.namespaceId);
     if (ns.isNull)
       return CommandResult(false, "", "Namespace not found");
 

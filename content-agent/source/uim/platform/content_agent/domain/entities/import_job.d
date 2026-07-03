@@ -34,6 +34,6 @@ struct ImportJob {
       .set("startedAt", startedAt)
       .set("completedAt", completedAt)
       .set("errorMessage", errorMessage)
-      .set("deployedItems", deployedItems);
+      .set("deployedItems", deployedItems.toJson);
   }
 }

@@ -26,10 +26,7 @@ class ManageTlsConfigurationsUseCase { // TODO: UIMUseCase {
         if (repo.existsById(r.tenantId, r.tlsConfigurationId))
             return CommandResult(false, "", "TLS configuration already exists");
 
-        TlsConfiguration c;
-        c.initEntity(r.tenantId, r.createdBy);
-
-        c.id = r.tlsConfigurationId;
+        auto c = TlsConfiguration(r.tenantId, r.tlsConfigurationId, r.createdBy);
         c.name = r.name;
         c.description = r.description;
         c.http2Enabled = r.http2Enabled;

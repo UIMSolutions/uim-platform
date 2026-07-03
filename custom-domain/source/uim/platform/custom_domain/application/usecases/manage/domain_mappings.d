@@ -35,8 +35,7 @@ class ManageDomainMappingsUseCase { // TODO: UIMUseCase {
         if (!byRoute.isNull)
             return CommandResult(false, "", "Custom route already mapped");
 
-        auto m = DomainMapping(r.tenantId, r.createdBy);
-        m.id = r.domainMappingId;
+        auto m = DomainMapping(r.tenantId, r.domainMappingId, r.createdBy);
         m.customDomainId = r.customDomainId;
         m.standardRoute = r.standardRoute;
         m.customRoute = r.customRoute;

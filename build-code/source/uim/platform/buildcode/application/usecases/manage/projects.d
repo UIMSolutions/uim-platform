@@ -49,8 +49,7 @@ class ManageProjectsUseCase {
         tstack = mixin("TechStack." ~ member);
     }
 
-    Project p;
-    p.initEntity(tenantId);
+    auto p = Project(tenantId);
     p.name           = req.name;
     p.description    = req.description;
     p.type           = ptype;

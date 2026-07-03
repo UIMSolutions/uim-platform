@@ -26,7 +26,7 @@ class ManageDevSpacesUseCase {
     auto qerr = _quota.checkDevSpaceQuota(existing.length);
     if (qerr !is null) return CommandResult(false, "", qerr);
 
-    DevSpace ds;
+    auto ds = DevSpace(tenantId); // , DevSpaceId(createId), req.createdBy);
     ds.initEntity(tenantId);
     ds.projectId     = ProjectId(req.projectId);
     ds.name          = req.name;

@@ -28,7 +28,7 @@ struct ContentItem {
       .set("providerId", providerId)
       .set("version", version_)
       .set("description", description)
-      .set("dependencies", dependencies);
+      .set("dependencies", dependencies.toJson);
   }
 }
 /// A package containing bundled content for transport across landscapes.

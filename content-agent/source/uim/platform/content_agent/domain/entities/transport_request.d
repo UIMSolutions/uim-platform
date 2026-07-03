@@ -30,7 +30,7 @@ struct TransportRequest {
       .set("description", description)
       .set("status", status.to!string)
       .set("mode", mode.to!string)
-      .set("packageIds", packageIds)
+      .set("packageIds", packageIds.toString)
       .set("queueId", queueId)
       .set("errorMessage", errorMessage);
   }
