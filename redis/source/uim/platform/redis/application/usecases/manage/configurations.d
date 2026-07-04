@@ -34,9 +34,7 @@ class ManageConfigurationsUseCase {
         if (!existing.isNull)
             return CommandResult(false, "", "Configuration already exists for this instance");
 
-        Configuration e;
-        e.initEntity(dto.tenantId, dto.createdBy);
-        e.id = dto.configurationId;
+        auto e = Configuration(dto.tenantId, dto.configurationId, dto.createdBy);
         e.instanceId = dto.instanceId;
         e.maxMemoryPolicy = dto.maxMemoryPolicy;
         e.timeout_ = dto.timeout_;

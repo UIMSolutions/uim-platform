@@ -20,15 +20,14 @@ class ManageVisibilitiesUseCase { // TODO: UIMUseCase {
     CommandResult createVisibility(CreateVisibilityRequest r) {
         if (r.visibilityId.isEmpty)
             return CommandResult(false, "", "Visibility ID is required");
+            
         if (r.name.length == 0)
             return CommandResult(false, "", "Visibility name is required");
 
         if (repo.existsById(r.tenantId, r.visibilityId))
             return CommandResult(false, "", "Visibility dashboard already exists");
 
-        Visibility v;
-        v.initEntity(r.tenantId, r.createdBy);
-        v.id = r.visibilityId;
+        auto v = Visibility(r.tenantId, r.visibilityId, r.createdBy);
         v.name = r.name;
         v.description = r.description;
         v.status = VisibilityStatus.active;

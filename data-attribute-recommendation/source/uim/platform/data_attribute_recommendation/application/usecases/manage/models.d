@@ -45,9 +45,7 @@ class ManageModelsUseCase { // TODO: UIMUseCase {
     if (!existing.isNull)
       return CommandResult(false, "", "Model configuration with this name already exists");
 
-    ModelConfiguration config;
-    config.initEntity(req.tenantId, req.createdBy);
- 
+    auto config = ModelConfiguration(req.tenantId, req.configId.isNull ? ModelConfigurationId(createId()) : req.configId, req.createdBy); 
     config.datasetId = req.datasetId;
     config.name = req.name;
     config.description = req.description;

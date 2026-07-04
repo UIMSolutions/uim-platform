@@ -18,7 +18,7 @@ enum DatasetStatus {
   completed,
   failed
 }
-DatasetStatus toDatasetStatus(string s) {
+DatasetStatus toDatasetStatus(string value) {
   mixin(EnumSwitch("DatasetStatus", "draft"));
 }
 DatasetStatus[] toDatasetStatuses(string[] values) {

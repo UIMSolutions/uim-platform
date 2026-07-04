@@ -26,9 +26,7 @@ class ManageProcessesUseCase { // TODO: UIMUseCase {
         if (!existing.isNull)
             return CommandResult(false, "", "Process already exists");
 
-        Process p;
-        p.initEntity(r.tenantId, r.createdBy);
-        p.id = r.processId;
+        auto p = Process(r.tenantId, r.processId, r.createdBy);
         p.projectId = r.projectId;
         p.name = r.name;
         p.description = r.description;

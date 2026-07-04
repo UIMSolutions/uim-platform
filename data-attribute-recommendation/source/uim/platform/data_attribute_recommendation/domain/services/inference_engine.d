@@ -57,9 +57,7 @@ class InferenceEngine {
     requestRepo.update(request);
 
     // Simulate prediction
-    InferenceResult result;
-    result.initEntity(tenantId, request.createdBy);
-
+    auto result = InferenceResult(tenantId, InferenceResultId(createId), request.createdBy);
     result.requestId = request.id;
     result.predictions = `{"category":"Electronics","subcategory":"Smartphones","brand":"Generic"}`;
     result.confidenceScores = `{"category":0.95,"subcategory":0.87,"brand":0.72}`;

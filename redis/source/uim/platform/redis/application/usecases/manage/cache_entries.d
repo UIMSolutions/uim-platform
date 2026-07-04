@@ -36,9 +36,7 @@ class ManageCacheEntriesUseCase {
         if (repo.keyExists(dto.tenantId, dto.instanceId, dto.key))
             return CommandResult(false, "", "Cache key already exists in this instance");
 
-        CacheEntry e;
-        e.initEntity(dto.tenantId, dto.createdBy);
-        e.id = dto.cacheEntryId;
+        auto e = CacheEntry(dto.tenantId, dto.cacheEntryId, dto.createdBy);
         e.instanceId = dto.instanceId;
         e.key = dto.key;
         e.value = dto.value;

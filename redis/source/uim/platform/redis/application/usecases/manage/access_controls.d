@@ -36,9 +36,7 @@ class ManageAccessControlsUseCase {
         if (repo.cidrExists(dto.tenantId, dto.instanceId, dto.cidr))
             return CommandResult(false, "", "CIDR already exists for this instance");
 
-        AccessControl e;
-        e.initEntity(dto.tenantId, dto.createdBy);
-        e.id = dto.accessControlId;
+        auto e = AccessControl(dto.tenantId, dto.accessControlId, dto.createdBy);
         e.instanceId = dto.instanceId;
         e.cidr = dto.cidr;
         e.description = dto.description;

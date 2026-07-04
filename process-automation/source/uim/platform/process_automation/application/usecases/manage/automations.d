@@ -27,9 +27,7 @@ class ManageAutomationsUseCase { // TODO: UIMUseCase {
         if (!existing.isNull)
             return CommandResult(false, "", "Automation already exists");
 
-        Automation a;
-        a.initEntity(r.tenantId, r.createdBy);
-        a.id = r.automationId;
+        auto a = Automation(r.tenantId, r.automationId, r.createdBy);
         a.projectId = r.projectId;
         a.name = r.name;
         a.description = r.description;

@@ -22,8 +22,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
         if (err.length > 0)
             return CommandResult(false, "", err);
 
-        PATask t;
-        t.initEntity(r.tenantId); // TODO: createdBy);
+        auto t = repo.findById(r.tenantId);
         t.id = r.taskId;
         t.processInstanceId = r.processInstanceId;
         t.name = r.name;

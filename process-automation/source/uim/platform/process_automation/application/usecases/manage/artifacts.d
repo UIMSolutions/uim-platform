@@ -27,9 +27,7 @@ class ManageArtifactsUseCase { // TODO: UIMUseCase {
         if (!existing.isNull)
             return CommandResult(false, "", "Artifact already exists");
 
-        Artifact a;
-        a.initEntity(r.tenantId, r.createdBy);
-        a.id = r.artifactId;
+        auto a = Artifact(r.tenantId, r.artifactId, r.createdBy);
         a.name = r.name;
         a.description = r.description;
         a.status = ArtifactStatus.available;

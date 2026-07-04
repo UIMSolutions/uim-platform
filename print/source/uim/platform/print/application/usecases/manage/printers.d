@@ -31,9 +31,7 @@ class ManagePrintersUseCase {
     }
 
     CommandResult createPrinter(PrinterDTO dto) {
-        Printer printer;
-        printer.initEntity(dto.tenantId, dto.createdBy);
-        printer.id = dto.printerId;
+        auto printer = Printer(dto.tenantId, dto.printerId, dto.createdBy);
         printer.name = dto.name;
         printer.description = dto.description;
         printer.host = dto.host;

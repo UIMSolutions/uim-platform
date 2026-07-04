@@ -27,9 +27,7 @@ class ManageFormsUseCase { // TODO: UIMUseCase {
         if (!existing.isNull)
             return CommandResult(false, "", "Form already exists");
 
-        Form f;
-        f.initEntity(r.tenantId, r.createdBy);
-        f.id = r.formId;
+        auto f = Form(r.tenantId, r.formId, r.createdBy);
         f.projectId = r.projectId;
         f.name = r.name;
         f.description = r.description;

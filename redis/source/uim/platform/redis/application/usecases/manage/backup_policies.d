@@ -33,9 +33,7 @@ class ManageBackupPoliciesUseCase {
         if (!existing.isNull)
             return CommandResult(false, "", "Backup policy already exists for this instance");
 
-        BackupPolicy e;
-        e.initEntity(dto.tenantId, dto.createdBy);
-        e.id = dto.backupPolicyId;
+        auto e = BackupPolicy(dto.tenantId, dto.backupPolicyId, dto.createdBy);
         e.instanceId = dto.instanceId;
         e.enabled = dto.enabled;
         e.intervalHours = dto.intervalHours;
