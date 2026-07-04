@@ -13,7 +13,7 @@ module uim.platform.content_agent.application.usecases.manage.content_providers;
 
 import uim.platform.content_agent;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Application service for content provider registration and management.

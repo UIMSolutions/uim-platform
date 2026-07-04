@@ -7,7 +7,7 @@ module uim.platform.content_agent.domain.entities.content_provider;
 
 import uim.platform.content_agent;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Describes a content type offered by a provider.

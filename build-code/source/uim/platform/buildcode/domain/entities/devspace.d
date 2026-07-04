@@ -8,7 +8,7 @@ module uim.platform.buildcode.domain.entities.devspace;
 import uim.platform.buildcode;
 
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

@@ -10,7 +10,7 @@ module uim.platform.connectivity.infrastructure.persistence.memory.connectivity_
 
 import uim.platform.connectivity;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryConnectivityLogRepository : TenantRepository!(ConnectivityLog, ConnectivityLogId), ConnectivityLogRepository {

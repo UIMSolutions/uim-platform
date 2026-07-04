@@ -7,7 +7,7 @@ module uim.platform.connectivity.domain.entities.cloud_connector;
 // import uim.platform.connectivity.domain.types;
 import uim.platform.connectivity;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// On-premise Cloud Connector registration.

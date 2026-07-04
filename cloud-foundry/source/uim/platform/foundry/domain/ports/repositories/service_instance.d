@@ -5,11 +5,11 @@
 *****************************************************************************************************************/
 module uim.platform.foundry.domain.ports.repositories.service_instance;
 
-// import uim.platform.foundry.domain.types;
+
 // import uim.platform.foundry.domain.entities.service_instance;
 import uim.platform.foundry;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Port for persisting and querying service instances.

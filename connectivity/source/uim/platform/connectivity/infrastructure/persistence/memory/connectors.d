@@ -9,7 +9,7 @@ module uim.platform.connectivity.infrastructure.persistence.memory.connectors;
 // import uim.platform.connectivity.domain.ports.repositories.connectors;
 import uim.platform.connectivity;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryConnectorRepository : TenantRepository!(CloudConnector, ConnectorId), ConnectorRepository {

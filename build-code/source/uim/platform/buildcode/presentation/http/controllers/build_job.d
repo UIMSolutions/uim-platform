@@ -7,7 +7,7 @@ module uim.platform.buildcode.presentation.http.controllers.build_job;
 
 import uim.platform.buildcode;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

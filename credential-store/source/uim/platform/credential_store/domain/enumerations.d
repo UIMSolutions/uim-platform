@@ -1,7 +1,7 @@
 module uim.platform.credential_store.domain.enumerations;
 import uim.platform.credential_store;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 // Credential types: password (text), key (binary), keyring (KEK for DEK encryption)

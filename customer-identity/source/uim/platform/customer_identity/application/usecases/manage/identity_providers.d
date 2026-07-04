@@ -7,7 +7,7 @@ module uim.platform.customer_identity.application.usecases.manage.identity_provi
 
 import uim.platform.customer_identity;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

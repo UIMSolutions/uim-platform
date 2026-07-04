@@ -10,7 +10,7 @@ module uim.platform.connectivity.presentation.http.controllers.channel;
 // import uim.platform.connectivity.domain.entities.service_channel;
 import uim.platform.connectivity;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class ChannelController : ManageHttpController {

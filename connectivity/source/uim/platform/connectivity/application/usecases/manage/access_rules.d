@@ -11,7 +11,7 @@ module uim.platform.connectivity.application.usecases.manage.access_rules;
 // import uim.platform.connectivity.domain.types;
 import uim.platform.connectivity;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Application service for access rule CRUD.

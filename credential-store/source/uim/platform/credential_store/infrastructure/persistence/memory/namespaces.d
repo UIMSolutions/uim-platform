@@ -10,7 +10,7 @@ module uim.platform.credential_store.infrastructure.persistence.memory.namespace
  
 import uim.platform.credential_store;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryNamespaceRepository : TenantRepository!(Namespace, NamespaceId), NamespaceRepository {

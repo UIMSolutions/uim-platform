@@ -10,7 +10,7 @@ module uim.platform.credential_store.infrastructure.persistence.memory.keyring_v
  
 import uim.platform.credential_store;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryKeyringVersionRepository : TenantRepository!(KeyringVersion, KeyringVersionId), KeyringVersionRepository {

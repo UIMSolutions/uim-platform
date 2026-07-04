@@ -9,7 +9,7 @@ module uim.platform.credential_store.presentation.http.controllers.namespace;
 
 import uim.platform.credential_store;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

@@ -9,7 +9,7 @@ module uim.platform.connectivity.infrastructure.persistence.memory.destinations;
 // import uim.platform.connectivity.domain.ports.repositories.destinations;
 import uim.platform.connectivity;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryDestinationRepository : TenantRepository!(Destination, DestinationId), DestinationRepository {

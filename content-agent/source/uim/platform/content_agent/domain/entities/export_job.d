@@ -7,7 +7,7 @@ module uim.platform.content_agent.domain.entities.export_job;
 
 import uim.platform.content_agent;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// An export operation that packages and ships content to a transport queue or file.

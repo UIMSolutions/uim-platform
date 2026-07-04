@@ -11,7 +11,7 @@ module uim.platform.connectivity.presentation.http.controllers.monitoring;
 
 import uim.platform.connectivity;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

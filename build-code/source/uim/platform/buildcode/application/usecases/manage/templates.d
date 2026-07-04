@@ -8,7 +8,7 @@ module uim.platform.buildcode.application.usecases.manage.templates;
 import uim.platform.buildcode;
 
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

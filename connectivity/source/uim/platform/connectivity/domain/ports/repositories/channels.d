@@ -8,7 +8,7 @@ module uim.platform.connectivity.domain.ports.repositories.channels;
 // import uim.platform.connectivity.domain.types;
 import uim.platform.connectivity;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing - service channel persistence.

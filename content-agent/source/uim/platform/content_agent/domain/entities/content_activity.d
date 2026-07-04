@@ -7,7 +7,7 @@ module uim.platform.content_agent.domain.entities.content_activity;
 
 import uim.platform.content_agent;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Audit record for a content operation.

@@ -7,7 +7,7 @@ module uim.platform.customer_identity.presentation.http.controllers.customer;
 
 import uim.platform.customer_identity;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

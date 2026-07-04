@@ -6,7 +6,7 @@
 module uim.platform.foundry.domain.enumerations.privatekey;
 import uim.platform.foundry;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Represents the algorithm used for a private key.

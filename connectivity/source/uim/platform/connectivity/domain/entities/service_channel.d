@@ -7,7 +7,7 @@ module uim.platform.connectivity.domain.entities.service_channel;
 // import uim.platform.connectivity.domain.types;
 import uim.platform.connectivity;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Tunnel / service channel between cloud and on-premise.

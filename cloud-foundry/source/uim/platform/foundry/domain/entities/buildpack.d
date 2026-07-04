@@ -5,10 +5,10 @@
 *****************************************************************************************************************/
 module uim.platform.foundry.domain.entities.buildpack;
 
-// import uim.platform.foundry.domain.types;
+
 import uim.platform.foundry;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// A buildpack — provides the runtime detection, compilation, and start

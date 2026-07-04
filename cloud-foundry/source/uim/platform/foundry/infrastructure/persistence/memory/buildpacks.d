@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.foundry.infrastructure.persistence.memory.buildpacks;
 
-// import uim.platform.foundry.domain.types;
+
 // import uim.platform.foundry.domain.entities.buildpack;
 // import uim.platform.foundry.domain.ports.repositories.buildpack;
 
@@ -13,7 +13,7 @@ module uim.platform.foundry.infrastructure.persistence.memory.buildpacks;
  
 import uim.platform.foundry;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryBuildpackRepository : TenantRepository!(Buildpack, BuildpackId), IBuildpackRepository {

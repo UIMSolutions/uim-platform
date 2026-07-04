@@ -10,7 +10,7 @@ module app;
 
 import uim.platform.foundry;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 @safe:

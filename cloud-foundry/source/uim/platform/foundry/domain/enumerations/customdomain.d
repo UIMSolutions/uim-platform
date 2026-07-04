@@ -6,7 +6,7 @@
 module uim.platform.foundry.domain.enumerations.customdomain;
 import uim.platform.foundry;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 enum DomainStatus {
     // Used for domains that have been registered but are not yet active or in use, which may require additional configuration or verification before they can be used

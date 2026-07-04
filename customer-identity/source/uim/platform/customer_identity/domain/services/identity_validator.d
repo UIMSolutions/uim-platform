@@ -7,7 +7,7 @@ module uim.platform.customer_identity.domain.services.identity_validator;
 
 import uim.platform.customer_identity;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

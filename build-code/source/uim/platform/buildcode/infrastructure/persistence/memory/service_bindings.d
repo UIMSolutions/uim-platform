@@ -7,7 +7,7 @@ module uim.platform.buildcode.infrastructure.persistence.memory.service_bindings
 
 import uim.platform.buildcode;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

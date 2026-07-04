@@ -11,7 +11,7 @@ module uim.platform.content_agent.application.usecases.monitor_activities;
 
 import uim.platform.content_agent;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Application service for viewing content operation activities.

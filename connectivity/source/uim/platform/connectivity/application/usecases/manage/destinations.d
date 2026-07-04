@@ -14,7 +14,7 @@ module uim.platform.connectivity.application.usecases.manage.destinations;
 // 
 import uim.platform.connectivity;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Application service for destination CRUD and lookup.

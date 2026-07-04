@@ -8,7 +8,7 @@ module uim.platform.credential_store.domain.services.credential_validator;
 // import std.regex : regex, matchAll;
 import uim.platform.credential_store;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 struct CredentialValidator {

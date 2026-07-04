@@ -6,14 +6,14 @@
 module uim.platform.foundry.application.usecases.manage.buildpacks;
 
 
-// import uim.platform.foundry.domain.types;
+
 // import uim.platform.foundry.domain.entities.buildpack;
 // import uim.platform.foundry.domain.ports.repositories.buildpack;
 
 // import uim.platform.foundry.application.dto;
 import uim.platform.foundry;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class ManageBuildpacksUseCase { // TODO: UIMUseCase {

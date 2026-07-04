@@ -8,7 +8,7 @@ module uim.platform.buildcode.domain.entities.pipeline;
 import uim.platform.buildcode;
 
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

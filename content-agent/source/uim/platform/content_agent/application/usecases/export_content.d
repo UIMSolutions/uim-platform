@@ -15,7 +15,7 @@ module uim.platform.content_agent.application.usecases.export_content;
 
 import uim.platform.content_agent;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Application service for exporting content packages.

@@ -10,7 +10,7 @@ module uim.platform.connectivity.presentation.http.controllers.connector;
 // import uim.platform.connectivity.domain.entities.cloud_connector;
 import uim.platform.connectivity;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class ConnectorController : ManageHttpController {

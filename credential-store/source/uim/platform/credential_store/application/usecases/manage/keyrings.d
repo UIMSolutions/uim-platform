@@ -15,7 +15,7 @@ module uim.platform.credential_store.application.usecases.manage.keyrings;
 
 import uim.platform.credential_store;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class ManageKeyringsUseCase { // TODO: UIMUseCase {

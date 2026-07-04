@@ -11,7 +11,7 @@ module uim.platform.content_agent.domain.services.transport_validator;
 
 import uim.platform.content_agent;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Result of transport validation.

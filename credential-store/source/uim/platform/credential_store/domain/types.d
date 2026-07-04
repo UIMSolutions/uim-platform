@@ -6,7 +6,7 @@
 module uim.platform.credential_store.domain.types;
 import uim.platform.credential_store;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 // ID aliases

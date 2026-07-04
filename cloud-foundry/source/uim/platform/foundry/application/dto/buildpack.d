@@ -6,7 +6,7 @@
 module uim.platform.foundry.application.dto.buildpack;
 import uim.platform.foundry;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 
 struct CreateBuildpackRequest {

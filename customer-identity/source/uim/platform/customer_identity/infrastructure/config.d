@@ -8,7 +8,7 @@ module uim.platform.customer_identity.infrastructure.config;
 import std.process : environment;
 import uim.platform.customer_identity;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

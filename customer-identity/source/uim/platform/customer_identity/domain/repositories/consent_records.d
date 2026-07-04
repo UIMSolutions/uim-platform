@@ -7,7 +7,7 @@ module uim.platform.customer_identity.domain.repositories.consent_records;
 
 import uim.platform.customer_identity;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

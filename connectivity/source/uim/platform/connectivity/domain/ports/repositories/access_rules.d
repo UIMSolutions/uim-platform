@@ -8,7 +8,7 @@ module uim.platform.connectivity.domain.ports.repositories.access_rules;
 // import uim.platform.connectivity.domain.types;
 import uim.platform.connectivity;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing - access rule persistence.

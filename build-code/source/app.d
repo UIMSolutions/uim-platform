@@ -7,7 +7,7 @@ module app;
 
 import uim.platform.buildcode;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 version (unittest) {

@@ -5,10 +5,10 @@
 *****************************************************************************************************************/
 module uim.platform.foundry.domain.entities.service_binding;
 
-// import uim.platform.foundry.domain.types;
+
 import uim.platform.foundry;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// A service binding — connects an application to a service instance,

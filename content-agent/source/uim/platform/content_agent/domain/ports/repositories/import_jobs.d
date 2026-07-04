@@ -9,7 +9,7 @@ module uim.platform.content_agent.domain.ports.repositories.import_jobs;
 // import uim.platform.content_agent.domain.types;
 import uim.platform.content_agent;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing - import job persistence.

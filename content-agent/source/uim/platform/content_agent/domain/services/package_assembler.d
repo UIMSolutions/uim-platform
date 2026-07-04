@@ -10,7 +10,7 @@ module uim.platform.content_agent.domain.services.package_assembler;
 
 import uim.platform.content_agent;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Result of a package assembly operation.

@@ -8,7 +8,7 @@ module uim.platform.content_agent.domain.ports.repositories.content_packages;
 
 import uim.platform.content_agent;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing - content package persistence.

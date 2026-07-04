@@ -8,7 +8,7 @@ module uim.platform.credential_store.domain.ports.repositories.namespaces;
 
 import uim.platform.credential_store;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 interface NamespaceRepository : ITenantRepository!(Namespace, NamespaceId) {

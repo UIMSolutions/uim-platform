@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.foundry.infrastructure.persistence.memory.orgs;
 
-// import uim.platform.foundry.domain.types;
+
 // import uim.platform.foundry.domain.entities.organization;
 // import uim.platform.foundry.domain.ports.repositories.org;
 
@@ -13,7 +13,7 @@ module uim.platform.foundry.infrastructure.persistence.memory.orgs;
  
 import uim.platform.foundry;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryOrgRepository : TenantRepository!(Organization, OrgId), IOrgRepository {

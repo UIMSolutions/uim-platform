@@ -10,7 +10,7 @@ module uim.platform.connectivity.infrastructure.persistence.memory.certificates;
 
 import uim.platform.connectivity;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryCertificateRepository : TenantRepository!(Certificate, CertificateId), CertificateRepository {

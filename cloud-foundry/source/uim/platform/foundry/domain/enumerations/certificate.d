@@ -6,7 +6,7 @@
 module uim.platform.foundry.domain.enumerations.certificate;
 import uim.platform.foundry;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 enum CertificateStatus {
     // Used for certificates that are still being created or generated, and have not yet been finalized or issued

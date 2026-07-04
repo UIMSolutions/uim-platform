@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.foundry.domain.services.app_lifecycle_manager;
 
-// import uim.platform.foundry.domain.types;
+
 // import uim.platform.foundry.domain.entities.application;
 // import uim.platform.foundry.domain.entities.organization;
 
@@ -15,7 +15,7 @@ module uim.platform.foundry.domain.services.app_lifecycle_manager;
 
 import uim.platform.foundry;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

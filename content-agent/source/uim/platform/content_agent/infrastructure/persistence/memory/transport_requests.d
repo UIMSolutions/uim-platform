@@ -12,7 +12,7 @@ module uim.platform.content_agent.infrastructure.persistence.memory.transport_re
  
 import uim.platform.content_agent;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryTransportRequestRepository : TenantRepository!(TransportRequest, TransportRequestId), TransportRequestRepository {

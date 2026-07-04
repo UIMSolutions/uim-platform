@@ -5,10 +5,10 @@
 *****************************************************************************************************************/
 module uim.platform.foundry.domain.entities.space;
 
-// import uim.platform.foundry.domain.types;
+
 import uim.platform.foundry;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// A space — an isolated area within an organization where applications,

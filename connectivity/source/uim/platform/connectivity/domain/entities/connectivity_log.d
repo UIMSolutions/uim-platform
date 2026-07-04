@@ -7,7 +7,7 @@ module uim.platform.connectivity.domain.entities.connectivity_log;
 // import uim.platform.connectivity.domain.types;
 import uim.platform.connectivity;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Immutable connectivity event log entry.

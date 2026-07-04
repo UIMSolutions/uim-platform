@@ -7,7 +7,7 @@ module uim.platform.customer_identity.infrastructure.persistence.memory.audit_lo
 
 import uim.platform.customer_identity;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

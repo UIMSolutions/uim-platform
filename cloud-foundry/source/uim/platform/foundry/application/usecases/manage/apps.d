@@ -6,7 +6,7 @@
 module uim.platform.foundry.application.usecases.manage.apps;
 
 
-// import uim.platform.foundry.domain.types;
+
 // import uim.platform.foundry.domain.entities.application;
 // import uim.platform.foundry.domain.ports.repositories.app;
 
@@ -14,7 +14,7 @@ module uim.platform.foundry.application.usecases.manage.apps;
 // import uim.platform.foundry.application.dto;
 import uim.platform.foundry;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class ManageAppsUseCase { // TODO: UIMUseCase {

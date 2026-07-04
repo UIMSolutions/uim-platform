@@ -11,7 +11,7 @@ module uim.platform.connectivity.presentation.http.controllers.certificate;
 // import uim.platform.connectivity.domain.entities.certificate;
 import uim.platform.connectivity;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class CertificateController : ManageHttpController {

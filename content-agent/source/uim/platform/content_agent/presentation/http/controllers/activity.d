@@ -10,7 +10,7 @@ module uim.platform.content_agent.presentation.http.controllers.activity;
 
 import uim.platform.content_agent;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class ActivityController : ManageHttpController {

@@ -7,7 +7,7 @@ module uim.platform.buildcode.domain.enumerations;
 
 import uim.platform.buildcode;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

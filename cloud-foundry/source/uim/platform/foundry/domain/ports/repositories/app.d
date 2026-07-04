@@ -5,11 +5,11 @@
 *****************************************************************************************************************/
 module uim.platform.foundry.domain.ports.repositories.app;
 
-// import uim.platform.foundry.domain.types;
+
 // import uim.platform.foundry.domain.entities.application;
 import uim.platform.foundry;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Port for persisting and querying applications.

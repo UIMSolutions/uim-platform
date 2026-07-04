@@ -41,7 +41,7 @@ module uim.platform.foundry.infrastructure.container;
 // import uim.platform.foundry.presentation.http.health;
 import uim.platform.foundry;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Dependency injection container — wires all layers together.

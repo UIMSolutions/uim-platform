@@ -10,7 +10,7 @@ import std.conv    : to;
 import std.random  : uniform;
 import std.format  : format;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

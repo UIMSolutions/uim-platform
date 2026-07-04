@@ -9,7 +9,7 @@ import uim.platform.buildcode;
 import std.conv     : to;
 import std.datetime : Clock, SysTime;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

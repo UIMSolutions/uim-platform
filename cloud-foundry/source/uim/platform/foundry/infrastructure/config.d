@@ -8,7 +8,7 @@ module uim.platform.foundry.infrastructure.config;
 import std.process : environment;
 import uim.platform.foundry;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Service configuration.

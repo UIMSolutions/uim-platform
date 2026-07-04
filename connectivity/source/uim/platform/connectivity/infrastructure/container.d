@@ -29,7 +29,7 @@ module uim.platform.connectivity.infrastructure.container;
 // import uim.platform.connectivity.presentation.http.health;
 import uim.platform.connectivity;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Dependency injection container - wires all layers together.

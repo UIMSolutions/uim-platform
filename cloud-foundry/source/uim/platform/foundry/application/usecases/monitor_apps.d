@@ -4,7 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.foundry.application.usecases.monitor_apps;
-// import uim.platform.foundry.domain.types;
+
 // import uim.platform.foundry.domain.entities.application;
 // import uim.platform.foundry.domain.entities.service_instance;
 // import uim.platform.foundry.domain.entities.route;
@@ -14,7 +14,7 @@ module uim.platform.foundry.application.usecases.monitor_apps;
 
 import uim.platform.foundry;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Read-only summaries for application health and space resource usage.
