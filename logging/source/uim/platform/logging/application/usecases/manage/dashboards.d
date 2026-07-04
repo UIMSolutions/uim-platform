@@ -26,8 +26,7 @@ class ManageDashboardsUseCase { // TODO: UIMUseCase {
     if (req.name.length == 0)
       return CommandResult(false, "", "Dashboard name is required");
 
-    Dashboard d;
-    d.initEntity(req.tenantId, req.createdBy);
+    auto d = Dashboard(req.tenantId); //, req.createdBy);
     d.name = req.name;
     d.description = req.description;
     d.isDefault = req.isDefault;

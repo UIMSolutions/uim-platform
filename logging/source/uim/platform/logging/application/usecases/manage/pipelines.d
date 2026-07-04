@@ -74,8 +74,7 @@ class ManagePipelinesUseCase { // TODO: UIMUseCase {
     if (!tryParseFormat(req.format, format))
       return CommandResult(false, "", "Invalid pipeline format: " ~ req.format);
 
-    Pipeline p;
-    p.initEntity(req.tenantId, req.createdBy);
+    auto p = Pipeline(req.tenantId); //, req.createdBy);
     p.name = req.name;
     p.description = req.description;
     p.sourceType = sourceType;

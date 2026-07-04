@@ -1,7 +1,9 @@
 module uim.platform.events.domain.enumerations;
 
 import uim.platform.events;
+
 mixin(ShowModule!());
+
 @safe:
 
 enum MessagingServiceStatus {
@@ -461,7 +463,7 @@ enum MessageBindingPermission {
     publishSubscribe
 }
 MessageBindingPermission toMessageBindingPermission(string value) {
-    mixin(EnumSwitch("MessageBindingPermission", "MessageBindingPermission.publish"));
+    mixin(EnumSwitch("MessageBindingPermission", "publish"));
 }
 MessageBindingPermission[] toMessageBindingPermission(string[] values) {
     return values.map!(toMessageBindingPermission).array;

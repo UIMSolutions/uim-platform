@@ -27,8 +27,7 @@ class ManageSitePoliciesUseCase {
     }
 
     CommandResult createSitePolicy(SitePolicyDTO dto) {
-        SitePolicy sp;
-        sp.initEntity(dto.tenantId, dto.createdBy);
+        auto sp = SitePolicy(dto.tenantId); //, dto.createdBy);
         sp.name = dto.name;
         sp.description = dto.description;
         sp.passwordMinLength = dto.passwordMinLength > 0 ? dto.passwordMinLength : 8;
@@ -42,7 +41,6 @@ class ManageSitePoliciesUseCase {
         sp.lockoutDurationSeconds = dto.lockoutDurationSeconds > 0 ? dto.lockoutDurationSeconds : 300;
         sp.emailVerificationRequired = dto.emailVerificationRequired;
         sp.version_ = dto.version_;
-
         
         try { sp.policyType = dto.policyType.to!PolicyType; }
         catch (Exception) { return CommandResult(false, "", "Invalid policy type"); }

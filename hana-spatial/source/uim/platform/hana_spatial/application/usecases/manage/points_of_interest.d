@@ -26,8 +26,7 @@ class ManagePointsOfInterestUseCase {
     err = SpatialValidator.validateCoordinate(r.latitude, r.longitude);
     if (err.length > 0) return CommandResult(false, "", err);
 
-    PointOfInterest poi;
-    poi.initEntity(r.tenantId);
+    auto poi = PointOfInterest(r.tenantId);
     poi.id = PointOfInterestId(r.id);
     poi.name = r.name;
     poi.description = r.description;

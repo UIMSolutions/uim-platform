@@ -80,11 +80,11 @@ class RunLogController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto runLogId = RunLogId(precheck.id);
+        auto id = RunLogId(precheck.id);
 
         auto data = precheck.data;
         UpdateRunLogRequest r;
-        r.runLogId = runLogId;
+        r.logId = id;
         r.tenantId = tenantId;
         r.status = data.getString("status");
         r.statusMessage = data.getString("statusMessage");

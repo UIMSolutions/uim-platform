@@ -7,7 +7,7 @@ module uim.platform.integration.automation.presentation.http.system;
 
 // import uim.platform.integration.automation.application.usecases.manage.systems;
 // import uim.platform.integration.automation.application.dto;
-// import uim.platform.integration.automation.domain.types;
+
 // import uim.platform.integration.automation.domain.entities.system_connection;
 import uim.platform.integration.automation;
 
@@ -56,104 +56,98 @@ class SystemController : ManageHttpController {
     r.createdBy = UserId(data.getString("createdBy"));
 
     auto result = useCase.createSystem(r);
-    if (result.isSuccess()) {
-      auto resp = Json.emptyObject
-        .set("id", result.id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-      res.writeJsonBody(resp, 201);
-    } else {
-      writeError(res, 400, result.message);
-    }
+    auto resp = Json.emptyObject
+      .set("id", result.id);
+    return successResponse("System created successfully", 201, resp);
   }
- catch (Exception e) {
-    writeError(res, 500, "Internal server error");
+
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto systems = useCase.listSystems(tenantId);
+
+    auto arr = systems.map!(s => s.toJson).array.toJson;
+
+    auto resp = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", systems.length);
+
+    return successResponse("System list retrieved successfully", 200, resp);
   }
-}
 
-override protected Json listHandler(HTTPServerRequest req) {
-  auto precheck = super.listHandler(req);
-  if (precheck.hasError)
-    return precheck;
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-  auto tenantId = precheck.tenantId;
-  auto systems = useCase.listSystems(tenantId);
+    auto tenantId = precheck.tenantId;
+    auto id = SystemConnectionId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid system ID", 400);
 
-  auto arr = systems.map!(s => s.toJson).array.toJson;
+    auto sys = useCase.getSystem(tenantId, id);
+    if (sys.isNull)
+      return errorResponse("System not found", 404);
 
-  auto resp = Json.emptyObject
-    .set("items", arr)
-    .set("totalCount", systems.length);
+    auto responseData = sys.toJson();
+    return successResponse("System retrieved successfully", 200, responseData);
+  }
 
-  return successResponse("System list retrieved successfully", 200, resp);
-}
+  override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-override protected Json getHandler(HTTPServerRequest req) {
-  auto precheck = super.getHandler(req);
-  if (precheck.hasError)
-    return precheck;
+    auto tenantId = precheck.tenantId;
+    auto id = SystemConnectionId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid system ID", 400);
 
-  auto tenantId = precheck.tenantId;
-  auto id = SystemConnectionId(precheck.id);
-  if (id.isNull)
-    return errorResponse("Invalid system ID", 400);
+    auto data = precheck.data;
+    auto r = UpdateSystemRequest();
+    r.connectionId = id;
+    r.tenantId = tenantId;
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.systemType = toSystemType(data.getString("systemType"));
+    r.host = data.getString("host");
+    r.port = getUshort(j, "port");
+    r.client = data.getString("client");
+    r.protocol = data.getString("protocol");
+    r.status = parseConnectionStatus(data.getString("status"));
+    r.environment = data.getString("environment");
+    r.region = data.getString("region");
+    r.systemId = data.getString("systemId");
+    r.tenant = data.getString("tenant");
 
-  auto sys = useCase.getSystem(tenantId, id);
-  if (sys.isNull)
-    return errorResponse("System not found", 404);
+    auto result = useCase.updateSystem(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-  auto responseData = sys.toJson();
-  return successResponse("System retrieved successfully", 200, responseData);
-}
-
-override protected Json updateHandler(HTTPServerRequest req) {
-  auto precheck = super.updateHandler(req);
-  if (precheck.hasError)
-    return precheck;
-
-  auto tenantId = precheck.tenantId;
-  auto id = SystemConnectionId(precheck.id);
-  if (id.isNull)
-    return errorResponse("Invalid system ID", 400);
-
-  auto data = precheck.data;
-  auto r = UpdateSystemRequest();
-  r.connectionId = id;
-  r.tenantId = tenantId;
-  r.name = data.getString("name");
-  r.description = data.getString("description");
-  r.systemType = toSystemType(data.getString("systemType"));
-  r.host = data.getString("host");
-  r.port = getUshort(j, "port");
-  r.client = data.getString("client");
-  r.protocol = data.getString("protocol");
-  r.status = parseConnectionStatus(data.getString("status"));
-  r.environment = data.getString("environment");
-  r.region = data.getString("region");
-  r.systemId = data.getString("systemId");
-  r.tenant = data.getString("tenant");
-
-  auto result = useCase.updateSystem(r);
-  if (result.hasError)
-    return errorResponse(result.message, 400);
-
-  auto resp = Json.emptyObject.set("id", result.id);
-  return successResponse("System updated successfully", 200, resp);
-
-}
-
-override protected Json deleteHandler(HTTPServerRequest req) {
-  auto precheck = super.deleteHandler(req);
-  if (precheck.hasError)
-    return precheck;
-
-  auto tenantId = precheck.tenantId;
-  auto id = SystemConnectionId(precheck.id);
-  if (id.isNull)
-    return errorResponse("Invalid system ID", 400);
-
-  auto result = useCase.deleteSystem(tenantId, id);
-  if (result.isSuccess()) {
     auto resp = Json.emptyObject.set("id", result.id);
+    return successResponse("System updated successfully", 200, resp);
+
+  }
+
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = SystemConnectionId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid system ID", 400);
+
+    auto result = useCase.deleteSystem(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
     return successResponse("System deleted successfully", 200, resp);
   }
@@ -169,14 +163,15 @@ override protected Json deleteHandler(HTTPServerRequest req) {
       return errorResponse("Invalid system ID", 400);
 
     auto result = useCase.testConnection(tenantId, id);
-    if (result.hasError)     return errorResponse(result.message, 400);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-      auto resp = Json.emptyObject
-        .set("id", result.id)
-        .set("connectionStatus", "active");
+    auto resp = Json.emptyObject
+      .set("id", result.id)
+      .set("connectionStatus", "active");
 
-      return successResponse("Connection test successful", 200, resp);
-   
+    return successResponse("Connection test successful", 200, resp);
+
   }
 
   mixin(HandleTemplate!("handleTestConnection", "getTestConnectionHandler"));

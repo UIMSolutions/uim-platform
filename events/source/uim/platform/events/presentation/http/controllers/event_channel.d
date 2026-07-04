@@ -53,11 +53,11 @@ class EventChannelController : ManageHttpController {
         if (id.isNull)
             return errorResponse("Invalid event channel ID", 400);
 
-        auto e = usecase.getChannel(tenantId, EventChannelId(id));
+        auto e = usecase.getChannel(tenantId, id);
         if (e.isNull)
-            return errorResponse("Scan job not found", 404);
+            return errorResponse("Event channel not found", 404);
 
-        auto responseData = item.toJson();
+        auto responseData = e.toJson();
         return successResponse("Event channel retrieved successfully", "Retrieved", 200, responseData);
     }
 
@@ -100,7 +100,7 @@ class EventChannelController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto id = EventChannelId(precheck.id);
-        if (channelId.isNull)
+        if (id.isNull)
             return errorResponse("Invalid event channel ID", 400);
 
         auto data = precheck.data;

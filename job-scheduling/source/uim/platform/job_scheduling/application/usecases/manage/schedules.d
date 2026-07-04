@@ -33,9 +33,7 @@ class ManageSchedulesUseCase { // TODO: UIMUseCase {
                 request.cronExpression))
             return CommandResult(false, "", "Invalid cron expression");
 
-        Schedule schedule;
-        schedule.initEntity(request.tenantId);
-
+        auto schedule = Schedule(request.tenantId); // , request.createdBy);
         schedule.jobId = request.jobId;
         schedule.description = request.description;
         schedule.type = request.type.to!ScheduleType;

@@ -45,8 +45,7 @@ class ManageLogStreamsUseCase { // TODO: UIMUseCase {
     if (!tryParseSourceType(req.sourceType, sourceType))
       return CommandResult(false, "", "Invalid source type: " ~ req.sourceType);
 
-    LogStream stream;
-    stream.initEntity(req.tenantId);
+    auto stream = LogStream(req.tenantId); //, req.createdBy);
     stream.name = req.name;
     stream.description = req.description;
     stream.sourceType = sourceType;

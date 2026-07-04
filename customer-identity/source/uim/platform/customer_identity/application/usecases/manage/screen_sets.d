@@ -31,8 +31,7 @@ class ManageScreenSetsUseCase {
     }
 
     CommandResult createScreenSet(ScreenSetDTO dto) {
-        ScreenSet ss;
-        ss.initEntity(dto.tenantId, dto.createdBy);
+        auto ss = ScreenSet(dto.tenantId, dto.createdBy);
         ss.name = dto.name;
         ss.description = dto.description;
         ss.htmlContent = dto.htmlContent;

@@ -24,8 +24,7 @@ class ManageProvidersUseCase {
     err = SpatialValidator.validateName(r.name);
     if (err.length > 0) return CommandResult(false, "", err);
 
-    Provider provider;
-    provider.initEntity(r.tenantId);
+    auto provider = Provider(r.tenantId);
     provider.id = ProviderId(r.id);
     provider.name = r.name;
     provider.description = r.description;

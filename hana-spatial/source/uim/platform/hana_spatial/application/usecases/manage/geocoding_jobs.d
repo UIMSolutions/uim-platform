@@ -24,8 +24,7 @@ class ManageGeocodingJobsUseCase {
     err = SpatialValidator.validateName(r.name);
     if (err.length > 0) return CommandResult(false, "", err);
 
-    GeocodingJob job;
-    job.initEntity(r.tenantId);
+    auto job = GeocodingJob(r.tenantId);
     job.id = GeocodingJobId(r.id);
     job.name = r.name;
     job.description = r.description;

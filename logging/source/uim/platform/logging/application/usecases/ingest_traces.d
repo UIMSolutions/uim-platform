@@ -24,9 +24,7 @@ class IngestTracesUseCase { // TODO: UIMUseCase {
   CommandResult ingestSpan(IngestSpanRequest req) {
     import std.uuid : randomUUID;
 
-    Span s;
-    s.initEntity(req.tenantId);
-
+    auto s = Span(req.tenantId);
     s.traceId = req.traceId;
     s.parentSpanId = req.parentSpanId;
     s.operationName = req.operationName;

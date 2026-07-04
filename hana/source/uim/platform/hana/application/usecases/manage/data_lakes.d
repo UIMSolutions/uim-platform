@@ -29,8 +29,7 @@ class ManageDataLakesUseCase { // TODO: UIMUseCase {
     if (!datalake.isNull)
       return CommandResult(false, "", "Data lake already exists");
 
-    DataLake d;
-    d.initEntity(r.tenantId, r.createdBy);
+    auto d = DataLake(r.tenantId, r.createdBy);
     d.id = r.datalakeId;
     d.instanceId = r.instanceId;
     d.name = r.name;

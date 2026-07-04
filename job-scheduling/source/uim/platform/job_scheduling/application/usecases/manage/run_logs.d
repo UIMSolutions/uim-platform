@@ -37,8 +37,7 @@ class ManageRunLogsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createRunLog(TenantId tenantId, ScheduleId scheduleId, JobId jobId) {
-        RunLog runlog;
-        runlog.initEntity(tenantId);
+        auto runlog = RunLog(tenantId);
         runlog.scheduleId = scheduleId;
         runlog.jobId = jobId;
         runlog.tenantId = tenantId;
@@ -50,7 +49,7 @@ class ManageRunLogsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateStatus(UpdateRunLogRequest req) {
-        auto runlog = repo.findById(req.tenantId, req.runLogId);
+        auto runlog = repo.findById(req.tenantId, req.logId);
         if (runlog.isNull)
             return CommandResult(false, "", "Run log not found");
 

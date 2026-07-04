@@ -23,8 +23,7 @@ class ManageAlertRulesUseCase { // TODO: UIMUseCase {
     if (req.name.length == 0)
       return CommandResult(false, "", "Alert rule name is required");
 
-    AlertRule rule;
-    rule.initEntity(req.tenantId, req.createdBy);
+    auto rule = AlertRule(req.tenantId); //, req.createdBy);
     rule.name = req.name;
     rule.description = req.description;
     rule.query = req.query;

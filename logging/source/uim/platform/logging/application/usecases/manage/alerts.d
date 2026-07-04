@@ -63,8 +63,7 @@ class ManageAlertsUseCase : TenantUseCase!(AlertRepository, Alert, AlertId) {
     AlertSeverity severity, string message, long matchCount, LogEntryId sampleId) {
     import std.uuid : randomUUID;
 
-    Alert a;
-    a.initEntity(tenantId);
+    auto a = Alert(tenantId); //, req.createdBy);
     a.ruleId = ruleId;
     a.ruleName = ruleName;
     a.severity = severity;

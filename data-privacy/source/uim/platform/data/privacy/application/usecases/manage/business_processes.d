@@ -23,9 +23,7 @@ class ManageBusinessProcessesUseCase { // TODO: UIMUseCase {
     if (req.name.length == 0)
       return CommandResult(false, "", "Name is required");
 
-    BusinessProcess p;
-    p.initEntity(req.tenantId);
-
+    auto p = BusinessProcess(req.tenantId);
     p.name = req.name;
     p.description = req.description;
     p.controllerId = req.controllerId;

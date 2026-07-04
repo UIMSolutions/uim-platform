@@ -23,9 +23,7 @@ class ManageRetentionPoliciesUseCase { // TODO: UIMUseCase {
   CommandResult createRetentionPolicy(CreateRetentionPolicyRequest req) {
     import std.uuid : randomUUID;
 
-    RetentionPolicy p;
-    p.initEntity(req.tenantId, req.createdBy);
-
+    auto p = RetentionPolicy(req.tenantId); //, req.createdBy);
     p.name = req.name;
     p.description = req.description;
     p.dataType = req.dataType.to!DataType;

@@ -54,7 +54,7 @@ class MessageBindingController : ManageHttpController {
         if (id.isNull)
             return errorResponse("Invalid message binding ID", 400);
 
-        auto e = usecase.getBinding(tenantId, MessageBindingId(id));
+        auto e = usecase.getBinding(tenantId, id);
         if (e.isNull)
             return errorResponse("Message binding not found", 404);
 

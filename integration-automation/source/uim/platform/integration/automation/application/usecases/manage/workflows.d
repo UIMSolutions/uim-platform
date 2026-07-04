@@ -6,7 +6,7 @@
 module uim.platform.integration.automation.application.usecases.manage.workflows;
 
 
-// import uim.platform.integration.automation.domain.types;
+
 // import uim.platform.integration.automation.domain.entities.workflow;
 // import uim.platform.integration.automation.domain.entities.workflow_step;
 // import uim.platform.integration.automation.domain.entities.integration_scenario;
@@ -50,7 +50,7 @@ class ManageWorkflowsUseCase { // TODO: UIMUseCase {
     auto scenario = scenarioRepo.findById(req.scenarioId, req.tenantId);
     if (scenario.isNull)
       return CommandResult(false, "", "Scenario not found");
-      
+
     if (scenario.status != ScenarioStatus.active)
       return CommandResult(false, "", "Scenario is not active");
 

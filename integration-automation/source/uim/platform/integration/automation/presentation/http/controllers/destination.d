@@ -7,7 +7,7 @@ module uim.platform.integration.automation.presentation.http.controllers.destina
 
 // import uim.platform.integration.automation.application.usecases.manage.destinations;
 // import uim.platform.integration.automation.application.dto;
-// import uim.platform.integration.automation.domain.types;
+
 // import uim.platform.integration.automation.domain.entities.destination;
 // import uim.platform.integration.automation.presentation.http.scenario_controller : parseSystemType;
 import uim.platform.integration.automation;

@@ -28,9 +28,8 @@ class ManageReplicationTasksUseCase { // TODO: UIMUseCase {
     if (repo.existsById(r.tenantId, r.replicationTaskId))
       return CommandResult(false, "", "Replication task already exists");
 
-    ReplicationTask t;  
-    t.initEntity(r.tenantId);
-    t.id = r.id;
+    auto t = ReplicationTask(r.tenantId);  
+    t.id = r.taskId;
     t.instanceId = r.instanceId;
     t.name = r.name;
     t.description = r.description;

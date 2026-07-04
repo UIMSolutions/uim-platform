@@ -14,14 +14,16 @@ mixin(ShowModule!());
 class QueueController : ManageHttpController {
     private ManageQueuesUseCase usecase;
 
-    this(ManageQueuesUseCase usecase) { this.usecase = usecase; }
+    this(ManageQueuesUseCase usecase) {
+        this.usecase = usecase;
+    }
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        router.get("/api/v1/sap-event-mesh/queues",    &handleList);
-        router.get("/api/v1/sap-event-mesh/queues/*",  &handleGet);
-        router.post("/api/v1/sap-event-mesh/queues",   &handleCreate);
-        router.put("/api/v1/sap-event-mesh/queues/*",  &handleUpdate);
+        router.get("/api/v1/sap-event-mesh/queues", &handleList);
+        router.get("/api/v1/sap-event-mesh/queues/*", &handleGet);
+        router.post("/api/v1/sap-event-mesh/queues", &handleCreate);
+        router.put("/api/v1/sap-event-mesh/queues/*", &handleUpdate);
         router.delete_("/api/v1/sap-event-mesh/queues/*", &handleDelete);
     }
 
@@ -32,12 +34,12 @@ class QueueController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-            auto items = usecase.listQueues(tenantId);
-            res.writeJsonBody(Json.emptyObject
-                .set("count", items.length)
-                .set("resources", items.map!(e => e.toJson).array.toJson)
-                .set("message", "Queue list retrieved successfully"), 200);
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+        auto items = usecase.listQueues(tenantId);
+        auto responseData = Json.emptyObject
+            .set("count", items.length)
+            .set("resources", items.map!(e => e.toJson).array.toJson)
+            .set("message", "Queue list retrieved successfully");
+        return successResponse("Queue list retrieved successfully", "Retrieved", 200, responseData);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -46,13 +48,15 @@ class QueueController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto id = precheck.id;
-            auto e = usecase.getQueue(tenantId, QueueId(id));
-            if (e.isNull) { writeError(res, 404, "Queue not found"); return; }
-            res.writeJsonBody(Json.emptyObject
-                .set("message", "Queue retrieved successfully")
-                .set("resource", e.toJson), 200);
-        } catch (Exception e) { writeError(res, 500, "Internal server error"); }
+        auto id = precheck.id;
+        auto e = usecase.getQueue(tenantId, QueueId(id));
+        if (e.isNull) {
+            return errorResponse("Queue not found", 404);
+        }
+        auto responseData = Json.emptyObject
+            .set("message", "Queue retrieved successfully")
+            .set("resource", e.toJson);
+        return successResponse("Queue retrieved successfully", "Retrieved", 200, responseData);
     }
 
     override protected Json createHandler(HTTPServerRequest req) {
@@ -63,32 +67,31 @@ class QueueController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-            QueueDTO dto;
-            dto.queueId            = QueueId(precheck.id);
-            dto.tenantId           = tenantId;
-            dto.serviceId          = MessagingServiceId(data.getString("serviceId"));
-            dto.name               = data.getString("name");
-            dto.description        = data.getString("description");
-            dto.maxMessageSizeBytes = data.getString("maxMessageSizeBytes");
-            dto.maxQueueSizeBytes  = data.getString("maxQueueSizeBytes");
-            dto.maxConsumers       = data.getString("maxConsumers");
-            dto.deadLetterQueue    = data.getString("deadLetterQueue");
-            dto.discardMessages    = data.getString("discardMessages");
-            dto.maxRedeliveryCount = data.getString("maxRedeliveryCount");
-            dto.messageExpiryTimer = data.getString("messageExpiryTimer");
-            dto.owner              = data.getString("owner");
-            dto.permission         = data.getString("permission");
-            dto.egressEnabled      = data.getBoolean("egressEnabled");
-            dto.ingressEnabled     = data.getBoolean("ingressEnabled");
-            dto.createdBy          = UserId(data.getString("createdBy"));
-            auto result = usecase.createQueue(dto);
-            if (result.hasError)
+        QueueDTO dto;
+        dto.queueId = QueueId(precheck.id);
+        dto.tenantId = tenantId;
+        dto.serviceId = MessagingServiceId(data.getString("serviceId"));
+        dto.name = data.getString("name");
+        dto.description = data.getString("description");
+        dto.maxMessageSizeBytes = data.getString("maxMessageSizeBytes");
+        dto.maxQueueSizeBytes = data.getString("maxQueueSizeBytes");
+        dto.maxConsumers = data.getString("maxConsumers");
+        dto.deadLetterQueue = data.getString("deadLetterQueue");
+        dto.discardMessages = data.getString("discardMessages");
+        dto.maxRedeliveryCount = data.getString("maxRedeliveryCount");
+        dto.messageExpiryTimer = data.getString("messageExpiryTimer");
+        dto.owner = data.getString("owner");
+        dto.permission = data.getString("permission");
+        dto.egressEnabled = data.getBoolean("egressEnabled");
+        dto.ingressEnabled = data.getBoolean("ingressEnabled");
+        dto.createdBy = UserId(data.getString("createdBy"));
+        auto result = usecase.createQueue(dto);
+        if (result.hasError)
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
         return successResponse("Queue created successfully", 201, responseData);
     }
-
 
     override protected Json updateHandler(HTTPServerRequest req) {
         auto precheck = super.updateHandler(req);
@@ -96,26 +99,25 @@ class QueueController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto queueId  = QueueId(precheck.id);
-            auto data = precheck.data;
-            QueueDTO dto;
-            dto.tenantId           = tenantId;
-            dto.queueId            = queueId;
-            dto.description        = data.getString("description");
-            dto.maxMessageSizeBytes = data.getString("maxMessageSizeBytes");
-            dto.maxQueueSizeBytes  = data.getString("maxQueueSizeBytes");
-            dto.maxConsumers       = data.getString("maxConsumers");
-            dto.deadLetterQueue    = data.getString("deadLetterQueue");
-            dto.maxRedeliveryCount = data.getString("maxRedeliveryCount");
-            dto.updatedBy          = UserId(data.getString("updatedBy"));
-            auto result = usecase.updateQueue(dto);
-            if (result.hasError)
+        auto queueId = QueueId(precheck.id);
+        auto data = precheck.data;
+        QueueDTO dto;
+        dto.tenantId = tenantId;
+        dto.queueId = queueId;
+        dto.description = data.getString("description");
+        dto.maxMessageSizeBytes = data.getString("maxMessageSizeBytes");
+        dto.maxQueueSizeBytes = data.getString("maxQueueSizeBytes");
+        dto.maxConsumers = data.getString("maxConsumers");
+        dto.deadLetterQueue = data.getString("deadLetterQueue");
+        dto.maxRedeliveryCount = data.getString("maxRedeliveryCount");
+        dto.updatedBy = UserId(data.getString("updatedBy"));
+        auto result = usecase.updateQueue(dto);
+        if (result.hasError)
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
         return successResponse("Queue updated successfully", 200, responseData);
     }
-
 
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto precheck = super.deleteHandler(req);
@@ -123,9 +125,12 @@ class QueueController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto id = QueueId(precheck.id);
-            auto result = usecase.deleteQueue(tenantId, id);
-            if (result.hasError)
+        auto id = QueueId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid queue ID", 400);
+            
+        auto result = usecase.deleteQueue(tenantId, id);
+        if (result.hasError)
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);

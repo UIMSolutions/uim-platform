@@ -54,7 +54,7 @@ class MessagingServiceController : ManageHttpController {
         if (e.isNull)
             return errorResponse("Scan job not found", 404);
 
-        auto responseData = item.toJson();
+        auto responseData = e.toJson();
         return successResponse("Messaging service retrieved successfully", "Retrieved", 200, responseData);
     }
 

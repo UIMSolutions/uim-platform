@@ -29,8 +29,7 @@ class ManageConfigurationsUseCase { // TODO: UIMUseCase {
       return config;
 
     // Return default configuration
-    Configuration c;
-    c.initEntity(tenantId);
+    auto c = Configuration(tenantId);
 
     c.defaultRetries = 3;
     c.defaultRetryDelayMs = 30000;
@@ -44,8 +43,7 @@ class ManageConfigurationsUseCase { // TODO: UIMUseCase {
     auto existing = repo.get(request.tenantId);
     if (!repo.existsByTenant(request.tenantId)) {
       // Create new configuration
-      Configuration c;
-      c.initEntity(request.tenantId);
+      auto c = Configuration(request.tenantId);
 
       c.defaultRetries = request.defaultRetries;
       c.defaultRetryDelayMs = request.defaultRetryDelayMs;
