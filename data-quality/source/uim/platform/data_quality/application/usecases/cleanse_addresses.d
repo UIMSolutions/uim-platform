@@ -26,9 +26,7 @@ class CleanseAddressesUseCase { // TODO: UIMUseCase {
 
   /// Cleanse a single address.
   AddressRecord cleanse(CleanseAddressRequest req) {
-    AddressRecord record;
-    record.initEntity(req.tenantId, req.createdBy);
-
+    auto record = AddressRecord(req.tenantId, AddressRecordId(createId), req.createdBy));
     record.sourceRecordId = req.sourceRecordId;
     record.inputLine1 = req.line1;
     record.inputLine2 = req.line2;

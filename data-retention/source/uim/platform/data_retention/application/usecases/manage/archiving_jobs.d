@@ -18,9 +18,7 @@ class ManageArchivingJobsUseCase { // TODO: UIMUseCase {
         if (req.applicationGroupId.isEmpty)
             return CommandResult(false, "", "Application group ID is required");
 
-        ArchivingJob aj;
-        aj.initEntity(req.tenantId, req.createdBy);
-
+        auto aj = ArchivingJob(req.tenantId, ArchivingJobId(randomUUID().toString()), req.createdBy);
         aj.applicationGroupId = ApplicationGroupId(req.applicationGroupId);
         aj.operationType = toArchivingJobOperationType(req.operationType);
         aj.status = ArchivingJobStatus.scheduled;

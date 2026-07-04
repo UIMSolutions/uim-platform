@@ -16,9 +16,7 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
         if (req.externalId.isEmpty)
             return CommandResult(false, "", "External ID is required");
 
-        DataSubject ds;
-        ds.initEntity(req.tenantId, req.createdBy);
-
+        auto ds = DataSubject(req.tenantId, DataSubjectId(createId), req.createdBy);
         ds.roleId = DataSubjectRoleId(req.roleId);
         ds.applicationGroupId = ApplicationGroupId(req.applicationGroupId);
         ds.externalId = req.externalId;
@@ -35,10 +33,10 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Data subject not found");
 
         if (req.lifecycleStatus.length > 0)
-            ds.lifecycleStatus = parseLifecycleStatus(req.lifecycleStatus);
+            ds.lifecycleStatus = req.lifecycleStatus.toLifecycleStatus;
         if (req.roleId.length > 0)
             ds.roleId = DataSubjectRoleId(req.roleId);
-        ds.updatedAt = clockSeconds();
+        ds.updatedAt = currentTimestamp;
 
         repo.update(ds);
         return CommandResult(true, ds.id.value, "");
@@ -50,8 +48,9 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Data subject not found");
 
         ds.lifecycleStatus = DataLifecycleStatus.blocked;
-        ds.blockedAt = clockSeconds();
-        ds.updatedAt = clockSeconds();
+        ds.blockedAt = currentTimestamp();
+        ds.updatedAt = currentTimestamp();
+
         repo.update(ds);
         return CommandResult(true, id.value, "");
     }

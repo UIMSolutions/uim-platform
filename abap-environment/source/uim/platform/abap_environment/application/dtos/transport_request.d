@@ -17,7 +17,7 @@ struct CreateTransportRequestRequest {
 }
 
 struct AddTransportTaskRequest {
-  TransportRequestId transportRequestId;
+  TransportRequestId requestId;
   TenantId tenantId;
   
   string owner;

@@ -43,29 +43,29 @@ mixin template TenantEntity(TId) {
     return id.isNull;
   }
 
-  void initEntity() {
-    this.id = randomUUID().toString;
-    this.createdAt = Clock.currStdTime();
-    this.updatedAt = createdAt;
-  }
+  // void initEntity() {
+  //   this.id = randomUUID().toString;
+  //   this.createdAt = Clock.currStdTime();
+  //   this.updatedAt = createdAt;
+  // }
 
-  void initEntity(TenantId tenantId) {
-    this.id = randomUUID().toString;
-    this.tenantId = tenantId;
-    this.createdAt = Clock.currStdTime();
-    this.updatedAt = createdAt;
-  }
+  // void initEntity(TenantId tenantId) {
+  //   this.id = randomUUID().toString;
+  //   this.tenantId = tenantId;
+  //   this.createdAt = Clock.currStdTime();
+  //   this.updatedAt = createdAt;
+  // }
 
-  void initEntity(TenantId tenantId, TId id) {
-    initEntity(tenantId);
-    this.id = id;
-  }
+  // void initEntity(TenantId tenantId, TId id) {
+  //   initEntity(tenantId);
+  //   this.id = id;
+  // }
 
-  void initEntity(TenantId tenantId, TId id, UserId byUser) {
-    initEntity(tenantId, id);
-    this.createdBy = byUser;
-    this.updatedBy = this.createdBy;
-  }
+  // void initEntity(TenantId tenantId, TId id, UserId byUser) {
+  //   initEntity(tenantId, id);
+  //   this.createdBy = byUser;
+  //   this.updatedBy = this.createdBy;
+  // }
 
   // Call this method when creating a new entity to initialize ID, tenantId, and timestamps
   void createEntity(TenantId tenantId) {
@@ -76,13 +76,13 @@ mixin template TenantEntity(TId) {
   }
 
   // Call this method when updating an existing entity to update timestamps
-  void updatedEntity() {
+  void update() {
     updatedAt = Clock.currStdTime();
   }
 
-  void updatedEntity(UserId byUser) {
+  void update(UserId updateUser) {
     updatedAt = Clock.currStdTime();
-    updatedBy = byUser;
+    updatedBy = updateUser;
   }
 
   // Convert the entity to a JSON object, excluding internal fields like createdBy/createdAt

@@ -39,9 +39,7 @@ class ManageDeletionRequestsUseCase { // TODO: UIMUseCase {
     // Deadline: 30 days from now (GDPR Art. 12(3))
     long deadline = now + (30L * 24 * 60 * 60 * 10_000_000L);
 
-    DeletionRequest request;
-    request.initEntity(req.tenantId, req.requestedBy);
-  
+    auto request = DeletionRequest(req.tenantId);  
     request.requestType = RequestType.deletion;
     request.status = DeletionStatus.requested;
     request.targetSystems = req.targetSystems;

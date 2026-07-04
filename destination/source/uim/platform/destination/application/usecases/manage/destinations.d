@@ -35,9 +35,7 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "",
           "Destination '" ~ req.name ~ "' already exists in this subaccount");
 
-    Destination d;
-    d.initEntity(req.tenantId, req.createdBy);
-
+    auto d = Destination(req.tenantId, DestinationId(createId), req.createdBy);
     d.subaccountId = req.subaccountId;
     d.serviceInstanceId = req.serviceInstanceId;
     d.name = req.name;

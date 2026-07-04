@@ -43,8 +43,7 @@ class ManagePermissionsUseCase { // TODO: UIMUseCase {
       return CommandResult(true, existing.id.value, "");
     }
 
-    auto entity = Permission();
-    entity.initEntity(r.tenantId, r.createdBy);
+    auto entity = Permission(r.tenantId, r.createdBy);
     entity.resourceId = r.resourceId;
     entity.resourceType = r.resourceType;
     entity.userId = r.userId;

@@ -25,14 +25,14 @@ class ManageApplicationJobsUseCase { // TODO: UIMUseCase {
   CommandResult createApplicationJob(CreateApplicationJobRequest request) {
     if (request.name.length == 0)
       return CommandResult(false, "", "Job name is required");
+      
     if (request.jobTemplateName.length == 0)
       return CommandResult(false, "", "Job template name is required");
 
     if (request.systemInstanceId.isEmpty)
       return CommandResult(false, "", "System instance ID is required");
 
-    ApplicationJob job;
-    job.initEntity(request.tenantId);
+    auto job = ApplicationJob(request.tenantId);
     job.systemInstanceId = request.systemInstanceId;
     job.name = request.name;
     job.description = request.description;

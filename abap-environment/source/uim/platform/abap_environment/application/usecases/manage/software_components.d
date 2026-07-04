@@ -42,9 +42,7 @@ class ManageSoftwareComponentsUseCase { // TODO: UIMUseCase {
     if (repo.existsByName(req.tenantId, req.systemInstanceId, req.name))
       return CommandResult(false, "", "Software component '" ~ req.name ~ "' already exists in this system");
 
-    SoftwareComponent comp;
-    comp.initEntity(req.tenantId);
-    
+    auto comp = SoftwareComponent(req.tenantId);
     comp.systemInstanceId = req.systemInstanceId;
     comp.name = req.name;
     comp.description = req.description;

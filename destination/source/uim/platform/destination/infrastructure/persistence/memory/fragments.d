@@ -70,24 +70,21 @@ unittest {
   auto subaccountId = SubaccountId("test-subaccount");
 
   // Create fragments
-  DestinationFragment f1;
-  f1.initEntity(tenantId);
+  auto f1 = DestinationFragment(tenantId);
   f1.createdBy = "user1";
   f1.subaccountId = subaccountId;
   f1.name = "Fragment A";
   f1.level = DestinationLevel.serviceInstance;
   repo.save(f1);
 
-  DestinationFragment f2;
-  f2.initEntity(tenantId);
+  auto f2 = DestinationFragment(tenantId);
   f2.createdBy = "user2";
   f2.subaccountId = subaccountId;
   f2.name = "Fragment B";
   f2.level = DestinationLevel.subaccount;
   repo.save(f2);
 
-  DestinationFragment f3;
-  f3.initEntity(tenantId);
+  auto f3 = DestinationFragment(tenantId);
   f3.createdBy = "user3";
   f3.subaccountId = SubaccountId("other-subaccount");
   f3.name = "Fragment C";

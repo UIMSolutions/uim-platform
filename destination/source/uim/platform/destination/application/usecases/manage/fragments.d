@@ -30,9 +30,7 @@ class ManageFragmentsUseCase { // TODO: UIMUseCase {
     if (!existing.isNull)
       return CommandResult(false, "", "Fragment '" ~ req.name ~ "' already exists");
 
-    DestinationFragment f;
-    f.initEntity(req.tenantId, req.createdBy);
-
+    auto f = DestinationFragment(req.tenantId, DestinationFragmentId(createId), req.createdBy);
     f.subaccountId = req.subaccountId;
     f.name = req.name;
     f.description = req.description;

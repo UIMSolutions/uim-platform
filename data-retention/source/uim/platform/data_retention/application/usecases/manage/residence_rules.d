@@ -18,8 +18,7 @@ class ManageResidenceRulesUseCase { // TODO: UIMUseCase {
         if (req.duration <= 0)
             return CommandResult(false, "", "Duration must be positive");
 
-        ResidenceRule rr;
-        rr.initEntity(req.tenantId, req.createdBy);
+        auto rr = ResidenceRule(req.tenantId);
         rr.businessPurposeId = BusinessPurposeId(req.businessPurposeId);
         rr.legalGroundId = LegalGroundId(req.legalGroundId);
         rr.duration = req.duration;

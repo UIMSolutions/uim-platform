@@ -33,9 +33,7 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
         return CommandResult(false, "", "Data subject with this external ID already exists");
     }
 
-    DataSubject subject;
-    subject.initEntity(req.tenantId);
-    
+    auto subject = DataSubject(req.tenantId);    
     subject.subjectType = req.subjectType;
     subject.externalId = req.externalId;
     subject.displayName = req.displayName;

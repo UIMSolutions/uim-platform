@@ -27,10 +27,7 @@ class ManageViewsUseCase { // TODO: UIMUseCase {
     if (r.spaceId.isEmpty)
       return CommandResult(false, "", "Space ID is required");
 
-    View v;
-    v.initEntity(r.tenantId) ;
-
-    v.id = id;
+    auto v = View(r.tenantId, r.viewId);
     v.spaceId = r.spaceId;
     v.name = r.name;
     v.description = r.description;

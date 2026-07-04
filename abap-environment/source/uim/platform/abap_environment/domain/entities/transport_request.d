@@ -12,7 +12,8 @@ import uim.platform.abap_environment;
 @safe:
 /// Individual task within a transport request.
 struct TransportTask {
-  mixin IdEntity!TransportTaskId;
+  // mixin IdEntity!TransportTaskId;
+  mixin TenantEntity!TransportTaskId;
   string owner;
   TransportStatus status = TransportStatus.modifiable;
   string description;

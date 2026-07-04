@@ -27,8 +27,7 @@ class ManageTaskChainsUseCase { // TODO: UIMUseCase {
     if (r.spaceId.isEmpty)
       return CommandResult(false, "", "Space ID is required");
 
-    TaskChain tc;
-    tc.initEntity(r.tenantId);
+    auto tc = TaskChain(r.tenantId);
     tc.spaceId = r.spaceId;
     tc.name = r.name;
     tc.description = r.description;

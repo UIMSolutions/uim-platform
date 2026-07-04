@@ -18,8 +18,7 @@ class ManageBusinessPurposesUseCase { // TODO: UIMUseCase {
         if (req.name.length == 0)
             return CommandResult(false, "", "Business purpose name is required");
 
-        BusinessPurpose bp;
-        bp.initEntity(req.tenantId, req.createdBy);
+        auto bp = BusinessPurpose(req.tenantId);y);
         bp.name = req.name;
         bp.description = req.description;
         bp.applicationGroupId = ApplicationGroupId(req.applicationGroupId);
@@ -32,8 +31,8 @@ class ManageBusinessPurposesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, bp.id.value, "");
     }
 
-    CommandResult updateBusinessPurpose(BusinessPurposeId id, UpdateBusinessPurposeRequest req) {
-        auto bp = repo.findById(tenantId, id);
+    CommandResult updateBusinessPurpose(UpdateBusinessPurposeRequest req) {
+        auto bp = repo.findById(req.tenantId, BusinessPurposeId(req.id));
         if (bp.isNull)
             return CommandResult(false, "", "Business purpose not found");
 
@@ -53,10 +52,10 @@ class ManageBusinessPurposesUseCase { // TODO: UIMUseCase {
         bp.updatedAt = clockSeconds();
 
         repo.update(bp);
-        return CommandResult(true, id.value, "");
+        return CommandResult(true, req.id, "");
     }
 
-    CommandResult activateBusinessPurpose(BusinessPurposeId id) {
+    CommandResult activateBusinessPurpose(TenantId tenantId, BusinessPurposeId id) {
         auto bp = repo.findById(tenantId, id);
         if (bp.isNull)
             return CommandResult(false, "", "Business purpose not found");
@@ -67,11 +66,11 @@ class ManageBusinessPurposesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, id.value, "");
     }
 
-    bool hasBusinessPurpose(BusinessPurposeId id) {
-        return repo.existsById(id);
+    bool hasBusinessPurpose(TenantId tenantId, BusinessPurposeId id) {
+        return repo.existsById(tenantId, id);
     }
 
-    BusinessPurpose getBusinessPurpose(BusinessPurposeId id) {
+    BusinessPurpose getBusinessPurpose(TenantId tenantId, BusinessPurposeId id) {
         return repo.findById(tenantId, id);
     }
 
@@ -83,7 +82,7 @@ class ManageBusinessPurposesUseCase { // TODO: UIMUseCase {
         return repo.findByApplicationGroup(tenantId, groupId);
     }
 
-    CommandResult deleteBusinessPurpose(BusinessPurposeId id) {
+    CommandResult deleteBusinessPurpose(TenantId tenantId, BusinessPurposeId id) {
         auto purpose = repo.findById(tenantId, id);
         if (purpose.isNull)
             return CommandResult(false, "", "Business purpose not found");

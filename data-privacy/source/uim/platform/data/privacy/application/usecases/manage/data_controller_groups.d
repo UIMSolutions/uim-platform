@@ -24,9 +24,7 @@ class ManageDataControllerGroupsUseCase { // TODO: UIMUseCase {
     if (req.name.length == 0)
       return CommandResult(false, "", "Name is required");
 
-    DataControllerGroup g;
-    g.initEntity(req.tenantId);
-
+    auto g = DataControllerGroup(req.tenantId);
     g.name = req.name;
     g.description = req.description;
     g.controllerIds = req.controllerIds;

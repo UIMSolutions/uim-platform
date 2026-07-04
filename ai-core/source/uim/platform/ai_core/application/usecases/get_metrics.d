@@ -28,10 +28,8 @@ class GetMetricsUseCase { // TODO: UIMUseCase {
     if (r.resourceGroupId.isEmpty)
       return CommandResult(false, "", "Resource group ID is required");
 
-    Metric metric;
-    metric.initEntity(r.tenantId) ;
-
-    metric.resourceGroupId = r.resourceGroupId;
+    auto metric = Metric(r.tenantId);
+    metric.groupId = r.resourceGroupId;
     metric.executionId = r.executionId;
 
     // Parse metric values

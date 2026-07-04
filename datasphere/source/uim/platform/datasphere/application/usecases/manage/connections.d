@@ -27,9 +27,7 @@ class ManageConnectionsUseCase { // TODO: UIMUseCase {
     if (r.spaceId.isEmpty)
       return CommandResult(false, "", "Space ID is required");
 
-    Connection c;
-    c.initEntity(r.tenantId, r.createdBy);
-
+    auto c = Connection(r.tenantId);
     c.spaceId = r.spaceId;
     c.name = r.name;
     c.description = r.description;

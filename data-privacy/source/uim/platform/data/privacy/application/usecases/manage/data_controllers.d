@@ -20,12 +20,11 @@ class ManageDataControllersUseCase { // TODO: UIMUseCase {
   CommandResult createController(CreateDataControllerRequest req) {
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
+      
     if (req.name.length == 0)
       return CommandResult(false, "", "Name is required");
 
-    auto now = currentTimestamp();
-    auto c = DataController();
-    c.initEntity(req.tenantId);
+    auto c = DataController(req.tenantId);
     c.name = req.name;
     c.description = req.description;
     c.legalEntityName = req.legalEntityName;

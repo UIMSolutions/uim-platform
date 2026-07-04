@@ -56,7 +56,7 @@ class ManageDataSubjectRolesUseCase { // TODO: UIMUseCase {
     }
 
     DataSubjectRole[] listDataSubjectRoles(TenantId tenantId) {
-        return repo.findAll(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     CommandResult deleteDataSubjectRole(TenantId tenantId, DataSubjectRoleId id) {

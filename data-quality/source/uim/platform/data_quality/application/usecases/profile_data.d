@@ -35,9 +35,7 @@ class ProfileDataUseCase { // TODO: UIMUseCase {
       columns ~= profileColumn(fieldName, req.records);
     }
 
-    DataProfile profile;
-    profile.initEntity(req.tenantId, req.requestedBy);
-    
+    auto profile = DataProfile(req.tenantId);
     profile.datasetId = req.datasetId;
     profile.datasetName = req.datasetName;
     profile.totalRecords = req.records.length;
@@ -55,7 +53,7 @@ class ProfileDataUseCase { // TODO: UIMUseCase {
     }
 
     profile.rating = scoreToRating(profile.overallQualityScore);
-    profile.profiledAt = currentTimestamp();
+    profile.profiledAt = profile.createdAt();
     profile.duration = (profile.profiledAt - startTime) / 10_000; // ms
 
     repo.save(profile);

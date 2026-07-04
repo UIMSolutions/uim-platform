@@ -27,9 +27,7 @@ class ManageDataAccessControlsUseCase { // TODO: UIMUseCase {
     if (r.spaceId.isEmpty)
       return CommandResult(false, "", "Space ID is required");
 
-    DataAccessControl dac;
-    dac.initEntity(r.tenantId);
-    dac.id = r.controlId;
+    auto dac = DataAccessControl(r.tenantId, r.controlId);
     dac.spaceId = r.spaceId;
     dac.name = r.name;
     dac.description = r.description;

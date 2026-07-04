@@ -35,9 +35,7 @@ class ManageConsentRecordsUseCase { // TODO: UIMUseCase {
     if (subject.isNull)
       return CommandResult(false, "", "Data subject not found");
 
-    auto now = currentTimestamp();
-    ConsentRecord record;
-    record.initEntity(req.tenantId);
+    auto record = ConsentRecord(req.tenantId);
     record.dataSubjectId = req.dataSubjectId;
     record.purpose = req.purpose.toProcessingPurpose;
     record.categories = req.categories.map!(c => c.toPersonalDataCategory).array;
@@ -46,7 +44,7 @@ class ManageConsentRecordsUseCase { // TODO: UIMUseCase {
     record.consentText = req.consentText;
     record.version_ = req.version_;
     record.ipAddress = req.ipAddress;
-    record.grantedAt = now;
+    record.grantedAt = record.createdAt();
     record.expiresAt = req.expiresAt;
 
     repo.save(record);

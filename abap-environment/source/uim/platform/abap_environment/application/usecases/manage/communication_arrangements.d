@@ -30,8 +30,7 @@ class ManageCommunicationArrangementsUseCase { // TODO: UIMUseCase {
     if (req.systemInstanceId.isEmpty)
       return CommandResult(false, "", "System instance ID is required");
 
-    CommunicationArrangement arr;
-    arr.initEntity(req.tenantId);
+    auto arr = CommunicationArrangement(req.tenantId);
     arr.systemInstanceId = req.systemInstanceId;
     arr.scenarioId = req.scenarioId;
     arr.name = req.name;

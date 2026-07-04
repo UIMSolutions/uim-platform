@@ -43,10 +43,7 @@ class ManageDocumentsUseCase { // TODO: UIMUseCase {
         return CommandResult(false, "", "Folder not found");
     }
 
-    auto now = currentTimestamp();
-
-    auto doc = Document();
-    doc.initEntity(r.tenantId, r.createdBy);
+    auto doc = Document(r.tenantId);
     doc.repositoryId = r.repositoryId;
     doc.folderId = r.folderId;
     doc.name = r.name;
@@ -59,8 +56,7 @@ class ManageDocumentsUseCase { // TODO: UIMUseCase {
     doc.properties = r.properties;
 
     // Create initial version (v1)
-    auto ver = DocumentVersion();
-    ver.initEntity(r.tenantId, r.createdBy);
+    auto ver = DocumentVersion(r.tenantId);
     ver.documentId = doc.id;
     ver.versionNumber = 1;
     ver.isMajor = true;

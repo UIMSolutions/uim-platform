@@ -29,10 +29,7 @@ class ManagePersonalDataModelsUseCase { // TODO: UIMUseCase {
     if (req.sourceSystem.length == 0)
       return CommandResult(false, "", "Source system is required");
 
-    auto now = currentTimestamp();
-    PersonalDataModel model;
-    model.initEntity(req.tenantId);
-    
+    auto model = PersonalDataModel(req.tenantId);
     model.fieldName = req.fieldName;
     model.fieldDescription = req.fieldDescription;
     model.category = req.category.toPersonalDataCategory;

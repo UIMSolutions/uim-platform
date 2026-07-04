@@ -23,9 +23,7 @@ class ManagePurposeRecordsUseCase { // TODO: UIMUseCase {
     if (req.subjectId.isEmpty)
       return CommandResult(false, "", "Data subject ID is required");
 
-    PurposeRecord r;
-    r.initEntity(req.tenantId);
-
+    auto r = PurposeRecord(req.tenantId);
     r.dataSubjectId = req.subjectId;
     r.businessContextId = req.contextId;
     r.purpose = req.purpose.toProcessingPurpose;

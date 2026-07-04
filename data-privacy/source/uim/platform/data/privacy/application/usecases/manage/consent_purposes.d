@@ -20,11 +20,11 @@ class ManageConsentPurposesUseCase { // TODO: UIMUseCase {
   CommandResult createPurpose(CreateConsentPurposeRequest req) {
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
+      
     if (req.name.length == 0)
       return CommandResult(false, "", "Name is required");
 
-    ConsentPurpose cp;
-    cp.initEntity(req.tenantId);
+    auto cp = ConsentPurpose(req.tenantId);
     cp.controllerId = req.controllerId;
     cp.name = req.name;
     cp.description = req.description;

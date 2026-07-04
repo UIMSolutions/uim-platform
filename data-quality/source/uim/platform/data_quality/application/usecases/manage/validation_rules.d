@@ -26,9 +26,7 @@ class ManageValidationRulesUseCase { // TODO: UIMUseCase {
     if (req.fieldName.length == 0)
       return CommandResult(false, "", "Field name is required");
 
-    ValidationRule rule;
-    rule.initEntity(req.tenantId, req.requestedBy);
-
+    auto rule = ValidationRule(req.tenantId);
     rule.name = req.name;
     rule.description = req.description;
     rule.datasetPattern = req.datasetPattern;

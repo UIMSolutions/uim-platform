@@ -28,10 +28,7 @@ class ManageCatalogAssetsUseCase { // TODO: UIMUseCase {
     if (r.spaceId.isEmpty)
       return CommandResult(false, "", "Space ID is required");
 
-    CatalogAsset ca;
-    ca.initEntity(r.tenantId);
-
-    ca.id = r.assetId;
+    auto ca = CatalogAsset(r.tenantId, r.assetId);
     ca.spaceId = r.spaceId;
     ca.name = r.name;
     ca.description = r.description;

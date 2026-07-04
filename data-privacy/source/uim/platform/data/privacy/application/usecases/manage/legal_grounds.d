@@ -29,9 +29,7 @@ class ManageLegalGroundsUseCase { // TODO: UIMUseCase {
     if (req.description.length == 0)
       return CommandResult(false, "", "Description is required");
 
-    LegalGround ground;
-    ground.initEntity(req.tenantId);
-
+    auto ground = LegalGround(req.tenantId);
     ground.dataSubjectId = req.dataSubjectId;
     ground.basis = req.basis;
     ground.purpose = req.purpose.toProcessingPurpose;

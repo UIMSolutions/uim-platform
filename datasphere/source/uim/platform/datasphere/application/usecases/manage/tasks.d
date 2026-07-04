@@ -26,11 +26,11 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
   CommandResult createTask(CreateTaskRequest r) {
     if (r.name.length == 0)
       return CommandResult(false, "", "Task name is required");
+
     if (r.spaceId.isEmpty)
       return CommandResult(false, "", "Space ID is required");
 
-    DSTask t;
-    t.initEntity(r.tenantId);
+    auto t = DSTask(r.tenantId);
     t.spaceId = r.spaceId;
     t.name = r.name;
     t.description = r.description;

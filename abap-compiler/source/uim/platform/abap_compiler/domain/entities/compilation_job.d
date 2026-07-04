@@ -42,15 +42,12 @@ struct CompilationJob {
 
     static CompilationJob create(TenantId tenantId, AbapProgramId pid) {
 
-        import std.uuid : randomUUID;
-
-        CompilationJob j;
-        j.initEntity(tenantId);
-        j.id = randomUUID().toString();
+        auto j = CompilationJob(tenantId);
         j.programId = pid;
         j.status = CompilationStatus.pending;
         j.startedAt = MonoTime.currTime.ticks;
         j.finishedAt = 0;
+
         return j;
     }
 }

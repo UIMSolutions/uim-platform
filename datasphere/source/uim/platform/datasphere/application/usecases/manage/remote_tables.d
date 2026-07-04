@@ -31,9 +31,7 @@ class ManageRemoteTablesUseCase { // TODO: UIMUseCase {
 
     import std.uuid : randomUUID;
 
-    RemoteTable rt;
-    rt.initEntity(r.tenantId) ;
-
+    auto rt = RemoteTable(r.tenantId);
     rt.spaceId = r.spaceId;
     rt.connectionId = r.connectionId;
     rt.name = r.name;

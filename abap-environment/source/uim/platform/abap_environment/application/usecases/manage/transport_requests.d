@@ -31,8 +31,7 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
     if (req.sourceSystemId.isEmpty)
       return CommandResult(false, "", "Source system ID is required");
 
-    TransportRequest tr;
-    tr.initEntity(req.tenantId);
+    auto tr = TransportRequest(req.tenantId);
     tr.sourceSystemId = req.sourceSystemId;
     tr.targetSystemId = req.targetSystemId;
     tr.description = req.description;
@@ -45,26 +44,20 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult addTransportTask(AddTransportTaskRequest req) {
-    auto tr = repo.findById(req.tenantId, req.transportRequestId);
+    auto tr = repo.findById(req.tenantId, req.requestId);
     if (tr.isNull)
       return CommandResult(false, "", "Transport request not found");
 
     if (tr.status != TransportStatus.modifiable)
       return CommandResult(false, "", "Transport request is not modifiable");
 
-    auto taskId = randomUUID().toString()[0 .. 8];
-    TransportTask task;
-    task.initEntity();
-    task.id = taskId;
+    auto task = TransportTask(req.tenantId);
     task.owner = req.owner;
     task.status = TransportStatus.modifiable;
     task.description = req.description;
     task.objectList = req.objectList;
-
-  
-    task.createdAt = currentTimestamp();
-
     tr.tasks ~= task;
+    
     repo.update(tr);
     return CommandResult(true, task.id.value, "");
   }

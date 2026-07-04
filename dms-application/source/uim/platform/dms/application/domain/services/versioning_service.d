@@ -66,8 +66,7 @@ class VersioningService {
     }
 
     // Create new version
-    auto ver = DocumentVersion.init;
-    ver.initEntity(tenantId, userId);
+    auto ver = DocumentVersion(tenantId, userId);
     ver.documentId = docId;
     ver.versionNumber = nextVersion;
     ver.isMajor = isMajor;

@@ -105,7 +105,7 @@ class TransportRequestController : ManageHttpController {
     auto data = precheck.data;
 
     AddTransportTaskRequest r;
-    r.transportRequestId = requestId;
+    r.requestId = requestId;
     r.tenantId = tenantId;
     r.owner = data.getString("owner");
     r.description = data.getString("description");
