@@ -42,6 +42,8 @@ struct UpdateTranslationProjectRequest {
 
 struct CreateGlossaryEntryRequest {
     TenantId tenantId;
+    GlossaryEntryId entryId;
+
     string sourceLanguage;
     string targetLanguage;
     string sourceTerm;
@@ -96,7 +98,7 @@ struct TranslateDocumentRequest {
 struct SubmitTranslationJobRequest {
     TenantId tenantId;
     JobType jobType;
-    
+
     string sourceLanguage;
     string targetLanguage;
     string provider;
