@@ -30,9 +30,7 @@ class ManageInstancesUseCase { // TODO: UIMUseCase {
     if (repo.existsById(r.tenantId, r.id))
       return CommandResult(false, "", "Instance already exists");
 
-    DatabaseInstance i;
-    i.initEntity(r.tenantId);
-    i.id = r.id;
+    auto i = DatabaseInstance(r.tenantId, r.  instanceId.isNull ? DatabaseInstanceId(createId()) : r.instanceId, r.createdBy);
     i.name = r.name;
     i.description = r.description;
     i.status = InstanceStatus.creating;

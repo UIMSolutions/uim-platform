@@ -26,9 +26,7 @@ class ManageIsolinesUseCase {
     err = SpatialValidator.validateId(r.id);
     if (err.length > 0) return CommandResult(false, "", err);
 
-    Isoline isoline;
-    isoline.initEntity(r.tenantId);
-    isoline.id = IsolineId(r.id);
+    auto isoline = Isoline(r.tenantId, r.id.isNull ? IsolineId(createId()) : r.id, r.createdBy);
     isoline.center = GeoCoordinate(r.centerLat, r.centerLon);
     isoline.rangeValue = r.rangeValue;
     isoline.providerId = r.providerId;

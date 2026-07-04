@@ -13,6 +13,8 @@ import uim.platform.dms.application;
 
 struct CreateRepositoryRequest {
   TenantId tenantId;
+  RepositoryId repositoryId;
+
   string name;
   string description;
   long maxFileSize;
@@ -33,6 +35,8 @@ struct UpdateRepositoryRequest {
 struct CreateFolderRequest {
   TenantId tenantId;
   RepositoryId repositoryId;
+  FolderId folderId;
+
   FolderId parentFolderId;
   string name;
   string description;
@@ -57,6 +61,8 @@ struct CreateDocumentRequest {
   TenantId tenantId;
   RepositoryId repositoryId;
   FolderId folderId;
+  DocumentId documentId;
+
   string name;
   string description;
   ContentCategory contentCategory;
@@ -114,6 +120,8 @@ struct CreateShareRequest {
 
 struct CreatePermissionRequest {
   TenantId tenantId;
+  PermissionId permissionId;
+
   string resourceId;
   ResourceType resourceType;
   UserId userId;
@@ -122,7 +130,7 @@ struct CreatePermissionRequest {
 }
 
 struct UpdatePermissionRequest {
-  PermissionId id;
+  PermissionId permissionId;
   TenantId tenantId;
   PermissionLevel level;
 }

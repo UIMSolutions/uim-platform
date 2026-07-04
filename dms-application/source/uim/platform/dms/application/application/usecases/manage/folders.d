@@ -46,8 +46,7 @@ class ManageFoldersUseCase { // TODO: UIMUseCase {
       path = parent.path ~ "/" ~ r.name;
     }
 
-    Folder entity;
-    entity.initEntity(r.tenantId, r.createdBy);
+    auto entity = Folder(r.tenantId, r.folderId.isNull ? FolderId(createId()) : r.folderId, r.createdBy);
     entity.repositoryId = r.repositoryId;
     entity.parentFolderId = r.parentFolderId;
     entity.name = r.name;
