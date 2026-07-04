@@ -8,7 +8,7 @@ module uim.platform.document_ai.domain.ports.repositories.clients;
 // import uim.platform.document_ai.domain.entities.client;
 import uim.platform.document_ai;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 interface ClientRepository : ITenantRepository!(Client, ClientId) {

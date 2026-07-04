@@ -7,7 +7,7 @@ module uim.platform.feature_flags.domain.entities.audit_entry;
 
 import uim.platform.feature_flags;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

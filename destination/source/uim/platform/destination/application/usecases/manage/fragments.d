@@ -11,7 +11,7 @@ module uim.platform.destination.application.usecases.manage.fragments;
 // 
 import uim.platform.destination;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Application service for destination fragment CRUD operations.

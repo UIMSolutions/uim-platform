@@ -7,7 +7,7 @@ module uim.platform.events.domain.repositories.event_channels;
 
 import uim.platform.events;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

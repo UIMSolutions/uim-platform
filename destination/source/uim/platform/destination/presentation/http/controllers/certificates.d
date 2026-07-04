@@ -7,7 +7,7 @@ module uim.platform.destination.presentation.http.controllers.certificates;
 
 import uim.platform.destination;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

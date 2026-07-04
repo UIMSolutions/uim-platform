@@ -7,7 +7,7 @@ module uim.platform.events.infrastructure.persistence.memory.webhooks;
 
 import uim.platform.events;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

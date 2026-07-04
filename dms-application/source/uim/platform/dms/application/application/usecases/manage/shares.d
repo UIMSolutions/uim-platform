@@ -15,7 +15,7 @@ module uim.platform.dms.application.application.usecases.manage.shares;
 
 import uim.platform.dms.application;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 class ManageSharesUseCase { // TODO: UIMUseCase {
   protected IShareRepository shares;

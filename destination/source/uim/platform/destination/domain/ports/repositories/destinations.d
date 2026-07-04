@@ -8,7 +8,7 @@ module uim.platform.destination.domain.ports.repositories.destinations;
 // import uim.platform.destination.domain.types;
 import uim.platform.destination;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — destination configuration persistence.

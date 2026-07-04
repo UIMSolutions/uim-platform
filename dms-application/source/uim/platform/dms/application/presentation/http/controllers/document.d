@@ -14,7 +14,7 @@ module uim.platform.dms.application.presentation.http.controllers.document;
 
 import uim.platform.dms.application;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 class DocumentController : ManageHttpController {
   private ManageDocumentsUseCase usecase;

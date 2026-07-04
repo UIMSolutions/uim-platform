@@ -12,7 +12,7 @@ module uim.platform.document_ai.infrastructure.persistence.memory.enrichment_dat
  
 import uim.platform.document_ai;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryEnrichmentDataRepository : EnrichmentDataRepository {

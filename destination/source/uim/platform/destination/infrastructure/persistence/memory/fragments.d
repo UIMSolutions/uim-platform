@@ -11,7 +11,7 @@ module uim.platform.destination.infrastructure.persistence.memory.fragments;
 //  
 import uim.platform.destination;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryFragmentRepository : TenantRepository!(DestinationFragment, DestinationFragmentId), FragmentRepository {

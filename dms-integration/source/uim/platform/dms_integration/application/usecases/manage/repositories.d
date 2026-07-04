@@ -7,7 +7,7 @@ module uim.platform.dms_integration.application.usecases.manage.repositories;
 
 import uim.platform.dms_integration;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

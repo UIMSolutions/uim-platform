@@ -10,7 +10,7 @@ module uim.platform.dms.application.infrastructure.persistence.memory.folders;
 
 import uim.platform.dms.application;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryFolderRepository : TenantRepository!(Folder, FolderId), IFolderRepository {

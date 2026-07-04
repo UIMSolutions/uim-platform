@@ -10,7 +10,7 @@ module uim.platform.destination.domain.entities.destination_lookup;
 // import uim.platform.destination.domain.entities.certificate;
 import uim.platform.destination;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// The result of a "find destination" lookup — includes destination config, resolved auth tokens, and certificates.

@@ -8,7 +8,7 @@ module uim.platform.destination.domain.services.destination_resolver;
 import uim.platform.destination;
 import std.base64 : Base64;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Domain service: resolves a destination by merging fragments and generating auth tokens.

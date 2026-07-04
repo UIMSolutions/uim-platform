@@ -13,7 +13,7 @@ import std.algorithm    : map;
 import std.array        : array;
 import std.conv         : to;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

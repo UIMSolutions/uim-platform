@@ -12,7 +12,7 @@ module uim.platform.document_ai.infrastructure.persistence.memory.clients;
  
 import uim.platform.document_ai;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryClientRepository : TenantRepository!(Client, ClientId), ClientRepository {

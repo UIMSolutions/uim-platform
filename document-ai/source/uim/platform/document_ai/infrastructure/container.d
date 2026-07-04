@@ -35,7 +35,7 @@ module uim.platform.document_ai.infrastructure.container;
 // import uim.platform.document_ai.presentation.http.controllers.health;
 import uim.platform.document_ai;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 struct Container {

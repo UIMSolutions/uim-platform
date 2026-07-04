@@ -17,7 +17,7 @@ module uim.platform.dms.application.application.usecases.manage.documents;
 
 import uim.platform.dms.application;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 class ManageDocumentsUseCase { // TODO: UIMUseCase {
   private MemoryDocumentRepository docs;

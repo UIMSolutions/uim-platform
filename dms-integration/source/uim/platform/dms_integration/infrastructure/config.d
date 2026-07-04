@@ -8,7 +8,7 @@ import std.process : environment;
 
 import uim.platform.dms_integration;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

@@ -10,7 +10,7 @@ module uim.platform.dms.application.infrastructure.persistence.memory.favorites;
 
 import uim.platform.dms.application;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 
 class MemoryFavoriteRepository : TenantRepository!(Favorite, FavoriteId), IFavoriteRepository {

@@ -11,7 +11,7 @@ import std.algorithm : map;
 import std.array     : array;
 import core.time     : MonoTime;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

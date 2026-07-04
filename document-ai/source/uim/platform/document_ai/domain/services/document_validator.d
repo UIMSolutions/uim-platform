@@ -7,7 +7,7 @@ module uim.platform.document_ai.domain.services.document_validator;
 // import uim.platform.document_ai.domain.types;
 import uim.platform.document_ai;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 struct ValidationResult {

@@ -10,7 +10,7 @@ module uim.platform.dms.application.domain.services.access_control_service;
 
 import uim.platform.dms.application;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 /// Domain service for access control checks.
 class AccessControlService {

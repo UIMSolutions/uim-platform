@@ -7,7 +7,7 @@ module uim.platform.events.application.usecases.manage.queue_subscriptions;
 
 import uim.platform.events;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

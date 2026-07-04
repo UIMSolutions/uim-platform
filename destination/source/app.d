@@ -11,7 +11,7 @@ module app;
 
 import uim.platform.destination;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

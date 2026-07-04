@@ -8,7 +8,7 @@ module uim.platform.dms.application.domain.ports.repositories.permissions;
 // import uim.platform.dms.application.domain.types;
 import uim.platform.dms.application;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 interface IPermissionRepository : ITenantRepository!(Permission, PermissionId) {
   size_t countByResource(TenantId tenantId, string resourceId, ResourceType resourceType, );

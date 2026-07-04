@@ -14,7 +14,7 @@ module uim.platform.document_ai.application.usecases.process_documents;
 
 import uim.platform.document_ai;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

@@ -7,7 +7,7 @@ module uim.platform.document_ai.domain.entities.schema;
 // import uim.platform.document_ai.domain.types;
 import uim.platform.document_ai;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 struct SchemaField {

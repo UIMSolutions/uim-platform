@@ -7,7 +7,7 @@ module uim.platform.dms_integration.application.dtos.dto;
 
 import uim.platform.dms_integration;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

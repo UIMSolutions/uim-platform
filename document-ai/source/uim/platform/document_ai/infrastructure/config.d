@@ -10,7 +10,7 @@ import std.process : environment;
 
 import uim.platform.document_ai;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 struct SrvConfig {

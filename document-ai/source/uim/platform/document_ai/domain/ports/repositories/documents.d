@@ -8,7 +8,7 @@ module uim.platform.document_ai.domain.ports.repositories.documents;
 // import uim.platform.document_ai.domain.entities.document;
 import uim.platform.document_ai;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 interface DocumentRepository {

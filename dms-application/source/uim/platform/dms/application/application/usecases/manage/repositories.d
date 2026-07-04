@@ -12,7 +12,7 @@ module uim.platform.dms.application.application.usecases.manage.repositories;
 // import uim.platform.dms.application.domain.types;
 import uim.platform.dms.application;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 class ManageRepositoriesUseCase { // TODO: UIMUseCase {
   private IRepositoryRepository repo;

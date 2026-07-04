@@ -1,7 +1,7 @@
 module uim.platform.events.domain.enumerations;
 
 import uim.platform.events;
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 
 enum MessagingServiceStatus {

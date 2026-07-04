@@ -7,7 +7,7 @@ module uim.platform.feature_flags.infrastructure.container;
 
 import uim.platform.feature_flags;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

@@ -9,7 +9,7 @@ import uim.platform.feature_flags;
 import vibe.http.server : HTTPServerResponse, HTTPStatus;
 import vibe.data.json   : Json;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

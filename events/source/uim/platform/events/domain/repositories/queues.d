@@ -7,7 +7,7 @@ module uim.platform.events.domain.repositories.queues;
 
 import uim.platform.events;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

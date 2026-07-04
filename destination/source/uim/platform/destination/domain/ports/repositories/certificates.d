@@ -8,7 +8,7 @@ module uim.platform.destination.domain.ports.repositories.certificates;
 // import uim.platform.destination.domain.types;
 import uim.platform.destination;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — certificate persistence.

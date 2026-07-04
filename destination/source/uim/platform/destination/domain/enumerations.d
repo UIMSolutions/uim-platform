@@ -1,7 +1,7 @@
 module uim.platform.destination.domain.enumerations;
 import uim.platform.destination;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Authentication method for the destination.

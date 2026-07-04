@@ -10,7 +10,7 @@ module uim.platform.dms.application.infrastructure.persistence.memory.shares;
 
 import uim.platform.dms.application;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryShareRepository : TenantRepository!(Share, ShareId), IShareRepository {

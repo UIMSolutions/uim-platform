@@ -12,7 +12,7 @@ module uim.platform.document_ai.infrastructure.persistence.memory.document;
  
 import uim.platform.document_ai;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryDocumentRepository : DocumentRepository {

@@ -9,7 +9,7 @@ import uim.platform.feature_flags;
 import std.algorithm : filter, find;
 import std.array     : array;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 
