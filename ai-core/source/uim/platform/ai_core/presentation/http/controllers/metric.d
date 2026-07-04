@@ -9,7 +9,7 @@ module uim.platform.ai_core.presentation.http.controllers.metric;
 
 import uim.platform.ai_core;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

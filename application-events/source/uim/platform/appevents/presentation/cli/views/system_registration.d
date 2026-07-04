@@ -13,7 +13,7 @@ module uim.platform.appevents.presentation.cli.views.system_registration;
 
 import uim.platform.appevents;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

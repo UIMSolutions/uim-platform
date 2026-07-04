@@ -7,7 +7,7 @@ module uim.platform.application_autoscaler.infrastructure.persistence.memory.sca
 
 import uim.platform.application_autoscaler;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

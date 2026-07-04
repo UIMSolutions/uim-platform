@@ -7,7 +7,7 @@ module uim.platform.application_autoscaler.domain.entities.scaling_history;
 
 import uim.platform.application_autoscaler;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

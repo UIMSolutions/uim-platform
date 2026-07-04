@@ -5,7 +5,7 @@ module uim.platform.analytics.infrastructure.persistence.mongodb.assets;
 // import uim.platform.analytics.domain;
 import uim.platform.analytics;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:  
 class MongoAssetRepository : AssetRepository {

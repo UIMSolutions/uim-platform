@@ -6,7 +6,7 @@
 module uim.platform.analytics.domain.enumerations.planning;
 import uim.platform.analytics;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 enum PlanningStatus {
   // Used for plans that are still being developed and have not yet been finalized or approved

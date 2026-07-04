@@ -8,7 +8,7 @@ module uim.platform.analytics.domain.repositories.dashboard;
 
 import uim.platform.analytics;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 /// Port: outgoing repository interface for Dashboard persistence.
 interface DashboardRepository : ITenantRepository!(Dashboard, DashboardId) {

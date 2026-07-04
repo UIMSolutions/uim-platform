@@ -7,7 +7,7 @@ module uim.platform.alert_notification.domain.ports.repositories.undelivered_eve
 
 import uim.platform.alert_notification;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

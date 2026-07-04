@@ -6,7 +6,7 @@
 module uim.platform.analytics.domain.enumerations.prediction;
 import uim.platform.analytics;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 enum PredictionType {
   // Used for predicting categorical outcomes, where the goal is to classify data points into predefined classes or categories based on input features

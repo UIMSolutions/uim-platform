@@ -2,7 +2,7 @@ module uim.platform.analytics.domain.entities.insight_asset;
 
 import uim.platform.analytics;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:  
 

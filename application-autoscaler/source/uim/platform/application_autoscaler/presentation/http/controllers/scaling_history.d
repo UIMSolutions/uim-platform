@@ -7,7 +7,7 @@ module uim.platform.application_autoscaler.presentation.http.controllers.scaling
 
 import uim.platform.application_autoscaler;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

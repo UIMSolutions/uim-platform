@@ -8,7 +8,7 @@ module uim.platform.analytics.infrastructure.persistence.memory.repositories.pla
 // import uim.platform.analytics.domain.repositories.planning;
 import uim.platform.analytics;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 class MemoryPlanningRepository : TenantRepository!(PlanningModel, PlanningModelId), PlanningRepository {
  

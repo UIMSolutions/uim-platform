@@ -7,7 +7,7 @@ module uim.platform.application_studio.application.usecases.manage.build_configu
 
 import uim.platform.application_studio;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

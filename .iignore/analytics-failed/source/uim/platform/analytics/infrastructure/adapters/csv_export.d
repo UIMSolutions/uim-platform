@@ -8,7 +8,7 @@ module uim.platform.analytics.infrastructure.adapters.csv_export;
 /// Adapter: simple CSV export implementation.
 import uim.platform.analytics;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 class CsvExportAdapter : ExportPort {
 

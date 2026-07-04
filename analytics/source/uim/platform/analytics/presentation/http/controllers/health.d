@@ -5,7 +5,7 @@ import vibe.http.router : URLRouter;
 import vibe.http.server : HTTPServerRequest, HTTPServerResponse;
 import uim.platform.analytics;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class AnalyticsHealthController {

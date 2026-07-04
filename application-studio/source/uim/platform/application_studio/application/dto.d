@@ -7,7 +7,7 @@ module uim.platform.application_studio.application.dto;
 
 import uim.platform.application_studio;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

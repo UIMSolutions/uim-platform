@@ -9,7 +9,7 @@ module uim.platform.ai_core.presentation.http.controllers.executable;
 // import uim.platform.ai_core;
 import uim.platform.ai_core;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class ExecutableController : ManageHttpController {

@@ -14,7 +14,7 @@ module uim.platform.ai_core.application.usecases.manage.executions;
 
 import uim.platform.ai_core;
 
-// mixin(ShowModule!()); 
+mixin(ShowModule!()); 
 
 @safe:
 class ManageExecutionsUseCase { // TODO: UIMUseCase {

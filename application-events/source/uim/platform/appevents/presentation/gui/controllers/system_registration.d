@@ -14,7 +14,7 @@ module uim.platform.appevents.presentation.gui.controllers.system_registration;
 
 import uim.platform.appevents;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

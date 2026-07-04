@@ -10,7 +10,7 @@ module uim.platform.analytics.infrastructure.web.handlers.widget;
 
 import uim.platform.analytics;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 
 class WidgetHandler {

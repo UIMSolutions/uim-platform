@@ -32,9 +32,7 @@ class ManageEventMessagesUseCase {
     }
 
     CommandResult publishMessage(EventMessageDTO dto) {
-        EventMessage msg;
-        msg.initEntity(dto.tenantId, dto.createdBy);
-        if (!dto.messageId.isNull) msg.id = dto.messageId;
+        auto msg = EventMessage(dto.tenantId, dto.messageId, dto.createdBy);
         msg.channelId = dto.channelId;
         msg.eventType = dto.eventType;
         msg.payload = dto.payload;

@@ -6,7 +6,7 @@ module uim.platform.analytics.presentation.cli.controller;
 
 import uim.platform.analytics;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:  
 class CliController {

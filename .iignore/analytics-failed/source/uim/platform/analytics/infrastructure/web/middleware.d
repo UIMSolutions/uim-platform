@@ -7,7 +7,7 @@ module uim.platform.analytics.infrastructure.web.middleware;
 // import vibe.core.log;
 import uim.platform.analytics;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 /// CORS middleware - adds cross-origin headers for browser access.
 void corsMiddleware(scope HTTPServerRequest req, scope HTTPServerResponse res) {

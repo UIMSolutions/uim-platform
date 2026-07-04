@@ -5,7 +5,7 @@ module uim.platform.analytics.infrastructure.config;
 // import uim.platform.analytics.domain.types;
 import uim.platform.analytics;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:  
 struct AppConfig {

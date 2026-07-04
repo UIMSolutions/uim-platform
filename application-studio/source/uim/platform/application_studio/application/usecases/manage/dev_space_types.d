@@ -7,7 +7,7 @@ module uim.platform.application_studio.application.usecases.manage.dev_space_typ
 
 import uim.platform.application_studio;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

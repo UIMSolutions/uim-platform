@@ -6,7 +6,7 @@ import vibe.data.json : Json;
 import vibe.http.server : HTTPServerRequest, HTTPServerResponse;
 import uim.platform.analytics;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 string tenantFromQuery(scope HTTPServerRequest req) {

@@ -19,7 +19,7 @@ module uim.platform.appevents.infrastructure.persistence.file.event_channels;
 
 import uim.platform.appevents;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

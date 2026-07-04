@@ -10,7 +10,7 @@ module uim.platform.analytics.app.usecases.dashboards;
 // import uim.platform.analytics.app.dto.dashboard;
 import uim.platform.analytics;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 /// Application service: dashboard use cases.
 class DashboardUseCases {

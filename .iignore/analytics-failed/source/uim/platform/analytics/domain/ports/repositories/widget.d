@@ -8,7 +8,7 @@ module uim.platform.analytics.domain.repositories.widget;
 
 import uim.platform.analytics;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 
 interface WidgetRepository : ITenantRepository!(Widget, WidgetId) {

@@ -7,7 +7,7 @@ module uim.platform.ai_core.domain.enumerations;
 
 import uim.platform.ai_core;
 
-// mixin(ShowModule!()); 
+mixin(ShowModule!()); 
 
 @safe:
 

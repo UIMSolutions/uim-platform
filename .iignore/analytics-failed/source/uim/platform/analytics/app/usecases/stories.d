@@ -10,7 +10,7 @@ module uim.platform.analytics.app.usecases.stories;
 // import uim.platform.analytics.app.dto.story;
 import uim.platform.analytics;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class StoryUseCases {

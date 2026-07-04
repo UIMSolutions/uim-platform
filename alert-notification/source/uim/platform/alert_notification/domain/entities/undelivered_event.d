@@ -7,7 +7,7 @@ module uim.platform.alert_notification.domain.entities.undelivered_event;
 
 import uim.platform.alert_notification;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

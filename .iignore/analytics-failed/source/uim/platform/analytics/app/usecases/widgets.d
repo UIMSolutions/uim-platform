@@ -13,7 +13,7 @@ module uim.platform.analytics.app.usecases.widgets;
 
 import uim.platform.analytics;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 class WidgetUseCases {
   private WidgetRepository repo;

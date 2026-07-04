@@ -14,7 +14,7 @@ module uim.platform.appevents.infrastructure.persistence.memory.event_filters;
 
 import uim.platform.appevents;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

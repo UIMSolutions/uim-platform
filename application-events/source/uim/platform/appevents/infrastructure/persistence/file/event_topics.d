@@ -17,7 +17,7 @@ module uim.platform.appevents.infrastructure.persistence.file.event_topics;
 
 import uim.platform.appevents;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

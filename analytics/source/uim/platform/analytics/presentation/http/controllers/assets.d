@@ -12,7 +12,7 @@ import uim.platform.service.helpers.read : readStringArray;
 import uim.platform.service.presentation.http.controllers.manage : ManageHttpController;
 import uim.platform.analytics;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class AnalyticsAssetsController : ManageHttpController {

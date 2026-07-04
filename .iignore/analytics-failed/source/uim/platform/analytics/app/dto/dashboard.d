@@ -11,7 +11,7 @@ import uim.platform.analytics.domain.values.common;
 
 import uim.platform.analytics;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 struct CreateDashboardRequest {

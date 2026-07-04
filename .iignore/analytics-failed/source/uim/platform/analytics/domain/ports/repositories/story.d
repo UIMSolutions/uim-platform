@@ -8,7 +8,7 @@ module uim.platform.analytics.domain.repositories.story;
 
 import uim.platform.analytics;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 
 interface StoryRepository : ITenantRepository!(Story, StoryId) {

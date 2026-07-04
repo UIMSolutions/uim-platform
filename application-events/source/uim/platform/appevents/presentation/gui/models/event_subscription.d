@@ -10,7 +10,7 @@ module uim.platform.appevents.presentation.gui.models.event_subscription;
 
 import uim.platform.appevents;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

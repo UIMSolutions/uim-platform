@@ -17,7 +17,7 @@ module uim.platform.appevents.infrastructure.persistence.file.dead_letter_entrie
 
 import uim.platform.appevents;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

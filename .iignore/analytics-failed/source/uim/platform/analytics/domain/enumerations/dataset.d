@@ -6,7 +6,7 @@
 module uim.platform.analytics.domain.enumerations.dataset;
 import uim.platform.analytics;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 /// Defines the role of a column in a dataset. This is used for categorizing columns and determining how they are used in analysis and reporting.
 enum ColumnRole {

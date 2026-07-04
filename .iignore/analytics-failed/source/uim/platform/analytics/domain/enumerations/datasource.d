@@ -7,7 +7,7 @@ module uim.platform.analytics.domain.enumerations.datasource;
 
 import uim.platform.analytics;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 
 enum DataSourceType {

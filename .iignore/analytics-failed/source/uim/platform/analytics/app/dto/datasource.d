@@ -8,7 +8,7 @@ module uim.platform.analytics.app.dto.datasource;
 //import uim.platform.analytics.domain.entities.datasource;
 import uim.platform.analytics;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 struct CreateDataSourceRequest {
   string name;

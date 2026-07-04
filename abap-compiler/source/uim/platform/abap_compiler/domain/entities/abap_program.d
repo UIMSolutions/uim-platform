@@ -30,9 +30,7 @@ struct AbapProgram {
 
     static AbapProgram create(string id, TenantId tenantId, ProgramType pt, string title, string language, string src) {
 
-        AbapProgram p;
-        p.initEntity(tenantId);
-
+        auto p = AbapProgram(tenantId);
         p.id = id;
         p.programType = pt;
         p.title = title;

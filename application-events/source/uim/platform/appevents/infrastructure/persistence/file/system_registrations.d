@@ -18,7 +18,7 @@ module uim.platform.appevents.infrastructure.persistence.file.system_registratio
 
 import uim.platform.appevents;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

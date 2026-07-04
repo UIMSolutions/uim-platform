@@ -15,7 +15,7 @@ module uim.platform.appevents.infrastructure.persistence.memory.dead_letter_entr
 // 
 import uim.platform.appevents;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

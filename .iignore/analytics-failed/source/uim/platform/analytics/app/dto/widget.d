@@ -10,7 +10,7 @@ import uim.platform.analytics.domain.entities.widget;
 import uim.platform.analytics.domain.values.chart_type;
 import uim.platform.analytics;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 
 struct CreateWidgetRequest {

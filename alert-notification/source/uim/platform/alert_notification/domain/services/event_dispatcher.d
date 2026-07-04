@@ -7,7 +7,7 @@ module uim.platform.alert_notification.domain.services.event_dispatcher;
 
 import uim.platform.alert_notification;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

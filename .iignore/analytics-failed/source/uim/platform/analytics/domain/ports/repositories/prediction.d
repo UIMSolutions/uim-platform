@@ -8,7 +8,7 @@ module uim.platform.analytics.domain.repositories.prediction;
 
 import uim.platform.analytics;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 
 interface PredictionRepository : ITenantRepository!(Prediction, PredictionId) {

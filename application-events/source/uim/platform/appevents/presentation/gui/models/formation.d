@@ -10,7 +10,7 @@ module uim.platform.appevents.presentation.gui.models.formation;
 
 import uim.platform.appevents;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

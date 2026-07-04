@@ -15,7 +15,7 @@ module uim.platform.appevents.presentation.http.controllers.dead_letter_entry;
 
 import uim.platform.appevents;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

@@ -7,7 +7,7 @@ module uim.platform.application_studio.application.usecases.manage.service_bindi
 
 import uim.platform.application_studio;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

@@ -4,7 +4,7 @@ module uim.platform.analytics.domain.ports.repositories.asset_repository;
 // import uim.platform.analytics.domain.types;
 import uim.platform.analytics;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:  
 interface AssetRepository {

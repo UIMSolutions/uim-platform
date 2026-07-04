@@ -7,7 +7,7 @@ module uim.platform.analytics.infrastructure.adapters.stub_data_connector;
 // import uim.platform.analytics.app.ports.dataconnector;
 import uim.platform.analytics;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 /// Stub adapter: simulates data fetching for development / testing.
 class StubDataConnector : DataConnector {

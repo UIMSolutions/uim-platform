@@ -10,7 +10,7 @@ import std.process : environment;
 
 import uim.platform.appevents;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

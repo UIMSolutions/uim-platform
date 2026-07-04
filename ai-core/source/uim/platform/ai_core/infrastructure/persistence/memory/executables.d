@@ -10,7 +10,7 @@ module uim.platform.ai_core.infrastructure.persistence.memory.executables;
 
 import uim.platform.ai_core;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryExecutableRepository : TenantRepository!(Executable, ExecutableId), ExecutableRepository {

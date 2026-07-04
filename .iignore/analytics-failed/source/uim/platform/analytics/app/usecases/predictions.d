@@ -12,7 +12,7 @@ module uim.platform.analytics.app.usecases.predictions;
 
 import uim.platform.analytics;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 class PredictionUseCases {
   private PredictionRepository repo;

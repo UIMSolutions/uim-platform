@@ -7,7 +7,7 @@ module uim.platform.application_autoscaler.domain.entities.app_binding;
 
 import uim.platform.application_autoscaler;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

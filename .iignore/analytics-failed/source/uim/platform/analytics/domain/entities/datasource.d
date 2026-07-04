@@ -7,7 +7,7 @@ module uim.platform.analytics.domain.entities.datasource;
 
 import uim.platform.analytics;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 /// Represents an external data connection (database, file, API, live connection).
 struct DataSource {

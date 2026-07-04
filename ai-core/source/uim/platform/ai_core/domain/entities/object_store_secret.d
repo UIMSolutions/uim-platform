@@ -7,7 +7,7 @@ module uim.platform.ai_core.domain.entities.object_store_secret;
 // import uim.platform.ai_core.domain.types;
 import uim.platform.ai_core;
 
-// mixin(ShowModule!()); 
+mixin(ShowModule!()); 
 
 @safe:
 struct ObjectStoreSecret {

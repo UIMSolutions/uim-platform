@@ -7,7 +7,7 @@ module uim.platform.application_autoscaler.presentation.http.controllers.policie
 
 import uim.platform.application_autoscaler;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

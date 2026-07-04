@@ -8,7 +8,7 @@ module uim.platform.analytics.domain.repositories.datasource;
 
 import uim.platform.analytics;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 
 interface DataSourceRepository : ITenantRepository!(DataSource, DataSourceId) {

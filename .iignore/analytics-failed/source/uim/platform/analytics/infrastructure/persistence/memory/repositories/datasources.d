@@ -8,7 +8,7 @@ module uim.platform.analytics.infrastructure.persistence.memory.repositories.dat
 // import uim.platform.analytics.domain.repositories.datasource;
 import uim.platform.analytics;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 class MemoryDataSourceRepository : TenantRepository!(DataSource, DataSourceId), DataSourceRepository {
 

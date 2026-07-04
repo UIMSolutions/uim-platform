@@ -13,7 +13,7 @@ module uim.platform.appevents.presentation.cli.views.dead_letter_entry;
 
 import uim.platform.appevents;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

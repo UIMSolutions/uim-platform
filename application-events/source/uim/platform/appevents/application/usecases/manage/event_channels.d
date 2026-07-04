@@ -29,8 +29,8 @@ class ManageEventChannelsUseCase {
     CommandResult createEventChannel(EventChannelDTO dto) {
         if (repo.nameExists(dto.tenantId, dto.name))
             return CommandResult(false, "", "Channel name already exists");
-        EventChannel ch;
-        ch.initEntity(dto.tenantId, dto.createdBy);
+            
+        auto ch = EventChannel(dto.tenantId);
         if (!dto.channelId.isNull) ch.id = dto.channelId;
         ch.name = dto.name;
         ch.topicId = dto.topicId;
@@ -39,6 +39,7 @@ class ManageEventChannelsUseCase {
         ch.status = dto.status;
         ch.deliveryMode = dto.deliveryMode;
         ch.maxSizeBytes = dto.maxSizeBytes;
+
         repo.save(ch);
         return CommandResult(true, ch.id.value, "");
     }

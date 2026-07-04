@@ -18,7 +18,7 @@ module uim.platform.appevents.presentation.http.controllers.event_channel;
 
 import uim.platform.appevents;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 
