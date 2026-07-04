@@ -11,7 +11,7 @@ module uim.platform.data.privacy.presentation.http.controllers.data_subject;
 // import uim.platform.data.privacy.domain.entities.data_subject;
 import uim.platform.data.privacy;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class DataSubjectController : ManageHttpController {

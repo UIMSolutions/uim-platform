@@ -7,7 +7,7 @@ module uim.platform.data_quality.application.usecases.validate_data;
 
 import uim.platform.data_quality;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class ValidateDataUseCase { // TODO: UIMUseCase {

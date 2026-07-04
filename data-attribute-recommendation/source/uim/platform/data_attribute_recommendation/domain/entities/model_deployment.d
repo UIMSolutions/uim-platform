@@ -7,7 +7,7 @@ module uim.platform.data_attribute_recommendation.domain.entities.model_deployme
 
 import uim.platform.data_attribute_recommendation;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// A deployed instance of a trained model, exposing an inference endpoint

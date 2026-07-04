@@ -11,7 +11,7 @@ module uim.platform.data_quality.application.usecases.detect_duplicates;
 
 import uim.platform.data_quality;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

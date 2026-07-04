@@ -9,7 +9,7 @@ module uim.platform.data.privacy.infrastructure.persistence.memory.information_r
 // import uim.platform.data.privacy.domain.ports.repositories.information_reports;
 import uim.platform.data.privacy;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryInformationReportRepository : TenantRepository!(InformationReport, InformationReportId), InformationReportRepository {

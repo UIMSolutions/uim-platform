@@ -8,7 +8,7 @@ module uim.platform.data_quality.presentation.http.controllers.dashboard;
 import uim.platform.service;
 import uim.platform.data_quality;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class DashboardController : HttpController {

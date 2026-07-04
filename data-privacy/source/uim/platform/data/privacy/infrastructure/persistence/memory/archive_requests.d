@@ -9,7 +9,7 @@ module uim.platform.data.privacy.infrastructure.persistence.memory.archive_reque
 // import uim.platform.data.privacy.domain.ports.archive_request_repository;
 import uim.platform.data.privacy;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryArchiveRequestRepository : TenantRepository!(ArchiveRequest, ArchiveRequestId), ArchiveRequestRepository {

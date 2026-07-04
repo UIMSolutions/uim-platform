@@ -7,7 +7,7 @@ module uim.platform.data_attribute_recommendation.infrastructure.config;
 import std.process : environment;
 import uim.platform.data_attribute_recommendation;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Service configuration.

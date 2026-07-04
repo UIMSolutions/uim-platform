@@ -7,7 +7,7 @@ module uim.platform.data_quality.domain.entities.address_record;
 
 import uim.platform.data_quality;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// An address record for cleansing and geocoding.

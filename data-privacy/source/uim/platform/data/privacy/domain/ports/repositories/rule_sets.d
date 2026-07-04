@@ -8,7 +8,7 @@ module uim.platform.data.privacy.domain.ports.repositories.rule_sets;
 // import uim.platform.data.privacy.domain.entities.rule_set;
 import uim.platform.data.privacy;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Port for persisting and querying rule sets.

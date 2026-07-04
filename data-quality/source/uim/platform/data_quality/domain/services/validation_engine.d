@@ -9,7 +9,7 @@ module uim.platform.data_quality.domain.services.validation_engine;
 
 import uim.platform.data_quality;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Domain service - evaluates validation rules against record field values.

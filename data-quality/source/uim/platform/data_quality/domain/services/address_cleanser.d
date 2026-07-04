@@ -12,7 +12,7 @@ module uim.platform.data_quality.domain.services.address_cleanser;
 
 import uim.platform.data_quality;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Domain service - cleanses and standardizes address data.

@@ -8,7 +8,7 @@ module uim.platform.data.privacy.domain.ports.repositories.consent_records;
 // import uim.platform.data.privacy.domain.entities.consent_record;
 import uim.platform.data.privacy;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Port for persisting consent records.

@@ -8,7 +8,7 @@ module uim.platform.data_quality.domain.ports.repositories.match_groups;
 // import uim.platform.data_quality.domain.entities.match_group;
 import uim.platform.data_quality;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Port for persisting duplicate match groups.

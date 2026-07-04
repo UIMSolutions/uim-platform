@@ -7,7 +7,7 @@ module uim.platform.data_quality.infrastructure.persistence.memory.validation_re
 
 import uim.platform.data_quality;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryValidationResultRepository : TenantRepository!(ValidationResult, ValidationResultId), ValidationResultRepository {

@@ -9,7 +9,7 @@ module uim.platform.data_attribute_recommendation.domain.ports.data_records;
 // import uim.platform.data_attribute_recommendation.domain.entities.data_record;
 import uim.platform.data_attribute_recommendation;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 interface DataRecordRepository : ITenantRepository!(DataRecord, DataRecordId) {

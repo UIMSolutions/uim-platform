@@ -9,7 +9,7 @@ module uim.platform.data.privacy.infrastructure.persistence.memory.data_subjects
 // import uim.platform.data.privacy.domain.ports.repositories.data_subjects;
 import uim.platform.data.privacy;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryDataSubjectRepository : TenantRepository!(DataSubject, DataSubjectId), DataSubjectRepository {

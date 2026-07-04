@@ -11,7 +11,7 @@ module uim.platform.data.privacy.application.usecases.manage.consent_records;
 // import uim.platform.data.privacy.application.dto;
 import uim.platform.data.privacy;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class ManageConsentRecordsUseCase { // TODO: UIMUseCase {

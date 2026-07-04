@@ -7,7 +7,7 @@ module uim.platform.data.privacy.domain.entities.anonymization_config;
 
 import uim.platform.data.privacy;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// An entity-level anonymization rule mapping a data category to an anonymization method.

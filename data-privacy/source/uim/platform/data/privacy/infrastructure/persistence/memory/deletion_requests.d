@@ -9,7 +9,7 @@ module uim.platform.data.privacy.infrastructure.persistence.memory.deletion_requ
 // import uim.platform.data.privacy.domain.ports.repositories.deletion_requests;
 import uim.platform.data.privacy;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryDeletionRequestRepository : TenantRepository!(DeletionRequest, DeletionRequestId), DeletionRequestRepository {

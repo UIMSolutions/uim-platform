@@ -8,7 +8,7 @@ module uim.platform.data.privacy.domain.ports.repositories.legal_grounds;
 // import uim.platform.data.privacy.domain.entities.legal_ground;
 import uim.platform.data.privacy;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Port for persisting legal grounds for data processing.

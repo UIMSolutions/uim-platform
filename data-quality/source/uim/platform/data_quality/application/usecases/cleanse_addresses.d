@@ -12,7 +12,7 @@ module uim.platform.data_quality.application.usecases.cleanse_addresses;
 
 import uim.platform.data_quality;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class CleanseAddressesUseCase { // TODO: UIMUseCase {

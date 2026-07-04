@@ -10,7 +10,7 @@ module uim.platform.data.privacy.application.usecases.manage.data_subjects;
 // import uim.platform.data.privacy.application.dto;
 import uim.platform.data.privacy;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class ManageDataSubjectsUseCase { // TODO: UIMUseCase {

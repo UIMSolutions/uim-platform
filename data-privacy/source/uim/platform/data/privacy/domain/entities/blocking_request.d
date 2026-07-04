@@ -7,7 +7,7 @@ module uim.platform.data.privacy.domain.entities.blocking_request;
 
 import uim.platform.data.privacy;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// A request to restrict processing of personal data (GDPR Art. 18).

@@ -10,7 +10,7 @@ import uim.platform.data_quality;
 import uim.platform.service;
 import uim.platform.data_quality.domain.entities.validation_rule;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

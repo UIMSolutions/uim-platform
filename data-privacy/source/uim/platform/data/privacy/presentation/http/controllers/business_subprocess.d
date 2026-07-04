@@ -10,7 +10,7 @@ module uim.platform.data.privacy.presentation.http.controllers.business_subproce
 // import uim.platform.data.privacy.domain.entities.business_subprocess;
 import uim.platform.data.privacy;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class BusinessSubprocessController : ManageHttpController {

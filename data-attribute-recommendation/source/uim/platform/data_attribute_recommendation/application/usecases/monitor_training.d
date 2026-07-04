@@ -15,7 +15,7 @@ module uim.platform.data_attribute_recommendation.application.usecases.monitor_t
 
 import uim.platform.data_attribute_recommendation;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Read-only summaries for training jobs, deployments, and overall pipeline health.

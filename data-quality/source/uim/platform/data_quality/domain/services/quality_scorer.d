@@ -10,7 +10,7 @@ module uim.platform.data_quality.domain.services.quality_scorer;
 
 import uim.platform.data_quality;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Domain service - computes quality scores and dashboard metrics.

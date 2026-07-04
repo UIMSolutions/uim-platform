@@ -8,7 +8,7 @@ module uim.platform.data.privacy.domain.ports.repositories.business_contexts;
 // import uim.platform.data.privacy.domain.entities.business_context;
 import uim.platform.data.privacy;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Port for persisting and querying business contexts.

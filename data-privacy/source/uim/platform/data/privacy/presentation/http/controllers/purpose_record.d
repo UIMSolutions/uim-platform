@@ -11,7 +11,7 @@ module uim.platform.data.privacy.presentation.http.controllers.purpose_record;
 // import uim.platform.data.privacy.domain.entities.purpose_record;
 import uim.platform.data.privacy;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class PurposeRecordController : ManageHttpController {

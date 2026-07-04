@@ -7,7 +7,7 @@ module uim.platform.data.privacy.domain.entities.consent_purpose;
 
 import uim.platform.data.privacy;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// A consent purpose configuration — templated consent form for a business process.

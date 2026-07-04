@@ -7,7 +7,7 @@ module uim.platform.data_quality.domain.entities.validation_rule;
 
 import uim.platform.data_quality;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// A configurable data quality validation rule.

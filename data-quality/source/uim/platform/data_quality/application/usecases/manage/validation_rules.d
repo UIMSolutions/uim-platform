@@ -8,7 +8,7 @@ module uim.platform.data_quality.application.usecases.manage.validation_rules;
 
 import uim.platform.data_quality;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class ManageValidationRulesUseCase { // TODO: UIMUseCase {

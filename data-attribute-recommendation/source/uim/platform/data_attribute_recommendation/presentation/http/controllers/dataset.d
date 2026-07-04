@@ -13,7 +13,7 @@ module uim.platform.data_attribute_recommendation.presentation.http.controllers.
 
 import uim.platform.data_attribute_recommendation;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 class DatasetController : ManageHttpController {
   private ManageDatasetsUseCase usecase;

@@ -7,7 +7,7 @@ module uim.platform.data.privacy.domain.entities.purpose_record;
 
 import uim.platform.data.privacy;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// A purpose record — tracks a specific purpose with retention/residence and expiration.

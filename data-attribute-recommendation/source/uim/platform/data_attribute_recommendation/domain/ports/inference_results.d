@@ -9,7 +9,7 @@ module uim.platform.data_attribute_recommendation.domain.ports.inference_results
 // import uim.platform.data_attribute_recommendation.domain.entities.inference_result;
 import uim.platform.data_attribute_recommendation;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 interface InferenceResultRepository : ITenantRepository!(InferenceResult, InferenceResultId) {

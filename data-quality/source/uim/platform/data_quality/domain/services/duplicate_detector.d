@@ -10,7 +10,7 @@ module uim.platform.data_quality.domain.services.duplicate_detector;
 
 import uim.platform.data_quality;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Domain service - detects duplicate records using configurable strategies.

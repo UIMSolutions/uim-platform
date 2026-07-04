@@ -11,7 +11,7 @@ module uim.platform.data_quality.infrastructure.persistence.memory.match_groups;
 
 import uim.platform.data_quality;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

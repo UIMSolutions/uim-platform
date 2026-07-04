@@ -14,7 +14,7 @@ module uim.platform.data_attribute_recommendation.application.usecases.manage.da
 
 import uim.platform.data_attribute_recommendation;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class ManageDataRecordsUseCase { // TODO: UIMUseCase {

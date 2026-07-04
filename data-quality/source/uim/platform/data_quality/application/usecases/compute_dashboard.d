@@ -12,7 +12,7 @@ module uim.platform.data_quality.application.usecases.compute_dashboard;
 
 import uim.platform.data_quality;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class ComputeDashboardUseCase { // TODO: UIMUseCase {

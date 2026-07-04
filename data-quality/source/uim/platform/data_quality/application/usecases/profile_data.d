@@ -10,7 +10,7 @@ module uim.platform.data_quality.application.usecases.profile_data;
 
 import uim.platform.data_quality;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class ProfileDataUseCase { // TODO: UIMUseCase {

@@ -9,7 +9,7 @@ module uim.platform.data.privacy.infrastructure.persistence.memory.rule_sets;
 // import uim.platform.data.privacy.domain.ports.repositories.rule_sets;
 import uim.platform.data.privacy;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryRuleSetRepository : TenantRepository!(RuleSet, RuleSetId), RuleSetRepository {

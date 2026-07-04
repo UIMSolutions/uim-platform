@@ -8,7 +8,7 @@ module uim.platform.data_quality.domain.ports.repositories.addresses;
 // import uim.platform.data_quality.domain.entities.address_record;
 import uim.platform.data_quality;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Port for persisting address records.

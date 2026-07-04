@@ -7,7 +7,7 @@ module uim.platform.data.privacy.domain.entities.information_report;
 
 import uim.platform.data.privacy;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// An information report — generated report about a data subject's personal data.

@@ -7,7 +7,7 @@ module uim.platform.data_quality.domain.entities.validation_result;
 
 import uim.platform.data_quality;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Result of running validation rules against a single record.

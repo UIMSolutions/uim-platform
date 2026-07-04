@@ -9,7 +9,7 @@ module uim.platform.data_attribute_recommendation.domain.ports.model_configs;
 // import uim.platform.data_attribute_recommendation.domain.entities.model_configuration;
 import uim.platform.data_attribute_recommendation;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 interface ModelConfigRepository : ITenantRepository!(ModelConfiguration, ModelConfigurationId) {

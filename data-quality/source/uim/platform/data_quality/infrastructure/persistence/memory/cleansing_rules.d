@@ -11,7 +11,7 @@ module uim.platform.data_quality.infrastructure.persistence.memory.cleansing_rul
 
 import uim.platform.data_quality;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

@@ -1,7 +1,7 @@
 module uim.platform.data_quality.domain.enumerations;
 import uim.platform.data_quality;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Data quality validation rule type.

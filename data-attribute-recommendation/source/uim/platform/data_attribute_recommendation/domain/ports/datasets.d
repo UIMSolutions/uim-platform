@@ -7,7 +7,7 @@ module uim.platform.data_attribute_recommendation.domain.ports.datasets;
 
 import uim.platform.data_attribute_recommendation;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 interface DatasetRepository : ITenantRepository!(Dataset, DatasetId) {

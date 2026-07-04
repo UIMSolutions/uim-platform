@@ -9,7 +9,7 @@ module uim.platform.data.privacy.infrastructure.persistence.memory.consent_purpo
 // import uim.platform.data.privacy.domain.ports.consent_purpose_repository;
 import uim.platform.data.privacy;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryConsentPurposeRepository : TenantRepository!(ConsentPurpose, ConsentPurposeId), ConsentPurposeRepository {

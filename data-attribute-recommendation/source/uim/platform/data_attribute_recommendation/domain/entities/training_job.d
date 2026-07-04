@@ -7,7 +7,7 @@ module uim.platform.data_attribute_recommendation.domain.entities.training_job;
 
 import uim.platform.data_attribute_recommendation;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Represents a single training run of a model configuration, tracking

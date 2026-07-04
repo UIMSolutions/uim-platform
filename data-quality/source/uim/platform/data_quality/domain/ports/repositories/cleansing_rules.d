@@ -8,7 +8,7 @@ module uim.platform.data_quality.domain.ports.repositories.cleansing_rules;
 // import uim.platform.data_quality.domain.entities.cleansing_rule;
 import uim.platform.data_quality;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Port for persisting data cleansing rules.

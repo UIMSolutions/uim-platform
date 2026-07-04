@@ -9,7 +9,7 @@ module uim.platform.data.privacy.infrastructure.persistence.memory.purpose_recor
 // import uim.platform.data.privacy.domain.ports.repositories.purpose_records;
 import uim.platform.data.privacy;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryPurposeRecordRepository : TenantRepository!(PurposeRecord, PurposeRecordId), PurposeRecordRepository {

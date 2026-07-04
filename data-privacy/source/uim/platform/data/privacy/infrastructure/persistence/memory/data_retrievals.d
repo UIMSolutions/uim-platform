@@ -9,7 +9,7 @@ module uim.platform.data.privacy.infrastructure.persistence.memory.data_retrieva
 // import uim.platform.data.privacy.domain.ports.repositories.data_retrieval_requests;
 import uim.platform.data.privacy;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryDataRetrievalRequestRepository : TenantRepository!(DataRetrievalRequest, DataRetrievalRequestId), DataRetrievalRequestRepository {

@@ -10,7 +10,7 @@ module uim.platform.data_quality.infrastructure.persistence.memory.data_profiles
 // import uim.platform.data_quality.domain.ports.repositories.data_profiles;
 import uim.platform.data_quality;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
  

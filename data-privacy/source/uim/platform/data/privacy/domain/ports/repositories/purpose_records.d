@@ -8,7 +8,7 @@ module uim.platform.data.privacy.domain.ports.repositories.purpose_records;
 // import uim.platform.data.privacy.domain.entities.purpose_record;
 import uim.platform.data.privacy;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Port for persisting and querying purpose records.

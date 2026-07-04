@@ -7,7 +7,7 @@ module uim.platform.data.privacy.domain.entities.business_context;
 
 import uim.platform.data.privacy;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// A business context — defines the context for processing personal data with versioning.

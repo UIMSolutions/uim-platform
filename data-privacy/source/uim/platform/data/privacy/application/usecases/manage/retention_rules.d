@@ -10,7 +10,7 @@ module uim.platform.data.privacy.application.usecases.manage.retention_rules;
 // import uim.platform.data.privacy.application.dto;
 import uim.platform.data.privacy;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class ManageRetentionRulesUseCase { // TODO: UIMUseCase {

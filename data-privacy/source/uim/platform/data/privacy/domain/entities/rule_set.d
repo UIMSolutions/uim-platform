@@ -7,7 +7,7 @@ module uim.platform.data.privacy.domain.entities.rule_set;
 
 import uim.platform.data.privacy;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// A rule condition evaluated against master data to identify relevant purposes.

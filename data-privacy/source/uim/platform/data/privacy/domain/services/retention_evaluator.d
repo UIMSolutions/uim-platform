@@ -9,7 +9,7 @@ module uim.platform.data.privacy.domain.services.retention_evaluator;
 // import uim.platform.data.privacy.domain.ports.repositories.retention_rules;
 import uim.platform.data.privacy;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Result of a retention evaluation.

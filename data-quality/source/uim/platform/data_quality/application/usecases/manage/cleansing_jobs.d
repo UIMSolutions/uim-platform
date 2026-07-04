@@ -10,7 +10,7 @@ module uim.platform.data_quality.application.usecases.manage.cleansing_jobs;
 
 import uim.platform.data_quality;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class ManageCleansingJobsUseCase { // TODO: UIMUseCase {

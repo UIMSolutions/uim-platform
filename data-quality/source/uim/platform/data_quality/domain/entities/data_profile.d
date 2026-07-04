@@ -7,7 +7,7 @@ module uim.platform.data_quality.domain.entities.data_profile;
 
 import uim.platform.data_quality;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Profile analysis result for a dataset.

@@ -7,7 +7,7 @@ module uim.platform.data_quality.application.dto;
 
 import uim.platform.data_quality;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 // ──────────────── Validation Rule DTOs ────────────────

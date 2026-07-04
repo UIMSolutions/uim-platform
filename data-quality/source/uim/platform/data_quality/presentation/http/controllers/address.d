@@ -13,7 +13,7 @@ import uim.platform.data_quality.helpers;
 import uim.platform.data_quality.infrastructure;
 import uim.platform.data_quality.presentation;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class AddressController : HttpController {

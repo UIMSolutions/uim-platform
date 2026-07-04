@@ -7,7 +7,7 @@ module uim.platform.data.privacy.application.usecases.manage.anonymization_confi
 
 import uim.platform.data.privacy;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class ManageAnonymizationConfigsUseCase { // TODO: UIMUseCase {

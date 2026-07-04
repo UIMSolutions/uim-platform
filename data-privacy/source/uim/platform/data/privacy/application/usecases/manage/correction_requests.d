@@ -7,7 +7,7 @@ module uim.platform.data.privacy.application.usecases.manage.correction_requests
 
 import uim.platform.data.privacy;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class ManageCorrectionRequestsUseCase { // TODO: UIMUseCase {

@@ -9,7 +9,7 @@ module uim.platform.data.privacy.domain.ports.repositories.correction_requests;
 
 import uim.platform.data.privacy;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Port for persisting and querying correction requests.

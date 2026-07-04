@@ -6,7 +6,7 @@
 module uim.platform.data_quality.domain.ports.repositories.validation_rules;
 import uim.platform.data_quality;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Port for persisting validation rules.

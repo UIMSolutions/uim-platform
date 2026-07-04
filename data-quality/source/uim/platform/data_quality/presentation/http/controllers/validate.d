@@ -10,7 +10,7 @@ import uim.platform.data_quality;
 import uim.platform.data_quality.application.dto;
 import uim.platform.data_quality.application.usecases.validate_data;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class ValidateController : HttpController {
