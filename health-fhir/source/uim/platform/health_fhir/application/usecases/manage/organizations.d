@@ -44,8 +44,7 @@ class ManageOrganizationsUseCase {
     if (existing.isNull)
       return CommandResult(false, "", "Organization not found");
 
-    Organization o;
-    o.initEntity(r.tenantId);
+    auto o  = Organization(r.tenantId);
     o.id        = r.organizationId;
     o.active_   = r.active_;
     o.type_     = r.type_;

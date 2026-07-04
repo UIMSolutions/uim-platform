@@ -34,8 +34,7 @@ class ManageExportsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Requester is required");
 
     auto now = currentTimestamp();
-    auto job = ExportJob();
-    job.initEntity(req.tenantId);
+    auto job = ExportJob(req.tenantId);
 
     job.requestedBy = req.requestedBy;
     job.format_ = req.format_;

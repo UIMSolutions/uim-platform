@@ -33,8 +33,7 @@ class ManageAccessRulesUseCase { // TODO: UIMUseCase {
     if (req.virtualHost.length == 0)
       return CommandResult(false, "", "Virtual host is required");
 
-    AccessRule rule;
-    rule.initEntity(tenantId);
+    auto rule = AccessRule(tenantId);
     rule.connectorId = req.connectorId;
     rule.description = req.description;
     rule.protocol = req.protocol.to!AccessProtocol;

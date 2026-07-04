@@ -35,9 +35,7 @@ class WriteSecurityEventUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Event type is required");
 
     // Create parent audit log entry
-    auto entry = AuditLogEntry();
-    entry.initEntity(req.tenantId);
-
+    auto entry = AuditLogEntry(req.tenantId);
     entry.userId = req.userId;
     entry.userName = req.userName;
     entry.category = AuditCategory.securityEvents;

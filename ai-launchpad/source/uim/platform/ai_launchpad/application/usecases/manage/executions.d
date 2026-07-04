@@ -26,7 +26,7 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
     auto e = Execution(r.tenantId, r.executionId.isNull ? ExecutionId(createId()) : r.executionId); // , r.createdBy);
     e.connectionId = r.connectionId;
     e.configurationId = r.configurationId;
-    e.resourceGroupId = r.groupId;
+    e.resourceGroupId = r.resourceGroupId;
     e.status = ExecutionStatus.pending;
 
     executions.save(e);

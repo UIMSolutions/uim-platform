@@ -31,9 +31,7 @@ class ManageAuditConfigUseCase { // } { // TODO: UIMUseCase {
     if (configs.existsByTenant(req.tenantId))
       return CommandResult(false, "", "Audit configuration already exists for this tenant");
 
-    AuditConfig config;
-    config.initEntity(req.tenantId);
-    
+    auto config = AuditConfig(req.tenantId);
     config.name = req.name.length > 0 ? req.name : "Default";
     config.status = ConfigStatus.enabled;
     config.logDataAccess = req.logDataAccess;

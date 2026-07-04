@@ -24,8 +24,7 @@ class ManageMedicationRequestsUseCase {
     if (!repo.findById(r.tenantId, r.medicationRequestId).isNull)
       return CommandResult(false, "", "MedicationRequest already exists");
 
-    MedicationRequest mr;
-    mr.initEntity(r.tenantId);
+    auto mr = MedicationRequest(r.tenantId);
     mr.id                   = r.medicationRequestId;
     mr.status_              = r.status_;
     mr.intent_              = r.intent_;
@@ -49,8 +48,7 @@ class ManageMedicationRequestsUseCase {
     if (existing.isNull)
       return CommandResult(false, "", "MedicationRequest not found");
 
-    MedicationRequest mr;
-    mr.initEntity(r.tenantId);
+    auto mr = MedicationRequest(r.tenantId);
     mr.id                   = r.medicationRequestId;
     mr.status_              = r.status_;
     mr.intent_              = r.intent_;

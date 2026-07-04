@@ -26,9 +26,7 @@ class ManageAppVersionsUseCase { // TODO: UIMUseCase {
         if (!DeploymentValidator.validateVersionCode(r.versionCode))
             return CommandResult(false, "", "Invalid version code");
 
-        AppVersion ver;
-        ver.initEntity(r.tenantId, r.createdBy);
-
+        auto ver = AppVersion(r.tenantId);
         ver.appId = r.appId;
         ver.versionCode = r.versionCode;
         ver.description = r.description;

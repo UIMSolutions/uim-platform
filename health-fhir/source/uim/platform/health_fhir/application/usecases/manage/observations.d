@@ -24,8 +24,7 @@ class ManageObservationsUseCase {
     if (!repo.findById(r.tenantId, r.observationId).isNull)
       return CommandResult(false, "", "Observation already exists");
 
-    Observation o;
-    o.initEntity(r.tenantId);
+    auto o = Observation(r.tenantId);
     o.id                  = r.observationId;
     o.status_             = r.status_;
     o.code_               = r.code_;
@@ -47,8 +46,7 @@ class ManageObservationsUseCase {
     if (existing.isNull)
       return CommandResult(false, "", "Observation not found");
 
-    Observation o;
-    o.initEntity(r.tenantId);
+    auto o = Observation(r.tenantId);
     o.id                  = r.observationId;
     o.status_             = r.status_;
     o.code_               = r.code_;

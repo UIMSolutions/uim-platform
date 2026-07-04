@@ -47,8 +47,7 @@ class ManageEncountersUseCase {
     if (existing.isNull)
       return CommandResult(false, "", "Encounter not found");
 
-    Encounter e;
-    e.initEntity(r.tenantId);
+    auto e = Encounter(r.tenantId);
     e.id               = r.encounterId;
     e.status_          = r.status_;
     e.class_           = r.class_;

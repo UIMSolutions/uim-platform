@@ -32,9 +32,7 @@ class ManageRetentionUseCase { // TODO: UIMUseCase {
     if (req.retentionDays <= 0)
       return CommandResult(false, "", "Retention days must be positive");
 
-    auto now = currentTimestamp();
-    RetentionPolicy policy;
-    policy.initEntity(req.tenantId);
+    auto policy = RetentionPolicy(req.tenantId);
     with (policy) {
       name = req.name;
       description = req.description;

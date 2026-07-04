@@ -26,8 +26,7 @@ class ManageRoleCollectionsUseCase {
 
     import std.uuid : randomUUID;
 
-    RoleCollectionEntity rc;
-    rc.initEntity(r.tenantId);
+    auto rc = RoleCollectionEntity(r.tenantId);
     rc.name = r.name;
     rc.description = r.description;
     rc.roleReferences = r.roleReferences.dup;

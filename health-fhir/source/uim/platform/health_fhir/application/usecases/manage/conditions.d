@@ -24,8 +24,7 @@ class ManageConditionsUseCase {
     if (!repo.findById(r.tenantId, r.conditionId).isNull)
       return CommandResult(false, "", "Condition already exists");
 
-    Condition c;
-    c.initEntity(r.tenantId);
+    auto c = Condition(r.tenantId);
     c.id                   = r.conditionId;
     c.clinicalStatus_      = r.clinicalStatus_;
     c.verificationStatus_  = r.verificationStatus_;

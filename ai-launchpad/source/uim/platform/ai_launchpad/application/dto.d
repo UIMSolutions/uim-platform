@@ -144,7 +144,7 @@ struct CreateExecutionRequest {
       .set("tenantId", tenantId.value)
       .set("connectionId", connectionId.value)
       .set("configurationId", configurationId.value)
-      .set("resourceGroupId", groupId.value);
+      .set("resourceGroupId", resourceGroupId.value);
   }
 }
 

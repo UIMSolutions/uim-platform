@@ -37,14 +37,14 @@ class ManageChannelsUseCase { // TODO: UIMUseCase {
 
     if (req.name.length == 0)
       return CommandResult(false, "", "Channel name is required");
+
     if (req.virtualHost.length == 0)
       return CommandResult(false, "", "Virtual host is required");
+      
     if (req.backendHost.length == 0)
       return CommandResult(false, "", "Backend host is required");
 
-    ServiceChannel ch;
-    ch.initEntity(req.tenantId);
-
+    auto ch = ServiceChannel(req.tenantId);
     ch.connectorId = req.connectorId;
     ch.name = req.name;
     ch.channelType = req.channelType.to!ChannelType;
@@ -117,9 +117,7 @@ class ManageChannelsUseCase { // TODO: UIMUseCase {
   private void recordLog(TenantId tenantId, ConnectivityEventType evtType,
       string sourceId, string sourceType, string message) {
 
-    ConnectivityLog entry;
-    entry.initEntity(tenantId);
-
+    auto entry = ConnectivityLogEntry(tenantId);
     entry.eventType = evtType;
     entry.severity = LogSeverity.info;
     entry.sourceId = sourceId;

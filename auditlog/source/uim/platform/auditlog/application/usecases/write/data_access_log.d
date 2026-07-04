@@ -35,9 +35,7 @@ class WriteDataAccessLogUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Data subject is required");
 
     // Create parent audit log entry
-    auto entry = AuditLogEntry();
-    entry.initEntity(req.tenantId);
-    
+    auto entry = AuditLogEntry(req.tenantId);
     entry.userId = req.accessedBy;
     entry.category = AuditCategory.dataAccess;
     entry.severity = AuditSeverity.info;

@@ -24,8 +24,7 @@ class ManagePractitionersUseCase {
     if (!repo.findById(r.tenantId, r.practitionerId).isNull)
       return CommandResult(false, "", "Practitioner already exists");
 
-    Practitioner p;
-    p.initEntity(r.tenantId);
+    auto p = Practitioner(r.tenantId);
     p.id             = r.practitionerId;
     p.name_          = r.name_;
     p.gender_        = r.gender_;

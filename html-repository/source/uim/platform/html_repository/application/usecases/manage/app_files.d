@@ -28,9 +28,7 @@ class ManageAppFilesUseCase { // TODO: UIMUseCase {
         if (!DeploymentValidator.validateFilePath(r.filePath))
             return CommandResult(false, "", "Invalid file path");
 
-        AppFile file;
-        file.initEntity(r.tenantId, r.createdBy);
-
+        auto file = AppFile(r.tenantId);
         file.appId = r.appId;
         file.versionId = r.versionId;
         file.filePath = r.filePath;

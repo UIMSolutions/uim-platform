@@ -27,8 +27,7 @@ class ManagePatientsUseCase {
     if (!repo.findById(r.tenantId, r.patientId).isNull)
       return CommandResult(false, "", "Patient already exists");
 
-    Patient p;
-    p.initEntity(r.tenantId);
+    auto p = Patient(r.tenantId);
     p.id         = r.patientId;
     p.name_      = r.name_;
     p.birthDate_ = r.birthDate_;
@@ -46,8 +45,7 @@ class ManagePatientsUseCase {
     if (existing.isNull)
       return CommandResult(false, "", "Patient not found");
 
-    Patient p;
-    p.initEntity(r.tenantId);
+    auto p = Patient(r.tenantId);
     p.id         = r.patientId;
     p.name_      = r.name_;
     p.birthDate_ = r.birthDate_;

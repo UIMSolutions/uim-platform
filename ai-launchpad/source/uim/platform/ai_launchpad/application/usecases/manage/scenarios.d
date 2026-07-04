@@ -21,10 +21,7 @@ class ManageScenariosUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult syncScenario(SyncScenarioRequest r) {
-    Scenario s;
-    s.initEntity(r.tenantId);
-
-    s.id = r.scenarioId;
+    auto s = Scenario(r.tenantId, r.scenarioId);
     s.connectionId = r.connectionId;
     s.name = r.name;
     s.description = r.description;
