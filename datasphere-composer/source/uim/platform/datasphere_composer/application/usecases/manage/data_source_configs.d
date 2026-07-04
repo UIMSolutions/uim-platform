@@ -16,9 +16,8 @@ class ManageDataSourceConfigsUseCase {
   this(DataSourceConfigRepository repo) { this.repo = repo; }
 
   CommandResult create(CreateDataSourceConfigRequest r) {
-    DataSourceConfig cfg;
+    auto cfg = DataSourceConfig.init(r.tenantId);
     cfg.id = DataSourceConfigId(r.id.length > 0 ? r.id : currentTimestamp());
-    cfg.tenantId = TenantId(r.tenantId);
     cfg.dataProductId = DataProductId(r.dataProductId);
     cfg.providerId = DataProviderId(r.providerId);
     cfg.qualityRank = r.qualityRank.length > 0
@@ -27,7 +26,6 @@ class ManageDataSourceConfigsUseCase {
     cfg.timestampConfig = TimestampConfig(r.timestampFormat, r.timestampField, r.timestampCustomPattern);
     cfg.enabled = r.enabled;
     cfg.disabledRuleIds = r.disabledRuleIds;
-    initEntity(cfg);
 
     auto err = ComposerValidator.validateDataSourceConfig(cfg);
     if (err !is null) return CommandResult(false, cfg.id.value, err);

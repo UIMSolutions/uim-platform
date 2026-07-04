@@ -31,8 +31,7 @@ class ManageSocialIdentitiesUseCase {
     }
 
     CommandResult linkSocialIdentity(SocialIdentityDTO dto) {
-        SocialIdentity si;
-        si.initEntity(dto.tenantId, dto.createdBy);
+        auto si = SocialIdentity(dto.tenantId, dto.identityId.isNull ? SocialIdentityId(createId()) : dto.identityId, dto.createdBy);
         si.customerId = dto.customerId;
         si.providerUserId = dto.providerUserId;
         si.providerEmail = dto.providerEmail;
@@ -43,7 +42,6 @@ class ManageSocialIdentitiesUseCase {
         si.profileData = dto.profileData;
         si.status = SocialIdentityStatus.linked;
 
-        
         try { si.provider = dto.provider.to!LoginProvider; }
         catch (Exception) { return CommandResult(false, "", "Invalid social provider"); }
 

@@ -44,7 +44,7 @@ struct CustomerSessionDTO {
 }
 
 struct SocialIdentityDTO {
-    SocialIdentityId socialIdentityId;
+    SocialIdentityId identityId;
     TenantId tenantId;
     CustomerId customerId;
     string provider;
@@ -60,7 +60,7 @@ struct SocialIdentityDTO {
 }
 
 struct ConsentRecordDTO {
-    ConsentRecordId consentRecordId;
+    ConsentRecordId recordId;
     TenantId tenantId;
     CustomerId customerId;
     string consentType;
@@ -89,7 +89,7 @@ struct AuditLogDTO {
 }
 
 struct IdentityProviderDTO {
-    IdentityProviderId identityProviderId;
+    IdentityProviderId providerId;
     TenantId tenantId;
     string name;
     string description;
@@ -123,7 +123,7 @@ struct ScreenSetDTO {
 }
 
 struct SitePolicyDTO {
-    SitePolicyId sitePolicyId;
+    SitePolicyId policyId;
     TenantId tenantId;
     string name;
     string description;

@@ -52,9 +52,7 @@ class WriteAuditLogUseCase { // TODO: UIMUseCase {
         return CommandResult(false, "", "Configuration change logging is disabled");
     }
 
-    auto entry = AuditLogEntry();
-    entry.initEntity(req.tenantId);
-
+    auto entry = AuditLogEntry(req.tenantId);
     entry.userId = req.userId;
     entry.userName = req.userName;
     entry.serviceId = req.serviceId;

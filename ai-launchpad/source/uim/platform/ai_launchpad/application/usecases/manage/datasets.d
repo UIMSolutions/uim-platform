@@ -26,9 +26,7 @@ class ManageDatasetsUseCase { // TODO: UIMUseCase {
     if (r.name.length == 0)
       return CommandResult(false, "", "Dataset name is required");
 
-    Dataset d;
-    d.initEntity(r.tenantId);
-
+    auto d = Dataset(r.tenantId);
     d.connectionId = r.connectionId;
     d.name = r.name;
     d.description = r.description;

@@ -31,10 +31,7 @@ class ManageRunConfigurationsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createRunConfiguration(RunConfigurationDTO dto) {
-        RunConfiguration e;
-        e.initEntity(dto.tenantId, dto.createdBy);
-
-        e.id = dto.configId;
+        auto  e = RunConfiguration(dto.tenantId, dto.configId, dto.createdBy);
         e.projectId = dto.projectId;
         e.name = dto.name;
         e.description = dto.description;

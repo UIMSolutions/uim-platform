@@ -22,9 +22,7 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createDeployment(CreateDeploymentRequest r) {
-    Deployment d;
-    d.initEntity(r.tenantId);
-
+    auto d = Deployment(r.tenantId);
     d.connectionId = r.connectionId;
     d.configurationId = r.configurationId;
     d.resourceGroupId = r.resourceGroupId;
