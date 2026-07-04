@@ -8,7 +8,7 @@ module uim.platform.monitoring.domain.ports.repositories.monitored_resources;
 // import uim.platform.monitoring.domain.types;
 import uim.platform.monitoring;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing - monitored resource persistence.

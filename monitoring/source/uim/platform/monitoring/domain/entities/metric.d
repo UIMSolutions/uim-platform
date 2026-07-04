@@ -7,7 +7,7 @@ module uim.platform.monitoring.domain.entities.metric;
 // import uim.platform.monitoring.domain.types;
 import uim.platform.monitoring;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// A single metric data point.

@@ -7,7 +7,7 @@ module uim.platform.masterdata_governance.domain.repositories.data_quality_rules
 
 import uim.platform.masterdata_governance;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

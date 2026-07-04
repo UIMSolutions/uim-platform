@@ -8,7 +8,7 @@ module uim.platform.monitoring.domain.ports.repositories.metric_definitions;
 // import uim.platform.monitoring.domain.types;
 import uim.platform.monitoring;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing - metric definition persistence.

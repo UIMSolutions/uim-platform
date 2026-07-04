@@ -7,7 +7,7 @@ module app;
 
 import uim.platform.personal_data;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 version (unittest) {

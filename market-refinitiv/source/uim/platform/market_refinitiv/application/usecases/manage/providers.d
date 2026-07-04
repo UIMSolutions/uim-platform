@@ -6,7 +6,7 @@
 module uim.platform.market_refinitiv.application.usecases.manage.providers;
 import uim.platform.market_refinitiv;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

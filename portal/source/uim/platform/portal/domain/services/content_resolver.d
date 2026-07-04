@@ -12,7 +12,7 @@ module uim.platform.portal.domain.services.content_resolver;
 // import uim.platform.portal.domain.types;
 import uim.platform.portal;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Resolved site tree — a fully expanded view of a site for rendering.

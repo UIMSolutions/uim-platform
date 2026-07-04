@@ -12,7 +12,7 @@ module uim.platform.monitoring.infrastructure.persistence.memory.notification_ch
  
 import uim.platform.monitoring;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryNotificationChannelRepository : TenantRepository!(NotificationChannel, NotificationChannelId), NotificationChannelRepository {

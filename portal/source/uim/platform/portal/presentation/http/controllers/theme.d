@@ -13,7 +13,7 @@ module uim.platform.portal.presentation.http.controllers.theme;
 import uim.platform.portal;
 import uim.platform.portal.application.usecases.manage;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class ThemeController : ManageHttpController {

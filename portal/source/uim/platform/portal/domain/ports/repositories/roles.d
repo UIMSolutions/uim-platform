@@ -9,7 +9,7 @@ module uim.platform.portal.domain.ports.repositories.roles;
 
 import uim.platform.portal;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — role persistence.

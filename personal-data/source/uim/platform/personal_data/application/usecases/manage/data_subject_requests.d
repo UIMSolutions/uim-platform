@@ -7,7 +7,7 @@ module uim.platform.personal_data.application.usecases.manage.data_subject_reque
 
 import uim.platform.personal_data;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

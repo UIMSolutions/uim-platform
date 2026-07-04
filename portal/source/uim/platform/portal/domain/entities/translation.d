@@ -7,7 +7,7 @@ module uim.platform.portal.domain.entities.translation;
 // import uim.platform.portal.domain.types;
 import uim.platform.portal;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Translation entry for portal content (i18n).

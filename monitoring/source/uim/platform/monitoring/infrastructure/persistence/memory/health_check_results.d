@@ -12,7 +12,7 @@ module uim.platform.monitoring.infrastructure.persistence.memory.health_check_re
  
 import uim.platform.monitoring;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryHealthCheckResultRepository : TenantRepository!(HealthCheckResult, HealthCheckResultId), HealthCheckResultRepository {

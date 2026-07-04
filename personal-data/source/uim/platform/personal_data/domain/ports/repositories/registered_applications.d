@@ -7,7 +7,7 @@ module uim.platform.personal_data.domain.ports.repositories.registered_applicati
 
 import uim.platform.personal_data;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

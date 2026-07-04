@@ -6,7 +6,7 @@
 module uim.platform.marketrates.infrastructure.container;
 import uim.platform.marketrates;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

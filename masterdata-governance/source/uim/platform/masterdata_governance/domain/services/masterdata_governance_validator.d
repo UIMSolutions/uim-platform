@@ -7,7 +7,7 @@ module uim.platform.masterdata_governance.domain.services.masterdata_governance_
 
 import uim.platform.masterdata_governance;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

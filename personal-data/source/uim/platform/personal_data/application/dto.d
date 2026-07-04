@@ -7,7 +7,7 @@ module uim.platform.personal_data.application.dto;
 
 import uim.platform.personal_data;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

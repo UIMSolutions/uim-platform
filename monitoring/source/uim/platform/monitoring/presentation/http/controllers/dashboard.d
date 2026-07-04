@@ -10,7 +10,7 @@ module uim.platform.monitoring.presentation.http.controllers.dashboard;
 
 import uim.platform.monitoring;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class DashboardController : HttpController {

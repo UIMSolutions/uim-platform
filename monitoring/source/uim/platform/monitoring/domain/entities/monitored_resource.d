@@ -7,7 +7,7 @@ module uim.platform.monitoring.domain.entities.monitored_resource;
 // import uim.platform.monitoring.domain.types;
 import uim.platform.monitoring;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// A monitored application, database system, or service on SAP BTP.

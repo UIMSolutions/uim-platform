@@ -10,7 +10,7 @@ module uim.platform.portal.infrastructure.persistence.memory.sites;
 
 import uim.platform.portal;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemorySiteRepository : TenantRepository!(Site, SiteId), SiteRepository {

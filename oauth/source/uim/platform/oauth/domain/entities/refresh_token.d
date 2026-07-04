@@ -7,7 +7,7 @@ module uim.platform.oauth.domain.entities.refresh_token;
 
 import uim.platform.oauth;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

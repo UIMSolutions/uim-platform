@@ -12,7 +12,7 @@ module uim.platform.monitoring.presentation.http.controllers.metric_definition;
 // import uim.platform.monitoring.presentation.http
 import uim.platform.monitoring;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MetricDefinitionController : ManageHttpController {

@@ -11,7 +11,7 @@ module uim.platform.portal.presentation.http.controllers.site;
 // import uim.platform.portal.domain.types;
 import uim.platform.portal;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class SiteController : ManageHttpController {

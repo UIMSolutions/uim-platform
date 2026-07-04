@@ -7,7 +7,7 @@ module uim.platform.marketrates.presentation.http.controllers.market_rate;
 import uim.platform.marketrates;
 
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

@@ -7,7 +7,7 @@ module uim.platform.monitoring.domain.entities.notification_channel;
 // import uim.platform.monitoring.domain.types;
 import uim.platform.monitoring;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// A notification channel for delivering alert notifications.

@@ -10,7 +10,7 @@ module uim.platform.portal.infrastructure.persistence.memory.providers;
 
 import uim.platform.portal;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryProviderRepository : TenantRepository!(ContentProvider, ProviderId), ProviderRepository {

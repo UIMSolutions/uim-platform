@@ -7,7 +7,7 @@ module uim.platform.oauth.domain.entities.branding_config;
 
 import uim.platform.oauth;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

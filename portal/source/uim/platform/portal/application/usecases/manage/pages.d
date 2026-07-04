@@ -18,7 +18,7 @@ import uim.platform.portal.domain.types;
 import uim.platform.portal.application.dto;
 import uim.platform.portal;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class ManagePagesUseCase { // TODO: UIMUseCase {

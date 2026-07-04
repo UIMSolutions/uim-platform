@@ -7,7 +7,7 @@ module uim.platform.masterdata_governance.domain.repositories.business_partners;
 
 import uim.platform.masterdata_governance;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

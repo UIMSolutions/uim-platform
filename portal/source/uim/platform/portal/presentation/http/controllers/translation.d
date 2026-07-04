@@ -12,7 +12,7 @@ module uim.platform.portal.presentation.http.controllers.translation;
 // import uim.platform.portal.application.usecases.manage;
 import uim.platform.portal;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class TranslationController : ManageHttpController {

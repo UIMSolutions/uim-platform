@@ -12,7 +12,7 @@ module uim.platform.monitoring.infrastructure.persistence.memory.monitored_resou
  
 import uim.platform.monitoring;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryMonitoredResourceRepository : TenantRepository!(MonitoredResource, MonitoredResourceId), MonitoredResourceRepository {

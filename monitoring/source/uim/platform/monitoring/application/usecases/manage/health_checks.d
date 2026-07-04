@@ -14,7 +14,7 @@ module uim.platform.monitoring.application.usecases.manage.health_checks;
 // 
 import uim.platform.monitoring;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Application service for health check CRUD and result recording.

@@ -14,7 +14,7 @@ module uim.platform.portal.application.usecases.manage.providers;
 // import uim.platform.portal.domain.types;
 import uim.platform.portal;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class ManageProvidersUseCase { // TODO: UIMUseCase {

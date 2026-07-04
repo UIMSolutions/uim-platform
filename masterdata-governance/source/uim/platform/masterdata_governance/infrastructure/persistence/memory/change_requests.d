@@ -7,7 +7,7 @@ module uim.platform.masterdata_governance.infrastructure.persistence.memory.chan
 
 import uim.platform.masterdata_governance;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

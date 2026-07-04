@@ -11,7 +11,7 @@ module app;
 
 import uim.platform.monitoring;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

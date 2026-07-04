@@ -7,7 +7,7 @@ module uim.platform.masterdata_governance.domain.repositories.change_requests;
 
 import uim.platform.masterdata_governance;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

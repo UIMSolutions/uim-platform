@@ -15,7 +15,7 @@ module uim.platform.portal.presentation.http.controllers.page;
 
 import uim.platform.portal;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class PageController : ManageHttpController {

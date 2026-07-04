@@ -10,7 +10,7 @@ module uim.platform.portal.application.dto;
 // import uim.platform.portal.domain.entities.theme : ThemeColors, ThemeFonts;
 import uim.platform.portal;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// --- Site DTOs ---

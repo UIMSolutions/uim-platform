@@ -7,7 +7,7 @@ module uim.platform.marketrates.domain.types;
 
 import uim.platform.marketrates;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

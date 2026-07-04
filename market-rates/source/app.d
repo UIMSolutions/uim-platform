@@ -7,7 +7,7 @@ module app;
 
 import uim.platform.marketrates;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 version (unittest) {

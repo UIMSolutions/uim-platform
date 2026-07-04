@@ -8,7 +8,7 @@ module uim.platform.portal.domain.ports.repositories.catalogs;
 // import uim.platform.portal.domain.types;
 import uim.platform.portal;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — catalog persistence.

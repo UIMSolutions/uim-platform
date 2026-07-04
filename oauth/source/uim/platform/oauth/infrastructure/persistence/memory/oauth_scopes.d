@@ -7,7 +7,7 @@ module uim.platform.oauth.infrastructure.persistence.memory.oauth_scopes;
 
 import uim.platform.oauth;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

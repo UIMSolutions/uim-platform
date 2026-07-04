@@ -8,7 +8,7 @@ import uim.platform.market_refinitiv;
 import std.algorithm : filter;
 import std.array     : array;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

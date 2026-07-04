@@ -7,7 +7,7 @@ module uim.platform.masterdata_governance.application.dtos.dto;
 
 import uim.platform.masterdata_governance;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

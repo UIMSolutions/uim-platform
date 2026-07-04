@@ -7,7 +7,7 @@ module uim.platform.oauth.application.usecases.manage.oauth_scopes;
 
 import uim.platform.oauth;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

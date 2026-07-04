@@ -6,7 +6,7 @@
 module uim.platform.marketrates.domain.ports.repositories.providers;
 import uim.platform.marketrates;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 interface ProviderRepository : ITenantRepository!(Provider, ProviderId) {

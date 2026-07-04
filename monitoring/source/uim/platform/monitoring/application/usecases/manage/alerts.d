@@ -11,7 +11,7 @@ module uim.platform.monitoring.application.usecases.manage.alerts;
 // 
 import uim.platform.monitoring;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Application service for alert lifecycle management (list, acknowledge, resolve).

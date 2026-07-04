@@ -8,7 +8,7 @@ module uim.platform.portal.domain.entities.section;
 
 import uim.platform.portal;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// A section within a page — groups tiles together.

@@ -7,7 +7,7 @@ module uim.platform.personal_data.presentation.http.controllers.registered_appli
 
 import uim.platform.personal_data;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

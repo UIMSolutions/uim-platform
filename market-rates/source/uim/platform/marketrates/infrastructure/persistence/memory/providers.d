@@ -8,7 +8,7 @@ import uim.platform.marketrates;
 import std.algorithm : filter;
 import std.array     : array;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

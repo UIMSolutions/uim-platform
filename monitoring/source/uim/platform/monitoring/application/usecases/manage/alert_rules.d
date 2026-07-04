@@ -11,7 +11,7 @@ module uim.platform.monitoring.application.usecases.manage.alert_rules;
 // 
 import uim.platform.monitoring;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Application service for alert rule CRUD (thresholds and checks configuration).
