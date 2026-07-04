@@ -41,7 +41,7 @@ enum WorkspaceStatus {
   suspended,
 }
 WorkspaceStatus toWorkspaceStatus(string value) {
-  mixin(EnumSwitch("WorkspaceStatus", "WorkspaceStatus.active"));
+  mixin(EnumSwitch("WorkspaceStatus", "active"));
 }
 /// 
 unittest {
@@ -98,7 +98,7 @@ enum ContentType {
   document,
 }
 ContentType toContentType(string value) {
-  mixin(EnumSwitch("ContentType", "ContentType.blogPost"));
+  mixin(EnumSwitch("ContentType", "blogPost"));
 }
 /// 
 unittest {
@@ -119,7 +119,7 @@ enum ContentStatus {
   deleted,
 }
 ContentStatus toContentStatus(string value) {
-  mixin(EnumSwitch("ContentStatus", "ContentStatus.draft"));
+  mixin(EnumSwitch("ContentStatus", "draft"));
 }
 ///
 unittest {
@@ -138,7 +138,7 @@ enum NotificationPriority {
   critical,
 }
 NotificationPriority toNotificationPriority(string value) {
-  mixin(EnumSwitch("NotificationPriority", "NotificationPriority.medium"));
+  mixin(EnumSwitch("NotificationPriority", "medium"));
 }
 ///
 unittest {
@@ -158,7 +158,7 @@ enum TaskStatus {
   overdue,
 }
 TaskStatus toTaskStatus(string value) {
-  mixin(EnumSwitch("TaskStatus", "TaskStatus.open"));
+  mixin(EnumSwitch("TaskStatus", "open"));
 }
 ///
 unittest {
@@ -178,7 +178,7 @@ enum TaskPriority {
   veryHigh,
 }
 TaskPriority toTaskPriority(string value) {
-  mixin(EnumSwitch("TaskPriority", "TaskPriority.medium"));
+  mixin(EnumSwitch("TaskPriority", "medium"));
 }
 ///
 unittest {
@@ -197,7 +197,7 @@ enum ChannelType {
   external,
 }
 ChannelType toChannelType(string value) {
-  mixin(EnumSwitch("ChannelType", "ChannelType.custom"));
+  mixin(EnumSwitch("ChannelType", "custom"));
 }
 ///
 unittest {
@@ -238,7 +238,7 @@ enum WidgetSize {
   fullWidth,
 }
 WidgetSize toWidgetSize(string value) {
-  mixin(EnumSwitch("WidgetSize", "WidgetSize.medium"));
+  mixin(EnumSwitch("WidgetSize", "medium"));
 }
 ///
 unittest {
@@ -257,7 +257,7 @@ enum MemberRole {
   owner,
 }
 MemberRole toMemberRole(string value) {
-  mixin(EnumSwitch("MemberRole", "MemberRole.contributor"));
+  mixin(EnumSwitch("MemberRole", "contributor"));
 }
 ///
 unittest {
@@ -276,7 +276,7 @@ enum SiteStatus {
   archived,
 }
 SiteStatus toSiteStatus(string value) { 
-  mixin(EnumSwitch("SiteStatus", "SiteStatus.draft"));
+  mixin(EnumSwitch("SiteStatus", "draft"));
 }
 ///
 unittest {
@@ -295,7 +295,7 @@ enum EventStatus {
   cancelled,
 }
 EventStatus toEventStatus(string value) {
-  mixin(EnumSwitch("EventStatus", "EventStatus.scheduled"));
+  mixin(EnumSwitch("EventStatus", "scheduled"));
 }
 /// 
 unittest {
@@ -314,7 +314,7 @@ enum SurveyStatus {
   archived,
 }
 SurveyStatus toSurveyStatus(string value) {
-  mixin(EnumSwitch("SurveyStatus", "SurveyStatus.draft"));
+  mixin(EnumSwitch("SurveyStatus", "draft"));
 }
 ///
 unittest {
@@ -334,7 +334,7 @@ enum QuestionType {
   scale,
 }
 QuestionType toQuestionType(string value) {
-  mixin(EnumSwitch("QuestionType", "QuestionType.singleChoice"));
+  mixin(EnumSwitch("QuestionType", "singleChoice"));
 }
 ///
 unittest {
@@ -354,7 +354,7 @@ enum ForumTopicStatus {
   archived,
 }
 ForumTopicStatus toForumTopicStatus(string value) {
-  mixin(EnumSwitch("ForumTopicStatus", "ForumTopicStatus.open"));
+  mixin(EnumSwitch("ForumTopicStatus", "open"));
 } 
 ///
 unittest {
@@ -399,7 +399,7 @@ enum KBArticleStatus {
 }
 
 KBArticleStatus toKBArticleStatus(string value) {
-  mixin(EnumSwitch("KBArticleStatus", "KBArticleStatus.draft"));
+  mixin(EnumSwitch("KBArticleStatus", "draft"));
   }
   ///
 unittest {
@@ -418,7 +418,7 @@ enum GroupType {
 }
 
 GroupType toGroupType(string value) {
-  mixin(EnumSwitch("GroupType", "GroupType.security"));
+  mixin(EnumSwitch("GroupType", "security"));
 }
 /// 
 unittest {
@@ -437,7 +437,7 @@ enum NavigationItemType {
   externalLink,
 }
 NavigationItemType toNavigationItemType(string value) {
-  mixin(EnumSwitch("NavigationItemType", "NavigationItemType.link"));
+  mixin(EnumSwitch("NavigationItemType", "link"));
 }
 ///
 unittest {

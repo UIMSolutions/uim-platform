@@ -51,13 +51,14 @@ class NotificationController : ManageHttpController {
     if (precheck.hasError)
       return precheck;
 
+    auto tenantId = precheck.tenantId;
     auto recipientIdRaw = req.query.get("recipientId", "");
     if (recipientIdRaw.length == 0)
       return errorResponse("recipientId query parameter is required", 400);
 
-    Notification[] resources = [];req.query.get("unread", "0") == "1"
-      ? resources = useCase.listUnreadNotifications(precheck.tenantId, UserId(recipientIdRaw))
-      : resources = useCase.listNotifications(precheck.tenantId, UserId(recipientIdRaw));
+    Notification[] resources = req.query.get("unread", "0") == "1"
+      ? useCase.listUnreadNotifications(tenantId, UserId(recipientIdRaw))
+      : useCase.listNotifications(tenantId, UserId(recipientIdRaw));
 
     auto payload = resources.map!(n => n.toJson()).array.toJson;
 

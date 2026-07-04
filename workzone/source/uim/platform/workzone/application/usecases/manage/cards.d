@@ -26,7 +26,7 @@ class ManageCardsUseCase { // TODO: UIMUseCase {
     if (req.title.length == 0)
       return CommandResult(false, "", "Card title is required");
 
-    auto c = Card(req.tenantId, req.cardId, req.createdBy)
+    auto c = Card(req.tenantId, req.cardId, req.createdBy);
     c.title = req.title;
     c.subtitle = req.subtitle;
     c.description = req.description;

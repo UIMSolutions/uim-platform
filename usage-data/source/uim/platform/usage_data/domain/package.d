@@ -6,7 +6,7 @@
 module uim.platform.usage_data.domain;
 
 public import uim.platform.usage_data.domain.entities;
-public import uim.platform.usage_data.domain.repositories;
+public import uim.platform.usage_data.domain.ports;
 public import uim.platform.usage_data.domain.services;
 public import uim.platform.usage_data.domain.values;
 public import uim.platform.usage_data.domain.enumerations;

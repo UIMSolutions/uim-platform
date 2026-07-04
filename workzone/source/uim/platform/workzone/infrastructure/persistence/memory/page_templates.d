@@ -36,16 +36,16 @@ class MemoryPageTemplateRepository : TenantRepository!(PageTemplate, PageTemplat
       }
   }
 
-  size_t countPublic() {
-    return findPublic().length;
+  size_t countPublic(TenantId tenantId) {
+    return findPublic(tenantId).length;
   }
 
-  PageTemplate[] findPublic() {
-    return findAll().filter!(t => t.isPublic).array;
+  PageTemplate[] findPublic(TenantId tenantId) {
+    return findByTenant(tenantId).filter!(t => t.isPublic).array;
   }
 
-  void removePublic() {
-    findPublic().each!(t => remove(t));
+  void removePublic(TenantId tenantId) {
+    findPublic(tenantId).each!(t => remove(t));
   }
 
 }

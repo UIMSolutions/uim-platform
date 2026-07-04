@@ -6,9 +6,9 @@
 module uim.platform.usage_data.domain.ports.repositories;
 
 public {
-  import uim.platform.usage_data.domain.repositories.usage_record;
-  import uim.platform.usage_data.domain.repositories.monthly_usage_report;
-  import uim.platform.usage_data.domain.repositories.daily_usage_report;
-  import uim.platform.usage_data.domain.repositories.monthly_cost_report;
-  import uim.platform.usage_data.domain.repositories.service_metric;
+  import uim.platform.usage_data.domain.ports.repositories.usage_record;
+  import uim.platform.usage_data.domain.ports.repositories.monthly_usage_report;
+  import uim.platform.usage_data.domain.ports.repositories.daily_usage_report;
+  import uim.platform.usage_data.domain.ports.repositories.monthly_cost_report;
+  import uim.platform.usage_data.domain.ports.repositories.service_metric;
 }

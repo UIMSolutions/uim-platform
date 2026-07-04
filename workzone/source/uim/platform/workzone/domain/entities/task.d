@@ -27,7 +27,7 @@ struct WZTask {
   string actionUrl; // deep link to source
   string category;
   string[] tags;
-  string dueDate;
+  long dueDate;
   long completedAt;
 
   Json toJson() const {

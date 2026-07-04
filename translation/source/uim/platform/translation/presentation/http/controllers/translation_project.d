@@ -47,8 +47,8 @@ class TranslationProjectController : ManageHttpController {
         r.baseBranch = data.getString("baseBranch");
         r.abapSystemId = data.getString("abapSystemId");
 
-        if (j["targetLanguages"].isArray)
-            foreach (l; j["targetLanguages"])
+        if (data["targetLanguages"].isArray)
+            foreach (l; data["targetLanguages"])
                 r.targetLanguages ~= l.get!string;
 
         auto result = usecase.createProject(r);
@@ -126,8 +126,8 @@ class TranslationProjectController : ManageHttpController {
         r.baseBranch = data.getString("baseBranch");
         r.status = data.getString("status");
 
-        if (j["targetLanguages"].isArray)
-            foreach (l; j["targetLanguages"])
+        if (data["targetLanguages"].isArray)
+            foreach (l; data["targetLanguages"])
                 r.targetLanguages ~= l.get!string;
 
         auto result = usecase.updateProject(r);

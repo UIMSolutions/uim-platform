@@ -17,8 +17,8 @@ interface PageTemplateRepository : ITenantRepository!(PageTemplate, PageTemplate
   PageTemplate findDefault(TenantId tenantId);
   void removeDefault(TenantId tenantId);
 
-  size_t countPublic();
-  PageTemplate[] findPublic();
-  void removePublic();
+  size_t countPublic(TenantId tenantId);
+  PageTemplate[] findPublic(TenantId tenantId);
+  void removePublic(TenantId tenantId);
 
 }

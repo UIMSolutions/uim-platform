@@ -25,7 +25,7 @@ class TranslationController : HttpController {
     }
 
     protected Json translateHandler(HTTPServerRequest req) {
-        auto precheck = super.postandler(req);
+        auto precheck = super.postHandler(req);
         if (precheck.hasError)
             return precheck;
 
@@ -42,16 +42,16 @@ class TranslationController : HttpController {
 
         // Accept either "texts" (array) or "text" (single string)
         if (data["texts"].isArray) {
-            foreach (item; data["texts"])
+            foreach (item; data["texts"].toArray)
                 r.texts ~= item.get!string;
         } else if (data["text"].isString) {
             r.texts ~= data.getString("text");
         }
 
         auto result = usecase.translateTexts(r);
-        if (result.getString("status") == "error") {
-            return errorResponse(400, result.getString("message"));
-        }
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+    
 
         return successResponse("Translation successful", "Translated", 200, result);
     }

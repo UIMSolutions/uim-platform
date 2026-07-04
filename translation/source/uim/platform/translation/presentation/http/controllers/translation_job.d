@@ -25,6 +25,7 @@ class TranslationJobController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.post("/api/v1/translation/jobs", &handleSubmit);
         router.get("/api/v1/translation/jobs", &handleList);
         router.get("/api/v1/translation/jobs/*", &handleGet);
@@ -61,14 +62,7 @@ class TranslationJobController : ManageHttpController {
                 .id));
     }
 
-    protected void handleSubmit(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            autp response = submitHandler(req);
-            res.writeJsonBody(response.body, response.code);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+    mixin(HandleTemplate!("handleSubmit", "submitHandler"));
 
     override protected Json listHandler(HTTPServerRequest req) {
         auto precheck = super.listHandler(req);
