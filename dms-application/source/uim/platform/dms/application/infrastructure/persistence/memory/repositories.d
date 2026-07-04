@@ -12,17 +12,17 @@ import uim.platform.dms.application;
 
 mixin(ShowModule!());
 @safe:
-class MemoryRepositoryRepository : TenantRepository!(Repository, RepositoryId), IRepositoryRepository {
+class MemoryRepositoryRepository : TenantRepository!(DmsRepository, RepositoryId), IRepositoryRepository {
   // #region byName
   bool existsByName(TenantId tenantId, string name) {
     return findByTenant(tenantId).any!(e => e.name == name);
   }
 
-  Repository findByName(TenantId tenantId, string name) {
+  DmsRepository findByName(TenantId tenantId, string name) {
     foreach (e; findByTenant(tenantId))
       if (e.name == name)
         return e;
-    return Repository.init;
+    return DmsRepository.init;
   }
 
   void removeByName(TenantId tenantId, string name) {
@@ -35,10 +35,10 @@ class MemoryRepositoryRepository : TenantRepository!(Repository, RepositoryId), 
     return findByStatus(tenantId, status).count;
   }
 
-  Repository[] filterByStatus(Repository[] repositories, RepositoryStatus status) {
+  DmsRepository[] filterByStatus(DmsRepository[] repositories, RepositoryStatus status) {
     return repositories.filter!(e => e.status == status).array;
   }
-  Repository[] findByStatus(TenantId tenantId, RepositoryStatus status) {
+  DmsRepository[] findByStatus(TenantId tenantId, RepositoryStatus status) {
     return filterByStatus(findByTenant(tenantId), status);
   }
 

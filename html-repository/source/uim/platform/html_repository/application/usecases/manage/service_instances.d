@@ -27,8 +27,7 @@ class ManageServiceInstancesUseCase { // TODO: UIMUseCase {
         if (!DeploymentValidator.validateInstanceName(r.name))
             return CommandResult(false, "", "Invalid service instance name");
 
-        ServiceInstance inst;
-        inst.initEntity(r.tenantId, r.createdBy);
+        auto inst = ServiceInstance(r.tenantId, r.createdBy);
         inst.spaceId = r.spaceId;
         inst.name = r.name;
         inst.plan = parsePlan(r.plan);

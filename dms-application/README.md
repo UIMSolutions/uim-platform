@@ -81,10 +81,10 @@ See the repository root [LICENSE](../LICENSE) file.
 
 | Entity | Description |
 |--------|-------------|
-| `Repository` | Top-level document storage container |
-| `Folder` | Hierarchical folder within a Repository |
-| `Document` | File stored within a Folder |
+| `DmsRepository` | Top-level document storage container |
+| `DmsFolder` | Hierarchical folder within a DmsRepository |
+| `Document` | File stored within a DmsFolder |
 | `DocumentVersion` | Immutable version snapshot of a Document |
-| `Share` | Shared access link for a Document or Folder |
-| `Permission` | Access control entry for a Repository, Folder, or Document |
-| `Favorite` | Bookmarked Document or Folder for quick access |
+| `Share` | Shared access link for a Document or DmsFolder |
+| `Permission` | Access control entry for a DmsRepository, DmsFolder, or Document |
+| `Favorite` | Bookmarked Document or DmsFolder for quick access |

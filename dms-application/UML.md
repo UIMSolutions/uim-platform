@@ -4,7 +4,7 @@
 
 ```mermaid
 classDiagram
-    class Repository {
+    class DmsRepository {
         +RepositoryId id
         +TenantId tenantId
         +string name
@@ -14,7 +14,7 @@ classDiagram
         +long createdAt
         +Json toJson()
     }
-    class Folder {
+    class DmsFolder {
         +FolderId id
         +TenantId tenantId
         +RepositoryId repositoryId
@@ -75,13 +75,13 @@ classDiagram
         +Json toJson()
     }
 
-    Repository "1" --> "0..*" Folder : contains
-    Repository "1" --> "0..*" Document : stores
-    Folder "1" --> "0..*" Folder : nests
-    Folder "1" --> "0..*" Document : organises
+    DmsRepository "1" --> "0..*" DmsFolder : contains
+    DmsRepository "1" --> "0..*" Document : stores
+    DmsFolder "1" --> "0..*" DmsFolder : nests
+    DmsFolder "1" --> "0..*" Document : organises
     Document "1" --> "0..*" DocumentVersion : versions
-    Permission --> Repository : on
-    Permission --> Folder : on
+    Permission --> DmsRepository : on
+    Permission --> DmsFolder : on
     Permission --> Document : on
 ```
 

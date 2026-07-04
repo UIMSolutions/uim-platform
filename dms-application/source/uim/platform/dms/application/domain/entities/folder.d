@@ -10,7 +10,7 @@ import uim.platform.dms.application;
 mixin(ShowModule!());
 
 @safe:
-class Folder {
+struct DmsFolder {
   mixin TenantEntity!(FolderId);
 
   RepositoryId repositoryId;

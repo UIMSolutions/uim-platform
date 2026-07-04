@@ -50,14 +50,11 @@ class ManageWorkflowsUseCase { // TODO: UIMUseCase {
     auto scenario = scenarioRepo.findById(req.scenarioId, req.tenantId);
     if (scenario.isNull)
       return CommandResult(false, "", "Scenario not found");
+      
     if (scenario.status != ScenarioStatus.active)
       return CommandResult(false, "", "Scenario is not active");
 
-    auto now = currentTimestamp();
-
-    Workflow wf;
-    wf.initEntity(req.tenantId, req.createdBy);
-
+    auto wf = Workflow(req.tenantId, req.createdBy);
     wf.scenarioId = req.scenarioId;
     wf.name = req.name.length > 0 ? req.name : scenario.name;
     wf.description = req.description.length > 0 ? req.description : scenario.description;

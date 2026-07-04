@@ -24,8 +24,7 @@ class ManageOrganizationsUseCase {
     if (!repo.findById(r.tenantId, r.organizationId).isNull)
       return CommandResult(false, "", "Organization already exists");
 
-    Organization o;
-    o.initEntity(r.tenantId);
+    auto o = Organization(r.tenantId);
     o.id       = r.organizationId;
     o.active_  = r.active_;
     o.type_    = r.type_;

@@ -32,8 +32,7 @@ class ManagePipelinesUseCase {
         stage = mixin("PipelineStage." ~ member);
     }
 
-    Pipeline p;
-    p.initEntity(tenantId);
+    auto p = Pipeline(tenantId);
     p.projectId      = ProjectId(req.projectId);
     p.name           = req.name;
     p.description    = req.description;

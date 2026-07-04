@@ -32,10 +32,7 @@ class ManageSourceSystemsUseCase { // TODO: UIMUseCase {
     if (!existing.isNull)
       return CommandResult(false, "", "Source system with this name already exists");
 
-    auto now = currentTimestamp();
-    SourceSystem sys;
-    sys.initEntity(req.tenantId, req.createdBy);
-
+    auto sys = SourceSystem(req.tenantId, req.createdBy);
     sys.name = req.name;
     sys.description = req.description;
     sys.systemType = req.systemType;

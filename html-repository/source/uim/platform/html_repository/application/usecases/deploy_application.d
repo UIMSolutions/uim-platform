@@ -41,9 +41,7 @@ class DeployApplicationUseCase { // TODO: UIMUseCase {
         if (version_.isNull)
             return CommandResult(false, "", "Version not found");
 
-        DeploymentRecord record;
-        record.initEntity(r.tenantId);
-
+        auto record = DeploymentRecord(r.tenantId);
         record.appId = r.appId;
         record.versionId = r.versionId;
         record.serviceInstanceId = r.serviceInstanceId;

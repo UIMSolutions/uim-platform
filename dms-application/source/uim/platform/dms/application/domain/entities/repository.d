@@ -10,7 +10,7 @@ import uim.platform.dms.application;
 mixin(ShowModule!());
 
 @safe:
-class Repository {
+struct DmsRepository {
   mixin TenantEntity!(RepositoryId);
 
   string name;

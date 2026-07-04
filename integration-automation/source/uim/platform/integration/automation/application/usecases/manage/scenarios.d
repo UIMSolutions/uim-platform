@@ -29,9 +29,7 @@ class ManageScenariosUseCase { // TODO: UIMUseCase {
     if (req.name.length == 0)
       return CommandResult(false, "", "Scenario name is required");
 
-    IntegrationScenario scenario;
-    scenario.initEntity(req.tenantId, req.createdBy);
-
+    auto scenario = IntegrationScenario(req.tenantId, req.createdBy);
     scenario.name = req.name;
     scenario.description = req.description;
     scenario.category = req.category;

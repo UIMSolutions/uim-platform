@@ -28,8 +28,7 @@ class ManageAppRoutesUseCase { // TODO: UIMUseCase {
         if (!DeploymentValidator.validatePathPrefix(request.pathPrefix))
             return CommandResult(false, "", "Invalid path prefix");
 
-        AppRoute route;
-        route.initEntity(request.tenantId, request.createdBy);
+        auto route = AppRoute(request.tenantId, request.createdBy);
         with (route) {
             appId = request.appId;
             pathPrefix = request.pathPrefix;

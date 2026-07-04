@@ -13,16 +13,16 @@ import uim.platform.dms.application;
 mixin(ShowModule!());
 
 @safe:
-class MemoryFolderRepository : TenantRepository!(Folder, FolderId), IFolderRepository {
+class MemoryFolderRepository : TenantRepository!(DmsFolder, FolderId), IFolderRepository {
   bool existsByPath(TenantId tenantId, RepositoryId repositoryId, string path) {
     return findByTenant(tenantId).any!(e => e.repositoryId == repositoryId && e.path == path);
   }
 
-  Folder findByPath(TenantId tenantId, RepositoryId repositoryId, string path) {
+  DmsFolder findByPath(TenantId tenantId, RepositoryId repositoryId, string path) {
     foreach (e; findByTenant(tenantId))
       if (e.repositoryId == repositoryId && e.path == path)
         return e;
-    return Folder.init;
+    return DmsFolder.init;
   }
 
   void removeByPath(TenantId tenantId, RepositoryId repositoryId, string path) {
@@ -35,7 +35,7 @@ class MemoryFolderRepository : TenantRepository!(Folder, FolderId), IFolderRepos
     return findByRepository(tenantId, repositoryId).length;
   }
 
-  Folder[] findByRepository(TenantId tenantId, RepositoryId repositoryId) {
+  DmsFolder[] findByRepository(TenantId tenantId, RepositoryId repositoryId) {
     return findByTenant(tenantId).filter!(e => e.repositoryId == repositoryId).array;
   }
 
@@ -47,7 +47,7 @@ class MemoryFolderRepository : TenantRepository!(Folder, FolderId), IFolderRepos
     return findByParent(tenantId, parentFolderId).length;
   }
 
-  Folder[] findByParent(TenantId tenantId, FolderId parentFolderId) {
+  DmsFolder[] findByParent(TenantId tenantId, FolderId parentFolderId) {
     return findByTenant(tenantId).filter!(e => e.parentFolderId == parentFolderId).array;
   }
 

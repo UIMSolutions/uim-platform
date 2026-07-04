@@ -100,9 +100,7 @@ class StepExecutor {
 
   private void recordLog(TenantId tenantId, WorkflowId workflowId, StepId stepId, string action,
       ExecutionOutcome outcome, string message, string executedBy, long durationMs = 0) {
-    ExecutionLog log;
-    log.initEntity(tenantId);
-
+    auto log = ExecutionLog(tenantId);
     log.workflowId = workflowId;
     log.stepId = stepId;
     log.tenantId = tenantId;

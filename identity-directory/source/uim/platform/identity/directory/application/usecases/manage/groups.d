@@ -35,9 +35,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
     if (groupRepo.exitstByDisplayName(req.tenantId, req.displayName))
       return GroupResponse("", "IAMGroup with this displayName already exists");
 
-    IAMGroup group;
-    group.initEntity(req.tenantId, req.createdBy);
-
+    auto group = IAMGroup(req.tenantId);
     group.externalId = req.externalId;
     group.displayName = req.displayName;
     group.description = req.description;
@@ -51,7 +49,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
       if (m.type == "User") {
         auto user = userRepo.findById(m.value);
         if (!user.isNull) {
-          user.groupIds ~= groupId;
+          user.groupIds ~= group.id;
           userRepo.update(user);
         }
       }

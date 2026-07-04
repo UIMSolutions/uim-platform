@@ -32,8 +32,7 @@ class ManageConsentRecordsUseCase {
 
     CommandResult grantConsent(ConsentRecordDTO dto) {
         
-        ConsentRecord cr;
-        cr.initEntity(dto.tenantId, dto.createdBy);
+        auto cr = ConsentRecord(dto.tenantId);
         cr.customerId = dto.customerId;
         cr.purpose = dto.purpose;
         cr.granted = true;

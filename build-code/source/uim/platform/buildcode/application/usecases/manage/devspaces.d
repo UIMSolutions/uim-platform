@@ -27,7 +27,6 @@ class ManageDevSpacesUseCase {
     if (qerr !is null) return CommandResult(false, "", qerr);
 
     auto ds = DevSpace(tenantId); // , DevSpaceId(createId), req.createdBy);
-    ds.initEntity(tenantId);
     ds.projectId     = ProjectId(req.projectId);
     ds.name          = req.name;
     ds.displayName   = req.displayName;

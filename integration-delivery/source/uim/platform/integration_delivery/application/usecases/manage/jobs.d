@@ -35,8 +35,7 @@ class ManageJobsUseCase {
     }
 
     CommandResult createJob(JobDTO dto) {
-        Job j;
-        j.initEntity(dto.tenantId, dto.createdBy);
+        auto j = Job(dto.tenantId, dto.createdBy);
         j.id = dto.jobId;
         j.name = dto.name;
         j.description = dto.description;

@@ -119,8 +119,7 @@ class ProvisioningEngine {
     auto now = currentTimestamp();
     foreach (i; 0 .. count) {
       // Create provisioned entity
-      ProvisionedEntity entity;
-      entity.initEntity(tenantId); 
+      auto entity = ProvisionedEntity(tenantId); 
 
       entity.externalId = eType == EntityType.user ? "user-" ~ randomUUID()
         .toString()[0 .. 8] : "group-" ~ randomUUID().toString()[0 .. 8];
@@ -136,9 +135,7 @@ class ProvisioningEngine {
       entityRepo.save(entity);
 
       // Create log entry
-      ProvisioningLog log;
-      log.initEntity(tenantId, job.createdBy);
-
+      auto log = ProvisioningLog(tenantId, job.createdBy);
       log.jobId = job.id;
       log.entityType = eType;
       log.entityId = entity.externalId;

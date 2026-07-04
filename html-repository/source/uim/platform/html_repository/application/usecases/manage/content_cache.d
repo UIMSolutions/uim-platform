@@ -25,9 +25,7 @@ class ManageContentCacheUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult cacheContent(CacheContentRequest r) {
-        ContentCache entry;
-        entry.initEntity(r.tenantId);
-
+        auto entry = ContentCache(r.tenantId);
         entry.appId = r.appId;
         entry.fileId = r.fileId;
         entry.filePath = r.filePath;

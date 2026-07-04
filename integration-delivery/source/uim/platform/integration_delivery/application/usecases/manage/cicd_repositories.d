@@ -31,8 +31,7 @@ class ManageCicdRepositoriesUseCase {
     }
 
     CommandResult createCicdRepository(CicdRepositoryDTO dto) {
-        CicdRepository r;
-        r.initEntity(dto.tenantId, dto.createdBy);
+        auto r = CicdRepository(dto.tenantId, dto.createdBy);
         r.id = dto.cicdRepositoryId;
         r.name = dto.name;
         r.description = dto.description;

@@ -58,7 +58,7 @@ class FolderController : ManageHttpController {
 
     auto resp = Json.emptyObject.set("id", result.id);
 
-    return successResponse("Folder created successfully", "Created", 201, resp);
+    return successResponse("DmsFolder created successfully", "Created", 201, resp);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
@@ -87,9 +87,9 @@ class FolderController : ManageHttpController {
 
     auto folder = usecase.getFolder(tenantId, id);
     if (folder.isNull) 
-    return errorResponse("Folder not found", 404);
+    return errorResponse("DmsFolder not found", 404);
 
-    return successResponse("Folder retrieved successfully", "Retrieved", 200, folder.toJson);
+    return successResponse("DmsFolder retrieved successfully", "Retrieved", 200, folder.toJson);
 }
 
 /**
@@ -116,7 +116,7 @@ override protected Json updateHandler(HTTPServerRequest req) {
 
     auto resp = Json.emptyObject.set("id", result.id);
 
-    return successResponse("Folder updated successfully", "Updated", 200, resp);
+    return successResponse("DmsFolder updated successfully", "Updated", 200, resp);
 }
 
 protected Json moveHandler(HTTPServerRequest req) {
@@ -138,7 +138,7 @@ protected Json moveHandler(HTTPServerRequest req) {
 
   auto resp = Json.emptyObject
     .set("id", result.id);
-  return successResponse("Folder moved successfully", "Moved", 200, resp);
+  return successResponse("DmsFolder moved successfully", "Moved", 200, resp);
 }
 
 mixin(HandleTemplate!("handleMove", "moveHandler"));
@@ -179,6 +179,6 @@ override protected Json deleteHandler(HTTPServerRequest req) {
 
   auto resp = Json.emptyObject
     .set("id", result.id);
-  return successResponse("Folder deleted successfully", "Deleted", 200, resp);
+  return successResponse("DmsFolder deleted successfully", "Deleted", 200, resp);
 }
 }

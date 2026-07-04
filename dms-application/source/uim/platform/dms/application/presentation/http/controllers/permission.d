@@ -140,7 +140,7 @@ class PermissionController : ManageHttpController {
 
     auto data = precheck.data;
     auto r = UpdatePermissionRequest();
-    r.id = id;
+    r.permissionId = id;
     r.tenantId = tenantId;
     r.level = data.getString("level").to!PermissionLevel;
 

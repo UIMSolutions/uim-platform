@@ -31,8 +31,7 @@ class ManageIdentityProvidersUseCase {
     }
 
     CommandResult createIdentityProvider(IdentityProviderDTO dto) {
-        IdentityProvider ip;
-        ip.initEntity(dto.tenantId, dto.createdBy);
+        auto ip = IdentityProvider(dto.tenantId);
         ip.name = dto.name;
         ip.description = dto.description;
         ip.clientId = dto.clientId;

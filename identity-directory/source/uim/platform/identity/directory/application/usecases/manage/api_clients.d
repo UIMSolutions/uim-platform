@@ -35,9 +35,7 @@ class ManageApiClientsUseCase { // TODO: UIMUseCase {
     auto clientId = randomUUID();
     auto clientSecret = randomUUID().toString() ~ "-" ~ randomUUID().toString();
 
-    ApiClient client;
-    client.initEntity(req.tenantId);
-
+    auto client = ApiClient(req.tenantId);
     client.name = req.name;
     client.description = req.description;
     client.scopes = req.scopes;

@@ -43,7 +43,7 @@ class ManagePermissionsUseCase { // TODO: UIMUseCase {
       return CommandResult(true, existing.id.value, "");
     }
 
-    auto entity = Permission(r.tenantId, r.createdBy);
+    auto entity = Permission(r.tenantId); //, r.createdBy);
     entity.resourceId = r.resourceId;
     entity.resourceType = r.resourceType;
     entity.userId = r.userId;
@@ -67,7 +67,7 @@ class ManagePermissionsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updatePermission(UpdatePermissionRequest r) {
-    auto permission = permissions.find(r.tenantId, r.id);
+    auto permission = permissions.findById(r.tenantId, r.permissionId);
     if (permission.isNull)
       return CommandResult(false, "", "Permission not found");
 

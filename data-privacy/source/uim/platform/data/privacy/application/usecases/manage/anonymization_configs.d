@@ -20,12 +20,11 @@ class ManageAnonymizationConfigsUseCase { // TODO: UIMUseCase {
   CommandResult createConfig(CreateAnonymizationConfigRequest req) {
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
+      
     if (req.name.length == 0)
       return CommandResult(false, "", "Name is required");
 
-    AnonymizationConfig c;
-    c.initEntity(req.tenantId);
-
+    auto c = AnonymizationConfig(req.tenantId);
     c.name = req.name;
     c.description = req.description;
     c.status = AnonymizationConfigStatus.draft;

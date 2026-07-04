@@ -54,7 +54,7 @@ class BrowseController : HttpController {
       .set("totalSubfolders", contents.subfolders.length)
       .set("totalDocuments", contents.documents.length);
 
-    return successResponse("Folder contents retrieved successfully", "Retrieved", 200, resp);
+    return successResponse("DmsFolder contents retrieved successfully", "Retrieved", 200, resp);
   }
 
   mixin(HandleTemplate!("handleBrowseFolder", "browseFolderHandler"));
@@ -69,10 +69,10 @@ class BrowseController : HttpController {
     if (id.isEmpty)
       return errorResponse("Invalid repository ID", 400);
 
-    auto summary = usecase.getRepositorySummary(tenantId, repoId);
+    auto summary = usecase.getRepositorySummary(tenantId, id);
 
     if (summary.repositoryId.isEmpty)
-      return errorResponse("Repository not found", 404);
+      return errorResponse("DmsRepository not found", 404);
 
     auto j = Json.emptyObject
       .set("repositoryId", summary.repositoryId)
@@ -81,7 +81,7 @@ class BrowseController : HttpController {
       .set("totalFolders", summary.totalFolders)
       .set("status", summary.status.to!string);
 
-    return successResponse("Repository summary retrieved successfully", "Retrieved", 200, j);
+    return successResponse("DmsRepository summary retrieved successfully", "Retrieved", 200, j);
   }
 
   mixin(HandleTemplate!("handleRepositorySummary", "getRepositorySummaryHandler"));

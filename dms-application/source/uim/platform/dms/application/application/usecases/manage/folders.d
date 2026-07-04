@@ -28,25 +28,25 @@ class ManageFoldersUseCase { // TODO: UIMUseCase {
 
   CommandResult createFolder(CreateFolderRequest r) {
     if (r.name.length == 0)
-      return CommandResult(false, "", "Folder name is required");
+      return CommandResult(false, "", "DmsFolder name is required");
     if (r.repositoryId.isEmpty)
-      return CommandResult(false, "", "Repository ID is required");
+      return CommandResult(false, "", "DmsRepository ID is required");
 
     // Validate repository exists
-    auto repository = repoRepo.find(r.tenantId, r.repositoryId);
+    auto repository = repoRepo.findById(r.tenantId, r.repositoryId);
     if (repository.isNull)
-      return CommandResult(false, "", "Repository not found");
+      return CommandResult(false, "", "DmsRepository not found");
 
     // Build path
     string path = "/" ~ r.name;
     if (r.parentFolderId.value.length > 0) {
-      auto parent = folders.find(r.tenantId, r.parentFolderId);
+      auto parent = folders.findById(r.tenantId, r.parentFolderId);
       if (parent.isNull)
         return CommandResult(false, "", "Parent folder not found");
       path = parent.path ~ "/" ~ r.name;
     }
 
-    auto entity = Folder(r.tenantId, r.folderId.isNull ? FolderId(createId()) : r.folderId, r.createdBy);
+    auto entity = DmsFolder(r.tenantId, r.folderId.isNull ? FolderId(createId()) : r.folderId, r.createdBy);
     entity.repositoryId = r.repositoryId;
     entity.parentFolderId = r.parentFolderId;
     entity.name = r.name;
@@ -58,26 +58,26 @@ class ManageFoldersUseCase { // TODO: UIMUseCase {
     return CommandResult(true, entity.id.value, "");
   }
 
-  Folder[] listFolders(TenantId tenantId) {
+  DmsFolder[] listFolders(TenantId tenantId) {
     return folders.findByTenant(tenantId);
   }
 
-  Folder[] listByRepository(TenantId tenantId, RepositoryId repositoryId) {
+  DmsFolder[] listByRepository(TenantId tenantId, RepositoryId repositoryId) {
     return folders.findByRepository(tenantId, repositoryId);
   }
 
-  Folder[] listSubfolders(TenantId tenantId, FolderId parentFolderId) {
+  DmsFolder[] listSubfolders(TenantId tenantId, FolderId parentFolderId) {
     return folders.findByParent(tenantId, parentFolderId);
   }
 
-  Folder getFolder(TenantId tenantId, FolderId id) {
+  DmsFolder getFolder(TenantId tenantId, FolderId id) {
     return folders.findById(tenantId, id);
   }
 
   CommandResult updateFolder(UpdateFolderRequest r) {
-    auto folder = folders.find(r.tenantId, r.folderId);
+    auto folder = folders.findById(r.tenantId, r.folderId);
     if (folder.isNull)
-      return CommandResult(false, "", "Folder not found");
+      return CommandResult(false, "", "DmsFolder not found");
 
     if (r.name.length > 0) {
       folder.name = r.name;
@@ -95,12 +95,12 @@ class ManageFoldersUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult moveFolder(MoveFolderRequest r) {
-    auto folder = folders.find(r.tenantId, r.folderId);
+    auto folder = folders.findById(r.tenantId, r.folderId);
     if (folder.isNull)
-      return CommandResult(false, "", "Folder not found");
+      return CommandResult(false, "", "DmsFolder not found");
 
     if (r.newParentFolderId.value.length > 0) {
-      auto newParent = folders.find(r.tenantId, r.newParentFolderId);
+      auto newParent = folders.findById(r.tenantId, r.newParentFolderId);
       if (newParent.isNull)
         return CommandResult(false, "", "New parent folder not found");
       folder.parentFolderId = r.newParentFolderId;
@@ -118,7 +118,7 @@ class ManageFoldersUseCase { // TODO: UIMUseCase {
   CommandResult deleteFolder(TenantId tenantId, FolderId id) {
     auto folder = folders.findById(tenantId, id);
     if (folder.isNull)
-      return CommandResult(false, "", "Folder not found");
+      return CommandResult(false, "", "DmsFolder not found");
 
     folders.remove(folder);
     return CommandResult(true, folder.id.value, "");

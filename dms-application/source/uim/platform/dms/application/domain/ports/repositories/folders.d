@@ -10,16 +10,16 @@ import uim.platform.dms.application;
 
 mixin(ShowModule!());
 @safe:
-interface IFolderRepository : ITenantRepository!(Folder, FolderId) {
+interface IFolderRepository : ITenantRepository!(DmsFolder, FolderId) {
   bool existsByPath(TenantId tenantId, RepositoryId repositoryId, string path);
-  Folder findByPath(TenantId tenantId, RepositoryId repositoryId, string path);
+  DmsFolder findByPath(TenantId tenantId, RepositoryId repositoryId, string path);
   void removeByPath(TenantId tenantId, RepositoryId repositoryId, string path);
   
   size_t countByRepository(TenantId tenantId, RepositoryId repositoryId);
-  Folder[] findByRepository(TenantId tenantId, RepositoryId repositoryId);
+  DmsFolder[] findByRepository(TenantId tenantId, RepositoryId repositoryId);
   void removeByRepository(TenantId tenantId, RepositoryId repositoryId);
 
   size_t countByParent(TenantId tenantId, FolderId parentFolderId);
-  Folder[] findByParent(TenantId tenantId, FolderId parentFolderId);
+  DmsFolder[] findByParent(TenantId tenantId, FolderId parentFolderId);
   void removeByParent(TenantId tenantId, FolderId parentFolderId);
 }

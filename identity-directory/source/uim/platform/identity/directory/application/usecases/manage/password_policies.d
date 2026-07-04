@@ -29,9 +29,7 @@ class ManagePasswordPoliciesUseCase { // TODO: UIMUseCase {
 
   /// Create a new password policy.
   PasswordPolicyResponse createPolicy(CreatePasswordPolicyRequest req) {
-    PasswordPolicy policy;
-    policy.initEntity(req.tenantId);
-
+    auto policy = PasswordPolicy(req.tenantId);
     policy.name = req.name;
     policy.description = req.description;
     policy.strength = PasswordStrength.standard;
@@ -52,9 +50,7 @@ class ManagePasswordPoliciesUseCase { // TODO: UIMUseCase {
 
     policyRepo.save(policy);
 
-    AuditEvent event;
-    event.initEntity(req.tenantId);
-
+    auto event = AuditEvent(req.tenantId);
     event.eventType = AuditEventType.schemaCreated; // reuse event type
     event.actorId = req.createdBy;
     event.actorName = req.createdBy; // TODO: lookup user name

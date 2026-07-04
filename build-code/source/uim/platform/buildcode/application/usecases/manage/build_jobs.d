@@ -29,8 +29,7 @@ class ManageBuildJobsUseCase {
     if (!pipeline.isActive)
       return CommandResult(false, "", "Pipeline is not active");
 
-    BuildJob job;
-    job.initEntity(tenantId);
+    auto job = BuildJob(tenantId);
     job.pipelineId   = PipelineId(req.pipelineId);
     job.projectId    = pipeline.projectId;
     job.commitSha    = req.commitSha;

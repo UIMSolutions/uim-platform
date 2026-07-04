@@ -34,8 +34,7 @@ class ManageCredentialsUseCase {
         if (repo.nameExists(dto.tenantId, dto.name))
             return CommandResult(false, "", "Credential name already exists");
 
-        Credential c;
-        c.initEntity(dto.tenantId, dto.createdBy);
+        auto c = Credential(dto.tenantId, dto.createdBy);
         c.id = dto.credentialId;
         c.name = dto.name;
         c.description = dto.description;

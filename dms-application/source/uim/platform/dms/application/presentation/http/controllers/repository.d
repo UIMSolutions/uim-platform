@@ -57,7 +57,7 @@ class RepositoryController : ManageHttpController {
       return errorResponse(result.message, 400);
 
     auto responseData = Json.emptyObject.set("id", result.id);
-    return successResponse("Repository created successfully", "Created", 201, responseData);
+    return successResponse("DmsRepository created successfully", "Created", 201, responseData);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
@@ -88,10 +88,10 @@ class RepositoryController : ManageHttpController {
 
     auto repository = usecase.getRepository(tenantId, id);
     if (repository.isNull)
-      return errorResponse("Repository not found", 404);
+      return errorResponse("DmsRepository not found", 404);
 
     auto responseData = Json.emptyObject.set("id", repository.id);
-    return successResponse("Repository retrieved successfully", "Retrieved", 200, responseData);
+    return successResponse("DmsRepository retrieved successfully", "Retrieved", 200, responseData);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
@@ -115,7 +115,7 @@ class RepositoryController : ManageHttpController {
       return errorResponse(result.message, 400);
 
     auto responseData = Json.emptyObject.set("id", result.id);
-    return successResponse("Repository updated successfully", "Updated", 200, responseData);
+    return successResponse("DmsRepository updated successfully", "Updated", 200, responseData);
   }
 
   protected Json activateHandler(HTTPServerRequest req) {
@@ -134,7 +134,7 @@ class RepositoryController : ManageHttpController {
       .set("id", result.id)
       .set("status", "active");
 
-    return successResponse("Repository activated successfully", "Activated", 200, resp);
+    return successResponse("DmsRepository activated successfully", "Activated", 200, resp);
   }
 
   mixin(HandleTemplate!("handleActivate", "activateHandler"));
@@ -155,7 +155,7 @@ class RepositoryController : ManageHttpController {
       .set("id", result.id)
       .set("status", Json("archived"));
 
-    return successResponse("Repository archived successfully", "Archived", 200, resp);
+    return successResponse("DmsRepository archived successfully", "Archived", 200, resp);
   }
 
   mixin(HandleTemplate!("handleArchive", "archiveHandler"));
@@ -175,6 +175,6 @@ class RepositoryController : ManageHttpController {
       return errorResponse(result.message, 400);
 
     auto responseData = Json.emptyObject.set("id", result.id);
-    return successResponse("Repository deleted successfully", 200, responseData);
+    return successResponse("DmsRepository deleted successfully", 200, responseData);
   }
 }

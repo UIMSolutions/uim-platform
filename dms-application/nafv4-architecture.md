@@ -25,11 +25,11 @@
 
 ```
 DMS Application
-├── C1.1  Repository Management
+├── C1.1  DmsRepository Management
 │   ├── C1.1.1  Create / update / delete repositories
-│   └── C1.1.2  Repository type and status lifecycle
+│   └── C1.1.2  DmsRepository type and status lifecycle
 │
-├── C1.2  Folder Hierarchy
+├── C1.2  DmsFolder Hierarchy
 │   ├── C1.2.1  Create / rename / delete folders
 │   └── C1.2.2  Nested folder paths
 │
@@ -59,7 +59,7 @@ DMS Application
 |---|---|
 | **Mission** | Provide enterprise document management modelled on SAP Document Management Service (DMS). |
 | **Vision** | Enable teams to store, version, and collaborate on documents within governed repository hierarchies. |
-| **Scope** | Repository and folder CRUD, document upload and versioning, permissions, favourites, and sharing. |
+| **Scope** | DmsRepository and folder CRUD, document upload and versioning, permissions, favourites, and sharing. |
 | **Stakeholders** | Business Users, Content Managers, Application Developers. |
 
 ---
@@ -70,8 +70,8 @@ DMS Application
 
 | Service ID | Name | Path Prefix | Methods |
 |---|---|---|---|
-| SVC-REPO-CRUD | Repository | `/api/v1/repositories` | GET, POST, PUT, DELETE |
-| SVC-FLD-CRUD | Folder | `/api/v1/folders` | GET, POST, PUT, DELETE |
+| SVC-REPO-CRUD | DmsRepository | `/api/v1/repositories` | GET, POST, PUT, DELETE |
+| SVC-FLD-CRUD | DmsFolder | `/api/v1/folders` | GET, POST, PUT, DELETE |
 | SVC-DOC-CRUD | Document | `/api/v1/documents` | GET, POST, PUT, DELETE |
 | SVC-DVER-CRUD | Document Version | `/api/v1/document-versions` | GET, POST |
 | SVC-PERM-CRUD | Permission | `/api/v1/permissions` | GET, POST, DELETE |
@@ -96,11 +96,11 @@ DMS Application
 
 | Entity | Key Relationships |
 |---|---|
-| `Repository` | Root aggregate; contains Folders and Documents |
-| `Folder` | Belongs to Repository; self-referential parent/child nesting |
-| `Document` | Belongs to Repository and Folder; parent of DocumentVersions |
+| `DmsRepository` | Root aggregate; contains Folders and Documents |
+| `DmsFolder` | Belongs to DmsRepository; self-referential parent/child nesting |
+| `Document` | Belongs to DmsRepository and DmsFolder; parent of DocumentVersions |
 | `DocumentVersion` | Belongs to Document; sequential version numbers |
-| `Permission` | Polymorphic ACL entry for Repository, Folder, or Document |
+| `Permission` | Polymorphic ACL entry for DmsRepository, DmsFolder, or Document |
 | `Favorite` | User bookmark to any resource |
 | `Share` | Owner-to-recipient grant with optional expiry |
 

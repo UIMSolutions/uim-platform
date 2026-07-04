@@ -25,10 +25,7 @@ class ManageApplicationsUseCase { // TODO: UIMUseCase {
   }
 
   AppResponse createApplication(CreateAppRequest req) {
-    auto now = currentTimestamp();
-    
-    Application app;
-    app.initEntity(req.tenantId);
+    auto app = Application(req.tenantId);
     app.name = req.name;
     app.description = req.description;
     app.protocol = req.protocol;

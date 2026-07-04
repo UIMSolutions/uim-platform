@@ -51,9 +51,7 @@ class ManageProxySystemsUseCase { // TODO: UIMUseCase {
     if (!existing.isNull)
       return CommandResult(false, "", "Proxy system with this name already exists");
 
-    auto sys = ProxySystem();
-    sys.initEntity(req.tenantId, req.createdBy);
-
+    auto sys = ProxySystem(req.tenantId, req.createdBy);
     sys.name = req.name;
     sys.description = req.description;
     sys.systemType = req.systemType;

@@ -93,7 +93,7 @@ class BrowseContentUseCase { // TODO: UIMUseCase {
     return favorites.findByUser(tenantId, userId);
   }
 struct FolderContents {
-  Folder[] subfolders;
+  DmsFolder[] subfolders;
   Document[] documents;
 }
   /// Remove a favorite.

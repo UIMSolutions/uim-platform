@@ -32,10 +32,7 @@ class ManageTargetSystemsUseCase { // TODO: UIMUseCase {
     if (!existing.isNull)
       return CommandResult(false, "", "Target system with this name already exists");
 
-    auto now = currentTimestamp();
-    TargetSystem sys;
-    sys.initEntity(req.tenantId, req.createdBy);
-
+    auto sys = TargetSystem(req.tenantId, req.createdBy);
     sys.name = req.name;
     sys.description = req.description;
     sys.systemType = req.systemType;

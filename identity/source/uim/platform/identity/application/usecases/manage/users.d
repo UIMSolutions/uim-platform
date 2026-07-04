@@ -23,9 +23,7 @@ class ManageUsersUseCase {
 
     CommandResult createUser(UserDTO dto) {
         import std.digest.sha : sha256Of, toHexString;
-        User u;
-        u.initEntity(dto.tenantId, dto.createdBy);
-        u.id = dto.userId;
+        auto u = User(dto.tenantId, dto.userId);
         u.userName = dto.userName;
         u.email = dto.email;
         u.displayName = dto.displayName;

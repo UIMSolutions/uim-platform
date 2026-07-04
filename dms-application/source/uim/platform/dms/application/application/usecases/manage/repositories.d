@@ -23,15 +23,15 @@ class ManageRepositoriesUseCase { // TODO: UIMUseCase {
 
   CommandResult createRepository(CreateRepositoryRequest r) {
     if (r.name.length == 0)
-      return CommandResult(false, "", "Repository name is required");
+      return CommandResult(false, "", "DmsRepository name is required");
     if (r.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
 
     auto existing = repo.findByName(r.tenantId, r.name);
     if (!existing.isNull)
-      return CommandResult(false, "", "Repository with this name already exists");
+      return CommandResult(false, "", "DmsRepository with this name already exists");
 
-    auto entity = Repository(r.tenantId, r.repositoryId, r.createdBy);
+    auto entity = DmsRepository(r.tenantId); //, r.repositoryId, r.createdBy);
     entity.name = r.name;
     entity.description = r.description;
     entity.status = RepositoryStatus.active;
@@ -42,18 +42,18 @@ class ManageRepositoriesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, entity.id.value, "");
   }
 
-  Repository[] listRepositories(TenantId tenantId) {
+  DmsRepository[] listRepositories(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  Repository getRepository(TenantId tenantId, RepositoryId repositoryId) {
+  DmsRepository getRepository(TenantId tenantId, RepositoryId repositoryId) {
     return repo.findById(tenantId, repositoryId);
   }
 
   CommandResult updateRepository(UpdateRepositoryRequest r) {
     auto entity = repo.findById(r.tenantId, r.repositoryId);
     if (entity.isNull)
-      return CommandResult(false, "", "Repository not found");
+      return CommandResult(false, "", "DmsRepository not found");
 
     if (r.name.length > 0)
       entity.name = r.name;
@@ -72,7 +72,7 @@ class ManageRepositoriesUseCase { // TODO: UIMUseCase {
   CommandResult archiveRepository(TenantId tenantId, RepositoryId repositoryId) {
     auto entity = repo.findById(tenantId, repositoryId);
     if (entity.isNull)
-      return CommandResult(false, "", "Repository not found");
+      return CommandResult(false, "", "DmsRepository not found");
 
     entity.status = RepositoryStatus.archived;
     entity.updatedAt = currentTimestamp();
@@ -84,7 +84,7 @@ class ManageRepositoriesUseCase { // TODO: UIMUseCase {
   CommandResult activateRepository(TenantId tenantId, RepositoryId repositoryId) {
     auto entity = repo.findById(tenantId, repositoryId);
     if (entity.isNull)
-      return CommandResult(false, "", "Repository not found");
+      return CommandResult(false, "", "DmsRepository not found");
 
     entity.status = RepositoryStatus.active;
     entity.updatedAt = currentTimestamp();
@@ -96,7 +96,7 @@ class ManageRepositoriesUseCase { // TODO: UIMUseCase {
   CommandResult deleteRepository(TenantId tenantId, RepositoryId repositoryId) {
     auto entity = repo.findById(tenantId, repositoryId);
     if (entity.isNull)
-      return CommandResult(false, "", "Repository not found");
+      return CommandResult(false, "", "DmsRepository not found");
 
     repo.remove(entity);
     return CommandResult(true, entity.id.value, "");

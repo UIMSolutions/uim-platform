@@ -18,8 +18,7 @@ class ManageServiceBindingsUseCase {
   this(ServiceBindingRepository repo) { _repo = repo; }
 
   CommandResult create(TenantId tenantId, CreateServiceBindingRequest req) {
-    ServiceBinding sb;
-    sb.initEntity(tenantId);
+    auto sb = ServiceBinding(tenantId);
     sb.projectId    = ProjectId(req.projectId);
     sb.serviceName  = req.serviceName;
     sb.servicePlan  = req.servicePlan;

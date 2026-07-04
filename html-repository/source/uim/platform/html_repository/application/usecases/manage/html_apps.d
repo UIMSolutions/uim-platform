@@ -32,9 +32,7 @@ class ManageHtmlAppsUseCase { // TODO: UIMUseCase {
         if (!existing.isNull)
             return CommandResult(false, "", "Application with this name already exists");
 
-        HtmlApp app;
-        app.initEntity(r.tenantId, r.createdBy);
-
+        auto app = HtmlApp(r.tenantId);
         app.spaceId = r.spaceId;
         app.serviceInstanceId = r.serviceInstanceId;
         app.name = r.name;

@@ -34,8 +34,7 @@ class ManageAIRequestsUseCase {
         gtype = mixin("AIGenerationType." ~ member);
     }
 
-    AIRequest r;
-    r.initEntity(tenantId);
+    auto r = AIRequest(tenantId);
     r.projectId      = ProjectId(req.projectId);
     r.requestedBy    = req.requestedBy;
     r.generationType = gtype;

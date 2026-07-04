@@ -86,9 +86,7 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
     if (!tryParseCertificateFormat(req.format_, format_))
       return CommandResult(false, "", "Invalid certificate format: " ~ req.format_);
 
-    Certificate certificate;
-    certificate.initEntity(req.tenantId);
-
+    auto certificate = Certificate(req.tenantId);
     certificate.subaccountId = req.subaccountId;
     certificate.name = req.name;
     certificate.description = req.description;

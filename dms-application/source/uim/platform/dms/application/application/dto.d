@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.dms.application.application.dto;
 // import uim.platform.dms.application.domain.types;
-// --- Repository DTOs ---
+// --- DmsRepository DTOs ---
 import uim.platform.dms.application;
 
 mixin(ShowModule!());
@@ -30,7 +30,7 @@ struct UpdateRepositoryRequest {
   long maxFileSize;
   string allowedFileTypes;
 }
-// --- Folder DTOs ---
+// --- DmsFolder DTOs ---
 
 struct CreateFolderRequest {
   TenantId tenantId;

@@ -35,12 +35,12 @@ class ManageDocumentsUseCase { // TODO: UIMUseCase {
     if (r.name.length == 0)
       return CommandResult(false, "", "Document name is required");
     if (r.repositoryId.isEmpty)
-      return CommandResult(false, "", "Repository ID is required");
+      return CommandResult(false, "", "DmsRepository ID is required");
 
     // Validate folder exists if provided
     if (!r.folderId.isEmpty) {
       if (!folders.existsById(r.tenantId, r.folderId))
-        return CommandResult(false, "", "Folder not found");
+        return CommandResult(false, "", "DmsFolder not found");
     }
 
     auto doc = Document(r.tenantId);
