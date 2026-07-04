@@ -6,12 +6,12 @@
 module uim.platform.document_ai.infrastructure.persistence.memory;
 
 public {
-  import uim.platform.document_ai.infrastructure.persistence.memory.document;
-  import uim.platform.document_ai.infrastructure.persistence.memory.extraction_result;
-  import uim.platform.document_ai.infrastructure.persistence.memory.schema;
-  import uim.platform.document_ai.infrastructure.persistence.memory.template;
-  import uim.platform.document_ai.infrastructure.persistence.memory.document_type;
+  import uim.platform.document_ai.infrastructure.persistence.memory.documents;
+  import uim.platform.document_ai.infrastructure.persistence.memory.extraction_results;
+  import uim.platform.document_ai.infrastructure.persistence.memory.schemas;
+  import uim.platform.document_ai.infrastructure.persistence.memory.templates;
+  import uim.platform.document_ai.infrastructure.persistence.memory.document_types;
   import uim.platform.document_ai.infrastructure.persistence.memory.enrichment_data;
-  import uim.platform.document_ai.infrastructure.persistence.memory.training_job;
-  import uim.platform.document_ai.infrastructure.persistence.memory.client;
+  import uim.platform.document_ai.infrastructure.persistence.memory.training_jobs;
+  import uim.platform.document_ai.infrastructure.persistence.memory.clients;
 }

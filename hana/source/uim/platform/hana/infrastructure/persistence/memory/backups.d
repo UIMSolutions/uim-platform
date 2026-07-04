@@ -8,8 +8,6 @@ module uim.platform.hana.infrastructure.persistence.memory.backups;
 // import uim.platform.hana.domain.entities.backup;
 // import uim.platform.hana.domain.ports.repositories.backups;
 
-
- 
 import uim.platform.hana;
 
 mixin(ShowModule!());

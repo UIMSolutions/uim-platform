@@ -8,8 +8,6 @@ module uim.platform.content_agent.infrastructure.persistence.memory.transport_re
 // import uim.platform.content_agent.domain.entities.transport_request;
 // import uim.platform.content_agent.domain.ports.repositories.transport_requests;
 
-
- 
 import uim.platform.content_agent;
 
 mixin(ShowModule!());

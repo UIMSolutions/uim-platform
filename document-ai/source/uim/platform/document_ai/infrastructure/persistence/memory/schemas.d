@@ -3,13 +3,11 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.document_ai.infrastructure.persistence.memory.schema;
-// import uim.platform.document_ai.domain.types;
+module uim.platform.document_ai.infrastructure.persistence.memory.schemas;
+
 // import uim.platform.document_ai.domain.entities.schema;
 // import uim.platform.document_ai.domain.ports.repositories.schemas;
 
-
- 
 import uim.platform.document_ai;
 
 mixin(ShowModule!());

@@ -4,7 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.document_ai.domain.ports.repositories.schema_repository;
-// import uim.platform.document_ai.domain.types;
+
 // import uim.platform.document_ai.domain.entities.schema;
 import uim.platform.document_ai;
 

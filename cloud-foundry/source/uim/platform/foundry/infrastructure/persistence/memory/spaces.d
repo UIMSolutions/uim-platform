@@ -9,8 +9,6 @@ module uim.platform.foundry.infrastructure.persistence.memory.spaces;
 // import uim.platform.foundry.domain.entities.space;
 // import uim.platform.foundry.domain.ports.repositories.space;
 
-
- 
 import uim.platform.foundry;
 
 mixin(ShowModule!());

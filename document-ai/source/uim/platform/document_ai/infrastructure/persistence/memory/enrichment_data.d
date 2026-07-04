@@ -4,12 +4,10 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.document_ai.infrastructure.persistence.memory.enrichment_data;
-// import uim.platform.document_ai.domain.types;
+
 // import uim.platform.document_ai.domain.entities.enrichment_data;
 // import uim.platform.document_ai.domain.ports.repositories.enrichment_datas;
 
-
- 
 import uim.platform.document_ai;
 
 mixin(ShowModule!());

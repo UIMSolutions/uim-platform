@@ -8,8 +8,6 @@ module uim.platform.content_agent.infrastructure.persistence.memory.content_prov
 // import uim.platform.content_agent.domain.entities.content_provider;
 // import uim.platform.content_agent.domain.ports.repositories.content_providers;
 
-
- 
 import uim.platform.content_agent;
 
 mixin(ShowModule!());

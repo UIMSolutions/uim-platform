@@ -8,8 +8,6 @@ module uim.platform.monitoring.infrastructure.persistence.memory.metric_definiti
 // import uim.platform.monitoring.domain.entities.metric_definition;
 // import uim.platform.monitoring.domain.ports.repositories.metric_definitions;
 
-
- 
 import uim.platform.monitoring;
 
 mixin(ShowModule!());

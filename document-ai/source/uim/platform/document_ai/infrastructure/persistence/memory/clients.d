@@ -4,12 +4,10 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.document_ai.infrastructure.persistence.memory.clients;
-// import uim.platform.document_ai.domain.types;
+
 // import uim.platform.document_ai.domain.entities.client;
 // import uim.platform.document_ai.domain.ports.repositories.clients;
 
-
- 
 import uim.platform.document_ai;
 
 mixin(ShowModule!());

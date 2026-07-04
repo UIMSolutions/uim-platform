@@ -8,8 +8,6 @@ module uim.platform.hana.infrastructure.persistence.memory.database_users;
 // import uim.platform.hana.domain.entities.database_user;
 // import uim.platform.hana.domain.ports.repositories.database_users;
 
-
- 
 import uim.platform.hana;
 
 mixin(ShowModule!());

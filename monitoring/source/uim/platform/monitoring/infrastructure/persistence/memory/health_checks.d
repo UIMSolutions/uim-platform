@@ -8,8 +8,6 @@ module uim.platform.monitoring.infrastructure.persistence.memory.health_checks;
 // import uim.platform.monitoring.domain.entities.health_check;
 // import uim.platform.monitoring.domain.ports.repositories.health_checks;
 
-
- 
 import uim.platform.monitoring;
 
 mixin(ShowModule!());
