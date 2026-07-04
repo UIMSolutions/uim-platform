@@ -25,12 +25,11 @@ class ManageSchemasUseCase { // TODO: UIMUseCase {
   CommandResult createSchema(CreateSchemaRequest r) {
     if (r.name.length == 0)
       return CommandResult(false, "", "Schema name is required");
+      
     if (r.clientId.isEmpty)
       return CommandResult(false, "", "Client ID is required");
 
-    Schema s;
-    s.initEntity(r.tenantId) ;
-
+    auto s = Schema(r.tenantId);
     s.clientId = r.clientId;
     s.documentTypeId = r.documentTypeId;
     s.name = r.name;

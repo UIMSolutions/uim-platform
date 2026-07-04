@@ -137,7 +137,7 @@ struct CreateExecutionRequest {
   ExecutionId executionId;
   ConnectionId connectionId;
   ConfigurationId configurationId;
-  ResourceGroupId groupId;
+  ResourceGroupId resourceGroupId;
 
   Json toJson() const {
     return Json.emptyObject

@@ -29,9 +29,7 @@ struct Metric {
     long networkOutputKbs;
 
     Json toJson() const {
-        return Json.emptyObject
-            .set("id",                      id.value)
-            .set("tenantId",                tenantId.value)
+        return entityToJson
             .set("instanceId",              instanceId.value)
             .set("timestamp",               timestamp_)
             .set("memoryUsedMb",            memoryUsedMb)
@@ -44,8 +42,6 @@ struct Metric {
             .set("totalCommandsProcessed",  totalCommandsProcessed)
             .set("cpuUsagePercent",         cpuUsagePercent)
             .set("networkInputKbs",         networkInputKbs)
-            .set("networkOutputKbs",        networkOutputKbs)
-            .set("createdAt",               createdAt)
-            .set("createdBy",               createdBy.value);
+            .set("networkOutputKbs",        networkOutputKbs);
     }
 }

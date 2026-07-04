@@ -34,8 +34,7 @@ class ManageSharesUseCase { // TODO: UIMUseCase {
     if (doc.isNull)
       return CommandResult(false, "", "Document not found");
 
-    auto entity = Share();
-    entity.initEntity(r.tenantId, r.createdBy);
+    auto entity = Share(r.tenantId, r.createdBy);
     entity.documentId = r.documentId;
     entity.shareType = r.shareType;
     entity.sharedWith = r.sharedWith;

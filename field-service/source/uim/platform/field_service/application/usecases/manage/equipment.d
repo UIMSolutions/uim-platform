@@ -35,9 +35,7 @@ class ManageEquipmentUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createEquipment(EquipmentDTO dto) {
-        Equipment e;
-        e.initEntity(dto.tenantId, dto.createdBy);
-        e.id = dto.equipmentId;
+        auto e = Equipment(dto.tenantId, dto.equipmentId, dto.createdBy);
         e.customerId = dto.customerId;
         e.serialNumber = dto.serialNumber;
         e.name = dto.name;

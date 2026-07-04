@@ -126,11 +126,7 @@ class ProcessDocumentsUseCase { // TODO: UIMUseCase {
   }
 
   private void processExtraction(Document doc) {
-    
-
-    ExtractionResult result;
-    result.initEntity(doc.tenantId);
-
+    auto result = ExtractionResult(doc.tenantId);
     result.clientId = doc.clientId;
     result.documentId = doc.id;
     result.schemaId = doc.schemaId;

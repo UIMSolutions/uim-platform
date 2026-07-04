@@ -31,8 +31,7 @@ class ManageRepositoriesUseCase { // TODO: UIMUseCase {
     if (!existing.isNull)
       return CommandResult(false, "", "Repository with this name already exists");
 
-    Repository entity;
-    entity.initEntity(r.tenantId, r.createdBy);
+    auto entity = Repository(r.tenantId, r.repositoryId, r.createdBy);
     entity.name = r.name;
     entity.description = r.description;
     entity.status = RepositoryStatus.active;

@@ -29,9 +29,7 @@ class ManageBackupsUseCase { // TODO: UIMUseCase {
     if (!existing.isNull)
       return CommandResult(false, "", "Backup already exists");
 
-    Backup b;
-    b.initEntity(r.tenantId);
-    b.id = r.id;
+    auto b = Backup(r.tenantId, r.id);
     b.instanceId = r.instanceId;
     b.name = r.name;
     b.status = BackupStatus.scheduled;
@@ -47,7 +45,7 @@ class ManageBackupsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, b.id.value, "");
   }
 
-  Backup getBackup(BackupId id) {
+  Backup getBackup(TenantId tenantId, BackupId id) {
     return repo.findById(tenantId, id);
   }
 
@@ -56,7 +54,7 @@ class ManageBackupsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateBackup(UpdateBackupRequest r) {
-    auto existing = repo.findById(r.tenantId, r.id);
+    auto existing = repo.findById(r.tenantId, r.backupId);
     if (existing.isNull)
       return CommandResult(false, "", "Backup not found");
 
@@ -69,7 +67,7 @@ class ManageBackupsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, existing.id.value, "");
   }
 
-  CommandResult deleteBackup(BackupId id) {
+  CommandResult deleteBackup(TenantId tenantId, BackupId id) {
     auto entity = repo.findById(tenantId, id);
     if (entity.isNull)
       return CommandResult(false, "", "Backup not found");

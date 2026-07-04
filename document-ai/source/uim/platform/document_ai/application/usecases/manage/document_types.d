@@ -28,9 +28,7 @@ class ManageDocumentTypesUseCase { // TODO: UIMUseCase {
     if (r.clientId.isEmpty)
       return CommandResult(false, "", "Client ID is required");
 
-    DocumentType dt;
-    dt.initEntity(r.tenantId) ;
-
+    auto dt = DocumentType(r.tenantId);
     dt.clientId = r.clientId;
     dt.name = r.name;
     dt.description = r.description;

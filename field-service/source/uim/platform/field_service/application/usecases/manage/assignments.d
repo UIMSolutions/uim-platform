@@ -35,9 +35,7 @@ class ManageAssignmentsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createAssignment(AssignmentDTO dto) {
-        Assignment assignment;
-        assignment.initEntity(dto.tenantId, dto.createdBy);
-        assignment.id = dto.assignmentId;
+        auto assignment = Assignment(dto.tenantId, dto.assignmentId, dto.createdBy);
         assignment.activityId = dto.activityId;
         assignment.technicianId = dto.technicianId;
         assignment.assignedDate = dto.assignedDate;

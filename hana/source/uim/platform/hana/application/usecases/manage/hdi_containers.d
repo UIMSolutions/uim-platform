@@ -28,9 +28,7 @@ class ManageHDIContainersUseCase { // TODO: UIMUseCase {
     if (repo.existsById(r.id))
       return CommandResult(false, "", "HDI Container already exists");
 
-    HDIContainer c;
-    c.initEntity(r.tenantId);
-    c.id = r.id;
+    auto c = HDIContainer(r.tenantId, r.id, r.createdBy);
     c.instanceId = r.instanceId;
     c.name = r.name;
     c.description = r.description;

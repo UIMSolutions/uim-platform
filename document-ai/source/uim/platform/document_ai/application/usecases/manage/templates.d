@@ -30,9 +30,7 @@ class ManageTemplatesUseCase { // TODO: UIMUseCase {
     if (r.schemaId.isEmpty)
       return CommandResult(false, "", "Schema ID is required");
 
-    Template t;
-    t.initEntity(r.tenantId) ;
-
+    auto t = Template(r.tenantId);
     t.clientId = r.clientId;
     t.schemaId = r.schemaId;
     t.documentTypeId = r.documentTypeId;

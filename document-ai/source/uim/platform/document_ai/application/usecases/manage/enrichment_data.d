@@ -28,9 +28,7 @@ class ManageEnrichmentDataUseCase { // TODO: UIMUseCase {
     if (r.clientId.isEmpty)
       return CommandResult(false, "", "Client ID is required");
 
-    EnrichmentData ed;
-    ed.initEntity(r.tenantId) ;
-
+    auto ed = EnrichmentData(r.tenantId);
     ed.clientId = r.clientId;
     ed.documentTypeId = r.documentTypeId;
     ed.name = r.name;

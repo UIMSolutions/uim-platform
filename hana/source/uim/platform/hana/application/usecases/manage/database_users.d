@@ -28,9 +28,7 @@ class ManageDatabaseUsersUseCase { // TODO: UIMUseCase {
     if (repo.existsById(r.id))
       return CommandResult(false, "", "Database user already exists");
 
-    DatabaseUser u;
-    u.id = r.id;
-    u.initEntity(r.tenantId);
+    auto u = DatabaseUser(r.tenantId, r.id, r.createdBy);
     u.instanceId = r.instanceId;
     u.userName = r.userName;
     u.status = UserStatus.active;

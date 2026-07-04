@@ -29,9 +29,7 @@ class ManageAlertsUseCase { // TODO: UIMUseCase {
     if (!existing.isNull)
       return CommandResult(false, "", "Alert already exists");
 
-    Alert a;
-    a.initEntity(r.tenantId);
-    a.id = r.alertId;
+    auto a = Alert(r.tenantId, r.alertId);
     a.instanceId = r.instanceId;
     a.name = r.name;
     a.description = r.description;

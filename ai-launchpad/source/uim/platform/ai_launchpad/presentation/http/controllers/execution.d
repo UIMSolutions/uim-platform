@@ -45,7 +45,7 @@ class ExecutionController : ManageHttpController {
     r.tenantId = tenantId;
     r.connectionId = connectionId;
     r.configurationId = data.getString("configurationId");
-    r.groupId = data.getString("resourceGroupId");
+    r.resourceGroupId = data.getString("resourceGroupId");
 
     auto result = usecase.createExecution(r);
     if (result.hasError)

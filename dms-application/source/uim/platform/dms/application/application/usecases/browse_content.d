@@ -79,8 +79,7 @@ class BrowseContentUseCase { // TODO: UIMUseCase {
     if (!fav.isNull)      
       return CommandResult(true, fav.id.value, "");
 
-    fav = Favorite();
-    fav.initEntity(r.tenantId);
+    fav = Favorite(r.tenantId);
     fav.userId = r.userId;
     fav.resourceId = r.resourceId;
     fav.resourceType = r.resourceType;

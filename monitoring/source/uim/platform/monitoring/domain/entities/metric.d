@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 /// A single metric data point.
 struct Metric {
-  mixin TenantEntity!(MetricId);
+  mixin TenantEntity!MetricId;
 
   MonitoredResourceId resourceId;
   MetricDefinitionId definitionId;

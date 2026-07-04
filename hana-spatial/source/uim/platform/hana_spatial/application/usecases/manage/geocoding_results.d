@@ -26,9 +26,7 @@ class ManageGeocodingResultsUseCase {
     if (err.length > 0)
       return CommandResult(false, "", err);
 
-    GeocodingResult result;
-    result.initEntity(r.tenantId);
-    result.id = GeocodingResultId(r.id);
+    auto result = GeocodingResult(r.tenantId, r.id, r.createdBy);
     result.type = GeocodingType.forward_;
     result.matchLevel = GeocodingMatchLevel.unknown;
     result.confidence = 0.0;

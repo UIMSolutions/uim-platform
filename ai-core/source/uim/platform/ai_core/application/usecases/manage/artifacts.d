@@ -24,16 +24,17 @@ class ManageArtifactsUseCase { // TODO: UIMUseCase {
   CommandResult createArtifact(CreateArtifactRequest r) {
     if (r.name.length == 0)
       return CommandResult(false, "", "Artifact name is required");
+
     if (r.kind.length == 0)
       return CommandResult(false, "", "Artifact kind is required");
+
     if (r.scenarioId.isEmpty)
       return CommandResult(false, "", "Scenario ID is required");
+      
     if (r.resourceGroupId.isEmpty)
       return CommandResult(false, "", "Resource group ID is required");
 
-    Artifact a;
-    a.initEntity(r.tenantId);
-
+    auto a = Artifact(r.tenantId);
     a.resourceGroupId = r.resourceGroupId;
     a.scenarioId = r.scenarioId;
     a.name = r.name;

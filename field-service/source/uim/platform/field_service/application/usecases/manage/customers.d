@@ -31,9 +31,7 @@ class ManageCustomersUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createCustomer(CustomerDTO dto) {
-        Customer customer;
-        customer.initEntity(dto.tenantId, dto.createdBy);
-        customer.id = dto.customerId;
+        auto customer = Customer(dto.tenantId, dto.customerId, dto.createdBy);
         customer.name = dto.name;
         customer.description = dto.description;
         customer.contactPerson = dto.contactPerson;
@@ -68,8 +66,19 @@ class ManageCustomersUseCase { // TODO: UIMUseCase {
             customer.phone = dto.phone;
         if (dto.address.length > 0)
             customer.address = dto.address;
+        if (dto.latitude.length > 0)
+            customer.latitude = dto.latitude;
+        if (dto.longitude.length > 0)
+            customer.longitude = dto.longitude;
+        if (dto.website.length > 0)
+            customer.website = dto.website;
+        if (dto.industry.length > 0)
+            customer.industry = dto.industry;
+        if (dto.accountNumber.length > 0)
+            customer.accountNumber = dto.accountNumber;
         if (!dto.updatedBy.isNull)
             customer.updatedBy = dto.updatedBy;
+            
         repo.update(customer);
         return CommandResult(true, customer.id.value, "");
     }

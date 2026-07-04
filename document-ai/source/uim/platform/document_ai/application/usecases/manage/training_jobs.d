@@ -39,9 +39,7 @@ class ManageTrainingJobsUseCase { // TODO: UIMUseCase {
         confirmedCount++;
     }
 
-    TrainingJob tj;
-    tj.initEntity(r.tenantId) ;
-
+    auto tj = TrainingJob(r.tenantId);
     tj.clientId = r.clientId;
     tj.documentTypeId = r.documentTypeId;
     tj.schemaId = r.schemaId;

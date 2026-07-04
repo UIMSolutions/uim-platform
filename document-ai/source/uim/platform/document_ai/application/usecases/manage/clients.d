@@ -25,9 +25,8 @@ class ManageClientsUseCase { // TODO: UIMUseCase {
     if (r.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
 
-    Client c;
-    c.initEntity(r.tenantId);
-    c.id = r.clientId.length > 0 ? r.clientId : randomUUID().to!string;
+    auto c = Client(r.tenantId);
+    c.id = r.clientId.isNull ? createId() : r.clientId;
     c.name = r.name;
     c.description = r.description;
     c.documentQuota = r.documentQuota > 0 ? r.documentQuota : 1000;

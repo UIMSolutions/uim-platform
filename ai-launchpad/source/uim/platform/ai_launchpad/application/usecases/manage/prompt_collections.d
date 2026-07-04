@@ -26,9 +26,7 @@ class ManagePromptCollectionsUseCase { // TODO: UIMUseCase {
     if (r.name.length == 0)
       return CommandResult(false, "", "Collection name is required");
 
-    PromptCollection pc;
-    pc.initEntity(r.tenantId);
-
+    auto pc = PromptCollection(r.tenantId);
     pc.name = r.name;
     pc.description = r.description;
     pc.scenarioId = r.scenarioId;

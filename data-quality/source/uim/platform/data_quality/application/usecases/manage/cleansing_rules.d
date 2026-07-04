@@ -28,8 +28,7 @@ class ManageCleansingRulesUseCase { // TODO: UIMUseCase {
     if (req.fieldName.length == 0)
       return CommandResult(false, "", "Field name is required");
 
-    auto rule = CleansingRule();
-    rule.initEntity(req.tenantId);
+    auto rule = CleansingRule(req.tenantId);
     rule.name = req.name;
     rule.description = req.description;
     rule.datasetPattern = req.datasetPattern;
