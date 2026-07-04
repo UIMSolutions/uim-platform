@@ -27,9 +27,7 @@ class ManagePrintDocumentsUseCase {
     }
 
     CommandResult createPrintDocument(PrintDocumentDTO dto) {
-        PrintDocument doc;
-        doc.initEntity(dto.tenantId, dto.createdBy);
-        doc.id = dto.documentId;
+        auto  doc = PrintDocument(dto.tenantId, dto.documentId, dto.createdBy);
         doc.fileName = dto.fileName;
         doc.mimeType = dto.mimeType;
         doc.sizeBytes = dto.sizeBytes;

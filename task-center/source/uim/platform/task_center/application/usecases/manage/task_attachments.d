@@ -27,10 +27,7 @@ class ManageTaskAttachmentsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createAttachment(CreateTaskAttachmentRequest req) {
-        TaskAttachment attachment;
-        attachment.initEntity(req.tenantId);
-
-        attachment.id = req.attachmentId;
+        auto attachment = TaskAttachment(req.tenantId, req.attachmentId, req.createdBy);
         attachment.taskId = req.taskId;
         attachment.fileName = req.fileName;
         attachment.fileSize = req.fileSize;

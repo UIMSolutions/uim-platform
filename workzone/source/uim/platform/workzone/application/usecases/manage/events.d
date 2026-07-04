@@ -26,9 +26,7 @@ class ManageEventsUseCase { // TODO: UIMUseCase {
     if (req.title.length == 0)
       return CommandResult(false, "", "Event title is required");
 
-    Event e;
-    e.initEntity(req.tenantId);
-
+    auto e = Event(req.tenantId, req.eventId, req.createdBy); 
     e.workspaceId = req.workspaceId;
     e.title = req.title;
     e.description = req.description;

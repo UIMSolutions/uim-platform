@@ -23,9 +23,7 @@ class ManageFeedsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createFeedEntry(CreateFeedEntryRequest req) {
-    FeedEntry entry;
-    entry.initEntity(req.tenantId, req.actorId);
-
+    auto entry = FeedEntry(req.tenantId, req.feedEntryId, req.actorId);
     entry.workspaceId = req.workspaceId;
     entry.actorId = req.actorId;
     entry.actorName = req.actorName;

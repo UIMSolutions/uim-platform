@@ -27,10 +27,7 @@ class ManageContentUseCase { // TODO: UIMUseCase {
     if (req.title.length == 0)
       return CommandResult(false, "", "Content title is required");
 
-    auto now = currentTimestamp();
-    ContentItem item;
-    item.initEntity(req.tenantId, req.authorId);
-
+    auto item = ContentItem(req.tenantId, req.contentId, req.authorId);
     item.workspaceId = req.workspaceId;
     item.title = req.title;
     item.body_ = req.body_;

@@ -21,13 +21,14 @@ class ManageGlossaryEntriesUseCase {
     CommandResult createEntry(CreateGlossaryEntryRequest r) {
         if (r.sourceTerm.length == 0)
             return CommandResult(false, "", "Source term is required");
+
         if (r.targetTerm.length == 0)
             return CommandResult(false, "", "Target term is required");
+
         if (r.sourceLanguage.length == 0 || r.targetLanguage.length == 0)
             return CommandResult(false, "", "Source and target languages are required");
 
-        GlossaryEntry e;
-        e.initEntity(r.tenantId);
+        auto e = GlossaryEntry(r.tenantId, r.entryId, r.createdBy);
         e.sourceLanguage = r.sourceLanguage;
         e.targetLanguage = r.targetLanguage;
         e.sourceTerm = r.sourceTerm;

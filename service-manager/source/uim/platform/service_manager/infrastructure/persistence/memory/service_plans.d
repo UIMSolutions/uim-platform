@@ -18,7 +18,7 @@ class MemoryServicePlanRepository : TenantRepository!(ServicePlan, ServicePlanId
         return this.filterByPricing(this.findByTenant(tenantId), pricing);
     }
     void removeByPricing(TenantId tenantId, ServicePlanPricing pricing) {
-        this.removeAll(this.findByPricing(tenantId, pricing));
+        this.findByPricing(tenantId, pricing).each!(p => this.remove(p));
     }
 
 }

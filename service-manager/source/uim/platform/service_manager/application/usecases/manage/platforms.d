@@ -22,8 +22,7 @@ class ManagePlatformsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createPlatform(CreatePlatformRequest dto) {
-        auto platform = Platform();
-        platform.initEntity(dto.tenantId);
+        auto platform = Platform(dto.tenantId);
 
         platform.id = PlatformId(currentTimestamp.to!string);
         platform.name = dto.name;

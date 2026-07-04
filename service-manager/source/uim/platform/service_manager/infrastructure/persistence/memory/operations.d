@@ -22,7 +22,7 @@ class MemoryOperationRepository : TenantRepository!(Operation, OperationId), Ope
     }
 
     void removeByOperationType(TenantId tenantId, OperationType type) {
-        this.removeAll(this.findByOperationType(tenantId, type));
+        this.findByOperationType(tenantId, type).each!(op => this.remove(op));
     }
     // #endregion ByOperationType
 
@@ -40,7 +40,7 @@ class MemoryOperationRepository : TenantRepository!(Operation, OperationId), Ope
     }
 
     void removeByOperationStatus(TenantId tenantId, OperationStatus status) {
-        this.removeAll(this.findByOperationStatus(tenantId, status));
+        this.findByOperationStatus(tenantId, status).each!(op => this.remove(op));
     }
     // #endregion ByOperationStatus
 }

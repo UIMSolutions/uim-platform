@@ -27,8 +27,7 @@ class ManageTranslationProjectsUseCase {
         if (r.targetLanguages.length == 0)
             return CommandResult(false, "", "At least one target language is required");
 
-        TranslationProject p;
-        p.initEntity(r.tenantId);
+        auto p = TranslationProject(r.tenantId, r.projectId, r.createdBy);
         p.name = r.name;
         p.description = r.description;
         p.sourceLanguage = r.sourceLanguage;

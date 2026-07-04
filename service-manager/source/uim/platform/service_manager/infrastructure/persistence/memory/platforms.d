@@ -18,7 +18,7 @@ class MemoryPlatformRepository : TenantRepository!(Platform, PlatformId), Platfo
         return this.filterByType(this.findByTenant(tenantId), type);
     }
     void removeByType(TenantId tenantId, PlatformType type) {
-        this.removeAll(this.findByType(tenantId, type));
+        this.findByType(tenantId, type).each!(p => this.remove(p));
     }
 
     size_t countByStatus(TenantId tenantId, PlatformStatus status) {
@@ -31,7 +31,7 @@ class MemoryPlatformRepository : TenantRepository!(Platform, PlatformId), Platfo
         return this.filterByStatus(this.findByTenant(tenantId), status);
     }
     void removeByStatus(TenantId tenantId, PlatformStatus status) {
-        this.removeAll(this.findByStatus(tenantId, status));
+        this.findByStatus(tenantId, status).each!(p => this.remove(p));
     }
     
 }

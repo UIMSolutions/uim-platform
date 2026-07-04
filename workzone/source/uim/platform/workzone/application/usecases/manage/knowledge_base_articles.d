@@ -26,9 +26,7 @@ class ManageKnowledgeBaseArticlesUseCase { // TODO: UIMUseCase {
     if (req.title.length == 0)
       return CommandResult(false, "", "Article title is required");
 
-    KnowledgeBaseArticle a;
-    a.initEntity(req.tenantId);
-
+    auto a = KnowledgeBaseArticle(req.tenantId, req.articleId, req.createdBy);
     a.workspaceId = req.workspaceId;
     a.title = req.title;
     a.body_ = req.body_;

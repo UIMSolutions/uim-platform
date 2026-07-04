@@ -21,6 +21,6 @@ class MemoryServiceOfferingRepository : TenantRepository!(ServiceOffering, Servi
     }
 
     void removeByStatus(TenantId tenantId, ServiceOfferingStatus status) {
-        this.removeAll(this.findByStatus(tenantId, status));
+        this.findByStatus(tenantId, status).each!(o => this.remove(o));
     }
 }

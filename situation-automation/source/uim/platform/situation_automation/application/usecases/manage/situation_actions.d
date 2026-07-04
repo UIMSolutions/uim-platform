@@ -26,9 +26,8 @@ class ManageSituationActionsUseCase { // TODO: UIMUseCase {
         if (!existing.isNull)
             return CommandResult(false, "", "Situation action already exists");
 
-        SituationAction action;
-        action.initEntity(r.tenantId, r.situationActionId, r.createdBy);
-        
+        auto action = SituationAction(r.tenantId, r.situationActionId);
+        action.createdBy = r.createdBy;
         action.name = r.name;
         action.description = r.description;
         action.status = ActionStatus.draft;

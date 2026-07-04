@@ -26,9 +26,7 @@ class ManageChannelsUseCase { // TODO: UIMUseCase {
     if (req.name.length == 0)
       return CommandResult(false, "", "Channel name is required");
 
-    Channel ch;
-    ch.initEntity(req.tenantId);
-
+    auto ch = Channel(req.tenantId, req.channelId, req.createdBy);
     ch.workspaceId = req.workspaceId;
     ch.name = req.name;
     ch.description = req.description;

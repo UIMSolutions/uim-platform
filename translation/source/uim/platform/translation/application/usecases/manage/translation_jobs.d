@@ -28,8 +28,7 @@ class ManageTranslationJobsUseCase {
         if (r.sourceLanguage.length == 0 || r.targetLanguage.length == 0)
             return CommandResult(false, "", "Source and target languages are required");
 
-        TranslationJob job;
-        job.initEntity(r.tenantId);
+        auto job = TranslationJob(r.tenantId, r.jobId, r.createdBy);
         job.jobType = r.jobType;
         job.sourceLanguage = r.sourceLanguage;
         job.targetLanguage = r.targetLanguage;

@@ -26,10 +26,7 @@ class ManageExternalContentProvidersUseCase { // TODO: UIMUseCase {
     if (req.name.length == 0)
       return CommandResult(false, "", "Provider name is required");
 
-    auto now = currentTimestamp();
-    ExternalContentProvider p;
-    p.initEntity(req.tenantId);
-
+    auto p = ExternalContentProvider(req.tenantId, req.providerId, req.createdBy);
     p.name = req.name;
     p.description = req.description;
     // TODO: p.providerType = req.providerType;

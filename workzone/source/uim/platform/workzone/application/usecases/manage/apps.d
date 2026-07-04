@@ -26,9 +26,7 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
     if (req.name.length == 0)
       return CommandResult(false, "", "App name is required");
 
-    AppRegistration app;
-    app.initEntity(req.tenantId);
-
+    auto app = AppRegistration(req.tenantId, req.appId, req.createdBy);
     app.name = req.name;
     app.description = req.description;
     app.launchUrl = req.launchUrl;

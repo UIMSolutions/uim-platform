@@ -27,9 +27,7 @@ class ManageNotificationsUseCase { // TODO: UIMUseCase {
         if (!existing.isNull)
             return CommandResult(false, "", "Notification already exists");
 
-        Notification n;
-        n.initEntity(r.tenantId, r.notificationId);
-
+        auto n = Notification(r.tenantId, r.notificationId);
         n.situationInstanceId = r.situationInstanceId;
         n.recipientId = r.recipientId.value;
         n.title = r.title;

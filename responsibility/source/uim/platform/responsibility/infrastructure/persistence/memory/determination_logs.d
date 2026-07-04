@@ -28,7 +28,7 @@ class MemoryDeterminationLogRepository
         return findByTenant(tenantId).filter!(l => l.status == status).array;
     }
 
-    void removeByTenant(TenantId tenantId) {
-        findByTenant(tenantId).each!(l => remove(l));
-    }
+    // void removeByTenant(TenantId tenantId) {
+        // findByTenant(tenantId).each!(l => remove(l));
+    // }
 }

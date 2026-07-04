@@ -26,8 +26,7 @@ class ManageDashboardsUseCase { // TODO: UIMUseCase {
         if (!existing.isNull)
             return CommandResult(false, "", "Dashboard already exists");
 
-        Dashboard d;
-        d.initEntity(r.tenantId, r.dashboardId, r.createdBy);
+        auto d = Dashboard(r.tenantId, r.dashboardId, r.createdBy);
         d.name = r.name;
         d.description = r.description;
         d.refreshIntervalSeconds = r.refreshIntervalSeconds;

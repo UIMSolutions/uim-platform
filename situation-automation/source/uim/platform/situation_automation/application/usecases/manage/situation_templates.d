@@ -26,9 +26,7 @@ class ManageSituationTemplatesUseCase { // TODO: UIMUseCase {
         if (!existing.isNull)
             return CommandResult(false, "", "Situation template already exists");
 
-        SituationTemplate templ;
-        templ.initEntity(r.tenantId, r.situationTemplateId, r.createdBy);
-
+        auto templ = SituationTemplate(r.tenantId, r.situationTemplateId, r.createdBy);
         templ.name = r.name;
         templ.description = r.description;
         templ.status = TemplateStatus.draft;

@@ -27,9 +27,7 @@ class ManageSituationInstancesUseCase { // TODO: UIMUseCase {
         if (!existing.isNull)
             return CommandResult(false, "", "Situation instance already exists");
 
-        SituationInstance i;
-        i.initEntity(r.tenantId, r.situationInstanceId);
-
+        auto i = SituationInstance(r.tenantId, r.situationInstanceId, r.createdBy);
         i.situationTemplateId = r.situationTemplateId;
         i.description = r.description;
         i.status = InstanceStatus.open;
