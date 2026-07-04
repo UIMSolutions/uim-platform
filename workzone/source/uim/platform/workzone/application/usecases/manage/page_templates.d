@@ -5,11 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.workzone.application.usecases.manage.page_templates;
 
-
-// import uim.platform.workzone.domain.types;
-// import uim.platform.workzone.domain.entities.page_template;
-// import uim.platform.workzone.domain.ports.repositories.page_templates;
-// import uim.platform.workzone.application.dto;
 import uim.platform.workzone;
 
 mixin(ShowModule!());
@@ -26,9 +21,7 @@ class ManagePageTemplatesUseCase { // TODO: UIMUseCase {
     if (req.name.length == 0)
       return CommandResult(false, "", "Page template name is required");
 
-    PageTemplate t;
-    t.initEntity(req.tenantId);
-
+    auto t = PageTemplate(req.tenantId);
     t.name = req.name;
     t.description = req.description;
     t.thumbnailUrl = req.thumbnailUrl;

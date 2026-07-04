@@ -26,10 +26,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
     if (req.title.length == 0)
       return CommandResult(false, "", "WZTask title is required");
 
-    auto now = currentTimestamp();
-    WZTask t;
-    t.initEntity(req.tenantId);
-
+    auto t = WZTask(req.tenantId);
     t.assigneeId = req.assigneeId;
     t.assigneeName = req.assigneeName;
     t.creatorId = req.creatorId;

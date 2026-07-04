@@ -26,10 +26,7 @@ class ManageWorkspacesUseCase { // TODO: UIMUseCase {
     if (req.name.length == 0)
       return CommandResult(false, "", "Workspace name is required");
 
-    auto now = currentTimestamp();
-    Workspace ws;
-    ws.initEntity(req.tenantId, req.createdBy);
-
+    auto ws = Workspace(req.tenantId);
     ws.name = req.name;
     ws.description = req.description;
     ws.alias_ = req.alias_;

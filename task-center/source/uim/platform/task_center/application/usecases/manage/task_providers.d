@@ -35,10 +35,7 @@ class ManageTaskProvidersUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createProvider(CreateTaskProviderRequest req) {
-        TaskProvider p;
-        p.initEntity(req.tenantId, req.createdBy);
-
-        p.id = req.providerId;
+        auto p = TaskProvider(req.tenantId, req.providerId);
         p.name = req.name;
         p.description = req.description;
         p.endpointUrl = req.endpointUrl;

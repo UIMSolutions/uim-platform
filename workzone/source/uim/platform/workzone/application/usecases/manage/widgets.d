@@ -23,10 +23,7 @@ class ManageWidgetsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createWidget(CreateWidgetRequest req) {
-    auto now = currentTimestamp();
-    Widget w;
-    w.initEntity(req.tenantId);
-    
+    auto w = Widget(req.tenantId);
     w.pageId = req.pageId;
     w.title = req.title;
     w.cardId = req.cardId;

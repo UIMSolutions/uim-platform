@@ -30,8 +30,7 @@ class ManageTagsUseCase { // TODO: UIMUseCase {
     if (!existing.isNull)
       return CommandResult(false, "", "Tag with this name already exists");
 
-    Tag t;
-    t.initEntity(req.tenantId);
+    auto t = Tag(req.tenantId);
     t.name = req.name;
     t.description = req.description;
     t.color = req.color;

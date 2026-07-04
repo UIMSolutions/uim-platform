@@ -26,9 +26,7 @@ class ManageNotificationsUseCase { // TODO: UIMUseCase {
     if (req.title.length == 0)
       return CommandResult(false, "", "Notification title is required");
 
-    Notification n;
-    n.initEntity(req.tenantId, req.recipientId);
-
+    auto n = Notification(req.tenantId, req.recipientId);
     n.recipientId = req.recipientId;
     n.title = req.title;
     n.body_ = req.body_;

@@ -26,10 +26,7 @@ class ManageWorkpagesUseCase { // TODO: UIMUseCase {
     if (req.title.length == 0)
       return CommandResult(false, "", "Page title is required");
 
-    auto now = currentTimestamp();
-    Workpage page;
-    page.initEntity(req.tenantId);
-    
+    auto page = Workpage(req.tenantId);
     page.workspaceId = req.workspaceId;
     page.title = req.title;
     page.description = req.description;

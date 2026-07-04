@@ -26,9 +26,7 @@ class ManageForumTopicsUseCase { // TODO: UIMUseCase {
     if (req.title.length == 0)
       return CommandResult(false, "", "Forum topic title is required");
 
-    ForumTopic t;
-    t.initEntity(req.tenantId);
-
+    auto t = ForumTopic(req.tenantId);
     t.workspaceId = req.workspaceId;
     t.title = req.title;
     t.body_ = req.body_;

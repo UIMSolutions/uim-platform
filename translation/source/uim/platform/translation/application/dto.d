@@ -96,6 +96,7 @@ struct TranslateDocumentRequest {
 struct SubmitTranslationJobRequest {
     TenantId tenantId;
     JobType jobType;
+    
     string sourceLanguage;
     string targetLanguage;
     string provider;

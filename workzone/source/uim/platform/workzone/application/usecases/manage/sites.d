@@ -26,9 +26,7 @@ class ManageSitesUseCase { // TODO: UIMUseCase {
     if (req.name.length == 0)
       return CommandResult(false, "", "Site name is required");
 
-    Site s;
-    s.initEntity(req.tenantId, req.createdBy);
-
+    auto s = Site(req.tenantId);
     s.name = req.name;
     s.description = req.description;
     s.alias_ = req.alias_;

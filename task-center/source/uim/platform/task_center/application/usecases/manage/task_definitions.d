@@ -35,10 +35,7 @@ class ManageTaskDefinitionsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createDefinition(CreateTaskDefinitionRequest req) {
-        TaskDefinition definition;
-        definition.initEntity(req.tenantId);
-
-        definition.id = req.definitionId;
+        auto definition = TaskDefinition(req.tenantId, req.definitionId);
         definition.providerId = req.providerId;
         definition.name = req.name;
         definition.description = req.description;

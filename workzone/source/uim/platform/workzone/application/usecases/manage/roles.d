@@ -27,9 +27,7 @@ class ManageRolesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Role name is required");
 
     auto now = currentTimestamp();
-    Role r;
-    r.initEntity(req.tenantId);
-
+    auto r = Role(req.tenantId);
     r.name = req.name;
     r.description = req.description;
     r.permissions = req.permissions;

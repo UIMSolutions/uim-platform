@@ -26,9 +26,7 @@ class ManageNavigationItemsUseCase { // TODO: UIMUseCase {
     if (req.title.length == 0)
       return CommandResult(false, "", "Navigation item title is required");
 
-    NavigationItem n;
-    n.initEntity(req.tenantId);
-
+    auto n = NavigationItem(req.tenantId);
     n.siteId = req.siteId;
     n.title = req.title;
     n.icon = req.icon;

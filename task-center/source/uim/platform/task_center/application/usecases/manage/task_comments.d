@@ -27,10 +27,7 @@ class ManageTaskCommentsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createComment(CreateTaskCommentRequest req) {
-        TaskComment comment;
-        comment.initEntity(req.tenantId);
-
-        comment.id = req.commentId;
+        auto comment = TaskComment(req.tenantId, req.commentId);
         comment.taskId = req.taskId;
         // TODO: comment.author = req.author;
         comment.content = req.content;

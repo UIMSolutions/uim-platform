@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 /// GET /api/v1/translation/languages — returns the list of supported BCP-47 language codes.
-class LanguageController : HttpController {
+class LanguageController : ManageHttpController {
     private PerformTranslationUseCase usecase;
 
     this(PerformTranslationUseCase usecase) {
@@ -21,24 +21,26 @@ class LanguageController : HttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+
         router.get("/api/v1/translation/languages", &handleList);
     }
 
-    override protected void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto langs = usecase.supportedLanguages();
+    protected Json listhandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto arr = Json.emptyArray;
-            foreach (l; langs)
-                arr ~= Json(l);
+        auto tenantId = precheck.tenantId;
+        auto langs = usecase.supportedLanguages(tenantId);
 
-            auto resp = Json.emptyObject
-                .set("languages", arr)
-                .set("count", langs.length);
+        auto arr = Json.emptyArray;
+        foreach (l; langs)
+            arr ~= Json(l);
 
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto resp = Json.emptyObject
+            .set("languages", arr)
+            .set("count", langs.length);
+
+        return successResponse("Supported languages retrieved successfully", "Retrieved", 200, resp);
     }
 }

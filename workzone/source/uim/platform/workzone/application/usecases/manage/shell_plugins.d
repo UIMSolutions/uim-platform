@@ -26,10 +26,7 @@ class ManageShellPluginsUseCase { // TODO: UIMUseCase {
     if (req.name.length == 0)
       return CommandResult(false, "", "Plugin name is required");
 
-    auto now = currentTimestamp();
-    ShellPlugin p;
-    p.initEntity(req.tenantId);
-
+    auto p = ShellPlugin(req.tenantId);
     p.name = req.name;
     p.description = req.description;
     p.version_ = req.version_;
@@ -38,7 +35,7 @@ class ManageShellPluginsUseCase { // TODO: UIMUseCase {
     p.configSchemaUrl = req.configSchemaUrl;
     p.status = PluginStatus.inactive;
     p.hookPoints = req.hookPoints;
-    p.installedAt = now;
+    p.installedAt = p.createdAt;
 
     repo.save(p);
     return CommandResult(true, p.id.value, "");

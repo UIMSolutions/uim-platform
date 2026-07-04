@@ -26,10 +26,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
     if (req.name.length == 0)
       return CommandResult(false, "", "WZGroup name is required");
 
-    auto now = currentTimestamp();
-    WZGroup g;
-    g.initEntity(req.tenantId);
-    
+    auto g = WZGroup(req.tenantId);
     g.name = req.name;
     g.description = req.description;
     // TODO: g.groupType = req.groupType;

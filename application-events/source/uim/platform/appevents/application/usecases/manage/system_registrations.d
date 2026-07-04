@@ -32,9 +32,7 @@ class ManageSystemRegistrationsUseCase {
     }
 
     CommandResult registerSystem(SystemRegistrationDTO dto) {
-        SystemRegistration reg;
-        reg.initEntity(dto.tenantId, dto.createdBy);
-        if (!dto.registrationId.isNull) reg.id = dto.registrationId;
+        auto reg = SystemRegistration(dto.tenantId, dto.registrationId, dto.registrationId);
         reg.formationId = dto.formationId;
         reg.systemId = dto.systemId;
         reg.systemType = dto.systemType;

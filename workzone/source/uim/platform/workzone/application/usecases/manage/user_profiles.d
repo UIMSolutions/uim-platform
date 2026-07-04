@@ -26,10 +26,7 @@ class ManageUserProfilesUseCase { // TODO: UIMUseCase {
     if (req.displayName.length == 0)
       return CommandResult(false, "", "Display name is required");
 
-    auto now = currentTimestamp();
-    UserProfile p;
-    p.initEntity(req.tenantId, req.userId);
-
+    auto p = UserProfile(req.tenantId);
     p.userId = req.userId;
     p.displayName = req.displayName;
     p.email = req.email;

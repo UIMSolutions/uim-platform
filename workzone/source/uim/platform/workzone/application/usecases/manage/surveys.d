@@ -26,10 +26,7 @@ class ManageSurveysUseCase { // TODO: UIMUseCase {
     if (req.title.length == 0)
       return CommandResult(false, "", "Survey title is required");
 
-    auto now = currentTimestamp();
-    Survey s;
-    s.initEntity(req.tenantId);
-
+    auto s = Survey(req.tenantId);
     s.workspaceId = req.workspaceId;
     s.title = req.title;
     s.description = req.description;
