@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.snowflake.application.dto;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

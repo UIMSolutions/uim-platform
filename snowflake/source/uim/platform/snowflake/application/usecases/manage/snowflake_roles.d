@@ -1,6 +1,6 @@
 module uim.platform.snowflake.application.usecases.manage.snowflake_roles;
 import uim.platform.snowflake;
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 class ManageSnowflakeRolesUseCase {
   private SnowflakeRoleRepository repo;

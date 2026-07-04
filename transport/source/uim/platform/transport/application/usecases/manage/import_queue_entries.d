@@ -7,7 +7,7 @@ module uim.platform.transport.application.usecases.manage.import_queue_entries;
 
 import uim.platform.transport;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

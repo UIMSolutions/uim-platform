@@ -41,9 +41,7 @@ class ManageDataRetrievalsUseCase { // TODO: UIMUseCase {
     // Deadline: 30 days from now (GDPR Art. 12(3))
     long deadline = now + (30L * 24 * 60 * 60 * 10_000_000L);
 
-    DataRetrievalRequest request;
-    request.initEntity(req.tenantId, req.requestedBy);
-
+    auto request = DataRetrievalRequest(req.tenantId, req.requestId.isNull ? DataRetrievalRequestId(createId()) : req.requestId, req.requestedBy);
     request.dataSubjectId = req.dataSubjectId;
     request.requestType = RequestType.access;
     request.status = RetrievalStatus.requested;

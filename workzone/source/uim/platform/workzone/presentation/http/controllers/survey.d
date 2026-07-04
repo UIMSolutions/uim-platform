@@ -2,7 +2,7 @@ module uim.platform.identity.authentication.presentation.http.survey;
 
 import uim.platform.workzone;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class SurveyController : ManageHttpController {

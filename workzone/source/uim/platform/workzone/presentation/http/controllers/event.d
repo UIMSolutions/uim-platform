@@ -2,7 +2,7 @@ module uim.platform.workzone.presentation.http.event;
 
 import uim.platform.workzone;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class EventController : ManageHttpController {

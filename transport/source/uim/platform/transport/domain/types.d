@@ -7,7 +7,7 @@ module uim.platform.transport.domain.types;
 
 import uim.platform.transport;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

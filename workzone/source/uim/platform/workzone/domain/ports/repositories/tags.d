@@ -8,7 +8,7 @@ module uim.platform.workzone.domain.ports.repositories.tags;
 // import uim.platform.workzone.domain.entities.tag;
 import uim.platform.workzone;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 interface TagRepository : ITenantRepository!(Tag, TagId) {

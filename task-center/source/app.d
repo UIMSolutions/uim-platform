@@ -7,7 +7,7 @@ module app;
 
 import uim.platform.task_center;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

@@ -7,7 +7,7 @@ module uim.platform.situation_automation.application.usecases.manage.entity_type
 
 import uim.platform.situation_automation;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class ManageEntityTypesUseCase { // TODO: UIMUseCase {

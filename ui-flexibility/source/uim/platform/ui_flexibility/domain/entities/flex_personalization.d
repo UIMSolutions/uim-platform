@@ -6,7 +6,7 @@
 module uim.platform.ui_flexibility.domain.entities.flex_personalization;
 import uim.platform.ui_flexibility;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

@@ -7,7 +7,7 @@ module uim.platform.usage_data.app.dto.monthly_usage_report;
 
 import uim.platform.usage_data;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 
 struct CreateMonthlyUsageReportRequest {

@@ -1,7 +1,7 @@
 module uim.platform.snowflake.infrastructure.config_;
 import std.process : environment;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 struct SrvConfig {
   string host        = "0.0.0.0";

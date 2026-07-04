@@ -30,9 +30,7 @@ class ManageInformationReportsUseCase { // TODO: UIMUseCase {
     if (subject.isNull)
       return CommandResult(false, "", "Data subject not found");
 
-    InformationReport report;
-    report.initEntity(req.tenantId, req.requestedBy);
-
+    auto report = InformationReport(req.tenantId, req.reportId.isNull ? InformationReportId(createId()) : req.reportId, req.requestedBy);
     report.dataSubjectId = req.subjectId;
     report.subjectRole = subject.subjectType;
     report.status = InformationReportStatus.requested;

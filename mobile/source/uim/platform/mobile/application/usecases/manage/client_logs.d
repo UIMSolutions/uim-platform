@@ -9,7 +9,6 @@ module uim.platform.mobile.application.usecases.manage.client_logs;
 
 // import uim.platform.mobile.application.dto;
 
-
 import uim.platform.mobile;
 
 // mixin(Showmodule!());

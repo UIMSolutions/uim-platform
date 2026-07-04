@@ -1,6 +1,6 @@
 module uim.platform.snowflake.infrastructure.persistence.memory.provisioning_requests;
 import uim.platform.snowflake;
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 class MemoryProvisioningRequestRepository
     : TenantRepository!(ProvisioningRequest, ProvisioningRequestId),

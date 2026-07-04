@@ -7,7 +7,7 @@ module uim.platform.transport.domain.entities.transport_route;
 
 import uim.platform.transport;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

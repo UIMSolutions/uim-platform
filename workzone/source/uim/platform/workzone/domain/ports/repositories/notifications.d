@@ -8,7 +8,7 @@ module uim.platform.workzone.domain.ports.repositories.notifications;
 // import uim.platform.workzone.domain.entities.notification;
 import uim.platform.workzone;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 interface NotificationRepository : ITenantRepository!(Notification, NotificationId) {

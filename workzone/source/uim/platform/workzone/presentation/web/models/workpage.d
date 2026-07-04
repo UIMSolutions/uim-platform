@@ -7,7 +7,7 @@ module uim.platform.workzone.presentation.web.models.workpage;
 
 import uim.platform.workzone;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Web view-model for a workpage.

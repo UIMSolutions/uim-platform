@@ -8,7 +8,7 @@ module uim.platform.workzone.domain.ports.repositories.navigation_items;
 // import uim.platform.workzone.domain.entities.navigation_item;
 import uim.platform.workzone;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 interface NavigationItemRepository : ITenantRepository!(NavigationItem, NavigationItemId) {

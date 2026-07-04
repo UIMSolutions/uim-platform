@@ -7,7 +7,7 @@ module uim.platform.workzone.domain.entities.workspace;
 // import uim.platform.workzone.domain.types;
 import uim.platform.workzone;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// A collaborative workspace — teams, projects, or departments.

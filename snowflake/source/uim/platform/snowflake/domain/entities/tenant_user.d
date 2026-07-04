@@ -7,7 +7,7 @@ module uim.platform.snowflake.domain.entities.tenant_user;
 
 import uim.platform.snowflake;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 struct SnowflakeTenantUser {

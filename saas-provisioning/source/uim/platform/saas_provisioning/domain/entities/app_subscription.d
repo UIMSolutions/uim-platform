@@ -7,7 +7,7 @@ module uim.platform.saas_provisioning.domain.entities.app_subscription;
 
 import uim.platform.saas_provisioning;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

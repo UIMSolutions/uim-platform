@@ -12,7 +12,7 @@ module uim.platform.workzone.application.usecases.manage.tags;
 // import uim.platform.workzone.application.dto;
 import uim.platform.workzone;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class ManageTagsUseCase { // TODO: UIMUseCase {

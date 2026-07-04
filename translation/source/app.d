@@ -7,7 +7,7 @@ module app;
 
 import uim.platform.translation;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

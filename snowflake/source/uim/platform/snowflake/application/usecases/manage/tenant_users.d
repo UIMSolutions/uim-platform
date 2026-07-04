@@ -1,6 +1,6 @@
 module uim.platform.snowflake.application.usecases.manage.tenant_users;
 import uim.platform.snowflake;
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 class ManageSnowflakeTenantUsersUseCase {
   private SnowflakeTenantUserRepository repo;

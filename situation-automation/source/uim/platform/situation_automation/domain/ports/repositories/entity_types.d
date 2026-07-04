@@ -9,7 +9,7 @@ module uim.platform.situation_automation.domain.ports.repositories.entity_types;
 
 import uim.platform.situation_automation;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

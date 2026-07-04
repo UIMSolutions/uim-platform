@@ -7,7 +7,7 @@ module uim.platform.usage_data.app.usecases.service_metrics;
 
 import uim.platform.usage_data;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 /// Application service: service metric catalog use cases.
 class ServiceMetricUseCases {

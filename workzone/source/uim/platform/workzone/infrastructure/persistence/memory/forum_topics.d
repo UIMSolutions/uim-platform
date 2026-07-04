@@ -9,7 +9,7 @@ module uim.platform.workzone.infrastructure.persistence.memory.forum_topics;
 // import uim.platform.workzone.domain.ports.repositories.forum_topics;
 import uim.platform.workzone;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

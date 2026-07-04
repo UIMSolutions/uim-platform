@@ -7,7 +7,7 @@ module uim.platform.solution_lifecycle.domain.services.deployment_engine;
 
 import uim.platform.solution_lifecycle;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

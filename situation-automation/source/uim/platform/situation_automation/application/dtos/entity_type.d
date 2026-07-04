@@ -1,7 +1,7 @@
 module uim.platform.situation_automation.application.dtos.entity_type;
 import uim.platform.situation_automation;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 struct CreateEntityTypeRequest {

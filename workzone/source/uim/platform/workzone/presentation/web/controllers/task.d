@@ -10,7 +10,7 @@ import uim.platform.workzone.presentation.web.models.task;
 import uim.platform.workzone.presentation.web.views.task;
 import uim.platform.workzone.presentation.web.views.error;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Web MVC controller — renders HTML for the My Tasks inbox.

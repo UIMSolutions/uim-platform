@@ -6,7 +6,7 @@
 module uim.platform.ui_flexibility.domain.ports.repositories.flex_applications;
 import uim.platform.ui_flexibility;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

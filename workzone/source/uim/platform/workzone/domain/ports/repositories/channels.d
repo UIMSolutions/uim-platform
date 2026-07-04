@@ -8,7 +8,7 @@ module uim.platform.workzone.domain.ports.repositories.channels;
 // import uim.platform.workzone.domain.entities.channel;
 import uim.platform.workzone;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 interface ChannelRepository : ITenantRepository!(Channel, ChannelId) {

@@ -7,7 +7,7 @@ module uim.platform.transport.infrastructure.persistence.memory.import_queue_ent
 
 import uim.platform.transport;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

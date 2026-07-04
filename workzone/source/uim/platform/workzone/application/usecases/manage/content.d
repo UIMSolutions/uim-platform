@@ -13,7 +13,7 @@ module uim.platform.workzone.application.usecases.manage.content;
 // import uim.platform.workzone.application.dto;
 import uim.platform.workzone;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class ManageContentUseCase { // TODO: UIMUseCase {

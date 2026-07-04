@@ -8,7 +8,7 @@ module uim.platform.workzone.domain.ports.repositories.tasks;
 // import uim.platform.workzone.domain.entities.task;
 import uim.platform.workzone;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 interface TaskRepository : ITenantRepository!(WZTask, TaskId) {

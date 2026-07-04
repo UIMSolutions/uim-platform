@@ -9,7 +9,7 @@ module uim.platform.workzone.domain.ports.repositories.themes;
 
 import uim.platform.workzone;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 interface ThemeRepository : ITenantRepository!(Theme, ThemeId) {

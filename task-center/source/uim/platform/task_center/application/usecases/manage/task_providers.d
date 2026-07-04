@@ -7,7 +7,7 @@ module uim.platform.task_center.application.usecases.manage.task_providers;
 
 import uim.platform.task_center;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

@@ -10,7 +10,7 @@ import uim.platform.workzone.presentation.web.models.workpage;
 import uim.platform.workzone.presentation.web.views.workpage;
 import uim.platform.workzone.presentation.web.views.error;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Web MVC controller — renders HTML for workpage management under a workspace.

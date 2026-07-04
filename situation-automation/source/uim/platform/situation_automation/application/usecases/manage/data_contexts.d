@@ -7,7 +7,7 @@ module uim.platform.situation_automation.application.usecases.manage.data_contex
 
 import uim.platform.situation_automation;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class ManageDataContextsUseCase { // TODO: UIMUseCase {

@@ -7,7 +7,7 @@ module uim.platform.usage_data.domain.entities.daily_usage_report;
 
 import uim.platform.usage_data;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 
 /// Aggregated daily usage report for a specific subaccount for a given date.

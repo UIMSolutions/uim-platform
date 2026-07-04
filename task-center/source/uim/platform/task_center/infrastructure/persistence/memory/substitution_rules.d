@@ -7,7 +7,7 @@ module uim.platform.task_center.infrastructure.persistence.memory.substitution_r
 
 import uim.platform.task_center;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

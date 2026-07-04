@@ -2,7 +2,7 @@ module uim.platform.workzone.presentation.http.forum_topic;
 
 import uim.platform.workzone;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class ForumTopicController : ManageHttpController {

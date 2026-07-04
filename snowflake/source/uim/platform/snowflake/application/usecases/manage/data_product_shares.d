@@ -1,6 +1,6 @@
 module uim.platform.snowflake.application.usecases.manage.data_product_shares;
 import uim.platform.snowflake;
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 class ManageDataProductSharesUseCase {
   private DataProductShareRepository repo;

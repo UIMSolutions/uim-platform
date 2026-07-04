@@ -7,7 +7,7 @@ module uim.platform.snowflake.domain.services.validators;
 
 import uim.platform.snowflake;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 struct SnowflakeValidator {

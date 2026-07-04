@@ -8,7 +8,7 @@ module uim.platform.saas_provisioning.presentation.http.controllers.subscription
 import uim.platform.saas_provisioning;
 
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

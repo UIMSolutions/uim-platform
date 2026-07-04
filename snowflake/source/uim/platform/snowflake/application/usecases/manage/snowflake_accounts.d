@@ -1,6 +1,6 @@
 module uim.platform.snowflake.application.usecases.manage.snowflake_accounts;
 import uim.platform.snowflake;
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 class ManageSnowflakeAccountsUseCase {
   private SnowflakeAccountRepository repo;

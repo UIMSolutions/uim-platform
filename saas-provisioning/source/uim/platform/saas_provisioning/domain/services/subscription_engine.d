@@ -10,7 +10,7 @@ import uim.platform.saas_provisioning;
 
 import std.array : replace;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

@@ -16,7 +16,7 @@ module uim.platform.workzone.application.dto;
 // import uim.platform.workzone.domain.entities.page_template : TemplateSection;
 import uim.platform.workzone;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 // ──────────────── Workspace DTOs ────────────────

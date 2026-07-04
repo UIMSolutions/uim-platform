@@ -9,7 +9,7 @@ module uim.platform.workzone.infrastructure.persistence.memory.knowledge_base_ar
 // import uim.platform.workzone.domain.ports.repositories.knowledge_base_articles;
 import uim.platform.workzone;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

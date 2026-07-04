@@ -2,7 +2,7 @@ module uim.platform.service_manager.application.usecases.manage.service_brokers;
 
 import uim.platform.service_manager;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

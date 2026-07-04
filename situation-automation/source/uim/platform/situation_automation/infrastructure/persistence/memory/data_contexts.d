@@ -7,7 +7,7 @@ module uim.platform.situation_automation.infrastructure.persistence.memory.data_
 
 import uim.platform.situation_automation;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryDataContextRepository : TenantRepository!(DataContext, DataContextId), DataContextRepository {

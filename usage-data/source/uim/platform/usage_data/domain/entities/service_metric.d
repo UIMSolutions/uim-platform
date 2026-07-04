@@ -7,7 +7,7 @@ module uim.platform.usage_data.domain.entities.service_metric;
 
 import uim.platform.usage_data;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 
 /// A ServiceMetric defines a measurable unit for a BTP service plan.

@@ -7,7 +7,7 @@ module uim.platform.transport.domain.services.transport_validator;
 
 import uim.platform.transport;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

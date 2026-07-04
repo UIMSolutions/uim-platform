@@ -8,7 +8,7 @@ import std.process : environment;
 
 import uim.platform.task_center;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

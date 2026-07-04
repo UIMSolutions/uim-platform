@@ -7,7 +7,7 @@ module uim.platform.workzone.domain.entities.group;
 
 import uim.platform.workzone;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// A user group — for role and content assignment.

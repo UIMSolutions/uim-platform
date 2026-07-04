@@ -7,7 +7,7 @@ module uim.platform.workzone.domain.entities.event;
 // import uim.platform.workzone.domain.types;
 import uim.platform.workzone;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// A calendar event within a workspace.

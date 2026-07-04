@@ -7,7 +7,7 @@ module uim.platform.task_center.domain.entities.task_definition;
 
 import uim.platform.task_center;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

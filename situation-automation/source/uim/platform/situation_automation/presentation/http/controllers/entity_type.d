@@ -9,7 +9,7 @@ module uim.platform.situation_automation.presentation.http.controllers.entity_ty
 
 import uim.platform.situation_automation;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

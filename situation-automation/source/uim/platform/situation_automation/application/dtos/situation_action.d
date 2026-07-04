@@ -1,7 +1,7 @@
 module uim.platform.situation_automation.application.dtos.situation_action;
 import uim.platform.situation_automation;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 struct CreateSituationActionRequest {

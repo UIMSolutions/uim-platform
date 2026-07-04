@@ -12,7 +12,7 @@ module uim.platform.workzone.application.usecases.manage.roles;
 // import uim.platform.workzone.application.dto;
 import uim.platform.workzone;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class ManageRolesUseCase { // TODO: UIMUseCase {

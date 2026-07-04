@@ -2,7 +2,7 @@ module uim.platform.workzone.presentation.http.controllers.shell_plugin;
 
 import uim.platform.workzone;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class ShellPluginController : ManageHttpController {

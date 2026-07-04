@@ -7,7 +7,7 @@ module uim.platform.transport.domain.entities.import_queue_entry;
 
 import uim.platform.transport;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

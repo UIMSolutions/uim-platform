@@ -7,7 +7,7 @@ module uim.platform.transport.infrastructure.persistence.memory.transport_action
 
 import uim.platform.transport;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

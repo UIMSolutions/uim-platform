@@ -7,7 +7,7 @@ module uim.platform.solution_lifecycle.application.dto;
 
 import uim.platform.solution_lifecycle;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

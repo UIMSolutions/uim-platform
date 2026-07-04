@@ -2,7 +2,7 @@ module uim.platform.service_manager.infrastructure.container;
 
 import uim.platform.service_manager;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

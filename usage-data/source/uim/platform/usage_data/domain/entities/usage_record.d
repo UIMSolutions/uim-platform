@@ -7,7 +7,7 @@ module uim.platform.usage_data.domain.entities.usage_record;
 
 import uim.platform.usage_data;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 
 /// A UsageRecord captures a single raw consumption event for a BTP service or application.

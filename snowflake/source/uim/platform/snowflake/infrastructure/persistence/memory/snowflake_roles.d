@@ -1,6 +1,6 @@
 module uim.platform.snowflake.infrastructure.persistence.memory.snowflake_roles;
 import uim.platform.snowflake;
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 class MemorySnowflakeRoleRepository
     : TenantRepository!(SnowflakeRole, SnowflakeRoleId),

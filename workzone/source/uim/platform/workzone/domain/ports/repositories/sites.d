@@ -8,7 +8,7 @@ module uim.platform.workzone.domain.ports.repositories.sites;
 // import uim.platform.workzone.domain.entities.site;
 import uim.platform.workzone;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 interface SiteRepository : ITenantRepository!(Site, SiteId) {

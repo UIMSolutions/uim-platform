@@ -7,7 +7,7 @@ module uim.platform.usage_data.infrastructure.web.handlers.usage_record;
 
 import uim.platform.usage_data;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 
 class UsageRecordHandler {

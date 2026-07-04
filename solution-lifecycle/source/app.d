@@ -7,7 +7,7 @@ module app;
 
 import uim.platform.solution_lifecycle;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

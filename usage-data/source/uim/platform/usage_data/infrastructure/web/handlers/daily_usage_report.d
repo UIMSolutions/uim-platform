@@ -7,7 +7,7 @@ module uim.platform.usage_data.infrastructure.web.handlers.daily_usage_report;
 
 import uim.platform.usage_data;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 
 class DailyUsageReportHandler {

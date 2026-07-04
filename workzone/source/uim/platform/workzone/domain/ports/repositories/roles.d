@@ -8,7 +8,7 @@ module uim.platform.workzone.domain.ports.repositories.roles;
 // import uim.platform.workzone.domain.entities.role;
 import uim.platform.workzone;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 interface RoleRepository : ITenantRepository!(Role, RoleId) {

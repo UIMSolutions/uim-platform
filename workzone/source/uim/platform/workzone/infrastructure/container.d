@@ -41,7 +41,7 @@ module uim.platform.workzone.infrastructure.container;
 // import uim.platform.identity.authentication.presentation.http.health;
 import uim.platform.workzone;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Dependency injection container — wires all layers together.

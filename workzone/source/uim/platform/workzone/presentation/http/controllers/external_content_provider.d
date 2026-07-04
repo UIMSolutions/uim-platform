@@ -2,7 +2,7 @@ module uim.platform.workzone.presentation.http.controllers.external_content_prov
 
 import uim.platform.workzone;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class ExternalContentProviderController : ManageHttpController {

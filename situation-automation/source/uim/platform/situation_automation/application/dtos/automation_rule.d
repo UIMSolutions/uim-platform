@@ -1,7 +1,7 @@
 module uim.platform.situation_automation.application.dtos.automation_rule;
 import uim.platform.situation_automation;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 struct CreateAutomationRuleRequest {

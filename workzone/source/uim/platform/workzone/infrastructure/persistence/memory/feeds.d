@@ -9,7 +9,7 @@ module uim.platform.workzone.infrastructure.persistence.memory.feeds;
 // import uim.platform.workzone.domain.ports.repositories.feeds;
 import uim.platform.workzone;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

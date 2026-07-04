@@ -7,7 +7,7 @@ module uim.platform.task_center.domain.services.task_validator;
 
 import uim.platform.task_center;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

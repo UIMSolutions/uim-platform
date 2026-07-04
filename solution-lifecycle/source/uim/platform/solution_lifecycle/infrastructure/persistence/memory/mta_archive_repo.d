@@ -7,7 +7,7 @@ module uim.platform.solution_lifecycle.infrastructure.persistence.memory.mta_arc
 
 import uim.platform.solution_lifecycle;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

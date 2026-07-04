@@ -9,7 +9,6 @@ module uim.platform.mobile.application.usecases.manage.device_registrations;
 
 // import uim.platform.mobile.application.dto;
 
-
 import uim.platform.mobile;
 
 // mixin(Showmodule!());

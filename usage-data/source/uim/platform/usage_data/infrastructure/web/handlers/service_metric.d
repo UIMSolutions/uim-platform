@@ -7,7 +7,7 @@ module uim.platform.usage_data.infrastructure.web.handlers.service_metric;
 
 import uim.platform.usage_data;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 
 class ServiceMetricHandler {

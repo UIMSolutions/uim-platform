@@ -7,7 +7,7 @@ module uim.platform.transport.presentation.http.controllers.import_queue_entry;
 
 import uim.platform.transport;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

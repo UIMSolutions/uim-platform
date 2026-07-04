@@ -7,7 +7,7 @@ module uim.platform.workzone.domain.entities.notification;
 // import uim.platform.workzone.domain.types;
 import uim.platform.workzone;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// A user notification — cross-system alerts and action items.

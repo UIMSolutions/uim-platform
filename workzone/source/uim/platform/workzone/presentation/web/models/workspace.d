@@ -7,7 +7,7 @@ module uim.platform.workzone.presentation.web.models.workspace;
 
 import uim.platform.workzone;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Web view-model for a single workspace — pre-formatted for HTML rendering.

@@ -7,7 +7,7 @@ module uim.platform.saas_provisioning.infrastructure.persistence.memory.app_subs
 
 import uim.platform.saas_provisioning;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

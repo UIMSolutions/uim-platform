@@ -7,7 +7,7 @@ module uim.platform.task_center.presentation.http.controllers.substitution_rule;
 
 import uim.platform.task_center;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

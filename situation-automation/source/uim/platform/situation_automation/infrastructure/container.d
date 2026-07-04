@@ -7,7 +7,7 @@ module uim.platform.situation_automation.infrastructure.container;
 
 import uim.platform.situation_automation;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 struct Container {

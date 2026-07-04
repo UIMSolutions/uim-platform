@@ -8,7 +8,7 @@ module uim.platform.translation.application.usecases.manage.translation_jobs;
 import uim.platform.translation;
 
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

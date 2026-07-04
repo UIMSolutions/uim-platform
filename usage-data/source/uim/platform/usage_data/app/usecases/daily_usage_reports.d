@@ -7,7 +7,7 @@ module uim.platform.usage_data.app.usecases.daily_usage_reports;
 
 import uim.platform.usage_data;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 /// Application service: daily usage report use cases.
 class DailyUsageReportUseCases {

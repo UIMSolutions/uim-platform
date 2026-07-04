@@ -9,7 +9,7 @@ module uim.platform.workzone.infrastructure.persistence.memory.external_content_
 // import uim.platform.workzone.domain.ports.repositories.external_content_providers;
 import uim.platform.workzone;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

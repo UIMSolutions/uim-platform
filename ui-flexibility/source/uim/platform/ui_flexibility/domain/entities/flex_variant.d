@@ -6,7 +6,7 @@
 module uim.platform.ui_flexibility.domain.entities.flex_variant;
 import uim.platform.ui_flexibility;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

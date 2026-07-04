@@ -1,6 +1,6 @@
 module uim.platform.snowflake.application.usecases.manage.provisioning_requests;
 import uim.platform.snowflake;
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 class ManageProvisioningRequestsUseCase {
   private ProvisioningRequestRepository repo;

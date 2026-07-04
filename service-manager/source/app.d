@@ -2,7 +2,7 @@ module app;
 
 import uim.platform.service_manager;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 version (unittest) {

@@ -7,7 +7,7 @@ module uim.platform.snowflake.domain.entities.zerocopy_connector;
 
 import uim.platform.snowflake;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 struct ZerocopyConnector {

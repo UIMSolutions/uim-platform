@@ -8,7 +8,7 @@ module uim.platform.workzone.domain.ports.repositories.workspaces;
 // import uim.platform.workzone.domain.entities.workspace;
 import uim.platform.workzone;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 interface WorkspaceRepository : ITenantRepository!(Workspace, WorkspaceId) {

@@ -7,7 +7,7 @@ module uim.platform.translation.infrastructure.container;
 
 import uim.platform.translation;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

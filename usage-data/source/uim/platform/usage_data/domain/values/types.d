@@ -7,7 +7,7 @@ module uim.platform.usage_data.domain.values.types;
 
 import uim.platform.usage_data;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 
 /// Strongly-typed identifier for a UsageRecord aggregate root.
