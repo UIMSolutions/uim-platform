@@ -375,6 +375,8 @@ struct DeactivatePurposeRecordRequest {
 
 struct CreateConsentPurposeRequest {
   TenantId tenantId;
+  ConsentPurposeId purposeId;
+
   DataControllerId controllerId;
   string name;
   string description;
@@ -401,6 +403,7 @@ struct UpdateConsentPurposeRequest {
 
 struct CreateRuleSetRequest {
   TenantId tenantId;
+  RuleSetId setId;
   BusinessContextId contextId;
   string name;
   string description;
@@ -423,6 +426,8 @@ struct UpdateRuleSetRequest {
 
 struct CreateInformationReportRequest {
   TenantId tenantId;
+  InformationReportId reportId;
+
   DataSubjectId subjectId;
   UserId requestedBy;
   string format; // pdf, json, xml, csv
@@ -442,6 +447,8 @@ struct UpdateInformationReportStatusRequest {
 
 struct CreateAnonymizationConfigRequest {
   TenantId tenantId;
+  AnonymizationConfigId configId;
+
   string name;
   string description;
   string rulesJson; // serialized AnonymizationRule array
