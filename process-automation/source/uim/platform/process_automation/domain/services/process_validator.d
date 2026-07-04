@@ -6,7 +6,7 @@
 module uim.platform.process_automation.domain.services.process_validator;
 import uim.platform.process_automation;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 struct ProcessValidator {

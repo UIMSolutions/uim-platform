@@ -9,7 +9,7 @@ module uim.platform.process_automation.presentation.http.controllers.automation;
 
 import uim.platform.process_automation;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

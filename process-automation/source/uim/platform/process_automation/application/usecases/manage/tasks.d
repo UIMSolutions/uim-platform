@@ -7,7 +7,7 @@ module uim.platform.process_automation.application.usecases.manage.tasks;
 
 import uim.platform.process_automation;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class ManageTasksUseCase { // TODO: UIMUseCase {

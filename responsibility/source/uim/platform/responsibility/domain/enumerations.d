@@ -7,7 +7,7 @@ module uim.platform.responsibility.domain.enumerations;
 
 import uim.platform.responsibility;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

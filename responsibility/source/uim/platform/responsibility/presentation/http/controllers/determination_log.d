@@ -7,7 +7,7 @@ module uim.platform.responsibility.presentation.http.controllers.determination_l
 
 import uim.platform.responsibility;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

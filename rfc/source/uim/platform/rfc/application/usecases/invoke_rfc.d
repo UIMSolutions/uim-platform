@@ -7,7 +7,7 @@ module uim.platform.rfc.application.usecases.invoke_rfc;
 
 import uim.platform.rfc;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 
 /// Primary use case: invoke an RFC call against a registered destination.

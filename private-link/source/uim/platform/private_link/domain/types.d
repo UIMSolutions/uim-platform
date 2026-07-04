@@ -6,7 +6,7 @@
 module uim.platform.private_link.domain.types;
 import uim.platform.private_link;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Unique identifier for a private link service instance.

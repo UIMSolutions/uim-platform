@@ -8,7 +8,7 @@ module uim.platform.responsibility.application.usecases.manage.determine_agents;
 import uim.platform.responsibility;
 
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 
@@ -78,7 +78,7 @@ class DetermineAgentsUseCase {
         log.errorMessage    = errorMsg;
         log.callerApp       = req.callerApp;
         log.executionTimeMs = elapsed;
-        
+
         _logRepo.save(log);
 
         return DetermineAgentsResult(

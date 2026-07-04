@@ -7,7 +7,7 @@ module uim.platform.responsibility.application.usecases.manage.team_types;
 
 import uim.platform.responsibility;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

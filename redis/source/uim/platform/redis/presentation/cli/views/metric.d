@@ -10,7 +10,7 @@ import std.stdio : writeln, writefln;
 import std.conv  : to;
 import std.format : format;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

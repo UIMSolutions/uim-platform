@@ -8,7 +8,7 @@ module uim.platform.process_automation.domain.ports.repositories.triggers;
 // import uim.platform.process_automation.domain.entities.trigger;
 import uim.platform.process_automation;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 interface TriggerRepository : ITenantRepository!(Trigger, TriggerId) {

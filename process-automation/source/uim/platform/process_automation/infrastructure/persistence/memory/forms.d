@@ -7,7 +7,7 @@ module uim.platform.process_automation.infrastructure.persistence.memory.forms;
 
 import uim.platform.process_automation;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryFormRepository : TenantRepository!(Form, FormId), FormRepository {

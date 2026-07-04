@@ -7,7 +7,7 @@ module uim.platform.postgres.application.usecases.manage.configurations;
 
 import uim.platform.postgres;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

@@ -7,7 +7,7 @@ module uim.platform.process_automation.application.usecases.manage.process_insta
 
 import uim.platform.process_automation;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class ManageProcessInstancesUseCase { // TODO: UIMUseCase {

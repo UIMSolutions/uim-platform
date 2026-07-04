@@ -10,7 +10,7 @@ import uim.platform.print;
 import std.file : exists, readText, write;
 import std.json;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

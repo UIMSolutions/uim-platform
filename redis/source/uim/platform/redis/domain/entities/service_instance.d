@@ -7,7 +7,7 @@ module uim.platform.redis.domain.entities.service_instance;
 
 import uim.platform.redis;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

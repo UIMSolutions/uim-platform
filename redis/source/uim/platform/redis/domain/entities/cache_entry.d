@@ -7,7 +7,7 @@ module uim.platform.redis.domain.entities.cache_entry;
 
 import uim.platform.redis;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

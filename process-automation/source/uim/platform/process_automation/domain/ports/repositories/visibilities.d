@@ -8,7 +8,7 @@ module uim.platform.process_automation.domain.ports.repositories.visibilities;
 // import uim.platform.process_automation.domain.entities.visibility;
 import uim.platform.process_automation;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 interface VisibilityRepository : ITenantRepository!(Visibility, VisibilityId) {

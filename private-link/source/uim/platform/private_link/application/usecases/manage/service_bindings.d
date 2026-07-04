@@ -6,7 +6,7 @@
 module uim.platform.private_link.application.usecases.manage.service_bindings;
 import uim.platform.private_link;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Use case: bind/unbind a private link service instance to an application.

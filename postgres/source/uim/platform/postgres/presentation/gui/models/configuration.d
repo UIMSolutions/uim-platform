@@ -7,7 +7,7 @@ module uim.platform.postgres.presentation.gui.models.configuration;
 
 import uim.platform.postgres;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

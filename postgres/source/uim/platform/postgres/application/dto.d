@@ -7,7 +7,7 @@ module uim.platform.postgres.application.dto;
 
 import uim.platform.postgres;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

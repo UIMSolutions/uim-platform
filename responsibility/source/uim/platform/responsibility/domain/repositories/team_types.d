@@ -7,7 +7,7 @@ module uim.platform.responsibility.domain.repositories.team_types;
 
 import uim.platform.responsibility;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

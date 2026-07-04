@@ -6,7 +6,7 @@
 module uim.platform.private_link.domain.entities.service_binding;
 import uim.platform.private_link;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Represents the binding of a private link service instance to an application.

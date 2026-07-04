@@ -7,7 +7,7 @@ module uim.platform.responsibility.infrastructure.container;
 
 import uim.platform.responsibility;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

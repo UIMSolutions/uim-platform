@@ -8,7 +8,7 @@ module uim.platform.redis.presentation.web.controllers.service_plan;
 import uim.platform.redis;
 
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

@@ -7,7 +7,7 @@ module uim.platform.postgres.domain.entities.service_binding;
 
 import uim.platform.postgres;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

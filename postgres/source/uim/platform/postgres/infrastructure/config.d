@@ -9,7 +9,7 @@ import uim.platform.postgres;
 import std.process : environment;
 
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

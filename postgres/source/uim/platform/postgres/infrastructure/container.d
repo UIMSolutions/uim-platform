@@ -7,7 +7,7 @@ module uim.platform.postgres.infrastructure.container;
 
 import uim.platform.postgres;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

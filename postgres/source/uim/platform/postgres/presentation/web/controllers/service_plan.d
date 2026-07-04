@@ -8,7 +8,7 @@ module uim.platform.postgres.presentation.web.controllers.service_plan;
 import uim.platform.postgres;
 
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

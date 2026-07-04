@@ -7,7 +7,7 @@ module uim.platform.redis.application.usecases.manage.service_instances;
 
 import uim.platform.redis;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

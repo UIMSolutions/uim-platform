@@ -7,7 +7,7 @@ module uim.platform.rfc.domain.ports.repositories.queues;
 
 import uim.platform.rfc;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 
 interface RfcQueueRepository {

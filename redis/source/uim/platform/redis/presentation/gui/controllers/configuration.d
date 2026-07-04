@@ -7,7 +7,7 @@ module uim.platform.redis.presentation.gui.controllers.configuration;
 
 import uim.platform.redis;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

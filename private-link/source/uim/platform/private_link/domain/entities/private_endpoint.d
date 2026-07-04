@@ -6,7 +6,7 @@
 module uim.platform.private_link.domain.entities.private_endpoint;
 import uim.platform.private_link;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// A private endpoint that provides an internal IP address to an IaaS provider

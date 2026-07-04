@@ -8,7 +8,7 @@ module uim.platform.private_link.infrastructure.config;
 import std.process : environment;
 import uim.platform.private_link;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Runtime configuration for the Private Link service.

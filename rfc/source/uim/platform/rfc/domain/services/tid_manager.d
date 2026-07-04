@@ -7,7 +7,7 @@ module uim.platform.rfc.domain.services.tid_manager;
 
 import uim.platform.rfc;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 
 /// Manages the lifecycle of Transaction IDs (TIDs) used in tRFC / qRFC / bgRFC.

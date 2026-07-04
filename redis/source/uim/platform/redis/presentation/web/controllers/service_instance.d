@@ -8,7 +8,7 @@ module uim.platform.redis.presentation.web.controllers.service_instance;
 import uim.platform.redis;
 
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

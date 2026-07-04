@@ -11,7 +11,7 @@ import std.algorithm : filter, any;
 import std.array     : array;
 import std.conv      : to;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

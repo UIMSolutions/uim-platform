@@ -7,7 +7,7 @@ module uim.platform.process_automation.infrastructure.persistence.memory.decisio
 
 import uim.platform.process_automation;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryDecisionRepository : TenantRepository!(Decision, DecisionId), DecisionRepository {

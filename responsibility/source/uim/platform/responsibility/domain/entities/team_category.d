@@ -7,7 +7,7 @@ module uim.platform.responsibility.domain.entities.team_category;
 
 import uim.platform.responsibility;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

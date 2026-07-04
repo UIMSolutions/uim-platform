@@ -7,7 +7,7 @@ module uim.platform.postgres.domain.types;
 
 import uim.platform.postgres;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

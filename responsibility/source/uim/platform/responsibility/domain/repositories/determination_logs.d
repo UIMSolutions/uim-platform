@@ -7,7 +7,7 @@ module uim.platform.responsibility.domain.repositories.determination_logs;
 
 import uim.platform.responsibility;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

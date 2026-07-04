@@ -7,7 +7,7 @@ module uim.platform.process_automation.infrastructure.persistence.memory.visibil
 
 import uim.platform.process_automation;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryVisibilityRepository : TenantRepository!(Visibility, VisibilityId), VisibilityRepository {

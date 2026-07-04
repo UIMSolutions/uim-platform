@@ -7,7 +7,7 @@ module uim.platform.process_automation.infrastructure.persistence.memory.trigger
 
 import uim.platform.process_automation;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryTriggerRepository : TenantRepository!(Trigger, TriggerId), TriggerRepository {

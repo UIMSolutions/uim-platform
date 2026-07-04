@@ -6,7 +6,7 @@
 module uim.platform.private_link.application.dto;
 import uim.platform.private_link;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 // ── ServiceInstance DTOs ────────────────────────────────────────────────────

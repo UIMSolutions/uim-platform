@@ -7,7 +7,7 @@ module uim.platform.redis.application.usecases.manage.backup_policies;
 
 import uim.platform.redis;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

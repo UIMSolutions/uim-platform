@@ -7,7 +7,7 @@ module uim.platform.rfc.domain.services.queue_processor;
 
 import uim.platform.rfc;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 
 /// Processes entries from a qRFC/bgRFC queue in sequence-number order.

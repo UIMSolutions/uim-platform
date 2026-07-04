@@ -7,7 +7,7 @@ module uim.platform.postgres.presentation.cli.controllers.service_binding;
 
 import uim.platform.postgres;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

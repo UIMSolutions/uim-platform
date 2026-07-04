@@ -7,7 +7,7 @@ module uim.platform.process_automation.infrastructure.persistence.memory.artifac
 
 import uim.platform.process_automation;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryArtifactRepository : TenantRepository!(Artifact, ArtifactId), ArtifactRepository {

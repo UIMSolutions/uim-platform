@@ -7,7 +7,7 @@ module uim.platform.rfc.domain.entities.rfc_call;
 
 import uim.platform.rfc;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 
 /// A key-value parameter value passed in or returned from an RFC call.

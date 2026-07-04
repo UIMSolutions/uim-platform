@@ -7,7 +7,7 @@ module uim.platform.redis.domain.entities.access_control;
 
 import uim.platform.redis;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

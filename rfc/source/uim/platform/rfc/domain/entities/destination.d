@@ -7,7 +7,7 @@ module uim.platform.rfc.domain.entities.destination;
 
 import uim.platform.rfc;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 
 /// An RFC Destination represents a connection profile to a remote SAP or non-SAP system.

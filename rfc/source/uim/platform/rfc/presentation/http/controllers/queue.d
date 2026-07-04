@@ -7,7 +7,7 @@ module uim.platform.rfc.presentation.http.controllers.queue;
 
 import uim.platform.rfc;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 
 /// HTTP controller for qRFC/bgRFC queue management.

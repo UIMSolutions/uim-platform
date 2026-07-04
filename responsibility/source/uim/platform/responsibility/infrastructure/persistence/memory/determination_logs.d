@@ -7,7 +7,7 @@ module uim.platform.responsibility.infrastructure.persistence.memory.determinati
 
 import uim.platform.responsibility;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

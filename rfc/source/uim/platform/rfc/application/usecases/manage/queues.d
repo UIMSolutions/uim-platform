@@ -7,7 +7,7 @@ module uim.platform.rfc.application.usecases.manage.queues;
 
 import uim.platform.rfc;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 
 class ManageQueuesUseCase {

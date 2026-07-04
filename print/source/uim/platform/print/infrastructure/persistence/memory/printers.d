@@ -7,7 +7,7 @@ module uim.platform.print.infrastructure.persistence.memory.printers;
 
 import uim.platform.print;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

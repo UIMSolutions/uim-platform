@@ -8,7 +8,7 @@ module uim.platform.process_automation.domain.ports.repositories.forms;
 // import uim.platform.process_automation.domain.entities.form;
 import uim.platform.process_automation;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 interface FormRepository : ITenantRepository!(Form, FormId) {
