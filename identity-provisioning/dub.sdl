@@ -1,7 +1,7 @@
 name "identity-provisioning"
 description "SAP Identity Provisioning style service using D, uim-framework and vibe.d"
 homepage "https://github.com/UIMSolutions/uim/platform/identity-provisioning"
-authors "Ozan Nurettin Suel" "UI Manufaktur"
+authors "Ozan Nurettin Suel" "UI Manufaktur (R.I.P)"
 copyright "Copyright 2018-2026, Ozan Nurettin Suel"
 license "Apache-2.0"
 

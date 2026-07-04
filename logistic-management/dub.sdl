@@ -1,7 +1,7 @@
 name "logistic-management"
 description "SAP BTP-style Logistics Management Service using D, uim-framework and vibe.d"
 homepage "https://github.com/UIMSolutions/uim/platform/logistic-management"
-authors "Ozan Nurettin Suel" "UI Manufaktur"
+authors "Ozan Nurettin Suel" "UI Manufaktur (R.I.P)"
 copyright "Copyright 2018-2026, Ozan Nurettin Suel"
 license "Apache-2.0"
 

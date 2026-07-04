@@ -6,7 +6,7 @@ Automation Service (CIAS)**. Built with **D** and **vibe.d**, following
 **Clean Architecture** and **Hexagonal Architecture** (Ports & Adapters)
 principles.
 
-Part of the [UIM Platform](https://www.sueel.de/uim/sap) suite.
+Part of the [UIM Platform](https://www.....de/uim/sap) suite.
 
 ## Features
 
@@ -552,7 +552,7 @@ Response:
 
 ---
 
-*Part of the [UIM Platform](https://www.sueel.de/uim/sap) suite.*
+*Part of the [UIM Platform](https://www.....de/uim/sap) suite.*
 *© 2018–2026, Ozan Nurettin Suel, UI Manufaktur — Apache-2.0*
 
 ## Testing

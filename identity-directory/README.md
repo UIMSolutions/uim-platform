@@ -6,7 +6,7 @@ inspired by **SAP Cloud Identity Directory (IDS / SCIM)**. Built with **D** and
 **vibe.d**, following **Clean Architecture** and **Hexagonal Architecture**
 (Ports & Adapters) principles.
 
-Part of the [UIM Platform](https://www.sueel.de/uim/sap) suite.
+Part of the [UIM Platform](https://www.....de/uim/sap) suite.
 
 ## Features
 

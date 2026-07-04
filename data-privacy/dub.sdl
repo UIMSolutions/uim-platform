@@ -1,7 +1,7 @@
 name "data-privacy"
 description "SAP Data Privacy Integration style service using D, uim-framework and vibe.d"
 homepage "https://github.com/UIMSolutions/uim/platform/data-privacy"
-authors "Ozan Nurettin Süel" "UI Manufaktur"
+authors "Ozan Nurettin Süel" "UI Manufaktur (R.I.P)"
 copyright "Copyright 2018-2026, Ozan Nurettin Suel"
 license "Apache-2.0"
 

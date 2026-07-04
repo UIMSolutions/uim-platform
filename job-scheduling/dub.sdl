@@ -1,7 +1,7 @@
 name "job-scheduling"
 description "SAP BTP-style Job Scheduling Service using D, uim-framework and vibe-d"
 homepage "https://github.com/UIMSolutions/uim/platform/job-scheduling"
-authors "Ozan Nurettin Suel" "UI Manufaktur"
+authors "Ozan Nurettin Suel" "UI Manufaktur (R.I.P)"
 copyright "Copyright 2018-2026, Ozan Nurettin Suel"
 license "Apache-2.0"
 
