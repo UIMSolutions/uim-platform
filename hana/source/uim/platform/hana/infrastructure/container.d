@@ -42,7 +42,7 @@ module uim.platform.hana.infrastructure.container;
 
 import uim.platform.hana;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 struct Container {

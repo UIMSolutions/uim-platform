@@ -7,7 +7,7 @@ module uim.platform.hana_spatial.domain.entities.point_of_interest;
 
 import uim.platform.hana_spatial;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

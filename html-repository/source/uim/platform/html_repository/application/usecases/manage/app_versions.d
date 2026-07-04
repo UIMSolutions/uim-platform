@@ -12,7 +12,7 @@ module uim.platform.html_repository.application.usecases.manage.app_versions;
 
 import uim.platform.html_repository;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class ManageAppVersionsUseCase { // TODO: UIMUseCase {

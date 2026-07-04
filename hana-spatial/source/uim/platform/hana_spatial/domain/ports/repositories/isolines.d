@@ -7,7 +7,7 @@ module uim.platform.hana_spatial.domain.ports.repositories.isolines;
 
 import uim.platform.hana_spatial;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 interface IsolineRepository : ITenantRepository!(Isoline, IsolineId) {

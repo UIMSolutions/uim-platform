@@ -8,7 +8,7 @@ module uim.platform.hana.domain.ports.repositories.database_users;
 // import uim.platform.hana.domain.entities.database_user;
 import uim.platform.hana;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 interface DatabaseUserRepository : ITenantRepository!(DatabaseUser, DatabaseUserId) {

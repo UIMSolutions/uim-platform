@@ -17,7 +17,7 @@ module uim.platform.html_repository.application.usecases.deploy_application;
 
 import uim.platform.html_repository;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

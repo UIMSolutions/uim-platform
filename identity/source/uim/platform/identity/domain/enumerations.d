@@ -8,7 +8,7 @@ module uim.platform.identity.domain.enumerations;
 
 import uim.platform.identity;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

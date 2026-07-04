@@ -10,7 +10,7 @@ module uim.platform.health_fhir.infrastructure.persistence.mongodb.patients;
 // Implementation stub — extend with actual vibe.d MongoDB calls.
 import uim.platform.health_fhir;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

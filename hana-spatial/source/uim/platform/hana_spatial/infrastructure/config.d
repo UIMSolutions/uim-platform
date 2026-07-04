@@ -10,7 +10,7 @@ import std.process : environment;
 
 import uim.platform.hana_spatial;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 struct SrvConfig {

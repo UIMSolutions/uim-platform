@@ -7,7 +7,7 @@ module uim.platform.hana_spatial.infrastructure.persistence.memory.routes;
 
 import uim.platform.hana_spatial;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryRouteRepository

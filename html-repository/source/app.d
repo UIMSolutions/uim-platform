@@ -10,7 +10,7 @@ module app;
 
 import uim.platform.html_repository;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 version (unittest) {

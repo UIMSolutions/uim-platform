@@ -7,7 +7,7 @@ module uim.platform.health_fhir.domain.types;
 
 import uim.platform.health_fhir;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

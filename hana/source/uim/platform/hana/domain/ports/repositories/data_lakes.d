@@ -8,7 +8,7 @@ module uim.platform.hana.domain.ports.repositories.data_lakes;
 // import uim.platform.hana.domain.entities.data_lake;
 import uim.platform.hana;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 interface DataLakeRepository : ITenantRepository!(DataLake, DataLakeId) {

@@ -8,7 +8,7 @@ module uim.platform.identity.domain.types;
 
 import uim.platform.identity;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

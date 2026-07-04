@@ -11,7 +11,7 @@ module uim.platform.hana.application.usecases.manage.hdi_containers;
 
 import uim.platform.hana;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class ManageHDIContainersUseCase { // TODO: UIMUseCase {

@@ -10,7 +10,7 @@ module uim.platform.html_repository.infrastructure.persistence.memory.service_in
 // import uim.platform.html_repository.domain.types;
 import uim.platform.html_repository;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class ServiceInstanceMemoryRepository : TenantRepository!(ServiceInstance, ServiceInstanceId), ServiceInstanceRepository {

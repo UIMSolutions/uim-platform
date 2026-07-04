@@ -11,7 +11,7 @@ module uim.platform.hana.application.usecases.manage.schemas;
 
 import uim.platform.hana;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class ManageSchemasUseCase { // TODO: UIMUseCase {

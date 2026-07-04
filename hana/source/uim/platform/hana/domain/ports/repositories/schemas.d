@@ -8,7 +8,7 @@ module uim.platform.hana.domain.ports.repositories.schemas;
 // import uim.platform.hana.domain.entities.schema;
 import uim.platform.hana;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 interface SchemaRepository : ITenantRepository!(Schema, SchemaId) {

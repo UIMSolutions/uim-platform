@@ -7,7 +7,7 @@ module uim.platform.identity.domain.repositories.application;
 
 import uim.platform.identity;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

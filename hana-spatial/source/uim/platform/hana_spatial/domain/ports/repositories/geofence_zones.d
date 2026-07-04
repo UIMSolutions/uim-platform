@@ -7,7 +7,7 @@ module uim.platform.hana_spatial.domain.ports.repositories.geofence_zones;
 
 import uim.platform.hana_spatial;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 interface GeofenceZoneRepository : ITenantRepository!(GeofenceZone, GeofenceZoneId) {

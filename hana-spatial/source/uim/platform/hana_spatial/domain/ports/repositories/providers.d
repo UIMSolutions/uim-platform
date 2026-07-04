@@ -7,7 +7,7 @@ module uim.platform.hana_spatial.domain.ports.repositories.providers;
 
 import uim.platform.hana_spatial;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 interface ProviderRepository : ITenantRepository!(Provider, ProviderId) {

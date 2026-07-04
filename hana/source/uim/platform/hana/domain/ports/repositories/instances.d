@@ -8,7 +8,7 @@ module uim.platform.hana.domain.ports.repositories.instances;
 // import uim.platform.hana.domain.entities.instance;
 import uim.platform.hana;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 interface InstanceRepository : ITenantRepository!(DatabaseInstance, DatabaseInstanceId) {

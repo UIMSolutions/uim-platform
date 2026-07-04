@@ -8,7 +8,7 @@ module uim.platform.identity.domain.entities.user;
 
 import uim.platform.identity;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

@@ -7,7 +7,7 @@ module uim.platform.identity.presentation.http.controllers.identity_provider;
 
 import uim.platform.identity;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

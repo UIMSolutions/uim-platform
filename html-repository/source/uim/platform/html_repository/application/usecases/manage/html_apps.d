@@ -12,7 +12,7 @@ module uim.platform.html_repository.application.usecases.manage.html_apps;
 
 import uim.platform.html_repository;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

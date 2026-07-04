@@ -12,7 +12,7 @@ module uim.platform.hana.infrastructure.persistence.memory.replication_tasks;
  
 import uim.platform.hana;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryReplicationTaskRepository : TenantRepository!(ReplicationTask, ReplicationTaskId), ReplicationTaskRepository {

@@ -8,7 +8,7 @@ module uim.platform.html_repository.domain.ports.repositories.app_versions;
 // import uim.platform.html_repository.domain.types;
 import uim.platform.html_repository;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 interface AppVersionRepository : ITenantRepository!(AppVersion, AppVersionId) {

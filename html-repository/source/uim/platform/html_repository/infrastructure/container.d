@@ -36,7 +36,7 @@ module uim.platform.html_repository.infrastructure.container;
 // import uim.platform.html_repository.presentation.http.controllers.health;
 import uim.platform.html_repository;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 struct Container {

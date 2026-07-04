@@ -8,7 +8,7 @@ module uim.platform.hana.domain.ports.repositories.configurations;
 // import uim.platform.hana.domain.entities.configuration;
 import uim.platform.hana;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 interface ConfigurationRepository : ITenantRepository!(Configuration, ConfigurationId) {

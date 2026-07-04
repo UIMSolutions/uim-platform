@@ -9,7 +9,7 @@ module uim.platform.html_repository.domain.services.content_delivery_service;
 // import std.digest.md : md5Of, toHexString;
 import uim.platform.html_repository;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 struct ContentDeliveryService {

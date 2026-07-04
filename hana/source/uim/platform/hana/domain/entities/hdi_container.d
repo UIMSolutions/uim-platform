@@ -7,7 +7,7 @@ module uim.platform.hana.domain.entities.hdi_container;
 // import uim.platform.hana.domain.types;
 import uim.platform.hana;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 struct HDIArtifact {

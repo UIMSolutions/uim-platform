@@ -6,7 +6,7 @@
 module uim.platform.hana.domain.services.instance_validator;
 import uim.platform.hana;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 struct InstanceValidator {

@@ -9,7 +9,7 @@ module uim.platform.hana.presentation.http.controllers.backup;
 
 import uim.platform.hana;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

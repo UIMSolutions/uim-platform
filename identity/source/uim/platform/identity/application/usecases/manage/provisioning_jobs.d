@@ -7,7 +7,7 @@ module uim.platform.identity.application.usecases.manage.provisioning_jobs;
 
 import uim.platform.identity;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

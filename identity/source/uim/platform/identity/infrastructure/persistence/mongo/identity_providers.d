@@ -8,7 +8,7 @@ module uim.platform.identity.infrastructure.persistence.mongo.identity_providers
 import uim.platform.identity;
 import vibe.db.mongo.mongo;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

@@ -7,7 +7,7 @@ module uim.platform.identity.infrastructure.persistence.memory.identity_provider
 
 import uim.platform.identity;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

@@ -12,7 +12,7 @@ module uim.platform.hana.infrastructure.persistence.memory.backups;
  
 import uim.platform.hana;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryBackupRepository : TenantRepository!(Backup, BackupId), BackupRepository {

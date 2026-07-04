@@ -11,7 +11,7 @@ module uim.platform.hana.application.usecases.manage.replication_tasks;
 
 import uim.platform.hana;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class ManageReplicationTasksUseCase { // TODO: UIMUseCase {

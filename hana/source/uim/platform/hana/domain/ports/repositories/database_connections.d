@@ -8,7 +8,7 @@ module uim.platform.hana.domain.ports.repositories.database_connections;
 // import uim.platform.hana.domain.entities.database_connection;
 import uim.platform.hana;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 interface DatabaseConnectionRepository : ITenantRepository!(DatabaseConnection, DatabaseConnectionId) {

@@ -11,7 +11,7 @@ module uim.platform.hana.application.usecases.manage.data_lakes;
 
 import uim.platform.hana;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class ManageDataLakesUseCase { // TODO: UIMUseCase {

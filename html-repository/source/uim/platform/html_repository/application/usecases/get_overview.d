@@ -15,7 +15,7 @@ module uim.platform.html_repository.application.usecases.get_overview;
 // import uim.platform.html_repository.application.dto;
 import uim.platform.html_repository;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class GetOverviewUseCase { // TODO: UIMUseCase {

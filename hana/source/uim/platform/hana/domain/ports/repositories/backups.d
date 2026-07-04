@@ -8,7 +8,7 @@ module uim.platform.hana.domain.ports.repositories.backups;
 // import uim.platform.hana.domain.entities.backup;
 import uim.platform.hana;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 interface BackupRepository : ITenantRepository!(Backup, BackupId) {

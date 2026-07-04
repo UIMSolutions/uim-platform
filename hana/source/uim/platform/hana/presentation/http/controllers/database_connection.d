@@ -8,7 +8,7 @@ module uim.platform.hana.presentation.http.controllers.database_connection;
 // import uim.platform.hana.application.dto;
 import uim.platform.hana;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 
