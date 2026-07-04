@@ -145,8 +145,7 @@ unittest {
   }
 
   auto tenantId = TenantId("tenant1");
-  TestEntity entity;
-  entity.initEntity(tenantId);
+  auto entity = TestEntity(tenantId);
   entity.id = TestId("entity1");
   entity.createdBy = UserId("user1");
   entity.updatedBy = UserId("user1");

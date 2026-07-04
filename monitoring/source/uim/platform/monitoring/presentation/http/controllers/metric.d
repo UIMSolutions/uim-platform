@@ -100,13 +100,13 @@ class MetricController : ManageHttpController {
     auto id = MonitoredResourceId(req.params.get("resourceId", ""));
     if (id.isEmpty)
       return errorResponse("Missing required parameter: resourceId", 400);
-    
+
     auto metricName = req.params.get("name", "");
 
-QueryMetricsRequest qr;
-      qr.tenantId = tenantId;
-      qr.resourceId = resourceId;
-      qr.metricName = metricName;
+    QueryMetricsRequest qr;
+    qr.tenantId = tenantId;
+    qr.resourceId = id;
+    qr.metricName = metricName;
     auto metrics = usecase.queryMetrics(qr);
     auto arr = metrics.map!(m => m.toJson).array.toJson;
 

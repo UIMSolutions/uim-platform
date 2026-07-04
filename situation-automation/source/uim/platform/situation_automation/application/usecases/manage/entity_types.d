@@ -26,9 +26,7 @@ class ManageEntityTypesUseCase { // TODO: UIMUseCase {
         if (!existing.isNull)
             return CommandResult(false, "", "Entity type already exists");
 
-        EntityType e;
-        e.initEntity(r.tenantId, r.entityTypeId, r.createdBy);
-        
+        auto e = EntityType(r.tenantId); //, r.entityTypeId, r.createdBy);
         e.name = r.name;
         e.description = r.description;
         e.sourceSystem = r.sourceSystem;

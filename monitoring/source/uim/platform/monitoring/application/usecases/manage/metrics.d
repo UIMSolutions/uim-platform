@@ -118,7 +118,7 @@ class ManageMetricsUseCase { // TODO: UIMUseCase {
       metrics ~= m;
     }
 
-    metricRepo.saveAll(metrics);
+    metrics.each!(m => metricRepo.save(m));
     return CommandResult(true, "", "");
   }
 

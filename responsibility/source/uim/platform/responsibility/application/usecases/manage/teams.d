@@ -29,8 +29,7 @@ class ManageTeamsUseCase {
     }
 
     CommandResult createTeam(TeamDTO dto) {
-        Team t;
-        t.initEntity(dto.tenantId, dto.createdBy);
+        auto t = Team(dto.tenantId); //, dto.createdBy);
         t.id          = dto.teamId;
         t.name        = dto.name;
         t.description = dto.description;

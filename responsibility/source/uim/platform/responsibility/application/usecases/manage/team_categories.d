@@ -25,8 +25,7 @@ class ManageTeamCategoriesUseCase {
     }
 
     CommandResult createCategory(TeamCategoryDTO dto) {
-        TeamCategory c;
-        c.initEntity(dto.tenantId, dto.createdBy);
+        auto c = TeamCategory(dto.tenantId); //, dto.createdBy);
         c.id          = dto.categoryId;
         c.name        = dto.name;
         c.description = dto.description;

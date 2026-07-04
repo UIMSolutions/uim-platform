@@ -27,8 +27,7 @@ class ManageDecisionsUseCase { // TODO: UIMUseCase {
         if (!existing.isNull)
             return CommandResult(false, "", "Decision already exists");
 
-        Decision d;
-        d.initEntity(r.tenantId, r.createdBy);
+        auto d = Decision(r.tenantId); //, UserId("test-user"));
         d.id = r.decisionId;
         d.projectId = r.projectId;
         d.name = r.name;

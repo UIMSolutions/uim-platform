@@ -32,8 +32,7 @@ class ManageEventTopicsUseCase {
         if (repo.nameExists(dto.tenantId, dto.name))
             return CommandResult(false, "", "Topic name already exists");
 
-        EventTopic t;
-        t.initEntity(dto.tenantId, dto.createdBy);
+        auto t = EventTopic(dto.tenantId); //, dto.createdBy);
         if (!dto.topicId.isNull)
             t.id = dto.topicId;
 

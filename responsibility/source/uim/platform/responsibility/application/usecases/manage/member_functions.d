@@ -25,8 +25,7 @@ class ManageMemberFunctionsUseCase {
     }
 
     CommandResult createFunction(MemberFunctionDTO dto) {
-        MemberFunction f;
-        f.initEntity(dto.tenantId, dto.createdBy);
+        auto f = MemberFunction(dto.tenantId); //, UserId("test-user"));
         f.id          = dto.functionId;
         f.name        = dto.name;
         f.description = dto.description;

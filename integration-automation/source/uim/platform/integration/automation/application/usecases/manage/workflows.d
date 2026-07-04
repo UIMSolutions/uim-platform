@@ -69,8 +69,7 @@ class ManageWorkflowsUseCase { // TODO: UIMUseCase {
 
     // Instantiate workflow steps from scenario templates
     foreach (tmpl; scenario.stepTemplates) {
-      WorkflowStep step;
-      step.initEntity(req.tenantId);
+      auto step = WorkflowStep(req.tenantId); //, req.createdBy);
 
       step.workflowId = wf.id;
       step.name = tmpl.name;

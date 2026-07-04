@@ -27,9 +27,7 @@ class ManageDataContextsUseCase { // TODO: UIMUseCase {
         if (!existing.isNull)
             return CommandResult(false, "", "Data context already exists");
 
-        DataContext d;
-        d.initEntity(r.tenantId, r.dataContextId);
-
+        auto d = DataContext(r.tenantId); //, r.dataContextId);
         d.instanceId = r.situationInstanceId;
         d.entityId = r.entityId;
         d.entityTypeId = r.entityTypeId;

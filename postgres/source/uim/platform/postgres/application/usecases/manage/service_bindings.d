@@ -29,8 +29,7 @@ class ManageServiceBindingsUseCase {
     }
 
     CommandResult createServiceBinding(ServiceBindingDTO dto) {
-        ServiceBinding e;
-        e.initEntity(dto.tenantId, dto.createdBy);
+        auto e = ServiceBinding(dto.tenantId); //, UserId("test-user"));
         e.id = dto.serviceBindingId;
         e.instanceId = dto.instanceId;
         e.appId = dto.appId;

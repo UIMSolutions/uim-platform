@@ -22,9 +22,7 @@ class ManageServiceBrokersUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createBroker(CreateServiceBrokerRequest dto) {
-        auto broker = ServiceBroker();
-        broker.initEntity(dto.tenantId);
-
+        auto broker = ServiceBroker(dto.tenantId);
         broker.id = ServiceBrokerId(currentTimestamp.to!string);
         broker.name = dto.name;
         broker.description = dto.description;

@@ -26,9 +26,7 @@ class ManageActionsUseCase { // TODO: UIMUseCase {
         if (repo.existsById(r.tenantId, r.actionId))
             return CommandResult(false, "", "Action already exists");
 
-        Action a;
-        a.initEntity(r.tenantId, r.createdBy);
-
+        auto a = Action(r.tenantId); //, UserId("test-user"));
         a.id = r.actionId;
         a.projectId = r.projectId;
         a.name = r.name;

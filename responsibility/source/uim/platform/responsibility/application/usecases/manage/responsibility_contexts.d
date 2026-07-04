@@ -25,8 +25,7 @@ class ManageResponsibilityContextsUseCase {
     }
 
     CommandResult createContext(ResponsibilityContextDTO dto) {
-        ResponsibilityContext c;
-        c.initEntity(dto.tenantId, dto.createdBy);
+        auto c = ResponsibilityContext(dto.tenantId); //, UserId("test-user"));
         c.id          = dto.contextId;
         c.name        = dto.name;
         c.description = dto.description;

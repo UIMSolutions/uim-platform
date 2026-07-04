@@ -23,8 +23,6 @@ class ManageServiceInstancesUseCase { // TODO: UIMUseCase {
 
     CommandResult createInstance(CreateServiceInstanceRequest dto) {
         auto instance = ServiceInstance(dto.tenantId);
-        instance.initEntity(dto.tenantId);
-
         instance.id = ServiceInstanceId(currentTimestamp.to!string);
         instance.tenantId = dto.tenantId;
         instance.name = dto.name;

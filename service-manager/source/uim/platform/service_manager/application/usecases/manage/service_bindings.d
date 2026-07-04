@@ -23,10 +23,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
 
     CommandResult createBinding(CreateServiceBindingRequest dto) {
 
-        auto binding = ServiceBinding();
-        binding.initEntity(dto.tenantId);
-
-        binding.tenantId = dto.tenantId;
+        auto binding = ServiceBinding(dto.tenantId);
         binding.name = dto.name;
         binding.id = ServiceBindingId(currentTimestamp.to!string);
         binding.tenantId = dto.tenantId;

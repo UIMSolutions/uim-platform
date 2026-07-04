@@ -31,8 +31,7 @@ class ManageResponsibilityRulesUseCase {
     }
 
     CommandResult createRule(ResponsibilityRuleDTO dto) {
-        ResponsibilityRule r;
-        r.initEntity(dto.tenantId, dto.createdBy);
+        auto r = ResponsibilityRule(dto.tenantId); //, UserId("test-user"));
         r.id = dto.ruleId;
         r.name = dto.name;
         r.description = dto.description;

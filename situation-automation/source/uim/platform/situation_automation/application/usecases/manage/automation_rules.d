@@ -26,8 +26,7 @@ class ManageAutomationRulesUseCase { // TODO: UIMUseCase {
         if (!existing.isNull)
             return CommandResult(false, "", "Automation rule already exists");
 
-        AutomationRule rule;
-        rule.initEntity(r.tenantId, r.automationRuleId, r.createdBy);
+        auto rule = AutomationRule(r.tenantId); //, r.automationRuleId, r.createdBy);
         rule.situationTemplateId = r.situationTemplateId;
         rule.name = r.name;
         rule.description = r.description;

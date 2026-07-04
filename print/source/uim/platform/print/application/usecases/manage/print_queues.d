@@ -31,8 +31,7 @@ class ManagePrintQueuesUseCase {
     }
 
     CommandResult createPrintQueue(PrintQueueDTO dto) {
-        PrintQueue queue;
-        queue.initEntity(dto.tenantId, dto.createdBy);
+        auto queue = PrintQueue(dto.tenantId, dto.createdBy);
         queue.id = dto.queueId;
         queue.name = dto.name;
         queue.description = dto.description;

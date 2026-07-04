@@ -35,8 +35,7 @@ class ManagePrintTasksUseCase {
     }
 
     CommandResult createPrintTask(PrintTaskDTO dto) {
-        PrintTask task;
-        task.initEntity(dto.tenantId, dto.createdBy);
+        auto task = PrintTask(dto.tenantId); //, UserId("test-user"));
         task.id = dto.taskId;
         task.queueId = PrintQueueId(dto.queueId);
         task.documentId = PrintDocumentId(dto.documentId);

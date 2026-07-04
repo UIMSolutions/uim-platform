@@ -27,9 +27,7 @@ class ManageAuthorizationCodesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createCode(AuthorizationCodeDTO dto) {
-        AuthorizationCode code;
-
-        code.initEntity(dto.tenantId);
+        auto code = AuthorizationCode(dto.tenantId); //, dto.createdBy);
         code.id = dto.codeId;
         code.tenantId = dto.tenantId;
         code.code = dto.code;

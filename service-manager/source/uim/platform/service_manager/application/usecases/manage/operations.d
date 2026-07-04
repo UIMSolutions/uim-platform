@@ -22,9 +22,7 @@ class ManageOperationsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createOperation(CreateOperationRequest dto) {
-        Operation e;
-        e.initEntity(dto.tenantId);
-
+        auto e = Operation(dto.tenantId);
         e.id = OperationId(currentTimestamp.to!string);
         e.resourceId = dto.resourceId;
         e.resourceType = dto.resourceType;

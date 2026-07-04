@@ -15,17 +15,17 @@ enum ResourceType {
   customApplication,
   service,
 }
-ResourceType toResourceType(string s) {
-  mixin(EnumSwitch!("ResourceType", "customApplication"));
+ResourceType toResourceType(string value) {
+  mixin(EnumSwitch("ResourceType", "customApplication"));
 }
 ResourceType[] toResourceType(string[] values) {
   return values.map!(toResourceType).array;
 }
-string toString(ResourceType type) {
-  mixin(type.to!string);
+string toString(ResourceType value) {
+  return value.to!string;
 }
-string[] toString(ResourceType[] types) {
-  return types.map!(toString).array;
+string[] toString(ResourceType[] values) {
+  return values.map!(toString).array;
 }
 ///
 unittest {
@@ -65,14 +65,14 @@ enum ResourceState {
   /// The resource is in an error state.
   error,
 }
-ResourceState toResourceState(string s) {
-  mixin(EnumSwitch!("ResourceState", "unknown"));
+ResourceState toResourceState(string value) {
+  mixin(EnumSwitch("ResourceState", "unknown"));
 }
 ResourceState[] toResourceState(string[] values) {
   return values.map!(toResourceState).array;
 }
 string toString(ResourceState state) {
-  mixin(type.to!string);
+  return state.to!string;
 }
 string[] toString(ResourceState[] states) {
   return states.map!(toString).array;
@@ -112,8 +112,8 @@ enum MetricCategory {
   certificate,
   custom,
 }
-MetricCategory toMetricCategory(string s) {
-  switch (s.toLower()) {
+MetricCategory toMetricCategory(string value) {
+  switch (value.toLower()) {
     case "cpu": return MetricCategory.cpu;
     case "memory": return MetricCategory.memory;
     case "disk": return MetricCategory.disk;
@@ -141,8 +141,8 @@ enum MetricUnit {
   boolean_,
   none,
 }
-MetricUnit toMetricUnit(string s) {
-  switch (s.toLower()) {
+MetricUnit toMetricUnit(string value) {
+  switch (value.toLower()) {
     case "percent": return MetricUnit.percent;
     case "bytes": return MetricUnit.bytes_;
     case "kilobytes": return MetricUnit.kilobytes;
@@ -165,8 +165,8 @@ enum AggregationMethod {
   last,
   count,
 }
-AggregationMethod toAggregationMethod(string s) {
-  switch (s.toLower()) {
+AggregationMethod toAggregationMethod(string value) {
+  switch (value.toLower()) {
     case "average": return AggregationMethod.average;
     case "sum": return AggregationMethod.sum;
     case "min": return AggregationMethod.min;
@@ -185,8 +185,8 @@ enum CheckType {
   database,
   certificate,
 }
-CheckType toCheckType(string s) {
-  switch (s.toLower()) {
+CheckType toCheckType(string value) {
+  switch (value.toLower()) {
     case "availability": return CheckType.availability;
     case "jmx": return CheckType.jmx;
     case "customhttp": return CheckType.customHttp;
@@ -204,8 +204,8 @@ enum CheckStatus {
   critical,
   disabled,
 }
-CheckStatus toCheckStatus(string s) {
-  switch (s.toLower()) {
+CheckStatus toCheckStatus(string value) {
+  switch (value.toLower()) {
     case "unknown": return CheckStatus.unknown;
     case "ok": return CheckStatus.ok;
     case "warning": return CheckStatus.warning;
@@ -222,8 +222,8 @@ enum AlertState {
   resolved,
   expired,
 }
-AlertState toAlertState(string s) {
-  switch (s.toLower()) {
+AlertState toAlertState(string value) {
+  switch (value.toLower()) {
     case "open": return AlertState.open;
     case "acknowledged": return AlertState.acknowledged;
     case "resolved": return AlertState.resolved;
@@ -240,8 +240,8 @@ enum ThresholdOperator {
   equal,
   notEqual,
 }
-ThresholdOperator toThresholdOperator(string s) {
-  switch (s.toLower()) {
+ThresholdOperator toThresholdOperator(string value) {
+  switch (value.toLower()) {
     case "greaterthan": return ThresholdOperator.greaterThan;
     case "greaterorequal": return ThresholdOperator.greaterOrEqual;
     case "lessthan": return ThresholdOperator.lessThan;
@@ -257,8 +257,8 @@ enum NotificationChannelType {
   webhook,
   onPremise,
 }
-NotificationChannelType toNotificationChannelType(string s) {
-  switch (s.toLower()) {
+NotificationChannelType toNotificationChannelType(string value) {
+  switch (value.toLower()) {
     case "email": return NotificationChannelType.email;
     case "webhook": return NotificationChannelType.webhook;
     case "onpremise": return NotificationChannelType.onPremise;
@@ -271,12 +271,7 @@ enum ChannelState {
   inactive, // channel is inactive and won't be used for notifications
   error, // channel encountered an error and won't be used for notifications
 }
-ChannelState toChannelState(string s) {
-  switch (s.toLower()) {
-    case "active": return ChannelState.active;
-    case "inactive": return ChannelState.inactive;
-    case "error": return ChannelState.error;
-    default: return ChannelState.active; // default
-  }
+ChannelState toChannelState(string value) {
+  mixin(EnumSwitch("ChannelState", "active"));
 }
 

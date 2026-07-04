@@ -29,8 +29,7 @@ class ManageTeamMembersUseCase {
     }
 
     CommandResult addMember(TeamMemberDTO dto) {
-        TeamMember m;
-        m.initEntity(dto.tenantId, dto.createdBy);
+        auto m = TeamMember(dto.tenantId); //, UserId("test-user"));
         m.id          = dto.memberId;
         m.teamId      = dto.teamId;
         m.userId      = dto.userId;
