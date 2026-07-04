@@ -7,7 +7,7 @@ module uim.platform.identity.directory.domain.entities.api_client;
 
 import uim.platform.identity.directory;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// API client / technical user for service-to-service access.

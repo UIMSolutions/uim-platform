@@ -15,7 +15,7 @@ module uim.platform.identity.provisioning.application.usecases.monitor_provision
 // import uim.platform.identity.provisioning.domain.ports.repositories.target_systems;
 import uim.platform.identity.provisioning;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Summary of a provisioning job for monitoring dashboards.

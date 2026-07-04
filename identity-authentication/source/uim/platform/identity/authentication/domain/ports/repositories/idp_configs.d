@@ -8,7 +8,7 @@ module uim.platform.identity.authentication.domain.ports.repositories.idp_config
 // import uim.platform.identity.authentication.domain.types;
 import uim.platform.identity.authentication;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — external IdP configuration persistence.

@@ -12,7 +12,7 @@ module uim.platform.integration.automation.domain.services.workflow_engine;
 // import uim.platform.integration.automation.domain.ports;
 import uim.platform.integration.automation;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Domain service that orchestrates workflow progression —

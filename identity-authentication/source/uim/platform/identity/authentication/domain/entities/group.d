@@ -7,7 +7,7 @@ module uim.platform.identity.authentication.domain.entities.group;
 // import uim.platform.identity.authentication.domain.types;
 import uim.platform.identity.authentication;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 /// IdaGroup entity for organizing users.
 struct IdaGroup {  

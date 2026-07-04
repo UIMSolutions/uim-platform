@@ -7,7 +7,7 @@ module uim.platform.identity.authentication.domain.ports.repositories.services.m
 // import uim.platform.identity.authentication.domain.types;
 import uim.platform.identity.authentication;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 /// Port: outgoing — multi-factor authentication adapter.
 interface MfaService {

@@ -16,7 +16,7 @@ module uim.platform.integration.automation.application.usecases.manage.steps;
 
 import uim.platform.integration.automation;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class ManageStepsUseCase { // TODO: UIMUseCase {

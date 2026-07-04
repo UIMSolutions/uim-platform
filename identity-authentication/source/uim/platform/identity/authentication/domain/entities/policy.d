@@ -7,7 +7,7 @@ module uim.platform.identity.authentication.domain.entities.policy;
 // import uim.platform.identity.authentication.domain.types;
 import uim.platform.identity.authentication;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 /// Authorization policy for controlling access to applications.
 struct AuthorizationPolicy {

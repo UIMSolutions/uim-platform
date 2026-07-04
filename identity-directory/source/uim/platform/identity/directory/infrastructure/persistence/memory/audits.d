@@ -9,7 +9,7 @@ module uim.platform.identity.directory.infrastructure.persistence.memory.audits;
 // import uim.platform.identity.directory.domain.ports.repositories.audits;
 import uim.platform.identity.directory;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// In-memory adapter for audit event persistence (append-only).

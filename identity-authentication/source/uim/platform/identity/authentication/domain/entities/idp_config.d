@@ -8,7 +8,7 @@ module uim.platform.identity.authentication.domain.entities.idp_config;
 
 import uim.platform.identity.authentication;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 /// External Identity Provider configuration for delegated authentication.
 struct IdpConfig {

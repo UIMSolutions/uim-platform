@@ -9,7 +9,7 @@ module uim.platform.identity.directory.application.usecases.query_audit_log;
 // import uim.platform.identity.directory.domain.ports.repositories.audits;
 import uim.platform.identity.directory;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Application use case: query audit logs.

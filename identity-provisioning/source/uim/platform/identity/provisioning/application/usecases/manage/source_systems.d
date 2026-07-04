@@ -12,7 +12,7 @@ module uim.platform.identity.provisioning.application.usecases.manage.source_sys
 // import uim.platform.identity.provisioning.application.dto;
 import uim.platform.identity.provisioning;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class ManageSourceSystemsUseCase { // TODO: UIMUseCase {

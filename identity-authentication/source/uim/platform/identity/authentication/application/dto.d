@@ -9,7 +9,7 @@ module uim.platform.identity.authentication.application.dto;
 /// --- Authentication DTOs ---
 import uim.platform.identity.authentication;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 struct AuthRequest {
   TenantId tenantId;

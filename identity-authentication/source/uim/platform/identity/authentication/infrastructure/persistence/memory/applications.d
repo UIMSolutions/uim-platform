@@ -10,7 +10,7 @@ module uim.platform.identity.authentication.infrastructure.persistence.memory.ap
 
 import uim.platform.identity.authentication;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 /// In-memory adapter for application/service provider persistence.
 class MemoryApplicationRepository : TenantRepository!(Application, ApplicationId), ApplicationRepository {

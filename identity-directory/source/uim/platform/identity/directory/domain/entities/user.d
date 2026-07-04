@@ -7,7 +7,7 @@ module uim.platform.identity.directory.domain.entities.user;
 
 import uim.platform.identity.directory;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// SCIM 2.0 user name component.

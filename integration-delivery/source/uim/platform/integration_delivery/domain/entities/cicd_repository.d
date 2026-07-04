@@ -7,7 +7,7 @@ module uim.platform.integration_delivery.domain.entities.cicd_repository;
 
 import uim.platform.integration_delivery;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

@@ -6,7 +6,7 @@
 module uim.platform.integration.automation.domain.types;
 import uim.platform.integration.automation;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Unique identifier type aliases for type safety.

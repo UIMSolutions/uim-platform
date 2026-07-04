@@ -15,7 +15,7 @@ module uim.platform.identity.authentication.application.usecases.manage.users;
 
 import uim.platform.identity.authentication;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 /// Application use case: SCIM-like user management (CRUD).
 class ManageUsersUseCase { // TODO: UIMUseCase {

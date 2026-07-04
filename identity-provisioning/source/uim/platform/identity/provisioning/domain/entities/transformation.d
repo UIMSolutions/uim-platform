@@ -7,7 +7,7 @@ module uim.platform.identity.provisioning.domain.entities.transformation;
 
 import uim.platform.identity.provisioning;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// An attribute-mapping transformation that defines how identity

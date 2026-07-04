@@ -7,7 +7,7 @@ module uim.platform.identity.provisioning.domain.enumerations;
 
 import uim.platform.identity.provisioning;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

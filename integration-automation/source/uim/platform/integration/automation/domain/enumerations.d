@@ -7,7 +7,7 @@ module uim.platform.integration.automation.domain.enumerations;
 
 import uim.platform.integration.automation;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

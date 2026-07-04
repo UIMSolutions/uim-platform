@@ -18,7 +18,7 @@ module uim.platform.identity.provisioning.domain.services.provisioning_engine;
 // import uim.platform.identity.provisioning.domain.ports.repositories.provisioned_entitys;
 import uim.platform.identity.provisioning;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Core domain service that orchestrates the provisioning pipeline:

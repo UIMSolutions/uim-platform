@@ -13,7 +13,7 @@ module uim.platform.identity.authentication.application.usecases.manage.tenants;
 // 
 import uim.platform.identity.authentication;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 /// Application use case: tenant management.
 class ManageTenantsUseCase { // TODO: UIMUseCase {

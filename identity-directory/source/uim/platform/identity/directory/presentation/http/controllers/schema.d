@@ -10,7 +10,7 @@ module uim.platform.identity.authentication.presentation.http.schema;
 // import uim.platform.identity.directory.domain.entities.schema;
 import uim.platform.identity.directory;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// HTTP controller for custom schema management.

@@ -9,7 +9,7 @@ module uim.platform.identity.directory.domain.ports.repositories.groups;
 
 import uim.platform.identity.directory;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — group persistence.

@@ -12,7 +12,7 @@ module uim.platform.identity.directory.application.dto;
 // import uim.platform.identity.directory.domain.entities.schema : SchemaAttribute;
 import uim.platform.identity.directory;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// --- User DTOs ---

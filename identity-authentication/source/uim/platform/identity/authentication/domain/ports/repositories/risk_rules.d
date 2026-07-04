@@ -8,7 +8,7 @@ module uim.platform.identity.authentication.domain.ports.repositories.risk_rules
 // import uim.platform.identity.authentication.domain.types;
 import uim.platform.identity.authentication;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 /// Port: outgoing — risk rule persistence.
 interface RiskRuleRepository : ITenantRepository!(RiskRule, RiskRuleId) {

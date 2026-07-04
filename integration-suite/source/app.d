@@ -1,7 +1,7 @@
 module app;
 import uim.platform.integration_suite;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

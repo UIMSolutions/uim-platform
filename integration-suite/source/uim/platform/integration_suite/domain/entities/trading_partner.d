@@ -1,6 +1,6 @@
 module uim.platform.integration_suite.domain.entities.trading_partner;
 import uim.platform.integration_suite;
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 
 /// A B2B trading partner profile capturing EDI and messaging preferences.

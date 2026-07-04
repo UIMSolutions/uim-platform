@@ -12,7 +12,7 @@ module uim.platform.integration.automation.presentation.http.controllers.destina
 // import uim.platform.integration.automation.presentation.http.scenario_controller : parseSystemType;
 import uim.platform.integration.automation;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class DestinationController : ManageHttpController {

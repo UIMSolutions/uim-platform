@@ -20,7 +20,7 @@ module uim.platform.identity.authentication.application.usecases.issue_token;
 // 
 import uim.platform.identity.authentication;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 /// Application use case: issue OAuth2/OIDC tokens after successful authentication.
 class IssueTokenUseCase { // TODO: UIMUseCase {

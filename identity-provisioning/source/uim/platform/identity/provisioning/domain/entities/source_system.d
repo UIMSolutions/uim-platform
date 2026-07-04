@@ -7,7 +7,7 @@ module uim.platform.identity.provisioning.domain.entities.source_system;
 
 import uim.platform.identity.provisioning;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// A source system from which identities (users/groups) are read

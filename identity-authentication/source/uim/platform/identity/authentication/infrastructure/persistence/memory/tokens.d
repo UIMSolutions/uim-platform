@@ -10,7 +10,7 @@ module uim.platform.identity.authentication.infrastructure.persistence.memory.to
 
 import uim.platform.identity.authentication;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 /// In-memory adapter for token persistence.
 class MemoryTokenRepository : TokenRepository {

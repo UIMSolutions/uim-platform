@@ -21,7 +21,7 @@ module uim.platform.identity.authentication.application.usecases.authenticate_us
 // 
 import uim.platform.identity.authentication;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 /// Application use case: authenticate a user with form-based credentials.
 class AuthenticateUserUseCase { // TODO: UIMUseCase {

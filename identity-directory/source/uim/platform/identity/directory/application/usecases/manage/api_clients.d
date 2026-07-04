@@ -13,7 +13,7 @@ module uim.platform.identity.directory.application.usecases.manage.api_clients;
 
 import uim.platform.identity.directory;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

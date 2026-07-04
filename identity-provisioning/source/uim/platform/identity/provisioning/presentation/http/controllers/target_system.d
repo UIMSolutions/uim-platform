@@ -11,7 +11,7 @@ module uim.platform.identity.provisioning.presentation.http.target_system;
 // import uim.platform.identity.provisioning.domain.types;
 import uim.platform.identity.provisioning;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class TargetSystemController : ManageHttpController {

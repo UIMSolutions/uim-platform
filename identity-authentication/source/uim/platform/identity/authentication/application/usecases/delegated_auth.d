@@ -13,7 +13,7 @@ module uim.platform.identity.authentication.application.usecases.delegated_auth;
 // import std.string : split;
 import uim.platform.identity.authentication;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 /// Application use case: delegate authentication to an external IdP.
 class DelegatedAuthUseCase { // TODO: UIMUseCase {

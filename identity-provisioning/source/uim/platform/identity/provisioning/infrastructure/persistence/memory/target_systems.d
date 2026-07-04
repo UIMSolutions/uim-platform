@@ -10,7 +10,7 @@ module uim.platform.identity.provisioning.infrastructure.persistence.memory.targ
 // import uim.platform.identity.provisioning.domain.ports.repositories.target_systems;
 import uim.platform.identity.provisioning;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryTargetSystemRepository : TargetSystemRepository {

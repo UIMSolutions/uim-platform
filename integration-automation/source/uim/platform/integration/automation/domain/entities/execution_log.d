@@ -7,7 +7,7 @@ module uim.platform.integration.automation.domain.entities.execution_log;
 // import uim.platform.integration.automation.domain.types;
 import uim.platform.integration.automation;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// An execution log entry — records the execution of a workflow step

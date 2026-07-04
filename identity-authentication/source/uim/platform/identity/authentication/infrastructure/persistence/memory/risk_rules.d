@@ -10,7 +10,7 @@ module uim.platform.identity.authentication.infrastructure.persistence.memory.ri
 
 import uim.platform.identity.authentication;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 /// In-memory adapter for risk rule persistence.
 class MemoryRiskRuleRepository : TenantRepository!(RiskRule, RiskRuleId), RiskRuleRepository {

@@ -7,7 +7,7 @@ module uim.platform.identity.directory.domain.types;
 /// Unique identifier type aliases for type safety.
 import uim.platform.identity.directory;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

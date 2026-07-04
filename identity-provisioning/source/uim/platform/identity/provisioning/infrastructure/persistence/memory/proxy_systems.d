@@ -10,7 +10,7 @@ module uim.platform.identity.provisioning.infrastructure.persistence.memory.prox
 // import uim.platform.identity.provisioning.domain.ports.repositories.proxy_systems;
 import uim.platform.identity.provisioning;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryProxySystemRepository : TenantRepository!(ProxySystem, ProxySystemId), ProxySystemRepository {

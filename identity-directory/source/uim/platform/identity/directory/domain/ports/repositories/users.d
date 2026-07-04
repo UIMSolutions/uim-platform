@@ -9,7 +9,7 @@ module uim.platform.identity.directory.domain.ports.repositories.users;
 
 import uim.platform.identity.directory;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — user persistence (SCIM 2.0 compliant).

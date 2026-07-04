@@ -7,7 +7,7 @@ module uim.platform.identity.provisioning.domain.entities.target_system;
 
 import uim.platform.identity.provisioning;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// A target system to which identities (users/groups) are written

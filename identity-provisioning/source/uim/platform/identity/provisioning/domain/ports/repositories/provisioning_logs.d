@@ -9,7 +9,7 @@ module uim.platform.identity.provisioning.domain.ports.repositories.provisioning
 // import uim.platform.identity.provisioning.domain.entities.provisioning_log;
 import uim.platform.identity.provisioning;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 interface ProvisioningLogRepository : ITenantRepository!(ProvisioningLog, ProvisioningLogId) {

@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.integration_suite.domain.enumerations;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

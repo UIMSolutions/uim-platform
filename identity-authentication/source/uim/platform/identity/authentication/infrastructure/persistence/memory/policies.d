@@ -12,7 +12,7 @@ module uim.platform.identity.authentication.infrastructure.persistence.memory.po
 
 import uim.platform.identity.authentication;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 /// In-memory adapter for authorization policy persistence.
 class MemoryPolicyRepository : TenantRepository!(AuthorizationPolicy, PolicyId), PolicyRepository {

@@ -10,7 +10,7 @@ module app;
 // import uim.platform.integration.automation.infrastructure.container;
 import uim.platform.integration.automation;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

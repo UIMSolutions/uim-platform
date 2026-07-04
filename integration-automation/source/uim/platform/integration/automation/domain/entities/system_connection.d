@@ -7,7 +7,7 @@ module uim.platform.integration.automation.domain.entities.system_connection;
 // import uim.platform.integration.automation.domain.types;
 import uim.platform.integration.automation;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// A system in the customer landscape — represents an endpoint

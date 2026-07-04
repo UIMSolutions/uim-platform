@@ -7,7 +7,7 @@ module uim.platform.identity.authentication.domain.entities.session;
 // import uim.platform.identity.authentication.domain.types;
 import uim.platform.identity.authentication;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 /// Authenticated session.
 struct IdaSession {

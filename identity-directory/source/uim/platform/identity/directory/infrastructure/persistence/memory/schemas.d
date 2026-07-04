@@ -9,7 +9,7 @@ module uim.platform.identity.directory.infrastructure.persistence.memory.schemas
 // import uim.platform.identity.directory.domain.ports.repositories.schemas;
 import uim.platform.identity.directory;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// In-memory adapter for custom schema persistence.

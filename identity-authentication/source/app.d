@@ -12,7 +12,7 @@ module app;
 
 import uim.platform.identity.authentication;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

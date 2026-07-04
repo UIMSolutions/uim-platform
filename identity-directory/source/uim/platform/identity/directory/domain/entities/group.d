@@ -7,7 +7,7 @@ module uim.platform.identity.directory.domain.entities.group;
 
 import uim.platform.identity.directory;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Member reference within a group.

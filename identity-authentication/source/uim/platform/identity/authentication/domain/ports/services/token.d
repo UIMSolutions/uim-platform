@@ -9,7 +9,7 @@ module uim.platform.identity.authentication.domain.ports.repositories.services.t
 // import uim.platform.identity.authentication.domain.types;
 import uim.platform.identity.authentication;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 /// Port: outgoing — token generation and validation.
 interface TokenService {

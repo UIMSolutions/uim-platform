@@ -7,5 +7,5 @@ module uim.platform.identity.authentication.presentation.rest.services.group;
 
 import uim.platform.identity.authentication;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:

@@ -15,7 +15,7 @@ module uim.platform.identity.directory.application.usecases.manage.groups;
 
 import uim.platform.identity.directory;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Application use case: SCIM 2.0 group management.

@@ -7,7 +7,7 @@ module uim.platform.identity.directory.domain.ports.repositories.password_servic
 
 import uim.platform.identity.directory;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

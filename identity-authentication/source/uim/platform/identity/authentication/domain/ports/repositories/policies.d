@@ -8,7 +8,7 @@ module uim.platform.identity.authentication.domain.ports.repositories.policies;
 // import uim.platform.identity.authentication.domain.types;
 import uim.platform.identity.authentication;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 /// Port: outgoing — authorization policy persistence.
 interface PolicyRepository : ITenantRepository!(AuthorizationPolicy, PolicyId) {

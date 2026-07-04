@@ -7,7 +7,7 @@ module uim.platform.identity.authentication.domain.entities.user;
 // import uim.platform.identity.authentication.domain.types;
 import uim.platform.identity.authentication;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 /// Core user entity in the identity directory.
 struct User {

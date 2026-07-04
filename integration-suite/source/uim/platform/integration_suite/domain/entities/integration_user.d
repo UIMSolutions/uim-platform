@@ -1,6 +1,6 @@
 module uim.platform.integration_suite.domain.entities.integration_user;
 import uim.platform.integration_suite;
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 
 /// A tenant user within the Integration Suite platform.

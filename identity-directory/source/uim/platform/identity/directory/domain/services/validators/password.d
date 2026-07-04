@@ -8,7 +8,7 @@ module uim.platform.identity.directory.domain.services.validators.password;
 
 import uim.platform.identity.directory;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Domain service: validates passwords against policy rules.

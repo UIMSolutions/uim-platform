@@ -14,7 +14,7 @@ module uim.platform.identity.directory.application.usecases.manage.password_poli
 
 import uim.platform.identity.directory;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Application use case: password policy management.

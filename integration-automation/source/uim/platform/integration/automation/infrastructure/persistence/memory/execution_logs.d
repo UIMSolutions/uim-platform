@@ -11,7 +11,7 @@ module uim.platform.integration.automation.infrastructure.persistence.memory.exe
 
 import uim.platform.integration.automation;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:;
 

@@ -11,7 +11,7 @@ module uim.platform.integration.automation.infrastructure.persistence.memory.sce
 
 import uim.platform.integration.automation;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryScenarioRepository : TenantRepository!(IntegrationScenario, ScenarioId), ScenarioRepository {

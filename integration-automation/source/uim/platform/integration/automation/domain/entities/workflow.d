@@ -7,7 +7,7 @@ module uim.platform.integration.automation.domain.entities.workflow;
 // import uim.platform.integration.automation.domain.types;
 import uim.platform.integration.automation;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// A workflow instance — a running execution of an integration scenario

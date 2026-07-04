@@ -9,7 +9,7 @@ module uim.platform.identity.directory.infrastructure.persistence.memory.api_cli
 // import uim.platform.identity.directory.domain.ports.repositories.api_clients;
 import uim.platform.identity.directory;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// In-memory adapter for API client persistence.

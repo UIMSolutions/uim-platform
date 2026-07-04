@@ -12,7 +12,7 @@ module uim.platform.identity.authentication.presentation.http.controllers.user;
 // 
 import uim.platform.identity.authentication;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 /// HTTP controller for SCIM-like user management API.
 class UserController : ManageHttpController {
