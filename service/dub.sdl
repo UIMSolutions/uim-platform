@@ -5,7 +5,7 @@ authors "Ozan Nurettin Süel"
 copyright "Copyright © 2018 - 2026, ONS"
 license "Apache-2.0"
 dependency "gtk-d" version="~>3.11.0"
-dependency "uim-framework" version="~>26.5.1"
+dependency "uim-framework" version="~>26.7.1"
 
 targetType "library"
 targetName "uim-platform-service"
