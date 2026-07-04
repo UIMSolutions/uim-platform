@@ -12,7 +12,7 @@ module uim.platform.management.presentation.http.controllers.label;
 
 import uim.platform.management;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 class LabelController : ManageHttpController {
   private ManageLabelsUseCase usecase;

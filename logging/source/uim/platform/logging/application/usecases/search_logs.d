@@ -11,7 +11,7 @@ module uim.platform.logging.application.usecases.search_logs;
 
 import uim.platform.logging;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class SearchLogsUseCase { // TODO: UIMUseCase {

@@ -10,7 +10,7 @@ module uim.platform.kyma.application.usecases.manage.environments;
 
 import uim.platform.kyma;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Application service for Kyma environment lifecycle management.

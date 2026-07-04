@@ -8,7 +8,7 @@ module uim.platform.logging.domain.ports.repositories.spans;
 
 import uim.platform.logging;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 interface SpanRepository : ITenantRepository!(Span, SpanId) {

@@ -8,7 +8,7 @@ module uim.platform.management.domain.services.entitlement_evaluator;
 
 import uim.platform.management;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Domain service: evaluates entitlement quota constraints,

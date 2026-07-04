@@ -6,7 +6,7 @@
 module uim.platform.keystore.application.dto;
 import uim.platform.keystore;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 // ---------------------------------------------------------------------------

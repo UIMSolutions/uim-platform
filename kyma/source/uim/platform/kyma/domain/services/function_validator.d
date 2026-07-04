@@ -8,7 +8,7 @@ module uim.platform.kyma.domain.services.function_validator;
 
 import uim.platform.kyma;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Domain service: validates serverless function configurations.

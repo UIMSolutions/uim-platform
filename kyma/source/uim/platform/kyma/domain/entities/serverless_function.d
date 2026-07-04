@@ -7,7 +7,7 @@ module uim.platform.kyma.domain.entities.serverless_function;
 
 import uim.platform.kyma;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// A serverless function deployed in a Kyma namespace.

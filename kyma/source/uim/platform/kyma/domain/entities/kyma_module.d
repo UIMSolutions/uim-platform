@@ -7,7 +7,7 @@ module uim.platform.kyma.domain.entities.kyma_module;
 
 import uim.platform.kyma;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// A Kyma module — an optional component that can be enabled/disabled.

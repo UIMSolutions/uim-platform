@@ -10,7 +10,7 @@ module uim.platform.logging.application.usecases.manage.retention_policies;
 
 import uim.platform.logging;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class ManageRetentionPoliciesUseCase { // TODO: UIMUseCase {

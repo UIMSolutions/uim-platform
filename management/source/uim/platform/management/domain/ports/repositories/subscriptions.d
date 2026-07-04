@@ -8,7 +8,7 @@ module uim.platform.management.domain.ports.repositories.subscriptions;
 
 import uim.platform.management;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — subscription persistence.

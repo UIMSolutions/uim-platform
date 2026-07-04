@@ -13,7 +13,7 @@ module uim.platform.job_scheduling.infrastructure.persistence.memory.run_log;
  
 import uim.platform.job_scheduling;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryRunLogRepository : TenantRepository!(RunLog, RunLogId), RunLogRepository {

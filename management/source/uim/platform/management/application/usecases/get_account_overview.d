@@ -15,7 +15,7 @@ module uim.platform.management.application.usecases.get_account_overview;
 
 import uim.platform.management;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Use case: generate a dashboard overview for a global account.

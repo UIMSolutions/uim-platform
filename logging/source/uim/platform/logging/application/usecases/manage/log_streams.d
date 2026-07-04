@@ -12,7 +12,7 @@ import std.conv : ConvException, to;
 import std.string : toLower;
 import uim.platform.logging;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class ManageLogStreamsUseCase { // TODO: UIMUseCase {

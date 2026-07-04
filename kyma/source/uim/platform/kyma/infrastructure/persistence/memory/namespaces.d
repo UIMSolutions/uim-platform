@@ -12,7 +12,7 @@ module uim.platform.kyma.infrastructure.persistence.memory.namespaces;
  
 import uim.platform.kyma;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryNamespaceRepository : TenantRepository!(Namespace, NamespaceId), NamespaceRepository {

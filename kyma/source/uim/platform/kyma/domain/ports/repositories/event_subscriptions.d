@@ -8,7 +8,7 @@ module uim.platform.kyma.domain.ports.repositories.event_subscriptions;
 
 import uim.platform.kyma;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — event subscription persistence.

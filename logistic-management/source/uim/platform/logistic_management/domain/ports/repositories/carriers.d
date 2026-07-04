@@ -6,7 +6,7 @@
 module uim.platform.logistic_management.domain.ports.repositories.carriers;
 import uim.platform.logistic_management;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 interface CarrierRepository : ITenantRepository!(Carrier, CarrierId) {

@@ -44,7 +44,7 @@ module uim.platform.management.infrastructure.container;
 
 import uim.platform.management;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 /// Dependency injection container — wires all layers together.
 struct Container {

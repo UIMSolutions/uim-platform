@@ -8,7 +8,7 @@ module uim.platform.kyma.domain.services.module_dependency_resolver;
 
 import uim.platform.kyma;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Domain service: resolves module dependencies and validates enable/disable operations.

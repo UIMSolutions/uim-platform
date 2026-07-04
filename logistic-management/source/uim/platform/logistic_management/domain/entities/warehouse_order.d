@@ -6,7 +6,7 @@
 module uim.platform.logistic_management.domain.entities.warehouse_order;
 import uim.platform.logistic_management;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// A warehouse order groups related warehouse tasks for a delivery or transfer.

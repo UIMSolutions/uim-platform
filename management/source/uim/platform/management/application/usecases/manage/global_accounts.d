@@ -12,7 +12,7 @@ module uim.platform.management.application.usecases.manage.global_accounts;
 
 import uim.platform.management;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Use case: manage global account lifecycle.

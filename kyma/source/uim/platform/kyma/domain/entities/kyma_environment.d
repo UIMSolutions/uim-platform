@@ -7,7 +7,7 @@ module uim.platform.kyma.domain.entities.kyma_environment;
 
 import uim.platform.kyma;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// A Kyma environment — a managed Kubernetes cluster with Kyma modules.

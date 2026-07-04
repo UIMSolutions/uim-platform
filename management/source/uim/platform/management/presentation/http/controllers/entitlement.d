@@ -12,7 +12,7 @@ module uim.platform.management.presentation.http.controllers.entitlement;
 
 import uim.platform.management;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 class EntitlementController : ManageHttpController {
   private ManageEntitlementsUseCase usecase;

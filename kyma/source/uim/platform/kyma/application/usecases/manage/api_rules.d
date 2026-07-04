@@ -10,7 +10,7 @@ module uim.platform.kyma.application.usecases.manage.api_rules;
 
 import uim.platform.kyma;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Application service for API rule management.

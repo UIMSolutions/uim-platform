@@ -8,7 +8,7 @@ module uim.platform.logging.domain.ports.repositories.alert_rules;
 
 import uim.platform.logging;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 interface AlertRuleRepository : ITenantRepository!(AlertRule, AlertRuleId) {

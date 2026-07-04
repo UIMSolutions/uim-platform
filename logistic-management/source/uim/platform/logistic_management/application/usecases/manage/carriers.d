@@ -6,7 +6,7 @@
 module uim.platform.logistic_management.application.usecases.manage.carriers;
 import uim.platform.logistic_management;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class ManageCarriersUseCase {

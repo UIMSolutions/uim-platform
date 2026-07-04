@@ -7,7 +7,7 @@ module uim.platform.management.domain.entities.subscription;
 
 import uim.platform.management;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// A subscription represents a SaaS application that a subaccount

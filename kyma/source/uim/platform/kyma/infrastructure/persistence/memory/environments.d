@@ -12,7 +12,7 @@ module uim.platform.kyma.infrastructure.persistence.memory.environments;
  
 import uim.platform.kyma;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryEnvironmentRepository : TenantRepository!(KymaEnvironment, KymaEnvironmentId), EnvironmentRepository {

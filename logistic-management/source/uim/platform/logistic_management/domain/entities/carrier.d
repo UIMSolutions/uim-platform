@@ -6,7 +6,7 @@
 module uim.platform.logistic_management.domain.entities.carrier;
 import uim.platform.logistic_management;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// A transportation service provider (carrier) used in freight orders.

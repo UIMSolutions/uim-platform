@@ -12,7 +12,7 @@ module uim.platform.job_scheduling.infrastructure.persistence.memory.job;
 
 import uim.platform.job_scheduling;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryJobRepository : TenantRepository!(Job, JobId), JobRepository {

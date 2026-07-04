@@ -2,7 +2,7 @@ module uim.platform.kyma.application.dto.function_;
 
 import uim.platform.kyma;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 struct CreateFunctionRequest {

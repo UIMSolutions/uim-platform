@@ -15,7 +15,7 @@ module uim.platform.logging.application.usecases.get_overview;
 
 import uim.platform.logging;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class GetOverviewUseCase { // TODO: UIMUseCase {

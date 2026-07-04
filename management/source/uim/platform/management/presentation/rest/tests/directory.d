@@ -2,7 +2,7 @@ module uim.platform.management.presentation.rest.tests.directory;
 
 import uim.platform.management;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 unittest {
     import vibe.core.core : yield, runTask;

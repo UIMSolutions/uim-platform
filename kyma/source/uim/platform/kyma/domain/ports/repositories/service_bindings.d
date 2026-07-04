@@ -8,7 +8,7 @@ module uim.platform.kyma.domain.ports.repositories.service_bindings;
 
 import uim.platform.kyma;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — service binding persistence.

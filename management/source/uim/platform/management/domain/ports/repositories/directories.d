@@ -8,7 +8,7 @@ module uim.platform.management.domain.ports.repositories.directories;
 
 import uim.platform.management;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — directory persistence.

@@ -12,7 +12,7 @@ module uim.platform.logging.infrastructure.persistence.memory.spans;
  
 import uim.platform.logging;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

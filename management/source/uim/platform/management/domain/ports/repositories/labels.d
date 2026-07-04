@@ -8,7 +8,7 @@ module uim.platform.management.domain.ports.repositories.labels;
 
 import uim.platform.management;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — label/tag persistence.

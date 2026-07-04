@@ -1,7 +1,7 @@
 module uim.platform.logging.domain.enumerations;
 import uim.platform.logging;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

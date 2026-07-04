@@ -8,7 +8,7 @@ module uim.platform.management.domain.ports.repositories.environment_instances;
 
 import uim.platform.management;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — environment instance persistence.

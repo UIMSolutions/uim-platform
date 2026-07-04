@@ -6,7 +6,7 @@
 module uim.platform.logistic_management.presentation.http.controllers.shipment;
 import uim.platform.logistic_management;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class ShipmentController : ManageHttpController {

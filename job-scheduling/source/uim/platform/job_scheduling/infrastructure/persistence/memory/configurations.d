@@ -10,7 +10,7 @@ module uim.platform.job_scheduling.infrastructure.persistence.memory.configurati
 // import uim.platform.job_scheduling.domain.ports.repositories.configurations;
 import uim.platform.job_scheduling;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryConfigurationRepository : TenantRepository!(Configuration, ConfigurationId), ConfigurationRepository {

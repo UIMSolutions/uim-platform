@@ -9,7 +9,7 @@ module uim.platform.job_scheduling.domain.ports.repositories.schedules;
 // import uim.platform.job_scheduling.domain.entities.schedule;
 import uim.platform.job_scheduling;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 interface ScheduleRepository : ITenantRepository!(Schedule, ScheduleId) {

@@ -10,7 +10,7 @@ module uim.platform.logging.presentation.http.controllers.alert_rule;
 //
 import uim.platform.logging;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

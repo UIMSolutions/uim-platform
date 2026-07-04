@@ -7,7 +7,7 @@ module uim.platform.kyma.domain.entities.namespace;
 
 import uim.platform.kyma;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// A Kubernetes namespace within a Kyma environment.

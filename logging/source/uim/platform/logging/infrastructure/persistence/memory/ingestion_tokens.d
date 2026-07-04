@@ -9,7 +9,7 @@ module uim.platform.logging.infrastructure.persistence.memory.ingestion_tokens;
 
 import uim.platform.logging;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryIngestionTokenRepository : TenantRepository!(IngestionToken, IngestionTokenId), IngestionTokenRepository {

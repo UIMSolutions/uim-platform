@@ -7,7 +7,7 @@ module uim.platform.job_scheduling.domain.types;
 
 import uim.platform.job_scheduling;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

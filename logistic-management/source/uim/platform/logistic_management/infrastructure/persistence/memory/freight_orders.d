@@ -8,7 +8,7 @@ import uim.platform.logistic_management;
 import std.algorithm : filter;
 import std.array : array;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryFreightOrderRepository : TenantRepository!(FreightOrder, FreightOrderId), FreightOrderRepository {

@@ -10,7 +10,7 @@ module uim.platform.kyma.application.usecases.manage.event_subscriptions;
 
 import uim.platform.kyma;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Application service for event subscription management.

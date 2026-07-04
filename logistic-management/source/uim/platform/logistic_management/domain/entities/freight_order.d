@@ -6,7 +6,7 @@
 module uim.platform.logistic_management.domain.entities.freight_order;
 import uim.platform.logistic_management;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// A freight/transportation order linking an origin to a destination via a carrier.

@@ -27,7 +27,7 @@ module uim.platform.job_scheduling.infrastructure.container;
 // import uim.platform.job_scheduling.presentation.http.controllers.health;
 import uim.platform.job_scheduling;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 struct Container {

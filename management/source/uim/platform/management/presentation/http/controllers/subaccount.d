@@ -11,7 +11,7 @@ module uim.platform.management.presentation.http.controllers.subaccount;
 
 import uim.platform.management;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 class SubaccountController : ManageHttpController {
   private ManageSubaccountsUseCase usecase;

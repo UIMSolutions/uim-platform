@@ -5,10 +5,9 @@
 *****************************************************************************************************************/
 module uim.platform.job_scheduling.application.dto;
 
-
 import uim.platform.job_scheduling;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 // --- Job ---

@@ -9,7 +9,7 @@ module uim.platform.logging.infrastructure.persistence.memory.retention_policies
 //import uim.platform.logging.domain.types;
 import uim.platform.logging;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

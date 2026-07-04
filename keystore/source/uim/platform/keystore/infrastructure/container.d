@@ -24,7 +24,7 @@ module uim.platform.keystore.infrastructure.container;
 
 import uim.platform.keystore;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 struct Container {

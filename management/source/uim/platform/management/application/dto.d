@@ -8,7 +8,7 @@ module uim.platform.management.application.dto;
 
 import uim.platform.management;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// --- Global Account DTOs ---

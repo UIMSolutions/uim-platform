@@ -2,7 +2,7 @@ module uim.platform.management.presentation.rest.interfaces.subaccount;
 
 import uim.platform.management;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 interface ISubaccountApi {

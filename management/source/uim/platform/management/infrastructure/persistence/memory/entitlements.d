@@ -12,7 +12,7 @@ module uim.platform.management.infrastructure.persistence.memory.entitlements;
 
 import uim.platform.management;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 
 class MemoryEntitlementRepository : TenantRepository!(Entitlement, EntitlementId), EntitlementRepository {

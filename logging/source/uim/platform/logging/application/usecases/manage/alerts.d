@@ -9,7 +9,7 @@ module uim.platform.logging.application.usecases.manage.alerts;
 
 import uim.platform.logging;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class ManageAlertsUseCase : TenantUseCase!(AlertRepository, Alert, AlertId) {

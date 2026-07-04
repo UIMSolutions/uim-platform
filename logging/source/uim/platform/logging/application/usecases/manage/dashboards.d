@@ -10,7 +10,7 @@ module uim.platform.logging.application.usecases.manage.dashboards;
 
 import uim.platform.logging;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class ManageDashboardsUseCase { // TODO: UIMUseCase {

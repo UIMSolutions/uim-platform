@@ -9,7 +9,7 @@ module uim.platform.logging.infrastructure.persistence.memory.alert_rules;
 
 import uim.platform.logging;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryAlertRuleRepository : TenantRepository!(AlertRule, AlertRuleId), AlertRuleRepository {

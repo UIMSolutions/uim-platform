@@ -8,7 +8,7 @@ module uim.platform.kyma.domain.ports.repositories.api_rules;
 
 import uim.platform.kyma;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — API rule persistence.

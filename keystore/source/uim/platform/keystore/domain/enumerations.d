@@ -7,7 +7,7 @@ module uim.platform.keystore.domain.enumerations;
 
 import uim.platform.keystore;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

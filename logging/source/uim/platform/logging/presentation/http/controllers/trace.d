@@ -11,7 +11,7 @@ module uim.platform.logging.presentation.http.controllers.trace;
 
 import uim.platform.logging;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

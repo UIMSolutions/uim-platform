@@ -10,7 +10,7 @@ module uim.platform.job_scheduling.presentation.http.controllers.job;
 
 import uim.platform.job_scheduling;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class JobController : ManageHttpController {

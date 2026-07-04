@@ -12,7 +12,7 @@ module uim.platform.management.infrastructure.persistence.memory.global_accounts
 
 import uim.platform.management;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 
 class MemoryGlobalAccountRepository : TenantRepository!(GlobalAccount, GlobalAccountId), GlobalAccountRepository {

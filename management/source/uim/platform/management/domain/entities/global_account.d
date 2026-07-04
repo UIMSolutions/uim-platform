@@ -7,7 +7,7 @@ module uim.platform.management.domain.entities.global_account;
 
 import uim.platform.management;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// A global account is the top-level entity in the SAP BTP account model.

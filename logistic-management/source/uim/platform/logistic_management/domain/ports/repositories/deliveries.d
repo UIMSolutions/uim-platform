@@ -6,7 +6,7 @@
 module uim.platform.logistic_management.domain.ports.repositories.deliveries;
 import uim.platform.logistic_management;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 interface DeliveryRepository : ITenantRepository!(Delivery, DeliveryId) {

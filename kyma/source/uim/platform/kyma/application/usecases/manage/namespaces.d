@@ -10,7 +10,7 @@ module uim.platform.kyma.application.usecases.manage.namespaces;
 
 import uim.platform.kyma;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Application service for Kubernetes namespace management.

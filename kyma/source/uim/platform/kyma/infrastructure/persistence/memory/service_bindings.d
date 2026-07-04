@@ -12,7 +12,7 @@ module uim.platform.kyma.infrastructure.persistence.memory.service_bindings;
  
 import uim.platform.kyma;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryServiceBindingRepository : ServiceBindingRepository {

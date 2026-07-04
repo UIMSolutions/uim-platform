@@ -8,7 +8,7 @@ module uim.platform.logging.domain.ports.repositories.ingestion_tokens;
 
 import uim.platform.logging;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 interface IngestionTokenRepository : ITenantRepository!(IngestionToken, IngestionTokenId) {

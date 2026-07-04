@@ -7,7 +7,7 @@ module uim.platform.management.domain.entities.entitlement;
 
 import uim.platform.management;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// An entitlement represents the assignment of a service plan's quota

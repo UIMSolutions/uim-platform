@@ -6,7 +6,7 @@
 module uim.platform.logistic_management.presentation.http.controllers.carrier;
 import uim.platform.logistic_management;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class CarrierController : ManageHttpController {

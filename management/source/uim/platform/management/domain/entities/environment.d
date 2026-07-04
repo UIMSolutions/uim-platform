@@ -7,7 +7,7 @@ module uim.platform.management.domain.entities.environment;
 
 import uim.platform.management;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// An environment instance represents a provisioned runtime environment

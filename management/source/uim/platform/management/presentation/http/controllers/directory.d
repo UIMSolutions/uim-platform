@@ -12,7 +12,7 @@ module uim.platform.management.presentation.http.controllers.directory;
 
 import uim.platform.management;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class DirectoryController : ManageHttpController {

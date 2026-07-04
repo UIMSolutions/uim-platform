@@ -2,7 +2,7 @@ module uim.platform.job_scheduling.domain.enumerations;
 
 import uim.platform.job_scheduling;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

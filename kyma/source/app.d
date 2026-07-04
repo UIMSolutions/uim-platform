@@ -10,7 +10,7 @@ module app;
 // import uim.platform.kyma.infrastructure.container;
 import uim.platform.kyma;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

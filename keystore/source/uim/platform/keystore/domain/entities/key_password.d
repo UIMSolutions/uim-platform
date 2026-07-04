@@ -8,7 +8,7 @@ module uim.platform.keystore.domain.entities.key_password;
 
 import uim.platform.keystore;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// A stored password or key phrase that protects a keystore or key entry.

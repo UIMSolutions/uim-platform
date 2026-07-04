@@ -9,7 +9,7 @@ module uim.platform.job_scheduling.domain.ports.repositories.run_logs;
 // import uim.platform.job_scheduling.domain.entities.run_log;
 import uim.platform.job_scheduling;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 interface RunLogRepository : ITenantRepository!(RunLog, RunLogId) {

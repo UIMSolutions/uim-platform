@@ -6,7 +6,7 @@
 module uim.platform.kyma.domain.types;
 import uim.platform.kyma;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Unique identifier type aliases for type safety.

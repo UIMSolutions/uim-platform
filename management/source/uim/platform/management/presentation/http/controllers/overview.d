@@ -10,7 +10,7 @@ module uim.platform.management.presentation.http.controllers.overview;
 // import uim.platform.management.application.dto;
 import uim.platform.management;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 class OverviewController : HttpController {
   private GetAccountOverviewUseCase usecase;

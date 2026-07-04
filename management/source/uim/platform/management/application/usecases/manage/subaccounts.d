@@ -12,7 +12,7 @@ module uim.platform.management.application.usecases.manage.subaccounts;
 
 import uim.platform.management;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Use case: manage subaccount lifecycle within global accounts.

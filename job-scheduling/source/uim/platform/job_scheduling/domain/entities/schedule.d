@@ -8,7 +8,7 @@ module uim.platform.job_scheduling.domain.entities.schedule;
 
 import uim.platform.job_scheduling;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 struct Schedule {

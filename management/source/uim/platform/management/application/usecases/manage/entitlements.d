@@ -11,7 +11,7 @@ module uim.platform.management.application.usecases.manage.entitlements;
 
 import uim.platform.management;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Use case: manage service plan entitlements and quota assignments.

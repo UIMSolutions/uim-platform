@@ -9,7 +9,7 @@ module uim.platform.logging.infrastructure.persistence.memory.pipelines;
 
 import uim.platform.logging;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryPipelineRepository : TenantRepository!(Pipeline, PipelineId), PipelineRepository {

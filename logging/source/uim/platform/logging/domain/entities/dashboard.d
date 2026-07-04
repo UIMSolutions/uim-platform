@@ -7,7 +7,7 @@ module uim.platform.logging.domain.entities.dashboard;
 
 import uim.platform.logging;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 struct DashboardPanel {

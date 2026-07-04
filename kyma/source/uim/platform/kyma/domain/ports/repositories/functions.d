@@ -8,7 +8,7 @@ module uim.platform.kyma.domain.ports.repositories.functions;
 
 import uim.platform.kyma;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — serverless function persistence.

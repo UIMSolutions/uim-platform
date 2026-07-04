@@ -8,7 +8,7 @@ module uim.platform.management.domain.ports.repositories.service_plans;
 
 import uim.platform.management;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — service plan catalog persistence.

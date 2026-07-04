@@ -13,7 +13,7 @@ module uim.platform.management.application.usecases.manage.environment_instances
 
 import uim.platform.management;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Use case: manage environment instance lifecycle (CF, Kyma, ABAP).

@@ -8,7 +8,7 @@ module uim.platform.kyma.domain.ports.repositories.applications;
 
 import uim.platform.kyma;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — external application connectivity persistence.

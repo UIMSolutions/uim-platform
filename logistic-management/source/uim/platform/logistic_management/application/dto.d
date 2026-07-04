@@ -6,7 +6,7 @@
 module uim.platform.logistic_management.application.dto;
 import uim.platform.logistic_management;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 // ─── Carrier DTOs ────────────────────────────────────────────────────────────

@@ -8,7 +8,7 @@ module uim.platform.management.domain.ports.repositories.global_accounts;
 
 import uim.platform.management;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — global account persistence.

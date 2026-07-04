@@ -9,7 +9,7 @@ module uim.platform.logging.infrastructure.persistence.memory.log_streams;
 
 import uim.platform.logging;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryLogStreamRepository : TenantRepository!(LogStream, LogStreamId), LogStreamRepository {

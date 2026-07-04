@@ -2,7 +2,7 @@ module uim.platform.management.helpers.filters;
 
 import uim.platform.management;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

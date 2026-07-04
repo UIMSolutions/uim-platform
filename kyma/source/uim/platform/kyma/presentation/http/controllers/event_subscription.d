@@ -11,7 +11,7 @@ module uim.platform.kyma.presentation.http.controllers.event_subscription;
 
 import uim.platform.kyma;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class EventSubscriptionController : ManageHttpController {

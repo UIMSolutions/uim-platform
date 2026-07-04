@@ -11,7 +11,7 @@ module uim.platform.kyma.application.usecases.manage.functions;
 
 import uim.platform.kyma;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 /// Application service for serverless function lifecycle management.
