@@ -13,7 +13,7 @@ module uim.platform.datasphere.infrastructure.persistence.memory.catalog_assets;
 
 import uim.platform.datasphere;
 
-// mixin(ShowModule!()); 
+mixin(ShowModule!()); 
 
 @safe:
 

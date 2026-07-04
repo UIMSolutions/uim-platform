@@ -7,7 +7,7 @@ module uim.platform.datasphere_composer.infrastructure.persistence.memory.custom
 
 import uim.platform.datasphere_composer;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryCustomerProfileRepository

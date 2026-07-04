@@ -10,7 +10,7 @@ module uim.platform.datasphere.infrastructure.persistence.memory.remote_tables;
 
 import uim.platform.datasphere;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryRemoteTableRepository : TenantRepository!(RemoteTable, RemoteTableId), RemoteTableRepository {

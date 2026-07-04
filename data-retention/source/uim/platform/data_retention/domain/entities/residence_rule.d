@@ -1,7 +1,7 @@
 module uim.platform.data_retention.domain.entities.residence_rule;
 import uim.platform.data_retention;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

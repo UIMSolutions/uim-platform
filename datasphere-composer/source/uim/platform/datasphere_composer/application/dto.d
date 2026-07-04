@@ -7,7 +7,7 @@ module uim.platform.datasphere_composer.application.dto;
 
 import uim.platform.datasphere_composer;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

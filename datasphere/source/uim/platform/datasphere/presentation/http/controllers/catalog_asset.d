@@ -9,7 +9,7 @@ module uim.platform.datasphere.presentation.http.controllers.catalog_asset;
 
 import uim.platform.datasphere;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

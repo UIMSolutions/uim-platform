@@ -12,7 +12,7 @@ module uim.platform.datasphere.application.usecases.manage.data_flows;
 
 import uim.platform.datasphere;
 
-// mixin(ShowModule!()); 
+mixin(ShowModule!()); 
 
 @safe:
 class ManageDataFlowsUseCase { // TODO: UIMUseCase {

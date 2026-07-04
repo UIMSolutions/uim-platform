@@ -6,7 +6,7 @@
 module uim.platform.databricks.application.usecases.manage_ml_models;
 import uim.platform.databricks;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

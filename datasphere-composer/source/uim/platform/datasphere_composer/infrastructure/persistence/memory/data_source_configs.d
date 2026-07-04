@@ -7,7 +7,7 @@ module uim.platform.datasphere_composer.infrastructure.persistence.memory.data_s
 
 import uim.platform.datasphere_composer;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 class MemoryDataSourceConfigRepository

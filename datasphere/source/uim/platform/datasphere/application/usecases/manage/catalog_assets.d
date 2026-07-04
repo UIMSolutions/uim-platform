@@ -11,7 +11,7 @@ module uim.platform.datasphere.application.usecases.manage.catalog_assets;
 
 import uim.platform.datasphere;
 
-// mixin(ShowModule!()); 
+mixin(ShowModule!()); 
 
 @safe:
 class ManageCatalogAssetsUseCase { // TODO: UIMUseCase {
@@ -24,6 +24,7 @@ class ManageCatalogAssetsUseCase { // TODO: UIMUseCase {
   CommandResult createCatalogAsset(CreateCatalogAssetRequest r) {
     if (r.name.length == 0)
       return CommandResult(false, "", "Catalog asset name is required");
+      
     if (r.spaceId.isEmpty)
       return CommandResult(false, "", "Space ID is required");
 

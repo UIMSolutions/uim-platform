@@ -2,7 +2,7 @@ module uim.platform.data_retention.infrastructure.container;
 
 import uim.platform.data_retention;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

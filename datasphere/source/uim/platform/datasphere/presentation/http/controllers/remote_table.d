@@ -9,7 +9,7 @@ module uim.platform.datasphere.presentation.http.controllers.remote_table;
 
 import uim.platform.datasphere;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

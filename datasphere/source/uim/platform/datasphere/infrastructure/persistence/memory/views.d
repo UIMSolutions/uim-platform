@@ -10,7 +10,7 @@ module uim.platform.datasphere.infrastructure.persistence.memory.view;
 
 import uim.platform.datasphere;
 
-// mixin(ShowModule!()); 
+mixin(ShowModule!()); 
 
 @safe:
 class MemoryViewRepository : TenantRepository!(View, ViewId), Repository {

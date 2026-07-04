@@ -7,7 +7,7 @@ module uim.platform.datasphere_composer.infrastructure.container;
 
 import uim.platform.datasphere_composer;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 struct Container {

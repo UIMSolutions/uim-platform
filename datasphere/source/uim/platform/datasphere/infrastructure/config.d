@@ -9,7 +9,7 @@ import std.process : environment;
 
 import uim.platform.datasphere;
 
-// mixin(ShowModule!()); 
+mixin(ShowModule!()); 
 
 @safe:
 struct SrvConfig {

@@ -7,7 +7,7 @@ module uim.platform.datasphere.domain.entities.data_flow;
 
 import uim.platform.datasphere;
 
-// mixin(ShowModule!()); 
+mixin(ShowModule!()); 
 
 @safe:
 struct FlowSource {

@@ -3,7 +3,7 @@ module uim.platform.data_retention.infrastructure.config;
 import std.process : environment;
 import uim.platform.data_retention;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

@@ -9,7 +9,7 @@ module app;
 
 import uim.platform.datasphere;
 
-// mixin(ShowModule!()); 
+mixin(ShowModule!()); 
 
 @safe:
 version (unittest) {

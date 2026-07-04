@@ -12,7 +12,7 @@ module uim.platform.datasphere.infrastructure.persistence.memory.task_chain;
  
 import uim.platform.datasphere;
 
-// mixin(ShowModule!()); 
+mixin(ShowModule!()); 
 
 @safe:
 class MemoryTaskChainRepository : TenantRepository!(TaskChain, TaskChainId), TaskChainRepository {

@@ -11,7 +11,7 @@ module uim.platform.datasphere.application.usecases.manage.remote_tables;
 
 import uim.platform.datasphere;
 
-// mixin(ShowModule!()); 
+mixin(ShowModule!()); 
 
 @safe:
 class ManageRemoteTablesUseCase { // TODO: UIMUseCase {

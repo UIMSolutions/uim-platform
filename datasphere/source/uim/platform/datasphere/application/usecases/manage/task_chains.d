@@ -11,7 +11,7 @@ module uim.platform.datasphere.application.usecases.manage.task_chains;
 
 import uim.platform.datasphere;
 
-// mixin(ShowModule!()); 
+mixin(ShowModule!()); 
 
 @safe:
 class ManageTaskChainsUseCase { // TODO: UIMUseCase {

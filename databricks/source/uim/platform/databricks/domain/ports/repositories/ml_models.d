@@ -1,7 +1,7 @@
 module uim.platform.databricks.domain.ports.repositories.ml_models;
 import uim.platform.databricks;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

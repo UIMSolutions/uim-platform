@@ -1,7 +1,7 @@
 module uim.platform.data_retention.application.usecases.manage.data_subject_roles;
 import uim.platform.data_retention;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

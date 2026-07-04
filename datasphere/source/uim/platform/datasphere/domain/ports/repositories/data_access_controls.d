@@ -8,7 +8,7 @@ module uim.platform.datasphere.domain.ports.repositories.data_access_controls;
 // import uim.platform.datasphere.domain.entities.data_access_control;
 import uim.platform.datasphere;
 
-// mixin(ShowModule!()); 
+mixin(ShowModule!()); 
 
 @safe:
 interface DataAccessControlRepository : ITenantRepository!(DataAccessControl, DataAccessControlId) {

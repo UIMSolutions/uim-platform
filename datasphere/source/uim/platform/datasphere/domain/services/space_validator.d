@@ -6,7 +6,7 @@
 module uim.platform.datasphere.domain.services.space_validator;
 import uim.platform.datasphere;
 
-// mixin(ShowModule!()); 
+mixin(ShowModule!()); 
 
 @safe:
 struct SpaceValidator {

@@ -8,7 +8,7 @@ module uim.platform.datasphere.domain.ports.repositories.views;
 // import uim.platform.datasphere.domain.entities.view_;
 import uim.platform.datasphere;
 
-// mixin(ShowModule!()); 
+mixin(ShowModule!()); 
 
 @safe:
 interface ViewRepository : ITenantRepository!(View, ViewId) {

@@ -12,7 +12,7 @@ module uim.platform.datasphere.infrastructure.persistence.memory.data_flow;
  
 import uim.platform.datasphere;
 
-// mixin(ShowModule!()); 
+mixin(ShowModule!()); 
 
 @safe:
 class MemoryDataFlowRepository : TenantRepository!(DataFlow, DataFlowId), DataFlowRepository {

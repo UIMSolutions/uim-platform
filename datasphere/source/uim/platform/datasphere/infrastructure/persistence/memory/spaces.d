@@ -11,7 +11,7 @@ module uim.platform.datasphere.infrastructure.persistence.memory.space;
 
  
 import uim.platform.datasphere;
-// mixin(ShowModule!());
+mixin(ShowModule!());
 @safe:
 
 class MemorySpaceRepository : TenantRepository!(Space, SpaceId), SpaceRepository {

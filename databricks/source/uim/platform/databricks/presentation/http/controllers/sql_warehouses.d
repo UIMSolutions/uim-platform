@@ -1,7 +1,7 @@
 module uim.platform.databricks.presentation.http.controllers.sql_warehouses;
 import uim.platform.databricks;
 
-// mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
 

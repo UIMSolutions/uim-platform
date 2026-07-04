@@ -38,7 +38,7 @@ module uim.platform.datasphere.infrastructure.container;
 // import uim.platform.datasphere.presentation.http.controllers.health;
 import uim.platform.datasphere;
 
-// mixin(ShowModule!()); 
+mixin(ShowModule!()); 
 
 @safe:
 

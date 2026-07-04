@@ -7,7 +7,7 @@ module uim.platform.datasphere.domain.entities.task;
 
 import uim.platform.datasphere;
 
-// mixin(ShowModule!()); 
+mixin(ShowModule!()); 
 
 @safe:
 struct DSTask {
