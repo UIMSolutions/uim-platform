@@ -89,13 +89,11 @@ class ManageAlertsUseCase { // TODO: UIMUseCase {
 
   /// Create an alert (used by the evaluate_metrics use case).
   CommandResult triggerAlert(TenantId tenantId, AlertRuleId ruleId,
-      MonitoredResourceId resourceId, string ruleName, string metricName,
-      double currentValue, double thresholdValue, ThresholdOperator op,
-      AlertSeverity severity, string message) {
-   
-    Alert alert;
-    alert.initEntity(tenantId);
+    MonitoredResourceId resourceId, string ruleName, string metricName,
+    double currentValue, double thresholdValue, ThresholdOperator op,
+    AlertSeverity severity, string message) {
 
+    auto alert = Alert(tenantId); //, UserId("test-user"));
     alert.ruleId = ruleId;
     alert.resourceId = resourceId;
     alert.ruleName = ruleName;
@@ -111,6 +109,5 @@ class ManageAlertsUseCase { // TODO: UIMUseCase {
     repo.save(alert);
     return CommandResult(true, alert.id.value, "");
   }
-
 
 }

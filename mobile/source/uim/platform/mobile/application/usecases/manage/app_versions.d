@@ -23,9 +23,7 @@ class ManageAppVersionsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createAppVersion(CreateAppVersionRequest r) {
-        AppVersion ver;
-        ver.initEntity(r.tenantId, r.createdBy);
-
+        auto ver = AppVersion(r.tenantId); //, UserId("test-user"));
         ver.appId = r.appId;
         ver.versionCode = r.versionCode;
         ver.versionName = r.versionName;
@@ -36,7 +34,7 @@ class ManageAppVersionsUseCase { // TODO: UIMUseCase {
         ver.minOsVersion = r.minOsVersion;
         ver.mandatory = r.mandatory;
         ver.status = VersionStatus.draft;
-        ver.releasedAt = r.releasedAt;
+        // TODO: ver.releasedAt = r.releasedAt;
 
         repo.save(ver);
         return CommandResult(true, ver.id.value, "");

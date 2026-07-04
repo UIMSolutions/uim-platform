@@ -32,9 +32,7 @@ class ManageCorsRulesUseCase { // TODO: UIMUseCase {
     if (bucket.isNull)
       return CommandResult(false, "", "Bucket not found");
 
-    CorsRule rule;
-    rule.initEntity(req.tenantId);
-
+    auto rule = CorsRule(req.tenantId); //, UserId("test-user"));
     rule.bucketId = req.bucketId;
     rule.allowedOrigins = req.allowedOrigins;
     rule.allowedMethods = req.allowedMethods;

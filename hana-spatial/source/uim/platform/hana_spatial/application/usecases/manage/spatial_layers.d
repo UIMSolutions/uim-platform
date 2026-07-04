@@ -24,8 +24,7 @@ class ManageSpatialLayersUseCase {
     err = SpatialValidator.validateName(r.name);
     if (err.length > 0) return CommandResult(false, "", err);
 
-    SpatialLayer layer;
-    layer.initEntity(r.tenantId);
+    auto layer = SpatialLayer(r.tenantId); //, UserId("test-user"));
     layer.id = SpatialLayerId(r.id);
     layer.name = r.name;
     layer.description = r.description;

@@ -28,8 +28,7 @@ class ManageCatalogsUseCase { // TODO: UIMUseCase {
     if (req.title.length == 0)
       return CatalogResponse(CatalogId(""), "Catalog title is required");
 
-    Catalog catalog;
-    catalog.initEntity(req.tenantId);
+    auto catalog = Catalog(req.tenantId); //, UserId("test-user"));
     with (catalog) {
       title = req.title;
       description = req.description;
@@ -54,7 +53,7 @@ class ManageCatalogsUseCase { // TODO: UIMUseCase {
     if (!catalogRepo.existsById(req.tenantId, req.catalogId))
       return CommandResult(false, "", "Catalog not found");
 
-    Catalog catalog = catalogRepo.findById(req.tenantId, req.catalogId);
+    auto catalog = catalogRepo.findById(req.tenantId, req.catalogId);
     with (catalog) {
       title = req.title.length > 0 ? req.title : catalog.title;
       description = req.description;
@@ -62,6 +61,7 @@ class ManageCatalogsUseCase { // TODO: UIMUseCase {
       active = req.active;
       updatedAt = currentTimestamp();
     }
+    
     catalogRepo.update(catalog);
     return CommandResult(true, catalog.catalogId.value, "Catalog updated successfully.");
   }

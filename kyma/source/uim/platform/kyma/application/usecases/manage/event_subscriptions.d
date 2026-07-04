@@ -32,9 +32,7 @@ class ManageEventSubscriptionsUseCase { // TODO: UIMUseCase {
     if (subscriptionRepository.existsByName(req.namespaceId, req.name))
       return CommandResult(false, "", "Subscription '" ~ req.name ~ "' already exists");
 
-    EventSubscription sub;
-    sub.initEntity(req.tenantId, req.createdBy);
-
+    auto sub = EventSubscription(req.tenantId); //, UserId("test-user"));
     sub.namespaceId = req.namespaceId;
     sub.environmentId = req.environmentId;
     sub.name = req.name;

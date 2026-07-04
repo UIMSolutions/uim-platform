@@ -34,8 +34,7 @@ class ManageMarketRatesUseCase {
     }
 
     foreach (rec; req.records) {
-      MarketRate rate;
-      rate.initEntity(req.tenantId);
+      auto rate = MarketRate(req.tenantId); //, UserId("test-user"));
       rate.providerCode       = rec.providerCode;
       rate.dataSource         = rec.dataSource;
       rate.key1               = rec.key1;
@@ -178,8 +177,8 @@ class ManageMarketRatesUseCase {
                          MarketDataCategory category, OperationStatus status,
                          string message, int recordCount,
                          string fromDate, string toDate) {
-    AuditLog entry;
-    entry.initEntity(tenantId);
+
+    auto entry = AuditLog(tenantId); //, UserId("test-user"));
     entry.operation   = op;
     entry.requestedBy = requestedBy;
     entry.providerCode = providerCode;
@@ -189,6 +188,7 @@ class ManageMarketRatesUseCase {
     entry.recordCount = recordCount;
     entry.fromDate    = fromDate;
     entry.toDate      = toDate;
+
     auditRepo.save(entry);
   }
 }

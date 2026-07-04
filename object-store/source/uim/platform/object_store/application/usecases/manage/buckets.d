@@ -25,6 +25,7 @@ class ManageBucketsUseCase { // TODO: UIMUseCase {
   CommandResult createBucket(CreateBucketRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Bucket name is required");
+      
     if (req.region.length == 0)
       return CommandResult(false, "", "Region is required");
 
@@ -32,8 +33,7 @@ class ManageBucketsUseCase { // TODO: UIMUseCase {
     if (!existing.isNull)
       return CommandResult(false, "", "Bucket with name '" ~ req.name ~ "' already exists");
 
-    Bucket bucket;
-    bucket.initEntity(req.tenantId, req.createdBy);
+    auto bucket = Bucket(req.tenantId); //, UserId("test-user"));
     bucket.name = req.name;
     bucket.region = req.region;
     bucket.storageClass = req.storageClass.to!StorageClass;

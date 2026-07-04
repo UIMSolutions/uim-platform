@@ -29,7 +29,7 @@ class ManageLabelsUseCase { // TODO: UIMUseCase {
     if (req.values.length == 0)
       return CommandResult(false, "", "At least one label value is required");
 
-    auto label = Label(req.tenantId, req.createdBy);
+    auto label = Label(req.tenantId); // , req.createdBy);
     label.resourceType = req.resourceType.to!LabeledResourceType;
     label.resourceId = req.resourceId;
     label.key = req.key;

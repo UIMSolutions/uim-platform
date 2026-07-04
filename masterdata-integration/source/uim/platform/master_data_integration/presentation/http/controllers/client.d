@@ -182,8 +182,6 @@ class ClientController : ManageHttpController {
     return successResponse("Client connected successfully", "Connected", 200, resp);
   }
 
-  mixin(HandleTemplate!("handleConnect", "connectHandler"));
-
   protected Json disconnectHandler(HTTPServerRequest req) {
     auto precheck = super.postHandler(req);
     if (precheck.hasError)

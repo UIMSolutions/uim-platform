@@ -32,8 +32,7 @@ class ManageAuditLogsUseCase {
 
     CommandResult recordAuditEvent(AuditLogDTO dto) {
         
-        AuditLog al;
-        al.initEntity(dto.tenantId, dto.createdBy);
+        auto al = AuditLog(dto.tenantId); //, dto.createdBy);
         al.actorId = dto.actorId;
         al.resourceId = dto.resourceId;
         al.ipAddress = dto.ipAddress;

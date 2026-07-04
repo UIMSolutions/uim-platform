@@ -32,8 +32,7 @@ class ManageDatabaseUsersUseCase {
         if (repo.usernameExists(dto.tenantId, dto.instanceId, dto.username))
             return CommandResult(false, "", "Username already exists on this instance");
 
-        DatabaseUser e;
-        e.initEntity(dto.tenantId, dto.createdBy);
+        auto e = DatabaseUser(dto.tenantId); //, UserId("test-user"));
         e.id = dto.databaseUserId;
         e.instanceId = dto.instanceId;
         e.username = dto.username;

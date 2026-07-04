@@ -27,9 +27,7 @@ class ManageReplicationJobsUseCase { // TODO: UIMUseCase {
     if (req.sourceClientId.isEmpty)
       return CommandResult(false, "", "Source client ID is required");
 
-    ReplicationJob job;
-    job.initEntity(req.tenantId, req.createdBy);
-
+    auto job = ReplicationJob(req.tenantId); //, req.createdBy);
     job.modelId = req.modelId;
     job.name = req.name.length > 0 ? req.name : "Replication-" ~ job.id.value[0 .. 8];
     job.description = req.description;

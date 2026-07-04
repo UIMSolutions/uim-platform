@@ -25,8 +25,7 @@ class ManageRoutesUseCase {
     err = SpatialValidator.validateId(r.id);
     if (err.length > 0) return CommandResult(false, "", err);
 
-    Route route;
-    route.initEntity(r.tenantId);
+    auto route = Route(r.tenantId); //, r.createdBy);
     route.id = RouteId(r.id);
     route.origin = GeoCoordinate(r.originLat, r.originLon);
     route.destination = GeoCoordinate(r.destinationLat, r.destinationLon);

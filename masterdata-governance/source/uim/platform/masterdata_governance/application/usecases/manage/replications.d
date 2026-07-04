@@ -39,8 +39,7 @@ class ManageReplicationsUseCase {
     }
 
     CommandResult createReplication(ReplicationDTO dto) {
-        Replication rep;
-        rep.initEntity(dto.tenantId, dto.triggeredBy);
+        auto rep = Replication(dto.tenantId); //, UserId("test-user"));
         rep.id = dto.replicationId;
         rep.businessPartnerId = dto.businessPartnerId;
         rep.targetSystem = dto.targetSystem;

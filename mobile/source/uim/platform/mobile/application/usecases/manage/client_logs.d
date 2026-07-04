@@ -29,7 +29,7 @@ class ManageClientLogsUseCase { // TODO: UIMUseCase {
         entry.level = r.level.toLoggingLevel();
         entry.message = r.message;
         entry.stackTrace = r.stackTrace;
-        entry.context = r.context;
+        // TODO: entry.context = r.context;
         entry.appVersion = r.appVersion;
         entry.osVersion = r.osVersion;
         entry.timestamp = r.timestamp > 0 ? r.timestamp : currentTimestamp();

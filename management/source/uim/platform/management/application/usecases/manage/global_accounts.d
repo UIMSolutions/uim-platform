@@ -31,7 +31,7 @@ class ManageGlobalAccountsUseCase { // TODO: UIMUseCase {
     if (req.region.length == 0)
       return CommandResult(false, "", "Region is required");
 
-    auto globalAccount = GlobalAccount(req.tenantId, req.createdBy);
+    auto globalAccount = GlobalAccount(req.tenantId); //, req.createdBy);
     globalAccount.displayName = req.displayName;
     globalAccount.description = req.description;
     globalAccount.contractNumber = req.contractNumber;

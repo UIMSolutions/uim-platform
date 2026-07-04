@@ -34,8 +34,7 @@ class ManageDeploymentTargetsUseCase {
         if (repo.nameExists(dto.tenantId, dto.name))
             return CommandResult(false, "", "Deployment target name already exists");
 
-        DeploymentTarget d;
-        d.initEntity(dto.tenantId, dto.createdBy);
+        auto d = DeploymentTarget(dto.tenantId); //, dto.createdBy);
         d.id = dto.deploymentTargetId;
         d.name = dto.name;
         d.description = dto.description;

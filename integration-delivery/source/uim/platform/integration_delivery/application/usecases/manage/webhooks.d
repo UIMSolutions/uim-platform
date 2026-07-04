@@ -31,8 +31,7 @@ class ManageWebhooksUseCase {
     }
 
     CommandResult createWebhook(WebhookDTO dto) {
-        Webhook w;
-        w.initEntity(dto.tenantId, dto.createdBy);
+        auto w = Webhook(dto.tenantId); //, UserId("test-user"));
         w.id = dto.webhookId;
         w.repositoryId = dto.repositoryId;
         w.jobId = dto.jobId;

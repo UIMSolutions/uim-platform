@@ -24,8 +24,7 @@ class ManageSpatialFeaturesUseCase {
     err = SpatialValidator.validateLayer(r.layerId);
     if (err.length > 0) return CommandResult(false, "", err);
 
-    SpatialFeature feature;
-    feature.initEntity(r.tenantId);
+    auto feature = SpatialFeature(r.tenantId); //, r.createdBy);
     feature.id = SpatialFeatureId(r.id);
     feature.layerId = SpatialLayerId(r.layerId);
     feature.name = r.name;

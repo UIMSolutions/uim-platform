@@ -32,8 +32,7 @@ class ManageServicePlansUseCase {
         if (repo.nameExists(dto.tenantId, dto.name))
             return CommandResult(false, "", "Plan name already exists");
 
-        ServicePlan e;
-        e.initEntity(dto.tenantId, dto.createdBy);
+        auto e = ServicePlan(dto.tenantId); //, UserId("test-user"));
         e.id = dto.servicePlanId;
         e.name = dto.name;
         e.description = dto.description;

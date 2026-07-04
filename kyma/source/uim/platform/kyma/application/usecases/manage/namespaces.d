@@ -31,8 +31,7 @@ class ManageNamespacesUseCase { // TODO: UIMUseCase {
     if (namespaceRepository.existsByName(req.environmentId, req.name))
       return CommandResult(false, "", "Namespace '" ~ req.name ~ "' already exists");
 
-    Namespace ns;
-    ns.initEntity(req.tenantId, req.createdBy);
+    auto ns = Namespace(req.tenantId); //, req.createdBy);
     with (ns) {
       environmentId = req.environmentId;
       name = req.name;

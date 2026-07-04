@@ -26,9 +26,8 @@ class ManageOfflineStoresUseCase { // TODO: UIMUseCase {
     CommandResult createOfflineStore(CreateOfflineStoreRequest r) {
         if (!OfflineSyncService.validateStoreName(r.name))
             return CommandResult(false, "", "Invalid store name");
-        OfflineStore store;
-        store.initEntity(r.tenantId, r.createdBy);
 
+        auto store = OfflineStore(r.tenantId); //, UserId("test-user"));
         store.appId = r.appId;
         store.name = r.name;
         store.description = r.description;

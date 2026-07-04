@@ -39,8 +39,7 @@ class ManageDataQualityScoresUseCase {
     }
 
     CommandResult createDataQualityScore(DataQualityScoreDTO dto) {
-        DataQualityScore score;
-        score.initEntity(dto.tenantId, dto.createdBy);
+        auto score = DataQualityScore(dto.tenantId); //, UserId("test-user"));
         score.id = dto.scoreId;
         score.businessPartnerId = dto.businessPartnerId;
         score.overallScore = dto.overallScore;

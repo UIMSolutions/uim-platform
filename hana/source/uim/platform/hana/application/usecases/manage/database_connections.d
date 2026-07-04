@@ -28,9 +28,8 @@ class ManageDatabaseConnectionsUseCase { // TODO: UIMUseCase {
     if (repo.existsById(r.id))
       return CommandResult(false, "", "Database connection already exists");
 
-    DatabaseConnection c;
-    c.initEntity(r.tenantId);
-    c.id = r.id;
+     auto c = DatabaseConnection(r.tenantId); //, r.createdBy);
+    c.id = r.connectionId;
     c.instanceId = r.instanceId;
     c.name = r.name;
     c.description = r.description;

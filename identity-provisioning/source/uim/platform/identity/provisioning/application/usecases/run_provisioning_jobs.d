@@ -52,9 +52,7 @@ class RunProvisioningJobsUseCase { // TODO: UIMUseCase {
     if (tgt.isNull)
       return CommandResult(false, "", "Target system not found");
 
-    ProvisioningJob job;
-    job.initEntity(req.tenantId, req.createdBy);
-
+    auto job = ProvisioningJob(req.tenantId); //, req.createdBy);
     job.sourceSystemId = req.sourceSystemId;
     job.targetSystemId = req.targetSystemId;
     job.jobType = req.jobType;

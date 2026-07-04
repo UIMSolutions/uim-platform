@@ -34,9 +34,7 @@ class ManageSitesUseCase { // TODO: UIMUseCase {
         return CommandResult(false, "", "Site alias already exists");
     }
 
-    Site site;
-    site.initEntity(req.tenantId, req.createdBy);
-
+    auto site = Site(req.tenantId); //, UserId("test-user"));
     site.name = req.name;
     site.description = req.description;
     site.alias_ = req.alias_;

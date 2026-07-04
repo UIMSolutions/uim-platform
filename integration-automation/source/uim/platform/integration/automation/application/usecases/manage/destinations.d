@@ -47,9 +47,7 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
 
     auto now = currentTimestamp();
 
-    Destination dest;
-    dest.initEntity(req.tenantId, req.createdBy);
-
+    auto dest = Destination(req.tenantId); //, req.createdBy);
     dest.name = req.name;
     dest.description = req.description;
     dest.systemId = req.systemId;

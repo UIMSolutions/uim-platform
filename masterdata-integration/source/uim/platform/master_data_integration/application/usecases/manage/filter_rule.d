@@ -25,9 +25,7 @@ class ManageFilterRulesUseCase { // TODO: UIMUseCase {
     if (req.name.length == 0)
       return CommandResult(false, "", "Filter rule name is required");
 
-    FilterRule rule;
-    rule.initEntity(req.tenantId, req.createdBy);
-
+    auto rule = FilterRule(req.tenantId); //, UserId("test-user"));
     rule.name = req.name;
     rule.description = req.description;
     rule.category = toMasterDataCategory(req.category);

@@ -39,9 +39,7 @@ class ManageSubaccountsUseCase { // TODO: UIMUseCase {
     if (repository.existsBySubdomain(req.tenantId, req.subdomain))
       return CommandResult(false, "", "Subdomain '" ~ req.subdomain ~ "' is already taken");
 
-    Subaccount subaccount;
-    subaccount.initEntity(req.tenantId);
-
+    auto subaccount = Subaccount(req.tenantId); //, req.createdBy);
     subaccount.globalAccountId = req.globalAccountId;
     subaccount.parentDirectoryId = req.parentDirectoryId;
     subaccount.displayName = req.displayName;
@@ -172,9 +170,7 @@ class ManageSubaccountsUseCase { // TODO: UIMUseCase {
   private void emitEvent(TenantId tenantId, string gaId, string subId, EnvironmentEventCategory cat,
       string eventType, string desc, UserId initiatedBy) {
 
-    EnvironmentEvent event;
-    event.initEntity(tenantId);
-
+    auto event = EnvironmentEvent(tenantId); //, initiatedBy);
     event.globalAccountId = gaId;
     event.subaccountId = subId;
     event.category = cat;

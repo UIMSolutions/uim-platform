@@ -31,8 +31,7 @@ class ManageApplicationsUseCase { // TODO: UIMUseCase {
     if (existing.isNull)
       return CommandResult(false, "", "Application '" ~ req.name ~ "' is already registered");
 
-    Application app;
-    app.initEntity(req.tenantId, req.createdBy);
+    auto app = Application(req.tenantId); //, UserId("test-user"));
     with(app) {
       environmentId = req.environmentId;
       name = req.name;

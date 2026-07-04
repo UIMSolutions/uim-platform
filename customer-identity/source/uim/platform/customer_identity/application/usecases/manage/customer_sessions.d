@@ -31,8 +31,7 @@ class ManageCustomerSessionsUseCase {
     }
 
     CommandResult createSession(CustomerSessionDTO dto) {
-        CustomerSession s;
-        s.initEntity(dto.tenantId, dto.createdBy);
+        auto s = CustomerSession(dto.tenantId); //, dto.createdBy);
         s.customerId = dto.customerId;
         s.token = dto.token;
         s.deviceInfo = dto.deviceInfo;

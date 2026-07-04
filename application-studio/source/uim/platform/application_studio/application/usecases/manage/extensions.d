@@ -27,9 +27,7 @@ class ManageExtensionsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createExtension(ExtensionDTO dto) {
-        Extension e;
-        e.initEntity(dto.tenantId, dto.createdBy);
-        
+        auto e = Extension(dto.tenantId); //, dto.createdBy);        
         e.id = dto.extensionId;
         e.name = dto.name;
         e.description = dto.description;

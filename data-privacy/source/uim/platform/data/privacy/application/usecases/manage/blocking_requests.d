@@ -34,8 +34,7 @@ class ManageBlockingRequestsUseCase { // TODO: UIMUseCase {
     if (subject.isNull)
       return CommandResult(false, "", "Data subject not found");
 
-    BlockingRequest request;
-    request.initEntity(req.tenantId);
+    auto request = BlockingRequest(req.tenantId); //, req.createdBy);
 
     request.dataSubjectId = req.dataSubjectId;
     request.requestedBy = req.requestedBy;

@@ -34,8 +34,7 @@ class ManageCustomersUseCase {
         if (repo.emailExists(dto.tenantId, dto.email))
             return CommandResult(false, "", "Email already registered");
 
-        Customer c;
-        c.initEntity(dto.tenantId, dto.createdBy);
+        auto c = Customer(dto.tenantId); //, dto.createdBy);
         c.id = dto.customerId.value.length > 0 ? dto.customerId : CustomerId(c.id.value);
         c.email = dto.email;
         c.phone = dto.phone;

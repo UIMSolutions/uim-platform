@@ -38,9 +38,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
     auto accessKeyId = randomUUID().toString;
     auto secretKey = randomUUID().toString;
 
-    ServiceBinding binding;
-    binding.initEntity(req.tenantId, req.createdBy);
-
+    auto binding = ServiceBinding(req.tenantId); //, UserId("test-user"));
     binding.name = req.name;
     binding.bucketId = req.bucketId;
     binding.accessKeyId = accessKeyId;

@@ -28,9 +28,7 @@ class ManageTilesUseCase { // TODO: UIMUseCase {
     if (req.title.length == 0)
       return TileResponse("", "Tile title is required");
 
-    auto now = currentTimestamp();
-    Tile tile;
-    tile.initEntity(req.tenantId, req.requestedBy);
+    auto tile = Tile(req.tenantId); //, UserId("test-user"));
     with (tile) {
       catalogId = req.catalogId;
       title = req.title;

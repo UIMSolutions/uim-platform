@@ -32,8 +32,7 @@ class ManageDatabaseExtensionsUseCase {
         if (repo.extensionExists(dto.tenantId, dto.instanceId, dto.extensionName))
             return CommandResult(false, "", "Extension already enabled on this instance");
 
-        DatabaseExtension e;
-        e.initEntity(dto.tenantId, dto.createdBy);
+        auto e = DatabaseExtension(dto.tenantId); //, UserId("test-user"));
         e.id = dto.databaseExtensionId;
         e.instanceId = dto.instanceId;
         e.extensionName = dto.extensionName;

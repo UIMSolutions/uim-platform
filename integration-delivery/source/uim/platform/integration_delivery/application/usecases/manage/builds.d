@@ -39,8 +39,7 @@ class ManageBuildsUseCase {
     }
 
     CommandResult triggerBuild(BuildDTO dto) {
-        Build b;
-        b.initEntity(dto.tenantId, dto.createdBy);
+        auto b = Build(dto.tenantId); //, dto.createdBy);
         b.id = dto.buildId;
         b.jobId = dto.jobId;
         b.commitSha = dto.commitSha;

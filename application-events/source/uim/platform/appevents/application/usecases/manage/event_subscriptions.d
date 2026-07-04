@@ -34,8 +34,8 @@ class ManageEventSubscriptionsUseCase {
     CommandResult createEventSubscription(EventSubscriptionDTO dto) {
         if (repo.nameExists(dto.tenantId, dto.name))
             return CommandResult(false, "", "Subscription name already exists");
-        EventSubscription sub;
-        sub.initEntity(dto.tenantId, dto.createdBy);
+
+        auto sub = EventSubscription(dto.tenantId); //, UserId("test-user"));
         if (!dto.subscriptionId.isNull) sub.id = dto.subscriptionId;
         sub.name = dto.name;
         sub.description = dto.description;
@@ -46,6 +46,7 @@ class ManageEventSubscriptionsUseCase {
         sub.formationId = dto.formationId;
         sub.filterExpression = dto.filterExpression;
         sub.maxRetries = dto.maxRetries;
+        
         repo.save(sub);
         return CommandResult(true, sub.id.value, "");
     }

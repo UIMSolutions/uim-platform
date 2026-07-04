@@ -27,9 +27,7 @@ class ManageDataModelsUseCase { // TODO: UIMUseCase {
     if (req.namespace.length == 0)
       return CommandResult(false, "", "Namespace is required");
 
-    DataModel model;
-    model.initEntity(req.tenantId, req.createdBy);
-
+    auto model = DataModel(req.tenantId); //, UserId("test-user"));
     model.name = req.name;
     model.namespace = req.namespace;
     model.version_ = req.version_.length > 0 ? req.version_ : "1.0.0";

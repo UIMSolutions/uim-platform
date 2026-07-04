@@ -29,8 +29,7 @@ class ManageMonitoredResourcesUseCase { // TODO: UIMUseCase {
     if (req.name.length == 0)
       return CommandResult(false, "", "Resource name is required");
 
-    MonitoredResource resource;
-    resource.initEntity(req.tenantId, req.registeredBy);
+    auto resource = MonitoredResource(req.tenantId); //, UserId("test-user"));
     resource.subaccountId = req.subaccountId;
     resource.name = req.name;
     resource.description = req.description;

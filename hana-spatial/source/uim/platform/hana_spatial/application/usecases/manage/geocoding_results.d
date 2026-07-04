@@ -48,8 +48,7 @@ class ManageGeocodingResultsUseCase {
     if (err.length > 0)
       return CommandResult(false, "", err);
 
-    GeocodingResult result;
-    result.initEntity(r.tenantId);
+     auto result = GeocodingResult(r.tenantId); //, r.createdBy);
     result.id = GeocodingResultId(r.id);
     result.type = GeocodingType.reverse_;
     result.matchLevel = GeocodingMatchLevel.unknown;

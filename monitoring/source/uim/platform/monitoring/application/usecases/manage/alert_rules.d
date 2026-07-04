@@ -29,8 +29,7 @@ class ManageAlertRulesUseCase { // TODO: UIMUseCase {
     if (req.metricName.length == 0)
       return CommandResult(false, "", "Metric name is required");
 
-    AlertRule rule;
-    rule.initEntity(req.tenantId, req.createdBy);
+    auto rule = AlertRule(req.tenantId); //, UserId("test-user"));
     rule.resourceId = req.resourceId;
     rule.name = req.name;
     rule.description = req.description;

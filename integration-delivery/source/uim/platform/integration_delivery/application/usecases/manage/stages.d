@@ -31,8 +31,7 @@ class ManageStagesUseCase {
     }
 
     CommandResult createStage(StageDTO dto) {
-        Stage s;
-        s.initEntity(dto.tenantId, dto.createdBy);
+        auto s = Stage(dto.tenantId); //, dto.createdBy);
         s.id = dto.stageId;
         s.buildId = dto.buildId;
         s.name = dto.name;

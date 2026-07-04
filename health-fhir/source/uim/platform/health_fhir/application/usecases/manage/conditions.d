@@ -48,8 +48,7 @@ class ManageConditionsUseCase {
     if (existing.isNull)
       return CommandResult(false, "", "Condition not found");
 
-    Condition c;
-    c.initEntity(r.tenantId);
+    auto c = Condition(r.tenantId); //, r.createdBy);
     c.id                   = r.conditionId;
     c.clinicalStatus_      = r.clinicalStatus_;
     c.verificationStatus_  = r.verificationStatus_;

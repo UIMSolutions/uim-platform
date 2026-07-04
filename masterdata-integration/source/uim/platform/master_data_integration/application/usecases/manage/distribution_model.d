@@ -28,9 +28,7 @@ class ManageDistributionModelsUseCase { // TODO: UIMUseCase {
     if (req.sourceClientId.isEmpty)
       return CommandResult(false, "", "Source client ID is required");
 
-    DistributionModel model;
-    model.initEntity(req.tenantId, req.createdBy);
-
+    auto model = DistributionModel(req.tenantId); //, UserId("test-user"));
     model.name = req.name;
     model.description = req.description;
     model.status = DistributionModelStatus.draft;

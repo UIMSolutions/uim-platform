@@ -29,8 +29,7 @@ class ManageSchemasUseCase { // TODO: UIMUseCase {
     if (!existing.isNull)
       return CommandResult(false, "", "Schema already exists");
 
-    Schema s;
-    s.initEntity(r.tenantId);
+    auto s = Schema(r.tenantId); //, r.createdBy);
     s.id = r.schemaId;
     s.instanceId = r.instanceId;
     s.name = r.name;

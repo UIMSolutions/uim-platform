@@ -32,8 +32,7 @@ class ManageServiceInstancesUseCase { // TODO: UIMUseCase {
     if (repo.existsByName(req.namespaceId, req.name))
       return CommandResult(false, "", "Service instance '" ~ req.name ~ "' already exists");
 
-    ServiceInstance inst;
-    inst.initEntity(req.tenantId, req.createdBy);
+    auto inst = ServiceInstance(req.tenantId); //, UserId("test-user"));
     inst.namespaceId = req.namespaceId;
     inst.environmentId = req.environmentId;
     inst.name = req.name;

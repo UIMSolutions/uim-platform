@@ -43,8 +43,7 @@ class ManageBusinessPartnersUseCase {
     }
 
     CommandResult createBusinessPartner(BusinessPartnerDTO dto) {
-        BusinessPartner bp;
-        bp.initEntity(dto.tenantId, dto.createdBy);
+        auto bp = BusinessPartner(dto.tenantId); //, UserId("test-user"));  
         bp.id = dto.businessPartnerId;
         bp.bpNumber = dto.bpNumber;
         bp.email = dto.email;

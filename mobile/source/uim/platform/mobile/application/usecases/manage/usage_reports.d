@@ -23,9 +23,12 @@ class ManageUsageReportsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createUsageReport(ReportUsageRequest r) {
-        UsageReport usage;
-        usage.initEntity(r.tenantId);
+        // Check if a report with the same sessionId and eventType already exists for the same app and device
+        auto existing = repo.findBySessionAndEvent(r.tenantId, r.appId, r.deviceId, r.sessionId, r.eventType);
+        if (!existing.isNull)
+            return CommandResult(false, "", "A usage report with the same session ID and event type already exists for this app and device");   
 
+        auto usage = UsageReport(r.tenantId); //, UserId("test-user"));
         usage.appId = r.appId;
         usage.deviceId = r.deviceId;
         usage.userId = r.userId;

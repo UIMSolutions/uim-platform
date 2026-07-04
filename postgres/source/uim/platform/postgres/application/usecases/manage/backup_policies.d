@@ -29,8 +29,7 @@ class ManageBackupPoliciesUseCase {
     }
 
     CommandResult createBackupPolicy(BackupPolicyDTO dto) {
-        BackupPolicy e;
-        e.initEntity(dto.tenantId, dto.createdBy);
+        auto e = BackupPolicy(dto.tenantId); //, UserId("test-user"));
         e.id = dto.backupPolicyId;
         e.instanceId = dto.instanceId;
         e.retentionPeriod = dto.retentionPeriod;

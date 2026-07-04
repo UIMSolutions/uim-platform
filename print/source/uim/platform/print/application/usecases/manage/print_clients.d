@@ -27,8 +27,7 @@ class ManagePrintClientsUseCase {
     }
 
     CommandResult registerPrintClient(PrintClientDTO dto) {
-        PrintClient client;
-        client.initEntity(dto.tenantId, dto.createdBy);
+        auto client = PrintClient(dto.tenantId); //, UserId("test-user"));
         client.id = dto.clientId;
         client.name = dto.name;
         client.description = dto.description;

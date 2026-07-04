@@ -38,9 +38,7 @@ class ManageTransformationsUseCase { // TODO: UIMUseCase {
     if (!engine.validateRules(req.mappingRules))
       return CommandResult(false, "", "Invalid mapping rules format");
 
-    Transformation t;
-    t.initEntity(req.tenantId, req.createdBy);
-
+    auto t = Transformation(req.tenantId); //, req.createdBy) ;
     t.name = req.name;
     t.mappingRules = req.mappingRules;
     t.conditions = req.conditions;

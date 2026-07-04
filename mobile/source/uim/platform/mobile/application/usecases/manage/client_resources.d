@@ -23,7 +23,7 @@ class ManageClientResourcesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createClientResource(CreateClientResourceRequest r) {
-        auto resource = ClientResource(r.tenantId, r.createdBy);
+        auto resource = ClientResource(r.tenantId); //, r.createdBy);
 
         resource.appId = r.appId;
         resource.name = r.name;
@@ -44,14 +44,16 @@ class ManageClientResourcesUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Client resource not found");
         if (r.description.length > 0)
             resource.description = r.description;
-        if (r.url.length > 0)
-            resource.url = r.url;
+        // TODO: Decide if we want to allow name updates or not. If yes, we need to validate it.
+        // if (r.url.length > 0)
+        //     resource.url = r.url;
         if (r.checksum.length > 0)
             resource.checksum = r.checksum;
         if (r.sizeBytes > 0)
             resource.sizeBytes = r.sizeBytes;
-        if (r.version_.length > 0)
-            resource.version_ = r.version_;
+        // TODO: Decide if we want to allow version updates or not. If yes, we need to implement a versioning strategy.
+        // if (r.version_.length > 0)
+        //     resource.version_ = r.version_;
         resource.updatedAt = currentTimestamp();
         resource.updatedBy = r.updatedBy;
         repo.update(resource);

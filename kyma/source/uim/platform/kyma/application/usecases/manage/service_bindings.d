@@ -30,8 +30,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
     if (repo.existsByName(req.namespaceId, req.name))
       return CommandResult(false, "", "Binding '" ~ req.name ~ "' already exists");
 
-    ServiceBinding binding;
-    binding.initEntity(req.tenantId, req.createdBy);
+    auto binding = ServiceBinding(req.tenantId); //, UserId("test-user"));
     binding.serviceInstanceId = req.serviceInstanceId;
     binding.namespaceId = req.namespaceId;
     binding.environmentId = req.environmentId;

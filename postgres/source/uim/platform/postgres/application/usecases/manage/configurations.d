@@ -29,8 +29,7 @@ class ManageConfigurationsUseCase {
     }
 
     CommandResult createConfiguration(ConfigurationDTO dto) {
-        Configuration e;
-        e.initEntity(dto.tenantId, dto.createdBy);
+        auto e = Configuration(dto.tenantId); //, UserId("test-user"));
         e.id = dto.configurationId;
         e.instanceId = dto.instanceId;
         e.auditLogLevels = dto.auditLogLevels;

@@ -25,8 +25,7 @@ class ManageProvidersUseCase {
     if (repo.codeExists(req.tenantId, req.code))
       return CommandResult(false, "", "A provider with this code already exists");
 
-    Provider p;
-    p.initEntity(req.tenantId);
+    auto p = Provider(req.tenantId); //, UserId("test-user"));
     p.code         = req.code;
     p.name         = req.name;
     p.description  = req.description;

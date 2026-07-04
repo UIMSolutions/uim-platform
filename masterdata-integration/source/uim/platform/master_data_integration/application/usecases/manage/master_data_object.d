@@ -27,14 +27,14 @@ class ManageMasterDataObjectsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createObject(CreateMasterDataObjectRequest req) {
+    /// Validate required fields
     if (req.objectType.length == 0)
       return CommandResult(false, "", "Object type is required");
+
     if (req.displayName.length == 0)
       return CommandResult(false, "", "Display name is required");
 
-    MasterDataObject obj;
-    obj.initEntity(req.tenantId, req.createdBy);
-
+    auto obj = MasterDataObject(req.tenantId); //, UserId("test-user"));
     obj.modelId = req.modelId;
     obj.category = toMasterDataCategory(req.category);
     obj.objectType = req.objectType;
@@ -143,9 +143,7 @@ class ManageMasterDataObjectsUseCase { // TODO: UIMUseCase {
     string[string] newValues,
     string sourceSystem, string sourceClient, string changedBy, long fromVersion, long toVersion) {
 
-    ChangeLogEntry entry;
-    entry.initEntity(tenantId);
-
+    auto entry = ChangeLogEntry(tenantId); //, UserId("test-user"));
     entry.objectId = objectId;
     entry.modelId = modelId;
     entry.category = category;

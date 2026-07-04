@@ -39,8 +39,7 @@ class ManageDataQualityRulesUseCase {
     }
 
     CommandResult createDataQualityRule(DataQualityRuleDTO dto) {
-        DataQualityRule rule;
-        rule.initEntity(dto.tenantId, dto.createdBy);
+        auto rule = DataQualityRule(dto.tenantId); //, UserId("test-user"));
         rule.id = dto.ruleId;
         rule.name = dto.name;
         rule.description = dto.description;

@@ -34,9 +34,7 @@ class ManageFunctionsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "",
           "Function '" ~ request.name ~ "' already exists in this namespace");
 
-    ServerlessFunction serverlessFunction;
-    serverlessFunction.initEntity(request.tenantId, request.createdBy);
-
+    auto serverlessFunction = ServerlessFunction(request.tenantId); //, request.createdBy);
     serverlessFunction.namespaceId = request.namespaceId;
     serverlessFunction.environmentId = request.environmentId;
     serverlessFunction.name = request.name;

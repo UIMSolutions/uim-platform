@@ -26,9 +26,7 @@ class ManageClientsUseCase { // TODO: UIMUseCase {
     if (req.name.length == 0)
       return CommandResult(false, "", "Client name is required");
 
-    Client client;
-    client.initEntity(req.tenantId, req.createdBy);
-
+    auto client = Client(req.tenantId); //, UserId("test-user"));
     client.name = req.name;
     client.description = req.description;
     client.clientType = toClientType(req.clientType);

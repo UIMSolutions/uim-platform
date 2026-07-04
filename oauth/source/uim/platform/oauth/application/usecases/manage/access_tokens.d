@@ -35,8 +35,7 @@ class ManageAccessTokensUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createToken(AccessTokenDTO dto) {
-        AccessToken token;
-        token.initEntity(dto.tenantId);
+        auto token = AccessToken(dto.tenantId); //, UserId("test-user"));
         token.id = dto.tokenId;
         token.tokenValue = dto.tokenValue;
         // TODO: token.clientId = dto.clientId;

@@ -35,8 +35,7 @@ class ManageMenuItemsUseCase { // TODO: UIMUseCase {
     if (!siteRepo.existsById(req.siteId))
       return MenuItemResponse(MenuItemId(""), "Site not found");
 
-    MenuItem item;
-    item.initEntity(req.tenantId);
+    auto item = MenuItem(req.tenantId); //, UserId("test-user"));
     with (item) {
       siteId = req.siteId;
       title = req.title;

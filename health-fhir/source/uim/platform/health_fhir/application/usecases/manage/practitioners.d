@@ -43,8 +43,7 @@ class ManagePractitionersUseCase {
     if (existing.isNull)
       return CommandResult(false, "", "Practitioner not found");
 
-    Practitioner p;
-    p.initEntity(r.tenantId);
+    auto p = Practitioner(r.tenantId); //, r.createdBy);
     p.id             = r.practitionerId;
     p.name_          = r.name_;
     p.gender_        = r.gender_;

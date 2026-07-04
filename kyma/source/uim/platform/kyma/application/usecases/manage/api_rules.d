@@ -32,8 +32,7 @@ class ManageApiRulesUseCase { // TODO: UIMUseCase {
     if (ruleRepository.existsByName(req.namespaceId, req.name))
       return CommandResult(false, "", "API rule '" ~ req.name ~ "' already exists");
 
-    ApiRule rule;
-    rule.initEntity(req.tenantId, req.createdBy);
+    auto rule = ApiRule(req.tenantId); //, req.createdBy);
     with (rule) {
       namespaceId = req.namespaceId;
       environmentId = req.environmentId;

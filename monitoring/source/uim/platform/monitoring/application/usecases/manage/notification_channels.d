@@ -26,9 +26,7 @@ class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
     if (request.name.length == 0)
       return CommandResult(false, "", "Channel name is required");
 
-    NotificationChannel channel;
-
-    channel.initEntity(request.tenantId, request.createdBy);
+    auto channel = NotificationChannel(request.tenantId); //, UserId("test-user"));
     channel.name = request.name;
     channel.description = request.description;
     channel.channelType = request.channelType.to!NotificationChannelType;

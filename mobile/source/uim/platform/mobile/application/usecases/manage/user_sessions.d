@@ -23,9 +23,7 @@ class ManageUserSessionsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createUserSession(CreateUserSessionRequest r) {
-        UserSession ses;
-        ses.initEntity(r.tenantId);
-
+        auto ses = UserSession(r.tenantId); //, UserId("test-user"));
         ses.appId = r.appId;
         ses.userId = r.userId;
         ses.deviceId = r.deviceId;

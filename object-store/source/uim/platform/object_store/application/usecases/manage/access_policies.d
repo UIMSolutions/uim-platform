@@ -35,8 +35,7 @@ class ManageAccessPoliciesUseCase { // TODO: UIMUseCase {
     if (bucket.isNull)
       return CommandResult(false, "", "Bucket not found");
 
-    AccessPolicy policy;
-    policy.initEntity(req.tenantId, req.createdBy);
+    auto policy = AccessPolicy(req.tenantId); //, UserId("test-user"));
     policy.bucketId = req.bucketId;
     policy.name = req.name;
     policy.effect = req.effect.to!PolicyEffect;

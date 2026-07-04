@@ -24,8 +24,7 @@ class ManageEncountersUseCase {
     if (!repo.findById(r.tenantId, r.encounterId).isNull)
       return CommandResult(false, "", "Encounter already exists");
 
-    Encounter e;
-    e.initEntity(r.tenantId);
+    auto e = Encounter(r.tenantId); //, r.createdBy);
     e.id              = r.encounterId;
     e.status_         = r.status_;
     e.class_          = r.class_;

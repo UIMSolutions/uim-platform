@@ -39,8 +39,7 @@ class ManageChangeRequestsUseCase {
     }
 
     CommandResult createChangeRequest(ChangeRequestDTO dto) {
-        ChangeRequest cr;
-        cr.initEntity(dto.tenantId, dto.requestedBy);
+        auto cr = ChangeRequest(dto.tenantId); //, UserId("test-user"));
         cr.id = dto.changeRequestId;
         cr.businessPartnerId = dto.businessPartnerId;
         cr.subject = dto.subject;

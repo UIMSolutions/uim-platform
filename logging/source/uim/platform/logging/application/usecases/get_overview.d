@@ -81,56 +81,47 @@ unittest {
 
   // Seed Test Data
   // 1 Log Entry
-  LogEntry log;
-  log.initEntity(tenantId);
+  auto log = LogEntry(tenantId); //, UserId("test-user"));
   logRepo.save(log);
 
   // 1 Span
-  Span span;
-  span.initEntity(tenantId);
+  auto span = Span(tenantId); //, UserId("test-user"));
   spanRepo.save(span);
 
   // 1 Stream
-  LogStream stream;
-  stream.initEntity(tenantId);
+  auto stream = LogStream(tenantId); //, UserId("test-user"));
   stream.name = "default";
   streamRepo.save(stream);
 
   // 1 Dashboard
-  Dashboard dashboard;
-  dashboard.initEntity(tenantId);
+  auto dashboard = Dashboard(tenantId); //, UserId("test-user"));
   dashboard.name = "Main View";
   dashboardRepo.save(dashboard);
 
   // 2 Alerts: 1 Open + Critical, 1 Resolved + Low
-  Alert alert1;
-  alert1.initEntity(tenantId);
+  auto alert1 = Alert(tenantId); //, UserId("test-user"));
   alert1.state = AlertState.open; 
   alert1.severity = AlertSeverity.critical;
   alertRepo.save(alert1);
   
-  Alert alert2;
-  alert2.initEntity(tenantId);
+  auto alert2 = Alert(tenantId); //, UserId("test-user"));
   alert2.state = AlertState.resolved; 
   alert2.severity = AlertSeverity.warning;
   alertRepo.save(alert2);
 
   // 2 Pipelines: 1 Active, 1 Inactive
-  Pipeline p1;
-  p1.initEntity(tenantId);
+  auto p1 = Pipeline(tenantId); //, UserId("test-user"));
   p1.isActive = true;
   p1.name = "Active Pipe";
   pipelineRepo.save(p1);
   
-  Pipeline p2;
-  p2.initEntity(tenantId);
+  auto p2 = Pipeline(tenantId); //, UserId("test-user"));
   p2.isActive = false;
   p2.name = "Inactive Pipe";
   pipelineRepo.save(p2);
 
   // 1 Channel
-  NotificationChannel channel;
-  channel.initEntity(tenantId);
+  auto channel = NotificationChannel(tenantId); //, UserId("test-user"));
   channel.name = "Email Admin";
   channelRepo.save(channel);
 

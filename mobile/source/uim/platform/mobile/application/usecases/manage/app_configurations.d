@@ -26,9 +26,8 @@ class ManageAppConfigurationsUseCase { // TODO: UIMUseCase {
         auto existing = repo.findByKey(r.tenantId, r.appId, r.key);
         if (!existing.isNull)
             return CommandResult(false, "", "Configuration with this key already exists");
-        AppConfiguration config;
-        config.initEntity(r.tenantId, r.createdBy);
 
+        auto config = AppConfiguration(r.tenantId); //, UserId("test-user"));
         config.appId = r.appId;
         config.key = r.key;
         config.value = r.value;

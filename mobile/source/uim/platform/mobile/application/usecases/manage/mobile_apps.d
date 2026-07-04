@@ -26,8 +26,8 @@ class ManageMobileAppsUseCase { // TODO: UIMUseCase {
         auto existing = repo.findByBundleId(r.bundleId);
         if (!existing.isNull)
             return CommandResult(false, "", "App with this bundle ID already exists");
-        MobileApp app;
-        app.initEntity(r.tenantId, r.createdBy);
+        
+        auto app = MobileApp(r.tenantId); //, UserId("test-user"));
 
         app.name = r.name;
         app.description = r.description;

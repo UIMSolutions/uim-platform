@@ -25,8 +25,7 @@ class ManageGeofenceZonesUseCase {
     err = SpatialValidator.validateName(r.name);
     if (err.length > 0) return CommandResult(false, "", err);
 
-    GeofenceZone zone;
-    zone.initEntity(r.tenantId);
+    auto zone = GeofenceZone(r.tenantId); //, r.createdBy);
     zone.id = GeofenceZoneId(r.id);
     zone.name = r.name;
     zone.description = r.description;

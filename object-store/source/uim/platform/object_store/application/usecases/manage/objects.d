@@ -48,9 +48,7 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
     if (!quotaResult.valid)
       return CommandResult(false, "", quotaResult.message);
 
-    StorageObject obj;
-    obj.initEntity(req.tenantId, req.createdBy);
-
+    auto obj = StorageObject(req.tenantId); //, UserId("test-user"));
     obj.bucketId = req.bucketId;
     obj.key = req.key;
     obj.contentType = req.contentType.length > 0 ? req.contentType : "application/octet-stream";
@@ -61,9 +59,7 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
 
     // Create initial version if versioning is enabled
     if (bucket.versioningEnabled) {
-      ObjectVersion ver;
-      ver.initEntity(req.tenantId, req.createdBy);
-
+      auto ver = ObjectVersion(req.tenantId); //, UserId("test-user"));
       ver.objectId = obj.id;
       ver.versionTag = "v1";
       ver.size = req.size;
@@ -188,8 +184,7 @@ class ManageObjectsUseCase { // TODO: UIMUseCase {
     if (!quotaResult.valid)
       return CommandResult(false, "", quotaResult.message);
 
-    StorageObject copy;
-    copy.initEntity(req.tenantId);
+    auto copy = StorageObject(req.tenantId); //, UserId("test-user"));
     copy.bucketId = req.destBucketId;
     copy.key = req.destKey;
     copy.contentType = sourceObj.contentType;

@@ -29,9 +29,7 @@ class ManageEnvironmentsUseCase { // TODO: UIMUseCase {
     if (req.region.length == 0)
       return CommandResult(false, "", "Region is required");
 
-    KymaEnvironment env;
-    env.initEntity(req.tenantId, req.createdBy);
-
+    auto env = KymaEnvironment(req.tenantId); //, req.createdBy);
     env.subaccountId = req.subaccountId;
     env.clusterId = "cluster-" ~ env.id.value[0 .. 8];
     env.name = req.name;

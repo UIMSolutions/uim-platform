@@ -31,10 +31,7 @@ class ManageCorrectionRequestsUseCase { // TODO: UIMUseCase {
     if (subject.isNull)
       return CommandResult(false, "", "Data subject not found");
 
-    auto now = currentTimestamp();
-    CorrectionRequest request;
-    request.initEntity(req.tenantId);
-
+    auto request = CorrectionRequest(req.tenantId); //, req.createdBy);
     request.dataSubjectId = req.subjectId;
     request.requestedBy = req.requestedBy;
     request.status = CorrectionStatus.requested;

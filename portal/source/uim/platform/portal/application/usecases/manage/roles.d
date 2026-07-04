@@ -35,8 +35,7 @@ class ManageRolesUseCase { // TODO: UIMUseCase {
 
     auto existing = roleRepo.findByName(req.tenantId, req.name);
     
-    Role role;
-    role.initEntity(req.tenantId);
+    auto role = Role(req.tenantId); //, UserId("test-user"));
     with (role) {
       name = req.name;
       description = req.description;

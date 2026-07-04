@@ -55,8 +55,9 @@ class ChangeLogController : HttpController {
       .set("totalCount", entries.length);
 
     // Provide the last delta token for incremental polling
-    if (entries.length > 0)
-      resp["nextDeltaToken"] = Json(entries[$ - 1].deltaToken);
+    // TODO: Consider adding a "nextDeltaToken" field in the response for clients to use in subsequent requests
+    // if (entries.length > 0)
+    //   resp["nextDeltaToken"] = Json(entries[$ - 1].deltaToken);
 
     return successResponse("Change log entries retrieved successfully", 200, resp);
   }

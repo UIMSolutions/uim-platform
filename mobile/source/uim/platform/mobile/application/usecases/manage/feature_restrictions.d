@@ -27,7 +27,8 @@ class ManageFeatureRestrictionsUseCase { // TODO: UIMUseCase {
         auto restriction = FeatureRestriction(r.tenantId);
 
         restriction.appId = r.appId;
-        restriction.featureName = r.featureName;
+        // TODO: Decide if we want to allow featureName to be set by the user or if it should be generated automatically. If we allow it, we need to validate it.
+        // restriction.featureName = r.featureName;
         restriction.description = r.description;
         restriction.enabled = r.enabled;
         restriction.allowedUsers = r.allowedUsers;

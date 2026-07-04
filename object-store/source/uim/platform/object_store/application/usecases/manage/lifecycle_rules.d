@@ -35,8 +35,7 @@ class ManageLifecycleRulesUseCase { // TODO: UIMUseCase {
     if (bucket.isNull)
       return CommandResult(false, "", "Bucket not found");
 
-    LifecycleRule rule;
-    rule.initEntity(req.tenantId, req.createdBy);
+    auto rule = LifecycleRule(req.tenantId); //, UserId("test-user"));
     rule.bucketId = req.bucketId;
     rule.name = req.name;
     rule.prefix = req.prefix;

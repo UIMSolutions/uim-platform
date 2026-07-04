@@ -35,9 +35,7 @@ class ManageMetricsUseCase { // TODO: UIMUseCase {
     if (definitions.existsByName(req.tenantId, req.name))
       return CommandResult(false, "", "Metric definition '" ~ req.name ~ "' already exists");
 
-    MetricDefinition definition;
-    definition.initEntity(req.tenantId, req.createdBy);
-
+    auto definition = MetricDefinition(req.tenantId); //, UserId("test-user"));
     definition.name = req.name;
     definition.displayName = req.displayName.length > 0 ? req.displayName : req.name;
     definition.description = req.description;

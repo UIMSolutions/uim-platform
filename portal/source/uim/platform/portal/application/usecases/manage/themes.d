@@ -28,9 +28,7 @@ class ManageThemesUseCase { // TODO: UIMUseCase {
     if (req.name.length == 0)
       return ThemeResponse("", "Theme name is required");
 
-    Theme theme;
-    theme.initEntity(req.tenantId, req.createdBy);
-
+    auto theme = Theme(req.tenantId); //, UserId("test-user"));
     theme.name = req.name;
     theme.description = req.description;
     theme.baseTheme = req.baseTheme;

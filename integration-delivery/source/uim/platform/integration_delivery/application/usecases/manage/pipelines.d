@@ -31,8 +31,7 @@ class ManagePipelinesUseCase {
     }
 
     CommandResult createPipeline(PipelineDTO dto) {
-        Pipeline p;
-        p.initEntity(dto.tenantId, dto.createdBy);
+        auto p = Pipeline(dto.tenantId); //, dto.createdBy);
         p.id = dto.pipelineId;
         p.name = dto.name;
         p.description = dto.description;

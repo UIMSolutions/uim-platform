@@ -36,8 +36,7 @@ class ManageServiceInstancesUseCase {
         if (repo.nameExists(dto.tenantId, dto.name))
             return CommandResult(false, "", "Service instance name already exists");
 
-        ServiceInstance e;
-        e.initEntity(dto.tenantId, dto.createdBy);
+        auto e = ServiceInstance(dto.tenantId); //, UserId("test-user"));
         e.id = dto.serviceInstanceId;
         e.name = dto.name;
         e.description = dto.description;

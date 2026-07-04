@@ -37,8 +37,7 @@ class ManagePagesUseCase { // TODO: UIMUseCase {
     if (!siteRepo.existsById(req.siteId))
       return PageResponse(PageResponseId(""), "Site not found");
 
-    Page page;
-    page.initEntity(req.tenantId);
+    auto page = Page(req.tenantId); //, UserId("test-user"));
     with (page) {
       siteId = req.siteId;
       title = req.title;
