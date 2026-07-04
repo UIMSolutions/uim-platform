@@ -31,8 +31,7 @@ class ManageHealthChecksUseCase { // TODO: UIMUseCase {
     if (req.name.length == 0)
       return CommandResult(false, "", "Check name is required");
 
-    HealthCheck check;
-    check.initEntity(req.tenantId, req.createdBy);
+    auto check = HealthCheck(req.tenantId);
     check.resourceId = req.resourceId;
     check.name = req.name;
     check.description = req.description;
@@ -93,9 +92,7 @@ class ManageHealthChecksUseCase { // TODO: UIMUseCase {
 
   CommandResult recordResult(RecordCheckResultRequest req) {
 
-    HealthCheckResult r;
-    r.initEntity(req.tenantId);
-
+    auto r = HealthCheckResult(req.tenantId);
     r.checkId = req.checkId;
     r.resourceId = req.resourceId;
     r.status = req.status.to!CheckStatus;

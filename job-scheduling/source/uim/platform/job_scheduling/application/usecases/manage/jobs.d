@@ -29,9 +29,7 @@ class ManageJobsUseCase { // TODO: UIMUseCase {
         if (r.actionUrl.length == 0 && r.type != "cloudFoundryTask")
             return CommandResult(false, "", "Action URL is required for HTTP jobs");
 
-        Job job;
-        job.initEntity(r.tenantId);
-
+        auto job = Job(r.tenantId, r.id.isNull ? JobId(createId()) : r.id, r.createdBy);
         job.name = r.name;
         job.description = r.description;
         job.actionUrl = r.actionUrl;

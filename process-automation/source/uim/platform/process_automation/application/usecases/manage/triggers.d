@@ -27,9 +27,7 @@ class ManageTriggersUseCase { // TODO: UIMUseCase {
         if (!existing.isNull)
             return CommandResult(false, "", "Trigger already exists");
 
-        Trigger t;
-        t.initEntity(r.tenantId, r.createdBy);
-        t.id = r.triggerId;
+        auto t = Trigger(r.tenantId, r.triggerId, r.createdBy);
         t.processId = r.processId;
         t.name = r.name;
         t.description = r.description;

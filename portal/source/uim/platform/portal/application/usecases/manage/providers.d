@@ -28,8 +28,7 @@ class ManageProvidersUseCase { // TODO: UIMUseCase {
     if (req.name.length == 0)
       return ProviderResponse(ProviderResponseId(""), "Provider name is required");
 
-    ContentProvider provider;
-    provider.initEntity(req.tenantId, req.createdBy);
+    auto provider = ContentProvider(req.tenantId);
     with (provider) {
       name = req.name;
       description = req.description;
@@ -52,10 +51,10 @@ class ManageProvidersUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateProvider(UpdateProviderRequest req) {
-    if (!providerRepo.existsById(req.providerId))
+    if (!providerRepo.existsById(req.tenantId, req.providerId))
       return CommandResult(false, "", "Content provider not found");
 
-    ContentProvider provider = providerRepo.findById(req.providerId);
+    auto provider = providerRepo.findById(req.tenantId, req.providerId);
     with (provider) {
       name = req.name.length > 0 ? req.name : name;
       description = req.description;
@@ -68,8 +67,8 @@ class ManageProvidersUseCase { // TODO: UIMUseCase {
     return CommandResult(true, provider.providerId.value, "Content provider updated successfully.");
   }
 
-  CommandResult deleteProvider(ProviderId id) {
-    auto provider = providerRepo.findById(id);
+  CommandResult deleteProvider(TenantId tenantId, ProviderId id) {
+    auto provider = providerRepo.findById(tenantId, id);
      if (provider.isNull)
       return CommandResult(false, "", "Content provider not found");  
 

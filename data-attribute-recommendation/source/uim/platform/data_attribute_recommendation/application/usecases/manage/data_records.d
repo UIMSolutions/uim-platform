@@ -29,8 +29,10 @@ class ManageDataRecordsUseCase { // TODO: UIMUseCase {
   CommandResult createDataRecord(CreateDataRecordRequest req) {
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
+
     if (req.datasetId.isEmpty)
       return CommandResult(false, "", "Dataset ID is required");
+
     if (req.attributes.length == 0)
       return CommandResult(false, "", "Attributes are required");
 
@@ -38,12 +40,11 @@ class ManageDataRecordsUseCase { // TODO: UIMUseCase {
     auto ds = datasetRepo.findById(req.tenantId, req.datasetId);
     if (ds.isNull)
       return CommandResult(false, "", "Dataset not found");
+
     if (ds.status != DatasetStatus.draft && ds.status != DatasetStatus.ready)
       return CommandResult(false, "", "Cannot add records to a processed or completed dataset");
 
-    DataRecord record;
-    record.initEntity(req.tenantId, req.createdBy);
-
+    auto record = DataRecord(req.tenantId, DataRecordId(createId), req.createdBy);
     record.datasetId = req.datasetId;
     record.tenantId = req.tenantId;
     record.attributes = req.attributes;

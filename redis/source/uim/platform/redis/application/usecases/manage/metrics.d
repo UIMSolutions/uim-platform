@@ -37,9 +37,7 @@ class ManageMetricsUseCase {
     }
 
     CommandResult recordMetric(MetricDTO dto) {
-        Metric e;
-        e.initEntity(dto.tenantId, dto.createdBy);
-        e.id = dto.metricId;
+        auto e = Metric(dto.tenantId, dto.metricId, dto.createdBy);
         e.instanceId = dto.instanceId;
         e.timestamp_ = dto.timestamp_;
         e.memoryUsedMb = dto.memoryUsedMb;

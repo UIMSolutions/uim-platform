@@ -29,9 +29,7 @@ class ManageMaintenanceWindowsUseCase {
     }
 
     CommandResult createMaintenanceWindow(MaintenanceWindowDTO dto) {
-        MaintenanceWindow e;
-        e.initEntity(dto.tenantId, dto.createdBy);
-        e.id = dto.maintenanceWindowId;
+        auto e = MaintenanceWindow(dto.tenantId, dto.maintenanceWindowId, dto.createdBy);
         e.instanceId = dto.instanceId;
         e.dayOfWeek = dto.dayOfWeek;
         e.startHourUtc = dto.startHourUtc;
@@ -50,11 +48,13 @@ class ManageMaintenanceWindowsUseCase {
         auto existing = repo.findById(dto.tenantId, dto.maintenanceWindowId);
         if (existing.isNull)
             return CommandResult(false, "", "Maintenance window not found");
+
         if (dto.dayOfWeek.length > 0) existing.dayOfWeek = dto.dayOfWeek;
         if (dto.startHourUtc >= 0) existing.startHourUtc = dto.startHourUtc;
         if (dto.durationHours > 0) existing.durationHours = dto.durationHours;
         existing.autoMinorVersionUpgrade = dto.autoMinorVersionUpgrade;
         if (!dto.updatedBy.isNull) existing.updatedBy = dto.updatedBy;
+        
         repo.update(existing);
         return CommandResult(true, existing.id.value, "");
     }
@@ -63,7 +63,8 @@ class ManageMaintenanceWindowsUseCase {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Maintenance window not found");
-        repo.removeById(tenantId, id);
-        return CommandResult(true, id.value, "");
+
+        repo.remove(existing);
+        return CommandResult(true, existing.id.value, "");
     }
 }

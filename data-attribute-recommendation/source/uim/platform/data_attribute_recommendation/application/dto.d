@@ -12,6 +12,8 @@ import uim.platform.data_attribute_recommendation;
 @safe:
 struct CreateDatasetRequest {
   TenantId tenantId;
+  DatasetId datasetId;
+
   string name;
   string description;
   string dataType;
@@ -46,6 +48,8 @@ struct CreateBulkRecordsRequest {
 
 struct CreateModelConfigRequest {
   TenantId tenantId;
+  ModelConfigurationId configId;
+
   DatasetId datasetId;
   string name;
   string description;
@@ -78,6 +82,8 @@ struct StartTrainingRequest {
 struct CreateDeploymentRequest {
   TenantId tenantId;
   TrainingJobId jobId;
+  DeploymentId deploymentId;
+
   string name;
   int replicas;
   UserId createdBy;
@@ -89,6 +95,5 @@ struct SubmitInferenceRequest {
   DeploymentId deploymentId;
   string inputData; // JSON
 }
-// --- Command Result ---
 
 

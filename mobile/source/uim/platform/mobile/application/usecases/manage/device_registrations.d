@@ -32,9 +32,7 @@ class ManageDeviceRegistrationsUseCase { // TODO: UIMUseCase {
             repo.update(existing);
             return CommandResult(true, existing.id.value, "");
         }
-        DeviceRegistration reg;
-        reg.initEntity(r.tenantId);
-
+        auto reg = DeviceRegistration(r.tenantId);
         reg.appId = r.appId;
         reg.deviceModel = r.deviceModel;
         reg.osVersion = r.osVersion;

@@ -15,6 +15,8 @@ import uim.platform.job_scheduling;
 
 struct CreateJobRequest {
     TenantId tenantId;
+    JobId jobId;
+
     string name;
     string description;
     string actionUrl;
@@ -44,6 +46,8 @@ struct UpdateJobRequest {
 struct CreateScheduleRequest {
     TenantId tenantId;
     JobId jobId;
+    ScheduleId scheduleId;
+
     string description;
     string type;
     string format;
@@ -75,7 +79,7 @@ struct UpdateScheduleRequest {
 // --- Run Log ---
 
 struct UpdateRunLogRequest {
-    RunLogId runLogId;
+    RunLogId logId;
     TenantId tenantId;
     string status;
     string statusMessage;

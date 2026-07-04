@@ -12,7 +12,7 @@ import uim.platform.redis;
 @safe:
 
 struct ServiceInstanceDTO {
-    ServiceInstanceId serviceInstanceId;
+    ServiceInstanceId instanceId;
     TenantId tenantId;
     string name;
     string description;
@@ -30,7 +30,7 @@ struct ServiceInstanceDTO {
 }
 
 struct ServiceBindingDTO {
-    ServiceBindingId serviceBindingId;
+    ServiceBindingId bindingId;
     TenantId tenantId;
     ServiceInstanceId instanceId;
     string appId;
@@ -41,7 +41,7 @@ struct ServiceBindingDTO {
 }
 
 struct ServicePlanDTO {
-    ServicePlanId servicePlanId;
+    ServicePlanId planId;
     TenantId tenantId;
     string name;
     string description;
@@ -105,7 +105,7 @@ struct MetricDTO {
 }
 
 struct BackupPolicyDTO {
-    BackupPolicyId backupPolicyId;
+    BackupPolicyId policyId;
     TenantId tenantId;
     ServiceInstanceId instanceId;
     bool enabled;
@@ -117,7 +117,7 @@ struct BackupPolicyDTO {
 }
 
 struct AccessControlDTO {
-    AccessControlId accessControlId;
+    AccessControlId controlId;
     TenantId tenantId;
     ServiceInstanceId instanceId;
     string cidr;

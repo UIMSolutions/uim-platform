@@ -32,9 +32,7 @@ class ManageServiceBindingsUseCase {
         if (!RedisValidator.isValidServiceBinding(ServiceBinding.init))
             return CommandResult(false, "", "Invalid binding: instanceId and appId required");
 
-        ServiceBinding e;
-        e.initEntity(dto.tenantId, dto.createdBy);
-        e.id = dto.serviceBindingId;
+        auto e = ServiceBinding(dto.tenantId, dto.bindingId, dto.createdBy);
         e.instanceId = dto.instanceId;
         e.appId = dto.appId;
         e.name = dto.name;

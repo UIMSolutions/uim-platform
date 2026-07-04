@@ -31,9 +31,7 @@ class ManageKeyMappingsUseCase { // TODO: UIMUseCase {
     if (req.entries.length == 0)
       return CommandResult(false, "", "At least one key mapping entry is required");
 
-    KeyMapping mapping;
-    mapping.initEntity(req.tenantId);
-
+    auto mapping = KeyMapping(req.tenantId);
     mapping.masterDataObjectId = req.objectId;
     mapping.category = req.category.to!MasterDataCategory;
     mapping.objectType = req.objectType;

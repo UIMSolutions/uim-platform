@@ -31,9 +31,8 @@ class ManagePushRegistrationsUseCase { // TODO: UIMUseCase {
             repo.update(existing);
             return CommandResult(true, existing.id.value, "");
         }
-        PushRegistration reg;
-        reg.initEntity(r.tenantId, r.createdBy);
-
+        
+        auto reg = PushRegistration(r.tenantId);
         reg.appId = r.appId;
         reg.deviceId = r.deviceId;
         reg.provider = parseProvider(r.provider);

@@ -23,9 +23,7 @@ class ManageClientLogsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult uploadLog(UploadClientLogRequest r) {
-        ClientLogEntry entry;
-        entry.initEntity(r.tenantId);
-
+        auto entry = ClientLogEntry(r.tenantId);
         entry.appId = r.appId;
         entry.deviceId = r.deviceId;
         entry.userId = r.userId;

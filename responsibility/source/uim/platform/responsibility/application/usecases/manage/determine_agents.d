@@ -68,9 +68,7 @@ class DetermineAgentsUseCase {
         
         immutable elapsed = MonoTime.currTime.ticks / 1_000_000 - startMs;
 
-        DeterminationLog log;
-        log.initEntity(req.tenantId, UserId("system"));
-        log.id              = DeterminationLogId(randomUUID().toString());
+        auto log = DeterminationLog(req.tenantId, DeterminationLogId(createId), UserId("system"));
         log.contextId       = req.contextId;
         log.ruleId          = ruleId;
         log.objectType      = req.objectType;
@@ -80,6 +78,7 @@ class DetermineAgentsUseCase {
         log.errorMessage    = errorMsg;
         log.callerApp       = req.callerApp;
         log.executionTimeMs = elapsed;
+        
         _logRepo.save(log);
 
         return DetermineAgentsResult(

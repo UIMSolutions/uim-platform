@@ -29,9 +29,7 @@ class ManageResponsibilityDefinitionsUseCase {
     }
 
     CommandResult createDefinition(ResponsibilityDefinitionDTO dto) {
-        ResponsibilityDefinition d;
-        d.initEntity(dto.tenantId, dto.createdBy);
-        d.id          = dto.definitionId;
+        auto d = ResponsibilityDefinition(dto.tenantId, dto.definitionId, dto.createdBy);
         d.name        = dto.name;
         d.description = dto.description;
         d.contextId   = dto.contextId;
@@ -41,10 +39,13 @@ class ManageResponsibilityDefinitionsUseCase {
         d.scope_      = parseScope(dto.scope_);
         d.validFrom   = dto.validFrom;
         d.validTo     = dto.validTo;
+
         if (d.name.length == 0)
             return CommandResult(false, "", "Definition name is required");
+
         if (d.contextId.length == 0)
             return CommandResult(false, "", "contextId is required");
+
         repo.save(d);
         return CommandResult(true, d.id.value, "");
     }

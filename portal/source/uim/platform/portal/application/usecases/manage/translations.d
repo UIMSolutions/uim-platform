@@ -25,12 +25,10 @@ class ManageTranslationsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createTranslation(CreateTranslationRequest req) {
-    if (req.fieldName.length == 0 || req.language.length == 0)
+    if (req.fieldName.length == 0)
       return CommandResult(false, "", "Field name and language are required");
 
-    Translation translation;
-    translation.initEntity(req.tenantId);
-    
+    auto translation = Translation(req.tenantId);
     translation.resourceType = req.resourceType;
     translation.resourceId = req.resourceId;
     translation.fieldName = req.fieldName;

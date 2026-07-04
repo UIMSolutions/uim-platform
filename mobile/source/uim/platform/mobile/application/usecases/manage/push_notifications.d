@@ -28,9 +28,7 @@ class ManagePushNotificationsUseCase { // TODO: UIMUseCase {
         if (!PushDeliveryService.validatePayloadSize(r.payload, provider))
             return CommandResult(false, "", "Payload exceeds maximum size for provider");
         
-        PushNotification notif;
-        notif.initEntity(r.tenantId, r.createdBy);
-
+        auto notif = PushNotification(r.tenantId);
         notif.appId = r.appId;
         notif.title = r.title;
         notif.body_ = r.body_;

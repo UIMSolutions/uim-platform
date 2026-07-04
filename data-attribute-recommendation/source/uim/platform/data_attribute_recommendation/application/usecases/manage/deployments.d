@@ -46,10 +46,7 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
     if (!existingDep.isNull && existingDep.status == DeploymentStatus.active)
       return CommandResult(false, "", "An active deployment already exists for this training job");
 
-    auto now = currentTimestamp();
-    ModelDeployment dep;
-    dep.initEntity(req.tenantId, req.createdBy);
-
+    auto dep = ModelDeployment(req.tenantId);
     dep.trainingJobId = req.jobId;
     dep.modelConfigId = job.modelConfigId;
     dep.name = req.name.length > 0 ? req.name : "deployment-" ~ dep.id.value[0 .. 8];

@@ -29,9 +29,7 @@ class ManageTeamTypesUseCase {
     }
 
     CommandResult createType(TeamTypeDTO dto) {
-        TeamType t;
-        t.initEntity(dto.tenantId, dto.createdBy);
-        t.id          = dto.typeId;
+        auto t = TeamType(dto.tenantId, dto.typeId, dto.createdBy);
         t.name        = dto.name;
         t.description = dto.description;
         t.code        = dto.code;
