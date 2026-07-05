@@ -177,7 +177,7 @@ CONN_HOST=127.0.0.1 CONN_PORT=9090 ./build/uim-connectivity-platform-service
 | `ChannelId` | `string` | Service channel identifier |
 | `RuleId` | `string` | Access rule identifier |
 | `CertificateId` | `string` | Certificate identifier |
-| `ConnectivityLogId` | `string` | Log entry identifier |
+| `ConnectivityLogEntryId` | `string` | Log entry identifier |
 | `TenantId` | `string` | Tenant identifier |
 | `SubaccountId` | `string` | Subaccount identifier |
 
@@ -345,9 +345,9 @@ package "Application Layer  «use cases»" as APP <<Rectangle>> {
   }
 
   class MonitorConnectivityUseCase << (U,#FF7043) >> {
-    + listLogs(tenantId) : ConnectivityLog[]
-    + listBySeverity(tenantId, sev) : ConnectivityLog[]
-    + listBySource(sourceId) : ConnectivityLog[]
+    + listLogs(tenantId) : ConnectivityLogEntry[]
+    + listBySeverity(tenantId, sev) : ConnectivityLogEntry[]
+    + listBySource(sourceId) : ConnectivityLogEntry[]
     + getSummary(tenantId) : ConnectivitySummary
   }
 }
@@ -428,8 +428,8 @@ package "Domain Layer  «business logic»" as DOMAIN <<Rectangle>> {
       + expiresWithinDays(now, days) : bool
     }
 
-    class ConnectivityLog << (E,#66BB6A) >> {
-      id : ConnectivityLogId
+    class ConnectivityLogEntry << (E,#66BB6A) >> {
+      id : ConnectivityLogEntryId
       tenantId : TenantId
       eventType : ConnectivityEventType
       severity : LogSeverity
@@ -492,9 +492,9 @@ package "Domain Layer  «business logic»" as DOMAIN <<Rectangle>> {
     }
 
     interface ConnectivityLogRepository << (P,#42A5F5) >> {
-      + findByTenant(tenantId) : ConnectivityLog[]
-      + findBySeverity(tenantId, sev) : ConnectivityLog[]
-      + findBySource(sourceId) : ConnectivityLog[]
+      + findByTenant(tenantId) : ConnectivityLogEntry[]
+      + findBySeverity(tenantId, sev) : ConnectivityLogEntry[]
+      + findBySource(sourceId) : ConnectivityLogEntry[]
       + save(entry) : void
     }
   }

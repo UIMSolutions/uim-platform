@@ -60,7 +60,7 @@ struct CertificateId {
   mixin IdTemplate;
 }
 
-struct ConnectivityLogId {
+struct ConnectivityLogEntryId {
   string value;
 
   this(string value) {

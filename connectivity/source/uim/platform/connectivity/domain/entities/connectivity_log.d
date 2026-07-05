@@ -11,8 +11,8 @@ mixin(ShowModule!());
 
 @safe:
 /// Immutable connectivity event log entry.
-struct ConnectivityLog {
-  mixin TenantEntity!(ConnectivityLogId);
+struct ConnectivityLogEntry {
+  mixin TenantEntity!(ConnectivityLogEntryId);
 
   ConnectivityEventType eventType;
   LogSeverity severity = LogSeverity.info;

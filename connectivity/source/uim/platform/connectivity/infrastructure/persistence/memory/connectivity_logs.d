@@ -13,18 +13,18 @@ import uim.platform.connectivity;
 mixin(ShowModule!());
 
 @safe:
-class MemoryConnectivityLogRepository : TenantRepository!(ConnectivityLog, ConnectivityLogId), ConnectivityLogRepository {
+class MemoryConnectivityLogRepository : TenantRepository!(ConnectivityLogEntry, ConnectivityLogEntryId), ConnectivityLogRepository {
 
   // #region BySeverity
   size_t countBySeverity(TenantId tenantId, LogSeverity severity) {
     return findBySeverity(tenantId, severity).length;
   }
 
-  ConnectivityLog[] filterBySeverity(ConnectivityLog[] logs, LogSeverity severity) {
+  ConnectivityLogEntry[] filterBySeverity(ConnectivityLogEntry[] logs, LogSeverity severity) {
     return logs.filter!(e => e.severity == severity).array;
   }
 
-  ConnectivityLog[] findBySeverity(TenantId tenantId, LogSeverity severity) {
+  ConnectivityLogEntry[] findBySeverity(TenantId tenantId, LogSeverity severity) {
     return filterBySeverity(findByTenant(tenantId), severity);
   }
 
@@ -38,7 +38,7 @@ class MemoryConnectivityLogRepository : TenantRepository!(ConnectivityLog, Conne
     return findBySource(tenantId, sourceId).length;
   }
 
-  ConnectivityLog[] findBySource(TenantId tenantId, string sourceId) {
+  ConnectivityLogEntry[] findBySource(TenantId tenantId, string sourceId) {
     return findByTenant(tenantId).filter!(e => e.sourceId == sourceId).array;
   }
 

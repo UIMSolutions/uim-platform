@@ -20,8 +20,8 @@ mixin(ShowModule!());
  *
  * TODO:
  * - Implement filtering, pagination, and other query parameters for log retrieval.  
- * - ConnectivityLog[] listBySeverity(TenantId tenantId, LogSeverity severity) 
- * - ConnectivityLog[] listBySource(TenantId tenantId, SourceId sourceId) 
+ * - ConnectivityLogEntry[] listBySeverity(TenantId tenantId, LogSeverity severity) 
+ * - ConnectivityLogEntry[] listBySource(TenantId tenantId, SourceId sourceId) 
  */
 class MonitoringController : HttpController {
   private MonitorConnectivityUseCase usecase;

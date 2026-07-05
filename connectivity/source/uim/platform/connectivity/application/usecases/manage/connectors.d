@@ -103,7 +103,7 @@ class ManageConnectorsUseCase { // TODO: UIMUseCase {
   private void recordLog(TenantId tenantId, ConnectivityEventType evtType,
       string sourceId, string sourceType, string message) {
    
-    auto entry = ConnectivityLog(tenantId);
+    auto entry = ConnectivityLogEntry(tenantId);
     entry.eventType = evtType;
     entry.severity = LogSeverity.info;
     entry.sourceId = sourceId;

@@ -179,7 +179,7 @@ NSOV-1  Connectivity Services
                      │  │   ServiceChannel            │  │
                      │  │   AccessRule                │  │
                      │  │   Certificate               │  │
-                     │  │   ConnectivityLog           │  │
+                     │  │   ConnectivityLogEntry           │  │
                      │  ├────────────────────────────┤  │
                      │  │ Ports (Interfaces):         │  │
                      │  │   DestinationRepository     │  │
@@ -339,9 +339,9 @@ NSOV-1  Connectivity Services
 │  Monitoring Domain                                                │
 │                                                                   │
 │  ┌──────────────────────────────────────────┐                    │
-│  │  ConnectivityLog (immutable)              │                    │
+│  │  ConnectivityLogEntry (immutable)              │                    │
 │  ├──────────────────────────────────────────┤                    │
-│  │ id : ConnectivityLogId                    │                    │
+│  │ id : ConnectivityLogEntryId                    │                    │
 │  │ tenantId : TenantId                       │                    │
 │  │ eventType : ConnectivityEventType         │                    │
 │  │   (16 values: connectionEstablished,      │                    │
@@ -478,7 +478,7 @@ NSOV-1  Connectivity Services
 | C1.4 Access Control | SVC-ACR-* | AccessRule | AccessRuleController | ManageAccessRulesUseCase |
 | C1.4.2 Path-Prefix Matching | (internal) | AccessRule | — | AccessControlEvaluator |
 | C1.5 Certificate Store | SVC-CERT-* | Certificate | CertificateController | ManageCertificatesUseCase |
-| C1.6 Monitoring | SVC-MON-* | ConnectivityLog | MonitoringController | MonitorConnectivityUseCase |
+| C1.6 Monitoring | SVC-MON-* | ConnectivityLogEntry | MonitoringController | MonitorConnectivityUseCase |
 | C1.7 Health | SVC-HEALTH | — | HealthController | — |
 
 ---

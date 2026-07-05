@@ -60,8 +60,8 @@ classDiagram
         +long expiresAt
         +Json toJson()
     }
-    class ConnectivityLog {
-        +ConnectivityLogId id
+    class ConnectivityLogEntry {
+        +ConnectivityLogEntryId id
         +TenantId tenantId
         +CloudConnectorId connectorId
         +string requestId
@@ -76,7 +76,7 @@ classDiagram
     CloudConnector "1" --> "0..*" ServiceChannel : tunnels
     CloudConnector "1" --> "0..*" AccessRule : enforces
     CloudConnector "1" --> "0..*" Certificate : uses
-    CloudConnector "1" --> "0..*" ConnectivityLog : records
+    CloudConnector "1" --> "0..*" ConnectivityLogEntry : records
 ```
 
 ---
