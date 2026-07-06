@@ -16,39 +16,18 @@ mixin(ShowModule!());
 // ---------------------------------------------------------------------------
 
 struct MtaArchiveId {
-    mixin IdTemplate;
+      mixin(IdTemplate);
 
-
-    this(string value) {
-        this.value = value;
-    }
-
-    string value;
 }
 
 struct MtaId {
-    mixin IdTemplate;
-    this(string value) {
-        this.value = value;
-    }
-
-    string value;
+    mixin(IdTemplate);
 }
 
 struct MtaOperationId {
-    mixin IdTemplate;
-    this(string value) {
-        this.value = value;
-    }
-
-    string value;
+    mixin(IdTemplate);
 }
 
 struct MtaSubscriptionId {
-    mixin IdTemplate;
-    this(string value) {
-        this.value = value;
-    }
-
-    string value;
+    mixin(IdTemplate);
 }

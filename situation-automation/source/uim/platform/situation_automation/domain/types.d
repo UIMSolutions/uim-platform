@@ -12,74 +12,26 @@ mixin(ShowModule!());
 @safe:
 // ID aliases
 struct SituationTemplateId  {
-    string value;
-
-    this(string value) {
-        this.value = value;
-    }
-
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }
 struct SituationInstanceId  {
-    string value;
-
-    this(string value) {
-        this.value = value;
-    }
-
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }
 struct SituationActionId  {
-    string value;
-
-    this(string value) {
-        this.value = value;
-    }
-
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }
 struct AutomationRuleId  {
-    string value;
-
-    this(string value) {
-        this.value = value;
-    }
-
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }
 struct EntityTypeId  {
-    string value;
-
-    this(string value) {
-        this.value = value;
-    }
-
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }
 struct DataContextId  {
-    string value;
-
-    this(string value) {
-        this.value = value;
-    }
-
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }
 struct NotificationId  {
-    string value;
-
-    this(string value) {
-        this.value = value;
-    }
-
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }
 struct DashboardId  {
-    string value;
-
-    this(string value) {
-        this.value = value;
-    }
-
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }

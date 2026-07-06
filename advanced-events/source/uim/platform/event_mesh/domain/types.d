@@ -5,83 +5,48 @@ import uim.platform.event_mesh;
 mixin(ShowModule!());
 
 @safe:
-// --- ID Aliases ---
+
+/// Strongly-typed identifier for a BrokerService aggregate root.
 struct BrokerServiceId {
-    string value;
-
-    this(string value) {
-        this.value = value;
-    }
-
-    mixin IdTemplate;
+    mixin(IdTemplate());
 }
 
+/// Strongly-typed identifier for a Queue aggregate root.
 struct QueueId {
-    string value;
-
-    this(string value) {
-        this.value = value;
-    }
-
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }
 
+/// Strongly-typed identifier for a Topic aggregate root.
 struct TopicId {
-    string value;
-
-    this(string value) {
-        this.value = value;
-    }
-
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }
 
+/// Strongly-typed identifier for a Subscription aggregate root.
+struct SubscriptionId {
+    mixin(IdTemplate);
+}
+
+/// Strongly-typed identifier for an EventSubscription aggregate root.
 struct EventSubscriptionId {
-    string value;
-
-    this(string value) {
-        this.value = value;
-    }
-
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }
 
+/// Strongly-typed identifier for an EventMessage aggregate root.
 struct EventMessageId {
-    string value;
+    mixin(IdTemplate);
+}   
 
-    this(string value) {
-        this.value = value;
-    }
-
-    mixin IdTemplate;
-}
-
+/// Strongly-typed identifier for an EventSchema aggregate root.
 struct EventSchemaId {
-    string value;
-
-    this(string value) {
-        this.value = value;
-    }
-
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }
 
+/// Strongly-typed identifier for an EventApplication aggregate root.
 struct EventApplicationId {
-    string value;
-
-    this(string value) {
-        this.value = value;
-    }
-
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }
 
+/// Strongly-typed identifier for a MeshBridge aggregate root.
 struct MeshBridgeId {
-    string value;
-
-    this(string value) {
-        this.value = value;
-    }
-
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }

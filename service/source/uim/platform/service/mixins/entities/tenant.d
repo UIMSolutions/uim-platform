@@ -122,13 +122,7 @@ mixin template TenantEntity(TId) {
 ///
 unittest {
   struct TestId {
-    mixin IdTemplate;
-
-    string value;
-
-    this(string value) {
-      this.value = value;
-    }
+    mixin(IdTemplate);
   }
 
   struct TestEntity {

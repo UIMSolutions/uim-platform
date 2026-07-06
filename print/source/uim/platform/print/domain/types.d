@@ -12,31 +12,21 @@ mixin(ShowModule!());
 @safe:
 
 struct PrintQueueId {
-    string value;
-    this(string value) { this.value = value; }
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }
 
 struct PrintTaskId {
-    string value;
-    this(string value) { this.value = value; }
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }
 
 struct PrinterId {
-    string value;
-    this(string value) { this.value = value; }
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }
 
 struct PrintDocumentId {
-    string value;
-    this(string value) { this.value = value; }
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }
 
 struct PrintClientId {
-    string value;
-    this(string value) { this.value = value; }
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }

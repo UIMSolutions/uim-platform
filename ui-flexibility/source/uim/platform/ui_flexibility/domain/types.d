@@ -14,56 +14,26 @@ mixin(ShowModule!());
 // ─── Domain ID types ─────────────────────────────────────────────────────────
 
 struct FlexChangeId {
-  mixin IdTemplate;
+    mixin(IdTemplate);
 
-  this(string value) {
-    this.value = value;
-  }
-
-  string value;
 }
 
 struct FlexVariantId {
-  mixin IdTemplate;
-  this(string value) {
-    this.value = value;
-  }
-
-  string value;
+  mixin(IdTemplate);
 }
 
 struct FlexVersionId {
-  mixin IdTemplate;
-  this(string value) {
-    this.value = value;
-  }
-
-  string value;
+  mixin(IdTemplate);
 }
 
 struct FlexDraftId {
-  mixin IdTemplate;
-  this(string value) {
-    this.value = value;
-  }
-
-  string value;
+  mixin(IdTemplate);
 }
 
 struct FlexPersonalizationId {
-  mixin IdTemplate;
-  this(string value) {
-    this.value = value;
-  }
-
-  string value;
+  mixin(IdTemplate);
 }
 
 struct FlexApplicationId {
-  mixin IdTemplate;
-  this(string value) {
-    this.value = value;
-  }
-
-  string value;
+  mixin(IdTemplate);
 }

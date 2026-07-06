@@ -12,82 +12,31 @@ mixin(ShowModule!());
 @safe:
 // ID aliases
 struct HtmlAppId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 struct AppVersionId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 struct AppFileId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
-}
-
-struct ServiceInstanceId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 struct DeploymentRecordId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 struct AppRouteId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 struct ContentCacheId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 
 // struct SpaceId {
-//   string value;
+//     mixin(IdTemplate);
 
-//   this(string value) {
-//     this.value = value;
-//   }
-
-//   mixin IdTemplate;
 // }

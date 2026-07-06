@@ -10,25 +10,25 @@ mixin(ShowModule!());
 @safe:
 
 /// Unique identifier for a SnowflakeAccount
-struct SnowflakeAccountId { string value; mixin IdTemplate; }
+struct SnowflakeAccountId { mixin(IdTemplate); }
 
 /// Unique identifier for a ZerocopyConnector
-struct ZerocopyConnectorId { string value; mixin IdTemplate; }
+struct ZerocopyConnectorId { mixin(IdTemplate); }
 
 /// Unique identifier for a SnowflakeWarehouse
-struct SnowflakeWarehouseId { string value; mixin IdTemplate; }
+struct SnowflakeWarehouseId { mixin(IdTemplate); }
 
 /// Unique identifier for a SnowflakeDatabase
-struct SnowflakeDatabaseId { string value; mixin IdTemplate; }
+struct SnowflakeDatabaseId { mixin(IdTemplate); }
 
 /// Unique identifier for a DataProductShare
-struct DataProductShareId { string value; mixin IdTemplate; }
+struct DataProductShareId { mixin(IdTemplate); }
 
 /// Unique identifier for a SnowflakeRole
-struct SnowflakeRoleId { string value; mixin IdTemplate; }
+struct SnowflakeRoleId { mixin(IdTemplate); }
 
 /// Unique identifier for a TenantUser
-struct SnowflakeTenantUserId { string value; mixin IdTemplate; }
+struct SnowflakeTenantUserId { mixin(IdTemplate); }
 
 /// Unique identifier for a ProvisioningRequest
-struct ProvisioningRequestId { string value; mixin IdTemplate; }
+struct ProvisioningRequestId { mixin(IdTemplate); }

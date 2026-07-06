@@ -12,211 +12,85 @@ mixin(ShowModule!());
 @safe:
 /// Unique identifier type aliases for type safety.
 struct DataSubjectId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 struct PersonalDataModelId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 struct DeletionRequestId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 struct BlockingRequestId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 struct LegalGroundId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 struct RetentionRuleId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 struct ConsentRecordId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 struct DataRetrievalRequestId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 struct DataControllerId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 struct DataControllerGroupId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 struct BusinessContextId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 struct BusinessProcessId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 struct BusinessSubprocessId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 struct CorrectionRequestId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 struct ArchiveRequestId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 struct DestructionRequestId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 struct PurposeRecordId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 struct ConsentPurposeId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 struct RuleSetId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 struct InformationReportId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 struct AnonymizationConfigId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }

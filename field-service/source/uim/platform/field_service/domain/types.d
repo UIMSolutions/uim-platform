@@ -12,81 +12,33 @@ mixin(ShowModule!());
 @safe:
 // --- ID Aliases ---
 struct ServiceCallId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 struct ActivityId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 struct AssignmentId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 struct EquipmentId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 struct TechnicianId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 struct CustomerId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 struct SkillId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 struct SmartformId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }

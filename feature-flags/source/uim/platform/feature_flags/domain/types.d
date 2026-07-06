@@ -36,14 +36,6 @@ struct RuleId {
     bool isNull() const { return value.length == 0; }
 }
 
-/// Strongly-typed identifier for a ServiceInstance
-struct ServiceInstanceId {
-    string value;
-    alias value this;
-
-    bool isNull() const { return value.length == 0; }
-}
-
 /// Strongly-typed identifier for an AuditEntry
 struct AuditEntryId {
     string value;

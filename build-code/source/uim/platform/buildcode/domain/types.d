@@ -13,73 +13,30 @@ mixin(ShowModule!());
 
 // ── ID types ─────────────────────────────────────────────────────────────────
 struct ProjectId {
-  string value;
-  this(string v) {
-    value = v;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 struct DevSpaceId {
-  string value;
-  this(string v) {
-    value = v;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 struct TemplateId {
-  string value;
-  this(string v) {
-    value = v;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 struct PipelineId {
-  string value;
-  this(string v) {
-    value = v;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 struct BuildJobId {
-  string value;
-  this(string v) {
-    value = v;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 struct DeploymentId {
-  string value;
-  this(string v) {
-    value = v;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 struct AIRequestId {
-  string value;
-  this(string v) {
-    value = v;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
-struct ServiceBindingId {
-  string value;
-  this(string v) {
-    value = v;
-  }
-
-  mixin IdTemplate;
-}

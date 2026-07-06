@@ -7,113 +7,47 @@ module uim.platform.data_quality.domain.types;
 import uim.platform.data_quality;
 /// Unique identifier type aliases for type safety.
 struct RecordId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 struct ValidationRuleId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 struct ValidationResultId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 struct CleansingRuleId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 struct DataProfileId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 struct DatasetId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 struct AddressId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 struct MatchGroupId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 struct CleansingJobId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 struct ProfileJobId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 struct QualityDashboardId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 

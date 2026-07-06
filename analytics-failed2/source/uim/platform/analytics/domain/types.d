@@ -6,13 +6,7 @@ mixin(ShowModule!());
 @safe:  
 
 struct AssetId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 enum StorageBackend {

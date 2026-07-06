@@ -13,75 +13,27 @@ mixin(ShowModule!());
 
 /// Domain ID types
 struct DataSubjectId  {
-    string value;
-
-    this(string value) {
-        this.value = value;
-    }
-
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }
 struct DataSubjectRequestId  {
-    string value;
-
-    this(string value) {
-        this.value = value;
-    }
-
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }
 struct PersonalDataRecordId  {
-    string value;
-
-    this(string value) {
-        this.value = value;
-    }
-
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }
 struct RegisteredApplicationId  {
-    string value;
-
-    this(string value) {
-        this.value = value;
-    }
-
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }
 struct ProcessingPurposeId  {
-    string value;
-
-    this(string value) {
-        this.value = value;
-    }
-
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }
 struct ConsentRecordId  {
-    string value;
-
-    this(string value) {
-        this.value = value;
-    }
-
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }
 struct RetentionRuleId  {
-    string value;
-
-    this(string value) {
-        this.value = value;
-    }
-
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }
 struct DataProcessingLogId  {
-    string value;
-
-    this(string value) {
-        this.value = value;
-    }
-
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }
 

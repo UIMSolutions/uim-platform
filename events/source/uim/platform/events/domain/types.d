@@ -11,10 +11,10 @@ mixin(ShowModule!());
 
 @safe:
 
-struct MessagingServiceId  { string value; this(string v) { value = v; } mixin IdTemplate; }
-struct MessageClientId     { string value; this(string v) { value = v; } mixin IdTemplate; }
-struct QueueId             { string value; this(string v) { value = v; } mixin IdTemplate; }
-struct QueueSubscriptionId { string value; this(string v) { value = v; } mixin IdTemplate; }
-struct WebhookId           { string value; this(string v) { value = v; } mixin IdTemplate; }
-struct EventChannelId      { string value; this(string v) { value = v; } mixin IdTemplate; }
-struct MessageBindingId    { string value; this(string v) { value = v; } mixin IdTemplate; }
+struct MessagingServiceId  { mixin(IdTemplate); }
+struct MessageClientId     { mixin(IdTemplate); }
+struct QueueId             { mixin(IdTemplate); }
+struct QueueSubscriptionId { mixin(IdTemplate); }
+struct WebhookId           { mixin(IdTemplate); }
+struct EventChannelId      { mixin(IdTemplate); }
+struct MessageBindingId    { mixin(IdTemplate); }

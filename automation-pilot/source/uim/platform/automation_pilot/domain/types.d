@@ -7,81 +7,33 @@ mixin(ShowModule!());
 @safe:
 
 struct CatalogId {
-    string value;
-
-    this(string value) {
-        this.value = value;
-    }
-
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }
 
 struct CommandId {
-    string value;
-
-    this(string value) {
-        this.value = value;
-    }
-
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }
 
 struct CommandInputId {
-    string value;
-
-    this(string value) {
-        this.value = value;
-    }
-
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }
 
 struct ExecutionId {
-    string value;
-
-    this(string value) {
-        this.value = value;
-    }
-
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }
 
 struct ScheduledExecutionId {
-    string value;
-
-    this(string value) {
-        this.value = value;
-    }
-
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }
 
 struct TriggerId {
-    string value;
-
-    this(string value) {
-        this.value = value;
-    }
-
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }
 
 struct ServiceAccountId {
-    string value;
-
-    this(string value) {
-        this.value = value;
-    }
-
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }
 
 struct ContentConnectorId {
-    string value;
-
-    this(string value) {
-        this.value = value;
-    }
-
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }

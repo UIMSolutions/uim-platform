@@ -80,12 +80,8 @@ mixin(ShowModule!());
 // unittest {
 //     // Setup mock types for testing
 //     struct MockId {
-//         mixin IdTemplate;
+//           mixin(IdTemplate);
 
-//         string value;
-//         this(string value) {
-//             this.value = value;
-//         }
 //     }
 
 //     struct MockEntity {

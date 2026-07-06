@@ -14,25 +14,17 @@ mixin(ShowModule!());
 // --- ID value types ---
 
 struct TranslationProjectId {
-    string value;
-    this(string value) { this.value = value; }
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }
 
 struct GlossaryEntryId {
-    string value;
-    this(string value) { this.value = value; }
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }
 
 struct TranslationJobId {
-    string value;
-    this(string value) { this.value = value; }
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }
 
 struct TranslationResultId {
-    string value;
-    this(string value) { this.value = value; }
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }

@@ -10,83 +10,20 @@ import uim.platform.foundry;
 mixin(ShowModule!());
 
 @safe:
-/// Unique identifier type aliases for type safety.
-// struct OrgId {
-//   string value;
-
-//   this(string value) {
-//     this.value = value;
-//   }
-
-//   mixin IdTemplate;
-// }
-
-// struct SpaceId {
-//   string value;
-
-//   this(string value) {
-//     this.value = value;
-//   }
-
-//   mixin IdTemplate;
-// }
 
 struct AppId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
-struct ServiceInstanceId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
-}
-
-struct ServiceBindingId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
-}
 
 struct RouteId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 struct CfDomainId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 struct BuildpackId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }

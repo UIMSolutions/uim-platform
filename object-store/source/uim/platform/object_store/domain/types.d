@@ -11,66 +11,22 @@ mixin(ShowModule!());
 @safe:
 // --- ID type aliases ---
 struct BucketId {
-    string value;
-  
-    this(string value) {
-        this.value = value;
-    }
-  
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }
 struct StorageObjectId {
-    string value;
-  
-    this(string value) {
-        this.value = value;
-    }
-  
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }
 struct ObjectVersionId {
-    string value;
-  
-    this(string value) {
-        this.value = value;
-    }
-  
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }
 struct AccessPolicyId {
-    string value;
-  
-    this(string value) {
-        this.value = value;
-    }
-  
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }
 struct LifecycleRuleId {
-    string value;
-  
-    this(string value) {
-        this.value = value;
-    }
-  
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }
 struct CorsRuleId {
-    string value;
-  
-    this(string value) {
-        this.value = value;
-    }
-  
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }
-struct ServiceBindingId {
-    string value;
-  
-    this(string value) {
-        this.value = value;
-    }
-  
-    mixin IdTemplate;
-}
+
 

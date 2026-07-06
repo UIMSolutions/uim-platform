@@ -14,52 +14,28 @@ mixin(ShowModule!());
 // --- Domain ID types ---
 
 struct DataProviderId {
-  string value;
-  this(string value) { this.value = value; }
-  mixin IdTemplate;
-}
+mixin(IdTemplate);}
 
 struct DataProductId {
-  string value;
-  this(string value) { this.value = value; }
-  mixin IdTemplate;
-}
+mixin(IdTemplate);}
 
 struct UnificationRuleId {
-  string value;
-  this(string value) { this.value = value; }
-  mixin IdTemplate;
-}
+mixin(IdTemplate);}
 
 struct DataSourceConfigId {
-  string value;
-  this(string value) { this.value = value; }
-  mixin IdTemplate;
-}
+mixin(IdTemplate);}
 
 struct AttributeMappingId {
-  string value;
-  this(string value) { this.value = value; }
-  mixin IdTemplate;
-}
+mixin(IdTemplate);}
 
 struct CustomerProfileId {
-  string value;
-  this(string value) { this.value = value; }
-  mixin IdTemplate;
-}
+mixin(IdTemplate);}
 
 struct CompositionRunId {
-  string value;
-  this(string value) { this.value = value; }
-  mixin IdTemplate;
-}
+mixin(IdTemplate);}
 
 struct TenantUserId {
-  string value;
-  this(string value) { this.value = value; }
-  mixin IdTemplate;
-}
+mixin(IdTemplate);}
 
 // --- Value types ---
 

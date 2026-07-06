@@ -13,43 +13,34 @@ import uim.platform.service;
 
 // TenantId and UserId are provided by uim.platform.service
 
-struct EventSubscriptionId  {
-    string value;
-    this(string value) { this.value = value; }
-    mixin IdTemplate;
+struct EventSubscriptionId {
+    mixin(IdTemplate);
 }
-struct EventTopicId         {
-    string value;
-    this(string value) { this.value = value; }
-    mixin IdTemplate;
+
+struct EventTopicId {
+    mixin(IdTemplate);
 }
-struct EventChannelId       {
-    string value;
-    this(string value) { this.value = value; }
-    mixin IdTemplate;
+
+struct EventChannelId {
+    mixin(IdTemplate);
 }
-struct EventMessageId       {
-    string value;
-    this(string value) { this.value = value; }
-    mixin IdTemplate;
+
+struct EventMessageId {
+    mixin(IdTemplate);
 }
-struct EventFilterId        {
-    string value;
-    this(string value) { this.value = value; }
-    mixin IdTemplate;
+
+struct EventFilterId {
+    mixin(IdTemplate);
 }
-struct DeadLetterEntryId    {
-    string value;
-    this(string value) { this.value = value; }
-    mixin IdTemplate;
+
+struct DeadLetterEntryId {
+    mixin(IdTemplate);
 }
-struct FormationId          {
-    string value;
-    this(string value) { this.value = value; }
-    mixin IdTemplate;
+
+struct FormationId {
+    mixin(IdTemplate);
 }
+
 struct SystemRegistrationId {
-    string value;
-    this(string value) { this.value = value; }
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }

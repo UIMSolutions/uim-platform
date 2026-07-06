@@ -15,56 +15,20 @@ mixin(ShowModule!());
 // Strong-typed IDs
 // ---------------------------------------------------------------------------
 struct DestinationId {
-    mixin IdTemplate;
-
-    string value;
-
-    this(string value) {
-        this.value = value;
-    }
+    mixin(IdTemplate);
 } /// RFC Destination name (SM59) — up to 32 chars
 struct FunctionModuleId {
-    mixin IdTemplate;
-
-    string value;
-
-    this(string value) {
-        this.value = value;
-    }
+    mixin(IdTemplate);
 } /// Function module name — up to 30 chars
 struct RfcCallId {
-    mixin IdTemplate;
-
-    string value;
-
-    this(string value) {
-        this.value = value;
-    }
+    mixin(IdTemplate);
 } /// UUID of an RFC call record
 struct TidValue {
-    mixin IdTemplate;
-
-    string value;
-
-    this(string value) {
-        this.value = value;
-    }
+    mixin(IdTemplate);
 } /// Transaction ID for tRFC/qRFC/bgRFC (24-char GUID)
 struct QueueName {
-    mixin IdTemplate;
-
-    string value;
-
-    this(string value) {
-        this.value = value;
-    }
+    mixin(IdTemplate);
 } /// Queue name for qRFC/bgRFC — up to 24 chars
 struct SystemId {
-    mixin IdTemplate;
-
-    string value;
-
-    this(string value) {
-        this.value = value;
-    }
+    mixin(IdTemplate);
 } /// SAP System ID (SID) — 3 chars

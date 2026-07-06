@@ -13,25 +13,13 @@ mixin(ShowModule!());
 @safe:
 
 struct IDMGroupId {
-    string value;
-    this(string value) { this.value = value; }
-    mixin IdTemplate;
-}
-
-struct ApplicationId {
-    string value;
-    this(string value) { this.value = value; }
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }
 
 struct IdentityProviderId {
-    string value;
-    this(string value) { this.value = value; }
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }
 
 struct ProvisioningJobId {
-    string value;
-    this(string value) { this.value = value; }
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }

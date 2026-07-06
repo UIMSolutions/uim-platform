@@ -11,44 +11,37 @@ mixin(ShowModule!());
 
 @safe:
 
+/// Strongly-typed identifier for a Mobile Application.
 struct MobileApplicationId {
-    string value;
-    this(string value) { this.value = value; }
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }
 
+/// Strongly-typed identifier for an App Definition.
 struct AppDefinitionId {
-    string value;
-    this(string value) { this.value = value; }
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }
 
+/// Strongly-typed identifier for an App Version.
 struct AppVersionId {
-    string value;
-    this(string value) { this.value = value; }
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }
 
+/// Strongly-typed identifier for a Device.
 struct DeviceId {
-    string value;
-    this(string value) { this.value = value; }
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }
 
+/// Strongly-typed identifier for a Sync Session.
 struct SyncSessionId {
-    string value;
-    this(string value) { this.value = value; }
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }
 
+/// Strongly-typed identifier for a Backend Connection.
 struct BackendConnectionId {
-    string value;
-    this(string value) { this.value = value; }
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }
 
+/// Strongly-typed identifier for a Deployment.
 struct DeploymentId {
-    string value;
-    this(string value) { this.value = value; }
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }

@@ -13,52 +13,28 @@ mixin(ShowModule!());
 
 // --- FHIR Resource ID types ---
 struct PatientId {
-  string value;
-  this(string value) { this.value = value; }
-  mixin IdTemplate;
-}
+mixin(IdTemplate);}
 
 struct PractitionerId {
-  string value;
-  this(string value) { this.value = value; }
-  mixin IdTemplate;
-}
+mixin(IdTemplate);}
 
 struct ObservationId {
-  string value;
-  this(string value) { this.value = value; }
-  mixin IdTemplate;
-}
+mixin(IdTemplate);}
 
 struct ConditionId {
-  string value;
-  this(string value) { this.value = value; }
-  mixin IdTemplate;
-}
+mixin(IdTemplate);}
 
 struct OrganizationId {
-  string value;
-  this(string value) { this.value = value; }
-  mixin IdTemplate;
-}
+mixin(IdTemplate);}
 
 struct EncounterId {
-  string value;
-  this(string value) { this.value = value; }
-  mixin IdTemplate;
-}
+mixin(IdTemplate);}
 
 struct MedicationId {
-  string value;
-  this(string value) { this.value = value; }
-  mixin IdTemplate;
-}
+mixin(IdTemplate);}
 
 struct MedicationRequestId {
-  string value;
-  this(string value) { this.value = value; }
-  mixin IdTemplate;
-}
+mixin(IdTemplate);}
 
 
 // --- FHIR Coding helper struct ---

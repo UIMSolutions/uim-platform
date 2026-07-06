@@ -12,35 +12,25 @@ mixin(ShowModule!());
 
 /// Strongly-typed identifier for a UsageRecord aggregate root.
 struct UsageRecordId {
-  string value;
-  this(string v) { value = v; }
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 /// Strongly-typed identifier for a MonthlyUsageReport aggregate root.
 struct MonthlyUsageReportId {
-  string value;
-  this(string v) { value = v; }
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 /// Strongly-typed identifier for a DailyUsageReport aggregate root.
 struct DailyUsageReportId {
-  string value;
-  this(string v) { value = v; }
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 /// Strongly-typed identifier for a MonthlyCostReport aggregate root.
 struct MonthlyCostReportId {
-  string value;
-  this(string v) { value = v; }
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 /// Strongly-typed identifier for a ServiceMetric aggregate root.
 struct ServiceMetricId {
-  string value;
-  this(string v) { value = v; }
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }

@@ -11,112 +11,72 @@ import uim.platform.abap_environment;
 @safe:
 /// Unique identifier type aliases for type safety.
 struct SystemInstanceId  {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
+
+/// Strongly-typed identifier for a Software Component aggregate root.
 struct SoftwareComponentId  {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
+/// Strongly-typed identifier for a Software Component Version aggregate root.
 struct CatalogAssignmentId  {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
+
+/// Strongly-typed identifier for a Software Component Version aggregate root.
 struct CommunicationArrangementId  {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
-struct ServiceBindingId  {
-  string value;
 
-  this(string value) {
-    this.value = value;
-  }
 
-  mixin IdTemplate;
-}
+/// Strongly-typed identifier for a Business User aggregate root.
 struct BusinessUserId  {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
+
+/// Strongly-typed identifier for a Business Role aggregate root.
 struct BusinessRoleId  {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
+
+/// Strongly-typed identifier for a Business Role Assignment aggregate root.
+struct BusinessRoleAssignmentId  {
+  mixin(IdTemplate);
+}
+
+/// Strongly-typed identifier for a Transport Request aggregate root.
 struct TransportRequestId  {
-  string value;
-
-  this(string value) {
-    this.value = value;
+  mixin(IdTemplate);
   }
 
-  mixin IdTemplate;
-}
+/// Strongly-typed identifier for a Transport Task aggregate root.
 struct TransportTaskId  {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
+
 struct ApplicationJobId  {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
+}
+/// Strongly-typed identifier for a Application Job Log aggregate root.
+struct ApplicationJobLogId  {
+  mixin(IdTemplate);
 }
 
+struct ApplicationJobLogEntryId  {
+  mixin(IdTemplate);
+}
+
+/// Strongly-typed identifier for a Service Definition aggregate root.
 struct ServiceDefinitionId  {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
+
+/// Strongly-typed identifier for a Communication Scenario aggregate root.
 struct CommunicationScenarioId  {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
+
+
+
+

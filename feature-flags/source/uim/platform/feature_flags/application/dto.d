@@ -16,6 +16,8 @@ mixin(ShowModule!());
 // ---------------------------------------------------------------------------
 
 struct VariantDTO {
+    TenantId tenantId;
+
     string key;
     string name;
     string description;
@@ -28,6 +30,8 @@ struct VariantDTO {
 // ---------------------------------------------------------------------------
 
 struct TargetingRuleDTO {
+    TenantId tenantId;
+
     string   name;
     string   description;
     string   type_;           /// RuleType string
@@ -43,6 +47,8 @@ struct TargetingRuleDTO {
 // ---------------------------------------------------------------------------
 
 struct CreateFeatureFlagRequest {
+    TenantId tenantId;
+
     string   name;
     string   description;
     string   type_;           /// FlagType string
@@ -55,6 +61,8 @@ struct CreateFeatureFlagRequest {
 }
 
 struct UpdateFeatureFlagRequest {
+    TenantId tenantId;
+
     string   description;
     string   defaultVariant;
     VariantDTO[]       variants;
@@ -64,6 +72,8 @@ struct UpdateFeatureFlagRequest {
 }
 
 struct PatchFeatureFlagRequest {
+    TenantId tenantId;
+
     string   state_;     /// FlagState string: "ENABLED" | "DISABLED" | "ARCHIVED"
     string   updatedBy;
 }
@@ -95,6 +105,7 @@ struct UpdateServiceInstanceRequest {
 
 struct EvaluationRequest {
     TenantId tenantId;
+
     string   flagName;
     string   instanceId;
     UserId   userId;
@@ -102,8 +113,9 @@ struct EvaluationRequest {
 }
 
 struct BulkEvaluationRequest {
-    string   instanceId;
     TenantId tenantId;
+
+    string   instanceId;
     UserId   userId;
     string[string] attributes;
 }

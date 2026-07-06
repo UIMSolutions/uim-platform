@@ -14,67 +14,27 @@ mixin(ShowModule!());
 // ID type aliases
 // ---------------------------------------------------------------------------
 struct ScalingPolicyId {
-    mixin IdTemplate;
-
-    string value;
-    this(string value) {
-        this.value = value;
-    }
+    mixin(IdTemplate);
 }
 struct ScalingRuleId {
-    mixin IdTemplate;
-
-    string value;
-    this(string value) {
-        this.value = value;
-    }
+    mixin(IdTemplate);
 }
 struct ScheduleId {
-    mixin IdTemplate;
-
-    string value;
-    this(string value) {
-        this.value = value;
-    }
+    mixin(IdTemplate);
 }
 struct RecurringScheduleId {
-    mixin IdTemplate;
-
-    string value;
-    this(string value) {
-        this.value = value;
-    }
+    mixin(IdTemplate);
 }
 struct SpecificDateScheduleId {
-    mixin IdTemplate;
-
-    string value;
-    this(string value) {
-        this.value = value;
-    }
+    mixin(IdTemplate);
 }
 struct CustomMetricId {
-    mixin IdTemplate;
-
-    string value;
-    this(string value) {
-        this.value = value;
-    }
+    mixin(IdTemplate);
 }
 struct ScalingHistoryId {
-    mixin IdTemplate;
-
-    string value;
-    this(string value) {
-        this.value = value;
-    }
+    mixin(IdTemplate);
 }
 struct AppBindingId {
-    mixin IdTemplate;
-
-    string value;
-    this(string value) {
-        this.value = value;
-    }
+    mixin(IdTemplate);
 }
 

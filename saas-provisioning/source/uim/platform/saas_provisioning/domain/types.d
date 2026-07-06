@@ -16,31 +16,13 @@ mixin(ShowModule!());
 // ---------------------------------------------------------------------------
 
 struct SaasApplicationId {
-    mixin IdTemplate;
-
-    this(string value) {
-        this.value = value;
-    }
-
-    string value;
+    mixin(IdTemplate);
 }
 
 struct AppSubscriptionId {
-    mixin IdTemplate;
-
-    this(string value) {
-        this.value = value;
-    }
-
-    string value;
+    mixin(IdTemplate);
 }
 
 struct SubscriptionJobId {
-    mixin IdTemplate;
-
-    this(string value) {
-        this.value = value;
-    }
-
-    string value;
+    mixin(IdTemplate);
 }

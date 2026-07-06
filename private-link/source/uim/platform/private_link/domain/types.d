@@ -9,35 +9,10 @@ import uim.platform.private_link;
 mixin(ShowModule!());
 
 @safe:
-/// Unique identifier for a private link service instance.
-struct ServiceInstanceId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
-}
 
 /// Unique identifier for a private endpoint.
 struct PrivateEndpointId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
-/// Unique identifier for a service binding.
-struct ServiceBindingId {
-  string value;
 
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
-}

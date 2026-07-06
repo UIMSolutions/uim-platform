@@ -7,6 +7,7 @@ module uim.platform.feature_flags.infrastructure.config;
 
 import std.process : environment;
 import std.conv    : to, ConvException;
+import uim.platform.feature_flags;
 
 mixin(ShowModule!());
 

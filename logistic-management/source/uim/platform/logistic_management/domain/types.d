@@ -10,43 +10,22 @@ mixin(ShowModule!());
 
 @safe:
 struct FreightOrderId {
-  string value;
-  this(string value) { this.value = value; }
-  mixin IdTemplate;
-}
+mixin(IdTemplate);}
 
 struct ShipmentId {
-  string value;
-  this(string value) { this.value = value; }
-  mixin IdTemplate;
-}
+mixin(IdTemplate);}
 
 struct DeliveryId {
-  string value;
-  this(string value) { this.value = value; }
-  mixin IdTemplate;
-}
+mixin(IdTemplate);}
 
 struct WarehouseTaskId {
-  string value;
-  this(string value) { this.value = value; }
-  mixin IdTemplate;
-}
+mixin(IdTemplate);}
 
 struct WarehouseOrderId {
-  string value;
-  this(string value) { this.value = value; }
-  mixin IdTemplate;
-}
+mixin(IdTemplate);}
 
 struct CarrierId {
-  string value;
-  this(string value) { this.value = value; }
-  mixin IdTemplate;
-}
+mixin(IdTemplate);}
 
 struct HandlingUnitId {
-  string value;
-  this(string value) { this.value = value; }
-  mixin IdTemplate;
-}
+mixin(IdTemplate);}

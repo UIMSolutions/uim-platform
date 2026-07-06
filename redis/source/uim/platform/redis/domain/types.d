@@ -11,11 +11,9 @@ mixin(ShowModule!());
 
 @safe:
 
-struct ServiceInstanceId { string value; mixin IdTemplate; }
-struct ServiceBindingId  { string value; mixin IdTemplate; }
-struct ServicePlanId     { string value; mixin IdTemplate; }
-struct ConfigurationId   { string value; mixin IdTemplate; }
-struct CacheEntryId      { string value; mixin IdTemplate; }
-struct MetricId          { string value; mixin IdTemplate; }
-struct BackupPolicyId    { string value; mixin IdTemplate; }
-struct AccessControlId   { string value; mixin IdTemplate; }
+struct ServicePlanId     { mixin(IdTemplate); }
+struct ConfigurationId   { mixin(IdTemplate); }
+struct CacheEntryId      { mixin(IdTemplate); }
+struct MetricId          { mixin(IdTemplate); }
+struct BackupPolicyId    { mixin(IdTemplate); }
+struct AccessControlId   { mixin(IdTemplate); }

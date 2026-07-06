@@ -10,111 +10,58 @@ import uim.platform.ai_core;
 mixin(ShowModule!()); 
 
 @safe:
-// ID aliases
+
+/// Strongly-typed identifier for a Scenario.
 struct ScenarioId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+    mixin(IdTemplate);
 }
 
+/// Strongly-typed identifier for an Executable.
 struct ExecutableId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+    mixin(IdTemplate);
 }
 
+/// Strongly-typed identifier for a Configuration.
 struct ConfigurationId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+    mixin(IdTemplate);
 }
 
+/// Strongly-typed identifier for an Execution.
 struct ExecutionId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+    mixin(IdTemplate);
 }
 
+/// Strongly-typed identifier for a Deployment.
 struct DeploymentId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+    mixin(IdTemplate);
 }
 
+/// Strongly-typed identifier for an Artifact.
 struct ArtifactId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+    mixin(IdTemplate);
 }
 
-struct ResourceGroupId  {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
-}
-struct MetricId  {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+/// Strongly-typed identifier for a Resource Group.
+struct ResourceGroupId {
+    mixin(IdTemplate);
 }
 
-struct DockerRegistrySecretId  {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
-}
-struct ObjectStoreSecretId  {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+/// Strongly-typed identifier for a Metric.
+struct MetricId {
+    mixin(IdTemplate);
 }
 
+/// Strongly-typed identifier for a Docker Registry Secret.
+struct DockerRegistrySecretId {
+    mixin(IdTemplate);
+}
+
+/// Strongly-typed identifier for an Object Store Secret.
+struct ObjectStoreSecretId {
+    mixin(IdTemplate);
+}
+
+/// Strongly-typed identifier for a Schedule.
 struct ScheduleId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+    mixin(IdTemplate);
 }

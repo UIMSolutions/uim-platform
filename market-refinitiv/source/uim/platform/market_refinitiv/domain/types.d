@@ -16,19 +16,13 @@ mixin(ShowModule!());
 // ---------------------------------------------------------------------------
 
 struct MarketRateId {
-  string value;
-  this(string v) { value = v; }
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 struct ProviderId {
-  string value;
-  this(string v) { value = v; }
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }
 
 struct AuditLogId {
-  string value;
-  this(string v) { value = v; }
-  mixin IdTemplate;
+  mixin(IdTemplate);
 }

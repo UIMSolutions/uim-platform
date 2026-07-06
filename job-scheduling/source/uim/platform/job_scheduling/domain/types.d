@@ -12,40 +12,16 @@ mixin(ShowModule!());
 @safe:
 
 struct JobId {
-    string value;
-    
-    this(string value) {
-        this.value = value;
-    }
-    
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }
 struct ScheduleId {
-    string value;
-    
-    this(string value) {
-        this.value = value;
-    }
-    
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }
 struct RunLogId {
-    string value;
-    
-    this(string value) {
-        this.value = value;
-    }
-    
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }
 
 struct ConfigurationId {
-    string value;
-    
-    this(string value) {
-        this.value = value;
-    }
-    
-    mixin IdTemplate;
+    mixin(IdTemplate);
 }
 

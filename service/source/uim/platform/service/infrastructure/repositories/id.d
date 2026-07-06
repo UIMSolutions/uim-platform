@@ -105,13 +105,7 @@ class IdRepository(TEntity, TId) : BaseRepository!(TEntity), IIdRepository!(TEnt
 ///
 
 struct TestEntityId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+    mixin(IdTemplate);
 }
 
 struct TestEntity {

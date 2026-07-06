@@ -130,13 +130,7 @@ class TenantRepository(TEntity, TId) : ITenantRepository!(TEntity, TId) {
 ///
 
 struct TestEntityId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+    mixin(IdTemplate);
 }
 
 struct TestEntity {

@@ -11,81 +11,50 @@ mixin(ShowModule!());
 
 @safe:
 
-struct TenantId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
-}
 
 struct UserId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+    mixin(IdTemplate);
 }
 
 struct GlobalAccountId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+    mixin(IdTemplate);
 }
 
 struct SubaccountId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+    mixin(IdTemplate);
 }
+
+
+
+struct ApplicationId {
+    mixin(IdTemplate);
+}
+
+
 struct ConnectionId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+    mixin(IdTemplate);
 }
 
 struct OrganizationId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
-}
-
-struct SpaceId {
-  string value;
-
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin IdTemplate;
+    mixin(IdTemplate);
 }
 
 struct OrgId {
-  string value;
+    mixin(IdTemplate);
+}
 
-  this(string value) {
-    this.value = value;
-  }
+struct ServiceBindingId {
+  mixin(IdTemplate);
+}
 
-  mixin IdTemplate;
+struct SpaceId {
+    mixin(IdTemplate);
+}
+
+struct TenantId {
+    mixin(IdTemplate);
+}
+
+struct ServiceInstanceId {
+    mixin(IdTemplate);
 }
