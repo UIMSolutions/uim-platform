@@ -14,8 +14,8 @@ enum WorkspaceType {
   public_,
   external,
 }
-WorkspaceType toWorkspaceType(string s) {
-  switch (s.toLower()) {
+WorkspaceType toWorkspaceType(string value, bool ignoreCase = true) {
+  switch (ignoreCase ? value.toLower() : value) {
     case "project": return WorkspaceType.project;
     case "team": return WorkspaceType.team;
     case "department": return WorkspaceType.department;
@@ -62,8 +62,8 @@ enum CardType {
   component,
   calendar,
 }
-CardType toCardType(string s) {
-  switch (s.toLower()) {
+CardType toCardType(string value, bool ignoreCase = true) {
+  switch (ignoreCase ? value.toLower() : value) {
     case "adaptive": return CardType.adaptive;
     case "analytical": return CardType.analytical;
     case "list": return CardType.list;
@@ -214,8 +214,8 @@ enum AppStatus {
   inactive,
   deprecated_,
 }
-AppStatus toAppStatus(string s) {
-  switch (s.toLower()) {
+AppStatus toAppStatus(string value, bool ignoreCase = true) {
+  switch (ignoreCase ? value.toLower() : value) {
     case "active": return AppStatus.active;
     case "inactive": return AppStatus.inactive;
     case "deprecated": return AppStatus.deprecated_;
@@ -372,8 +372,8 @@ enum NotificationStatus {
   dismissed,
   actionRequired,
 }
-NotificationStatus toNotificationStatus(string value) {
-  switch (value.toLower()) {
+NotificationStatus toNotificationStatus(string value, bool ignoreCase = true) {
+  switch (ignoreCase ? value.toLower() : value) {
     case "unread": return NotificationStatus.unread;
     case "read": return NotificationStatus.read_;
     case "dismissed": return NotificationStatus.dismissed;
@@ -455,8 +455,8 @@ enum PluginStatus {
   inactive,
   error,
 }
-PluginStatus toPluginStatus(string s) {
-  switch (s.toLower()) {
+PluginStatus toPluginStatus(string value, bool ignoreCase = true) {
+  switch (ignoreCase ? value.toLower() : value) {
     case "active": return PluginStatus.active;
     case "inactive": return PluginStatus.inactive;
     case "error": return PluginStatus.error;
@@ -478,8 +478,8 @@ enum ProviderStatus {
   error,
 }
 
-ProviderStatus toProviderStatus(string s) {
-  switch (s.toLower()) {
+ProviderStatus toProviderStatus(string value, bool ignoreCase = true) {
+  switch (ignoreCase ? value.toLower() : value) {
     case "connected": return ProviderStatus.connected;
     case "disconnected": return ProviderStatus.disconnected;
     case "error": return ProviderStatus.error;
@@ -502,8 +502,8 @@ enum ProviderType {
   sapBtp,
   custom,
 }
-ProviderType toProviderType(string s) {
-  switch (s.toLower()) {
+ProviderType toProviderType(string value, bool ignoreCase = true) {
+  switch (ignoreCase ? value.toLower() : value) {
     case "odata": return ProviderType.odata;
     case "rest": return ProviderType.rest;
     case "graphql": return ProviderType.graphql;

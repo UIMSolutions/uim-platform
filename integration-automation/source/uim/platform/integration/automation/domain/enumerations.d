@@ -150,7 +150,7 @@ enum StepStatus {
   failed,
   blocked,
 }
-StepStatus toStepStatus(string s) {
+StepStatus toStepStatus(string value) {
   mixin(EnumSwitch("StepStatus", "StepStatus.pending"));
 }
 StepStatus[] toStepStatus(string[] values) {
@@ -192,7 +192,7 @@ enum StepPriority {
   high,
   critical,
 }
-StepPriority toStepPriority(string s) {
+StepPriority toStepPriority(string value) {
   mixin(EnumSwitch("StepPriority", "StepPriority.low"));
 }
 StepPriority[] toStepPriority(string[] values) {
@@ -237,7 +237,7 @@ enum SystemType {
   onPremise,
   thirdParty,
 }
-SystemType toSystemType(string s) {
+SystemType toSystemType(string value) {
   mixin(EnumSwitch("SystemType", "SystemType.sapS4Hana"));
 }
 SystemType[] toSystemType(string[] values) {
@@ -289,7 +289,7 @@ enum ConnectionStatus {
   error,
   testing,
 }
-ConnectionStatus toConnectionStatus(string s) {
+ConnectionStatus toConnectionStatus(string value) {
   mixin(EnumSwitch("ConnectionStatus", "ConnectionStatus.active"));
 }
 ConnectionStatus[] toConnectionStatus(string[] values) {
@@ -328,7 +328,7 @@ enum DestinationType {
   soap,
   restApi,
 }
-DestinationType toDestinationType(string s) {
+DestinationType toDestinationType(string value) {
   mixin(EnumSwitch("DestinationType", "DestinationType.http"));
 }
 DestinationType[] toDestinationType(string[] values) {
@@ -371,7 +371,7 @@ enum AuthenticationType {
   principalPropagation,
   noAuthentication,
 }
-AuthenticationType toAuthenticationType(string s) {
+AuthenticationType toAuthenticationType(string value) {
   mixin(EnumSwitch("AuthenticationType", "AuthenticationType.basic"));
 }
 AuthenticationType[] toAuthenticationType(string[] values) {
@@ -451,7 +451,7 @@ enum ExecutionOutcome {
   timeout,
   error,
 }
-ExecutionOutcome toExecutionOutcome(string s) {
+ExecutionOutcome toExecutionOutcome(string value) {
   mixin(EnumSwitch("ExecutionOutcome", "ExecutionOutcome.success"));
 }
 ExecutionOutcome[] toExecutionOutcome(string[] values) {
@@ -495,7 +495,7 @@ enum ScenarioCategory {
   communicationManagement,
   custom,
 }
-ScenarioCategory toScenarioCategory(string s) {
+ScenarioCategory toScenarioCategory(string value) {
   mixin(EnumSwitch("ScenarioCategory", "ScenarioCategory.custom"));
 }
 ScenarioCategory[] toScenarioCategory(string[] values) {

@@ -123,6 +123,63 @@ enum PageType {
 PageType toPageType(string value) {
     mixin(EnumSwitch("PageType", "blank"));
 }
+PageType[] toPageTypes(string[] values) {
+    return values.map!(toPageType).array;
+}
+string toString(PageType type) {
+    return type.to!string;
+}
+string[] toString(PageType[] types) {
+    return types.map!(toString).array;
+}
+/// 
+unittest {
+    mixin(ShowTest!("PageType enumeration"));
+
+    assert(PageType.blank.to!string == "blank");
+    assert(PageType.list.to!string == "list");
+    assert(PageType.detail.to!string == "detail");
+    assert(PageType.form.to!string == "form");
+    assert(PageType.dashboard.to!string == "dashboard");
+    assert(PageType.login.to!string == "login");
+    assert(PageType.settings.to!string == "settings");
+    assert(PageType.custom.to!string == "custom");
+
+    assert("blank".to!PageType == PageType.blank);
+    assert("list".to!PageType == PageType.list);
+    assert("detail".to!PageType == PageType.detail);
+    assert("form".to!PageType == PageType.form);
+    assert("dashboard".to!PageType == PageType.dashboard);
+    assert("login".to!PageType == PageType.login);
+    assert("settings".to!PageType == PageType.settings);
+    assert("custom".to!PageType == PageType.custom);
+
+    assert("blank".toPageType == PageType.blank);
+    assert("list".toPageType == PageType.list);
+    assert("detail".toPageType == PageType.detail);
+    assert("form".toPageType == PageType.form);
+    assert("dashboard".toPageType == PageType.dashboard);   
+    assert("login".toPageType == PageType.login);
+    assert("settings".toPageType == PageType.settings);
+    assert("custom".toPageType == PageType.custom);
+
+    assert("noexists".toPageType == PageType.blank); // Default case
+    assert("".toPageType == PageType.blank); // Default case
+
+    assert(PageType.blank.toString == "blank");
+    assert(PageType.list.toString == "list");
+    assert(PageType.detail.toString == "detail");
+    assert(PageType.form.toString == "form");
+    assert(PageType.dashboard.toString == "dashboard");
+    assert(PageType.login.toString == "login");
+    assert(PageType.settings.toString == "settings");
+    assert(PageType.custom.toString == "custom");
+
+    assert(["blank", "list", "detail", "form", "dashboard", "login", "settings", "custom"].toPageTypes ==
+           [PageType.blank, PageType.list, PageType.detail, PageType.form, PageType.dashboard, PageType.login, PageType.settings, PageType.custom]);
+    assert(toString([PageType.blank, PageType.list, PageType.detail, PageType.form, PageType.dashboard, PageType.login, PageType.settings, PageType.custom]) ==
+           ["blank", "list", "detail", "form", "dashboard", "login", "settings", "custom"]);
+}   
 
 enum PageStatus {
     draft,
@@ -203,61 +260,232 @@ string toString(ComponentCategory category) {
 string[] toString(ComponentCategory[] categories) {
     return categories.map!(toString).array;
 }
+///
+unittest {
+    mixin(ShowTest!("ComponentCategory enumeration"));
 
-enum ComponentStatus {
-    active,
-    deprecated_,
-    experimental
+    assert(ComponentCategory.basic.to!string == "basic");
+    assert(ComponentCategory.layout.to!string == "layout");
+    assert(ComponentCategory.input.to!string == "input");
+    assert(ComponentCategory.display.to!string == "display");
+    assert(ComponentCategory.navigation.to!string == "navigation");
+    assert(ComponentCategory.media.to!string == "media");
+    assert(ComponentCategory.chart.to!string == "chart");
+    assert(ComponentCategory.custom.to!string == "custom");
+
+    assert("basic".to!ComponentCategory == ComponentCategory.basic);
+    assert("layout".to!ComponentCategory == ComponentCategory.layout);
+    assert("input".to!ComponentCategory == ComponentCategory.input);
+    assert("display".to!ComponentCategory == ComponentCategory.display);
+    assert("navigation".to!ComponentCategory == ComponentCategory.navigation);
+    assert("media".to!ComponentCategory == ComponentCategory.media);
+    assert("chart".to!ComponentCategory == ComponentCategory.chart);
+    assert("custom".to!ComponentCategory == ComponentCategory.custom);
+
+    assert("basic".toComponentCategory == ComponentCategory.basic);
+    assert("layout".toComponentCategory == ComponentCategory.layout);
+    assert("input".toComponentCategory == ComponentCategory.input);
+    assert("display".toComponentCategory == ComponentCategory.display);
+    assert("navigation".toComponentCategory == ComponentCategory.navigation);
+    assert("media".toComponentCategory == ComponentCategory.media);
+    assert("chart".toComponentCategory == ComponentCategory.chart);
+    assert("custom".toComponentCategory == ComponentCategory.custom);
+
+    assert("noexists".toComponentCategory == ComponentCategory.basic); // Default case
+    assert("".toComponentCategory == ComponentCategory.basic); // Default case  
+
+    assert(toString(ComponentCategory.basic) == "basic");
+    assert(toString(ComponentCategory.layout) == "layout");
+    assert(toString(ComponentCategory.input) == "input");
+    assert(toString(ComponentCategory.display) == "display");
+    assert(toString(ComponentCategory.navigation) == "navigation");
+    assert(toString(ComponentCategory.media) == "media");
+    assert(toString(ComponentCategory.chart) == "chart");
+    assert(toString(ComponentCategory.custom) == "custom"); 
+
+    assert(["basic", "layout", "input", "display", "navigation", "media", "chart", "custom"].toComponentCategories ==
+           [ComponentCategory.basic, ComponentCategory.layout, ComponentCategory.input, ComponentCategory.display, ComponentCategory.navigation, ComponentCategory.media, ComponentCategory.chart, ComponentCategory.custom]);
+    assert(toString([ComponentCategory.basic, ComponentCategory.layout, ComponentCategory.input, ComponentCategory.display, ComponentCategory.navigation, ComponentCategory.media, ComponentCategory.chart, ComponentCategory.custom]) ==
+           ["basic", "layout", "input", "display", "navigation", "media", "chart", "custom"]);
+}
+
+enum ComponentStatus : string {
+    active = "active",
+    deprecated_ = "deprecated",
+    experimental = "experimental"
 }
 ComponentStatus toComponentStatus(string s) {
-    const map = [
-        "active": ComponentStatus.active,
-        "deprecated": ComponentStatus.deprecated_,
-        "experimental": ComponentStatus.experimental
-    ];
-    return map.get(s, ComponentStatus.active);
+    switch (s.toLower) {
+        case "active": return ComponentStatus.active;
+        case "deprecated": return ComponentStatus.deprecated_;
+        case "experimental": return ComponentStatus.experimental;
+        default: return ComponentStatus.active; // Default case
+    }
+}
+ComponentStatus[] toComponentStatus(string[] values) {
+    return values.map!(toComponentStatus).array;
+}
+string toString(ComponentStatus status) {
+    return status.to!string;
+}
+string[] toString(ComponentStatus[] statuses) {
+    return statuses.map!(toString).array;
+}
+///
+unittest {
+    mixin(ShowTest!("ComponentStatus enumeration"));
+
+    assert(ComponentStatus.active.to!string == "active");
+    assert(ComponentStatus.deprecated_.to!string == "deprecated");
+    assert(ComponentStatus.experimental.to!string == "experimental");
+
+    assert("active".to!ComponentStatus == ComponentStatus.active);
+    assert("deprecated".to!ComponentStatus == ComponentStatus.deprecated_);
+    assert("experimental".to!ComponentStatus == ComponentStatus.experimental);
+
+    assert("active".toComponentStatus == ComponentStatus.active);
+    assert("deprecated".toComponentStatus == ComponentStatus.deprecated_);
+    assert("experimental".toComponentStatus == ComponentStatus.experimental);
+    assert("noexists".toComponentStatus == ComponentStatus.active); // Default case
+    assert("".toComponentStatus == ComponentStatus.active); // Default case
+
+    assert(toString(ComponentStatus.active) == "active");
+    assert(toString(ComponentStatus.deprecated_) == "deprecated");
+    assert(toString(ComponentStatus.experimental) == "experimental");
+
+    assert(["active", "deprecated", "experimental"].toComponentStatus ==
+           [ComponentStatus.active, ComponentStatus.deprecated_, ComponentStatus.experimental]);
+    assert(toString([ComponentStatus.active, ComponentStatus.deprecated_, ComponentStatus.experimental]) ==
+           ["active", "deprecated", "experimental"]);
 }
 
-enum FieldType {
-    text,
-    number,
-    boolean_,
-    date,
-    dateTime,
-    object_,
-    list,
-    image,
-    file,
-    reference
+enum FieldType : string{
+    text = "text",
+    number = "number",
+    boolean_ = "boolean",
+    date = "date",
+    dateTime = "dateTime",
+    object_ = "object",
+    list = "list",
+    image = "image",
+    file = "file",
+    reference = "reference"
 }
 FieldType toFieldType(string s) {
-    const map = [
-        "text": FieldType.text,
-        "number": FieldType.number,
-        "boolean": FieldType.boolean_,
-        "date": FieldType.date,
-        "dateTime": FieldType.dateTime,
-        "object": FieldType.object_,
-        "list": FieldType.list,
-        "image": FieldType.image,
-        "file": FieldType.file,
-        "reference": FieldType.reference
-    ];
-    return map.get(s, FieldType.text);
+    switch(s.toLower) {
+        case "text": return FieldType.text;
+        case "number": return FieldType.number;
+        case "boolean": return FieldType.boolean_;
+        case "date": return FieldType.date;
+        case "datetime": return FieldType.dateTime;
+        case "object": return FieldType.object_;
+        case "list": return FieldType.list;
+        case "image": return FieldType.image;
+        case "file": return FieldType.file;
+        case "reference": return FieldType.reference;
+        default: return FieldType.text; // Default case
+    }
+}
+FieldType[] toFieldType(string[] values) {
+    return values.map!(toFieldType).array;
+}
+string toString(FieldType type) {
+    return cast(string)type;
+}
+string[] toString(FieldType[] types) {
+    return types.map!(toString).array;
+}
+///
+unittest {
+    mixin(ShowTest!("FieldType enumeration"));
+
+    assert(FieldType.text.to!string == "text");
+    assert(FieldType.number.to!string == "number");
+    assert(FieldType.boolean_.to!string == "boolean");
+    assert(FieldType.date.to!string == "date");
+    assert(FieldType.dateTime.to!string == "dateTime");
+    assert(FieldType.object_.to!string == "object");
+    assert(FieldType.list.to!string == "list");
+    assert(FieldType.image.to!string == "image");
+    assert(FieldType.file.to!string == "file");
+    assert(FieldType.reference.to!string == "reference");
+
+    assert("text".toFieldType == FieldType.text);
+    assert("number".toFieldType == FieldType.number);
+    assert("boolean".toFieldType == FieldType.boolean_);
+    assert("date".toFieldType == FieldType.date);
+    assert("dateTime".toFieldType == FieldType.dateTime);
+    assert("object".toFieldType == FieldType.object_);
+    assert("list".toFieldType == FieldType.list);
+    assert("image".toFieldType == FieldType.image);
+    assert("file".toFieldType == FieldType.file);
+    assert("reference".toFieldType == FieldType.reference);
+
+    assert("noexists".toFieldType == FieldType.text); // Default case
+    assert("".toFieldType == FieldType.text); // Default case   
+
+    assert(toString(FieldType.text) == "text");
+    assert(toString(FieldType.number) == "number");
+    assert(toString(FieldType.boolean_) == "boolean");
+    assert(toString(FieldType.date) == "date");
+    assert(toString(FieldType.dateTime) == "dateTime");
+    assert(toString(FieldType.object_) == "object");
+    assert(toString(FieldType.list) == "list");
+    assert(toString(FieldType.image) == "image");
+    assert(toString(FieldType.file) == "file");
+    assert(toString(FieldType.reference) == "reference");   
+
+    assert(["text", "number", "boolean", "date", "dateTime", "object", "list", "image", "file", "reference"].toFieldType ==
+           [FieldType.text, FieldType.number, FieldType.boolean_, FieldType.date, FieldType.dateTime, FieldType.object_, FieldType.list, FieldType.image, FieldType.file, FieldType.reference]);
+    assert(toString([FieldType.text, FieldType.number, FieldType.boolean_, FieldType.date, FieldType.dateTime, FieldType.object_, FieldType.list, FieldType.image, FieldType.file, FieldType.reference]) ==
+           ["text", "number", "boolean", "date", "dateTime", "object", "list", "image", "file", "reference"]);  
 }
 
-enum DataEntityStatus {
-    draft,
-    active,
-    deprecated_
+enum DataEntityStatus : string {
+    draft = "draft",
+    active = "active",
+    deprecated_ = "deprecated"
 }
 DataEntityStatus toDataEntityStatus(string s) {
-    const map = [
-        "draft": DataEntityStatus.draft,
-        "active": DataEntityStatus.active,
-        "deprecated": DataEntityStatus.deprecated_
-    ];
-    return map.get(s, DataEntityStatus.draft);
+    switch (s.toLower) {
+        case "draft": return DataEntityStatus.draft;
+        case "active": return DataEntityStatus.active;
+        case "deprecated": return DataEntityStatus.deprecated_;
+        default: return DataEntityStatus.draft; // Default case
+    }
+}
+DataEntityStatus[] toDataEntityStatus(string[] values) {
+    return values.map!(toDataEntityStatus).array;
+}
+string toString(DataEntityStatus status) {
+    return status.to!string;
+}
+string[] toString(DataEntityStatus[] statuses) {
+    return statuses.map!(toString).array;
+}
+/// 
+unittest {
+    mixin(ShowTest!("DataEntityStatus enumeration"));
+
+    assert(DataEntityStatus.draft.to!string == "draft");
+    assert(DataEntityStatus.active.to!string == "active");
+    assert(DataEntityStatus.deprecated_.to!string == "deprecated");
+
+    assert("draft".toDataEntityStatus == DataEntityStatus.draft);
+    assert("active".toDataEntityStatus == DataEntityStatus.active);
+    assert("deprecated".toDataEntityStatus == DataEntityStatus.deprecated_);
+
+    assert("noexists".toDataEntityStatus == DataEntityStatus.draft); // Default case
+    assert("".toDataEntityStatus == DataEntityStatus.draft); // Default case
+
+    assert(toString(DataEntityStatus.draft) == "draft");
+    assert(toString(DataEntityStatus.active) == "active");
+    assert(toString(DataEntityStatus.deprecated_) == "deprecated");
+
+    assert(["draft", "active", "deprecated"].toDataEntityStatus ==
+           [DataEntityStatus.draft, DataEntityStatus.active, DataEntityStatus.deprecated_]);
+    assert(toString([DataEntityStatus.draft, DataEntityStatus.active, DataEntityStatus.deprecated_]) ==
+           ["draft", "active", "deprecated"]);
 }
 
 enum ConnectionType {

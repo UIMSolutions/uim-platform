@@ -91,8 +91,8 @@ enum LegalBasis {
   publicTask, // Art. 6(1)(e)
   legitimateInterest, // Art. 6(1)(f)
 }
-LegalBasis toLegalBasis(string s) {
-  switch (s.toLower()) {
+LegalBasis toLegalBasis(string value, bool ignoreCase = true) {
+  switch (ignoreCase ? value.toLower() : value) {
   case "contract":
     return LegalBasis.contract;
   case "legalobligation":
@@ -152,8 +152,8 @@ enum ConsentStatus {
   revoked,
   expired,
 }
-ConsentStatus toConsentStatus(string s) {
-  switch (s.toLower()) {
+ConsentStatus toConsentStatus(string value, bool ignoreCase = true) {
+  switch (ignoreCase ? value.toLower() : value) {
   case "granted":
     return ConsentStatus.granted;
   case "revoked":
@@ -173,8 +173,8 @@ enum DeletionStatus {
   failed,
   blocked,
 }
-DeletionStatus toDeletionStatus(string s) {
-  switch (s.toLower()) {
+DeletionStatus toDeletionStatus(string value, bool ignoreCase = true) {
+  switch (ignoreCase ? value.toLower() : value) {
   case "inprogress":
     return DeletionStatus.inProgress;
   case "completed":
@@ -193,8 +193,8 @@ enum BlockingStatus {
   active,
   released,
 }
-BlockingStatus toBlockingStatus(string s) {
-  switch (s.toLower()) {
+BlockingStatus toBlockingStatus(string value, bool ignoreCase = true) {
+  switch (ignoreCase ? value.toLower() : value) {
   case "active":
     return BlockingStatus.active;
   case "released":
@@ -210,8 +210,8 @@ enum RetrievalStatus {
   completed,
   failed,
 }
-RetrievalStatus toRetrievalStatus(string s) {
-  switch (s.toLower()) {
+RetrievalStatus toRetrievalStatus(string value, bool ignoreCase = true) {
+  switch (ignoreCase ? value.toLower() : value) {
   case "inprogress":
     return RetrievalStatus.inProgress;
   case "completed":
@@ -228,8 +228,8 @@ enum DataSensitivity {
   sensitive, // GDPR Art. 9 special categories
   highlyConfidential,
 }
-DataSensitivity toDataSensitivity(string s) {
-  switch (s.toLower()) {
+DataSensitivity toDataSensitivity(string value, bool ignoreCase = true) {
+  switch (ignoreCase ? value.toLower() : value) {
   case "sensitive":
     return DataSensitivity.sensitive;
   case "highlyconfidential":
@@ -247,8 +247,8 @@ enum RequestType {
   restriction, // Art. 18
   objection, // Art. 21
 }
-RequestType toRequestType(string s) {
-  switch (s.toLower()) {
+RequestType toRequestType(string value, bool ignoreCase = true) {
+  switch (ignoreCase ? value.toLower() : value) {
   case "deletion":
     return RequestType.deletion;
   case "rectification":
@@ -270,8 +270,8 @@ enum RetentionRuleStatus {
   expired,
 }
 
-RetentionRuleStatus toRetentionRuleStatus(string value) {
-  switch (value.toLower()) {
+RetentionRuleStatus toRetentionRuleStatus(string value, bool ignoreCase = true) {
+  switch (ignoreCase ? value.toLower() : value) {
   case "inactive":
     return RetentionRuleStatus.inactive;
   case "expired":
@@ -288,8 +288,8 @@ enum CorrectionStatus {
   completed,
   rejected,
 }
-CorrectionStatus toCorrectionStatus(string s) {
-  switch (s.toLower()) {
+CorrectionStatus toCorrectionStatus(string value, bool ignoreCase = true) {
+  switch (ignoreCase ? value.toLower() : value) {
   case "inprogress":
     return CorrectionStatus.inProgress;
   case "completed":
@@ -307,8 +307,8 @@ enum ArchiveStatus {
   completed,
   failed,
 }
-ArchiveStatus toArchiveStatus(string s) {
-  switch (s.toLower()) {
+ArchiveStatus toArchiveStatus(string value, bool ignoreCase = true) {
+  switch (ignoreCase ? value.toLower() : value) {
   case "scheduled":
     return ArchiveStatus.scheduled;
   case "inprogress":
@@ -328,8 +328,8 @@ enum PortabilityStatus {
   completed,
   failed,
 }
-PortabilityStatus toPortabilityStatus(string s) {
-  switch (s.toLower()) {
+PortabilityStatus toPortabilityStatus(string value, bool ignoreCase = true) {
+  switch (ignoreCase ? value.toLower() : value) {
   case "inprogress":
     return PortabilityStatus.inProgress;
   case "completed":
@@ -347,8 +347,8 @@ enum DestructionStatus {
   completed,
   failed,
 }
-DestructionStatus toDestructionStatus(string s) {
-  switch (s.toLower()) {
+DestructionStatus toDestructionStatus(string value, bool ignoreCase = true) {
+  switch (ignoreCase ? value.toLower() : value) {
   case "scheduled":
     return DestructionStatus.scheduled;
   case "inprogress":
@@ -368,8 +368,8 @@ enum PurposeRecordStatus {
   expired,
   deactivated,
 }
-PurposeRecordStatus toPurposeRecordStatus(string s) {
-  switch (s.toLower()) {
+PurposeRecordStatus toPurposeRecordStatus(string value, bool ignoreCase = true) {
+  switch (ignoreCase ? value.toLower() : value) {
   case "expiring":
     return PurposeRecordStatus.expiring;
   case "expired":
@@ -387,8 +387,8 @@ enum ConsentPurposeStatus {
   inactive,
   deprecated_,
 }
-ConsentPurposeStatus toConsentPurposeStatus(string s) {
-  switch (s.toLower()) {
+ConsentPurposeStatus toConsentPurposeStatus(string value, bool ignoreCase = true) {
+  switch (ignoreCase ? value.toLower() : value) {
   case "draft":
     return ConsentPurposeStatus.draft;
   case "inactive":
@@ -405,8 +405,8 @@ enum RuleSetStatus {
   active,
   inactive,
 }
-RuleSetStatus toRuleSetStatus(string s) {
-  switch (s.toLower()) {
+RuleSetStatus toRuleSetStatus(string value, bool ignoreCase = true) {
+  switch (ignoreCase ? value.toLower() : value) {
   case "draft":
     return RuleSetStatus.draft;
   case "inactive":
@@ -422,8 +422,8 @@ enum InformationReportStatus {
   completed,
   failed,
 }
-InformationReportStatus toInformationReportStatus(string s) {
-  switch (s.toLower()) {
+InformationReportStatus toInformationReportStatus(string value, bool ignoreCase = true) {
+  switch (ignoreCase ? value.toLower() : value) {
   case "generating":
     return InformationReportStatus.generating;
   case "completed":
@@ -441,8 +441,8 @@ enum ExportFormat {
   xml,
   csv,
 }
-ExportFormat toExportFormat(string s) {
-  switch (s.toLower()) {
+ExportFormat toExportFormat(string value, bool ignoreCase = true) {
+  switch (ignoreCase ? value.toLower() : value) {
   case "json":
     return ExportFormat.json;
   case "xml":
@@ -458,8 +458,8 @@ enum BusinessContextStatus {
   active,
   inactive,
 }
-BusinessContextStatus toBusinessContextStatus(string s) {
-  switch (s.toLower()) {
+BusinessContextStatus toBusinessContextStatus(string value, bool ignoreCase = true) {
+  switch (ignoreCase ? value.toLower() : value) {
   case "draft":
     return BusinessContextStatus.draft;
   case "inactive":
@@ -477,8 +477,8 @@ enum AnonymizationMethod {
   tokenization,
   noise,
 }
-AnonymizationMethod toAnonymizationMethod(string s) {
-  switch (s.toLower()) {
+AnonymizationMethod toAnonymizationMethod(string value, bool ignoreCase = true) {
+  switch (ignoreCase ? value.toLower() : value) {
   case "generalization":
     return AnonymizationMethod.generalization;
   case "suppression":
@@ -499,8 +499,8 @@ enum AnonymizationConfigStatus {
   active,
   inactive,
 }
-AnonymizationConfigStatus toAnonymizationConfigStatus(string s) {
-  switch (s.toLower()) {
+AnonymizationConfigStatus toAnonymizationConfigStatus(string value, bool ignoreCase = true) {
+  switch (ignoreCase ? value.toLower() : value) {
   case "draft":
     return AnonymizationConfigStatus.draft;
   case "inactive":
@@ -521,8 +521,8 @@ enum RuleOperator {
   in_,
   notIn,
 }
-RuleOperator toRuleOperator(string s) {
-  switch (s.toLower()) {
+RuleOperator toRuleOperator(string value, bool ignoreCase = true) {
+  switch (ignoreCase ? value.toLower() : value) {
   case "notequals":
     return RuleOperator.notEquals;
   case "contains":

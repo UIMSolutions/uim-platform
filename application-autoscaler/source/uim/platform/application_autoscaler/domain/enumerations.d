@@ -148,7 +148,7 @@ enum ScalingDirection {
   // No scaling action
   none,
 }
-ScalingDirection toScalingDirection(string s) {
+ScalingDirection toScalingDirection(string value) {
   mixin(EnumSwitch("ScalingDirection", "none"));
 }
 ScalingDirection[] toScalingDirections(string[] s) {
@@ -192,7 +192,7 @@ enum ScalingStatus {
   // Scaling action was ignored due to cooldown or other constraints
   ignored,
 }
-ScalingStatus toScalingStatus(string s) {
+ScalingStatus toScalingStatus(string value) {
   mixin(EnumSwitch("ScalingStatus", "ignored"));
 }
 ScalingStatus[] toScalingStatuses(string[] s) {
@@ -282,7 +282,7 @@ enum MetricAllowFrom {
   // Allow metric from any application bound to the same service instance
   boundApp,
 }
-MetricAllowFrom toMetricAllowFrom(string s) {
+MetricAllowFrom toMetricAllowFrom(string value) {
   mixin(EnumSwitch("MetricAllowFrom", "sameApp"));
 }
 MetricAllowFrom[] toMetricAllowFroms(string[] s) {

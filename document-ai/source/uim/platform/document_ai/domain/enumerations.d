@@ -77,7 +77,7 @@ enum ExtractionMethod {
   template_based,
   hybrid,
 }
-ExtractionMethod toExtractionMethod(string s) {
+ExtractionMethod toExtractionMethod(string value) {
     mixin(EnumSwitch("ExtractionMethod", "ExtractionMethod.ml_model"));
 }
 ExtractionMethod[] toExtractionMethod(string[] values) {
@@ -124,7 +124,7 @@ enum DocumentCategory {
   general,
   custom,
 }
-DocumentCategory toDocumentCategory(string s) {
+DocumentCategory toDocumentCategory(string value) {
     mixin(EnumSwitch("DocumentCategory", "DocumentCategory.general"));
 }
 DocumentCategory[] toDocumentCategory(string[] values) {
@@ -241,7 +241,7 @@ enum ConfidenceLevel {
   medium,
   low,
 }
-ConfidenceLevel toConfidenceLevel(string s) {
+ConfidenceLevel toConfidenceLevel(string value) {
     mixin(EnumSwitch("ConfidenceLevel", "ConfidenceLevel.medium"));
 }
 ConfidenceLevel[] toConfidenceLevel(string[] values) {
@@ -276,7 +276,7 @@ enum EnrichmentMatchStatus {
   unmatched,
   ambiguous,
 }
-EnrichmentMatchStatus toEnrichmentMatchStatus(string s) {
+EnrichmentMatchStatus toEnrichmentMatchStatus(string value) {
     mixin(EnumSwitch("EnrichmentMatchStatus", "EnrichmentMatchStatus.unmatched"));
 }   
 EnrichmentMatchStatus[] toEnrichmentMatchStatus(string[] values) {
@@ -314,7 +314,7 @@ enum FileType {
   xlsx,
   docx,
 }
-FileType toFileType(string s) {
+FileType toFileType(string value) {
     mixin(EnumSwitch("FileType", "FileType.pdf"));
 }   
 FileType[] toFileType(string[] values) {
@@ -355,7 +355,7 @@ enum SchemaStatus {
   inactive,
   draft,
 }
-SchemaStatus toSchemaStatus(string s) {
+SchemaStatus toSchemaStatus(string value) {
     mixin(EnumSwitch("SchemaStatus", "SchemaStatus.active"));
 }
 SchemaStatus[] toSchemaStatus(string[] values) {
@@ -390,7 +390,7 @@ enum TemplateStatus {
   inactive,
   draft,
 }
-TemplateStatus toTemplateStatus(string s) {
+TemplateStatus toTemplateStatus(string value) {
     mixin(EnumSwitch("TemplateStatus", "TemplateStatus.active"));
 }
 TemplateStatus[] toTemplateStatus(string[] values) {

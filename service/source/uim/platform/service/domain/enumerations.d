@@ -210,8 +210,8 @@ enum LoggingLevel : string {
   fatal = "fatal",
   trace = "trace"
 }
-LoggingLevel toLoggingLevel(string s) {
-  switch (s.toLower()) {
+LoggingLevel toLoggingLevel(string value, bool ignoreCase = true) {
+  switch (ignoreCase ? value.toLower() : value) {
     case "debug": return LoggingLevel.debug_;
     case "info": return LoggingLevel.info;
     case "warning": return LoggingLevel.warning;
@@ -232,8 +232,8 @@ enum HttpMethod {
   head_ = "HEAD",
   options_ = "OPTIONS",
 }
-HttpMethod toHttpMethod(string s) {
-  switch (s.toLower()) {
+HttpMethod toHttpMethod(string value, bool ignoreCase = true) {
+  switch (ignoreCase ? value.toLower() : value) {
     case "get": return HttpMethod.get_;
     case "post": return HttpMethod.post_;
     case "put": return HttpMethod.put_;

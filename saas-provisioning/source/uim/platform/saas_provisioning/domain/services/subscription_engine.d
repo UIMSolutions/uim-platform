@@ -44,13 +44,13 @@ class SubscriptionEngine {
                                    string subdomain,
                                    string subscribedBy) {
         auto app = appRepo.findByAppName(providerTenantId, appName);
-        if (app.isNull) return new SubscriptionJob();
+        if (app.isNull) return SubscriptionJob();
 
         long now    = MonoTime.currTime.ticks;
         string subId = now.to!string ~ "-sub-" ~ appName;
         string jobId = now.to!string ~ "-job-subscribe";
 
-        auto sub = new AppSubscription();
+        auto sub = AppSubscription();
         sub.id                        = AppSubscriptionId(subId);
         sub.tenantId                  = providerTenantId;
         sub.appName                   = appName;
@@ -96,12 +96,12 @@ class SubscriptionEngine {
                                       string subscriptionId,
                                       UserId requestedBy) {
         auto sub = subRepo.findById(providerTenantId, AppSubscriptionId(subscriptionId));
-        if (sub.isNull) return new SubscriptionJob();
+        if (sub.isNull) return SubscriptionJob();
 
         long now     = MonoTime.currTime.ticks;
         string jobId  = now.to!string ~ "-job-unsubscribe";
 
-        auto job = new SubscriptionJob();
+        auto job =  SubscriptionJob();
         job.id             = SubscriptionJobId(jobId);
         job.tenantId       = providerTenantId;
         job.appName        = sub.appName;

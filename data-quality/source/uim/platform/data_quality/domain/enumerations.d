@@ -5,21 +5,19 @@ mixin(ShowModule!());
 
 @safe:
 /// Data quality validation rule type.
-enum RuleType {
-  required, // field must not be empty
-  format_, // regex / pattern match
-  range, // min/max numeric range
-  enumeration, // value must be in a set
-  length, // min/max string length
-  crossField, // comparison between fields
-  custom, // user-defined expression
-  referenceData, // lookup against reference table
+enum RuleType : string{
+  required = "required", // field must not be empty
+  format_ = "format", // regex / pattern match
+  range = "range", // min/max numeric range
+  enumeration = "enumeration", // value must be in a set
+  length = "length", // min/max string length
+  crossField = "crossField", // comparison between fields
+  custom = "custom", // user-defined expression
+  referenceData = "referenceData", // lookup against reference table
 }
 
-RuleType toRuleType(string s) {
-  import std.uni : toLower;
-
-  switch (s.toLower()) {
+RuleType toRuleType(string value, bool ignoreCase = true) {
+  switch (ignoreCase ? value.toLower() : value) {
   case "required":
     return RuleType.required;
   case "format":
@@ -86,7 +84,7 @@ enum RuleSeverity {
   critical,
 }
 
-RuleSeverity toRuleSeverity(string s) {
+RuleSeverity toRuleSeverity(string value) {
   mixin(EnumSwitch("RuleSeverity", "info"));
 }
 
@@ -131,7 +129,7 @@ enum RuleStatus {
   inactive,
 }
 
-RuleStatus toRuleStatus(string s) {
+RuleStatus toRuleStatus(string value) {
   mixin(EnumSwitch("RuleStatus", "draft"));
 }
 RuleStatus[] toRuleStatuses(string[] values) {

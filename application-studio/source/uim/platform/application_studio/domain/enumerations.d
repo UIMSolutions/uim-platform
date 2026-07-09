@@ -35,7 +35,7 @@ enum DevSpaceStatus {
     // Dev space has been deleted and is no longer available. In this status, the dev space has been permanently removed, and users cannot access it or recover any data associated with it. This status indicates that the dev space has been intentionally removed and is no longer part of the system.
     deleted
 }
-DevSpaceStatus toDevSpaceStatus(string s) {
+DevSpaceStatus toDevSpaceStatus(string value) {
     mixin(EnumSwitch("DevSpaceStatus", "starting"));
 }
 DevSpaceStatus[] toDevSpaceStatuses(string[] statuses) {
@@ -92,13 +92,37 @@ enum DevSpacePlan {
     // The professional plan offers the highest level of features and resources, catering to enterprise-level development and large-scale projects. It includes maximum compute resources, extensive storage, advanced tools and services, and premium support options. This plan is ideal for organizations with complex development needs and high-performance requirements.
     professional
 }
-DevSpacePlan toDevSpacePlan(string s) {
-    const map = [
-        "free": DevSpacePlan.free,
-        "standard": DevSpacePlan.standard,
-        "professional": DevSpacePlan.professional
-    ];
-    return map.get(s.toLower, DevSpacePlan.free);
+DevSpacePlan toDevSpacePlan(string value) {
+    mixin(EnumSwitch("DevSpacePlan", "free"));
+}
+DevSpacePlan[] toDevSpacePlans(string[] plans) {
+    return plans.map!(toDevSpacePlan).array;
+}
+string toString(DevSpacePlan plan) {
+    return plan.to!string;
+}
+string[] toString(DevSpacePlan[] plans) {
+    return plans.map!(toString).array;
+}
+///
+unittest {
+    mixin(ShowTest!("DevSpacePlan"));
+
+    assert(DevSpacePlan.free.toString == "free");
+    assert(DevSpacePlan.standard.toString == "standard");
+    assert(DevSpacePlan.professional.toString == "professional");
+
+    assert("".toDevSpacePlan == DevSpacePlan.free); // Default case
+    assert("noexists".toDevSpacePlan == DevSpacePlan.free); // Default case
+
+    assert("free".toDevSpacePlan == DevSpacePlan.free);
+    assert("standard".toDevSpacePlan == DevSpacePlan.standard);
+    assert("professional".toDevSpacePlan == DevSpacePlan.professional);
+
+    assert(["free", "standard", "professional"].toDevSpacePlans ==
+           [DevSpacePlan.free, DevSpacePlan.standard, DevSpacePlan.professional]);
+    assert(toString([DevSpacePlan.free, DevSpacePlan.standard, DevSpacePlan.professional]) ==
+           ["free", "standard", "professional"]);    
 }
 
 enum DevSpaceTypeCategory {
@@ -108,15 +132,38 @@ enum DevSpaceTypeCategory {
     custom,
     // The third-party category includes dev space types that are provided by external vendors or community contributors. These dev space types may offer specialized configurations, tools, or integrations that are not available in the predefined or custom categories. Users can explore and utilize third-party dev space types to enhance their development experience and access additional features or capabilities that may be relevant to their projects.
     thirdParty
-
 }
-DevSpaceTypeCategory toDevSpaceTypeCategory(string s) {
-    const map = [
-        "predefined": DevSpaceTypeCategory.predefined,
-        "custom": DevSpaceTypeCategory.custom,
-        "thirdparty": DevSpaceTypeCategory.thirdParty
-    ];
-    return map.get(s.toLower, DevSpaceTypeCategory.predefined);
+DevSpaceTypeCategory toDevSpaceTypeCategory(string value) {
+    mixin(EnumSwitch("DevSpaceTypeCategory", "predefined"));
+}
+DevSpaceTypeCategory[] toDevSpaceTypeCategories(string[] categories) {
+    return categories.map!(toDevSpaceTypeCategory).array;
+}
+string toString(DevSpaceTypeCategory category) {
+    return category.to!string;
+}
+string[] toString(DevSpaceTypeCategory[] categories) {
+    return categories.map!(toString).array;
+}
+///
+unittest {
+    mixin(ShowTest!("DevSpaceTypeCategory"));
+
+    assert(DevSpaceTypeCategory.predefined.toString == "predefined");
+    assert(DevSpaceTypeCategory.custom.toString == "custom");
+    assert(DevSpaceTypeCategory.thirdParty.toString == "thirdParty");
+
+    assert("".toDevSpaceTypeCategory == DevSpaceTypeCategory.predefined); // Default case
+    assert("noexists".toDevSpaceTypeCategory == DevSpaceTypeCategory.predefined); // Default case
+
+    assert("predefined".toDevSpaceTypeCategory == DevSpaceTypeCategory.predefined);
+    assert("custom".toDevSpaceTypeCategory == DevSpaceTypeCategory.custom);
+    assert("thirdParty".toDevSpaceTypeCategory == DevSpaceTypeCategory.thirdParty);
+
+    assert(["predefined", "custom", "thirdParty"].toDevSpaceTypeCategories ==
+           [DevSpaceTypeCategory.predefined, DevSpaceTypeCategory.custom, DevSpaceTypeCategory.thirdParty]);
+    assert(toString([DevSpaceTypeCategory.predefined, DevSpaceTypeCategory.custom, DevSpaceTypeCategory.thirdParty]) ==
+           ["predefined", "custom", "thirdParty"]);
 }
 
 enum ExtensionScope {
@@ -127,30 +174,83 @@ enum ExtensionScope {
     // The third-party scope includes extensions that are developed and maintained by external vendors, community contributors, or independent developers. These extensions may offer specialized features, integrations, or customizations that are not provided by the platform provider. Users can explore and utilize third-party extensions to enhance their development experience and access additional functionalities that may be relevant to their projects.
     thirdParty
 }
-ExtensionScope toExtensionScope(string s) {
-    const map = [
-        "predefined": ExtensionScope.predefined,
-        "additional": ExtensionScope.additional,
-        "thirdparty": ExtensionScope.thirdParty
-    ];
-    return map.get(s.toLower, ExtensionScope.predefined);
+ExtensionScope toExtensionScope(string value) {
+    mixin(EnumSwitch("ExtensionScope", "predefined"));
+}
+ExtensionScope[] toExtensionScope(string[] scopes) {
+    return scopes.map!(toExtensionScope).array;
+}
+string toString(ExtensionScope value) {
+    return value.to!string;
+}
+string[] toString(ExtensionScope[] scopes) {
+    return scopes.map!(toString).array;
+}
+/// 
+unittest {
+    mixin(ShowTest!("ExtensionScope"));
+
+    assert(ExtensionScope.predefined.toString == "predefined");
+    assert(ExtensionScope.additional.toString == "additional");
+    assert(ExtensionScope.thirdParty.toString == "thirdParty");
+
+    assert("".toExtensionScope == ExtensionScope.predefined); // Default case
+    assert("noexists".toExtensionScope == ExtensionScope.predefined); // Default case
+
+    assert("predefined".toExtensionScope == ExtensionScope.predefined);
+    assert("additional".toExtensionScope == ExtensionScope.additional);
+    assert("thirdParty".toExtensionScope == ExtensionScope.thirdParty);
+
+    assert(["predefined", "additional", "thirdParty"].toExtensionScope ==
+           [ExtensionScope.predefined, ExtensionScope.additional, ExtensionScope.thirdParty]);
+    assert(toString([ExtensionScope.predefined, ExtensionScope.additional, ExtensionScope.thirdParty]) ==
+           ["predefined", "additional", "thirdParty"]);
 }
 
-enum ExtensionStatus {
+enum ExtensionStatus : string {
     // The active status indicates that the extension is currently enabled and functioning properly within the application studio environment. In this status, users can utilize the features and capabilities provided by the extension without any issues. The active status signifies that the extension is fully operational and ready for use.
-    active,
+    active = "active",
     // The inactive status indicates that the extension is currently disabled or not functioning properly within the application studio environment. In this status, users may not be able to access or utilize the features and capabilities provided by the extension. The inactive status signifies that there may be issues with the extension that need to be addressed before it can be used effectively.
-    inactive,
+    inactive = "inactive",
     // The deprecated status indicates that the extension is no longer recommended for use and may be removed in future releases of the application studio. In this status, users are discouraged from using the extension, and it may not receive updates or support from the platform provider. The deprecated status signifies that there are better alternatives available, and users should consider transitioning to those alternatives for improved functionality and support.
-    deprecated_
+    deprecated_ = "deprecated"
 }
 ExtensionStatus toExtensionStatus(string s) {
-    const map = [
-        "active": ExtensionStatus.active,
-        "inactive": ExtensionStatus.inactive,
-        "deprecated": ExtensionStatus.deprecated_
-    ];
-    return map.get(s.toLower, ExtensionStatus.inactive);
+    switch(s.toLower) {
+        case "active": return ExtensionStatus.active;
+        case "inactive": return ExtensionStatus.inactive;
+        case "deprecated": return ExtensionStatus.deprecated_;
+        default: return ExtensionStatus.inactive; // Default case
+    }
+}
+ExtensionStatus[] toExtensionStatus(string[] statuses) {
+    return statuses.map!(toExtensionStatus).array;
+}
+string toString(ExtensionStatus status) {
+    return cast(string)status;
+}
+string[] toString(ExtensionStatus[] statuses) {
+    return statuses.map!(toString).array;
+}
+///
+unittest {
+    mixin(ShowTest!("ExtensionStatus"));
+
+    assert(ExtensionStatus.active.toString == "active");
+    assert(ExtensionStatus.inactive.toString == "inactive");
+    assert(ExtensionStatus.deprecated_.toString == "deprecated");
+
+    assert("".toExtensionStatus == ExtensionStatus.inactive); // Default case
+    assert("noexists".toExtensionStatus == ExtensionStatus.inactive); // Default case
+
+    assert("active".toExtensionStatus == ExtensionStatus.active);
+    assert("inactive".toExtensionStatus == ExtensionStatus.inactive);
+    assert("deprecated".toExtensionStatus == ExtensionStatus.deprecated_);
+
+    assert(["active", "inactive", "deprecated"].toExtensionStatus ==
+           [ExtensionStatus.active, ExtensionStatus.inactive, ExtensionStatus.deprecated_]);
+    assert(toString([ExtensionStatus.active, ExtensionStatus.inactive, ExtensionStatus.deprecated_]) ==
+           ["active", "inactive", "deprecated"]);
 }
 
 enum ProjectType {
@@ -205,35 +305,81 @@ enum ProjectType {
     // The SAP Cloud Platform Artificial Intelligence (AI) project type is designed for developing applications that integrate with or extend the capabilities of SAP Cloud Platform Artificial Intelligence (AI), which is SAP's cloud-based artificial intelligence solution. This project type provides tools and frameworks for building applications that can interact with AI's data and services, enabling developers to create solutions that enhance the functionality of AI and meet specific artificial intelligence-related business requirements.
     ai    
 }
-ProjectType toProjectType(string s) {
-    const map = [
-        "sapfiori": ProjectType.sapFiori,
-        "capnodejs": ProjectType.capNodeJs,
-        "capjava": ProjectType.capJava,
-        "hananative": ProjectType.hanaNative,
-        "sapui5": ProjectType.sapUi5,
-        "mdk": ProjectType.mdk,
-        "workflow": ProjectType.workflow,
-        "multitarget": ProjectType.multitarget,
-        "basic": ProjectType.basic,
-        "cap": ProjectType.cap,
-        "sapfioriElements": ProjectType.sapFioriElements,
-        "businessApplicationStudio": ProjectType.businessApplicationStudio,
-        "s4hana": ProjectType.s4hana,
-        "successFactors": ProjectType.successFactors,
-        "ariba": ProjectType.ariba,
-        "concur": ProjectType.concur,
-        "customerExperience": ProjectType.customerExperience,
-        "iot": ProjectType.iot,
-        "analyticsCloud": ProjectType.analyticsCloud,
-        "cpi": ProjectType.cpi,
-        "cfx": ProjectType.cfx,
-        "cpwf": ProjectType.cpwf,
-        "cpbm": ProjectType.cpbm,
-        "rpa": ProjectType.rpa,
-        "ai": ProjectType.ai
-    ];
-    return map.get(s.toLower, ProjectType.basic);
+ProjectType toProjectType(string value) {
+    mixin(EnumSwitch("ProjectType", "sapFiori"));
+}
+ProjectType[] toProjectTypes(string[] values) {
+    return values.map!(toProjectType).array;
+}
+string toString(ProjectType value) {
+    return value.to!string;
+}
+string[] toString(ProjectType[] values) {
+    return values.map!(toString).array;
+}
+/// 
+unittest {
+    mixin(ShowTest!("ProjectType"));
+
+    assert(ProjectType.sapFiori.toString == "sapFiori");
+    assert(ProjectType.capNodeJs.toString == "capNodeJs");
+    assert(ProjectType.capJava.toString == "capJava");
+    assert(ProjectType.hanaNative.toString == "hanaNative");
+    assert(ProjectType.sapUi5.toString == "sapUi5");
+    assert(ProjectType.mdk.toString == "mdk");
+    assert(ProjectType.workflow.toString == "workflow");
+    assert(ProjectType.multitarget.toString == "multitarget");
+    assert(ProjectType.basic.toString == "basic");
+    assert(ProjectType.cap.toString == "cap");
+    assert(ProjectType.sapFioriElements.toString == "sapFioriElements");
+    assert(ProjectType.businessApplicationStudio.toString == "businessApplicationStudio");
+    assert(ProjectType.s4hana.toString == "s4hana");
+    assert(ProjectType.successFactors.toString == "successFactors");
+    assert(ProjectType.ariba.toString == "ariba");
+    assert(ProjectType.concur.toString == "concur");
+    assert(ProjectType.customerExperience.toString == "customerExperience");
+    assert(ProjectType.iot.toString == "iot");
+    assert(ProjectType.analyticsCloud.toString == "analyticsCloud");
+    assert(ProjectType.cpi.toString == "cpi");
+    assert(ProjectType.cfx.toString == "cfx");
+    assert(ProjectType.cpwf.toString == "cpwf");
+    assert(ProjectType.cpbm.toString == "cpbm");
+    assert(ProjectType.rpa.toString == "rpa");
+    assert(ProjectType.ai.toString == "ai");
+
+    assert("".toProjectType == ProjectType.sapFiori); // Default case
+    assert("noexists".toProjectType == ProjectType.sapFiori); // Default case
+
+    assert("sapFiori".toProjectType == ProjectType.sapFiori);
+    assert("capNodeJs".toProjectType == ProjectType.capNodeJs);
+    assert("capJava".toProjectType == ProjectType.capJava);
+    assert("hanaNative".toProjectType == ProjectType.hanaNative);
+    assert("sapUi5".toProjectType == ProjectType.sapUi5);
+    assert("mdk".toProjectType == ProjectType.mdk);
+    assert("workflow".toProjectType == ProjectType.workflow);
+    assert("multitarget".toProjectType == ProjectType.multitarget);
+    assert("basic".toProjectType == ProjectType.basic);
+    assert("cap".toProjectType == ProjectType.cap);
+    assert("sapFioriElements".toProjectType == ProjectType.sapFioriElements);
+    assert("businessApplicationStudio".toProjectType == ProjectType.businessApplicationStudio);
+    assert("s4hana".toProjectType == ProjectType.s4hana);
+    assert("successFactors".toProjectType == ProjectType.successFactors);
+    assert("ariba".toProjectType == ProjectType.ariba);
+    assert("concur".toProjectType == ProjectType.concur);
+    assert("customerExperience".toProjectType == ProjectType.customerExperience);
+    assert("iot".toProjectType == ProjectType.iot);
+    assert("analyticsCloud".toProjectType == ProjectType.analyticsCloud);
+    assert("cpi".toProjectType == ProjectType.cpi);
+    assert("cfx".toProjectType == ProjectType.cfx);
+    assert("cpwf".toProjectType == ProjectType.cpwf);
+    assert("cpbm".toProjectType == ProjectType.cpbm);
+    assert("rpa".toProjectType == ProjectType.rpa);
+    assert("ai".toProjectType == ProjectType.ai);
+
+    assert(["sapFiori", "capNodeJs", "capJava", "hanaNative", "sapUi5", "mdk", "workflow", "multitarget", "basic", "cap", "sapFioriElements", "businessApplicationStudio", "s4hana", "successFactors", "ariba", "concur", "customerExperience", "iot", "analyticsCloud", "cpi", "cfx", "cpwf", "cpbm", "rpa", "ai"].toProjectTypes ==
+           [ProjectType.sapFiori, ProjectType.capNodeJs, ProjectType.capJava, ProjectType.hanaNative, ProjectType.sapUi5, ProjectType.mdk, ProjectType.workflow, ProjectType.multitarget, ProjectType.basic, ProjectType.cap, ProjectType.sapFioriElements, ProjectType.businessApplicationStudio, ProjectType.s4hana, ProjectType.successFactors, ProjectType.ariba, ProjectType.concur, ProjectType.customerExperience, ProjectType.iot, ProjectType.analyticsCloud, ProjectType.cpi, ProjectType.cfx, ProjectType.cpwf, ProjectType.cpbm, ProjectType.rpa, ProjectType.ai]);
+    assert(toString([ProjectType.sapFiori, ProjectType.capNodeJs, ProjectType.capJava, ProjectType.hanaNative, ProjectType.sapUi5, ProjectType.mdk, ProjectType.workflow, ProjectType.multitarget, ProjectType.basic, ProjectType.cap, ProjectType.sapFioriElements, ProjectType.businessApplicationStudio, ProjectType.s4hana, ProjectType.successFactors, ProjectType.ariba, ProjectType.concur, ProjectType.customerExperience, ProjectType.iot, ProjectType.analyticsCloud, ProjectType.cpi, ProjectType.cfx, ProjectType.cpwf, ProjectType.cpbm, ProjectType.rpa, ProjectType.ai]) ==
+           ["sapFiori", "capNodeJs", "capJava", "hanaNative", "sapUi5", "mdk", "workflow", "multitarget", "basic", "cap", "sapFioriElements", "businessApplicationStudio", "s4hana", "successFactors", "ariba", "concur", "customerExperience", "iot", "analyticsCloud", "cpi", "cfx", "cpwf", "cpbm", "rpa", "ai"]);
 }
 
 enum ProjectStatus {
@@ -248,15 +394,41 @@ enum ProjectStatus {
     // The error status indicates that the project has encountered an error that prevents it from functioning properly. In this status, users may not be able to access or utilize the project until the underlying issue is resolved. The error status signifies that there is a problem that needs attention and may require troubleshooting or support to fix.
     error
 }
-ProjectStatus toProjectStatus(string s) {
-    const map = [
-        "active": ProjectStatus.active,
-        "archived": ProjectStatus.archived,
-        "building": ProjectStatus.building,
-        "deploying": ProjectStatus.deploying,
-        "error": ProjectStatus.error
-    ];
-    return map.get(s.toLower, ProjectStatus.active);
+ProjectStatus toProjectStatus(string value) {
+    mixin(EnumSwitch("ProjectStatus", "active"));
+}
+ProjectStatus[] toProjectStatuses(string[] values) {
+    return values.map!(toProjectStatus).array;
+}
+string toString(ProjectStatus value) {
+    return value.to!string;
+}
+string[] toString(ProjectStatus[] values) {
+    return values.map!(toString).array;
+}
+///
+unittest {
+    mixin(ShowTest!("ProjectStatus"));
+
+    assert(ProjectStatus.active.toString == "active");
+    assert(ProjectStatus.archived.toString == "archived");
+    assert(ProjectStatus.building.toString == "building");
+    assert(ProjectStatus.deploying.toString == "deploying");
+    assert(ProjectStatus.error.toString == "error");
+
+    assert("".toProjectStatus == ProjectStatus.active); // Default case
+    assert("noexists".toProjectStatus == ProjectStatus.active); // Default case 
+
+    assert("active".toProjectStatus == ProjectStatus.active);
+    assert("archived".toProjectStatus == ProjectStatus.archived);
+    assert("building".toProjectStatus == ProjectStatus.building);
+    assert("deploying".toProjectStatus == ProjectStatus.deploying);
+    assert("error".toProjectStatus == ProjectStatus.error);
+
+    assert(["active", "archived", "building", "deploying", "error"].toProjectStatuses ==
+           [ProjectStatus.active, ProjectStatus.archived, ProjectStatus.building, ProjectStatus.deploying, ProjectStatus.error]);
+    assert(toString([ProjectStatus.active, ProjectStatus.archived, ProjectStatus.building, ProjectStatus.deploying, ProjectStatus.error]) ==
+           ["active", "archived", "building", "deploying", "error"]);
 }
 
 enum TemplateCategory {
@@ -273,16 +445,43 @@ enum TemplateCategory {
     // The general template category includes templates that do not fall into any specific category.
     general
 }
-TemplateCategory toTemplateCategory(string s) {
-    const map = [
-        "sapfiori": TemplateCategory.sapFiori,
-        "sapcap": TemplateCategory.sapCap,
-        "saphana": TemplateCategory.sapHana,
-        "sapmdk": TemplateCategory.sapMdk,
-        "sapworkflow": TemplateCategory.sapWorkflow,
-        "general": TemplateCategory.general
-    ];
-    return map.get(s.toLower, TemplateCategory.general);
+TemplateCategory toTemplateCategory(string value) {
+    mixin(EnumSwitch("TemplateCategory", "general"));
+}
+TemplateCategory[] toTemplateCategories(string[] categories) {
+    return categories.map!(toTemplateCategory).array;
+}
+string toString(TemplateCategory category) {
+    return category.to!string;
+}
+string[] toString(TemplateCategory[] categories) {
+    return categories.map!(toString).array;
+}
+///
+unittest {
+    mixin(ShowTest!("TemplateCategory"));
+
+    assert(TemplateCategory.sapFiori.toString == "sapFiori");
+    assert(TemplateCategory.sapCap.toString == "sapCap");
+    assert(TemplateCategory.sapHana.toString == "sapHana");
+    assert(TemplateCategory.sapMdk.toString == "sapMdk");
+    assert(TemplateCategory.sapWorkflow.toString == "sapWorkflow");
+    assert(TemplateCategory.general.toString == "general");
+
+    assert("".toTemplateCategory == TemplateCategory.general); // Default case
+    assert("noexists".toTemplateCategory == TemplateCategory.general); // Default case
+
+    assert("sapFiori".toTemplateCategory == TemplateCategory.sapFiori);
+    assert("sapCap".toTemplateCategory == TemplateCategory.sapCap);
+    assert("sapHana".toTemplateCategory == TemplateCategory.sapHana);
+    assert("sapMdk".toTemplateCategory == TemplateCategory.sapMdk);
+    assert("sapWorkflow".toTemplateCategory == TemplateCategory.sapWorkflow);
+    assert("general".toTemplateCategory == TemplateCategory.general);   
+
+    assert(["sapFiori", "sapCap", "sapHana", "sapMdk", "sapWorkflow", "general"].toTemplateCategories ==
+           [TemplateCategory.sapFiori, TemplateCategory.sapCap, TemplateCategory.sapHana, TemplateCategory.sapMdk, TemplateCategory.sapWorkflow, TemplateCategory.general]);
+    assert(toString([TemplateCategory.sapFiori, TemplateCategory.sapCap, TemplateCategory.sapHana, TemplateCategory.sapMdk, TemplateCategory.sapWorkflow, TemplateCategory.general]) ==
+           ["sapFiori", "sapCap", "sapHana", "sapMdk", "sapWorkflow", "general"]);
 }
 
 enum ServiceProviderType {
@@ -297,15 +496,41 @@ enum ServiceProviderType {
     // The external REST service provider type includes services that are based
     externalRest
 }
-ServiceProviderType toServiceProviderType(string s) {
-    const map = [
-        "sapbtp": ServiceProviderType.sapBtp,
-        "saps4hana": ServiceProviderType.sapS4Hana,
-        "sapsuccessfactors": ServiceProviderType.sapSuccessFactors,
-        "externalodata": ServiceProviderType.externalOData,
-        "externalrest": ServiceProviderType.externalRest
-    ];
-    return map.get(s.toLower, ServiceProviderType.externalRest);
+ServiceProviderType toServiceProviderType(string value) {
+    mixin(EnumSwitch("ServiceProviderType", "sapBtp"));
+}
+ServiceProviderType[] toServiceProviderTypes(string[] types) {
+    return types.map!(toServiceProviderType).array;
+}
+string toString(ServiceProviderType type) {
+    return type.to!string;
+}
+string[] toString(ServiceProviderType[] types) {
+    return types.map!(toString).array;
+}
+///
+unittest {
+    mixin(ShowTest!("ServiceProviderType"));    
+
+    assert(ServiceProviderType.sapBtp.toString == "sapBtp");
+    assert(ServiceProviderType.sapS4Hana.toString == "sapS4Hana");
+    assert(ServiceProviderType.sapSuccessFactors.toString == "sapSuccessFactors");
+    assert(ServiceProviderType.externalOData.toString == "externalOData");
+    assert(ServiceProviderType.externalRest.toString == "externalRest");
+
+    assert("".toServiceProviderType == ServiceProviderType.sapBtp); // Default case
+    assert("noexists".toServiceProviderType == ServiceProviderType.sapBtp); // Default case
+
+    assert("sapBtp".toServiceProviderType == ServiceProviderType.sapBtp);
+    assert("sapS4Hana".toServiceProviderType == ServiceProviderType.sapS4Hana);
+    assert("sapSuccessFactors".toServiceProviderType == ServiceProviderType.sapSuccessFactors);
+    assert("externalOData".toServiceProviderType == ServiceProviderType.externalOData);
+    assert("externalRest".toServiceProviderType == ServiceProviderType.externalRest);
+
+    assert(["sapBtp", "sapS4Hana", "sapSuccessFactors", "externalOData", "externalRest"].toServiceProviderTypes ==
+           [ServiceProviderType.sapBtp, ServiceProviderType.sapS4Hana, ServiceProviderType.sapSuccessFactors, ServiceProviderType.externalOData, ServiceProviderType.externalRest]);
+    assert(toString([ServiceProviderType.sapBtp, ServiceProviderType.sapS4Hana, ServiceProviderType.sapSuccessFactors, ServiceProviderType.externalOData, ServiceProviderType.externalRest]) ==
+           ["sapBtp", "sapS4Hana", "sapSuccessFactors", "externalOData", "externalRest"]);
 }
 
 enum BindingStatus {
@@ -316,33 +541,89 @@ enum BindingStatus {
     // The error binding status indicates that there is an issue with the binding, preventing it from functioning correctly.
     error
 }
-BindingStatus toBindingStatus(string s) {
-    const map = [
-        "connected": BindingStatus.connected,
-        "disconnected": BindingStatus.disconnected,
-        "error": BindingStatus.error
-    ];
-    return map.get(s.toLower, BindingStatus.disconnected);
+BindingStatus toBindingStatus(string value) {
+    mixin(EnumSwitch("BindingStatus", "disconnected"));
+}
+BindingStatus[] toBindingStatuses(string[] statuses) {
+    return statuses.map!(toBindingStatus).array;
+}
+string toString(BindingStatus status) {
+    return status.to!string;
+}
+string[] toString(BindingStatus[] statuses) {
+    return statuses.map!(toString).array;
+}
+///
+unittest {
+    mixin(ShowTest!("BindingStatus"));
+
+    assert(BindingStatus.connected.toString == "connected");
+    assert(BindingStatus.disconnected.toString == "disconnected");
+    assert(BindingStatus.error.toString == "error");
+
+    assert("".toBindingStatus == BindingStatus.disconnected); // Default case
+    assert("noexists".toBindingStatus == BindingStatus.disconnected); // Default case
+
+    assert("connected".toBindingStatus == BindingStatus.connected);
+    assert("disconnected".toBindingStatus == BindingStatus.disconnected);
+    assert("error".toBindingStatus == BindingStatus.error);
+
+    assert(["connected", "disconnected", "error"].toBindingStatuses ==
+           [BindingStatus.connected, BindingStatus.disconnected, BindingStatus.error]);
+    assert(toString([BindingStatus.connected, BindingStatus.disconnected, BindingStatus.error]) ==
+           ["connected", "disconnected", "error"]);
 }
 
-enum RunMode {
+enum RunMode : string {
     // The run mode indicates that the application is running in normal mode.
-    run,
+    run = "run",
     // The debug mode indicates that the application is running in debug mode, allowing for debugging and troubleshooting.
-    debug_,
+    debug_ = "debug",
     // The test mode indicates that the application is running in test mode, typically used for testing purposes.
-    test,
+    test = "test",
     // The preview mode indicates that the application is running in preview mode, allowing for a preview of the application's behavior.
-    preview
+    preview = "preview"
 }
 RunMode toRunMode(string s) {
-    const map = [
-        "run": RunMode.run,
-        "debug": RunMode.debug_,
-        "test": RunMode.test,
-        "preview": RunMode.preview
-    ];
-    return map.get(s.toLower, RunMode.run);
+    switch(s.toLower) {
+        case "run": return RunMode.run;
+        case "debug": return RunMode.debug_;
+        case "test": return RunMode.test;
+        case "preview": return RunMode.preview;
+        default: return RunMode.run; // Default case
+    }
+}
+RunMode[] toRunModes(string[] modes) {
+    return modes.map!(toRunMode).array;
+}
+string toString(RunMode mode) {
+    return cast(string)mode;
+}
+string[] toString(RunMode[] modes) {
+    return modes.map!(toString).array;
+}
+/// 
+unittest {
+    mixin(ShowTest!("RunMode"));
+
+    assert(RunMode.run.toString == "run");
+    assert(RunMode.debug_.toString == "debug");
+    assert(RunMode.test.toString == "test");
+    assert(RunMode.preview.toString == "preview");
+
+    assert("".toRunMode == RunMode.run); // Default case
+    assert("noexists".toRunMode == RunMode.run); // Default case
+
+    assert("run".toRunMode == RunMode.run);
+    assert("debug".toRunMode == RunMode.debug_);
+    assert("test".toRunMode == RunMode.test);
+    assert("preview".toRunMode == RunMode.preview);
+
+    assert(["run", "debug", "test", "preview"].toRunModes ==
+           [RunMode.run, RunMode.debug_, RunMode.test, RunMode.preview]);
+    assert(toString([RunMode.run, RunMode.debug_, RunMode.test, RunMode.preview]) ==
+           ["run", "debug", "test", "preview"]);
+    
 }
 
 enum RunStatus {
@@ -355,14 +636,39 @@ enum RunStatus {
     // The error status indicates that the application has encountered an error that prevents it from running properly.
     error
 }
-RunStatus toRunStatus(string s) {
-    const map = [
-        "idle": RunStatus.idle,
-        "running": RunStatus.running,
-        "stopped": RunStatus.stopped,
-        "error": RunStatus.error
-    ];
-    return map.get(s.toLower, RunStatus.idle);
+RunStatus toRunStatus(string value) {
+    mixin(EnumSwitch("RunStatus", "idle"));
+}
+RunStatus[] toRunStatuses(string[] statuses) {
+    return statuses.map!(toRunStatus).array;
+}
+string toString(RunStatus status) {
+    return status.to!string;
+}
+string[] toString(RunStatus[] statuses) {
+    return statuses.map!(toString).array;
+}
+///
+unittest {
+    mixin(ShowTest!("RunStatus"));
+
+    assert(RunStatus.idle.toString == "idle");
+    assert(RunStatus.running.toString == "running");
+    assert(RunStatus.stopped.toString == "stopped");
+    assert(RunStatus.error.toString == "error");
+
+    assert("".toRunStatus == RunStatus.idle); // Default case
+    assert("noexists".toRunStatus == RunStatus.idle); // Default case
+
+    assert("idle".toRunStatus == RunStatus.idle);
+    assert("running".toRunStatus == RunStatus.running);
+    assert("stopped".toRunStatus == RunStatus.stopped);
+    assert("error".toRunStatus == RunStatus.error);
+
+    assert(["idle", "running", "stopped", "error"].toRunStatuses ==
+           [RunStatus.idle, RunStatus.running, RunStatus.stopped, RunStatus.error]);
+    assert(toString([RunStatus.idle, RunStatus.running, RunStatus.stopped, RunStatus.error]) ==
+           ["idle", "running", "stopped", "error"]);
 }
 
 enum BuildStatus {
@@ -377,15 +683,41 @@ enum BuildStatus {
     // The cancelled build status indicates that the build process has been explicitly cancelled by the user
     cancelled
 }
-BuildStatus toBuildStatus(string s) {
-    const map = [
-        "pending": BuildStatus.pending,
-        "building": BuildStatus.building,
-        "succeeded": BuildStatus.succeeded,
-        "failed": BuildStatus.failed,
-        "cancelled": BuildStatus.cancelled
-    ];
-    return map.get(s.toLower, BuildStatus.pending);
+BuildStatus toBuildStatus(string value) {
+    mixin(EnumSwitch("BuildStatus", "pending"));
+}
+BuildStatus[] toBuildStatuses(string[] statuses) {
+    return statuses.map!(toBuildStatus).array;
+}
+string toString(BuildStatus status) {
+    return status.to!string;
+}
+string[] toString(BuildStatus[] statuses) {
+    return statuses.map!(toString).array;
+}
+///
+unittest {
+    mixin(ShowTest!("BuildStatus"));
+
+    assert(BuildStatus.pending.toString == "pending");
+    assert(BuildStatus.building.toString == "building");
+    assert(BuildStatus.succeeded.toString == "succeeded");
+    assert(BuildStatus.failed.toString == "failed");
+    assert(BuildStatus.cancelled.toString == "cancelled");
+
+    assert("".toBuildStatus == BuildStatus.pending); // Default case
+    assert("noexists".toBuildStatus == BuildStatus.pending); // Default case
+
+    assert("pending".toBuildStatus == BuildStatus.pending);
+    assert("building".toBuildStatus == BuildStatus.building);
+    assert("succeeded".toBuildStatus == BuildStatus.succeeded);
+    assert("failed".toBuildStatus == BuildStatus.failed);
+    assert("cancelled".toBuildStatus == BuildStatus.cancelled); 
+
+    assert(["pending", "building", "succeeded", "failed", "cancelled"].toBuildStatuses ==
+           [BuildStatus.pending, BuildStatus.building, BuildStatus.succeeded, BuildStatus.failed, BuildStatus.cancelled]);
+    assert(toString([BuildStatus.pending, BuildStatus.building, BuildStatus.succeeded, BuildStatus.failed, BuildStatus.cancelled]) ==
+           ["pending", "building", "succeeded", "failed", "cancelled"]);
 }
 
 enum DeployTarget {
@@ -400,13 +732,39 @@ enum DeployTarget {
     // The Docker deploy target indicates that the application is intended to be deployed as a Docker container. This deploy target involves packaging the application and its dependencies into a Docker image, which can then be run on any platform that supports Docker. Deploying to Docker allows for greater flexibility and portability, as the application can be easily moved and run in different environments without worrying about compatibility issues.
     docker
 }
-DeployTarget toDeployTarget(string s) {
-    const map = [
-        "cloudfoundry": DeployTarget.cloudFoundry,
-        "kyma": DeployTarget.kyma,
-        "abap": DeployTarget.abap,
-        "html5repository": DeployTarget.html5Repository,
-        "docker": DeployTarget.docker
-    ];
-    return map.get(s.toLower, DeployTarget.cloudFoundry);
+DeployTarget toDeployTarget(string value) {
+    mixin(EnumSwitch("DeployTarget", "cloudFoundry"));
+}
+DeployTarget[] toDeployTargets(string[] targets) {
+    return targets.map!(toDeployTarget).array;
+}
+string toString(DeployTarget target) {
+    return target.to!string;
+}
+string[] toString(DeployTarget[] targets) {
+    return targets.map!(toString).array;
+}
+///
+unittest {
+    mixin(ShowTest!("DeployTarget"));
+
+    assert(DeployTarget.cloudFoundry.toString == "cloudFoundry");
+    assert(DeployTarget.kyma.toString == "kyma");
+    assert(DeployTarget.abap.toString == "abap");
+    assert(DeployTarget.html5Repository.toString == "html5Repository");
+    assert(DeployTarget.docker.toString == "docker");   
+
+    assert("".toDeployTarget == DeployTarget.cloudFoundry); // Default case
+    assert("noexists".toDeployTarget == DeployTarget.cloudFoundry); // Default case
+
+    assert("cloudFoundry".toDeployTarget == DeployTarget.cloudFoundry);
+    assert("kyma".toDeployTarget == DeployTarget.kyma);
+    assert("abap".toDeployTarget == DeployTarget.abap);
+    assert("html5Repository".toDeployTarget == DeployTarget.html5Repository);
+    assert("docker".toDeployTarget == DeployTarget.docker);
+
+    assert(["cloudFoundry", "kyma", "abap", "html5Repository", "docker"].toDeployTargets ==
+           [DeployTarget.cloudFoundry, DeployTarget.kyma, DeployTarget.abap, DeployTarget.html5Repository, DeployTarget.docker]);
+    assert(toString([DeployTarget.cloudFoundry, DeployTarget.kyma, DeployTarget.abap, DeployTarget.html5Repository, DeployTarget.docker]) ==
+           ["cloudFoundry", "kyma", "abap", "html5Repository", "docker"]);
 }

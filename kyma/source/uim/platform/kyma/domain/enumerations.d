@@ -141,7 +141,7 @@ enum FunctionRuntime {
     python312,
 }
 
-FunctionRuntime toFunctionRuntime(string s) {
+FunctionRuntime toFunctionRuntime(string value) {
     mixin(EnumSwitch!"FunctionRuntime", "nodejs20");
 }
 FunctionRuntime[] toFunctionRuntimeArray(string[] values) {
@@ -182,7 +182,7 @@ enum FunctionStatus {
     error,
     inactive,
 }
-FunctionStatus toFunctionStatus(string s) {
+FunctionStatus toFunctionStatus(string value) {
     mixin(EnumSwitch!"FunctionStatus", "error");
 }   
 FunctionStatus[] toFunctionStatus(string[] values) {

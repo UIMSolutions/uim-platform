@@ -7,7 +7,6 @@ module uim.platform.saas_provisioning.presentation.http.controllers.subscription
 
 import uim.platform.saas_provisioning;
 
-
 mixin(ShowModule!());
 
 @safe:
@@ -25,7 +24,7 @@ class SubscriptionJobController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        router.get("/api/v1/saas-provisioning/jobs",   &handleList);
+        router.get("/api/v1/saas-provisioning/jobs", &handleList);
         router.get("/api/v1/saas-provisioning/jobs/*", &handleGet);
     }
 
@@ -36,14 +35,11 @@ class SubscriptionJobController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-            auto jobs = usecase.listJobs(tenantId);
-            auto arr = Json.emptyArray;
-            foreach (j; jobs) arr ~= j.toJson();
-            res.writeJsonBody(
-                Json.emptyObject.set("count", jobs.length).set("jobs", arr), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto jobs = usecase.listJobs(tenantId);
+        auto arr = jobs.map!(j => j.toJson).array.toJson;
+
+        auto responsedata = Json.emptyObject.set("count", jobs.length).set("jobs", arr);
+        return successResponse("Jobs retrieved", "Retrieved " ~ jobs.length ~ " jobs for tenant " ~ tenantId, 200, responsedata);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -52,12 +48,13 @@ class SubscriptionJobController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto id = SubscriptionJobId(precheck.id);
-            auto job = usecase.getJob(tenantId, id);
-            if (job.isNull) { writeError(res, 404, "Job not found"); return; }
-            res.writeJsonBody(job.toJson(), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto id = SubscriptionJobId(precheck.id);
+        auto job = usecase.getJob(tenantId, id);
+        if (job.isNull)
+            return errorResponse("Job not found", "No job found with ID " ~ id, 404);
+
+        auto responsedata = job.toJson;
+        return successResponse("Job retrieved", "Retrieved job with ID " ~ id, 200, responsedata);
+
     }
 }

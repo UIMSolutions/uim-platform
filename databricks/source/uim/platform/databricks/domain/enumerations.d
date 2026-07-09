@@ -13,7 +13,7 @@ enum WorkspaceStatus : string {
   failed       = "failed",
   deleted      = "deleted"
 }
-WorkspaceStatus toWorkspaceStatus(string s) {
+WorkspaceStatus toWorkspaceStatus(string value) {
   mixin(EnumSwitch("WorkspaceStatus", "provisioning"));
 }
 WorkspaceStatus[] toWorkspaceStatuses(string[] values) {
@@ -68,7 +68,7 @@ enum WorkspaceTier : string {
   premium    = "premium",
   enterprise = "enterprise"
 }
-WorkspaceTier toWorkspaceTier(string s) {
+WorkspaceTier toWorkspaceTier(string value) {
   mixin(EnumSwitch("WorkspaceTier", "standard"));
 }
 WorkspaceTier[] toWorkspaceTiers(string[] values) {

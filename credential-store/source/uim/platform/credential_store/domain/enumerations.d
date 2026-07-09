@@ -11,8 +11,8 @@ enum CredentialType {
   keyring,
 }
 
-CredentialType toCredentialType(string s) {
-  switch (s.toLower()) {
+CredentialType toCredentialType(string value, bool ignoreCase = true) {
+  switch (ignoreCase ? value.toLower() : value) {
   case "password":
     return CredentialType.password;
   case "key":
@@ -30,8 +30,8 @@ enum CredentialStatus {
   deleted_,
 }
 
-CredentialStatus toCredentialStatus(string s) {
-  switch (s.toLower()) {
+CredentialStatus toCredentialStatus(string value, bool ignoreCase = true) {
+  switch (ignoreCase ? value.toLower() : value) {
   case "active":
     return CredentialStatus.active;
   case "disabled":
@@ -55,8 +55,8 @@ enum OperationType {
   rotate,
 }
 
-OperationType toOperationType(string s) {
-  switch (s.toLower()) {
+OperationType toOperationType(string value, bool ignoreCase = true) {
+  switch (ignoreCase ? value.toLower() : value) {
   case "create":
     return OperationType.create;
   case "read":
@@ -90,8 +90,8 @@ enum ResourceType {
   dek,
 }
 
-ResourceType toResourceType(string s) {
-  switch (s.toLower()) {
+ResourceType toResourceType(string value, bool ignoreCase = true) {
+  switch (ignoreCase ? value.toLower() : value) {
   case "namespace":
     return ResourceType.namespace;
   case "password":
@@ -117,8 +117,8 @@ enum PermissionLevel {
   admin,
 }
 
-PermissionLevel toPermissionLevel(string s) {
-  switch (s.toLower()) {
+PermissionLevel toPermissionLevel(string value, bool ignoreCase = true) {
+  switch (ignoreCase ? value.toLower() : value) {
   case "readwrite":
     return PermissionLevel.readWrite;
   case "readonly":
@@ -135,8 +135,8 @@ enum BindingStatus {
   revoked,
 }
 
-BindingStatus toBindingStatus(string s) {
-  switch (s.toLower()) {
+BindingStatus toBindingStatus(string value, bool ignoreCase = true) {
+  switch (ignoreCase ? value.toLower() : value) {
   case "active":
     return BindingStatus.active;
   case "revoked":
@@ -154,8 +154,8 @@ enum KeyringRotationPeriod {
   days365 = 365,
 }
 
-KeyringRotationPeriod toKeyringRotationPeriod(string s) {
-  switch (s.toLower()) {
+KeyringRotationPeriod toKeyringRotationPeriod(string value, bool ignoreCase = true) {
+  switch (ignoreCase ? value.toLower() : value) {
   case "30":
     return KeyringRotationPeriod.days30;
   case "60":

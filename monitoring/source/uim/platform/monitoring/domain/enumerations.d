@@ -112,8 +112,8 @@ enum MetricCategory {
   certificate,
   custom,
 }
-MetricCategory toMetricCategory(string value) {
-  switch (value.toLower()) {
+MetricCategory toMetricCategory(string value, bool ignoreCase = true) {
+  switch (ignoreCase ? value.toLower() : value) {
     case "cpu": return MetricCategory.cpu;
     case "memory": return MetricCategory.memory;
     case "disk": return MetricCategory.disk;
@@ -141,8 +141,8 @@ enum MetricUnit {
   boolean_,
   none,
 }
-MetricUnit toMetricUnit(string value) {
-  switch (value.toLower()) {
+MetricUnit toMetricUnit(string value, bool ignoreCase = true) {
+  switch (ignoreCase ? value.toLower() : value) {
     case "percent": return MetricUnit.percent;
     case "bytes": return MetricUnit.bytes_;
     case "kilobytes": return MetricUnit.kilobytes;
@@ -165,8 +165,8 @@ enum AggregationMethod {
   last,
   count,
 }
-AggregationMethod toAggregationMethod(string value) {
-  switch (value.toLower()) {
+AggregationMethod toAggregationMethod(string value, bool ignoreCase = true) {
+  switch (ignoreCase ? value.toLower() : value) {
     case "average": return AggregationMethod.average;
     case "sum": return AggregationMethod.sum;
     case "min": return AggregationMethod.min;
@@ -185,8 +185,8 @@ enum CheckType {
   database,
   certificate,
 }
-CheckType toCheckType(string value) {
-  switch (value.toLower()) {
+CheckType toCheckType(string value, bool ignoreCase = true) {
+  switch (ignoreCase ? value.toLower() : value) {
     case "availability": return CheckType.availability;
     case "jmx": return CheckType.jmx;
     case "customhttp": return CheckType.customHttp;
@@ -204,8 +204,8 @@ enum CheckStatus {
   critical,
   disabled,
 }
-CheckStatus toCheckStatus(string value) {
-  switch (value.toLower()) {
+CheckStatus toCheckStatus(string value, bool ignoreCase = true) {
+  switch (ignoreCase ? value.toLower() : value) {
     case "unknown": return CheckStatus.unknown;
     case "ok": return CheckStatus.ok;
     case "warning": return CheckStatus.warning;
@@ -222,8 +222,8 @@ enum AlertState {
   resolved,
   expired,
 }
-AlertState toAlertState(string value) {
-  switch (value.toLower()) {
+AlertState toAlertState(string value, bool ignoreCase = true) {
+  switch (ignoreCase ? value.toLower() : value) {
     case "open": return AlertState.open;
     case "acknowledged": return AlertState.acknowledged;
     case "resolved": return AlertState.resolved;
@@ -240,8 +240,8 @@ enum ThresholdOperator {
   equal,
   notEqual,
 }
-ThresholdOperator toThresholdOperator(string value) {
-  switch (value.toLower()) {
+ThresholdOperator toThresholdOperator(string value, bool ignoreCase = true) {
+  switch (ignoreCase ? value.toLower() : value) {
     case "greaterthan": return ThresholdOperator.greaterThan;
     case "greaterorequal": return ThresholdOperator.greaterOrEqual;
     case "lessthan": return ThresholdOperator.lessThan;
@@ -257,8 +257,8 @@ enum NotificationChannelType {
   webhook,
   onPremise,
 }
-NotificationChannelType toNotificationChannelType(string value) {
-  switch (value.toLower()) {
+NotificationChannelType toNotificationChannelType(string value, bool ignoreCase = true) {
+  switch (ignoreCase ? value.toLower() : value) {
     case "email": return NotificationChannelType.email;
     case "webhook": return NotificationChannelType.webhook;
     case "onpremise": return NotificationChannelType.onPremise;

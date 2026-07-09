@@ -18,8 +18,8 @@ enum StorageBackend {
   mongodb_
 }
 
-StorageBackend toStorageBackend(string s) {
-  switch (s.toLower()) {
+StorageBackend toStorageBackend(string value, bool ignoreCase = true) {
+  switch (ignoreCase ? value.toLower() : value) {
     case "memory": return StorageBackend.memory_;
     case "files": return StorageBackend.files_;
     case "mongodb": return StorageBackend.mongodb_;
@@ -35,8 +35,8 @@ enum ChangeLayer {
   customer_,  // Created by key user (tenant-level)
   user_       // Created by end user (personal)
 }
-ChangeLayer toChangeLayer(string s) {
-  switch (s.toLower()) {
+ChangeLayer toChangeLayer(string value, bool ignoreCase = true) {
+  switch (ignoreCase ? value.toLower() : value) {
     case "vendor": return ChangeLayer.vendor_;
     case "customer": return ChangeLayer.customer_;
     case "user": return ChangeLayer.user_;
@@ -87,8 +87,8 @@ enum VariantType {
   dialog_,     // Dialog variant
   page_        // Page layout variant
 }
-VatiantType toVariantType(string s) {
-  switch (s.toLower()) {
+VatiantType toVariantType(string value, bool ignoreCase = true) {
+  switch (ignoreCase ? value.toLower() : value) {
     case "filterbar": return VariantType.filterBar_;
     case "table": return VariantType.table_;
     case "chart": return VariantType.chart_;
@@ -104,8 +104,8 @@ enum VersionStatus {
   active_,     // Currently active version
   archived_    // Superseded by newer version
 }
-VersionStatus toVersionStatus(string s) {
-  switch (s.toLower()) {
+VersionStatus toVersionStatus(string value, bool ignoreCase = true) {
+  switch (ignoreCase ? value.toLower() : value) {
     case "draft": return VersionStatus.draft_;
     case "active": return VersionStatus.active_;
     case "archived": return VersionStatus.archived_;
@@ -118,8 +118,8 @@ enum PersonalizationScope {
   page_,       // Full page personalization
   app_         // Application-level personalization
 }
-PersonalizationScope toPersonalizationScope(string s) {
-  switch (s.toLower()) {
+PersonalizationScope toPersonalizationScope(string value, bool ignoreCase = true) {
+  switch (ignoreCase ? value.toLower() : value) {
     case "control": return PersonalizationScope.control_;
     case "page": return PersonalizationScope.page_;
     case "app": return PersonalizationScope.app_;

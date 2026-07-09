@@ -7,7 +7,6 @@ module uim.platform.saas_provisioning.presentation.http.controllers.saas_applica
 
 import uim.platform.saas_provisioning;
 
-
 mixin(ShowModule!());
 
 @safe:
@@ -28,10 +27,10 @@ class SaasApplicationController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        router.get(    "/api/v1/saas-provisioning/applications",   &handleList);
-        router.post(   "/api/v1/saas-provisioning/applications",   &handleCreate);
-        router.get(    "/api/v1/saas-provisioning/applications/*", &handleGet);
-        router.put(    "/api/v1/saas-provisioning/applications/*", &handleUpdate);
+        router.get("/api/v1/saas-provisioning/applications", &handleList);
+        router.post("/api/v1/saas-provisioning/applications", &handleCreate);
+        router.get("/api/v1/saas-provisioning/applications/*", &handleGet);
+        router.put("/api/v1/saas-provisioning/applications/*", &handleUpdate);
         router.delete_("/api/v1/saas-provisioning/applications/*", &handleDelete);
     }
 
@@ -44,14 +43,11 @@ class SaasApplicationController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-            auto apps = usecase.listApplications(tenantId);
-            auto arr = Json.emptyArray;
-            foreach (a; apps) arr ~= a.toJson();
-            res.writeJsonBody(
-                Json.emptyObject.set("count", apps.length).set("applications", arr), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto apps = usecase.listApplications(tenantId);
+        auto arr = apps.map!(a => a.toJson).array.toJson;
+
+        auto responsedata = Json.emptyObject.set("count", apps.length).set("applications", arr);
+        return successResponse("Applications retrieved", "Retrieved " ~ apps.length ~ " applications for tenant " ~ tenantId, 200, responsedata);
     }
 
     override protected Json createHandler(HTTPServerRequest req) {
@@ -60,34 +56,34 @@ class SaasApplicationController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto tenantId = precheck.tenantId;
-            auto body_    = req.json;
+        auto tenantId = precheck.tenantId;
+        auto body_ = req.json;
 
-            RegisterAppRequest dto;
-            dto.appName               = body_["appName"].get!string;
-            dto.displayName           = body_["displayName"].get!string;
-            dto.description           = safeStr(body_, "description");
-            dto.category              = safeStr(body_, "category");
-            dto.plan                  = safeEnum!AppPlan(body_, "plan", AppPlan.application);
-            dto.providerSubaccountId  = safeStr(body_, "providerSubaccountId");
-            dto.globalAccountId       = safeStr(body_, "globalAccountId");
-            dto.xsuaaServiceInstanceId = safeStr(body_, "xsuaaServiceInstanceId");
-            dto.autoSubscribeGlobalAccounts = safeBool(body_, "autoSubscribeGlobalAccounts");
-            if ("appUrls" in body_) {
-                auto u = body_["appUrls"];
-                dto.appUrls.onSubscriptionUrl   = safeStr(u, "onSubscriptionUrl");
-                dto.appUrls.onUnsubscriptionUrl = safeStr(u, "onUnsubscriptionUrl");
-                dto.appUrls.onUpdateUrl         = safeStr(u, "onUpdateUrl");
-                dto.appUrls.getDependenciesUrl  = safeStr(u, "getDependenciesUrl");
-                dto.appUrls.appBaseUrl          = safeStr(u, "appBaseUrl");
-            }
-
-            auto result = usecase.registerApplication(tenantId, dto);
-            if (!result.success) { writeError(res, 400, result.message); return; }
-            res.writeJsonBody(Json.emptyObject.set("id", result.id), 201);
-        } catch (Exception e) {
-            writeError(res, 400, "Invalid request: " ~ e.msg);
+        RegisterAppRequest dto;
+        dto.appName = body_["appName"].get!string;
+        dto.displayName = body_["displayName"].get!string;
+        dto.description = body_.getString("description");
+        dto.category = body_.getString("category");
+        dto.plan = safeEnum!AppPlan(body_, "plan", AppPlan.application);
+        dto.providerSubaccountId = body_.getString("providerSubaccountId");
+        dto.globalAccountId = body_.getString("globalAccountId");
+        dto.xsuaaServiceInstanceId = body_.getString("xsuaaServiceInstanceId");
+        dto.autoSubscribeGlobalAccounts = safeBool(body_, "autoSubscribeGlobalAccounts");
+        if ("appUrls" in body_) {
+            auto u = body_["appUrls"];
+            dto.appUrls.onSubscriptionUrl = safeStr(u, "onSubscriptionUrl");
+            dto.appUrls.onUnsubscriptionUrl = safeStr(u, "onUnsubscriptionUrl");
+            dto.appUrls.onUpdateUrl = safeStr(u, "onUpdateUrl");
+            dto.appUrls.getDependenciesUrl = safeStr(u, "getDependenciesUrl");
+            dto.appUrls.appBaseUrl = safeStr(u, "appBaseUrl");
         }
+
+        auto result = usecase.registerApplication(tenantId, dto);
+        if (result.hasError)
+            return errorResponse("Application registration failed", result.message, 400);
+
+        auto responsedata = Json.emptyObject.set("id", result.id);
+        return successResponse("Application registered", "Application registered with ID " ~ result.id, 201, responsedata);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -96,13 +92,13 @@ class SaasApplicationController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto id = SaasApplicationId(precheck.id);
-            auto app = usecase.getApplication(tenantId, id);
-            if (app.isNull) { writeError(res, 404, "Application not found"); return; }
-            res.writeJsonBody(app.toJson(), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto id = SaasApplicationId(precheck.id);
+        auto app = usecase.getApplication(tenantId, id);
+        if (app.isNull)
+            return errorResponse("Application not found", "No application found with ID " ~ id, 404);
+
+        auto responsedata = app.toJson;
+        return successResponse("Application retrieved", "Retrieved application with ID " ~ id, 200, responsedata);
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -111,30 +107,31 @@ class SaasApplicationController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto id       = SaasApplicationId(precheck.id);
-            auto body_    = req.json;
+        auto id = SaasApplicationId(precheck.id);
+        auto body_ = req.json;
 
-            UpdateAppRequest dto;
-            dto.displayName                 = safeStr(body_, "displayName");
-            dto.description                 = safeStr(body_, "description");
-            dto.category                    = safeStr(body_, "category");
-            dto.plan                        = safeEnum!AppPlan(body_, "plan", AppPlan.application);
-            dto.autoSubscribeGlobalAccounts = safeBool(body_, "autoSubscribeGlobalAccounts");
-            if ("appUrls" in body_) {
-                auto u = body_["appUrls"];
-                dto.appUrls.onSubscriptionUrl   = safeStr(u, "onSubscriptionUrl");
-                dto.appUrls.onUnsubscriptionUrl = safeStr(u, "onUnsubscriptionUrl");
-                dto.appUrls.onUpdateUrl         = safeStr(u, "onUpdateUrl");
-                dto.appUrls.getDependenciesUrl  = safeStr(u, "getDependenciesUrl");
-                dto.appUrls.appBaseUrl          = safeStr(u, "appBaseUrl");
-            }
-
-            auto result = usecase.updateApplication(tenantId, id, dto);
-            if (!result.success) { writeError(res, 404, result.message); return; }
-            res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
-        } catch (Exception e) {
-            writeError(res, 400, "Invalid request: " ~ e.msg);
+        UpdateAppRequest dto;
+        dto.displayName = body_.getString("displayName");
+        dto.description = body_.getString("description");
+        dto.category = body_.getString("category");
+        dto.plan = safeEnum!AppPlan(body_, "plan", AppPlan.application);
+        dto.autoSubscribeGlobalAccounts = safeBool(body_, "autoSubscribeGlobalAccounts");
+        if ("appUrls" in body_) {
+            auto u = body_["appUrls"];
+            dto.appUrls.onSubscriptionUrl = safeStr(u, "onSubscriptionUrl");
+            dto.appUrls.onUnsubscriptionUrl = safeStr(u, "onUnsubscriptionUrl");
+            dto.appUrls.onUpdateUrl = safeStr(u, "onUpdateUrl");
+            dto.appUrls.getDependenciesUrl = safeStr(u, "getDependenciesUrl");
+            dto.appUrls.appBaseUrl = safeStr(u, "appBaseUrl");
         }
+
+        auto result = usecase.updateApplication(tenantId, id, dto);
+        if (result.hasError)
+            return errorResponse("Application update failed", result.message, 404);
+
+        auto responsedata = Json.emptyObject.set("id", result.id);
+        return successResponse("Application updated", "Updated application with ID " ~ result.id, 200, responsedata);
+
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -143,13 +140,13 @@ class SaasApplicationController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto id = SaasApplicationId(precheck.id);
-            auto result = usecase.deregisterApplication(tenantId, id);
-            if (!result.success) { writeError(res, 404, result.message); return; }
-            res.writeJsonBody(Json.emptyObject.set("id", result.id), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto id = SaasApplicationId(precheck.id);
+        auto result = usecase.deregisterApplication(tenantId, id);
+        if (result.hasError)
+            return errorResponse("Application deregistration failed", result.message, 404);
+
+        return successResponse("Application deregistered", "Deregistered application with ID " ~ id, 200, Json
+                .emptyObject);
     }
 
     // -----------------------------------------------------------------------
@@ -157,18 +154,24 @@ class SaasApplicationController : ManageHttpController {
     // -----------------------------------------------------------------------
 
     private string safeStr(Json obj, string key) {
-        if ((key in obj) !is null && obj[key].isString) return obj[key].get!string;
+        if ((key in obj) !is null && obj[key].isString)
+            return obj[key].get!string;
         return "";
     }
 
     private bool safeBool(Json obj, string key) {
-        if ((key in obj) !is null && obj[key].isBoolean_) return obj[key].get!bool;
+        if ((key in obj) !is null && obj[key].isBoolean_)
+            return obj[key].get!bool;
         return false;
     }
 
     private E safeEnum(E)(Json obj, string key, E default_) {
         if ((key in obj) !is null && obj[key].isString) {
-            try { return obj[key].get!string.to!E; } catch (Exception) {}
+            try {
+                return obj[key].get!string
+                    .to!E;
+            } catch (Exception) {
+            }
         }
         return default_;
     }
