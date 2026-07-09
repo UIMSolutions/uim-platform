@@ -27,7 +27,7 @@ EventCategory[] toEventCategory(string[] categories) {
     return categories.map!(toEventCategory).array;
 }
 string toString(EventCategory category) {
-    mixin(category.to!string);
+    return cast(string)category;
 }
 string[] toString(EventCategory[] categories) {
     return categories.map!(toString).array;
@@ -75,7 +75,7 @@ EventSeverity[] toEventSeverity(string[] severities) {
     return severities.map!(toEventSeverity).array;
 }
 string toString(EventSeverity severity) {
-    mixin(severity.to!string);
+    return cast(string)severity;
 }
 string[] toString(EventSeverity[] severities) {
     return severities.map!(toString).array;
@@ -115,7 +115,7 @@ EventStatus[] toEventStatus(string[] values) {
     return values.map!(toEventStatus).array;
 }
 string toString(EventStatus status) {
-    mixin(toEnumToString!("EventStatus"));
+    return status.to!string;
 }
 string[] toString(EventStatus[] statuses) {
     return statuses.map!(toString).array;
@@ -158,7 +158,7 @@ PropertyKey[] toPropertyKey(string[] values) {
     return values.map!(toPropertyKey).array;
 }
 string toString(PropertyKey key) {
-    mixin(toEnumToString!("PropertyKey"));
+    return key.to!string;
 }
 string[] toString(PropertyKey[] keys) {
     return keys.map!(toString).array;
@@ -212,7 +212,7 @@ Predicate[] toPredicate(string[] values) {
     return values.map!(toPredicate).array;
 }
 string toString(Predicate predicate) {
-    mixin(toEnumToString!("Predicate"));
+    return cast(string)predicate;
 }
 string[] toString(Predicate[] predicates) {
     return predicates.map!(toString).array;
@@ -304,7 +304,7 @@ ResourceState[] toResourceState(string[] values) {
     return values.map!(toResourceState).array;
 }
 string toString(ResourceState state) {
-    mixin(toEnumToString!("ResourceState"));
+    return state.to!string;
 }
 string[] toString(ResourceState[] states) {
     return states.map!(toString).array;

@@ -32,6 +32,7 @@ class ManageOfflineStoresUseCase { // TODO: UIMUseCase {
         store.name = r.name;
         store.description = r.description;
         store.storeType = r.storeType;
+        store.description = r.description;
         store.encryptionEnabled = r.encryptionEnabled;
         store.maxSizeMb = r.maxSizeMb;
         store.syncPolicy = r.syncPolicy;

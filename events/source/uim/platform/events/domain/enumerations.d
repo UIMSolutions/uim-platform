@@ -289,20 +289,26 @@ unittest {
     assert([WebhookStatus.active, WebhookStatus.paused].toString == ["active", "paused"]);  
 }
 
-enum WebhookAuthType {
-    none_,
-    oauth2,
-    basic,
-    apiKey
+enum WebhookAuthType : string {
+    none_ = "none",
+    oauth2 = "oauth2",
+    basic = "basic",
+    apiKey = "apiKey"   
 }
 WebhookAuthType toWebhookAuthType(string value) {
-    mixin(EnumSwitch("WebhookAuthType", "none_"));
+    switch(value.toLower()) {
+        case "none": return WebhookAuthType.none_;
+        case "oauth2": return WebhookAuthType.oauth2;
+        case "basic": return WebhookAuthType.basic;
+        case "apikey": return WebhookAuthType.apiKey;
+        default: return WebhookAuthType.none_;
+    }   
 }
 WebhookAuthType[] toWebhookAuthType(string[] values) {
     return values.map!(toWebhookAuthType).array;
 }
 string toString(WebhookAuthType value) {
-    return value.to!string();
+    return cast(string)value; // This will return the enum member name as a string, e.g., "none_", "oauth2", "basic", "apiKey"
 }
 string[] toString(WebhookAuthType[] values) {
     return values.map!(toString).array;
@@ -357,19 +363,24 @@ unittest {
     assert([WebhookDeliveryMode.atLeastOnce, WebhookDeliveryMode.atMostOnce].toString == ["atLeastOnce", "atMostOnce"]);  
 }
 
-enum EventChannelStatus {
-    active,
-    inactive,
-    deprecated_
+enum EventChannelStatus : string{
+    active = "active",
+    inactive = "inactive",
+    deprecated_ = "deprecated"
 }
 EventChannelStatus toEventChannelStatus(string value) {
-    mixin(EnumSwitch("EventChannelStatus", "active"));
+    switch(value.toLower()) {
+        case "active": return EventChannelStatus.active;
+        case "inactive": return EventChannelStatus.inactive;
+        case "deprecated": return EventChannelStatus.deprecated_;
+        default: return EventChannelStatus.active; // default
+    }
 }
 EventChannelStatus[] toEventChannelStatus(string[] values) {
     return values.map!(toEventChannelStatus).array;
 }
 string toString(EventChannelStatus value) {
-    return value.to!string();
+    return cast(string)value; // This will return the enum member name as a string, e.g., "active", "inactive", "deprecated_"
 }
 string[] toString(EventChannelStatus[] values) {
     return values.map!(toString).array;

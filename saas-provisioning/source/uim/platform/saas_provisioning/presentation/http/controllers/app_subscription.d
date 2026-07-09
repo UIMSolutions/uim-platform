@@ -137,6 +137,7 @@ protected void handleUnsubscribe(scope HTTPServerRequest req, scope HTTPServerRe
     try {
         auto tenantId = tenantId;
         auto id = AppSubscriptionId(precheck.id);
+        
         UserId requestedBy = "";
         try {
             requestedBy = safeStr(req.json, "requestedBy");

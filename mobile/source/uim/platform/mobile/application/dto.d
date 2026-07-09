@@ -13,6 +13,8 @@ import uim.platform.mobile;
 // MobileApp DTOs
 struct CreateMobileAppRequest {
   TenantId tenantId;
+  string appId;
+
   string name;
   string description;
   string bundleId;
@@ -27,6 +29,8 @@ struct CreateMobileAppRequest {
 
 struct UpdateMobileAppRequest {
   TenantId tenantId;
+  MobileAppId appId;
+
   string description;
   string securityConfig;
   string authProvider;
@@ -39,7 +43,7 @@ struct UpdateMobileAppRequest {
 // DeviceRegistration DTOs
 struct RegisterDeviceRequest {
   TenantId tenantId;
-  string appId;
+  MobileAppId appId;
   string deviceModel;
   string osVersion;
   string appVersion;
@@ -58,7 +62,7 @@ struct UpdateDeviceRequest {
 // PushNotification DTOs
 struct SendPushNotificationRequest {
   TenantId tenantId;
-  string appId;
+  MobileAppId appId;
   string title;
   string body_;
   string payload;
@@ -73,7 +77,7 @@ struct SendPushNotificationRequest {
 // PushRegistration DTOs
 struct CreatePushRegistrationRequest {
   TenantId tenantId;
-  string appId;
+  MobileAppId appId;
   string deviceId;
   string provider;
   string pushToken;
@@ -89,13 +93,14 @@ struct UpdatePushRegistrationRequest {
 // AppConfiguration DTOs
 struct CreateAppConfigRequest {
   TenantId tenantId;
-  string appId;
+  MobileAppId appId;
   string key;
   string value;
   string description;
   bool isSecret;
   string platform;
   UserId createdBy;
+  string dataType;
 }
 
 struct UpdateAppConfigRequest {
@@ -108,7 +113,9 @@ struct UpdateAppConfigRequest {
 // FeatureRestriction DTOs
 struct CreateFeatureRestrictionRequest {
   TenantId tenantId;
-  string appId;
+  FeatureRestrictionId restrictionId;
+
+  MobileAppId appId;
   string featureKey;
   string description;
   string type;
@@ -117,21 +124,36 @@ struct CreateFeatureRestrictionRequest {
   string[] whitelist;
   string metadata;
   UserId createdBy;
+  UserId[] allowedUsers;
+  string[] allowedDevices;
+  string minAppVersion;
+  string maxAppVersion;
+  Date startDate;
+  Date endDate;
 }
 
 struct UpdateFeatureRestrictionRequest {
   TenantId tenantId;
+  FeatureRestrictionId restrictionId;
   string description;
   bool enabled;
   int percentage;
   string[] whitelist;
   string metadata;
   UserId updatedBy;
+  UserId[] allowedUsers;
+  string[] allowedDevices;
+  string minAppVersion;
+  string maxAppVersion;
+  Date startDate;
+  Date endDate;
 }
 // ClientResource DTOs
 struct CreateClientResourceRequest {
   TenantId tenantId;
-  string appId;
+  ClientResourceId resourceId; // Optional, can be generated if not provided
+
+  MobileAppId appId;
   string name;
   string description;
   string type;
@@ -166,7 +188,7 @@ struct UpdateClientResourceRequest {
 // AppVersion DTOs
 struct CreateAppVersionRequest {
   TenantId tenantId;
-  string appId;
+  MobileAppId appId;
   string versionCode;
   int buildNumber;
   string platform;
@@ -192,7 +214,7 @@ struct UpdateAppVersionRequest {
 // UsageReport DTOs
 struct ReportUsageRequest {
   TenantId tenantId;
-  string appId;
+  MobileAppId appId;
   string deviceId;
   UserId userId;
   string metricType;
@@ -206,7 +228,7 @@ struct ReportUsageRequest {
 // OfflineStore DTOs
 struct CreateOfflineStoreRequest {
   TenantId tenantId;
-  string appId;
+  MobileAppId appId;
   string name;
   string serviceUrl;
   string definingRequests;
@@ -216,6 +238,7 @@ struct CreateOfflineStoreRequest {
 
 struct UpdateOfflineStoreRequest {
   TenantId tenantId;
+  MobileAppId appId;
   string serviceUrl;
   string definingRequests;
   string syncStatus;
@@ -223,7 +246,7 @@ struct UpdateOfflineStoreRequest {
 // UserSession DTOs
 struct CreateUserSessionRequest {
   TenantId tenantId;
-  string appId;
+  MobileAppId appId;
   string deviceId;
   UserId userId;
   string ipAddress;
@@ -234,7 +257,7 @@ struct CreateUserSessionRequest {
 // ClientLog DTOs
 struct UploadClientLogRequest {
   TenantId tenantId;
-  string appId;
+  MobileAppId appId;
   string deviceId;
   UserId userId;
   string level;

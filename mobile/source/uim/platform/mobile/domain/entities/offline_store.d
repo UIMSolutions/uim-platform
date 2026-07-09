@@ -19,6 +19,7 @@ struct OfflineStore {
   string serviceUrl;         // backend OData service URL
   string definingRequests;   // JSON array of defining requests
   OfflineStoreType storeType;
+  string description;
   SyncStatus syncStatus;
   long lastSyncAt;
   size_t sizeBytes;
@@ -27,6 +28,7 @@ struct OfflineStore {
     return entityToJson
       .set("appId", appId.value)
       .set("name", name)
+      .set("description", description)
       .set("serviceUrl", serviceUrl)
       .set("definingRequests", definingRequests)
       .set("storeType", storeType)

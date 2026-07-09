@@ -8,17 +8,17 @@ import uim.platform.abap_environment;
 
 // ─── System Instance ───
 /// ABAP system provisioning plan.
-enum SystemPlan {
+enum SystemPlan : string {
   /// Standard plan with full features and capabilities.
-  standard,
+  standard = "standard",
   /// Free plan with limited features and capabilities, suitable for small-scale or personal use.
-  free_,
+  free_ = "free",
   /// Development plan for testing and development purposes, with limited features and capabilities.
-  development,
+  development = "development",
   /// Test plan for testing purposes, with limited features and capabilities.
-  test,
+  test = "test",
   /// Production plan for production use, with full features and capabilities.
-  production,
+  production = "production",
 }
 
 SystemPlan toSystemPlan(string plan) {

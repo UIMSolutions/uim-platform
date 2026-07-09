@@ -17,6 +17,7 @@ struct AppConfiguration {
   string key;
   string value;
   string description;
+
   bool isSecret;
   AppPlatform platform;     // platform-specific or all
   long version_;

@@ -101,19 +101,17 @@ class SubscriptionEngine {
         long now     = MonoTime.currTime.ticks;
         string jobId  = now.to!string ~ "-job-unsubscribe";
 
-        auto job =  SubscriptionJob();
+        auto job =  SubscriptionJob(providerTenantId);
         job.id             = SubscriptionJobId(jobId);
-        job.tenantId       = providerTenantId;
         job.appName        = sub.appName;
         job.subscriptionId = subscriptionId;
         job.jobType        = JobType.unsubscribe;
+
         job.jobStatus      = JobStatus.succeeded;
         job.progress       = 100;
         job.message        = "Unsubscription completed (stub — no callback invoked)";
-        job.startedAt      = now;
-        job.finishedAt     = now;
-        job.createdAt      = now;
-        job.updatedAt      = now;
+        job.startedAt      = SubscriptionJob.createdAt;
+        job.finishedAt     = SubscriptionJob.createdAt;
         jobRepo.add(job);
 
         sub.state     = SubscriptionState.unsubscribed;

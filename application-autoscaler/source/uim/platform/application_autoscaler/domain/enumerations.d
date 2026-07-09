@@ -37,14 +37,26 @@ MetricType toMetricType(string s) {
     default:           return MetricType.custom_;
   }
 }
+MetricType toMetricType(Json value) {
+  return toMetricType(value.getString);
+}
 MetricType[] toMetricTypes(string[] s) {
   return s.map!(toMetricType).array;
+}
+MetricType[] toMetricTypes(Json[] values) {
+  return values.map!(toMetricType).array;
 }
 string toString(MetricType metricType) {
   return metricType.to!string;
 }
 string[] toString(MetricType[] metricTypes) {
   return metricTypes.map!(toString).array;
+}
+Json toJson(MetricType metricType) {
+  return metricType.toString.toJson;
+}
+Json[] toJson(MetricType[] metricTypes) {
+  return metricTypes.map!(toJson).array;
 }
 ///
 unittest {

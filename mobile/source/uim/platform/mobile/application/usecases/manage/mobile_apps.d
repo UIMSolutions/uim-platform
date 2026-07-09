@@ -23,16 +23,15 @@ class ManageMobileAppsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createMobileApp(CreateMobileAppRequest r) {
-        auto existing = repo.findByBundleId(r.bundleId);
+        auto existing = repo.findByBundleId(r.tenantId, r.bundleId);
         if (!existing.isNull)
             return CommandResult(false, "", "App with this bundle ID already exists");
         
         auto app = MobileApp(r.tenantId); //, UserId("test-user"));
-
         app.name = r.name;
         app.description = r.description;
         app.bundleId = r.bundleId;
-        app.platform = parsePlatform(r.platform);
+        app.platform = r.platform.toAppPlatform;
         app.status = AppStatus.active;
         app.securityConfig = r.securityConfig;
         app.authProvider = r.authProvider;
@@ -44,10 +43,11 @@ class ManageMobileAppsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, app.id.value, "");
     }
 
-    CommandResult updateMobileApp(MobileAppId id, UpdateMobileAppRequest r) {
-        auto app = repo.findById(tenantId, id);
+    CommandResult updateMobileApp(UpdateMobileAppRequest r) {
+        auto app = repo.findById(r.tenantId, r.appId);
         if (app.isNull)
             return CommandResult(false, "", "App not found");
+
         if (r.description.length > 0) app.description = r.description;
         if (r.securityConfig.length > 0) app.securityConfig = r.securityConfig;
         if (r.authProvider.length > 0) app.authProvider = r.authProvider;
@@ -60,7 +60,7 @@ class ManageMobileAppsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, app.id.value, "");
     }
 
-    MobileApp getMobileApp(MobileAppId id) {
+    MobileApp getMobileApp(TenantId tenantId, MobileAppId id) {
         return repo.findById(tenantId, id);
     }
 
@@ -68,27 +68,17 @@ class ManageMobileAppsUseCase { // TODO: UIMUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult deleteMobileApp(MobileAppId id) {
+    CommandResult deleteMobileApp(TenantId tenantId, MobileAppId id) {
         auto app = repo.findById(tenantId, id);
         if (app.isNull)
             return CommandResult(false, "", "App not found");
 
-        repo.remove(id);
+        repo.remove(app);
         return CommandResult(true, app.id.value, "");
     }
 
     size_t countMobileAppsByTenant(TenantId tenantId) {
         return repo.countByTenant(tenantId);
-    }
-
-    private static AppPlatform parsePlatform(string s) {
-        switch (s) {
-            case "ios": return AppPlatform.ios;
-            case "android": return AppPlatform.android;
-            case "windows": return AppPlatform.windows;
-            case "web": return AppPlatform.web;
-            default: return AppPlatform.ios;
-        }
     }
 
 }

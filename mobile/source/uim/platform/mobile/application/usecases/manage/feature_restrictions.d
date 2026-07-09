@@ -43,9 +43,10 @@ class ManageFeatureRestrictionsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateFeatureRestriction(UpdateFeatureRestrictionRequest r) {
-        auto restriction = repo.findById(r.tenantId, r.id);
+        auto restriction = repo.findById(r.tenantId, r.restrictionId);
         if (restriction.isNull)
             return CommandResult(false, "", "Feature restriction not found");
+
         if (r.description.length > 0) restriction.description = r.description;
         restriction.enabled = r.enabled;
         restriction.allowedUsers = r.allowedUsers;

@@ -40,13 +40,7 @@ enum HealthStatus {
     unknown,
 }
 HealthStatus toHealthStatus(string s) {
-    const map = [
-        "healthy": HealthStatus.healthy,
-        "warning": HealthStatus.warning,
-        "critical": HealthStatus.critical,
-        "unknown": HealthStatus.unknown
-    ];
-    return map.get(s.toLower, HealthStatus.unknown);
+    mixin(EnumSwitch("HealthStatus", "unknown"));
 }
 
 enum ExpirationSeverity {
@@ -57,12 +51,5 @@ enum ExpirationSeverity {
     expired,
 }
 ExpirationSeverity toExpirationSeverity(string s) {
-    const map = [
-        "none": ExpirationSeverity.none,
-        "info": ExpirationSeverity.info,
-        "warning": ExpirationSeverity.warning,
-        "critical": ExpirationSeverity.critical,
-        "expired": ExpirationSeverity.expired
-    ];
-    return map.get(s.toLower, ExpirationSeverity.none);
+    mixin(EnumSwitch("ExpirationSeverity", "none"));
 }

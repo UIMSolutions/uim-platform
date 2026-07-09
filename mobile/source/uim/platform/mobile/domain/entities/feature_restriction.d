@@ -14,24 +14,30 @@ import uim.platform.mobile;
 struct FeatureRestriction {
   mixin TenantEntity!(FeatureRestrictionId);
 
+  string description;
+  bool enabled;
   MobileAppId appId;
   string featureKey;
-  string description;
   RestrictionType type;
-  bool enabled;
-  int percentage;           // for gradual rollout (0-100)
-  string[] whitelist;       // user/device IDs for whitelist type
-  string metadata;          // JSON additional config
-  
+  int percentage; // for gradual rollout (0-100)
+  string[] whitelist; // user/device IDs for whitelist type
+  string metadata; // JSON additional config
+  UserId[] allowedUsers;
+  string[] allowedDevices;
+  string minAppVersion;
+  string maxAppVersion;
+  Date startDate;
+  Date endDate;
+
   Json toJson() const {
-      return entityToJson
-          .set("appId", appId.value)
-          .set("featureKey", featureKey)
-          .set("description", description)
-          .set("type", type.to!string)
-          .set("enabled", enabled)
-          .set("percentage", percentage)
-          .set("whitelist", whitelist.array.toJson)
-          .set("metadata", metadata);
+    return entityToJson
+      .set("appId", appId.value)
+      .set("featureKey", featureKey)
+      .set("description", description)
+      .set("type", type.to!string)
+      .set("enabled", enabled)
+      .set("percentage", percentage)
+      .set("whitelist", whitelist.array.toJson)
+      .set("metadata", metadata);
   }
 }
