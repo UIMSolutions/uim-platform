@@ -47,6 +47,9 @@ bool existsLatest(TenantId tenantId, MobileAppId appId, AppPlatform platform) {
     return findByApp(tenantId, appId).length;
   }
 
+  AppVersion[] filterByApp(AppVersion[] versions, MobileAppId appId) {
+    return versions.filter!(v => v.appId == appId).array;
+  }
   AppVersion[] findByApp(TenantId tenantId, MobileAppId appId) {
     return filterByApp(findByTenant(tenantId), appId);
   }

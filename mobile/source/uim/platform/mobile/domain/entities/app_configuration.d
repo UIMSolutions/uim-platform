@@ -17,11 +17,10 @@ struct AppConfiguration {
   string key;
   string value;
   string description;
-
+  DataType dataType; 
   bool isSecret;
   AppPlatform platform;     // platform-specific or all
   long version_;
-
 
   Json toJson() const {
     return entityToJson

@@ -63,6 +63,8 @@ struct UpdateDeviceRequest {
 struct SendPushNotificationRequest {
   TenantId tenantId;
   MobileAppId appId;
+  DeviceRegistrationId deviceId;
+
   string title;
   string body_;
   string payload;
@@ -78,7 +80,7 @@ struct SendPushNotificationRequest {
 struct CreatePushRegistrationRequest {
   TenantId tenantId;
   MobileAppId appId;
-  string deviceId;
+  DeviceRegistrationId deviceId;
   string provider;
   string pushToken;
   string[] topics;
@@ -93,6 +95,8 @@ struct UpdatePushRegistrationRequest {
 // AppConfiguration DTOs
 struct CreateAppConfigRequest {
   TenantId tenantId;
+  AppConfigurationId configId;
+
   MobileAppId appId;
   string key;
   string value;
@@ -229,15 +233,21 @@ struct ReportUsageRequest {
 struct CreateOfflineStoreRequest {
   TenantId tenantId;
   MobileAppId appId;
+  OfflineStoreId storeId;
   string name;
   string serviceUrl;
   string definingRequests;
   string storeType;
+  string description;
+  bool encryptionEnabled;
+  size_t maxSizeMb;
   UserId createdBy;
 }
 
 struct UpdateOfflineStoreRequest {
   TenantId tenantId;
+  OfflineStoreId storeId;
+  
   MobileAppId appId;
   string serviceUrl;
   string definingRequests;

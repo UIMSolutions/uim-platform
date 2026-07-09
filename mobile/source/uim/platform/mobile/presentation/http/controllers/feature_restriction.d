@@ -50,7 +50,7 @@ class FeatureRestrictionController : ManageHttpController {
     r.whitelist = data.getStrings("whitelist");
     r.metadata = data.getString("metadata");
     r.createdBy = UserId(data.getString("createdBy"));
-    auto result = usecase.create(r);
+    auto result = usecase.createFeatureRestriction(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
     auto resp = Json.emptyObject.set("id", result.id);

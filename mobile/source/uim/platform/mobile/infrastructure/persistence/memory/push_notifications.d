@@ -20,6 +20,10 @@ class MemoryPushNotificationRepository : TenantRepository!(PushNotification, Pus
     return findByApp(tenantId, appId).length;
   }
 
+  PushNotification[] filterByApp(PushNotification[] notifications, MobileAppId appId) {
+    return notifications.filter!(n => n.appId == appId).array;
+  }
+  
   PushNotification[] findByApp(TenantId tenantId, MobileAppId appId) {
     return filterByApp(findByTenant(tenantId).array, appId);
   }

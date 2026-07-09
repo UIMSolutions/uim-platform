@@ -17,12 +17,13 @@ import uim.platform.mobile;
 class MemoryMobileAppRepository : TenantRepository!(MobileApp, MobileAppId), MobileAppRepository {
 
   size_t countByBundleId(TenantId tenantId, string bundleId) {
-    return findByBundleId(tenantId, bundleId).length;
+    return findByBundleId(tenantId, bundleId) == MobileApp.init ? 0 : 1;
   }
 
   bool existsByBundleId(TenantId tenantId, string bundleId) {
-    return findByBundleId(tenantId, bundleId).id != MobileAppId.init;
+    return findByBundleId(tenantId, bundleId) != MobileApp.init;
   }
+
   MobileApp findByBundleId(TenantId tenantId, string bundleId) {
     foreach (a; findByTenant(tenantId)) {
       if (a.bundleId == bundleId)

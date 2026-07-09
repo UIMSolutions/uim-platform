@@ -20,6 +20,9 @@ class MemoryClientLogRepository : TenantRepository!(ClientLogEntry, ClientLogEnt
     return findByApp(tenantId, appId).length;
   }
 
+  ClientLogEntry[] filterByApp(ClientLogEntry[] entries, MobileAppId appId) {
+    return entries.filter!(e => e.appId == appId).array;
+  }
   ClientLogEntry[] findByApp(TenantId tenantId, MobileAppId appId) {
     return filterByApp(findByTenant(tenantId), appId);
   }

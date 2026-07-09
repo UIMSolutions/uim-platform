@@ -28,9 +28,9 @@ class ManageClientResourcesUseCase { // TODO: UIMUseCase {
         resource.appId = r.appId;
         resource.name = r.name;
         resource.description = r.description;
-        resource.type = r.resourceType;
+        // TODO: ? resource.type = r.resourceType;
         resource.url = r.url;
-        resource.checksum = r.checksum;
+        // TODO: ? resource.checksum = r.checksum;
         resource.sizeBytes = r.sizeBytes;
         resource.version_ = r.version_;
 
@@ -47,8 +47,8 @@ class ManageClientResourcesUseCase { // TODO: UIMUseCase {
         // TODO: Decide if we want to allow name updates or not. If yes, we need to validate it.
         // if (r.url.length > 0)
         //     resource.url = r.url;
-        if (r.checksum.length > 0)
-            resource.checksum = r.checksum;
+        // TODO: ? if (r.checksum.length > 0)
+        //     resource.checksum = r.checksum;
         if (r.sizeBytes > 0)
             resource.sizeBytes = r.sizeBytes;
         // TODO: Decide if we want to allow version updates or not. If yes, we need to implement a versioning strategy.
@@ -64,7 +64,11 @@ class ManageClientResourcesUseCase { // TODO: UIMUseCase {
         return repo.findById(tenantId, id);
     }
 
-    ClientResource[] listClientResourcesByApp(TenantId tenantId, MobileAppId appId) {
+    ClientResource[] listClientResources(TenantId tenantId) {
+        return repo.findByTenant(tenantId);
+    }
+
+    ClientResource[] listClientResources(TenantId tenantId, MobileAppId appId) {
         return repo.findByApp(tenantId, appId);
     }
 

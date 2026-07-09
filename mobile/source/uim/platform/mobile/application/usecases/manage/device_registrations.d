@@ -68,7 +68,11 @@ class ManageDeviceRegistrationsUseCase { // TODO: UIMUseCase {
         return repo.findById(tenantId, id);
     }
 
-    DeviceRegistration[] listByApp(TenantId tenantId, MobileAppId appId) {
+    DeviceRegistration[] listDeviceRegistration(TenantId tenantId) {
+        return repo.findByTenant(tenantId);
+    }
+
+    DeviceRegistration[] listDeviceRegistration(TenantId tenantId, MobileAppId appId) {
         return repo.findByApp(tenantId, appId);
     }
 

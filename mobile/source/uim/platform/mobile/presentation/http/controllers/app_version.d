@@ -49,7 +49,7 @@ class AppVersionController : ManageHttpController {
     r.downloadUrl = data.getString("downloadUrl");
     r.sizeBytes = data.getLong("sizeBytes");
     r.createdBy = UserId(data.getString("createdBy"));
-    auto result = usecase.create(r);
+    auto result = usecase.createAppVersion(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
     auto resp = Json.emptyObject.set("id", result.id);
@@ -63,7 +63,7 @@ class AppVersionController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto results = usecase.list(tenantId);
+    auto results = usecase.listAppVersions(tenantId);
     auto items = Json.emptyArray;
     foreach (item; results) {
       items ~= Json.emptyObject
@@ -91,21 +91,21 @@ class AppVersionController : ManageHttpController {
     if (id.isNull)
       return errorResponse("Invalid app version ID", 400);
 
-    auto result = usecase.get(id);
-    if (result.hasError)
-      return errorResponse(result.message, 400);
+    auto appVersion = usecase.getAppVersion(tenantId, id);
+    if (appVersion.isNull)
+      return errorResponse("App version not found", 400);
     auto resp = Json.emptyObject
-      .set("id", result.data.id)
-      .set("tenantId", result.data.tenantId)
-      .set("appId", result.data.appId)
-      .set("versionCode", result.data.versionCode)
-      .set("buildNumber", result.data.buildNumber)
-      .set("platform", result.data.platform)
-      .set("releaseNotes", result.data.releaseNotes)
-      .set("downloadUrl", result.data.downloadUrl)
-      .set("sizeBytes", result.data.sizeBytes)
-      .set("createdBy", result.data.createdBy)
-      .set("status", result.data.status)
+      .set("id", appVersion.id)
+      .set("tenantId", appVersion.tenantId)
+      .set("appId", appVersion.appId)
+      .set("versionCode", appVersion.versionCode)
+      .set("buildNumber", appVersion.buildNumber)
+      .set("platform", appVersion.platform)
+      .set("releaseNotes", appVersion.releaseNotes)
+      .set("downloadUrl", appVersion.downloadUrl)
+      .set("sizeBytes", appVersion.sizeBytes)
+      .set("createdBy", appVersion.createdBy)
+      .set("status", appVersion.status)
       .set("message", "App version retrieved successfully");
 
     
@@ -125,13 +125,13 @@ override protected Json updateHandler(HTTPServerRequest req) {
 
   auto data = precheck.data;
   UpdateAppVersionRequest r;
-  r.id = id;
+  r.versionId = id;
   r.releaseNotes = data.getString("releaseNotes");
   r.downloadUrl = data.getString("downloadUrl");
-  r.sizeBytes = data.getLong("sizeBytes");
+  // TODO: ? r.sizeBytes = data.getLong("sizeBytes");
   r.status = data.getString("status");
   r.updatedBy = UserId(data.getString("updatedBy"));
-  auto result = usecase.update(r);
+  auto result = usecase.updateAppVersion(r);
   if (result.hasError)
     return errorResponse(result.message, 400);
 

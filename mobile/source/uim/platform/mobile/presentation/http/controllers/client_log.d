@@ -48,7 +48,7 @@ class ClientLogController : ManageHttpController {
     r.platform = data.getString("platform");
     r.appVersion = data.getString("appVersion");
     r.timestamp = data.getLong("timestamp");
-    auto result = usecase.upload(r);
+    auto result = usecase.uploadLog(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
 
@@ -89,7 +89,7 @@ class ClientLogController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto id = ClientLogEntryId(precheck.id);
-    auto result = usecase.get(tenantId, id);
+    auto result = usecase.getLog(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
       

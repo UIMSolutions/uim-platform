@@ -21,6 +21,8 @@ struct ClientResource {
   string data;              // base64-encoded content
   size_t sizeBytes;
   ulong version_;
+  string checksum;          // SHA256 checksum of the resource data 
+  string url;               // optional URL to the resource (if not stored in the database)
   
   Json toJson() const {
     return entityToJson
@@ -32,6 +34,5 @@ struct ClientResource {
       .set("data", data)
       .set("sizeBytes", sizeBytes)
       .set("version", version_);
-
   }
 }

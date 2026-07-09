@@ -19,6 +19,8 @@ struct OfflineStore {
   string serviceUrl;         // backend OData service URL
   string definingRequests;   // JSON array of defining requests
   OfflineStoreType storeType;
+  bool encryptionEnabled;
+  size_t maxSizeMb;
   string description;
   SyncStatus syncStatus;
   long lastSyncAt;
@@ -31,8 +33,8 @@ struct OfflineStore {
       .set("description", description)
       .set("serviceUrl", serviceUrl)
       .set("definingRequests", definingRequests)
-      .set("storeType", storeType)
-      .set("syncStatus", syncStatus)
+      // TODO: ? .set("storeType", storeType)
+      // TODO: ? .set("syncStatus", syncStatus)
       .set("lastSyncAt", lastSyncAt)
       .set("sizeBytes", sizeBytes);
 

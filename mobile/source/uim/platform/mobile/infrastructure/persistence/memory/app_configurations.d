@@ -46,11 +46,14 @@ void removeByKey(TenantId tenantId, MobileAppId appId, string key) {
   size_t countByAppAndPlatform(TenantId tenantId, MobileAppId appId, AppPlatform platform) {
     return findByAppAndPlatform(tenantId, appId, platform).length;
   }
+  AppConfiguration[] filterByApp(AppConfiguration[] configs, MobileAppId appId) {
+    return configs.filter!(c => c.appId == appId).array;
+  }
   AppConfiguration[] filterByAppAndPlatform(AppConfiguration[] configs, MobileAppId appId, AppPlatform platform) {
     return filterByApp(configs, appId).filter!(c => c.platform == platform).array;
   }
   AppConfiguration[] findByAppAndPlatform(TenantId tenantId, MobileAppId appId, AppPlatform platform) {
-    return filterByAppAndPlatform(findByApp(tenantId, appId), appId, platform);
+    return filterByAppAndPlatform(findByTenant(tenantId), appId, platform);
   }
   void removeByAppAndPlatform(TenantId tenantId, MobileAppId appId, AppPlatform platform) {
     findByAppAndPlatform(tenantId, appId, platform).each!(c => remove(c));

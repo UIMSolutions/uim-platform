@@ -32,6 +32,10 @@ class MemoryOfflineStoreRepository : TenantRepository!(OfflineStore, OfflineStor
     return findByApp(tenantId, appId).length;
   }
 
+  OfflineStore[] filterByApp(OfflineStore[] stores, MobileAppId appId) {
+    return stores.filter!(s => s.appId == appId).array;
+  }
+  
   OfflineStore[] findByApp(TenantId tenantId, MobileAppId appId) {
     return filterByApp(findByTenant(tenantId), appId);
   }

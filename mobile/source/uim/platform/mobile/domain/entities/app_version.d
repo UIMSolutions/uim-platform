@@ -25,6 +25,9 @@ struct AppVersion {
   bool mandatory;
   string minOsVersion;
   string maxOsVersion;
+  string versionName;
+  size_t fileSize;
+  string checksum;
 
 
   Json toJson() const {

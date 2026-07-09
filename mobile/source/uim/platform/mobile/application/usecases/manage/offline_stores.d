@@ -31,34 +31,35 @@ class ManageOfflineStoresUseCase { // TODO: UIMUseCase {
         store.appId = r.appId;
         store.name = r.name;
         store.description = r.description;
-        store.storeType = r.storeType;
+        store.storeType = r.storeType.toOfflineStoreType;
         store.description = r.description;
         store.encryptionEnabled = r.encryptionEnabled;
         store.maxSizeMb = r.maxSizeMb;
-        store.syncPolicy = r.syncPolicy;
-        store.conflictPolicy = r.conflictPolicy;
-        store.status = OfflineStoreStatus.active;
+        // TODO: ? store.syncPolicy = r.syncPolicy;
+        // TODO: ? store.conflictPolicy = r.conflictPolicy;
+        // TODO: ? store.status = OfflineStoreStatus.active;
 
         repo.save(store);
         return CommandResult(true, store.id.value, "");
     }
 
     CommandResult updateOfflineStore(UpdateOfflineStoreRequest r) {
-        auto store = repo.findById(r.tenantId, r.id);
+        auto store = repo.findById(r.tenantId, r.storeId);
         if (store.isNull)
             return CommandResult(false, "", "Offline store not found");
-        if (r.description.length > 0) store.description = r.description;
-        if (r.syncPolicy.length > 0) store.syncPolicy = r.syncPolicy;
-        if (r.conflictPolicy.length > 0) store.conflictPolicy = r.conflictPolicy;
-        if (r.maxSizeMb > 0) store.maxSizeMb = r.maxSizeMb;
-        store.encryptionEnabled = r.encryptionEnabled;
+
+        // TODO: ? if (r.description.length > 0) store.description = r.description;
+        // TODO: ? if (r.syncPolicy.length > 0) store.syncPolicy = r.syncPolicy;
+        // TODO: ? if (r.conflictPolicy.length > 0) store.conflictPolicy = r.conflictPolicy;
+        // TODO: ? if (r.maxSizeMb > 0) store.maxSizeMb = r.maxSizeMb;
+        // TODO: ? store.encryptionEnabled = r.encryptionEnabled;
         store.updatedAt = currentTimestamp();
-        store.updatedBy = r.updatedBy;
+        // TODO: ? store.updatedBy = r.updatedBy;
         repo.update(store);
         return CommandResult(true, store.id.value, "");
     }
 
-    OfflineStore getOfflineStore(OfflineStoreId id) {
+    OfflineStore getOfflineStore(TenantId tenantId, OfflineStoreId id) {
         return repo.findById(tenantId, id);
     }
 

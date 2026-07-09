@@ -28,7 +28,7 @@ struct PushRegistration {
       .set("deviceId", deviceId.value)
       .set("provider", provider.toString())
       .set("pushToken", pushToken)
-      .set("topics", topics)
+      // TODO: ? .set("topics", topics)
       .set("status", status.toString())
       .set("registeredAt", registeredAt);
   }

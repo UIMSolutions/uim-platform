@@ -26,11 +26,11 @@ class ManageAppVersionsUseCase { // TODO: UIMUseCase {
         auto ver = AppVersion(r.tenantId); //, UserId("test-user"));
         ver.appId = r.appId;
         ver.versionCode = r.versionCode;
-        ver.versionName = r.versionName;
+        // TODO: ? ver.versionName = r.versionName;
         ver.releaseNotes = r.releaseNotes;
         ver.downloadUrl = r.downloadUrl;
-        ver.fileSize = r.fileSize;
-        ver.checksum = r.checksum;
+         // TODO: ? ver.fileSize = r.fileSize;
+         // TODO: ? ver.checksum = r.checksum;
         ver.minOsVersion = r.minOsVersion;
         ver.mandatory = r.mandatory;
         ver.status = VersionStatus.draft;
@@ -62,12 +62,16 @@ class ManageAppVersionsUseCase { // TODO: UIMUseCase {
         return repo.findById(tenantId, id);
     }
 
-    AppVersion getLatestAppVersion(TenantId tenantId, MobileAppId appId) {
-        return repo.findLatest(tenantId, appId);
+    // AppVersion getLatestAppVersion(TenantId tenantId, MobileAppId id) {
+    //     return repo.findLatest(tenantId, id);
+    // }
+
+    AppVersion[] listAppVersions(TenantId tenantId) {
+        return repo.findByTenant(tenantId);
     }
 
-    AppVersion[] listAppVersions(TenantId tenantId, MobileAppId appId) {
-        return repo.findByApp(tenantId, appId);
+    AppVersion[] listAppVersions(TenantId tenantId, MobileAppId id) {
+        return repo.findByApp(tenantId, id);
     }
 
     CommandResult deleteAppVersion(TenantId tenantId, AppVersionId id) {
@@ -79,7 +83,7 @@ class ManageAppVersionsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, ver.id.value, "");
     }
 
-    size_t countAppVersions(TenantId tenantId, MobileAppId appId) {
-        return repo.countByApp(tenantId, appId);
+    size_t countAppVersions(TenantId tenantId, MobileAppId id) {
+        return repo.countByApp(tenantId, id);
     }
 }

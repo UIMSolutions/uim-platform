@@ -815,7 +815,7 @@ unittest {
   ].toString == ["appLaunch", "screenView", "apiCall", "pushReceived", "syncCompleted", "crash", "custom"]);
 }
 
-enum Datatype : string {
+enum DataType : string {
   string_ = "string",
   integer = "integer",
   float_ = "float",
@@ -826,63 +826,63 @@ enum Datatype : string {
   binary = "binary",
   json = "json",
 } 
-Datatype toDatatype(string value) {
+DataType toDataType(string value) {
   switch(value.toLower) {
     case "string":
-      return Datatype.string_;
+      return DataType.string_;
     case "integer":
-      return Datatype.integer;
+      return DataType.integer;
     case "float":
-      return Datatype.float_;
+      return DataType.float_;
     case "boolean":
-      return Datatype.boolean_;
+      return DataType.boolean_;
     case "date":
-      return Datatype.date;
+      return DataType.date;
     case "datetime":
-      return Datatype.datetime;
+      return DataType.datetime;
     case "time":
-      return Datatype.time;
+      return DataType.time;
     case "binary":
-      return Datatype.binary;
+      return DataType.binary;
     case "json":
-      return Datatype.json;
+      return DataType.json;
     default:
-      return Datatype.string_;
+      return DataType.string_;
   }
 }
-Datatype[] toDatatype(string[] values) {
-  return values.map!(toDatatype).array;
+DataType[] toDataType(string[] values) {
+  return values.map!(toDataType).array;
 }
-string toString(Datatype value) {
+string toString(DataType value) {
   return cast(string)value; // This will return the enum member name as a string, e.g., "string", "integer", etc.
 }
-string[] toString(Datatype[] values) {
+string[] toString(DataType[] values) {
   return values.map!(toString).array;
 }
 /// 
 unittest { 
-  mixin(ShowTest!("Datatype"));
+  mixin(ShowTest!("DataType"));
 
-  assert(toDatatype("string") == Datatype.string_);
-  assert(toDatatype("integer") == Datatype.integer);
-  assert(toDatatype("float") == Datatype.float_);
-  assert(toDatatype("boolean") == Datatype.boolean_);
-  assert(toDatatype("date") == Datatype.date);
-  assert(toDatatype("datetime") == Datatype.datetime);
-  assert(toDatatype("time") == Datatype.time);
-  assert(toDatatype("binary") == Datatype.binary);
-  assert(toDatatype("json") == Datatype.json);
+  assert(toDataType("string") == DataType.string_);
+  assert(toDataType("integer") == DataType.integer);
+  assert(toDataType("float") == DataType.float_);
+  assert(toDataType("boolean") == DataType.boolean_);
+  assert(toDataType("date") == DataType.date);
+  assert(toDataType("datetime") == DataType.datetime);
+  assert(toDataType("time") == DataType.time);
+  assert(toDataType("binary") == DataType.binary);
+  assert(toDataType("json") == DataType.json);
 
-  assert(toDatatype("unknown") == Datatype.string_);
-  assert(toDatatype("") == Datatype.string_);
+  assert(toDataType("unknown") == DataType.string_);
+  assert(toDataType("") == DataType.string_);
 
-  assert(toString(Datatype.string_) == "string");
-  assert(toString(Datatype.integer) == "integer");
-  assert(toString(Datatype.float_) == "float");
-  assert(toString(Datatype.boolean_) == "boolean");
-  assert(toString(Datatype.date) == "date");
-  assert(toString(Datatype.datetime) == "datetime");
-  assert(toString(Datatype.time) == "time");
-  assert(toString(Datatype.binary) == "binary");
-  assert(toString(Datatype.json) == "json");
+  assert(toString(DataType.string_) == "string");
+  assert(toString(DataType.integer) == "integer");
+  assert(toString(DataType.float_) == "float");
+  assert(toString(DataType.boolean_) == "boolean");
+  assert(toString(DataType.date) == "date");
+  assert(toString(DataType.datetime) == "datetime");
+  assert(toString(DataType.time) == "time");
+  assert(toString(DataType.binary) == "binary");
+  assert(toString(DataType.json) == "json");
 }

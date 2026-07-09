@@ -33,20 +33,6 @@ struct PushDeliveryService {
     return payload.length <= maxSize;
   }
 
-  // Determine provider from platform
-  static PushProvider defaultProvider(AppPlatform platform) {
-    final switch (platform) {
-    case AppPlatform.ios:
-      return PushProvider.apns;
-    case AppPlatform.android:
-      return PushProvider.fcm;
-    case AppPlatform.windows:
-      return PushProvider.wns;
-    case AppPlatform.web:
-      return PushProvider.w3c;
-    }
-  }
-
   // Check if a push token looks valid (basic validation)
   static bool validatePushToken(string token, PushProvider provider) {
     if (token.length == 0)

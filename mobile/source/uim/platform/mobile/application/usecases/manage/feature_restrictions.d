@@ -65,7 +65,8 @@ class ManageFeatureRestrictionsUseCase { // TODO: UIMUseCase {
         auto restriction = repo.findById(tenantId, featureId);
         if (restriction.isNull)
             return false;
-        return FeatureEvaluationService.evaluate(restriction, userId, deviceId);
+            
+        return FeatureEvaluationService.isFeatureEnabled(restriction, userId, deviceId);
     }
 
     FeatureRestriction getFeatureRestriction(TenantId tenantId, FeatureRestrictionId id) {

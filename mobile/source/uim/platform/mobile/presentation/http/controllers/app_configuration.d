@@ -38,7 +38,7 @@ class AppConfigurationController : ManageHttpController {
     auto tenantId = precheck.tenantId;
 
     auto data = precheck.data;
-    CreateAppConfigurationRequest r;
+    CreateAppConfigRequest r;
     r.tenantId = tenantId;
     r.appId = data.getString("appId");
     r.key = data.getString("key");
@@ -47,7 +47,7 @@ class AppConfigurationController : ManageHttpController {
     r.isSecret = data.getBoolean("isSecret");
     r.platform = data.getString("platform");
     r.createdBy = UserId(data.getString("createdBy"));
-    auto result = usecase.create(r);
+    auto result = usecase.createAppConfiguration(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
     auto resp = Json.emptyObject.set("id", result.id);
@@ -61,96 +61,96 @@ class AppConfigurationController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto results = usecase.list(tenantId);
+    auto results = usecase.listAppConfigurations(tenantId);
     auto items = Json.emptyArray;
     foreach (item; results) {
       items ~= Json.emptyObject
         .set("id", item.id)
         .set("appId", item.appId)
         .set("key", item.key)
-        .set("platform", item.platform)
-        .set("status", item.status);
+        .set("platform", item.platform);
+        // TODO: ? .set("status", item.status);
     }
 
     auto resp = Json.emptyObject
       .set("items", items)
       .set("totalCount", results.length);
-  return successResponse("App configuration list retrieved successfully", "Retrieved", 200, resp);
-}
+    return successResponse("App configuration list retrieved successfully", "Retrieved", 200, resp);
+  }
 
-override protected Json getHandler(HTTPServerRequest req) {
-  auto precheck = super.getHandler(req);
-  if (precheck.hasError)
-    return precheck;
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-  auto tenantId = precheck.tenantId;
-  auto id = AppConfigurationId(precheck.id);
-  if (id.isNull)
-    return errorResponse("Invalid app configuration ID", 400);
+    auto tenantId = precheck.tenantId;
+    auto id = AppConfigurationId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid app configuration ID", 400);
 
-  auto result = usecase.get(tenantId, id);
-  if (result.hasError)
-    return errorResponse(result.message, 400);
+    auto config = usecase.getAppConfiguration(tenantId, id);
+    if (config.isNull)
+      return errorResponse("App configuration not found", 400);
 
-  auto resp = Json.emptyObject
-    .set("id", result.data.id)
-    .set("tenantId", result.data.tenantId)
-    .set("appId", result.data.appId)
-    .set("key", result.data.key)
-    .set("value", result.data.value)
-    .set("description", result.data.description)
-    .set("isSecret", result.data.isSecret)
-    .set("platform", result.data.platform)
-    .set("createdBy", result.data.createdBy);
+    auto resp = Json.emptyObject
+      .set("id", config.id)
+      .set("tenantId", config.tenantId)
+      .set("appId", config.appId)
+      .set("key", config.key)
+      .set("value", config.value)
+      .set("description", config.description)
+      .set("isSecret", config.isSecret)
+      .set("platform", config.platform)
+      .set("createdBy", config.createdBy);
 
-  return successResponse("App configuration retrieved successfully", "Retrieved", 200, resp);
-}
+    return successResponse("App configuration retrieved successfully", "Retrieved", 200, resp);
+  }
 
-override protected Json updateHandler(HTTPServerRequest req) {
-  auto precheck = super.updateHandler(req);
-  if (precheck.hasError)
-    return precheck;
+  override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-  auto tenantId = precheck.tenantId;
-  auto id = AppConfigurationId(precheck.id);
-  if (id.isNull)
-    return errorResponse("Invalid app configuration ID", 400);
+    auto tenantId = precheck.tenantId;
+    auto id = AppConfigurationId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid app configuration ID", 400);
 
-  auto data = precheck.data;
-  UpdateAppConfigurationRequest r;
-  r.configurationId = id;
-  r.value = data.getString("value");
-  r.description = data.getString("description");
-  r.isSecret = data.getBoolean("isSecret");
-  r.platform = data.getString("platform");
-  r.updatedBy = UserId(data.getString("updatedBy"));
-  auto result = usecase.update(r);
-  if (result.hasError)
-    return errorResponse(result.message, 400);
+    auto data = precheck.data;
+    UpdateAppConfigRequest r;
+    r.configId = id;
+    r.value = data.getString("value");
+    r.description = data.getString("description");
+    // TODO: ? r.isSecret = data.getBoolean("isSecret");
+    // TODO: ? r.platform = data.getString("platform");
+    r.updatedBy = UserId(data.getString("updatedBy"));
+    auto result = usecase.updateAppConfiguration(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-  auto resp = Json.emptyObject
-    .set("id", result.id);
+    auto resp = Json.emptyObject
+      .set("id", result.id);
 
     return successResponse("App configuration updated successfully", "Updated", 200, resp);
-}
+  }
 
-override protected Json deleteHandler(HTTPServerRequest req) {
-  auto precheck = super.deleteHandler(req);
-  if (precheck.hasError)
-    return precheck;
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-  auto tenantId = precheck.tenantId;
-  auto id = AppConfigurationId(precheck.id);
-  if (id.isNull)
-    return errorResponse("Invalid app configuration ID", 400);
+    auto tenantId = precheck.tenantId;
+    auto id = AppConfigurationId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid app configuration ID", 400);
 
-  auto result = usecase.deleteAppConfiguration(tenantId, id);
-  if (result.hasError)
-    return errorResponse(result.message, 400);
+    auto result = usecase.deleteAppConfiguration(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-  auto resp = Json.emptyObject
-    .set("id", result.id);
+    auto resp = Json.emptyObject
+      .set("id", result.id);
 
-  return successResponse("App configuration deleted successfully", "Deleted", 204, resp);
-}
+    return successResponse("App configuration deleted successfully", "Deleted", 204, resp);
+  }
 }

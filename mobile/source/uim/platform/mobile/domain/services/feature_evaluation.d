@@ -38,7 +38,7 @@ struct FeatureEvaluationService {
 
     // Simple hash-based bucketing
     size_t hash = 0;
-    foreach (c; userId) {
+    foreach (c; userId.value) {
       hash = hash * 31 + cast(size_t) c;
     }
     return (hash % 100) < cast(size_t) percentage;
@@ -47,7 +47,7 @@ struct FeatureEvaluationService {
   // Check if user or device is in whitelist
   private static bool isInWhitelist(string[] whitelist, UserId userId, string deviceId) {
     foreach (entry; whitelist) {
-      if (entry == userId || entry == deviceId)
+      if (entry == userId.value || entry == deviceId)
         return true;
     }
     return false;

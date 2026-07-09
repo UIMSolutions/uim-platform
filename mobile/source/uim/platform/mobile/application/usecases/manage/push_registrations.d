@@ -34,7 +34,7 @@ class ManagePushRegistrationsUseCase { // TODO: UIMUseCase {
         auto reg = PushRegistration(r.tenantId);
         reg.appId = r.appId;
         reg.deviceId = r.deviceId;
-        reg.provider = parseProvider(r.provider);
+        reg.provider = r.provider.toPushProvider;
         reg.pushToken = r.pushToken;
         reg.topics = r.topics;
         reg.status = PushRegStatus.active;

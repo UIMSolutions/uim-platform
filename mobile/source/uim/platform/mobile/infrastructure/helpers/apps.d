@@ -5,6 +5,6 @@ import uim.platform.mobile;
 
 @safe:
 
-T[] filterByApp(T)(T items, MobileAppId appId) {
-    return items.filter!(c => c.appId == appId).array;
-}
+// T[] filterByApp(T)(T items, MobileAppId appId) {
+//     return items.filter!(c => c.appId == appId).array;
+// }

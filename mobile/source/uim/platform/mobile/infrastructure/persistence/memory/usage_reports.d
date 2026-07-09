@@ -33,6 +33,9 @@ class MemoryUsageReportRepository : TenantRepository!(UsageReport, UsageReportId
   size_t countByApp(TenantId tenantId, MobileAppId appId) {
     return findByApp(tenantId, appId).length;
   } 
+  UsageReport[] filterByApp(UsageReport[] reports, MobileAppId appId) {
+    return reports.filter!(r => r.appId == appId).array;
+  }
   UsageReport[] findByApp(TenantId tenantId, MobileAppId appId) {
     return filterByApp(findByTenant(tenantId).array, appId);
   }

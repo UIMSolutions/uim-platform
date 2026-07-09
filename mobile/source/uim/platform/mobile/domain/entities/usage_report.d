@@ -30,11 +30,11 @@ struct UsageReport {
       .set("appId", appId.value)
       .set("deviceId", deviceId.value)
       .set("userId", userId)
-      .set("metricType", metricType)
+      // TODO: ? .set("metricType", metricType)
       .set("metricKey", metricKey)
       .set("metricValue", metricValue)
       .set("sessionId", sessionId)
-      .set("platform", platform)
+      // TODO: ? .set("platform", platform)
       .set("appVersion", appVersion)
       .set("timestamp", timestamp);
   }

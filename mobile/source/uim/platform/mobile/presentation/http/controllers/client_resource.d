@@ -23,6 +23,7 @@ class ClientResourceController : ManageHttpController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+    
     router.post("/api/v1/resources", &handleCreate);
     router.get("/api/v1/resources", &handleList);
     router.get("/api/v1/resources/*", &handleGet);
@@ -61,7 +62,7 @@ class ClientResourceController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto results = usecase.list(tenantId);
+    auto results = usecase.listClientResources(tenantId);
     auto items = Json.emptyArray;
     foreach (item; results) {
       items ~= Json.emptyObject
@@ -88,20 +89,20 @@ class ClientResourceController : ManageHttpController {
     if (id.isNull)
       return errorResponse("Invalid client resource ID", 400);
 
-    auto result = usecase.get(tenantId, id);
-    if (result.hasError)
-      return errorResponse(result.message, 400);
+    auto resource = usecase.getClientResource(tenantId, id);
+    if (resource.isNull)
+      return errorResponse("Client resource not found", 400);
 
     auto resp = Json.emptyObject
-      .set("id", result.data.id)
-      .set("tenantId", result.data.tenantId)
-      .set("appId", result.data.appId)
-      .set("name", result.data.name)
-      .set("description", result.data.description)
-      .set("type", result.data.type)
-      .set("contentType", result.data.contentType)
-      .set("data", result.data.data)
-      .set("createdBy", result.data.createdBy);
+      .set("id", resource.id)
+      .set("tenantId", resource.tenantId)
+      .set("appId", resource.appId)
+      .set("name", resource.name)
+      .set("description", resource.description)
+      .set("type", resource.type)
+      .set("contentType", resource.contentType)
+      .set("data", resource.data)
+      .set("createdBy", resource.createdBy);
 
     return successResponse("Client resource retrieved successfully", "Retrieved", 200, resp);
   }
@@ -120,13 +121,13 @@ class ClientResourceController : ManageHttpController {
     UpdateClientResourceRequest r;
     r.tenantId = tenantId;
     r.resourceId = id;
-    r.name = data.getString("name");
+    // TODO: ? r.name = data.getString("name");
     r.description = data.getString("description");
-    r.type = data.getString("type");
+    // TODO: ? r.type = data.getString("type");
     r.contentType = data.getString("contentType");
     r.data = data.getString("data");
     r.updatedBy = UserId(data.getString("updatedBy"));
-    auto result = usecase.update(r);
+    auto result = usecase.updateClientResource(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
     auto resp = Json.emptyObject.set("id", result.id);

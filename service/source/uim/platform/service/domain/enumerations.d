@@ -221,6 +221,36 @@ LoggingLevel toLoggingLevel(string value, bool ignoreCase = true) {
     default: return LoggingLevel.info; // default
   }
 }
+LoggingLevel[] toLoggingLevel(string[] values, bool ignoreCase = true) {
+  return values.map!(v => toLoggingLevel(v, ignoreCase)).array;
+}
+string toString(LoggingLevel level) {
+  return cast(string)level;
+}
+string[] toString(LoggingLevel[] levels) {  
+  return levels.map!(toString).array;
+}
+///
+unittest {
+  mixin(ShowTest!("LoggingLevel Enum"));
+
+  assert(LoggingLevel.info.toString == "info");
+  assert(LoggingLevel.debug_.toString == "debug");
+  assert(LoggingLevel.warning.toString == "warning");
+  assert(LoggingLevel.error.toString == "error");
+  assert(LoggingLevel.fatal.toString == "fatal");
+  assert(LoggingLevel.trace.toString == "trace");
+
+  assert("info".toLoggingLevel == LoggingLevel.info);
+  assert("debug".toLoggingLevel == LoggingLevel.debug_);
+  assert("warning".toLoggingLevel == LoggingLevel.warning);
+  assert("error".toLoggingLevel == LoggingLevel.error);
+  assert("fatal".toLoggingLevel == LoggingLevel.fatal);
+  assert("trace".toLoggingLevel == LoggingLevel.trace);
+
+  assert("noexists".toLoggingLevel == LoggingLevel.info); // Default case
+  assert("".toLoggingLevel == LoggingLevel.info); // Default case
+}
 
 /// HTTP method used during destination health checks or probing.
 enum HttpMethod {
@@ -243,4 +273,36 @@ HttpMethod toHttpMethod(string value, bool ignoreCase = true) {
     case "options": return HttpMethod.options_;
     default: return HttpMethod.get_; // default
   }
+}
+HttpMethod[] toHttpMethod(string[] values, bool ignoreCase = true) {
+  return values.map!(v => toHttpMethod(v, ignoreCase)).array;
+}
+string toString(HttpMethod method) {
+  return cast(string)method;
+}
+string[] toString(HttpMethod[] methods) {
+  return methods.map!(toString).array;
+}
+///
+unittest {
+  mixin(ShowTest!("HttpMethod Enum"));    
+
+  assert(HttpMethod.get_.toString == "GET");
+  assert(HttpMethod.post_.toString == "POST");  
+  assert(HttpMethod.put_.toString == "PUT");
+  assert(HttpMethod.delete_.toString == "DELETE");
+  assert(HttpMethod.patch_.toString == "PATCH");
+  assert(HttpMethod.head_.toString == "HEAD");
+  assert(HttpMethod.options_.toString == "OPTIONS");
+
+  assert("get".toHttpMethod == HttpMethod.get_);
+  assert("post".toHttpMethod == HttpMethod.post_);
+  assert("put".toHttpMethod == HttpMethod.put_);
+  assert("delete".toHttpMethod == HttpMethod.delete_);
+  assert("patch".toHttpMethod == HttpMethod.patch_);
+  assert("head".toHttpMethod == HttpMethod.head_);
+  assert("options".toHttpMethod == HttpMethod.options_);
+
+  assert(["get", "post", "put", "delete", "patch", "head", "options"].toHttpMethod == [HttpMethod.get_, HttpMethod.post_, HttpMethod.put_, HttpMethod.delete_, HttpMethod.patch_, HttpMethod.head_, HttpMethod.options_]);
+  assert(toString([HttpMethod.get_, HttpMethod.post_, HttpMethod.put_, HttpMethod.delete_, HttpMethod.patch_, HttpMethod.head_, HttpMethod.options_]) == ["GET", "POST", "PUT", "DELETE", "PATCH", "HEAD", "OPTIONS"]);
 }

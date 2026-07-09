@@ -63,15 +63,15 @@ class DeviceRegistrationController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto results = usecase.list(tenantId);
+    auto results = usecase.listDeviceRegistration(tenantId);
     auto items = Json.emptyArray;
     foreach (item; results) {
       items ~= Json.emptyObject
         .set("id", item.id)
         .set("appId", item.appId)
         .set("deviceModel", item.deviceModel)
-        .set("platform", item.platform)
-        .set("status", item.status);
+        .set("platform", item.platform);
+        // TODO: ? .set("status", item.status);
     }
     auto resp = Json.emptyObject
       .set("items", items)
@@ -90,21 +90,21 @@ class DeviceRegistrationController : ManageHttpController {
     if (id.isNull)
       errorResponse("Invalid Device Registraion ID", 400);
 
-    auto result = usecase.get(id);
+    auto result = usecase.getDeviceRegistration(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
 
     auto resp = Json.emptyObject
-      .set("id", result.data.id)
-      .set("tenantId", result.data.tenantId)
-      .set("appId", result.data.appId)
-      .set("deviceModel", result.data.deviceModel)
-      .set("osVersion", result.data.osVersion)
-      .set("appVersion", result.data.appVersion)
-      .set("platform", result.data.platform)
-      .set("userId", result.data.userId)
-      .set("deviceToken", result.data.deviceToken)
-      .set("status", result.data.status);
+      .set("id", result.id)
+      .set("tenantId", result.tenantId)
+      .set("appId", result.appId)
+      .set("deviceModel", result.deviceModel)
+      .set("osVersion", result.osVersion)
+      .set("appVersion", result.appVersion)
+      .set("platform", result.platform)
+      .set("userId", result.userId)
+      .set("deviceToken", result.deviceToken)
+      .set("status", result.status);
 
     return successResponse("Device registration retrieved successfully", "Retrieved", 200, resp);
   }
@@ -121,7 +121,7 @@ class DeviceRegistrationController : ManageHttpController {
 
     auto data = precheck.data;
     auto status = data.getString("status");
-    auto result = usecase.updateStatus(id, status);
+    auto result = usecase.updateStatus(tenantId, id, status);
     if (result.hasError)
       return errorResponse(result.message, 400);
 
@@ -142,7 +142,7 @@ class DeviceRegistrationController : ManageHttpController {
     if (id.isNull)
       errorResponse("Invalid Device Registraion ID", 400);
       
-    auto result = usecase.deleteDeviceRegistration(DeviceRegistrationId(id));
+    auto result = usecase.deleteDeviceRegistration(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
 

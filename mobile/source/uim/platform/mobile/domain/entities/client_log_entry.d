@@ -32,7 +32,7 @@ struct ClientLogEntry {
       .set("appId", appId.value)
       .set("deviceId", deviceId.value)
       .set("userId", userId)
-      .set("level", level.toString())
+      // TODO: ? .set("level", level.toString())
       .set("source", source.toString())
       .set("message", message)
       .set("stackTrace", stackTrace)

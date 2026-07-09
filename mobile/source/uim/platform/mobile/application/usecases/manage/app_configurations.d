@@ -32,7 +32,7 @@ class ManageAppConfigurationsUseCase { // TODO: UIMUseCase {
         config.key = r.key;
         config.value = r.value;
         config.description = r.description;
-        config.dataType = r.dataType;
+        // TODO. ? config.dataType = r.dataType;
         config.isSecret = r.isSecret;
 
         repo.save(config);
@@ -40,7 +40,7 @@ class ManageAppConfigurationsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateAppConfiguration(UpdateAppConfigRequest r) {
-        auto config = repo.findById(r.tenantId, r.id);
+        auto config = repo.findById(r.tenantId, r.configId);
         if (config.isNull)
             return CommandResult(false, "", "Configuration not found");
 
@@ -62,7 +62,11 @@ class ManageAppConfigurationsUseCase { // TODO: UIMUseCase {
         return repo.findByKey(tenantId, appId, key);
     }
 
-    AppConfiguration[] listAppConfigurationsByApp(TenantId tenantId, MobileAppId appId) {
+    AppConfiguration[] listAppConfigurations(TenantId tenantId) {
+        return repo.findByTenant(tenantId);
+    }
+
+    AppConfiguration[] listAppConfigurations(TenantId tenantId, MobileAppId appId) {
         return repo.findByApp(tenantId, appId);
     }
 

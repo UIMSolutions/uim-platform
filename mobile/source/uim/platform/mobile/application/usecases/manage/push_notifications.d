@@ -23,7 +23,7 @@ class ManagePushNotificationsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult send(SendPushNotificationRequest r) {
-        auto provider = parseProvider(r.provider);
+        auto provider = r.provider.toPushProvider;
         if (!PushDeliveryService.validatePayloadSize(r.payload, provider))
             return CommandResult(false, "", "Payload exceeds maximum size for provider");
         
@@ -34,7 +34,7 @@ class ManagePushNotificationsUseCase { // TODO: UIMUseCase {
         notif.payload = r.payload;
         notif.provider = provider;
         notif.status = NotificationStatus.pending;
-        notif.priority = parsePriority(r.priority);
+        notif.priority = r.priority.toNotificationPriority;
         notif.targetDevices = r.targetDevices;
         notif.targetTopics = r.targetTopics;
         notif.scheduledAt = r.scheduledAt;
@@ -53,7 +53,7 @@ class ManagePushNotificationsUseCase { // TODO: UIMUseCase {
     }
 
     PushNotification[] listNotifications(TenantId tenantId, MobileAppId appId, string status) {
-        return repo.findByStatus(tenantId, appId, parseNotifStatus(status));
+        return repo.findByStatus(tenantId, appId, status.toNotificationStatus);
     }
 
     CommandResult deleteNotification(TenantId tenantId, PushNotificationId id) {

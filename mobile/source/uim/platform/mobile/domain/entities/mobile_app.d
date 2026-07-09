@@ -30,7 +30,7 @@ struct MobileApp {
       .set("name", name)
       .set("description", description)
       .set("bundleId", bundleId)
-      .set("platform", platform)
+      // TODO: ? .set("platform", platform)
       .set("status", status)
       .set("securityConfig", securityConfig)
       .set("authProvider", authProvider)
