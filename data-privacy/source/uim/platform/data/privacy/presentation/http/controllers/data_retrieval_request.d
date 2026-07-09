@@ -41,7 +41,7 @@ class DataRetrievalController : ManageHttpController {
     auto data = precheck.data;
     CreateDataRetrievalRequest r;
     r.tenantId = tenantId;
-    r.dataSubjectId = DataSubjectId(data.getString("dataSubjectId"));
+    r.subjectId = DataSubjectId(data.getString("dataSubjectId"));
     r.requestedBy = data.getString("requestedBy");
     r.targetSystems = data.getStrings("targetSystems");
     r.reason = data.getString("reason");
@@ -99,8 +99,8 @@ class DataRetrievalController : ManageHttpController {
     auto tenantId = precheck.tenantId;
     auto data = precheck.data;
     UpdateRetrievalStatusRequest r;
-    r.id = DataRetrievalRequestId(precheck.id);
     r.tenantId = tenantId;
+    r.requestId = DataRetrievalRequestId(precheck.id);
     r.status = data.getString("status");
     r.downloadUrl = data.getString("downloadUrl");
     r.totalFields = data.getLong("totalFields");

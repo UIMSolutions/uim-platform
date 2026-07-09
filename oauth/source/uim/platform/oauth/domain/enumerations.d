@@ -38,8 +38,8 @@ unittest {
     assert("confidential".toClientType == ClientType.confidential);
     assert("public".toClientType == ClientType.public_);
 
-    assert("".toClientType == ClientType.public_);
-    assert("some".toClientType == ClientType.public_);
+    assert("".toClientType == ClientType.confidential); // default
+    assert("some".toClientType == ClientType.confidential); // default
 
     assert(ClientType.confidential.toString == "confidential");
     assert(ClientType.public_.toString == "public_");
@@ -54,6 +54,19 @@ enum ClientStatus {
     inactive,
     blocked
 }
+ClientStatus toClientStatus(string value) {
+    mixin(EnumSwitch("ClientStatus", "active"));
+}
+ClientStatus[] toClientStatus(string[] values) {
+    return values.map!(toClientStatus).array;
+}
+string toString(ClientStatus value) {
+    return value.to!string();
+}
+string[] toString(ClientStatus[] values) {
+    return values.map!(toString).array;
+}
+
 /// OAuth grant types
 enum GrantType {
     authorizationCode,

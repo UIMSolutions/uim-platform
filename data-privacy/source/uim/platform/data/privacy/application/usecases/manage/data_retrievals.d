@@ -30,10 +30,10 @@ class ManageDataRetrievalsUseCase { // TODO: UIMUseCase {
   CommandResult createRequest(CreateDataRetrievalRequest req) {
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
-    if (req.dataSubjectId.isEmpty)
+    if (req.subjectId.isEmpty)
       return CommandResult(false, "", "Data subject ID is required");
 
-    auto subject = dataSubjects.findById(req.tenantId, req.dataSubjectId);
+    auto subject = dataSubjects.findById(req.tenantId, req.subjectId);
     if (subject.isNull)
       return CommandResult(false, "", "Data subject not found");
 
@@ -42,7 +42,7 @@ class ManageDataRetrievalsUseCase { // TODO: UIMUseCase {
     long deadline = now + (30L * 24 * 60 * 60 * 10_000_000L);
 
     auto request = DataRetrievalRequest(req.tenantId, req.requestId.isNull ? DataRetrievalRequestId(createId()) : req.requestId, req.requestedBy);
-    request.dataSubjectId = req.dataSubjectId;
+    request.dataSubjectId = req.subjectId;
     request.requestType = RequestType.access;
     request.status = RetrievalStatus.requested;
     request.targetSystems = req.targetSystems;
@@ -89,7 +89,7 @@ class ManageDataRetrievalsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateStatus(UpdateRetrievalStatusRequest req) {
-    auto request = repo.findById(req.tenantId, req.id);
+    auto request = repo.findById(req.tenantId, req.requestId);
     if (request.isNull)
       return CommandResult(false, "", "Data retrieval request not found");
 

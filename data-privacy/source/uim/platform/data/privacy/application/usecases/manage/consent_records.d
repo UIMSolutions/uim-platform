@@ -44,7 +44,7 @@ class ManageConsentRecordsUseCase { // TODO: UIMUseCase {
     record.consentText = req.consentText;
     record.version_ = req.version_;
     record.ipAddress = req.ipAddress;
-    record.grantedAt = record.createdAt();
+    record.grantedAt = record.createdAt;
     record.expiresAt = req.expiresAt;
 
     repo.save(record);

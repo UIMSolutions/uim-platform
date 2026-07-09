@@ -23,6 +23,39 @@ enum PlanningStatus {
 PlanningStatus toPlanningStatus(string status) {
   mixin(EnumSwitch("PlanningStatus", "draft"));
 }
+PlanningStatus[] toPlanningStatuses(string[] statuses) {
+  return statuses.map!(toPlanningStatus).array;
+}
+string toString(PlanningStatus status) {
+  return status.to!string;
+}
+string[] toString(PlanningStatus[] statuses) {
+  return statuses.map!(toString).array;
+}
+///
+unittest {
+  mixin(ShowTest!("PlanningStatus"));
+
+  assert(PlanningStatus.draft.toString == "draft");
+  assert(PlanningStatus.inProgress.toString == "inProgress");
+  assert(PlanningStatus.locked.toString == "locked");
+  assert(PlanningStatus.approved.toString == "approved");
+  assert(PlanningStatus.published.toString == "published"); 
+
+  assert("".toPlanningStatus == PlanningStatus.draft); // Default case
+  assert("noexists".toPlanningStatus == PlanningStatus.draft); // Default case
+
+  assert("draft".toPlanningStatus == PlanningStatus.draft);
+  assert("inProgress".toPlanningStatus == PlanningStatus.inProgress);
+  assert("locked".toPlanningStatus == PlanningStatus.locked);
+  assert("approved".toPlanningStatus == PlanningStatus.approved);
+  assert("published".toPlanningStatus == PlanningStatus.published); 
+
+  assert(["draft", "inProgress", "locked", "approved", "published"].toPlanningStatuses ==
+         [PlanningStatus.draft, PlanningStatus.inProgress, PlanningStatus.locked, PlanningStatus.approved, PlanningStatus.published]);
+  assert(toString([PlanningStatus.draft, PlanningStatus.inProgress, PlanningStatus.locked, PlanningStatus.approved, PlanningStatus.published]) ==
+         ["draft", "inProgress", "locked", "approved", "published"]);
+}
 
 enum PlanningVersionType {
   // Used for versions that represent actual historical data or results, which can be used for analysis and comparison against plans and forecasts

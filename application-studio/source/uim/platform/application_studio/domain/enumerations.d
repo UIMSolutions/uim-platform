@@ -36,20 +36,52 @@ enum DevSpaceStatus {
     deleted
 }
 DevSpaceStatus toDevSpaceStatus(string s) {
-    const map = [
-        "starting": DevSpaceStatus.starting,
-        "running": DevSpaceStatus.running,
-        "stopped": DevSpaceStatus.stopped,
-        "stopping": DevSpaceStatus.stopping,
-        "error": DevSpaceStatus.error,
-        "archived": DevSpaceStatus.archived,
-        "hibernated": DevSpaceStatus.hibernated,
-        "hibernating": DevSpaceStatus.hibernating,
-        "resuming": DevSpaceStatus.resuming,
-        "deleting": DevSpaceStatus.deleting,
-        "deleted": DevSpaceStatus.deleted
-    ];
-    return map.get(s.toLower, DevSpaceStatus.error);
+    mixin(EnumSwitch("DevSpaceStatus", "starting"));
+}
+DevSpaceStatus[] toDevSpaceStatuses(string[] statuses) {
+    return statuses.map!(toDevSpaceStatus).array;
+}
+string toString(DevSpaceStatus status) {
+    return status.to!string;
+}
+string[] toString(DevSpaceStatus[] statuses) {
+    return statuses.map!(toString).array;
+}
+///
+unittest {
+    mixin(ShowTest!("DevSpaceStatus"));
+
+    assert(DevSpaceStatus.starting.toString == "starting");
+    assert(DevSpaceStatus.running.toString == "running");
+    assert(DevSpaceStatus.stopped.toString == "stopped");
+    assert(DevSpaceStatus.stopping.toString == "stopping");
+    assert(DevSpaceStatus.error.toString == "error");
+    assert(DevSpaceStatus.archived.toString == "archived");
+    assert(DevSpaceStatus.hibernated.toString == "hibernated");
+    assert(DevSpaceStatus.hibernating.toString == "hibernating");
+    assert(DevSpaceStatus.resuming.toString == "resuming");
+    assert(DevSpaceStatus.deleting.toString == "deleting");
+    assert(DevSpaceStatus.deleted.toString == "deleted");
+
+    assert("".toDevSpaceStatus == DevSpaceStatus.starting); // Default case
+    assert("noexists".toDevSpaceStatus == DevSpaceStatus.starting); // Default case
+
+    assert("starting".toDevSpaceStatus == DevSpaceStatus.starting);
+    assert("running".toDevSpaceStatus == DevSpaceStatus.running);
+    assert("stopped".toDevSpaceStatus == DevSpaceStatus.stopped);
+    assert("stopping".toDevSpaceStatus == DevSpaceStatus.stopping);
+    assert("error".toDevSpaceStatus == DevSpaceStatus.error);
+    assert("archived".toDevSpaceStatus == DevSpaceStatus.archived);
+    assert("hibernated".toDevSpaceStatus == DevSpaceStatus.hibernated);
+    assert("hibernating".toDevSpaceStatus == DevSpaceStatus.hibernating);
+    assert("resuming".toDevSpaceStatus == DevSpaceStatus.resuming);
+    assert("deleting".toDevSpaceStatus == DevSpaceStatus.deleting);
+    assert("deleted".toDevSpaceStatus == DevSpaceStatus.deleted);
+
+    assert(["starting", "running", "stopped", "stopping", "error", "archived", "hibernated", "hibernating", "resuming", "deleting", "deleted"].toDevSpaceStatuses ==
+           [DevSpaceStatus.starting, DevSpaceStatus.running, DevSpaceStatus.stopped, DevSpaceStatus.stopping, DevSpaceStatus.error, DevSpaceStatus.archived, DevSpaceStatus.hibernated, DevSpaceStatus.hibernating, DevSpaceStatus.resuming, DevSpaceStatus.deleting, DevSpaceStatus.deleted]);
+    assert(toString([DevSpaceStatus.starting, DevSpaceStatus.running, DevSpaceStatus.stopped, DevSpaceStatus.stopping, DevSpaceStatus.error, DevSpaceStatus.archived, DevSpaceStatus.hibernated, DevSpaceStatus.hibernating, DevSpaceStatus.resuming, DevSpaceStatus.deleting, DevSpaceStatus.deleted]) ==
+           ["starting", "running", "stopped", "stopping", "error", "archived", "hibernated", "hibernating", "resuming", "deleting", "deleted"]);    
 }
 
 enum DevSpacePlan {

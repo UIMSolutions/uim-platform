@@ -163,7 +163,9 @@ struct RevokeConsentRequest {
 
 struct CreateDataRetrievalRequest {
   TenantId tenantId;
-  DataSubjectId dataSubjectId;
+  DataRetrievalRequestId requestId;
+
+  DataSubjectId subjectId;
   UserId requestedBy;
   string[] targetSystems;
   string[] categories;
@@ -171,7 +173,7 @@ struct CreateDataRetrievalRequest {
 }
 
 struct UpdateRetrievalStatusRequest {
-  DataRetrievalRequestId id;
+  DataRetrievalRequestId requestId;
   TenantId tenantId;
   string status;
   string downloadUrl;
@@ -183,6 +185,8 @@ struct UpdateRetrievalStatusRequest {
 
 struct CreateDataControllerRequest {
   TenantId tenantId;
+  DataControllerId controllerId;
+
   string name;
   string description;
   string legalEntityName;
@@ -212,6 +216,8 @@ struct UpdateDataControllerRequest {
 
 struct CreateDataControllerGroupRequest {
   TenantId tenantId;
+  DataControllerGroupId groupId;
+
   string name;
   string description;
   DataControllerId[] controllerIds;
@@ -229,6 +235,8 @@ struct UpdateDataControllerGroupRequest {
 
 struct CreateBusinessContextRequest {
   TenantId tenantId;
+  BusinessContextId contextId;
+  
   string name;
   string description;
   DataControllerGroupId controllerGroupId;
@@ -257,6 +265,8 @@ struct ActivateBusinessContextRequest {
 
 struct CreateBusinessProcessRequest {
   TenantId tenantId;
+  BusinessProcessId processId;
+
   string name;
   string description;
   DataControllerId controllerId;
@@ -279,6 +289,7 @@ struct UpdateBusinessProcessRequest {
 
 struct CreateBusinessSubprocessRequest {
   TenantId tenantId;
+  BusinessSubprocessId subprocessId;
   BusinessProcessId parentProcessId;
   
   string name;
@@ -302,6 +313,8 @@ struct UpdateBusinessSubprocessRequest {
 
 struct CreateCorrectionRequest {
   TenantId tenantId;
+  CorrectionRequestId requestId;
+
   DataSubjectId subjectId;
   UserId requestedBy;
   string[] targetSystems;
@@ -312,14 +325,16 @@ struct CreateCorrectionRequest {
 }
 
 struct UpdateCorrectionStatusRequest {
-  CorrectionRequestId requestId;
   TenantId tenantId;
+  CorrectionRequestId requestId;
   string status;
 }
 // ──────────────── Archive Request DTOs ────────────────
 
 struct CreateArchiveRequest {
   TenantId tenantId;
+  ArchiveRequestId requestId;
+
   DataSubjectId subjectId;
   UserId requestedBy;
   string[] targetSystems;
@@ -339,11 +354,13 @@ struct UpdateArchiveStatusRequest {
 
 struct CreateDestructionRequest {
   TenantId tenantId;
+  DestructionRequestId requestId;
+
   DataSubjectId dataSubjectId;
   UserId requestedBy;
   string[] targetSystems;
-  string archiveRequestId;
-  string blockingRequestId;
+  ArchiveRequestId archiveRequestId;
+  BlockingRequestId blockingRequestId;
   string reason;
   long scheduledAt;
 }
@@ -357,6 +374,8 @@ struct UpdateDestructionStatusRequest {
 
 struct CreatePurposeRecordRequest {
   TenantId tenantId;
+  PurposeRecordId recordId;
+
   DataSubjectId subjectId;
   BusinessContextId contextId;
   string purpose;

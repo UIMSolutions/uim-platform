@@ -1,3 +1,8 @@
+/****************************************************************************************************************
+* Copyright: (c) 2018-2026 Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
+* Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module uim.platform.field_service.domain.enumerations;
 import uim.platform.field_service;
 
@@ -76,9 +81,13 @@ unittest {
 }
 
 enum ServiceCallPriority {
+    /// The service call has a low priority and can be addressed in due course.
     low,
+    /// The service call has a medium priority and should be addressed in a timely manner.
     medium,
+    /// The service call has a high priority and requires immediate attention.
     high,
+    /// The service call has a critical priority and requires urgent attention.
     critical
 }
 ServiceCallPriority toServiceCallPriority(string value) {
