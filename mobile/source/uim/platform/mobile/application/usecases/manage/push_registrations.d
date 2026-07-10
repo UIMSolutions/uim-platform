@@ -49,11 +49,15 @@ class ManagePushRegistrationsUseCase { // TODO: UIMUseCase {
         return repo.findById(tenantId, id);
     }
 
-    PushRegistration[] listPushRegistrationsByApp(TenantId tenantId, MobileAppId appId) {
+    PushRegistration[] listPushRegistrations(TenantId tenantId) {
+        return repo.findByTenant(tenantId);
+    }
+
+    PushRegistration[] listPushRegistrations(TenantId tenantId, MobileAppId appId) {
         return repo.findByApp(tenantId, appId);
     }
 
-    PushRegistration[] listPushRegistrationsByTopic(TenantId tenantId, MobileAppId appId, string topic) {
+    PushRegistration[] listPushRegistrations(TenantId tenantId, MobileAppId appId, string topic) {
         return repo.findByTopic(tenantId, appId, topic);
     }
 

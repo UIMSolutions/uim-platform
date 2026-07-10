@@ -70,7 +70,7 @@ class AppVersionController : ManageHttpController {
         .set("id", item.id)
         .set("appId", item.appId)
         .set("versionCode", item.versionCode)
-        .set("platform", item.platform)
+        // .set("platform", item.platform)
         .set("status", item.status);
     }
 

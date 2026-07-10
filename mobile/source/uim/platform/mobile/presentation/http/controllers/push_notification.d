@@ -66,7 +66,7 @@ class PushNotificationController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto results = usecase.list(tenantId);
+    auto results = usecase.listNotifications(tenantId);
     auto items = Json.emptyArray;
     foreach (item; results) {
       items ~= Json.emptyObject
@@ -90,24 +90,25 @@ class PushNotificationController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto id = precheck.id;
-    auto result = usecase.get(id);
-    if (result.hasError)
-      return errorResponse(result.message, 400);
+    auto notification = usecase.getNotification(tenantId, id);
+    if (notification.isNull)
+      return errorResponse("Push notification not found", 400);
+      
     auto resp = Json.emptyObject
-      .set("id", Json(result.data.id))
-      .set("tenantId", Json(result.data.tenantId))
-      .set("appId", Json(result.data.appId))
-      .set("title", Json(result.data.title))
-      .set("body", Json(result.data.body_))
-      .set("payload", Json(result.data.payload))
-      .set("provider", Json(result.data.provider))
-      .set("priority", Json(result.data.priority))
-      .set("targetDevices", toJsonArray(result.data.targetDevices))
-      .set("targetTopics", toJsonArray(result.data.targetTopics))
-      .set("scheduledAt", Json(result.data.scheduledAt))
-      .set("expiresAt", Json(result.data.expiresAt))
-      .set("status", Json(result.data.status))
-      .set("createdBy", Json(result.data.createdBy))
+      .set("id", notification.id)
+      .set("tenantId", notification.tenantId)
+      .set("appId", notification.appId)
+      .set("title", notification.title)
+      .set("body", notification.body_)
+      .set("payload", notification.payload)
+      .set("provider", notification.provider)
+      .set("priority", notification.priority)
+      .set("targetDevices", toJsonArray(notification.targetDevices))
+      .set("targetTopics", toJsonArray(notification.targetTopics))
+      .set("scheduledAt", notification.scheduledAt)
+      .set("expiresAt", notification.expiresAt)
+      .set("status", notification.status)
+      .set("createdBy", notification.createdBy)
       .set("message", "Push notification retrieved successfully");
 
     return successResponse("Push notification retrieved successfully", "Retrieved", 200, resp);
@@ -120,7 +121,7 @@ class PushNotificationController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto id = PushNotificationId(precheck.id);
-    auto result = usecase.deletePushNotification(id);
+    auto result = usecase.deleteNotification(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
     return successResponse("Push notification deleted successfully", "Deleted", 204, Json

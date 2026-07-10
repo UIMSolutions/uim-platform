@@ -37,14 +37,14 @@ class PushRegistrationController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto data = precheck.data;
-    RegisterPushRequest r;
+    CreatePushRegistrationRequest r;
     r.tenantId = tenantId;
     r.appId = data.getString("appId");
     r.deviceId = data.getString("deviceId");
     r.provider = data.getString("provider");
     r.pushToken = data.getString("pushToken");
     r.topics = data.getStrings("topics");
-    auto result = usecase.register(r);
+    auto result = usecase.registerPushRegistration(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
     auto resp = Json.emptyObject.set("id", result.id);
@@ -60,7 +60,7 @@ class PushRegistrationController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto results = usecase.list(tenantId);
+    auto results = usecase.listPushRegistrations(tenantId);
     auto items = Json.emptyArray;
     foreach (item; results) {
       items ~= Json.emptyObject
@@ -87,19 +87,19 @@ class PushRegistrationController : ManageHttpController {
     if (id.isNull)
       return errorResponse("Invalid push registration ID", 400);
 
-    auto result = usecase.get(tenantId, id);
-    if (result.hasError)
-      return errorResponse(result.message, 400);
+    auto registration = usecase.getPushRegistration(tenantId, id);
+    if (registration.isNull)
+      return errorResponse("Push registration not found", 400);
 
     auto resp = Json.emptyObject
-      .set("id", Json(result.data.id))
-      .set("tenantId", Json(result.data.tenantId))
-      .set("appId", Json(result.data.appId))
-      .set("deviceId", Json(result.data.deviceId))
-      .set("provider", Json(result.data.provider))
-      .set("pushToken", Json(result.data.pushToken))
-      .set("topics", toJsonArray(result.data.topics))
-      .set("status", Json(result.data.status));
+      .set("id", registration.id)
+      .set("tenantId", registration.tenantId)
+      .set("appId", registration.appId)
+      .set("deviceId", registration.deviceId)
+      .set("provider", registration.provider)
+      .set("pushToken", registration.pushToken)
+      .set("topics", toJsonArray(registration.topics))
+      .set("status", registration.status);
 
     return successResponse("Push registration retrieved successfully", "Retrieved", 200, resp);
   }
@@ -111,7 +111,7 @@ class PushRegistrationController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto id = PushRegistrationId(precheck.id);
-    auto result = usecase.deletePushRegistration(tenantId,id);
+    auto result = usecase.deletePushRegistration(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
 

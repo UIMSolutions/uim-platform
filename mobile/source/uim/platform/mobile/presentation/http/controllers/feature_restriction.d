@@ -23,6 +23,7 @@ class FeatureRestrictionController : ManageHttpController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+
     router.post("/api/v1/features", &handleCreate);
     router.get("/api/v1/features", &handleList);
     router.get("/api/v1/features/*", &handleGet);
@@ -64,7 +65,7 @@ class FeatureRestrictionController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto results = usecase.list(tenantId);
+    auto results = usecase.listFeatureRestrictions(tenantId);
     auto items = Json.emptyArray;
     foreach (item; results) {
       items ~= Json.emptyObject
@@ -90,22 +91,22 @@ class FeatureRestrictionController : ManageHttpController {
     auto tenantId = precheck.tenantId;
     auto id = FeatureRestrictionId(precheck.id);
 
-    auto result = usecase.get(tenantId, id);
-    if (result.hasError)
-      return errorResponse(result.message, 400);
+    auto restriction = usecase.getFeatureRestriction(tenantId, id);
+    if (restriction.isNull)
+      return errorResponse("Feature restriction not found", 400);
 
     auto resp = Json.emptyObject
-      .set("id", Json(result.data.id))
-      .set("tenantId", Json(result.data.tenantId))
-      .set("appId", Json(result.data.appId))
-      .set("featureKey", Json(result.data.featureKey))
-      .set("description", Json(result.data.description))
-      .set("type", Json(result.data.type))
-      .set("enabled", Json(result.data.enabled))
-      .set("percentage", Json(result.data.percentage))
-      .set("whitelist", toJsonArray(result.data.whitelist))
-      .set("metadata", Json(result.data.metadata))
-      .set("createdBy", Json(result.data.createdBy));
+      .set("id", restriction.id)
+      .set("tenantId", restriction.tenantId)
+      .set("appId", restriction.appId)
+      .set("featureKey", restriction.featureKey)
+      .set("description", restriction.description)
+      .set("type", restriction.type)
+      .set("enabled", restriction.enabled)
+      .set("percentage", restriction.percentage)
+      .set("whitelist", restriction.whitelist.map!(a => a.toJson()).array.toJson)
+      .set("metadata", restriction.metadata)
+      .set("createdBy", restriction.createdBy);
 
     return successResponse("Feature restriction retrieved successfully", "Retrieved", 200, resp);
   }
@@ -119,15 +120,15 @@ class FeatureRestrictionController : ManageHttpController {
     auto id = precheck.id;
     auto data = precheck.data;
     UpdateFeatureRestrictionRequest r;
-    r.id = id;
+    r.restrictionId = id;
     r.description = data.getString("description");
-    r.type = data.getString("type");
+    // TODO: ? r.type = data.getString("type");
     r.enabled = data.getBoolean("enabled");
     r.percentage = data.getInteger("percentage");
     r.whitelist = data.getStrings("whitelist");
     r.metadata = data.getString("metadata");
     r.updatedBy = UserId(data.getString("updatedBy"));
-    auto result = usecase.update(r);
+    auto result = usecase.updateFeatureRestriction(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
 
@@ -148,24 +149,34 @@ class FeatureRestrictionController : ManageHttpController {
     auto result = usecase.deleteFeatureRestriction(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
-    
-    return successResponse("Feature restriction deleted successfully", "Deleted", 200);
-}
 
-protected void handleEvaluate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-  try {
+    return successResponse("Feature restriction deleted successfully", "Deleted", 200, Json.emptyObject.set("id", result
+        .id));
+  }
+
+  protected Json evaluateHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
     auto tenantId = precheck.tenantId;
     auto data = precheck.data;
     auto featureId = data.getString("featureId");
     auto userId = data.getString("userId");
     auto deviceId = data.getString("deviceId");
-    auto result = usecase.evaluate(featureId, userId, deviceId);
+    auto result = usecase.evaluateRestriction(tenantId, featureId, userId, deviceId);
     auto resp = Json.emptyObject
       .set("enabled", result.enabled);
 
-    res.writeJsonBody(resp, 200);
-  } catch (Exception e) {
-    writeError(res, 500, "Internal server error");
+    return successResponse("Feature evaluation completed successfully", "Evaluated", 200, resp);
   }
-}
+
+  protected void handleEvaluate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto response = evaluateHandler(req);
+      res.writeJsonBody(response, response.code);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
+    }
+  }
 }

@@ -48,6 +48,10 @@ class ManagePushNotificationsUseCase { // TODO: UIMUseCase {
         return repo.findById(tenantId, id);
     }
 
+    PushNotification[] listNotifications(TenantId tenantId) {
+        return repo.findByTenant(tenantId);
+    }
+
     PushNotification[] listNotifications(TenantId tenantId, MobileAppId appId) {
         return repo.findByApp(tenantId, appId);
     }

@@ -64,7 +64,7 @@ class ManageMobileAppsUseCase { // TODO: UIMUseCase {
         return repo.findById(tenantId, id);
     }
 
-    MobileApp[] listMobileAppsByTenant(TenantId tenantId) {
+    MobileApp[] listMobileApps(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 

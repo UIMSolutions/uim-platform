@@ -45,9 +45,9 @@ class OfflineStoreController : ManageHttpController {
     r.name = data.getString("name");
     r.description = data.getString("description");
     r.storeType = data.getString("storeType");
-    r.syncPolicy = data.getString("syncPolicy");
+    // TODO: r.syncPolicy = data.getString("syncPolicy");
     r.createdBy = UserId(data.getString("createdBy"));
-    auto result = usecase.create(r);
+    auto result = usecase.createOfflineStore(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
     auto resp = Json.emptyObject.set("id", result.id);
@@ -61,15 +61,15 @@ class OfflineStoreController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto results = usecase.list(tenantId);
+    auto results = usecase.listOfflineStores(tenantId);
     auto items = Json.emptyArray;
     foreach (item; results) {
       items ~= Json.emptyObject
         .set("id", item.id)
         .set("appId", item.appId)
-        .set("name", item.name)
-        .set("storeType", item.storeType)
-        .set("status", item.status);
+        .set("name", item.name);
+        // TODO: .set("storeType", item.storeType);
+        // TODO .set("status", item.status);
     }
 
     auto resp = Json.emptyObject
@@ -89,20 +89,20 @@ class OfflineStoreController : ManageHttpController {
     if (id.isNull)
       return errorResponse("Invalid offline store ID", 400);
 
-    auto result = usecase.get(tenantId, id);
-    if (result.hasError)
-      return errorResponse(result.message, 400);
+    auto store = usecase.getOfflineStore(tenantId, id);
+    if (store.isNull)
+      return errorResponse("Offline store not found", 400);
 
     auto resp = Json.emptyObject
-      .set("id", Json(result.data.id))
-      .set("tenantId", Json(result.data.tenantId))
-      .set("appId", Json(result.data.appId))
-      .set("name", Json(result.data.name))
-      .set("description", Json(result.data.description))
-      .set("storeType", Json(result.data.storeType))
-      .set("syncPolicy", Json(result.data.syncPolicy))
-      .set("status", Json(result.data.status))
-      .set("createdBy", Json(result.data.createdBy));
+      .set("id", store.id)
+      .set("tenantId", store.tenantId)
+      .set("appId", store.appId)
+      .set("name", store.name)
+      .set("description", store.description)
+      .set("storeType", store.storeType)
+      // TODO: ?.set("syncPolicy", store.syncPolicy)
+      // TODO: ?.set("status", store.status)
+      .set("createdBy", store.createdBy);
 
     return successResponse("Offline store retrieved successfully", "Retrieved", 200, resp);
   }
@@ -121,12 +121,12 @@ class OfflineStoreController : ManageHttpController {
     UpdateOfflineStoreRequest r;
     r.tenantId = tenantId;
     r.storeId = id;
-    r.name = data.getString("name");
-    r.description = data.getString("description");
-    r.syncPolicy = data.getString("syncPolicy");
-    r.status = data.getString("status");
-    r.updatedBy = UserId(data.getString("updatedBy"));
-    auto result = usecase.update(r);
+    // TODO: r.name = data.getString("name");
+    // TODO:r.description = data.getString("description");
+    // TODO:r.syncPolicy = data.getString("syncPolicy");
+    // TOD: ? r.status = data.getString("status");
+    // TODO r.updatedBy = UserId(data.getString("updatedBy"));
+    auto result = usecase.updateOfflineStore(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
     auto resp = Json.emptyObject.set("id", result.id);
@@ -145,6 +145,7 @@ class OfflineStoreController : ManageHttpController {
     if (result.hasError)
       return errorResponse(result.message, 400);
 
-    return successResponse("Offline store deleted successfully", "Deleted", 204, result);
+    auto resp = Json.emptyObject.set("id", result.id);
+    return successResponse("Offline store deleted successfully", "Deleted", 204, resp);
   }
 }

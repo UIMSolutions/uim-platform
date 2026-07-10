@@ -63,7 +63,11 @@ class ManageOfflineStoresUseCase { // TODO: UIMUseCase {
         return repo.findById(tenantId, id);
     }
 
-    OfflineStore[] listOfflineStoresByApp(TenantId tenantId, MobileAppId appId) {
+    OfflineStore[] listOfflineStores(TenantId tenantId) {
+        return repo.findByTenant(tenantId);
+    }
+
+    OfflineStore[] listOfflineStores(TenantId tenantId, MobileAppId appId) {
         return repo.findByApp(tenantId, appId);
     }
 

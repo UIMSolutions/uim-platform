@@ -42,7 +42,11 @@ class ManageClientLogsUseCase { // TODO: UIMUseCase {
         return repo.findById(tenantId, id);
     }
 
-    ClientLogEntry[] listLogs(TenantId tenantId, MobileAppId appId) {
+    ClientLogEntry[] listLogs(TenantId tenantId) {
+        return repo.findByTenant(tenantId);
+    }
+
+    ClientLogEntry[] listLogs(TenantId tenantId, MobileAppId appId) {        
         return repo.findByApp(tenantId, appId);
     }
 

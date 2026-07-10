@@ -61,7 +61,7 @@ class ManageFeatureRestrictionsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, restriction.id.value, "");
     }
 
-    bool evaluateFeatureRestriction(TenantId tenantId, FeatureRestrictionId featureId, UserId userId, string deviceId) {
+    bool evaluatRestriction(TenantId tenantId, FeatureRestrictionId featureId, UserId userId, string deviceId) {
         auto restriction = repo.findById(tenantId, featureId);
         if (restriction.isNull)
             return false;
@@ -71,6 +71,10 @@ class ManageFeatureRestrictionsUseCase { // TODO: UIMUseCase {
 
     FeatureRestriction getFeatureRestriction(TenantId tenantId, FeatureRestrictionId id) {
         return repo.findById(tenantId, id);
+    }
+
+    FeatureRestriction[] listFeatureRestrictions(TenantId tenantId) {
+        return repo.findByTenant(tenantId);
     }
 
     FeatureRestriction[] listFeatureRestrictions(TenantId tenantId, MobileAppId appId) {

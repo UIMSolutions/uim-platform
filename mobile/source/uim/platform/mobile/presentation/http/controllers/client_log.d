@@ -64,14 +64,14 @@ class ClientLogController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto results = usecase.list(tenantId);
+    auto results = usecase.listLogs(tenantId);
     auto items = Json.emptyArray;
     foreach (item; results) {
       items ~= Json.emptyObject
         .set("id", item.id)
         .set("appId", item.appId)
         .set("level", item.level)
-        .set("source", item.source)
+        // .set("source", item.source)
         .set("message", item.message);
     }
 
@@ -90,23 +90,23 @@ class ClientLogController : ManageHttpController {
     auto tenantId = precheck.tenantId;
     auto id = ClientLogEntryId(precheck.id);
     auto result = usecase.getLog(tenantId, id);
-    if (result.hasError)
-      return errorResponse(result.message, 400);
+    if (result.isNull)
+      return errorResponse("Client log not found", 400);
       
     auto resp = Json.emptyObject
-      .set("id", result.data.id)
-      .set("tenantId", result.data.tenantId)
-      .set("appId", result.data.appId)
-      .set("deviceId", result.data.deviceId)
-      .set("userId", result.data.userId)
-      .set("level", result.data.level)
-      .set("source", result.data.source)
-      .set("message", result.data.message)
-      .set("stackTrace", result.data.stackTrace)
-      .set("metadata", result.data.metadata)
-      .set("platform", result.data.platform)
-      .set("appVersion", result.data.appVersion)
-      .set("timestamp", result.data.timestamp);
+      .set("id", result.id)
+      .set("tenantId", result.tenantId)
+      .set("appId", result.appId)
+      .set("deviceId", result.deviceId)
+      .set("userId", result.userId)
+      .set("level", result.level)
+      // TODO: ? .set("source", result.source)
+      .set("message", result.message)
+      .set("stackTrace", result.stackTrace)
+      .set("metadata", result.metadata)
+      .set("platform", result.platform)
+      .set("appVersion", result.appVersion)
+      .set("timestamp", result.timestamp);
 
     return successResponse("Client log retrieved successfully", "Retrieved", 200, resp);
   }

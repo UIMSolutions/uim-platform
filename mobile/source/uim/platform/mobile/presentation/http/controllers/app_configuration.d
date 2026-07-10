@@ -67,8 +67,8 @@ class AppConfigurationController : ManageHttpController {
       items ~= Json.emptyObject
         .set("id", item.id)
         .set("appId", item.appId)
-        .set("key", item.key)
-        .set("platform", item.platform);
+        .set("key", item.key);
+        // TODO: ? .set("platform", item.platform);
         // TODO: ? .set("status", item.status);
     }
 
@@ -100,7 +100,7 @@ class AppConfigurationController : ManageHttpController {
       .set("value", config.value)
       .set("description", config.description)
       .set("isSecret", config.isSecret)
-      .set("platform", config.platform)
+      // TODO: .set("platform", config.platform)
       .set("createdBy", config.createdBy);
 
     return successResponse("App configuration retrieved successfully", "Retrieved", 200, resp);

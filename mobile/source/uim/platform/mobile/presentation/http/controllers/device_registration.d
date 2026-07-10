@@ -88,11 +88,11 @@ class DeviceRegistrationController : ManageHttpController {
     auto tenantId = precheck.tenantId;
     auto id = DeviceRegistrationId(precheck.id);
     if (id.isNull)
-      errorResponse("Invalid Device Registraion ID", 400);
+      return errorResponse("Invalid Device Registration ID", 400);
 
     auto result = usecase.getDeviceRegistration(tenantId, id);
-    if (result.hasError)
-      return errorResponse(result.message, 400);
+    if (result.isNull)
+      return errorResponse("Device registration not found", 400);
 
     auto resp = Json.emptyObject
       .set("id", result.id)

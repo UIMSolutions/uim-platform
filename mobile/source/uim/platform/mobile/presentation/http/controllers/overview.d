@@ -23,25 +23,35 @@ class OverviewController : HttpController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+
     router.get("/api/v1/overview", &handleGetOverview);
   }
 
+  protected Json getOverviewHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto summary = usecase.getSummary(tenantId);
+    auto resp = Json.emptyObject
+      .set("totalApps", Json(summary.totalApps))
+      .set("totalDevices", Json(summary.totalDevices))
+      // TODO: .set("totalSessions", Json(summary.totalSessions))
+      .set("totalPushNotifications", Json(summary.totalPushNotifications))
+      .set("totalFeatureFlags", Json(summary.totalFeatureFlags))
+      .set("totalOfflineStores", Json(summary.totalOfflineStores))
+      .set("totalUsageReports", Json(summary.totalUsageReports));
+      // .set("totalClientLogs", Json(summary.totalClientLogs));
+
+    return successResponse("Overview retrieved successfully", "Retrieved", 200, resp);
+  }
+
+
   protected void handleGetOverview(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = precheck.tenantId;
-      auto summary = usecase.getSummary(tenantId);
-      auto resp = Json.emptyObject
-        .set("totalApps", Json(summary.totalApps))
-        .set("totalDevices", Json(summary.totalDevices))
-        .set("totalSessions", Json(summary.totalSessions))
-        .set("totalPushNotifications", Json(summary.totalPushNotifications))
-        .set("totalFeatureFlags", Json(summary.totalFeatureFlags))
-        .set("totalOfflineStores", Json(summary.totalOfflineStores))
-        .set("totalUsageReports", Json(summary.totalUsageReports))
-        .set("totalClientLogs", Json(summary.totalClientLogs))
-        .set("message", "Overview retrieved successfully");
-        
-      res.writeJsonBody(resp, 200);
+      auto response = getOverviewHandler(req);
+      res.writeJsonBody(response, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

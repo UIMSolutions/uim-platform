@@ -50,7 +50,7 @@ class MobileAppController : ManageHttpController {
     r.offlineEnabled = data.getBoolean("offlineEnabled");
     r.iconUrl = data.getString("iconUrl");
     r.createdBy = UserId(data.getString("createdBy"));
-    auto result = usecase.create(r);
+    auto result = usecase.createMobileApp(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
     auto resp = Json.emptyObject.set("id", result.id);
@@ -64,7 +64,7 @@ class MobileAppController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto results = usecase.list(tenantId);
+    auto results = usecase.listMobileApps(tenantId);
     auto items = Json.emptyArray;
     foreach (item; results) {
       items ~= Json.emptyObject
@@ -91,23 +91,24 @@ class MobileAppController : ManageHttpController {
     if (id.isNull)
       return errorResponse("Invalid mobile app ID", 400);
 
-    auto result = usecase.get(id);
-    if (result.hasError)
-      return errorResponse(result.message, 400);
+    auto app = usecase.getMobileApp(tenantId, id);
+    if (app.isNull)
+      return errorResponse("Mobile app not found", 400);
+
     auto resp = Json.emptyObject
-      .set("id", result.data.id)
-      .set("tenantId", result.data.tenantId)
-      .set("name", result.data.name)
-      .set("description", result.data.description)
-      .set("bundleId", result.data.bundleId)
-      .set("platform", result.data.platform)
-      .set("securityConfig", result.data.securityConfig)
-      .set("authProvider", result.data.authProvider)
-      .set("pushEnabled", result.data.pushEnabled)
-      .set("offlineEnabled", result.data.offlineEnabled)
-      .set("iconUrl", result.data.iconUrl)
-      .set("status", result.data.status)
-      .set("createdBy", result.data.createdBy)
+      .set("id", app.id)
+      .set("tenantId", app.tenantId)
+      .set("name", app.name)
+      .set("description", app.description)
+      .set("bundleId", app.bundleId)
+      .set("platform", app.platform)
+      .set("securityConfig", app.securityConfig)
+      .set("authProvider", app.authProvider)
+      .set("pushEnabled", app.pushEnabled)
+      .set("offlineEnabled", app.offlineEnabled)
+      .set("iconUrl", app.iconUrl)
+      .set("status", app.status)
+      .set("createdBy", app.createdBy)
       .set("message", "Mobile app retrieved successfully");
 
     return successResponse("Mobile app retrieved successfully", "Retrieved", 200, resp);
@@ -125,7 +126,8 @@ class MobileAppController : ManageHttpController {
 
     auto data = precheck.data;
     UpdateMobileAppRequest r;
-    r.id = id;
+    r.tenantId = tenantId;
+    r.appId = id;
     r.description = data.getString("description");
     r.securityConfig = data.getString("securityConfig");
     r.authProvider = data.getString("authProvider");
@@ -134,7 +136,7 @@ class MobileAppController : ManageHttpController {
     r.offlineEnabled = data.getBoolean("offlineEnabled");
     r.iconUrl = data.getString("iconUrl");
     r.updatedBy = UserId(data.getString("updatedBy"));
-    auto result = usecase.update(r);
+    auto result = usecase.updateMobileApp(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
 

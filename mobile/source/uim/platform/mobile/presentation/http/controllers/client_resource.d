@@ -23,7 +23,7 @@ class ClientResourceController : ManageHttpController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/resources", &handleCreate);
     router.get("/api/v1/resources", &handleList);
     router.get("/api/v1/resources/*", &handleGet);
@@ -47,8 +47,8 @@ class ClientResourceController : ManageHttpController {
     r.type = data.getString("type");
     r.contentType = data.getString("contentType");
     r.data = data.getString("data");
-    r.createdBy = UserId(data.getString("createdBy"));
-    auto result = usecase.create(r);
+    // TODO: ? r.createdBy = UserId(data.getString("createdBy"));
+    auto result = usecase.createClientResource(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
     auto resp = Json.emptyObject.set("id", result.id);
@@ -69,7 +69,7 @@ class ClientResourceController : ManageHttpController {
         .set("id", item.id)
         .set("appId", item.appId)
         .set("name", item.name)
-        .set("type", item.type)
+        // TODO: ? .set("type", item.type)
         .set("contentType", item.contentType);
     }
     auto resp = Json.emptyObject
@@ -99,7 +99,7 @@ class ClientResourceController : ManageHttpController {
       .set("appId", resource.appId)
       .set("name", resource.name)
       .set("description", resource.description)
-      .set("type", resource.type)
+      // TODO: .set("type", resource.type)
       .set("contentType", resource.contentType)
       .set("data", resource.data)
       .set("createdBy", resource.createdBy);
@@ -147,6 +147,6 @@ class ClientResourceController : ManageHttpController {
     if (result.hasError)
       return errorResponse(result.message, 400);
 
-    return successResponse("Client resource deleted successfully", "Deleted", 200);
+    return successResponse("Client resource deleted successfully", "Deleted", 200, Json.emptyObject.set("id", result.id));
   }
 }
