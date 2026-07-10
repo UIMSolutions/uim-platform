@@ -171,7 +171,16 @@ class TaskController : ManageHttpController {
         return successResponse("Task claimed successfully", "Claimed", 200, resp);
     }
 
-    mixin(HandleTemplate!("handleClaim", "claimHandler"));
+    // mixin(HandleTemplate!("handleClaim", "claimHandler"));
+
+    protected void handleClaim(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+            auto response = claimHandler(req);
+            res.writeJsonBody(response, response.code);
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
+    }
 
     protected Json releaseHandler(HTTPServerRequest req) {
         auto precheck = super.getHandler(req);
@@ -285,14 +294,14 @@ class TaskController : ManageHttpController {
             return errorResponse(result.message, 400);
         auto resp = Json.emptyObject.set("id", result.id);
         return successResponse("Task deleted successfully", "Deleted", 200, resp);
-}
+    }
 
-private bool pathEndsWithAction(string path) {
-    import std.algorithm : endsWith;
+    private bool pathEndsWithAction(string path) {
+        import std.algorithm : endsWith;
 
-    return path.endsWith("/claim") || path.endsWith("/release") ||
-        path.endsWith(
-            "/forward") || path.endsWith("/complete") ||
-        path.endsWith("/cancel");
-}
+        return path.endsWith("/claim") || path.endsWith("/release") ||
+            path.endsWith(
+                "/forward") || path.endsWith("/complete") ||
+            path.endsWith("/cancel");
+    }
 }

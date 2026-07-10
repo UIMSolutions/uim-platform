@@ -11,13 +11,13 @@ import uim.platform.datasphere;
 mixin(ShowModule!()); 
 
 @safe:
-interface TaskRepository {
-  DSTask findById(SpaceId spaceId, TaskId id);
-  DSTask[] findBySpace(SpaceId spaceId);
-  DSTask[] findByStatus(SpaceId spaceId, TaskStatus status);
-  DSTask[] findByType(SpaceId spaceId, TaskType type);
-  void save(DSTask t);
-  void update(DSTask t);
-  void remove(SpaceId spaceId, TaskId id);
-  size_t countBySpace(SpaceId spaceId);
+interface TaskRepository : ITenantRepository!(DSTask, TaskId) {
+
+  size_t countBySpace(TenantId tenantId, SpaceId spaceId);
+  DSTask[] findBySpace(TenantId tenantId, SpaceId spaceId);
+
+  DSTask[] findByStatus(TenantId tenantId, SpaceId spaceId, TaskStatus status);
+
+  DSTask[] findByType(TenantId tenantId, SpaceId spaceId, TaskType type);
+
 }

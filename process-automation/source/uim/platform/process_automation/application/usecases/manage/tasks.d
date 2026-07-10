@@ -22,7 +22,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
         if (err.length > 0)
             return CommandResult(false, "", err);
 
-        auto t = repo.findById(r.tenantId);
+        auto t = repo.findById(r.tenantId, r.taskId);
         t.id = r.taskId;
         t.processInstanceId = r.processInstanceId;
         t.name = r.name;

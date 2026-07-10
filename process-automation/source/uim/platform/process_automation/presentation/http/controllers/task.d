@@ -152,7 +152,7 @@ class TaskController : ManageHttpController {
     return successResponse("TASK updated successfully", 200, responseData);
   }
 
-  protected Json handleClaim(HTTPServerRequest req) {
+  protected Json claimHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);
     if (precheck.hasError)
       return precheck;
