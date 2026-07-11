@@ -15,56 +15,39 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// In-memory adapter for session persistence.
-class MemorySessionRepository : SessionRepository {
-  private IASession[SessionId] store;
+class MemorySessionRepository : TenantRepository!(IASession, SessionId), SessionRepository {
 
-  bool existsById(SessionId id) {
-    return (id in store) ? true : false;
-  }
-
-  IASession findById(SessionId id) {
-    if (existsById(id))
-      return store[id];
-    return IASession.init;
-  }
-
-  IASession[] findByUser(UserId userId) {
+  IASession[] findByUser(TenantId tenantId, UserId userId) {
     return findByTenant(tenantId).filter!(s => s.userId == userId).array;
   }
 
-  void save(IASession session) {
-    store[session.id] = session;
-  }
-
-  void revoke(SessionId id) {
-    if (existsById(id)) {
-      auto p = store[id];
+  void revoke(TenantId tenantId, SessionId id) {
+    if (existsById(tenantId, id)) {
+      auto p = findById(tenantId, id);
       p.revoked = true;
-      store[id] = p;
+      update(p);
     }
   }
 
-  void revokeAllForUser(UserId userId) {
+  void revokeAllForUser(TenantId tenantId, UserId userId) {
     foreach (s; findByTenant(tenantId)) {
       if (s.userId == userId) {
-        auto updated = s;
-        updated.revoked = true;
-        store[s.id] = updated;
+        s.revoked = true;
+        update(s);
       }
     }
   }
 
-  void removeExpired() {
+  void removeExpired(TenantId tenantId) {
     auto now = currentTimestamp();
     SessionId[] toRemove;
-    foreach (id, s; store) {
+    foreach (id, s; findByTenant(tenantId)  ) {
       if (s.expiresAt < now)
-        toRemove ~= id;
+        remove(s);
     }
-    removeIds(toRemove);
   }
 
-  void removeIds(SessionId[] ids) {
-    ids.each!(id => removeById(id));
+  void removeIds(TenantId tenantId, SessionId[] ids) {
+    ids.each!(id => removeById(tenantId, id));
   }
 }

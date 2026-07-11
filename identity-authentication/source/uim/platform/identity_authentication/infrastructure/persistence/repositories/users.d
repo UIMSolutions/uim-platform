@@ -29,6 +29,12 @@ class MemoryUserRepository : TenantRepository!(IAUser, UserId), UserRepository {
     }
     return IAUser.init;
   }
+  void removeByEmail(TenantId tenantId, string email) {
+    foreach (u; findByTenant(tenantId)) {
+      if (u.email == email)
+        remove(u);
+    }
+  }
 
   bool existsByUserName(TenantId tenantId, string userName) {
     foreach (u; findByTenant(tenantId)) {
@@ -44,19 +50,24 @@ class MemoryUserRepository : TenantRepository!(IAUser, UserId), UserRepository {
     }
     return IAUser.init;
   }
+  void removeByUserName(TenantId tenantId, string userName) {
+    foreach (u; findByTenant(tenantId)) {
+      if (u.userName == userName)
+        remove(u);
+    }
+  }
 
-
-  size_t countByGroupId(GroupId groupId) {
-    return findByGroupId(groupId).length;
+  size_t countByGroupId(TenantId tenantId, GroupId groupId) {
+    return findByGroupId(tenantId, groupId).length;
   }
   IAUser[] filterByGroupId(IAUser[] users, GroupId groupId) {
     return users.filter!(u => u.groupIds.canFind(groupId)).array;
   }
-  IAUser[] findByGroupId(GroupId groupId) {
+  IAUser[] findByGroupId(TenantId tenantId, GroupId groupId) {
     return findByTenant(tenantId).filter!(u => u.groupIds.canFind(groupId)).array;
   }
-  void removeByGroupId(GroupId groupId) {
-    findByGroupId(groupId).each!(u => remove(u.id));
+  void removeByGroupId(TenantId tenantId, GroupId groupId) {
+    findByGroupId(tenantId, groupId).each!(u => remove(u));
   }
 
 }

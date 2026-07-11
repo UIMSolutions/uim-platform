@@ -49,7 +49,7 @@ struct Container {
   // Repositories (driven adapters)
   MemoryUserRepository userRepo;
   MemoryGroupRepository groupRepo;
-  MemoryTenantRepository tenantRepo;
+  // MemoryTenantRepository tenantRepo;
   MemoryApplicationRepository appRepo;
   MemorySessionRepository sessionRepo;
   MemoryTokenRepository tokenRepo;
@@ -68,7 +68,7 @@ struct Container {
   ManageUsersUseCase manageUsers;
   ManageGroupsUseCase manageGroups;
   ManageApplicationsUseCase manageApplications;
-  ManageTenantsUseCase manageTenants;
+  // ManageTenantsUseCase manageTenants;
   ManagePoliciesUseCase managePolicies;
   DelegatedAuthUseCase delegatedAuth;
 
@@ -77,7 +77,7 @@ struct Container {
   UserController userController;
   GroupController groupController;
   ApplicationController applicationController;
-  TenantController tenantController;
+  // TenantController tenantController;
   PolicyController policyController;
 }
 /// Build the full dependency graph.
@@ -87,7 +87,7 @@ Container buildContainer(SrvConfig config) {
   // Infrastructure adapters
   c.userRepo = new MemoryUserRepository();
   c.groupRepo = new MemoryGroupRepository();
-  c.tenantRepo = new MemoryTenantRepository();
+  // c.tenantRepo = new MemoryTenantRepository();
   c.appRepo = new MemoryApplicationRepository();
   c.sessionRepo = new MemorySessionRepository();
   c.tokenRepo = new MemoryTokenRepository();
@@ -107,7 +107,7 @@ Container buildContainer(SrvConfig config) {
   c.manageUsers = new ManageUsersUseCase(c.userRepo, c.passwordSvc);
   c.manageGroups = new ManageGroupsUseCase(c.groupRepo, c.userRepo);
   c.manageApplications = new ManageApplicationsUseCase(c.appRepo);
-  c.manageTenants = new ManageTenantsUseCase(c.tenantRepo);
+  // c.manageTenants = new ManageTenantsUseCase(c.tenantRepo);
   c.managePolicies = new ManagePoliciesUseCase(c.policyRepo);
   c.delegatedAuth = new DelegatedAuthUseCase(c.idpConfigRepo, c.userRepo);
 
@@ -116,7 +116,7 @@ Container buildContainer(SrvConfig config) {
   c.userController = new UserController(c.manageUsers);
   c.groupController = new GroupController(c.manageGroups);
   c.applicationController = new ApplicationController(c.manageApplications);
-  c.tenantController = new TenantController(c.manageTenants);
+  // c.tenantController = new TenantController(c.manageTenants);
   c.policyController = new PolicyController(c.managePolicies);
 
   return c;

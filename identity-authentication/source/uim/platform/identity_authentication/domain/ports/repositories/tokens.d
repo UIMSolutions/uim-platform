@@ -11,7 +11,7 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// Port: outgoing — token persistence.
-interface TokenRepository : TenantRepository!(Token, TokenId) {
+interface TokenRepository : ITenantRepository!(Token, TokenId) {
 
   bool existsByValue(TenantId tenantId, string tokenValue);
   Token findByValue(TenantId tenantId, string tokenValue);

@@ -14,14 +14,11 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// In-memory adapter for external IdP configuration persistence.
-class MemoryIdpConfigRepository : TenantRepository!(IdpConfig, string), IdpConfigRepository {
+class MemoryIdpConfigRepository : TenantRepository!(IdpConfig, IdpConfigId), IdpConfigRepository {
 
-  bool exists(string id) {
-    return findByTenant(tenantId).any!(c => c.id == id);
-  }
   IdpConfig findDefaultForTenant(TenantId tenantId) {
     foreach (c; findByTenant(tenantId)) {
-      if (c.tenantId == tenantId && c.isDefault)
+      if (c.isDefault)
         return c;
     }
     return IdpConfig.init;
@@ -29,14 +26,14 @@ class MemoryIdpConfigRepository : TenantRepository!(IdpConfig, string), IdpConfi
 
   bool hasDomainHint(TenantId tenantId, string emailDomain) {
     foreach (c; findByTenant(tenantId)) {
-      if (c.tenantId == tenantId && c.domainHints.canFind(emailDomain))
+      if (c.domainHints.canFind(emailDomain))
         return true;
     }
     return false;
   }
   IdpConfig findByDomainHint(TenantId tenantId, string emailDomain) {
     foreach (c; findByTenant(tenantId)) {
-      if (c.tenantId == tenantId && c.domainHints.canFind(emailDomain))
+      if (c.domainHints.canFind(emailDomain))
         return c;
     }
     return IdpConfig.init;

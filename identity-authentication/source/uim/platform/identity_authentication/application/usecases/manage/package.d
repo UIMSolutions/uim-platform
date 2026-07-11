@@ -10,5 +10,5 @@ public {
   import uim.platform.identity_authentication.application.usecases.manage.groups;
   import uim.platform.identity_authentication.application.usecases.manage.users;
   import uim.platform.identity_authentication.application.usecases.manage.policies;
-  import uim.platform.identity_authentication.application.usecases.manage.tenants;
+  // import uim.platform.identity_authentication.application.usecases.manage.tenants;
 }

@@ -28,3 +28,10 @@ struct TokenId {
   mixin(IdTemplate);
 }
 
+struct RiskRuleId {
+  mixin(IdTemplate);
+}
+
+struct IdpConfigId {
+  mixin(IdTemplate);
+}
