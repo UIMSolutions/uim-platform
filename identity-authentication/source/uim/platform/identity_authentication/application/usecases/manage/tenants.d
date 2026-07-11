@@ -1,0 +1,59 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module uim.platform.identity_authentication.application.usecases.manage.tenants;
+// import uim.platform.identity_authentication.domain.entities.tenant;
+// import uim.platform.identity_authentication.domain.types;
+// import uim.platform.identity_authentication.domain.ports.repositories.tenant;
+// import uim.platform.identity_authentication.application.dto;
+// 
+// 
+// 
+import uim.platform.identity_authentication;
+
+mixin(ShowModule!());
+@safe:
+/// Application use case: tenant management.
+class ManageTenantsUseCase { // TODO: UIMUseCase {
+  private TenantRepository tenantRepo;
+
+  this(TenantRepository tenantRepo) {
+    this.tenantRepo = tenantRepo;
+  }
+
+  TenantResponse createTenant(CreateTenantRequest req) {
+    if (tenantRepo.existsBySubdomain(req.subdomain))
+      return TenantResponse("", "Subdomain already in use");
+
+    auto now = currentTimestamp();
+    auto tenant = Tenant(randomUUID().toString(), req.name, req.subdomain,
+        req.defaultSsoProtocol, req.allowedAuthMethods, req.mfaEnforced, [], now, now);
+    tenantRepo.save(tenant);
+    return TenantResponse(tenant.id.value, "");
+  }
+
+  Tenant getTenant(TenantId id) {
+    return tenantRepo.findById(tenantId, id);
+  }
+
+  Tenant[] listTenants(size_t offset = 0, size_t limit = 100) {
+    return tenantRepo.findAll(offset, limit);
+  }
+
+  CommandResult updateTenant(UpdateTenantRequest req) {
+    auto tenant = tenantRepo.findById(req.tenantId);
+    if (tenant.isNull)
+      return CommandResult(false, "", "Tenant not found");
+
+    if (req.name.length > 0)
+      tenant.name = req.name;
+    if (req.allowedAuthMethods.length > 0)
+      tenant.allowedAuthMethods = req.allowedAuthMethods;
+
+    tenant.updatedAt = currentTimestamp();
+    tenantRepo.update(tenant);
+    return CommandResult(true, tenant.id.value, "");
+  }
+}

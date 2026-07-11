@@ -1,0 +1,59 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module uim.platform.identity_authentication.domain.services.policy_evaluator;
+
+// import uim.platform.identity_authentication.domain.entities.policy;
+// import uim.platform.identity_authentication.domain.entities.user;
+// import uim.platform.identity_authentication.domain.types;
+
+import uim.platform.identity_authentication;
+
+mixin(ShowModule!());
+@safe:
+/// Domain service: evaluates authorization policies against a user.
+struct PolicyEvaluationContext {
+  string ipAddress;
+  AuthMethod authMethod;
+  string[] userGroupIds;
+}
+/// Returns true if the user satisfies all rules in the policy.
+bool evaluatePolicy(AuthorizationPolicy policy, IAUser user, PolicyEvaluationContext ctx) {
+  if (!policy.active)
+    return true; // Inactive policies pass
+
+  foreach (rule; policy.rules) {
+    if (!evaluateRule(rule, user, ctx))
+      return false;
+  }
+  return true;
+}
+/// Returns the list of policies that deny access.
+AuthorizationPolicy[] findDenyingPolicies(AuthorizationPolicy[] policies,
+    IAUser user, PolicyEvaluationContext ctx) {
+  AuthorizationPolicy[] denying;
+  foreach (policy; policies) {
+    if (!evaluatePolicy(policy, user, ctx))
+      denying ~= policy;
+  }
+  return denying;
+}
+
+private bool evaluateRule(PolicyRule rule, IAUser user, PolicyEvaluationContext ctx) {
+  
+  // import std.algorithm : canFind;
+
+  switch (rule.attribute) {
+  case "group":
+    bool inGroup = ctx.userGroupIds.canFind(rule.value);
+    return rule.operator_ == "eq" || rule.operator_ == "in" ? inGroup : !inGroup;
+  case "ip_range":
+    return rule.operator_ == "eq" ? ctx.ipAddress == rule.value : ctx.ipAddress != rule.value;
+  case "auth_method":
+    return ctx.authMethod.to!string == rule.value;
+  default:
+    return true;
+  }
+}
