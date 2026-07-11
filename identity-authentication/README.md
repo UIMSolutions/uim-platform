@@ -52,7 +52,7 @@ Clean/Hexagonal architecture with four layers:
 
 ```bash
 # Build and run locally
-cd identity-authentication
+cd identity_authentication
 dub run
 
 # Run tests

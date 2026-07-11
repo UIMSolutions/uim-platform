@@ -3,17 +3,17 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.identity.authentication.application.usecases.manage.groups;
-// import uim.platform.identity.authentication.domain.entities.group;
-// import uim.platform.identity.authentication.domain.types;
-// import uim.platform.identity.authentication.domain.ports.repositories.group;
-// import uim.platform.identity.authentication.domain.ports.repositories.user;
-// import uim.platform.identity.authentication.application.dto;
+module uim.platform.identity_authentication.application.usecases.manage.groups;
+// import uim.platform.identity_authentication.domain.entities.group;
+// import uim.platform.identity_authentication.domain.types;
+// import uim.platform.identity_authentication.domain.ports.repositories.group;
+// import uim.platform.identity_authentication.domain.ports.repositories.user;
+// import uim.platform.identity_authentication.application.dto;
 // 
 // 
 // 
 // import std.algorithm : canFind, remove;
-import uim.platform.identity.authentication;
+import uim.platform.identity_authentication;
 
 mixin(ShowModule!());
 @safe:
@@ -46,7 +46,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult addMember(TenantId tenantId, GroupId groupId, UserId userId) {
-    import uim.platform.identity.authentication.domain.entities.user : IAUser;
+    import uim.platform.identity_authentication.domain.entities.user : IAUser;
 
     auto group = groupRepo.findById(tenantId, groupId);
     if (group.isNull)

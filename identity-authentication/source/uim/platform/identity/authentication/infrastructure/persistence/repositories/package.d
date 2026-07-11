@@ -12,7 +12,7 @@ public {
   import uim.platform.identity.authentication.infrastructure.persistence.memory.policies;
   import uim.platform.identity.authentication.infrastructure.persistence.memory.risk_rules;
   import uim.platform.identity.authentication.infrastructure.persistence.memory.sessions;
-  import uim.platform.identity.authentication.infrastructure.persistence.memory.tenants;
+  // import uim.platform.identity.authentication.infrastructure.persistence.memory.tenants;
   import uim.platform.identity.authentication.infrastructure.persistence.memory.tokens;
   import uim.platform.identity.authentication.infrastructure.persistence.memory.users;
 

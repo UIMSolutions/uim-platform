@@ -6,11 +6,11 @@
 module app;
 
 // import std.conv;
-// import uim.platform.identity.authentication;
-// import uim.platform.identity.authentication.infrastructure.config;
-// import uim.platform.identity.authentication.infrastructure.container;
+// import uim.platform.identity_authentication;
+// import uim.platform.identity_authentication.infrastructure.config;
+// import uim.platform.identity_authentication.infrastructure.container;
 
-import uim.platform.identity.authentication;
+import uim.platform.identity_authentication;
 
 mixin(ShowModule!());
 

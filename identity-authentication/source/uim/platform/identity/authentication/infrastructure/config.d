@@ -3,10 +3,10 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.identity.authentication.infrastructure.config;
+module uim.platform.identity_authentication.infrastructure.config;
 import std.process : environment;
 
-import uim.platform.identity.authentication;
+import uim.platform.identity_authentication;
 
 mixin(ShowModule!());
 @safe:

@@ -114,11 +114,11 @@ Identity Authentication
 
 ```
 Kubernetes Cluster — Namespace: uim-platform
-├── ConfigMap: identity-authentication-config
+├── ConfigMap: identity_authentication-config
 │   IDENTITY_AUTHENTICATION_HOST: "0.0.0.0"
 │   IDENTITY_AUTHENTICATION_PORT: "8080"
-├── Deployment: identity-authentication  port: 8080
-└── Service: identity-authentication (ClusterIP :8080)
+├── Deployment: identity_authentication  port: 8080
+└── Service: identity_authentication (ClusterIP :8080)
 ```
 
 ---

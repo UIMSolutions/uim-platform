@@ -3,22 +3,22 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.identity.authentication.application.usecases.issue_token;
-// import uim.platform.identity.authentication.domain.entities.user;
-// import uim.platform.identity.authentication.domain.entities.application;
-// import uim.platform.identity.authentication.domain.entities.token;
-// import uim.platform.identity.authentication.domain.types;
-// import uim.platform.identity.authentication.domain.ports.repositories.user;
-// import uim.platform.identity.authentication.domain.ports.repositories.application;
-// import uim.platform.identity.authentication.domain.ports.repositories.token;
-// import uim.platform.identity.authentication.domain.ports.repositories.session;
-// import uim.platform.identity.authentication.domain.ports.repositories.token_service;
+module uim.platform.identity_authentication.application.usecases.issue_token;
+// import uim.platform.identity_authentication.domain.entities.user;
+// import uim.platform.identity_authentication.domain.entities.application;
+// import uim.platform.identity_authentication.domain.entities.token;
+// import uim.platform.identity_authentication.domain.types;
+// import uim.platform.identity_authentication.domain.ports.repositories.user;
+// import uim.platform.identity_authentication.domain.ports.repositories.application;
+// import uim.platform.identity_authentication.domain.ports.repositories.token;
+// import uim.platform.identity_authentication.domain.ports.repositories.session;
+// import uim.platform.identity_authentication.domain.ports.repositories.token_service;
 // 
 // 
 // import core.time;
 // 
 // 
-import uim.platform.identity.authentication;
+import uim.platform.identity_authentication;
 
 mixin(ShowModule!());
 @safe:
@@ -42,7 +42,7 @@ class IssueTokenUseCase { // TODO: UIMUseCase {
   TokenResponse execute(TokenRequest req) {
     // Validate session
     auto session = sessionRepo.findById(req.sessionId);
-    import uim.platform.identity.authentication.domain.entities.session : IdaSession;
+    import uim.platform.identity_authentication.domain.entities.session : IdaSession;
 
     if (session.isNull || session.revoked)
       return TokenResponse("", "", "", "Invalid session");

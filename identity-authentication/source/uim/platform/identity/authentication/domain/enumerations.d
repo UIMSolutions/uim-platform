@@ -1,6 +1,6 @@
-module uim.platform.identity.authentication.domain.enumerations;
+module uim.platform.identity_authentication.domain.enumerations;
 
-import uim.platform.identity.authentication;
+import uim.platform.identity_authentication;
 
 mixin(ShowModule!());
 
