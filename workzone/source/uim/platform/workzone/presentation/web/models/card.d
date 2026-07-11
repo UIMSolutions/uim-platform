@@ -12,8 +12,8 @@ mixin(ShowModule!());
 @safe:
 /// Web view-model for a Card integration tile.
 struct CardViewModel {
-    string id;
     TenantId tenantId;
+    string id;
     string title;
     string subtitle;
     string description;

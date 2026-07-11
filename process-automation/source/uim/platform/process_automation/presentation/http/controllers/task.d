@@ -166,6 +166,8 @@ class TaskController : ManageHttpController {
 
     auto sub = path[0 .. claimIdx];
     auto id = TaskId(extractIdFromPath(sub));
+    if (id.isNull)
+      return errorResponse("Task ID is required", 400);
 
     auto data = precheck.data;
     ClaimTaskRequest r;

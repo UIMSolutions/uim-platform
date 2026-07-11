@@ -23,27 +23,26 @@ class CardWebController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+
         router.get("/ui/cards",     &handleList);
         router.get("/ui/cards/*",   &handleDetail);
     }
 
-    private void handleList(scope HTTPServerRequest req,
-                            scope HTTPServerResponse res) {
-        immutable tenantId = tenantId;
+    override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
         try {
             auto cards = useCase.listCards(tenantId);
             CardListViewModel vm;
             vm.tenantId = tenantId;
             foreach (c; cards)
                 vm.items ~= CardViewModel.from(c);
-            res.writeBody(renderCardList(vm), "text/html; charset=utf-8");
-        } catch (Exception e) {
-            CardListViewModel vm;
-            vm.errorMessage = e.msg;
-            res.statusCode = 500;
-            res.writeBody(renderCardList(vm), "text/html; charset=utf-8");
-        }
-    }
+            
+            return Json(vm);
+    } 
 
     private void handleDetail(scope HTTPServerRequest req,
                               scope HTTPServerResponse res) {
