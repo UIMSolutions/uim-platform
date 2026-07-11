@@ -28,7 +28,7 @@ struct Token {
       .set("applicationId", applicationId)
       .set("tokenType", tokenType.to!string)
       .set("tokenValue", tokenValue)
-      .set("scopes", scopes)
+      .set("scopes", scopes.map!(s => Json(s).array.toJson))
       .set("issuedAt", issuedAt)
       .set("expiresAt", expiresAt)
       .set("revoked", revoked);

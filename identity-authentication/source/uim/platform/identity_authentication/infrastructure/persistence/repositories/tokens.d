@@ -14,19 +14,12 @@ mixin(ShowModule!());
 @safe:
 /// In-memory adapter for token persistence.
 class MemoryTokenRepository : TenantRepository!(Token, TokenId), TokenRepository {
-  private Token[TokenId] store;
 
-  bool existsById(TokenId id) {
-    return (id in store) ? true : false;
+  bool existsByValue(TenantId tenantId, string tokenValue) {
+    return findByTenant(tenantId).any!(t => t.tokenValue == tokenValue);
   }
-
-  Token findById(TokenId id) {
-    if (existsById(id))
-      return store[id];
-    return Token.init;
-  }
-
-  Token findByValue(string tokenValue) {
+  
+  Token findByValue(TenantId tenantId, string tokenValue) {
     foreach (t; findByTenant(tenantId)) {
       if (t.tokenValue == tokenValue)
         return t;
@@ -34,7 +27,7 @@ class MemoryTokenRepository : TenantRepository!(Token, TokenId), TokenRepository
     return Token.init;
   }
 
-  Token[] findByUser(UserId userId) {
+  Token[] findByUser(TenantId tenantId, UserId userId) {
     Token[] result;
     foreach (t; findByTenant(tenantId)) {
       if (t.userId == userId)
@@ -43,24 +36,20 @@ class MemoryTokenRepository : TenantRepository!(Token, TokenId), TokenRepository
     return result;
   }
 
-  void save(Token token) {
-    store[token.id] = token;
-  }
-
-  void revoke(TokenId id) {
-    if (existsById(id)) {
-      auto updated = store[id];
+  void revoke(TenantId tenantId, TokenId id) {
+    if (existsById(tenantId, id)) {
+      auto updated = findById(tenantId, id);
       updated.revoked = true;
-      store[id] = updated;
+      update(updated);
     }
   }
 
-  void revokeAllForUser(UserId userId) {
+  void revokeAllForUser(TenantId tenantId, UserId userId) {
     foreach (t; findByTenant(tenantId)) {
       if (t.userId == userId) {
         auto updated = t;
         updated.revoked = true;
-        store[t.id] = updated;
+        update(updated);
       }
     }
   }

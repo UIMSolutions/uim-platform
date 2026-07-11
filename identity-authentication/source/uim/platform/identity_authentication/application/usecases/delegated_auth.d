@@ -36,7 +36,7 @@ class DelegatedAuthUseCase { // TODO: UIMUseCase {
     }
 
     // Fallback to default IdP
-    return idpRepo.findDefaultForTenant(tenantId);
+    return idpRepo.findDefault(tenantId);
   }
 
   /// Build the authorization URL for the external IdP.

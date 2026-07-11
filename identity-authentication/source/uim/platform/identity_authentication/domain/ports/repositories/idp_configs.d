@@ -14,9 +14,9 @@ mixin(ShowModule!());
 /// Port: outgoing — external IdP configuration persistence.
 interface IdpConfigRepository : ITenantRepository!(IdpConfig, IdpConfigId) {
 
-  bool existsDefaultForTenant(TenantId tenantId);
-  IdpConfig findDefaultForTenant(TenantId tenantId);
-  void removeDefaultForTenant(TenantId tenantId);
+  bool existsDefault(TenantId tenantId);
+  IdpConfig findDefault(TenantId tenantId);
+  void removeDefault(TenantId tenantId);
 
   bool existsByDomainHint(TenantId tenantId, string emailDomain);
   IdpConfig findByDomainHint(TenantId tenantId, string emailDomain);

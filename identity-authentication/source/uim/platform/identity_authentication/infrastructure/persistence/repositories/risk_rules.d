@@ -15,13 +15,8 @@ mixin(ShowModule!());
 /// In-memory adapter for risk rule persistence.
 class MemoryRiskRuleRepository : TenantRepository!(RiskRule, RiskRuleId), RiskRuleRepository {
 
-    size_t findByRiskLevel(TenantId tenantId, RiskLevel riskLevel) {
-        size_t count = 0;
-        foreach (r; findByTenant(tenantId)) {
-            if (r.riskLevel == riskLevel)
-                count++;
-        }
-        return count;
+    size_t countByRiskLevel(TenantId tenantId, RiskLevel riskLevel) {
+        return findByRiskLevel(tenantId, riskLevel).length;
     }
 
     RiskRule[] filterByRiskLevel(RiskRule[] rules, RiskLevel riskLevel) {
@@ -31,6 +26,7 @@ class MemoryRiskRuleRepository : TenantRepository!(RiskRule, RiskRuleId), RiskRu
     RiskRule[] findByRiskLevel(TenantId tenantId, RiskLevel riskLevel) { // Todo Next: size_t offset = 0, size_t limit = 100);
         return filterByRiskLevel(findByTenant(tenantId), riskLevel);
     }
+    
     void removeByRiskLevel(TenantId tenantId, RiskLevel riskLevel) {
         findByRiskLevel(tenantId, riskLevel).each!((r) => remove(r));
     }

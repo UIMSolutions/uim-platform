@@ -72,11 +72,17 @@ class AuthenticateUserUseCase { // TODO: UIMUseCase {
 
     // Create session
     auto now = currentTimestamp();
-    auto session = IASession(randomUUID().toString(), user.id, req.tenantId,
-        req.applicationId, AuthMethod.form, requiredMfa, req.ipAddress,
-        req.userAgent, riskLevel, now, now + dur!"hours"(8).total!"hnsecs", false);
+    auto session = IASession(req.tenantId, SessionId(randomUUID().toString()), user.id);
+    session.applicationId = req.applicationId;
+    session.authMethod = AuthMethod.form;
+    // TODO: session.requiredMfa = requiredMfa;
+    session.ipAddress = req.ipAddress;
+    session.userAgent = req.userAgent;
+    session.riskLevel = riskLevel;
+    session.expiresAt = session.createdAt + dur!"hours"(8).total!"hnsecs";
+    session.revoked = false;
     sessionRepo.save(session);
 
-    return AuthResult(true, "Authentication successful", false, MfaType.none, session.id, user.id);
+    return AuthResult(true, "Authentication successful", false, MfaType.none, session.id.value, user.id);
   }
 }

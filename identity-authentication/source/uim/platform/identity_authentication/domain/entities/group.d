@@ -15,12 +15,12 @@ struct IAGroup {
 
   string name;
   string description;
-  string[] memberUserIds;
+  UserId[] memberUserIds;
  
   Json toJson() const {
     return entityToJson
       .set("name", name)
       .set("description", description)
-      .set("memberUserIds", memberUserIds);
+      .set("memberUserIds", memberUserIds.map!(id => Json(id.value)).array.toJson);
   }
 }

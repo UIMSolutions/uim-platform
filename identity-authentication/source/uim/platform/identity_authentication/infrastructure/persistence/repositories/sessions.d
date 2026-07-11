@@ -17,8 +17,16 @@ mixin(ShowModule!());
 /// In-memory adapter for session persistence.
 class MemorySessionRepository : TenantRepository!(IASession, SessionId), SessionRepository {
 
+  size_t countByUser(TenantId tenantId, UserId userId) {
+    return findByUser(tenantId, userId).length;
+  }
+  
+  IASession[] filterByUser(IASession[] sessions, UserId userId) {
+    return sessions.filter!(s => s.userId == userId).array;
+  }
+
   IASession[] findByUser(TenantId tenantId, UserId userId) {
-    return findByTenant(tenantId).filter!(s => s.userId == userId).array;
+    return filterByUser(findByTenant(tenantId), userId);
   }
 
   void revoke(TenantId tenantId, SessionId id) {

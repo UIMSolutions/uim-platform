@@ -21,7 +21,7 @@ struct IAUser {
   UserStatus status = UserStatus.active;
   MfaType mfaType = MfaType.none;
   string mfaSecret;
-  string[] groupIds;
+  GroupId[] groupIds;
   string phoneNumber;
   string externalIdpId;
   UserId globalUserId; // Unique identifier across landscape (like SAP Global IAUser ID)
@@ -46,7 +46,7 @@ struct IAUser {
       .set("lastName", lastName)
       .set("status", status.to!string)
       .set("mfaType", mfaType.to!string)
-      .set("groupIds", groupIds)
+      .set("groupIds", groupIds.map!(id => Json(id.value)).array.toJson)
       .set("phoneNumber", phoneNumber)
       .set("externalIdpId", externalIdpId)
       .set("globalUserId", globalUserId);

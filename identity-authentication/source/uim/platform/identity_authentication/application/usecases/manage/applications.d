@@ -24,7 +24,7 @@ class ManageApplicationsUseCase { // TODO: UIMUseCase {
     this.appRepo = appRepo;
   }
 
-  AppResponse createApplication(CreateAppRequest req) {
+  CommandResult createApplication(CreateAppRequest req) {
     auto app = Application(req.tenantId);
     app.name = req.name;
     app.description = req.description;
@@ -38,7 +38,7 @@ class ManageApplicationsUseCase { // TODO: UIMUseCase {
     app.active = true;
 
     appRepo.save(app);
-    return AppResponse(app.id, app.clientId, app.clientSecret, "");
+    return CommandResult(true, app.id.value, "");
   }
 
   Application getApplication(TenantId tenantId, ApplicationId id) {

@@ -16,15 +16,25 @@ mixin(ShowModule!());
 /// In-memory adapter for external IdP configuration persistence.
 class MemoryIdpConfigRepository : TenantRepository!(IdpConfig, IdpConfigId), IdpConfigRepository {
 
-  IdpConfig findDefaultForTenant(TenantId tenantId) {
+  bool existsDefault(TenantId tenantId) {
+    return findByTenant(tenantId).any!(c => c.isDefault);
+  }
+
+  IdpConfig findDefault(TenantId tenantId) {
     foreach (c; findByTenant(tenantId)) {
       if (c.isDefault)
         return c;
     }
     return IdpConfig.init;
   }
+  void removeDefault(TenantId tenantId) {
+    foreach (c; findByTenant(tenantId)) {
+      if (c.isDefault)
+        remove(c);
+    }
+  }
 
-  bool hasDomainHint(TenantId tenantId, string emailDomain) {
+  bool existsByDomainHint(TenantId tenantId, string emailDomain) {
     foreach (c; findByTenant(tenantId)) {
       if (c.domainHints.canFind(emailDomain))
         return true;
@@ -37,6 +47,12 @@ class MemoryIdpConfigRepository : TenantRepository!(IdpConfig, IdpConfigId), Idp
         return c;
     }
     return IdpConfig.init;
+  }
+  void removeByDomainHint(TenantId tenantId, string emailDomain) {
+    foreach (c; findByTenant(tenantId)) {
+      if (c.domainHints.canFind(emailDomain))
+        remove(c);
+    }
   }
 
 }

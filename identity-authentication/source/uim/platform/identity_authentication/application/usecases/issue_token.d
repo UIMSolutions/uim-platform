@@ -41,17 +41,17 @@ class IssueTokenUseCase { // TODO: UIMUseCase {
 
   TokenResponse execute(TokenRequest req) {
     // Validate session
-    auto session = sessionRepo.findById(req.sessionId);
+    auto session = sessionRepo.findById(req.tenantId, req.sessionId);
     import uim.platform.identity_authentication.domain.entities.session : IASession;
 
     if (session.isNull || session.revoked)
       return TokenResponse("", "", "", "Invalid session");
 
-    auto user = userRepo.findById(session.userId);
+    auto user = userRepo.findById(session.tenantId, session.userId);
     if (user.isNull)
       return TokenResponse("", "", "", "IAUser not found");
 
-    auto app = appRepo.findByClient(req.clientId);
+    auto app = appRepo.findByClient(session.tenantId, req.clientId);
     if (app.isNull)
       return TokenResponse("", "", "", "Unknown application");
 
@@ -82,6 +82,7 @@ class IssueTokenUseCase { // TODO: UIMUseCase {
 }
 
 struct TokenRequest {
+  TenantId tenantId;
   string sessionId;
   string clientId;
   string clientSecret;

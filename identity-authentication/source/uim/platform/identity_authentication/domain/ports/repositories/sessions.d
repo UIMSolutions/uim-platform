@@ -13,7 +13,7 @@ mixin(ShowModule!());
 /// Port: outgoing — session persistence.
 interface SessionRepository : ITenantRepository!(IASession, SessionId) {
 
-  IASession[] findByUser(UserId userId);
+  IASession[] findByUser(TenantId tenantId, UserId userId);
   
   void revoke(TenantId tenantId, SessionId id);
   void revokeAllForUser(TenantId tenantId, UserId userId);

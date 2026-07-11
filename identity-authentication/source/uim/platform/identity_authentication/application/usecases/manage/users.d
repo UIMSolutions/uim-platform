@@ -52,7 +52,7 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
   }
 
   /// Get user by ID.
-  IAUser getUser(UserId id) {
+  IAUser getUser(TenantId tenantId, UserId id) {
     return userRepo.findById(tenantId, id);
   }
 
@@ -63,7 +63,7 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
 
   /// Update user profile.
   CommandResult updateUser(UpdateUserRequest req) {
-    auto user = userRepo.findById(req.userId);
+    auto user = userRepo.findById(req.tenantId, req.userId);
     if (user.isNull)
       return CommandResult(false, "", "IAUser not found");
 
@@ -80,7 +80,7 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
   }
 
   /// Deactivate (soft-delete) a user.
-  CommandResult deactivateUser(UserId id) {
+  CommandResult deactivateUser(TenantId tenantId, UserId id) {
     auto user = userRepo.findById(tenantId, id);
     if (user.isNull)
       return CommandResult(false, "", "IAUser not found");
@@ -92,15 +92,15 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
   }
 
   /// Change password.
-  CommandResult changePassword(UserId id, string oldPassword, string newPassword) {
-    auto user = userRepo.findById(tenantId, id);
+  CommandResult changePassword(ChangePasswordRequest req) {
+    auto user = userRepo.findById(req.tenantId, req.userId);
     if (user.isNull)
       return CommandResult(false, "", "IAUser not found");
 
-    if (!passwordSvc.verifyPassword(oldPassword, user.passwordHash))
+    if (!passwordSvc.verifyPassword(req.oldPassword, user.passwordHash))
       return CommandResult(false, "", "Current password is incorrect");
 
-    user.passwordHash = passwordSvc.hashPassword(newPassword);
+    user.passwordHash = passwordSvc.hashPassword(req.newPassword);
     user.updatedAt = currentTimestamp();
     userRepo.update(user);
     return CommandResult(true, user.id.value, "Password changed successfully.");

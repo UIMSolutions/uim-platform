@@ -42,6 +42,8 @@ struct CreateUserRequest {
 }
 
 struct UpdateUserRequest {
+  TenantId tenantId;
+
   UserId userId;
   string firstName;
   string lastName;
@@ -65,6 +67,8 @@ struct CreateGroupRequest {
 }
 
 struct GroupResponse {
+  TenantId tenantId;
+
   string groupId;
   string error;
 
@@ -88,6 +92,7 @@ struct CreateAppRequest {
 }
 
 struct UpdateAppRequest {
+  TenantId tenantId;
   ApplicationId applicationId;
   string name;
   string[] redirectUris;
@@ -95,6 +100,8 @@ struct UpdateAppRequest {
 }
 
 struct AppResponse {
+  TenantId tenantId;
+
   string applicationId;
   string clientId;
   string clientSecret;
@@ -145,4 +152,28 @@ struct PolicyResponse {
   bool isSuccess() const {
     return error.length == 0;
   }
+}
+
+struct UpdatePolicyRequest {
+  PolicyId policyId;
+  string name;
+  string description;
+  PolicyRule[] rules;
+  string[] applicationIds;
+}
+
+struct PolicyRuleResponse {
+  string policyId;
+  string error;
+
+  bool isSuccess() const {
+    return error.length == 0;
+  }
+}
+
+struct ChangePasswordRequest {
+  TenantId tenantId;
+  UserId userId;
+  string oldPassword;
+  string newPassword;
 }
