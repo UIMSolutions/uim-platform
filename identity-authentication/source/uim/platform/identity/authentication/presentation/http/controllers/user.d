@@ -55,7 +55,7 @@ class UserController : ManageHttpController {
 
     auto response = Json.emptyObject;
     response["id"] = result.userId;
-    return successResponse("User created successfully", "Created", 201, response);
+    return successResponse("IAUser created successfully", "Created", 201, response);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
@@ -87,13 +87,13 @@ class UserController : ManageHttpController {
 
     auto user = useCase.getUser(tenantId, userId);
     if (user.isNull)
-      return errorResponse("User not found", 404);
+      return errorResponse("IAUser not found", 404);
 
     auto response = user.toJson;
     // Remove sensitive field
     response.remove("passwordHash");
     response.remove("mfaSecret");
-    return successResponse("User retrieved successfully", "Retrieved", 200, response);
+    return successResponse("IAUser retrieved successfully", "Retrieved", 200, response);
 
   }
 
@@ -116,7 +116,7 @@ class UserController : ManageHttpController {
     auto resp = Json.emptyObject
       .set("status", "updated");
 
-    return successResponse("User updated successfully", "Updated", 200, resp);
+    return successResponse("IAUser updated successfully", "Updated", 200, resp);
   }
 
   protected Json changePasswordHandler(HTTPServerRequest req) {

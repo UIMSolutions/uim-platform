@@ -43,7 +43,7 @@ unittest {
   assert([MfaType.none, MfaType.totp].toString == ["none", "totp"]);
 }
 
-/// User status in the identity directory.
+/// IAUser status in the identity directory.
 enum UserStatus {
   active,
   inactive,

@@ -27,7 +27,7 @@ class JwtTokenService : TokenService {
     this.signingSecret = signingSecret;
   }
 
-  string generateToken(User user, Application app, TokenType tokenType, string[] scopes) {
+  string generateToken(IAUser user, Application app, TokenType tokenType, string[] scopes) {
     // import std.array : join;
 
     auto now = currentTimestamp();
@@ -60,7 +60,7 @@ class JwtTokenService : TokenService {
     return parts[0]; // userId
   }
 
-  string generateSamlAssertion(User user, Application app) {
+  string generateSamlAssertion(IAUser user, Application app) {
     // Simplified SAML assertion (in production, use proper XML signing)
     return "<saml:Assertion>" ~ "<saml:Issuer>identity-authentication</saml:Issuer>"
       ~ "<saml:Subject><saml:NameID>" ~ user.email ~ "</saml:NameID></saml:Subject>"

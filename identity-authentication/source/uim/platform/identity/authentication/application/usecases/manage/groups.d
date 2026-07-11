@@ -46,7 +46,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult addMember(TenantId tenantId, GroupId groupId, UserId userId) {
-    import uim.platform.identity.authentication.domain.entities.user : User;
+    import uim.platform.identity.authentication.domain.entities.user : IAUser;
 
     auto group = groupRepo.findById(tenantId, groupId);
     if (group.isNull)
@@ -54,7 +54,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
 
     auto user = userRepo.findById(userId);
     if (user.isNull)
-      return CommandResult(false, "", "User not found");
+      return CommandResult(false, "", "IAUser not found");
 
     if (!group.memberUserIds.canFind(userId)) {
       group.memberUserIds ~= userId;

@@ -31,10 +31,10 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
   UserResponse createUser(CreateUserRequest req) {
     // Check uniqueness
     if (userRepo.existsByEmail(req.tenantId, req.email))
-      return UserResponse("", "User with this email already exists");
+      return UserResponse("", "IAUser with this email already exists");
 
     auto now = currentTimestamp();
-    auto user = User(req.tenantId);
+    auto user = IAUser(req.tenantId);
     user.userName = req.userName;
     user.email = req.email;
     user.firstName = req.firstName;
@@ -52,12 +52,12 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
   }
 
   /// Get user by ID.
-  User getUser(UserId id) {
+  IAUser getUser(UserId id) {
     return userRepo.findById(tenantId, id);
   }
 
   /// List users for a tenant.
-  User[] listUsers(TenantId tenantId, size_t offset = 0, size_t limit = 100) {
+  IAUser[] listUsers(TenantId tenantId, size_t offset = 0, size_t limit = 100) {
     return userRepo.findByTenant(tenantId, offset, limit);
   }
 
@@ -65,7 +65,7 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
   CommandResult updateUser(UpdateUserRequest req) {
     auto user = userRepo.findById(req.userId);
     if (user.isNull)
-      return CommandResult(false, "", "User not found");
+      return CommandResult(false, "", "IAUser not found");
 
     if (req.firstName.length > 0)
       user.firstName = req.firstName;
@@ -76,26 +76,26 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
 
     user.updatedAt = currentTimestamp();
     userRepo.update(user);
-    return CommandResult(true, user.id.value, "User updated successfully.");
+    return CommandResult(true, user.id.value, "IAUser updated successfully.");
   }
 
   /// Deactivate (soft-delete) a user.
   CommandResult deactivateUser(UserId id) {
     auto user = userRepo.findById(tenantId, id);
     if (user.isNull)
-      return CommandResult(false, "", "User not found");
+      return CommandResult(false, "", "IAUser not found");
 
     user.status = UserStatus.inactive;
     user.updatedAt = currentTimestamp();
     userRepo.update(user);
-    return CommandResult(true, user.id.value, "User deactivated successfully.");
+    return CommandResult(true, user.id.value, "IAUser deactivated successfully.");
   }
 
   /// Change password.
   CommandResult changePassword(UserId id, string oldPassword, string newPassword) {
     auto user = userRepo.findById(tenantId, id);
     if (user.isNull)
-      return CommandResult(false, "", "User not found");
+      return CommandResult(false, "", "IAUser not found");
 
     if (!passwordSvc.verifyPassword(oldPassword, user.passwordHash))
       return CommandResult(false, "", "Current password is incorrect");

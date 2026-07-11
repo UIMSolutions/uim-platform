@@ -39,7 +39,7 @@ class AuthController : HttpController {
     auto data = precheck.data;
     auto authReq = AuthRequest(data.getString("tenantId"), data.getString("applicationId"),
       data.getString("email"), data.getString("password"),
-      data.getString("mfaCode"), req.peer, req.headers.get("User-Agent", ""));
+      data.getString("mfaCode"), req.peer, req.headers.get("IAUser-Agent", ""));
 
     auto result = authUseCase.execute(authReq);
     if (result.hasError)

@@ -20,7 +20,7 @@ struct PolicyEvaluationContext {
   string[] userGroupIds;
 }
 /// Returns true if the user satisfies all rules in the policy.
-bool evaluatePolicy(AuthorizationPolicy policy, User user, PolicyEvaluationContext ctx) {
+bool evaluatePolicy(AuthorizationPolicy policy, IAUser user, PolicyEvaluationContext ctx) {
   if (!policy.active)
     return true; // Inactive policies pass
 
@@ -32,7 +32,7 @@ bool evaluatePolicy(AuthorizationPolicy policy, User user, PolicyEvaluationConte
 }
 /// Returns the list of policies that deny access.
 AuthorizationPolicy[] findDenyingPolicies(AuthorizationPolicy[] policies,
-    User user, PolicyEvaluationContext ctx) {
+    IAUser user, PolicyEvaluationContext ctx) {
   AuthorizationPolicy[] denying;
   foreach (policy; policies) {
     if (!evaluatePolicy(policy, user, ctx))
@@ -41,7 +41,7 @@ AuthorizationPolicy[] findDenyingPolicies(AuthorizationPolicy[] policies,
   return denying;
 }
 
-private bool evaluateRule(PolicyRule rule, User user, PolicyEvaluationContext ctx) {
+private bool evaluateRule(PolicyRule rule, IAUser user, PolicyEvaluationContext ctx) {
   
   // import std.algorithm : canFind;
 

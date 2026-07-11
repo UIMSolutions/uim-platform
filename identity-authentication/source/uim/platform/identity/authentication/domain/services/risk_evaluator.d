@@ -20,7 +20,7 @@ struct RiskEvaluationContext {
   string userType;
 }
 /// Pure domain logic for risk evaluation.
-RiskLevel evaluateRisk(RiskRule[] rules, User user, RiskEvaluationContext ctx) {
+RiskLevel evaluateRisk(RiskRule[] rules, IAUser user, RiskEvaluationContext ctx) {
   RiskLevel highest = RiskLevel.low;
 
   foreach (rule; rules) {
@@ -36,7 +36,7 @@ RiskLevel evaluateRisk(RiskRule[] rules, User user, RiskEvaluationContext ctx) {
   return highest;
 }
 /// Check which MFA is required given the evaluated risk.
-MfaType requiredMfaForRisk(RiskRule[] rules, User user, RiskEvaluationContext ctx) {
+MfaType requiredMfaForRisk(RiskRule[] rules, IAUser user, RiskEvaluationContext ctx) {
   MfaType required = MfaType.none;
 
   foreach (rule; rules) {
@@ -52,7 +52,7 @@ MfaType requiredMfaForRisk(RiskRule[] rules, User user, RiskEvaluationContext ct
   return required;
 }
 
-private bool matchesAllConditions(RiskCondition[] conditions, User user, RiskEvaluationContext ctx) {
+private bool matchesAllConditions(RiskCondition[] conditions, IAUser user, RiskEvaluationContext ctx) {
   // import std.algorithm : canFind;
 
   foreach (cond; conditions) {
@@ -62,7 +62,7 @@ private bool matchesAllConditions(RiskCondition[] conditions, User user, RiskEva
   return true;
 }
 
-private bool matchesCondition(RiskCondition cond, User user, RiskEvaluationContext ctx) {
+private bool matchesCondition(RiskCondition cond, IAUser user, RiskEvaluationContext ctx) {
   
   // import std.algorithm : canFind;
 

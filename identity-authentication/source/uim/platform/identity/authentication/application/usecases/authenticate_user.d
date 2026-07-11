@@ -47,7 +47,7 @@ class AuthenticateUserUseCase { // TODO: UIMUseCase {
       return AuthResult(false, "Invalid credentials");
 
     if (!user.isActive())
-      return AuthResult(false, "User account is not active");
+      return AuthResult(false, "IAUser account is not active");
 
     // Verify password
     if (!passwordSvc.verifyPassword(req.password, user.passwordHash))

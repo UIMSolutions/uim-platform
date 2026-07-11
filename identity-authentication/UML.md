@@ -4,7 +4,7 @@
 
 ```mermaid
 classDiagram
-    class User {
+    class IAUser {
         +UserId id
         +TenantId tenantId
         +string username
@@ -85,9 +85,9 @@ classDiagram
     Application "1" --> "0..*" IdpConfig : configures
     Application "1" --> "0..*" Policy : governs
     Application "1" --> "0..*" RiskRule : protects
-    User "1" --> "0..*" Session : opens
-    User "1" --> "0..*" Token : holds
-    User "0..*" --> "0..*" Group : belongs
+    IAUser "1" --> "0..*" Session : opens
+    IAUser "1" --> "0..*" Token : holds
+    IAUser "0..*" --> "0..*" Group : belongs
 ```
 
 ---
@@ -130,11 +130,11 @@ flowchart TB
 
 ---
 
-## Sequence Diagram — User Authentication Flow
+## Sequence Diagram — IAUser Authentication Flow
 
 ```mermaid
 sequenceDiagram
-    participant UA as User Agent
+    participant UA as IAUser Agent
     participant AC as ApplicationController
     participant TC as TokenController
     participant TUC as ManageTokensUseCase

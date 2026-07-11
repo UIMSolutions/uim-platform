@@ -26,7 +26,7 @@ Clean/Hexagonal architecture with four layers:
 ## Features
 
 - **Authentication** — Login flow and token issuance (JWT-based)
-- **Users** — User lifecycle management with profile attributes and group membership
+- **Users** — IAUser lifecycle management with profile attributes and group membership
 - **Groups** — Group management for role-based access control
 - **Applications** — Register and configure OIDC/SAML applications
 - **Tenants** — Multi-tenant configuration management

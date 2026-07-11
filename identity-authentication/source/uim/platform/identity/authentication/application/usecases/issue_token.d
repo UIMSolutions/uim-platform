@@ -49,7 +49,7 @@ class IssueTokenUseCase { // TODO: UIMUseCase {
 
     auto user = userRepo.findById(session.userId);
     if (user.isNull)
-      return TokenResponse("", "", "", "User not found");
+      return TokenResponse("", "", "", "IAUser not found");
 
     auto app = appRepo.findByClient(req.clientId);
     if (app.isNull)

@@ -25,8 +25,8 @@
 
 ```
 Identity Authentication
-├── C1.1  User Management
-│   ├── C1.1.1  User CRUD and status lifecycle
+├── C1.1  IAUser Management
+│   ├── C1.1.1  IAUser CRUD and status lifecycle
 │   └── C1.1.2  Group membership management
 │
 ├── C1.2  Application Configuration
@@ -61,7 +61,7 @@ Identity Authentication
 |---|---|
 | **Mission** | Provide identity authentication modelled on SAP Identity Authentication Service (IAS) for BTP. |
 | **Vision** | Enable secure, federated, and policy-governed authentication for all BTP applications. |
-| **Scope** | User/group lifecycle, application config, IdP federation, policies, sessions, and token issuance. |
+| **Scope** | IAUser/group lifecycle, application config, IdP federation, policies, sessions, and token issuance. |
 | **Stakeholders** | Identity Administrators, Security Officers, Application Owners. |
 
 ---
@@ -72,7 +72,7 @@ Identity Authentication
 
 | Service ID | Name | Path Prefix | Methods |
 |---|---|---|---|
-| SVC-USR-CRUD | User | `/api/v1/users` | GET, POST, PUT, DELETE |
+| SVC-USR-CRUD | IAUser | `/api/v1/users` | GET, POST, PUT, DELETE |
 | SVC-GRP-CRUD | Group | `/api/v1/groups` | GET, POST, PUT, DELETE |
 | SVC-APP-CRUD | Application | `/api/v1/applications` | GET, POST, PUT, DELETE |
 | SVC-IDP-CRUD | IdP Config | `/api/v1/idp-configs` | GET, POST, PUT, DELETE |
@@ -88,7 +88,7 @@ Identity Authentication
 
 ```
 ┌────────────────────┐   REST/HTTP/JSON   ┌──────────────────────────────┐
-│  End User /         │ ─────────────────> │  Identity Authentication     │
+│  End IAUser /         │ ─────────────────> │  Identity Authentication     │
 │  Application        │                    │  Service — port 8080          │
 └────────────────────┘                    └──────────────────────────────┘
 ```
@@ -99,7 +99,7 @@ Identity Authentication
 
 | Entity | Key Relationships |
 |---|---|
-| `User` | Core principal; member of Groups; creates Sessions and Tokens |
+| `IAUser` | Core principal; member of Groups; creates Sessions and Tokens |
 | `Group` | Collection of Users |
 | `Application` | Registered client; owns IdpConfigs, Policies, RiskRules |
 | `IdpConfig` | SAML/OIDC federation metadata linked to Application |

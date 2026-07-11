@@ -10,7 +10,7 @@ import uim.platform.identity.authentication;
 mixin(ShowModule!());
 @safe:
 /// Core user entity in the identity directory.
-struct User {
+struct IAUser {
   mixin TenantEntity!UserId;
 
   string userName;
@@ -24,7 +24,7 @@ struct User {
   string[] groupIds;
   string phoneNumber;
   string externalIdpId;
-  UserId globalUserId; // Unique identifier across landscape (like SAP Global User ID)
+  UserId globalUserId; // Unique identifier across landscape (like SAP Global IAUser ID)
 
   string displayName() const {
     return firstName ~ " " ~ lastName;

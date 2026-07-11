@@ -29,7 +29,7 @@ struct AuthResult {
   string sessionId;
   UserId userId;
 }
-/// --- User DTOs ---
+/// --- IAUser DTOs ---
 
 struct CreateUserRequest {
   TenantId tenantId;

@@ -13,7 +13,7 @@ import uim.platform.identity.authentication;
 mixin(ShowModule!());
 @safe:
 /// In-memory adapter for user persistence (swap for DB adapter in production).
-class MemoryUserRepository : TenantRepository!(User, UserId), UserRepository {
+class MemoryUserRepository : TenantRepository!(IAUser, UserId), UserRepository {
 
   bool existsByEmail(TenantId tenantId, string email) {
     foreach (u; findByTenant(tenantId)) {
@@ -22,12 +22,12 @@ class MemoryUserRepository : TenantRepository!(User, UserId), UserRepository {
     }
     return false;
   }
-  User findByEmail(TenantId tenantId, string email) {
+  IAUser findByEmail(TenantId tenantId, string email) {
     foreach (u; findByTenant(tenantId)) {
       if (u.tenantId == tenantId && u.email == email)
         return u;
     }
-    return User.init;
+    return IAUser.init;
   }
 
   bool existsByUserName(TenantId tenantId, string userName) {
@@ -37,22 +37,22 @@ class MemoryUserRepository : TenantRepository!(User, UserId), UserRepository {
     }
     return false;
   }
-  User findByUserName(TenantId tenantId, string userName) {
+  IAUser findByUserName(TenantId tenantId, string userName) {
     foreach (u; findByTenant(tenantId)) {
       if (u.tenantId == tenantId && u.userName == userName)
         return u;
     }
-    return User.init;
+    return IAUser.init;
   }
 
 
   size_t countByGroupId(GroupId groupId) {
     return findByGroupId(groupId).length;
   }
-  User[] filterByGroupId(User[] users, GroupId groupId) {
+  IAUser[] filterByGroupId(IAUser[] users, GroupId groupId) {
     return users.filter!(u => u.groupIds.canFind(groupId)).array;
   }
-  User[] findByGroupId(GroupId groupId) {
+  IAUser[] findByGroupId(GroupId groupId) {
     return findByTenant(tenantId).filter!(u => u.groupIds.canFind(groupId)).array;
   }
   void removeByGroupId(GroupId groupId) {
