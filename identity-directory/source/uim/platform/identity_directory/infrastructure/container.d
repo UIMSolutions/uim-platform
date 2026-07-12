@@ -6,12 +6,12 @@
 module uim.platform.identity_directory.infrastructure.container;
 // import uim.platform.identity_directory.infrastructure.config;
 // Repositories
-// import uim.platform.identity_directory.infrastructure.persistence.memory.user;
-// import uim.platform.identity_directory.infrastructure.persistence.memory.group;
-// import uim.platform.identity_directory.infrastructure.persistence.memory.schema;
-// import uim.platform.identity_directory.infrastructure.persistence.memory.password_policy;
-// import uim.platform.identity_directory.infrastructure.persistence.memory.api_client;
-// import uim.platform.identity_directory.infrastructure.persistence.memory.audit;
+// import uim.platform.identity_directory.infrastructure.persistence.repositories.user;
+// import uim.platform.identity_directory.infrastructure.persistence.repositories.group;
+// import uim.platform.identity_directory.infrastructure.persistence.repositories.schema;
+// import uim.platform.identity_directory.infrastructure.persistence.repositories.password_policy;
+// import uim.platform.identity_directory.infrastructure.persistence.repositories.api_client;
+// import uim.platform.identity_directory.infrastructure.persistence.repositories.audit;
 // Services
 // import uim.platform.identity_directory.infrastructure.security.sha256_password_service;
 // Use Cases

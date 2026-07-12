@@ -18,7 +18,7 @@ struct AuditEvent {
   string actorId; // user or client that performed the action
   string actorType; // "User", "ApiClient", "System"
   string targetId; // affected resource ID
-  string targetType; // "User", "IAMGroup", "Schema", etc.
+  string targetType; // "User", "IDGroup", "Schema", etc.
   string description;
   string ipAddress;
   string userAgent;

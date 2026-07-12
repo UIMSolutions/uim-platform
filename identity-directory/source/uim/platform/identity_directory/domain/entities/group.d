@@ -13,7 +13,7 @@ mixin(ShowModule!());
 /// Member reference within a group.
 struct GroupMember {
   string value; // user or group ID
-  string type; // "User" or "IAMGroup"
+  string type; // "User" or "IDGroup"
   string display;
 
   Json toJson() const {
@@ -24,7 +24,7 @@ struct GroupMember {
   }
 }
 /// SCIM 2.0 group entity.
-struct IAMGroup {
+struct IDGroup {
   mixin TenantEntity!IAMGroupId;
 
   string externalId;

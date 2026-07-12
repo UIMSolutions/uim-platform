@@ -81,7 +81,7 @@ class PasswordPolicyController : ManageHttpController {
     return successResponse("Password policies retrieved successfully", "Retrieved", 200, response);
   }
 
-  override protected Json getActiveHandler(HTTPServerRequest req) {
+  protected Json getActiveHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);
     if (precheck.hasError)
       return precheck;

@@ -59,7 +59,7 @@ struct UserResponse {
     return error.length == 0;
   }
 }
-/// --- IAMGroup DTOs ---
+/// --- IDGroup DTOs ---
 
 struct CreateGroupRequest {
   TenantId tenantId;
@@ -78,7 +78,7 @@ struct UpdateGroupRequest {
 struct AddMemberRequest {
   IAMGroupId groupId;
   string memberId;
-  string memberType; // "User" or "IAMGroup"
+  string memberType; // "User" or "IDGroup"
   string display;
 }
 

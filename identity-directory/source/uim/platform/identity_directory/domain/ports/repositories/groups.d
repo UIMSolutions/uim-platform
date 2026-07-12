@@ -13,14 +13,14 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — group persistence.
-interface GroupRepository : ITenantRepository!(IAMGroup, IAMGroupId) {
+interface GroupRepository : ITenantRepository!(IDGroup, IAMGroupId) {
   
   bool existsByDisplayName(TenantId tenantId, string displayName);
-  IAMGroup findByDisplayName(TenantId tenantId, string displayName);
+  IDGroup findByDisplayName(TenantId tenantId, string displayName);
   void removeByDisplayName(TenantId tenantId, string displayName);
   
   size_t countByMember(string memberId);
-  IAMGroup[] findByMember(string memberId);
+  IDGroup[] findByMember(string memberId);
   void removeByMember(string memberId);
   
 }

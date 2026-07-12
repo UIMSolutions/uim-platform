@@ -28,9 +28,9 @@
 Identity Directory
 ├── C1.1  User Management
 │   ├── C1.1.1  Create, read, update, delete users
-│   └── C1.1.2  IAMGroup membership management
+│   └── C1.1.2  IDGroup membership management
 │
-├── C1.2  IAMGroup Management
+├── C1.2  IDGroup Management
 │   └── C1.2.1  Create and manage groups
 │
 ├── C1.3  Schema Management
@@ -66,7 +66,7 @@ Identity Directory
 | Service ID | Name | Path Prefix | Methods |
 |---|---|---|---|
 | SVC-USER-CRUD | User | `/api/v1/users` | GET, POST, PUT, DELETE |
-| SVC-GRP-CRUD | IAMGroup | `/api/v1/groups` | GET, POST, PUT, DELETE |
+| SVC-GRP-CRUD | IDGroup | `/api/v1/groups` | GET, POST, PUT, DELETE |
 | SVC-SCH-CRUD | Schema | `/api/v1/schemas` | GET, POST, DELETE |
 | SVC-AC-CRUD | API Client | `/api/v1/api-clients` | GET, POST, DELETE |
 | SVC-PP-CRUD | Password Policy | `/api/v1/password-policies` | GET, POST, PUT |
@@ -91,7 +91,7 @@ Identity Directory
 | Entity | Key Relationships |
 |---|---|
 | `User` | Directory user with group memberships |
-| `IAMGroup` | Collection of Users |
+| `IDGroup` | Collection of Users |
 | `Schema` | Custom attribute schema extension |
 | `ApiClient` | SCIM API access credential |
 | `PasswordPolicy` | Password strength rules |

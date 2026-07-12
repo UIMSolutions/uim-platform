@@ -5,10 +5,9 @@
 *****************************************************************************************************************/
 module uim.platform.identity_directory.application.usecases.manage;
 
-public {
+public:
   import uim.platform.identity_directory.application.usecases.manage.users;
   import uim.platform.identity_directory.application.usecases.manage.groups;
   import uim.platform.identity_directory.application.usecases.manage.schemas;
   import uim.platform.identity_directory.application.usecases.manage.password_policies;
   import uim.platform.identity_directory.application.usecases.manage.api_clients;
-}

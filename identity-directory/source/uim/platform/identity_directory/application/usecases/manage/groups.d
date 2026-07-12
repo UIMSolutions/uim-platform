@@ -33,14 +33,14 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
   /// Create a new group.
   GroupResponse createGroup(CreateGroupRequest req) {
     if (groupRepo.exitstByDisplayName(req.tenantId, req.displayName))
-      return GroupResponse("", "IAMGroup with this displayName already exists");
+      return GroupResponse("", "IDGroup with this displayName already exists");
 
-    auto group = IAMGroup(req.tenantId);
+    auto group = IDGroup(req.tenantId);
     group.externalId = req.externalId;
     group.displayName = req.displayName;
     group.description = req.description;
     group.members = req.members;
-    group.schemas = ["urn:ietf:params:scim:schemas:core:2.0:IAMGroup"];
+    group.schemas = ["urn:ietf:params:scim:schemas:core:2.0:IDGroup"];
 
     groupRepo.save(group);
 
@@ -56,19 +56,19 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
     }
 
     auditRepo.save(AuditEvent(randomUUID().toString(), req.tenantId,
-        AuditEventType.groupCreated, "system", "System", groupId, "IAMGroup",
-        "IAMGroup created: " ~ req.displayName, "", "", null, now,));
+        AuditEventType.groupCreated, "system", "System", groupId, "IDGroup",
+        "IDGroup created: " ~ req.displayName, "", "", null, now,));
 
     return GroupResponse(groupId, "");
   }
 
   /// Get group by ID.
-  IAMGroup getGroup(IAMGroupId id) {
+  IDGroup getGroup(IAMGroupId id) {
     return groupRepo.findById(tenantId, id);
   }
 
   /// List groups for a tenant.
-  IAMGroup[] listGroups(TenantId tenantId, size_t offset = 0, size_t limit = 100) {
+  IDGroup[] listGroups(TenantId tenantId, size_t offset = 0, size_t limit = 100) {
     return groupRepo.findByTenant(tenantId, offset, limit);
   }
 
@@ -76,7 +76,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
   CommandResult updateGroup(UpdateGroupRequest req) {
     auto group = groupRepo.findById(req.groupId);
     if (group.isNull)
-      return CommandResult(false, "", "IAMGroup not found");
+      return CommandResult(false, "", "IDGroup not found");
 
     if (req.displayName.length > 0)
       group.displayName = req.displayName;
@@ -87,8 +87,8 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
     groupRepo.update(group);
 
     auditRepo.save(AuditEvent(randomUUID().toString(), group.tenantId,
-        AuditEventType.groupUpdated, "system", "System", req.groupId, "IAMGroup",
-        "IAMGroup updated", "", "", null, Clock.currStdTime(),));
+        AuditEventType.groupUpdated, "system", "System", req.groupId, "IDGroup",
+        "IDGroup updated", "", "", null, Clock.currStdTime(),));
 
     return CommandResult(true, req.groupId.value, "");
   }
@@ -97,7 +97,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
   CommandResult addMember(AddMemberRequest req) {
     auto group = groupRepo.findById(req.groupId);
     if (group.isNull)
-      return CommandResult(false, "", "IAMGroup not found");
+      return CommandResult(false, "", "IDGroup not found");
 
     // Check if already a member
     if (group.hasMember(req.memberId))
@@ -117,7 +117,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
     }
 
     auditRepo.save(AuditEvent(randomUUID().toString(), group.tenantId,
-        AuditEventType.memberAdded, "system", "System", req.groupId, "IAMGroup",
+        AuditEventType.memberAdded, "system", "System", req.groupId, "IDGroup",
         "Member added: " ~ req.memberId, "", "", null, Clock.currStdTime(),));
 
     return CommandResult(true, req.groupId.value, "Member added successfully.");
@@ -127,7 +127,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
   CommandResult removeMember(RemoveMemberRequest req) {
     auto group = groupRepo.findById(req.groupId);
     if (group.isNull)
-      return CommandResult(false, "", "IAMGroup not found");
+      return CommandResult(false, "", "IDGroup not found");
 
     auto newMembers = group.members.filter!(m => m.value != req.memberId).array.toJson;
     if (newMembers.length == group.members.length)
@@ -145,7 +145,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
     }
 
     auditRepo.save(AuditEvent(randomUUID().toString(), group.tenantId,
-        AuditEventType.memberRemoved, "system", "System", req.groupId, "IAMGroup",
+        AuditEventType.memberRemoved, "system", "System", req.groupId, "IDGroup",
         "Member removed: " ~ req.memberId, "", "", null, Clock.currStdTime(),));
 
     return CommandResult(true, req.groupId.value, "Member removed successfully.");
@@ -155,7 +155,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
   CommandResult deleteGroup(IAMGroupId id) {
     auto group = groupRepo.findById(tenantId, id);
     if (group.isNull)
-      return CommandResult(false, "", "IAMGroup not found");
+      return CommandResult(false, "", "IDGroup not found");
 
     // Remove group from all member users
     foreach (m; group.members) {
@@ -171,9 +171,9 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
     groupRepo.remove(group);
 
     auditRepo.save(AuditEvent(randomUUID().toString(), group.tenantId,
-        AuditEventType.groupDeleted, "system", "System", id, "IAMGroup",
-        "IAMGroup deleted: " ~ group.displayName, "", "", null, Clock.currStdTime(),));
+        AuditEventType.groupDeleted, "system", "System", id, "IDGroup",
+        "IDGroup deleted: " ~ group.displayName, "", "", null, Clock.currStdTime(),));
 
-    return CommandResult(true, id.value, "IAMGroup deleted successfully.");
+    return CommandResult(true, id.value, "IDGroup deleted successfully.");
   }
 }

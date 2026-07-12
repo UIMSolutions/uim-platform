@@ -12,7 +12,7 @@ classDiagram
         +string status
         +string[] groupIds
     }
-    class IAMGroup {
+    class IDGroup {
         +string id
         +string displayName
         +string description
@@ -48,7 +48,7 @@ classDiagram
         +string timestamp
     }
 
-    User "many" --> "many" IAMGroup : member of
+    User "many" --> "many" IDGroup : member of
     AuditEvent --> User : records action by
 ```
 
@@ -67,7 +67,7 @@ flowchart TB
     end
     subgraph Domain["Domain Layer"]
         USER["User"]
-        GROUP["IAMGroup"]
+        GROUP["IDGroup"]
         SCHEMA["Schema"]
         CLIENT["ApiClient"]
         POLICY["PasswordPolicy"]

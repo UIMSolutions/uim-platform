@@ -47,7 +47,7 @@ class GroupController : ManageHttpController {
       .set("schemas", ["urn:ietf:params:scim:api:messages:2.0:ListResponse"].toJson)
       .set("totalResults", groups.length)
       .set("Resources", list);
-    return successResponse("IAMGroup list retrieved successfully", "Retrieved", 200, response);
+    return successResponse("IDGroup list retrieved successfully", "Retrieved", 200, response);
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
@@ -72,7 +72,7 @@ class GroupController : ManageHttpController {
 
     auto responseData = Json.emptyObject
       .set("id", result.id)
-      .set("schemas", ["urn:ietf:params:scim:schemas:core:2.0:IAMGroup"].toJson);
+      .set("schemas", ["urn:ietf:params:scim:schemas:core:2.0:IDGroup"].toJson);
 
     return successResponse("Scan job created successfully", "Created", 201, responseData);
   }
@@ -89,10 +89,10 @@ class GroupController : ManageHttpController {
 
     auto group = useCase.getGroup(tenantId, id);
     if (group.isNull)
-      return errorResponse("IAMGroup not found", 404);
+      return errorResponse("IDGroup not found", 404);
 
     auto responseData = group.toJson();
-    return successResponse("IAMGroup retrieved successfully", "Retrieved", 200, responseData);
+    return successResponse("IDGroup retrieved successfully", "Retrieved", 200, responseData);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
@@ -112,7 +112,7 @@ class GroupController : ManageHttpController {
     if (result.hasError)
       writeScimError(res, 404, result.errorMessage);
 
-    return successResponse("IAMGroup updated successfully", "Updated", 200, Json.emptyObject.set("id", result
+    return successResponse("IDGroup updated successfully", "Updated", 200, Json.emptyObject.set("id", result
         .id));
   }
 
@@ -130,7 +130,7 @@ class GroupController : ManageHttpController {
     if (result.hasError)
       return errorResponse(result.errorMessage, 404);
 
-    return successResponse("IAMGroup deleted successfully", "Deleted", 200, Json.emptyObject);
+    return successResponse("IDGroup deleted successfully", "Deleted", 200, Json.emptyObject);
   }
 
   protected Json addMemberHandler(HTTPServerRequest req) {
