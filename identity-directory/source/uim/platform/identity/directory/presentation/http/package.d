@@ -3,8 +3,8 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.identity.directory.presentation.http;
+module uim.platform.identity_directory.presentation.http;
 
 public {
-    import uim.platform.identity.directory.presentation.http.controllers;
+    import uim.platform.identity_directory.presentation.http.controllers;
 }

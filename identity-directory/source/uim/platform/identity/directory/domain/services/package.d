@@ -1,5 +1,5 @@
-module uim.platform.identity.directory.domain.services;
+module uim.platform.identity_directory.domain.services;
 
 public {
-  import uim.platform.identity.directory.domain.services.validators;
+  import uim.platform.identity_directory.domain.services.validators;
 }

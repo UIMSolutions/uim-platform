@@ -3,14 +3,14 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.identity.directory.application.dto;
+module uim.platform.identity_directory.application.dto;
 
-// import uim.platform.identity.directory.domain.types;
-// import uim.platform.identity.directory.domain.entities.user : UserName, Email,
+// import uim.platform.identity_directory.domain.types;
+// import uim.platform.identity_directory.domain.entities.user : UserName, Email,
 //   PhoneNumber, Address, ExtendedAttribute;
-// import uim.platform.identity.directory.domain.entities.group : GroupMember;
-// import uim.platform.identity.directory.domain.entities.schema : SchemaAttribute;
-import uim.platform.identity.directory;
+// import uim.platform.identity_directory.domain.entities.group : GroupMember;
+// import uim.platform.identity_directory.domain.entities.schema : SchemaAttribute;
+import uim.platform.identity_directory;
 
 mixin(ShowModule!());
 

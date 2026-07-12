@@ -3,12 +3,12 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.identity.directory.infrastructure.security.sha256_password_service;
-// import uim.platform.identity.directory.domain.ports.repositories.password_service;
+module uim.platform.identity_directory.infrastructure.security.sha256_password_service;
+// import uim.platform.identity_directory.domain.ports.repositories.password_service;
 // import std.digest.sha;
 
 // import std.string : representation;
-import uim.platform.identity.directory;
+import uim.platform.identity_directory;
 
 mixin(ShowModule!());
 

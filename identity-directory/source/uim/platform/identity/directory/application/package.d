@@ -1,6 +1,6 @@
-module uim.platform.identity.directory.application;
+module uim.platform.identity_directory.application;
 
 public {
-  import uim.platform.identity.directory.application.dto;
-  import uim.platform.identity.directory.application.usecases;
+  import uim.platform.identity_directory.application.dto;
+  import uim.platform.identity_directory.application.usecases;
 }

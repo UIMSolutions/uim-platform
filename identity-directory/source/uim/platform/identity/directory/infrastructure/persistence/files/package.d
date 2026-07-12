@@ -1,2 +1,2 @@
-module uim.platform.identity.directory.infrastructure.persistence.file;
+module uim.platform.identity_directory.infrastructure.persistence.file;
 

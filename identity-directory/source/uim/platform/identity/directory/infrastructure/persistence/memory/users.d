@@ -3,11 +3,11 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.identity.directory.infrastructure.persistence.memory.users;
-// import uim.platform.identity.directory.domain.entities.user;
+module uim.platform.identity_directory.infrastructure.persistence.memory.users;
+// import uim.platform.identity_directory.domain.entities.user;
 
-// import uim.platform.identity.directory.domain.ports.repositories.users;
-import uim.platform.identity.directory;
+// import uim.platform.identity_directory.domain.ports.repositories.users;
+import uim.platform.identity_directory;
 
 mixin(ShowModule!());
 

@@ -1,2 +1,2 @@
-module uim.platform.identity.directory.infrastructure.persistence.mongo;
+module uim.platform.identity_directory.infrastructure.persistence.mongo;
 

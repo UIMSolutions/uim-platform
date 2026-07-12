@@ -3,10 +3,10 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.identity.directory.infrastructure.config;
+module uim.platform.identity_directory.infrastructure.config;
 import std.process : environment;
 
-import uim.platform.identity.directory;
+import uim.platform.identity_directory;
 
 mixin(ShowModule!());
 

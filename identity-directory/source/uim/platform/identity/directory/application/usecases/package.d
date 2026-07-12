@@ -1,2 +1,2 @@
-module uim.platform.identity.directory.application.usecases;
+module uim.platform.identity_directory.application.usecases;
 

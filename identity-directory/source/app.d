@@ -5,10 +5,10 @@
 *****************************************************************************************************************/
 module app;
 
-// import uim.platform.identity.directory.infrastructure.config;
-// import uim.platform.identity.directory.infrastructure.container;
+// import uim.platform.identity_directory.infrastructure.config;
+// import uim.platform.identity_directory.infrastructure.container;
 
-import uim.platform.identity.directory;
+import uim.platform.identity_directory;
 
 mixin(ShowModule!());
 
