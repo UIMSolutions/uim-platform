@@ -22,7 +22,7 @@ class MemoryPolicyRepository : TenantRepository!(AuthorizationPolicy, PolicyId),
   }
 
   AuthorizationPolicy[] filterByApplication(AuthorizationPolicy[] policies, ApplicationId appId) {
-    return policies.filter!(p => p.applicationIds.canFind(appId)).array;
+    return policies.filter!(p => p.applicationIds.any!(id => id == appId.value)).array;
   }
 
   AuthorizationPolicy[] findByApplication(TenantId tenantId, ApplicationId appId) {

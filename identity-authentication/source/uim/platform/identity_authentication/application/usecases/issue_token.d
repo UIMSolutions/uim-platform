@@ -45,51 +45,70 @@ class IssueTokenUseCase { // TODO: UIMUseCase {
     import uim.platform.identity_authentication.domain.entities.session : IASession;
 
     if (session.isNull || session.revoked)
-      return TokenResponse("", "", "", "Invalid session");
+      return TokenResponse(TenantId(""), "", "", "", "Invalid session");
 
     auto user = userRepo.findById(session.tenantId, session.userId);
     if (user.isNull)
-      return TokenResponse("", "", "", "IAUser not found");
+      return TokenResponse(TenantId(""), "", "", "", "User not found");
 
     auto app = appRepo.findByClient(session.tenantId, req.clientId);
     if (app.isNull)
-      return TokenResponse("", "", "", "Unknown application");
+      return TokenResponse(TenantId(""), "", "", "", "Unknown application");
 
     if (app.clientSecret != req.clientSecret)
-      return TokenResponse("", "", "", "Invalid client credentials");
+      return TokenResponse(TenantId(""), "", "", "", "Invalid client credentials");
 
     auto now = currentTimestamp();
 
     // Generate access token
     auto accessTokenValue = tokenSvc.generateToken(user, app, TokenType.access, req.scopes);
-    auto accessToken = Token(randomUUID().toString(), user.id, session.tenantId,
-        app.id, TokenType.access, accessTokenValue, req.scopes, now,
-        now + dur!"hours"(1).total!"hnsecs", false);
+    auto accessToken = Token();
+    accessToken.tenantId = session.tenantId;
+    accessToken.id = randomUUID().toString();
+    accessToken.userId = user.id;
+    // accessToken.appId = app.id;
+    accessToken.tokenType = TokenType.access;
+    // accessToken.value = accessTokenValue;
+    accessToken.scopes = req.scopes;
+    accessToken.createdAt = now;
+    accessToken.expiresAt = now + dur!"hours"(1).total!"hnsecs";
+    accessToken.revoked = false;
     tokenRepo.save(accessToken);
 
     // Generate refresh token
     auto refreshTokenValue = tokenSvc.generateToken(user, app, TokenType.refresh, req.scopes);
-    auto refreshToken = Token(randomUUID().toString(), user.id, session.tenantId,
-        app.id, TokenType.refresh, refreshTokenValue, req.scopes, now,
-        now + dur!"hours"(24).total!"hnsecs", false);
+    auto refreshToken = Token();
+    refreshToken.id = randomUUID().toString();
+    refreshToken.userId = user.id;
+    refreshToken.tenantId = session.tenantId;
+    // refreshToken.appId = app.id;
+    refreshToken.tokenType = TokenType.refresh;
+    // refreshToken.value = refreshTokenValue;
+    refreshToken.scopes = req.scopes;
+    refreshToken.createdAt = now;
+    refreshToken.expiresAt = now + dur!"hours"(24).total!"hnsecs";
+    refreshToken.revoked = false;
     tokenRepo.save(refreshToken);
 
     // Generate ID token (OIDC)
     auto idTokenValue = tokenSvc.generateToken(user, app, TokenType.idToken, req.scopes);
 
-    return TokenResponse(accessTokenValue, refreshTokenValue, idTokenValue, "");
+    return TokenResponse(session.tenantId, accessTokenValue, refreshTokenValue, idTokenValue, "");
   }
 }
 
 struct TokenRequest {
   TenantId tenantId;
-  string sessionId;
+  SessionId sessionId;
+  
   string clientId;
   string clientSecret;
   string[] scopes;
 }
 
 struct TokenResponse {
+  TenantId tenantId;
+
   string accessToken;
   string refreshToken;
   string idToken;

@@ -55,8 +55,12 @@ class AuthenticateUserUseCase { // TODO: UIMUseCase {
 
     // Risk evaluation
     auto riskRules = riskRuleRepo.findByTenant(req.tenantId);
-    auto riskCtx = RiskEvaluationContext(req.ipAddress, req.userAgent,
-        AuthMethod.form, user.groupIds, "employee");
+    auto riskCtx = RiskEvaluationContext();
+    riskCtx.ipAddress = req.ipAddress;
+    riskCtx.userAgent = req.userAgent;
+    riskCtx.authMethod = AuthMethod.form;
+    // riskCtx.groupIds = user.groupIds;
+    // riskCtx.role = "employee";
     auto riskLevel = evaluateRisk(riskRules, user, riskCtx);
     auto requiredMfa = requiredMfaForRisk(riskRules, user, riskCtx);
 

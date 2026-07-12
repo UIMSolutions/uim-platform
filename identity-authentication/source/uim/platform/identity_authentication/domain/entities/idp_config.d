@@ -35,7 +35,7 @@ struct IdpConfig {
       .set("tokenEndpoint", tokenEndpoint)
       .set("userInfoEndpoint", userInfoEndpoint)
       .set("clientId", clientId)
-      .set("domainHints", domainHints)
+      // .set("domainHints", domainHints)
       .set("isDefault", isDefault)
       .set("active", active);
   }

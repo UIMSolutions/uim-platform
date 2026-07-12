@@ -52,10 +52,10 @@ class ApplicationController : ManageHttpController {
     if (result.hasError)
       return errorResponse(result.message, 400);
 
-    auto responseData = Json.emptyObject
-      .set("applicationId", result.applicationId)
-      .set("clientId", result.clientId)
-      .set("clientSecret", result.clientSecret);
+    auto responseData = Json.emptyObject.set("id", result.id);
+      // .set("applicationId", result.applicationId)
+      // .set("clientId", result.clientId)
+//      .set("clientSecret", result.clientSecret);
     return successResponse("Application created successfully", "Created", 201, responseData);
   }
 
@@ -80,7 +80,7 @@ class ApplicationController : ManageHttpController {
     auto tenantId = precheck.tenantId;
     auto path = req.requestURI;
     auto idx = path.lastIndexOf('/');
-    auto appId = idx >= 0 ? path[idx + 1 .. $] : "";
+    auto appId = ApplicationId(idx >= 0 ? path[idx + 1 .. $] : "");
 
     auto app = useCase.getApplication(tenantId, appId);
     if (app.isNull)
@@ -100,10 +100,9 @@ class ApplicationController : ManageHttpController {
     auto tenantId = precheck.tenantId;
     // import std.string : lastIndexOf;
 
-    auto tenantId = precheck.tenantId;
     auto path = req.requestURI;
     auto idx = path.lastIndexOf('/');
-    auto appId = idx >= 0 ? path[idx + 1 .. $] : "";
+    auto appId = ApplicationId(idx >= 0 ? path[idx + 1 .. $] : "");
 
     auto data = precheck.data;
     UpdateAppRequest request;
@@ -118,7 +117,7 @@ class ApplicationController : ManageHttpController {
       return errorResponse(result.message, 400);
 
     auto responseData = Json.emptyObject
-      .set("applicationId", result.applicationId);
+      .set("id", appId.value);
     return successResponse("Application updated successfully", "Updated", 200, responseData);
   }
 }

@@ -40,7 +40,7 @@ class PolicyController : ManageHttpController {
     ScanJobDTO dto;
     dto.tenantId = tenantId;
     PolicyRule[] rules;
-    foreach (rj; rulesJson.toArray) {
+    foreach (rj; data["rules"].toArray) {
       PolicyRule rule;
       rule.attribute = getString(rj, "attribute");
       rule.operator = getString(rj, "operator");
@@ -49,8 +49,12 @@ class PolicyController : ManageHttpController {
       rules ~= rule;
     }
 
-    auto createReq = CreatePolicyRequest(data.getString("tenantId"), data.getString("name"),
-      data.getString("description"), rules, data.getStrings("applicationIds"));
+    auto createReq = CreatePolicyRequest();
+    createReq.tenantId = tenantId;
+    createReq.name = data.getString("name");
+    createReq.description = data.getString("description");
+    createReq.rules = rules;
+    createReq.applicationIds = data.getStrings("applicationIds");
 
     auto result = useCase.createPolicy(createReq);
     if (result.hasError)
@@ -68,12 +72,11 @@ class PolicyController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto policies = useCase.listPolicies(tenantId);
-    auto arr = policies.map!(p => p.toJson).array;
+    auto policies = useCase.listPolicies(tenantId).map!(p => p.toJson).array.toJson;
 
     auto response = Json.emptyObject
-      .set("totalResults", policies.length)
-      .set("resources", arr);
+      .set("totalResults", policies.array.length)
+      .set("resources", policies);
 
     return successResponse("Policies retrieved successfully", "OK", 200, response);
   }

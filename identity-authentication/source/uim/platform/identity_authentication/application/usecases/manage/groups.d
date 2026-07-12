@@ -29,12 +29,13 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
 
   GroupResponse createGroup(CreateGroupRequest req) {
     auto group = IAGroup(req.tenantId);
+    group.id = GroupId(randomUUID().toString());
     group.name = req.name;
     group.description = req.description;
     group.memberUserIds = [];
         
     groupRepo.save(group);
-    return GroupResponse(group.id.value, "");
+    return GroupResponse(req.tenantId, group.id.value, "");
   }
 
   IAGroup getGroup(TenantId tenantId, GroupId id) {
@@ -63,7 +64,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
 
       // Also update user's groupIds
       if (!user.groupIds.canFind(groupId)) {
-        user.groupIds ~= groupId.value;
+        user.groupIds ~= groupId;
         userRepo.update(user);
       }
     }
@@ -77,7 +78,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
 
     string[] updated;
     foreach (mid; group.memberUserIds) {
-      if (mid != userId.value)
+      if (mid.value != userId.value)
         updated ~= mid;
     }
     group.memberUserIds = updated;

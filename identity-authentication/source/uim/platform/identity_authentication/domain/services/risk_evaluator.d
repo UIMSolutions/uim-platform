@@ -28,8 +28,8 @@ RiskLevel evaluateRisk(RiskRule[] rules, IAUser user, RiskEvaluationContext ctx)
       continue;
 
     if (matchesAllConditions(rule.conditions, user, ctx)) {
-      if (rule.resultLevel > highest)
-        highest = rule.resultLevel;
+      if (rule.riskLevel > highest)
+        highest = rule.riskLevel;
     }
   }
 

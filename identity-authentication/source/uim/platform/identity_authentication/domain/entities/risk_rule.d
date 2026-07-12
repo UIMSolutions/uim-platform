@@ -15,7 +15,7 @@ struct RiskRule {
 
   string name;
   RiskCondition[] conditions;
-  RiskLevel resultLevel;
+  RiskLevel riskLevel;
   MfaType requiredMfa = MfaType.none; // MFA to enforce when rule triggers
   bool active = true;
 
@@ -23,7 +23,7 @@ struct RiskRule {
     return entityToJson
       .set("name", name)
       .set("conditions", conditions.map!(c => c.toJson()).array.toJson)
-      .set("resultLevel", resultLevel.to!string)
+      .set("riskLevel", riskLevel.to!string)
       .set("requiredMfa", requiredMfa.to!string)
       .set("active", active);
   }

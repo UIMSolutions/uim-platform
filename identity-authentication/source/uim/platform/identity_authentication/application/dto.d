@@ -54,8 +54,8 @@ struct UserResponse {
   UserId userId;
   string error;
 
-  bool isSuccess() const {
-    return error.length == 0;
+  bool hasError() const {
+    return error.length > 0;
   }
 }
 /// --- IAGroup DTOs ---
@@ -68,12 +68,11 @@ struct CreateGroupRequest {
 
 struct GroupResponse {
   TenantId tenantId;
-
-  string groupId;
+  GroupId groupId;
   string error;
 
-  bool isSuccess() const {
-    return error.length == 0;
+  bool hasError() const {
+    return error.length > 0;
   }
 }
 /// --- Application DTOs ---

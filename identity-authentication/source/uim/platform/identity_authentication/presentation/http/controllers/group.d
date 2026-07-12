@@ -38,74 +38,74 @@ class GroupController : ManageHttpController {
     auto tenantId = precheck.tenantId;
 
     auto data = precheck.data;
-    auto createReq = CreateGroupRequest(data.getString("tenantId"),
-      data.getString("name"), data.getString("description"));
+    auto createReq = CreateGroupRequest();
+    createReq.tenantId = tenantId;
+    createReq.name = data.getString("name");
+    createReq.description = data.getString("description");
 
     auto result = useCase.createGroup(createReq);
     if (result.hasError)
-      return errorResponse(result.message, 400);
+      return errorResponse(result.error, 400);
 
     auto response = Json.emptyObject;
     response["id"] = result.groupId;
     return successResponse("Group created successfully", "Created", 201, response);
-}
-
-override protected Json listHandler(HTTPServerRequest req) {
-  auto precheck = super.listHandler(req);
-  if (precheck.hasError)
-    return precheck;
-
-  auto tenantId = precheck.tenantId;
-
-  auto groups = useCase.listGroups(tenantId);
-  auto response = Json.emptyObject;
-  response["totalResults"] = groups.length.toJson;
-  response["resources"] = groups.toJson;
-  return successResponse("Groups retrieved successfully", "OK", 200, response);
-}
-
-override protected Json getHandler(HTTPServerRequest req) {
-  auto precheck = super.getHandler(req);
-  if (precheck.hasError)
-    return precheck;
-
-  auto tenantId = precheck.tenantId;
-  // import std.string : lastIndexOf;
-  auto tenantId = precheck.tenantId;
-
-  auto path = req.requestURI;
-  auto idx = path.lastIndexOf('/');
-  auto groupId = idx >= 0 ? path[idx + 1 .. $] : "";
-
-  auto group = useCase.getGroup(groupId);
-  if (group == IAGroup.isNull) {
-    return errorResponse("IAGroup not found", 404);
   }
 
-  return successResponse("Group retrieved successfully", "Retrieved", 200, toJsonValue(group));
-}
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-protected void handleAddMember(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-  try {
+    auto tenantId = precheck.tenantId;
+
+    auto groups = useCase.listGroups(tenantId);
+    auto response = Json.emptyObject;
+    response["totalResults"] = groups.length.toJson;
+    response["resources"] = groups.toJson;
+    return successResponse("Groups retrieved successfully", "OK", 200, response);
+  }
+
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    // import std.string : lastIndexOf;
+
+    auto path = req.requestURI;
+    auto idx = path.lastIndexOf('/');
+    auto groupId = idx >= 0 ? path[idx + 1 .. $] : "";
+
+    auto group = useCase.getGroup(tenantId, groupId);
+    if (group.isNull) 
+      return errorResponse("IAGroup not found", 404);
+    
+
+    return successResponse("Group retrieved successfully", "Retrieved", 200, toJsonValue(group));
+  }
+
+  protected Json addMemberHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
     auto tenantId = precheck.tenantId;
 
     auto data = precheck.data;
-    auto error = useCase.addMember(data.getString("groupId"), data.getString("userId"));
+    auto groupId = GroupId(data.getString("groupId"));
+    auto userId = UserId(data.getString("userId"));
 
-    if (error.length > 0) {
-      auto errRes = Json.emptyObject;
-      errRes["error"] = Json(error);
-      res.writeJsonBody(errRes, 400);
-    } else {
-      auto resp = Json.emptyObject
-        .set("status", "member_added");
+    auto result = useCase.addMember(tenantId, groupId, userId);
+    if (result.hasError) 
+      return errorResponse(result.message, 400);
+    
 
-      res.writeJsonBody(resp, 200);
-    }
-  } catch (Exception e) {
-    auto errRes = Json.emptyObject;
-    errRes["error"] = Json("Internal server error");
-    res.writeJsonBody(errRes, 500);
+    auto response = Json.emptyObject.set("id", result.id);
+    response["status"] = "member_added";
+    return successResponse("Member added successfully", "OK", 200, response);
   }
-}
+
+  mixin(HandleTemplate!("handleAddMember", "addMemberHandler"));
 }

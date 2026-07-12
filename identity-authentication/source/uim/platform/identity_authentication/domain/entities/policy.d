@@ -34,7 +34,7 @@ struct PolicyRule {
   string operator_; // e.g., "eq", "in", "not_in", "matches"
   string value;
 
-  Json toJson() {
+  Json toJson() const {
     return Json.emptyObject
       .set("attribute", attribute)
       .set("operator", operator_)

@@ -27,7 +27,7 @@ class AuthController : HttpController {
 
     router.post("/api/v1/auth/login", &handleLogin);
     router.post("/api/v1/auth/token", &handleToken);
-    router.get("/api/v1/auth/health", &handleHealth);
+    // router.get("/api/v1/auth/health", &handleHealth);
   }
 
   protected Json loginHandler(HTTPServerRequest req) {
@@ -37,12 +37,17 @@ class AuthController : HttpController {
 
     auto tenantId = precheck.tenantId;
     auto data = precheck.data;
-    auto authReq = AuthRequest(data.getString("tenantId"), data.getString("applicationId"),
-      data.getString("email"), data.getString("password"),
-      data.getString("mfaCode"), req.peer, req.headers.get("IAUser-Agent", ""));
+    auto authReq = AuthRequest();
+    authReq.tenantId = tenantId;
+    authReq.applicationId = data.getString("applicationId");
+    authReq.email = data.getString("email");
+    authReq.password = data.getString("password");
+    authReq.mfaCode = data.getString("mfaCode");
+    // authReq.peer = req.peer;
+    authReq.userAgent = req.headers.get("IAUser-Agent", "");
 
     auto result = authUseCase.execute(authReq);
-    if (result.hasError)
+    if (!result.success)
       return errorResponse(result.message, 400);
 
     auto response = Json.emptyObject
@@ -55,7 +60,7 @@ class AuthController : HttpController {
     }
 
     response["sessionId"] = Json(result.sessionId);
-    response["userId"] = Json(result.userId);
+    response["userId"] = Json(result.userId.value);
 
     return successResponse("Login successful", "OK", 200, response);
   }
@@ -69,12 +74,15 @@ class AuthController : HttpController {
 
     auto tenantId = precheck.tenantId;
     auto data = precheck.data;
-    auto tokenReq = TokenRequest(data.getString("sessionId"), data.getString("clientId"),
-      data.getString("clientSecret"), data.getStrings("scopes"));
+    auto tokenReq = TokenRequest();
+    tokenReq.sessionId = data.getString("sessionId");
+    tokenReq.clientId = data.getString("clientId");
+    tokenReq.clientSecret = data.getString("clientSecret");
+    tokenReq.scopes = data.getStrings("scopes");
 
     auto result = tokenUseCase.execute(tokenReq);
-    if (result.hasError())
-      return errorResponse(result.message, 400);
+    if (result.error.length > 0)
+      return errorResponse(result.error, 400);
 
     auto response = Json.emptyObject
       .set("access_token", result.accessToken)
