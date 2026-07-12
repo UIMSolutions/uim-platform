@@ -31,7 +31,7 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
   UserResponse createUser(CreateUserRequest req) {
     // Check uniqueness
     if (userRepo.existsByEmail(req.tenantId, req.email))
-      return UserResponse("", "IAUser with this email already exists");
+      return UserResponse(UserId(""), "User with this email already exists");
 
     auto now = currentTimestamp();
     auto user = IAUser(req.tenantId);
@@ -48,7 +48,7 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
     user.globalUserId = randomUUID().toString();
 
     userRepo.save(user);
-    return UserResponse(user.id.value, "");
+    return UserResponse(user.id, "");
   }
 
   /// Get user by ID.
@@ -65,7 +65,7 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
   CommandResult updateUser(UpdateUserRequest req) {
     auto user = userRepo.findById(req.tenantId, req.userId);
     if (user.isNull)
-      return CommandResult(false, "", "IAUser not found");
+      return CommandResult(false, "", "User not found");
 
     if (req.firstName.length > 0)
       user.firstName = req.firstName;
@@ -76,26 +76,26 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
 
     user.updatedAt = currentTimestamp();
     userRepo.update(user);
-    return CommandResult(true, user.id.value, "IAUser updated successfully.");
+    return CommandResult(true, user.id.value, "User updated successfully.");
   }
 
   /// Deactivate (soft-delete) a user.
   CommandResult deactivateUser(TenantId tenantId, UserId id) {
     auto user = userRepo.findById(tenantId, id);
     if (user.isNull)
-      return CommandResult(false, "", "IAUser not found");
+      return CommandResult(false, "", "User not found");
 
     user.status = UserStatus.inactive;
     user.updatedAt = currentTimestamp();
     userRepo.update(user);
-    return CommandResult(true, user.id.value, "IAUser deactivated successfully.");
+    return CommandResult(true, user.id.value, "User deactivated successfully.");
   }
 
   /// Change password.
   CommandResult changePassword(ChangePasswordRequest req) {
     auto user = userRepo.findById(req.tenantId, req.userId);
     if (user.isNull)
-      return CommandResult(false, "", "IAUser not found");
+      return CommandResult(false, "", "User not found");
 
     if (!passwordSvc.verifyPassword(req.oldPassword, user.passwordHash))
       return CommandResult(false, "", "Current password is incorrect");

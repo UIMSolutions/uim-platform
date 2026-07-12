@@ -35,7 +35,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
     group.memberUserIds = [];
         
     groupRepo.save(group);
-    return GroupResponse(req.tenantId, group.id.value, "");
+    return GroupResponse(req.tenantId, group.id, "");
   }
 
   IAGroup getGroup(TenantId tenantId, GroupId id) {
@@ -55,7 +55,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
 
     auto user = userRepo.findById(tenantId, userId);
     if (user.isNull)
-      return CommandResult(false, "", "IAUser not found");
+      return CommandResult(false, "", "User not found");
 
     if (!group.memberUserIds.hasUserId(userId)) {
       group.memberUserIds ~= userId;
@@ -76,7 +76,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
     if (group.isNull)
       return CommandResult(false, "", "IAGroup not found");
 
-    string[] updated;
+    UserId[] updated;
     foreach (mid; group.memberUserIds) {
       if (mid.value != userId.value)
         updated ~= mid;

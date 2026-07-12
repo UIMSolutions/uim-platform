@@ -44,7 +44,7 @@ class AuthController : HttpController {
     authReq.password = data.getString("password");
     authReq.mfaCode = data.getString("mfaCode");
     // authReq.peer = req.peer;
-    authReq.userAgent = req.headers.get("IAUser-Agent", "");
+    authReq.userAgent = req.headers.get("User-Agent", "");
 
     auto result = authUseCase.execute(authReq);
     if (!result.success)

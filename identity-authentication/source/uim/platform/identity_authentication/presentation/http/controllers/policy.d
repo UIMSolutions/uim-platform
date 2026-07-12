@@ -37,13 +37,11 @@ class PolicyController : ManageHttpController {
     auto tenantId = precheck.tenantId;
 
     auto data = precheck.data;
-    ScanJobDTO dto;
-    dto.tenantId = tenantId;
     PolicyRule[] rules;
     foreach (rj; data["rules"].toArray) {
       PolicyRule rule;
       rule.attribute = getString(rj, "attribute");
-      rule.operator = getString(rj, "operator");
+      // rule.operator = getString(rj, "operator");
       rule.value = getString(rj, "value");
 
       rules ~= rule;
@@ -58,7 +56,7 @@ class PolicyController : ManageHttpController {
 
     auto result = useCase.createPolicy(createReq);
     if (result.hasError)
-      return errorResponse(result.message, 400);
+      return errorResponse(result.error, 400);
 
     auto response = Json.emptyObject;
 
@@ -75,7 +73,7 @@ class PolicyController : ManageHttpController {
     auto policies = useCase.listPolicies(tenantId).map!(p => p.toJson).array.toJson;
 
     auto response = Json.emptyObject
-      .set("totalResults", policies.array.length)
+      .set("totalResults", policies.length)
       .set("resources", policies);
 
     return successResponse("Policies retrieved successfully", "OK", 200, response);
@@ -91,9 +89,8 @@ class PolicyController : ManageHttpController {
 
     auto path = req.requestURI;
     auto idx = path.lastIndexOf('/');
-    auto policyId = idx >= 0 ? path[idx + 1 .. $] : "";
+    auto policyId = PolicyId(idx >= 0 ? path[idx + 1 .. $] : "");
 
-    auto tenantId = precheck.tenantId;
     auto policy = useCase.getPolicy(tenantId, policyId);
     if (policy.isNull)
       return errorResponse("Policy not found", 404);

@@ -47,8 +47,7 @@ class GroupController : ManageHttpController {
     if (result.hasError)
       return errorResponse(result.error, 400);
 
-    auto response = Json.emptyObject;
-    response["id"] = result.groupId;
+    auto response = Json.emptyObject.set("id", result.groupId);
     return successResponse("Group created successfully", "Created", 201, response);
   }
 
@@ -76,14 +75,15 @@ class GroupController : ManageHttpController {
 
     auto path = req.requestURI;
     auto idx = path.lastIndexOf('/');
-    auto groupId = idx >= 0 ? path[idx + 1 .. $] : "";
+    auto groupId = GroupId(idx >= 0 ? path[idx + 1 .. $] : "");
 
     auto group = useCase.getGroup(tenantId, groupId);
     if (group.isNull) 
       return errorResponse("IAGroup not found", 404);
     
 
-    return successResponse("Group retrieved successfully", "Retrieved", 200, toJsonValue(group));
+    auto response = group.toJson;
+    return successResponse("Group retrieved successfully", "Retrieved", 200, response);
   }
 
   protected Json addMemberHandler(HTTPServerRequest req) {

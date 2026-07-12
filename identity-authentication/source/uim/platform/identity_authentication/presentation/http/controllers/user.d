@@ -51,11 +51,11 @@ class UserController : ManageHttpController {
 
     auto result = useCase.createUser(request);
     if (result.hasError)
-      return errorResponse(result.message, 400);
+      return errorResponse(result.error, 400);
 
     auto response = Json.emptyObject;
-    response["id"] = result.userId;
-    return successResponse("IAUser created successfully", "Created", 201, response);
+    response["id"] = result.userId.value;
+    return successResponse("User created successfully", "Created", 201, response);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
@@ -64,10 +64,6 @@ class UserController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    TenantId tenantId = req.params.get("tenantId", "");
-    if (tenantId.isEmpty)
-      tenantId = tenantId;
-
     auto users = useCase.listUsers(tenantId);
     auto response = Json.emptyObject;
     response["totalResults"] = users.length.toJson;
@@ -81,19 +77,17 @@ class UserController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto tenantId = precheck.tenantId;
-    auto path = req.requestURI;
-    auto userId = precheck.id;
+    auto userId = UserId(precheck.id);
 
     auto user = useCase.getUser(tenantId, userId);
     if (user.isNull)
-      return errorResponse("IAUser not found", 404);
+      return errorResponse("User not found", 404);
 
     auto response = user.toJson;
     // Remove sensitive field
     response.remove("passwordHash");
     response.remove("mfaSecret");
-    return successResponse("IAUser retrieved successfully", "Retrieved", 200, response);
+    return successResponse("User retrieved successfully", "Retrieved", 200, response);
 
   }
 
@@ -103,8 +97,7 @@ class UserController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto path = req.requestURI;
-    auto userId = precheck.id;
+    auto userId = UserId(precheck.id);
     auto data = precheck.data;
     auto updateReq = UpdateUserRequest(tenantId, userId, data.getString("firstName"),
       data.getString("lastName"), data.getString("phoneNumber"));
@@ -116,7 +109,7 @@ class UserController : ManageHttpController {
     auto resp = Json.emptyObject
       .set("status", "updated");
 
-    return successResponse("IAUser updated successfully", "Updated", 200, resp);
+    return successResponse("User updated successfully", "Updated", 200, resp);
   }
 
   protected Json changePasswordHandler(HTTPServerRequest req) {
@@ -126,8 +119,13 @@ class UserController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto data = precheck.data;
-    auto result = useCase.changePassword(tenantId, data.getString("userId"),
-      data.getString("oldPassword"), data.getString("newPassword"));
+    auto request = ChangePasswordRequest();
+    request.tenantId = tenantId;
+    request.userId = UserId(data.getString("userId"));
+    request.oldPassword = data.getString("oldPassword");
+    request.newPassword = data.getString("newPassword");
+
+    auto result = useCase.changePassword(request);
 
     if (result.hasError)
       return errorResponse(result.message, 400);
@@ -138,7 +136,7 @@ class UserController : ManageHttpController {
     return successResponse("Password changed successfully", "Updated", 200, resp);
   }
 
-  mixin(HandleTemplate!("HandleChangePassword", "changePasswordHandler"));
+  mixin(HandleTemplate!("handleChangePassword", "changePasswordHandler"));
 }
 
 private string extractIdFromPath(string path) {

@@ -25,7 +25,7 @@ class ManagePoliciesUseCase { // TODO: UIMUseCase {
 
   PolicyResponse createPolicy(CreatePolicyRequest req) {
     auto now = currentTimestamp();
-    auto policy = AuthorizationPolicy(req.tenantId, AuthorizationPolicyId(randomUUID().toString()));
+    auto policy = AuthorizationPolicy(req.tenantId, PolicyId(randomUUID().toString()));
     policy.name = req.name;
     policy.description = req.description;
     policy.rules = req.rules;

@@ -148,8 +148,8 @@ struct PolicyResponse {
   string policyId;
   string error;
 
-  bool isSuccess() const {
-    return error.length == 0;
+  bool hasError() const {
+    return error.length > 0;
   }
 }
 
@@ -165,8 +165,8 @@ struct PolicyRuleResponse {
   string policyId;
   string error;
 
-  bool isSuccess() const {
-    return error.length == 0;
+  bool hasError() const {
+    return error.length > 0;
   }
 }
 

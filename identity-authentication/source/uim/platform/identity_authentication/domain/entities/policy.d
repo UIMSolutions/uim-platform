@@ -24,7 +24,7 @@ struct AuthorizationPolicy {
       .set("name", name)
       .set("description", description)
       .set("rules", rules.map!(r => r.toJson()).array.toJson)
-      .set("applicationIds", applicationIds)
+      // .set("applicationIds", applicationIds)
       .set("active", active);
   }
 }
