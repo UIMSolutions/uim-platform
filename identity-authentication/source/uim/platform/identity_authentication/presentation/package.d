@@ -5,16 +5,16 @@
 *****************************************************************************************************************/
 module uim.platform.identity_authentication.presentation;
 
-public {
+public:
   import uim.platform.identity_authentication.presentation.http;
   import uim.platform.identity_authentication.presentation.web;
   import uim.platform.identity_authentication.presentation.api;
   import uim.platform.identity_authentication.presentation.gui;
-  import uim.platform.identity_authentication.presentation.rest;
+  // import uim.platform.identity_authentication.presentation.rest;
 
     // import uim.platform.identity_authentication.presentation.components;
     // import uim.platform.identity_authentication.presentation.pages;
     // import uim.platform.identity_authentication.presentation.routes;
     // import uim.platform.identity_authentication.presentation.layouts;
     // import uim.platform.identity_authentication.presentation.widgets;
-}
+

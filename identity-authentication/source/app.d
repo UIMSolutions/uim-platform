@@ -33,7 +33,7 @@ version (unittest) {
     container.userController.registerRoutes(router);
     container.groupController.registerRoutes(router);
     container.applicationController.registerRoutes(router);
-    container.tenantController.registerRoutes(router);
+    // container.tenantController.registerRoutes(router);
     container.policyController.registerRoutes(router);
 
     auto settings = new HTTPServerSettings();
@@ -53,7 +53,7 @@ version (unittest) {
     writefln("║    CRUD /api/v1/users                            ║");
     writefln("║    CRUD /api/v1/groups                           ║");
     writefln("║    CRUD /api/v1/applications                     ║");
-    writefln("║    CRUD /api/v1/tenants                          ║");
+    // writefln("║    CRUD /api/v1/tenants                          ║");
     writefln("║    CRUD /api/v1/policies                         ║");
     writefln("╚══════════════════════════════════════════════════╝");
 
