@@ -33,21 +33,21 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
   /// Create a new group.
   GroupResponse createGroup(CreateGroupRequest req) {
     if (groupRepo.existsByDisplayName(req.tenantId, req.displayName))
-      return GroupResponse("", "IDGroup with this displayName already exists");
+      return GroupResponse(GroupId(""), "IDGroup with this displayName already exists");
 
     auto group = IDGroup(req.tenantId);
     group.externalId = req.externalId;
     group.displayName = req.displayName;
     group.description = req.description;
     group.members = req.members;
-    group.schemas = ["urn:ietf:params:scim:schemas:core:2.0:IDGroup"];
+    group.schemas = ["urn:ietf:params:scim:schemas:core:2.0:Group"];
 
     groupRepo.save(group);
 
     // Update user groupIds for initial members
     foreach (m; req.members) {
-      if (m.type == "IDUser") {
-        auto user = userRepo.findById(group.tenantId, m.value);
+      if (m.type == "User") {
+        auto user = userRepo.findById(group.tenantId, UserId(m.value));
         if (!user.isNull) {
           user.groupIds ~= group.id;
           userRepo.update(user);
@@ -55,15 +55,25 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
       }
     }
 
-    auditRepo.save(AuditEvent(randomUUID().toString(), req.tenantId,
-        AuditEventType.groupCreated, "system", "System", group.id, "IDGroup",
-        "IDGroup created: " ~ req.displayName, "", "", null, now,));
+    auto event = AuditEvent(req.tenantId);
+    event.id = randomUUID().toString();
+    event.eventType = AuditEventType.groupCreated;
+    event.actorId = "system";
+    event.targetId = group.id.value;
+    event.targetType = "IDGroup";
+    event.description = "IDGroup created: " ~ req.displayName;
+    event.details = null;
+    // event.metadata = "";
+    // event.context = null;
+    event.timestamp = event.createdAt;
 
-    return GroupResponse(group.id.value, "");
+    auditRepo.save(event);
+
+    return GroupResponse(group.id, "");
   }
 
   /// Get group by ID.
-  IDGroup getGroup(GroupId id) {
+  IDGroup getGroup(TenantId tenantId, GroupId id) {
     return groupRepo.findById(tenantId, id);
   }
 
@@ -80,15 +90,26 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
 
     if (req.displayName.length > 0)
       group.displayName = req.displayName;
+
     if (req.description.length > 0)
       group.description = req.description;
 
     group.updatedAt = currentTimestamp();
     groupRepo.update(group);
 
-    auditRepo.save(AuditEvent(randomUUID().toString(), group.tenantId,
-        AuditEventType.groupUpdated, "system", "System", req.groupId, "IDGroup",
-        "IDGroup updated", "", "", null, Clock.currStdTime(),));
+    auto event = AuditEvent(req.tenantId);
+    event.id = randomUUID().toString();
+    event.eventType = AuditEventType.groupUpdated;
+    event.actorId = "system";
+    event.targetId = group.id.value;
+    event.targetType = "IDGroup";
+    event.description = "IDGroup updated: " ~ group.displayName;
+    event.details = null;
+    // event.metadata = "";
+    // event.context = null;
+    event.timestamp = event.createdAt;
+
+    auditRepo.save(event);
 
     return CommandResult(true, req.groupId.value, "");
   }
@@ -97,7 +118,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
   CommandResult addMember(AddMemberRequest req) {
     auto group = groupRepo.findById(req.tenantId, req.groupId);
     if (group.isNull)
-      return CommandResult(false, "", "IDGroup not found");
+      return CommandResult(false, "", "Group not found");
 
     // Check if already a member
     if (group.hasMember(req.memberId))
@@ -108,17 +129,27 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
     groupRepo.update(group);
 
     // Update user's groupIds
-    if (req.memberType == "IDUser") {
-      auto user = userRepo.findById(req.memberId);
-      if (user != IDUser.init) {
+    if (req.memberType == "User") {
+      auto user = userRepo.findById(group.tenantId, req.memberId);
+      if (!user.isNull) {
         user.groupIds ~= req.groupId;
         userRepo.update(user);
       }
     }
 
-    auditRepo.save(AuditEvent(randomUUID().toString(), group.tenantId,
-        AuditEventType.memberAdded, "system", "System", req.groupId, "IDGroup",
-        "Member added: " ~ req.memberId, "", "", null, Clock.currStdTime(),));
+    auto event = AuditEvent(req.tenantId);
+    event.id = randomUUID().toString();
+    event.eventType = AuditEventType.memberAdded;
+    event.actorId = "system";
+    event.targetId = req.groupId.value;
+    event.targetType = "IDGroup";
+    event.description = "Member added: " ~ req.memberId;
+    event.details = null;
+    // event.metadata = "";
+    // event.context = null;
+    event.timestamp = event.createdAt;  
+
+    auditRepo.save(event);
 
     return CommandResult(true, req.groupId.value, "Member added successfully.");
   }
@@ -127,9 +158,9 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
   CommandResult removeMember(RemoveMemberRequest req) {
     auto group = groupRepo.findById(req.tenantId, req.groupId);
     if (group.isNull)
-      return CommandResult(false, "", "IDGroup not found");
+      return CommandResult(false, "", "Group not found");
 
-    auto newMembers = group.members.filter!(m => m.value != req.memberId).array.toJson;
+    auto newMembers = group.members.filter!(m => m.id != req.memberId).array;
     if (newMembers.length == group.members.length)
       return CommandResult(false, "", "Member not found in group");
 
@@ -144,10 +175,19 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
       userRepo.update(user);
     }
 
-    auditRepo.save(AuditEvent(randomUUID().toString(), group.tenantId,
-        AuditEventType.memberRemoved, "system", "System", req.groupId, "IDGroup",
-        "Member removed: " ~ req.memberId, "", "", null, Clock.currStdTime(),));
+    auto event = AuditEvent(req.tenantId);
+    event.id = randomUUID().toString();
+    event.eventType = AuditEventType.memberRemoved;
+    event.actorId = "system";
+    event.targetId = req.groupId.value;
+    event.targetType = "IDGroup";
+    event.description = "Member removed: " ~ req.memberId;
+    event.details = null;
+    // event.metadata = "";
+    // event.context = null;
+    event.timestamp = event.createdAt;
 
+    auditRepo.save(event);
     return CommandResult(true, req.groupId.value, "Member removed successfully.");
   }
 
@@ -155,11 +195,11 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
   CommandResult deleteGroup(TenantId tenantId, GroupId id) {
     auto group = groupRepo.findById(tenantId, id);
     if (group.isNull)
-      return CommandResult(false, "", "IDGroup not found");
+      return CommandResult(false, "", "Group not found");
 
     // Remove group from all member users
     foreach (m; group.members) {
-      if (m.type == "IDUser") {
+      if (m.type == "User") {
         auto user = userRepo.findById(tenantId, m.value);
         if (!user.isNull) {
           user.groupIds = user.groupIds.filter!(g => g != id).array.toJson;
@@ -170,10 +210,19 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
 
     groupRepo.remove(group);
 
-    auditRepo.save(AuditEvent(randomUUID().toString(), group.tenantId,
-        AuditEventType.groupDeleted, "system", "System", id, "IDGroup",
-        "IDGroup deleted: " ~ group.displayName, "", "", null, Clock.currStdTime(),));
+    auto event = AuditEvent(tenantId);
+    event.id = randomUUID().toString();
+    event.eventType = AuditEventType.groupDeleted;
+    event.actorId = "system";
+    event.targetId = id.value;
+    event.targetType = "Group";
+    event.description = "Group deleted: " ~ group.displayName;
+    // event.details = null;
+    // event.metadata = "";
+    // event.context = null;
+    event.timestamp = event.createdAt;
 
-    return CommandResult(true, id.value, "IDGroup deleted successfully.");
+    auditRepo.save(event);
+    return CommandResult(true, id.value, "Group deleted successfully.");
   }
 }

@@ -80,7 +80,7 @@ struct Address {
 }
 /// Extended attributes stored as key-value pairs (custom schema extensions).
 struct ExtendedAttribute {
-  string schemaId;
+  SchemaId schemaId;
   string attributeName;
   string value;
 
@@ -112,7 +112,7 @@ struct IDUser {
   Email[] emails;
   PhoneNumber[] phoneNumbers;
   Address[] addresses;
-  string[] groupIds;
+  GroupId[] groupIds;
   ExtendedAttribute[] extendedAttributes;
   string[] schemas; // SCIM schema URNs
   
@@ -120,8 +120,10 @@ struct IDUser {
   string getDisplayName() const {
     if (displayName.length > 0)
       return displayName;
+
     if (name.formatted.length > 0)
       return name.formatted;
+    
     return name.givenName ~ " " ~ name.familyName;
   }
 

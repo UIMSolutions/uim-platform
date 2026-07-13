@@ -60,12 +60,12 @@ class ManagePasswordPoliciesUseCase { // TODO: UIMUseCase {
 
     auditRepo.save(event);  
 
-    return PasswordPolicyResponse(policy.id.value, "");
+    return PasswordPolicyResponse(policy.id, "");
   }
 
   /// Get policy by ID.
-  PasswordPolicy getPolicy(string id) {
-    return policyRepo.findById(req.tenantId, id);
+  PasswordPolicy getPolicy(TenantId tenantId, PasswordPolicyId id) {
+    return policyRepo.findById(tenantId, id);
   }
 
   /// List policies for a tenant.

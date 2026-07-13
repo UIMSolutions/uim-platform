@@ -31,20 +31,17 @@ class MemoryGroupRepository : TenantRepository!(IDGroup, GroupId), GroupReposito
     findByTenant(tenantId).filter!(g => g.displayName == displayName).each!(g => remove(g.id));
   }
 
-  size_t countByMember(string memberId) {
-    return findByMember(memberId).length;
+  size_t countByMember(TenantId tenantId, string memberId) {
+    return findByMember(tenantId, memberId).length;
   }
   IDGroup[] filterByMember(IDGroup[] groups, string memberId) {
     return groups.filter!(g => g.hasMember(memberId)).array;
   }
-  IDGroup[] findByMember(string memberId) {
+  IDGroup[] findByMember(TenantId tenantId, string memberId) {
     return findByTenant(tenantId).filter!(g => g.hasMember(memberId)).array;
   }
 
-  void removeByMember(string memberId) {
-    findByMember(memberId).each!(g => {
-      g.removeMember(memberId);
-      store[g.id] = g; // Update the group in the store after modification
-    });
+  void removeByMember(TenantId tenantId, string memberId) {
+    findByMember(tenantId, memberId).each!(g => remove(g)); // Update the group in the store after modification
   }
 }

@@ -20,7 +20,7 @@ enum UserStatus {
   provisioning, // IDUser is currently being provisioned and not yet active
   pending // IDUser is pending activation (e.g. awaiting email verification)
 }
-UserStatus toUserStatus(string s) {
+UserStatus toUserStatus(string value) {
   mixin(EnumSwitch("UserStatus", "active"));
 }
 UserStatus[] toUserStatus(string[] arr) {
@@ -60,7 +60,7 @@ enum GroupType {
   dynamic, // Dynamic group with membership based on rules
   nested // Nested group that can contain other groups as members
 }
-GroupType toGroupType(string s) {
+GroupType toGroupType(string value) {
   mixin(EnumSwitch("GroupType", "standard"));
 }
 GroupType[] toGroupType(string[] arr) {
@@ -98,7 +98,7 @@ enum AttributeType {
   complexType, // Complex type with sub-attributes
   binaryType, // Binary data type
 }
-AttributeType toAttributeType(string s) {
+AttributeType toAttributeType(string value) {
   mixin(EnumSwitch("AttributeType", "stringType"));
 }
 AttributeType[] toAttributeType(string[] arr) {
@@ -226,7 +226,7 @@ enum Uniqueness {
   server, // Attribute values must be unique within the server (e.g. username)
   global, // Attribute values must be globally unique across all servers (e.g. email)
 }
-Uniqueness toUniqueness(string s) {
+Uniqueness toUniqueness(string value) {
   mixin(EnumSwitch("Uniqueness", "none"));
 }
 Uniqueness[] toUniqueness(string[] arr) {
@@ -261,7 +261,7 @@ enum PasswordStrength {
   strong, // Password meets strong complexity requirements
   enterprise, // Password meets enterprise-grade complexity requirements
 }
-PasswordStrength toPasswordStrength(string s) {
+PasswordStrength toPasswordStrength(string value) {
   mixin(EnumSwitch("PasswordStrength", "standard"));
 }
 PasswordStrength[] toPasswordStrength(string[] arr) {
@@ -315,7 +315,7 @@ enum AuditEventType {
   loginSuccess, // A user successfully logged in
   loginFailure, // A user failed to log in due to invalid credentials
 }
-AuditEventType toAuditEventType(string s) {
+AuditEventType toAuditEventType(string value) {
   mixin(EnumSwitch("AuditEventType", "loginSuccess"));
 }
 AuditEventType[] toAuditEventType(string[] arr) {
@@ -331,49 +331,49 @@ string[] toString(AuditEventType[] eventTypes) {
 unittest {
   mixin(ShowTest!("AuditEventType"));
 
-  assert(toAuditEventType("userCreated") == AuditEventType.userCreated);
-  assert(toAuditEventType("userUpdated") == AuditEventType.userUpdated);
-  assert(toAuditEventType("userDeleted") == AuditEventType.userDeleted);
-  assert(toAuditEventType("userActivated") == AuditEventType.userActivated);
-  assert(toAuditEventType("userDeactivated") == AuditEventType.userDeactivated);
-  assert(toAuditEventType("userLocked") == AuditEventType.userLocked);
-  assert(toAuditEventType("userUnlocked") == AuditEventType.userUnlocked);
-  assert(toAuditEventType("passwordChanged") == AuditEventType.passwordChanged);
-  assert(toAuditEventType("passwordReset") == AuditEventType.passwordReset);
-  assert(toAuditEventType("groupCreated") == AuditEventType.groupCreated);
-  assert(toAuditEventType("groupUpdated") == AuditEventType.groupUpdated);
-  assert(toAuditEventType("groupDeleted") == AuditEventType.groupDeleted);
-  assert(toAuditEventType("memberAdded") == AuditEventType.memberAdded);
-  assert(toAuditEventType("memberRemoved") == AuditEventType.memberRemoved);
-  assert(toAuditEventType("schemaCreated") == AuditEventType.schemaCreated);
-  assert(toAuditEventType("schemaUpdated") == AuditEventType.schemaUpdated);
-  assert(toAuditEventType("schemaDeleted") == AuditEventType.schemaDeleted);
-  assert(toAuditEventType("apiClientCreated") == AuditEventType.apiClientCreated);    
+  assert("userCreated".toAuditEventType == AuditEventType.userCreated);
+  assert("userUpdated".toAuditEventType == AuditEventType.userUpdated);
+  assert("userDeleted".toAuditEventType == AuditEventType.userDeleted);
+  assert("userActivated".toAuditEventType == AuditEventType.userActivated);
+  assert("userDeactivated".toAuditEventType == AuditEventType.userDeactivated);
+  assert("userLocked".toAuditEventType == AuditEventType.userLocked);
+  assert("userUnlocked".toAuditEventType == AuditEventType.userUnlocked);
+  assert("passwordChanged".toAuditEventType == AuditEventType.passwordChanged);
+  assert("passwordReset".toAuditEventType == AuditEventType.passwordReset);
+  assert("groupCreated".toAuditEventType == AuditEventType.groupCreated);
+  assert("groupUpdated".toAuditEventType == AuditEventType.groupUpdated);
+  assert("groupDeleted".toAuditEventType == AuditEventType.groupDeleted);
+  assert("memberAdded".toAuditEventType == AuditEventType.memberAdded);
+  assert("memberRemoved".toAuditEventType == AuditEventType.memberRemoved);
+  assert("schemaCreated".toAuditEventType == AuditEventType.schemaCreated);
+  assert("schemaUpdated".toAuditEventType == AuditEventType.schemaUpdated);
+  assert("schemaDeleted".toAuditEventType == AuditEventType.schemaDeleted);
+  assert("apiClientCreated".toAuditEventType == AuditEventType.apiClientCreated);    
+  assert("apiClientRevoked".toAuditEventType == AuditEventType.apiClientRevoked);
+  assert("loginSuccess".toAuditEventType == AuditEventType.loginSuccess);
+  assert("loginFailure".toAuditEventType == AuditEventType.loginFailure);
 
-  assert(toAuditEventType("apiClientRevoked") == AuditEventType.apiClientRevoked);
-  assert(toAuditEventType("loginSuccess") == AuditEventType.loginSuccess);
-  assert(toAuditEventType("loginFailure") == AuditEventType.loginFailure);
-  assert(toString(AuditEventType.userCreated) == "userCreated");
-  assert(toString(AuditEventType.userUpdated) == "userUpdated");
-  assert(toString(AuditEventType.userDeleted) == "userDeleted");
-  assert(toString(AuditEventType.userActivated) == "userActivated");
-  assert(toString(AuditEventType.userDeactivated) == "userDeactivated");
-  assert(toString(AuditEventType.userLocked) == "userLocked");
-  assert(toString(AuditEventType.userUnlocked) == "userUnlocked");    
-  assert(toString(AuditEventType.passwordChanged) == "passwordChanged");
-  assert(toString(AuditEventType.passwordReset) == "passwordReset");
-  assert(toString(AuditEventType.groupCreated) == "groupCreated");
-  assert(toString(AuditEventType.groupUpdated) == "groupUpdated");
-  assert(toString(AuditEventType.groupDeleted) == "groupDeleted");
-  assert(toString(AuditEventType.memberAdded) == "memberAdded");
-  assert(toString(AuditEventType.memberRemoved) == "memberRemoved");
-  assert(toString(AuditEventType.schemaCreated) == "schemaCreated");
-  assert(toString(AuditEventType.schemaUpdated) == "schemaUpdated");
-  assert(toString(AuditEventType.schemaDeleted) == "schemaDeleted");
-  assert(toString(AuditEventType.apiClientCreated) == "apiClientCreated");
-  assert(toString(AuditEventType.apiClientRevoked) == "apiClientRevoked");
-  assert(toString(AuditEventType.loginSuccess) == "loginSuccess");
-  assert(toString(AuditEventType.loginFailure) == "loginFailure");
+  assert(AuditEventType.userCreated.toString == "userCreated");
+  assert(AuditEventType.userUpdated.toString == "userUpdated");
+  assert(AuditEventType.userDeleted.toString == "userDeleted");
+  assert(AuditEventType.userActivated.toString == "userActivated");
+  assert(AuditEventType.userDeactivated.toString == "userDeactivated");
+  assert(AuditEventType.userLocked.toString == "userLocked");
+  assert(AuditEventType.userUnlocked.toString == "userUnlocked");    
+  assert(AuditEventType.passwordChanged.toString == "passwordChanged");
+  assert(AuditEventType.passwordReset.toString == "passwordReset");
+  assert(AuditEventType.groupCreated.toString == "groupCreated");
+  assert(AuditEventType.groupUpdated.toString == "groupUpdated");
+  assert(AuditEventType.groupDeleted.toString == "groupDeleted");
+  assert(AuditEventType.memberAdded.toString == "memberAdded");
+  assert(AuditEventType.memberRemoved.toString == "memberRemoved");
+  assert(AuditEventType.schemaCreated.toString == "schemaCreated");
+  assert(AuditEventType.schemaUpdated.toString == "schemaUpdated");
+  assert(AuditEventType.schemaDeleted.toString == "schemaDeleted");
+  assert(AuditEventType.apiClientCreated.toString == "apiClientCreated");
+  assert(AuditEventType.apiClientRevoked.toString == "apiClientRevoked");
+  assert(AuditEventType.loginSuccess.toString == "loginSuccess");
+  assert(AuditEventType.loginFailure.toString == "loginFailure");
   assert([AuditEventType.userCreated, AuditEventType.userUpdated, AuditEventType.userDeleted, AuditEventType.userActivated, AuditEventType.userDeactivated, AuditEventType.userLocked, AuditEventType.userUnlocked, AuditEventType.passwordChanged, AuditEventType.passwordReset, AuditEventType.groupCreated, AuditEventType.groupUpdated, AuditEventType.groupDeleted, AuditEventType.memberAdded, AuditEventType.memberRemoved, AuditEventType.schemaCreated, AuditEventType.schemaUpdated, AuditEventType.schemaDeleted, AuditEventType.apiClientCreated, AuditEventType.apiClientRevoked, AuditEventType.loginSuccess, AuditEventType.loginFailure].map!(s => toString(s)).array == ["userCreated", "userUpdated", "userDeleted", "userActivated", "userDeactivated", "userLocked", "userUnlocked", "passwordChanged", "passwordReset", "groupCreated", "groupUpdated", "groupDeleted", "memberAdded", "memberRemoved", "schemaCreated", "schemaUpdated", "schemaDeleted", "apiClientCreated", "apiClientRevoked", "loginSuccess", "loginFailure"]);
   assert(["userCreated", "userUpdated", "userDeleted", "userActivated", "userDeactivated", "userLocked", "userUnlocked", "passwordChanged", "passwordReset", "groupCreated", "groupUpdated", "groupDeleted", "memberAdded", "memberRemoved", "schemaCreated", "schemaUpdated", "schemaDeleted", "apiClientCreated", "apiClientRevoked", "loginSuccess", "loginFailure"].map!(s => toAuditEventType(s)).array == [AuditEventType.userCreated, AuditEventType.userUpdated, AuditEventType.userDeleted, AuditEventType.userActivated, AuditEventType.userDeactivated, AuditEventType.userLocked, AuditEventType.userUnlocked, AuditEventType.passwordChanged, AuditEventType.passwordReset, AuditEventType.groupCreated, AuditEventType.groupUpdated, AuditEventType.groupDeleted, AuditEventType.memberAdded, AuditEventType.memberRemoved, AuditEventType.schemaCreated, AuditEventType.schemaUpdated, AuditEventType.schemaDeleted, AuditEventType.apiClientCreated, AuditEventType.apiClientRevoked, AuditEventType.loginSuccess, AuditEventType.loginFailure]); 
 }
@@ -383,7 +383,7 @@ enum SortOrder {
   ascending, // Sort in ascending order (A-Z, 0-9)
   descending, // Sort in descending order (Z-A, 9-0)
 }
-SortOrder toSortOrder(string s) {
+SortOrder toSortOrder(string value) {
   mixin(EnumSwitch("SortOrder", "ascending"));
 }
 SortOrder[] toSortOrder(string[] arr) {

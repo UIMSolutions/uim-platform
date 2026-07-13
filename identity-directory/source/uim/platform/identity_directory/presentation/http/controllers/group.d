@@ -72,7 +72,7 @@ class GroupController : ManageHttpController {
 
     auto responseData = Json.emptyObject
       .set("id", result.id)
-      .set("schemas", ["urn:ietf:params:scim:schemas:core:2.0:IDGroup"].toJson);
+      .set("schemas", ["urn:ietf:params:scim:schemas:core:2.0:Group"].toJson);
 
     return successResponse("Scan job created successfully", "Created", 201, responseData);
   }

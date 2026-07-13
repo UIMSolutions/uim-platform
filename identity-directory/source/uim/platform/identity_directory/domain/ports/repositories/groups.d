@@ -19,8 +19,8 @@ interface GroupRepository : ITenantRepository!(IDGroup, GroupId) {
   IDGroup findByDisplayName(TenantId tenantId, string displayName);
   void removeByDisplayName(TenantId tenantId, string displayName);
   
-  size_t countByMember(string memberId);
-  IDGroup[] findByMember(string memberId);
-  void removeByMember(string memberId);
+  size_t countByMember(TenantId tenantId, string memberId);
+  IDGroup[] findByMember(TenantId tenantId, string memberId);
+  void removeByMember(TenantId tenantId, string memberId);
   
 }

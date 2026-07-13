@@ -30,7 +30,7 @@ class ManageSchemasUseCase { // TODO: UIMUseCase {
   /// Create a new custom schema.
   SchemaResponse createSchema(CreateSchemaRequest req) {
     if (schemaRepo.existsByName(req.tenantId, req.name))
-      return SchemaResponse("", "Schema with this name already exists");
+      return SchemaResponse(SchemaId(""), "Schema with this name already exists");
 
     auto now = currentTimestamp();
     auto schemaUrn = "urn:sap:cloud:scim:schemas:extension:custom:2.0:" ~ req.name;
@@ -38,15 +38,21 @@ class ManageSchemasUseCase { // TODO: UIMUseCase {
         req.attributes, now, now,);
     schemaRepo.save(schema);
 
-    auditRepo.save(AuditEvent(randomUUID().toString(), req.tenantId, AuditEventType.schemaCreated,
-        "system", "System", schemaUrn, "Schema",
-        "Schema created: " ~ req.name, "", "", null, now,));
+    auto event = AuditEvent(req.tenantId);
+    event.id = AuditEventId(createId);
+    event.eventType = AuditEventType.schemaCreated;
+    event.actorId = "system";
+    // event.actorName = "System";
+    event.targetId = schema.id.value;
+    event.targetType = "Schema";
+    event.description = "Schema created: " ~ req.name;
+    auditRepo.save(event);
 
-    return SchemaResponse(schemaUrn, "");
+    return SchemaResponse(SchemaId(schemaUrn), "");
   }
 
   /// Get schema by ID.
-  Schema getSchema(SchemaId id) {
+  Schema getSchema(TenantId tenantId, SchemaId id) {
     return schemaRepo.findById(tenantId, id);
   }
 
@@ -57,7 +63,7 @@ class ManageSchemasUseCase { // TODO: UIMUseCase {
 
   /// Update a schema.
   CommandResult updateSchema(UpdateSchemaRequest req) {
-    auto schema = schemaRepo.findById(req.schemaId);
+    auto schema = schemaRepo.findById(req.tenantId, req.schemaId);
     if (schema.isNull)
       return CommandResult(false, "", "Schema not found");
 
@@ -71,24 +77,36 @@ class ManageSchemasUseCase { // TODO: UIMUseCase {
     schema.updatedAt = currentTimestamp();
     schemaRepo.update(schema);
 
-    auditRepo.save(AuditEvent(randomUUID().toString(), schema.tenantId,
-        AuditEventType.schemaUpdated, "system", "System", req.schemaId,
-        "Schema", "Schema updated", "", "", null, Clock.currStdTime(),));
+    auto event = AuditEvent(req.tenantId);
+    event.id = AuditEventId(createId);
+    event.eventType = AuditEventType.schemaUpdated;
+    event.actorId = "system";
+    // event.actorName = "System";
+    event.targetId = schema.id.value;
+    event.targetType = "Schema";
+    event.description = "Schema updated: " ~ schema.name;
+    auditRepo.save(event);
 
     return CommandResult(true, schema.id.value, "");
   }
 
   /// Delete a schema.
-  CommandResult deleteSchema(SchemaId id) {
+  CommandResult deleteSchema(TenantId tenantId, SchemaId id) {
     auto schema = schemaRepo.findById(tenantId, id);
     if (schema.isNull)
       return CommandResult(false, "", "Schema not found");
 
     schemaRepo.remove(schema);
 
-    auditRepo.save(AuditEvent(randomUUID().toString(), schema.tenantId,
-        AuditEventType.schemaDeleted, "system", "System", schema.id, "Schema",
-        "Schema deleted: " ~ schema.name, "", "", null, Clock.currStdTime(),));
+    auto event = AuditEvent(tenantId);
+    event.id = AuditEventId(createId);
+    event.eventType = AuditEventType.schemaDeleted;
+    event.actorId = "system";
+    // event.actorName = "System";
+    event.targetId = schema.id.value;
+    event.targetType = "Schema";
+    event.description = "Schema deleted: " ~ schema.name; 
+    auditRepo.save(event);
 
     return CommandResult(true, schema.id.value, "");
   }

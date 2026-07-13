@@ -35,8 +35,8 @@ struct SchemaAttribute {
       .set("mutability", mutability.to!string())
       .set("returned", returned.to!string())
       .set("uniqueness", uniqueness.to!string())
-      .set("canonicalValues", canonicalValues)
-      .set("referenceTypes", referenceTypes);
+      .set("canonicalValues", canonicalValues.map!(v => Json(v)).array)
+      .set("referenceTypes", referenceTypes.map!(v => Json(v)).array);
   }
 }
 /// Custom schema definition (SCIM 2.0 schema extension).

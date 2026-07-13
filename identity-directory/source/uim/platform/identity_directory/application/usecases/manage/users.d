@@ -72,15 +72,23 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
     userRepo.save(user);
 
     // Audit
-    auditRepo.save(AuditEvent(randomUUID().toString(), req.tenantId,
-        AuditEventType.userCreated, "system", "System", userId, "IDUser",
-        "IDUser created: " ~ req.userName, "", "", null, now,));
+    auto event = AuditEvent(req.tenantId);
+    event.id = AuditEventId(createId);
+    event.eventType = AuditEventType.userCreated;
+    event.actorId = "system";
+    // event.actorName = "System";
+    event.targetId = user.id.value;
+    event.targetType = "IDUser";
+    event.description = "IDUser created: " ~ req.userName;
+    event.details = null;
+    event.timestamp = event.createdAt;
+    auditRepo.save(event);
 
-    return UserResponse(userId, "");
+    return UserResponse(user.id, "");
   }
 
   /// Get user by ID.
-  IDUser getUser(UserId id) {
+  IDUser getUser(TenantId tenantId, UserId id) {
     return userRepo.findById(tenantId, id);
   }
 
@@ -134,7 +142,7 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
   }
 
   /// Deactivate (soft-delete) a user.
-  CommandResult deactivateUser(UserId id) {
+  CommandResult deactivateUser(TenantId tenantId, UserId id) {
     auto user = userRepo.findById(tenantId, id);
     if (user.isNull)
       return CommandResult(false, "", "IDUser not found");
@@ -144,45 +152,64 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
     user.updatedAt = currentTimestamp();
     userRepo.update(user);
 
-    auditRepo.save(AuditEvent(randomUUID().toString(), user.tenantId,
-        AuditEventType.userDeactivated, "system", "System", id, "IDUser",
-        "IDUser deactivated", "", "", null, Clock.currStdTime(),));
+    auto event = AuditEvent(tenantId);
+    event.id = AuditEventId(createId);
+    event.eventType = AuditEventType.userDeactivated;
+    event.actorId = "system";
+    // event.actorName = "System";
+    event.targetId = user.id.value;
+    event.targetType = "IDUser";
+    event.description = "IDUser deactivated: " ~ user.userName;
+    event.details = null;
+    event.timestamp = event.createdAt;
+    auditRepo.save(event);  
 
     return CommandResult(true, id.value, "");
   }
 
   /// Delete a user permanently.
-  CommandResult deleteUser(UserId id) {
+  CommandResult deleteUser(TenantId tenantId, UserId id) {
     auto user = userRepo.findById(tenantId, id);
     if (user.isNull)
       return CommandResult(false, "", "IDUser not found");
 
     userRepo.remove(user);
 
-    auditRepo.save(AuditEvent(randomUUID().toString(), user.tenantId,
-        AuditEventType.userDeleted, "system", "System", user.id, "IDUser",
-        "IDUser deleted: " ~ user.userName, "", "", null, Clock.currStdTime(),));
+    auto event = AuditEvent(tenantId);
+    event.id = AuditEventId(createId);
+    event.eventType = AuditEventType.userDeleted;
+    event.actorId = "system";
+    // event.actorName = "System";
+    event.targetId = user.id.value;
+    event.targetType = "IDUser";
+    event.description = "IDUser deleted: " ~ user.userName;
+    event.details = null;
+    event.timestamp = event.createdAt;
+    // auditRepo.save(AuditEvent(randomUUID().toString(), user.tenantId,
+    //     AuditEventType.userDeleted, "system", "System", user.id, "IDUser",
+    //     "IDUser deleted: " ~ user.userName, "", "", null, Clock.currStdTime(),));
+    auditRepo.save(event);
 
     return CommandResult(true, user.id.value, "");
   }
 
   /// Change user password.
-  string changePassword(UserId id, string oldPassword, string newPassword) {
+  CommandResult changePassword(TenantId tenantId, UserId id, string oldPassword, string newPassword) {
     auto user = userRepo.findById(tenantId, id);
     if (user.isNull)
-      return "IDUser not found";
+      return CommandResult(false, "", "IDUser not found");
 
     if (user.passwordHash.length > 0 && !passwordSvc.verifyPassword(oldPassword, user.passwordHash))
-      return "Current password is incorrect";
+      return CommandResult(false, "", "Current password is incorrect");
 
     // Validate against policy
     auto policy = policyRepo.findActiveForTenant(user.tenantId);
-    if (policy != typeof(policy).init) {
+    if (!policy.isNull) {
       auto validation = validatePassword(newPassword, policy);
       if (!validation.valid) {
         // import std.algorithm : joiner;
         
-        return validation.violations.joiner("; ").to!string;
+        return CommandResult(false, "", validation.violations.joiner("; ").to!string);
       }
     }
 
@@ -190,9 +217,17 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
     user.updatedAt = currentTimestamp();
     userRepo.update(user);
 
-    auditRepo.save(AuditEvent(randomUUID().toString(), user.tenantId,
-        AuditEventType.passwordChanged, id, "IDUser", id, "IDUser",
-        "Password changed", "", "", null, Clock.currStdTime(),));
+    auto event = AuditEvent(user.tenantId);
+    event.id = AuditEventId(createId);
+    event.eventType = AuditEventType.passwordChanged;
+    event.actorId = "system";
+    // event.actorName = "System";
+    event.targetId = user.id.value;
+    event.targetType = "IDUser";
+    event.description = "Password changed for user: " ~ user.userName;
+    event.details = null;
+    event.timestamp = event.createdAt;
+    auditRepo.save(event);
 
     return CommandResult(true, id.value, "");
   }

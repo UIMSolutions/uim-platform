@@ -19,6 +19,8 @@ mixin(ShowModule!());
 
 struct CreateUserRequest {
   TenantId tenantId;
+  UserId userId;
+
   string externalId;
   string userName;
   UserName name;
@@ -54,9 +56,8 @@ struct UserResponse {
   UserId userId;
   string error;
 
-  bool isSuccess() const
-  {
-    return error.length == 0;
+  bool hasError() const {
+    return error.length > 0;
   }
 }
 /// --- IDGroup DTOs ---
@@ -70,12 +71,14 @@ struct CreateGroupRequest {
 }
 
 struct UpdateGroupRequest {
+  TenantId tenantId;
   GroupId groupId;
   string displayName;
   string description;
 }
 
 struct AddMemberRequest {
+  TenantId tenantId;
   GroupId groupId;
   string memberId;
   string memberType; // "IDUser" or "IDGroup"
@@ -83,29 +86,32 @@ struct AddMemberRequest {
 }
 
 struct RemoveMemberRequest {
+  TenantId tenantId;
   GroupId groupId;
   string memberId;
 }
 
 struct GroupResponse {
-  string groupId;
+  GroupId groupId;
   string error;
 
-  bool isSuccess() const
-  {
-    return error.length == 0;
+  bool hasError() const {
+    return error.length > 0;
   }
 }
 /// --- Schema DTOs ---
 
 struct CreateSchemaRequest {
   TenantId tenantId;
+  SchemaId schemaId;
+
   string name;
   string description;
   SchemaAttribute[] attributes;
 }
 
 struct UpdateSchemaRequest {
+  TenantId tenantId;
   SchemaId schemaId;
   string name;
   string description;
@@ -113,18 +119,18 @@ struct UpdateSchemaRequest {
 }
 
 struct SchemaResponse {
-  string schemaId;
+  SchemaId schemaId;
   string error;
 
-  bool isSuccess() const
-  {
-    return error.length == 0;
+  bool hasError() const {
+    return error.length > 0;
   }
 }
 /// --- Password Policy DTOs ---
-
 struct CreatePasswordPolicyRequest {
   TenantId tenantId;
+  PasswordPolicyId policyId;
+
   string name;
   string description;
   size_t minLength;
@@ -142,16 +148,14 @@ struct CreatePasswordPolicyRequest {
 }
 
 struct PasswordPolicyResponse {
-  string policyId;
+  PasswordPolicyId policyId;
   string error;
 
-  bool isSuccess() const
-  {
-    return error.length == 0;
+  bool hasError() const {
+    return error.length > 0;
   }
 }
 /// --- API Client DTOs ---
-
 struct CreateApiClientRequest {
   TenantId tenantId;
   string name;
@@ -165,9 +169,8 @@ struct ApiClientResponse {
   string clientSecret; // only returned on creation
   string error;
 
-  bool isSuccess() const
-  {
-    return error.length == 0;
+  bool hasError() const {
+    return error.length > 0;
   }
 }
 /// --- SCIM List Response ---

@@ -43,7 +43,7 @@ struct IDGroup {
 
   /// Check if a user is a member.
   bool hasMember(UserId userId) const {
-    return any!(m => m.value == userId)(members);
+    return members.any!(m => m.value == userId.value && m.type == "User");
   }
 
   Json toJson() const {
@@ -51,8 +51,8 @@ struct IDGroup {
       .set("externalId", externalId)
       .set("displayName", displayName)
       .set("description", description)
-      .set("groupType", groupType.to!string)
+      .set("groupType", groupType.to!string())
       .set("members", members.map!(m => m.toJson()).array.toJson)
-      .set("schemas", schemas);
+      .set("schemas", schemas.map!(s => Json(s)).array.toJson);
   }
 }
