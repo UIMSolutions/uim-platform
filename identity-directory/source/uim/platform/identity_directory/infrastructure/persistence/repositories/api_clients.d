@@ -25,4 +25,10 @@ class MemoryApiClientRepository : TenantRepository!(ApiClient, ApiClientId), Api
     }
     return ApiClient.init;
   }
+
+  void removeByClient(string clientId) {
+    auto client = findByClient(clientId);
+    if (client.id.value != 0)
+      remove(client);
+  }
 }

@@ -13,21 +13,45 @@ mixin(ShowModule!());
 
 /// SCIM 2.0 user status.
 enum UserStatus {
-  active, // User is active and can authenticate
-  inactive, // User is inactive and cannot authenticate
-  locked, // User is locked due to too many failed login attempts
-  staged, // User is staged for activation but not yet active
-  provisioning, // User is currently being provisioned and not yet active
-  pending // User is pending activation (e.g. awaiting email verification)
+  active, // IDUser is active and can authenticate
+  inactive, // IDUser is inactive and cannot authenticate
+  locked, // IDUser is locked due to too many failed login attempts
+  staged, // IDUser is staged for activation but not yet active
+  provisioning, // IDUser is currently being provisioned and not yet active
+  pending // IDUser is pending activation (e.g. awaiting email verification)
 }
 UserStatus toUserStatus(string s) {
-  const map = [
-    "active": UserStatus.active,
-    "inactive": UserStatus.inactive,
-    "locked": UserStatus.locked,
-    "staged": UserStatus.staged
-  ];
-  return map.get(s.toLower, UserStatus.inactive);
+  mixin(EnumSwitch("UserStatus", "active"));
+}
+UserStatus[] toUserStatus(string[] arr) {
+  return arr.map!(s => toUserStatus(s)).array;
+}
+string toString(UserStatus status) {
+  return status.to!string;
+}
+string[] toString(UserStatus[] statuses) {
+  return statuses.map!(s => toString(s)).array;
+}
+///
+unittest {
+  mixin(ShowTest!("UserStatus"));
+
+  assert(toUserStatus("active") == UserStatus.active);
+  assert(toUserStatus("inactive") == UserStatus.inactive);
+  assert(toUserStatus("locked") == UserStatus.locked);
+  assert(toUserStatus("staged") == UserStatus.staged);
+  assert(toUserStatus("provisioning") == UserStatus.provisioning);
+  assert(toUserStatus("pending") == UserStatus.pending);
+
+  assert(toString(UserStatus.active) == "active");
+  assert(toString(UserStatus.inactive) == "inactive");
+  assert(toString(UserStatus.locked) == "locked");
+  assert(toString(UserStatus.staged) == "staged");
+  assert(toString(UserStatus.provisioning) == "provisioning");
+  assert(toString(UserStatus.pending) == "pending");
+
+  assert([UserStatus.active, UserStatus.inactive, UserStatus.locked, UserStatus.staged, UserStatus.provisioning, UserStatus.pending].map!(s => toString(s)).array == ["active", "inactive", "locked", "staged", "provisioning", "pending"]);
+  assert(["active", "inactive", "locked", "staged", "provisioning", "pending"].map!(s => toUserStatus(s)).array == [UserStatus.active, UserStatus.inactive, UserStatus.locked, UserStatus.staged, UserStatus.provisioning, UserStatus.pending]);
 }
 
 /// SCIM 2.0 group type.
@@ -37,12 +61,31 @@ enum GroupType {
   nested // Nested group that can contain other groups as members
 }
 GroupType toGroupType(string s) {
-  const map = [
-    "standard": GroupType.standard,
-    "dynamic": GroupType.dynamic,
-    "nested": GroupType.nested
-  ];
-  return map.get(s.toLower, GroupType.standard);
+  mixin(EnumSwitch("GroupType", "standard"));
+}
+GroupType[] toGroupType(string[] arr) {
+  return arr.map!(s => toGroupType(s)).array;
+}
+string toString(GroupType type) {
+  return type.to!string;
+}
+string[] toString(GroupType[] types) {
+  return types.map!(s => toString(s)).array;
+}
+///
+unittest {
+  mixin(ShowTest!("GroupType"));
+
+  assert(toGroupType("standard") == GroupType.standard);
+  assert(toGroupType("dynamic") == GroupType.dynamic);
+  assert(toGroupType("nested") == GroupType.nested);
+
+  assert(toString(GroupType.standard) == "standard");
+  assert(toString(GroupType.dynamic) == "dynamic");
+  assert(toString(GroupType.nested) == "nested");
+
+  assert([GroupType.standard, GroupType.dynamic, GroupType.nested].map!(s => toString(s)).array == ["standard", "dynamic", "nested"]);
+  assert(["standard", "dynamic", "nested"].map!(s => toGroupType(s)).array == [GroupType.standard, GroupType.dynamic, GroupType.nested]);
 }
 
 /// Attribute data types for custom schemas.
@@ -56,50 +99,125 @@ enum AttributeType {
   binaryType, // Binary data type
 }
 AttributeType toAttributeType(string s) {
-  const map = [
-    "string": AttributeType.stringType,
-    "integer": AttributeType.integerType,
-    "boolean": AttributeType.booleanType,
-    "dateTime": AttributeType.dateTimeType,
-    "reference": AttributeType.referenceType,
-    "complex": AttributeType.complexType,
-    "binary": AttributeType.binaryType
-  ];
-  return map.get(s.toLower, AttributeType.stringType);
+  mixin(EnumSwitch("AttributeType", "stringType"));
+}
+AttributeType[] toAttributeType(string[] arr) {
+  return arr.map!(s => toAttributeType(s)).array;
+}
+string toString(AttributeType type) {
+  return type.to!string;
+}
+string[] toString(AttributeType[] types) {
+  return types.map!(s => toString(s)).array;
+}
+/// 
+unittest {
+  mixin(ShowTest!("AttributeType"));
+
+  assert("stringType".toAttributeType == AttributeType.stringType);
+  assert("integerType".toAttributeType == AttributeType.integerType);
+  assert("booleanType".toAttributeType == AttributeType.booleanType);
+  assert("dateTimeType".toAttributeType == AttributeType.dateTimeType);
+  assert("referenceType".toAttributeType == AttributeType.referenceType);
+  assert("complexType".toAttributeType == AttributeType.complexType);
+  assert("binaryType".toAttributeType == AttributeType.binaryType);
+
+  assert(AttributeType.stringType.toString == "stringType");
+  assert(AttributeType.integerType.toString == "integerType");
+  assert(AttributeType.booleanType.toString == "booleanType");
+  assert(AttributeType.dateTimeType.toString == "dateTimeType");
+  assert(AttributeType.referenceType.toString == "referenceType");
+  assert(AttributeType.complexType.toString == "complexType");
+  assert(AttributeType.binaryType.toString == "binaryType");
+
+  assert([AttributeType.stringType, AttributeType.integerType, AttributeType.booleanType, AttributeType.dateTimeType, AttributeType.referenceType, AttributeType.complexType, AttributeType.binaryType].map!(s => toString(s)).array == ["stringType", "integerType", "booleanType", "dateTimeType", "referenceType", "complexType", "binaryType"]);
+  assert(["stringType", "integerType", "booleanType", "dateTimeType", "referenceType", "complexType", "binaryType"].map!(s => toAttributeType(s)).array == [AttributeType.stringType, AttributeType.integerType, AttributeType.booleanType, AttributeType.dateTimeType, AttributeType.referenceType, AttributeType.complexType, AttributeType.binaryType]);
 }
 
 /// Attribute mutability (SCIM 2.0).
-enum Mutability {
-  readWrite, // Attribute can be read and updated by clients
-  readOnly, // Attribute can be read but not updated by clients
-  writeOnly, // Attribute can be updated but not read by clients (e.g. password)
-  immutable_, // Attribute is immutable and cannot be updated after creation (e.g. id)
+enum Mutability : string {
+  readWrite = "readWrite", // Attribute can be read and updated by clients
+  readOnly = "readOnly", // Attribute can be read but not updated by clients
+  writeOnly = "writeOnly", // Attribute can be updated but not read by clients (e.g. password)
+  immutable_ = "immutable", // Attribute is immutable and cannot be updated after creation (e.g. id)
 }
 Mutability toMutability(string s) {
-  const map = [
-    "readWrite": Mutability.readWrite,
-    "readOnly": Mutability.readOnly,
-    "writeOnly": Mutability.writeOnly,
-    "immutable": Mutability.immutable_
-  ];
-  return map.get(s.toLower, Mutability.readWrite);
+  switch (s.toLower) {
+    case "readwrite": return Mutability.readWrite;
+    case "readonly": return Mutability.readOnly;
+    case "writeonly": return Mutability.writeOnly;
+    case "immutable": return Mutability.immutable_;
+    default: return Mutability.readWrite; // default to readWrite if unknown
+  }
+}
+Mutability[] toMutability(string[] arr) {
+  return arr.map!(s => toMutability(s)).array;
+}
+string toString(Mutability mut) {
+  return mut.to!string;
+}
+string[] toString(Mutability[] muts) {
+  return muts.map!(s => toString(s)).array;
+}
+///
+unittest {
+  mixin(ShowTest!("Mutability"));
+
+  assert(toMutability("readWrite") == Mutability.readWrite);
+  assert(toMutability("readOnly") == Mutability.readOnly);
+  assert(toMutability("writeOnly") == Mutability.writeOnly);
+  assert(toMutability("immutable") == Mutability.immutable_);
+
+  assert(toString(Mutability.readWrite) == "readWrite");
+  assert(toString(Mutability.readOnly) == "readOnly");
+  assert(toString(Mutability.writeOnly) == "writeOnly");
+  assert(toString(Mutability.immutable_) == "immutable");
+
+  assert([Mutability.readWrite, Mutability.readOnly, Mutability.writeOnly, Mutability.immutable_].map!(s => toString(s)).array == ["readWrite", "readOnly", "writeOnly", "immutable"]);
+  assert(["readWrite", "readOnly", "writeOnly", "immutable"].map!(s => toMutability(s)).array == [Mutability.readWrite, Mutability.readOnly, Mutability.writeOnly, Mutability.immutable_]);
 }
 
 /// Attribute returned behavior (SCIM 2.0).
-enum Returned {
-  always, // Attribute is always returned in responses
-  never, // Attribute is never returned in responses
-  default_, // Attribute is returned by default but can be excluded with ?excludedAttributes
-  request, // Attribute is returned only if explicitly requested via ?attributes
+enum Returned : string {
+  always = "always", // Attribute is always returned in responses
+  never = "never", // Attribute is never returned in responses
+  default_ = "default", // Attribute is returned by default but can be excluded with ?excludedAttributes
+  request = "request", // Attribute is returned only if explicitly requested via ?attributes
 }
 Returned toReturned(string s) {
-  const map = [
-    "always": Returned.always,
-    "never": Returned.never,
-    "default": Returned.default_,
-    "request": Returned.request
-  ];
-  return map.get(s.toLower, Returned.default_);
+  switch (s.toLower) {
+    case "always": return Returned.always;
+    case "never": return Returned.never;
+    case "default": return Returned.default_;
+    case "request": return Returned.request;
+    default: return Returned.default_; // default to default if unknown
+  }
+}
+Returned[] toReturned(string[] arr) {
+  return arr.map!(s => toReturned(s)).array;
+}
+string toString(Returned ret) {
+  return ret.to!string;
+}
+string[] toString(Returned[] rets) {
+  return rets.map!(s => toString(s)).array;
+} 
+///
+unittest {
+  mixin(ShowTest!("Returned"));
+
+  assert(toReturned("always") == Returned.always);
+  assert(toReturned("never") == Returned.never);
+  assert(toReturned("default") == Returned.default_);
+  assert(toReturned("request") == Returned.request);
+
+  assert(toString(Returned.always) == "always");
+  assert(toString(Returned.never) == "never");
+  assert(toString(Returned.default_) == "default");
+  assert(toString(Returned.request) == "request");
+
+  assert([Returned.always, Returned.never, Returned.default_, Returned.request].map!(s => toString(s)).array == ["always", "never", "default", "request"]);
+  assert(["always", "never", "default", "request"].map!(s => toReturned(s)).array == [Returned.always, Returned.never, Returned.default_, Returned.request]);
 }
 
 /// Attribute uniqueness (SCIM 2.0).
@@ -109,12 +227,31 @@ enum Uniqueness {
   global, // Attribute values must be globally unique across all servers (e.g. email)
 }
 Uniqueness toUniqueness(string s) {
-  const map = [
-    "none": Uniqueness.none,
-    "server": Uniqueness.server,
-    "global": Uniqueness.global
-  ];
-  return map.get(s.toLower, Uniqueness.none);
+  mixin(EnumSwitch("Uniqueness", "none"));
+}
+Uniqueness[] toUniqueness(string[] arr) {
+  return arr.map!(s => toUniqueness(s)).array;
+}
+string toString(Uniqueness uniq) {
+  return uniq.to!string;
+}
+string[] toString(Uniqueness[] uniqs) {
+  return uniqs.map!(s => toString(s)).array;
+}
+///
+unittest {
+  mixin(ShowTest!("Uniqueness"));
+
+  assert(toUniqueness("none") == Uniqueness.none);
+  assert(toUniqueness("server") == Uniqueness.server);
+  assert(toUniqueness("global") == Uniqueness.global);
+
+  assert(toString(Uniqueness.none) == "none");
+  assert(toString(Uniqueness.server) == "server");
+  assert(toString(Uniqueness.global) == "global");
+
+  assert([Uniqueness.none, Uniqueness.server, Uniqueness.global].map!(s => toString(s)).array == ["none", "server", "global"]);
+  assert(["none", "server", "global"].map!(s => toUniqueness(s)).array == [Uniqueness.none, Uniqueness.server, Uniqueness.global]);
 }
 
 /// Password policy strength level.
@@ -125,13 +262,33 @@ enum PasswordStrength {
   enterprise, // Password meets enterprise-grade complexity requirements
 }
 PasswordStrength toPasswordStrength(string s) {
-  const map = [
-    "weak": PasswordStrength.weak,
-    "standard": PasswordStrength.standard,
-    "strong": PasswordStrength.strong,
-    "enterprise": PasswordStrength.enterprise
-  ];
-  return map.get(s.toLower, PasswordStrength.standard);
+  mixin(EnumSwitch("PasswordStrength", "standard"));
+}
+PasswordStrength[] toPasswordStrength(string[] arr) {
+  return arr.map!(s => toPasswordStrength(s)).array;
+}
+string toString(PasswordStrength strength) {
+  return strength.to!string;
+}
+string[] toString(PasswordStrength[] strengths) {
+  return strengths.map!(s => toString(s)).array;
+}
+///
+unittest {
+  mixin(ShowTest!("PasswordStrength"));
+
+  assert(toPasswordStrength("weak") == PasswordStrength.weak);
+  assert(toPasswordStrength("standard") == PasswordStrength.standard);
+  assert(toPasswordStrength("strong") == PasswordStrength.strong);
+  assert(toPasswordStrength("enterprise") == PasswordStrength.enterprise);  
+
+  assert(toString(PasswordStrength.weak) == "weak");
+  assert(toString(PasswordStrength.standard) == "standard");
+  assert(toString(PasswordStrength.strong) == "strong");
+  assert(toString(PasswordStrength.enterprise) == "enterprise");
+
+  assert([PasswordStrength.weak, PasswordStrength.standard, PasswordStrength.strong, PasswordStrength.enterprise].map!(s => toString(s)).array == ["weak", "standard", "strong", "enterprise"]);
+  assert(["weak", "standard", "strong", "enterprise"].map!(s => toPasswordStrength(s)).array == [PasswordStrength.weak, PasswordStrength.standard, PasswordStrength.strong, PasswordStrength.enterprise]);
 }
 
 /// Audit event type.
@@ -159,40 +316,95 @@ enum AuditEventType {
   loginFailure, // A user failed to log in due to invalid credentials
 }
 AuditEventType toAuditEventType(string s) {
-  const map = [
-    "usercreated": AuditEventType.userCreated,
-    "userupdated": AuditEventType.userUpdated,
-    "userdeleted": AuditEventType.userDeleted,
-    "useractivated": AuditEventType.userActivated,
-    "userdeactivated": AuditEventType.userDeactivated,
-    "userlocked": AuditEventType.userLocked,
-    "userunlocked": AuditEventType.userUnlocked,
-    "passwordchanged": AuditEventType.passwordChanged,
-    "passwordreset": AuditEventType.passwordReset,
-    "groupcreated": AuditEventType.groupCreated,
-    "groupupdated": AuditEventType.groupUpdated,
-    "groupdeleted": AuditEventType.groupDeleted,
-    "memberadded": AuditEventType.memberAdded,
-    "memberremoved": AuditEventType.memberRemoved,
-    "schemacreated": AuditEventType.schemaCreated,
-    "schemaupdated": AuditEventType.schemaUpdated,
-    "schemadeleted": AuditEventType.schemaDeleted,
-    "apiclientcreated": AuditEventType.apiClientCreated,
-    "apiclientrevoked": AuditEventType.apiClientRevoked,
-    "loginsuccess": AuditEventType.loginSuccess,
-    "loginfailure": AuditEventType.loginFailure
-  ];
-  return map.get(s.toLower, AuditEventType.loginFailure);
+  mixin(EnumSwitch("AuditEventType", "loginSuccess"));
 }
+AuditEventType[] toAuditEventType(string[] arr) {
+  return arr.map!(s => toAuditEventType(s)).array;
+}
+string toString(AuditEventType eventType) {
+  return eventType.to!string;
+}
+string[] toString(AuditEventType[] eventTypes) {
+  return eventTypes.map!(s => toString(s)).array;
+}
+///
+unittest {
+  mixin(ShowTest!("AuditEventType"));
+
+  assert(toAuditEventType("userCreated") == AuditEventType.userCreated);
+  assert(toAuditEventType("userUpdated") == AuditEventType.userUpdated);
+  assert(toAuditEventType("userDeleted") == AuditEventType.userDeleted);
+  assert(toAuditEventType("userActivated") == AuditEventType.userActivated);
+  assert(toAuditEventType("userDeactivated") == AuditEventType.userDeactivated);
+  assert(toAuditEventType("userLocked") == AuditEventType.userLocked);
+  assert(toAuditEventType("userUnlocked") == AuditEventType.userUnlocked);
+  assert(toAuditEventType("passwordChanged") == AuditEventType.passwordChanged);
+  assert(toAuditEventType("passwordReset") == AuditEventType.passwordReset);
+  assert(toAuditEventType("groupCreated") == AuditEventType.groupCreated);
+  assert(toAuditEventType("groupUpdated") == AuditEventType.groupUpdated);
+  assert(toAuditEventType("groupDeleted") == AuditEventType.groupDeleted);
+  assert(toAuditEventType("memberAdded") == AuditEventType.memberAdded);
+  assert(toAuditEventType("memberRemoved") == AuditEventType.memberRemoved);
+  assert(toAuditEventType("schemaCreated") == AuditEventType.schemaCreated);
+  assert(toAuditEventType("schemaUpdated") == AuditEventType.schemaUpdated);
+  assert(toAuditEventType("schemaDeleted") == AuditEventType.schemaDeleted);
+  assert(toAuditEventType("apiClientCreated") == AuditEventType.apiClientCreated);    
+
+  assert(toAuditEventType("apiClientRevoked") == AuditEventType.apiClientRevoked);
+  assert(toAuditEventType("loginSuccess") == AuditEventType.loginSuccess);
+  assert(toAuditEventType("loginFailure") == AuditEventType.loginFailure);
+  assert(toString(AuditEventType.userCreated) == "userCreated");
+  assert(toString(AuditEventType.userUpdated) == "userUpdated");
+  assert(toString(AuditEventType.userDeleted) == "userDeleted");
+  assert(toString(AuditEventType.userActivated) == "userActivated");
+  assert(toString(AuditEventType.userDeactivated) == "userDeactivated");
+  assert(toString(AuditEventType.userLocked) == "userLocked");
+  assert(toString(AuditEventType.userUnlocked) == "userUnlocked");    
+  assert(toString(AuditEventType.passwordChanged) == "passwordChanged");
+  assert(toString(AuditEventType.passwordReset) == "passwordReset");
+  assert(toString(AuditEventType.groupCreated) == "groupCreated");
+  assert(toString(AuditEventType.groupUpdated) == "groupUpdated");
+  assert(toString(AuditEventType.groupDeleted) == "groupDeleted");
+  assert(toString(AuditEventType.memberAdded) == "memberAdded");
+  assert(toString(AuditEventType.memberRemoved) == "memberRemoved");
+  assert(toString(AuditEventType.schemaCreated) == "schemaCreated");
+  assert(toString(AuditEventType.schemaUpdated) == "schemaUpdated");
+  assert(toString(AuditEventType.schemaDeleted) == "schemaDeleted");
+  assert(toString(AuditEventType.apiClientCreated) == "apiClientCreated");
+  assert(toString(AuditEventType.apiClientRevoked) == "apiClientRevoked");
+  assert(toString(AuditEventType.loginSuccess) == "loginSuccess");
+  assert(toString(AuditEventType.loginFailure) == "loginFailure");
+  assert([AuditEventType.userCreated, AuditEventType.userUpdated, AuditEventType.userDeleted, AuditEventType.userActivated, AuditEventType.userDeactivated, AuditEventType.userLocked, AuditEventType.userUnlocked, AuditEventType.passwordChanged, AuditEventType.passwordReset, AuditEventType.groupCreated, AuditEventType.groupUpdated, AuditEventType.groupDeleted, AuditEventType.memberAdded, AuditEventType.memberRemoved, AuditEventType.schemaCreated, AuditEventType.schemaUpdated, AuditEventType.schemaDeleted, AuditEventType.apiClientCreated, AuditEventType.apiClientRevoked, AuditEventType.loginSuccess, AuditEventType.loginFailure].map!(s => toString(s)).array == ["userCreated", "userUpdated", "userDeleted", "userActivated", "userDeactivated", "userLocked", "userUnlocked", "passwordChanged", "passwordReset", "groupCreated", "groupUpdated", "groupDeleted", "memberAdded", "memberRemoved", "schemaCreated", "schemaUpdated", "schemaDeleted", "apiClientCreated", "apiClientRevoked", "loginSuccess", "loginFailure"]);
+  assert(["userCreated", "userUpdated", "userDeleted", "userActivated", "userDeactivated", "userLocked", "userUnlocked", "passwordChanged", "passwordReset", "groupCreated", "groupUpdated", "groupDeleted", "memberAdded", "memberRemoved", "schemaCreated", "schemaUpdated", "schemaDeleted", "apiClientCreated", "apiClientRevoked", "loginSuccess", "loginFailure"].map!(s => toAuditEventType(s)).array == [AuditEventType.userCreated, AuditEventType.userUpdated, AuditEventType.userDeleted, AuditEventType.userActivated, AuditEventType.userDeactivated, AuditEventType.userLocked, AuditEventType.userUnlocked, AuditEventType.passwordChanged, AuditEventType.passwordReset, AuditEventType.groupCreated, AuditEventType.groupUpdated, AuditEventType.groupDeleted, AuditEventType.memberAdded, AuditEventType.memberRemoved, AuditEventType.schemaCreated, AuditEventType.schemaUpdated, AuditEventType.schemaDeleted, AuditEventType.apiClientCreated, AuditEventType.apiClientRevoked, AuditEventType.loginSuccess, AuditEventType.loginFailure]); 
+}
+
 /// Sort order.
 enum SortOrder {
   ascending, // Sort in ascending order (A-Z, 0-9)
   descending, // Sort in descending order (Z-A, 9-0)
 }
 SortOrder toSortOrder(string s) {
-  const map = [
-    "ascending": SortOrder.ascending, 
-    "descending": SortOrder.descending
-  ];
-  return map.get(s.toLower, SortOrder.ascending);
+  mixin(EnumSwitch("SortOrder", "ascending"));
+}
+SortOrder[] toSortOrder(string[] arr) {
+  return arr.map!(s => toSortOrder(s)).array;
+}
+string toString(SortOrder order) {
+  return order.to!string;
+}
+string[] toString(SortOrder[] orders) {
+  return orders.map!(s => toString(s)).array;
+}
+///
+unittest {
+  mixin(ShowTest!("SortOrder"));
+
+  assert(toSortOrder("ascending") == SortOrder.ascending);
+  assert(toSortOrder("descending") == SortOrder.descending);
+
+  assert(toString(SortOrder.ascending) == "ascending");
+  assert(toString(SortOrder.descending) == "descending");
+
+  assert([SortOrder.ascending, SortOrder.descending].map!(s => toString(s)).array == ["ascending", "descending"]);
+  assert(["ascending", "descending"].map!(s => toSortOrder(s)).array == [SortOrder.ascending, SortOrder.descending]);
 }

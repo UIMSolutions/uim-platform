@@ -83,7 +83,7 @@ class GroupController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = IAMGroupId(precheck.id);
+    auto id = GroupId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid group ID", 400);
 
@@ -101,7 +101,7 @@ class GroupController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto groupId = IAMGroupId(precheck.id);
+    auto groupId = GroupId(precheck.id);
     if (groupId.isNull)
       return errorResponse("Invalid group ID", 400);
 
@@ -122,7 +122,7 @@ class GroupController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = IAMGroupId(precheck.id);
+    auto id = GroupId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid group ID", 400);
 

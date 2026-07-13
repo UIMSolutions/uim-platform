@@ -15,7 +15,7 @@ import uim.platform.identity_directory;
 mixin(ShowModule!());
 
 @safe:
-/// --- User DTOs ---
+/// --- IDUser DTOs ---
 
 struct CreateUserRequest {
   TenantId tenantId;
@@ -70,20 +70,20 @@ struct CreateGroupRequest {
 }
 
 struct UpdateGroupRequest {
-  IAMGroupId groupId;
+  GroupId groupId;
   string displayName;
   string description;
 }
 
 struct AddMemberRequest {
-  IAMGroupId groupId;
+  GroupId groupId;
   string memberId;
-  string memberType; // "User" or "IDGroup"
+  string memberType; // "IDUser" or "IDGroup"
   string display;
 }
 
 struct RemoveMemberRequest {
-  IAMGroupId groupId;
+  GroupId groupId;
   string memberId;
 }
 

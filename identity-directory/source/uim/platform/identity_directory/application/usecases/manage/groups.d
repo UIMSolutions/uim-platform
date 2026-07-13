@@ -32,7 +32,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
 
   /// Create a new group.
   GroupResponse createGroup(CreateGroupRequest req) {
-    if (groupRepo.exitstByDisplayName(req.tenantId, req.displayName))
+    if (groupRepo.existsByDisplayName(req.tenantId, req.displayName))
       return GroupResponse("", "IDGroup with this displayName already exists");
 
     auto group = IDGroup(req.tenantId);
@@ -46,8 +46,8 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
 
     // Update user groupIds for initial members
     foreach (m; req.members) {
-      if (m.type == "User") {
-        auto user = userRepo.findById(m.value);
+      if (m.type == "IDUser") {
+        auto user = userRepo.findById(group.tenantId, m.value);
         if (!user.isNull) {
           user.groupIds ~= group.id;
           userRepo.update(user);
@@ -56,14 +56,14 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
     }
 
     auditRepo.save(AuditEvent(randomUUID().toString(), req.tenantId,
-        AuditEventType.groupCreated, "system", "System", groupId, "IDGroup",
+        AuditEventType.groupCreated, "system", "System", group.id, "IDGroup",
         "IDGroup created: " ~ req.displayName, "", "", null, now,));
 
-    return GroupResponse(groupId, "");
+    return GroupResponse(group.id.value, "");
   }
 
   /// Get group by ID.
-  IDGroup getGroup(IAMGroupId id) {
+  IDGroup getGroup(GroupId id) {
     return groupRepo.findById(tenantId, id);
   }
 
@@ -74,7 +74,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
 
   /// Update group metadata.
   CommandResult updateGroup(UpdateGroupRequest req) {
-    auto group = groupRepo.findById(req.groupId);
+    auto group = groupRepo.findById(req.tenantId, req.groupId);
     if (group.isNull)
       return CommandResult(false, "", "IDGroup not found");
 
@@ -95,7 +95,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
 
   /// Add a member to a group.
   CommandResult addMember(AddMemberRequest req) {
-    auto group = groupRepo.findById(req.groupId);
+    auto group = groupRepo.findById(req.tenantId, req.groupId);
     if (group.isNull)
       return CommandResult(false, "", "IDGroup not found");
 
@@ -108,9 +108,9 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
     groupRepo.update(group);
 
     // Update user's groupIds
-    if (req.memberType == "User") {
+    if (req.memberType == "IDUser") {
       auto user = userRepo.findById(req.memberId);
-      if (user != User.init) {
+      if (user != IDUser.init) {
         user.groupIds ~= req.groupId;
         userRepo.update(user);
       }
@@ -125,7 +125,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
 
   /// Remove a member from a group.
   CommandResult removeMember(RemoveMemberRequest req) {
-    auto group = groupRepo.findById(req.groupId);
+    auto group = groupRepo.findById(req.tenantId, req.groupId);
     if (group.isNull)
       return CommandResult(false, "", "IDGroup not found");
 
@@ -138,7 +138,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
     groupRepo.update(group);
 
     // Update user's groupIds
-    auto user = userRepo.findById(req.memberId);
+    auto user = userRepo.findById(req.tenantId, req.memberId);
     if (!user.isNull) {
       user.groupIds = user.groupIds.filter!(g => g != req.groupId).array.toJson;
       userRepo.update(user);
@@ -152,15 +152,15 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
   }
 
   /// Delete a group.
-  CommandResult deleteGroup(IAMGroupId id) {
+  CommandResult deleteGroup(TenantId tenantId, GroupId id) {
     auto group = groupRepo.findById(tenantId, id);
     if (group.isNull)
       return CommandResult(false, "", "IDGroup not found");
 
     // Remove group from all member users
     foreach (m; group.members) {
-      if (m.type == "User") {
-        auto user = userRepo.findById(m.value);
+      if (m.type == "IDUser") {
+        auto user = userRepo.findById(tenantId, m.value);
         if (!user.isNull) {
           user.groupIds = user.groupIds.filter!(g => g != id).array.toJson;
           userRepo.update(user);

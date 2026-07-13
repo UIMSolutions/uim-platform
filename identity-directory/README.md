@@ -12,8 +12,8 @@ Part of the [UIM Platform](https://www.....de/uim/sap) suite.
 
 | Capability | Description |
 |---|---|
-| **User Management (SCIM 2.0)** | Full CRUD for users with SCIM-compliant structured names, multi-valued emails, phone numbers, addresses, lifecycle status (Active / Inactive / Locked / Staged), and custom schema extensions |
-| **IDGroup Management (SCIM 2.0)** | Standard and dynamic groups with nested membership (User or IDGroup members), member add/remove operations, and tenant-scoped display name search |
+| **IDUser Management (SCIM 2.0)** | Full CRUD for users with SCIM-compliant structured names, multi-valued emails, phone numbers, addresses, lifecycle status (Active / Inactive / Locked / Staged), and custom schema extensions |
+| **IDGroup Management (SCIM 2.0)** | Standard and dynamic groups with nested membership (IDUser or IDGroup members), member add/remove operations, and tenant-scoped display name search |
 | **Custom Schemas** | SCIM 2.0 schema extensions with typed attributes (String, Integer, Boolean, DateTime, Reference, Complex, Binary), mutability rules, returned behavior, and uniqueness constraints |
 | **Password Policies** | Configurable password rules per tenant — min/max length, character class requirements (uppercase, lowercase, digit, special), unique character minimum, consecutive repeat limit, password history, failed-attempt lockout, and expiry days |
 | **Password Validation** | Domain service that validates passwords against all policy rules and returns a list of specific violations |
@@ -21,7 +21,7 @@ Part of the [UIM Platform](https://www.....de/uim/sap) suite.
 | **Password Hashing** | SHA-256 password hashing via the PasswordService port with pluggable adapter |
 | **API Clients** | Technical user / service-to-service credentials with scoped access, expiration, client ID + secret generation (secret returned only at creation), and revocation |
 | **Audit Logging** | Immutable audit trail for 21 event types (user/group/schema/client lifecycle, password changes, login events) with actor, target, IP address, user agent, and custom metadata |
-| **SCIM Search** | User search endpoint with filter expressions and pagination (startIndex, itemsPerPage) |
+| **SCIM Search** | IDUser search endpoint with filter expressions and pagination (startIndex, itemsPerPage) |
 
 ## Architecture
 
@@ -182,8 +182,8 @@ IDS_HOST=127.0.0.1 IDS_PORT=9090 ./build/uim-identity-directory-platform-service
 
 | Alias | Underlying | Purpose |
 |---|---|---|
-| `UserId` | `string` | User identifier |
-| `IAMGroupId` | `string` | IDGroup identifier |
+| `UserId` | `string` | IDUser identifier |
+| `GroupId` | `string` | IDGroup identifier |
 | `TenantId` | `string` | Tenant identifier |
 | `SchemaId` | `string` | Schema URN identifier |
 | `AttributeId` | `string` | Schema attribute identifier |
@@ -212,7 +212,7 @@ IDS_HOST=127.0.0.1 IDS_PORT=9090 ./build/uim-identity-directory-platform-service
 | **PhoneNumber** | value, type (work/mobile/fax/other), primary |
 | **Address** | formatted, streetAddress, locality, region, postalCode, country, type, primary |
 | **ExtendedAttribute** | schemaId, attributeName, value |
-| **GroupMember** | value (user/group ID), type ("User"/"IDGroup"), display |
+| **GroupMember** | value (user/group ID), type ("IDUser"/"IDGroup"), display |
 | **SchemaAttribute** | id, name, description, type, multiValued, required, mutability, returned, uniqueness, canonicalValues, referenceTypes |
 
 ### Domain Services

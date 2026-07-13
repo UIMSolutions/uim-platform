@@ -11,7 +11,8 @@ mixin(ShowModule!());
 
 @safe:
 
-struct IAMGroupId {
+/// Unique identifier type aliases for type safety.
+struct GroupId {
   mixin(IdTemplate);
 }
 
@@ -24,5 +25,13 @@ struct AttributeId {
 }
 
 struct ApiClientId {
+  mixin(IdTemplate);
+}
+
+struct AuditEventId {
+  mixin(IdTemplate);
+}
+
+struct PasswordPolicyId {
   mixin(IdTemplate);
 }

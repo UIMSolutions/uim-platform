@@ -13,18 +13,22 @@ mixin(ShowModule!());
 
 @safe:
 /// In-memory adapter for group persistence.
-class MemoryGroupRepository : TenantRepository!(IDGroup, IAMGroupId), GroupRepository {
+class MemoryGroupRepository : TenantRepository!(IDGroup, GroupId), GroupRepository {
 
   bool existsByDisplayName(TenantId tenantId, string displayName) {
-    return findByTenant(tenantId).any!(g => g.tenantId == tenantId && g.displayName == displayName);
+    return findByTenant(tenantId).any!(g => g.displayName == displayName);
   }
   
   IDGroup findByDisplayName(TenantId tenantId, string displayName) {
     foreach (g; findByTenant(tenantId)) {
-      if (g.tenantId == tenantId && g.displayName == displayName)
+      if (g.displayName == displayName)
         return g;
     }
     return IDGroup.init;
+  }
+
+  void removeByDisplayName(TenantId tenantId, string displayName) {
+    findByTenant(tenantId).filter!(g => g.displayName == displayName).each!(g => remove(g.id));
   }
 
   size_t countByMember(string memberId) {

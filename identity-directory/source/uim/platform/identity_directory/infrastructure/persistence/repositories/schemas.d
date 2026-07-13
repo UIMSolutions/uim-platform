@@ -26,4 +26,10 @@ class MemorySchemaRepository : TenantRepository!(Schema, SchemaId), SchemaReposi
     return Schema.init;
   }
 
+  void removeByName(TenantId tenantId, string name) {
+    auto schema = findByName(tenantId, name);
+    if (schema.schemaId.value != 0)
+      remove(schema);
+  }
+
 }

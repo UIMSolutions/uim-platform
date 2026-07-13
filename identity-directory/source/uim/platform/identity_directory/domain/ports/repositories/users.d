@@ -13,24 +13,24 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — user persistence (SCIM 2.0 compliant).
-interface UserRepository : ITenantRepository!(User, UserId) {
+interface UserRepository : ITenantRepository!(IDUser, UserId) {
 
   bool existsByUserName(TenantId tenantId, string userName);
-  User findByUserName(TenantId tenantId, string userName);
+  IDUser findByUserName(TenantId tenantId, string userName);
   void removeByUserName(TenantId tenantId, string userName);
 
   bool existsByExternalId(TenantId tenantId, string externalId);
-  User findByExternalId(TenantId tenantId, string externalId);
+  IDUser findByExternalId(TenantId tenantId, string externalId);
   void removeByExternalId(TenantId tenantId, string externalId);
 
   size_t countByEmail(TenantId tenantId, string email);
-  User[] findByEmail(TenantId tenantId, string email);
+  IDUser[] findByEmail(TenantId tenantId, string email);
   void removeByEmail(TenantId tenantId, string email);
 
-  size_t countByGroupId(TenantId tenantId, IAMGroupId groupId);
-  User[] findByGroupId(TenantId tenantId, IAMGroupId groupId);
-  void removeByGroupId(TenantId tenantId, IAMGroupId groupId);
+  size_t countByGroup(TenantId tenantId, GroupId groupId);
+  IDUser[] findByGroup(TenantId tenantId, GroupId groupId);
+  void removeByGroup(TenantId tenantId, GroupId groupId);
 
-  User[] search(TenantId tenantId, string filter, size_t offset = 0, size_t limit = 100);
+  IDUser[] search(TenantId tenantId, string filter); //, size_t offset = 0, size_t limit = 100);
 
 }

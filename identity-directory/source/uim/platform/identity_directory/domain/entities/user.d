@@ -92,7 +92,7 @@ struct ExtendedAttribute {
   }
 }
 /// Core user entity — SCIM 2.0 compliant.
-struct User {
+struct IDUser {
   mixin TenantEntity!UserId;
 
   string externalId;

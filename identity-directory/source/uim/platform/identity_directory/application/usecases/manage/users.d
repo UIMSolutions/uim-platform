@@ -39,7 +39,7 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
   UserResponse createUser(CreateUserRequest req) {
     // Check username uniqueness
     if (userRepo.existsByUserName(req.tenantId, req.userName))
-      return UserResponse("", "User with this userName already exists");
+      return UserResponse("", "IDUser with this userName already exists");
 
     // Validate password against policy
     auto policy = policyRepo.findActiveForTenant(req.tenantId);
@@ -50,7 +50,7 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
         // return UserResponse("", validation.violations.joiner("; ").to!string);
     }
 
-    auto user = User(req.tenantId);
+    auto user = IDUser(req.tenantId);
 
     user.externalId = req.externalId;
     user.userName = req.userName;
@@ -73,24 +73,24 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
 
     // Audit
     auditRepo.save(AuditEvent(randomUUID().toString(), req.tenantId,
-        AuditEventType.userCreated, "system", "System", userId, "User",
-        "User created: " ~ req.userName, "", "", null, now,));
+        AuditEventType.userCreated, "system", "System", userId, "IDUser",
+        "IDUser created: " ~ req.userName, "", "", null, now,));
 
     return UserResponse(userId, "");
   }
 
   /// Get user by ID.
-  User getUser(UserId id) {
+  IDUser getUser(UserId id) {
     return userRepo.findById(tenantId, id);
   }
 
   /// List users for a tenant (SCIM paginated).
-  User[] listUsers(TenantId tenantId, size_t offset = 0, size_t limit = 100) {
+  IDUser[] listUsers(TenantId tenantId, size_t offset = 0, size_t limit = 100) {
     return userRepo.findByTenant(tenantId, offset, limit);
   }
 
   /// Search users with a SCIM-like filter.
-  User[] searchUsers(TenantId tenantId, string filter, size_t offset = 0, size_t limit = 100) {
+  IDUser[] searchUsers(TenantId tenantId, string filter, size_t offset = 0, size_t limit = 100) {
     return userRepo.search(tenantId, filter, offset, limit);
   }
 
@@ -98,7 +98,7 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
   string updateUser(UpdateUserRequest req) {
     auto user = userRepo.findById(req.userId);
     if (user.isNull)
-      return "User not found";
+      return "IDUser not found";
 
     if (req.name != UserName.init)
       user.name = req.name;
@@ -127,8 +127,8 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
     userRepo.update(user);
 
     auditRepo.save(AuditEvent(randomUUID().toString(), user.tenantId,
-        AuditEventType.userUpdated, "system", "System", req.userId, "User",
-        "User updated", "", "", null, Clock.currStdTime(),));
+        AuditEventType.userUpdated, "system", "System", req.userId, "IDUser",
+        "IDUser updated", "", "", null, Clock.currStdTime(),));
 
     return "";
   }
@@ -137,7 +137,7 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
   CommandResult deactivateUser(UserId id) {
     auto user = userRepo.findById(tenantId, id);
     if (user.isNull)
-      return CommandResult(false, "", "User not found");
+      return CommandResult(false, "", "IDUser not found");
 
     user.active = false;
     user.status = UserStatus.inactive;
@@ -145,8 +145,8 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
     userRepo.update(user);
 
     auditRepo.save(AuditEvent(randomUUID().toString(), user.tenantId,
-        AuditEventType.userDeactivated, "system", "System", id, "User",
-        "User deactivated", "", "", null, Clock.currStdTime(),));
+        AuditEventType.userDeactivated, "system", "System", id, "IDUser",
+        "IDUser deactivated", "", "", null, Clock.currStdTime(),));
 
     return CommandResult(true, id.value, "");
   }
@@ -155,13 +155,13 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
   CommandResult deleteUser(UserId id) {
     auto user = userRepo.findById(tenantId, id);
     if (user.isNull)
-      return CommandResult(false, "", "User not found");
+      return CommandResult(false, "", "IDUser not found");
 
     userRepo.remove(user);
 
     auditRepo.save(AuditEvent(randomUUID().toString(), user.tenantId,
-        AuditEventType.userDeleted, "system", "System", user.id, "User",
-        "User deleted: " ~ user.userName, "", "", null, Clock.currStdTime(),));
+        AuditEventType.userDeleted, "system", "System", user.id, "IDUser",
+        "IDUser deleted: " ~ user.userName, "", "", null, Clock.currStdTime(),));
 
     return CommandResult(true, user.id.value, "");
   }
@@ -170,7 +170,7 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
   string changePassword(UserId id, string oldPassword, string newPassword) {
     auto user = userRepo.findById(tenantId, id);
     if (user.isNull)
-      return "User not found";
+      return "IDUser not found";
 
     if (user.passwordHash.length > 0 && !passwordSvc.verifyPassword(oldPassword, user.passwordHash))
       return "Current password is incorrect";
@@ -191,7 +191,7 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
     userRepo.update(user);
 
     auditRepo.save(AuditEvent(randomUUID().toString(), user.tenantId,
-        AuditEventType.passwordChanged, id, "User", id, "User",
+        AuditEventType.passwordChanged, id, "IDUser", id, "IDUser",
         "Password changed", "", "", null, Clock.currStdTime(),));
 
     return CommandResult(true, id.value, "");

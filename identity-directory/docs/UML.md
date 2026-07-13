@@ -4,7 +4,7 @@
 
 ```mermaid
 classDiagram
-    class User {
+    class IDUser {
         +string id
         +string userName
         +string email
@@ -48,8 +48,8 @@ classDiagram
         +string timestamp
     }
 
-    User "many" --> "many" IDGroup : member of
-    AuditEvent --> User : records action by
+    IDUser "many" --> "many" IDGroup : member of
+    AuditEvent --> IDUser : records action by
 ```
 
 ## Component Diagram
@@ -66,7 +66,7 @@ flowchart TB
         CLIENT_UC["ApiClientUseCases"]
     end
     subgraph Domain["Domain Layer"]
-        USER["User"]
+        USER["IDUser"]
         GROUP["IDGroup"]
         SCHEMA["Schema"]
         CLIENT["ApiClient"]
@@ -85,7 +85,7 @@ flowchart TB
     Application --> Infrastructure
 ```
 
-## Sequence Diagram — Create User
+## Sequence Diagram — Create IDUser
 
 ```mermaid
 sequenceDiagram

@@ -56,8 +56,8 @@ class UserController : ManageHttpController {
     auto response = Json.emptyObject;
     response["id"] = Json(result.userId);
     response["schemas"] = Json.emptyArray;
-    response["schemas"] ~= Json("urn:ietf:params:scim:schemas:core:2.0:User");
-    return successResponse("User created successfully", "Created", 201, response);
+    response["schemas"] ~= Json("urn:ietf:params:scim:schemas:core:2.0:IDUser");
+    return successResponse("IDUser created successfully", "Created", 201, response);
     // writeScimError(res, 409, result.message);
   }
 
@@ -88,10 +88,10 @@ class UserController : ManageHttpController {
     auto userId = precheck.id;
     auto user = useCase.getUser(userId);
     if (user.isNull)
-      return scimErrorResponse("User not found", 404);
+      return scimErrorResponse("IDUser not found", 404);
 
     auto response = user.toJson;
-    return successResponse("User retrieved successfully", "", 200, response);
+    return successResponse("IDUser retrieved successfully", "", 200, response);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
@@ -124,8 +124,8 @@ class UserController : ManageHttpController {
     auto response = Json.emptyObject;
     response["id"] = Json(userId);
     response["schemas"] = Json.emptyArray;
-    response["schemas"] ~= Json("urn:ietf:params:scim:schemas:core:2.0:User");
-    return successResponse("User updated successfully", "", 200, response);
+    response["schemas"] ~= Json("urn:ietf:params:scim:schemas:core:2.0:IDUser");
+    return successResponse("IDUser updated successfully", "", 200, response);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
@@ -140,7 +140,7 @@ class UserController : ManageHttpController {
     if (result.hasError)
       writeScimError(res, 404, result.errorMessage);
 
-    return successResponse("User deleted successfully", "", 200, Json.emptyObject);
+    return successResponse("IDUser deleted successfully", "", 200, Json.emptyObject);
   }
   protected Json changePasswordHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);
@@ -180,7 +180,7 @@ class UserController : ManageHttpController {
         .set("totalResults", users.length)
         .set("resources", list);
 
-      return successResponse("User search completed successfully", "", 200, responseData);
+      return successResponse("IDUser search completed successfully", "", 200, responseData);
   }
 
   mixin(HandleTemplate!("handleSearch", "searchHandler"));

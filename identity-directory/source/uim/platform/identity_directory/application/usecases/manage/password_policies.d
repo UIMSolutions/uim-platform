@@ -46,26 +46,26 @@ class ManagePasswordPoliciesUseCase { // TODO: UIMUseCase {
     policy.lockoutDurationMinutes = req.lockoutDurationMinutes > 0 ? req.lockoutDurationMinutes : 30;
     policy.expiryDays = req.expiryDays > 0 ? req.expiryDays : 90;
     policy.warningDaysBeforeExpiry = 14;
-    policy.isActive = true;
+    // policy.isActive = true;
 
     policyRepo.save(policy);
 
     auto event = AuditEvent(req.tenantId);
     event.eventType = AuditEventType.schemaCreated; // reuse event type
-    event.actorId = req.createdBy;
-    event.actorName = req.createdBy; // TODO: lookup user name
+    // event.actorId = req.createdBy;
+    // event.actorName = req.createdBy; // TODO: lookup user name
     event.targetId = policy.id.value;
     event.targetType = "PasswordPolicy";
     event.description = "Password policy created: " ~ req.name;
 
     auditRepo.save(event);  
 
-    return PasswordPolicyResponse(policyId, "");
+    return PasswordPolicyResponse(policy.id.value, "");
   }
 
   /// Get policy by ID.
   PasswordPolicy getPolicy(string id) {
-    return policyRepo.findById(tenantId, id);
+    return policyRepo.findById(req.tenantId, id);
   }
 
   /// List policies for a tenant.

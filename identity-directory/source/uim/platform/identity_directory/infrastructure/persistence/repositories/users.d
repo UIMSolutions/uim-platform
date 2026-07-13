@@ -15,62 +15,52 @@ mixin(ShowModule!());
 // import std.algorithm : canFind;
 // import std.string : toLower, indexOf;
 /// In-memory adapter for user persistence.
-class MemoryUserRepository : UserRepository {
+class MemoryUserRepository : TenantRepository!(IDUser, UserId), UserRepository {
 
   bool existsByUserName(TenantId tenantId, string userName) {
-    return findByTenant(tenantId).any!(u => u.tenantId == tenantId && u.userName == userName);
+    return findByTenant(tenantId).any!(u => u.userName == userName);
   }
 
-  User findByUserName(TenantId tenantId, string userName) {
+  IDUser findByUserName(TenantId tenantId, string userName) {
     foreach (u; findByTenant(tenantId)) {
-      if (u.tenantId == tenantId && u.userName == userName)
+      if (u.userName == userName)
         return u;
     }
-    return User.init;
-  }
-
-  bool existsByExternalId(TenantId tenantId, string externalId) {
-    return findByTenant(tenantId).any!(u => u.tenantId == tenantId && u.externalId == externalId);
-  }
-
-  User findByExternalId(TenantId tenantId, string externalId) {
-    foreach (u; findByTenant(tenantId)) {
-      if (u.tenantId == tenantId && u.externalId == externalId)
-        return u;
-    }
-    return User.init;
-  }
-
-  size_t countByUserName(TenantId tenantId, string userName) {
-    size_t count;
-    foreach (u; findByTenant(tenantId)) {
-      if (u.tenantId == tenantId && u.userName == userName)
-        count++;
-    }
-    return count;
-  }
-
-  User[] filterByUserName(User[] users, string userName) {
-    return users.filter!(u => u.userName == userName).array;
-  }
-
-  User[] findByUserName(TenantId tenantId, string userName) {
-    return filterByUserName(findByTenant(tenantId), userName);
+    return IDUser.init;
   }
 
   void removeByUserName(TenantId tenantId, string userName) {
-    findByUserName(tenantId, userName).each!(u => remove(u));
+    auto user = findByUserName(tenantId, userName);
+    if (user.userId.value != 0)
+      remove(user);
+  }
+
+  bool existsByExternalId(TenantId tenantId, string externalId) {
+    return findByTenant(tenantId).any!(u => u.externalId == externalId);
+  }
+
+  IDUser findByExternalId(TenantId tenantId, string externalId) {
+    foreach (u; findByTenant(tenantId)) {
+      if (u.externalId == externalId)
+        return u;
+    }
+    return IDUser.init;
+  }
+  void removeByExternalId(TenantId tenantId, string externalId) {
+    auto user = findByExternalId(tenantId, externalId);
+    if (user.userId.value != 0)
+      remove(user);
   }
 
   size_t countByEmail(TenantId tenantId, string email) {
     return findByEmail(tenantId, email).length;
   }
 
-  User[] filterByEmail(User[] users, string email) {
+  IDUser[] filterByEmail(IDUser[] users, string email) {
     return users.filter!(u => u.emails.canFind!(e => e.value == email)).array;
   }
 
-  User[] findByEmail(TenantId tenantId, string email) {
+  IDUser[] findByEmail(TenantId tenantId, string email) {
     return filterByEmail(findByTenant(tenantId), email);
   }
 
@@ -78,20 +68,24 @@ class MemoryUserRepository : UserRepository {
     findByEmail(tenantId, email).each!(u => remove(u));
   }
 
-  size_t countByGroupId(TenantId tenantId, IAMGroupId groupId) {
-    return findByGroupId(groupId).length;
+  size_t countByGroup(TenantId tenantId, GroupId groupId) {
+    return findByGroup(tenantId, groupId).length;
   }
 
-  User[] filterByGroupId(User[] users, IAMGroupId groupId) {
+  IDUser[] filterByGroup(IDUser[] users, GroupId groupId) {
     return users.filter!(u => u.groupIds.canFind(groupId)).array;
   }
 
-  User[] findByGroupId(IAMGroupId groupId) {
+  IDUser[] findByGroup(TenantId tenantId, GroupId groupId) {
     return findByTenant(tenantId).filter!(u => u.groupIds.canFind(groupId)).array;
   }
 
-  User[] search(TenantId tenantId, string filter, size_t offset = 0, size_t limit = 100) {
-    User[] result;
+  void removeByGroup(TenantId tenantId, GroupId groupId) {
+    findByGroup(tenantId, groupId).each!(u => remove(u));
+  }
+
+  IDUser[] search(TenantId tenantId, string filter) { // }, size_t offset = 0, size_t limit = 100) {
+    IDUser[] result;
     auto lowerFilter = filter.toLower();
     size_t idx;
     foreach (u; findByTenant(tenantId)) {
@@ -115,9 +109,9 @@ class MemoryUserRepository : UserRepository {
       }
 
       if (matches) {
-        if (idx >= offset && result.length < limit)
+        // if (idx >= offset && result.length < limit)
           result ~= u;
-        idx++;
+        // idx++;
       }
     }
     return result;
