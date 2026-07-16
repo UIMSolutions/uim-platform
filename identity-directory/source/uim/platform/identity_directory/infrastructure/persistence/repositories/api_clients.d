@@ -27,8 +27,6 @@ class MemoryApiClientRepository : TenantRepository!(ApiClient, ApiClientId), Api
   }
 
   void removeByClient(TenantId tenantId, string clientId) {
-    auto client = findByClient(tenantId, clientId);
-    if (client.id.value != 0)
-      remove(client);
+    remove(findByClient(tenantId, clientId));
   }
 }

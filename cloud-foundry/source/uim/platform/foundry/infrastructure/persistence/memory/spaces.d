@@ -28,9 +28,7 @@ class MemorySpaceRepository : TenantRepository!(Space, SpaceId), ISpaceRepositor
   }
   
   void removeByName(TenantId tenantId, OrgId orgId, string name) {
-    auto e = findByName(tenantId, orgId, name);
-    if (!e.isNull)
-      remove(e);
+    remove(findByName(tenantId, orgId, name));
   }
 
   size_t countByOrg(TenantId tenantId, OrgId orgId) {

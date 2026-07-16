@@ -42,18 +42,18 @@ class PasswordPolicyController : ManageHttpController {
     request.tenantId = tenantId;
     request.name = data.getString("name");
     request.description = data.getString("description");
-    request.minLength = jsonUint(j, "minLength", 8);
-    request.maxLength = jsonUint(j, "maxLength", 128);
+    request.minLength = jsonUint(data, "minLength", 8);
+    request.maxLength = jsonUint(data, "maxLength", 128);
     request.requireUppercase = data.getBoolean("requireUppercase", true);
     request.requireLowercase = data.getBoolean("requireLowercase", true);
     request.requireDigit = data.getBoolean("requireDigit", true);
     request.requireSpecialChar = data.getBoolean("requireSpecialChar", true);
-    request.minUniqueChars = jsonUint(j, "minUniqueChars", 1);
-    request.maxRepeatedChars = jsonUint(j, "maxRepeatedChars", 2);
-    request.passwordHistoryCount = jsonUint(j, "passwordHistoryCount", 5);
-    request.maxFailedAttempts = jsonUint(j, "maxFailedAttempts", 5);
-    request.lockoutDurationMinutes = jsonUint(j, "lockoutDurationMinutes", 30);
-    request.expiryDays = jsonUint(j, "expiryDays", 90);
+    request.minUniqueChars = jsonUint(data, "minUniqueChars", 1);
+    request.maxRepeatedChars = jsonUint(data, "maxRepeatedChars", 2);
+    request.passwordHistoryCount = jsonUint(data, "passwordHistoryCount", 5);
+    request.maxFailedAttempts = jsonUint(data, "maxFailedAttempts", 5);
+    request.lockoutDurationMinutes = jsonUint(data, "lockoutDurationMinutes", 30);
+    request.expiryDays = jsonUint(data, "expiryDays", 90);
 
     auto result = useCase.createPolicy(request);
     if (result.hasError)
@@ -71,12 +71,11 @@ class PasswordPolicyController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto policies = useCase.listPolicies(tenantId);
-    auto list = policies.map!(p => p.toJson).array;
+    auto policies = useCase.listPolicies(tenantId).map!(p => p.toJson).array.toJson;
 
     auto response = Json.emptyObject
       .set("totalResults", policies.length)
-      .set("resources", list);
+      .set("resources", policies);
 
     return successResponse("Password policies retrieved successfully", "Retrieved", 200, response);
   }

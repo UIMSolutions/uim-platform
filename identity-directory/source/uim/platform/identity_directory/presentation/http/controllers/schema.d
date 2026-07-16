@@ -39,7 +39,7 @@ class SchemaController : ManageHttpController {
     auto tenantId = precheck.tenantId;
 
     auto data = precheck.data;
-    auto request = CreateSchemaRequest;
+    auto request = CreateSchemaRequest();
     request.tenantId = tenantId;
     request.name = data.getString("name");
     request.description = data.getString("description");
@@ -79,7 +79,7 @@ class SchemaController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto schemaId = precheck.id;
+    auto schemaId = SchemaId(precheck.id);
     auto schema = useCase.getSchema(tenantId, schemaId);
     if (schema.isNull)
       return errorResponse("Schema not found", 404);
@@ -150,10 +150,10 @@ private SchemaAttribute[] parseSchemaAttributes(Json j) {
   SchemaAttribute[] result;
   if (!j.isObject)
     return result;
-  auto val = "attributes" in j;
-  if (val.isNull || (val).type != Json.Type.array.toJson)
-    return result;
-  foreach (item; *val) {
+  // auto val = "attributes" in j;
+  // if (val.isNull || (val).type != Json.Type.array.toJson)
+  //   return result;
+  foreach (item; j.toArray("attributes")) {
     result ~= SchemaAttribute(item.getString("id"), item.getString("name"),
       item.getString("description"),);
   }

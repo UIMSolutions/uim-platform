@@ -16,9 +16,9 @@ struct AuditEvent {
 
   AuditEventType eventType;
   string actorId; // user or client that performed the action
-  string actorType; // "IDUser", "ApiClient", "System"
+  string actorType; // "User", "ApiClient", "System"
   string targetId; // affected resource ID
-  string targetType; // "IDUser", "IDGroup", "Schema", etc.
+  string targetType; // "User", "Group", "Schema", etc.
   string description;
   string ipAddress;
   string userAgent;
@@ -26,6 +26,11 @@ struct AuditEvent {
   long timestamp;
 
   Json toJson() const {
+    auto jdetails = Json.emptyObject;
+    foreach (key, value; details) {
+      jdetails.set(key, value);
+    }
+
     return entityToJson
       .set("eventType", eventType.to!string)
       .set("actorId", actorId)
@@ -35,7 +40,7 @@ struct AuditEvent {
       .set("description", description)
       .set("ipAddress", ipAddress)
       .set("userAgent", userAgent)
-      .set("details", details)
+      .set("details", jdetails)
       .set("timestamp", timestamp);
   }
 }

@@ -118,11 +118,15 @@ class TenantRepository(TEntity, TId) : ITenantRepository!(TEntity, TId) {
     }
     
     void remove(TEntity entity) {
+        if (entity.isNull)
+            return; // Do not remove null entities
+
         _store.remove(entity);
     }
+    
     void remove(TEntity[] entities) {
         foreach (entity; entities) {
-            _store.remove(entity);
+            remove(entity);
         }
     }
     // #endregion remove
@@ -134,7 +138,7 @@ struct TestEntityId {
 }
 
 struct TestEntity {
-  TestEntityId id;
+  mixin TenantEntity!TestEntityId;
   string name;
   TenantId tenantId;
 

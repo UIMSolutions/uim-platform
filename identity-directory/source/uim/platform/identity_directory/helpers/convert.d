@@ -14,11 +14,24 @@ mixin(ShowModule!());
 Address[] toAddresses(Json json) {
   Address[] result;
 
-  return value.getArray("addresses").map!(item => Address(
-      item.getString("formatted"), item.getString("streetAddress"),
-      item.getString("locality"), item.getString("region"),
-      item.getString("postalCode"), item.getString("country"),
-      item.getString("type"), getBoolean(item, "primary"))).array.toJson;
+  foreach (item; json.getArray("addresses")) {
+    if (!item.isObject)
+      continue;
+
+    auto address = Address();
+    address.formatted = item.getString("formatted");
+    address.streetAddress = item.getString("streetAddress");
+    address.locality = item.getString("locality");
+    address.region = item.getString("region");
+    address.postalCode = item.getString("postalCode");
+    address.country = item.getString("country");
+    address.type = item.getString("type");
+    address.primary = getBoolean(item, "primary");
+
+    result ~= address;
+  }
+
+  return result;
 }
 
 UserName toUserName(Json json) {
@@ -32,7 +45,13 @@ UserName toUserName(Json json) {
   if (!value.isObject)
     return UserName.init;
 
-  return UserName(value.getString("formatted"), value.getString("familyName"),
-    value.getString("givenName"), value.getString("middleName"),    
-    value.getString("honorificPrefix"), value.getString("honorificSuffix"));
+  auto userName = UserName();
+  userName.formatted = value.getString("formatted");
+  userName.familyName = value.getString("familyName");
+  userName.givenName = value.getString("givenName");
+  userName.middleName = value.getString("middleName");
+  userName.honorificPrefix = value.getString("honorificPrefix");
+  userName.honorificSuffix = value.getString("honorificSuffix");
+
+  return userName;
 }

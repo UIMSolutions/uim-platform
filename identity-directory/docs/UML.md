@@ -66,8 +66,8 @@ flowchart TB
         CLIENT_UC["ApiClientUseCases"]
     end
     subgraph Domain["Domain Layer"]
-        USER["IDUser"]
-        GROUP["IDGroup"]
+        USER["User"]
+        GROUP["Group"]
         SCHEMA["Schema"]
         CLIENT["ApiClient"]
         POLICY["PasswordPolicy"]

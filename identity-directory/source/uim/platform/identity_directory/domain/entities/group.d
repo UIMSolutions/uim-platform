@@ -13,7 +13,7 @@ mixin(ShowModule!());
 /// Member reference within a group.
 struct GroupMember {
   string value; // user or group ID
-  string type; // "IDUser" or "IDGroup"
+  string type; // "User" or "Group"
   string display;
 
   Json toJson() const {
@@ -43,8 +43,17 @@ struct IDGroup {
 
   /// Check if a user is a member.
   bool hasMember(UserId userId) const {
-    return members.any!(m => m.value == userId.value && m.type == "User");
+    return hasMember(userId.value);
   }
+
+  // bool hasMember(GroupId groupId) const {
+  //   return members.any!(m => m.value == groupId.value && m.type == "Group");
+  // }
+
+  bool hasMember(string memberId) const {
+    return members.any!(m => m.value == memberId && m.type == "User");
+  }
+
 
   Json toJson() const {
     return entityToJson

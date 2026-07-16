@@ -31,7 +31,7 @@ class Sha256PasswordService : PasswordService {
     auto salt = stored[0 .. sepIdx];
     auto expectedHash = stored[sepIdx + 1 .. $];
 
-    auto hash = sha256Of(cast(ubyte[])(plaintext ~ salt).representation);
+    auto hash = sha256Of(/* cast(ubyte[]) */ (plaintext ~ salt).representation);
     return toHexString(hash).idup == expectedHash;
   }
 }

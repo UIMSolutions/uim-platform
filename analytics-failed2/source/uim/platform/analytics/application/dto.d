@@ -24,13 +24,3 @@ struct UpdateAssetRequest {
   string[] dimensions;
   string[] measures;
 }
-
-// struct CommandResult {
-//   bool success;
-//   AssetId assetId;
-//   string message;
-
-//   @property bool hasError() const {
-//     return !success;
-//   }
-// }

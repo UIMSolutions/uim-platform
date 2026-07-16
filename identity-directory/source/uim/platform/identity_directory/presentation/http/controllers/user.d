@@ -41,13 +41,19 @@ class UserController : ManageHttpController {
     auto tenantId = precheck.tenantId;
 
     auto data = precheck.data;
-    auto createReq = CreateUserRequest(req.headers.get("X-Tenant-Id", ""),
-      data.getString("externalId"), data.getString("userName"), j.parseUserName,
-      data.getString("displayName"), data.getString("userType"),
-      data.getString("preferredLanguage"), data.getString("locale"),
-      data.getString("timezone"), data.getString("password"), parseEmails(j),
-      parsePhoneNumbers(j), j.toAddresses, [], // extendedAttributes
-      data.getStrings("schemas"),);
+    auto createReq = CreateUserRequest();
+    createReq.tenantId = tenantId;
+    createReq.externalId = data.getString("externalId");
+    createReq.userName = data.getString("userName");
+    createReq.displayName = data.getString("displayName");
+    createReq.userType = data.getString("userType");
+    createReq.preferredLanguage = data.getString("preferredLanguage");
+    createReq.locale = data.getString("locale");
+    createReq.timezone = data.getString("timezone");
+    createReq.password = data.getString("password");
+    // createReq.emails = parseEmails(data);
+    // createReq.phoneNumbers = parsePhoneNumbers(data);
+    createReq.addresses = data.toAddresses;
 
     auto result = useCase.createUser(createReq);
     if (result.hasError)
@@ -57,7 +63,7 @@ class UserController : ManageHttpController {
     response["id"] = Json(result.userId);
     response["schemas"] = Json.emptyArray;
     response["schemas"] ~= Json("urn:ietf:params:scim:schemas:core:2.0:IDUser");
-    return successResponse("IDUser created successfully", "Created", 201, response);
+    return successResponse("User created successfully", "Created", 201, response);
     // writeScimError(res, 409, result.message);
   }
 
@@ -88,10 +94,10 @@ class UserController : ManageHttpController {
     auto userId = precheck.id;
     auto user = useCase.getUser(userId);
     if (user.isNull)
-      return scimErrorResponse("IDUser not found", 404);
+      return scimErrorResponse("User not found", 404);
 
     auto response = user.toJson;
-    return successResponse("IDUser retrieved successfully", "", 200, response);
+    return successResponse("User retrieved successfully", "", 200, response);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
@@ -125,7 +131,7 @@ class UserController : ManageHttpController {
     response["id"] = Json(userId);
     response["schemas"] = Json.emptyArray;
     response["schemas"] ~= Json("urn:ietf:params:scim:schemas:core:2.0:IDUser");
-    return successResponse("IDUser updated successfully", "", 200, response);
+    return successResponse("User updated successfully", "", 200, response);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
@@ -140,7 +146,7 @@ class UserController : ManageHttpController {
     if (result.hasError)
       writeScimError(res, 404, result.errorMessage);
 
-    return successResponse("IDUser deleted successfully", "", 200, Json.emptyObject);
+    return successResponse("User deleted successfully", "", 200, Json.emptyObject);
   }
   protected Json changePasswordHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);
@@ -180,7 +186,7 @@ class UserController : ManageHttpController {
         .set("totalResults", users.length)
         .set("resources", list);
 
-      return successResponse("IDUser search completed successfully", "", 200, responseData);
+      return successResponse("User search completed successfully", "", 200, responseData);
   }
 
   mixin(HandleTemplate!("handleSearch", "searchHandler"));

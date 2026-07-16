@@ -16,17 +16,16 @@ class MemorySystemInstanceRepository : TenantRepository!(SystemInstance, SystemI
   bool existsByName(TenantId tenantId, string name) {
     return findByTenant(tenantId).any!(e => e.tenantId == tenantId && e.name == name);
   }
+  
   SystemInstance findByName(TenantId tenantId, string name) {
     foreach (e; findByTenant(tenantId))
-      if (e.tenantId == tenantId && e.name == name)
+      if (e.name == name)
         return e;
     return SystemInstance.init;
   }
 
   void removeByName(TenantId tenantId, string name) {
-    auto instance = findByName(tenantId, name);
-    if (!instance.isNull)
-      remove(instance);
+    remove(findByName(tenantId, name));
   }
   
   size_t countByStatus(TenantId tenantId, SystemStatus status) {

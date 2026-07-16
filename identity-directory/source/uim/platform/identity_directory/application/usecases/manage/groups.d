@@ -33,7 +33,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
   /// Create a new group.
   GroupResponse createGroup(CreateGroupRequest req) {
     if (groupRepo.existsByDisplayName(req.tenantId, req.displayName))
-      return GroupResponse(GroupId(""), "IDGroup with this displayName already exists");
+      return GroupResponse("", "Group with this displayName already exists");
 
     auto group = IDGroup(req.tenantId);
     group.externalId = req.externalId;
@@ -60,8 +60,8 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
     event.eventType = AuditEventType.groupCreated;
     event.actorId = "system";
     event.targetId = group.id.value;
-    event.targetType = "IDGroup";
-    event.description = "IDGroup created: " ~ req.displayName;
+    event.targetType = "Group";
+    event.description = "Group created: " ~ req.displayName;
     event.details = null;
     // event.metadata = "";
     // event.context = null;
@@ -69,7 +69,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
 
     auditRepo.save(event);
 
-    return GroupResponse(group.id, "");
+    return GroupResponse(group.id.value, "");
   }
 
   /// Get group by ID.
@@ -86,7 +86,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
   CommandResult updateGroup(UpdateGroupRequest req) {
     auto group = groupRepo.findById(req.tenantId, req.groupId);
     if (group.isNull)
-      return CommandResult(false, "", "IDGroup not found");
+      return CommandResult(false, "", "Group not found");
 
     if (req.displayName.length > 0)
       group.displayName = req.displayName;
@@ -102,8 +102,8 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
     event.eventType = AuditEventType.groupUpdated;
     event.actorId = "system";
     event.targetId = group.id.value;
-    event.targetType = "IDGroup";
-    event.description = "IDGroup updated: " ~ group.displayName;
+    event.targetType = "Group";
+    event.description = "Group updated: " ~ group.displayName;
     event.details = null;
     // event.metadata = "";
     // event.context = null;
@@ -130,10 +130,10 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
 
     // Update user's groupIds
     if (req.memberType == "User") {
-      auto user = userRepo.findById(group.tenantId, req.memberId);
-      if (!user.isNull) {
-        user.groupIds ~= req.groupId;
-        userRepo.update(user);
+        auto user = userRepo.findById(group.tenantId, UserId(req.memberId));
+        if (!user.isNull) {
+          user.groupIds ~= req.groupId;
+          userRepo.update(user);
       }
     }
 
@@ -142,7 +142,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
     event.eventType = AuditEventType.memberAdded;
     event.actorId = "system";
     event.targetId = req.groupId.value;
-    event.targetType = "IDGroup";
+    event.targetType = "Group";
     event.description = "Member added: " ~ req.memberId;
     event.details = null;
     // event.metadata = "";
@@ -160,7 +160,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
     if (group.isNull)
       return CommandResult(false, "", "Group not found");
 
-    auto newMembers = group.members.filter!(m => m.id != req.memberId).array;
+    auto newMembers = group.members.filter!(m => m.value != req.memberId).array;
     if (newMembers.length == group.members.length)
       return CommandResult(false, "", "Member not found in group");
 
@@ -169,9 +169,9 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
     groupRepo.update(group);
 
     // Update user's groupIds
-    auto user = userRepo.findById(req.tenantId, req.memberId);
+    auto user = userRepo.findById(req.tenantId, UserId(req.memberId));
     if (!user.isNull) {
-      user.groupIds = user.groupIds.filter!(g => g != req.groupId).array.toJson;
+      user.groupIds = user.groupIds.filter!(gId => gId.value != group.id.value).array;
       userRepo.update(user);
     }
 
@@ -180,7 +180,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
     event.eventType = AuditEventType.memberRemoved;
     event.actorId = "system";
     event.targetId = req.groupId.value;
-    event.targetType = "IDGroup";
+    event.targetType = "Group";
     event.description = "Member removed: " ~ req.memberId;
     event.details = null;
     // event.metadata = "";
@@ -200,9 +200,9 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
     // Remove group from all member users
     foreach (m; group.members) {
       if (m.type == "User") {
-        auto user = userRepo.findById(tenantId, m.value);
+        auto user = userRepo.findById(tenantId, UserId(m.value));
         if (!user.isNull) {
-          user.groupIds = user.groupIds.filter!(g => g != id).array.toJson;
+          user.groupIds = user.groupIds.filter!(gId => gId.value != id.value).array;
           userRepo.update(user);
         }
       }

@@ -30,9 +30,7 @@ class MemoryUserRepository : TenantRepository!(IDUser, UserId), UserRepository {
   }
 
   void removeByUserName(TenantId tenantId, string userName) {
-    auto user = findByUserName(tenantId, userName);
-    if (user.userId.value != 0)
-      remove(user);
+    remove(findByUserName(tenantId, userName));
   }
 
   bool existsByExternalId(TenantId tenantId, string externalId) {
@@ -47,9 +45,7 @@ class MemoryUserRepository : TenantRepository!(IDUser, UserId), UserRepository {
     return IDUser.init;
   }
   void removeByExternalId(TenantId tenantId, string externalId) {
-    auto user = findByExternalId(tenantId, externalId);
-    if (user.userId.value != 0)
-      remove(user);
+    remove(findByExternalId(tenantId, externalId));
   }
 
   size_t countByEmail(TenantId tenantId, string email) {

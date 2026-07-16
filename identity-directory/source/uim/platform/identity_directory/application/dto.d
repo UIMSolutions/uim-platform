@@ -38,6 +38,8 @@ struct CreateUserRequest {
 }
 
 struct UpdateUserRequest {
+  TenantId tenantId;
+
   UserId userId;
   UserName name;
   string displayName;
@@ -81,7 +83,7 @@ struct AddMemberRequest {
   TenantId tenantId;
   GroupId groupId;
   string memberId;
-  string memberType; // "IDUser" or "IDGroup"
+  string memberType; // "User" or "Group"
   string display;
 }
 
@@ -92,7 +94,7 @@ struct RemoveMemberRequest {
 }
 
 struct GroupResponse {
-  GroupId groupId;
+  string id;
   string error;
 
   bool hasError() const {

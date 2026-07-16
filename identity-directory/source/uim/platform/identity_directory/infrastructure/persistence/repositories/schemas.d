@@ -18,6 +18,7 @@ class MemorySchemaRepository : TenantRepository!(Schema, SchemaId), SchemaReposi
   bool existsByName(TenantId tenantId, string name) {
     return findByTenant(tenantId).any!(s => s.tenantId == tenantId && s.name == name);
   }
+
   Schema findByName(TenantId tenantId, string name) {
     foreach (s; findByTenant(tenantId)) {
       if (s.tenantId == tenantId && s.name == name)
@@ -27,9 +28,7 @@ class MemorySchemaRepository : TenantRepository!(Schema, SchemaId), SchemaReposi
   }
 
   void removeByName(TenantId tenantId, string name) {
-    auto schema = findByName(tenantId, name);
-    if (schema.schemaId.value != 0)
-      remove(schema);
+    remove(findByName(tenantId, name));
   }
 
 }

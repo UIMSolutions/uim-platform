@@ -41,7 +41,7 @@ class ApiClientController : ManageHttpController {
     // Serialize without clientSecret
     auto arr = Json.emptyArray;
     foreach (c; clients) {
-      auto j = toJsonValue(c);
+      auto j = c.toJson;
       j.remove("clientSecret");
       arr ~= j;
     }
@@ -65,14 +65,14 @@ class ApiClientController : ManageHttpController {
     createReq.tenantId = tenantId;
     createReq.name = data.getString("name");
     createReq.description = data.getString("description");
-    createReq.scopes = getStrings(j, "scopes");
+    createReq.scopes = data.getStrings("scopes");
     createReq.expiresAt = data.getLong("expiresAt");
 
     auto result = useCase.createClient(createReq);
     if (result.hasError)
-      return errorResponse(result.message, 400);
+      return errorResponse(result.error, 400);
 
-    auto responseData = Json.emptyObject.set("id", result.id);
+    auto responseData = Json.emptyObject.set("id", result.clientId);
     return successResponse("API client created successfully", "Created", 201, responseData);
   }
 
@@ -104,7 +104,7 @@ class ApiClientController : ManageHttpController {
 
     auto result = useCase.revokeClient(tenantId, id);
     if (result.hasError)
-      return errorResponse(result.message, 400);
+      return errorResponse(result.message , 400);
 
     auto responseData = Json.emptyObject.set("status", "revoked");
     return successResponse("API client revoked successfully", "Revoked", 200, responseData);

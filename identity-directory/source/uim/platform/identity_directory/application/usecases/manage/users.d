@@ -39,15 +39,14 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
   UserResponse createUser(CreateUserRequest req) {
     // Check username uniqueness
     if (userRepo.existsByUserName(req.tenantId, req.userName))
-      return UserResponse("", "IDUser with this userName already exists");
+      return UserResponse(UserId(""), "User with this userName already exists");
 
     // Validate password against policy
     auto policy = policyRepo.findActiveForTenant(req.tenantId);
     if (policy != typeof(policy).init && req.password.length > 0) {
       auto validation = validatePassword(req.password, policy);
       if (!validation.valid) 
-        return errorResponse("Password does not meet policy requirements: " ~ validation.violations.joiner("; ").to!string, 400);
-        // return UserResponse("", validation.violations.joiner("; ").to!string);
+        return UserResponse(UserId(""), validation.violations.joiner("; ").to!string);
     }
 
     auto user = IDUser(req.tenantId);
@@ -78,8 +77,8 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
     event.actorId = "system";
     // event.actorName = "System";
     event.targetId = user.id.value;
-    event.targetType = "IDUser";
-    event.description = "IDUser created: " ~ req.userName;
+    event.targetType = "User";
+    event.description = "User created: " ~ req.userName;
     event.details = null;
     event.timestamp = event.createdAt;
     auditRepo.save(event);
@@ -93,20 +92,20 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
   }
 
   /// List users for a tenant (SCIM paginated).
-  IDUser[] listUsers(TenantId tenantId, size_t offset = 0, size_t limit = 100) {
-    return userRepo.findByTenant(tenantId, offset, limit);
+  IDUser[] listUsers(TenantId tenantId) { //}, size_t offset = 0, size_t limit = 100) {
+    return userRepo.findByTenant(tenantId); //, offset, limit);
   }
 
   /// Search users with a SCIM-like filter.
-  IDUser[] searchUsers(TenantId tenantId, string filter, size_t offset = 0, size_t limit = 100) {
-    return userRepo.search(tenantId, filter, offset, limit);
+  IDUser[] searchUsers(TenantId tenantId, string filter) { // }, size_t offset = 0, size_t limit = 100) {
+    return userRepo.search(tenantId, filter); //, offset, limit);
   }
 
   /// Update user profile.
   string updateUser(UpdateUserRequest req) {
-    auto user = userRepo.findById(req.userId);
+    auto user = userRepo.findById(req.tenantId, req.userId);
     if (user.isNull)
-      return "IDUser not found";
+      return "User not found";
 
     if (req.name != UserName.init)
       user.name = req.name;
@@ -134,9 +133,17 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
     user.updatedAt = currentTimestamp();
     userRepo.update(user);
 
-    auditRepo.save(AuditEvent(randomUUID().toString(), user.tenantId,
-        AuditEventType.userUpdated, "system", "System", req.userId, "IDUser",
-        "IDUser updated", "", "", null, Clock.currStdTime(),));
+    auto event = AuditEvent(req.tenantId);
+    event.id = AuditEventId(createId);
+    event.eventType = AuditEventType.userUpdated;
+    event.actorId = "system";
+    // event.actorName = "System";
+    event.targetId = user.id.value;
+    event.targetType = "User";
+    event.description = "User updated: " ~ user.userName;
+    event.details = null;
+    event.timestamp = event.createdAt;
+    auditRepo.save(event);
 
     return "";
   }
@@ -145,7 +152,7 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
   CommandResult deactivateUser(TenantId tenantId, UserId id) {
     auto user = userRepo.findById(tenantId, id);
     if (user.isNull)
-      return CommandResult(false, "", "IDUser not found");
+      return CommandResult(false, "", "User not found");
 
     user.active = false;
     user.status = UserStatus.inactive;
@@ -158,8 +165,8 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
     event.actorId = "system";
     // event.actorName = "System";
     event.targetId = user.id.value;
-    event.targetType = "IDUser";
-    event.description = "IDUser deactivated: " ~ user.userName;
+    event.targetType = "User";
+    event.description = "User deactivated: " ~ user.userName;
     event.details = null;
     event.timestamp = event.createdAt;
     auditRepo.save(event);  
@@ -171,7 +178,7 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
   CommandResult deleteUser(TenantId tenantId, UserId id) {
     auto user = userRepo.findById(tenantId, id);
     if (user.isNull)
-      return CommandResult(false, "", "IDUser not found");
+      return CommandResult(false, "", "User not found");
 
     userRepo.remove(user);
 
@@ -181,13 +188,13 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
     event.actorId = "system";
     // event.actorName = "System";
     event.targetId = user.id.value;
-    event.targetType = "IDUser";
-    event.description = "IDUser deleted: " ~ user.userName;
+    event.targetType = "User";
+    event.description = "User deleted: " ~ user.userName;
     event.details = null;
     event.timestamp = event.createdAt;
     // auditRepo.save(AuditEvent(randomUUID().toString(), user.tenantId,
-    //     AuditEventType.userDeleted, "system", "System", user.id, "IDUser",
-    //     "IDUser deleted: " ~ user.userName, "", "", null, Clock.currStdTime(),));
+    //     AuditEventType.userDeleted, "system", "System", user.id, "User",
+    //     "User deleted: " ~ user.userName, "", "", null, Clock.currStdTime(),));
     auditRepo.save(event);
 
     return CommandResult(true, user.id.value, "");
@@ -197,7 +204,7 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
   CommandResult changePassword(TenantId tenantId, UserId id, string oldPassword, string newPassword) {
     auto user = userRepo.findById(tenantId, id);
     if (user.isNull)
-      return CommandResult(false, "", "IDUser not found");
+      return CommandResult(false, "", "User not found");
 
     if (user.passwordHash.length > 0 && !passwordSvc.verifyPassword(oldPassword, user.passwordHash))
       return CommandResult(false, "", "Current password is incorrect");
@@ -223,7 +230,7 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
     event.actorId = "system";
     // event.actorName = "System";
     event.targetId = user.id.value;
-    event.targetType = "IDUser";
+    event.targetType = "User";
     event.description = "Password changed for user: " ~ user.userName;
     event.details = null;
     event.timestamp = event.createdAt;

@@ -120,6 +120,9 @@ class MemoryTenantStore(TEntity, TId) : ITenantStore!(TEntity, TId) {
     }
 
     void remove(TEntity entity) {
+        if (entity.isNull)
+            return; // Do not remove null entities
+
         auto tenantId = entity.tenantId;
         auto id = entity.id;
         remove(tenantId, id);

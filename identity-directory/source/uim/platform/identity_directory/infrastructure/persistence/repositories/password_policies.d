@@ -28,8 +28,6 @@ class MemoryPasswordPolicyRepository : TenantRepository!(PasswordPolicy, Passwor
   }
 
   void removeActiveForTenant(TenantId tenantId) {
-    auto policy = findActiveForTenant(tenantId);
-    if (policy.id.value != 0)
-      remove(policy);
+    remove(findActiveForTenant(tenantId));
   }
 }

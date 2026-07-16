@@ -50,8 +50,8 @@ class AuditController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = ActorId(precheck.id);
-    if (id.isNull)
+    auto id = precheck.id;
+    if (id.isEmpty)
       return errorResponse("Invalid actor ID", 400);
 
     auto events = useCase.findByActor(tenantId, id);
@@ -71,8 +71,8 @@ class AuditController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = TargetId(precheck.id);
-    if (id.isNull)
+    auto id = precheck.id;
+    if (id.isEmpty)
       return errorResponse("Invalid target ID", 400);
 
     auto events = useCase.findByTarget(tenantId, id);

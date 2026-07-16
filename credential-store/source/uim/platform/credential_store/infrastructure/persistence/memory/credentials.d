@@ -28,9 +28,7 @@ class MemoryCredentialRepository : TenantRepository!(Credential, CredentialId), 
   }
 
   void removeByName(TenantId tenantId, NamespaceId namespaceId, string name, CredentialType type) {
-    Credential c = findByName(tenantId, namespaceId, name, type);
-    if (!c.isNull)
-      remove(c);
+    remove(findByName(tenantId, namespaceId, name, type));
   }
 
   size_t countByNamespace(TenantId tenantId, NamespaceId namespaceId) {

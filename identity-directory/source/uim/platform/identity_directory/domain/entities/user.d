@@ -149,6 +149,10 @@ struct IDUser {
 
     auto extendedAttrsJson = extendedAttributes.map!(ea => ea.toJson()).array.toJson;
 
+    auto jgroupIds = groupIds.map!(g => Json(g.value)).array.toJson;
+
+    auto jschemas = schemas.map!(s => Json(s)).array.toJson;
+
     return entityToJson
       .set("externalId", externalId)
       .set("userName", userName)
@@ -173,8 +177,8 @@ struct IDUser {
       .set("emails", emailsJson)
       .set("phoneNumbers", phonesJson)
       .set("addresses", addressesJson)
-      .set("groupIds", groupIds)
+      .set("groupIds", jgroupIds)
       .set("extendedAttributes", extendedAttrsJson)
-      .set("schemas", schemas); 
+      .set("schemas", jschemas);
   }
 }

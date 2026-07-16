@@ -39,15 +39,13 @@ class GroupController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-
-    auto groups = useCase.listGroups(tenantId);
-    auto list = groups.map!(g => toJsonValue(g)).array.toJson;
+    auto groups = useCase.listGroups(tenantId).map!(g => g.toJson).array.toJson;
 
     auto response = Json.emptyObject
       .set("schemas", ["urn:ietf:params:scim:api:messages:2.0:ListResponse"].toJson)
       .set("totalResults", groups.length)
-      .set("Resources", list);
-    return successResponse("IDGroup list retrieved successfully", "Retrieved", 200, response);
+      .set("Resources", groups);
+    return successResponse("Group list retrieved successfully", "Retrieved", 200, response);
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
@@ -58,7 +56,7 @@ class GroupController : ManageHttpController {
     auto tenantId = precheck.tenantId;
 
     auto data = precheck.data;
-    auto members = parseMembers(j);
+    auto members = parseMembers(data);
     CreateGroupRequest createReq;
     createReq.tenantId = tenantId;
     createReq.externalId = data.getString("externalId");
@@ -68,13 +66,13 @@ class GroupController : ManageHttpController {
 
     auto result = useCase.createGroup(createReq);
     if (result.hasError)
-      return errorResponse(result.message, 400);
+      return errorResponse(result.error, 400);
 
     auto responseData = Json.emptyObject
       .set("id", result.id)
-      .set("schemas", ["urn:ietf:params:scim:schemas:core:2.0:Group"].toJson);
+      .set("schemas", ["urn:ietf:params:scim:schemas:core:2.0:group"].toJson);
 
-    return successResponse("Scan job created successfully", "Created", 201, responseData);
+    return successResponse("Group created successfully", "Created", 201, responseData);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
@@ -89,10 +87,10 @@ class GroupController : ManageHttpController {
 
     auto group = useCase.getGroup(tenantId, id);
     if (group.isNull)
-      return errorResponse("IDGroup not found", 404);
+      return errorResponse("Group not found", 404);
 
     auto responseData = group.toJson();
-    return successResponse("IDGroup retrieved successfully", "Retrieved", 200, responseData);
+    return successResponse("Group retrieved successfully", "Retrieved", 200, responseData);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
@@ -110,9 +108,10 @@ class GroupController : ManageHttpController {
       data.getString("description"),);
     auto result = useCase.updateGroup(updateReq);
     if (result.hasError)
-      writeScimError(res, 404, result.errorMessage);
+      return errorResponse(result.errorMessage, 400);
+      // writeScimError(res, 404, result.errorMessage);
 
-    return successResponse("IDGroup updated successfully", "Updated", 200, Json.emptyObject.set("id", result
+    return successResponse("Group updated successfully", "Updated", 200, Json.emptyObject.set("id", result
         .id));
   }
 
@@ -130,18 +129,23 @@ class GroupController : ManageHttpController {
     if (result.hasError)
       return errorResponse(result.errorMessage, 404);
 
-    return successResponse("IDGroup deleted successfully", "Deleted", 200, Json.emptyObject);
+    return successResponse("Group deleted successfully", "Deleted", 200, Json.emptyObject);
   }
 
   protected Json addMemberHandler(HTTPServerRequest req) {
-    auto precheck = super.POSTHandler(req);
+    auto precheck = super.postHandler(req);
     if (precheck.hasError)
       return precheck;
 
     auto tenantId = precheck.tenantId;
     auto data = precheck.data;
-    auto addReq = AddMemberRequest(tenantId, data.getString("groupId"),
-      data.getString("memberId"), data.getString("memberType"), data.getString("display"),);
+    auto addReq = AddMemberRequest();
+    addReq.tenantId = tenantId;
+    addReq.groupId = data.getString("groupId");
+    addReq.memberId = data.getString("memberId");
+    addReq.memberType = data.getString("memberType");
+    addReq.display = data.getString("display");
+    
     auto result = useCase.addMember(addReq);
     if (result.hasError)
       return errorResponse(result.errorMessage, 400);
@@ -178,17 +182,17 @@ protected Json deleteMemberHandler(HTTPServerRequest req) {
 mixin(HandleTemplate!("handleDeleteMember", "deleteMemberHandler"));
 
 private GroupMember[] parseMembers(Json j) {
-  import uim.platform.identity_directory.domain.entities.group : GroupMember;
+  if (!j.isObject) return null;
 
+  if (!j.isArray("members"))return null;
+  
   GroupMember[] result;
-  if (!j.isObject)
-    return result;
-  auto val = "members" in j;
-  if (val.isNull || !(val).isArray)
-    return result;
-  foreach (item; *val) {
-    result ~= GroupMember(item.getString("value"), item.getString("type"),
-      item.getString("display"),);
+  foreach (item; j["members"].toArray) {
+    auto member = GroupMember();
+    member.value = item.getString("value");
+    member.type = item.getString("type");
+    member.display = item.getString("display");
+    result ~= member;
   }
   return result;
 }

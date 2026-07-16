@@ -212,7 +212,7 @@ IDS_HOST=127.0.0.1 IDS_PORT=9090 ./build/uim-identity-directory-platform-service
 | **PhoneNumber** | value, type (work/mobile/fax/other), primary |
 | **Address** | formatted, streetAddress, locality, region, postalCode, country, type, primary |
 | **ExtendedAttribute** | schemaId, attributeName, value |
-| **GroupMember** | value (user/group ID), type ("IDUser"/"IDGroup"), display |
+| **GroupMember** | value (user/group ID), type ("User"/"Group"), display |
 | **SchemaAttribute** | id, name, description, type, multiValued, required, mutability, returned, uniqueness, canonicalValues, referenceTypes |
 
 ### Domain Services
