@@ -7,12 +7,12 @@ module uim.platform.authorization_trust.infrastructure.container;
 
 // import uim.platform.authorization_trust.infrastructure.config;
 // Repositories
-// import uim.platform.authorization_trust.infrastructure.persistence.memory.oauth_clients;
-// import uim.platform.authorization_trust.infrastructure.persistence.memory.scopes;
-// import uim.platform.authorization_trust.infrastructure.persistence.memory.roles;
-// import uim.platform.authorization_trust.infrastructure.persistence.memory.role_collections;
-// import uim.platform.authorization_trust.infrastructure.persistence.memory.user_assignments;
-// import uim.platform.authorization_trust.infrastructure.persistence.memory.identity_providers;
+// import uim.platform.authorization_trust.infrastructure.persistence.repositories.oauth_clients;
+// import uim.platform.authorization_trust.infrastructure.persistence.repositories.scopes;
+// import uim.platform.authorization_trust.infrastructure.persistence.repositories.roles;
+// import uim.platform.authorization_trust.infrastructure.persistence.repositories.role_collections;
+// import uim.platform.authorization_trust.infrastructure.persistence.repositories.user_assignments;
+// import uim.platform.authorization_trust.infrastructure.persistence.repositories.identity_providers;
 // Domain services
 // import uim.platform.authorization_trust.domain.services.token_service;
 // Use cases

@@ -1,0 +1,82 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module uim.platform.auditlog.infrastructure.persistence.repositories.config_change;
+// import uim.platform.auditlog.domain.types;
+// import uim.platform.auditlog.domain.entities.config_change_log;
+// import uim.platform.auditlog.domain.ports.repositories.config_change_logs;
+
+
+ 
+
+import uim.platform.auditlog;
+
+mixin(ShowModule!());
+
+@safe:
+class MemoryConfigChangeLogRepository : TenantRepository!(ConfigChangeLog, ConfigChangeLogId), ConfigChangeLogRepository {
+
+  bool existsByAuditLogId(TenantId tenantId, AuditLogId auditLogId) {
+    return findByTenant(tenantId).any!(e => e.auditLogId == auditLogId);
+  }
+
+  ConfigChangeLog findByAuditLogId(TenantId tenantId, AuditLogId auditLogId) {
+    foreach (e; findByTenant(tenantId))
+      if (e.auditLogId == auditLogId)
+        return e;
+    return ConfigChangeLog.init;
+  }
+
+  void removeByAuditLogId(TenantId tenantId, AuditLogId auditLogId) {
+    if (existsByAuditLogId(tenantId, auditLogId)) {
+      remove(findByAuditLogId(tenantId, auditLogId));
+    }
+  }
+
+  size_t countByUser(TenantId tenantId, UserId changedBy) {
+    return findByUser(tenantId, changedBy).length;
+  }
+  ConfigChangeLog[] filterByUser(ConfigChangeLog[] logs, UserId changedBy) {
+    return logs.filter!(e => e.changedBy == changedBy).array;
+  }
+  ConfigChangeLog[] findByUser(TenantId tenantId, UserId changedBy) {
+    return findByTenant(tenantId).filter!(e => e.changedBy == changedBy).array;
+  }
+  void removeByUser(TenantId tenantId, UserId changedBy) {
+    findByUser(tenantId, changedBy).each!(e => remove(e));
+  }
+
+  size_t countByConfigType(TenantId tenantId, string configType) {
+    return findByConfigType(tenantId, configType).length;
+  }
+  ConfigChangeLog[] filterByConfigType(ConfigChangeLog[] logs, string configType) {
+    return logs.filter!(e => e.configType == configType).array;
+  }
+  ConfigChangeLog[] findByConfigType(TenantId tenantId, string configType) {
+    return findByTenant(tenantId).filter!(e => e.configType == configType).array;
+  }
+  void removeByConfigType(TenantId tenantId, string configType) {
+    findByConfigType(tenantId, configType).each!(e => remove(e));
+  }
+
+  size_t countByTimeRange(TenantId tenantId, long timeFrom, long timeTo) {
+    return findByTimeRange(tenantId, timeFrom, timeTo).length;
+  }
+  ConfigChangeLog[] filterByTimeRange(ConfigChangeLog[] logs, long timeFrom, long timeTo) {
+    return logs.filter!(e => e.timestamp >= timeFrom && e.timestamp <= timeTo).array;
+  }
+  ConfigChangeLog[] findByTimeRange(TenantId tenantId, long timeFrom, long timeTo) {
+    return findByTenant(tenantId).filter!(e => e.timestamp >= timeFrom && e.timestamp <= timeTo)
+      .array;
+  }
+  void removeByTimeRange(TenantId tenantId, long timeFrom, long timeTo) {
+    findByTimeRange(tenantId, timeFrom, timeTo).each!(e => remove(e));
+  }
+
+  void removeOlderThan(TenantId tenantId, long beforeTimestamp) {
+    findByTenant(tenantId).filter!(e => e.timestamp < beforeTimestamp)
+      .each!(e => remove(e));
+  }
+}

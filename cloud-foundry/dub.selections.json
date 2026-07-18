@@ -16,7 +16,7 @@
 		"stdx-allocator": "2.77.5",
 		"taggedalgebraic": "1.0.1",
 		"tinyendian": "0.2.0",
-		"uim-framework": "26.7.1",
+		"uim-framework": "26.7.2",
 		"uim-platform": {"path":"../"},
 		"unit-threaded": "2.2.4",
 		"vibe-container": "1.7.1",
