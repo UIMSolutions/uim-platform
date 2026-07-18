@@ -6,14 +6,14 @@
 module uim.platform.abap_environment.infrastructure.container;
 // import uim.platform.abap_environment.infrastructure.config;
 // Repositories
-// import uim.platform.abap_environment.infrastructure.persistence.memory.system_instances;
-// import uim.platform.abap_environment.infrastructure.persistence.memory.software_components;
-// import uim.platform.abap_environment.infrastructure.persistence.memory.communication_arrangements;
-// import uim.platform.abap_environment.infrastructure.persistence.memory.service_bindings;
-// import uim.platform.abap_environment.infrastructure.persistence.memory.business_users;
-// import uim.platform.abap_environment.infrastructure.persistence.memory.business_roles;
-// import uim.platform.abap_environment.infrastructure.persistence.memory.transport_requests;
-// import uim.platform.abap_environment.infrastructure.persistence.memory.application_jobs;
+// import uim.platform.abap_environment.infrastructure.persistence.repositories.system_instances;
+// import uim.platform.abap_environment.infrastructure.persistence.repositories.software_components;
+// import uim.platform.abap_environment.infrastructure.persistence.repositories.communication_arrangements;
+// import uim.platform.abap_environment.infrastructure.persistence.repositories.service_bindings;
+// import uim.platform.abap_environment.infrastructure.persistence.repositories.business_users;
+// import uim.platform.abap_environment.infrastructure.persistence.repositories.business_roles;
+// import uim.platform.abap_environment.infrastructure.persistence.repositories.transport_requests;
+// import uim.platform.abap_environment.infrastructure.persistence.repositories.application_jobs;
 // Use Cases
 // import uim.platform.abap_environment.application.usecases.manage.system_instances;
 // import uim.platform.abap_environment.application.usecases.manage.software_components;
