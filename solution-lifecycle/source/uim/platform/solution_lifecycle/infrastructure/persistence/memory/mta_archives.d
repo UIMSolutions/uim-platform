@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.solution_lifecycle.infrastructure.persistence.memory.mta_subscription_repo;
+module uim.platform.solution_lifecycle.infrastructure.persistence.repositories.mta_archive_repo;
 
 import uim.platform.solution_lifecycle;
 
@@ -11,15 +11,15 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryMtaSubscriptionRepository
-    : TenantRepository!(MtaSubscription, MtaSubscriptionId),
-      MtaSubscriptionRepository
+class MemoryMtaArchiveRepository
+    : TenantRepository!(MtaArchive, MtaArchiveId),
+      MtaArchiveRepository
 {
-    /// Find all subscriptions for a given provider MTA ID
-    MtaSubscription[] findByProviderMtaId(TenantId tenantId, string mtaId) {
-        MtaSubscription[] result;
-        foreach (s; findByTenant(tenantId))
-            if (s.mtaId == mtaId) result ~= s;
+    /// Find archives by MTA application ID
+    MtaArchive[] findByMtaId(TenantId tenantId, string mtaId) {
+        MtaArchive[] result;
+        foreach (a; findByTenant(tenantId))
+            if (a.mtaId == mtaId) result ~= a;
         return result;
     }
 }
