@@ -6,16 +6,16 @@
 module uim.platform.hana.infrastructure.container;
 // import uim.platform.hana.infrastructure.config;
 // Repositories
-// import uim.platform.hana.infrastructure.persistence.memory.instances;
-// import uim.platform.hana.infrastructure.persistence.memory.data_lakes;
-// import uim.platform.hana.infrastructure.persistence.memory.schemas;
-// import uim.platform.hana.infrastructure.persistence.memory.database_users;
-// import uim.platform.hana.infrastructure.persistence.memory.backups;
-// import uim.platform.hana.infrastructure.persistence.memory.alerts;
-// import uim.platform.hana.infrastructure.persistence.memory.hdi_containers;
-// import uim.platform.hana.infrastructure.persistence.memory.replication_tasks;
-// import uim.platform.hana.infrastructure.persistence.memory.configurations;
-// import uim.platform.hana.infrastructure.persistence.memory.database_connections;
+// import uim.platform.hana.infrastructure.persistence.repositories.instances;
+// import uim.platform.hana.infrastructure.persistence.repositories.data_lakes;
+// import uim.platform.hana.infrastructure.persistence.repositories.schemas;
+// import uim.platform.hana.infrastructure.persistence.repositories.database_users;
+// import uim.platform.hana.infrastructure.persistence.repositories.backups;
+// import uim.platform.hana.infrastructure.persistence.repositories.alerts;
+// import uim.platform.hana.infrastructure.persistence.repositories.hdi_containers;
+// import uim.platform.hana.infrastructure.persistence.repositories.replication_tasks;
+// import uim.platform.hana.infrastructure.persistence.repositories.configurations;
+// import uim.platform.hana.infrastructure.persistence.repositories.database_connections;
 // Use Cases
 // import uim.platform.hana.application.usecases.manage.instances;
 // import uim.platform.hana.application.usecases.manage.data_lakes;

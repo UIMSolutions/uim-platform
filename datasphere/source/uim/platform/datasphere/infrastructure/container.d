@@ -6,15 +6,15 @@
 module uim.platform.datasphere.infrastructure.container;
 // import uim.platform.datasphere.infrastructure.config;
 // Repositories
-// import uim.platform.datasphere.infrastructure.persistence.memory.space;
-// import uim.platform.datasphere.infrastructure.persistence.memory.connection;
-// import uim.platform.datasphere.infrastructure.persistence.memory.remote_table;
-// import uim.platform.datasphere.infrastructure.persistence.memory.data_flow;
-// import uim.platform.datasphere.infrastructure.persistence.memory.view;
-// import uim.platform.datasphere.infrastructure.persistence.memory.task;
-// import uim.platform.datasphere.infrastructure.persistence.memory.task_chain;
-// import uim.platform.datasphere.infrastructure.persistence.memory.data_access_control;
-// import uim.platform.datasphere.infrastructure.persistence.memory.catalog_asset;
+// import uim.platform.datasphere.infrastructure.persistence.repositories.space;
+// import uim.platform.datasphere.infrastructure.persistence.repositories.connection;
+// import uim.platform.datasphere.infrastructure.persistence.repositories.remote_table;
+// import uim.platform.datasphere.infrastructure.persistence.repositories.data_flow;
+// import uim.platform.datasphere.infrastructure.persistence.repositories.view;
+// import uim.platform.datasphere.infrastructure.persistence.repositories.task;
+// import uim.platform.datasphere.infrastructure.persistence.repositories.task_chain;
+// import uim.platform.datasphere.infrastructure.persistence.repositories.data_access_control;
+// import uim.platform.datasphere.infrastructure.persistence.repositories.catalog_asset;
 // Use Cases
 // import uim.platform.datasphere.application.usecases.manage.spaces;
 // import uim.platform.datasphere.application.usecases.manage.connections;

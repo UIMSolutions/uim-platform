@@ -1,5 +1,5 @@
 module uim.platform.buildcode.infrastructure.persistence;
 
 public {
-  import uim.platform.buildcode.infrastructure.persistence.memory;
+  import uim.platform.buildcode.infrastructure.persistence.repositories;
 }
