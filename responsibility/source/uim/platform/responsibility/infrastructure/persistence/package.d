@@ -10,5 +10,5 @@ import uim.platform.responsibility;
 // mixin(ShowModule!());
 
 public {
-    import uim.platform.responsibility.infrastructure.persistence.memory;
+    import uim.platform.responsibility.infrastructure.persistence.repositories;
 }

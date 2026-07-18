@@ -3,9 +3,9 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.abap_compiler.infrastructure.persistence.memory;
+module uim.platform.abap_compiler.infrastructure.persistence.repositories;
 
 public {
-    import uim.platform.abap_compiler.infrastructure.persistence.memory.programs;
-    import uim.platform.abap_compiler.infrastructure.persistence.memory.jobs;
+    import uim.platform.abap_compiler.infrastructure.persistence.repositories.programs;
+    import uim.platform.abap_compiler.infrastructure.persistence.repositories.jobs;
 }

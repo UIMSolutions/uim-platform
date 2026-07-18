@@ -6,5 +6,5 @@
 module uim.platform.abap_compiler.infrastructure.persistence;
 
 public {
-    import uim.platform.abap_compiler.infrastructure.persistence.memory;
+    import uim.platform.abap_compiler.infrastructure.persistence.repositories;
 }
