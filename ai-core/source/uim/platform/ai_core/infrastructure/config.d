@@ -15,7 +15,8 @@ mixin(ShowModule!());
 struct SrvConfig {
   string host = "0.0.0.0";
   ushort port = 10001;
-  string serviceName = "AI Core Service";
+  string serviceName = "ai-core";
+  string serviceDisplay = "AI Core Service";
 }
 
 SrvConfig loadConfig() {

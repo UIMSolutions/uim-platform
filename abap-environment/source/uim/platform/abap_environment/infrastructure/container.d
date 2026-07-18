@@ -108,7 +108,7 @@ Container buildContainer(SrvConfig config) {
   c.businessRoleController = new BusinessRoleController(c.manageBusinessRoles);
   c.transportRequestController = new TransportRequestController(c.manageTransportRequests);
   c.applicationJobController = new ApplicationJobController(c.manageApplicationJobs);
-  c.healthController = new HealthController("abap-environment");
+  c.healthController = new HealthController(config.serviceName, "2026.0.1", config.serviceDisplay);
 
   return c;
 }

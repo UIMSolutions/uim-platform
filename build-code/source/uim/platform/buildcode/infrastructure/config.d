@@ -16,7 +16,8 @@ mixin(ShowModule!());
 struct AppConfig {
   string host        = "0.0.0.0";
   ushort port        = 8098;
-  string serviceName = "SAP Build Code Platform Service";
+  string serviceDisplay = "SAP Build Code Platform Service";
+  string serviceName = "build-code";
 }
 
 AppConfig loadConfig() {

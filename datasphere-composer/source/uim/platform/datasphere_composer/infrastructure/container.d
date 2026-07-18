@@ -64,7 +64,7 @@ Container buildContainer(SrvConfig cfg) {
   c.compositionRuns   = new ManageCompositionRunsUseCase(c.compositionRunRepo);
   c.tenantUsers       = new ManageTenantUsersUseCase(c.tenantUserRepo);
 
-  c.healthCtrl          = new HealthController();
+  c.healthCtrl          = new HealthController("data-composer");
   c.dataProviderCtrl    = new DataProviderController(c.dataProviders);
   c.dataProductCtrl     = new DataProductController(c.dataProducts);
   c.unificationRuleCtrl = new UnificationRuleController(c.unificationRules);

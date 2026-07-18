@@ -13,8 +13,9 @@ import uim.platform.abap_environment;
 /// Service configuration.
 struct SrvConfig {
   string host = "0.0.0.0";
-  ushort port = 10000;
-  string serviceName = "ABAP Environment Service";
+  ushort port = 10_001;
+  string serviceDisplay = "ABAP Environment Service";
+  string serviceName = "abap-environment";
 }
 /// Load configuration from environment variables.
 SrvConfig loadConfig() {

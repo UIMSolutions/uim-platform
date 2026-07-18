@@ -76,7 +76,7 @@ Container buildContainer(AppConfig config) @safe {
   c.deploymentController     = new DeploymentController(c.manageDeployments);
   c.aiRequestController      = new AIRequestController(c.manageAIRequests);
   c.serviceBindingController = new ServiceBindingController(c.manageServiceBindings);
-  c.healthController         = new HealthController();
+  c.healthController         = new HealthController(config.serviceName, "2026.0.1", config.serviceDisplay);
 
   return c;
 }

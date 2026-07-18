@@ -151,8 +151,10 @@ class TestRepository : TenantRepository!(TestEntity, TestEntityId) {
 }
 
 unittest {
-  TestEntity entity1 = TestEntity(TestEntityId("1"), "Entity 1", TenantId("tenant1"));
-  TestEntity entity2 = TestEntity(TestEntityId("2"), "Entity 2", TenantId("tenant1"));
+  TestEntity entity1 = TestEntity(TenantId("tenant1"), TestEntityId("1"), UserId("user1"));
+  entity1.name = "Entity 1";
+  TestEntity entity2 = TestEntity(TenantId("tenant1"), TestEntityId("2"), UserId("user2"));
+  entity2.name = "Entity 2";
 
   auto repo = new TestRepository();
   repo.save(entity1);

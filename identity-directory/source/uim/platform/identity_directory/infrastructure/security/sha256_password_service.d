@@ -17,7 +17,7 @@ mixin(ShowModule!());
 class Sha256PasswordService : PasswordService {
   string hashPassword(string plaintext) {
     auto salt = randomUUID().toString()[0 .. 8];
-    auto hash = sha256Of(cast(ubyte[])(plaintext ~ salt).representation);
+    auto hash = sha256Of(/* cast(ubyte[])*/ (plaintext ~ salt).representation);
     return salt ~ "$" ~ toHexString(hash).idup;
   }
 

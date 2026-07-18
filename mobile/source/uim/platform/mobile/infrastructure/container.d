@@ -6,18 +6,18 @@
 module uim.platform.mobile.infrastructure.container;
 // import uim.platform.mobile.infrastructure.config;
 // Repositories
-// import uim.platform.mobile.infrastructure.persistence.memory.mobile_apps;
-// import uim.platform.mobile.infrastructure.persistence.memory.device_registrations;
-// import uim.platform.mobile.infrastructure.persistence.memory.push_notifications;
-// import uim.platform.mobile.infrastructure.persistence.memory.push_registrations;
-// import uim.platform.mobile.infrastructure.persistence.memory.app_configurations;
-// import uim.platform.mobile.infrastructure.persistence.memory.feature_restrictions;
-// import uim.platform.mobile.infrastructure.persistence.memory.client_resources;
-// import uim.platform.mobile.infrastructure.persistence.memory.app_versions;
-// import uim.platform.mobile.infrastructure.persistence.memory.usage_reports;
-// import uim.platform.mobile.infrastructure.persistence.memory.offline_stores;
-// import uim.platform.mobile.infrastructure.persistence.memory.user_sessions;
-// import uim.platform.mobile.infrastructure.persistence.memory.client_logs;
+// import uim.platform.mobile.infrastructure.persistence.repositories.mobile_apps;
+// import uim.platform.mobile.infrastructure.persistence.repositories.device_registrations;
+// import uim.platform.mobile.infrastructure.persistence.repositories.push_notifications;
+// import uim.platform.mobile.infrastructure.persistence.repositories.push_registrations;
+// import uim.platform.mobile.infrastructure.persistence.repositories.app_configurations;
+// import uim.platform.mobile.infrastructure.persistence.repositories.feature_restrictions;
+// import uim.platform.mobile.infrastructure.persistence.repositories.client_resources;
+// import uim.platform.mobile.infrastructure.persistence.repositories.app_versions;
+// import uim.platform.mobile.infrastructure.persistence.repositories.usage_reports;
+// import uim.platform.mobile.infrastructure.persistence.repositories.offline_stores;
+// import uim.platform.mobile.infrastructure.persistence.repositories.user_sessions;
+// import uim.platform.mobile.infrastructure.persistence.repositories.client_logs;
 // Use Cases
 // import uim.platform.mobile.application.usecases.manage.mobile_apps;
 // import uim.platform.mobile.application.usecases.manage.device_registrations;

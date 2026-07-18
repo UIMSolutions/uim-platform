@@ -50,7 +50,7 @@ class SchemaController : ManageHttpController {
       return errorResponse(result.errorMessage);
 
     auto response = Json.emptyObject;
-    response["id"] = Json(result.schemaId);
+    response["id"] = Json(result.schemaId.value);
 
     return successResponse("Schema created successfully", "Created", 201, response);
     // writeScimError(res, 409, result.message);
@@ -85,7 +85,7 @@ class SchemaController : ManageHttpController {
       return errorResponse("Schema not found", 404);
 
     auto response = Json.emptyObject;
-    response["id"] = Json(schema.id);
+    response["id"] = Json(schema.id.value);
     response["name"] = Json(schema.name);
     response["description"] = Json(schema.description);
     response["attributes"] = toJsonArray(schema.attributes);
@@ -153,7 +153,7 @@ private SchemaAttribute[] parseSchemaAttributes(Json j) {
   // auto val = "attributes" in j;
   // if (val.isNull || (val).type != Json.Type.array.toJson)
   //   return result;
-  foreach (item; j.toArray("attributes")) {
+  foreach (item; j.getArray("attributes")) {
     result ~= SchemaAttribute(item.getString("id"), item.getString("name"),
       item.getString("description"),);
   }

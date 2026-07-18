@@ -17,6 +17,8 @@ class AIRequestController : SAPController {
   this(ManageAIRequestsUseCase uc) { _uc = uc; }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/buildcode/ai/generate",   &generate);
     router.get ("/api/v1/buildcode/ai/requests",   &listRequests);
     router.get ("/api/v1/buildcode/ai/requests/*", &getRequest);

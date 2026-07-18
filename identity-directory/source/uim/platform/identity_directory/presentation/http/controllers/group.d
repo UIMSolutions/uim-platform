@@ -15,10 +15,10 @@ mixin(ShowModule!());
 @safe:
 /// HTTP controller for SCIM 2.0 group management.
 class GroupController : ManageHttpController {
-  private ManageGroupsUseCase useCase;
+  private ManageGroupsUseCase usecase;
 
-  this(ManageGroupsUseCase useCase) {
-    this.useCase = useCase;
+  this(ManageGroupsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -39,7 +39,7 @@ class GroupController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto groups = useCase.listGroups(tenantId).map!(g => g.toJson).array.toJson;
+    auto groups = usecase.listGroups(tenantId).map!(g => g.toJson).array.toJson;
 
     auto response = Json.emptyObject
       .set("schemas", ["urn:ietf:params:scim:api:messages:2.0:ListResponse"].toJson)
@@ -64,7 +64,7 @@ class GroupController : ManageHttpController {
     createReq.description = data.getString("description");
     createReq.members = members;
 
-    auto result = useCase.createGroup(createReq);
+    auto result = usecase.createGroup(createReq);
     if (result.hasError)
       return errorResponse(result.error, 400);
 
@@ -85,7 +85,7 @@ class GroupController : ManageHttpController {
     if (id.isNull)
       return errorResponse("Invalid group ID", 400);
 
-    auto group = useCase.getGroup(tenantId, id);
+    auto group = usecase.getGroup(tenantId, id);
     if (group.isNull)
       return errorResponse("Group not found", 404);
 
@@ -104,12 +104,12 @@ class GroupController : ManageHttpController {
       return errorResponse("Invalid group ID", 400);
 
     auto data = precheck.data;
-    auto updateReq = UpdateGroupRequest(groupId, data.getString("displayName"),
+    auto updateReq = UpdateGroupRequest(tenantId, groupId, data.getString("displayName"),
       data.getString("description"),);
-    auto result = useCase.updateGroup(updateReq);
+    auto result = usecase.updateGroup(updateReq);
     if (result.hasError)
       return errorResponse(result.errorMessage, 400);
-      // writeScimError(res, 404, result.errorMessage);
+    // writeScimError(res, 404, result.errorMessage);
 
     return successResponse("Group updated successfully", "Updated", 200, Json.emptyObject.set("id", result
         .id));
@@ -125,7 +125,7 @@ class GroupController : ManageHttpController {
     if (id.isNull)
       return errorResponse("Invalid group ID", 400);
 
-    auto result = useCase.deleteGroup(tenantId, id);
+    auto result = usecase.deleteGroup(tenantId, id);
     if (result.hasError)
       return errorResponse(result.errorMessage, 404);
 
@@ -145,8 +145,8 @@ class GroupController : ManageHttpController {
     addReq.memberId = data.getString("memberId");
     addReq.memberType = data.getString("memberType");
     addReq.display = data.getString("display");
-    
-    auto result = useCase.addMember(addReq);
+
+    auto result = usecase.addMember(addReq);
     if (result.hasError)
       return errorResponse(result.errorMessage, 400);
 
@@ -160,32 +160,34 @@ class GroupController : ManageHttpController {
     return successResponse("Member added successfully", "Added", 200, Json.emptyObject.set("id", result
         .id));
   }
+
+  mixin(HandleTemplate!("handleAddMember", "addMemberHandler"));
+
+  protected Json deleteMemberHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
+    auto removeReq = RemoveMemberRequest(tenantId, data.getString("groupId"), data.getString("memberId"),);
+    auto result = usecase.removeMember(removeReq);
+    if (result.hasError)
+      return errorResponse(result.errorMessage, 400);
+
+    return successResponse("Member removed successfully", "Removed", 200, Json.emptyObject);
+  }
+
+  mixin(HandleTemplate!("handleDeleteMember", "deleteMemberHandler"));
 }
-
-mixin(HandleTemplate!("handleAddMember", "addMemberHandler"));
-
-protected Json deleteMemberHandler(HTTPServerRequest req) {
-  auto precheck = super.deleteHandler(req);
-  if (precheck.hasError)
-    return precheck;
-
-  auto tenantId = precheck.tenantId;
-  auto data = precheck.data;
-  auto removeReq = RemoveMemberRequest(tenantId, data.getString("groupId"), data.getString("memberId"),);
-  auto result = useCase.removeMember(removeReq);
-  if (result.hasError)
-    return errorResponse(result.errorMessage, 400);
-
-  return successResponse("Member removed successfully", "Removed", 200, Json.emptyObject);
-}
-
-mixin(HandleTemplate!("handleDeleteMember", "deleteMemberHandler"));
 
 private GroupMember[] parseMembers(Json j) {
-  if (!j.isObject) return null;
+  if (!j.isObject)
+    return null;
 
-  if (!j.isArray("members"))return null;
-  
+  if (!j.isArray("members"))
+    return null;
+
   GroupMember[] result;
   foreach (item; j["members"].toArray) {
     auto member = GroupMember();

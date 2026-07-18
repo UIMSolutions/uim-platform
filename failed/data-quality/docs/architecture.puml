@@ -25,7 +25,6 @@ title Data Quality Management Service\nClean + Hexagonal Architecture
 package "Presentation Layer  «driving adapters»" as PRES <<Rectangle>> {
   skinparam packageBackgroundColor HTTP_COLOR
 
-  class HealthController << (C,#EF9A9A) >>
   class ValidationRuleController << (C,#EF9A9A) >>
   class ValidateController << (C,#EF9A9A) >>
   class AddressController << (C,#EF9A9A) >>

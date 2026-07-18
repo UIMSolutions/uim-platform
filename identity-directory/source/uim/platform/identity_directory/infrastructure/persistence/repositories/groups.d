@@ -28,7 +28,7 @@ class MemoryGroupRepository : TenantRepository!(IDGroup, GroupId), GroupReposito
   }
 
   void removeByDisplayName(TenantId tenantId, string displayName) {
-    findByDisplayName(tenantId, displayName).each!(g => remove(g));
+    remove(findByDisplayName(tenantId, displayName));
   }
 
   size_t countByMember(TenantId tenantId, string memberId) {

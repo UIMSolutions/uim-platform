@@ -14,8 +14,8 @@ mixin(ShowModule!());
 // Handles upload, download, query and delete of market rates,
 // and provider CRUD – the primary HTTP driving adapter.
 class MarketRateController : SAPController {
-  private ManageMarketRatesUseCase ratesUC;
-  private ManageProvidersUseCase   providersUC;
+  protected ManageMarketRatesUseCase ratesUC;
+  protected ManageProvidersUseCase   providersUC;
 
   this(ManageMarketRatesUseCase ratesUC, ManageProvidersUseCase providersUC) {
     this.ratesUC     = ratesUC;
@@ -23,6 +23,7 @@ class MarketRateController : SAPController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
     // Upload / download
     router.post("/api/v1/market_refinitiv/upload",   &handleUpload);
     router.post("/api/v1/market_refinitiv/download", &handleDownload);

@@ -14,7 +14,7 @@ mixin(ShowModule!());
 @safe:
 
 class PipelineController : ManageHttpController {
-  private ManagePipelinesUseCase usecase;
+  protected ManagePipelinesUseCase usecase;
 
   this(ManagePipelinesUseCase usecase) {
     this.usecase = usecase;

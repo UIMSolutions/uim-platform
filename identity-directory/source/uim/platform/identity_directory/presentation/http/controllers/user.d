@@ -60,7 +60,7 @@ class UserController : ManageHttpController {
       return scimErrorResponse(result.message, 409);
 
     auto response = Json.emptyObject;
-    response["id"] = Json(result.userId);
+    response["id"] = result.userId.value;
     response["schemas"] = Json.emptyArray;
     response["schemas"] ~= Json("urn:ietf:params:scim:schemas:core:2.0:IDUser");
     return successResponse("User created successfully", "Created", 201, response);
@@ -80,7 +80,7 @@ class UserController : ManageHttpController {
     response["totalResults"] = Json(users.length);
     response["startIndex"] = Json(1L);
     response["itemsPerPage"] = Json(users.length);
-    response["Resources"] = serializeUsers(users);
+    response["Resources"] = users.map!(u => u.toJson).array.toJson;
 
     return successResponse("Users retrieved successfully", "", 200, response);
   }
@@ -92,7 +92,7 @@ class UserController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto userId = precheck.id;
-    auto user = useCase.getUser(userId);
+    auto user = useCase.getUser(tenantId, userId);
     if (user.isNull)
       return scimErrorResponse("User not found", 404);
 
@@ -109,26 +109,27 @@ class UserController : ManageHttpController {
     auto userId = precheck.id;
     auto data = precheck.data;
     auto request = UpdateUserRequest();
+    request.tenantId = tenantId;
     request.userId = userId;
-    request.externalId = data.getString("externalId");
-    request.userName = data.getString("userName");
+    // request.externalId = data.getString("externalId");
+    // request.userName = data.getString("userName");
     request.displayName = data.getString("displayName");
     request.userType = data.getString("userType");
     request.preferredLanguage = data.getString("preferredLanguage");
     request.locale = data.getString("locale");
     request.timezone = data.getString("timezone");
     request.active = data.getBoolean("active", true);
-    request.emails = parseEmails(j);
-    request.phoneNumbers = parsePhoneNumbers(j);
-    request.addresses = j.toAddresses;
+    request.emails = parseEmails(data);
+    request.phoneNumbers = parsePhoneNumbers(data);
+    request.addresses = data.toAddresses;
     request.extendedAttributes = []; // extendedAttributes
 
-    auto result = useCase.updateUser(updateReq);
-    if (result.hasError)
-      writeScimError(res, 404, result.errorMessage);
+    auto result = useCase.updateUser(request);
+    if (result.error)
+      return errorResponse(result.message, 404);
+    // writeScimError(res, 404, result.message);
 
-    auto response = Json.emptyObject;
-    response["id"] = Json(userId);
+    auto response = Json.emptyObject.set("id", userId);
     response["schemas"] = Json.emptyArray;
     response["schemas"] ~= Json("urn:ietf:params:scim:schemas:core:2.0:IDUser");
     return successResponse("User updated successfully", "", 200, response);
@@ -144,10 +145,12 @@ class UserController : ManageHttpController {
 
     auto result = useCase.deleteUser(tenantId, id);
     if (result.hasError)
-      writeScimError(res, 404, result.errorMessage);
+      return errorResponse(result.errorMessage, 404);
+      // writeScimError(res, 404, result.errorMessage);
 
     return successResponse("User deleted successfully", "", 200, Json.emptyObject);
   }
+
   protected Json changePasswordHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);
     if (precheck.hasError)
@@ -155,17 +158,18 @@ class UserController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto id = UserId(precheck.id);
-    
+
     auto data = precheck.data;
     auto result = useCase.changePassword(tenantId, id,
       data.getString("currentPassword"), data.getString("newPassword"));
     if (result.hasError)
-      return scimErrorResponse(result.errorMessage, 400);
+      return errorResponse(result.errorMessage, 400);
+      // return scimErrorResponse(result.errorMessage, 400);
 
     auto response = Json.emptyObject
-      .set("status", Json("password_changed"));
+      .set("status", "password_changed");
 
-     return successResponse("Password changed successfully", "", 200, response);
+    return successResponse("Password changed successfully", "", 200, response);
   }
 
   mixin(HandleTemplate!("handleChangePassword", "changePasswordHandler"));
@@ -181,12 +185,11 @@ class UserController : ManageHttpController {
     auto list = users.map!(u => u.toJson).array.toJson;
 
     auto responseData = Json.emptyObject
-      .set("schemas", Json.emptyArray)
-        .set("schemas", "urn:ietf:params:scim:api:messages:2.0:ListResponse")
-        .set("totalResults", users.length)
-        .set("resources", list);
+      .set("schemas", ["urn:ietf:params:scim:api:messages:2.0:ListResponse"].toJson)
+      .set("totalResults", users.length)
+      .set("resources", list);
 
-      return successResponse("User search completed successfully", "", 200, responseData);
+    return successResponse("User search completed successfully", "", 200, responseData);
   }
 
   mixin(HandleTemplate!("handleSearch", "searchHandler"));
@@ -205,8 +208,7 @@ private Email[] parseEmails(Json j) {
     return result;
 
   return value.toArray.map!(item => Email(item.getString("value"), item.getString(
-      "type"), getBoolean(item, "primary")))
-    .array.toJson;
+      "type"), getBoolean(item, "primary"))).array;
 }
 
 private PhoneNumber[] parsePhoneNumbers(Json j) {
@@ -223,7 +225,7 @@ private PhoneNumber[] parsePhoneNumbers(Json j) {
 
   return value.toArray.map!(item => PhoneNumber(item.getString("value"), item.getString(
       "type"),
-      getBoolean(item, "primary"))).array.toJson;
+      item.getBoolean("primary"))).array;
 }
 
 protected Json scimErrorResponse(string detail, int status) {

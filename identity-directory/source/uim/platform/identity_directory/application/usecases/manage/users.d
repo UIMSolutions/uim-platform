@@ -39,14 +39,14 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
   UserResponse createUser(CreateUserRequest req) {
     // Check username uniqueness
     if (userRepo.existsByUserName(req.tenantId, req.userName))
-      return UserResponse(UserId(""), "User with this userName already exists");
+      return UserResponse(UserId(""), true, "User with this userName already exists");
 
     // Validate password against policy
     auto policy = policyRepo.findActiveForTenant(req.tenantId);
     if (policy != typeof(policy).init && req.password.length > 0) {
       auto validation = validatePassword(req.password, policy);
       if (!validation.valid) 
-        return UserResponse(UserId(""), validation.violations.joiner("; ").to!string);
+        return UserResponse(UserId(""), true, validation.violations.joiner("; ").to!string);
     }
 
     auto user = IDUser(req.tenantId);
@@ -83,7 +83,7 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
     event.timestamp = event.createdAt;
     auditRepo.save(event);
 
-    return UserResponse(user.id, "");
+    return UserResponse(user.id, false, "");
   }
 
   /// Get user by ID.
@@ -102,7 +102,7 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
   }
 
   /// Update user profile.
-  string updateUser(UpdateUserRequest req) {
+  CommandResult updateUser(UpdateUserRequest req) {
     auto user = userRepo.findById(req.tenantId, req.userId);
     if (user.isNull)
       return "User not found";
@@ -145,7 +145,8 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
     event.timestamp = event.createdAt;
     auditRepo.save(event);
 
-    return "";
+    return CommandResult(true, user.id.value, "");
+
   }
 
   /// Deactivate (soft-delete) a user.

@@ -56,10 +56,11 @@ struct UpdateUserRequest {
 
 struct UserResponse {
   UserId userId;
-  string error;
+  bool error = false;
+  string message = "";
 
   bool hasError() const {
-    return error.length > 0;
+    return error;
   }
 }
 /// --- IDGroup DTOs ---

@@ -6,5 +6,5 @@
 module uim.platform.mobile.infrastructure.persistence;
 
 public {
-  import uim.platform.mobile.infrastructure.persistence.memory;
+  import uim.platform.mobile.infrastructure.persistence.repositories;
 }

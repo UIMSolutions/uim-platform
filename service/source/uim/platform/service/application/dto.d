@@ -44,7 +44,7 @@ struct CommandResult {
 }
 ///
 unittest {
-  mixin(ShowTestModule!());
+  mixin(ShowTest!("CommandResult"));
 
   CommandResult r1 = CommandResult(true, "123", "");
   assert(r1.isSuccess());
@@ -64,6 +64,4 @@ unittest {
   assert(r3.id == "");
   assert(r3.message == "Error occurred");
   assert(r3.code == 404);
-
-  writeln("All tests passed.");
 }
