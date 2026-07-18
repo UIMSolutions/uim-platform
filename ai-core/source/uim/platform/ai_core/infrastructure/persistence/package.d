@@ -6,5 +6,5 @@
 module uim.platform.ai_core.infrastructure.persistence;
 
 public {
-  import uim.platform.ai_core.infrastructure.persistence.memory;
+  import uim.platform.ai_core.infrastructure.persistence.repositories;
 }
