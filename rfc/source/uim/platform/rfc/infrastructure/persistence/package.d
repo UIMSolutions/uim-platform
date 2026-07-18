@@ -5,4 +5,4 @@
 *****************************************************************************************************************/
 module uim.platform.rfc.infrastructure.persistence;
 
-public import uim.platform.rfc.infrastructure.persistence.memory;
+public import uim.platform.rfc.infrastructure.persistence.repositories;
