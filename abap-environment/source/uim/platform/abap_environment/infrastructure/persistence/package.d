@@ -6,7 +6,5 @@
 module uim.platform.abap_environment.infrastructure.persistence;
 
 public {
-  import uim.platform.abap_environment.infrastructure.persistence.files;
   import uim.platform.abap_environment.infrastructure.persistence.repositories;
-  import uim.platform.abap_environment.infrastructure.persistence.mongo;
 }
