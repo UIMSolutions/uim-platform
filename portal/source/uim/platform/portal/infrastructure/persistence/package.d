@@ -7,6 +7,6 @@ module uim.platform.portal.infrastructure.persistence;
 
 public {
   import uim.platform.portal.infrastructure.persistence.files;
-  import uim.platform.portal.infrastructure.persistence.memory;
+  import uim.platform.portal.infrastructure.persistence.repositories;
   import uim.platform.portal.infrastructure.persistence.mongo;
 }

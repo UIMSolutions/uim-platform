@@ -8,13 +8,13 @@ module uim.platform.object_store.infrastructure.container;
 // import uim.platform.object_store.infrastructure.config;
 
 // Repositories
-// import uim.platform.object_store.infrastructure.persistence.memory.bucket;
-// import uim.platform.object_store.infrastructure.persistence.memory.storage_object;
-// import uim.platform.object_store.infrastructure.persistence.memory.object_version;
-// import uim.platform.object_store.infrastructure.persistence.memory.access_policy;
-// import uim.platform.object_store.infrastructure.persistence.memory.lifecycle_rule;
-// import uim.platform.object_store.infrastructure.persistence.memory.cors_rule;
-// import uim.platform.object_store.infrastructure.persistence.memory.service_binding;
+// import uim.platform.object_store.infrastructure.persistence.repositories.bucket;
+// import uim.platform.object_store.infrastructure.persistence.repositories.storage_object;
+// import uim.platform.object_store.infrastructure.persistence.repositories.object_version;
+// import uim.platform.object_store.infrastructure.persistence.repositories.access_policy;
+// import uim.platform.object_store.infrastructure.persistence.repositories.lifecycle_rule;
+// import uim.platform.object_store.infrastructure.persistence.repositories.cors_rule;
+// import uim.platform.object_store.infrastructure.persistence.repositories.service_binding;
 
 // Use Cases
 // import uim.platform.object_store.application.usecases.manage.buckets;

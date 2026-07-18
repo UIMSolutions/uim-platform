@@ -7,16 +7,16 @@ module uim.platform.portal.infrastructure.container;
 // import uim.platform.portal.infrastructure.config;
 // 
 // Repositories
-// import uim.platform.portal.infrastructure.persistence.memory.site;
-// import uim.platform.portal.infrastructure.persistence.memory.page;
-// import uim.platform.portal.infrastructure.persistence.memory.section;
-// import uim.platform.portal.infrastructure.persistence.memory.tile;
-// import uim.platform.portal.infrastructure.persistence.memory.catalog;
-// import uim.platform.portal.infrastructure.persistence.memory.provider;
-// import uim.platform.portal.infrastructure.persistence.memory.role;
-// import uim.platform.portal.infrastructure.persistence.memory.theme;
-// import uim.platform.portal.infrastructure.persistence.memory.menu_item;
-// import uim.platform.portal.infrastructure.persistence.memory.translation;
+// import uim.platform.portal.infrastructure.persistence.repositories.site;
+// import uim.platform.portal.infrastructure.persistence.repositories.page;
+// import uim.platform.portal.infrastructure.persistence.repositories.section;
+// import uim.platform.portal.infrastructure.persistence.repositories.tile;
+// import uim.platform.portal.infrastructure.persistence.repositories.catalog;
+// import uim.platform.portal.infrastructure.persistence.repositories.provider;
+// import uim.platform.portal.infrastructure.persistence.repositories.role;
+// import uim.platform.portal.infrastructure.persistence.repositories.theme;
+// import uim.platform.portal.infrastructure.persistence.repositories.menu_item;
+// import uim.platform.portal.infrastructure.persistence.repositories.translation;
 // 
 // Use Cases
 // import uim.platform.portal.application.usecases.manage.sites;
