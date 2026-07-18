@@ -6,5 +6,5 @@
 module uim.platform.ai_launchpad.infrastructure.persistence;
 
 public {
-  import uim.platform.ai_launchpad.infrastructure.persistence.memory;
+  import uim.platform.ai_launchpad.infrastructure.persistence.repositories;
 }
