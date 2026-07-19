@@ -11,7 +11,7 @@ mixin(ShowModule!());
 @safe:
 
 struct SpatialLayer {
-  mixin TenantEntity!(SpatialLayerId);
+  mixin TenantEntity!SpatialLayerId;
 
   string name;
   string description;

@@ -34,7 +34,7 @@ struct ReverseGeocodeRequest {
 
 struct CalculateRouteRequest {
   TenantId tenantId;
-  string id;
+  RouteId routeId;
   double originLat;
   double originLon;
   double destinationLat;
@@ -51,7 +51,7 @@ struct CalculateRouteRequest {
 
 struct CreatePoiRequest {
   TenantId tenantId;
-  string id;
+  PointOfInterestId poiId;
   string name;
   string description;
   string category;
@@ -73,7 +73,7 @@ struct CreatePoiRequest {
 
 struct UpdatePoiRequest {
   TenantId tenantId;
-  string id;
+  PointOfInterestId poiId;
   string name;
   string description;
   string category;
@@ -88,7 +88,7 @@ struct UpdatePoiRequest {
 
 struct CalculateIsolineRequest {
   TenantId tenantId;
-  string id;
+  IsolineId isolineId;
   double centerLat;
   double centerLon;
   string mode;          // "time" or "distance"
@@ -101,7 +101,7 @@ struct CalculateIsolineRequest {
 
 struct CreateGeofenceZoneRequest {
   TenantId tenantId;
-  string id;
+  GeofenceZoneId zoneId;
   string name;
   string description;
   string shapeType;
@@ -115,7 +115,7 @@ struct CreateGeofenceZoneRequest {
 
 struct UpdateGeofenceZoneRequest {
   TenantId tenantId;
-  string id;
+  GeofenceZoneId zoneId;
   string name;
   string description;
   double radiusMeters;
@@ -125,14 +125,14 @@ struct UpdateGeofenceZoneRequest {
 
 struct GeofenceCheckRequest {
   TenantId tenantId;
-  string zoneId;
+  GeofenceZoneId zoneId;
   double latitude;
   double longitude;
 }
 
 struct GeofenceCheckResult {
   bool inside;
-  string zoneId;
+  GeofenceZoneId zoneId;
   string zoneName;
 }
 
@@ -140,7 +140,7 @@ struct GeofenceCheckResult {
 
 struct CreateSpatialLayerRequest {
   TenantId tenantId;
-  string id;
+  SpatialLayerId layerId;
   string name;
   string description;
   string type;
@@ -151,7 +151,7 @@ struct CreateSpatialLayerRequest {
 
 struct UpdateSpatialLayerRequest {
   TenantId tenantId;
-  string id;
+  SpatialLayerId layerId;
   string name;
   string description;
   bool isPublic;
@@ -161,8 +161,8 @@ struct UpdateSpatialLayerRequest {
 
 struct CreateSpatialFeatureRequest {
   TenantId tenantId;
-  string id;
-  string layerId;
+  SpatialFeatureId featureId;
+  SpatialLayerId layerId;
   string name;
   string geometryType;
   string geometry;      // GeoJSON geometry string
@@ -172,7 +172,7 @@ struct CreateSpatialFeatureRequest {
 
 struct UpdateSpatialFeatureRequest {
   TenantId tenantId;
-  string id;
+  SpatialFeatureId featureId;
   string name;
   string geometry;
   string properties;
@@ -183,7 +183,7 @@ struct UpdateSpatialFeatureRequest {
 
 struct CreateProviderRequest {
   TenantId tenantId;
-  string id;
+  ProviderId providerId;
   string name;
   string description;
   string type;
@@ -200,7 +200,7 @@ struct CreateProviderRequest {
 
 struct UpdateProviderRequest {
   TenantId tenantId;
-  string id;
+  ProviderId providerId;
   string name;
   string description;
   string status;
@@ -217,7 +217,7 @@ struct UpdateProviderRequest {
 
 struct CreateGeocodingJobRequest {
   TenantId tenantId;
-  string id;
+  GeocodingJobId jobId;
   string name;
   string description;
   string providerId;
@@ -229,6 +229,6 @@ struct CreateGeocodingJobRequest {
 
 struct GeocodingJobActionRequest {
   TenantId tenantId;
-  string id;
+  GeocodingJobId jobId;
   string action;    // "start", "cancel"
 }

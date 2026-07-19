@@ -5,6 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.health_fhir.presentation.http.controllers.medication;
 import uim.platform.health_fhir;
+
 mixin(ShowModule!());
 
 @safe:
@@ -18,10 +19,10 @@ class MedicationController : ManageHttpController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    router.get("/fhir/R4/Medication",     &handleList);
-    router.get("/fhir/R4/Medication/*",   &handleGet);
-    router.post("/fhir/R4/Medication",    &handleCreate);
-    router.put("/fhir/R4/Medication/*",   &handleUpdate);
+    router.get("/fhir/R4/Medication", &handleList);
+    router.get("/fhir/R4/Medication/*", &handleGet);
+    router.post("/fhir/R4/Medication", &handleCreate);
+    router.put("/fhir/R4/Medication/*", &handleUpdate);
     router.delete_("/fhir/R4/Medication/*", &handleDelete);
   }
 
@@ -30,99 +31,113 @@ class MedicationController : ManageHttpController {
       Json.emptyObject.set("resourceType", "OperationOutcome")
         .set("issue", Json.emptyArray ~= Json.emptyObject
           .set("severity", "error").set("code", "processing").set("diagnostics", msg)),
-      status
+        status
     );
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-              CreateMedicationRequest r;
-      r.tenantId    = tenantId;
-      r.medicationId = MedicationId(precheck.id);
-      auto result = usecase.createMedication(r);
-      if (result.hasError)
-        return errorResponse(result.message, 400);
+    auto data = precheck.data;
+    CreateMedicationRequest r;
+    r.tenantId = tenantId;
+    r.medicationId = MedicationId(precheck.id);
+    auto result = usecase.createMedication(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-      return successResponse("Medication created successfully", 201, Json.emptyObject.set("resourceType", "Medication").set("id", result.id));  
+    return successResponse("Medication created successfully", 201, Json.emptyObject.set("resourceType", "Medication")
+        .set("id", result.id));
 
-      // res.writeJsonBody(Json.emptyObject.set("resourceType", "Medication").set("id", result.id), 201);
-      // writeFhirError(res, 500, "Internal server error");
+    // res.writeJsonBody(Json.emptyObject.set("resourceType", "Medication").set("id", result.id), 201);
+    // writeFhirError(res, 500, "Internal server error");
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto meds = usecase.listMedications(tenantId);
-      auto entries = meds.map!(m => m.toJson()).array;
+    auto tenantId = precheck.tenantId;
+    auto meds = usecase.listMedications(tenantId);
+    auto entries = meds.map!(m => m.toJson()).array;
 
-      auto responseData = Json.emptyObject.set("resourceType", "Bundle").set("type", "searchset")
-        .set("total", meds.length).set("entry", entries);
-      return successResponse("Medications retrieved successfully", 200, responseData);
-        // Json.emptyObject.set("resourceType", "Bundle").set("type", "searchset")
-        //   .set("total", meds.length).set("entry", entries),
-        // 200
-      
+    auto responseData = Json.emptyObject.set("resourceType", "Bundle")
+      .set("type", "searchset")
+      .set("total", meds.length).set("entry", entries);
+    return successResponse("Medications retrieved successfully", 200, responseData);
+    // Json.emptyObject.set("resourceType", "Bundle").set("type", "searchset")
+    //   .set("total", meds.length).set("entry", entries),
+    // 200
+
     // writeFhirError(res, 500, "Internal server error");
-    
+
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = MedicationId(precheck.id);
-      auto m = usecase.getMedication(tenantId, id);
-      if (m.isNull) { writeFhirError(res, 404, "Medication not found"); return; }
-      res.writeJsonBody(m.toJson(), 200);
-    } catch (Exception e) {
-    // writeFhirError(res, 500, "Internal server error");
-    }
+    auto tenantId = precheck.tenantId;
+    auto id = MedicationId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid medication ID", 400);
+
+    auto m = usecase.getMedication(tenantId, id);
+    if (m.isNull)
+      return errorResponse("Medication not found", 404);
+
+    return successResponse("Medication retrieved successfully", 200, m.toJson());
+    // writeFhirError(res, 404, "Medication not found");
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = MedicationId(precheck.id);
-      auto data = precheck.data;
-      UpdateMedicationRequest r;
-      r.tenantId     = tenantId;
-      r.medicationId = id;
-      auto result = usecase.updateMedication(r);
-      if (result.success)
-        res.writeJsonBody(Json.emptyObject.set("resourceType", "Medication").set("id", result.id), 200);
-      else
-        writeFhirError(res, 400, result.message);
-    } catch (Exception e) {
-    // writeFhirError(res, 500, "Internal server error");
-    }
+    auto tenantId = precheck.tenantId;
+    auto id = MedicationId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid medication ID", 400);
+
+    auto data = precheck.data;
+    UpdateMedicationRequest r;
+    r.tenantId = tenantId;
+    r.medicationId = id;
+    // r.data = data; // Add this line to set the data for the update request
+    auto result = usecase.updateMedication(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    return successResponse("Medication updated successfully", 200, Json.emptyObject.set(
+        "resourceType", "Medication").set("id", result.id));
+
+    //   res.writeJsonBody(Json.emptyObject.set("resourceType", "Medication").set("id", result.id), 200);
+    // else
+    //   writeFhirError(res, 400, result.message);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto id = MedicationId(precheck.id);
-      auto result = usecase.deleteMedication(tenantId, id);
-      if (result.success) res.writeBody("", cast(int) HTTPStatus.noContent, "application/json");
-      else writeFhirError(res, 404, result.message);
-    } catch (Exception e) {
-    // writeFhirError(res, 500, "Internal server error");
-    }
+    auto tenantId = precheck.tenantId;
+    auto id = MedicationId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid medication ID", 400);
+
+    auto result = usecase.deleteMedication(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    return successResponse("Medication deleted successfully", 204);
+    // res.writeBody("", cast(int)HTTPStatus.noContent, "application/json");
   }
 }

@@ -77,15 +77,10 @@ override protected Json listHandler(HTTPServerRequest req) {
       .set("createdAt", t.createdAt);
   }
 
-  auto response = Json.emptyObject;
-  response["count"] = Json(tasks.length);
-  response["resources"] = jarr;
-
-  res.writeJsonBody(response, 200);
-}
- catch (Exception e) {
-  writeError(res, 500, "Internal server error");
-}
+  auto response = Json.emptyObject
+    .set("count", tasks.length)
+    .set("resources", jarr);
+  return successResponse("Replication task list retrieved successfully", "Retrieved", 200, response);
 }
 
 override protected Json getHandler(HTTPServerRequest req) {

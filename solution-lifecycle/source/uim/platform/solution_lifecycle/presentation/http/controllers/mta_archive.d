@@ -6,6 +6,7 @@
 module uim.platform.solution_lifecycle.presentation.http.controllers.mta_archive;
 
 import uim.platform.solution_lifecycle;
+
 mixin(ShowModule!());
 
 @safe:
@@ -20,94 +21,88 @@ class MtaArchiveController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        router.get("/api/v1/slm/mta-archives",   &handleList);
-        router.get("/api/v1/slm/mta-archives/*",  &handleGet);
-        router.post("/api/v1/slm/mta-archives",  &handleUpload);
+
+        router.get("/api/v1/slm/mta-archives", &handleList);
+        router.get("/api/v1/slm/mta-archives/*", &handleGet);
+        router.post("/api/v1/slm/mta-archives", &handleUpload);
         router.delete_("/api/v1/slm/mta-archives/*", &handleDelete);
     }
 
-    protected void handleUpload(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto data = precheck.data;
+    override protected Json uploadHandler(HTTPServerRequest req) {
+        auto precheck = super.uploadHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+        auto data = precheck.data;
             UploadMtaArchiveRequest r;
-            r.tenantId     = tenantId;
-            r.fileName     = data.getString("fileName");
-            r.mtaId        = data.getString("mtaId");
-            r.mtaVersion   = data.getString("mtaVersion");
-            r.fileSizeBytes = j["fileSizeBytes"].isInteger
-                              ? j["fileSizeBytes"].get!long : 0L;
-            r.checksum     = data.getString("checksum");
-            r.uploadedBy   = data.getString("uploadedBy");
-            r.namespace_   = data.getString("namespace");
-            if (j["targetPlatforms"].isArray)
-                foreach (p; j["targetPlatforms"])
+            r.tenantId = tenantId;
+            r.fileName = data.getString("fileName");
+            r.mtaId = data.getString("mtaId");
+            r.mtaVersion = data.getString("mtaVersion");
+            r.fileSizeBytes = data.get("fileSizeBytes", 0L).get!long;
+            r.checksum = data.getString("checksum");
+            r.uploadedBy = data.getString("uploadedBy");
+            r.namespace_ = data.getString("namespace");
+            if (data.get("targetPlatforms", Json.emptyArray).isArray)
+                foreach (p; data.get("targetPlatforms", Json.emptyArray))
                     r.targetPlatforms ~= p.get!string;
 
             auto result = usecase.uploadArchive(r);
             if (result.hasError)
-            return errorResponse(result.message, 400);
-                res.writeJsonBody(
-                    Json.emptyObject.set("id", result.id).set("message", "MTA archive registered"),
-                    201
-                );
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+                return errorResponse(result.message, 400);
+            
+}
+    mixin(HandleTemplate!("handleUpload", "uploadHandler"));
 
-    override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+        return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-            auto archives = usecase.listArchives(tenantId);
-            auto arr = Json.emptyArray;
-            foreach (a; archives) arr ~= a.toJson;
-            res.writeJsonBody(
-                Json.emptyObject.set("count", archives.length).set("mta-archives", arr),
-                200
-            );
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+    auto archives = usecase.listArchives(tenantId).map!(a => a.toJson()).array.toJson;
+    return successResponse("MTA archives retrieved successfully", "Retrieved", 200,
+        Json.emptyObject.set("count", archives.length).set("mta-archives", archives));
+}
 
-    override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+        return precheck;
 
-        auto tenantId = precheck.tenantId;
-            auto id = MtaArchiveId(precheck.id);
-            auto a = usecase.getArchive(tenantId, id);
-            if (a.isNull) { writeError(res, 404, "MTA archive not found"); return; }
-            res.writeJsonBody(a.toJson, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+    auto tenantId = precheck.tenantId;
+    auto id = MtaArchiveId(precheck.id);
+    if (id.isNull)
+        return errorResponse("Invalid MTA archive ID", 400);
 
-    override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto a = usecase.getArchive(tenantId, id);
+    if (a.isNull)
+        return errorResponse("MTA archive not found", 404);
 
-        auto tenantId = precheck.tenantId;
-            auto id = MtaArchiveId(precheck.id);
-            auto result = usecase.deleteArchive(tenantId, id);
-            if (result.hasError)
-            return errorResponse(result.message, 400);
-                res.writeJsonBody(Json.emptyObject.set("message", "MTA archive deleted"), 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+    return successResponse("MTA archive retrieved successfully", "Retrieved", 200, a.toJson());
+}
+
+override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+        return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = MtaArchiveId(precheck.id);
+    if (id.isNull)
+        return errorResponse("Invalid MTA archive ID", 400);
+
+    // writeError(res, 400, "Invalid MTA archive ID"); return; }
+    auto result = usecase.deleteArchive(tenantId, id);
+    if (result.hasError)
+        return errorResponse(result.message, 400);
+
+    return successResponse("MTA archive deleted successfully", "Deleted", 200, Json
+            .emptyObject.set("id", id.value));
+    //     res.writeJsonBody(Json.emptyObject.set("message", "MTA archive deleted"), 200);
+    // } else {
+    //     writeError(res, 404, result.message);
+}
 }

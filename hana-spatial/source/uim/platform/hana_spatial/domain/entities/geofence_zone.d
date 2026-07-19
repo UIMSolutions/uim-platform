@@ -11,7 +11,7 @@ mixin(ShowModule!());
 @safe:
 
 struct GeofenceZone {
-  mixin TenantEntity!(GeofenceZoneId);
+  mixin TenantEntity!GeofenceZoneId;
 
   string name;
   string description;

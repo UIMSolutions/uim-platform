@@ -11,7 +11,7 @@ mixin(ShowModule!());
 @safe:
 
 struct Isoline {
-  mixin TenantEntity!(IsolineId);
+  mixin TenantEntity!IsolineId;
 
   GeoCoordinate center;
   IsolineMode mode;

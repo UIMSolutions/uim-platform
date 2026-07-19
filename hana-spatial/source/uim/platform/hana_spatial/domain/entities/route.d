@@ -28,7 +28,7 @@ struct RouteLeg {
 }
 
 struct Route {
-  mixin TenantEntity!(RouteId);
+  mixin TenantEntity!RouteId;
 
   GeoCoordinate origin;
   GeoCoordinate destination;

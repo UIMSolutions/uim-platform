@@ -6,6 +6,7 @@
 module uim.platform.hana_spatial.presentation.http.controllers.geocoding_job;
 
 import uim.platform.hana_spatial;
+
 mixin(ShowModule!());
 
 @safe:
@@ -95,46 +96,46 @@ class GeocodingJobController : ManageHttpController {
     return successResponse("Geocoding job retrieved successfully", 200, item.toJson());
   }
 
-  private void handleAction(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
-      auto id = GeocodingJobId(precheck.id);
-      if (id.isNull)
-        return errorResponse("Invalid geocoding job ID", 400);
+  protected Json actionHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto data = precheck.data;
-      GeocodingJobActionRequest r;
-      r.tenantId = tenantId;
-      r.id = id;
-      r.action = data.getString("action");
+    auto tenantId = precheck.tenantId;
+    auto id = GeocodingJobId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid geocoding job ID", 400);
 
-      auto result = usecase.performAction(r);
-      if (result.hasError)
-        return errorResponse(result.message, 400);
+    auto data = precheck.data;
+    GeocodingJobActionRequest r;
+    r.tenantId = tenantId;
+    r.id = id;
+    r.action = data.getString("action");
 
-      res.writeJsonBody(Json.emptyObject.set("id", result.id).set("message", "Action performed"), 200);
-    } else {
-      writeError(res, 400, result.message);
-    }
-  } catch (Exception e) {
-    writeError(res, 500, "Internal server error");
+    auto result = usecase.performAction(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    return successResponse("Action performed successfully", 200, Json.emptyObject.set("id", result
+        .id).set("message", "Action performed: " ~ r.action));
   }
-}
 
-override protected Json deleteHandler(HTTPServerRequest req) {
-  auto precheck = super.deleteHandler(req);
-  if (precheck.hasError)
-    return precheck;
+  mixin(HandleTemplate!("handleAction", "actionHandler"));
 
-  auto tenantId = precheck.tenantId;
-  auto id = GeocodingJobId(precheck.id);
-  if (id.isNull)
-    return errorResponse("Invalid geocoding job ID", 400);
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-  auto result = usecase.remove(tenantId, id);
-  if (result.hasError)
-    return errorResponse(result.message, 400);
-  
-  return successResponse("Geocoding job deleted successfully", 200);
-}
+    auto tenantId = precheck.tenantId;
+    auto id = GeocodingJobId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid geocoding job ID", 400);
+
+    auto result = usecase.remove(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    return successResponse("Geocoding job deleted successfully", 200);
+  }
 }
