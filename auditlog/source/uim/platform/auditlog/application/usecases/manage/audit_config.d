@@ -17,9 +17,9 @@ import uim.platform.auditlog;
 mixin(ShowModule!());
 @safe:
 class ManageAuditConfigUseCase { // } { // TODO: UIMUseCase {
-  private AuditConfigRepository configs;
+  private IAuditConfigRepository configs;
 
-  this(AuditConfigRepository configs) {
+  this(IAuditConfigRepository configs) {
     this.configs = configs;
   }
 

@@ -42,8 +42,8 @@ struct Container {
   // Repositories (driven adapters)
   MemoryAuditLogRepository auditLogRepo;
   MemoryRetentionPolicyRepository retentionRepo;
-  MemoryAuditConfigRepository auditConfigRepo;
-  MemoryExportJobRepository exportRepo;
+  IAuditConfigRepository auditConfigRepo;
+  ExportJobRepository exportRepo;
   MemorySecurityEventRepository securityEventRepo;
   MemoryDataAccessLogRepository dataAccessRepo;
   MemoryConfigChangeLogRepository configChangeRepo;
@@ -75,8 +75,8 @@ Container buildContainer(SrvConfig config) {
   // Infrastructure adapters
   c.auditLogRepo = new MemoryAuditLogRepository();
   c.retentionRepo = new MemoryRetentionPolicyRepository();
-  c.auditConfigRepo = new MemoryAuditConfigRepository();
-  c.exportRepo = new MemoryExportJobRepository();
+  c.auditConfigRepo = new AuditConfigRepository();
+  c.exportRepo = new ExportJobRepository();
   c.securityEventRepo = new MemorySecurityEventRepository();
   c.dataAccessRepo = new MemoryDataAccessLogRepository();
   c.configChangeRepo = new MemoryConfigChangeLogRepository();

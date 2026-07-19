@@ -171,7 +171,7 @@ sequenceDiagram
     participant Admin
     participant EC as ExportJobController
     participant EUC as ManageExportJobsUseCase
-    participant ER as ExportJobRepository
+    participant ER as IExportJobRepository
     participant AR as AuditLogEntryRepository
 
     Admin->>EC: POST /export-jobs { format=JSON, category=security-events, from, to }

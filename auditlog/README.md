@@ -452,7 +452,7 @@ package "Domain Layer  «core business logic»" as DOM <<Rectangle>> {
       + removeById(tenantId, id) : void
     }
 
-    @safe: interface  ExportJobRepository << (P,#42A5F5) >> {
+    @safe: interface  IExportJobRepository << (P,#42A5F5) >> {
       + findByTenant(tenantId) : ExportJob[]
       + findById(tenantId, id) : ExportJob*
       + save(job) : void
@@ -506,9 +506,9 @@ package "Infrastructure Layer  «driven adapters»" as INFRA <<Rectangle>> {
   skinparam packageBackgroundColor INFRA_COLOR
 
   @safe: class MemoryAuditLogRepository << (A,#AB47BC) >>
-  @safe: class MemoryAuditConfigRepository << (A,#AB47BC) >>
+  @safe: class AuditConfigRepository << (A,#AB47BC) >>
   @safe: class MemoryRetentionPolicyRepository << (A,#AB47BC) >>
-  @safe: class MemoryExportJobRepository << (A,#AB47BC) >>
+  @safe: class ExportJobRepository << (A,#AB47BC) >>
   @safe: class MemorySecurityEventRepository << (A,#AB47BC) >>
   @safe: class MemoryDataAccessLogRepository << (A,#AB47BC) >>
   @safe: class MemoryConfigChangeLogRepository << (A,#AB47BC) >>
@@ -534,7 +534,7 @@ WriteAuditLogUseCase --> AuditConfigRepository
 RetrieveAuditLogsUseCase --> AuditLogRepository
 ManageRetentionUseCase --> RetentionPolicyRepository
 ManageAuditConfigUseCase --> AuditConfigRepository
-ManageExportsUseCase --> ExportJobRepository
+ManageExportsUseCase --> IExportJobRepository
 ManageExportsUseCase --> AuditLogRepository
 WriteSecurityEventUseCase --> AuditLogRepository
 WriteSecurityEventUseCase --> SecurityEventRepository
@@ -566,9 +566,9 @@ WriteConfigChangeUseCase ..> AuditLogEntry
 
 ' Infrastructure implements Ports
 MemoryAuditLogRepository ..|> AuditLogRepository
-MemoryAuditConfigRepository ..|> AuditConfigRepository
+AuditConfigRepository ..|> AuditConfigRepository
 MemoryRetentionPolicyRepository ..|> RetentionPolicyRepository
-MemoryExportJobRepository ..|> ExportJobRepository
+ExportJobRepository ..|> IExportJobRepository
 MemorySecurityEventRepository ..|> SecurityEventRepository
 MemoryDataAccessLogRepository ..|> DataAccessLogRepository
 MemoryConfigChangeLogRepository ..|> ConfigChangeLogRepository

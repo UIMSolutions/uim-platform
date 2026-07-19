@@ -1,7 +1,14 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module uim.platform.auditlog.domain.enumerations;
+
 import uim.platform.auditlog;
 
 mixin(ShowModule!());
+
 @safe:
 
 // #region AuditCategory
@@ -12,17 +19,24 @@ enum AuditCategory {
   dataAccess, // audit.data-access
   dataModification, // audit.data-modification
 }
+
 AuditCategory toAuditCategory(string value) {
-  switch(value.lower) {
-    case "audit.security-events": return AuditCategory.securityEvents;
-    case "audit.configuration": return AuditCategory.configuration;
-    case "audit.data-access": return AuditCategory.dataAccess;
-    case "audit.data-modification": return AuditCategory.dataModification;
-    default: return AuditCategory.securityEvents;
+  switch (value.lower) {
+  case "audit.security-events":
+    return AuditCategory.securityEvents;
+  case "audit.configuration":
+    return AuditCategory.configuration;
+  case "audit.data-access":
+    return AuditCategory.dataAccess;
+  case "audit.data-modification":
+    return AuditCategory.dataModification;
+  default:
+    return AuditCategory.securityEvents;
   }
 }
+
 AuditCategory[] toAuditCategories(string[] values) {
-  return values.map!(v => toAuditCategory(v)).array;
+  return values.map!toAuditCategory.array;
 }
 
 string toString(AuditCategory c) {
@@ -37,25 +51,30 @@ string toString(AuditCategory c) {
     return "audit.data-modification";
   }
 }
-string[] toString(AuditCategory[] categories) {
-  return categories.map!(c => toString(c)).array;
+
+string[] toStrings(AuditCategory[] categories) {
+  return categories.map!toString.array;
 }
 /// 
 unittest {
   mixin(ShowTest!("AuditCategory"));
 
-  assert(toAuditCategory("audit.security-events") == AuditCategory.securityEvents);
-  assert(toAuditCategory("audit.configuration") == AuditCategory.configuration);
-  assert(toAuditCategory("audit.data-access") == AuditCategory.dataAccess);
-  assert(toAuditCategory("audit.data-modification") == AuditCategory.dataModification);
+  assert("audit.security-events".toAuditCategory == AuditCategory.securityEvents);
+  assert("audit.configuration".toAuditCategory == AuditCategory.configuration);
+  assert("audit.data-access".toAuditCategory == AuditCategory.dataAccess);
+  assert("audit.data-modification".toAuditCategory == AuditCategory.dataModification);
 
-  assert(toString(AuditCategory.securityEvents) == "audit.security-events");
-  assert(toString(AuditCategory.configuration) == "audit.configuration");
-  assert(toString(AuditCategory.dataAccess) == "audit.data-access");
-  assert(toString(AuditCategory.dataModification) == "audit.data-modification");
+  assert(AuditCategory.securityEvents.toString == "audit.security-events");
+  assert(AuditCategory.configuration.toString == "audit.configuration");
+  assert(AuditCategory.dataAccess.toString == "audit.data-access");
+  assert(AuditCategory.dataModification.toString == "audit.data-modification");
 
-  assert(toAuditCategories(["audit.security-events", "audit.data-access"]) == [AuditCategory.securityEvents, AuditCategory.dataAccess]);
-  assert(toString([AuditCategory.securityEvents, AuditCategory.dataAccess]) == ["audit.security-events", "audit.data-access"]);
+  assert(["audit.security-events", "audit.data-access"].toAuditCategories == [
+      AuditCategory.securityEvents, AuditCategory.dataAccess
+    ]);
+  assert([AuditCategory.securityEvents, AuditCategory.dataAccess].toStrings == [
+      "audit.security-events", "audit.data-access"
+    ]);
 }
 // #endregion AuditCategory
 
@@ -66,34 +85,42 @@ enum AuditSeverity {
   error,
   critical,
 }
+
 AuditSeverity toAuditSeverity(string value) {
   mixin(EnumSwitch("AuditSeverity", "info"));
 }
-AuditSeverity[] toAuditSeverity(string[] values) {
-  return values.map!(v => toAuditSeverity(v)).array;
+
+AuditSeverity[] toAuditSeverities(string[] values) {
+  return values.map!toAuditSeverity.array;
 }
+
 string toString(AuditSeverity s) {
   return s.to!string();
 }
-string[] toString(AuditSeverity[] severities) {
-  return severities.map!(s => toString(s)).array;
+
+string[] toStrings(AuditSeverity[] severities) {
+  return severities.map!toString.array;
 }
 /// 
 unittest {
   mixin(ShowTest!("AuditSeverity"));
 
-  assert(toAuditSeverity("info") == AuditSeverity.info);
-  assert(toAuditSeverity("warning") == AuditSeverity.warning);
-  assert(toAuditSeverity("error") == AuditSeverity.error);
-  assert(toAuditSeverity("critical") == AuditSeverity.critical);
+  assert("info".toAuditSeverity == AuditSeverity.info);
+  assert("warning".toAuditSeverity == AuditSeverity.warning);
+  assert("error".toAuditSeverity == AuditSeverity.error);
+  assert("critical".toAuditSeverity == AuditSeverity.critical);
 
-  assert(toString(AuditSeverity.info) == "info");
-  assert(toString(AuditSeverity.warning) == "warning");
-  assert(toString(AuditSeverity.error) == "error");
-  assert(toString(AuditSeverity.critical) == "critical");
+  assert(AuditSeverity.info.toString == "info");
+  assert(AuditSeverity.warning.toString == "warning");
+  assert(AuditSeverity.error.toString == "error");
+  assert(AuditSeverity.critical.toString == "critical");
 
-  assert(toAuditSeverity(["info", "error"]) == [AuditSeverity.info, AuditSeverity.error]);
-  assert(toString([AuditSeverity.info, AuditSeverity.error]) == ["info", "error"]);
+  assert(toAuditSeverities(["info", "error"]) == [
+      AuditSeverity.info, AuditSeverity.error
+    ]);
+  assert([AuditSeverity.info, AuditSeverity.error].toStrings == [
+      "info", "error"
+    ]);
 }
 
 /// Concrete action that triggered the audit entry.
@@ -118,87 +145,115 @@ enum AuditAction : string {
   mfaEnroll = "mfaEnroll",
   mfaVerify = "mfaVerify",
 }
+
 AuditAction toAuditAction(string value) {
-  switch(value.toLower()) {
-    case "create": return AuditAction.create;
-    case "read": return AuditAction.read_;
-    case "update": return AuditAction.update;
-    case "delete": return AuditAction.delete_;
-    case "login": return AuditAction.login;
-    case "logout": return AuditAction.logout;
-    case "loginfailed": return AuditAction.loginFailed;
-    case "passwordchange": return AuditAction.passwordChange;
-    case "roleassign": return AuditAction.roleAssign;
-    case "rolerevoke": return AuditAction.roleRevoke;
-    case "policychange": return AuditAction.policyChange;
-    case "configchange": return AuditAction.configChange;
-    case "export": return AuditAction.export_;
-    case "dataaccess": return AuditAction.dataAccess;
-    case "consentchange": return AuditAction.consentChange;
-    case "tokenissue": return AuditAction.tokenIssue;
-    case "tokenrevoke": return AuditAction.tokenRevoke;
-    case "mfaenroll": return AuditAction.mfaEnroll;
-    case "mfaverify": return AuditAction.mfaVerify;
-    default: return AuditAction.create; // default to create for unknown actions
+  switch (value.toLower()) {
+  case "create":
+    return AuditAction.create;
+  case "read":
+    return AuditAction.read_;
+  case "update":
+    return AuditAction.update;
+  case "delete":
+    return AuditAction.delete_;
+  case "login":
+    return AuditAction.login;
+  case "logout":
+    return AuditAction.logout;
+  case "loginfailed":
+    return AuditAction.loginFailed;
+  case "passwordchange":
+    return AuditAction.passwordChange;
+  case "roleassign":
+    return AuditAction.roleAssign;
+  case "rolerevoke":
+    return AuditAction.roleRevoke;
+  case "policychange":
+    return AuditAction.policyChange;
+  case "configchange":
+    return AuditAction.configChange;
+  case "export":
+    return AuditAction.export_;
+  case "dataaccess":
+    return AuditAction.dataAccess;
+  case "consentchange":
+    return AuditAction.consentChange;
+  case "tokenissue":
+    return AuditAction.tokenIssue;
+  case "tokenrevoke":
+    return AuditAction.tokenRevoke;
+  case "mfaenroll":
+    return AuditAction.mfaEnroll;
+  case "mfaverify":
+    return AuditAction.mfaVerify;
+  default:
+    return AuditAction.create; // default to create for unknown actions
   }
-} 
-AuditAction[] toAuditAction(string[] values) {
-  return values.map!(v => toAuditAction(v)).array;
 }
-string toString(AuditAction a) {
-  return cast(string)a;
+
+AuditAction[] toAuditActions(string[] values) {
+  return values.map!toAuditAction.array;
 }
-string[] toString(AuditAction[] actions) {
-  return actions.map!(a => toString(a)).array;
+
+string toString(AuditAction action) {
+  return cast(string)action;
+}
+
+string[] toStrings(AuditAction[] actions) {
+  return actions.map!toString.array;
 }
 /// 
 unittest {
   mixin(ShowTest!("AuditAction"));
 
-  assert(toAuditAction("create") == AuditAction.create);
-  assert(toAuditAction("read") == AuditAction.read_);
-  assert(toAuditAction("update") == AuditAction.update);
-  assert(toAuditAction("delete") == AuditAction.delete_);
-  assert(toAuditAction("login") == AuditAction.login);
-  assert(toAuditAction("logout") == AuditAction.logout);
-  assert(toAuditAction("loginFailed") == AuditAction.loginFailed);
-  assert(toAuditAction("passwordChange") == AuditAction.passwordChange);
-  assert(toAuditAction("roleAssign") == AuditAction.roleAssign);
-  assert(toAuditAction("roleRevoke") == AuditAction.roleRevoke);
-  assert(toAuditAction("policyChange") == AuditAction.policyChange);
-  assert(toAuditAction("configChange") == AuditAction.configChange);
-  assert(toAuditAction("export") == AuditAction.export_);
-  assert(toAuditAction("dataAccess") == AuditAction.dataAccess);
-  assert(toAuditAction("consentChange") == AuditAction.consentChange);
-  assert(toAuditAction("tokenIssue") == AuditAction.tokenIssue);
-  assert(toAuditAction("tokenRevoke") == AuditAction.tokenRevoke);
-  assert(toAuditAction("mfaEnroll") == AuditAction.mfaEnroll);
-  assert(toAuditAction("mfaVerify") == AuditAction.mfaVerify);
-  assert(toAuditAction("unknownAction") == AuditAction.create);
+  assert("create".toAuditAction == AuditAction.create);
+  assert("read".toAuditAction == AuditAction.read_);
+  assert("update".toAuditAction == AuditAction.update);
+  assert("delete".toAuditAction == AuditAction.delete_);
+  assert("login".toAuditAction == AuditAction.login);
+  assert("logout".toAuditAction == AuditAction.logout);
+  assert("loginFailed".toAuditAction == AuditAction.loginFailed);
+  assert("passwordChange".toAuditAction == AuditAction.passwordChange);
+  assert("roleAssign".toAuditAction == AuditAction.roleAssign);
+  assert("roleRevoke".toAuditAction == AuditAction.roleRevoke);
+  assert("policyChange".toAuditAction == AuditAction.policyChange);
+  assert("configChange".toAuditAction == AuditAction.configChange);
+  assert("export".toAuditAction == AuditAction.export_);
+  assert("dataAccess".toAuditAction == AuditAction.dataAccess);
+  assert("consentChange".toAuditAction == AuditAction.consentChange);
+  assert("tokenIssue".toAuditAction == AuditAction.tokenIssue);
+  assert("tokenRevoke".toAuditAction == AuditAction.tokenRevoke);
+  assert("mfaEnroll".toAuditAction == AuditAction.mfaEnroll);
+  assert("mfaVerify".toAuditAction == AuditAction.mfaVerify);
+  assert("unknownAction".toAuditAction == AuditAction.create);
 
-  assert(toString(AuditAction.create) == "create");
-  assert(toString(AuditAction.read_) == "read");
-  assert(toString(AuditAction.update) == "update");
-  assert(toString(AuditAction.delete_) == "delete");
-  assert(toString(AuditAction.login) == "login");
-  assert(toString(AuditAction.logout) == "logout");
-  assert(toString(AuditAction.loginFailed) == "loginFailed");
-  assert(toString(AuditAction.passwordChange) == "passwordChange");
-  assert(toString(AuditAction.roleAssign) == "roleAssign");
-  assert(toString(AuditAction.roleRevoke) == "roleRevoke");
-  assert(toString(AuditAction.policyChange) == "policyChange");
-  assert(toString(AuditAction.configChange) == "configChange");
-  assert(toString(AuditAction.export_) == "export");
-  assert(toString(AuditAction.dataAccess) == "dataAccess");
-  assert(toString(AuditAction.consentChange) == "consentChange");
-  assert(toString(AuditAction.tokenIssue) == "tokenIssue");
-  assert(toString(AuditAction.tokenRevoke) == "tokenRevoke");
-  assert(toString(AuditAction.mfaEnroll) == "mfaEnroll");
-  assert(toString(AuditAction.mfaVerify) == "mfaVerify");
+  assert(AuditAction.create.toString == "create");
+  assert(AuditAction.read_.toString == "read");
+  assert(AuditAction.update.toString == "update");
+  assert(AuditAction.delete_.toString == "delete");
+  assert(AuditAction.login.toString == "login");
+  assert(AuditAction.logout.toString == "logout");
+  assert(AuditAction.loginFailed.toString == "loginFailed");
+  assert(AuditAction.passwordChange.toString == "passwordChange");
+  assert(AuditAction.roleAssign.toString == "roleAssign");
+  assert(AuditAction.roleRevoke.toString == "roleRevoke");
+  assert(AuditAction.policyChange.toString == "policyChange");
+  assert(AuditAction.configChange.toString == "configChange");
+  assert(AuditAction.export_.toString == "export");
+  assert(AuditAction.dataAccess.toString == "dataAccess");
+  assert(AuditAction.consentChange.toString == "consentChange");
+  assert(AuditAction.tokenIssue.toString == "tokenIssue");
+  assert(AuditAction.tokenRevoke.toString == "tokenRevoke");
+  assert(AuditAction.mfaEnroll.toString == "mfaEnroll");
+  assert(AuditAction.mfaVerify.toString == "mfaVerify");
 
-  assert(toAuditAction(["create", "login"]) == [AuditAction.create, AuditAction.login]);
-  assert(toString([AuditAction.create, AuditAction.login]) == ["create", "login"]);
-} 
+  assert(["create", "login"].toAuditActions == [
+      AuditAction.create, AuditAction.login
+    ]);
+  assert([AuditAction.create, AuditAction.login].toStrings == [
+      "create", "login"
+    ]);
+}
 
 /// Outcome of the audited operation.
 enum AuditOutcome {
@@ -207,34 +262,42 @@ enum AuditOutcome {
   denied,
   error,
 }
+
 AuditOutcome toAuditOutcome(string value) {
   mixin(EnumSwitch("AuditOutcome", "success"));
 }
-AuditOutcome[] toAuditOutcome(string[] values) {
-  return values.map!(v => toAuditOutcome(v)).array;
+
+AuditOutcome[] toAuditOutcomes(string[] values) {
+  return values.map!toAuditOutcome.array;
 }
+
 string toString(AuditOutcome o) {
   return o.to!string();
 }
-string[] toString(AuditOutcome[] outcomes) {
-  return outcomes.map!(o => toString(o)).array;
+
+string[] toStrings(AuditOutcome[] outcomes) {
+  return outcomes.map!toString.array;
 }
 /// 
 unittest {
   mixin(ShowTest!("AuditOutcome"));
 
-  assert(toAuditOutcome("success") == AuditOutcome.success);
-  assert(toAuditOutcome("failure") == AuditOutcome.failure);
-  assert(toAuditOutcome("denied") == AuditOutcome.denied);
-  assert(toAuditOutcome("error") == AuditOutcome.error);
+  assert("success".toAuditOutcome == AuditOutcome.success);
+  assert("failure".toAuditOutcome == AuditOutcome.failure);
+  assert("denied".toAuditOutcome == AuditOutcome.denied);
+  assert("error".toAuditOutcome == AuditOutcome.error);
 
-  assert(toString(AuditOutcome.success) == "success");
-  assert(toString(AuditOutcome.failure) == "failure");
-  assert(toString(AuditOutcome.denied) == "denied");
-  assert(toString(AuditOutcome.error) == "error");
+  assert(AuditOutcome.success.toString == "success");
+  assert(AuditOutcome.failure.toString == "failure");
+  assert(AuditOutcome.denied.toString == "denied");
+  assert(AuditOutcome.error.toString == "error");
 
-  assert(toAuditOutcome(["success", "failure"]) == [AuditOutcome.success, AuditOutcome.failure]);
-  assert(toString([AuditOutcome.success, AuditOutcome.failure]) == ["success", "failure"]);
+  assert(["success", "failure"].toAuditOutcomes == [
+      AuditOutcome.success, AuditOutcome.failure
+    ]);
+  assert([AuditOutcome.success, AuditOutcome.failure].toStrings == [
+      "success", "failure"
+    ]);
 }
 
 /// Retention policy status.
@@ -243,32 +306,40 @@ enum RetentionStatus {
   inactive,
   expired,
 }
+
 RetentionStatus toRetentionStatus(string value) {
   mixin(EnumSwitch("RetentionStatus", "active"));
 }
-RetentionStatus[] toRetentionStatus(string[] values) {
-  return values.map!(v => toRetentionStatus(v)).array;
+
+RetentionStatus[] toRetentionStatuses(string[] values) {
+  return values.map!toRetentionStatus.array;
 }
+
 string toString(RetentionStatus s) {
   return s.to!string();
 }
-string[] toString(RetentionStatus[] statuses) {
+
+string[] toStrings(RetentionStatus[] statuses) {
   return statuses.map!(s => toString(s)).array;
 }
 /// 
 unittest {
   mixin(ShowTest!("RetentionStatus"));
 
-  assert(toRetentionStatus("active") == RetentionStatus.active);
-  assert(toRetentionStatus("inactive") == RetentionStatus.inactive);
-  assert(toRetentionStatus("expired") == RetentionStatus.expired);
+  assert("active".toRetentionStatus == RetentionStatus.active);
+  assert("inactive".toRetentionStatus == RetentionStatus.inactive);
+  assert("expired".toRetentionStatus == RetentionStatus.expired);
 
-  assert(toString(RetentionStatus.active) == "active");
-  assert(toString(RetentionStatus.inactive) == "inactive");
-  assert(toString(RetentionStatus.expired) == "expired");
+  assert(RetentionStatus.active.toString == "active");
+  assert(RetentionStatus.inactive.toString == "inactive");
+  assert(RetentionStatus.expired.toString == "expired");
 
-  assert(toRetentionStatus(["active", "expired"]) == [RetentionStatus.active, RetentionStatus.expired]);
-  assert(toString([RetentionStatus.active, RetentionStatus.expired]) == ["active", "expired"]);
+  assert(["active", "expired"].toRetentionStatuses == [
+      RetentionStatus.active, RetentionStatus.expired
+    ]);
+  assert([RetentionStatus.active, RetentionStatus.expired].toStrings == [
+      "active", "expired"
+    ]);
 }
 
 /// Export job status.
@@ -278,34 +349,42 @@ enum ExportStatus {
   completed,
   failed,
 }
+
 ExportStatus toExportStatus(string value) {
   mixin(EnumSwitch("ExportStatus", "pending"));
 }
-ExportStatus[] toExportStatus(string[] values) {
-  return values.map!(v => toExportStatus(v)).array;
+
+ExportStatus[] toExportStatuses(string[] values) {
+  return values.map!toExportStatus.array;
 }
+
 string toString(ExportStatus s) {
   return s.to!string();
 }
-string[] toString(ExportStatus[] statuses) {
-  return statuses.map!(s => toString(s)).array;
+
+string[] toStrings(ExportStatus[] statuses) {
+  return statuses.map!toString.array;
 }
 /// 
 unittest {
   mixin(ShowTest!("ExportStatus"));
 
-  assert(toExportStatus("pending") == ExportStatus.pending);
-  assert(toExportStatus("inProgress") == ExportStatus.inProgress);
-  assert(toExportStatus("completed") == ExportStatus.completed);
-  assert(toExportStatus("failed") == ExportStatus.failed);
+  assert("pending".toExportStatus == ExportStatus.pending);
+  assert("inProgress".toExportStatus == ExportStatus.inProgress);
+  assert("completed".toExportStatus == ExportStatus.completed);
+  assert("failed".toExportStatus == ExportStatus.failed);
 
-  assert(toString(ExportStatus.pending) == "pending");
-  assert(toString(ExportStatus.inProgress) == "inProgress");
-  assert(toString(ExportStatus.completed) == "completed");
-  assert(toString(ExportStatus.failed) == "failed");
+  assert(ExportStatus.pending.toString == "pending");
+  assert(ExportStatus.inProgress.toString == "inProgress");
+  assert(ExportStatus.completed.toString == "completed");
+  assert(ExportStatus.failed.toString == "failed");
 
-  assert(toExportStatus(["pending", "completed"]) == [ExportStatus.pending, ExportStatus.completed]);
-  assert(toString([ExportStatus.pending, ExportStatus.completed]) == ["pending", "completed"]);
+  assert(["pending", "completed"].toExportStatuses == [
+      ExportStatus.pending, ExportStatus.completed
+    ]);
+  assert([ExportStatus.pending, ExportStatus.completed].toStrings == [
+      "pending", "completed"
+    ]);
 }
 
 /// Export output format.
@@ -313,30 +392,36 @@ enum ExportFormat {
   json,
   csv,
 }
+
 ExportFormat toExportFormat(string value) {
   mixin(EnumSwitch("ExportFormat", "json"));
 }
-ExportFormat[] toExportFormat(string[] values) {
-  return values.map!(v => toExportFormat(v)).array;
+
+ExportFormat[] toExportFormats(string[] values) {
+  return values.map!toExportFormat.array;
 }
+
 string toString(ExportFormat f) {
   return f.to!string();
 }
-string[] toString(ExportFormat[] formats) {
-  return formats.map!(f => toString(f)).array;
+
+string[] toStrings(ExportFormat[] formats) {
+  return formats.map!toString.array;
 }
 /// 
 unittest {
   mixin(ShowTest!("ExportFormat"));
 
-  assert(toExportFormat("json") == ExportFormat.json);
-  assert(toExportFormat("csv") == ExportFormat.csv);  
+  assert("json".toExportFormat == ExportFormat.json);
+  assert("csv".toExportFormat == ExportFormat.csv);
 
-  assert(toString(ExportFormat.json) == "json");
-  assert(toString(ExportFormat.csv) == "csv");
+  assert(ExportFormat.json.toString == "json");
+  assert(ExportFormat.csv.toString == "csv");
 
-  assert(toExportFormat(["json", "csv"]) == [ExportFormat.json, ExportFormat.csv]);
-  assert(toString([ExportFormat.json, ExportFormat.csv]) == ["json", "csv"]);
+  assert(["json", "csv"].toExportFormats == [
+      ExportFormat.json, ExportFormat.csv
+    ]);
+  assert([ExportFormat.json, ExportFormat.csv].toStrings == ["json", "csv"]);
 }
 
 /// Audit log configuration status.
@@ -344,28 +429,36 @@ enum ConfigStatus {
   enabled,
   disabled,
 }
+
 ConfigStatus toConfigStatus(string value) {
   mixin(EnumSwitch("ConfigStatus", "enabled"));
 }
-ConfigStatus[] toConfigStatus(string[] values) {
-  return values.map!(v => toConfigStatus(v)).array;
+
+ConfigStatus[] toConfigStatuses(string[] values) {
+  return values.map!toConfigStatus.array;
 }
+
 string toString(ConfigStatus s) {
   return s.to!string();
 }
-string[] toString(ConfigStatus[] statuses) {
-  return statuses.map!(s => toString(s)).array;
+
+string[] toStrings(ConfigStatus[] statuses) {
+  return statuses.map!toString.array;
 }
 /// 
 unittest {
-  mixin(ShowTest!("ConfigStatus")); 
+  mixin(ShowTest!("ConfigStatus"));
 
-  assert(toConfigStatus("enabled") == ConfigStatus.enabled);
-  assert(toConfigStatus("disabled") == ConfigStatus.disabled);  
+  assert("enabled".toConfigStatus == ConfigStatus.enabled);
+  assert("disabled".toConfigStatus == ConfigStatus.disabled);
 
-  assert(toString(ConfigStatus.enabled) == "enabled");
-  assert(toString(ConfigStatus.disabled) == "disabled");
+  assert(ConfigStatus.enabled.toString == "enabled");
+  assert(ConfigStatus.disabled.toString == "disabled");
 
-  assert(toConfigStatus(["enabled", "disabled"]) == [ConfigStatus.enabled, ConfigStatus.disabled]);
-  assert(toString([ConfigStatus.enabled, ConfigStatus.disabled]) == ["enabled", "disabled"]);
+  assert(["enabled", "disabled"].toConfigStatuses == [
+      ConfigStatus.enabled, ConfigStatus.disabled
+    ]);
+  assert([ConfigStatus.enabled, ConfigStatus.disabled].toStrings == [
+      "enabled", "disabled"
+    ]);
 }

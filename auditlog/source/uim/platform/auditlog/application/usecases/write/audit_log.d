@@ -18,9 +18,9 @@ mixin(ShowModule!());
 @safe:
 class WriteAuditLogUseCase { // TODO: UIMUseCase {
   private AuditLogRepository logRepo;
-  private AuditConfigRepository configRepo;
+  private IAuditConfigRepository configRepo;
 
-  this(AuditLogRepository logRepo, AuditConfigRepository configRepo) {
+  this(AuditLogRepository logRepo, IAuditConfigRepository configRepo) {
     this.logRepo = logRepo;
     this.configRepo = configRepo;
   }
