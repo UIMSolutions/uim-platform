@@ -7,7 +7,6 @@ module uim.platform.auditlog.presentation.http.controllers.security_event;
 // 
 // 
 // import uim.platform.auditlog.application.usecases.write.security_event;
-
 import uim.platform.auditlog;
 
 mixin(ShowModule!());

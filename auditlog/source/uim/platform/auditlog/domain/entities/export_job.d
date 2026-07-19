@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.auditlog.domain.entities.export_job;
-
 import uim.platform.auditlog;
 
 mixin(ShowModule!());

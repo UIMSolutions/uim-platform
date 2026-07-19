@@ -5,11 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.auditlog.application.usecases.write.audit_log;
 
-
-
-// import uim.platform.auditlog.domain.entities.audit_log_entry;
-// import uim.platform.auditlog.domain.ports.repositories.audit_logs;
-// import uim.platform.auditlog.domain.ports.repositories.audit_configs;
 import uim.platform.auditlog;
 
 mixin(ShowModule!());

@@ -4,11 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.auditlog.infrastructure.persistence.repositories.config_change;
-
-// import uim.platform.auditlog.domain.entities.config_change_log;
-// import uim.platform.auditlog.domain.ports.repositories.config_change_logs;
-
-
 import uim.platform.auditlog;
 
 mixin(ShowModule!());

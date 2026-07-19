@@ -6,9 +6,6 @@
 module uim.platform.auditlog.presentation.http.controllers.config_change;
 
 // import uim.platform.auditlog.application.usecases.write.config_change;
-
-
-// import uim.platform.auditlog.domain.entities.audit_log_entry : AuditAttribute;
 import uim.platform.auditlog;
 
 mixin(ShowModule!());
