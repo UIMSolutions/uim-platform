@@ -10,7 +10,6 @@ module uim.platform.auditlog.domain.services.retention_enforcer;
 // import uim.platform.auditlog.domain.ports.repositories.security_events;
 // import uim.platform.auditlog.domain.ports.repositories.data_access_logs;
 // import uim.platform.auditlog.domain.ports.repositories.config_change_logs;
-
 import uim.platform.auditlog;
 
 mixin(ShowModule!());
@@ -18,13 +17,13 @@ mixin(ShowModule!());
 @safe:
 class RetentionEnforcer {
   private IAuditLogRepository auditRepo;
-  private RetentionPolicyRepository policyRepo;
-  private SecurityEventRepository secRepo;
-  private DataAccessLogRepository dalRepo;
+  private IRetentionPolicyRepository policyRepo;
+  private ISecurityEventRepository secRepo;
+  private IDataAccessLogRepository dalRepo;
   private IConfigChangeLogRepository cclRepo;
 
-  this(IAuditLogRepository auditRepo, RetentionPolicyRepository policyRepo,
-      SecurityEventRepository secRepo, DataAccessLogRepository dalRepo,
+  this(IAuditLogRepository auditRepo, IRetentionPolicyRepository policyRepo,
+      ISecurityEventRepository secRepo, IDataAccessLogRepository dalRepo,
       IConfigChangeLogRepository cclRepo) {
     this.auditRepo = auditRepo;
     this.policyRepo = policyRepo;

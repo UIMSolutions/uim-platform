@@ -8,14 +8,13 @@ module uim.platform.auditlog.infrastructure.persistence.repositories.security_ev
 // import uim.platform.auditlog.domain.entities.security_event;
 // import uim.platform.auditlog.domain.ports.repositories.security_events;
 // 
-//  
-
+// 
 import uim.platform.auditlog;
 
 mixin(ShowModule!());
 
 @safe:
-class MemorySecurityEventRepository : TenantRepository!(SecurityEvent, SecurityEventId), SecurityEventRepository {
+class SecurityEventRepository : TenantRepository!(SecurityEvent, SecurityEventId), ISecurityEventRepository {
 
   // #region ByAuditLogId
   bool existsByAuditLogId(TenantId tenantId, AuditLogId auditLogId) {

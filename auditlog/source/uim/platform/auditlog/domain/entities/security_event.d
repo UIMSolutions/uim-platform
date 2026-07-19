@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.auditlog.domain.entities.security_event;
 
-
 import uim.platform.auditlog;
 
 mixin(ShowModule!());

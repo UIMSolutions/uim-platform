@@ -6,7 +6,6 @@
 module uim.platform.auditlog.domain.ports.repositories.audit_configs;
 
 // import uim.platform.auditlog.domain.entities.audit_config;
-
 import uim.platform.auditlog;
 
 mixin(ShowModule!());

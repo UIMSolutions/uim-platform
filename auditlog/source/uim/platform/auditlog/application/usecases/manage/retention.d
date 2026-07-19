@@ -10,7 +10,6 @@ module uim.platform.auditlog.application.usecases.manage.retention;
 // import uim.platform.auditlog.domain.entities.retention_policy;
 // import uim.platform.auditlog.domain.ports.repositories.retention_policys;
 
-
 import uim.platform.auditlog;
 
 mixin(ShowModule!());
@@ -18,9 +17,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageRetentionUseCase { // TODO: UIMUseCase {
-  private RetentionPolicyRepository repo;
+  private IRetentionPolicyRepository repo;
 
-  this(RetentionPolicyRepository repo) {
+  this(IRetentionPolicyRepository repo) {
     this.repo = repo;
   }
 

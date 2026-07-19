@@ -9,14 +9,12 @@ module uim.platform.auditlog.infrastructure.persistence.repositories.config_chan
 // import uim.platform.auditlog.domain.ports.repositories.config_change_logs;
 
 
- 
-
 import uim.platform.auditlog;
 
 mixin(ShowModule!());
 
 @safe:
-class MemoryConfigChangeLogRepository : TenantRepository!(ConfigChangeLog, ConfigChangeLogId), IConfigChangeLogRepository {
+class ConfigChangeLogRepository : TenantRepository!(ConfigChangeLog, ConfigChangeLogId), IConfigChangeLogRepository {
 
   bool existsByAuditLogId(TenantId tenantId, AuditLogId auditLogId) {
     return findByTenant(tenantId).any!(e => e.auditLogId == auditLogId);

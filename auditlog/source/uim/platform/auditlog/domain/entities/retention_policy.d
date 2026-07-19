@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.auditlog.domain.entities.retention_policy;
 
-
 import uim.platform.auditlog;
 
 mixin(ShowModule!());

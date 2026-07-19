@@ -8,14 +8,13 @@ module uim.platform.auditlog.infrastructure.persistence.repositories.retention;
 // import uim.platform.auditlog.domain.entities.retention_policy;
 // import uim.platform.auditlog.domain.ports.repositories.retention_policys;
 // 
-//  
-
+// 
 import uim.platform.auditlog;
 
 mixin(ShowModule!());
 
 @safe:
-class MemoryRetentionPolicyRepository : TenantRepository!(RetentionPolicy, RetentionPolicyId), RetentionPolicyRepository {
+class RetentionPolicyRepository : TenantRepository!(RetentionPolicy, RetentionPolicyId), IRetentionPolicyRepository {
   bool existsDefault(TenantId tenantId) {
     return findByTenant(tenantId).any!(p => p.isDefault && p.status == RetentionStatus.active);
   }

@@ -1,5 +1,4 @@
 module uim.platform.auditlog.application.dtos.auditlog;
-
 import uim.platform.auditlog;
 
 mixin(ShowModule!());

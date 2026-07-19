@@ -11,7 +11,6 @@ module app;
 // import uim.platform.auditlog.infrastructure.container;
 // 
 
-
 import uim.platform.auditlog;
 
 @safe:

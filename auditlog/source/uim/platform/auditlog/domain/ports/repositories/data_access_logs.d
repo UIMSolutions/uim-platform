@@ -6,13 +6,12 @@
 module uim.platform.auditlog.domain.ports.repositories.data_access_logs;
 
 // import uim.platform.auditlog.domain.entities.data_access_log;
-
 import uim.platform.auditlog;
 
 mixin(ShowModule!());
 /// Port for persisting data access log records.
 @safe:
-interface DataAccessLogRepository : ITenantRepository!(DataAccessLog, DataAccessLogId) {
+interface IDataAccessLogRepository : ITenantRepository!(DataAccessLog, DataAccessLogId) {
 
   bool existsByAuditLogId(TenantId tenantId, AuditLogId auditLogId);
   DataAccessLog findByAuditLogId(TenantId tenantId, AuditLogId auditLogId);

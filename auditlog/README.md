@@ -443,7 +443,7 @@ package "Domain Layer  «core business logic»" as DOM <<Rectangle>> {
       + removeById(tenantId, id) : void
     }
 
-    @safe: interface  RetentionPolicyRepository << (P,#42A5F5) >> {
+    @safe: interface  IRetentionPolicyRepository << (P,#42A5F5) >> {
       + findByTenant(tenantId) : RetentionPolicy[]
       + findById(tenantId, id) : RetentionPolicy*
       + findDefault(tenantId) : RetentionPolicy*
@@ -460,7 +460,7 @@ package "Domain Layer  «core business logic»" as DOM <<Rectangle>> {
       + removeById(tenantId, id) : void
     }
 
-    @safe: interface  SecurityEventRepository << (P,#42A5F5) >> {
+    @safe: interface  ISecurityEventRepository << (P,#42A5F5) >> {
       + findByTenant(tenantId) : SecurityEvent[]
       + findByUser(tenantId, userId) : SecurityEvent[]
       + findByOutcome(tenantId, outcome) : SecurityEvent[]
@@ -468,7 +468,7 @@ package "Domain Layer  «core business logic»" as DOM <<Rectangle>> {
       + removeOlderThan(tenantId, before) : void
     }
 
-    @safe: interface  DataAccessLogRepository << (P,#42A5F5) >> {
+    @safe: interface  IDataAccessLogRepository << (P,#42A5F5) >> {
       + findByTenant(tenantId) : DataAccessLog[]
       + findByAccessor(tenantId, userId) : DataAccessLog[]
       + findByDataSubject(tenantId, subject) : DataAccessLog[]
@@ -507,11 +507,11 @@ package "Infrastructure Layer  «driven adapters»" as INFRA <<Rectangle>> {
 
   @safe: class AuditLogRepository << (A,#AB47BC) >>
   @safe: class AuditConfigRepository << (A,#AB47BC) >>
-  @safe: class MemoryRetentionPolicyRepository << (A,#AB47BC) >>
+  @safe: class RetentionPolicyRepository << (A,#AB47BC) >>
   @safe: class ExportJobRepository << (A,#AB47BC) >>
-  @safe: class MemorySecurityEventRepository << (A,#AB47BC) >>
-  @safe: class MemoryDataAccessLogRepository << (A,#AB47BC) >>
-  @safe: class MemoryConfigChangeLogRepository << (A,#AB47BC) >>
+  @safe: class SecurityEventRepository << (A,#AB47BC) >>
+  @safe: class DataAccessLogRepository << (A,#AB47BC) >>
+  @safe: class ConfigChangeLogRepository << (A,#AB47BC) >>
 }
 
 ' ============================================================
@@ -532,23 +532,23 @@ ConfigChangeController --> WriteConfigChangeUseCase
 WriteAuditLogUseCase --> IAuditLogRepository
 WriteAuditLogUseCase --> AuditConfigRepository
 RetrieveAuditLogsUseCase --> IAuditLogRepository
-ManageRetentionUseCase --> RetentionPolicyRepository
+ManageRetentionUseCase --> IRetentionPolicyRepository
 ManageAuditConfigUseCase --> AuditConfigRepository
 ManageExportsUseCase --> IExportJobRepository
 ManageExportsUseCase --> IAuditLogRepository
 WriteSecurityEventUseCase --> IAuditLogRepository
-WriteSecurityEventUseCase --> SecurityEventRepository
+WriteSecurityEventUseCase --> ISecurityEventRepository
 WriteDataAccessLogUseCase --> IAuditLogRepository
-WriteDataAccessLogUseCase --> DataAccessLogRepository
+WriteDataAccessLogUseCase --> IDataAccessLogRepository
 WriteConfigChangeUseCase --> IAuditLogRepository
 WriteConfigChangeUseCase --> IConfigChangeLogRepository
 
 ' Domain Services → Ports
 AuditFilterService --> IAuditLogRepository
 RetentionEnforcer --> IAuditLogRepository
-RetentionEnforcer --> RetentionPolicyRepository
-RetentionEnforcer --> SecurityEventRepository
-RetentionEnforcer --> DataAccessLogRepository
+RetentionEnforcer --> IRetentionPolicyRepository
+RetentionEnforcer --> ISecurityEventRepository
+RetentionEnforcer --> IDataAccessLogRepository
 RetentionEnforcer --> IConfigChangeLogRepository
 
 ' Use Cases → Entities
@@ -567,11 +567,11 @@ WriteConfigChangeUseCase ..> AuditLogEntry
 ' Infrastructure implements Ports
 AuditLogRepository ..|> IAuditLogRepository
 AuditConfigRepository ..|> AuditConfigRepository
-MemoryRetentionPolicyRepository ..|> RetentionPolicyRepository
+RetentionPolicyRepository ..|> IRetentionPolicyRepository
 ExportJobRepository ..|> IExportJobRepository
-MemorySecurityEventRepository ..|> SecurityEventRepository
-MemoryDataAccessLogRepository ..|> DataAccessLogRepository
-MemoryConfigChangeLogRepository ..|> IConfigChangeLogRepository
+SecurityEventRepository ..|> ISecurityEventRepository
+DataAccessLogRepository ..|> IDataAccessLogRepository
+ConfigChangeLogRepository ..|> IConfigChangeLogRepository
 
 @enduml
 ```

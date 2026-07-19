@@ -12,7 +12,6 @@ module uim.platform.auditlog.application.usecases.write.data_access_log;
 // import uim.platform.auditlog.domain.ports.repositories.audit_logs;
 // import uim.platform.auditlog.domain.ports.repositories.data_access_logs;
 
-
 import uim.platform.auditlog;
 
 mixin(ShowModule!());
@@ -20,9 +19,9 @@ mixin(ShowModule!());
 @safe:
 class WriteDataAccessLogUseCase { // TODO: UIMUseCase {
   private IAuditLogRepository auditRepo;
-  private DataAccessLogRepository dalRepo;
+  private IDataAccessLogRepository dalRepo;
 
-  this(IAuditLogRepository auditRepo, DataAccessLogRepository dalRepo) {
+  this(IAuditLogRepository auditRepo, IDataAccessLogRepository dalRepo) {
     this.auditRepo = auditRepo;
     this.dalRepo = dalRepo;
   }

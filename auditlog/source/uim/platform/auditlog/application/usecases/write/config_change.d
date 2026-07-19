@@ -12,7 +12,6 @@ module uim.platform.auditlog.application.usecases.write.config_change;
 // import uim.platform.auditlog.domain.ports.repositories.audit_logs;
 // import uim.platform.auditlog.domain.ports.repositories.config_change_logs;
 
-
 import uim.platform.auditlog; 
 
 mixin(ShowModule!());

@@ -32,7 +32,6 @@ module uim.platform.auditlog.infrastructure.container;
 // import uim.platform.auditlog.presentation.http.controllers.data_access;
 // import uim.platform.auditlog.presentation.http.controllers.config_change;
 // import uim.platform.auditlog.presentation.http.controllers.health;
-
 import uim.platform.auditlog;
 
 mixin(ShowModule!());
@@ -41,12 +40,12 @@ mixin(ShowModule!());
 struct Container {
   // Repositories (driven adapters)
   AuditLogRepository auditLogRepo;
-  MemoryRetentionPolicyRepository retentionRepo;
+  RetentionPolicyRepository retentionRepo;
   IAuditConfigRepository auditConfigRepo;
   ExportJobRepository exportRepo;
-  MemorySecurityEventRepository securityEventRepo;
-  MemoryDataAccessLogRepository dataAccessRepo;
-  MemoryConfigChangeLogRepository configChangeRepo;
+  SecurityEventRepository securityEventRepo;
+  DataAccessLogRepository dataAccessRepo;
+  ConfigChangeLogRepository configChangeRepo;
 
   // Use cases (application layer)
   WriteAuditLogUseCase writeAuditLog;
@@ -74,12 +73,12 @@ Container buildContainer(SrvConfig config) {
 
   // Infrastructure adapters
   c.auditLogRepo = new AuditLogRepository();
-  c.retentionRepo = new MemoryRetentionPolicyRepository();
+  c.retentionRepo = new RetentionPolicyRepository();
   c.auditConfigRepo = new AuditConfigRepository();
   c.exportRepo = new ExportJobRepository();
-  c.securityEventRepo = new MemorySecurityEventRepository();
-  c.dataAccessRepo = new MemoryDataAccessLogRepository();
-  c.configChangeRepo = new MemoryConfigChangeLogRepository();
+  c.securityEventRepo = new SecurityEventRepository();
+  c.dataAccessRepo = new DataAccessLogRepository();
+  c.configChangeRepo = new ConfigChangeLogRepository();
 
   // Application use cases
   c.writeAuditLog = new WriteAuditLogUseCase(c.auditLogRepo, c.auditConfigRepo);

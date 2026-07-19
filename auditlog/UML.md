@@ -150,7 +150,7 @@ sequenceDiagram
     participant SEC as SecurityEventController
     participant SUC as ManageSecurityEventsUseCase
     participant AR as AuditLogEntryRepository
-    participant SR as SecurityEventRepository
+    participant SR as ISecurityEventRepository
 
     Client->>SEC: POST /security-events { eventType=login, userId, ipAddress }
     SEC->>SUC: createSecurityEvent(dto)

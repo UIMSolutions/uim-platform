@@ -8,7 +8,6 @@ module uim.platform.auditlog.application.usecases.retrieve_audit_logs;
 // import uim.platform.auditlog.domain.entities.audit_log_entry;
 // import uim.platform.auditlog.domain.ports.repositories.audit_logs;
 
-
 import uim.platform.auditlog; 
 
 mixin(ShowModule!());
