@@ -26,7 +26,7 @@ class ManageApplicationJobsUseCase { // TODO: UIMUseCase {
     if (request.name.isEmpty)
       return CommandResult(false, "", "Job name is required");
       
-    if (request.jobTemplatename.isEmpty)
+    if (request.jobTemplateName.isEmpty)
       return CommandResult(false, "", "Job template name is required");
 
     if (request.systemInstanceId.isEmpty)

@@ -23,7 +23,7 @@ struct DomainValidator {
     }
 
     static string validateDomainName(string domainName) {
-        if (domainname.isEmpty)
+        if (domainName.isEmpty)
             return "Domain name is required";
         if (domainName.length > 253)
             return "Domain name must be 253 characters or fewer";

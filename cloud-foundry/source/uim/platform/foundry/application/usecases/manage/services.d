@@ -38,16 +38,14 @@ class ManageServicesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Service instance name is required");
     if (req.serviceName.isEmpty)
       return CommandResult(false, "", "Service name is required");
-    if (req.servicePlanname.isEmpty)
+    if (req.servicePlanName.isEmpty)
       return CommandResult(false, "", "Service plan name is required");
 
     auto instance = instances.findByName(req.tenantId, req.spaceId, req.name);
     if (!instance.isNull)
       return CommandResult(false, "", "Service instance with this name already exists in space");
 
-    auto now = currentTimestamp();
     auto srvInstance = ServiceInstance(req.tenantId, req.instanceId.isNull ? ServiceInstanceId(createId()) : req.instanceId, req.createdBy);
-
     srvInstance.spaceId = req.spaceId;
     srvInstance.name = req.name;
     srvInstance.serviceName = req.serviceName;
