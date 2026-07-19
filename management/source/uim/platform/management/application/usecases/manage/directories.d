@@ -26,7 +26,7 @@ class ManageDirectoriesUseCase { // TODO: UIMUseCase {
     if (request.accountId.isEmpty)
       return CommandResult(false, "", "Global account ID is required");
 
-    if (request.displayname.isEmpty)
+    if (request.displayName.isEmpty)
       return CommandResult(false, "", "Display name is required");
 
     if (directories.existsById(request.tenantId, request.directoryId))

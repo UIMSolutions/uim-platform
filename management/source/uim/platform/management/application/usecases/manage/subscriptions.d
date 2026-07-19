@@ -28,7 +28,7 @@ class ManageSubscriptionsUseCase { // TODO: UIMUseCase {
   CommandResult createSubscription(CreateSubscriptionRequest request) {
     if (request.subaccountId.isEmpty)
       return CommandResult(false, "", "Subaccount ID is required");
-    if (request.appname.isEmpty)
+    if (request.appName.isEmpty)
       return CommandResult(false, "", "Application name is required");
 
     // Check for existing subscription to same app

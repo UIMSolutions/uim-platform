@@ -26,7 +26,7 @@ class ManageGlobalAccountsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createAccount(CreateGlobalAccountRequest req) {
-    if (req.displayname.isEmpty)
+    if (req.displayName.isEmpty)
       return CommandResult(false, "", "Display name is required");
     if (req.region.length == 0)
       return CommandResult(false, "", "Region is required");

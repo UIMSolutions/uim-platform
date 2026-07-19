@@ -26,7 +26,7 @@ class ManageAlertRulesUseCase { // TODO: UIMUseCase {
     if (req.name.isEmpty)
       return CommandResult(false, "", "Rule name is required");
 
-    if (req.metricname.isEmpty)
+    if (req.metricName.isEmpty)
       return CommandResult(false, "", "Metric name is required");
 
     auto rule = AlertRule(req.tenantId); //, UserId("test-user"));

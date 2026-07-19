@@ -40,7 +40,7 @@ class EnvironmentProvisioner {
     }
 
     // Validate plan name is not empty
-    if (planname.isEmpty) {
+    if (planName.isEmpty) {
       v.valid = false;
       v.reason = "Plan name is required for environment provisioning";
       return v;

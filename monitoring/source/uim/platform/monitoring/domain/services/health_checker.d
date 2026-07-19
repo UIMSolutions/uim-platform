@@ -45,14 +45,14 @@ struct HealthChecker {
       break;
 
     case CheckType.jmx:
-      if (check.mbeanname.isEmpty)
+      if (check.mbeanName.isEmpty)
         errors ~= "MBean name is required for JMX checks";
-      if (check.mbeanAttribute.length == 0)
+      if (check.mbeanAttribute.isEmpty)
         errors ~= "MBean attribute is required for JMX checks";
       break;
 
     case CheckType.customHttp:
-      if (check.customUrl.length == 0)
+      if (check.customUrl.isEmpty)
         errors ~= "Custom URL is required for custom HTTP checks";
       break;
 
@@ -63,7 +63,7 @@ struct HealthChecker {
       break;
 
     case CheckType.certificate:
-      if (check.url.length == 0)
+      if (check.url.isEmpty)
         errors ~= "URL is required for certificate checks";
       break;
     }
