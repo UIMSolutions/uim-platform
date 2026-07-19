@@ -55,75 +55,74 @@ class OrganizationController : ManageHttpController {
     auto responseData = Json.emptyObject.set("id", result.id);
     return successResponse("Organization created successfully", "Created", 201, responseData);
   }
-}
 
-override protected Json listHandler(HTTPServerRequest req) {
-  auto precheck = super.listHandler(req);
-  if (precheck.hasError)
-    return precheck;
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-  auto tenantId = precheck.tenantId;
-  auto orgs = usecase.listOrganizations(tenantId);
-  auto entries = orgs.map!(o => o.toJson()).array;
+    auto tenantId = precheck.tenantId;
+    auto orgs = usecase.listOrganizations(tenantId);
+    auto entries = orgs.map!(o => o.toJson()).array;
 
-  return successResponse("Organizations retrieved successfully", "OK", 200, Json.emptyObject.set("resourceType", "Bundle")
-      .set("type", "searchset")
-      .set("total", orgs.length).set("entry", entries));
+    return successResponse("Organizations retrieved successfully", "OK", 200, Json.emptyObject.set("resourceType", "Bundle")
+        .set("type", "searchset")
+        .set("total", orgs.length).set("entry", entries));
 
-  // writeFhirError(res, 500, "Internal server error");
-}
+    // writeFhirError(res, 500, "Internal server error");
+  }
 
-override protected Json getHandler(HTTPServerRequest req) {
-  auto precheck = super.getHandler(req);
-  if (precheck.hasError)
-    return precheck;
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-  auto tenantId = precheck.tenantId;
-  auto id = OrganizationId(precheck.id);
-  auto o = usecase.getOrganization(tenantId, id);
-  if (o.isNull)
-    return errorResponse("Organization not found", 404);
+    auto tenantId = precheck.tenantId;
+    auto id = OrganizationId(precheck.id);
+    auto o = usecase.getOrganization(tenantId, id);
+    if (o.isNull)
+      return errorResponse("Organization not found", 404);
 
-  return successResponse("Organization retrieved successfully", "OK", 200, o.toJson());  
-//    writeFhirError(res, 404, "Organization not found");
-}
+    return successResponse("Organization retrieved successfully", "OK", 200, o.toJson());
+    //    writeFhirError(res, 404, "Organization not found");
+  }
 
-override protected Json updateHandler(HTTPServerRequest req) {
-  auto precheck = super.updateHandler(req);
-  if (precheck.hasError)
-    return precheck;
+  override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-  auto tenantId = precheck.tenantId;
-  auto id = OrganizationId(precheck.id);
-  auto data = precheck.data;
-  UpdateOrganizationRequest r;
-  r.tenantId = tenantId;
-  r.organizationId = id;
-  r.name_ = data.getString("name");
-  r.active_ = j.get("active", Json(true)).get!bool;
-  auto result = usecase.updateOrganization(r);
-  if (result.hasError)
-    return errorResponse(result.message, 400);
+    auto tenantId = precheck.tenantId;
+    auto id = OrganizationId(precheck.id);
+    auto data = precheck.data;
+    UpdateOrganizationRequest r;
+    r.tenantId = tenantId;
+    r.organizationId = id;
+    r.name_ = data.getString("name");
+    r.active_ = j.get("active", Json(true)).get!bool;
+    auto result = usecase.updateOrganization(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-  auto responseData = Json.emptyObject.set("id", result.id);
-  return successResponse("Organization updated successfully", "Updated", 200, responseData);
-}
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Organization updated successfully", "Updated", 200, responseData);
+  }
 
-override protected Json deleteHandler(HTTPServerRequest req) {
-  auto precheck = super.deleteHandler(req);
-  if (precheck.hasError)
-    return precheck;
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-  auto tenantId = precheck.tenantId;
-  auto id = OrganizationId(precheck.id);
-  if (id.isNull)
-    return errorResponse("Invalid organization ID", 400);
+    auto tenantId = precheck.tenantId;
+    auto id = OrganizationId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid organization ID", 400);
 
-  auto result = usecase.deleteOrganization(tenantId, id);
-  if (result.hasError)
-    return errorResponse(result.message, 400);
+    auto result = usecase.deleteOrganization(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-  auto responseData = Json.emptyObject.set("id", result.id);
-  return successResponse("Organization deleted successfully", "Deleted", 200, responseData);
-}
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Organization deleted successfully", "Deleted", 200, responseData);
+  }
 }

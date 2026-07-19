@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 /// Role for portal access — controls what content users can see.
 struct Role {
-  mixin TenantEntity!(RoleId);
+  mixin TenantEntity!RoleId;
 
   string name;
   string description;

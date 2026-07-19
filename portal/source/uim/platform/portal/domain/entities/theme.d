@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 /// Theme definition for portal sites.
 struct Theme {
-  mixin TenantEntity!(ThemeId);
+  mixin TenantEntity!ThemeId;
 
   string name;
   string description;

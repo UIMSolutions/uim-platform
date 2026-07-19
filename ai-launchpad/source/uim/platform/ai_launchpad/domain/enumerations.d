@@ -21,14 +21,14 @@ enum ConnectionStatus {
 ConnectionStatus toConnectionStatus(string value) {
   mixin(EnumSwitch("ConnectionStatus", "inactive"));
 }
-ConnectionStatus[] toConnectionStatus(string[] values) {
-  return values.map!(v => toConnectionStatus(v)).array;
+ConnectionStatus[] toConnectionStatuses(string[] values) {
+  return values.map!toConnectionStatus.array;
 }
 string toString(ConnectionStatus status) {
   return status.to!string;
 }
 string[] toStrings(ConnectionStatus[] statuses) {
-  return statuses.map!(s => toString(s)).array;
+  return statuses.map!toString.array;
 }
 ///
 unittest {
@@ -45,8 +45,8 @@ unittest {
   assert(ConnectionStatus.error.toString == "error");
   assert(ConnectionStatus.pending.toString == "pending");
 
-  assert(toConnectionStatus(["active", "error", "unknown"]) == [ConnectionStatus.active, ConnectionStatus.error, ConnectionStatus.inactive]);
-  assert(toString([ConnectionStatus.active, ConnectionStatus.error]) == ["active", "error"]);
+  assert(["active", "error", "unknown"].toConnectionStatuses == [ConnectionStatus.active, ConnectionStatus.error, ConnectionStatus.inactive]);
+  assert([ConnectionStatus.active, ConnectionStatus.error].toStrings == ["active", "error"]);
 }
 
 enum ConnectionType {
@@ -56,7 +56,7 @@ enum ConnectionType {
 ConnectionType toConnectionType(string value) {
   mixin(EnumSwitch("ConnectionType", "custom"));
 }
-ConnectionType[] toConnectionType(string[] types) {
+ConnectionType[] toConnectionTypes(string[] types) {
   return types.map!(toConnectionType).array;
 }
 string toString(ConnectionType type) {
@@ -69,15 +69,17 @@ string[] toStrings(ConnectionType[] types) {
 unittest {
   mixin(ShowTest!("ConnectionType enum conversion"));
 
-  assert(toConnectionType("ai_core") == ConnectionType.ai_core);
-  assert(toConnectionType("custom") == ConnectionType.custom);
-  assert(toConnectionType("unknown") == ConnectionType.custom); // default case 
+  assert("ai_core".toConnectionType == ConnectionType.ai_core);
+  assert("custom".toConnectionType == ConnectionType.custom);
 
-  assert(toString(ConnectionType.ai_core) == "ai_core");
-  assert(toString(ConnectionType.custom) == "custom");  
+  assert("".toConnectionType == ConnectionType.custom); // default case 
+  assert("unknown".toConnectionType == ConnectionType.custom); // default case 
 
-  assert(toConnectionType(["ai_core", "custom", "unknown"]) == [ConnectionType.ai_core, ConnectionType.custom, ConnectionType.custom]);
-  assert(toString([ConnectionType.ai_core, ConnectionType.custom]) == ["ai_core", "custom"]);
+  assert(ConnectionType.ai_core.toString == "ai_core");
+  assert(ConnectionType.custom.toString == "custom");  
+
+  assert(["ai_core", "custom", "unknown"].toConnectionTypes == [ConnectionType.ai_core, ConnectionType.custom, ConnectionType.custom]);
+  assert([ConnectionType.ai_core, ConnectionType.custom].toStrings == ["ai_core", "custom"]);
 }
 
 // Execution lifecycle
@@ -93,7 +95,7 @@ enum ExecutionStatus {
 ExecutionStatus toExecutionStatus(string value) {
   mixin(EnumSwitch("ExecutionStatus", "unknown"));
 }
-ExecutionStatus[] toExecutionStatus(string[] values) {
+ExecutionStatus[] toExecutionStatuses(string[] values) {
   return values.map!(toExecutionStatus).array;
 }
 string toString(ExecutionStatus status) {
@@ -106,25 +108,25 @@ string[] toStrings(ExecutionStatus[] statuses) {
 unittest {
   mixin(ShowTest!("ExecutionStatus enum conversion"));
 
-  assert(toExecutionStatus("pending") == ExecutionStatus.pending);
-  assert(toExecutionStatus("running") == ExecutionStatus.running);
-  assert(toExecutionStatus("completed") == ExecutionStatus.completed);
-  assert(toExecutionStatus("failed") == ExecutionStatus.failed);
-  assert(toExecutionStatus("stopped") == ExecutionStatus.stopped);
-  assert(toExecutionStatus("dead") == ExecutionStatus.dead);
-  assert(toExecutionStatus("unknown") == ExecutionStatus.unknown); // default case
-  assert(toExecutionStatus("thing") == ExecutionStatus.unknown); // default case
+  assert("pending".toExecutionStatus == ExecutionStatus.pending);
+  assert("running".toExecutionStatus == ExecutionStatus.running);
+  assert("completed".toExecutionStatus == ExecutionStatus.completed);
+  assert("failed".toExecutionStatus == ExecutionStatus.failed);
+  assert("stopped".toExecutionStatus == ExecutionStatus.stopped);
+  assert("dead".toExecutionStatus == ExecutionStatus.dead);
+  assert("unknown".toExecutionStatus == ExecutionStatus.unknown); // default case
+  assert("thing".toExecutionStatus == ExecutionStatus.unknown); // default case
 
-  assert(toString(ExecutionStatus.pending) == "pending");
-  assert(toString(ExecutionStatus.running) == "running");
-  assert(toString(ExecutionStatus.completed) == "completed");
-  assert(toString(ExecutionStatus.failed) == "failed");
-  assert(toString(ExecutionStatus.stopped) == "stopped");
-  assert(toString(ExecutionStatus.dead) == "dead");
-  assert(toString(ExecutionStatus.unknown) == "unknown");
+  assert(ExecutionStatus.pending.toString == "pending");
+  assert(ExecutionStatus.running.toString == "running");
+  assert(ExecutionStatus.completed.toString == "completed");
+  assert(ExecutionStatus.failed.toString == "failed");
+  assert(ExecutionStatus.stopped.toString == "stopped");
+  assert(ExecutionStatus.dead.toString == "dead");
+  assert(ExecutionStatus.unknown.toString == "unknown");
 
-  assert(toExecutionStatus(["pending", "running", "unknown"]) == [ExecutionStatus.pending, ExecutionStatus.running, ExecutionStatus.unknown]);
-  assert(toString([ExecutionStatus.pending, ExecutionStatus.failed]) == ["pending", "failed"]);
+  assert(["pending", "running", "unknown"].toExecutionStatuses == [ExecutionStatus.pending, ExecutionStatus.running, ExecutionStatus.unknown]);
+  assert([ExecutionStatus.pending, ExecutionStatus.failed].toStrings == ["pending", "failed"]);
 }
 
 // Deployment lifecycle
@@ -138,7 +140,7 @@ enum DeploymentStatus {
 DeploymentStatus toDeploymentStatus(string value) {
   mixin(EnumSwitch("DeploymentStatus", "unknown"));
 }
-DeploymentStatus[] toDeploymentStatus(string[] values) {
+DeploymentStatus[] toDeploymentStatuses(string[] values) {
   return values.map!(toDeploymentStatus).array;
 }
 string toString(DeploymentStatus status) {
@@ -151,21 +153,23 @@ string[] toStrings(DeploymentStatus[] statuses) {
 unittest {
   mixin(ShowTest!("DeploymentStatus enum conversion"));
 
-  assert(toDeploymentStatus("pending") == DeploymentStatus.pending);
-  assert(toDeploymentStatus("running") == DeploymentStatus.running);
-  assert(toDeploymentStatus("stopped") == DeploymentStatus.stopped);
-  assert(toDeploymentStatus("dead") == DeploymentStatus.dead);
-  assert(toDeploymentStatus("unknown") == DeploymentStatus.unknown); 
-  assert(toDeploymentStatus("thing") == DeploymentStatus.unknown); // default case
+  assert("pending".toDeploymentStatus == DeploymentStatus.pending);
+  assert("running".toDeploymentStatus == DeploymentStatus.running);
+  assert("stopped".toDeploymentStatus == DeploymentStatus.stopped);
+  assert("dead".toDeploymentStatus == DeploymentStatus.dead);
+  assert("unknown".toDeploymentStatus == DeploymentStatus.unknown); 
 
-  assert(toString(DeploymentStatus.pending) == "pending");
-  assert(toString(DeploymentStatus.running) == "running");
-  assert(toString(DeploymentStatus.stopped) == "stopped");
-  assert(toString(DeploymentStatus.dead) == "dead");
-  assert(toString(DeploymentStatus.unknown) == "unknown");  
+  assert("".toDeploymentStatus == DeploymentStatus.unknown); // default case
+  assert("something".toDeploymentStatus == DeploymentStatus.unknown); // default case
 
-  assert(toDeploymentStatus(["pending", "running", "unknown"]) == [DeploymentStatus.pending, DeploymentStatus.running, DeploymentStatus.unknown]);
-  assert(toString([DeploymentStatus.pending, DeploymentStatus.stopped]) == ["pending", "stopped"]);
+  assert(DeploymentStatus.pending.toString == "pending");
+  assert(DeploymentStatus.running.toString == "running");
+  assert(DeploymentStatus.stopped.toString == "stopped");
+  assert(DeploymentStatus.dead.toString == "dead");
+  assert(DeploymentStatus.unknown.toString == "unknown");
+
+  assert(["pending", "running", "unknown"].toDeploymentStatuses == [DeploymentStatus.pending, DeploymentStatus.running, DeploymentStatus.unknown]);
+  assert([DeploymentStatus.pending, DeploymentStatus.stopped].toStrings == ["pending", "stopped"]);
 }
 
 // Model tracking
@@ -182,30 +186,30 @@ ModelStatus toModelStatus(string value) {
     default: return ModelStatus.available; // default to available if unknown
   }
 }
-ModelStatus[] toModelStatus(string[] values) {
+ModelStatus[] toModelStatuses(string[] values) {
   return values.map!(toModelStatus).array;
 }
 string toString(ModelStatus status) {
   return cast(string) status;
 }
 string[] toStrings(ModelStatus[] statuses) {
-  return statuses.map!(toString).array;
+  return statuses.map!toString.array;
 }
 ///
 unittest {
   mixin(ShowTest!("ModelStatus enum conversion"));
 
-  assert(toModelStatus("available") == ModelStatus.available);
-  assert(toModelStatus("archived") == ModelStatus.archived);
-  assert(toModelStatus("deprecated") == ModelStatus.deprecated_);
-  assert(toModelStatus("unknown") == ModelStatus.available); // default case    
+  assert("available".toModelStatus == ModelStatus.available);
+  assert("archived".toModelStatus == ModelStatus.archived);
+  assert("deprecated".toModelStatus == ModelStatus.deprecated_);
+  assert("unknown".toModelStatus == ModelStatus.available); // default case    
 
-  assert(toString(ModelStatus.available) == "available");
-  assert(toString(ModelStatus.archived) == "archived");
-  assert(toString(ModelStatus.deprecated_) == "deprecated");
+  assert(ModelStatus.available.toString == "available");
+  assert(ModelStatus.archived.toString == "archived");
+  assert(ModelStatus.deprecated_.toString == "deprecated");
 
-  assert(toModelStatus(["available", "archived", "unknown"]) == [ModelStatus.available, ModelStatus.archived, ModelStatus.available]);
-  assert(toString([ModelStatus.available, ModelStatus.deprecated_]) == ["available", "deprecated"]);
+  assert(["available", "archived", "unknown"].toModelStatuses == [ModelStatus.available, ModelStatus.archived, ModelStatus.available]);
+  assert([ModelStatus.available, ModelStatus.deprecated_].toStrings == ["available", "deprecated"]);
 }
 
 // Dataset tracking
@@ -218,7 +222,7 @@ enum DatasetStatus {
 DatasetStatus toDatasetStatus(string value) {
   mixin(EnumSwitch("DatasetStatus", "available"));
 }
-DatasetStatus[] toDatasetStatus(string[] values) {
+DatasetStatus[] toDatasetStatuses(string[] values) {
   return values.map!(toDatasetStatus).array;
 }
 string toString(DatasetStatus status) {
@@ -231,19 +235,19 @@ string[] toStrings(DatasetStatus[] statuses) {
 unittest {
   mixin(ShowTest!("DatasetStatus enum conversion"));
 
-  assert(toDatasetStatus("available") == DatasetStatus.available);
-  assert(toDatasetStatus("processing") == DatasetStatus.processing);
-  assert(toDatasetStatus("error") == DatasetStatus.error);
-  assert(toDatasetStatus("archived") == DatasetStatus.archived);
-  assert(toDatasetStatus("unknown") == DatasetStatus.available); // default case
+  assert("available".toDatasetStatus == DatasetStatus.available);
+  assert("processing".toDatasetStatus == DatasetStatus.processing);
+  assert("error".toDatasetStatus == DatasetStatus.error);
+  assert("archived".toDatasetStatus == DatasetStatus.archived);
+  assert("unknown".toDatasetStatus == DatasetStatus.available); // default case
 
-  assert(toString(DatasetStatus.available) == "available");
-  assert(toString(DatasetStatus.processing) == "processing");
-  assert(toString(DatasetStatus.error) == "error");
-  assert(toString(DatasetStatus.archived) == "archived");
+  assert(DatasetStatus.available.toString == "available");
+  assert(DatasetStatus.processing.toString == "processing");
+  assert(DatasetStatus.error.toString == "error");
+  assert(DatasetStatus.archived.toString == "archived");
 
-  assert(toDatasetStatus(["available", "error", "unknown"]) == [DatasetStatus.available, DatasetStatus.error, DatasetStatus.available]);
-  assert(toString([DatasetStatus.available, DatasetStatus.archived]) == ["available", "archived"]);
+  assert(["available", "error", "unknown"].toDatasetStatuses == [DatasetStatus.available, DatasetStatus.error, DatasetStatus.available]);
+  assert([DatasetStatus.available, DatasetStatus.archived].toStrings == ["available", "archived"]);
 }
 
 // Workspace
@@ -254,7 +258,7 @@ enum WorkspaceStatus {
 WorkspaceStatus toWorkspaceStatus(string value) {
   mixin(EnumSwitch("WorkspaceStatus", "inactive"));
 }
-WorkspaceStatus[] toWorkspaceStatus(string[] values) {
+WorkspaceStatus[] toWorkspaceStatuses(string[] values) {
   return values.map!(toWorkspaceStatus).array;
 }
 string toString(WorkspaceStatus status) {
@@ -267,15 +271,15 @@ string[] toStrings(WorkspaceStatus[] statuses) {
 unittest {
   mixin(ShowTest!("WorkspaceStatus enum conversion"));
 
-  assert(toWorkspaceStatus("active") == WorkspaceStatus.active);
-  assert(toWorkspaceStatus("inactive") == WorkspaceStatus.inactive);
-  assert(toWorkspaceStatus("unknown") == WorkspaceStatus.inactive); // default case
+  assert("active".toWorkspaceStatus == WorkspaceStatus.active);
+  assert("inactive".toWorkspaceStatus == WorkspaceStatus.inactive);
+  assert("unknown".toWorkspaceStatus == WorkspaceStatus.inactive); // default case
 
-  assert(toString(WorkspaceStatus.active) == "active");
-  assert(toString(WorkspaceStatus.inactive) == "inactive");
+  assert(WorkspaceStatus.active.toString == "active");
+  assert(WorkspaceStatus.inactive.toString == "inactive");
 
-  assert(toWorkspaceStatus(["active", "unknown"]) == [WorkspaceStatus.active, WorkspaceStatus.inactive]);
-  assert(toString([WorkspaceStatus.active, WorkspaceStatus.inactive]) == ["active", "inactive"]);
+  assert(["active", "unknown"].toWorkspaceStatuses == [WorkspaceStatus.active, WorkspaceStatus.inactive]);
+  assert([WorkspaceStatus.active, WorkspaceStatus.inactive].toStrings == ["active", "inactive"]);
 }
 
 // GenAI Hub prompt management
@@ -287,7 +291,7 @@ enum PromptRole {
 PromptRole toPromptRole(string value) {
   mixin(EnumSwitch("PromptRole", "user"));
 }
-PromptRole[] toPromptRole(string[] roles) {
+PromptRole[] toPromptRoles(string[] roles) {
   return roles.map!(toPromptRole).array;
 }
 string toString(PromptRole role) {  return role.to!string;
@@ -299,17 +303,17 @@ string[] toStrings(PromptRole[] roles) {
 unittest {
   mixin(ShowTest!("PromptRole enum conversion"));
 
-  assert(toPromptRole("system") == PromptRole.system);
-  assert(toPromptRole("user") == PromptRole.user);
-  assert(toPromptRole("assistant") == PromptRole.assistant);
-  assert(toPromptRole("unknown") == PromptRole.user); // default case 
+  assert("system".toPromptRole == PromptRole.system);
+  assert("user".toPromptRole == PromptRole.user);
+  assert("assistant".toPromptRole == PromptRole.assistant);
+  assert("unknown".toPromptRole == PromptRole.user); // default case 
 
-  assert(toString(PromptRole.system) == "system");
-  assert(toString(PromptRole.user) == "user");
-  assert(toString(PromptRole.assistant) == "assistant");  
+  assert(PromptRole.system.toString == "system");
+  assert(PromptRole.user.toString == "user");
+  assert(PromptRole.assistant.toString == "assistant");  
 
-  assert(toPromptRole(["system", "assistant", "unknown"]) == [PromptRole.system, PromptRole.assistant, PromptRole.user]);
-  assert(toString([PromptRole.system, PromptRole.assistant]) == ["system", "assistant"]);
+  assert(["system", "assistant", "unknown"].toPromptRoles == [PromptRole.system, PromptRole.assistant, PromptRole.user]);
+  assert([PromptRole.system, PromptRole.assistant].toStrings == ["system", "assistant"]);
 }
 
 enum PromptStatus {
@@ -320,7 +324,7 @@ enum PromptStatus {
 PromptStatus toPromptStatus(string value) {
   mixin(EnumSwitch("PromptStatus", "draft"));
 }
-PromptStatus[] toPromptStatus(string[] values) {
+PromptStatus[] toPromptStatuses(string[] values) {
   return values.map!(toPromptStatus).array;
 }
 string toString(PromptStatus status) {
@@ -333,17 +337,17 @@ string[] toStrings(PromptStatus[] statuses) {
 unittest {
   mixin(ShowTest!("PromptStatus enum conversion"));
 
-  assert(toPromptStatus("draft") == PromptStatus.draft);
-  assert(toPromptStatus("active") == PromptStatus.active);
-  assert(toPromptStatus("archived") == PromptStatus.archived);
-  assert(toPromptStatus("unknown") == PromptStatus.draft); // default case
+  assert("draft".toPromptStatus == PromptStatus.draft);
+  assert("active".toPromptStatus == PromptStatus.active);
+  assert("archived".toPromptStatus == PromptStatus.archived);
+  assert("unknown".toPromptStatus == PromptStatus.draft); // default case
 
-  assert(toString(PromptStatus.draft) == "draft");
-  assert(toString(PromptStatus.active) == "active");
-  assert(toString(PromptStatus.archived) == "archived");  
+  assert(PromptStatus.draft.toString == "draft");
+  assert(PromptStatus.active.toString == "active");
+  assert(PromptStatus.archived.toString == "archived");  
 
-  assert(toPromptStatus(["draft", "active", "unknown"]) == [PromptStatus.draft, PromptStatus.active, PromptStatus.draft]);
-  assert(toString([PromptStatus.draft, PromptStatus.archived]) == ["draft", "archived"]);
+  assert(["draft", "active", "unknown"].toPromptStatuses == [PromptStatus.draft, PromptStatus.active, PromptStatus.draft]);
+  assert([PromptStatus.draft, PromptStatus.archived].toStrings == ["draft", "archived"]);
 }
  
 // Artifact classification
@@ -356,7 +360,7 @@ enum ArtifactKind {
 ArtifactKind toArtifactKind(string value) {
   mixin(EnumSwitch("ArtifactKind", "other"));
 }
-ArtifactKind[] toArtifactKind(string[] kinds) {
+ArtifactKind[] toArtifactKinds(string[] kinds) {
   return kinds.map!(toArtifactKind).array;
 }
 string toString(ArtifactKind kind) {
@@ -369,18 +373,18 @@ string[] toStrings(ArtifactKind[] kinds) {
 unittest {
   mixin(ShowTest!("ArtifactKind enum conversion"));
 
-  assert(toArtifactKind("model") == ArtifactKind.model);
-  assert(toArtifactKind("dataset") == ArtifactKind.dataset);
-  assert(toArtifactKind("resultset") == ArtifactKind.resultset);
-  assert(toArtifactKind("unknown") == ArtifactKind.other); // default case
+  assert("model".toArtifactKind == ArtifactKind.model);
+  assert("dataset".toArtifactKind == ArtifactKind.dataset);
+  assert("resultset".toArtifactKind == ArtifactKind.resultset);
+  assert("unknown".toArtifactKind == ArtifactKind.other); // default case
 
-  assert(toString(ArtifactKind.model) == "model");
-  assert(toString(ArtifactKind.dataset) == "dataset");
-  assert(toString(ArtifactKind.resultset) == "resultset");
-  assert(toString(ArtifactKind.other) == "other");
+  assert(ArtifactKind.model.toString == "model");
+  assert(ArtifactKind.dataset.toString == "dataset");
+  assert(ArtifactKind.resultset.toString == "resultset");
+  assert(ArtifactKind.other.toString == "other");
 
-  assert(toArtifactKind(["model", "resultset", "unknown"]) == [ArtifactKind.model, ArtifactKind.resultset, ArtifactKind.other]);
-  assert(toString([ArtifactKind.model, ArtifactKind.dataset]) == ["model", "dataset"]);
+  assert(["model", "resultset", "unknown"].toArtifactKinds == [ArtifactKind.model, ArtifactKind.resultset, ArtifactKind.other]);
+  assert([ArtifactKind.model, ArtifactKind.dataset].toStrings == ["model", "dataset"]);
 }
 
 // Target status for lifecycle operations
@@ -399,7 +403,7 @@ TargetStatus toTargetStatus(string value) {
     default: return TargetStatus.stopped; // default to stopped if unknown
   }
 }
-TargetStatus[] toTargetStatus(string[] values) {
+TargetStatus[] toTargetStatuses(string[] values) {
   return values.map!(toTargetStatus).array;
 }
 string toString(TargetStatus status) {
@@ -412,19 +416,19 @@ string[] toStrings(TargetStatus[] statuses) {
 unittest {
   mixin(ShowTest!("TargetStatus enum conversion")); 
 
-  assert(toTargetStatus("running") == TargetStatus.running);
-  assert(toTargetStatus("stopped") == TargetStatus.stopped);
-  assert(toTargetStatus("deleted") == TargetStatus.deleted_);
-  assert(toTargetStatus("completed") == TargetStatus.completed);
-  assert(toTargetStatus("unknown") == TargetStatus.stopped); // default case
+  assert("running".toTargetStatus == TargetStatus.running);
+  assert("stopped".toTargetStatus == TargetStatus.stopped);
+  assert("deleted".toTargetStatus == TargetStatus.deleted_);
+  assert("completed".toTargetStatus == TargetStatus.completed);
+  assert("unknown".toTargetStatus == TargetStatus.stopped); // default case
 
-  assert(toString(TargetStatus.running) == "running");
-  assert(toString(TargetStatus.stopped) == "stopped");
-  assert(toString(TargetStatus.deleted_) == "deleted"); 
-  assert(toString(TargetStatus.completed) == "completed");
+  assert(TargetStatus.running.toString == "running");
+  assert(TargetStatus.stopped.toString == "stopped");
+  assert(TargetStatus.deleted_.toString == "deleted"); 
+  assert(TargetStatus.completed.toString == "completed");
 
-  assert(toTargetStatus(["running", "deleted", "unknown"]) == [TargetStatus.running, TargetStatus.deleted_, TargetStatus.stopped]);
-  assert(toString([TargetStatus.running, TargetStatus.completed]) == ["running", "completed"]);
+  assert(["running", "deleted", "unknown"]toTargetStatus == [TargetStatus.running, TargetStatus.deleted_, TargetStatus.stopped]);
+  assert([TargetStatus.running, TargetStatus.completed].toStrings == ["running", "completed"]);
 }
 
 // Metric value types
@@ -441,30 +445,30 @@ MetricValueType toMetricValueType(string value) {
     default: return MetricValueType.string_; // default to string if unknown
   }
 }
-MetricValueType[] toMetricValueType(string[] values) {
-  return values.map!(toMetricValueType).array;
+MetricValueType[] toMetricValueTypes(string[] values) {
+  return values.map!toMetricValueType.array;
 }
 string toString(MetricValueType type) {
   return cast(string)type;
 }
 string[] toStrings(MetricValueType[] types) {
-  return types.map!(toString).array;
+  return types.map!toString.array;
 }
 ///
 unittest {
   mixin(ShowTest!("MetricValueType enum conversion"));
 
-  assert(toMetricValueType("float") == MetricValueType.float_);
-  assert(toMetricValueType("int") == MetricValueType.int_);
-  assert(toMetricValueType("string") == MetricValueType.string_);
-  assert(toMetricValueType("unknown") == MetricValueType.string_); // default case
+  assert("float".toMetricValueType == MetricValueType.float_);
+  assert("int".toMetricValueType == MetricValueType.int_);
+  assert("string".toMetricValueType == MetricValueType.string_);
+  assert("unknown".toMetricValueType == MetricValueType.string_); // default case
 
-  assert(toString(MetricValueType.float_) == "float");
-  assert(toString(MetricValueType.int_) == "int");
-  assert(toString(MetricValueType.string_) == "string");
+  assert(MetricValueType.float_.toString == "float");
+  assert(MetricValueType.int_.toString == "int");
+  assert(MetricValueType.string_.toString == "string");
 
-  assert(toMetricValueType(["float", "int", "unknown"]) == [MetricValueType.float_, MetricValueType.int_, MetricValueType.string_]);
-  assert(toString([MetricValueType.float_, MetricValueType.string_]) == ["float", "string"]);
+  assert(["float", "int", "unknown"].toMetricValueTypes == [MetricValueType.float_, MetricValueType.int_, MetricValueType.string_]);
+  assert([MetricValueType.float_, MetricValueType.string_].toStrings == ["float", "string"]);
 }
 
 // Usage statistics
@@ -476,30 +480,30 @@ enum StatisticsPeriod {
 StatisticsPeriod toStatisticsPeriod(string value) {
   mixin(EnumSwitch("StatisticsPeriod", "daily"));
 }
-StatisticsPeriod[] toStatisticsPeriod(string[] values) {
-  return values.map!(toStatisticsPeriod).array;
+StatisticsPeriod[] toStatisticsPeriods(string[] values) {
+  return values.map!toStatisticsPeriod.array;
 }
 string toString(StatisticsPeriod period) {
   return period.to!string;
 }
 string[] toStrings(StatisticsPeriod[] periods) {
-  return periods.map!(toString).array;
+  return periods.map!toString.array;
 }
 ///
 unittest {
   mixin(ShowTest!("StatisticsPeriod enum conversion"));   
 
-  assert(toStatisticsPeriod("daily") == StatisticsPeriod.daily);
-  assert(toStatisticsPeriod("weekly") == StatisticsPeriod.weekly);
-  assert(toStatisticsPeriod("monthly") == StatisticsPeriod.monthly);
-  assert(toStatisticsPeriod("unknown") == StatisticsPeriod.daily); // default case
+  assert("daily".toStatisticsPeriod == StatisticsPeriod.daily);
+  assert("weekly".toStatisticsPeriod == StatisticsPeriod.weekly);
+  assert("monthly".toStatisticsPeriod == StatisticsPeriod.monthly);
+  assert("unknown".toStatisticsPeriod == StatisticsPeriod.daily); // default case
 
   assert(toString(StatisticsPeriod.daily) == "daily");
   assert(toString(StatisticsPeriod.weekly) == "weekly");
   assert(toString(StatisticsPeriod.monthly) == "monthly");
 
-  assert(toStatisticsPeriod(["daily", "weekly", "unknown"]) == [StatisticsPeriod.daily, StatisticsPeriod.weekly, StatisticsPeriod.daily]);
-  assert(toString([StatisticsPeriod.daily, StatisticsPeriod.monthly]) == ["daily", "monthly"]);
+  assert(["daily", "weekly", "unknown"].toStatisticsPeriods == [StatisticsPeriod.daily, StatisticsPeriod.weekly, StatisticsPeriod.daily]);
+  assert([StatisticsPeriod.daily, StatisticsPeriod.monthly].toStrings == ["daily", "monthly"]);
 }
 
 // Log severity levels
@@ -511,30 +515,32 @@ enum LogSeverity {
 LogSeverity toLogSeverity(string value) {
   mixin(EnumSwitch("LogSeverity", "info"));
 }
-LogSeverity[] toLogSeverity(string[] values) {
-  return values.map!(toLogSeverity).array;
+LogSeverity[] toLogSeverities(string[] values) {
+  return values.map!toLogSeverity.array;
 }
 string toString(LogSeverity severity) {
   return severity.to!string;
 }
 string[] toStrings(LogSeverity[] severities) {
-  return severities.map!(toString).array;
+  return severities.map!toString.array;
 }
 ///
 unittest {
   mixin(ShowTest!("LogSeverity enum conversion"));
 
-  assert(toLogSeverity("info") == LogSeverity.info);
-  assert(toLogSeverity("warn") == LogSeverity.warn);
-  assert(toLogSeverity("error") == LogSeverity.error);
-  assert(toLogSeverity("unknown") == LogSeverity.info); // default case 
+  assert("info".toLogSeverity == LogSeverity.info);
+  assert("warn".toLogSeverity == LogSeverity.warn);
+  assert("error".toLogSeverity == LogSeverity.error);
 
-  assert(toString(LogSeverity.info) == "info");
-  assert(toString(LogSeverity.warn) == "warn");
-  assert(toString(LogSeverity.error) == "error");
+  assert("".toLogSeverity == LogSeverity.info); // default case 
+  assert("unknown".toLogSeverity == LogSeverity.info); // default case 
 
-  assert(toLogSeverity(["info", "error", "unknown"]) == [LogSeverity.info, LogSeverity.error, LogSeverity.info]);
-  assert(toString([LogSeverity.info, LogSeverity.warn]) == ["info", "warn"]);
+  assert(LogSeverity.info.toString == "info");
+  assert(LogSeverity.warn.toString == "warn");
+  assert(LogSeverity.error.toString == "error");
+
+  assert(["info", "error", "unknown"].toLogSeverities == [LogSeverity.info, LogSeverity.error, LogSeverity.info]);
+  assert([LogSeverity.info, LogSeverity.warn].toStrings == ["info", "warn"]);
 }
 
 // Schedule status
@@ -545,8 +551,8 @@ enum ScheduleStatus {
 ScheduleStatus toScheduleStatus(string value) {
   mixin(EnumSwitch("ScheduleStatus", "inactive"));
 }
-ScheduleStatus[] toScheduleStatus(string[] values) {
-  return values.map!(toScheduleStatus).array;
+ScheduleStatus[] toScheduleStatuses(string[] values) {
+  return values.map!toScheduleStatus.array;
 }
 string toString(ScheduleStatus status) {
   return status.to!string;
@@ -558,13 +564,13 @@ string[] toStrings(ScheduleStatus[] statuses) {
 unittest {
   mixin(ShowTest!("ScheduleStatus enum conversion"));
 
-  assert(toScheduleStatus("active") == ScheduleStatus.active);
-  assert(toScheduleStatus("inactive") == ScheduleStatus.inactive);
-  assert(toScheduleStatus("unknown") == ScheduleStatus.inactive); // default case
+  assert("active".toScheduleStatus == ScheduleStatus.active);
+  assert("inactive".toScheduleStatus == ScheduleStatus.inactive);
+  assert("unknown".toScheduleStatus == ScheduleStatus.inactive); // default case
 
-  assert(toString(ScheduleStatus.active) == "active");
-  assert(toString(ScheduleStatus.inactive) == "inactive");
+  assert(ScheduleStatus.active.toString == "active");
+  assert(ScheduleStatus.inactive.toString == "inactive");
 
-  assert(toScheduleStatus(["active", "unknown"]) == [ScheduleStatus.active, ScheduleStatus.inactive]);
-  assert(toString([ScheduleStatus.active, ScheduleStatus.inactive]) == ["active", "inactive"]);
+  assert(["active", "unknown"].toScheduleStatuses == [ScheduleStatus.active, ScheduleStatus.inactive]);
+  assert([ScheduleStatus.active, ScheduleStatus.inactive].toStrings == ["active", "inactive"]);
 }

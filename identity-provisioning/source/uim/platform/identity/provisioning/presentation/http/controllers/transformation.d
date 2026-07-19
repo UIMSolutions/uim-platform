@@ -106,56 +106,50 @@ class TransformationController : ManageHttpController {
     r.conditions = data.getString("conditions");
     auto result = usecase.updateTransformation(
       r);
-    if (result.hasError) {
+    if (result.hasError)
       return errorResponse(result.message, 400);
 
-      auto resp = Json.emptyObject
-        .set("id", result.id);
+    auto resp = Json.emptyObject
+      .set("id", result.id);
 
-  return successResponse("Transformation updated successfully", 200, resp);
-}
+    return successResponse("Transformation updated successfully", 200, resp);
+  }
 
-protected void handleTest(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-  try {
+  protected Json testHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
     auto tenantId = precheck.tenantId;
     auto data = precheck.data;
     auto systemId = data.getString(
       "systemId");
     auto inputAttributes = data.getString("inputAttributes");
 
-    if (systemId.isEmpty || inputAttributes.length == 0) {
-      writeError(res, 400, "systemId and inputAttributes are required");
-      return;
-    }
+    if (systemId.isEmpty || inputAttributes.length == 0)
+      return errorResponse("systemId and inputAttributes are required", 400);
 
     auto output = usecase.testTransformation(tenantId, inputAttributes, systemId);
     auto resp = Json.emptyObject
       .set("output", output);
-    res.writeJsonBody(resp, 200);
-  } catch (Exception e) {
-    writeError(res, 500, "Internal server error");
-  }
-}
 
-override protected Json deleteHandler(HTTPServerRequest req) {
-  auto precheck = super.deleteHandler(req);
-  if (precheck.hasError)
-    return precheck;
-  auto tenantId = precheck.tenantId;
-  auto id = precheck
-    .id;
-  auto tenantId = precheck.tenantId;
-  auto result = usecase.deleteTransformation(
-    tenantId, id);
-  if (result.isSuccess) {
-    auto resp = Json.emptyObject
-      .set("deleted", true);
-    res.writeJsonBody(resp, 200);
-  } else
-    writeError(res, 404, result.message);
-}
- catch (Exception e) {
-  writeError(res, 500, "Internal server error");
-}
-}
+    return successResponse("Transformation test executed successfully", 200, resp);
+  }
+
+  mixin(HandleTemplate!("handleTest", "testHandler"));
+
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = TransformationId(precheck.id);
+    auto result = usecase.deleteTransformation(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    return successResponse("Transformation deleted successfully", 200, Json.emptyObject.set("id", result
+        .id));
+  }
 }

@@ -95,30 +95,31 @@ class ProxySystemController : ManageHttpController {
     if (precheck.hasError)
       return precheck;
     auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
+    auto id = ProxySystemId(precheck.id);
     
     auto data = precheck.data;
     auto r = UpdateProxySystemRequest();
-    r.id = id;
     r.tenantId = tenantId;
+    r.systemId = id;
     r.name = data.getString("name");
     r.description = data.getString(
       "description");
     r.connectionConfig = data.getString("connectionConfig");
 
     auto result = usecase.updateProxySystem(r);
-    if (result.isSuccess) {
-      auto resp = Json.emptyObject
-        .set("id", result.id);
-      res.writeJsonBody(resp, 200);
-    } else {
-      auto status = result.message == "Proxy system not found" ? 404 : 400;
-      writeError(res, status, result.message);
-    }
-  }
- catch (Exception e) {
-    writeError(res, 500, "Internal server error");
-  }
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    return successResponse("Proxy system updated successfully", 200, Json.emptyObject.set("id", result.id));
+
+    // if (result.isSuccess) {
+    //   auto resp = Json.emptyObject
+    //     .set("id", result.id);
+    //   res.writeJsonBody(resp, 200);
+    // } else {
+    //   auto status = result.message == "Proxy system not found" ? 404 : 400;
+    //   writeError(res, status, result.message);
+    // }
 }
 
 protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -166,13 +167,16 @@ override protected Json deleteHandler(HTTPServerRequest req) {
   auto precheck = super.deleteHandler(req);
   if (precheck.hasError)
     return precheck;
+
   auto tenantId = precheck.tenantId;
-  auto id = precheck
-    .id;
-  auto tenantId = precheck.tenantId;
+  auto id = ProxySystemId(precheck.id);
+  if (id.isNull)
+    return errorResponse("Invalid proxy system ID", 400);
+
   auto result = usecase.deleteProxySystem(tenantId, id);
   if (result.hasError)
     return errorResponse(result.message, 404);
+
   auto resp = Json.emptyObject.set("id", result
       .id);
   return successResponse(

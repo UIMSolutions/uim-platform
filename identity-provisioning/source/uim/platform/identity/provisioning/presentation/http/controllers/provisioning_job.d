@@ -50,126 +50,128 @@ class ProvisioningJobController : HttpController {
     r.createdBy = UserId(req.headers.get("X-User-Id", "system"));
 
     auto result = usecase.createJob(r);
-    if (result.isSuccess) {
-      auto resp = Json.emptyObject
-        .set("id", result.id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-      return successResponse("Provisioning job created successfully", 201, resp);
-    }
+    auto resp = Json.emptyObject
+      .set("id", result.id);
 
-    override protected Json listHandler(HTTPServerRequest req) {
-      auto precheck = super.listHandler(req);
-      if (precheck.hasError)
-        return precheck;
-
-      auto tenantId = precheck.tenantId;
-
-      auto items = usecase.listJobs(tenantId);
-      auto arr = items.map!(j => j.toJson).array.toJson;
-
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", items.length);
-
-      return successResponse("Provisioning jobs retrieved successfully", 200, resp);
-    }
-
-    override protected Json getHandler(HTTPServerRequest req) {
-      auto precheck = super.getHandler(req);
-      if (precheck.hasError)
-        return precheck;
-
-      auto tenantId = precheck.tenantId;
-      auto id = ProvisioningJobId(precheck.id);
-      if (id.isNull)
-        return errorResponse("Invalid provisioning job ID", 400);
-
-      auto job = usecase.getJob(tenantId, id);
-      if (job.isNull)
-        return errorResponse("Provisioning job not found", 404);
-
-      auto resp = job.toJson;
-      return successResponse("Provisioning job retrieved successfully", 200, resp);
-    }
-
-    protected Json runHandler(HTTPServerRequest req) {
-      auto precheck = super.postHandler(req);
-      if (precheck.hasError)
-        return precheck;
-
-      auto tenantId = precheck.tenantId;
-      auto id = ProvisioningJobId(precheck.id);
-      if (id.isNull)
-        return errorResponse("Invalid provisioning job ID", 400);
-
-      auto result = usecase.runJob(tenantId, id);
-      if (result.hasError)
-        return errorResponse(result.message, 400);
-
-      auto resp = Json.emptyObject
-        .set("id", result.id)
-        .set("status", "running");
-      return successResponse("Provisioning job started successfully", 200, resp);
-    }
-
-    mixin(HandleTemplate!("handleRun", "runHandler"));
-
-    protected Json createAndRunHandler(HTTPServerRequest req) {
-      auto createResponse = super.postHandler(req);
-      if (createResponse.hasError)
-        return createResponse;
-
-      auto id = createResponse.data.getString("id");
-      if (id is null)
-        return errorResponse("Failed to retrieve created job ID", 500);
-
-      auto runResponse = runHandler(req);
-      if (runResponse.hasError)
-        return runResponse;
-
-      auto resp = Json.emptyObject
-        .set("id", id)
-        .set("status", "running");
-      return successResponse("Provisioning job created and started successfully", 201, resp);
-    }
-
-    mixin(HandleTemplate!("handleCreateAndRun", "createAndRunHandler"));
-
-    protected Json cancelHandler(HTTPServerRequest req) {
-      auto precheck = super.postHandler(req);
-      if (precheck.hasError)
-        return precheck;
-
-      auto tenantId = precheck.tenantId;
-      auto id = ProvisioningJobId(precheck.id);
-      if (id.isNull)
-        return errorResponse("Invalid provisioning job ID", 400);
-
-      auto result = usecase.cancelJob(tenantId, id);
-      if (result.hasError)
-        return errorResponse(result.message, 400);
-
-      auto resp = Json.emptyObject
-        .set("id", result.id);
-      return successResponse("Provisioning job cancelled successfully", 200, resp);
-    }
-
-mixin(HandleTemplate!("handleCancel", "cancelHandler"));
-
-    override protected Json deleteHandler(HTTPServerRequest req) {
-      auto precheck = super.deleteHandler(req);
-      if (precheck.hasError)
-        return precheck;
-
-      auto tenantId = precheck.tenantId;
-      auto id = ProvisioningJobId(precheck.id);
-      if (id.isNull) // This should ideally never happen since the route requires an ID, but we check just in case
-        return errorResponse("Invalid provisioning job ID", 400);
-
-      auto result = usecase.deleteJob(tenantId, id);
-      if (result.hasError)
-
-        auto resp = Json.emptyObject.set("id", result.id);
-      return successResponse("Provisioning job deleted successfully", 200, resp);
-    }
+    return successResponse("Provisioning job created successfully", 201, resp);
   }
+
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+
+    auto items = usecase.listJobs(tenantId);
+    auto arr = items.map!(j => j.toJson).array.toJson;
+
+    auto resp = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", items.length);
+
+    return successResponse("Provisioning jobs retrieved successfully", 200, resp);
+  }
+
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = ProvisioningJobId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid provisioning job ID", 400);
+
+    auto job = usecase.getJob(tenantId, id);
+    if (job.isNull)
+      return errorResponse("Provisioning job not found", 404);
+
+    auto resp = job.toJson;
+    return successResponse("Provisioning job retrieved successfully", 200, resp);
+  }
+
+  protected Json runHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = ProvisioningJobId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid provisioning job ID", 400);
+
+    auto result = usecase.runJob(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto resp = Json.emptyObject
+      .set("id", result.id)
+      .set("status", "running");
+    return successResponse("Provisioning job started successfully", 200, resp);
+  }
+
+  mixin(HandleTemplate!("handleRun", "runHandler"));
+
+  protected Json createAndRunHandler(HTTPServerRequest req) {
+    auto createResponse = super.postHandler(req);
+    if (createResponse.hasError)
+      return createResponse;
+
+    auto id = createResponse.data.getString("id");
+    if (id is null)
+      return errorResponse("Failed to retrieve created job ID", 500);
+
+    auto runResponse = runHandler(req);
+    if (runResponse.hasError)
+      return runResponse;
+
+    auto resp = Json.emptyObject
+      .set("id", id)
+      .set("status", "running");
+    return successResponse("Provisioning job created and started successfully", 201, resp);
+  }
+
+  mixin(HandleTemplate!("handleCreateAndRun", "createAndRunHandler"));
+
+  protected Json cancelHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = ProvisioningJobId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid provisioning job ID", 400);
+
+    auto result = usecase.cancelJob(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    auto resp = Json.emptyObject
+      .set("id", result.id);
+    return successResponse("Provisioning job cancelled successfully", 200, resp);
+  }
+
+  mixin(HandleTemplate!("handleCancel", "cancelHandler"));
+
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = ProvisioningJobId(precheck.id);
+    if (id.isNull) // This should ideally never happen since the route requires an ID, but we check just in case
+      return errorResponse("Invalid provisioning job ID", 400);
+
+    auto result = usecase.deleteJob(tenantId, id);
+    if (result.hasError)
+
+      auto resp = Json.emptyObject.set("id", result.id);
+    return successResponse("Provisioning job deleted successfully", 200, resp);
+  }
+}

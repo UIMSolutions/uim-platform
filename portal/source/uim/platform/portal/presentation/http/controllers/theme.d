@@ -142,16 +142,17 @@ class ThemeController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto themeId = precheck.id;
-    auto error = useCase.deleteTheme(tenantId, themeId);
-    if (error.length > 0)
-      writeApiError(res, 400, error);
-    else
-      res.writeJsonBody(Json.emptyObject, 204);
-  }
- catch (Exception e) {
-    writeApiError(res, 500, "Internal server error");
-  }
+    auto id = ThemeId(precheck.id);
+    auto result = useCase.deleteTheme(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    return successResponse("Theme deleted successfully", "Deleted", 200, Json.emptyObject.set("id", result.id));
+
+//     if (error.length > 0)
+//       writeApiError(res, 400, error);
+//     else
+//       res.writeJsonBody(Json.emptyObject, 204);
 }
 
 private ThemeColors parseColors(Json j) {

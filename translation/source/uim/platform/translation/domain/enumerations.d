@@ -88,7 +88,7 @@ enum TranslationProvider {
 TranslationProvider toTranslationProvider(string value) {
     mixin(EnumSwitch!"TranslationProvider", "mltr");
 }
-TranslationProvider[] toTranslationProvider(string[] values) {
+TranslationProvider[] toTranslationProviders(string[] values) {
     return values.map!(toTranslationProvider).array;
 }
 string toString(TranslationProvider value) {
@@ -101,20 +101,20 @@ string[] toStrings(TranslationProvider[] values) {
 unittest {
     mixin(ShowTest!"TranslationProvider");
 
-    assert(toTranslationProvider("mltr") == TranslationProvider.mltr);
-    assert(toTranslationProvider("machineMt") == TranslationProvider.machineMt);
-    assert(toTranslationProvider("companyMltr") == TranslationProvider.companyMltr);
-    assert(toTranslationProvider("llm") == TranslationProvider.llm);
+    assert("mltr".toTranslationProvider == TranslationProvider.mltr);
+    assert("machineMt".toTranslationProvider == TranslationProvider.machineMt);
+    assert("companyMltr".toTranslationProvider == TranslationProvider.companyMltr);
+    assert("llm".toTranslationProvider == TranslationProvider.llm);
 
-    assert(toTranslationProvider("") == TranslationProvider.mltr);
-    assert(toTranslationProvider("invalid") == TranslationProvider.mltr);
+    assert("".toTranslationProvider == TranslationProvider.mltr);
+    assert("invalid".toTranslationProvider == TranslationProvider.mltr);
 
-    assert(toString(TranslationProvider.mltr) == "mltr");
-    assert(toString(TranslationProvider.machineMt) == "machineMt");
-    assert(toString(TranslationProvider.companyMltr) == "companyMltr");
-    assert(toString(TranslationProvider.llm) == "llm");
+    assert(TranslationProvider.mltr.toString == "mltr");
+    assert(TranslationProvider.machineMt.toString == "machineMt");
+    assert(TranslationProvider.companyMltr.toString == "companyMltr");
+    assert(TranslationProvider.llm.toString == "llm");
 
-    assert(toTranslationProvider(["mltr", "llm", "invalid"]) == [TranslationProvider.mltr, TranslationProvider.llm, TranslationProvider.mltr]);
+    assert(toTranslationProviders(["mltr", "llm", "invalid"]) == [TranslationProvider.mltr, TranslationProvider.llm, TranslationProvider.mltr]);
     assert(toString([TranslationProvider.mltr, TranslationProvider.companyMltr]) == ["mltr", "companyMltr"]);
 }
 
@@ -129,7 +129,7 @@ enum JobStatus {
 JobStatus toJobStatus(string value) {
     mixin(EnumSwitch!"JobStatus", "pending");
 }
-JobStatus[] toJobStatus(string[] values) {
+JobStatus[] toJobStatuses(string[] values) {
     return values.map!(toJobStatus).array;
 }
 string toString(JobStatus value) {
@@ -142,23 +142,23 @@ string[] toStrings(JobStatus[] values) {
 unittest {
     mixin(ShowTest!"JobStatus");
 
-    assert(toJobStatus("pending") == JobStatus.pending);
-    assert(toJobStatus("processing") == JobStatus.processing);
-    assert(toJobStatus("completed") == JobStatus.completed);
-    assert(toJobStatus("failed") == JobStatus.failed);
-    assert(toJobStatus("cancelled") == JobStatus.cancelled);
+    assert("pending".toJobStatus == JobStatus.pending);
+    assert("processing".toJobStatus == JobStatus.processing);
+    assert("completed".toJobStatus == JobStatus.completed);
+    assert("failed".toJobStatus == JobStatus.failed);
+    assert("cancelled".toJobStatus == JobStatus.cancelled);
     
-    assert(toJobStatus("") == JobStatus.pending);
-    assert(toJobStatus("invalid") == JobStatus.pending);
+    assert("".toJobStatus == JobStatus.pending);
+    assert("invalid".toJobStatus == JobStatus.pending);
 
-    assert(toString(JobStatus.pending) == "pending");
-    assert(toString(JobStatus.processing) == "processing");
-    assert(toString(JobStatus.completed) == "completed");
-    assert(toString(JobStatus.failed) == "failed");
-    assert(toString(JobStatus.cancelled) == "cancelled");
+    assert(JobStatus.pending.toString == "pending");
+    assert(JobStatus.processing.toString == "processing");
+    assert(JobStatus.completed.toString == "completed");
+    assert(JobStatus.failed.toString == "failed");
+    assert(JobStatus.cancelled.toString == "cancelled");
 
-    assert(toJobStatusArray(["pending", "completed", "invalid"]) == [JobStatus.pending, JobStatus.completed, JobStatus.pending]);
-    assert(toStringArray([JobStatus.pending, JobStatus.cancelled]) == ["pending", "cancelled"]);
+    assert(["pending", "completed", "invalid"].toJobStatuses == [JobStatus.pending, JobStatus.completed, JobStatus.pending]);
+    assert([JobStatus.pending, JobStatus.cancelled].toStrings == ["pending", "cancelled"]);
 }
 
 /// Kind of translation job
@@ -170,7 +170,7 @@ enum JobType {
 JobType toJobType(string value) {
     mixin(EnumSwitch!"JobType", "software");
 }
-JobType[] toJobType(string[] values) {
+JobType[] toJobTypes(string[] values) {
     return values.map!(toJobType).array;
 }
 string toString(JobType value) {
@@ -183,19 +183,19 @@ string[] toStrings(JobType[] values) {
 unittest {
     mixin(ShowTest!"JobType");
 
-    assert(toJobType("software") == JobType.software);
-    assert(toJobType("document") == JobType.document);
-    assert(toJobType("text") == JobType.text);
+    assert("software".toJobType == JobType.software);
+    assert("document".toJ.obType == JobType.document);
+    assert("text".toJobType == JobType.text);
     
-    assert(toJobType("") == JobType.software);
-    assert(toJobType("invalid") == JobType.software);
+    assert("".toJobType == JobType.software);
+    assert("invalid".toJobType == JobType.software);
 
-    assert(toString(JobType.software) == "software");
-    assert(toString(JobType.document) == "document");
-    assert(toString(JobType.text) == "text");
+    assert(JobType.software.toString == "software");
+    assert(JobType.document.toString == "document");
+    assert(JobType.text.toString == "text");
 
-    assert(toJobTypeArray(["software", "text", "invalid"]) == [JobType.software, JobType.text, JobType.software]);
-    assert(toStringArray([JobType.software, JobType.document]) == ["software", "document"]);
+    assert(["software", "text", "invalid"].toJobTypes == [JobType.software, JobType.text, JobType.software]);
+    assert([JobType.software, JobType.document].toStrings == ["software", "document"]);
 }
 
 /// Quality rating for a translation result
@@ -209,7 +209,7 @@ enum QualityLevel {
 QualityLevel toQualityLevel(string value) {
     mixin(EnumSwitch!"QualityLevel", "unknown");
 }
-QualityLevel[] toQualityLevel(string[] values) {
+QualityLevel[] toQualityLevels(string[] values) {
     return values.map!(toQualityLevel).array;
 }
 string toString(QualityLevel value) {
@@ -222,21 +222,21 @@ string[] toStrings(QualityLevel[] values) {
 unittest {
     mixin(ShowTest!"QualityLevel");
 
-    assert(toQualityLevel("excellent") == QualityLevel.excellent);
-    assert(toQualityLevel("good") == QualityLevel.good);
-    assert(toQualityLevel("adequate") == QualityLevel.adequate);
-    assert(toQualityLevel("poor") == QualityLevel.poor);
-    assert(toQualityLevel("unknown") == QualityLevel.unknown);
+    assert("excellent".toQualityLevel == QualityLevel.excellent);
+    assert("good".toQualityLevel == QualityLevel.good);
+    assert("adequate".toQualityLevel == QualityLevel.adequate);
+    assert("poor".toQualityLevel == QualityLevel.poor);
+    assert("unknown".toQualityLevel == QualityLevel.unknown);
     
-    assert(toQualityLevel("") == QualityLevel.unknown);
-    assert(toQualityLevel("invalid") == QualityLevel.unknown);
+    assert("".toQualityLevel == QualityLevel.unknown);
+    assert("invalid".toQualityLevel == QualityLevel.unknown);
 
-    assert(toString(QualityLevel.excellent) == "excellent");
-    assert(toString(QualityLevel.good) == "good");
-    assert(toString(QualityLevel.adequate) == "adequate");
-    assert(toString(QualityLevel.poor) == "poor");
-    assert(toString(QualityLevel.unknown) == "unknown");
+    assert(QualityLevel.excellent.toString == "excellent");
+    assert(QualityLevel.good.toString == "good");
+    assert(QualityLevel.adequate.toString == "adequate");
+    assert(QualityLevel.poor.toString == "poor");
+    assert(QualityLevel.unknown.toString == "unknown");
 
-    assert(toQualityLevelArray(["excellent", "poor", "invalid"]) == [QualityLevel.excellent, QualityLevel.poor, QualityLevel.unknown]);
-    assert(toStringArray([QualityLevel.excellent, QualityLevel.good]) == ["excellent", "good"]);
+    assert(["excellent", "poor", "invalid"].toQualityLevels == [QualityLevel.excellent, QualityLevel.poor, QualityLevel.unknown]);
+    assert([QualityLevel.excellent, QualityLevel.good].toStrings == ["excellent", "good"]);
 }

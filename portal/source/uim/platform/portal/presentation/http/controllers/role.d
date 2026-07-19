@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.portal.presentation.http.controllers.role;
 
-
 // import uim.platform.portal.application.usecases.manage.roles;
 // import uim.platform.portal.application.dto;
 // import uim.platform.portal.domain.entities.role;
@@ -34,76 +33,79 @@ class RoleController : ManageHttpController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-      auto createReq = CreateRoleRequest(req.headers.get("X-Tenant-Id", ""),
-        data.getString("name"), data.getString("description"),
-        jsonEnum!RoleScope(j, "scope", RoleScope.site),);
+    auto data = precheck.data;
+    auto createReq = CreateRoleRequest(req.headers.get("X-Tenant-Id", ""),
+      data.getString("name"), data.getString("description"),
+      jsonEnum!RoleScope(j, "scope", RoleScope.site),);
 
-      auto result = useCase.createRole(createReq);
-      if (result.hasError())
-        return errorResponse("", 0);
+    auto result = useCase.createRole(createReq);
+    if (result.hasError())
+      return errorResponse("", 0);
 
-        auto response = Json.emptyObject;
-        response["id"] = Json(result.roleId);
+    auto response = Json.emptyObject;
+    response["id"] = Json(result.roleId);
 
-        return successResponse("", "", 0, response);
+    return successResponse("", "", 0, response);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto roles = useCase.listRoles(tenantId);
-      auto response = Json.emptyObject
+    auto tenantId = precheck.tenantId;
+    auto roles = useCase.listRoles(tenantId);
+    auto response = Json.emptyObject
       .set("totalResults", Json(roles.length))
       .set("resources", roles.map!(role => role.toJson).array.toJson);
 
-      return successResponse("", "", 0, response);
+    return successResponse("", "", 0, response);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto roleId = precheck.id;
-      auto role = useCase.getRole(roleId);
-      if (role.isNull)
-        return errorResponse("", 0);
+    auto tenantId = precheck.tenantId;
+    auto roleId = precheck.id;
+    auto role = useCase.getRole(roleId);
+    if (role.isNull)
+      return errorResponse("", 0);
 
     return successResponse("", "", 0, role.toJson);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto roleId = precheck.id;
-      auto data = precheck.data;
-      auto updateReq = UpdateRoleRequest(roleId, data.getString("name"),
-        data.getString("description"),);
+    auto tenantId = precheck.tenantId;
+    auto id = RoleId(precheck.id);
+    auto data = precheck.data;
+    auto updateReq = UpdateRoleRequest();
+    updateReq.tenantId = tenantId;
+    updateReq.roleId = id;
+    updateReq.name = data.getString("name");
+    updateReq.description = data.getString("description");
 
-      auto result = useCase.updateRole(updateReq);
-      if (result.isNull) 
-      return errorResponse("", 0);
+    auto result = useCase.updateRole(updateReq);
+    if (result.isNull)
+      return errorResponse("Role not found", 404);
 
     auto responseData = Json.emptyObject.set("id", result.id);
-    return successResponse("", "", 0, responseData);
+    return successResponse("Role updated successfully", 200, responseData);
   }
 
   protected void handleAssign(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    try {
       auto tenantId = precheck.tenantId;
       auto data = precheck.data;
       auto assignReq = AssignRoleRequest(data.getString("roleId"), getStrings(j,
@@ -120,19 +122,23 @@ class RoleController : ManageHttpController {
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto roleId = precheck.id;
-      auto error = useCase.deleteRole(roleId);
-      if (error.length > 0)
-        writeApiError(res, 404, error);
-      else
-        res.writeJsonBody(Json.emptyObject, 204);
-    } catch (Exception e) {
-      writeApiError(res, 500, "Internal server error");
-    }
+    auto tenantId = precheck.tenantId;
+    auto roleId = precheck.id;
+    auto result = useCase.deleteRole(tenantId, roleId);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    return successResponse("Role deleted successfully", 200, Json.emptyObject.set("id", result.id));
+    //   if (error.length > 0)
+    //     writeApiError(res, 404, error);
+    //   else
+    //     res.writeJsonBody(Json.emptyObject, 204);
+    // } catch (Exception e) {
+    //   writeApiError(res, 500, "Internal server error");
+    // }
   }
 }

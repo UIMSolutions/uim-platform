@@ -45,96 +45,98 @@ class TranslationController : ManageHttpController {
       data.getString("fieldName"), data.getString("language"), data.getString("value"),);
 
     auto result = useCase.createTranslation(createReq);
-    if (result.hasError) 
+    if (result.hasError)
       return errorResponse(result.message, 400);
-    
-      auto response = Json.emptyObject
-        .set("id", result.translationId);
 
-        return successResponse("Translation created successfully", "Created", 201, response);
-}
+    auto response = Json.emptyObject
+      .set("id", result.translationId);
 
-override protected Json listHandler(HTTPServerRequest req) {
-  auto precheck = super.listHandler(req);
-  if (precheck.hasError)
-    return precheck;
+    return successResponse("Translation created successfully", "Created", 201, response);
+  }
 
-  auto tenantId = precheck.tenantId;
-  auto language = req.headers.get("X-Language", "");
-  auto resourceType = req.headers.get("X-Resource-Type", "");
-  auto resourceId = req.headers.get("X-Resource-Id", "");
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-  Translation[] translations = resourceType.length > 0 && !resourceId.isEmpty
-    ? useCase.listTranslations(tenantId, resourceType, resourceId, language)
-    : useCase.listTranslations(tenantId, language);
+    auto tenantId = precheck.tenantId;
+    auto language = req.headers.get("X-Language", "");
+    auto resourceType = req.headers.get("X-Resource-Type", "");
+    auto resourceId = req.headers.get("X-Resource-Id", "");
 
-  auto response = Json.emptyObject;
-  response["totalResults"] = Json(translations.length);
-  response["resources"] = toJsonArray(translations);
+    Translation[] translations = resourceType.length > 0 && !resourceId.isEmpty
+      ? useCase.listTranslations(tenantId, resourceType, resourceId, language) : useCase.listTranslations(tenantId, language);
 
-  return successResponse("Translations retrieved successfully", "Retrieved", 200, response);
-}
+    auto response = Json.emptyObject;
+    response["totalResults"] = Json(translations.length);
+    response["resources"] = toJsonArray(translations);
 
-override protected Json getHandler(HTTPServerRequest req) {
-  auto precheck = super.getHandler(req);
-  if (precheck.hasError)
-    return precheck;
+    return successResponse("Translations retrieved successfully", "Retrieved", 200, response);
+  }
 
-  auto tenantId = precheck.tenantId;
-  auto translationId = precheck.id;
-  auto translation = useCase.getTranslation(tenantId, translationId);
-  if (translation.isNull)
-    return errorResponse("Translation not found", 404);
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-  return successReponse("Translation retrieved successfully", "Retrieved", 200, translation.toJson());
-}
+    auto tenantId = precheck.tenantId;
+    auto translationId = precheck.id;
+    auto translation = useCase.getTranslation(tenantId, translationId);
+    if (translation.isNull)
+      return errorResponse("Translation not found", 404);
 
-override protected Json updateHandler(HTTPServerRequest req) {
-  auto precheck = super.updateHandler(req);
-  if (precheck.hasError)
-    return precheck;
+    return successReponse("Translation retrieved successfully", "Retrieved", 200, translation.toJson());
+  }
 
-  auto tenantId = precheck.tenantId;
-  auto translationId = precheck.id;
-  auto data = precheck.data;
-  auto updateReq = UpdateTranslationRequest(translationId, data.getString("value"),);
+  override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-  auto result = useCase.updateTranslation(tenantId, updateReq);
-  if (result.hasError)
-    return errorResponse(result.message, 400);
+    auto tenantId = precheck.tenantId;
+    auto translationId = precheck.id;
+    auto data = precheck.data;
+    auto updateReq = UpdateTranslationRequest(translationId, data.getString("value"),);
 
-  return successResponse("Translation updated successfully", "Updated", 200, Json.emptyObject.set("id", result.id));
+    auto result = useCase.updateTranslation(tenantId, updateReq);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+
+    return successResponse("Translation updated successfully", "Updated", 200, Json.emptyObject.set("id", result
+        .id));
     // writeApiError(res, 404, error);
-  // else
+    // else
     // res.writeJsonBody(Json.emptyObject, 200);
-// }
-//  catch (Exception e) {
-  // writeApiError(res, 500, "Internal server error");
-}
+    // }
+    //  catch (Exception e) {
+    // writeApiError(res, 500, "Internal server error");
+  }
 
-override protected Json deleteHandler(HTTPServerRequest req) {
-  auto precheck = super.deleteHandler(req);
-  if (precheck.hasError)
-    return precheck;
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-  auto tenantId = precheck.tenantId;
-  auto id = TranslationId(precheck.id);
-  if (id.isNull)
-    return errorResponse("Invalid translation ID", 400);
+    auto tenantId = precheck.tenantId;
+    auto id = TranslationId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid translation ID", 400);
 
-  auto result = useCase.deleteTranslation(tenantId, id);
-  if (result.hasError)
-    return errorResponse(result.message, 400);
+    auto result = useCase.deleteTranslation(tenantId, id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
 
-  return successResponse("Translation deleted successfully", "Deleted", 200, Json.emptyObject.set("id", result.id));
+    return successResponse("Translation deleted successfully", "Deleted", 200, Json.emptyObject.set("id", result
+        .id));
     // writeApiError(res, 404, error);
 
-//   if (error.length > 0)
-//     writeApiError(res, 404, error);
-//   else
-//     res.writeJsonBody(Json.emptyObject, 204);
-// }
-//  catch (Exception e) {
-//   writeApiError(res, 500, "Internal server error");
+    //   if (error.length > 0)
+    //     writeApiError(res, 404, error);
+    //   else
+    //     res.writeJsonBody(Json.emptyObject, 204);
+    // }
+    //  catch (Exception e) {
+    //   writeApiError(res, 500, "Internal server error");
 
+  }
 }

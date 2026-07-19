@@ -49,6 +49,8 @@ struct UpdateTargetSystemRequest {
 
 struct CreateProxySystemRequest {
   TenantId tenantId;
+  ProxySystemId systemId;
+
   string name;
   string description;
   SystemType systemType;
@@ -59,7 +61,7 @@ struct CreateProxySystemRequest {
 }
 
 struct UpdateProxySystemRequest {
-  ProxySystemId id;
+  ProxySystemId systemId;
   TenantId tenantId;
   string name;
   string description;
@@ -69,6 +71,8 @@ struct UpdateProxySystemRequest {
 
 struct CreateTransformationRequest {
   TenantId tenantId;
+  TransformationId transformationId;
+
   string systemId;
   SystemRole systemRole;
   string name;
@@ -78,7 +82,7 @@ struct CreateTransformationRequest {
 }
 
 struct UpdateTransformationRequest {
-  TransformationId id;
+  TransformationId transformationId;
   TenantId tenantId;
   string name;
   string mappingRules;

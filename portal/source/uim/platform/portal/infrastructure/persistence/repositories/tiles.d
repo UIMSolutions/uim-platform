@@ -55,3 +55,4 @@ class MemoryTileRepository : TenantRepository!(Tile, TileId), TileRepository {
 
     return result;
   }
+}
