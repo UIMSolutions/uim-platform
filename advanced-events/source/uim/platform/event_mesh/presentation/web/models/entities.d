@@ -9,7 +9,6 @@ import std.conv : to;
 import std.uuid : randomUUID;
 
 import uim.platform.event_mesh;
-
 mixin(ShowModule!());
 
 @safe:

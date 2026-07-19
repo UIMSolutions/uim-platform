@@ -6,7 +6,6 @@
 module uim.platform.datasphere_composer.domain.enumerations;
 
 import uim.platform.datasphere_composer;
-
 mixin(ShowModule!());
 
 @safe:

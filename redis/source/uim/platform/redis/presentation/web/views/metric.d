@@ -8,7 +8,6 @@ module uim.platform.redis.presentation.web.views.metric;
 import uim.platform.redis;
 
 import std.format : format;
-
 mixin(ShowModule!());
 
 @safe:

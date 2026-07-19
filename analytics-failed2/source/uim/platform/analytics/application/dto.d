@@ -1,7 +1,6 @@
 module uim.platform.analytics.application.dto;
 
 import uim.platform.analytics;
-
 mixin(ShowModule!());
 
 @safe:  

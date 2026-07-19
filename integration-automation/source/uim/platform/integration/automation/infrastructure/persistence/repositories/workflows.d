@@ -6,7 +6,6 @@
 module uim.platform.integration.automation.infrastructure.persistence.repositories.workflows;
 
 import uim.platform.integration.automation;
-
 mixin(ShowModule!());
 
 @safe:

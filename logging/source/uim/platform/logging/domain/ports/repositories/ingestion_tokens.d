@@ -7,7 +7,6 @@ module uim.platform.logging.domain.ports.repositories.ingestion_tokens;
 // import uim.platform.logging.domain.entities.ingestion_token;
 
 import uim.platform.logging;
-
 mixin(ShowModule!());
 
 @safe:

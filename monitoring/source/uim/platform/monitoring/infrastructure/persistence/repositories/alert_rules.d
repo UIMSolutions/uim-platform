@@ -9,7 +9,6 @@ module uim.platform.monitoring.infrastructure.persistence.repositories.alert_rul
 // import uim.platform.monitoring.domain.ports.repositories.alert_rules;
 
 import uim.platform.monitoring;
-
 mixin(ShowModule!());
 
 @safe:

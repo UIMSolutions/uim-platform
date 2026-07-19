@@ -9,7 +9,6 @@ module uim.platform.portal.infrastructure.persistence.repositories.menu_items;
 // import uim.platform.portal.domain.ports.repositories.menu_items;
 
 import uim.platform.portal;
-
 mixin(ShowModule!());
 
 @safe:

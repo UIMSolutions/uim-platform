@@ -6,7 +6,6 @@
 module uim.platform.translation.application.dto;
 
 import uim.platform.translation;
-
 mixin(ShowModule!());
 
 @safe:

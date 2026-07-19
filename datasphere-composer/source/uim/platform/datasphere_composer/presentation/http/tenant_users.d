@@ -8,7 +8,6 @@ module uim.platform.datasphere_composer.presentation.http.tenant_users;
 import uim.platform.datasphere_composer;
 import vibe.http.server;
 import vibe.http.router;
-
 mixin(ShowModule!());
 
 @safe:

@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.destination.domain.types;
 import uim.platform.destination;
-
 mixin(ShowModule!());
 
 @safe:

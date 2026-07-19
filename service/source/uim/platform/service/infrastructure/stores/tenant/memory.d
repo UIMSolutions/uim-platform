@@ -1,7 +1,6 @@
 module uim.platform.service.infrastructure.stores.tenant.memory;
 
 import uim.platform.service;
-
 mixin(ShowModule!());
 
 @safe:

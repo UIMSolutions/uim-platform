@@ -8,7 +8,6 @@ module uim.platform.auditlog.infrastructure.persistence.repositories.data_access
 // import uim.platform.auditlog.domain.entities.data_access_log;
 // import uim.platform.auditlog.domain.ports.repositories.data_access_logs;
 import uim.platform.auditlog;
-
 mixin(ShowModule!());
 
 @safe:

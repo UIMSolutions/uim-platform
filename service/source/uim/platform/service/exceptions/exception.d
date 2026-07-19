@@ -6,7 +6,6 @@
 module uim.platform.service.exceptions.exception;
 
 import uim.platform.service;
-
 mixin(ShowModule!());
 
 @safe:

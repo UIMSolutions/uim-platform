@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.logging.domain.types;
 import uim.platform.logging;
-
 mixin(ShowModule!());
 
 @safe:

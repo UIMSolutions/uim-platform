@@ -6,7 +6,6 @@
 module uim.platform.solution_lifecycle.domain.types;
 
 import uim.platform.solution_lifecycle;
-
 mixin(ShowModule!());
 
 @safe:

@@ -6,7 +6,6 @@
 module uim.platform.identity.provisioning.domain.entities.target_system;
 
 import uim.platform.identity.provisioning;
-
 mixin(ShowModule!());
 
 @safe:

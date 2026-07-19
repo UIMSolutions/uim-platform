@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.foundry.domain.enumerations.domain;
 import uim.platform.foundry;
-
 mixin(ShowModule!());
 
 @safe:

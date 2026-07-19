@@ -6,7 +6,6 @@
 module uim.platform.redis.presentation.web.models.backup_policy;
 
 import uim.platform.redis;
-
 mixin(ShowModule!());
 
 @safe:

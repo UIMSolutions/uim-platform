@@ -6,7 +6,6 @@
 module uim.platform.service.presentation.http.controllers.controller;
 
 import uim.platform.service;
-
 mixin(ShowModule!());
 
 @safe:

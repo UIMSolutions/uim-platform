@@ -6,7 +6,6 @@
 module uim.platform.service.domain.enumerations;
 
 import uim.platform.service;
-
 mixin(ShowModule!());
 
 @safe:

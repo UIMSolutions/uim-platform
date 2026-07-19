@@ -6,7 +6,6 @@ module uim.platform.analytics.application.usecases.manage_assets;
 // import uim.platform.analytics.domain;
 
 import uim.platform.analytics;
-
 mixin(ShowModule!());
 
 @safe:  

@@ -6,7 +6,6 @@
 module uim.platform.service.interfaces.stores.id;
 
 import uim.platform.service;
-
 mixin(ShowModule!());
 
 @safe:

@@ -9,7 +9,6 @@ module uim.platform.portal.infrastructure.persistence.repositories.catalogs;
 // import uim.platform.portal.domain.ports.repositories.catalogs;
 
 import uim.platform.portal;
-
 mixin(ShowModule!());
 
 @safe:

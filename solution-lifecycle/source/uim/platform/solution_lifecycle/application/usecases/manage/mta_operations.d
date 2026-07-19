@@ -6,7 +6,6 @@
 module uim.platform.solution_lifecycle.application.usecases.manage.mta_operations;
 
 import uim.platform.solution_lifecycle;
-
 mixin(ShowModule!());
 
 @safe:

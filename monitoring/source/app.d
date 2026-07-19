@@ -10,7 +10,6 @@ module app;
 // import uim.platform.monitoring.infrastructure.container;
 
 import uim.platform.monitoring;
-
 mixin(ShowModule!());
 
 @safe:

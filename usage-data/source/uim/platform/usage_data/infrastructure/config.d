@@ -7,7 +7,6 @@ module uim.platform.usage_data.infrastructure.config;
 
 import std.process : environment;
 import uim.platform.usage_data;
-
 mixin(ShowModule!());
 @safe:
 /// Service configuration loaded from environment variables.

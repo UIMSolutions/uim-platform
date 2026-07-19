@@ -10,7 +10,6 @@ import vibe.db.mongo.mongo : MongoClient, MongoCollection, connectMongoDB;
 import std.algorithm : filter, any;
 import std.array     : array;
 import std.conv      : to;
-
 mixin(ShowModule!());
 
 @safe:

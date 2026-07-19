@@ -6,7 +6,6 @@
 module uim.platform.postgres.domain.entities.configuration;
 
 import uim.platform.postgres;
-
 mixin(ShowModule!());
 
 @safe:

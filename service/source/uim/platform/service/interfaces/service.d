@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.service.interfaces.service;
 import uim.platform.service;
-
 mixin(ShowModule!());
 
 @safe:

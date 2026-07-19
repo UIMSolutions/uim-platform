@@ -9,7 +9,6 @@ import uim.platform.postgres;
 import std.conv   : to;
 import std.format : format;
 import std.algorithm : min;
-
 mixin(ShowModule!());
 
 @safe:

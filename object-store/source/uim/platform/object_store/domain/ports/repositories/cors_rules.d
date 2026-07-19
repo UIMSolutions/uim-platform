@@ -8,7 +8,6 @@ module uim.platform.object_store.domain.ports.repositories.cors_rules;
 // import uim.platform.object_store.domain.entities.cors_rule;
 // import uim.platform.object_store.domain.types;
 import uim.platform.object_store;
-
 mixin(ShowModule!());
 
 @safe:

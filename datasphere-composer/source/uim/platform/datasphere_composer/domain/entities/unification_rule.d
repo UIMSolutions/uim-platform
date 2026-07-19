@@ -6,7 +6,6 @@
 module uim.platform.datasphere_composer.domain.entities.unification_rule;
 
 import uim.platform.datasphere_composer;
-
 mixin(ShowModule!());
 
 @safe:

@@ -6,7 +6,6 @@
 module uim.platform.datasphere_composer.infrastructure.persistence.memory.unification_rules;
 
 import uim.platform.datasphere_composer;
-
 mixin(ShowModule!());
 
 @safe:

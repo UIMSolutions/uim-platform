@@ -2,7 +2,6 @@ module uim.platform.service.infrastructure.stores.tenant.file;
 import std.file;
 import std.path;
 import uim.platform.service;
-
 mixin(ShowModule!());
 
 @safe:

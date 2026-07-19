@@ -6,7 +6,6 @@
 module uim.platform.event_mesh.domain.repositories.queues;
 
 import uim.platform.event_mesh;
-
 mixin(ShowModule!());
 
 @safe:

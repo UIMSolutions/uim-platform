@@ -6,7 +6,6 @@
 module uim.platform.ai_core.domain.entities.docker_registry_secret;
 // import uim.platform.ai_core.domain.types;
 import uim.platform.ai_core;
-
 mixin(ShowModule!()); 
 
 @safe:

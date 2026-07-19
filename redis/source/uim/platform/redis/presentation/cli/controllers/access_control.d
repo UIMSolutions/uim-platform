@@ -6,7 +6,6 @@
 module uim.platform.redis.presentation.cli.controllers.access_control;
 
 import uim.platform.redis;
-
 mixin(ShowModule!());
 
 @safe:

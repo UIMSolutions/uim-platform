@@ -9,7 +9,6 @@ module app;
 // import uim.platform.foundry.infrastructure.container;
 
 import uim.platform.foundry;
-
 mixin(ShowModule!());
 
 @safe:

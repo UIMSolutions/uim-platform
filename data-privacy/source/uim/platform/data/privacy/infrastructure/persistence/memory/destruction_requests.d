@@ -8,7 +8,6 @@ module uim.platform.data.privacy.infrastructure.persistence.memory.destruction_r
 // import uim.platform.data.privacy.domain.entities.destruction_request;
 // import uim.platform.data.privacy.domain.ports.repositories.destruction_requests;
 import uim.platform.data.privacy;
-
 mixin(ShowModule!());
 
 @safe:

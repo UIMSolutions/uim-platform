@@ -13,7 +13,6 @@ module uim.platform.content_agent.application.usecases.manage.transport_queues;
 
 
 import uim.platform.content_agent;
-
 mixin(ShowModule!());
 
 @safe:

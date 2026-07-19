@@ -13,7 +13,6 @@ module uim.platform.monitoring.application.usecases.manage.health_checks;
 // import uim.platform.monitoring.domain.types;
 // 
 import uim.platform.monitoring;
-
 mixin(ShowModule!());
 
 @safe:

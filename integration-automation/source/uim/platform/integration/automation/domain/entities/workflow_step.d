@@ -6,7 +6,6 @@
 module uim.platform.integration.automation.domain.entities.workflow_step;
 
 import uim.platform.integration.automation;
-
 mixin(ShowModule!());
 
 @safe:

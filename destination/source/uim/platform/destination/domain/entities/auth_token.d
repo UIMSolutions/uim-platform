@@ -6,7 +6,6 @@
 module uim.platform.destination.domain.entities.auth_token;
 // import uim.platform.destination.domain.types;
 import uim.platform.destination;
-
 mixin(ShowModule!());
 
 @safe:

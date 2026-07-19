@@ -9,7 +9,6 @@ import std.process : environment;
 
 
 import uim.platform.hana_spatial;
-
 mixin(ShowModule!());
 
 @safe:

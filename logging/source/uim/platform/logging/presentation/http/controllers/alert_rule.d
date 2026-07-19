@@ -9,7 +9,6 @@ module uim.platform.logging.presentation.http.controllers.alert_rule;
 //import uim.platform.logging.application.dto;
 //
 import uim.platform.logging;
-
 mixin(ShowModule!());
 
 @safe:

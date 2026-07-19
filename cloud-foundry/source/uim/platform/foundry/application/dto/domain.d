@@ -1,6 +1,5 @@
 module uim.platform.foundry.application.dto.domain;
  import uim.platform.foundry;
-
 mixin(ShowModule!());
 
 @safe:

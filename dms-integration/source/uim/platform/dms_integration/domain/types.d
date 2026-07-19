@@ -6,7 +6,6 @@
 module uim.platform.dms_integration.domain.types;
 
 import uim.platform.dms_integration;
-
 mixin(ShowModule!());
 
 @safe:

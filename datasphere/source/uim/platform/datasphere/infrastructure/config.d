@@ -8,7 +8,6 @@ module uim.platform.datasphere.infrastructure.config;
 import std.process : environment;
 
 import uim.platform.datasphere;
-
 mixin(ShowModule!()); 
 
 @safe:

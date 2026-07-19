@@ -11,7 +11,6 @@ module uim.platform.auditlog.presentation.http.controllers.retention;
 
 // import uim.platform.auditlog.domain.entities.retention_policy;
 import uim.platform.auditlog;
-
 mixin(ShowModule!());
 
 @safe:

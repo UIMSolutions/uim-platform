@@ -1,7 +1,6 @@
 module uim.platform.service.application.usecases.id;
 
 import uim.platform.service;
-
 mixin(ShowModule!());
 
 @safe:

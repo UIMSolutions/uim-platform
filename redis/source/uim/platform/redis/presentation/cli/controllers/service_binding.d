@@ -6,7 +6,6 @@
 module uim.platform.redis.presentation.cli.controllers.service_binding;
 
 import uim.platform.redis;
-
 mixin(ShowModule!());
 
 @safe:

@@ -1,7 +1,6 @@
 module app;
 
 import uim.platform.service_manager;
-
 mixin(ShowModule!());
 
 @safe:

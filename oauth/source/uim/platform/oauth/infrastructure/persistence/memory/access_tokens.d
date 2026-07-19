@@ -6,7 +6,6 @@
 module uim.platform.oauth.infrastructure.persistence.memory.access_tokens;
 
 import uim.platform.oauth;
-
 mixin(ShowModule!());
 
 @safe:

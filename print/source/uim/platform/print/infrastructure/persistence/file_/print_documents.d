@@ -9,7 +9,6 @@ module uim.platform.print.infrastructure.persistence.file_.print_documents;
 import uim.platform.print;
 import std.file : exists, readText, write;
 import std.json;
-
 mixin(ShowModule!());
 
 @safe:

@@ -6,7 +6,6 @@
 module uim.platform.oauth.application.usecases.manage.oauth_clients;
 
 import uim.platform.oauth;
-
 mixin(ShowModule!());
 
 @safe:

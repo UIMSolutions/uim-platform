@@ -8,7 +8,6 @@ module app;
 // import uim.platform.datasphere.infrastructure.container;
 
 import uim.platform.datasphere;
-
 mixin(ShowModule!()); 
 
 @safe:

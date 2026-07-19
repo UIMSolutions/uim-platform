@@ -6,7 +6,6 @@
 module uim.platform.postgres.domain.entities.database_extension;
 
 import uim.platform.postgres;
-
 mixin(ShowModule!());
 
 @safe:

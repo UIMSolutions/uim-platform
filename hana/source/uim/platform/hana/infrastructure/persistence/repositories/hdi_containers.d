@@ -11,7 +11,6 @@ module uim.platform.hana.infrastructure.persistence.repositories.hdi_containers;
 
  
 import uim.platform.hana;
-
 mixin(ShowModule!());
 
 @safe:

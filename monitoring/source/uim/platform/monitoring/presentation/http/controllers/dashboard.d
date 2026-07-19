@@ -9,7 +9,6 @@ module uim.platform.monitoring.presentation.http.controllers.dashboard;
 // import uim.platform.monitoring.application.dto;
 
 import uim.platform.monitoring;
-
 mixin(ShowModule!());
 
 @safe:

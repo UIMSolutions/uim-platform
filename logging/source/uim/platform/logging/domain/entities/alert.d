@@ -6,7 +6,6 @@
 module uim.platform.logging.domain.entities.alert;
 
 import uim.platform.logging;
-
 mixin(ShowModule!());
 
 @safe:

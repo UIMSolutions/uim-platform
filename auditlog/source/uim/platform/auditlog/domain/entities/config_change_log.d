@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.auditlog.domain.entities.config_change_log;
 import uim.platform.auditlog;
-
 mixin(ShowModule!());
 /// Tracks security-critical configuration changes.
 @safe:

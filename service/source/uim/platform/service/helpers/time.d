@@ -1,7 +1,6 @@
 module uim.platform.service.helpers.time;
 
 import uim.platform.service;
-
 mixin(ShowModule!());
 
 @safe:

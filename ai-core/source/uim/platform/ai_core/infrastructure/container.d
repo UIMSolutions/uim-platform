@@ -35,7 +35,6 @@ module uim.platform.ai_core.infrastructure.container;
 // import uim.platform.ai_core.presentation.http.controllers.meta;
 // import uim.platform.ai_core.presentation.http.controllers.health;
 import uim.platform.ai_core;
-
 mixin(ShowModule!()); 
 
 @safe:

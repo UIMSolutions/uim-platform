@@ -1,6 +1,5 @@
 module uim.platform.auditlog.application.dtos.dataaccess;
 import uim.platform.auditlog;
-
 mixin(ShowModule!());
 
 @safe:

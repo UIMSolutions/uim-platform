@@ -1,7 +1,6 @@
 module uim.platform.service_manager.domain.ports.repositories.labels;
 
 import uim.platform.service_manager;
-
 mixin(ShowModule!());
 
 @safe:

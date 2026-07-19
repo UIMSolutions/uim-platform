@@ -1,6 +1,5 @@
 module uim.platform.data_retention.domain.entities.archiving_job;
 import uim.platform.data_retention;
-
 mixin(ShowModule!());
 
 @safe:

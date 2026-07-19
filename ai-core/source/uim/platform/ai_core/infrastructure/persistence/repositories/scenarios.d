@@ -9,7 +9,6 @@ module uim.platform.ai_core.infrastructure.persistence.repositories.scenarios;
 // import uim.platform.ai_core.domain.ports.repositories.scenarios;
 
 import uim.platform.ai_core;
-
 mixin(ShowModule!()); 
 
 @safe:

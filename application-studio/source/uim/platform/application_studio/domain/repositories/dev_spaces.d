@@ -6,7 +6,6 @@
 module uim.platform.application_studio.domain.repositories.dev_spaces;
 
 import uim.platform.application_studio;
-
 mixin(ShowModule!());
 
 @safe:

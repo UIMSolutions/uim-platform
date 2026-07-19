@@ -6,7 +6,6 @@
 module uim.platform.oauth.domain.entities.oauth_client;
 
 import uim.platform.oauth;
-
 mixin(ShowModule!());
 
 @safe:

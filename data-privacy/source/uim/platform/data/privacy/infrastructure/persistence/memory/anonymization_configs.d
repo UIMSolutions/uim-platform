@@ -8,7 +8,6 @@ module uim.platform.data.privacy.infrastructure.persistence.memory.anonymization
 // import uim.platform.data.privacy.domain.entities.anonymization_config;
 // import uim.platform.data.privacy.domain.ports.anonymization_config_repository;
 import uim.platform.data.privacy;
-
 mixin(ShowModule!());
 
 @safe:

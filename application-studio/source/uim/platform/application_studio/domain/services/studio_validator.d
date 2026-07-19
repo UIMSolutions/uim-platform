@@ -6,7 +6,6 @@
 module uim.platform.application_studio.domain.services.studio_validator;
 
 import uim.platform.application_studio;
-
 mixin(ShowModule!());
 
 @safe:

@@ -6,7 +6,6 @@
 module uim.platform.task_center.presentation.http.controllers.user_task_filter;
 
 import uim.platform.task_center;
-
 mixin(ShowModule!());
 
 @safe:

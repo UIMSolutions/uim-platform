@@ -8,7 +8,6 @@ module uim.platform.logging.presentation.http.controllers.channel;
 
 // 
 import uim.platform.logging;
-
 mixin(ShowModule!());
 
 @safe:

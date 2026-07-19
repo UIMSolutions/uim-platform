@@ -6,7 +6,6 @@
 module uim.platform.redis.domain.repositories.service_plans;
 
 import uim.platform.redis;
-
 mixin(ShowModule!());
 
 @safe:

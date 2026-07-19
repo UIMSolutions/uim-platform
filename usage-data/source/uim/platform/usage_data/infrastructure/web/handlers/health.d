@@ -6,7 +6,6 @@
 module uim.platform.usage_data.infrastructure.web.handlers.health;
 
 import uim.platform.usage_data;
-
 mixin(ShowModule!());
 @safe:
 

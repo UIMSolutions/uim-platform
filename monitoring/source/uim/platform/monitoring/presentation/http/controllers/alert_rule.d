@@ -10,7 +10,6 @@ module uim.platform.monitoring.presentation.http.controllers.alert_rule;
 // import uim.platform.monitoring.domain.entities.alert_rule;
 // import uim.platform.monitoring.domain.types;
 import uim.platform.monitoring;
-
 mixin(ShowModule!());
 
 @safe:

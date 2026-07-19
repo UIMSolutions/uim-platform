@@ -12,7 +12,6 @@ module uim.platform.destination.application.usecases.manage.certificates;
 // 
 import std.string : replace, toLower;
 import uim.platform.destination;
-
 mixin(ShowModule!());
 
 @safe:

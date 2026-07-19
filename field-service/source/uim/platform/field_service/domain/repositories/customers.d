@@ -6,7 +6,6 @@
 module uim.platform.field_service.domain.repositories.customers;
 
 import uim.platform.field_service;
-
 mixin(ShowModule!());
 
 @safe:

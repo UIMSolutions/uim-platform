@@ -12,7 +12,6 @@ module uim.platform.connectivity.application.usecases.manage.channels;
 // import uim.platform.connectivity.domain.ports.repositories.connectivity_logs;
 // import uim.platform.connectivity.domain.types;
 import uim.platform.connectivity;
-
 mixin(ShowModule!());
 
 @safe:

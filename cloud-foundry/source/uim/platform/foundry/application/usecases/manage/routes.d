@@ -15,7 +15,6 @@ module uim.platform.foundry.application.usecases.manage.routes;
 // import uim.platform.foundry.domain.services.route_resolver;
 // import uim.platform.foundry.application.dto;
 import uim.platform.foundry;
-
 mixin(ShowModule!());
 
 @safe:

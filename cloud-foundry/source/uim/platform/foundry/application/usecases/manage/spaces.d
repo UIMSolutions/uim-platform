@@ -13,7 +13,6 @@ module uim.platform.foundry.application.usecases.manage.spaces;
 
 // import uim.platform.foundry.application.dto;
 import uim.platform.foundry;
-
 mixin(ShowModule!());
 
 @safe:

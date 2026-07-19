@@ -6,7 +6,6 @@
 module uim.platform.postgres.presentation.cli.controllers.backup_policy;
 
 import uim.platform.postgres;
-
 mixin(ShowModule!());
 
 @safe:

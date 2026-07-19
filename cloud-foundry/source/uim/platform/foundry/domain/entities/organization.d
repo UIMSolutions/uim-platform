@@ -7,7 +7,6 @@ module uim.platform.foundry.domain.entities.organization;
 
 
 import uim.platform.foundry;
-
 mixin(ShowModule!());
 
 @safe:

@@ -8,7 +8,6 @@ module uim.platform.hana.presentation.http.controllers.instance;
 // import uim.platform.hana.application.dto;
 
 import uim.platform.hana;
-
 mixin(ShowModule!());
 
 @safe:
@@ -222,15 +221,10 @@ class InstanceController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto id = InstanceId(precheck.id);
-    auto result = usecase.deleteInstance(id);
+    auto result = usecase.deleteInstance(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
-    res.writeJsonBody(Json.emptyObject, 204);
-  } else {
-    writeError(res, 404, result.message);
-  }
-} catch (Exception e) {
-  writeError(res, 500, "Internal server error");
-}
+    
+    return successResponse("Instance deleted successfully", "Deleted", 200, Json.emptyObject.set("id", result.id));
 }
 }

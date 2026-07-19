@@ -6,7 +6,6 @@
 module uim.platform.portal.domain.entities.content_provider;
 // mport uim.platform.portal.domain.types;
 import uim.platform.portal;
-
 mixin(ShowModule!());
 
 @safe:

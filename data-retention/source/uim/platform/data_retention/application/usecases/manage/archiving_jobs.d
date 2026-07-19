@@ -1,6 +1,5 @@
 module uim.platform.data_retention.application.usecases.manage.archiving_jobs;
 import uim.platform.data_retention;
-
 mixin(ShowModule!());
 
 @safe:

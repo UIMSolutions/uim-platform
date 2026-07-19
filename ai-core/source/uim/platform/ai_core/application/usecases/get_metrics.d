@@ -11,7 +11,6 @@ module uim.platform.ai_core.application.usecases.get_metrics;
 
 
 import uim.platform.ai_core;
-
 mixin(ShowModule!()); 
 
 @safe:

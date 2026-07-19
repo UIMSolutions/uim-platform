@@ -7,7 +7,6 @@ module uim.platform.buildcode.domain.entities.build_job;
 
 import uim.platform.buildcode;
 
-
 mixin(ShowModule!());
 
 @safe:

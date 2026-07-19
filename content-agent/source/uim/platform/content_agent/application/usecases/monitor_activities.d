@@ -10,7 +10,6 @@ module uim.platform.content_agent.application.usecases.monitor_activities;
 
 
 import uim.platform.content_agent;
-
 mixin(ShowModule!());
 
 @safe:

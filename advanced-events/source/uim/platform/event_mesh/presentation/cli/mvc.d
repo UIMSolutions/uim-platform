@@ -10,7 +10,6 @@ import std.format : format;
 import std.stdio : writeln;
 
 import uim.platform.event_mesh;
-
 mixin(ShowModule!());
 
 @safe:

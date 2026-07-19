@@ -8,7 +8,6 @@ module app;
 // import uim.platform.credential_store.infrastructure.container;
 
 import uim.platform.credential_store;
-
 mixin(ShowModule!());
 
 @safe:

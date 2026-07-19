@@ -6,7 +6,6 @@
 module uim.platform.redis.domain.repositories.backup_policies;
 
 import uim.platform.redis;
-
 mixin(ShowModule!());
 
 @safe:

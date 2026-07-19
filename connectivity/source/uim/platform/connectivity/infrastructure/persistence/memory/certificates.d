@@ -9,7 +9,6 @@ module uim.platform.connectivity.infrastructure.persistence.memory.certificates;
 // import uim.platform.connectivity.domain.ports.repositories.certificates;
 
 import uim.platform.connectivity;
-
 mixin(ShowModule!());
 
 @safe:

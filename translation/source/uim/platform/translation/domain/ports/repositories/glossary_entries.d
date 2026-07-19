@@ -6,7 +6,6 @@
 module uim.platform.translation.domain.ports.repositories.glossary_entries;
 
 import uim.platform.translation;
-
 mixin(ShowModule!());
 
 @safe:

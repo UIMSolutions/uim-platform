@@ -6,7 +6,6 @@
 module uim.platform.oauth.domain.repositories.oauth_clients;
 
 import uim.platform.oauth;
-
 mixin(ShowModule!());
 
 @safe:

@@ -1,6 +1,5 @@
 module uim.platform.data_retention.domain.ports.repositories.deletion_requests;
 import uim.platform.data_retention;
-
 mixin(ShowModule!());
 
 @safe:

@@ -10,7 +10,6 @@ module uim.platform.datasphere.infrastructure.persistence.repositories.data_acce
 
  
 import uim.platform.datasphere;
-
 mixin(ShowModule!()); 
 
 @safe:

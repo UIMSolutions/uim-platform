@@ -8,7 +8,6 @@ module uim.platform.datasphere_composer.presentation.http.unification_rules;
 import uim.platform.datasphere_composer;
 import vibe.http.server;
 import vibe.http.router;
-
 mixin(ShowModule!());
 
 @safe:

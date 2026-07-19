@@ -8,7 +8,6 @@ module uim.platform.object_store.domain.services.encryption_policy;
 // import uim.platform.object_store.domain.entities.bucket;
 // import uim.platform.object_store.domain.types;
 import uim.platform.object_store;
-
 mixin(ShowModule!());
 
 @safe:

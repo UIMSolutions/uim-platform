@@ -6,7 +6,6 @@
 module uim.platform.buildcode.infrastructure.persistence.repositories.templates;
 
 import uim.platform.buildcode;
-
 mixin(ShowModule!());
 
 @safe:

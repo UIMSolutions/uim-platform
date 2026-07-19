@@ -6,7 +6,6 @@
 module uim.platform.oauth.application.dto;
 
 import uim.platform.oauth;
-
 mixin(ShowModule!());
 
 @safe:

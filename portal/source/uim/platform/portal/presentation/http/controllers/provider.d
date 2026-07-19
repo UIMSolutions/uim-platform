@@ -10,7 +10,6 @@ module uim.platform.portal.presentation.http.controllers.provider;
 // import uim.platform.portal.domain.entities.content_provider;
 // import uim.platform.portal.domain.types;
 import uim.platform.portal;
-
 mixin(ShowModule!());
 
 @safe:

@@ -6,7 +6,6 @@
 module uim.platform.field_service.presentation.http.controllers.activity;
 
 import uim.platform.field_service;
-
 mixin(ShowModule!());
 
 @safe:

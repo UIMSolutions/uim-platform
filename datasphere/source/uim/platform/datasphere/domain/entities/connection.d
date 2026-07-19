@@ -6,7 +6,6 @@
 module uim.platform.datasphere.domain.entities.connection;
 
 import uim.platform.datasphere;
-
 mixin(ShowModule!()); 
 
 @safe:

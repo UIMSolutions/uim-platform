@@ -1,7 +1,6 @@
 module uim.platform.service_manager.infrastructure.config;
 
 import uim.platform.service_manager;
-
 mixin(ShowModule!());
 
 @safe:

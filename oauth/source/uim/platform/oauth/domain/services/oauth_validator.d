@@ -6,7 +6,6 @@
 module uim.platform.oauth.domain.services.oauth_validator;
 
 import uim.platform.oauth;
-
 mixin(ShowModule!());
 
 @safe:

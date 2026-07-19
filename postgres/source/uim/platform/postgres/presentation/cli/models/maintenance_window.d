@@ -6,7 +6,6 @@
 module uim.platform.postgres.presentation.cli.models.maintenance_window;
 
 import uim.platform.postgres;
-
 mixin(ShowModule!());
 
 @safe:

@@ -6,7 +6,6 @@
 module uim.platform.events.application.usecases.manage.event_channels;
 
 import uim.platform.events;
-
 mixin(ShowModule!());
 
 @safe:

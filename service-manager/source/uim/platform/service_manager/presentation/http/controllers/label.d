@@ -1,7 +1,6 @@
 module uim.platform.service_manager.presentation.http.controllers.label;
 
 import uim.platform.service_manager;
-
 mixin(ShowModule!());
 
 @safe:

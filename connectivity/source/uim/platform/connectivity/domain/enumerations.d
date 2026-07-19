@@ -1,6 +1,5 @@
 module uim.platform.connectivity.domain.enumerations;
 import uim.platform.connectivity;
-
 mixin(ShowModule!());
 
 @safe:

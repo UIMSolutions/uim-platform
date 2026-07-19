@@ -6,7 +6,6 @@
 module uim.platform.keystore.domain.entities.keystore;
 
 import uim.platform.keystore;
-
 mixin(ShowModule!());
 
 @safe:

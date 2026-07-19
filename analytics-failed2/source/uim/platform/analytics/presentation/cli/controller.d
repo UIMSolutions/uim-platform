@@ -5,7 +5,6 @@ module uim.platform.analytics.presentation.cli.controller;
 // import uim.platform.analytics.presentation.cli.view;
 
 import uim.platform.analytics;
-
 mixin(ShowModule!());
 
 @safe:  

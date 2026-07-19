@@ -8,7 +8,6 @@ module uim.platform.postgres.infrastructure.config;
 import uim.platform.postgres;
 import std.process : environment;
 
-
 mixin(ShowModule!());
 
 @safe:

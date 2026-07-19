@@ -9,7 +9,6 @@ module uim.platform.logging.application.usecases.manage.notification_channels;
 
 
 import uim.platform.logging;
-
 mixin(ShowModule!());
 
 @safe:

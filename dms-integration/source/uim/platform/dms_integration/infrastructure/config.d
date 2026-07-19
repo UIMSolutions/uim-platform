@@ -7,7 +7,6 @@ module uim.platform.dms_integration.infrastructure.config;
 import std.process : environment;
 
 import uim.platform.dms_integration;
-
 mixin(ShowModule!());
 
 @safe:

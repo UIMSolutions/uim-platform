@@ -8,7 +8,6 @@ module app;
 // import uim.platform.content_agent.infrastructure.config;
 // import uim.platform.content_agent.infrastructure.container;
 import uim.platform.content_agent;
-
 mixin(ShowModule!());
 
 @safe:

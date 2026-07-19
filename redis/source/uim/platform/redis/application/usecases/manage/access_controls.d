@@ -6,7 +6,6 @@
 module uim.platform.redis.application.usecases.manage.access_controls;
 
 import uim.platform.redis;
-
 mixin(ShowModule!());
 
 @safe:

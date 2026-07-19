@@ -6,7 +6,6 @@
 module uim.platform.logging.domain.entities.span;
 
 import uim.platform.logging;
-
 mixin(ShowModule!());
 
 @safe:

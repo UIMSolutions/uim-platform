@@ -9,7 +9,6 @@ module uim.platform.credential_store.infrastructure.persistence.memory.service_b
 
  
 import uim.platform.credential_store;
-
 mixin(ShowModule!());
 
 @safe:

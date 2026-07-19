@@ -1,7 +1,6 @@
 module uim.platform.task_center.application.dtos.taskdefinition;
 
 import uim.platform.task_center;
-
 mixin(ShowModule!());
 
 @safe:

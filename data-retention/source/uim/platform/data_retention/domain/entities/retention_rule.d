@@ -1,6 +1,5 @@
 module uim.platform.data_retention.domain.entities.retention_rule;
 import uim.platform.data_retention;
-
 mixin(ShowModule!());
 
 @safe:

@@ -6,7 +6,6 @@
 module uim.platform.field_service.infrastructure.persistence.memory.technicians;
 
 import uim.platform.field_service;
-
 mixin(ShowModule!());
 
 @safe:

@@ -6,7 +6,6 @@
 module uim.platform.print.domain.entities.print_queue;
 
 import uim.platform.print;
-
 mixin(ShowModule!());
 
 @safe:

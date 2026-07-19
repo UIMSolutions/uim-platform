@@ -7,7 +7,6 @@ module uim.platform.portal.infrastructure.config;
 import std.process : environment;
 
 import uim.platform.portal;
-
 mixin(ShowModule!());
 
 @safe:

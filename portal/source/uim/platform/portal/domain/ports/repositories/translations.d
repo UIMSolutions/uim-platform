@@ -7,7 +7,6 @@ module uim.platform.portal.domain.ports.repositories.translations;
 // import uim.platform.portal.domain.entities.translation;
 // import uim.platform.portal.domain.types;
 import uim.platform.portal;
-
 mixin(ShowModule!());
 
 @safe:

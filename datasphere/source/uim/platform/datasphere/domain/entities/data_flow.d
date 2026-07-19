@@ -6,7 +6,6 @@
 module uim.platform.datasphere.domain.entities.data_flow;
 
 import uim.platform.datasphere;
-
 mixin(ShowModule!()); 
 
 @safe:

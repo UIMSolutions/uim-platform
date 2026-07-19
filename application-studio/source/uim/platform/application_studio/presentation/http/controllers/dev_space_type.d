@@ -6,7 +6,6 @@
 module uim.platform.application_studio.presentation.http.controllers.dev_space_type;
 
 import uim.platform.application_studio;
-
 mixin(ShowModule!());
 
 @safe:

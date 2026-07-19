@@ -6,7 +6,6 @@
 module uim.platform.ai_launchpad.application.usecases.get_capabilities;
 
 import uim.platform.ai_launchpad;
-
 mixin(ShowModule!());
 
 @safe:

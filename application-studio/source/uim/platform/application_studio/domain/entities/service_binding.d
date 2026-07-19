@@ -6,7 +6,6 @@
 module uim.platform.application_studio.domain.entities.service_binding;
 
 import uim.platform.application_studio;
-
 mixin(ShowModule!());
 
 @safe:

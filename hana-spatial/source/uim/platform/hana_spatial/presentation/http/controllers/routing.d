@@ -6,7 +6,6 @@
 module uim.platform.hana_spatial.presentation.http.controllers.routing;
 
 import uim.platform.hana_spatial;
-
 mixin(ShowModule!());
 
 @safe:

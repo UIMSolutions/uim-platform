@@ -7,7 +7,6 @@ module uim.platform.service.classes.config;
 
 import core.sync.mutex : Mutex;
 import uim.platform.service;
-
 mixin(ShowModule!());
 
 @safe:

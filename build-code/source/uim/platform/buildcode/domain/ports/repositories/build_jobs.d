@@ -6,7 +6,6 @@
 module uim.platform.buildcode.domain.ports.repositories.build_jobs;
 
 import uim.platform.buildcode;
-
 mixin(ShowModule!());
 
 @safe:

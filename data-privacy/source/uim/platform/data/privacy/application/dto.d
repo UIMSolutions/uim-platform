@@ -6,7 +6,6 @@
 module uim.platform.data.privacy.application.dto;
 
 import uim.platform.data.privacy;
-
 mixin(ShowModule!());
 
 @safe:

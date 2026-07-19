@@ -6,7 +6,6 @@
 module uim.platform.usage_data.infrastructure.persistence.memory.repositories.usage_record;
 
 import uim.platform.usage_data;
-
 mixin(ShowModule!());
 @safe:
 /// In-memory adapter implementing UsageRecordRepository port.

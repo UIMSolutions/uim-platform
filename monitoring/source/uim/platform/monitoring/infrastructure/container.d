@@ -34,7 +34,6 @@ import uim.platform.monitoring.presentation.http.controllers.alert;
 import uim.platform.monitoring.presentation.http.controllers.channel;
 import uim.platform.monitoring.presentation.http.controllers.dashboard;
 import uim.platform.service;
-
 mixin(ShowModule!());
 
 @safe:

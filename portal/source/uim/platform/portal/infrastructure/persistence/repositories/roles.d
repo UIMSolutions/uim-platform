@@ -10,7 +10,6 @@ module uim.platform.portal.infrastructure.persistence.repositories.roles;
 // import std.algorithm : canFind;
 
 import uim.platform.portal;
-
 mixin(ShowModule!());
 
 @safe:

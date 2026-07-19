@@ -8,7 +8,6 @@ module uim.platform.data.privacy.infrastructure.persistence.memory.data_controll
 // import uim.platform.data.privacy.domain.entities.data_controller;
 // import uim.platform.data.privacy.domain.ports.data_controller_repository;
 import uim.platform.data.privacy;
-
 mixin(ShowModule!());
 
 @safe:

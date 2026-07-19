@@ -6,7 +6,6 @@
 module uim.platform.print.application.usecases.manage.print_clients;
 
 import uim.platform.print;
-
 mixin(ShowModule!());
 
 @safe:

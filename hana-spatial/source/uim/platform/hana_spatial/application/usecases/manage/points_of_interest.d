@@ -7,7 +7,6 @@ module uim.platform.hana_spatial.application.usecases.manage.points_of_interest;
 
 import uim.platform.hana_spatial;
 
-
 mixin(ShowModule!());
 
 @safe:

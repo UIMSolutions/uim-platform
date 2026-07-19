@@ -6,7 +6,6 @@
 module uim.platform.datasphere_composer.application.usecases.manage.data_products;
 
 import uim.platform.datasphere_composer;
-
 mixin(ShowModule!());
 
 @safe:

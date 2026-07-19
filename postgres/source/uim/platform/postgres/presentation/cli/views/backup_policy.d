@@ -8,7 +8,6 @@ module uim.platform.postgres.presentation.cli.views.backup_policy;
 import uim.platform.postgres;
 import std.stdio : writeln, writefln;
 import std.conv  : to;
-
 mixin(ShowModule!());
 
 @safe:

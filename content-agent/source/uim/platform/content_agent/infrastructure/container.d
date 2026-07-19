@@ -32,7 +32,6 @@ module uim.platform.content_agent.infrastructure.container;
 // import uim.platform.content_agent.presentation.http.health;
 
 import uim.platform.content_agent;
-
 mixin(ShowModule!());
 
 @safe:

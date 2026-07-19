@@ -6,7 +6,6 @@
 module uim.platform.datasphere_composer.infrastructure.persistence.memory.customer_profiles;
 
 import uim.platform.datasphere_composer;
-
 mixin(ShowModule!());
 
 @safe:

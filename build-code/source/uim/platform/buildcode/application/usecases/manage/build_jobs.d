@@ -8,7 +8,6 @@ module uim.platform.buildcode.application.usecases.manage.build_jobs;
 import uim.platform.buildcode;
 import std.conv     : to;
 import std.datetime : Clock, SysTime;
-
 mixin(ShowModule!());
 
 @safe:

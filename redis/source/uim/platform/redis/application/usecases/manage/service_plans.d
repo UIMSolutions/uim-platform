@@ -6,7 +6,6 @@
 module uim.platform.redis.application.usecases.manage.service_plans;
 
 import uim.platform.redis;
-
 mixin(ShowModule!());
 
 @safe:

@@ -6,7 +6,6 @@
 module uim.platform.print.domain.repositories.print_tasks;
 
 import uim.platform.print;
-
 mixin(ShowModule!());
 
 @safe:

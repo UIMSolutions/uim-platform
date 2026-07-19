@@ -1,7 +1,6 @@
 module uim.platform.service.domain.entities.user;
 
 import uim.platform.service;
-
 mixin(ShowModule!());
 
 @safe:

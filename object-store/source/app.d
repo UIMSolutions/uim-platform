@@ -9,7 +9,6 @@ module app;
 // import uim.platform.object_store.infrastructure.container;
 
 import uim.platform.object_store;
-
 mixin(ShowModule!());
 
 @safe:

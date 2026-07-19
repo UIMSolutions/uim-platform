@@ -6,7 +6,6 @@
 module uim.platform.application_studio.infrastructure.persistence.repositories.extensions;
 
 import uim.platform.application_studio;
-
 mixin(ShowModule!());
 
 @safe:

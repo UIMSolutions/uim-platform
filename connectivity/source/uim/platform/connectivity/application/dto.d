@@ -8,7 +8,6 @@ module uim.platform.connectivity.application.dto;
 // import uim.platform.connectivity.domain.entities.destination : DestinationProperty;
 
 import uim.platform.connectivity;
-
 mixin(ShowModule!());
 
 @safe:

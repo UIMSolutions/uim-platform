@@ -6,7 +6,6 @@
 module uim.platform.task_center.domain.entities.user_task_filter;
 
 import uim.platform.task_center;
-
 mixin(ShowModule!());
 
 @safe:

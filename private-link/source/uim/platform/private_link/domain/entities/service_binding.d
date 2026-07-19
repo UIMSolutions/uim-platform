@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.private_link.domain.entities.service_binding;
 import uim.platform.private_link;
-
 mixin(ShowModule!());
 
 @safe:

@@ -6,7 +6,6 @@
 module uim.platform.events.infrastructure.container;
 
 import uim.platform.events;
-
 mixin(ShowModule!());
 
 @safe:

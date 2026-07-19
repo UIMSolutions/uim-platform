@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.auditlog.application.usecases.retrieve_audit_logs;
 import uim.platform.auditlog; 
-
 mixin(ShowModule!());
 
 @safe:

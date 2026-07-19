@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.private_link.application.dto;
 import uim.platform.private_link;
-
 mixin(ShowModule!());
 
 @safe:

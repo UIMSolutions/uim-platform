@@ -6,7 +6,6 @@
 module uim.platform.buildcode.application.dto;
 
 import uim.platform.buildcode;
-
 mixin(ShowModule!());
 
 @safe:

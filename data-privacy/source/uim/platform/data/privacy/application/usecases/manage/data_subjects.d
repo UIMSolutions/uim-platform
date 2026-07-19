@@ -9,7 +9,6 @@ module uim.platform.data.privacy.application.usecases.manage.data_subjects;
 // import uim.platform.data.privacy.domain.ports.repositories.data_subjects;
 // import uim.platform.data.privacy.application.dto;
 import uim.platform.data.privacy;
-
 mixin(ShowModule!());
 
 @safe:

@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.auditlog.domain.services.audit_filter_service;
 import uim.platform.auditlog;
-
 mixin(ShowModule!());
 /// Domain service — provides search and filtering over audit logs.
 @safe:

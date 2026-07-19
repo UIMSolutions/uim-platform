@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.health_fhir.application.usecases.manage.medication_requests;
 import uim.platform.health_fhir;
-
 mixin(ShowModule!());
 
 @safe:

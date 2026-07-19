@@ -6,7 +6,6 @@
 module uim.platform.datasphere_composer.application.usecases.manage.tenant_users;
 
 import uim.platform.datasphere_composer;
-
 mixin(ShowModule!());
 
 @safe:

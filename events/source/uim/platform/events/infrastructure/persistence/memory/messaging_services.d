@@ -6,7 +6,6 @@
 module uim.platform.events.infrastructure.persistence.memory.messaging_services;
 
 import uim.platform.events;
-
 mixin(ShowModule!());
 
 @safe:

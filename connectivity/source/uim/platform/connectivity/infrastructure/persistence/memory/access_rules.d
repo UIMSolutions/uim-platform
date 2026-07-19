@@ -9,7 +9,6 @@ module uim.platform.connectivity.infrastructure.persistence.memory.access_rules;
 // import uim.platform.connectivity.domain.ports.repositories.access_rules;
 
 import uim.platform.connectivity;
-
 mixin(ShowModule!());
 
 @safe:

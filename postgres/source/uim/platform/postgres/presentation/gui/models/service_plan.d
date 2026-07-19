@@ -6,7 +6,6 @@
 module uim.platform.postgres.presentation.gui.models.service_plan;
 
 import uim.platform.postgres;
-
 mixin(ShowModule!());
 
 @safe:

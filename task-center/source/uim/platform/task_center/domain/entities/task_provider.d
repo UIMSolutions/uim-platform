@@ -6,7 +6,6 @@
 module uim.platform.task_center.domain.entities.task_provider;
 
 import uim.platform.task_center;
-
 mixin(ShowModule!());
 
 @safe:

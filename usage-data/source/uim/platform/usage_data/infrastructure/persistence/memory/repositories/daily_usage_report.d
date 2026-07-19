@@ -6,7 +6,6 @@
 module uim.platform.usage_data.infrastructure.persistence.memory.repositories.daily_usage_report;
 
 import uim.platform.usage_data;
-
 mixin(ShowModule!());
 @safe:
 /// In-memory adapter implementing DailyUsageReportRepository port.

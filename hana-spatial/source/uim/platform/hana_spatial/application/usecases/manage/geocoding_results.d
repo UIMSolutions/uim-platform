@@ -6,7 +6,6 @@
 module uim.platform.hana_spatial.application.usecases.manage.geocoding_results;
 
 import uim.platform.hana_spatial;
-
 mixin(ShowModule!());
 
 @safe:

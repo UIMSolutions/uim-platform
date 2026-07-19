@@ -14,7 +14,6 @@ module uim.platform.portal.presentation.http.controllers.page;
 // import uim.platform.portal.application.usecases.manage;
 
 import uim.platform.portal;
-
 mixin(ShowModule!());
 
 @safe:

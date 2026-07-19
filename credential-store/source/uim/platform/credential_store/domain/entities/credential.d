@@ -6,7 +6,6 @@
 module uim.platform.credential_store.domain.entities.credential;
 
 import uim.platform.credential_store;
-
 mixin(ShowModule!());
 
 @safe:

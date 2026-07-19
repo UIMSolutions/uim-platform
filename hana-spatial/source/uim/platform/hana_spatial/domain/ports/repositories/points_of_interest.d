@@ -6,7 +6,6 @@
 module uim.platform.hana_spatial.domain.ports.repositories.points_of_interest;
 
 import uim.platform.hana_spatial;
-
 mixin(ShowModule!());
 
 @safe:

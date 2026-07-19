@@ -7,7 +7,6 @@ module uim.platform.monitoring.domain.ports.repositories.health_check_results;
 // import uim.platform.monitoring.domain.entities.health_check_result;
 // import uim.platform.monitoring.domain.types;
 import uim.platform.monitoring;
-
 mixin(ShowModule!());
 
 @safe:

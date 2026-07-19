@@ -6,7 +6,6 @@
 module uim.platform.data.privacy.domain.enumerations;
 
 import uim.platform.data.privacy;
-
 mixin(ShowModule!());
 
 @safe:

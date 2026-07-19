@@ -6,7 +6,6 @@
 module uim.platform.hana_spatial.domain.services.validators;
 
 import uim.platform.hana_spatial;
-
 mixin(ShowModule!());
 
 @safe:

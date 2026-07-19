@@ -11,7 +11,6 @@ module uim.platform.foundry.presentation.http.controllers.service;
 // import uim.platform.foundry.domain.entities.service_instance;
 // import uim.platform.foundry.domain.entities.service_binding;
 import uim.platform.foundry;
-
 mixin(ShowModule!());
 
 @safe:

@@ -8,7 +8,6 @@ module uim.platform.foundry.presentation.http.controllers.monitoring;
 // import uim.platform.foundry.application.usecases.monitor_apps;
 
 import uim.platform.foundry;
-
 mixin(ShowModule!());
 
 @safe:

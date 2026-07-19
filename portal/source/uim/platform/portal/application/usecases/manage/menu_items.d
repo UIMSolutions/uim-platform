@@ -15,7 +15,6 @@ module uim.platform.portal.application.usecases.manage.menu_items;
 // import uim.platform.portal.application.dto;
 // import uim.platform.portal.domain.types;
 import uim.platform.portal;
-
 mixin(ShowModule!());
 
 @safe:

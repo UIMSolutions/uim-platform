@@ -9,7 +9,6 @@ module uim.platform.health_fhir.infrastructure.persistence.mongodb.patients;
 // Connection URI provided via HEALTHFHIR_MONGO_URI env variable.
 // Implementation stub — extend with actual vibe.d MongoDB calls.
 import uim.platform.health_fhir;
-
 mixin(ShowModule!());
 
 @safe:

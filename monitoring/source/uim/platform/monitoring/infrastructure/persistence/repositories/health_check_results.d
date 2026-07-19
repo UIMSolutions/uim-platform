@@ -9,7 +9,6 @@ module uim.platform.monitoring.infrastructure.persistence.repositories.health_ch
 // import uim.platform.monitoring.domain.ports.repositories.health_check_results;
 
 import uim.platform.monitoring;
-
 mixin(ShowModule!());
 
 @safe:

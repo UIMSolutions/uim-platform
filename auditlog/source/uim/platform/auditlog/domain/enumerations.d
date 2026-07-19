@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.auditlog.domain.enumerations;
 import uim.platform.auditlog;
-
 mixin(ShowModule!());
 
 @safe:

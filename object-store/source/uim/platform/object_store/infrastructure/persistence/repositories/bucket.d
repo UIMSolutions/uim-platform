@@ -10,7 +10,6 @@ module uim.platform.object_store.infrastructure.persistence.repositories.bucket;
 // import uim.platform.object_store.domain.ports.repositories.bucket;
 
 import uim.platform.object_store;
-
 mixin(ShowModule!());
 
 @safe:

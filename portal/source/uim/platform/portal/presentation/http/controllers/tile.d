@@ -13,7 +13,6 @@ module uim.platform.portal.presentation.http.controllers.tile;
 // .platform.identity.authentication.presentation.http
 // import uim.platform.portal.application.usecases.manage;
 import uim.platform.portal;
-
 mixin(ShowModule!());
 
 @safe:

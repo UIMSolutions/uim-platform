@@ -6,7 +6,6 @@
 module uim.platform.oauth.infrastructure.container;
 
 import uim.platform.oauth;
-
 mixin(ShowModule!());
 
 @safe:

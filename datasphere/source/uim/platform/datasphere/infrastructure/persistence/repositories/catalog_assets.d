@@ -9,7 +9,6 @@ module uim.platform.datasphere.infrastructure.persistence.repositories.catalog_a
 // import uim.platform.datasphere.domain.ports.repositories.catalog_assets;
 
 import uim.platform.datasphere;
-
 mixin(ShowModule!()); 
 
 @safe:

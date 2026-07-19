@@ -6,7 +6,6 @@
 module uim.platform.service.helpers.network;
 
 import uim.platform.service;
-
 mixin(ShowModule!());
 
 @safe:

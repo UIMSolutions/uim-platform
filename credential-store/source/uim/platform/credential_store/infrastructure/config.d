@@ -8,7 +8,6 @@ module uim.platform.credential_store.infrastructure.config;
 import std.process : environment;
 
 import uim.platform.credential_store;
-
 mixin(ShowModule!());
 
 @safe:

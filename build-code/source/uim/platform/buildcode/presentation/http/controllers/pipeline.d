@@ -6,7 +6,6 @@
 module uim.platform.buildcode.presentation.http.controllers.pipeline;
 
 import uim.platform.buildcode;
-
 mixin(ShowModule!());
 
 @safe:

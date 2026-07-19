@@ -28,7 +28,6 @@ module uim.platform.connectivity.infrastructure.container;
 // import uim.platform.connectivity.presentation.http.monitoring;
 // import uim.platform.connectivity.presentation.http.health;
 import uim.platform.connectivity;
-
 mixin(ShowModule!());
 
 @safe:

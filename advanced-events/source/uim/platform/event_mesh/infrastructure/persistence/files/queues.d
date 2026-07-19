@@ -12,7 +12,6 @@ import vibe.data.json : Json, parseJsonString;
 
 import uim.platform.event_mesh;
 import uim.platform.event_mesh.infrastructure.persistence.files.common;
-
 mixin(ShowModule!());
 
 @safe:

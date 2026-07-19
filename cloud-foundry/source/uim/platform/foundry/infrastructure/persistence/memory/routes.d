@@ -12,7 +12,6 @@ module uim.platform.foundry.infrastructure.persistence.memory.routes;
 // import std.algorithm : canFind, filter;
  
 import uim.platform.foundry;
-
 mixin(ShowModule!());
 
 @safe:

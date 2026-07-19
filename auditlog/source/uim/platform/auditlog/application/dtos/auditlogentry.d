@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.auditlog.application.dtos.auditlogentry;
 import uim.platform.auditlog;
-
 mixin(ShowModule!());
 
 @safe:

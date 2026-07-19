@@ -6,7 +6,6 @@
 module uim.platform.event_mesh.infrastructure.persistence.memory.mesh_bridges;
 
 import uim.platform.event_mesh;
-
 mixin(ShowModule!());
 
 @safe:

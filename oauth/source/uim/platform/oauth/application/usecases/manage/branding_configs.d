@@ -6,7 +6,6 @@
 module uim.platform.oauth.application.usecases.manage.branding_configs;
 
 import uim.platform.oauth;
-
 mixin(ShowModule!());
 
 @safe:

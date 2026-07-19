@@ -8,7 +8,6 @@ module uim.platform.redis.infrastructure.config;
 import uim.platform.redis;
 import std.process : environment;
 
-
 mixin(ShowModule!());
 
 @safe:

@@ -6,7 +6,6 @@
 module uim.platform.event_mesh.application.dto;
 
 import uim.platform.event_mesh;
-
 mixin(ShowModule!());
 
 @safe:

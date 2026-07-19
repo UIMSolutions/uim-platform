@@ -9,7 +9,6 @@ module uim.platform.connectivity.presentation.http.controllers.channel;
 // import uim.platform.connectivity.application.dto;
 // import uim.platform.connectivity.domain.entities.service_channel;
 import uim.platform.connectivity;
-
 mixin(ShowModule!());
 
 @safe:

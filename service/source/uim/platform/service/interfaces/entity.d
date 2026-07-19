@@ -6,7 +6,6 @@
 module uim.platform.service.interfaces.entity;
 
 import uim.platform.service;
-
 mixin(ShowModule!());
 
 @safe:

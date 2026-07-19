@@ -6,7 +6,6 @@
 module uim.platform.service.helpers.required;
 
 import uim.platform.service;
-
 mixin(ShowModule!());
 
 @safe:

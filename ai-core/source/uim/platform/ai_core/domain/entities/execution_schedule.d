@@ -6,7 +6,6 @@
 module uim.platform.ai_core.domain.entities.execution_schedule;
 // import uim.platform.ai_core.domain.types;
 import uim.platform.ai_core;
-
 mixin(ShowModule!()); 
 
 @safe:

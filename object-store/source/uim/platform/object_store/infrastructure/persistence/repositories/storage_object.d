@@ -12,7 +12,6 @@ module uim.platform.object_store.infrastructure.persistence.repositories.storage
 // import std.algorithm : filter, startsWith;
 
 import uim.platform.object_store;
-
 mixin(ShowModule!());
 
 @safe:

@@ -10,7 +10,6 @@ module uim.platform.content_agent.infrastructure.persistence.memory.content_acti
 // import std.algorithm : filter, sort;
  
 import uim.platform.content_agent;
-
 mixin(ShowModule!());
 
 @safe:

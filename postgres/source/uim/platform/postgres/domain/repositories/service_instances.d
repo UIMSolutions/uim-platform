@@ -6,7 +6,6 @@
 module uim.platform.postgres.domain.repositories.service_instances;
 
 import uim.platform.postgres;
-
 mixin(ShowModule!());
 
 @safe:

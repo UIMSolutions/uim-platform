@@ -7,7 +7,6 @@ module uim.platform.task_center.infrastructure.config;
 import std.process : environment;
 
 import uim.platform.task_center;
-
 mixin(ShowModule!());
 
 @safe:

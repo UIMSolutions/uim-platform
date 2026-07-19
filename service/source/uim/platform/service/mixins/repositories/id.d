@@ -1,6 +1,5 @@
 module uim.platform.service.mixins.repositories.id;
 import uim.platform.service;
-
 mixin(ShowModule!());
 
 @safe:

@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.health_fhir.application.dto;
 import uim.platform.health_fhir;
-
 mixin(ShowModule!());
 
 @safe:

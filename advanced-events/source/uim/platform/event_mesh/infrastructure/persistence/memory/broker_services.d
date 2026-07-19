@@ -6,7 +6,6 @@
 module uim.platform.event_mesh.infrastructure.persistence.memory.broker_services;
 
 import uim.platform.event_mesh;
-
 mixin(ShowModule!());
 
 @safe:

@@ -1,7 +1,6 @@
 module uim.platform.monitoring.domain.enumerations;
 
 import uim.platform.monitoring;
-
 mixin(ShowModule!());
 
 @safe:

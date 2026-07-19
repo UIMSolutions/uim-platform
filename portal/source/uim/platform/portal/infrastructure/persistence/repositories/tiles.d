@@ -9,7 +9,6 @@ module uim.platform.portal.infrastructure.persistence.repositories.tiles;
 // import uim.platform.portal.domain.ports.repositories.tiles;
 // import std.string : toLower, indexOf;
 import uim.platform.portal;
-
 mixin(ShowModule!());
 
 @safe:

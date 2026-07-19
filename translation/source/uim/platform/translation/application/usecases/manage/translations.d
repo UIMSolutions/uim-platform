@@ -6,7 +6,6 @@
 module uim.platform.translation.application.usecases.manage.translations;
 
 import uim.platform.translation;
-
 mixin(ShowModule!());
 
 @safe:

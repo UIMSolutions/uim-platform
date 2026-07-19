@@ -22,7 +22,6 @@ module uim.platform.destination.infrastructure.container;
 // import uim.platform.destination.presentation.http.health;
 
 import uim.platform.destination;
-
 mixin(ShowModule!());
 
 @safe:

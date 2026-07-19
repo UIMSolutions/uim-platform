@@ -9,7 +9,6 @@ module uim.platform.ai_core.infrastructure.persistence.repositories.metrics;
 // import uim.platform.ai_core.domain.ports.repositories.metrics;
 
 import uim.platform.ai_core;
-
 mixin(ShowModule!()); 
 
 @safe:

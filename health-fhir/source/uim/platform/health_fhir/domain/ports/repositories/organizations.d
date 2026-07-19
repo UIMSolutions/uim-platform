@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.health_fhir.domain.ports.repositories.organizations;
 import uim.platform.health_fhir;
-
 mixin(ShowModule!());
 
 @safe:

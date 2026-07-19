@@ -6,7 +6,6 @@
 module uim.platform.redis.presentation.gui.controllers.cache_entry;
 
 import uim.platform.redis;
-
 mixin(ShowModule!());
 
 @safe:

@@ -1,6 +1,5 @@
 module uim.platform.data_retention.domain.entities.application_group;
 import uim.platform.data_retention;
-
 mixin(ShowModule!());
 
 @safe:

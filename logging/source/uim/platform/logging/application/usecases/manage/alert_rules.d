@@ -8,7 +8,6 @@ module uim.platform.logging.application.usecases.manage.alert_rules;
 // import uim.platform.logging.domain.ports.repositories.alert_rules;
 
 import uim.platform.logging;
-
 mixin(ShowModule!());
 
 @safe:

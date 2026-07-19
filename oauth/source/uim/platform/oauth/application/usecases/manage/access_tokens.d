@@ -6,7 +6,6 @@
 module uim.platform.oauth.application.usecases.manage.access_tokens;
 
 import uim.platform.oauth;
-
 mixin(ShowModule!());
 
 @safe:

@@ -8,7 +8,6 @@ module uim.platform.ai_launchpad.infrastructure.persistence.repositories.prompts
 // import uim.platform.ai_launchpad.domain.entities.prompt : Prompt;
 // import uim.platform.ai_launchpad.domain.types;
 import uim.platform.ai_launchpad;
-
 mixin(ShowModule!());
 
 @safe:

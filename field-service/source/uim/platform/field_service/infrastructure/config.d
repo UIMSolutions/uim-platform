@@ -7,7 +7,6 @@ module uim.platform.field_service.infrastructure.config;
 import std.process : environment;
 
 import uim.platform.field_service;
-
 mixin(ShowModule!());
 
 @safe:

@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.foundry.domain.enumerations.dashboard;
 import uim.platform.foundry;
-
 mixin(ShowModule!());
 
 @safe:

@@ -1,6 +1,5 @@
 module uim.platform.credential_store.domain.enumerations;
 import uim.platform.credential_store;
-
 mixin(ShowModule!());
 
 @safe:

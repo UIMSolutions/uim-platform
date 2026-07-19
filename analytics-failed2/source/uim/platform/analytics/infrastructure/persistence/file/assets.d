@@ -6,7 +6,6 @@ module uim.platform.analytics.infrastructure.persistence.file.assets;
 // 
 // import uim.platform.analytics.domain;
 import uim.platform.analytics;
-
 mixin(ShowModule!());
 
 @safe:  

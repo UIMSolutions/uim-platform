@@ -8,7 +8,6 @@ module uim.platform.keystore.domain.ports.repositories.key_entries;
 // import uim.platform.keystore.domain.types;
 
 import uim.platform.keystore;
-
 mixin(ShowModule!());
 
 @safe:

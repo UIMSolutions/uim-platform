@@ -6,7 +6,6 @@
 module uim.platform.usage_data.infrastructure.web.routes;
 
 import uim.platform.usage_data;
-
 mixin(ShowModule!());
 @safe:
 

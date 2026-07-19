@@ -9,7 +9,6 @@ module uim.platform.print.infrastructure.persistence.mongo.print_tasks;
 import uim.platform.print;
 import vibe.db.mongo.mongo;
 import vibe.data.bson;
-
 mixin(ShowModule!());
 
 @safe:

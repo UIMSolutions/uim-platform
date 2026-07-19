@@ -6,7 +6,6 @@
 module uim.platform.task_center.domain.ports.repositories.substitution_rules;
 
 import uim.platform.task_center;
-
 mixin(ShowModule!());
 
 @safe:

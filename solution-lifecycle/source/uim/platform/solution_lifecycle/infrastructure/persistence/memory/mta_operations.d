@@ -6,7 +6,6 @@
 module uim.platform.solution_lifecycle.infrastructure.persistence.memory.mta_operations;_repo;
 
 import uim.platform.solution_lifecycle;
-
 mixin(ShowModule!());
 
 @safe:

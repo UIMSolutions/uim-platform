@@ -6,7 +6,6 @@
 module uim.platform.print.presentation.http.controllers.printer;
 
 import uim.platform.print;
-
 mixin(ShowModule!());
 
 @safe:

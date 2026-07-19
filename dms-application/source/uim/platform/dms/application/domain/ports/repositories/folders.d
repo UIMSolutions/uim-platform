@@ -7,7 +7,6 @@ module uim.platform.dms.application.domain.ports.repositories.folders;
 // import uim.platform.dms.application.domain.entities.folder;
 // import uim.platform.dms.application.domain.types;
 import uim.platform.dms.application;
-
 mixin(ShowModule!());
 @safe:
 interface IFolderRepository : ITenantRepository!(DmsFolder, FolderId) {

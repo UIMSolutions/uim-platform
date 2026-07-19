@@ -8,7 +8,6 @@ module uim.platform.redis.infrastructure.persistence.memory.service_instances;
 import uim.platform.redis;
 import std.algorithm : filter;
 import std.array : array;
-
 mixin(ShowModule!());
 
 @safe:

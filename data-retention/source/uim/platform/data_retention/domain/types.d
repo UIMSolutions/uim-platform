@@ -1,6 +1,5 @@
 module uim.platform.data_retention.domain.types;
 import uim.platform.data_retention;
-
 mixin(ShowModule!());
 
 @safe:

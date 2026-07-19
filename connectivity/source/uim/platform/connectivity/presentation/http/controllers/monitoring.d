@@ -10,7 +10,6 @@ module uim.platform.connectivity.presentation.http.controllers.monitoring;
 // import uim.platform.connectivity.domain.types;
 
 import uim.platform.connectivity;
-
 mixin(ShowModule!());
 
 @safe:

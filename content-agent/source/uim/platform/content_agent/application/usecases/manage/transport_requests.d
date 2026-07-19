@@ -17,7 +17,6 @@ module uim.platform.content_agent.application.usecases.manage.transport_requests
 // import uim.platform.content_agent.domain.services.transport_validator;
 
 import uim.platform.content_agent;
-
 mixin(ShowModule!());
 
 @safe:

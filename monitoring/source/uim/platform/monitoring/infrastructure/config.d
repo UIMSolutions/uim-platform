@@ -6,7 +6,6 @@
 module uim.platform.monitoring.infrastructure.config;
 import std.process : environment;
 import uim.platform.monitoring;
-
 mixin(ShowModule!());
 
 @safe:

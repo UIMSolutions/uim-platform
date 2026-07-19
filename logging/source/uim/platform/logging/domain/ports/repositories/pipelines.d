@@ -7,7 +7,6 @@ module uim.platform.logging.domain.ports.repositories.pipelines;
 // import uim.platform.logging.domain.entities.pipeline;
 
 import uim.platform.logging;
-
 mixin(ShowModule!());
 
 @safe:

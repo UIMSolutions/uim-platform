@@ -6,7 +6,6 @@
 module uim.platform.credential_store.domain.entities.audit_log_entry;
 
 import uim.platform.credential_store;
-
 mixin(ShowModule!());
 
 @safe:

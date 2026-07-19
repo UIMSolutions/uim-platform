@@ -6,7 +6,6 @@
 module uim.platform.buildcode.domain.services.quota_service;
 
 import uim.platform.buildcode;
-
 mixin(ShowModule!());
 
 @safe:

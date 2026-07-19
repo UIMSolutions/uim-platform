@@ -4,7 +4,6 @@ module uim.platform.analytics.infrastructure.persistence.mongodb.assets;
 // import vibe.db.mongo.mongo : Bson, DeleteOptions, MongoCollection, UpdateOptions, connectMongoDB;
 // import uim.platform.analytics.domain;
 import uim.platform.analytics;
-
 mixin(ShowModule!());
 
 @safe:  

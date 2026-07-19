@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.health_fhir.presentation.http.controllers.capability;
 import uim.platform.health_fhir;
-
 mixin(ShowModule!());
 
 @safe:

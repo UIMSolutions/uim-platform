@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.private_link.infrastructure.container;
 import uim.platform.private_link;
-
 mixin(ShowModule!());
 
 @safe:

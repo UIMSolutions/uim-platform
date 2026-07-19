@@ -7,7 +7,6 @@ module uim.platform.object_store.application.dto;
 
 // import uim.platform.object_store.domain.types;
 import uim.platform.object_store;
-
 mixin(ShowModule!());
 
 @safe:

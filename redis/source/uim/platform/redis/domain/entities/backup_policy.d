@@ -6,7 +6,6 @@
 module uim.platform.redis.domain.entities.backup_policy;
 
 import uim.platform.redis;
-
 mixin(ShowModule!());
 
 @safe:

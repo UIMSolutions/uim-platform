@@ -8,7 +8,6 @@ module uim.platform.data.privacy.infrastructure.persistence.memory.consent_recor
 // import uim.platform.data.privacy.domain.entities.consent_record;
 // import uim.platform.data.privacy.domain.ports.repositories.consent_records;
 import uim.platform.data.privacy;
-
 mixin(ShowModule!());
 
 @safe:

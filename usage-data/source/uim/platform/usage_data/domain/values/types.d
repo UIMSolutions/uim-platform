@@ -6,7 +6,6 @@
 module uim.platform.usage_data.domain.values.types;
 
 import uim.platform.usage_data;
-
 mixin(ShowModule!());
 @safe:
 

@@ -6,7 +6,6 @@
 module uim.platform.hana_spatial.infrastructure.container;
 
 import uim.platform.hana_spatial;
-
 mixin(ShowModule!());
 
 @safe:

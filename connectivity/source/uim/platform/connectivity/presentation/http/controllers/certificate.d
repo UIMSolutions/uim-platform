@@ -10,7 +10,6 @@ module uim.platform.connectivity.presentation.http.controllers.certificate;
 // import uim.platform.connectivity.application.dto;
 // import uim.platform.connectivity.domain.entities.certificate;
 import uim.platform.connectivity;
-
 mixin(ShowModule!());
 
 @safe:

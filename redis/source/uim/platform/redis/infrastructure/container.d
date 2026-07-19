@@ -6,7 +6,6 @@
 module uim.platform.redis.infrastructure.container;
 
 import uim.platform.redis;
-
 mixin(ShowModule!());
 
 @safe:

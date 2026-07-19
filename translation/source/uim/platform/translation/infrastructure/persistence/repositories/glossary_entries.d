@@ -8,7 +8,6 @@ module uim.platform.translation.infrastructure.persistence.repositories.glossary
 import uim.platform.translation;
 import std.algorithm : filter;
 import std.array : array;
-
 mixin(ShowModule!());
 
 @safe:

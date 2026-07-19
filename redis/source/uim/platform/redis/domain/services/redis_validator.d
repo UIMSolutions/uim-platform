@@ -6,7 +6,6 @@
 module uim.platform.redis.domain.services.redis_validator;
 
 import uim.platform.redis;
-
 mixin(ShowModule!());
 
 @safe:

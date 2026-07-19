@@ -7,7 +7,6 @@ module uim.platform.redis.presentation.gui.views.backup_policy;
 
 import uim.platform.redis;
 
-
 mixin(ShowModule!());
 
 @safe:

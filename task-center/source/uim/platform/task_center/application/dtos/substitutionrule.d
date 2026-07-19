@@ -1,7 +1,6 @@
 module uim.platform.task_center.application.dtos.substitutionrule;
 
 import uim.platform.task_center;
-
 mixin(ShowModule!());
 
 @safe:

@@ -14,7 +14,6 @@ module uim.platform.content_agent.application.usecases.manage.content_packages;
 // import uim.platform.content_agent.domain.services.package_assembler;
 
 import uim.platform.content_agent;
-
 mixin(ShowModule!());
 
 @safe:

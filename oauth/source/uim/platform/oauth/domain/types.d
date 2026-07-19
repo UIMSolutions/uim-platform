@@ -6,7 +6,6 @@
 module uim.platform.oauth.domain.types;
 
 import uim.platform.oauth;
-
 mixin(ShowModule!());
 
 @safe:

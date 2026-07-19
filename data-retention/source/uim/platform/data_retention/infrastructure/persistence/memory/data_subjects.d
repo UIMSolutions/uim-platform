@@ -1,6 +1,5 @@
 module uim.platform.data_retention.infrastructure.persistence.memory.data_subjects;
 import uim.platform.data_retention;
-
 mixin(ShowModule!());
 
 @safe:

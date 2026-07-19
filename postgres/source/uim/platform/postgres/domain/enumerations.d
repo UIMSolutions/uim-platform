@@ -6,7 +6,6 @@
 module uim.platform.postgres.domain.enumerations;
 
 import uim.platform.postgres;
-
 mixin(ShowModule!());
 
 @safe:

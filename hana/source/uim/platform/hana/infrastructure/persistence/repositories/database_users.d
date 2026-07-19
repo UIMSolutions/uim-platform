@@ -9,7 +9,6 @@ module uim.platform.hana.infrastructure.persistence.repositories.database_users;
 // import uim.platform.hana.domain.ports.repositories.database_users;
 
 import uim.platform.hana;
-
 mixin(ShowModule!());
 
 @safe:

@@ -8,7 +8,6 @@ module uim.platform.logging.infrastructure.config;
 
 import std.process : environment;
 import uim.platform.logging;
-
 mixin(ShowModule!());
 
 @safe:

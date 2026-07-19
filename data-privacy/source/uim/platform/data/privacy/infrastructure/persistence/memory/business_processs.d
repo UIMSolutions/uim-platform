@@ -8,7 +8,6 @@ module uim.platform.data.privacy.infrastructure.persistence.memory.business_proc
 // import uim.platform.data.privacy.domain.entities.business_process;
 // import uim.platform.data.privacy.domain.ports.business_process_repository;
 import uim.platform.data.privacy;
-
 mixin(ShowModule!());
 
 @safe:

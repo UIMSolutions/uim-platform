@@ -6,7 +6,6 @@
 module uim.platform.data.privacy.domain.entities.deletion_request;
 
 import uim.platform.data.privacy;
-
 mixin(ShowModule!());
 
 @safe:

@@ -1,7 +1,6 @@
 module uim.platform.service_manager.infrastructure.persistence.repositories.platforms;
 
 import uim.platform.service_manager;
-
 mixin(ShowModule!());
 
 @safe:

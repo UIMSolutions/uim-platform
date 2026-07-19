@@ -6,7 +6,6 @@
 module uim.platform.postgres.presentation.cli.models.service_binding;
 
 import uim.platform.postgres;
-
 mixin(ShowModule!());
 
 @safe:

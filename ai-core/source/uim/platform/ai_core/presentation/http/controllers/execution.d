@@ -8,7 +8,6 @@ module uim.platform.ai_core.presentation.http.controllers.execution;
 
 
 import uim.platform.ai_core;
-
 mixin(ShowModule!());
 
 @safe:

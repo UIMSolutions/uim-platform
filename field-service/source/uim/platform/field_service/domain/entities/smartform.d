@@ -6,7 +6,6 @@
 module uim.platform.field_service.domain.entities.smartform;
 
 import uim.platform.field_service;
-
 mixin(ShowModule!());
 
 @safe:

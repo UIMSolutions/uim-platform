@@ -6,7 +6,6 @@
 module uim.platform.monitoring.domain.entities.notification_channel;
 // import uim.platform.monitoring.domain.types;
 import uim.platform.monitoring;
-
 mixin(ShowModule!());
 
 @safe:

@@ -10,7 +10,6 @@ module uim.platform.monitoring.application.usecases.manage.monitored_resources;
 // import uim.platform.monitoring.domain.types;
 // 
 import uim.platform.monitoring;
-
 mixin(ShowModule!());
 
 @safe:

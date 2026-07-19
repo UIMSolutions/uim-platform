@@ -9,7 +9,6 @@ module uim.platform.destination.presentation.http.controllers.certificate;
 // import uim.platform.destination.domain.entities.certificate;
 // import uim.platform.destination.domain.types;
 import uim.platform.destination;
-
 mixin(ShowModule!());
 
 @safe:

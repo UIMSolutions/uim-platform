@@ -1,6 +1,5 @@
 module uim.platform.auditlog.application.dtos.securityevent;
 import uim.platform.auditlog;
-
 mixin(ShowModule!());
 
 @safe:

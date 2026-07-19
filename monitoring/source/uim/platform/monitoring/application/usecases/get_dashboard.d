@@ -16,7 +16,6 @@ module uim.platform.monitoring.application.usecases.get_dashboard;
 // import uim.platform.monitoring.domain.ports.repositories.notification_channels;
 // import uim.platform.monitoring.domain.types;
 import uim.platform.monitoring;
-
 mixin(ShowModule!());
 
 @safe:

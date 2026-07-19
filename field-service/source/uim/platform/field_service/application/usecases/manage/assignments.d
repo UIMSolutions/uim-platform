@@ -6,7 +6,6 @@
 module uim.platform.field_service.application.usecases.manage.assignments;
 
 import uim.platform.field_service;
-
 mixin(ShowModule!());
 
 @safe:

@@ -14,7 +14,6 @@ module uim.platform.foundry.domain.services.app_lifecycle_manager;
 // import uim.platform.foundry.domain.ports.repositories.space;
 
 import uim.platform.foundry;
-
 mixin(ShowModule!());
 
 @safe:

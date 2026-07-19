@@ -10,7 +10,6 @@ module uim.platform.destination.application.usecases.manage.fragments;
 // import uim.platform.destination.domain.types;
 // 
 import uim.platform.destination;
-
 mixin(ShowModule!());
 
 @safe:

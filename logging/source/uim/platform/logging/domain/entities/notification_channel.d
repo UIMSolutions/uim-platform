@@ -6,7 +6,6 @@
 module uim.platform.logging.domain.entities.notification_channel;
 
 import uim.platform.logging;
-
 mixin(ShowModule!());
 
 @safe:

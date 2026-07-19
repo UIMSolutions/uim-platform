@@ -8,7 +8,6 @@ module uim.platform.portal.domain.ports.repositories.pages;
 // import uim.platform.portal.domain.entities.page;
 // import uim.platform.portal.domain.types;
 import uim.platform.portal;
-
 mixin(ShowModule!());
 
 @safe:

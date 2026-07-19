@@ -7,7 +7,6 @@ module uim.platform.application_studio.infrastructure.config;
 import std.process : environment;
 
 import uim.platform.application_studio;
-
 mixin(ShowModule!());
 
 @safe:

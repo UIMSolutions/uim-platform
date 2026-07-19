@@ -7,7 +7,6 @@ module uim.platform.postgres.presentation.web.controllers.database_user;
 
 import uim.platform.postgres;
 
-
 mixin(ShowModule!());
 
 @safe:

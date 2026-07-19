@@ -1,6 +1,5 @@
 module uim.platform.data_retention.domain.ports.repositories.data_subject_roles;
 import uim.platform.data_retention;
-
 mixin(ShowModule!());
 
 @safe:

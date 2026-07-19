@@ -9,7 +9,6 @@ import std.process : environment;
 
 
 import uim.platform.health_fhir;
-
 mixin(ShowModule!());
 
 @safe:

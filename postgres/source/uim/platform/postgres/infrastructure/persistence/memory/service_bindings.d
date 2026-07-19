@@ -8,7 +8,6 @@ module uim.platform.postgres.infrastructure.persistence.memory.service_bindings;
 import uim.platform.postgres;
 import std.algorithm : filter;
 import std.array : array;
-
 mixin(ShowModule!());
 
 @safe:

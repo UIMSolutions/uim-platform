@@ -10,7 +10,6 @@ module uim.platform.object_store.infrastructure.persistence.repositories.access_
 // import uim.platform.object_store.domain.ports.repositories.access_policy;
 
 import uim.platform.object_store;
-
 mixin(ShowModule!());
 
 @safe:

@@ -13,7 +13,6 @@ module uim.platform.foundry.application.usecases.manage.apps;
 // import uim.platform.foundry.domain.services.app_lifecycle_manager;
 // import uim.platform.foundry.application.dto;
 import uim.platform.foundry;
-
 mixin(ShowModule!());
 
 @safe:

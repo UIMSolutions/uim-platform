@@ -7,7 +7,6 @@ module uim.platform.print.infrastructure.config;
 
 import uim.platform.print;
 import std.process : environment;
-
 mixin(ShowModule!());
 
 @safe:

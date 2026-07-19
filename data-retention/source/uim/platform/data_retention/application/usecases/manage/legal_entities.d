@@ -1,6 +1,5 @@
 module uim.platform.data_retention.application.usecases.manage.legal_entities;
 import uim.platform.data_retention;
-
 mixin(ShowModule!());
 
 @safe:

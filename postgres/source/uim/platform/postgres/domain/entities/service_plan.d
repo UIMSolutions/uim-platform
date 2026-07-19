@@ -6,7 +6,6 @@
 module uim.platform.postgres.domain.entities.service_plan;
 
 import uim.platform.postgres;
-
 mixin(ShowModule!());
 
 @safe:

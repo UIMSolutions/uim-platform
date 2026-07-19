@@ -8,7 +8,6 @@ module uim.platform.buildcode.infrastructure.config;
 import std.process : environment;
 import uim.platform.buildcode;
 
-
 mixin(ShowModule!());
 
 @safe:

@@ -13,7 +13,6 @@ module uim.platform.object_store.presentation.http.controllers.bucket;
 // import uim.platform.object_store.presentation.http
 
 import uim.platform.object_store;
-
 mixin(ShowModule!());
 
 @safe:

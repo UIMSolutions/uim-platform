@@ -1,6 +1,5 @@
 module uim.platform.data_retention.presentation.http.controllers.deletion_request;
 import uim.platform.data_retention;
-
 mixin(ShowModule!());
 
 @safe:

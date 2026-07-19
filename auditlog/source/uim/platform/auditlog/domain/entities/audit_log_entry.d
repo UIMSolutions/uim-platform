@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.auditlog.domain.entities.audit_log_entry;
 import uim.platform.auditlog;
-
 mixin(ShowModule!());
 /// Core audit log record — an immutable chronological entry.
 @safe:

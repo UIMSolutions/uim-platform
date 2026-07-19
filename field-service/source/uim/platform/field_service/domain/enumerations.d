@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.field_service.domain.enumerations;
 import uim.platform.field_service;
-
 mixin(ShowModule!());
 
 @safe:

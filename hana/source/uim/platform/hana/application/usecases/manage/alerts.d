@@ -10,7 +10,6 @@ module uim.platform.hana.application.usecases.manage.alerts;
 // import uim.platform.hana.application.dto;
 
 import uim.platform.hana;
-
 mixin(ShowModule!());
 
 @safe:

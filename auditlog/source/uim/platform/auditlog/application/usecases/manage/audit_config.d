@@ -10,7 +10,6 @@ module uim.platform.auditlog.application.usecases.manage.audit_config;
 
 // import uim.platform.auditlog.domain.entities.audit_config;
 import uim.platform.auditlog;
-
 mixin(ShowModule!());
 @safe:
 class ManageAuditConfigUseCase { // } { // TODO: UIMUseCase {

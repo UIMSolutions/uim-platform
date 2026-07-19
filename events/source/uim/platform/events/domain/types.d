@@ -6,7 +6,6 @@
 module uim.platform.events.domain.types;
 
 import uim.platform.events;
-
 mixin(ShowModule!());
 
 @safe:

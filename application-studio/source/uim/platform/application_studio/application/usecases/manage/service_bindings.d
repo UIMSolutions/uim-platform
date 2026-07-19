@@ -6,7 +6,6 @@
 module uim.platform.application_studio.application.usecases.manage.service_bindings;
 
 import uim.platform.application_studio;
-
 mixin(ShowModule!());
 
 @safe:

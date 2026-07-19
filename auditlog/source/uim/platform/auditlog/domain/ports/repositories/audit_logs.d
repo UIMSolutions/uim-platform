@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.auditlog.domain.ports.repositories.audit_logs;
 import uim.platform.auditlog;
-
 mixin(ShowModule!());
 /// Port for persisting and querying audit log entries.
 @safe:

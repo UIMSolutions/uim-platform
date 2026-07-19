@@ -13,7 +13,6 @@ module uim.platform.content_agent.application.usecases.import_content;
 // import uim.platform.content_agent.domain.ports.repositories.content_activitys;
 
 import uim.platform.content_agent;
-
 mixin(ShowModule!());
 
 @safe:

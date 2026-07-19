@@ -10,7 +10,6 @@ module uim.platform.object_store.infrastructure.persistence.repositories.lifecyc
 // import uim.platform.object_store.domain.ports.repositories.lifecycle_rule;
 
 import uim.platform.object_store;
-
 mixin(ShowModule!());
 
 @safe:
