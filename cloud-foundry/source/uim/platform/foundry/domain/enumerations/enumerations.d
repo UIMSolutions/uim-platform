@@ -42,7 +42,7 @@ unittest {
   assert(toString(OrgStatus.suspended) == "suspended");
 
   assert(toStringArray([OrgStatus.active, OrgStatus.suspended]) == ["active", "suspended"]);
-  assert(toOrgStatusArray(["active", "suspended"]) == [OrgStatus.active, OrgStatus.suspended]);
+  assert(toOrgStatuses(["active", "suspended"]) == [OrgStatus.active, OrgStatus.suspended]);
 }
 
 /// Space lifecycle status.
@@ -59,7 +59,7 @@ SpaceStatus[] toSpaceStatuses(string[] values) {
 string toString(SpaceStatus value) {
   return value.to!string;
 }
-string[] toStringArray(SpaceStatus[] values) {
+string[] toStrings(SpaceStatus[] values) {
   return values.map!toString.array;
 }
 /// 
@@ -75,8 +75,8 @@ unittest {
   assert(toString(SpaceStatus.active) == "active");
   assert(toString(SpaceStatus.suspended) == "suspended");
 
-  assert(toStringArray([SpaceStatus.active, SpaceStatus.suspended]) == ["active", "suspended"]);
-  assert(toSpaceStatusArray(["active", "suspended"]) == [SpaceStatus.active, SpaceStatus.suspended]);
+  assert(toStrings([SpaceStatus.active, SpaceStatus.suspended]) == ["active", "suspended"]);
+  assert(toSpaceStatuses(["active", "suspended"]) == [SpaceStatus.active, SpaceStatus.suspended]);
 }
 
 /// Application runtime state.
@@ -89,7 +89,7 @@ enum AppState {
 AppState toAppState(string value) {
   mixin(EnumSwitch("AppState", "stopped"));
 }
-AppState[] toAppState(string[] values) {
+AppState[] toAppStates(string[] values) {
   return values.map!(toAppState).array;
 }
 string toString(AppState value) {
@@ -115,8 +115,8 @@ unittest {
   assert(toString(AppState.staging) == "staging");
   assert(toString(AppState.crashed) == "crashed");
 
-  assert(toStringArray([AppState.stopped, AppState.started, AppState.crashed]) == ["stopped", "started", "crashed"]);
-  assert(toAppStateArray(["stopped", "started", "crashed"]) == [AppState.stopped, AppState.started, AppState.crashed]);
+  assert(toStrings([AppState.stopped, AppState.started, AppState.crashed]) == ["stopped", "started", "crashed"]);
+  assert(toAppStates(["stopped", "started", "crashed"]) == [AppState.stopped, AppState.started, AppState.crashed]);
 }
 
 /// Individual application instance state.
@@ -129,18 +129,18 @@ enum InstanceState {
 InstanceState toInstanceState(string value) {
   mixin(EnumSwitch("InstanceState", "down"));
 }
-InstanceState[] toInstanceState(string[] values) {
+InstanceState[] toInstanceStates(string[] values) {
   return values.map!(toInstanceState).array;
 }
 string toString(InstanceState value) {
   return value.to!string;
 }
-string[] toStringArray(InstanceState[] values) {
+string[] toStrings(InstanceState[] values) {
   return values.map!toString.array;
 }
 /// 
 unittest {
-  mixin(ShowTest!"InstanceState");
+  mixin(ShowTest!("InstanceState"));
 
   assert("running".toInstanceState == InstanceState.running);
   assert("crashed".toInstanceState == InstanceState.crashed);
@@ -155,8 +155,8 @@ unittest {
   assert(toString(InstanceState.starting) == "starting");
   assert(toString(InstanceState.down) == "down");
 
-  assert(toStringArray([InstanceState.running, InstanceState.crashed, InstanceState.down]) == ["running", "crashed", "down"]);
-  assert(toInstanceStateArray(["running", "crashed", "down"]) == [InstanceState.running, InstanceState.crashed, InstanceState.down]);
+  assert(toStrings([InstanceState.running, InstanceState.crashed, InstanceState.down]) == ["running", "crashed", "down"]);
+  assert(toInstanceStates(["running", "crashed", "down"]) == [InstanceState.running, InstanceState.crashed, InstanceState.down]);
 } 
 
 /// Service instance provisioning status.
@@ -181,7 +181,7 @@ string[] toStrings(ServiceInstanceStatus[] values) {
 }
 /// 
 unittest {
-  mixin(ShowTest!"ServiceInstanceStatus");
+  mixin(ShowTest!("ServiceInstanceStatus"));
 
   assert("creating".toServiceInstanceStatus == ServiceInstanceStatus.creating);
   assert("active".toServiceInstanceStatus == ServiceInstanceStatus.active);
@@ -198,8 +198,8 @@ unittest {
   assert(toString(ServiceInstanceStatus.deleteInProgress) == "deleteInProgress");
   assert(toString(ServiceInstanceStatus.failed) == "failed");
 
-  assert(toString([ServiceInstanceStatus.creating, ServiceInstanceStatus.active, ServiceInstanceStatus.failed]) == ["creating", "active", "failed"]);
-  assert(toServiceInstanceStatus(["creating", "active", "failed"]) == [ServiceInstanceStatus.creating, ServiceInstanceStatus.active, ServiceInstanceStatus.failed]);
+  assert(toStrings([ServiceInstanceStatus.creating, ServiceInstanceStatus.active, ServiceInstanceStatus.failed]) == ["creating", "active", "failed"]);
+  assert(toServiceInstanceStatuses(["creating", "active", "failed"]) == [ServiceInstanceStatus.creating, ServiceInstanceStatus.active, ServiceInstanceStatus.failed]);
 }
 
 /// Service binding lifecycle status.
@@ -223,7 +223,7 @@ string[] toStrings(BindingStatus[] values) {
 }
 /// 
 unittest {
-  mixin(ShowTest!"BindingStatus");    
+  mixin(ShowTest!("BindingStatus"));
 
   assert("creating".toBindingStatus == BindingStatus.creating);
   assert("active".toBindingStatus == BindingStatus.active);
@@ -238,8 +238,8 @@ unittest {
   assert(toString(BindingStatus.deleteInProgress) == "deleteInProgress");
   assert(toString(BindingStatus.failed) == "failed");
 
-  assert(toString([BindingStatus.creating, BindingStatus.active, BindingStatus.failed]) == ["creating", "active", "failed"]);
-  assert(toBindingStatus(["creating", "active", "failed"]) == [BindingStatus.creating, BindingStatus.active, BindingStatus.failed]);
+  assert([BindingStatus.creating, BindingStatus.active, BindingStatus.failed].toStrings == ["creating", "active", "failed"]);
+  assert(["creating", "active", "failed"].toBindingStatuses == [BindingStatus.creating, BindingStatus.active, BindingStatus.failed]);
 }
 
 /// Route protocol.
@@ -250,7 +250,7 @@ enum RouteProtocol {
 RouteProtocol toRouteProtocol(string value) {
   mixin(EnumSwitch("RouteProtocol", "http"));
 }
-RouteProtocol[] toRouteProtocol(string[] values) {
+RouteProtocol[] toRouteProtocols(string[] values) {
   return values.map!(toRouteProtocol).array;
 }
 string toString(RouteProtocol value) {
@@ -261,7 +261,7 @@ string[] toStrings(RouteProtocol[] values) {
 }
 /// 
 unittest {
-  mixin(ShowTest!"RouteProtocol");  
+  mixin(ShowTest!("RouteProtocol"));
 
   assert("http".toRouteProtocol == RouteProtocol.http);
   assert("tcp".toRouteProtocol == RouteProtocol.tcp); 
@@ -272,31 +272,36 @@ unittest {
   assert(toString(RouteProtocol.http) == "http");
   assert(toString(RouteProtocol.tcp) == "tcp"); 
 
-  assert(toString([RouteProtocol.http, RouteProtocol.tcp]) == ["http", "tcp"]);
-  assert(toRouteProtocol(["http", "tcp"]) == [RouteProtocol.http, RouteProtocol.tcp]);
+  assert([RouteProtocol.http, RouteProtocol.tcp].toStrings == ["http", "tcp"]);
+  assert(["http", "tcp"].toRouteProtocols == [RouteProtocol.http, RouteProtocol.tcp]);
 }
 
 /// Domain ownership scope.
-enum DomainScope : string{
+enum DomainScope : string {
   shared_ = "shared",
   private_ = "private",
   internal_ = "internal",
 }
 DomainScope toDomainScope(string value) {
-  mixin(EnumSwitch("DomainScope", "shared_"));
+  switch(value.toLower) {
+    case "shared": return DomainScope.shared_;
+    case "private": return DomainScope.private_;
+    case "internal": return DomainScope.internal_;
+    default: return DomainScope.shared_; // Default value for unknown strings is "shared"
+  }
 }
-DomainScope[] toDomainScope(string[] values) {
+DomainScope[] toDomainScopes(string[] values) {
   return values.map!(toDomainScope).array;
 }
 string toString(DomainScope value) {
-  return value.to!string;
+  return cast(string)value;
 }
 string[] toStrings(DomainScope[] values) {
   return values.map!toString.array;
 }
 ///
 unittest {
-  mixin(ShowTest!"DomainScope");  
+  mixin(ShowTest!("DomainScope"));
 
   assert("shared".toDomainScope == DomainScope.shared_);
   assert("private".toDomainScope == DomainScope.private_);
@@ -309,8 +314,8 @@ unittest {
   assert(toString(DomainScope.private_) == "private"); 
   assert(toString(DomainScope.internal_) == "internal"); 
 
-  assert(toString([DomainScope.shared_, DomainScope.private_, DomainScope.internal_]) == ["shared", "private", "internal"]);
-  assert(toDomainScope(["shared", "private", "internal"]) == [DomainScope.shared_, DomainScope.private_, DomainScope.internal_]);
+  assert(toStrings([DomainScope.shared_, DomainScope.private_, DomainScope.internal_]) == ["shared", "private", "internal"]);
+  assert(toDomainScopes(["shared", "private", "internal"]) == [DomainScope.shared_, DomainScope.private_, DomainScope.internal_]);
 }
 
 /// Buildpack origin type.
@@ -321,7 +326,7 @@ enum BuildpackType {
 BuildpackType toBuildpackType(string value) {
   mixin(EnumSwitch("BuildpackType", "system"));
 }
-BuildpackType[] toBuildpackType(string[] values) {
+BuildpackType[] toBuildpackTypes(string[] values) {
   return values.map!(toBuildpackType).array;
 }
 string toString(BuildpackType value) {
@@ -332,7 +337,7 @@ string[] toStrings(BuildpackType[] values) {
 }
 /// 
 unittest {
-  mixin(ShowTest!"BuildpackType");
+  mixin(ShowTest!("BuildpackType"));
 
   assert("system".toBuildpackType == BuildpackType.system);
   assert("custom".toBuildpackType == BuildpackType.custom); 
@@ -343,8 +348,8 @@ unittest {
   assert(toString(BuildpackType.system) == "system");
   assert(toString(BuildpackType.custom) == "custom");
 
-  assert(toString([BuildpackType.system, BuildpackType.custom]) == ["system", "custom"]);
-  assert(toBuildpackType(["system", "custom"]) == [BuildpackType.system, BuildpackType.custom]);
+  assert(toStrings([BuildpackType.system, BuildpackType.custom]) == ["system", "custom"]);
+  assert(toBuildpackTypes(["system", "custom"]) == [BuildpackType.system, BuildpackType.custom]);
 }
 
 /// Application health check strategy.
@@ -356,7 +361,7 @@ enum HealthCheckType {
 HealthCheckType toHealthCheckType(string value) {
   mixin(EnumSwitch("HealthCheckType", "http"));
 }
-HealthCheckType[] toHealthCheckType(string[] values) {
+HealthCheckType[] toHealthCheckTypes(string[] values) {
   return values.map!(toHealthCheckType).array;
 }
 string toString(HealthCheckType value) {
@@ -367,7 +372,7 @@ string[] toStrings(HealthCheckType[] values) {
 }
 ///
 unittest {
-  mixin(ShowTest!"HealthCheckType");
+  mixin(ShowTest!("HealthCheckType"));
 
   assert("http".toHealthCheckType == HealthCheckType.http);
   assert("port".toHealthCheckType == HealthCheckType.port);
@@ -380,6 +385,6 @@ unittest {
   assert(toString(HealthCheckType.port) == "port");
   assert(toString(HealthCheckType.process) == "process");
 
-  assert(toString([HealthCheckType.http, HealthCheckType.port, HealthCheckType.process]) == ["http", "port", "process"]);
-  assert(toHealthCheckType(["http", "port", "process"]) == [HealthCheckType.http, HealthCheckType.port, HealthCheckType.process]);
+  assert(toStrings([HealthCheckType.http, HealthCheckType.port, HealthCheckType.process]) == ["http", "port", "process"]);
+  assert(toHealthCheckTypes(["http", "port", "process"]) == [HealthCheckType.http, HealthCheckType.port, HealthCheckType.process]);
 }

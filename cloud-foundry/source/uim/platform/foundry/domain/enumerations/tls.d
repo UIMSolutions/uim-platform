@@ -4,6 +4,7 @@
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.foundry.domain.enumerations.tls;
+
 import uim.platform.foundry;
 
 mixin(ShowModule!());
@@ -18,7 +19,7 @@ enum TlsProtocolVersion {
 TlsProtocolVersion toTlsProtocolVersion(string value) {
     mixin(EnumSwitch("TlsProtocolVersion", "tls1_2"));
 }
-TlsProtocolVersion[] toTlsProtocolVersion(string[] values) {
+TlsProtocolVersion[] toTlsProtocolVersions(string[] values) {
     return values.map!(toTlsProtocolVersion).array;
 }
 string toString(TlsProtocolVersion version_) {
@@ -44,8 +45,8 @@ unittest {
     assert(TlsProtocolVersion.tls1_2.toString == "tls1_2");
     assert(TlsProtocolVersion.tls1_3.toString == "tls1_3");
 
-    assert(toString([TlsProtocolVersion.tls1_0, TlsProtocolVersion.tls1_3]) == ["tls1_0", "tls1_3"]);
-    assert(toTlsProtocolVersion(["tls1_0", "tls1_3"]) == [TlsProtocolVersion.tls1_0, TlsProtocolVersion.tls1_3]);
+    assert(toStrings([TlsProtocolVersion.tls1_0, TlsProtocolVersion.tls1_3]) == ["tls1_0", "tls1_3"]);
+    assert(toTlsProtocolVersions(["tls1_0", "tls1_3"]) == [TlsProtocolVersion.tls1_0, TlsProtocolVersion.tls1_3]);
 }
 
 enum CipherSuiteStrength {
@@ -56,9 +57,10 @@ enum CipherSuiteStrength {
 CipherSuiteStrength toCipherSuiteStrength(string value) {
     mixin(EnumSwitch("CipherSuiteStrength", "strong"));
 }
-CipherSuiteStrength[] toCipherSuiteStrength(string[] values) {
+CipherSuiteStrength[] toCipherSuiteStrengths(string[] values) {
     return values.map!(toCipherSuiteStrength).array;
 }
+
 string toString(CipherSuiteStrength strength) {
     return strength.to!string;
 }
@@ -80,6 +82,6 @@ unittest {
     assert(CipherSuiteStrength.medium.toString == "medium");
     assert(CipherSuiteStrength.weak.toString == "weak");
 
-    assert(toString([CipherSuiteStrength.strong, CipherSuiteStrength.weak]) == ["strong", "weak"]);
-    assert(toCipherSuiteStrength(["strong", "weak"]) == [CipherSuiteStrength.strong, CipherSuiteStrength.weak]);
+    assert(toStrings([CipherSuiteStrength.strong, CipherSuiteStrength.weak]) == ["strong", "weak"]);
+    assert(toCipherSuiteStrengths(["strong", "weak"]) == [CipherSuiteStrength.strong, CipherSuiteStrength.weak]);
 }

@@ -175,7 +175,7 @@ ExpirationSeverity toExpirationSeverity(string value) {
     mixin(EnumSwitch("ExpirationSeverity", "none"));
 }
 
-ExpirationSeverity[] toExpirationSeverity(string[] arr) {
+ExpirationSeverity[] toExpirationSeverities(string[] arr) {
     return arr.map!(toExpirationSeverity).array;
 }
 
@@ -190,36 +190,38 @@ string[] toStrings(ExpirationSeverity[] arr) {
 unittest {
     mixin(ShowTest!("ExpirationSeverity"));
 
-    assert(toExpirationSeverity("none") == ExpirationSeverity.none);
-    assert(toExpirationSeverity("info") == ExpirationSeverity.info);
-    assert(toExpirationSeverity("warning") == ExpirationSeverity.warning);
-    assert(toExpirationSeverity("critical") == ExpirationSeverity.critical);
-    assert(toExpirationSeverity("expired") == ExpirationSeverity.expired);
-    assert(toExpirationSeverity("invalid") == ExpirationSeverity.none);
+    assert("none".toExpirationSeverity == ExpirationSeverity.none);
+    assert("info".toExpirationSeverity == ExpirationSeverity.info);
+    assert("warning".toExpirationSeverity == ExpirationSeverity.warning);
+    assert("critical".toExpirationSeverity == ExpirationSeverity.critical);
+    assert("expired".toExpirationSeverity == ExpirationSeverity.expired);
+    
+    assert("".toExpirationSeverity == ExpirationSeverity.none);
+    assert("invalid".toExpirationSeverity == ExpirationSeverity.none);
 
     assert(toString(ExpirationSeverity.none) == "none");
     assert(toString(ExpirationSeverity.info) == "info");
     assert(toString(ExpirationSeverity.warning) == "warning");
     assert(toString(ExpirationSeverity.critical) == "critical");
     assert(toString(ExpirationSeverity.expired) == "expired");
+
     assert([
         ExpirationSeverity.none,
         ExpirationSeverity.info,
         ExpirationSeverity.warning,
         ExpirationSeverity.critical,
         ExpirationSeverity.expired
-    ].toString ==
+    ].toStrings ==
         ["none", "info",
             "warning",
             "critical",
             "expired"]);
 
-    assert(["none", "info", "warning", "critical", "expired"].toExpi ==
-        [
-            ExpirationSeverity.none,
-            ExpirationSeverity.info,
-            ExpirationSeverity.warning,
-            ExpirationSeverity.critical,
-            ExpirationSeverity.expired
-        ]);
+    assert(["none", "info", "warning", "critical", "expired"].toExpirationSeverities == [
+        ExpirationSeverity.none,
+        ExpirationSeverity.info,
+        ExpirationSeverity.warning,
+        ExpirationSeverity.critical,
+        ExpirationSeverity.expired
+    ]);
 }

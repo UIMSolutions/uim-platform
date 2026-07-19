@@ -23,7 +23,7 @@ enum KeyAlgorithm {
 KeyAlgorithm toKeyAlgorithm(string value) {
     mixin(EnumSwitch("KeyAlgorithm", "rsa2048"));
 }
-KeyAlgorithm[] toKeyAlgorithm(string[] values) {
+KeyAlgorithm[] toKeyAlgorithms(string[] values) {
     return values.map!(toKeyAlgorithm).array;
 }
 string toString(KeyAlgorithm algorithm) {
@@ -49,8 +49,8 @@ unittest {
     assert(KeyAlgorithm.ecdsaP256.toString == "ecdsaP256");
     assert(KeyAlgorithm.ecdsaP384.toString == "ecdsaP384");
 
-    assert(toString([KeyAlgorithm.rsa2048, KeyAlgorithm.ecdsaP384]) == ["rsa2048", "ecdsaP384"]);
-    assert(toKeyAlgorithm(["rsa2048", "ecdsaP384"]) == [KeyAlgorithm.rsa2048, KeyAlgorithm.ecdsaP384]);
+    assert(toStrings([KeyAlgorithm.rsa2048, KeyAlgorithm.ecdsaP384]) == ["rsa2048", "ecdsaP384"]);
+    assert(toKeyAlgorithms(["rsa2048", "ecdsaP384"]) == [KeyAlgorithm.rsa2048, KeyAlgorithm.ecdsaP384]);
 }
 
 enum KeyStatus {
@@ -88,6 +88,6 @@ unittest {
     assert(KeyStatus.inactive.toString == "inactive");
     assert(KeyStatus.deleted.toString == "deleted");
 
-    assert(toString([KeyStatus.active, KeyStatus.deleted]) == ["active", "deleted"]);
-    assert(toKeyStatus(["active", "deleted"]) == [KeyStatus.active, KeyStatus.deleted]);
+    assert([KeyStatus.active, KeyStatus.deleted].toStrings == ["active", "deleted"]);
+    assert(["active", "deleted"].toKeyStatuses == [KeyStatus.active, KeyStatus.deleted]);
 }

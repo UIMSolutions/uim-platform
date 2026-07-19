@@ -27,18 +27,49 @@ enum CertificateStatus {
     deactivated,    
 }
 
-CertificateStatus toCertificateStatus(string status) {
-    const map = [
-        "draft": CertificateStatus.draft,
-        "approved": CertificateStatus.approved,
-        "rejected": CertificateStatus.rejected,
-        "pending": CertificateStatus.pending,
-        "active": CertificateStatus.active,
-        "expired": CertificateStatus.expired,
-        "revoked": CertificateStatus.revoked,
-        "deactivated": CertificateStatus.deactivated,
-    ];
-    return map.get(status.toLower, CertificateStatus.draft);
+CertificateStatus toCertificateStatus(string value) {
+    mixin(EnumSwitch("CertificateStatus", "draft"));
+}
+CertificateStatus[] toCertificateStatuses(string[] statuses) {
+    return statuses.map!(s => toCertificateStatus(s)).array;
+}
+string toString(CertificateStatus status) {
+    return status.to!string;
+}
+string[] toStrings(CertificateStatus[] statuses) {
+    return statuses.map!toString.array;
+}
+///
+unittest {
+    mixin(ShowTest!("CertificateStatus"));
+
+    assert(CertificateStatus.draft.toString == "draft");
+    assert(CertificateStatus.approved.toString == "approved");
+    assert(CertificateStatus.rejected.toString == "rejected");
+    assert(CertificateStatus.pending.toString == "pending");
+    assert(CertificateStatus.active.toString == "active");
+    assert(CertificateStatus.expired.toString == "expired");
+    assert(CertificateStatus.revoked.toString == "revoked");
+    assert(CertificateStatus.deactivated.toString == "deactivated");
+
+    assert("draft".toCertificateStatus == CertificateStatus.draft);
+    assert("approved".toCertificateStatus == CertificateStatus.approved);
+    assert("rejected".toCertificateStatus == CertificateStatus.rejected);
+    assert("pending".toCertificateStatus == CertificateStatus.pending);
+    assert("active".toCertificateStatus == CertificateStatus.active);
+    assert("expired".toCertificateStatus == CertificateStatus.expired);
+    assert("revoked".toCertificateStatus == CertificateStatus.revoked);
+    assert("deactivated".toCertificateStatus == CertificateStatus.deactivated);
+
+    assert("".toCertificateStatus == CertificateStatus.draft);
+    assert("unknown".toCertificateStatus == CertificateStatus.draft);
+
+    assert([
+        CertificateStatus.draft, CertificateStatus.approved, CertificateStatus.rejected,
+        CertificateStatus.pending, CertificateStatus.active, CertificateStatus.expired,
+        CertificateStatus.revoked, CertificateStatus.deactivated
+    ].toStrings ==
+        ["draft", "approved", "rejected", "pending", "active", "expired", "revoked", "deactivated"]);
 }
 
 enum CertificateType {
@@ -57,15 +88,47 @@ enum CertificateType {
     // Used for document signing certificates that are used to digitally sign electronic documents, providing assurance of authenticity and integrity for digital transactions and agreements
     documentSigning,
 }
-CertificateType toCertificateType(string type) {
-    const map = [
-        "standard": CertificateType.standard,
-        "wildcard": CertificateType.wildcard,
-        "multiDomain": CertificateType.multiDomain,
-        "client": CertificateType.client,
-        "codeSigning": CertificateType.codeSigning,
-        "emailSigning": CertificateType.emailSigning,
-        "documentSigning": CertificateType.documentSigning,
-    ];
-    return map.get(type.toLower, CertificateType.standard);
+CertificateType toCertificateType(string value) {
+    mixin(EnumSwitch("CertificateType", "standard"));
 }
+CertificateType[] toCertificateTypes(string[] values) {
+    return values.map!(s => toCertificateType(s)).array;
+}
+string toString(CertificateType type) {
+    return type.to!string;
+}
+string[] toStrings(CertificateType[] types) {
+    return types.map!toString.array;
+}
+///
+unittest {
+    mixin(ShowTest!("CertificateType"));
+
+    assert(CertificateType.standard.toString == "standard");
+    assert(CertificateType.wildcard.toString == "wildcard");
+    assert(CertificateType.multiDomain.toString == "multiDomain");
+    assert(CertificateType.client.toString == "client");
+    assert(CertificateType.codeSigning.toString == "codeSigning");
+    assert(CertificateType.emailSigning.toString == "emailSigning");
+    assert(CertificateType.documentSigning.toString == "documentSigning");  
+
+    assert("standard".toCertificateType == CertificateType.standard);
+    assert("wildcard".toCertificateType == CertificateType.wildcard);
+    assert("multiDomain".toCertificateType == CertificateType.multiDomain);
+    assert("client".toCertificateType == CertificateType.client);
+    assert("codeSigning".toCertificateType == CertificateType.codeSigning); 
+    assert("emailSigning".toCertificateType == CertificateType.emailSigning);
+    assert("documentSigning".toCertificateType == CertificateType.documentSigning);
+
+    assert("".toCertificateType == CertificateType.standard);
+    assert("unknown".toCertificateType == CertificateType.standard);
+
+    assert([
+        CertificateType.standard, CertificateType.wildcard, CertificateType.multiDomain,
+        CertificateType.client, CertificateType.codeSigning, CertificateType.emailSigning,
+        CertificateType.documentSigning
+    ].toStrings ==
+        ["standard", "wildcard", "multiDomain", "client", "codeSigning", "emailSigning", "documentSigning"]);   
+}
+
+
