@@ -22,7 +22,7 @@ class ManageViewsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createView(CreateViewRequest r) {
-    if (r.name.length == 0)
+    if (r.name.isEmpty)
       return CommandResult(false, "", "View name is required");
     if (r.spaceId.isEmpty)
       return CommandResult(false, "", "Space ID is required");

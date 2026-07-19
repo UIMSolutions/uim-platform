@@ -26,9 +26,9 @@ class ManagePromptsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createPrompt(CreatePromptRequest r) {
-    if (r.name.length == 0)
+    if (r.name.isEmpty)
       return CommandResult(false, "", "Prompt name is required");
-    if (r.modelName.length == 0)
+    if (r.modelname.isEmpty)
       return CommandResult(false, "", "Model name is required");
 
     auto p = Prompt(r.tenantId, PromptId(""), r.createdBy);

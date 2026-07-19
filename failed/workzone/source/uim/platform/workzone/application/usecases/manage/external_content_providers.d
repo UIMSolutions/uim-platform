@@ -23,7 +23,7 @@ class ManageExternalContentProvidersUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createProvider(CreateExternalContentProviderRequest req) {
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "Provider name is required");
 
     auto p = ExternalContentProvider(req.tenantId, req.providerId, req.createdBy);

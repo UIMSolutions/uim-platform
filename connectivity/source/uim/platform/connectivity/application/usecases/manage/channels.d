@@ -35,7 +35,7 @@ class ManageChannelsUseCase { // TODO: UIMUseCase {
     if (cc.isNull)
       return CommandResult(false, "", "Connector not found");
 
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "Channel name is required");
 
     if (req.virtualHost.length == 0)

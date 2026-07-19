@@ -14,7 +14,7 @@ mixin(ShowModule!());
 struct DataSubjectValidator {
     static bool validate(string id, string firstName, string lastName) {
         if (id.isNull) return false;
-        if (firstName.length == 0 && lastName.length == 0) return false;
+        if (firstname.isEmpty && lastname.isEmpty) return false;
         return true;
     }
 

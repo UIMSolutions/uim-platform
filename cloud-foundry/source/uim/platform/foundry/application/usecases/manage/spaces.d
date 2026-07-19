@@ -31,7 +31,7 @@ class ManageSpacesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Tenant ID is required");
     if (req.orgId.isEmpty)
       return CommandResult(false, "", "Organization ID is required");
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "Space name is required");
 
     // Validate org exists

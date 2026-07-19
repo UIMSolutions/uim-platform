@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 struct OAuthValidator {
     static string validateOAuthClient(OAuthClient entity) {
-        if (entity.name.length == 0) return "Client name is required";
+        if (entity.name.isEmpty) return "Client name is required";
         if (entity.tenantId.value.length == 0) return "Tenant ID is required";
         if (entity.clientId.length == 0) return "Client ID is required";
         if (entity.clientSecret.length == 0) return "Client secret is required";
@@ -21,7 +21,7 @@ struct OAuthValidator {
     }
 
     static string validateOAuthScope(OAuthScope entity) {
-        if (entity.name.length == 0) return "Scope name is required";
+        if (entity.name.isEmpty) return "Scope name is required";
         if (entity.tenantId.value.length == 0) return "Tenant ID is required";
         if (entity.applicationId.length == 0) return "Application ID is required";
         return "";
@@ -50,7 +50,7 @@ struct OAuthValidator {
     }
 
     static string validateBrandingConfig(BrandingConfig entity) {
-        if (entity.name.length == 0) return "Branding config name is required";
+        if (entity.name.isEmpty) return "Branding config name is required";
         if (entity.tenantId.value.length == 0) return "Tenant ID is required";
         return "";
     }

@@ -23,7 +23,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createGroup(CreateGroupRequest req) {
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "WZGroup name is required");
 
     auto g = WZGroup(req.tenantId);

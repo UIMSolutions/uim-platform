@@ -30,7 +30,7 @@ class ManageContentProvidersUseCase { // TODO: UIMUseCase {
     if (providerRepo.existsByName(req.tenantId, req.name))
       return CommandResult(false, "", "Provider with name '" ~ req.name ~ "' already exists");
 
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "Provider name is required");
       
     if (req.endpoint.length == 0)

@@ -24,7 +24,7 @@ class ManageTasksUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createTask(CreateTaskRequest r) {
-    if (r.name.length == 0)
+    if (r.name.isEmpty)
       return CommandResult(false, "", "Task name is required");
 
     if (r.spaceId.isEmpty)

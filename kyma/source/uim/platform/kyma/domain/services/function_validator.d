@@ -15,7 +15,7 @@ mixin(ShowModule!());
 class FunctionValidator {
   /// Validate function configuration before deployment.
   string validate(ServerlessFunction fn) {
-    if (fn.name.length == 0)
+    if (fn.name.isEmpty)
       return "Function name is required";
     if (fn.sourceCode.length == 0)
       return "Function source code cannot be empty";

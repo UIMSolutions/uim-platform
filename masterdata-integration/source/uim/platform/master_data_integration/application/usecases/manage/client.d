@@ -23,7 +23,7 @@ class ManageClientsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createClient(CreateClientRequest req) {
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "Client name is required");
 
     auto client = Client(req.tenantId); //, UserId("test-user"));

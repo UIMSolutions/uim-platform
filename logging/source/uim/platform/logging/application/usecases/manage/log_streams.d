@@ -38,7 +38,7 @@ class ManageLogStreamsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createStream(CreateLogStreamRequest req) {
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "Stream name is required");
 
     LogSourceType sourceType;

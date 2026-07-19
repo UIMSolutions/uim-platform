@@ -28,7 +28,7 @@ class ManageLifecycleRulesUseCase { // TODO: UIMUseCase {
   CommandResult createRule(CreateLifecycleRuleRequest req) {
     if (req.bucketId.isEmpty)
       return CommandResult(false, "", "Bucket ID is required");
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "Rule name is required");
 
     auto bucket = bucketRepo.findById(req.tenantId, req.bucketId);

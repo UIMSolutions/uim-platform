@@ -22,7 +22,7 @@ class ManageNamespacesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createNamespace(CreateNamespaceRequest req) {
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "Namespace name is required");
 
     if (req.environmentId.isEmpty)

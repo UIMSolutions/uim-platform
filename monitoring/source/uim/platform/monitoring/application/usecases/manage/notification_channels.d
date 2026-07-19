@@ -23,7 +23,7 @@ class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createChannel(CreateNotificationChannelRequest request) {
-    if (request.name.length == 0)
+    if (request.name.isEmpty)
       return CommandResult(false, "", "Channel name is required");
 
     auto channel = NotificationChannel(request.tenantId); //, UserId("test-user"));

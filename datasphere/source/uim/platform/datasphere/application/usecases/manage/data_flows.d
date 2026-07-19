@@ -23,7 +23,7 @@ class ManageDataFlowsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createDataFlow(CreateDataFlowRequest r) {
-    if (r.name.length == 0)
+    if (r.name.isEmpty)
       return CommandResult(false, "", "Data flow name is required");
     if (r.spaceId.isEmpty)
       return CommandResult(false, "", "Space ID is required");

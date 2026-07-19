@@ -23,7 +23,7 @@ class ManageConfigurationsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createConfiguration(CreateConfigurationRequest r) {
-    if (r.name.length == 0)
+    if (r.name.isEmpty)
       return CommandResult(false, "", "Configuration name is required");
 
     auto c = Configuration(r.tenantId, r.configurationId.isNull ? ConfigurationId(createId()) : r.configurationId); // , r.createdBy);

@@ -22,7 +22,7 @@ class ManageFilterRulesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createRule(CreateFilterRuleRequest req) {
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "Filter rule name is required");
 
     auto rule = FilterRule(req.tenantId); //, UserId("test-user"));

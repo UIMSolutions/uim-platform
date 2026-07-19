@@ -26,7 +26,7 @@ class ManageSoftwareComponentsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createSoftwareComponent(CreateSoftwareComponentRequest req) {
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "Component name is required");
     
     if (req.systemInstanceId.isEmpty)

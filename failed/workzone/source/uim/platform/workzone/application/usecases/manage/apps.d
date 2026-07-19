@@ -23,7 +23,7 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createApp(CreateAppRequest req) {
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "App name is required");
 
     auto app = AppRegistration(req.tenantId, req.appId, req.createdBy);

@@ -23,7 +23,7 @@ class ManageCustomMetricsUseCase {
     
     import std.random : uniform;
 
-    if (r.metricName.length == 0)
+    if (r.metricname.isEmpty)
       return CommandResult(false, "", "metricName is required");
     if (r.appId.length == 0)
       return CommandResult(false, "", "appId is required");

@@ -51,7 +51,7 @@ class ManageServiceInstancesUseCase {
         e.status = InstanceStatus.provisioning;
         e.port  = 5432;
 
-        if (e.name.length == 0 || e.planId.value.length == 0)
+        if (e.name.isEmpty || e.planId.value.length == 0)
             return CommandResult(false, "", "name and planId are required");
 
         repo.save(e);

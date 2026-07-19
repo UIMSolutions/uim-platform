@@ -23,7 +23,7 @@ class ManagePromptCollectionsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createCollection(CreatePromptCollectionRequest r) {
-    if (r.name.length == 0)
+    if (r.name.isEmpty)
       return CommandResult(false, "", "Collection name is required");
 
     auto pc = PromptCollection(r.tenantId);

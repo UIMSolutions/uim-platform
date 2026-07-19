@@ -26,7 +26,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createBinding(CreateServiceBindingRequest req) {
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "Binding name is required");
     if (req.bucketId.isEmpty)
       return CommandResult(false, "", "Bucket ID is required");

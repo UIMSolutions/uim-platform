@@ -22,7 +22,7 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createCertificate(CreateCertificateRequest req) {
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "Certificate name is required");
 
     // Check for duplicate name within tenant

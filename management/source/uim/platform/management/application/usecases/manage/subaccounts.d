@@ -28,7 +28,7 @@ class ManageSubaccountsUseCase { // TODO: UIMUseCase {
   CommandResult createSubaccount(CreateSubaccountRequest req) {
     if (req.globalAccountId.isEmpty)
       return CommandResult(false, "", "Global account ID is required");
-    if (req.displayName.length == 0)
+    if (req.displayname.isEmpty)
       return CommandResult(false, "", "Display name is required");
     if (req.subdomain.length == 0)
       return CommandResult(false, "", "Subdomain is required");

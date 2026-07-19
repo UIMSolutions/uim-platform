@@ -26,7 +26,7 @@ class ManageBusinessUsersUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createBusinessUser(CreateBusinessUserRequest req) {
-    if (req.username.length == 0)
+    if (req.username.isEmpty)
       return CommandResult(false, "", "Username is required");
     if (req.email.length == 0)
       return CommandResult(false, "", "Email is required");

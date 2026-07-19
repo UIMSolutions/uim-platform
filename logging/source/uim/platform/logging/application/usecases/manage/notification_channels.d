@@ -23,7 +23,7 @@ class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
   CommandResult createChannel(CreateNotificationChannelRequest req) {
     import std.uuid : randomUUID;
 
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "Channel name is required");
 
     auto channel = NotificationChannel(req.tenantId); //, req.createdBy);

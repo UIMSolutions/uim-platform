@@ -22,7 +22,7 @@ class ManageDataLakesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createDataLake(CreateDataLakeRequest r) {
-    if (r.isNull || r.name.length == 0)
+    if (r.isNull || r.name.isEmpty)
       return CommandResult(false, "", "Data lake ID and name are required");
 
     auto datalake = repo.findById(r.tenantId, r.id);

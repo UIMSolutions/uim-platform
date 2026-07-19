@@ -25,7 +25,7 @@ class ManageSourceSystemsUseCase { // TODO: UIMUseCase {
   CommandResult createSourceSystem(CreateSourceSystemRequest req) {
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "System name is required");
 
     auto existing = repo.findByName(req.tenantId, req.name);

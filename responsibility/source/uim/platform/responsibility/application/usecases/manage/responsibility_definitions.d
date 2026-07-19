@@ -40,7 +40,7 @@ class ManageResponsibilityDefinitionsUseCase {
         d.validFrom   = dto.validFrom;
         d.validTo     = dto.validTo;
 
-        if (d.name.length == 0)
+        if (d.name.isEmpty)
             return CommandResult(false, "", "Definition name is required");
 
         if (d.contextId.length == 0)

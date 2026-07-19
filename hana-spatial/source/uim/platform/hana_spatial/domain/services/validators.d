@@ -27,7 +27,7 @@ struct SpatialValidator {
   }
 
   static string validateName(string name) {
-    if (name.length == 0)
+    if (name.isEmpty)
       return "Name must not be empty";
     if (name.length > 255)
       return "Name must not exceed 255 characters";

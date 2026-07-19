@@ -32,7 +32,7 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
     if (destinations.existsByName(req.tenantId, req.name))
       return CommandResult(false, "", "Destination with name '" ~ req.name ~ "' already exists");
 
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "Destination name is required");
 
     if (req.url.length == 0)

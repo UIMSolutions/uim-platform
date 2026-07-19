@@ -15,7 +15,7 @@ struct ProcessValidator {
             return "Tenant ID is required";
         if (processId.isEmpty)
             return "Process ID is required";
-        if (name.length == 0)
+        if (name.isEmpty)
             return "Process name is required";
         if (name.length > 256)
             return "Process name must not exceed 256 characters";
@@ -37,7 +37,7 @@ struct ProcessValidator {
             return "Tenant ID is required";
         if (taskId.isEmpty)
             return "Task ID is required";
-        if (name.length == 0)
+        if (name.isEmpty)
             return "Task name is required";
         if (assignee.length == 0)
             return "Assignee is required";

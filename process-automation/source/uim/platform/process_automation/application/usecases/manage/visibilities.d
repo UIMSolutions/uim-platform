@@ -21,7 +21,7 @@ class ManageVisibilitiesUseCase { // TODO: UIMUseCase {
         if (r.visibilityId.isEmpty)
             return CommandResult(false, "", "Visibility ID is required");
             
-        if (r.name.length == 0)
+        if (r.name.isEmpty)
             return CommandResult(false, "", "Visibility name is required");
 
         if (repo.existsById(r.tenantId, r.visibilityId))

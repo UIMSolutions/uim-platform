@@ -119,7 +119,7 @@ class ManageRoutesUseCase { // TODO: UIMUseCase {
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
       
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "Domain name is required");
 
     if (domains.existsByName(req.tenantId, req.name))

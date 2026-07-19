@@ -20,7 +20,7 @@ struct RetentionEvaluator {
   static RetentionValidation validate(const ref RetentionPolicy policy) {
     string[] errors;
 
-    if (policy.name.length == 0)
+    if (policy.name.isEmpty)
       errors ~= "Policy name is required";
     if (policy.retentionDays < 1)
       errors ~= "Retention days must be at least 1";

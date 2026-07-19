@@ -29,7 +29,7 @@ class ManageEntitlementsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Global account ID is required");
     if (request.servicePlanId.isEmpty)
       return CommandResult(false, "", "Service plan ID is required");
-    if (request.serviceName.length == 0)
+    if (request.serviceName.isEmpty)
       return CommandResult(false, "", "Service name is required");
 
     // Check current quota usage for this plan in the global account

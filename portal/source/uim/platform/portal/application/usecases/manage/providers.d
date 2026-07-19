@@ -25,7 +25,7 @@ class ManageProvidersUseCase { // TODO: UIMUseCase {
   }
 
   ProviderResponse createProvider(CreateProviderRequest req) {
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return ProviderResponse(ProviderResponseId(""), "Provider name is required");
 
     auto provider = ContentProvider(req.tenantId);

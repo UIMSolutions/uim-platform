@@ -20,7 +20,7 @@ class ManagePrivateEndpointsUseCase {
   }
 
   CommandResult createEndpoint(CreatePrivateEndpointRequest req) {
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "Name is required");
 
     auto inst = instances.findById(req.tenantId, req.serviceInstanceId);

@@ -39,7 +39,7 @@ class ManageDatabaseUsersUseCase {
         e.roles = dto.roles;
         e.status = UserStatus.active;
 
-        if (e.instanceId.value.length == 0 || e.username.length == 0)
+        if (e.instanceId.value.length == 0 || e.username.isEmpty)
             return CommandResult(false, "", "instanceId and username are required");
 
         repo.save(e);

@@ -25,7 +25,7 @@ class ManageAccessPoliciesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createPolicy(CreateAccessPolicyRequest req) {
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "Policy name is required");
 
     if (req.bucketId.isEmpty)

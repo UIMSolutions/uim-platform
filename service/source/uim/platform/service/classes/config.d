@@ -190,15 +190,15 @@ class UIMConfig : IUIMConfig {
   * Throws an exception if validation fails.
   */
   void validate() {
-    if (serviceName.length == 0) {
+    if (serviceName.isEmpty) {
       throw new Exception("Service name cannot be empty");
     }
 
-    if (serviceVersion.length == 0) {
+    if (serviceVersion.isEmpty) {
       throw new Exception("Service version cannot be empty");
     }
 
-    if (host.length == 0) {
+    if (host.isEmpty) {
       throw new Exception("Host cannot be empty");
     }
 
@@ -206,15 +206,15 @@ class UIMConfig : IUIMConfig {
       throw new Exception("Port must be greater than zero");
     }
 
-    if (basePath.length == 0) {
+    if (basePath.isEmpty) {
       throw new Exception("Base path cannot be empty");
     }
 
-    if (!basePath.startsWith("/")) {
+    if (basePath.isEmpty || !basePath.startsWith("/")) {
       throw new Exception("Base path must start with '/'");
     }
 
-    if (requireAuthToken && authToken.length == 0) {
+    if (requireAuthToken && authToken.isEmpty) {
       throw new Exception("Auth token is required when token authentication is enabled");
     }
 

@@ -22,7 +22,7 @@ class ManageDatasetsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult registerDataset(RegisterDatasetRequest r) {
-    if (r.name.length == 0)
+    if (r.name.isEmpty)
       return CommandResult(false, "", "Dataset name is required");
 
     auto d = Dataset(r.tenantId);

@@ -28,7 +28,7 @@ class ManageServiceBrokersUseCase { // TODO: UIMUseCase {
         broker.description = dto.description;
         broker.brokerUrl = dto.brokerUrl;
 
-        if (dto.name.length == 0)
+        if (dto.name.isEmpty)
             return CommandResult(false, "", "Service broker name is required");
         if (dto.brokerUrl.length == 0)
             return CommandResult(false, "", "Broker URL is required");

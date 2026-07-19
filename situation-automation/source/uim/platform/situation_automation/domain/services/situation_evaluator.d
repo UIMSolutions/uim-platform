@@ -17,7 +17,7 @@ struct SituationEvaluator {
             return "Tenant ID is required";
         if (id.isNull)
             return "ID is required";
-        if (name.length == 0)
+        if (name.isEmpty)
             return "Name is required";
         if (name.length > 256)
             return "Name must be 256 characters or fewer";

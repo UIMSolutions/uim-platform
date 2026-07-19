@@ -23,7 +23,7 @@ class ManageCommunicationArrangementsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createArrangement(CreateCommunicationArrangementRequest req) {
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "Arrangement name is required");
     if (req.scenarioId.isEmpty)
       return CommandResult(false, "", "Communication scenario ID is required");

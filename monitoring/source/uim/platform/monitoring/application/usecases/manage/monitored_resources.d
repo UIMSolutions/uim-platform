@@ -26,7 +26,7 @@ class ManageMonitoredResourcesUseCase { // TODO: UIMUseCase {
     if (repo.existsByName(req.tenantId, req.name))
       return CommandResult(false, "", "Resource with name '" ~ req.name ~ "' already exists");
 
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "Resource name is required");
 
     auto resource = MonitoredResource(req.tenantId); //, UserId("test-user"));

@@ -37,7 +37,7 @@ class EvaluationController {
     private void handleEvaluate(HTTPServerRequest req, HTTPServerResponse res) @safe {
         auto path     = req.requestPath.to!string;
         auto flagName = precheck.id;
-        if (flagName.length == 0) { writeError(res, 400, "Flag name required"); return; }
+        if (flagname.isEmpty) { writeError(res, 400, "Flag name required"); return; }
 
         EvaluationRequest dto;
         dto.flagName   = flagName;

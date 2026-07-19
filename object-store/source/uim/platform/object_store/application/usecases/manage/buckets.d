@@ -23,7 +23,7 @@ class ManageBucketsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createBucket(CreateBucketRequest req) {
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "Bucket name is required");
       
     if (req.region.length == 0)

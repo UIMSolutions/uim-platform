@@ -15,7 +15,7 @@ class ManageBusinessPurposesUseCase { // TODO: UIMUseCase {
     CommandResult createBusinessPurpose(CreateBusinessPurposeRequest req) {
         import std.uuid : randomUUID;
 
-        if (req.name.length == 0)
+        if (req.name.isEmpty)
             return CommandResult(false, "", "Business purpose name is required");
 
         auto bp = BusinessPurpose(req.tenantId);y);

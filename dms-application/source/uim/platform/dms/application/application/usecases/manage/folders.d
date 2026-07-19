@@ -27,7 +27,7 @@ class ManageFoldersUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createFolder(CreateFolderRequest r) {
-    if (r.name.length == 0)
+    if (r.name.isEmpty)
       return CommandResult(false, "", "DmsFolder name is required");
     if (r.repositoryId.isEmpty)
       return CommandResult(false, "", "DmsRepository ID is required");

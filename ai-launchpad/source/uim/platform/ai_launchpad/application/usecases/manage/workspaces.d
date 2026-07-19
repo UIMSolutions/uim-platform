@@ -22,7 +22,7 @@ class ManageWorkspacesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createWorkspace(CreateWorkspaceRequest r) {
-    if (r.name.length == 0)
+    if (r.name.isEmpty)
       return CommandResult(false, "", "Workspace name is required");
 
     auto w = Workspace(r.tenantId, r.workspaceId.isNull ? WorkspaceId(createId()) : r.workspaceId); // , r.createdBy);

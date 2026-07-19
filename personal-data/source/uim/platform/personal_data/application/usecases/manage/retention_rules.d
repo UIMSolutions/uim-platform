@@ -20,7 +20,7 @@ class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
 
     CommandResult createRetentionRule(CreateRetentionRuleRequest r) {
         if (r.isNull) return CommandResult(false, "", "ID is required");
-        if (r.name.length == 0) return CommandResult(false, "", "Rule name is required");
+        if (r.name.isEmpty) return CommandResult(false, "", "Rule name is required");
 
         RetentionRule rule;
         rule.id = r.id;

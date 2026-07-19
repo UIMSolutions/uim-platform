@@ -25,7 +25,7 @@ class ManageTranslationsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createTranslation(CreateTranslationRequest req) {
-    if (req.fieldName.length == 0)
+    if (req.fieldname.isEmpty)
       return CommandResult(false, "", "Field name and language are required");
 
     auto translation = Translation(req.tenantId);

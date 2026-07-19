@@ -23,7 +23,7 @@ class ManageUserProfilesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createUserProfile(CreateUserProfileRequest req) {
-    if (req.displayName.length == 0)
+    if (req.displayname.isEmpty)
       return CommandResult(false, "", "Display name is required");
 
     auto p = UserProfile(req.tenantId);

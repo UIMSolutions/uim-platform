@@ -23,10 +23,10 @@ class ManageApplicationJobsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createApplicationJob(CreateApplicationJobRequest request) {
-    if (request.name.length == 0)
+    if (request.name.isEmpty)
       return CommandResult(false, "", "Job name is required");
       
-    if (request.jobTemplateName.length == 0)
+    if (request.jobTemplatename.isEmpty)
       return CommandResult(false, "", "Job template name is required");
 
     if (request.systemInstanceId.isEmpty)

@@ -31,7 +31,7 @@ class ManageMemberFunctionsUseCase {
         f.description = dto.description;
         f.code        = dto.code;
         f.status      = parseFunctionStatus(dto.status);
-        if (f.name.length == 0)
+        if (f.name.isEmpty)
             return CommandResult(false, "", "Function name is required");
         repo.save(f);
         return CommandResult(true, f.id.value, "");

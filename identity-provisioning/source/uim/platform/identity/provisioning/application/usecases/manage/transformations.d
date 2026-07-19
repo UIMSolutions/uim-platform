@@ -30,7 +30,7 @@ class ManageTransformationsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Tenant ID is required");
     if (req.systemId.isEmpty)
       return CommandResult(false, "", "System ID is required");
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "Transformation name is required");
     if (req.mappingRules.length == 0)
       return CommandResult(false, "", "Mapping rules are required");

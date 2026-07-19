@@ -22,7 +22,7 @@ class ManageDataModelsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createModel(CreateDataModelRequest req) {
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "Data model name is required");
     if (req.namespace.length == 0)
       return CommandResult(false, "", "Namespace is required");

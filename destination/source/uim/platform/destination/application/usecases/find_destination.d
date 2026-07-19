@@ -36,7 +36,7 @@ class FindDestinationUseCase { // TODO: UIMUseCase {
   DestinationLookupResponse find(FindDestinationRequest req) {
     DestinationLookupResponse resp;
 
-    if (req.name.length == 0) {
+    if (req.name.isEmpty) {
       resp.found = false;
       resp.error = "Destination name is required";
       return resp;

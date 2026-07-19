@@ -187,7 +187,7 @@ class KeystoreController : ManageHttpController {
     auto applicationId = req.params.get("applicationId", "");
     auto subscriptionId = req.params.get("subscriptionId", "");
 
-    if (name.length == 0 || accountId.length == 0)
+    if (name.isEmpty || accountId.length == 0)
       return errorResponse("name and accountId are required", 400);
 
     auto ks = searchSvc.findByName(tenantId, accountId, applicationId, subscriptionId, name);

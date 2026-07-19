@@ -20,7 +20,7 @@ class ManageRegisteredApplicationsUseCase { // TODO: UIMUseCase {
 
     CommandResult createApplication(CreateRegisteredApplicationRequest r) {
         if (r.isNull) return CommandResult(false, "", "ID is required");
-        if (r.name.length == 0) return CommandResult(false, "", "Application name is required");
+        if (r.name.isEmpty) return CommandResult(false, "", "Application name is required");
 
         RegisteredApplication app;
         app.id = r.id;

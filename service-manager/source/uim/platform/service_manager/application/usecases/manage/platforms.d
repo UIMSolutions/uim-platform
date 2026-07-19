@@ -34,7 +34,7 @@ class ManagePlatformsUseCase { // TODO: UIMUseCase {
         platform.status = PlatformStatus.active;
         platform.subaccountId = dto.subaccountId;
 
-        if (dto.name.length == 0)
+        if (dto.name.isEmpty)
             return CommandResult(false, "", "Platform name is required");
 
         repo.save(platform);

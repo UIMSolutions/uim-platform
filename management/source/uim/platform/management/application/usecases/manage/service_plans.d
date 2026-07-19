@@ -22,9 +22,9 @@ class ManageServicePlansUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createPlan(CreateServicePlanRequest req) {
-    if (req.serviceName.length == 0)
+    if (req.serviceName.isEmpty)
       return CommandResult(false, "", "Service name is required");
-    if (req.planName.length == 0)
+    if (req.planname.isEmpty)
       return CommandResult(false, "", "Plan name is required");
 
     auto plan = ServicePlan(req.tenantId);

@@ -87,7 +87,7 @@ class WorkspaceCliController {
                 type_ = arg[7 .. $];
             }
         }
-        if (name.length == 0) {
+        if (name.isEmpty) {
             auto dv = DetailView("create");
             dv.renderError("--name is required.");
             return 1;

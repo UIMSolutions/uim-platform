@@ -24,7 +24,7 @@ class ManageJobsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createJob(CreateJobRequest r) {
-        if (r.name.length == 0)
+        if (r.name.isEmpty)
             return CommandResult(false, "", "Job name is required");
         if (r.actionUrl.length == 0 && r.type != "cloudFoundryTask")
             return CommandResult(false, "", "Action URL is required for HTTP jobs");

@@ -19,7 +19,7 @@ class ManageScopesUseCase {
   }
 
   CommandResult createScope(CreateScopeRequest r) {
-    if (r.name.length == 0)
+    if (r.name.isEmpty)
       return CommandResult(false, "", "Scope name is required");
     if (repo.existsByName(r.tenantId, r.name))
       return CommandResult(false, "", "A scope with this name already exists");

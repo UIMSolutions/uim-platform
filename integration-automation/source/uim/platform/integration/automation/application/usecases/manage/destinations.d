@@ -28,7 +28,7 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
   CommandResult createDestination(CreateDestinationRequest req) {
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "Destination name is required");
     if (req.url.length == 0)
       return CommandResult(false, "", "URL is required");

@@ -20,7 +20,7 @@ class ManageProvidersUseCase {
   CommandResult createProvider(CreateProviderRequest req) {
     if (req.code.length == 0)
       return CommandResult(false, "", "Provider code is required");
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "Provider name is required");
     if (repo.codeExists(req.tenantId, req.code))
       return CommandResult(false, "", "A provider with this code already exists");

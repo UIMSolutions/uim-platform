@@ -22,7 +22,7 @@ class ManageRepositoriesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createRepository(CreateRepositoryRequest r) {
-    if (r.name.length == 0)
+    if (r.name.isEmpty)
       return CommandResult(false, "", "DmsRepository name is required");
     if (r.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");

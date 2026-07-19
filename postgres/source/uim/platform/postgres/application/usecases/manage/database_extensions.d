@@ -40,7 +40,7 @@ class ManageDatabaseExtensionsUseCase {
         e.schema_ = dto.schema_;
         e.status = ExtensionStatus.enabled;
 
-        if (e.instanceId.value.length == 0 || e.extensionName.length == 0)
+        if (e.instanceId.value.length == 0 || e.extensionname.isEmpty)
             return CommandResult(false, "", "instanceId and extensionName are required");
 
         repo.save(e);

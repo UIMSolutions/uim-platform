@@ -21,7 +21,7 @@ class ManageDnsRecordsUseCase { // TODO: UIMUseCase {
     CommandResult createDnsRecord(CreateDnsRecordRequest r) {
         if (r.dnsRecordId.isEmpty)
             return CommandResult(false, "", "DNS record ID is required");
-        if (r.hostname.length == 0)
+        if (r.hostname.isEmpty)
             return CommandResult(false, "", "Hostname is required");
         if (r.value.length == 0)
             return CommandResult(false, "", "Value is required");

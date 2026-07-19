@@ -30,7 +30,7 @@ class ManageTeamCategoriesUseCase {
         c.name        = dto.name;
         c.description = dto.description;
         c.code        = dto.code;
-        if (c.name.length == 0)
+        if (c.name.isEmpty)
             return CommandResult(false, "", "Category name is required");
         repo.save(c);
         return CommandResult(true, c.id.value, "");

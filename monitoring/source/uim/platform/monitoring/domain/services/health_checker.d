@@ -26,7 +26,7 @@ struct HealthChecker {
   static ValidationResult validate(const ref HealthCheck check) {
     string[] errors;
 
-    if (check.name.length == 0)
+    if (check.name.isEmpty)
       errors ~= "Check name is required";
 
     if (check.resourceId.value.isEmpty)
@@ -45,7 +45,7 @@ struct HealthChecker {
       break;
 
     case CheckType.jmx:
-      if (check.mbeanName.length == 0)
+      if (check.mbeanname.isEmpty)
         errors ~= "MBean name is required for JMX checks";
       if (check.mbeanAttribute.length == 0)
         errors ~= "MBean attribute is required for JMX checks";

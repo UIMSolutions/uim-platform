@@ -20,7 +20,7 @@ class ManageActionsUseCase { // TODO: UIMUseCase {
     CommandResult createAction(CreateActionRequest r) {
         if (r.actionId.isEmpty)
             return CommandResult(false, "", "Action ID is required");
-        if (r.name.length == 0)
+        if (r.name.isEmpty)
             return CommandResult(false, "", "Action name is required");
 
         if (repo.existsById(r.tenantId, r.actionId))

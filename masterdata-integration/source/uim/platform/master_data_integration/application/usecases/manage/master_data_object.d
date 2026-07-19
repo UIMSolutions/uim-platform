@@ -31,7 +31,7 @@ class ManageMasterDataObjectsUseCase { // TODO: UIMUseCase {
     if (req.objectType.length == 0)
       return CommandResult(false, "", "Object type is required");
 
-    if (req.displayName.length == 0)
+    if (req.displayname.isEmpty)
       return CommandResult(false, "", "Display name is required");
 
     auto obj = MasterDataObject(req.tenantId); //, UserId("test-user"));

@@ -16,7 +16,7 @@ struct ProjectValidator {
 
   string[] validateName(string name) {
     string[] errors;
-    if (name.length == 0)
+    if (name.isEmpty)
       errors ~= "Project name must not be empty";
     if (name.length > 128)
       errors ~= "Project name must not exceed 128 characters";

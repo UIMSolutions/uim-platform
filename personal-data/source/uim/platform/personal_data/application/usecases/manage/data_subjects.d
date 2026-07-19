@@ -20,7 +20,7 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
 
     CommandResult createDataSubject(CreateDataSubjectRequest r) {
         if (r.isNull) return CommandResult(false, "", "ID is required");
-        if (r.firstName.length == 0 && r.lastName.length == 0)
+        if (r.firstname.isEmpty && r.lastname.isEmpty)
             return CommandResult(false, "", "First name or last name is required");
 
         

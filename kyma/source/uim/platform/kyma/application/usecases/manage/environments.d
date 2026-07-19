@@ -22,7 +22,7 @@ class ManageEnvironmentsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createEnvironment(CreateEnvironmentRequest req) {
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "Environment name is required");
     if (req.plan.length == 0)
       return CommandResult(false, "", "Plan is required");

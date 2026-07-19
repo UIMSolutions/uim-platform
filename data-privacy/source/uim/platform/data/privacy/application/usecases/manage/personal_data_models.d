@@ -24,7 +24,7 @@ class ManagePersonalDataModelsUseCase { // TODO: UIMUseCase {
   CommandResult createModel(CreatePersonalDataModelRequest req) {
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
-    if (req.fieldName.length == 0)
+    if (req.fieldname.isEmpty)
       return CommandResult(false, "", "Field name is required");
     if (req.sourceSystem.length == 0)
       return CommandResult(false, "", "Source system is required");

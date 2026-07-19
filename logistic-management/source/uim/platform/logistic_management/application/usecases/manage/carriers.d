@@ -19,7 +19,7 @@ public:
   }
 
   CommandResult createCarrier(TenantId tenantId, CreateCarrierRequest req) {
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "Carrier name is required");
     if (_repo.existsByName(tenantId, req.name))
       return CommandResult(false, "A carrier with that name already exists");

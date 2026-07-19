@@ -36,7 +36,7 @@ class ManageServiceInstancesUseCase { // TODO: UIMUseCase {
         instance.createdAt = currentTimestamp;
         instance.updatedAt = instance.createdAt;
 
-        if (dto.name.length == 0)
+        if (dto.name.isEmpty)
             return CommandResult(false, "", "Service instance name is required");
 
         if (dto.planId.isNull)

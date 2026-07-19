@@ -23,7 +23,7 @@ class ManageRolesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createRole(CreateRoleRequest req) {
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "Role name is required");
 
     auto now = currentTimestamp();

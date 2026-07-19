@@ -19,7 +19,7 @@ class ManageRoleCollectionsUseCase {
   }
 
   CommandResult createRoleCollection(CreateRoleCollectionRequest r) {
-    if (r.name.length == 0)
+    if (r.name.isEmpty)
       return CommandResult(false, "", "Role collection name is required");
     if (repo.existsByName(r.tenantId, r.name))
       return CommandResult(false, "", "A role collection with this name already exists");

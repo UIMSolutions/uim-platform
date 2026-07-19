@@ -23,7 +23,7 @@ class ManageFragmentsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createFragment(CreateFragmentRequest req) {
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "Fragment name is required");
 
     auto existing = repo.findByName(req.tenantId, req.subaccountId, req.name);

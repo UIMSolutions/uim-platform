@@ -26,7 +26,7 @@ class ManageSystemsUseCase { // TODO: UIMUseCase {
   CommandResult createSystem(CreateSystemRequest req) {
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "System name is required");
     if (req.host.length == 0)
       return CommandResult(false, "", "Host is required");

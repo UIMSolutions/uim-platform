@@ -25,7 +25,7 @@ class ManageDatasetsUseCase { // TODO: UIMUseCase {
   CommandResult createDataset(CreateDatasetRequest req) {
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "Dataset name is required");
 
     if (repo.existsByName(req.tenantId, req.name))

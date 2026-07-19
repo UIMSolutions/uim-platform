@@ -41,7 +41,7 @@ class ManageFeatureFlagsUseCase {
     }
 
     FlagResult createFlag(CreateFeatureFlagRequest req) {
-        if (req.name.length == 0)
+        if (req.name.isEmpty)
             return FlagResult(false, "", "Flag name is required");
         if (req.instanceId.length == 0)
             return FlagResult(false, "", "Service instance ID is required");

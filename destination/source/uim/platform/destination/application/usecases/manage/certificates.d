@@ -68,7 +68,7 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult upload(UploadCertificateRequest req) {
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "Certificate name is required");
 
     if (req.content.length == 0)

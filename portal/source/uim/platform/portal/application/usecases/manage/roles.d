@@ -27,7 +27,7 @@ class ManageRolesUseCase { // TODO: UIMUseCase {
   }
 
   RoleResponse createRole(CreateRoleRequest req) {
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return RoleResponse("", "Role name is required");
 
     if (roleRepo.existsByName(req.tenantId, req.name))

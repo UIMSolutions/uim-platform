@@ -22,7 +22,7 @@ class ManageBackupsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createBackup(CreateBackupRequest r) {
-    if (r.isNull || r.name.length == 0)
+    if (r.isNull || r.name.isEmpty)
       return CommandResult(false, "", "Backup ID and name are required");
 
     auto existing = repo.findById(r.tenantId, r.id);

@@ -20,7 +20,7 @@ class ManageAutomationsUseCase { // TODO: UIMUseCase {
     CommandResult createAutomation(CreateAutomationRequest r) {
         if (r.automationId.isEmpty)
             return CommandResult(false, "", "Automation ID is required");
-        if (r.name.length == 0)
+        if (r.name.isEmpty)
             return CommandResult(false, "", "Automation name is required");
 
         auto existing = repo.findById(r.tenantId, r.automationId);

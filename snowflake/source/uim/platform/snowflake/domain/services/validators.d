@@ -13,25 +13,25 @@ mixin(ShowModule!());
 struct SnowflakeValidator {
 
   static string validateAccount(SnowflakeAccount a) {
-    if (a.name.length == 0)   return "Account name is required";
+    if (a.name.isEmpty)   return "Account name is required";
     if (a.region.length == 0) return "Region is required";
     return null;
   }
 
   static string validateConnector(ZerocopyConnector c) {
-    if (c.name.length == 0)           return "Connector name is required";
+    if (c.name.isEmpty)           return "Connector name is required";
     if (c.accountId.value.length == 0) return "Account ID is required";
     return null;
   }
 
   static string validateWarehouse(SnowflakeWarehouse w) {
-    if (w.name.length == 0)            return "Warehouse name is required";
+    if (w.name.isEmpty)            return "Warehouse name is required";
     if (w.accountId.value.length == 0) return "Account ID is required";
     return null;
   }
 
   static string validateDatabase(SnowflakeDatabase db) {
-    if (db.name.length == 0)            return "Database name is required";
+    if (db.name.isEmpty)            return "Database name is required";
     if (db.accountId.value.length == 0) return "Account ID is required";
     return null;
   }
@@ -39,12 +39,12 @@ struct SnowflakeValidator {
   static string validateShare(DataProductShare s) {
     if (s.dataProductId.length == 0)   return "Data product ID is required";
     if (s.accountId.value.length == 0) return "Account ID is required";
-    if (s.shareName.length == 0)       return "Share name is required";
+    if (s.sharename.isEmpty)       return "Share name is required";
     return null;
   }
 
   static string validateRole(SnowflakeRole r) {
-    if (r.name.length == 0)            return "Role name is required";
+    if (r.name.isEmpty)            return "Role name is required";
     if (r.accountId.value.length == 0) return "Account ID is required";
     return null;
   }
@@ -55,11 +55,11 @@ struct SnowflakeValidator {
   }
 
   static string validateProvisioningRequest(ProvisioningRequest req) {
-    if (req.accountName.length == 0)  return "Account name is required";
+    if (req.accountname.isEmpty)  return "Account name is required";
     if (req.region.length == 0)        return "Region is required";
     if (req.adminEmail.length == 0)    return "Admin email is required";
-    if (req.adminFirstName.length == 0) return "Admin first name is required";
-    if (req.adminLastName.length == 0)  return "Admin last name is required";
+    if (req.adminFirstname.isEmpty) return "Admin first name is required";
+    if (req.adminLastname.isEmpty)  return "Admin last name is required";
     return null;
   }
 }

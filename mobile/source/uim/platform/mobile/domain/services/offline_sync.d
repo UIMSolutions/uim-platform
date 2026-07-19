@@ -26,7 +26,7 @@ struct OfflineSyncService {
 
   // Validate store name
   static bool validateStoreName(string name) {
-    if (name.length == 0 || name.length > 100)
+    if (name.isEmpty || name.length > 100)
       return false;
     import std.regex : regex, matchAll;
 

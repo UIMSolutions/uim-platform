@@ -23,7 +23,7 @@ class ManageShellPluginsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createPlugin(CreateShellPluginRequest req) {
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "Plugin name is required");
 
     auto p = ShellPlugin(req.tenantId);

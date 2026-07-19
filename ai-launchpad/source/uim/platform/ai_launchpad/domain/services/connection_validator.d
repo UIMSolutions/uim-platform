@@ -23,7 +23,7 @@ struct ValidationResult {
 
 class ConnectionValidator {
   ValidationResult validate(Connection c) {
-    if (c.name.length == 0) return ValidationResult(false, "Connection name is required");
+    if (c.name.isEmpty) return ValidationResult(false, "Connection name is required");
     if (c.url.length == 0) return ValidationResult(false, "Connection URL is required");
     if (c.authUrl.length == 0) return ValidationResult(false, "Auth URL is required");
     if (c.clientId.isEmpty) return ValidationResult(false, "Client ID is required");

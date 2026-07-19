@@ -22,7 +22,7 @@ class ManageDataAccessControlsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createDataAccessControl(CreateDataAccessControlRequest r) {
-    if (r.name.length == 0)
+    if (r.name.isEmpty)
       return CommandResult(false, "", "Data access control name is required");
     if (r.spaceId.isEmpty)
       return CommandResult(false, "", "Space ID is required");

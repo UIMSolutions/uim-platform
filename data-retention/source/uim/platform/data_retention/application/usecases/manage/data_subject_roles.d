@@ -15,7 +15,7 @@ class ManageDataSubjectRolesUseCase { // TODO: UIMUseCase {
     CommandResult createDataSubjectRole(CreateDataSubjectRoleRequest req) {
         import std.uuid : randomUUID;
 
-        if (req.name.length == 0)
+        if (req.name.isEmpty)
             return CommandResult(false, "", "Data subject role name is required");
 
         DataSubjectRole dsr;

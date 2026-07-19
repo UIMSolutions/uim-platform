@@ -29,7 +29,7 @@ class ManageServiceInstancesUseCase {
     }
 
     FlagResult createInstance(CreateServiceInstanceRequest req) {
-        if (req.name.length == 0)
+        if (req.name.isEmpty)
             return FlagResult(false, "", "Instance name is required");
 
         ServiceInstance inst;

@@ -37,7 +37,7 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
         binding.createdAt = currentTimestamp;
         binding.updatedAt = binding.createdAt;
 
-        if (dto.name.length == 0)
+        if (dto.name.isEmpty)
             return CommandResult(false, "", "Service binding name is required");
         if (dto.instanceId.isNull)
             return CommandResult(false, "", "Service instance ID is required");

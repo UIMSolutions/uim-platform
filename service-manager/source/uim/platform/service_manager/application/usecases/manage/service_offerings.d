@@ -33,7 +33,7 @@ class ManageServiceOfferingsUseCase { // TODO: UIMUseCase {
         e.metadata = dto.metadata;
         e.createdAt = currentTimestamp;
 
-        if (dto.name.length == 0)
+        if (dto.name.isEmpty)
             return CommandResult(false, "", "Service offering name is required");
 
         repo.save(e);

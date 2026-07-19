@@ -28,7 +28,7 @@ class ProcessDocumentsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult upload(UploadDocumentRequest r) {
-    if (r.fileName.length == 0)
+    if (r.filename.isEmpty)
       return CommandResult(false, "", "File name is required");
     if (r.clientId.isEmpty)
       return CommandResult(false, "", "Client ID is required");

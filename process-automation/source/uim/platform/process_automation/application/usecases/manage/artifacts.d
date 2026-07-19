@@ -20,7 +20,7 @@ class ManageArtifactsUseCase { // TODO: UIMUseCase {
     CommandResult createArtifact(CreateArtifactRequest r) {
         if (r.artifactId.isEmpty)
             return CommandResult(false, "", "Artifact ID is required");
-        if (r.name.length == 0)
+        if (r.name.isEmpty)
             return CommandResult(false, "", "Artifact name is required");
 
         auto existing = repo.findById(r.tenantId, r.artifactId);

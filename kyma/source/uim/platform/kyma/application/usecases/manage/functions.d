@@ -25,7 +25,7 @@ class ManageFunctionsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createFunction(CreateFunctionRequest request) {
-    if (request.name.length == 0)
+    if (request.name.isEmpty)
       return CommandResult(false, "", "Function name is required");
     if (request.namespaceId.isEmpty)
       return CommandResult(false, "", "Namespace ID is required");

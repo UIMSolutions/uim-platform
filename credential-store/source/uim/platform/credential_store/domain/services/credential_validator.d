@@ -38,7 +38,7 @@ struct CredentialValidator {
   }
 
   static bool validateNamespaceName(string name) {
-    if (name.length == 0 || name.length > 100)
+    if (name.isEmpty || name.length > 100)
       return false;
     // allowed: letters, digits, _ - . : ! ~
     auto pat = regex(`^[a-zA-Z0-9_\-.:!~]+$`);

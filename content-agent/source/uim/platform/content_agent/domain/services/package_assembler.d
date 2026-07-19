@@ -27,7 +27,7 @@ struct PackageAssembler {
     string[] errors;
     string[] deps;
 
-    if (pkg.name.length == 0)
+    if (pkg.name.isEmpty)
       errors ~= "Package name is required";
 
     if (pkg.items.length == 0)

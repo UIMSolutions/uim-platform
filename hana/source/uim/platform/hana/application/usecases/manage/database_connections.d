@@ -22,7 +22,7 @@ class ManageDatabaseConnectionsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createDatabaseConnection(CreateDatabaseConnectionRequest r) {
-    if (r.isNull || r.name.length == 0)
+    if (r.isNull || r.name.isEmpty)
       return CommandResult(false, "", "Connection ID and name are required");
 
     if (repo.existsById(r.id))

@@ -22,11 +22,11 @@ class ManageServiceInstancesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createServiceInstance(CreateServiceInstanceRequest req) {
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "Service instance name is required");
-    if (req.serviceOfferingName.length == 0)
+    if (req.serviceOfferingname.isEmpty)
       return CommandResult(false, "", "Service offering name is required");
-    if (req.servicePlanName.length == 0)
+    if (req.servicePlanname.isEmpty)
       return CommandResult(false, "", "Service plan name is required");
 
     if (repo.existsByName(req.namespaceId, req.name))

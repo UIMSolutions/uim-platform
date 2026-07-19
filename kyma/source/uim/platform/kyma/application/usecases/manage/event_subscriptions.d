@@ -22,7 +22,7 @@ class ManageEventSubscriptionsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createEventSubscription(CreateEventSubscriptionRequest req) {
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "Subscription name is required");
     if (req.source.length == 0)
       return CommandResult(false, "", "Event source is required");

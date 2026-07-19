@@ -28,7 +28,7 @@ class ManageHealthChecksUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createCheck(CreateHealthCheckRequest req) {
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "Check name is required");
 
     auto check = HealthCheck(req.tenantId);

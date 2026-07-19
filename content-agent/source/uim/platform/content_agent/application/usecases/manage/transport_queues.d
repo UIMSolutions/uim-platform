@@ -32,7 +32,7 @@ class ManageTransportQueuesUseCase { // TODO: UIMUseCase {
     if (!existing.isNull)
       return CommandResult(false, "", "Queue with name '" ~ req.name ~ "' already exists");
 
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "Queue name is required");
 
     auto queue = TransportQueue(req.tenantId, req.queueId.isNull ? TransportQueueId(createId()) : req.queueId, req.createdBy);

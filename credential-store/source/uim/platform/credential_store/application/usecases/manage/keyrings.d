@@ -28,7 +28,7 @@ class ManageKeyringsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createKeyring(CreateKeyringRequest r) {
-    if (r.name.length == 0 || r.name.length > 255)
+    if (r.name.isEmpty || r.name.length > 255)
       return CommandResult(false, "", "Keyring name must be 1-255 characters");
 
     if (credRepo.existsByName(r.tenantId, r.namespaceId, r.name, CredentialType.keyring))

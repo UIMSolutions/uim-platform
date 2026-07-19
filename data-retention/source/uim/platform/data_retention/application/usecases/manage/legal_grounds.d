@@ -15,7 +15,7 @@ class ManageLegalGroundsUseCase { // TODO: UIMUseCase {
     CommandResult createLegalGround(CreateLegalGroundRequest req) {
         import std.uuid : randomUUID;
 
-        if (req.name.length == 0)
+        if (req.name.isEmpty)
             return CommandResult(false, "", "Legal ground name is required");
 
         LegalGround lg;

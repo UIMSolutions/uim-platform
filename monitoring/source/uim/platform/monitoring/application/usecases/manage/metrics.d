@@ -29,7 +29,7 @@ class ManageMetricsUseCase { // TODO: UIMUseCase {
   // --- Metric Definitions ---
 
   CommandResult createDefinition(CreateMetricDefinitionRequest req) {
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "Metric name is required");
 
     if (definitions.existsByName(req.tenantId, req.name))
@@ -85,7 +85,7 @@ class ManageMetricsUseCase { // TODO: UIMUseCase {
 
   // --- Metric Data Points ---
   CommandResult pushMetric(PushMetricRequest req) {
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "Metric name is required");
 
     if (req.resourceId.isEmpty)

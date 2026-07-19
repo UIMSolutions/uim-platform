@@ -20,7 +20,7 @@ class ManageServiceInstancesUseCase {
   }
 
   CommandResult createInstance(CreateServiceInstanceRequest req) {
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "Name is required");
     if (req.resourceId.length == 0)
       return CommandResult(false, "", "resourceId is required");

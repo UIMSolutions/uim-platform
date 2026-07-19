@@ -15,7 +15,7 @@ class ManageApplicationGroupsUseCase { // TODO: UIMUseCase {
     CommandResult createApplicationGroup(CreateApplicationGroupRequest req) {
         import std.uuid : randomUUID;
 
-        if (req.name.length == 0)
+        if (req.name.isEmpty)
             return CommandResult(false, "", "Application group name is required");
 
         ApplicationGroup ag;

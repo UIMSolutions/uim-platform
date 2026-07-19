@@ -47,7 +47,7 @@ class IngestTracesUseCase { // TODO: UIMUseCase {
 
     if (req.traceId.isEmpty)
       return CommandResult(false, "", "Trace ID is required");
-    if (req.operationName.length == 0)
+    if (req.operationname.isEmpty)
       return CommandResult(false, "", "Operation name is required");
 
     spanRepo.save(s);

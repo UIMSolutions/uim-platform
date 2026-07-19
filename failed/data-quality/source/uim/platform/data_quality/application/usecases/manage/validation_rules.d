@@ -21,9 +21,9 @@ class ManageValidationRulesUseCase { // TODO: UIMUseCase {
   CommandResult createValidationRule(CreateValidationRuleRequest req) {
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "Rule name is required");
-    if (req.fieldName.length == 0)
+    if (req.fieldname.isEmpty)
       return CommandResult(false, "", "Field name is required");
 
     auto rule = ValidationRule(req.tenantId);

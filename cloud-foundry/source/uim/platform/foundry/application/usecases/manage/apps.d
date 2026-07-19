@@ -31,7 +31,7 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Tenant ID is required");
     if (req.spaceId.isEmpty)
       return CommandResult(false, "", "Space ID is required");
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "Application name is required");
 
     // Unique name within space

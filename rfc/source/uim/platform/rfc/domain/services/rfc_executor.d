@@ -85,7 +85,7 @@ private:
 
     ExecuteResult _executeQueued(RfcCall call, Destination dest, FunctionModule fm) {
         // qRFC — tRFC with queue-based ordering. Queue name is mandatory.
-        if (call.queueName.length == 0) {
+        if (call.queuename.isEmpty) {
             ExecuteResult r;
             r.success      = false;
             r.errorMessage = "qRFC requires a queue name";

@@ -18,7 +18,7 @@ class ManagePageTemplatesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createTemplate(CreatePageTemplateRequest req) {
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "Page template name is required");
 
     auto t = PageTemplate(req.tenantId);

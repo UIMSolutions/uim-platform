@@ -22,9 +22,9 @@ class ManageApiRulesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createApiRule(CreateApiRuleRequest req) {
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "API rule name is required");
-    if (req.serviceName.length == 0)
+    if (req.serviceName.isEmpty)
       return CommandResult(false, "", "Service name is required");
     if (req.host.length == 0)
       return CommandResult(false, "", "Host is required");

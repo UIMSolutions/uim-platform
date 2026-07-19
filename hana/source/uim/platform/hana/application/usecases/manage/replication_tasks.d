@@ -22,7 +22,7 @@ class ManageReplicationTasksUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createReplicationTask(CreateReplicationTaskRequest r) {
-    if (r.isNull || r.name.length == 0)
+    if (r.isNull || r.name.isEmpty)
       return CommandResult(false, "", "Replication task ID and name are required");
 
     if (repo.existsById(r.tenantId, r.replicationTaskId))

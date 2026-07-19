@@ -23,7 +23,7 @@ class ManageModelsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult registerModel(RegisterModelRequest r) {
-    if (r.name.length == 0)
+    if (r.name.isEmpty)
       return CommandResult(false, "", "Model name is required");
 
     auto m = Model(r.tenantId, r.modelId.isNull ? ModelId(createId()) : r.modelId); // , r.createdBy);

@@ -25,7 +25,7 @@ class ManageModulesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult enableModule(EnableModuleRequest request) {
-    if (request.name.length == 0)
+    if (request.name.isEmpty)
       return CommandResult(false, "", "Module name is required");
 
     if (request.environmentId.isEmpty)

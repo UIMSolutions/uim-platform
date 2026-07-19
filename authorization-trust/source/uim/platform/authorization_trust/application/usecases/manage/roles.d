@@ -19,7 +19,7 @@ class ManageRolesUseCase {
   }
 
   CommandResult createRole(CreateRoleRequest r) {
-    if (r.name.length == 0)
+    if (r.name.isEmpty)
       return CommandResult(false, "", "Role name is required");
     if (repo.existsByName(r.tenantId, r.name, r.appId))
       return CommandResult(false, "", "A role with this name already exists for the application");

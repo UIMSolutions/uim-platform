@@ -20,7 +20,7 @@ class ManageProcessingPurposesUseCase { // TODO: UIMUseCase {
 
     CommandResult createProcessingPurpose(CreateProcessingPurposeRequest r) {
         if (r.tenantId.isEmpty) return CommandResult(false, "", "Tenant ID is required");
-        if (r.name.length == 0) return CommandResult(false, "", "Purpose name is required");
+        if (r.name.isEmpty) return CommandResult(false, "", "Purpose name is required");
         if (r.legalBasis.length == 0) return CommandResult(false, "", "Legal basis is required");
 
         ProcessingPurpose p;

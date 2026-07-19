@@ -23,7 +23,7 @@ class ManageChannelsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createChannel(CreateChannelRequest req) {
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "Channel name is required");
 
     auto ch = Channel(req.tenantId, req.channelId, req.createdBy);

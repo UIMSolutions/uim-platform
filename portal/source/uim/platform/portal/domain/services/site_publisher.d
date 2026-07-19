@@ -20,7 +20,7 @@ struct PublishValidationResult {
 PublishValidationResult validateForPublish(const ref Site site) {
   string[] errors;
 
-  if (site.name.length == 0)
+  if (site.name.isEmpty)
     errors ~= "Site must have a name";
   if (site.pageIds.length == 0)
     errors ~= "Site must have at least one page";

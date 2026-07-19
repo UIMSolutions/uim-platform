@@ -23,7 +23,7 @@ class ManageThemesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createTheme(CreateThemeRequest req) {
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "Theme name is required");
 
     auto t = Theme(req.tenantId);

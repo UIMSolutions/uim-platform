@@ -15,7 +15,7 @@ class ManageLegalEntitiesUseCase { // TODO: UIMUseCase {
     CommandResult createLegalEntity(CreateLegalEntityRequest req) {
         import std.uuid : randomUUID;
 
-        if (req.name.length == 0)
+        if (req.name.isEmpty)
             return CommandResult(false, "", "Legal entity name is required");
 
         LegalEntity le;

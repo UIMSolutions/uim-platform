@@ -13,19 +13,19 @@ mixin(ShowModule!());
 
 struct ComposerValidator {
   static string validateDataProvider(DataProvider provider) {
-    if (provider.name.length == 0) return "Provider name is required";
+    if (provider.name.isEmpty) return "Provider name is required";
     if (provider.systemType.length == 0) return "System type is required";
     return null;
   }
 
   static string validateDataProduct(DataProduct product) {
-    if (product.name.length == 0) return "Data product name is required";
+    if (product.name.isEmpty) return "Data product name is required";
     if (product.providerId.value.length == 0) return "Provider ID is required";
     return null;
   }
 
   static string validateUnificationRule(UnificationRule rule) {
-    if (rule.name.length == 0) return "Rule name is required";
+    if (rule.name.isEmpty) return "Rule name is required";
     if (rule.identifierAttributes.length == 0) return "At least one identifier attribute is required";
     if (rule.identifierAttributes.length > 5) return "Maximum 5 identifier attributes per rule";
     return null;
@@ -38,8 +38,8 @@ struct ComposerValidator {
   }
 
   static string validateAttributeMapping(AttributeMapping mapping) {
-    if (mapping.sourceAttributeName.length == 0) return "Source attribute name is required";
-    if (mapping.targetAttributeName.length == 0) return "Target attribute name is required";
+    if (mapping.sourceAttributename.isEmpty) return "Source attribute name is required";
+    if (mapping.targetAttributename.isEmpty) return "Target attribute name is required";
     if (mapping.configId.value.length == 0) return "Data source config ID is required";
     return null;
   }

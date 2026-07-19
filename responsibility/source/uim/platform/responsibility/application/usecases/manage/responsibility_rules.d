@@ -42,7 +42,7 @@ class ManageResponsibilityRulesUseCase {
         r.contextId = dto.contextId;
         r.teamId = dto.teamId;
 
-        if (r.name.length == 0)
+        if (r.name.isEmpty)
             return CommandResult(false, "", "Rule name is required");
         repo.save(r);
         return CommandResult(true, r.id.value, "");

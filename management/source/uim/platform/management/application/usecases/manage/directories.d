@@ -26,14 +26,14 @@ class ManageDirectoriesUseCase { // TODO: UIMUseCase {
     if (request.accountId.isEmpty)
       return CommandResult(false, "", "Global account ID is required");
 
-    if (request.displayName.length == 0)
+    if (request.displayname.isEmpty)
       return CommandResult(false, "", "Display name is required");
 
     if (directories.existsById(request.tenantId, request.directoryId))
       return CommandResult(false, "", "Directory with the same ID already exists");
 
     auto directory = Directory(request.tenantId);
-    directory.id = request.directoryId.isNull ? DirectoryId(generateUniqueId()) : request.directoryId;
+    directory.id = request.directoryId.isNull ? DirectoryId(generateId()) : request.directoryId;
     directory.globalAccountId = request.accountId;
     directory.displayName = request.displayName;
     directory.description = request.description;

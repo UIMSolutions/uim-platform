@@ -24,7 +24,7 @@ class ManageSystemInstancesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createInstance(CreateSystemInstanceRequest req) {
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "System instance name is required");
 
     if (req.tenantId.isEmpty)

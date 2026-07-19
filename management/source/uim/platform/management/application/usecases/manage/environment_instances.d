@@ -32,7 +32,7 @@ class ManageEnvironmentsUseCase { // TODO: UIMUseCase {
   CommandResult createEnvironment(CreateEnvironmentRequest req) {
     if (req.subaccountId.isEmpty)
       return CommandResult(false, "", "Subaccount ID is required");
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "Environment name is required");
 
     auto subaccount = subaccountRepo.findById(req.tenantId, req.subaccountId);

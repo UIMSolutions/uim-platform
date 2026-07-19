@@ -34,7 +34,7 @@ class ManageTeamTypesUseCase {
         t.description = dto.description;
         t.code        = dto.code;
         t.categoryId  = dto.categoryId;
-        if (t.name.length == 0)
+        if (t.name.isEmpty)
             return CommandResult(false, "", "Team type name is required");
         repo.save(t);
         return CommandResult(true, t.id.value, "");

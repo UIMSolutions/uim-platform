@@ -32,7 +32,7 @@ class ManageResponsibilityContextsUseCase {
         c.objectType  = dto.objectType;
         c.namespace_  = dto.namespace_;
         c.status      = parseContextStatus(dto.status);
-        if (c.name.length == 0)
+        if (c.name.isEmpty)
             return CommandResult(false, "", "Context name is required");
         repo.save(c);
         return CommandResult(true, c.id.value, "");

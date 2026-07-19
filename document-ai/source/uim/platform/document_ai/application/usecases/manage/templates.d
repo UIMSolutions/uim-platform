@@ -23,7 +23,7 @@ class ManageTemplatesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createTemplate(CreateTemplateRequest r) {
-    if (r.name.length == 0)
+    if (r.name.isEmpty)
       return CommandResult(false, "", "Template name is required");
     if (r.clientId.isEmpty)
       return CommandResult(false, "", "Client ID is required");

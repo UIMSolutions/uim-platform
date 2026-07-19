@@ -24,7 +24,7 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createDestination(CreateDestinationRequest req) {
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "Destination name is required");
 
     if (req.url.length == 0 && req.destinationType != "rfc")

@@ -26,7 +26,7 @@ class ManageSitesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createSite(CreateSiteRequest req) {
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "Site name is required");
 
     if (req.alias_.length > 0) {

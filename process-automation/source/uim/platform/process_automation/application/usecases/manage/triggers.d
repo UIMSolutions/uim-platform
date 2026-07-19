@@ -20,7 +20,7 @@ class ManageTriggersUseCase { // TODO: UIMUseCase {
     CommandResult createTrigger(CreateTriggerRequest r) {
         if (r.triggerId.isEmpty)
             return CommandResult(false, "", "Trigger ID is required");
-        if (r.name.length == 0)
+        if (r.name.isEmpty)
             return CommandResult(false, "", "Trigger name is required");
 
         auto existing = repo.findById(r.tenantId, r.triggerId);

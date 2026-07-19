@@ -44,7 +44,7 @@ class ManageServicePlansUseCase {
         e.available = dto.available;
         e.pricingUnit = dto.pricingUnit;
 
-        if (e.name.length == 0)
+        if (e.name.isEmpty)
             return CommandResult(false, "", "name is required");
 
         repo.save(e);

@@ -23,7 +23,7 @@ class ManageSchemasUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createSchema(CreateSchemaRequest r) {
-    if (r.name.length == 0)
+    if (r.name.isEmpty)
       return CommandResult(false, "", "Schema name is required");
       
     if (r.clientId.isEmpty)

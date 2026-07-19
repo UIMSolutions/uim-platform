@@ -22,7 +22,7 @@ class ManageDistributionModelsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createModel(CreateDistributionModelRequest req) {
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "Distribution model name is required");
 
     if (req.sourceClientId.isEmpty)

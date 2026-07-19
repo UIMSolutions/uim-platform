@@ -35,7 +35,7 @@ class ManageContentPackagesUseCase { // TODO: UIMUseCase {
     if (packages.existsByName(req.tenantId, req.name))
       return CommandResult(false, "", "Package with name '" ~ req.name ~ "' already exists");
 
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "Package name is required");
    
     auto pkg = ContentPackage(req.tenantId, req.createdBy);

@@ -23,7 +23,7 @@ struct DeploymentValidator {
 
   // Validate app name (alphanumeric with dots and hyphens)
   static bool validateAppName(string name) {
-    if (name.length == 0 || name.length > 255)
+    if (name.isEmpty || name.length > 255)
       return false;
     import std.regex : regex, matchAll;
 
@@ -59,7 +59,7 @@ struct DeploymentValidator {
 
   // Validate service instance name
   static bool validateInstanceName(string name) {
-    if (name.length == 0 || name.length > 100)
+    if (name.isEmpty || name.length > 100)
       return false;
     import std.regex : regex, matchAll;
 

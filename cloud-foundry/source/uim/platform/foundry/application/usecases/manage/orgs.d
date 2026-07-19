@@ -30,7 +30,7 @@ class ManageOrgsUseCase { // TODO: UIMUseCase {
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
       
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "Organization name is required");
 
     // Unique name per tenant

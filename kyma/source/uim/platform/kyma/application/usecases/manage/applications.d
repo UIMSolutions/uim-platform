@@ -22,7 +22,7 @@ class ManageApplicationsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult register(RegisterApplicationRequest req) {
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "Application name is required");
     if (req.environmentId.isEmpty)
       return CommandResult(false, "", "Environment ID is required");

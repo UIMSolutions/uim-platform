@@ -20,7 +20,7 @@ class ManageTranslationProjectsUseCase {
     }
 
     CommandResult createProject(CreateTranslationProjectRequest r) {
-        if (r.name.length == 0)
+        if (r.name.isEmpty)
             return CommandResult(false, "", "Project name is required");
         if (r.sourceLanguage.length == 0)
             return CommandResult(false, "", "Source language is required");

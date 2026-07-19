@@ -23,7 +23,7 @@ struct FhirValidator {
   static string validatePatient(string id, string familyName) {
     auto err = validateResourceId(id);
     if (err.length > 0) return err;
-    if (familyName.length == 0)
+    if (familyname.isEmpty)
       return "Patient family name is required";
     return "";
   }
@@ -43,7 +43,7 @@ struct FhirValidator {
   static string validateOrganization(string id, string name) {
     auto err = validateResourceId(id);
     if (err.length > 0) return err;
-    if (name.length == 0)
+    if (name.isEmpty)
       return "Organization name is required";
     return "";
   }

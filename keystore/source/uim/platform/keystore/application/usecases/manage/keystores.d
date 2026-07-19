@@ -24,7 +24,7 @@ class ManageKeystoresUseCase {
 
   // Upload (create) a keystore at the given scope level.
   CommandResult uploadKeystore(UploadKeystoreRequest r) {
-    if (r.name.length == 0)
+    if (r.name.isEmpty)
       return CommandResult(false, "", "Name is required");
     if (r.content.length == 0)
       return CommandResult(false, "", "Content is required");

@@ -33,7 +33,7 @@ class ManageModelsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Tenant ID is required");
     if (req.datasetId.isEmpty)
       return CommandResult(false, "", "Dataset ID is required");
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "Model name is required");
 
     // Verify dataset exists

@@ -23,7 +23,7 @@ class ManageTagsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createTag(CreateTagRequest req) {
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "Tag name is required");
 
     auto existing = repo.findByName(req.tenantId, req.name);

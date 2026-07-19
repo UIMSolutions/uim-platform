@@ -36,7 +36,7 @@ class ManageServicePlansUseCase { // TODO: UIMUseCase {
         plan.createdAt = currentTimestamp;
         plan.updatedAt = plan.createdAt;
 
-        if (dto.name.length == 0)
+        if (dto.name.isEmpty)
             return CommandResult(false, "", "Service plan name is required");
 
         repo.save(plan);

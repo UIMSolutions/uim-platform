@@ -63,7 +63,7 @@ class ManagePipelinesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createPipeline(CreatePipelineRequest req) {
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "Pipeline name is required");
 
     PipelineSourceType sourceType;

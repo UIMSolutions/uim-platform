@@ -23,7 +23,7 @@ class ManageDashboardsUseCase { // TODO: UIMUseCase {
   CommandResult createDashboard(CreateDashboardRequest req) {
     import std.uuid : randomUUID;
 
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "Dashboard name is required");
 
     auto d = Dashboard(req.tenantId); //, req.createdBy);

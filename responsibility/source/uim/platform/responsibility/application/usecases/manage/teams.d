@@ -37,7 +37,7 @@ class ManageTeamsUseCase {
         t.categoryId  = dto.categoryId;
         t.status      = parseStatus(dto.status);
         t.scope_      = parseScope(dto.scope_);
-        if (t.name.length == 0)
+        if (t.name.isEmpty)
             return CommandResult(false, "", "Team name is required");
         repo.save(t);
         return CommandResult(true, t.id.value, "");

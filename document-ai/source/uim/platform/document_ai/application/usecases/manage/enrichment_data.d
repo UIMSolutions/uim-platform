@@ -23,7 +23,7 @@ class ManageEnrichmentDataUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createEnrichmentData(CreateEnrichmentDataRequest r) {
-    if (r.name.length == 0)
+    if (r.name.isEmpty)
       return CommandResult(false, "", "Enrichment data name is required");
     if (r.clientId.isEmpty)
       return CommandResult(false, "", "Client ID is required");

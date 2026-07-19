@@ -34,11 +34,11 @@ class ManageServicesUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Tenant ID is required");
     if (req.spaceId.isEmpty)
       return CommandResult(false, "", "Space ID is required");
-    if (req.name.length == 0)
+    if (req.name.isEmpty)
       return CommandResult(false, "", "Service instance name is required");
-    if (req.serviceName.length == 0)
+    if (req.serviceName.isEmpty)
       return CommandResult(false, "", "Service name is required");
-    if (req.servicePlanName.length == 0)
+    if (req.servicePlanname.isEmpty)
       return CommandResult(false, "", "Service plan name is required");
 
     auto instance = instances.findByName(req.tenantId, req.spaceId, req.name);

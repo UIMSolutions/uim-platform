@@ -22,7 +22,7 @@ class ManageCatalogAssetsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult createCatalogAsset(CreateCatalogAssetRequest r) {
-    if (r.name.length == 0)
+    if (r.name.isEmpty)
       return CommandResult(false, "", "Catalog asset name is required");
       
     if (r.spaceId.isEmpty)
