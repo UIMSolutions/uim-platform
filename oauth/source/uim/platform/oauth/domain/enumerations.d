@@ -57,7 +57,7 @@ enum ClientStatus {
 ClientStatus toClientStatus(string value) {
     mixin(EnumSwitch("ClientStatus", "active"));
 }
-ClientStatus[] toClientStatus(string[] values) {
+ClientStatus[] toClientStatuses(string[] values) {
     return values.map!(toClientStatus).array;
 }
 string toString(ClientStatus value) {

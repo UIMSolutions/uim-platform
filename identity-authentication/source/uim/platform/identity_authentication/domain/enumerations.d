@@ -53,7 +53,7 @@ enum UserStatus {
 UserStatus toUserStatus(string value) {
   mixin(EnumSwitch("UserStatus", "active"));
 }
-UserStatus[] toUserStatus(string[] values) {
+UserStatus[] toUserStatuses(string[] values) {
   return values.map!(v => v.toUserStatus).array;
 }
 string toString(UserStatus value) {
@@ -173,7 +173,7 @@ enum JobStatus {
 JobStatus toJobStatus(string value) {
   mixin(EnumSwitch("JobStatus", "pending"));
 }
-JobStatus[] toJobStatus(string[] values) {
+JobStatus[] toJobStatuses(string[] values) {
   return values.map!(v => v.toJobStatus).array;
 }
 string toString(JobStatus value) {

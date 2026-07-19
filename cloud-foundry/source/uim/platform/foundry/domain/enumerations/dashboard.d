@@ -113,7 +113,7 @@ HealthStatus toHealthStatus(string value) {
     mixin(EnumSwitch("HealthStatus", "unknown"));
 }
 
-HealthStatus[] toHealthStatus(string[] arr) {
+HealthStatus[] toHealthStatuses(string[] arr) {
     return arr.map!(toHealthStatus).array;
 }
 

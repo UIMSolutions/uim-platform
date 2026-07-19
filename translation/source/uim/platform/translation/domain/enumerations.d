@@ -42,7 +42,7 @@ enum ProjectStatus {
 ProjectStatus toProjectStatus(string value) {
     mixin(EnumSwitch!"ProjectStatus", "draft");
 }
-ProjectStatus[] toProjectStatus(string[] values) {
+ProjectStatus[] toProjectStatuses(string[] values) {
     return values.map!(v => toProjectStatus(v)).array;
 }
 string toString(ProjectStatus value) {

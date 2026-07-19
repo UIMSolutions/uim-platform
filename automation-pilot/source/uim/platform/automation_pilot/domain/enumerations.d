@@ -112,7 +112,7 @@ CommandStatus toCommandStatus(string value) {
     }
 }
 
-CommandStatus[] toCommandStatus(string[] s) {
+CommandStatus[] toCommandStatuses(string[] s) {
     return s.map!(toCommandStatus).array;
 }
 

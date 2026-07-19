@@ -64,7 +64,7 @@ enum KeyStatus {
 KeyStatus toKeyStatus(string value) {
     mixin(EnumSwitch("KeyStatus", "active"));
 }
-KeyStatus[] toKeyStatus(string[] values) {
+KeyStatus[] toKeyStatuses(string[] values) {
     return values.map!(toKeyStatus).array;
 }
 string toString(KeyStatus status) {

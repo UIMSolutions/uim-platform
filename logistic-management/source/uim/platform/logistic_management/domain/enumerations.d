@@ -52,7 +52,7 @@ enum FreightOrderStatus {
 FreightOrderStatus toFreightOrderStatus(string value) {
   mixin(EnumSwitch("FreightOrderStatus", "FreightOrderStatus.draft"));
 }
-FreightOrderStatus[] toFreightOrderStatus(string[] values) {
+FreightOrderStatus[] toFreightOrderStatuses(string[] values) {
   return values.map!(v => v.toFreightOrderStatus).array;
 }
 string toString(FreightOrderStatus value) {
@@ -93,7 +93,7 @@ enum ShipmentStatus {
 ShipmentStatus toShipmentStatus(string value) {
   mixin(EnumSwitch("ShipmentStatus", "ShipmentStatus.created"));
 }
-ShipmentStatus[] toShipmentStatus(string[] values) {
+ShipmentStatus[] toShipmentStatuses(string[] values) {
   return values.map!(v => v.toShipmentStatus).array;
 }
 string toString(ShipmentStatus value) {
@@ -135,7 +135,7 @@ enum DeliveryStatus {
 DeliveryStatus toDeliveryStatus(string value) {
   mixin(EnumSwitch("DeliveryStatus", "DeliveryStatus.created"));
 }
-DeliveryStatus[] toDeliveryStatus(string[] values) {
+DeliveryStatus[] toDeliveryStatuses(string[] values) {
   return values.map!(v => v.toDeliveryStatus).array;
 }
 string toString(DeliveryStatus value) {
@@ -218,7 +218,7 @@ enum WarehouseTaskStatus {
 WarehouseTaskStatus toWarehouseTaskStatus(string value) {
   mixin(EnumSwitch("WarehouseTaskStatus", "WarehouseTaskStatus.created"));
 }
-WarehouseTaskStatus[] toWarehouseTaskStatus(string[] values) {
+WarehouseTaskStatus[] toWarehouseTaskStatuses(string[] values) {
   return values.map!(v => v.toWarehouseTaskStatus).array;
 }
 string toString(WarehouseTaskStatus value) {
@@ -259,7 +259,7 @@ enum WarehouseOrderStatus {
 WarehouseOrderStatus toWarehouseOrderStatus(string value) {
   mixin(EnumSwitch("WarehouseOrderStatus", "WarehouseOrderStatus.created"));
 }
-WarehouseOrderStatus[] toWarehouseOrderStatus(string[] values) {
+WarehouseOrderStatus[] toWarehouseOrderStatuses(string[] values) {
   return values.map!(v => v.toWarehouseOrderStatus).array;
 }
 string toString(WarehouseOrderStatus value) {
@@ -298,7 +298,7 @@ enum CarrierStatus {
 CarrierStatus toCarrierStatus(string value) {
   mixin(EnumSwitch("CarrierStatus", "CarrierStatus.active"));
 } 
-CarrierStatus[] toCarrierStatus(string[] values) {
+CarrierStatus[] toCarrierStatuses(string[] values) {
   return values.map!(v => v.toCarrierStatus).array;
 }
 string toString(CarrierStatus value) {

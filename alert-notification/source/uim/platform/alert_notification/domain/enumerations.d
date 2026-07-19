@@ -111,7 +111,7 @@ enum EventStatus : string {
 EventStatus toEventStatus(string value) {
     mixin(EnumSwitch!("EventStatus", "sent"));
 }
-EventStatus[] toEventStatus(string[] values) {
+EventStatus[] toEventStatuses(string[] values) {
     return values.map!(toEventStatus).array;
 }
 string toString(EventStatus status) {

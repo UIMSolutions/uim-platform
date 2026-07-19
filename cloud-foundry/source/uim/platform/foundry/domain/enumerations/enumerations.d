@@ -19,7 +19,7 @@ enum OrgStatus {
 OrgStatus toOrgStatus(string value) {
   mixin(EnumSwitch("OrgStatus", "active"));
 }
-OrgStatus[] toOrgStatus(string[] values) {
+OrgStatus[] toOrgStatuses(string[] values) {
   return values.map!(toOrgStatus).array;
 }
 string toString(OrgStatus value) {
@@ -53,7 +53,7 @@ enum SpaceStatus {
 SpaceStatus toSpaceStatus(string value) {
   mixin(EnumSwitch("SpaceStatus", "active"));
 }
-SpaceStatus[] toSpaceStatus(string[] values) {
+SpaceStatus[] toSpaceStatuses(string[] values) {
   return values.map!(toSpaceStatus).array;
 }
 string toString(SpaceStatus value) {
@@ -170,7 +170,7 @@ enum ServiceInstanceStatus {
 ServiceInstanceStatus toServiceInstanceStatus(string value) {
   mixin(EnumSwitch("ServiceInstanceStatus", "creating"));
 }
-ServiceInstanceStatus[] toServiceInstanceStatus(string[] values) {
+ServiceInstanceStatus[] toServiceInstanceStatuses(string[] values) {
   return values.map!(toServiceInstanceStatus).array;
 }
 string toString(ServiceInstanceStatus value) {
@@ -212,7 +212,7 @@ enum BindingStatus {
 BindingStatus toBindingStatus(string value) {
   mixin(EnumSwitch("BindingStatus", "creating"));
 }
-BindingStatus[] toBindingStatus(string[] values) {
+BindingStatus[] toBindingStatuses(string[] values) {
   return values.map!(toBindingStatus).array;
 }
 string toString(BindingStatus value) {

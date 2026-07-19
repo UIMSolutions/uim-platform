@@ -71,7 +71,7 @@ enum AppStatus : string{
 AppStatus toAppStatus(string value) {
     mixin(EnumSwitch("AppStatus", "draft"));
 }
-AppStatus[] toAppStatus(string[] values) {
+AppStatus[] toAppStatuses(string[] values) {
     return values.map!(toAppStatus).array;
 }
 string toString(AppStatus value) {
@@ -113,7 +113,7 @@ enum DefinitionStatus {
 DefinitionStatus toDefinitionStatus(string value) {
     mixin(EnumSwitch("DefinitionStatus", "draft"));
 }
-DefinitionStatus[] toDefinitionStatus(string[] values) {
+DefinitionStatus[] toDefinitionStatuses(string[] values) {
     return values.map!(toDefinitionStatus).array;
 }
 string toString(DefinitionStatus value) {
@@ -199,7 +199,7 @@ enum DeviceStatus {
 DeviceStatus toDeviceStatus(string value) {
     mixin(EnumSwitch("DeviceStatus", "enrolled"));
 }
-DeviceStatus[] toDeviceStatus(string[] values) {
+DeviceStatus[] toDeviceStatuses(string[] values) {
     return values.map!(toDeviceStatus).array;
 }
 string toString(DeviceStatus value) {
@@ -245,7 +245,7 @@ enum SyncStatus {
 SyncStatus toSyncStatus(string value) {
     mixin(EnumSwitch("SyncStatus", "pending"));
 }
-SyncStatus[] toSyncStatus(string[] values) {
+SyncStatus[] toSyncStatuses(string[] values) {
     return values.map!(toSyncStatus).array;
 }
 string toString(SyncStatus value) {
@@ -378,7 +378,7 @@ enum ConnectionStatus {
 ConnectionStatus toConnectionStatus(string value) {
     mixin(EnumSwitch("ConnectionStatus", "inactive"));
 }
-ConnectionStatus[] toConnectionStatus(string[] values) {
+ConnectionStatus[] toConnectionStatuses(string[] values) {
     return values.map!(toConnectionStatus).array;
 }
 string toString(ConnectionStatus value) {
@@ -424,7 +424,7 @@ enum DeploymentStatus {
 DeploymentStatus toDeploymentStatus(string value) {
     mixin(EnumSwitch("DeploymentStatus", "pending"));
 }
-DeploymentStatus[] toDeploymentStatus(string[] values) {
+DeploymentStatus[] toDeploymentStatuses(string[] values) {
     return values.map!(toDeploymentStatus).array;
 }
 string toString(DeploymentStatus value) {

@@ -223,7 +223,7 @@ ExtensionStatus toExtensionStatus(string s) {
         default: return ExtensionStatus.inactive; // Default case
     }
 }
-ExtensionStatus[] toExtensionStatus(string[] statuses) {
+ExtensionStatus[] toExtensionStatuses(string[] statuses) {
     return statuses.map!(toExtensionStatus).array;
 }
 string toString(ExtensionStatus status) {

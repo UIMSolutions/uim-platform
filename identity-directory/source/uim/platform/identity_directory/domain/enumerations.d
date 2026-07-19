@@ -23,7 +23,7 @@ enum UserStatus {
 UserStatus toUserStatus(string value) {
   mixin(EnumSwitch("UserStatus", "active"));
 }
-UserStatus[] toUserStatus(string[] arr) {
+UserStatus[] toUserStatuses(string[] arr) {
   return arr.map!(s => toUserStatus(s)).array;
 }
 string toString(UserStatus status) {

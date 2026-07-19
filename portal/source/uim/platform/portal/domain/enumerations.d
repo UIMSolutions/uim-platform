@@ -22,7 +22,7 @@ enum SiteStatus {
 SiteStatus toSiteStatus(string value) {
   mixin(EnumSwitch("SiteStatus", "draft"));
 }
-SiteStatus[] toSiteStatus(string[] values) {
+SiteStatus[] toSiteStatuses(string[] values) {
   return values.map!(v => toSiteStatus(v));
 }
 string toString(SiteStatus status) {
@@ -301,7 +301,7 @@ enum TransportStatus {
 TransportStatus toTransportStatus(string value) {
   mixin(EnumSwitch("TransportStatus", "pending"));
 }
-TransportStatus[] toTransportStatus(string[] values) {
+TransportStatus[] toTransportStatuses(string[] values) {
   return values.map!(v => toTransportStatus(v));
 }
 string toString(TransportStatus status) {

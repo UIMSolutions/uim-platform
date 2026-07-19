@@ -21,7 +21,7 @@ GlobalAccountStatus toGlobalAccountStatus(string value) {
   mixin(EnumSwitch("GlobalAccountStatus", "active"));
 }
 
-GlobalAccountStatus[] toGlobalAccountStatus(string[] values) {
+GlobalAccountStatus[] toGlobalAccountStatuses(string[] values) {
   return values.map!(v => v.toGlobalAccountStatus).array;
 }
 
@@ -117,7 +117,7 @@ DirectoryStatus toDirectoryStatus(string value) {
   mixin(EnumSwitch("DirectoryStatus", "active"));
 }
 
-DirectoryStatus[] toDirectoryStatus(string[] values) {
+DirectoryStatus[] toDirectoryStatuses(string[] values) {
   return values.map!(v => v.toDirectoryStatus).array;
 }
 
@@ -287,7 +287,7 @@ SubaccountStatus toSubaccountStatus(string value) {
   mixin(EnumSwitch("SubaccountStatus", "active"));
 }
 
-SubaccountStatus[] toSubaccountStatus(string[] values) {
+SubaccountStatus[] toSubaccountStatuses(string[] values) {
   return values.map!(v => v.toSubaccountStatus).array;
 }
 
@@ -403,7 +403,7 @@ EntitlementStatus toEntitlementStatus(string value) {
   mixin(EnumSwitch("EntitlementStatus", "active"));
 }
 
-EntitlementStatus[] toEntitlementStatus(string[] values) {
+EntitlementStatus[] toEntitlementStatuses(string[] values) {
   return values.map!(v => v.toEntitlementStatus).array;
 }
 
@@ -510,7 +510,7 @@ ServicePlanStatus toServicePlanStatus(string value, bool ignoreCase = true) {
   }
 }
 
-ServicePlanStatus[] toServicePlanStatus(string[] values) {
+ServicePlanStatus[] toServicePlanStatuses(string[] values) {
   return values.map!(v => v.toServicePlanStatus).array;
 }
 
@@ -615,7 +615,7 @@ QuotaStatus toQuotaStatus(string value, bool ignoreCase = true) {
   }
 }
 
-QuotaStatus[] toQuotaStatus(string[] values) {
+QuotaStatus[] toQuotaStatuses(string[] values) {
   return values.map!(v => v.toQuotaStatus).array;
 }
 
@@ -686,7 +686,7 @@ SubscriptionStatus toSubscriptionStatus(string value) {
   mixin(EnumSwitch("SubscriptionStatus", "subscribed"));
 }
 
-SubscriptionStatus[] toSubscriptionStatus(string[] values) {
+SubscriptionStatus[] toSubscriptionStatuses(string[] values) {
   return values.map!(v => v.toSubscriptionStatus).array;
 }
 
@@ -741,7 +741,7 @@ enum ServiceInstanceStatus {
 ServiceInstanceStatus toServiceInstanceStatus(string value) {
   mixin(EnumSwitch("ServiceInstanceStatus", "creating"));
 }
-ServiceInstanceStatus[] toServiceInstanceStatus(string[] values) {
+ServiceInstanceStatus[] toServiceInstanceStatuses(string[] values) {
   return values.map!(v => v.toServiceInstanceStatus).array;
 }
 string toString(ServiceInstanceStatus value) {

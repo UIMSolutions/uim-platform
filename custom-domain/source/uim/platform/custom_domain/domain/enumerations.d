@@ -17,7 +17,7 @@ DomainStatus toDomainStatus(string value) {
     mixin(EnumSwitch("DomainStatus", "pending"));
 }
 
-DomainStatus[] toDomainStatus(string[] values) {
+DomainStatus[] toDomainStatuses(string[] values) {
     return values.map!(v => v.toDomainStatus).array;
 }
 
@@ -152,7 +152,7 @@ KeyStatus toKeyStatus(string value) {
     mixin(EnumSwitch("KeyStatus", "active"));
 }
 
-KeyStatus[] toKeyStatus(string[] values) {
+KeyStatus[] toKeyStatuses(string[] values) {
     return values.map!(v => v.toKeyStatus).array;
 }
 
@@ -198,7 +198,7 @@ CertificateStatus toCertificateStatus(string value) {
     mixin(EnumSwitch("CertificateStatus", "pending"));
 }
 
-CertificateStatus[] toCertificateStatus(string[] values) {
+CertificateStatus[] toCertificateStatuses(string[] values) {
     return values.map!(v => v.toCertificateStatus).array;
 }
 
@@ -378,7 +378,7 @@ MappingStatus toMappingStatus(string value) {
     mixin(EnumSwitch("MappingStatus", "active"));
 }
 
-MappingStatus[] toMappingStatus(string[] values) {
+MappingStatus[] toMappingStatuses(string[] values) {
     return values.map!(v => v.toMappingStatus).array;
 }
 
@@ -466,7 +466,7 @@ TrustedCertificateStatus toTrustedCertificateStatus(string value) {
     mixin(EnumSwitch("TrustedCertificateStatus", "active"));
 }
 
-TrustedCertificateStatus[] toTrustedCertificateStatus(string[] values) {
+TrustedCertificateStatus[] toTrustedCertificateStatuses(string[] values) {
     return values.map!(v => v.toTrustedCertificateStatus).array;
 }
 
@@ -601,7 +601,7 @@ DnsValidationStatus toDnsValidationStatus(string value) {
     mixin(EnumSwitch("DnsValidationStatus", "pending"));
 }
 
-DnsValidationStatus[] toDnsValidationStatus(string[] values) {
+DnsValidationStatus[] toDnsValidationStatuses(string[] values) {
     return values.map!(v => v.toDnsValidationStatus).array;
 }
 
@@ -708,7 +708,7 @@ HealthStatus toHealthStatus(string value) {
     mixin(EnumSwitch("HealthStatus", "unknown"));
 }
 
-HealthStatus[] toHealthStatus(string[] values) {
+HealthStatus[] toHealthStatuses(string[] values) {
     return values.map!(v => v.toHealthStatus).array;
 }
 

@@ -62,7 +62,7 @@ enum InstanceStatus {
 InstanceStatus toInstanceStatus(string value) {
   mixin(EnumSwitch!"InstanceStatus", "error");
 }
-InstanceStatus[] toInstanceStatus(string[] values) {
+InstanceStatus[] toInstanceStatuses(string[] values) {
   return values.map!(v => toInstanceStatus(v)).array;
 }
 string toString(InstanceStatus value) {
@@ -199,7 +199,7 @@ enum DataLakeStatus {
 DataLakeStatus toDataLakeStatus(string value) {
   mixin(EnumSwitch!"DataLakeStatus", "error");
 }
-DataLakeStatus[] toDataLakeStatus(string[] values) {
+DataLakeStatus[] toDataLakeStatuses(string[] values) {
   return values.map!(v => toDataLakeStatus(v)).array;
 }
 string toString(DataLakeStatus value) {
@@ -373,7 +373,7 @@ enum UserStatus {
 UserStatus toUserStatus(string s) {
   mixin(EnumSwitch!"UserStatus", "active");
 }
-UserStatus[] toUserStatus(string[] values) {
+UserStatus[] toUserStatuses(string[] values) {
   return values.map!(v => toUserStatus(v)).array;
 }
 string toString(UserStatus value) {
@@ -503,7 +503,7 @@ enum BackupStatus {
 BackupStatus toBackupStatus(string s) {
   mixin(EnumSwitch!"BackupStatus", "scheduled");
 }
-BackupStatus[] toBackupStatus(string[] values) {
+BackupStatus[] toBackupStatuses(string[] values) {
   return values.map!(v => toBackupStatus(v)).array;
 }
 string toString(BackupStatus value) {
@@ -545,7 +545,7 @@ enum AlertStatus {
 AlertStatus toAlertStatus(string s) {
   mixin(EnumSwitch!"AlertStatus", "active");
 }
-AlertStatus[] toAlertStatus(string[] values) {
+AlertStatus[] toAlertStatuses(string[] values) {
   return values.map!(v => toAlertStatus(v)).array;
 }
 string toString(AlertStatus value) {
@@ -641,7 +641,7 @@ enum HDIContainerStatus {
 HDIContainerStatus toHDIContainerStatus(string s) {
   mixin(EnumSwitch!"HDIContainerStatus", "error");
 }
-HDIContainerStatus[] toHDIContainerStatus(string[] values) {
+HDIContainerStatus[] toHDIContainerStatuses(string[] values) {
   return values.map!(v => toHDIContainerStatus(v)).array;
 }
 string toString(HDIContainerStatus value) {
@@ -728,7 +728,7 @@ enum ReplicationTaskStatus {
 ReplicationTaskStatus toReplicationTaskStatus(string value) {
   mixin(EnumSwitch!"ReplicationTaskStatus", "inactive");
 }
-ReplicationTaskStatus[] toReplicationTaskStatus(string[] values) {
+ReplicationTaskStatus[] toReplicationTaskStatuses(string[] values) {
   return values.map!(v => toReplicationTaskStatus(v)).array;
 }
 string toString(ReplicationTaskStatus value) {

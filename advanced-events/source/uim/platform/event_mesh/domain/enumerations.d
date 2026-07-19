@@ -32,7 +32,7 @@ BrokerServiceStatus toBrokerServiceStatus(string value) {
   mixin(EnumSwitch("BrokerServiceStatus", "failed"));
 }
 
-BrokerServiceStatus[] toBrokerServiceStatus(string[] values) {
+BrokerServiceStatus[] toBrokerServiceStatuses(string[] values) {
   return values.map!(v => toBrokerServiceStatus(v)).array;
 }
 
@@ -64,11 +64,11 @@ unittest {
   assert(toString(BrokerServiceStatus.failed) == "failed");
   assert(toString(BrokerServiceStatus.decommissioned) == "decommissioned");
 
-  assert(toBrokerServiceStatus(["running", "unknown", "provisioning"]) == [
+  assert(["running", "unknown", "provisioning"].toBrokerServiceStatuses == [
       BrokerServiceStatus.running, BrokerServiceStatus.failed,
       BrokerServiceStatus.provisioning
     ]);
-  assert(toString([BrokerServiceStatus.stopped, BrokerServiceStatus.degraded]) == [
+  assert([BrokerServiceStatus.stopped, BrokerServiceStatus.degraded].toStrings == [
       "stopped", "degraded"
     ]);
 }
@@ -84,7 +84,7 @@ BrokerServiceType toBrokerServiceType(string value) {
   mixin(EnumSwitch("BrokerServiceType", "standard"));
 }
 
-BrokerServiceType[] toBrokerServiceType(string[] values) {
+BrokerServiceType[] toBrokerServiceTypes(string[] values) {
   return values.map!(v => toBrokerServiceType(v)).array;
 }
 
@@ -110,11 +110,11 @@ unittest {
   assert(toString(BrokerServiceType.standard) == "standard");
   assert(toString(BrokerServiceType.premium) == "premium");
 
-  assert(toBrokerServiceType(["developer", "unknown", "premium"]) == [
+  assert(["developer", "unknown", "premium"].toBrokerServiceTypes == [
       BrokerServiceType.developer, BrokerServiceType.standard,
       BrokerServiceType.premium
     ]);
-  assert(toString([BrokerServiceType.enterprise, BrokerServiceType.standard]) == [
+  assert([BrokerServiceType.enterprise, BrokerServiceType.standard].toStrings == [
       "enterprise", "standard"
     ]);
 }
@@ -132,7 +132,7 @@ BrokerServiceClass toBrokerServiceClass(string value) {
   mixin(EnumSwitch("BrokerServiceClass", "standardKilo"));
 }
 
-BrokerServiceClass[] toBrokerServiceClass(string[] values) {
+BrokerServiceClass[] toBrokerServiceClasses(string[] values) {
   return values.map!(v => toBrokerServiceClass(v)).array;
 }
 
@@ -162,13 +162,11 @@ unittest {
   assert(toString(BrokerServiceClass.standardKilo) == "standardKilo");
   assert(toString(BrokerServiceClass.standardMega) == "standardMega");
 
-  assert(toBrokerServiceClass(["enterprisekilo", "unknown", "standardmega"]) == [
+  assert(["enterprisekilo", "unknown", "standardmega"].toBrokerServiceClasses == [
       BrokerServiceClass.enterpriseKilo, BrokerServiceClass.standardKilo,
       BrokerServiceClass.standardMega
     ]);
-  assert(toString([
-      BrokerServiceClass.developerKilo, BrokerServiceClass.enterpriseGiga
-    ]) == ["developerKilo", "enterpriseGiga"]);
+  assert([BrokerServiceClass.developerKilo, BrokerServiceClass.enterpriseGiga].toStrings == ["developerKilo", "enterpriseGiga"]);
 }
 
 enum CloudProvider {
@@ -183,7 +181,7 @@ CloudProvider toCloudProvider(string value) {
   mixin(EnumSwitch("CloudProvider", "sap"));
 }
 
-CloudProvider[] toCloudProvider(string[] providers) {
+CloudProvider[] toCloudProviders(string[] providers) {
   return providers.map!(p => toCloudProvider(p)).array;
 }
 
@@ -211,10 +209,10 @@ unittest {
   assert(toString(CloudProvider.sap) == "sap");
   assert(toString(CloudProvider.onPremise) == "onPremise");
 
-  assert(toCloudProvider(["aws", "unknown", "gcp"]) == [
+  assert(["aws", "unknown", "gcp"].toCloudProviders == [
       CloudProvider.aws, CloudProvider.sap, CloudProvider.gcp
     ]);
-  assert(toString([CloudProvider.azure, CloudProvider.onPremise]) == [
+  assert([CloudProvider.azure, CloudProvider.onPremise].toStrings == [
       "azure", "onPremise"
     ]);
 }
@@ -228,7 +226,7 @@ QueueAccessType toQueueAccessType(string value) {
   mixin(EnumSwitch("QueueAccessType", "exclusive"));
 }
 
-QueueAccessType[] toQueueAccessType(string[] values) {
+QueueAccessType[] toQueueAccessTypes(string[] values) {
   return values.map!(v => toQueueAccessType(v)).array;
 }
 
@@ -247,14 +245,18 @@ unittest {
   assert(toQueueAccessType("nonexclusive") == QueueAccessType.nonExclusive);
   assert(toQueueAccessType("unknown") == QueueAccessType.exclusive); // default case  
 
+  assert(["exclusive", "unknown", "nonexclusive"].toQueueAccessTypes == [
+      QueueAccessType.exclusive, QueueAccessType.exclusive, QueueAccessType.nonExclusive
+    ]);
+
   assert(toString(QueueAccessType.exclusive) == "exclusive");
   assert(toString(QueueAccessType.nonExclusive) == "nonExclusive");
 
-  assert(toQueueAccessType(["exclusive", "unknown", "nonexclusive"]) == [
+  assert(["exclusive", "unknown", "nonexclusive"].toQueueAccessTypes == [
       QueueAccessType.exclusive, QueueAccessType.exclusive,
       QueueAccessType.nonExclusive
     ]);
-  assert(toString([QueueAccessType.exclusive, QueueAccessType.nonExclusive]) == [
+  assert([QueueAccessType.exclusive, QueueAccessType.nonExclusive].toStrings == [
       "exclusive", "nonExclusive"
     ]);
 }
@@ -270,7 +272,7 @@ QueueStatus toQueueStatus(string value) {
   mixin(EnumSwitch("QueueStatus", "inactive"));
 }
 
-QueueStatus[] toQueueStatus(string[] values) {
+QueueStatus[] toQueueStatuses(string[] values) {
   return values.map!(toQueueStatus).array;
 }
 
@@ -296,10 +298,10 @@ unittest {
   assert(toString(QueueStatus.shuttingDown) == "shuttingDown");
   assert(toString(QueueStatus.pendingDelete) == "pendingDelete");
 
-  assert(toQueueStatus(["active", "unknown", "shuttingdown"]) == [
+  assert(["active", "unknown", "shuttingdown"].toQueueStatuses == [
       QueueStatus.active, QueueStatus.inactive, QueueStatus.shuttingDown
     ]);
-  assert(toString([QueueStatus.inactive, QueueStatus.pendingDelete]) == [
+  assert([QueueStatus.inactive, QueueStatus.pendingDelete].toStrings == [
       "inactive", "pendingDelete"
     ]);
 }
@@ -341,7 +343,7 @@ unittest {
   assert(toQueueType(["durable", "unknown", "temporary"]) == [
       QueueType.durable, QueueType.durable, QueueType.temporary
     ]);
-  assert(toString([QueueType.nonDurable, QueueType.temporary]) == [
+  assert([QueueType.nonDurable, QueueType.temporary].toStrings == [
       "nonDurable", "temporary"
     ]);
 }
@@ -356,7 +358,7 @@ TopicStatus toTopicStatus(string value) {
   mixin(EnumSwitch("TopicStatus", "inactive"));
 }
 
-TopicStatus[] toTopicStatus(string[] values) {
+TopicStatus[] toTopicStatuses(string[] values) {
   return values.map!(toTopicStatus).array;
 }
 
@@ -380,10 +382,10 @@ unittest {
   assert(toString(TopicStatus.inactive) == "inactive");
   assert(toString(TopicStatus.pendingDelete) == "pendingDelete");
 
-  assert(toTopicStatus(["active", "unknown", "pendingdelete"]) == [
+  assert(["active", "unknown", "pendingdelete"].toTopicStatuses == [
       TopicStatus.active, TopicStatus.inactive, TopicStatus.pendingDelete
     ]);
-  assert(toString([TopicStatus.inactive, TopicStatus.pendingDelete]) == [
+  assert([TopicStatus.inactive, TopicStatus.pendingDelete].toStrings == [
       "inactive", "pendingDelete"
     ]);
 }
@@ -398,7 +400,7 @@ SubscriptionStatus toSubscriptionStatus(string value) {
   mixin(EnumSwitch("SubscriptionStatus", "suspended"));
 }
 
-SubscriptionStatus[] toSubscriptionStatus(string[] values) {
+SubscriptionStatus[] toSubscriptionStatuses(string[] values) {
   return values.map!(toSubscriptionStatus).array;
 }
 
@@ -422,13 +424,11 @@ unittest {
   assert(toString(SubscriptionStatus.suspended) == "suspended");
   assert(toString(SubscriptionStatus.pendingDelete) == "pendingDelete");
 
-  assert(toSubscriptionStatus(["active", "unknown", "pendingdelete"]) == [
+  assert(["active", "unknown", "pendingdelete"].toSubscriptionStatuses == [
       SubscriptionStatus.active, SubscriptionStatus.suspended,
       SubscriptionStatus.pendingDelete
     ]);
-  assert(toString([
-      SubscriptionStatus.suspended, SubscriptionStatus.pendingDelete
-    ]) == ["suspended", "pendingDelete"]);
+  assert([SubscriptionStatus.suspended, SubscriptionStatus.pendingDelete].toStrings == ["suspended", "pendingDelete"]);
 }
 
 enum SubscriptionType {
@@ -529,7 +529,7 @@ MessageStatus toMessageStatus(string value) {
   mixin(EnumSwitch("MessageStatus", "pending"));
 }
 
-MessageStatus[] toMessageStatus(string[] values) {
+MessageStatus[] toMessageStatuses(string[] values) {
   return values.map!(toMessageStatus).array;
 }
 
@@ -682,7 +682,7 @@ SchemaStatus toSchemaStatus(string value) {
   }
 }
 
-SchemaStatus[] toSchemaStatus(string[] values) {
+SchemaStatus[] toSchemaStatuses(string[] values) {
   return values.map!(toSchemaStatus).array;
 }
 
@@ -729,7 +729,7 @@ EventApplicationStatus toEventApplicationStatus(string value) {
   mixin(EnumSwitch("EventApplicationStatus", "registered"));
 }
 
-EventApplicationStatus[] toEventApplicationStatus(string[] values) {
+EventApplicationStatus[] toEventApplicationStatuses(string[] values) {
   return values.map!(v => toEventApplicationStatus(v)).array;
 }
 
@@ -819,7 +819,7 @@ BridgeStatus toBridgeStatus(string value) {
   mixin(EnumSwitch("BridgeStatus", "failed"));
 }
 
-BridgeStatus[] toBridgeStatus(string[] values) {
+BridgeStatus[] toBridgeStatuses(string[] values) {
   return values.map!(toBridgeStatus).array;
 }
 

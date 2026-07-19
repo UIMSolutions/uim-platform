@@ -120,7 +120,7 @@ enum ProjectStatus : string {
 ProjectStatus toProjectStatus(string value) {
   mixin(EnumSwitch("ProjectStatus", "ProjectStatus.inactive"));
 }
-ProjectStatus[] toProjectStatus(string[] values) {
+ProjectStatus[] toProjectStatuses(string[] values) {
   return values.map!(v => v.toProjectStatus).array;
 }
 string toString(ProjectStatus value) {
@@ -157,7 +157,7 @@ enum DevSpaceStatus : string {
 DevSpaceStatus toDevSpaceStatus(string value) {
   mixin(EnumSwitch("DevSpaceStatus", "DevSpaceStatus.stopped"));
 }
-DevSpaceStatus[] toDevSpaceStatus(string[] values) {
+DevSpaceStatus[] toDevSpaceStatuses(string[] values) {
   return values.map!(v => v.toDevSpaceStatus).array;
 }
 string toString(DevSpaceStatus value) {
@@ -236,7 +236,7 @@ enum JobStatus : string {
 JobStatus toJobStatus(string value) {
   mixin(EnumSwitch("JobStatus", "JobStatus.queued"));
 }
-JobStatus[] toJobStatus(string[] values) {
+JobStatus[] toJobStatuses(string[] values) {
   return values.map!(v => v.toJobStatus).array;
 }
 string toString(JobStatus value) {
@@ -318,7 +318,7 @@ enum DeploymentStatus : string {
 DeploymentStatus toDeploymentStatus(string value) {
   mixin(EnumSwitch("DeploymentStatus", "DeploymentStatus.pending"));
 }
-DeploymentStatus[] toDeploymentStatus(string[] values) {
+DeploymentStatus[] toDeploymentStatuses(string[] values) {
   return values.map!(v => v.toDeploymentStatus).array;
 }
 string toString(DeploymentStatus value) {
@@ -358,7 +358,7 @@ enum AIRequestStatus : string {
 AIRequestStatus toAIRequestStatus(string value) {
   mixin(EnumSwitch("AIRequestStatus", "AIRequestStatus.pending"));
 }
-AIRequestStatus[] toAIRequestStatus(string[] values) {
+AIRequestStatus[] toAIRequestStatuses(string[] values) {
   return values.map!(v => v.toAIRequestStatus).array;
 }
 string toString(AIRequestStatus value) {
@@ -439,7 +439,7 @@ enum BindingStatus : string {
 BindingStatus toBindingStatus(string value) {
   mixin(EnumSwitch("BindingStatus", "BindingStatus.inactive_"));
 }
-BindingStatus[] toBindingStatus(string[] values) {
+BindingStatus[] toBindingStatuses(string[] values) {
   return values.map!(v => v.toBindingStatus).array;
 }
 string toString(BindingStatus value) {

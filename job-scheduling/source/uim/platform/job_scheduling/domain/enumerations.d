@@ -73,7 +73,7 @@ enum JobStatus {
 JobStatus toJobStatus(string value) @safe {
     mixin(EnumSwitch("JobStatus", "active"));
 }
-JobStatus[] toJobStatus(string[] values) @safe {
+JobStatus[] toJobStatuses(string[] values) @safe {
     return values.map!(v => v.toJobStatus).array;
 }
 string toString(JobStatus value) @safe {
@@ -170,7 +170,7 @@ enum JobScheduleStatus {
 JobScheduleStatus toJobScheduleStatus(string value) @safe {
     mixin(EnumSwitch("JobScheduleStatus", "active"));
 }
-JobScheduleStatus[] toJobScheduleStatus(string[] values) @safe {
+JobScheduleStatus[] toJobScheduleStatuses(string[] values) @safe {
     return values.map!(v => v.toJobScheduleStatus).array;
 }
 string toString(JobScheduleStatus value) @safe {
@@ -204,7 +204,7 @@ enum RunStatus {
 RunStatus toRunStatus(string value) @safe {
     mixin(EnumSwitch("RunStatus", "scheduled"));
 }
-RunStatus[] toRunStatus(string[] values) @safe {
+RunStatus[] toRunStatuses(string[] values) @safe {
     return values.map!(v => v.toRunStatus).array;
 }
 string toString(RunStatus value) @safe {

@@ -51,7 +51,7 @@ enum BucketStatus {
 BucketStatus toBucketStatus(string value) {
   mixin(EnumSwitch("BucketStatus", "BucketStatus.active"));
 }
-BucketStatus[] toBucketStatus(string[] values) {
+BucketStatus[] toBucketStatuses(string[] values) {
   return values.map!(v => v.toBucketStatus).array;
 }
 
@@ -87,7 +87,7 @@ enum ObjectStatus {
 ObjectStatus toObjectStatus(string value) {
   mixin(EnumSwitch("ObjectStatus", "ObjectStatus.active"));
 }
-ObjectStatus[] toObjectStatus(string[] values) {
+ObjectStatus[] toObjectStatuses(string[] values) {
   return values.map!(v => v.toObjectStatus).array;
 } 
 string toString(ObjectStatus value) {
@@ -230,7 +230,7 @@ enum BindingStatus {
 BindingStatus toBindingStatus(string value) {
   mixin(EnumSwitch("BindingStatus", "BindingStatus.active"));
 }
-BindingStatus[] toBindingStatus(string[] values) {
+BindingStatus[] toBindingStatuses(string[] values) {
   return values.map!(v => v.toBindingStatus).array;
 }
 
@@ -265,7 +265,7 @@ enum RuleStatus {
 RuleStatus toRuleStatus(string value) {
   mixin(EnumSwitch("RuleStatus", "RuleStatus.disabled"));
 }
-RuleStatus[] toRuleStatus(string[] values) {
+RuleStatus[] toRuleStatuses(string[] values) {
   return values.map!(v => v.toRuleStatus).array;
 }
 

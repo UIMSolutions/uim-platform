@@ -100,7 +100,7 @@ SystemStatus toSystemStatus(string value) {
   mixin(EnumSwitch("SystemStatus", "active"));
 }
 
-SystemStatus[] toSystemStatus(string[] values) {
+SystemStatus[] toSystemStatuses(string[] values) {
   return values.map!(v => toSystemStatus(v)).array;
 }
 
@@ -200,7 +200,7 @@ ComponentStatus toComponentStatus(string value) {
   mixin(EnumSwitch("ComponentStatus", "notCloned"));
 }
 
-ComponentStatus[] toComponentStatus(string[] values) {
+ComponentStatus[] toComponentStatuses(string[] values) {
   return values.map!(v => toComponentStatus(v)).array;
 }
 
@@ -446,7 +446,7 @@ ArrangementStatus toArrangementStatus(string value) {
   mixin(EnumSwitch("ArrangementStatus", "active"));
 }
 
-ArrangementStatus[] toArrangementStatus(string[] values) {
+ArrangementStatus[] toArrangementStatuses(string[] values) {
   return values.map!(v => toArrangementStatus(v)).array;
 }
 
@@ -552,7 +552,7 @@ BindingStatus toBindingStatus(string value) {
   }
 }
 
-BindingStatus[] toBindingStatus(string[] values) {
+BindingStatus[] toBindingStatuses(string[] values) {
   return values.map!(v => toBindingStatus(v)).array;
 }
 
@@ -596,7 +596,7 @@ UserStatus toUserStatus(string value) {
   mixin(EnumSwitch("UserStatus", "active"));
 }
 
-UserStatus[] toUserStatus(string[] values) {
+UserStatus[] toUserStatuses(string[] values) {
   return values.map!(v => toUserStatus(v)).array;
 }
 
@@ -730,7 +730,7 @@ TransportStatus toTransportStatus(string value) {
   mixin(EnumSwitch("TransportStatus", "modifiable"));
 }
 
-TransportStatus[] toTransportStatus(string[] values) {
+TransportStatus[] toTransportStatuses(string[] values) {
   return values.map!(v => toTransportStatus(v)).array;
 }
 
@@ -828,7 +828,7 @@ JobStatus toJobStatus(string value) {
   mixin(EnumSwitch("JobStatus", "scheduled"));
 }
 
-JobStatus[] toJobStatus(string[] values) {
+JobStatus[] toJobStatuses(string[] values) {
   return values.map!(v => toJobStatus(v)).array;
 }
 

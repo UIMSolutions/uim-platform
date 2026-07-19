@@ -77,7 +77,7 @@ AppStatus toAppStatus(string value) {
   }
 }
 
-AppStatus[] toAppStatus(string[] values) {
+AppStatus[] toAppStatuses(string[] values) {
   return values.map!(toAppStatus).array;
 }
 
@@ -129,7 +129,7 @@ DeviceStatus toDeviceStatus(string value) {
   mixin(EnumSwitch("DeviceStatus", "registered"));
 }
 
-DeviceStatus[] toDeviceStatus(string[] values) {
+DeviceStatus[] toDeviceStatuses(string[] values) {
   return values.map!(toDeviceStatus).array;
 }
 
@@ -234,7 +234,7 @@ NotificationStatus toNotificationStatus(string value) {
   mixin(EnumSwitch("NotificationStatus", "pending"));
 }
 
-NotificationStatus[] toNotificationStatus(string[] values) {
+NotificationStatus[] toNotificationStatuses(string[] values) {
   return values.map!(toNotificationStatus).array;
 }
 
@@ -340,7 +340,7 @@ PushRegStatus toPushRegStatus(string value) {
   mixin(EnumSwitch("PushRegStatus", "active"));
 }
 
-PushRegStatus[] toPushRegStatus(string[] values) {
+PushRegStatus[] toPushRegStatuses(string[] values) {
   return values.map!(toPushRegStatus).array;
 }
 
@@ -506,7 +506,7 @@ VersionStatus toVersionStatus(string value) {
   }
 }
 
-VersionStatus[] toVersionStatus(string[] values) {
+VersionStatus[] toVersionStatuses(string[] values) {
   return values.map!(toVersionStatus).array;
 }
 
@@ -610,7 +610,7 @@ SyncStatus toSyncStatus(string value) {
   mixin(EnumSwitch("SyncStatus", "idle"));
 }
 
-SyncStatus[] toSyncStatus(string[] values) {
+SyncStatus[] toSyncStatuses(string[] values) {
   return values.map!(toSyncStatus).array;
 }
 
@@ -663,7 +663,7 @@ SessionStatus toSessionStatus(string value) {
   mixin(EnumSwitch("SessionStatus", "active"));
 }
 
-SessionStatus[] toSessionStatus(string[] values) {
+SessionStatus[] toSessionStatuses(string[] values) {
   return values.map!(toSessionStatus).array;
 }
 

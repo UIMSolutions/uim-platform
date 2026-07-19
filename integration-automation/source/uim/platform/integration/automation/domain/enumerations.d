@@ -33,7 +33,7 @@ ScenarioStatus toScenarioStatus(string s) {
     return ScenarioStatus.draft; // default to draft if unknown
   }
 }
-ScenarioStatus[] toScenarioStatus(string[] values) {
+ScenarioStatus[] toScenarioStatuses(string[] values) {
   return values.map!(v => v.toScenarioStatus).array;
 }
 string toString(ScenarioStatus value) {
@@ -72,7 +72,7 @@ enum WorkflowStatus {
 WorkflowStatus toWorkflowStatus(string value) {
   mixin(EnumSwitch("WorkflowStatus", "WorkflowStatus.planned"));
 }
-WorkflowStatus[] toWorkflowStatus(string[] values) {
+WorkflowStatus[] toWorkflowStatuses(string[] values) {
   return values.map!(v => v.toWorkflowStatus).array;
 }
 string toString(WorkflowStatus value) {
@@ -153,7 +153,7 @@ enum StepStatus {
 StepStatus toStepStatus(string value) {
   mixin(EnumSwitch("StepStatus", "StepStatus.pending"));
 }
-StepStatus[] toStepStatus(string[] values) {
+StepStatus[] toStepStatuses(string[] values) {
   return values.map!(v => v.toStepStatus).array;
 }
 string toString(StepStatus value) {
@@ -292,7 +292,7 @@ enum ConnectionStatus {
 ConnectionStatus toConnectionStatus(string value) {
   mixin(EnumSwitch("ConnectionStatus", "ConnectionStatus.active"));
 }
-ConnectionStatus[] toConnectionStatus(string[] values) {
+ConnectionStatus[] toConnectionStatuses(string[] values) {
   return values.map!(v => v.toConnectionStatus).array;
 }
 string toString(ConnectionStatus value) {

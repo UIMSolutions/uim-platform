@@ -64,7 +64,7 @@ ExecutionStatus toExecutionStatus(string value) {
   mixin(EnumSwitch("ExecutionStatus", "pending"));
 }
 
-ExecutionStatus[] toExecutionStatus(string[] statuses) {
+ExecutionStatus[] toExecutionStatuses(string[] statuses) {
   return statuses.map!(toExecutionStatus).array;
 }
 
@@ -122,7 +122,7 @@ DeploymentStatus toDeploymentStatus(string value) {
   mixin(EnumSwitch("DeploymentStatus", "pending"));
 }
 
-DeploymentStatus[] toDeploymentStatus(string[] statuses) {
+DeploymentStatus[] toDeploymentStatuses(string[] statuses) {
   return statuses.map!(toDeploymentStatus).array;
 }
 
@@ -233,7 +233,7 @@ TargetStatus toTargetStatus(string value) {
   }
 }
 
-TargetStatus[] toTargetStatus(string[] statuses) {
+TargetStatus[] toTargetStatuses(string[] statuses) {
   return statuses.map!(toTargetStatus).array;
 }
 
@@ -424,7 +424,7 @@ ScheduleStatus toScheduleStatus(string value) {
   mixin(EnumSwitch("ScheduleStatus", "active"));
 }
 
-ScheduleStatus[] toScheduleStatus(string[] statuses) {
+ScheduleStatus[] toScheduleStatuses(string[] statuses) {
   return statuses.map!(toScheduleStatus).array;
 }
 

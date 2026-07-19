@@ -31,7 +31,7 @@ ProgramType toProgramType(string value) {
 }
 
 ProgramType[] toProgramTypes(string[] values) {
-    return values.map!(v => toProgramType(v)).array;
+    return values.map!toProgramType.array;
 }
 
 string toString(ProgramType type) {
@@ -43,32 +43,32 @@ string[] toStrings(ProgramType[] types) {
 }
 ///
 unittest {
-    assert(toProgramType("report") == ProgramType.report);
-    assert(toProgramType("includeProgram") == ProgramType.includeProgram);
-    assert(toProgramType("modulePool") == ProgramType.modulePool);
-    assert(toProgramType("functionGroup") == ProgramType.functionGroup);
-    assert(toProgramType("classPool") == ProgramType.classPool);
-    assert(toProgramType("interfacePool") == ProgramType.interfacePool);
-    assert(toProgramType("subroutinePool") == ProgramType.subroutinePool);
-    assert(toProgramType("typePool") == ProgramType.typePool);
-    assert(toProgramType("transformation") == ProgramType.transformation);
-    assert(toProgramType("unknown") == ProgramType.unknown);
+    assert("report".toProgramType == ProgramType.report);
+    assert("includeProgram".toProgramType == ProgramType.includeProgram);
+    assert("modulePool".toProgramType == ProgramType.modulePool);
+    assert("functionGroup".toProgramType == ProgramType.functionGroup);
+    assert("classPool".toProgramType == ProgramType.classPool);
+    assert("interfacePool".toProgramType == ProgramType.interfacePool);
+    assert("subroutinePool".toProgramType == ProgramType.subroutinePool);
+    assert("typePool".toProgramType == ProgramType.typePool);
+    assert("transformation".toProgramType == ProgramType.transformation);
+    assert("unknown".toProgramType == ProgramType.unknown);
 
-    assert(toString(ProgramType.report) == "report");
-    assert(toString(ProgramType.includeProgram) == "includeProgram");
-    assert(toString(ProgramType.modulePool) == "modulePool");
-    assert(toString(ProgramType.functionGroup) == "functionGroup");
-    assert(toString(ProgramType.classPool) == "classPool");
-    assert(toString(ProgramType.interfacePool) == "interfacePool");
-    assert(toString(ProgramType.subroutinePool) == "subroutinePool");
-    assert(toString(ProgramType.typePool) == "typePool");
-    assert(toString(ProgramType.transformation) == "transformation");
-    assert(toString(ProgramType.unknown) == "unknown");
+    assert(ProgramType.report.toString == "report");
+    assert(ProgramType.includeProgram.toString == "includeProgram");
+    assert(ProgramType.modulePool.toString == "modulePool");
+    assert(ProgramType.functionGroup.toString == "functionGroup");
+    assert(ProgramType.classPool.toString == "classPool");
+    assert(ProgramType.interfacePool.toString == "interfacePool");
+    assert(ProgramType.subroutinePool.toString == "subroutinePool");
+    assert(ProgramType.typePool.toString == "typePool");
+    assert(ProgramType.transformation.toString == "transformation");
+    assert(ProgramType.unknown.toString == "unknown");
 
-    assert(toProgramType(["report", "modulePool"]) == [
+    assert(["report", "modulePool"].toProgramTypes == [
             ProgramType.report, ProgramType.modulePool
         ]);
-    assert(toString([ProgramType.functionGroup, ProgramType.classPool]) == [
+    assert([ProgramType.functionGroup, ProgramType.classPool].toStrings == [
             "functionGroup", "classPool"
         ]);
 }
@@ -77,6 +77,7 @@ unittest {
 // Token types produced by the ABAP lexer
 // ---------------------------------------------------------------------------
 enum TokenType {
+    unknown,
     keyword,
     identifier,
     literal_integer,
@@ -91,8 +92,7 @@ enum TokenType {
     rparen,
     whitespace,
     newline,
-    eof,
-    unknown
+    eof
 }
 
 TokenType toTokenType(string value) {
@@ -100,7 +100,7 @@ TokenType toTokenType(string value) {
 }
 
 TokenType[] toTokenTypes(string[] values) {
-    return values.map!(v => toTokenType(v)).array;
+    return values.map!toTokenType.array;
 }
 
 string toString(TokenType type) {
@@ -129,27 +129,30 @@ unittest {
     assert("eof".toTokenType == TokenType.eof);
     assert("unknown".toTokenType == TokenType.unknown);
 
-    assert(toString(TokenType.keyword) == "keyword");
-    assert(toString(TokenType.identifier) == "identifier");
-    assert(toString(TokenType.literal_integer) == "literal_integer");
-    assert(toString(TokenType.literal_string) == "literal_string");
-    assert(toString(TokenType.literal_char) == "literal_char");
-    assert(toString(TokenType.operator) == "operator");
-    assert(toString(TokenType.comment) == "comment");
-    assert(toString(TokenType.period) == "period");
-    assert(toString(TokenType.comma) == "comma");
-    assert(toString(TokenType.colon) == "colon");
-    assert(toString(TokenType.lparen) == "lparen");
-    assert(toString(TokenType.rparen) == "rparen");
-    assert(toString(TokenType.whitespace) == "whitespace");
-    assert(toString(TokenType.newline) == "newline");
-    assert(toString(TokenType.eof) == "eof");
-    assert(toString(TokenType.unknown) == "unknown");
+    assert("".toTokenType == TokenType.unknown);
+    assert("something".toTokenType == TokenType.unknown);
 
-    assert(toTokenTypes(["keyword", "identifier"]) == [
+    assert(TokenType.keyword.toString == "keyword");
+    assert(TokenType.identifier.toString == "identifier");
+    assert(TokenType.literal_integer.toString == "literal_integer");
+    assert(TokenType.literal_string.toString == "literal_string");
+    assert(TokenType.literal_char.toString == "literal_char");
+    assert(TokenType.operator.toString == "operator");
+    assert(TokenType.comment.toString == "comment");
+    assert(TokenType.period.toString == "period");
+    assert(TokenType.comma.toString == "comma");
+    assert(TokenType.colon.toString == "colon");
+    assert(TokenType.lparen.toString == "lparen");
+    assert(TokenType.rparen.toString == "rparen");
+    assert(TokenType.whitespace.toString == "whitespace");
+    assert(TokenType.newline.toString == "newline");
+    assert(TokenType.eof.toString == "eof");
+    assert(TokenType.unknown.toString == "unknown");
+
+    assert(["keyword", "identifier"].toTokenTypes == [
             TokenType.keyword, TokenType.identifier
         ]);
-    assert(toStrings([TokenType.literal_string, TokenType.operator]) == [
+    assert([TokenType.literal_string, TokenType.operator].toStrings == [
             "literal_string", "operator"
         ]);
 }
@@ -198,18 +201,18 @@ string[] toStrings(OOVisibility[] visibilities) {
 }
 ///
 unittest {
-    assert(toOOVisibility("public") == OOVisibility.public_);
-    assert(toOOVisibility("protected") == OOVisibility.protected_);
-    assert(toOOVisibility("private") == OOVisibility.private_);
+    assert("public".toOOVisibility == OOVisibility.public_);
+    assert("protected".toOOVisibility == OOVisibility.protected_);
+    assert("private".toOOVisibility == OOVisibility.private_);
 
-    assert(toString(OOVisibility.public_) == "public");
-    assert(toString(OOVisibility.protected_) == "protected");
-    assert(toString(OOVisibility.private_) == "private");
+    assert(OOVisibility.public_.toString == "public");
+    assert(OOVisibility.protected_.toString == "protected");
+    assert(OOVisibility.private_.toString == "private");
 
-    assert(toOOVisibilities(["public", "private"]) == [
+    assert(["public", "private"].toOOVisibilities == [
             OOVisibility.public_, OOVisibility.private_
         ]);
-    assert(toStrings([OOVisibility.protected_, OOVisibility.public_]) == [
+    assert([OOVisibility.protected_, OOVisibility.public_].toStrings == [
             "protected", "public"
         ]);
 }
@@ -228,8 +231,8 @@ ProcessingMode toProcessingMode(string value) {
     mixin(EnumSwitch("ProcessingMode", "normal"));
 }
 
-ProcessingMode[] toProcessingMode(string[] values) {
-    return values.map!(v => toProcessingMode(v)).array;
+ProcessingMode[] toProcessingModes(string[] values) {
+    return values.map!toProcessingMode.array;
 }
 
 string toString(ProcessingMode mode) {
@@ -237,24 +240,27 @@ string toString(ProcessingMode mode) {
 }
 
 string[] toStrings(ProcessingMode[] modes) {
-    return modes.map!(m => toString(m)).array;
+    return modes.map!toString.array;
 }
 ///
 unittest {
-    assert(toProcessingMode("normal") == ProcessingMode.normal);
-    assert(toProcessingMode("dialog") == ProcessingMode.dialog);
-    assert(toProcessingMode("batch") == ProcessingMode.batch);
-    assert(toProcessingMode("rfc") == ProcessingMode.rfc);
+    assert("normal".toProcessingMode == ProcessingMode.normal);
+    assert("dialog".toProcessingMode == ProcessingMode.dialog);
+    assert("batch".toProcessingMode == ProcessingMode.batch);
+    assert("rfc".toProcessingMode == ProcessingMode.rfc);
+
+    assert("".toProcessingMode == ProcessingMode.normal);
+    assert("unknown".toProcessingMode == ProcessingMode.normal);
 
     assert(toString(ProcessingMode.normal) == "normal");
     assert(toString(ProcessingMode.dialog) == "dialog");
     assert(toString(ProcessingMode.batch) == "batch");
     assert(toString(ProcessingMode.rfc) == "rfc");
 
-    assert(toProcessingMode(["normal", "batch"]) == [
+    assert(["normal", "batch"].toProcessingModes == [
             ProcessingMode.normal, ProcessingMode.batch
         ]);
-    assert(toStrings([ProcessingMode.dialog, ProcessingMode.rfc]) == [
+    assert([ProcessingMode.dialog, ProcessingMode.rfc].toStrings == [
             "dialog", "rfc"
         ]);
 }
@@ -273,7 +279,7 @@ DiagnosticSeverity toDiagnosticSeverity(string value) {
     mixin(EnumSwitch("DiagnosticSeverity", "error"));
 }
 
-DiagnosticSeverity[] toDiagnosticSeverity(string[] values) {
+DiagnosticSeverity[] toDiagnosticSeverities(string[] values) {
     return values.map!(v => toDiagnosticSeverity(v)).array;
 }
 
@@ -286,20 +292,23 @@ string[] toStrings(DiagnosticSeverity[] severities) {
 }
 ///
 unittest {
-    assert(toDiagnosticSeverity("error") == DiagnosticSeverity.error);
-    assert(toDiagnosticSeverity("warning") == DiagnosticSeverity.warning);
-    assert(toDiagnosticSeverity("info") == DiagnosticSeverity.info);
-    assert(toDiagnosticSeverity("hint") == DiagnosticSeverity.hint);
+    assert("error".toDiagnosticSeverity == DiagnosticSeverity.error);
+    assert("warning".toDiagnosticSeverity == DiagnosticSeverity.warning);
+    assert("info".toDiagnosticSeverity == DiagnosticSeverity.info);
+    assert("hint".toDiagnosticSeverity == DiagnosticSeverity.hint);
+    
+    assert("".toDiagnosticSeverity == DiagnosticSeverity.error);
+    assert("unknown".toDiagnosticSeverity == DiagnosticSeverity.error);
 
     assert(toString(DiagnosticSeverity.error) == "error");
     assert(toString(DiagnosticSeverity.warning) == "warning");
     assert(toString(DiagnosticSeverity.info) == "info");
     assert(toString(DiagnosticSeverity.hint) == "hint");
 
-    assert(toDiagnosticSeverity(["error", "info"]) == [
+    assert(["error", "info"].toDiagnosticSeverities == [
             DiagnosticSeverity.error, DiagnosticSeverity.info
         ]);
-    assert(toStrings([DiagnosticSeverity.warning, DiagnosticSeverity.hint]) == [
+    assert([DiagnosticSeverity.warning, DiagnosticSeverity.hint].toStrings == [
             "warning", "hint"
         ]);
 }
@@ -320,7 +329,7 @@ CompilationStatus toCompilationStatus(string value) {
 }
 
 CompilationStatus[] toCompilationStatuses(string[] values) {
-    return values.map!(v => toCompilationStatus(v)).array;
+    return values.map!toCompilationStatus.array;
 }
 
 string toString(CompilationStatus status) {
@@ -328,26 +337,28 @@ string toString(CompilationStatus status) {
 }
 
 string[] toStrings(CompilationStatus[] statuses) {
-    return statuses.map!(s => toString(s)).array;
+    return statuses.map!toString.array;
 }
 ///
 unittest {
-    assert(toCompilationStatus("pending") == CompilationStatus.pending);
-    assert(toCompilationStatus("running") == CompilationStatus.running);
-    assert(toCompilationStatus("succeeded") == CompilationStatus.succeeded);
-    assert(toCompilationStatus("failed") == CompilationStatus.failed);
-    assert(toCompilationStatus("aborted") == CompilationStatus.aborted);
+    assert("pending".toCompilationStatus == CompilationStatus.pending);
+    assert("running".toCompilationStatus == CompilationStatus.running);
+    assert("succeeded".toCompilationStatus == CompilationStatus.succeeded);
+    assert("failed".toCompilationStatus == CompilationStatus.failed);
 
-    assert(toString(CompilationStatus.pending) == "pending");
-    assert(toString(CompilationStatus.running) == "running");
-    assert(toString(CompilationStatus.succeeded) == "succeeded");
-    assert(toString(CompilationStatus.failed) == "failed");
-    assert(toString(CompilationStatus.aborted) == "aborted");
+    assert("".toCompilationStatus == CompilationStatus.pending);
+    assert("unknown".toCompilationStatus == CompilationStatus.pending);
 
-    assert(toCompilationStatus(["pending", "succeeded"]) == [
+    assert(CompilationStatus.pending.toString == "pending");
+    assert(CompilationStatus.running.toString == "running");
+    assert(CompilationStatus.succeeded.toString == "succeeded");
+    assert(CompilationStatus.failed.toString == "failed");
+    assert(CompilationStatus.aborted.toString == "aborted");
+
+    assert(["pending", "succeeded"].toCompilationStatuses == [
             CompilationStatus.pending, CompilationStatus.succeeded
         ]);
-    assert(toStrings([CompilationStatus.running, CompilationStatus.failed]) == [
+    assert([CompilationStatus.running, CompilationStatus.failed].toStrings == [
             "running", "failed"
         ]);
 }

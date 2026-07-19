@@ -154,7 +154,7 @@ enum SessionStatus {
 SessionStatus toSessionStatus(string value) {
     mixin(EnumSwitch!("SessionStatus", "active"));
 }
-SessionStatus[] toSessionStatus(string[] values) {
+SessionStatus[] toSessionStatuses(string[] values) {
     return values.map!(toSessionStatus).array;
 }
 string toString(SessionStatus status) {
@@ -191,7 +191,7 @@ enum SocialIdentityStatus {
 SocialIdentityStatus toSocialIdentityStatus(string value) {
     mixin(EnumSwitch!("SocialIdentityStatus", "linked"));
 }
-SocialIdentityStatus[] toSocialIdentityStatus(string[] values) {
+SocialIdentityStatus[] toSocialIdentityStatuses(string[] values) {
     return values.map!(toSocialIdentityStatus).array;
 }
 string toString(SocialIdentityStatus status) {
@@ -485,7 +485,7 @@ enum IdentityProviderStatus {
 IdentityProviderStatus toIdentityProviderStatus(string value) {
     mixin(EnumSwitch!("IdentityProviderStatus", "active"));
 }
-IdentityProviderStatus[] toIdentityProviderStatus(string[] values) {
+IdentityProviderStatus[] toIdentityProviderStatuses(string[] values) {
     return values.map!(toIdentityProviderStatus).array;
 }
 string toString(IdentityProviderStatus status) {
@@ -568,7 +568,7 @@ enum ScreenSetStatus {
 ScreenSetStatus toScreenSetStatus(string value) {
     mixin(EnumSwitch!("ScreenSetStatus", "draft"));
 }
-ScreenSetStatus[] toScreenSetStatus(string[] values) {
+ScreenSetStatus[] toScreenSetStatuses(string[] values) {
     return values.map!(toScreenSetStatus).array;
 }
 string toString(ScreenSetStatus status) {

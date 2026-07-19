@@ -17,7 +17,7 @@ enum MessagingServiceStatus {
 MessagingServiceStatus toMessagingServiceStatus(string value) {
     mixin(EnumSwitch("MessagingServiceStatus", "creating"));
 }
-MessagingServiceStatus[] toMessagingServiceStatus(string[] values) {
+MessagingServiceStatus[] toMessagingServiceStatuses(string[] values) {
     return values.map!(v => v.toMessagingServiceStatus).array;
 }
 string toString(MessagingServiceStatus value) {
@@ -90,7 +90,7 @@ enum MessageClientStatus {
 MessageClientStatus toMessageClientStatus(string value) {
     mixin(EnumSwitch("MessageClientStatus", "active"));
 }
-MessageClientStatus[] toMessageClientStatus(string[] values) {
+MessageClientStatus[] toMessageClientStatuses(string[] values) {
     return values.map!(v => v.toMessageClientStatus).array;
 }
 string toString(MessageClientStatus value) {
@@ -161,7 +161,7 @@ enum QueueStatus {
 QueueStatus toQueueStatus(string value) {
     mixin(EnumSwitch("QueueStatus", "active"));
 }
-QueueStatus[] toQueueStatus(string[] values) {
+QueueStatus[] toQueueStatuses(string[] values) {
     return values.map!(toQueueStatus).array;
 }
 string toString(QueueStatus value) {
@@ -226,7 +226,7 @@ enum QueueSubscriptionStatus {
 QueueSubscriptionStatus toQueueSubscriptionStatus(string value) {
     mixin(EnumSwitch("QueueSubscriptionStatus", "active"));
 }
-QueueSubscriptionStatus[] toQueueSubscriptionStatus(string[] values) {
+QueueSubscriptionStatus[] toQueueSubscriptionStatuses(string[] values) {
     return values.map!(toQueueSubscriptionStatus).array;
 }
 string toString(QueueSubscriptionStatus value) {
@@ -261,7 +261,7 @@ enum WebhookStatus {
 WebhookStatus toWebhookStatus(string value) {
     mixin(EnumSwitch("WebhookStatus", "active"));
 }
-WebhookStatus[] toWebhookStatus(string[] values) {
+WebhookStatus[] toWebhookStatuses(string[] values) {
     return values.map!(toWebhookStatus).array;
 }
 string toString(WebhookStatus value) {
@@ -376,7 +376,7 @@ EventChannelStatus toEventChannelStatus(string value) {
         default: return EventChannelStatus.active; // default
     }
 }
-EventChannelStatus[] toEventChannelStatus(string[] values) {
+EventChannelStatus[] toEventChannelStatuses(string[] values) {
     return values.map!(toEventChannelStatus).array;
 }
 string toString(EventChannelStatus value) {
@@ -443,7 +443,7 @@ enum MessageBindingStatus {
 MessageBindingStatus toMessageBindingStatus(string value) {
     mixin(EnumSwitch("MessageBindingStatus", "active"));
 }
-MessageBindingStatus[] toMessageBindingStatus(string[] values) {
+MessageBindingStatus[] toMessageBindingStatuses(string[] values) {
     return values.map!(toMessageBindingStatus).array;
 }
 string toString(MessageBindingStatus value) {

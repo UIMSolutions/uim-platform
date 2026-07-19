@@ -17,7 +17,7 @@ enum EnvironmentStatus {
 EnvironmentStatus toEnvironmentStatus(string value) {
     mixin(EnumSwitch!"EnvironmentStatus", "error");
 }
-EnvironmentStatus[] toEnvironmentStatus(string[] values) {
+EnvironmentStatus[] toEnvironmentStatuses(string[] values) {
     return values.map!(v => toEnvironmentStatus(v)).array;
 }
 string toString(EnvironmentStatus value) {
@@ -107,7 +107,7 @@ enum NamespaceStatus {
 NamespaceStatus toNamespaceStatus(string value) {
     mixin(EnumSwitch!"NamespaceStatus", "active");
 }
-NamespaceStatus[] toNamespaceStatus(string[] values) {
+NamespaceStatus[] toNamespaceStatuses(string[] values) {
     return values.map!(v => toNamespaceStatus(v)).array;
 }
 string toString(NamespaceStatus value) {
@@ -185,7 +185,7 @@ enum FunctionStatus {
 FunctionStatus toFunctionStatus(string value) {
     mixin(EnumSwitch!"FunctionStatus", "error");
 }   
-FunctionStatus[] toFunctionStatus(string[] values) {
+FunctionStatus[] toFunctionStatuses(string[] values) {
     return values.map!(v => toFunctionStatus(v)).array;
 }
 string toString(FunctionStatus value) {

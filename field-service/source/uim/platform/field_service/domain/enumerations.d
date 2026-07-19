@@ -291,7 +291,7 @@ enum ActivityStatus {
 ActivityStatus toActivityStatus(string value) {
     mixin(EnumSwitch("ActivityStatus", "draft"));
 }
-ActivityStatus[] toActivityStatus(string[] values) {
+ActivityStatus[] toActivityStatuses(string[] values) {
     return values.map!(toActivityStatus).array;
 }
 string toString(ActivityStatus status) {
@@ -341,7 +341,7 @@ enum AssignmentStatus {
 AssignmentStatus toAssignmentStatus(string value) {
     mixin(EnumSwitch("AssignmentStatus", "proposed"));
 }
-AssignmentStatus[] toAssignmentStatus(string[] values) {
+AssignmentStatus[] toAssignmentStatuses(string[] values) {
     return values.map!(toAssignmentStatus).array;
 }
 string toString(AssignmentStatus status) {
@@ -387,7 +387,7 @@ enum EquipmentStatus {
 EquipmentStatus toEquipmentStatus(string value) {
     mixin(EnumSwitch("EquipmentStatus", "active"));
 }
-EquipmentStatus[] toEquipmentStatus(string[] values) {
+EquipmentStatus[] toEquipmentStatuses(string[] values) {
     return values.map!(toEquipmentStatus).array;
 }
 string toString(EquipmentStatus status) {
@@ -483,7 +483,7 @@ enum TechnicianStatus {
 TechnicianStatus toTechnicianStatus(string value) {
     mixin(EnumSwitch("TechnicianStatus", "available"));
 }
-TechnicianStatus[] toTechnicianStatus(string[] values) {
+TechnicianStatus[] toTechnicianStatuses(string[] values) {
     return values.map!(toTechnicianStatus).array;
 }
 string toString(TechnicianStatus status) {
@@ -566,7 +566,7 @@ enum CustomerStatus {
 CustomerStatus toCustomerStatus(string value) {
     mixin(EnumSwitch("CustomerStatus", "active"));
 }
-CustomerStatus[] toCustomerStatus(string[] values) {
+CustomerStatus[] toCustomerStatuses(string[] values) {
     return values.map!(toCustomerStatus).array;
 }
 string toString(CustomerStatus status) {
@@ -751,7 +751,7 @@ enum SmartformStatus {
 SmartformStatus toSmartformStatus(string value) {
     mixin(EnumSwitch("SmartformStatus", "draft"));
 }
-SmartformStatus[] toSmartformStatus(string[] values) {
+SmartformStatus[] toSmartformStatuses(string[] values) {
     return values.map!(toSmartformStatus).array;
 }
 string toString(SmartformStatus status) {

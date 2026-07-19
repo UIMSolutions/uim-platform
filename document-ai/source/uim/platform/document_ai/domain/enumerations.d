@@ -22,7 +22,7 @@ enum DocumentStatus {
 DocumentStatus toDocumentStatus(string value) {
     mixin(EnumSwitch("DocumentStatus", "DocumentStatus.pending"));
 }
-DocumentStatus[] toDocumentStatus(string[] values) {
+DocumentStatus[] toDocumentStatuses(string[] values) {
     return values.map!(v => toDocumentStatus(v)).array;
 }
 string toString(DocumentStatus status) {
@@ -40,7 +40,7 @@ enum TrainingJobStatus {
 TrainingJobStatus toTrainingJobStatus(string value) {
     mixin(EnumSwitch("TrainingJobStatus", "TrainingJobStatus.pending"));
 }
-TrainingJobStatus[] toTrainingJobStatus(string[] values) {
+TrainingJobStatus[] toTrainingJobStatuses(string[] values) {
     return values.map!(v => toTrainingJobStatus(v)).array;
 }
 string toString(TrainingJobStatus status) {
@@ -279,7 +279,7 @@ enum EnrichmentMatchStatus {
 EnrichmentMatchStatus toEnrichmentMatchStatus(string value) {
     mixin(EnumSwitch("EnrichmentMatchStatus", "EnrichmentMatchStatus.unmatched"));
 }   
-EnrichmentMatchStatus[] toEnrichmentMatchStatus(string[] values) {
+EnrichmentMatchStatus[] toEnrichmentMatchStatuses(string[] values) {
     return values.map!(v => toEnrichmentMatchStatus(v)).array;
 }
 string toString(EnrichmentMatchStatus value) {
@@ -358,7 +358,7 @@ enum SchemaStatus {
 SchemaStatus toSchemaStatus(string value) {
     mixin(EnumSwitch("SchemaStatus", "SchemaStatus.active"));
 }
-SchemaStatus[] toSchemaStatus(string[] values) {
+SchemaStatus[] toSchemaStatuses(string[] values) {
     return values.map!(v => toSchemaStatus(v)).array;
 }
 string toString(SchemaStatus value) {
@@ -393,7 +393,7 @@ enum TemplateStatus {
 TemplateStatus toTemplateStatus(string value) {
     mixin(EnumSwitch("TemplateStatus", "TemplateStatus.active"));
 }
-TemplateStatus[] toTemplateStatus(string[] values) {
+TemplateStatus[] toTemplateStatuses(string[] values) {
     return values.map!(v => toTemplateStatus(v)).array;
 }
 string toString(TemplateStatus value) {
