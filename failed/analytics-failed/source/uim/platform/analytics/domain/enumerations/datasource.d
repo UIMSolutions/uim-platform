@@ -31,7 +31,7 @@ string toString(DataSourceType type) {
   return type.to!string;
 }
 string[] toStrings(DataSourceType[] types) {
-  return types.map!(toString).array;
+  return types.map!toString.array;
 }
 ///
 unittest {
@@ -80,7 +80,7 @@ string toString(DataSourceStatus status) {
   return status.to!string;
 }
 string[] toStrings(DataSourceStatus[] statuses) {
-  return statuses.map!(toString).array;
+  return statuses.map!toString.array;
 }
 ///
 unittest {

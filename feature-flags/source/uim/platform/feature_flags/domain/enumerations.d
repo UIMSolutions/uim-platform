@@ -45,7 +45,7 @@ unittest {
     assert(FlagType.number_.toString == "NUMBER");
 
     assert(["BOOLEAN", "STRING"].toFlagType == [FlagType.boolean_, FlagType.string_]);
-    assert([FlagType.boolean_, FlagType.string_].toString == ["BOOLEAN", "STRING"]);
+    assert([FlagType.boolean_, FlagType.string_].toStrings == ["BOOLEAN", "STRING"]);
 }
 
 /// Lifecycle state of a feature flag
@@ -80,7 +80,7 @@ unittest {
     assert(FlagState.archived_.toString == "ARCHIVED");
 
     assert(["ENABLED", "DISABLED"].toFlagState == [FlagState.enabled_, FlagState.disabled_]);
-    assert([FlagState.enabled_, FlagState.disabled_].toString == ["ENABLED", "DISABLED"]);
+    assert([FlagState.enabled_, FlagState.disabled_].toStrings == ["ENABLED", "DISABLED"]);
 }
 
 /// Type of targeting rule
@@ -118,7 +118,7 @@ unittest {
     assert(RuleType.attributeMatch.toString == "ATTRIBUTE_MATCH");
 
     assert(["USER_MATCH", "TENANT_MATCH", "PERCENTAGE_ROLLOUT", "ATTRIBUTE_MATCH"].toRuleType == [RuleType.userMatch, RuleType.tenantMatch, RuleType.percentageRollout, RuleType.attributeMatch]);
-    assert([RuleType.userMatch, RuleType.tenantMatch, RuleType.percentageRollout, RuleType.attributeMatch].toString == ["USER_MATCH", "TENANT_MATCH", "PERCENTAGE_ROLLOUT", "ATTRIBUTE_MATCH"]);
+    assert([RuleType.userMatch, RuleType.tenantMatch, RuleType.percentageRollout, RuleType.attributeMatch].toStrings == ["USER_MATCH", "TENANT_MATCH", "PERCENTAGE_ROLLOUT", "ATTRIBUTE_MATCH"]);
 }
 
 /// Evaluation context hint for SDK clients
@@ -156,7 +156,7 @@ unittest {
     assert(EvaluationKind.number_.toString == "NUMBER");    
 
     assert(["BOOLEAN", "STRING"].toEvaluationKind == [EvaluationKind.boolean_, EvaluationKind.string_]);
-    assert([EvaluationKind.boolean_, EvaluationKind.string_].toString == ["BOOLEAN", "STRING"]);
+    assert([EvaluationKind.boolean_, EvaluationKind.string_].toStrings == ["BOOLEAN", "STRING"]);
 }
 
 /// Change-type recorded in the audit log
@@ -200,7 +200,7 @@ unittest {
     assert(AuditAction.archived_.toString == "ARCHIVED");
 
     assert(["CREATED", "UPDATED", "DELETED", "ENABLED", "DISABLED", "ARCHIVED"].toAuditAction == [AuditAction.created_, AuditAction.updated_, AuditAction.deleted_, AuditAction.enabled_, AuditAction.disabled_, AuditAction.archived_]);
-    assert([AuditAction.created_, AuditAction.updated_, AuditAction.deleted_, AuditAction.enabled_, AuditAction.disabled_, AuditAction.archived_].toString == ["CREATED", "UPDATED", "DELETED", "ENABLED", "DISABLED", "ARCHIVED"]);
+    assert([AuditAction.created_, AuditAction.updated_, AuditAction.deleted_, AuditAction.enabled_, AuditAction.disabled_, AuditAction.archived_].toStrings == ["CREATED", "UPDATED", "DELETED", "ENABLED", "DISABLED", "ARCHIVED"]);
 }
 
 /// Storage backend selector (for infrastructure routing)
@@ -235,5 +235,5 @@ unittest {
     assert(StorageBackend.mongodb_.toString == "MONGODB");
 
     assert(["MEMORY", "FILE"].toStorageBackend == [StorageBackend.memory_, StorageBackend.file_]);
-    assert([StorageBackend.memory_, StorageBackend.file_].toString == ["MEMORY", "FILE"]);
+    assert([StorageBackend.memory_, StorageBackend.file_].toStrings == ["MEMORY", "FILE"]);
 }

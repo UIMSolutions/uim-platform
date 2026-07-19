@@ -33,7 +33,7 @@ string toString(AppPlatform value) {
 }
 
 string[] toStrings(AppPlatform[] values) {
-  return values.map!(toString).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -86,7 +86,7 @@ string toString(AppStatus value) {
 }
 
 string[] toStrings(AppStatus[] values) {
-  return values.map!(toString).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -114,7 +114,7 @@ unittest {
     ]) == ["active", "inactive", "suspended", "deleted"]);
   assert([
     AppStatus.active, AppStatus.inactive, AppStatus.suspended, AppStatus.deleted_
-  ].toString == ["active", "inactive", "suspended", "deleted"]);
+  ].toStrings == ["active", "inactive", "suspended", "deleted"]);
 }
 
 // Device status
@@ -138,7 +138,7 @@ string toString(DeviceStatus value) {
 }
 
 string[] toStrings(DeviceStatus[] values) {
-  return values.map!(toString).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -166,7 +166,7 @@ unittest {
   assert([
     DeviceStatus.registered, DeviceStatus.locked, DeviceStatus.wiped,
     DeviceStatus.blocked
-  ].toString == ["registered", "locked", "wiped", "blocked"]);
+  ].toStrings == ["registered", "locked", "wiped", "blocked"]);
 }
 
 // Push notification provider
@@ -190,7 +190,7 @@ string toString(PushProvider value) {
 }
 
 string[] toStrings(PushProvider[] values) {
-  return values.map!(toString).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -218,7 +218,7 @@ unittest {
     ]) == ["fcm", "apns", "wns", "w3c"]);
   assert([
     PushProvider.fcm, PushProvider.apns, PushProvider.wns, PushProvider.w3c
-  ].toString == ["fcm", "apns", "wns", "w3c"]);
+  ].toStrings == ["fcm", "apns", "wns", "w3c"]);
 }
 
 // Notification status
@@ -243,7 +243,7 @@ string toString(NotificationStatus value) {
 }
 
 string[] toStrings(NotificationStatus[] values) {
-  return values.map!(toString).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -277,7 +277,7 @@ unittest {
     NotificationStatus.pending, NotificationStatus.sent,
     NotificationStatus.delivered, NotificationStatus.failed,
     NotificationStatus.expired
-  ].toString == ["pending", "sent", "delivered", "failed", "expired"]);
+  ].toStrings == ["pending", "sent", "delivered", "failed", "expired"]);
 }
 
 // Notification priority
@@ -300,7 +300,7 @@ string toString(NotificationPriority value) {
 }
 
 string[] toStrings(NotificationPriority[] values) {
-  return values.map!(toString).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -326,7 +326,7 @@ unittest {
   assert([
     NotificationPriority.normal, NotificationPriority.low,
     NotificationPriority.high
-  ].toString == ["normal", "low", "high"]);
+  ].toStrings == ["normal", "low", "high"]);
 }
 
 // Push registration status
@@ -349,7 +349,7 @@ string toString(PushRegStatus value) {
 }
 
 string[] toStrings(PushRegStatus[] values) {
-  return values.map!(toString).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -371,7 +371,7 @@ unittest {
   assert(toString([
       PushRegStatus.active, PushRegStatus.expired, PushRegStatus.revoked
     ]) == ["active", "expired", "revoked"]);
-  assert([PushRegStatus.active, PushRegStatus.expired, PushRegStatus.revoked].toString == [
+  assert([PushRegStatus.active, PushRegStatus.expired, PushRegStatus.revoked].toStrings == [
       "active", "expired", "revoked"
     ]);
 }
@@ -396,7 +396,7 @@ string toString(RestrictionType value) {
 }
 
 string[] toStrings(RestrictionType[] values) {
-  return values.map!(toString).array;
+  return values.map!toString.array;
 }
 /// 
 unittest {
@@ -424,7 +424,7 @@ unittest {
   assert([
     RestrictionType.boolean_, RestrictionType.percentage,
     RestrictionType.whitelist
-  ].toString == ["boolean_", "percentage", "whitelist"]);
+  ].toStrings == ["boolean_", "percentage", "whitelist"]);
 }
 
 // Resource type
@@ -448,7 +448,7 @@ string toString(ClientResourceType value) {
 }
 
 string[] toStrings(ClientResourceType[] values) {
-  return values.map!(toString).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -477,7 +477,7 @@ unittest {
   assert([
     ClientResourceType.bundle, ClientResourceType.configuration,
     ClientResourceType.certificate, ClientResourceType.translation
-  ].toString == ["bundle", "configuration", "certificate", "translation"]);
+  ].toStrings == ["bundle", "configuration", "certificate", "translation"]);
 }
 
 // Version status
@@ -515,7 +515,7 @@ string toString(VersionStatus value) {
 }
 
 string[] toStrings(VersionStatus[] values) {
-  return values.map!(toString).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -549,7 +549,7 @@ unittest {
   assert([
     VersionStatus.draft, VersionStatus.published, VersionStatus.mandatory,
     VersionStatus.deprecated_, VersionStatus.archived
-  ].toString == ["draft", "published", "mandatory", "deprecated", "archived"]);
+  ].toStrings == ["draft", "published", "mandatory", "deprecated", "archived"]);
 }
 
 // Store type
@@ -571,7 +571,7 @@ string toString(OfflineStoreType value) {
 }
 
 string[] toStrings(OfflineStoreType[] values) {
-  return values.map!(toString).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -590,7 +590,7 @@ unittest {
   assert(toString([OfflineStoreType.odata, OfflineStoreType.custom]) == [
       "odata", "custom"
     ]);
-  assert([OfflineStoreType.odata, OfflineStoreType.custom].toString == [
+  assert([OfflineStoreType.odata, OfflineStoreType.custom].toStrings == [
       "odata", "custom"
     ]);
   assert(["odata", "custom"].toOfflineStoreType == [
@@ -619,7 +619,7 @@ string toString(SyncStatus value) {
 }
 
 string[] toStrings(SyncStatus[] values) {
-  return values.map!(toString).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -649,7 +649,7 @@ unittest {
     ]) == ["idle", "syncing", "error", "completed"]);
   assert([
     SyncStatus.idle, SyncStatus.syncing, SyncStatus.error, SyncStatus.completed
-  ].toString == ["idle", "syncing", "error", "completed"]);
+  ].toStrings == ["idle", "syncing", "error", "completed"]);
 }
 
 // Session status
@@ -672,7 +672,7 @@ string toString(SessionStatus value) {
 }
 
 string[] toStrings(SessionStatus[] values) {
-  return values.map!(toString).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -694,7 +694,7 @@ unittest {
   assert(toString([
       SessionStatus.active, SessionStatus.expired, SessionStatus.terminated
     ]) == ["active", "expired", "terminated"]);
-  assert([SessionStatus.active, SessionStatus.expired, SessionStatus.terminated].toString == [
+  assert([SessionStatus.active, SessionStatus.expired, SessionStatus.terminated].toStrings == [
       "active", "expired", "terminated"
     ]);
 }
@@ -720,7 +720,7 @@ string toString(LogSource value) {
 }
 
 string[] toStrings(LogSource[] values) {
-  return values.map!(toString).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -745,7 +745,7 @@ unittest {
   assert(toString([
       LogSource.client, LogSource.server, LogSource.push, LogSource.sync
     ]) == ["client", "server", "push", "sync"]);
-  assert([LogSource.client, LogSource.server, LogSource.push, LogSource.sync].toString == [
+  assert([LogSource.client, LogSource.server, LogSource.push, LogSource.sync].toStrings == [
       "client", "server", "push", "sync"
     ]);
 }
@@ -770,7 +770,7 @@ string toString(MetricType value) {
   return value.to!string; // This will return the enum member name as a string, e.g., "appLaunch", "screenView", etc.
 }
 string[] toStrings(MetricType[] values) {
-  return values.map!(toString).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -812,7 +812,7 @@ unittest {
     MetricType.appLaunch, MetricType.screenView, MetricType.apiCall,
     MetricType.pushReceived, MetricType.syncCompleted, MetricType.crash,
     MetricType.custom
-  ].toString == ["appLaunch", "screenView", "apiCall", "pushReceived", "syncCompleted", "crash", "custom"]);
+  ].toStrings == ["appLaunch", "screenView", "apiCall", "pushReceived", "syncCompleted", "crash", "custom"]);
 }
 
 enum DataType : string {
@@ -857,7 +857,7 @@ string toString(DataType value) {
   return cast(string)value; // This will return the enum member name as a string, e.g., "string", "integer", etc.
 }
 string[] toStrings(DataType[] values) {
-  return values.map!(toString).array;
+  return values.map!toString.array;
 }
 /// 
 unittest { 

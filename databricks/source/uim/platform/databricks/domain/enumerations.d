@@ -23,7 +23,7 @@ string toString(WorkspaceStatus status) {
   return status.to!string;
 }
 string[] toStrings(WorkspaceStatus[] statuses) {
-  return statuses.map!(toString).array;
+  return statuses.map!toString.array;
 }
 /// 
 unittest {
@@ -78,7 +78,7 @@ string toString(WorkspaceTier tier) {
   return tier.to!string;
 }
 string[] toStrings(WorkspaceTier[] tiers) {
-  return tiers.map!(toString).array;
+  return tiers.map!toString.array;
 }
 /// 
 unittest {

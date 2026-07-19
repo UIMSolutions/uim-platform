@@ -32,7 +32,7 @@ string toString(AppPlatform value) {
     return value.to!string; // This will return the enum member name as a string, e.g. "ios", "android", etc
 }
 string[] toStrings(AppPlatform[] values) {
-    return values.map!(toString).array;
+    return values.map!toString.array;
 }
 ///
 unittest {
@@ -78,7 +78,7 @@ string toString(AppStatus value) {
     return cast(string)value; // This will return the enum member name as a string, e.g. "draft", "active", etc
 }
 string[] toStrings(AppStatus[] values) {
-    return values.map!(toString).array;
+    return values.map!toString.array;
 }
 ///
 unittest {
@@ -120,7 +120,7 @@ string toString(DefinitionStatus value) {
     return value.to!string; // This will return the enum member name as a string, e.g. "draft", "published", etc
 }
 string[] toStrings(DefinitionStatus[] values) {
-    return values.map!(toString).array;
+    return values.map!toString.array;
 }
 ///
 unittest {
@@ -206,7 +206,7 @@ string toString(DeviceStatus value) {
     return value.to!string; // This will return the enum member name as a string, e.g. "enrolled", "active", etc
 }
 string[] toStrings(DeviceStatus[] values) {
-    return values.map!(toString).array;
+    return values.map!toString.array;
 }
 ///
 unittest {
@@ -252,7 +252,7 @@ string toString(SyncStatus value) {
     return value.to!string; // This will return the enum member name as a string, e.g. "pending", "inProgress", etc
 }
 string[] toStrings(SyncStatus[] values) {
-    return values.map!(toString).array;
+    return values.map!toString.array;
 }
 ///
 unittest {
@@ -296,7 +296,7 @@ string toString(SyncDirection value) {
     return value.to!string; // This will return the enum member name as a string, e.g. "upload", "download", etc
 }
 string[] toStrings(SyncDirection[] values) {
-    return values.map!(toString).array;
+    return values.map!toString.array;
 }
 ///
 unittest {
@@ -340,7 +340,7 @@ string toString(BackendType value) {
     return value.to!string; // This will return the enum member name as a string, e.g. "s4hana", "ecc", etc
 }
 string[] toStrings(BackendType[] values) {
-    return values.map!(toString).array;
+    return values.map!toString.array;
 }
 ///
 unittest {
@@ -385,7 +385,7 @@ string toString(ConnectionStatus value) {
     return value.to!string; // This will return the enum member name as a string, e.g. "active", "inactive", etc
 }
 string[] toStrings(ConnectionStatus[] values) {
-    return values.map!(toString).array;
+    return values.map!toString.array;
 }
 ///
 unittest {
@@ -431,7 +431,7 @@ string toString(DeploymentStatus value) {
     return value.to!string; // This will return the enum member name as a string, e.g. "pending", "deploying", etc
 }
 string[] toStrings(DeploymentStatus[] values) {
-    return values.map!(toString).array;
+    return values.map!toString.array;
 }
 ///
 unittest {
@@ -475,7 +475,7 @@ string toString(DeploymentScope value) {
     return value.to!string; // This will return the enum member name as a string, e.g. "device", "group", etc
 }
 string[] toStrings(DeploymentScope[] values) {
-    return values.map!(toString).array;
+    return values.map!toString.array;
 }
 ///
 unittest {

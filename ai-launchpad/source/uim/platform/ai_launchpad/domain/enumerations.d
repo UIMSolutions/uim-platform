@@ -63,7 +63,7 @@ string toString(ConnectionType type) {
   return type.to!string;
 }
 string[] toStrings(ConnectionType[] types) {
-  return types.map!(toString).array;
+  return types.map!toString.array;
 }
 ///
 unittest {
@@ -102,7 +102,7 @@ string toString(ExecutionStatus status) {
   return status.to!string;
 }
 string[] toStrings(ExecutionStatus[] statuses) {
-  return statuses.map!(toString).array;
+  return statuses.map!toString.array;
 }
 ///
 unittest {
@@ -147,7 +147,7 @@ string toString(DeploymentStatus status) {
   return status.to!string;
 }
 string[] toStrings(DeploymentStatus[] statuses) {
-  return statuses.map!(toString).array;
+  return statuses.map!toString.array;
 }
 ///
 unittest {
@@ -229,7 +229,7 @@ string toString(DatasetStatus status) {
   return status.to!string;
 }
 string[] toStrings(DatasetStatus[] statuses) {
-  return statuses.map!(toString).array;
+  return statuses.map!toString.array;
 }
 ///
 unittest {
@@ -265,7 +265,7 @@ string toString(WorkspaceStatus status) {
   return status.to!string;
 }
 string[] toStrings(WorkspaceStatus[] statuses) {
-  return statuses.map!(toString).array;
+  return statuses.map!toString.array;
 }
 ///
 unittest {
@@ -297,7 +297,7 @@ PromptRole[] toPromptRoles(string[] roles) {
 string toString(PromptRole role) {  return role.to!string;
 }
 string[] toStrings(PromptRole[] roles) {
-  return roles.map!(toString).array;
+  return roles.map!toString.array;
 }
 ///
 unittest {
@@ -331,7 +331,7 @@ string toString(PromptStatus status) {
   return status.to!string;
 }
 string[] toStrings(PromptStatus[] statuses) {
-  return statuses.map!(toString).array;
+  return statuses.map!toString.array;
 }
 ///
 unittest {
@@ -367,7 +367,7 @@ string toString(ArtifactKind kind) {
   return kind.to!string;
 }
 string[] toStrings(ArtifactKind[] kinds) {
-  return kinds.map!(toString).array;
+  return kinds.map!toString.array;
 }
 ///
 unittest {
@@ -410,7 +410,7 @@ string toString(TargetStatus status) {
   return status.to!string;
 }
 string[] toStrings(TargetStatus[] statuses) {
-  return statuses.map!(toString).array;
+  return statuses.map!toString.array;
 }
 ///
 unittest {
@@ -558,7 +558,7 @@ string toString(ScheduleStatus status) {
   return status.to!string;
 }
 string[] toStrings(ScheduleStatus[] statuses) {
-  return statuses.map!(toString).array;
+  return statuses.map!toString.array;
 }
 ///
 unittest {

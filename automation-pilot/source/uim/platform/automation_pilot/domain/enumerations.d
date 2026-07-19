@@ -29,7 +29,7 @@ string toString(CatalogType type) {
 }
 
 string[] toStrings(CatalogType[] types) {
-    return types.map!(toString).array;
+    return types.map!toString.array;
 }
 ///
 unittest {
@@ -69,7 +69,7 @@ string toString(CatalogStatus status) {
 }
 
 string[] toStrings(CatalogStatus[] statuses) {
-    return statuses.map!(toString).array;
+    return statuses.map!toString.array;
 }
 ///
 unittest {
@@ -121,7 +121,7 @@ string toString(CommandStatus status) {
 }
 
 string[] toStrings(CommandStatus[] statuses) {
-    return statuses.map!(toString).array;
+    return statuses.map!toString.array;
 }
 ///
 unittest {
@@ -169,7 +169,7 @@ string toString(CommandType type) {
 }
 
 string[] toStrings(CommandType[] types) {
-    return types.map!(toString).array;
+    return types.map!toString.array;
 }
 ///
 unittest {
@@ -221,7 +221,7 @@ string toString(ExecutionStatus status) {
 }
 
 string[] toStrings(ExecutionStatus[] statuses) {
-    return statuses.map!(toString).array;
+    return statuses.map!toString.array;
 }
 ///
 unittest {
@@ -281,7 +281,7 @@ string toString(ExecutionPriority priority) {
 }
 
 string[] toStrings(ExecutionPriority[] priorities) {
-    return priorities.map!(toString).array;
+    return priorities.map!toString.array;
 }
 ///
 unittest {
@@ -330,7 +330,7 @@ string toString(ScheduleType type) {
 }
 
 string[] toStrings(ScheduleType[] types) {
-    return types.map!(toString).array;
+    return types.map!toString.array;
 }
 ///
 unittest {
@@ -375,7 +375,7 @@ string toString(ScheduleStatus status) {
 }
 
 string[] toStrings(ScheduleStatus[] statuses) {
-    return statuses.map!(toString).array;
+    return statuses.map!toString.array;
 }
 ///
 unittest {
@@ -425,7 +425,7 @@ string toString(TriggerType type) {
 }
 
 string[] toStrings(TriggerType[] types) {
-    return types.map!(toString).array;
+    return types.map!toString.array;
 }
 ///
 unittest {
@@ -472,7 +472,7 @@ string toString(TriggerStatus status) {
 }
 
 string[] toStrings(TriggerStatus[] statuses) {
-    return statuses.map!(toString).array;
+    return statuses.map!toString.array;
 }
 
 unittest {
@@ -531,7 +531,7 @@ string toString(InputType type) {
 }
 
 string[] toStrings(InputType[] types) {
-    return types.map!(toString).array;
+    return types.map!toString.array;
 }
 ///
 unittest {
@@ -578,7 +578,7 @@ string toString(InputSensitivity sensitivity) {
 }
 
 string[] toStrings(InputSensitivity[] sensitivities) {
-    return sensitivities.map!(toString).array;
+    return sensitivities.map!toString.array;
 }
 ///
 unittest {
@@ -621,7 +621,7 @@ string toString(ServiceAccountStatus status) {
 }
 
 string[] toStrings(ServiceAccountStatus[] statuses) {
-    return statuses.map!(toString).array;
+    return statuses.map!toString.array;
 }
 ///
 unittest {
@@ -640,7 +640,7 @@ unittest {
     assert(ServiceAccountStatus.inactive.toString == "inactive");
     assert(ServiceAccountStatus.revoked.toString == "revoked");
 
-    assert([ServiceAccountStatus.active, ServiceAccountStatus.revoked].toString == [
+    assert([ServiceAccountStatus.active, ServiceAccountStatus.revoked].toStrings == [
             "active", "revoked"
         ]);
 }
@@ -665,7 +665,7 @@ string toString(ConnectorType type) {
 }
 
 string[] toStrings(ConnectorType[] types) {
-    return types.map!(toString).array;
+    return types.map!toString.array;
 }
 ///
 unittest {
@@ -710,7 +710,7 @@ string toString(ConnectorStatus status) {
 }
 
 string[] toStrings(ConnectorStatus[] statuses) {
-    return statuses.map!(toString).array;
+    return statuses.map!toString.array;
 }
 ///
 unittest {
@@ -754,7 +754,7 @@ string toString(BackupStatus status) {
 }
 
 string[] toStrings(BackupStatus[] statuses) {
-    return statuses.map!(toString).array;
+    return statuses.map!toString.array;
 }
 ///
 unittest {

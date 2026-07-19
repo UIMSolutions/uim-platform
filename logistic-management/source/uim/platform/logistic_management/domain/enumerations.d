@@ -38,7 +38,7 @@ unittest {
   assert(LogisticsDirection.inbound.toString == "inbound");
 
   assert(["outbound", "inbound"].toLogisticsDirection == [LogisticsDirection.outbound, LogisticsDirection.inbound]);
-  assert([LogisticsDirection.outbound, LogisticsDirection.inbound].toString == ["outbound", "inbound"]);
+  assert([LogisticsDirection.outbound, LogisticsDirection.inbound].toStrings == ["outbound", "inbound"]);
 }
 
 /// Lifecycle status of a freight order.
@@ -79,7 +79,7 @@ unittest {
   assert(FreightOrderStatus.cancelled.toString == "cancelled");
 
   assert(["draft", "planned"].toFreightOrderStatus == [FreightOrderStatus.draft, FreightOrderStatus.planned]);
-  assert([FreightOrderStatus.draft, FreightOrderStatus.planned].toString == ["draft", "planned"]);
+  assert([FreightOrderStatus.draft, FreightOrderStatus.planned].toStrings == ["draft", "planned"]);
 }
 
 /// Lifecycle status of a shipment.
@@ -120,7 +120,7 @@ unittest {
   assert(ShipmentStatus.cancelled.toString == "cancelled");
 
   assert(["created", "shipped"].toShipmentStatus == [ShipmentStatus.created, ShipmentStatus.shipped]);
-  assert([ShipmentStatus.created, ShipmentStatus.shipped].toString == ["created", "shipped"]);
+  assert([ShipmentStatus.created, ShipmentStatus.shipped].toStrings == ["created", "shipped"]);
 }
 
 /// Lifecycle status of a delivery document.
@@ -164,7 +164,7 @@ unittest {
   assert(DeliveryStatus.cancelled.toString == "cancelled");
 
   assert(["created", "shipped"].toDeliveryStatus == [DeliveryStatus.created, DeliveryStatus.shipped]);
-  assert([DeliveryStatus.created, DeliveryStatus.shipped].toString == ["created", "shipped"]);
+  assert([DeliveryStatus.created, DeliveryStatus.shipped].toStrings == ["created", "shipped"]);
 }
 
 /// Type and status of a warehouse task.
@@ -205,7 +205,7 @@ unittest {
   assert(WarehouseTaskType.counting.toString == "counting");
 
   assert(["picking", "packing"].toWarehouseTaskType == [WarehouseTaskType.picking, WarehouseTaskType.packing]);
-  assert([WarehouseTaskType.picking, WarehouseTaskType.packing].toString == ["picking", "packing"]);
+  assert([WarehouseTaskType.picking, WarehouseTaskType.packing].toStrings == ["picking", "packing"]);
 }
 
 enum WarehouseTaskStatus {
@@ -245,7 +245,7 @@ unittest {
   assert(WarehouseTaskStatus.cancelled.toString == "cancelled");
 
   assert(["created", "inProgress"].toWarehouseTaskStatus == [WarehouseTaskStatus.created, WarehouseTaskStatus.inProgress]);
-  assert([WarehouseTaskStatus.created, WarehouseTaskStatus.inProgress].toString == ["created", "inProgress"]);
+  assert([WarehouseTaskStatus.created, WarehouseTaskStatus.inProgress].toStrings == ["created", "inProgress"]);
 }
 
 /// Status of a warehouse order.
@@ -286,7 +286,7 @@ unittest {
   assert(WarehouseOrderStatus.cancelled.toString == "cancelled");
 
   assert(["created", "inProgress"].toWarehouseOrderStatus == [WarehouseOrderStatus.created, WarehouseOrderStatus.inProgress]);
-  assert([WarehouseOrderStatus.created, WarehouseOrderStatus.inProgress].toString == ["created", "inProgress"]);
+  assert([WarehouseOrderStatus.created, WarehouseOrderStatus.inProgress].toStrings == ["created", "inProgress"]);
 }
 
 /// Carrier / transport service provider status.
@@ -321,7 +321,7 @@ unittest {
   assert(CarrierStatus.suspended.toString == "suspended");
 
   assert(["active", "inactive"].toCarrierStatus == [CarrierStatus.active, CarrierStatus.inactive]);
-  assert([CarrierStatus.active, CarrierStatus.inactive].toString == ["active", "inactive"]);
+  assert([CarrierStatus.active, CarrierStatus.inactive].toStrings == ["active", "inactive"]);
 }
 
 /// Transportation mode.
@@ -362,7 +362,7 @@ unittest {
   assert(TransportMode.multimodal.toString == "multimodal");
 
   assert(["road", "sea"].toTransportMode == [TransportMode.road, TransportMode.sea]);
-  assert([TransportMode.road, TransportMode.sea].toString == ["road", "sea"]);
+  assert([TransportMode.road, TransportMode.sea].toStrings == ["road", "sea"]);
 }
 
 /// Handling unit type (packaging level).
@@ -403,5 +403,5 @@ unittest {
   assert(HandlingUnitType.drum.toString == "drum");
 
   assert(["pallet", "crate"].toHandlingUnitType == [HandlingUnitType.pallet, HandlingUnitType.crate]);
-  assert([HandlingUnitType.pallet, HandlingUnitType.crate].toString == ["pallet", "crate"]);
+  assert([HandlingUnitType.pallet, HandlingUnitType.crate].toStrings == ["pallet", "crate"]);
 }

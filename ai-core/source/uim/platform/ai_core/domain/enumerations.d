@@ -30,7 +30,7 @@ string toString(ExecutableType type) {
 }
 
 string[] toStrings(ExecutableType[] types) {
-  return types.map!(toString).array;
+  return types.map!toString.array;
 }
 ///
 unittest {
@@ -73,7 +73,7 @@ string toString(ExecutionStatus status) {
 }
 
 string[] toStrings(ExecutionStatus[] statuses) {
-  return statuses.map!(toString).array;
+  return statuses.map!toString.array;
 }
 ///
 unittest {
@@ -131,7 +131,7 @@ string toString(DeploymentStatus status) {
 }
 
 string[] toStrings(DeploymentStatus[] statuses) {
-  return statuses.map!(toString).array;
+  return statuses.map!toString.array;
 }
 ///
 unittest {
@@ -181,7 +181,7 @@ string toString(ArtifactKind kind) {
 }
 
 string[] toStrings(ArtifactKind[] kinds) {
-  return kinds.map!(toString).array;
+  return kinds.map!toString.array;
 }
 ///
 unittest {
@@ -242,7 +242,7 @@ string toString(TargetStatus status) {
 }
 
 string[] toStrings(TargetStatus[] statuses) {
-  return statuses.map!(toString).array;
+  return statuses.map!toString.array;
 }
 ///
 unittest {
@@ -302,7 +302,7 @@ string toString(MetricValueType type) {
 }
 
 string[] toStrings(MetricValueType[] types) {
-  return types.map!(toString).array;
+  return types.map!toString.array;
 }
 ///
 unittest {
@@ -348,7 +348,7 @@ string toString(LogSeverity severity) {
 }
 
 string[] toStrings(LogSeverity[] severities) {
-  return severities.map!(toString).array;
+  return severities.map!toString.array;
 }
 ///
 unittest {
@@ -433,7 +433,7 @@ string toString(ScheduleStatus status) {
 }
 
 string[] toStrings(ScheduleStatus[] statuses) {
-  return statuses.map!(toString).array;
+  return statuses.map!toString.array;
 }
 ///
 unittest {

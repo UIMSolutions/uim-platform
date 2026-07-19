@@ -12,105 +12,127 @@ mixin(ShowModule!());
 @safe:
 
 enum ApplicationType {
-    web,
-    mobile,
-    webAndMobile
+  web,
+  mobile,
+  webAndMobile
 }
+
 ApplicationType toApplicationType(string value) {
-    mixin(EnumSwitch("ApplicationType", "web"));
+  mixin(EnumSwitch("ApplicationType", "web"));
 }
+
 ApplicationType[] toApplicationTypes(string[] values) {
-    return values.map!(toApplicationType).array;
+  return values.map!(toApplicationType).array;
 }
+
 string toString(ApplicationType type) {
-    return type.to!string;
+  return type.to!string;
 }
+
 string[] toStrings(ApplicationType[] types) {
-    return types.map!(toString).array;
+  return types.map!toString.array;
 }
 ///
 unittest {
-    mixin(ShowTest!("ApplicationType enumeration"));
+  mixin(ShowTest!("ApplicationType enumeration"));
 
-    assert(ApplicationType.web.to!string == "web");
-    assert(ApplicationType.mobile.to!string == "mobile");
-    assert(ApplicationType.webAndMobile.to!string == "webAndMobile");
+  assert(ApplicationType.web.to!string == "web");
+  assert(ApplicationType.mobile.to!string == "mobile");
+  assert(ApplicationType.webAndMobile.to!string == "webAndMobile");
 
-    assert("web".to!ApplicationType == ApplicationType.web);
-    assert("mobile".to!ApplicationType == ApplicationType.mobile);
-    assert("webAndMobile".to!ApplicationType == ApplicationType.webAndMobile);
+  assert("web".to!ApplicationType == ApplicationType.web);
+  assert("mobile".to!ApplicationType == ApplicationType.mobile);
+  assert("webAndMobile".to!ApplicationType == ApplicationType.webAndMobile);
 
-    assert("web".toApplicationType == ApplicationType.web);
-    assert("mobile".toApplicationType == ApplicationType.mobile);
-    assert("webAndMobile".toApplicationType == ApplicationType.webAndMobile);
-    assert("noexists".toApplicationType == ApplicationType.web); // Default case
-    assert("".toApplicationType == ApplicationType.web); // Default case
+  assert("web".toApplicationType == ApplicationType.web);
+  assert("mobile".toApplicationType == ApplicationType.mobile);
+  assert("webAndMobile".toApplicationType == ApplicationType.webAndMobile);
+  assert("noexists".toApplicationType == ApplicationType.web); // Default case
+  assert("".toApplicationType == ApplicationType.web); // Default case
 
-    assert(toString(ApplicationType.web) == "web");
-    assert(toString(ApplicationType.mobile) == "mobile");
-    assert(toString(ApplicationType.webAndMobile) == "webAndMobile");
+  assert(toString(ApplicationType.web) == "web");
+  assert(toString(ApplicationType.mobile) == "mobile");
+  assert(toString(ApplicationType.webAndMobile) == "webAndMobile");
 
-    assert(["web", "mobile", "webAndMobile"].toApplicationTypes ==
-           [ApplicationType.web, ApplicationType.mobile, ApplicationType.webAndMobile]);
-    assert(toString([ApplicationType.web, ApplicationType.mobile, ApplicationType.webAndMobile]) ==
-           ["web", "mobile", "webAndMobile"]);
+  assert(["web", "mobile", "webAndMobile"].toApplicationTypes ==
+      [
+        ApplicationType.web, ApplicationType.mobile,
+        ApplicationType.webAndMobile
+      ]);
+  assert(toString([
+      ApplicationType.web, ApplicationType.mobile,
+      ApplicationType.webAndMobile
+    ]) ==
+    ["web", "mobile", "webAndMobile"]);
 }
 
 enum ApplicationStatus {
-    draft,
-    active,
-    published,
-    archived,
-    error
+  draft,
+  active,
+  published,
+  archived,
+  error
 }
+
 ApplicationStatus toApplicationStatus(string value) {
-    mixin(EnumSwitch("ApplicationStatus", "draft"));
+  mixin(EnumSwitch("ApplicationStatus", "draft"));
 }
+
 ApplicationStatus[] toApplicationStatuses(string[] values) {
-    return values.map!(toApplicationStatus).array;
+  return values.map!(toApplicationStatus).array;
 }
+
 string toString(ApplicationStatus status) {
-    return status.to!string;
+  return status.to!string;
 }
+
 string[] toStrings(ApplicationStatus[] statuses) {
-    return statuses.map!(toString).array;
+  return statuses.map!toString.array;
 }
 /// 
 unittest {
-    mixin(ShowTest!("ApplicationStatus enumeration"));
+  mixin(ShowTest!("ApplicationStatus enumeration"));
 
-    assert(ApplicationStatus.draft.to!string == "draft");
-    assert(ApplicationStatus.active.to!string == "active");
-    assert(ApplicationStatus.published.to!string == "published");
-    assert(ApplicationStatus.archived.to!string == "archived");
-    assert(ApplicationStatus.error.to!string == "error");
+  assert(ApplicationStatus.draft.to!string == "draft");
+  assert(ApplicationStatus.active.to!string == "active");
+  assert(ApplicationStatus.published.to!string == "published");
+  assert(ApplicationStatus.archived.to!string == "archived");
+  assert(ApplicationStatus.error.to!string == "error");
 
-    assert("draft".to!ApplicationStatus == ApplicationStatus.draft);
-    assert("active".to!ApplicationStatus == ApplicationStatus.active);
-    assert("published".to!ApplicationStatus == ApplicationStatus.published);
-    assert("archived".to!ApplicationStatus == ApplicationStatus.archived);
-    assert("error".to!ApplicationStatus == ApplicationStatus.error);
+  assert("draft".to!ApplicationStatus == ApplicationStatus.draft);
+  assert("active".to!ApplicationStatus == ApplicationStatus.active);
+  assert("published".to!ApplicationStatus == ApplicationStatus.published);
+  assert("archived".to!ApplicationStatus == ApplicationStatus.archived);
+  assert("error".to!ApplicationStatus == ApplicationStatus.error);
 
-    assert("draft".toApplicationStatus == ApplicationStatus.draft);
-    assert("active".toApplicationStatus == ApplicationStatus.active);
-    assert("published".toApplicationStatus == ApplicationStatus.published);
-    assert("archived".toApplicationStatus == ApplicationStatus.archived);
-    assert("error".toApplicationStatus == ApplicationStatus.error);
-    assert("noexists".toApplicationStatus == ApplicationStatus.draft); // Default case
-    assert("".toApplicationStatus == ApplicationStatus.draft); // Default case
+  assert("draft".toApplicationStatus == ApplicationStatus.draft);
+  assert("active".toApplicationStatus == ApplicationStatus.active);
+  assert("published".toApplicationStatus == ApplicationStatus.published);
+  assert("archived".toApplicationStatus == ApplicationStatus.archived);
+  assert("error".toApplicationStatus == ApplicationStatus.error);
+  assert("noexists".toApplicationStatus == ApplicationStatus.draft); // Default case
+  assert("".toApplicationStatus == ApplicationStatus.draft); // Default case
 
-    assert(toString(ApplicationStatus.draft) == "draft");
-    assert(toString(ApplicationStatus.active) == "active");
-    assert(toString(ApplicationStatus.published) == "published");
-    assert(toString(ApplicationStatus.archived) == "archived");
-    assert(toString(ApplicationStatus.error) == "error");
+  assert(toString(ApplicationStatus.draft) == "draft");
+  assert(toString(ApplicationStatus.active) == "active");
+  assert(toString(ApplicationStatus.published) == "published");
+  assert(toString(ApplicationStatus.archived) == "archived");
+  assert(toString(ApplicationStatus.error) == "error");
 
-    assert(["draft", "active", "published", "archived", "error"].toApplicationStatuses ==
-           [ApplicationStatus.draft, ApplicationStatus.active, ApplicationStatus.published, ApplicationStatus.archived, ApplicationStatus.error]);
-    assert(toString([ApplicationStatus.draft, ApplicationStatus.active, ApplicationStatus.published, ApplicationStatus.archived, ApplicationStatus.error]) ==
-           ["draft", "active", "published",}
+  assert(["draft", "active", "published", "archived", "error"].toApplicationStatuses ==
+      [
+        ApplicationStatus.draft, ApplicationStatus.active,
+        ApplicationStatus.published, ApplicationStatus.archived,
+        ApplicationStatus.error
+      ]);
+  assert([
+    ApplicationStatus.draft, ApplicationStatus.active,
+    ApplicationStatus.published, ApplicationStatus.archived,
+    ApplicationStatus.error
+  ] ==
+    ["draft", "active", "published", "archived", "error"]);
 
-enum PageType {
+  enum PageType {
     blank,
     list,
     detail,
@@ -119,21 +141,25 @@ enum PageType {
     login,
     settings,
     custom
-}
-PageType toPageType(string value) {
+  }
+
+  PageType toPageType(string value) {
     mixin(EnumSwitch("PageType", "blank"));
-}
-PageType[] toPageTypes(string[] values) {
-    return values.map!(toPageType).array;
-}
-string toString(PageType type) {
+  }
+
+  PageType[] toPageTypes(string[] values) {
+    return values.map!toPageType.array;
+  }
+
+  string toString(PageType type) {
     return type.to!string;
-}
-string[] toStrings(PageType[] types) {
-    return types.map!(toString).array;
-}
-/// 
-unittest {
+  }
+
+  string[] toStrings(PageType[] types) {
+    return types.map!toString.array;
+  }
+  /// 
+  unittest {
     mixin(ShowTest!("PageType enumeration"));
 
     assert(PageType.blank.to!string == "blank");
@@ -158,7 +184,7 @@ unittest {
     assert("list".toPageType == PageType.list);
     assert("detail".toPageType == PageType.detail);
     assert("form".toPageType == PageType.form);
-    assert("dashboard".toPageType == PageType.dashboard);   
+    assert("dashboard".toPageType == PageType.dashboard);
     assert("login".toPageType == PageType.login);
     assert("settings".toPageType == PageType.settings);
     assert("custom".toPageType == PageType.custom);
@@ -175,33 +201,51 @@ unittest {
     assert(PageType.settings.toString == "settings");
     assert(PageType.custom.toString == "custom");
 
-    assert(["blank", "list", "detail", "form", "dashboard", "login", "settings", "custom"].toPageTypes ==
-           [PageType.blank, PageType.list, PageType.detail, PageType.form, PageType.dashboard, PageType.login, PageType.settings, PageType.custom]);
-    assert(toString([PageType.blank, PageType.list, PageType.detail, PageType.form, PageType.dashboard, PageType.login, PageType.settings, PageType.custom]) ==
-           ["blank", "list", "detail", "form", "dashboard", "login", "settings", "custom"]);
-}   
+    assert([
+      "blank", "list", "detail", "form", "dashboard", "login", "settings",
+      "custom"
+    ].toPageTypes ==
+      [
+        PageType.blank, PageType.list, PageType.detail, PageType.form,
+        PageType.dashboard, PageType.login, PageType.settings,
+        PageType.custom
+      ]);
+    assert(toString([
+        PageType.blank, PageType.list, PageType.detail, PageType.form,
+        PageType.dashboard, PageType.login, PageType.settings,
+        PageType.custom
+      ]) ==
+      [
+        "blank", "list", "detail", "form", "dashboard", "login",
+        "settings", "custom"
+      ]);
+  }
 
-enum PageStatus {
+  enum PageStatus {
     draft,
     active,
     published,
     archived,
     error
-}
-PageStatus toPageStatus(string value) {
+  }
+
+  PageStatus toPageStatus(string value) {
     mixin(EnumSwitch("PageStatus", "draft"));
-}
-PageStatus[] toPageStatuses(string[] values) {
-    return values.map!(toPageStatus).array;
-}   
-string toString(PageStatus status) {
+  }
+
+  PageStatus[] toPageStatuses(string[] values) {
+    return values.map!toPageStatus.array;
+  }
+
+  string toString(PageStatus status) {
     return status.to!string;
-}
-string[] toStrings(PageStatus[] statuses) {  
-    return statuses.map!(toString).array;
-}
-///
-unittest {
+  }
+
+  string[] toStrings(PageStatus[] statuses) {
+    return statuses.map!toString.array;
+  }
+  ///
+  unittest {
     mixin(ShowTest!("PageStatus enumeration"));
 
     assert(PageStatus.draft.to!string == "draft");
@@ -233,12 +277,18 @@ unittest {
     assert(toString(PageStatus.error) == "error");
 
     assert(["draft", "active", "published", "archived", "error"].toPageStatuses ==
-           [PageStatus.draft, PageStatus.active, PageStatus.published, PageStatus.archived, PageStatus.error]);
-    assert(toString([PageStatus.draft, PageStatus.active, PageStatus.published, PageStatus.archived, PageStatus.error]) ==
-           ["draft", "active", "published", "archived", "error"]);  
-}
+        [
+          PageStatus.draft, PageStatus.active, PageStatus.published,
+          PageStatus.archived, PageStatus.error
+        ]);
+    assert(toString([
+        PageStatus.draft, PageStatus.active, PageStatus.published,
+        PageStatus.archived, PageStatus.error
+      ]) ==
+      ["draft", "active", "published", "archived", "error"]);
+  }
 
-enum ComponentCategory {
+  enum ComponentCategory {
     basic,
     layout,
     input,
@@ -247,21 +297,25 @@ enum ComponentCategory {
     media,
     chart,
     custom
-}
-ComponentCategory toComponentCategory(string value) {
+  }
+
+  ComponentCategory toComponentCategory(string value) {
     mixin(EnumSwitch("ComponentCategory", "basic"));
-}
-ComponentCategory[] toComponentCategories(string[] values) {
+  }
+
+  ComponentCategory[] toComponentCategories(string[] values) {
     return values.map!(toComponentCategory).array;
-}
-string toString(ComponentCategory category) {
+  }
+
+  string toString(ComponentCategory category) {
     return category.to!string;
-}
-string[] toStrings(ComponentCategory[] categories) {
-    return categories.map!(toString).array;
-}
-///
-unittest {
+  }
+
+  string[] toStrings(ComponentCategory[] categories) {
+    return categories.map!toString.array;
+  }
+  ///
+  unittest {
     mixin(ShowTest!("ComponentCategory enumeration"));
 
     assert(ComponentCategory.basic.to!string == "basic");
@@ -301,38 +355,62 @@ unittest {
     assert(toString(ComponentCategory.navigation) == "navigation");
     assert(toString(ComponentCategory.media) == "media");
     assert(toString(ComponentCategory.chart) == "chart");
-    assert(toString(ComponentCategory.custom) == "custom"); 
+    assert(toString(ComponentCategory.custom) == "custom");
 
-    assert(["basic", "layout", "input", "display", "navigation", "media", "chart", "custom"].toComponentCategories ==
-           [ComponentCategory.basic, ComponentCategory.layout, ComponentCategory.input, ComponentCategory.display, ComponentCategory.navigation, ComponentCategory.media, ComponentCategory.chart, ComponentCategory.custom]);
-    assert(toString([ComponentCategory.basic, ComponentCategory.layout, ComponentCategory.input, ComponentCategory.display, ComponentCategory.navigation, ComponentCategory.media, ComponentCategory.chart, ComponentCategory.custom]) ==
-           ["basic", "layout", "input", "display", "navigation", "media", "chart", "custom"]);
-}
+    assert([
+      "basic", "layout", "input", "display", "navigation", "media", "chart",
+      "custom"
+    ].toComponentCategories ==
+      [
+        ComponentCategory.basic, ComponentCategory.layout,
+        ComponentCategory.input, ComponentCategory.display,
+        ComponentCategory.navigation, ComponentCategory.media,
+        ComponentCategory.chart, ComponentCategory.custom
+      ]);
+    assert(toString([
+        ComponentCategory.basic, ComponentCategory.layout,
+        ComponentCategory.input, ComponentCategory.display,
+        ComponentCategory.navigation, ComponentCategory.media,
+        ComponentCategory.chart, ComponentCategory.custom
+      ]) ==
+      [
+        "basic", "layout", "input", "display", "navigation", "media",
+        "chart", "custom"
+      ]);
+  }
 
-enum ComponentStatus : string {
+  enum ComponentStatus : string {
     active = "active",
     deprecated_ = "deprecated",
     experimental = "experimental"
-}
-ComponentStatus toComponentStatus(string s) {
+  }
+
+  ComponentStatus toComponentStatus(string s) {
     switch (s.toLower) {
-        case "active": return ComponentStatus.active;
-        case "deprecated": return ComponentStatus.deprecated_;
-        case "experimental": return ComponentStatus.experimental;
-        default: return ComponentStatus.active; // Default case
+    case "active":
+      return ComponentStatus.active;
+    case "deprecated":
+      return ComponentStatus.deprecated_;
+    case "experimental":
+      return ComponentStatus.experimental;
+    default:
+      return ComponentStatus.active; // Default case
     }
-}
-ComponentStatus[] toComponentStatus(string[] values) {
-    return values.map!(toComponentStatus).array;
-}
-string toString(ComponentStatus status) {
+  }
+
+  ComponentStatus[] toComponentStatus(string[] values) {
+    return values.map!toComponentStatus.array;
+  }
+
+  string toString(ComponentStatus status) {
     return status.to!string;
-}
-string[] toStrings(ComponentStatus[] statuses) {
-    return statuses.map!(toString).array;
-}
-///
-unittest {
+  }
+
+  string[] toStrings(ComponentStatus[] statuses) {
+    return statuses.map!toString.array;
+  }
+  ///
+  unittest {
     mixin(ShowTest!("ComponentStatus enumeration"));
 
     assert(ComponentStatus.active.to!string == "active");
@@ -354,12 +432,18 @@ unittest {
     assert(toString(ComponentStatus.experimental) == "experimental");
 
     assert(["active", "deprecated", "experimental"].toComponentStatus ==
-           [ComponentStatus.active, ComponentStatus.deprecated_, ComponentStatus.experimental]);
-    assert(toString([ComponentStatus.active, ComponentStatus.deprecated_, ComponentStatus.experimental]) ==
-           ["active", "deprecated", "experimental"]);
-}
+        [
+          ComponentStatus.active, ComponentStatus.deprecated_,
+          ComponentStatus.experimental
+        ]);
+    assert(toString([
+        ComponentStatus.active, ComponentStatus.deprecated_,
+        ComponentStatus.experimental
+      ]) ==
+      ["active", "deprecated", "experimental"]);
+  }
 
-enum FieldType : string{
+  enum FieldType : string {
     text = "text",
     number = "number",
     boolean_ = "boolean",
@@ -370,33 +454,48 @@ enum FieldType : string{
     image = "image",
     file = "file",
     reference = "reference"
-}
-FieldType toFieldType(string s) {
-    switch(s.toLower) {
-        case "text": return FieldType.text;
-        case "number": return FieldType.number;
-        case "boolean": return FieldType.boolean_;
-        case "date": return FieldType.date;
-        case "datetime": return FieldType.dateTime;
-        case "object": return FieldType.object_;
-        case "list": return FieldType.list;
-        case "image": return FieldType.image;
-        case "file": return FieldType.file;
-        case "reference": return FieldType.reference;
-        default: return FieldType.text; // Default case
+  }
+
+  FieldType toFieldType(string s) {
+    switch (s.toLower) {
+    case "text":
+      return FieldType.text;
+    case "number":
+      return FieldType.number;
+    case "boolean":
+      return FieldType.boolean_;
+    case "date":
+      return FieldType.date;
+    case "datetime":
+      return FieldType.dateTime;
+    case "object":
+      return FieldType.object_;
+    case "list":
+      return FieldType.list;
+    case "image":
+      return FieldType.image;
+    case "file":
+      return FieldType.file;
+    case "reference":
+      return FieldType.reference;
+    default:
+      return FieldType.text; // Default case
     }
-}
-FieldType[] toFieldType(string[] values) {
-    return values.map!(toFieldType).array;
-}
-string toString(FieldType type) {
+  }
+
+  FieldType[] toFieldType(string[] values) {
+    return values.map!toFieldType.array;
+  }
+
+  string toString(FieldType type) {
     return cast(string)type;
-}
-string[] toStrings(FieldType[] types) {
-    return types.map!(toString).array;
-}
-///
-unittest {
+  }
+
+  string[] toStrings(FieldType[] types) {
+    return types.map!toString.array;
+  }
+  ///
+  unittest {
     mixin(ShowTest!("FieldType enumeration"));
 
     assert(FieldType.text.to!string == "text");
@@ -424,47 +523,71 @@ unittest {
     assert("noexists".toFieldType == FieldType.text); // Default case
     assert("".toFieldType == FieldType.text); // Default case   
 
-    assert(toString(FieldType.text) == "text");
-    assert(toString(FieldType.number) == "number");
-    assert(toString(FieldType.boolean_) == "boolean");
-    assert(toString(FieldType.date) == "date");
-    assert(toString(FieldType.dateTime) == "dateTime");
-    assert(toString(FieldType.object_) == "object");
-    assert(toString(FieldType.list) == "list");
-    assert(toString(FieldType.image) == "image");
-    assert(toString(FieldType.file) == "file");
-    assert(toString(FieldType.reference) == "reference");   
+    assert(FieldType.text.toString == "text");
+    assert(FieldType.number.toString == "number");
+    assert(FieldType.boolean_.toString == "boolean");
+    assert(FieldType.date.toString == "date");
+    assert(FieldType.dateTime.toString == "dateTime");
+    assert(FieldType.object_.toString == "object");
+    assert(FieldType.list.toString == "list");
+    assert(FieldType.image.toString == "image");
+    assert(FieldType.file.toString == "file");
+    assert(FieldType.reference.toString == "reference");
 
-    assert(["text", "number", "boolean", "date", "dateTime", "object", "list", "image", "file", "reference"].toFieldType ==
-           [FieldType.text, FieldType.number, FieldType.boolean_, FieldType.date, FieldType.dateTime, FieldType.object_, FieldType.list, FieldType.image, FieldType.file, FieldType.reference]);
-    assert(toString([FieldType.text, FieldType.number, FieldType.boolean_, FieldType.date, FieldType.dateTime, FieldType.object_, FieldType.list, FieldType.image, FieldType.file, FieldType.reference]) ==
-           ["text", "number", "boolean", "date", "dateTime", "object", "list", "image", "file", "reference"]);  
-}
+    assert([
+      "text", "number", "boolean", "date", "dateTime", "object", "list",
+      "image", "file", "reference"
+    ].toFieldType ==
+      [
+        FieldType.text, FieldType.number, FieldType.boolean_,
+        FieldType.date, FieldType.dateTime, FieldType.object_,
+        FieldType.list, FieldType.image, FieldType.file,
+        FieldType.reference
+      ]);
+    assert(toString([
+        FieldType.text, FieldType.number, FieldType.boolean_,
+        FieldType.date, FieldType.dateTime, FieldType.object_,
+        FieldType.list, FieldType.image, FieldType.file,
+        FieldType.reference
+      ]) ==
+      [
+        "text", "number", "boolean", "date", "dateTime", "object", "list",
+        "image", "file", "reference"
+      ]);
+  }
 
-enum DataEntityStatus : string {
+  enum DataEntityStatus : string {
     draft = "draft",
     active = "active",
     deprecated_ = "deprecated"
-}
-DataEntityStatus toDataEntityStatus(string s) {
+  }
+
+  DataEntityStatus toDataEntityStatus(string s) {
     switch (s.toLower) {
-        case "draft": return DataEntityStatus.draft;
-        case "active": return DataEntityStatus.active;
-        case "deprecated": return DataEntityStatus.deprecated_;
-        default: return DataEntityStatus.draft; // Default case
+    case "draft":
+      return DataEntityStatus.draft;
+    case "active":
+      return DataEntityStatus.active;
+    case "deprecated":
+      return DataEntityStatus.deprecated_;
+    default:
+      return DataEntityStatus.draft; // Default case
     }
-}
-DataEntityStatus[] toDataEntityStatus(string[] values) {
+  }
+
+  DataEntityStatus[] toDataEntityStatus(string[] values) {
     return values.map!(toDataEntityStatus).array;
-}
-string toString(DataEntityStatus status) {
-    return status.to!string;
-}
-string[] toStrings(DataEntityStatus[] statuses) {
-    return statuses.map!(toString).array;
-}
-/// 
-unittest {
+  }
+
+  string toString(DataEntityStatus status) {
+    return cast(string)status;
+  }
+
+  string[] toStrings(DataEntityStatus[] statuses) {
+    return statuses.map!toString.array;
+  }
+  /// 
+  unittest {
     mixin(ShowTest!("DataEntityStatus enumeration"));
 
     assert(DataEntityStatus.draft.to!string == "draft");
@@ -483,12 +606,18 @@ unittest {
     assert(toString(DataEntityStatus.deprecated_) == "deprecated");
 
     assert(["draft", "active", "deprecated"].toDataEntityStatus ==
-           [DataEntityStatus.draft, DataEntityStatus.active, DataEntityStatus.deprecated_]);
-    assert(toString([DataEntityStatus.draft, DataEntityStatus.active, DataEntityStatus.deprecated_]) ==
-           ["draft", "active", "deprecated"]);
-}
+        [
+          DataEntityStatus.draft, DataEntityStatus.active,
+          DataEntityStatus.deprecated_
+        ]);
+    assert(toString([
+        DataEntityStatus.draft, DataEntityStatus.active,
+        DataEntityStatus.deprecated_
+      ]) ==
+      ["draft", "active", "deprecated"]);
+  }
 
-enum ConnectionType {
+  enum ConnectionType {
     sapBtpDestination,
     odata,
     restApi,
@@ -498,59 +627,138 @@ enum ConnectionType {
     sapConcur,
     graphql,
     custom
-}
-ConnectionType toConnectionType(string s) {
+  }
+
+  ConnectionType toConnectionType(string s) {
     const map = [
-        "sapBtpDestination": ConnectionType.sapBtpDestination,
-        "odata": ConnectionType.odata,
-        "restApi": ConnectionType.restApi,
-        "sapS4Hana": ConnectionType.sapS4Hana,
-        "sapSuccessFactors": ConnectionType.sapSuccessFactors,
-        "sapAriba": ConnectionType.sapAriba,
-        "sapConcur": ConnectionType.sapConcur,
-        "graphql": ConnectionType.graphql,
-        "custom": ConnectionType.custom
+      "sapBtpDestination": ConnectionType.sapBtpDestination,
+      "odata": ConnectionType.odata,
+      "restApi": ConnectionType.restApi,
+      "sapS4Hana": ConnectionType.sapS4Hana,
+      "sapSuccessFactors": ConnectionType.sapSuccessFactors,
+      "sapAriba": ConnectionType.sapAriba,
+      "sapConcur": ConnectionType.sapConcur,
+      "graphql": ConnectionType.graphql,
+      "custom": ConnectionType.custom
     ];
     return map.get(s, ConnectionType.custom);
-}
+  }
 
-enum ConnectionStatus {
-    connected,
+  enum ConnectionStatus {
     disconnected,
+    connected,
     error,
     pending
-}
-ConnectionStatus toConnectionStatus(string s) {
-    const map = [
-        "connected": ConnectionStatus.connected,
-        "disconnected": ConnectionStatus.disconnected,
-        "error": ConnectionStatus.error,
-        "pending": ConnectionStatus.pending
-    ];
-    return map.get(s, ConnectionStatus.disconnected);
-}
+  }
 
-enum AuthMethod {
+  ConnectionStatus toConnectionStatus(string value) {
+    mixin(EnumSwitch("ConnectionStatus", "disconnected"));
+  }
+
+  ConnectionStatus[] toConnectionStatuses(string[] values) {
+    return values.map!toConnectionStatus.array;
+  }
+
+  string toString(ConnectionStatus status) {
+    return status.to!string;
+  }
+
+  string[] toStrings(ConnectionStatus[] statuses) {
+    return statuses.map!toString.array;
+  }
+  ///
+  unittest {
+    mixin(ShowTest!("ConnectionStatus enumeration"));
+
+    assert(ConnectionStatus.disconnected.to!string == "disconnected");
+    assert(ConnectionStatus.connected.to!string == "connected");
+    assert(ConnectionStatus.error.to!string == "error");
+    assert(ConnectionStatus.pending.to!string == "pending");
+
+    assert("disconnected".toConnectionStatus == ConnectionStatus.disconnected);
+    assert("connected".toConnectionStatus == ConnectionStatus.connected);
+    assert("error".toConnectionStatus == ConnectionStatus.error);
+    assert("pending".toConnectionStatus == ConnectionStatus.pending);
+
+    assert("noexists".toConnectionStatus == ConnectionStatus.disconnected); // Default case
+    assert("".toConnectionStatus == ConnectionStatus.disconnected); // Default case
+
+    assert(["disconnected", "connected", "error", "pending"].toConnectionStatuses ==
+        [
+          ConnectionStatus.disconnected, ConnectionStatus.connected,
+          ConnectionStatus.error, ConnectionStatus.pending
+        ]);
+
+    assert([
+      ConnectionStatus.disconnected, ConnectionStatus.connected,
+      ConnectionStatus.error, ConnectionStatus.pending
+    ].toStrings ==
+      ["disconnected", "connected", "error", "pending"]);
+  }
+
+  enum AuthMethod {
     none,
     basicAuth,
     oauth2,
     apiKey,
     sapBtpAuth,
     certificate
-}
-AuthMethod toAuthMethod(string s) {
-    const map = [
-        "none": AuthMethod.none,
-        "basicAuth": AuthMethod.basicAuth,
-        "oauth2": AuthMethod.oauth2,
-        "apiKey": AuthMethod.apiKey,
-        "sapBtpAuth": AuthMethod.sapBtpAuth,
-        "certificate": AuthMethod.certificate
-    ];
-    return map.get(s, AuthMethod.none);
-}
+  }
 
-enum FlowTrigger {
+  AuthMethod toAuthMethod(string s) {
+    mixin(EnumSwitch("AuthMethod", "none"));
+  }
+  AuthMethod[] toAuthMethods(string[] values) {
+    return values.map!toAuthMethod.array;
+  }
+  string toString(AuthMethod method) {
+    return method.to!string;
+  }
+  string[] toStrings(AuthMethod[] methods) {
+    return methods.map!toString.array;
+  }
+  ///
+  unittest {
+    mixin(ShowTest!("AuthMethod enumeration"));
+
+    assert(AuthMethod.none.to!string == "none");
+    assert(AuthMethod.basicAuth.to!string == "basicAuth");
+    assert(AuthMethod.oauth2.to!string == "oauth2");
+    assert(AuthMethod.apiKey.to!string == "apiKey");
+    assert(AuthMethod.sapBtpAuth.to!string == "sapBtpAuth");
+    assert(AuthMethod.certificate.to!string == "certificate");
+
+    assert(AuthMethod.none.toString == "none");
+    assert(AuthMethod.basicAuth.toString == "basicAuth");
+    assert(AuthMethod.oauth2.toString == "oauth2");
+    assert(AuthMethod.apiKey.toString == "apiKey");
+    assert(AuthMethod.sapBtpAuth.toString == "sapBtpAuth");
+    assert(AuthMethod.certificate.toString == "certificate");
+
+    assert("none".toAuthMethod == AuthMethod.none);
+    assert("basicAuth".toAuthMethod == AuthMethod.basicAuth);
+    assert("oauth2".toAuthMethod == AuthMethod.oauth2);
+    assert("apiKey".toAuthMethod == AuthMethod.apiKey);
+    assert("sapBtpAuth".toAuthMethod == AuthMethod.sapBtpAuth);
+    assert("certificate".toAuthMethod == AuthMethod.certificate);
+
+    assert("noexists".toAuthMethod == AuthMethod.none); // Default case
+    assert("".toAuthMethod == AuthMethod.none); // Default case
+
+    assert(["none", "basicAuth", "oauth2", "apiKey", "sapBtpAuth", "certificate"].toAuthMethods ==
+        [
+          AuthMethod.none, AuthMethod.basicAuth, AuthMethod.oauth2,
+          AuthMethod.apiKey, AuthMethod.sapBtpAuth, AuthMethod.certificate
+        ]);
+
+    assert([
+      AuthMethod.none, AuthMethod.basicAuth, AuthMethod.oauth2,
+      AuthMethod.apiKey, AuthMethod.sapBtpAuth, AuthMethod.certificate
+    ].toStrings ==
+      ["none", "basicAuth", "oauth2", "apiKey", "sapBtpAuth", "certificate"]);
+  }
+
+  enum FlowTrigger {
     componentEvent,
     pageMount,
     pageUnmount,
@@ -558,110 +766,117 @@ enum FlowTrigger {
     dataChange,
     timer,
     custom
-}
-FlowTrigger toFlowTrigger(string s) {
+  }
+
+  FlowTrigger toFlowTrigger(string s) {
     const map = [
-        "componentEvent": FlowTrigger.componentEvent,
-        "pageMount": FlowTrigger.pageMount,
-        "pageUnmount": FlowTrigger.pageUnmount,
-        "appLaunch": FlowTrigger.appLaunch,
-        "dataChange": FlowTrigger.dataChange,
-        "timer": FlowTrigger.timer,
-        "custom": FlowTrigger.custom
+      "componentEvent": FlowTrigger.componentEvent,
+      "pageMount": FlowTrigger.pageMount,
+      "pageUnmount": FlowTrigger.pageUnmount,
+      "appLaunch": FlowTrigger.appLaunch,
+      "dataChange": FlowTrigger.dataChange,
+      "timer": FlowTrigger.timer,
+      "custom": FlowTrigger.custom
     ];
     return map.get(s, FlowTrigger.custom);
-}
+  }
 
-enum FlowStatus {
+  enum FlowStatus {
     active,
     inactive,
     error
-}
-FlowStatus toFlowStatus(string s) {
+  }
+
+  FlowStatus toFlowStatus(string s) {
     const map = [
-        "active": FlowStatus.active,
-        "inactive": FlowStatus.inactive,
-        "error": FlowStatus.error
+      "active": FlowStatus.active,
+      "inactive": FlowStatus.inactive,
+      "error": FlowStatus.error
     ];
     return map.get(s, FlowStatus.inactive);
-}
+  }
 
-enum BuildTarget {
+  enum BuildTarget {
     web,
     ios,
     android,
     webAndMobile
-}
-BuildTarget toBuildTarget(string s) {
+  }
+
+  BuildTarget toBuildTarget(string s) {
     const map = [
-        "web": BuildTarget.web,
-        "ios": BuildTarget.ios,
-        "android": BuildTarget.android,
-        "webAndMobile": BuildTarget.webAndMobile
+      "web": BuildTarget.web,
+      "ios": BuildTarget.ios,
+      "android": BuildTarget.android,
+      "webAndMobile": BuildTarget.webAndMobile
     ];
     return map.get(s, BuildTarget.web);
-}
+  }
 
-enum BuildStatus {
+  enum BuildStatus {
     pending,
     building,
     succeeded,
     failed,
     cancelled
-}
-BuildStatus toBuildStatus(string s) {
+  }
+
+  BuildStatus toBuildStatus(string s) {
     const map = [
-        "pending": BuildStatus.pending,
-        "building": BuildStatus.building,
-        "succeeded": BuildStatus.succeeded,
-        "failed": BuildStatus.failed,
-        "cancelled": BuildStatus.cancelled
+      "pending": BuildStatus.pending,
+      "building": BuildStatus.building,
+      "succeeded": BuildStatus.succeeded,
+      "failed": BuildStatus.failed,
+      "cancelled": BuildStatus.cancelled
     ];
     return map.get(s, BuildStatus.pending);
-}
+  }
 
-enum DeployStatus {
+  enum DeployStatus {
     notDeployed,
     deploying,
     deployed,
     failed
-}
-DeployStatus toDeployStatus(string s) {
+  }
+
+  DeployStatus toDeployStatus(string s) {
     const map = [
-        "notDeployed": DeployStatus.notDeployed,
-        "deploying": DeployStatus.deploying,
-        "deployed": DeployStatus.deployed,
-        "failed": DeployStatus.failed
+      "notDeployed": DeployStatus.notDeployed,
+      "deploying": DeployStatus.deploying,
+      "deployed": DeployStatus.deployed,
+      "failed": DeployStatus.failed
     ];
     return map.get(s, DeployStatus.notDeployed);
-}
+  }
 
-enum MemberRole {
+  enum MemberRole {
     owner,
     editor,
     viewer,
     tester
-}
-MemberRole toMemberRole(string s) {
+  }
+
+  MemberRole toMemberRole(string s) {
     const map = [
-        "owner": MemberRole.owner,
-        "editor": MemberRole.editor,
-        "viewer": MemberRole.viewer,
-        "tester": MemberRole.tester
+      "owner": MemberRole.owner,
+      "editor": MemberRole.editor,
+      "viewer": MemberRole.viewer,
+      "tester": MemberRole.tester
     ];
     return map.get(s, MemberRole.viewer);
-}
+  }
 
-enum MemberStatus {
+  enum MemberStatus {
     active,
     invited,
     removed
-}
-MemberStatus toMemberStatus(string s) {
+  }
+
+  MemberStatus toMemberStatus(string s) {
     const map = [
-        "active": MemberStatus.active,
-        "invited": MemberStatus.invited,
-        "removed": MemberStatus.removed
+      "active": MemberStatus.active,
+      "invited": MemberStatus.invited,
+      "removed": MemberStatus.removed
     ];
     return map.get(s, MemberStatus.active);
-}
+  }

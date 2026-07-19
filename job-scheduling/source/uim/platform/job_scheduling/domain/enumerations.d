@@ -33,7 +33,7 @@ unittest {
     assert(JobType.cloudFoundryTask.toString == "cloudFoundryTask");
 
     assert(["httpEndpoint", "cloudFoundryTask"].toJobType == [JobType.httpEndpoint, JobType.cloudFoundryTask]);
-    assert([JobType.httpEndpoint, JobType.cloudFoundryTask].toString == ["httpEndpoint", "cloudFoundryTask"]);
+    assert([JobType.httpEndpoint, JobType.cloudFoundryTask].toStrings == ["httpEndpoint", "cloudFoundryTask"]);
 }
 
 enum JobTriggerType {
@@ -63,7 +63,7 @@ unittest {
     assert(JobTriggerType.eventBased.toString == "eventBased");
 
     assert([ "timeBased", "eventBased"].toJobTriggerType == [JobTriggerType.timeBased, JobTriggerType.eventBased]);
-    assert([JobTriggerType.timeBased, JobTriggerType.eventBased].toString == ["timeBased", "eventBased"]);
+    assert([JobTriggerType.timeBased, JobTriggerType.eventBased].toStrings == ["timeBased", "eventBased"]);
 }
 
 enum JobStatus {
@@ -93,7 +93,7 @@ unittest {
     assert(JobStatus.inactive.toString == "inactive");
 
     assert(["active", "inactive"].toJobStatus == [JobStatus.active, JobStatus.inactive]);
-    assert([JobStatus.active, JobStatus.inactive].toString == ["active", "inactive"]);
+    assert([JobStatus.active, JobStatus.inactive].toStrings == ["active", "inactive"]);
 }
 
 enum ScheduleType {
@@ -123,7 +123,7 @@ unittest {
     assert(ScheduleType.recurring.toString == "recurring");
 
     assert(["oneTime", "recurring"].toScheduleType == [ScheduleType.oneTime, ScheduleType.recurring]);
-    assert([ScheduleType.oneTime, ScheduleType.recurring].toString == ["oneTime", "recurring"]);
+    assert([ScheduleType.oneTime, ScheduleType.recurring].toStrings == ["oneTime", "recurring"]);
 }
 
 enum ScheduleFormat {
@@ -160,7 +160,7 @@ unittest {
     assert(ScheduleFormat.repeatAt.toString == "repeatAt");
 
     assert(["cron", "humanReadable", "repeatInterval", "repeatAt"].toScheduleFormat == [ScheduleFormat.cron, ScheduleFormat.humanReadable, ScheduleFormat.repeatInterval, ScheduleFormat.repeatAt]);
-    assert([ScheduleFormat.cron, ScheduleFormat.humanReadable, ScheduleFormat.repeatInterval, ScheduleFormat.repeatAt].toString == ["cron", "humanReadable", "repeatInterval", "repeatAt"]);
+    assert([ScheduleFormat.cron, ScheduleFormat.humanReadable, ScheduleFormat.repeatInterval, ScheduleFormat.repeatAt].toStrings == ["cron", "humanReadable", "repeatInterval", "repeatAt"]);
 }
 
 enum JobScheduleStatus {
@@ -190,7 +190,7 @@ unittest {
     assert(JobScheduleStatus.inactive.toString == "inactive");
 
     assert(["active", "inactive"].toJobScheduleStatus == [JobScheduleStatus.active, JobScheduleStatus.inactive]);
-    assert([JobScheduleStatus.active, JobScheduleStatus.inactive].toString == ["active", "inactive"]);
+    assert([JobScheduleStatus.active, JobScheduleStatus.inactive].toStrings == ["active", "inactive"]);
 }
 
 enum RunStatus {
@@ -233,5 +233,5 @@ unittest {
     assert(RunStatus.deadLettered.toString == "deadLettered");
 
     assert(["scheduled", "triggered", "running", "completed", "failed", "deadLettered"].toRunStatus == [RunStatus.scheduled, RunStatus.triggered, RunStatus.running, RunStatus.completed, RunStatus.failed, RunStatus.deadLettered]);
-    assert([RunStatus.scheduled, RunStatus.triggered, RunStatus.running, RunStatus.completed, RunStatus.failed, RunStatus.deadLettered].toString == ["scheduled", "triggered", "running", "completed", "failed", "deadLettered"]);
+    assert([RunStatus.scheduled, RunStatus.triggered, RunStatus.running, RunStatus.completed, RunStatus.failed, RunStatus.deadLettered].toStrings == ["scheduled", "triggered", "running", "completed", "failed", "deadLettered"]);
 }

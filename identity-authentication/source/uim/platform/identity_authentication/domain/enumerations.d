@@ -40,7 +40,7 @@ unittest {
   assert(MfaType.email.toString == "email");
 
   assert(["none", "totp"].toMfaType == [MfaType.none, MfaType.totp]);
-  assert([MfaType.none, MfaType.totp].toString == ["none", "totp"]);
+  assert([MfaType.none, MfaType.totp].toStrings == ["none", "totp"]);
 }
 
 /// IAUser status in the identity directory.
@@ -78,7 +78,7 @@ unittest {
   assert(UserStatus.pendingVerification.toString == "pendingVerification");
 
   assert(["active", "locked"].toUserStatus == [UserStatus.active, UserStatus.locked]);
-  assert([UserStatus.active, UserStatus.locked].toString == ["active", "locked"]);
+  assert([UserStatus.active, UserStatus.locked].toStrings == ["active", "locked"]);
 }
 
 /// Risk level determined by risk-based authentication.
@@ -122,7 +122,7 @@ unittest {
   assert(RiskLevel.critical.toString == "critical");    
  
   assert(["low", "high"].toRiskLevel == [RiskLevel.low, RiskLevel.high]);
-  assert([RiskLevel.low, RiskLevel.high].toString == ["low", "high"]);
+  assert([RiskLevel.low, RiskLevel.high].toStrings == ["low", "high"]);
 }
 
 /// Token type.
@@ -160,7 +160,7 @@ unittest {
   assert(TokenType.samlAssertion.toString == "samlAssertion");
 
   assert(["access", "idToken"].toTokenType == [TokenType.access, TokenType.idToken]);
-  assert([TokenType.access, TokenType.idToken].toString == ["access", "idToken"]);
+  assert([TokenType.access, TokenType.idToken].toStrings == ["access", "idToken"]);
 }
 
 /// Provisioning job status.
@@ -198,7 +198,7 @@ unittest {
   assert(JobStatus.failed.toString == "failed");
 
   assert(["pending", "completed"].toJobStatus == [JobStatus.pending, JobStatus.completed]);
-  assert([JobStatus.pending, JobStatus.completed].toString == ["pending", "completed"]);
+  assert([JobStatus.pending, JobStatus.completed].toStrings == ["pending", "completed"]);
 }
 
 /// Identity provider type for delegation.
@@ -239,5 +239,5 @@ unittest {
   assert(IdpType.corporate.toString == "corporate");    
 
   assert(["local", "saml"].toIdpType == [IdpType.local, IdpType.saml]);
-  assert([IdpType.local, IdpType.saml].toString == ["local", "saml"]);
+  assert([IdpType.local, IdpType.saml].toStrings == ["local", "saml"]);
 }

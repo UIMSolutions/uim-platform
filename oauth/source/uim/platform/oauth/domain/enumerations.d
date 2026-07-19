@@ -29,7 +29,7 @@ string toString(ClientType value) {
     return value.to!string();
 }
 string[] toStrings(ClientType[] values) {
-    return values.map!(toString).array;
+    return values.map!toString.array;
 }
 ///
 unittest {
@@ -45,7 +45,7 @@ unittest {
     assert(ClientType.public_.toString == "public_");
 
     assert(["confidential", "public"].toClientType == [ClientType.confidential, ClientType.public_]);
-    assert([ClientType.confidential, ClientType.public_].toString == ["confidential", "public_"]);
+    assert([ClientType.confidential, ClientType.public_].toStrings == ["confidential", "public_"]);
 }
 
 /// OAuth client status
@@ -64,7 +64,7 @@ string toString(ClientStatus value) {
     return value.to!string();
 }
 string[] toStrings(ClientStatus[] values) {
-    return values.map!(toString).array;
+    return values.map!toString.array;
 }
 
 /// OAuth grant types

@@ -49,7 +49,7 @@ unittest {
   assert(["active", "suspended"].toGlobalAccountStatus == [
       GlobalAccountStatus.active, GlobalAccountStatus.suspended
     ]);
-  assert([GlobalAccountStatus.active, GlobalAccountStatus.suspended].toString == [
+  assert([GlobalAccountStatus.active, GlobalAccountStatus.suspended].toStrings == [
       "active", "suspended"
     ]);
 }
@@ -98,7 +98,7 @@ unittest {
   assert(["enterprise", "trial"].toLicenseType == [
       LicenseType.enterprise, LicenseType.trial
     ]);
-  assert([LicenseType.enterprise, LicenseType.trial].toString == [
+  assert([LicenseType.enterprise, LicenseType.trial].toStrings == [
       "enterprise", "trial"
     ]);
 }
@@ -144,7 +144,7 @@ unittest {
   assert(["active", "inactive"].toDirectoryStatus == [
       DirectoryStatus.active, DirectoryStatus.inactive
     ]);
-  assert([DirectoryStatus.active, DirectoryStatus.inactive].toString == [
+  assert([DirectoryStatus.active, DirectoryStatus.inactive].toStrings == [
       "active", "inactive"
     ]);
 }
@@ -205,7 +205,7 @@ unittest {
   assert(["default", "ldap"].toDirectoryType == [
       DirectoryType.default_, DirectoryType.ldap
     ]);
-  assert([DirectoryType.default_, DirectoryType.ldap].toString == [
+  assert([DirectoryType.default_, DirectoryType.ldap].toStrings == [
       "default_", "ldap"
     ]);
 }
@@ -260,7 +260,7 @@ unittest {
   assert(["default", "entitlements"].toDirectoryFeature == [
       DirectoryFeature.default_, DirectoryFeature.entitlements
     ]);
-  assert([DirectoryFeature.default_, DirectoryFeature.entitlements].toString == [
+  assert([DirectoryFeature.default_, DirectoryFeature.entitlements].toStrings == [
       "default_", "entitlements"
     ]);
 }
@@ -324,7 +324,7 @@ unittest {
   assert(["active", "suspended"].toSubaccountStatus == [
       SubaccountStatus.active, SubaccountStatus.suspended
     ]);
-  assert([SubaccountStatus.active, SubaccountStatus.suspended].toString == [
+  assert([SubaccountStatus.active, SubaccountStatus.suspended].toStrings == [
       "active", "suspended"
     ]);
 }
@@ -382,7 +382,7 @@ unittest {
   assert(["unset", "production"].toSubaccountUsage == [
       SubaccountUsage.unset, SubaccountUsage.production
     ]);
-  assert([SubaccountUsage.unset, SubaccountUsage.production].toString == [
+  assert([SubaccountUsage.unset, SubaccountUsage.production].toStrings == [
       "unset", "production"
     ]);
 }
@@ -432,7 +432,7 @@ unittest {
   assert(["active", "pending"].toEntitlementStatus == [
       EntitlementStatus.active, EntitlementStatus.pending
     ]);
-  assert([EntitlementStatus.active, EntitlementStatus.pending].toString == [
+  assert([EntitlementStatus.active, EntitlementStatus.pending].toStrings == [
       "active", "pending"
     ]);
 }
@@ -482,7 +482,7 @@ unittest {
   assert(["service", "application"].toServicePlanCategory == [
       ServicePlanCategory.service, ServicePlanCategory.application
     ]);
-  assert([ServicePlanCategory.service, ServicePlanCategory.application].toString == [
+  assert([ServicePlanCategory.service, ServicePlanCategory.application].toStrings == [
       "service", "application"
     ]);
 }
@@ -537,7 +537,7 @@ unittest {
   assert(["active", "deprecated"].toServicePlanStatus == [
       ServicePlanStatus.active, ServicePlanStatus.deprecated_
     ]);
-  assert([ServicePlanStatus.active, ServicePlanStatus.deprecated_].toString == [
+  assert([ServicePlanStatus.active, ServicePlanStatus.deprecated_].toStrings == [
       "active", "deprecated_"
     ]);
 }
@@ -587,7 +587,7 @@ unittest {
   assert(["free", "subscription"].toPricingModel == [
       PricingModel.free, PricingModel.subscription
     ]);
-  assert([PricingModel.free, PricingModel.subscription].toString == [
+  assert([PricingModel.free, PricingModel.subscription].toStrings == [
       "free", "subscription"
     ]);
 }
@@ -642,7 +642,7 @@ unittest {
   assert(["active", "deprecated"].toQuotaStatus == [
       QuotaStatus.active, QuotaStatus.deprecated_
     ]);
-  assert([QuotaStatus.active, QuotaStatus.deprecated_].toString == [
+  assert([QuotaStatus.active, QuotaStatus.deprecated_].toStrings == [
       "active", "deprecated_"
     ]);
 }
@@ -719,7 +719,7 @@ unittest {
   assert(["subscribed", "subscribing"].toSubscriptionStatus == [
       SubscriptionStatus.subscribed, SubscriptionStatus.subscribing
     ]);
-  assert([SubscriptionStatus.subscribed, SubscriptionStatus.subscribing].toString == [
+  assert([SubscriptionStatus.subscribed, SubscriptionStatus.subscribing].toStrings == [
       "subscribed", "subscribing"
     ]);
 }
@@ -770,7 +770,7 @@ unittest {
   assert(["creating", "ready"].toServiceInstanceStatus == [
       ServiceInstanceStatus.creating, ServiceInstanceStatus.ready
     ]);
-  assert([ServiceInstanceStatus.creating, ServiceInstanceStatus.ready].toString == [
+  assert([ServiceInstanceStatus.creating, ServiceInstanceStatus.ready].toStrings == [
       "creating", "ready"
     ]);
 }
@@ -817,7 +817,7 @@ unittest {
   assert(["cloudFoundry", "kyma"].toEnvironmentType == [
       EnvironmentType.cloudFoundry, EnvironmentType.kyma
     ]);
-  assert([EnvironmentType.cloudFoundry, EnvironmentType.kyma].toString == [
+  assert([EnvironmentType.cloudFoundry, EnvironmentType.kyma].toStrings == [
       "cloudFoundry", "kyma"
     ]);
 }
@@ -880,7 +880,7 @@ unittest {
   assert(["subaccountLifecycle", "entitlementChange"].toEnvironmentEventCategory == [
       EnvironmentEventCategory.subaccountLifecycle, EnvironmentEventCategory.entitlementChange
     ]);
-  assert([EnvironmentEventCategory.subaccountLifecycle, EnvironmentEventCategory.entitlementChange].toString == [
+  assert([EnvironmentEventCategory.subaccountLifecycle, EnvironmentEventCategory.entitlementChange].toStrings == [
       "subaccountLifecycle", "entitlementChange"
     ]);
 }
@@ -928,7 +928,7 @@ unittest {
   assert(["info", "warning"].toEnvironmentEventSeverity == [
       EnvironmentEventSeverity.info, EnvironmentEventSeverity.warning
     ]);
-  assert([EnvironmentEventSeverity.info, EnvironmentEventSeverity.warning].toString == [
+  assert([EnvironmentEventSeverity.info, EnvironmentEventSeverity.warning].toStrings == [
       "info", "warning" 
     ]);
 }
@@ -979,7 +979,7 @@ unittest {
   assert(["subaccount", "globalAccount"].toLabeledResourceType == [
       LabeledResourceType.subaccount, LabeledResourceType.globalAccount
     ]);
-  assert([LabeledResourceType.subaccount, LabeledResourceType.globalAccount].toString == [
+  assert([LabeledResourceType.subaccount, LabeledResourceType.globalAccount].toStrings == [
       "subaccount", "globalAccount"
     ]);
 }

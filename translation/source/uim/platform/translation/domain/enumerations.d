@@ -95,7 +95,7 @@ string toString(TranslationProvider value) {
     return value.to!string;
 }
 string[] toStrings(TranslationProvider[] values) {
-    return values.map!(toString).array;
+    return values.map!toString.array;
 }
 ///
 unittest {
@@ -136,7 +136,7 @@ string toString(JobStatus value) {
     return value.to!string;
 }
 string[] toStrings(JobStatus[] values) {
-    return values.map!(toString).array;
+    return values.map!toString.array;
 }
 /// 
 unittest {
@@ -177,7 +177,7 @@ string toString(JobType value) {
     return value.to!string;
 }
 string[] toStrings(JobType[] values) {
-    return values.map!(toString).array;
+    return values.map!toString.array;
 }
 ///
 unittest {
@@ -216,7 +216,7 @@ string toString(QualityLevel value) {
     return value.to!string;
 }
 string[] toStrings(QualityLevel[] values) {
-    return values.map!(toString).array;
+    return values.map!toString.array;
 }   
 ///
 unittest {

@@ -30,7 +30,7 @@ string toString(PlanningStatus status) {
   return status.to!string;
 }
 string[] toStrings(PlanningStatus[] statuses) {
-  return statuses.map!(toString).array;
+  return statuses.map!toString.array;
 }
 ///
 unittest {
@@ -77,7 +77,7 @@ string toString(PlanningVersionType type) {
   return type.to!string;
 }
 string[] toStrings(PlanningVersionType[] types) {
-  return types.map!(toString).array;
+  return types.map!toString.array;
 }
 ///
 unittest {

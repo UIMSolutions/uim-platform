@@ -30,7 +30,7 @@ string toString(PredictionType type) {
   return type.to!string;
 }
 string[] toStrings(PredictionType[] types) {
-  return types.map!(toString).array;
+  return types.map!toString.array;
 }
 ///
 unittest {
@@ -79,7 +79,7 @@ string toString(PredictionStatus status) {
   return status.to!string;
 }
 string[] toStrings(PredictionStatus[] statuses) {
-  return statuses.map!(toString).array;
+  return statuses.map!toString.array;
 }
 ///
 unittest {

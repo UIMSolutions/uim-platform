@@ -30,7 +30,7 @@ string toString(KeyAlgorithm algorithm) {
     return algorithm.to!string;
 }
 string[] toStrings(KeyAlgorithm[] algorithms) {
-    return algorithms.map!(toString).array;
+    return algorithms.map!toString.array;
 }
 ///
 unittest {
@@ -71,7 +71,7 @@ string toString(KeyStatus status) {
     return status.to!string;
 }
 string[] toStrings(KeyStatus[] statuses) {
-    return statuses.map!(toString).array;
+    return statuses.map!toString.array;
 }
 /// 
 unittest {

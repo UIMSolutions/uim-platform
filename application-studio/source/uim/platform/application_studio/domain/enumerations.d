@@ -45,7 +45,7 @@ string toString(DevSpaceStatus status) {
     return status.to!string;
 }
 string[] toStrings(DevSpaceStatus[] statuses) {
-    return statuses.map!(toString).array;
+    return statuses.map!toString.array;
 }
 ///
 unittest {
@@ -102,7 +102,7 @@ string toString(DevSpacePlan plan) {
     return plan.to!string;
 }
 string[] toStrings(DevSpacePlan[] plans) {
-    return plans.map!(toString).array;
+    return plans.map!toString.array;
 }
 ///
 unittest {
@@ -143,7 +143,7 @@ string toString(DevSpaceTypeCategory category) {
     return category.to!string;
 }
 string[] toStrings(DevSpaceTypeCategory[] categories) {
-    return categories.map!(toString).array;
+    return categories.map!toString.array;
 }
 ///
 unittest {
@@ -184,7 +184,7 @@ string toString(ExtensionScope value) {
     return value.to!string;
 }
 string[] toStrings(ExtensionScope[] scopes) {
-    return scopes.map!(toString).array;
+    return scopes.map!toString.array;
 }
 /// 
 unittest {
@@ -230,7 +230,7 @@ string toString(ExtensionStatus status) {
     return cast(string)status;
 }
 string[] toStrings(ExtensionStatus[] statuses) {
-    return statuses.map!(toString).array;
+    return statuses.map!toString.array;
 }
 ///
 unittest {
@@ -315,7 +315,7 @@ string toString(ProjectType value) {
     return value.to!string;
 }
 string[] toStrings(ProjectType[] values) {
-    return values.map!(toString).array;
+    return values.map!toString.array;
 }
 /// 
 unittest {
@@ -404,7 +404,7 @@ string toString(ProjectStatus value) {
     return value.to!string;
 }
 string[] toStrings(ProjectStatus[] values) {
-    return values.map!(toString).array;
+    return values.map!toString.array;
 }
 ///
 unittest {
@@ -455,7 +455,7 @@ string toString(TemplateCategory category) {
     return category.to!string;
 }
 string[] toStrings(TemplateCategory[] categories) {
-    return categories.map!(toString).array;
+    return categories.map!toString.array;
 }
 ///
 unittest {
@@ -506,7 +506,7 @@ string toString(ServiceProviderType type) {
     return type.to!string;
 }
 string[] toStrings(ServiceProviderType[] types) {
-    return types.map!(toString).array;
+    return types.map!toString.array;
 }
 ///
 unittest {
@@ -551,7 +551,7 @@ string toString(BindingStatus status) {
     return status.to!string;
 }
 string[] toStrings(BindingStatus[] statuses) {
-    return statuses.map!(toString).array;
+    return statuses.map!toString.array;
 }
 ///
 unittest {
@@ -600,7 +600,7 @@ string toString(RunMode mode) {
     return cast(string)mode;
 }
 string[] toStrings(RunMode[] modes) {
-    return modes.map!(toString).array;
+    return modes.map!toString.array;
 }
 /// 
 unittest {
@@ -646,7 +646,7 @@ string toString(RunStatus status) {
     return status.to!string;
 }
 string[] toStrings(RunStatus[] statuses) {
-    return statuses.map!(toString).array;
+    return statuses.map!toString.array;
 }
 ///
 unittest {
@@ -693,7 +693,7 @@ string toString(BuildStatus status) {
     return status.to!string;
 }
 string[] toStrings(BuildStatus[] statuses) {
-    return statuses.map!(toString).array;
+    return statuses.map!toString.array;
 }
 ///
 unittest {
@@ -742,7 +742,7 @@ string toString(DeployTarget target) {
     return target.to!string;
 }
 string[] toStrings(DeployTarget[] targets) {
-    return targets.map!(toString).array;
+    return targets.map!toString.array;
 }
 ///
 unittest {

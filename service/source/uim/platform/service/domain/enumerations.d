@@ -27,7 +27,7 @@ string toString(SsoProtocol protocol) {
   return protocol.to!string;
 }
 string[] toStrings(SsoProtocol[] protocols) {
-  return protocols.map!(toString).array;
+  return protocols.map!toString.array;
 }
 /// 
 unittest {
@@ -70,7 +70,7 @@ string toString(AuthMethod method) {
   return method.to!string;
 }
 string[] toStrings(AuthMethod[] methods) {
-  return methods.map!(toString).array;
+  return methods.map!toString.array;
 }
 unittest {
   assert(AuthMethod.form.to!string == "form");
@@ -128,7 +128,7 @@ string toString(PersistenceType type) {
   return type.to!string;
 }
 string[] toStrings(PersistenceType[] types) {
-  return types.map!(toString).array;
+  return types.map!toString.array;
 }
 ///
 unittest {

@@ -53,7 +53,7 @@ string toString(FilterOperator operator) {
   return cast(string)operator; // This will return the enum member name as a string,
 }
 string[] toStrings(FilterOperator[] operators) {
-  return operators.map!(toString).array;
+  return operators.map!toString.array;
 }
 ///
 unittest {

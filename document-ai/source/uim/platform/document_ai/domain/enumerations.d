@@ -67,7 +67,7 @@ unittest {
     assert(DocumentStatus.confirmed.toString == "confirmed");
 
     assert(["pending", "completed"].toDocumentStatus == [DocumentStatus.pending, DocumentStatus.completed]);
-    assert([DocumentStatus.pending, DocumentStatus.completed].toString == ["pending", "completed"]);
+    assert([DocumentStatus.pending, DocumentStatus.completed].toStrings == ["pending", "completed"]);
 }
 
 // Extraction method used
@@ -105,7 +105,7 @@ unittest {
     assert(ExtractionMethod.hybrid.toString == "hybrid");
 
     assert(["ml_model", "hybrid"].toExtractionMethod == [ExtractionMethod.ml_model, ExtractionMethod.hybrid]);
-    assert([ExtractionMethod.ml_model, ExtractionMethod.hybrid].toString == ["ml_model", "hybrid"]);
+    assert([ExtractionMethod.ml_model, ExtractionMethod.hybrid].toStrings == ["ml_model", "hybrid"]);
 }
 
 // Document categories
@@ -168,7 +168,7 @@ unittest {
     assert(DocumentCategory.general.toString == "general");
 
     assert(["invoice", "receipt"].toDocumentCategory == [DocumentCategory.invoice, DocumentCategory.receipt]);
-    assert([DocumentCategory.invoice, DocumentCategory.receipt].toString == ["invoice", "receipt"]);
+    assert([DocumentCategory.invoice, DocumentCategory.receipt].toStrings == ["invoice", "receipt"]);
 }
 
 // Field value types in schemas
@@ -232,7 +232,7 @@ unittest {
     assert(FieldValueType.line_items.toString == "line_items");
 
     assert(["string", "date"].toFieldValueType == [FieldValueType.string_, FieldValueType.date_]);
-    assert([FieldValueType.string_, FieldValueType.date_].toString == ["string", "date"]);
+    assert([FieldValueType.string_, FieldValueType.date_].toStrings == ["string", "date"]);
 }
 
 // Confidence levels
@@ -267,7 +267,7 @@ unittest {
     assert(ConfidenceLevel.low.toString == "low");  
 
     assert(["high", "low"].toConfidenceLevel == [ConfidenceLevel.high, ConfidenceLevel.low]);
-    assert([ConfidenceLevel.high, ConfidenceLevel.low].toString == ["high", "low"]);
+    assert([ConfidenceLevel.high, ConfidenceLevel.low].toStrings == ["high", "low"]);
 }
 
 // Enrichment match status
@@ -302,7 +302,7 @@ unittest {
     assert(EnrichmentMatchStatus.ambiguous.toString == "ambiguous");    
 
     assert(["matched", "ambiguous"].toEnrichmentMatchStatus == [EnrichmentMatchStatus.matched, EnrichmentMatchStatus.ambiguous]);
-    assert([EnrichmentMatchStatus.matched, EnrichmentMatchStatus.ambiguous].toString == ["matched", "ambiguous"]);
+    assert([EnrichmentMatchStatus.matched, EnrichmentMatchStatus.ambiguous].toStrings == ["matched", "ambiguous"]);
 }
 
 // File types supported
@@ -346,7 +346,7 @@ unittest {
     assert(FileType.docx.toString == "docx");   
 
     assert(["pdf", "docx"].toFileType == [FileType.pdf, FileType.docx]);
-    assert([FileType.pdf, FileType.docx].toString == ["pdf", "docx"]);
+    assert([FileType.pdf, FileType.docx].toStrings == ["pdf", "docx"]);
 }
 
 // Schema status
@@ -381,7 +381,7 @@ unittest {
     assert(SchemaStatus.draft.toString == "draft");
 
     assert(["active", "draft"].toSchemaStatus == [SchemaStatus.active, SchemaStatus.draft]);
-    assert([SchemaStatus.active, SchemaStatus.draft].toString == ["active", "draft"]);
+    assert([SchemaStatus.active, SchemaStatus.draft].toStrings == ["active", "draft"]);
 }
 
 // Template status
@@ -416,5 +416,5 @@ unittest {
     assert(TemplateStatus.draft.toString == "draft");   
 
     assert(["active", "draft"].toTemplateStatus == [TemplateStatus.active, TemplateStatus.draft]);
-    assert([TemplateStatus.active, TemplateStatus.draft].toString == ["active", "draft"]);
+    assert([TemplateStatus.active, TemplateStatus.draft].toStrings == ["active", "draft"]);
 }

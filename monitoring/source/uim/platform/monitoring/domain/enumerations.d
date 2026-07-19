@@ -25,7 +25,7 @@ string toString(ResourceType value) {
   return value.to!string;
 }
 string[] toStrings(ResourceType[] values) {
-  return values.map!(toString).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -75,7 +75,7 @@ string toString(ResourceState state) {
   return state.to!string;
 }
 string[] toStrings(ResourceState[] states) {
-  return states.map!(toString).array;
+  return states.map!toString.array;
 }
 ///
 unittest {

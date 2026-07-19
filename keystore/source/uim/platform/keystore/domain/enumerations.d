@@ -46,7 +46,7 @@ unittest {
   assert(KeystoreFormat.pem.toString == "pem");
 
   assert(["jks", "p12"].toKeystoreFormat == [KeystoreFormat.jks, KeystoreFormat.p12]);
-  assert([KeystoreFormat.jks, KeystoreFormat.p12].toString == ["jks", "p12"]);
+  assert([KeystoreFormat.jks, KeystoreFormat.p12].toStrings == ["jks", "p12"]);
 }
 
 // Keystore scope level (search order: subscription > application > account)
@@ -81,7 +81,7 @@ unittest {
   assert(KeystoreLevel.subscription.toString == "subscription");
 
   assert(["account", "subscription"].toKeystoreLevel == [KeystoreLevel.account, KeystoreLevel.subscription]);
-  assert([KeystoreLevel.account, KeystoreLevel.subscription].toString == ["account", "subscription"]);
+  assert([KeystoreLevel.account, KeystoreLevel.subscription].toStrings == ["account", "subscription"]);
 }
 
 // Type of entry within a keystore
@@ -119,5 +119,5 @@ unittest {
   assert(KeyEntryType.secretKey.toString == "secretKey");
 
   assert(["trustedCertificate", "privateKey"].toKeyEntryType == [KeyEntryType.trustedCertificate, KeyEntryType.privateKey]);
-  assert([KeyEntryType.trustedCertificate, KeyEntryType.privateKey].toString == ["trustedCertificate", "privateKey"]);
+  assert([KeyEntryType.trustedCertificate, KeyEntryType.privateKey].toStrings == ["trustedCertificate", "privateKey"]);
 }

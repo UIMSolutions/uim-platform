@@ -279,7 +279,7 @@ string toString(QueueStatus status) {
 }
 
 string[] toStrings(QueueStatus[] statuses) {
-  return statuses.map!(toString).array;
+  return statuses.map!toString.array;
 }
 ///
 unittest {
@@ -323,7 +323,7 @@ string toString(QueueType type) {
 }
 
 string[] toStrings(QueueType[] types) {
-  return types.map!(toString).array;
+  return types.map!toString.array;
 }
 ///
 unittest {
@@ -365,7 +365,7 @@ string toString(TopicStatus status) {
 }
 
 string[] toStrings(TopicStatus[] statuses) {
-  return statuses.map!(toString).array;
+  return statuses.map!toString.array;
 }
 ///
 unittest {
@@ -407,7 +407,7 @@ string toString(SubscriptionStatus status) {
 }
 
 string[] toStrings(SubscriptionStatus[] statuses) {
-  return statuses.map!(toString).array;
+  return statuses.map!toString.array;
 }
 ///
 unittest {
@@ -450,7 +450,7 @@ string toString(SubscriptionType type) {
 }
 
 string[] toStrings(SubscriptionType[] types) {
-  return types.map!(toString).array;
+  return types.map!toString.array;
 }
 ///
 unittest {
@@ -493,7 +493,7 @@ string toString(DeliveryMode mode) {
 }
 
 string[] toStrings(DeliveryMode[] modes) {
-  return modes.map!(toString).array;
+  return modes.map!toString.array;
 }
 ///
 unittest {
@@ -538,7 +538,7 @@ string toString(MessageStatus status) {
 }
 
 string[] toStrings(MessageStatus[] statuses) {
-  return statuses.map!(toString).array;
+  return statuses.map!toString.array;
 }
 ///
 unittest {
@@ -587,7 +587,7 @@ string toString(MessagePriority priority) {
 }
 
 string[] toStrings(MessagePriority[] priorities) {
-  return priorities.map!(toString).array;
+  return priorities.map!toString.array;
 }
 ///
 unittest {
@@ -633,7 +633,7 @@ string toString(SchemaFormat format) {
 }
 
 string[] toStrings(SchemaFormat[] formats) {
-  return formats.map!(toString).array;
+  return formats.map!toString.array;
 }
 ///
 unittest {
@@ -691,7 +691,7 @@ string toString(SchemaStatus status) {
 }
 
 string[] toStrings(SchemaStatus[] statuses) {
-  return statuses.map!(toString).array;
+  return statuses.map!toString.array;
 }
 ///
 unittest {
@@ -783,7 +783,7 @@ string toString(EventApplicationType type) {
 }
 
 string[] toStrings(EventApplicationType[] types) {
-  return types.map!(toString).array;
+  return types.map!toString.array;
 }
 ///
 unittest {
@@ -828,7 +828,7 @@ string toString(BridgeStatus status) {
 }
 
 string[] toStrings(BridgeStatus[] statuses) {
-  return statuses.map!(toString).array;
+  return statuses.map!toString.array;
 }
 ///
 unittest {
@@ -877,7 +877,7 @@ string toString(BridgeType type) {
 }
 
 string[] toStrings(BridgeType[] types) {
-  return types.map!(toString).array;
+  return types.map!toString.array;
 }
 ///
 unittest {
@@ -924,7 +924,7 @@ string toString(ProtocolType type) {
 }
 
 string[] toStrings(ProtocolType[] types) {
-  return types.map!(toString).array;
+  return types.map!toString.array;
 }
 ///
 unittest {

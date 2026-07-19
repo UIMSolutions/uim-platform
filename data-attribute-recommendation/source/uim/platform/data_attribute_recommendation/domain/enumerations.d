@@ -28,7 +28,7 @@ string toString(DatasetStatus status) {
   return status.to!string;
 }
 string[] toStrings(DatasetStatus[] statuses) {
-  return statuses.map!(toString).array;
+  return statuses.map!toString.array;
 }
 /// 
 unittest {

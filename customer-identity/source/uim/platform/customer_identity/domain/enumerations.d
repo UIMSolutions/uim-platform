@@ -28,7 +28,7 @@ string toString (CustomerStatus status) {
     mixin(EnumToString!("CustomerStatus"));
 }
 string[] toStrings(CustomerStatus[] statuses) {
-    return statuses.map!(toString).array;
+    return statuses.map!toString.array;
 }
 ///
 unittest {
@@ -70,7 +70,7 @@ string toString (CustomerGender gender ) {
     return gender.to!string();
 }
 string[] toStrings(CustomerGender[] genders) {
-    return genders.map!(toString).array;
+    return genders.map!toString.array;
 }
 /// 
 unittest {
@@ -114,7 +114,7 @@ string toString (LoginProvider provider) {
     return provider.to!string();
 }
 string[] toStrings(LoginProvider[] providers) {
-    return providers.map!(toString).array;
+    return providers.map!toString.array;
 }
 /// 
 unittest {
@@ -161,7 +161,7 @@ string toString(SessionStatus status) {
     return status.to!string();
 }
 string[] toStrings(SessionStatus[] statuses) {
-    return statuses.map!(toString).array;
+    return statuses.map!toString.array;
 }
 ///
 unittest {
@@ -198,7 +198,7 @@ string toString(SocialIdentityStatus status) {
     return status.to!string();
 }
 string[] toStrings(SocialIdentityStatus[] statuses) {
-    return statuses.map!(toString).array;
+    return statuses.map!toString.array;
 }
 ///
 unittest {
@@ -239,7 +239,7 @@ string toString(ConsentType type) {
     return type.to!string();
 }
 string[] toStrings(ConsentType[] types) {
-    return types.map!(toString).array;
+    return types.map!toString.array;
 }
 ///
 unittest {
@@ -287,7 +287,7 @@ string toString(LegalBasis basis) {
     return basis.to!string();
 }
 string[] toStrings(LegalBasis[] bases) {
-    return bases.map!(toString).array;
+    return bases.map!toString.array;
 }
 ///
 unittest {
@@ -342,7 +342,7 @@ string toString(AuditAction action) {
     return action.to!string();
 }
 string[] toStrings(AuditAction[] actions) {
-    return actions.map!(toString).array;
+    return actions.map!toString.array;
 }
 ///
 unittest {
@@ -385,7 +385,7 @@ unittest {
     assert(AuditAction.policyUpdated.toString == "policyUpdated");
     assert(AuditAction.adminAction.toString == "adminAction");
 
-    assert([AuditAction.register, AuditAction.login].toString == ["register", "login"]);
+    assert([AuditAction.register, AuditAction.login].toStrings == ["register", "login"]);
 }
 
 enum ResourceType {
@@ -407,7 +407,7 @@ string toString(ResourceType type) {
     return type.to!string();
 }
 string[] toStrings(ResourceType[] types) {
-    return types.map!(toString).array;
+    return types.map!toString.array;
 }
 ///
 unittest {
@@ -453,7 +453,7 @@ string toString(IdentityProviderType type) {
     return type.to!string();
 }
 string[] toStrings(IdentityProviderType[] types) {
-    return types.map!(toString).array;
+    return types.map!toString.array;
 }
 ///
 unittest {
@@ -492,7 +492,7 @@ string toString(IdentityProviderStatus status) {
     return status.to!string();
 }
 string[] toStrings(IdentityProviderStatus[] statuses) {
-    return statuses.map!(toString).array;
+    return statuses.map!toString.array;
 }
 ///
 unittest {
@@ -532,7 +532,7 @@ string toString(ScreenSetFlowType type) {
     return type.to!string();
 }
 string[] toStrings(ScreenSetFlowType[] types) {  
-    return types.map!(toString).array;
+    return types.map!toString.array;
 }   
 ///
 unittest {
@@ -575,7 +575,7 @@ string toString(ScreenSetStatus status) {
     return status.to!string();
 }
 string[] toStrings(ScreenSetStatus[] statuses) {
-    return statuses.map!(toString).array;
+    return statuses.map!toString.array;
 }
 ///
 unittest {

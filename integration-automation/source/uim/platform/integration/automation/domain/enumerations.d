@@ -57,7 +57,7 @@ unittest {
   assert(ScenarioStatus.archived.toString == "archived");
 
   assert(["draft", "active"].toScenarioStatus == [ScenarioStatus.draft, ScenarioStatus.active]);
-  assert([ScenarioStatus.draft, ScenarioStatus.active].toString == ["draft", "active"]);
+  assert([ScenarioStatus.draft, ScenarioStatus.active].toStrings == ["draft", "active"]);
 }
 
 /// Workflow instance execution status.
@@ -100,7 +100,7 @@ unittest {
   assert(WorkflowStatus.suspended.toString == "suspended");
 
   assert(["planned", "completed"].toWorkflowStatus == [WorkflowStatus.planned, WorkflowStatus.completed]);
-  assert([WorkflowStatus.planned, WorkflowStatus.completed].toString == ["planned", "completed"]);
+  assert([WorkflowStatus.planned, WorkflowStatus.completed].toStrings == ["planned", "completed"]);
 }
 
 /// Type of workflow step / task.
@@ -138,7 +138,7 @@ unittest {
   assert(StepType.notification.toString == "notification");
 
   assert(["manual", "approval"].toStepType == [StepType.manual, StepType.approval]);
-  assert([StepType.manual, StepType.approval].toString == ["manual", "approval"]);
+  assert([StepType.manual, StepType.approval].toStrings == ["manual", "approval"]);
 } 
 
 /// Status of an individual workflow step.
@@ -182,7 +182,7 @@ unittest {
   assert(StepStatus.blocked.toString == "blocked");
 
   assert(["pending", "completed"].toStepStatus == [StepStatus.pending, StepStatus.completed]);
-  assert([StepStatus.pending, StepStatus.completed].toString == ["pending", "completed"]);
+  assert([StepStatus.pending, StepStatus.completed].toStrings == ["pending", "completed"]);
 }
 
 /// Priority level for tasks.
@@ -220,7 +220,7 @@ unittest {
   assert(StepPriority.critical.toString == "critical");
 
   assert(["low", "high"].toStepPriority == [StepPriority.low, StepPriority.high]);
-  assert([StepPriority.low, StepPriority.high].toString == ["low", "high"]);
+  assert([StepPriority.low, StepPriority.high].toStrings == ["low", "high"]);
 }
 
 /// SAP system types supported in the landscape.
@@ -279,7 +279,7 @@ unittest {
   assert(SystemType.thirdParty.toString == "thirdParty");
 
   assert(["sapS4Hana", "sapBtp"].toSystemType == [SystemType.sapS4Hana, SystemType.sapBtp]);
-  assert([SystemType.sapS4Hana, SystemType.sapBtp].toString == ["sapS4Hana", "sapBtp"]);
+  assert([SystemType.sapS4Hana, SystemType.sapBtp].toStrings == ["sapS4Hana", "sapBtp"]);
 }
 
 /// Connection status of a system in the landscape.
@@ -317,7 +317,7 @@ unittest {
   assert(ConnectionStatus.testing.toString == "testing");
 
   assert(["active", "error"].toConnectionStatus == [ConnectionStatus.active, ConnectionStatus.error]);
-  assert([ConnectionStatus.active, ConnectionStatus.error].toString == ["active", "error"]);
+  assert([ConnectionStatus.active, ConnectionStatus.error].toStrings == ["active", "error"]);
 }
 
 /// Destination / API protocol type.
@@ -358,7 +358,7 @@ unittest {
   assert(DestinationType.restApi.toString == "restApi");
 
   assert(["http", "odata"].toDestinationType == [DestinationType.http, DestinationType.odata]);
-  assert([DestinationType.http, DestinationType.odata].toString == ["http", "odata"]);
+  assert([DestinationType.http, DestinationType.odata].toStrings == ["http", "odata"]);
 }
 
 /// Authentication method for destinations.
@@ -405,7 +405,7 @@ unittest {
   assert(AuthenticationType.noAuthentication.toString == "noAuthentication");
 
   assert(["basic", "certificate"].toAuthenticationType == [AuthenticationType.basic, AuthenticationType.certificate]);
-  assert([AuthenticationType.basic, AuthenticationType.certificate].toString == ["basic", "certificate"]);
+  assert([AuthenticationType.basic, AuthenticationType.certificate].toStrings == ["basic", "certificate"]);
 }
 
 /// Proxy type for destination routing.
@@ -440,7 +440,7 @@ unittest {
   assert(ProxyType.privateLink.toString == "privateLink");
 
   assert(["internet", "onPremise"].toProxyType == [ProxyType.internet, ProxyType.onPremise]);
-  assert([ProxyType.internet, ProxyType.onPremise].toString == ["internet", "onPremise"]);
+  assert([ProxyType.internet, ProxyType.onPremise].toStrings == ["internet", "onPremise"]);
 }
 
 /// Outcome of executing a step or automation.
@@ -481,7 +481,7 @@ unittest {
   assert(ExecutionOutcome.error.toString == "error");
 
   assert(["success", "skipped"].toExecutionOutcome == [ExecutionOutcome.success, ExecutionOutcome.skipped]);
-  assert([ExecutionOutcome.success, ExecutionOutcome.skipped].toString == ["success", "skipped"]);
+  assert([ExecutionOutcome.success, ExecutionOutcome.skipped].toStrings == ["success", "skipped"]);
 }
 
 /// Category of an integration scenario.
@@ -531,7 +531,7 @@ unittest {
   assert(ScenarioCategory.custom.toString == "custom");
 
   assert(["leadToCash", "designToOperate"].toScenarioCategory == [ScenarioCategory.leadToCash, ScenarioCategory.designToOperate]);
-  assert([ScenarioCategory.leadToCash, ScenarioCategory.designToOperate].toString == ["leadToCash", "designToOperate"]);
+  assert([ScenarioCategory.leadToCash, ScenarioCategory.designToOperate].toStrings == ["leadToCash", "designToOperate"]);
 }
 
 enum ScenarioType {
@@ -562,5 +562,5 @@ unittest {
   assert(ScenarioType.custom.toString == "custom"); 
 
   assert(["standard", "custom"].toScenarioType == [ScenarioType.standard, ScenarioType.custom]);
-  assert([ScenarioType.standard, ScenarioType.custom].toString == ["standard", "custom"]);
+  assert([ScenarioType.standard, ScenarioType.custom].toStrings == ["standard", "custom"]);
 }

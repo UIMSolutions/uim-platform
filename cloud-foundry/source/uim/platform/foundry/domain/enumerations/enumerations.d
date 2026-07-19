@@ -26,7 +26,7 @@ string toString(OrgStatus value) {
   return value.to!string;
 }
 string[] toStringArray(OrgStatus[] values) {
-  return values.map!(toString).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -60,7 +60,7 @@ string toString(SpaceStatus value) {
   return value.to!string;
 }
 string[] toStringArray(SpaceStatus[] values) {
-  return values.map!(toString).array;
+  return values.map!toString.array;
 }
 /// 
 unittest {
@@ -96,7 +96,7 @@ string toString(AppState value) {
   return value.to!string;
 }
 string[] toStrings(AppState[] values) { 
-  return values.map!(toString).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -136,7 +136,7 @@ string toString(InstanceState value) {
   return value.to!string;
 }
 string[] toStringArray(InstanceState[] values) {
-  return values.map!(toString).array;
+  return values.map!toString.array;
 }
 /// 
 unittest {
@@ -177,7 +177,7 @@ string toString(ServiceInstanceStatus value) {
   return value.to!string;
 }
 string[] toStrings(ServiceInstanceStatus[] values) {
-  return values.map!(toString).array;
+  return values.map!toString.array;
 }
 /// 
 unittest {
@@ -219,7 +219,7 @@ string toString(BindingStatus value) {
   return value.to!string;
 }
 string[] toStrings(BindingStatus[] values) {
-  return values.map!(toString).array;
+  return values.map!toString.array;
 }
 /// 
 unittest {
@@ -257,7 +257,7 @@ string toString(RouteProtocol value) {
   return value.to!string;
 }
 string[] toStrings(RouteProtocol[] values) {
-  return values.map!(toString).array;
+  return values.map!toString.array;
 }
 /// 
 unittest {
@@ -292,7 +292,7 @@ string toString(DomainScope value) {
   return value.to!string;
 }
 string[] toStrings(DomainScope[] values) {
-  return values.map!(toString).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -328,7 +328,7 @@ string toString(BuildpackType value) {
   return value.to!string;
 }
 string[] toStrings(BuildpackType[] values) {
-  return values.map!(toString).array;
+  return values.map!toString.array;
 }
 /// 
 unittest {
@@ -363,7 +363,7 @@ string toString(HealthCheckType value) {
   return value.to!string;
 }
 string[] toStrings(HealthCheckType[] values) {
-  return values.map!(toString).array;
+  return values.map!toString.array;
 }
 ///
 unittest {

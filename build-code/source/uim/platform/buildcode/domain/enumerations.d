@@ -58,7 +58,7 @@ unittest {
   assert(ProjectType.other.toString == "other");
 
   assert(["cap", "fiori"].toProjectType == [ProjectType.cap, ProjectType.fiori]);
-  assert([ProjectType.cap, ProjectType.fiori].toString == ["cap", "fiori"]);
+  assert([ProjectType.cap, ProjectType.fiori].toStrings == ["cap", "fiori"]);
 }
 
 /// Runtime framework within a project
@@ -108,7 +108,7 @@ unittest {
   assert(TechStack.other.toString == "other");  
 
   assert(["cap-java", "sapui5"].toTechStack == [TechStack.capJava, TechStack.sapui5]);
-  assert([TechStack.capJava, TechStack.sapui5].toString == ["cap-java", "sapui5"]);
+  assert([TechStack.capJava, TechStack.sapui5].toStrings == ["cap-java", "sapui5"]);
 } 
 
 /// Status of a project
@@ -143,7 +143,7 @@ unittest {
   assert(ProjectStatus.archived.toString == "archived");  
 
   assert(["active", "archived"].toProjectStatus == [ProjectStatus.active, ProjectStatus.archived]);
-  assert([ProjectStatus.active, ProjectStatus.archived].toString == ["active", "archived"]);
+  assert([ProjectStatus.active, ProjectStatus.archived].toStrings == ["active", "archived"]);
 } 
 
 /// Status of a dev space
@@ -184,7 +184,7 @@ unittest {
   assert(DevSpaceStatus.error_.toString == "error");
 
   assert(["starting", "stopped"].toDevSpaceStatus == [DevSpaceStatus.starting, DevSpaceStatus.stopped]);
-  assert([DevSpaceStatus.starting, DevSpaceStatus.stopped].toString == ["starting", "stopped"]);
+  assert([DevSpaceStatus.starting, DevSpaceStatus.stopped].toStrings == ["starting", "stopped"]);
 } 
 
 /// Stage of a CI/CD pipeline
@@ -222,7 +222,7 @@ unittest {
   assert(PipelineStage.full.toString == "full");  
 
   assert(["build", "deploy"].toPipelineStage == [PipelineStage.build, PipelineStage.deploy]);
-  assert([PipelineStage.build, PipelineStage.deploy].toString == ["build", "deploy"]);
+  assert([PipelineStage.build, PipelineStage.deploy].toStrings == ["build", "deploy"]);
 }
 
 /// Status of a pipeline run or build job
@@ -263,7 +263,7 @@ unittest {
   assert(JobStatus.cancelled.toString == "cancelled");
 
   assert(["queued", "failed"].toJobStatus == [JobStatus.queued, JobStatus.failed]);
-  assert([JobStatus.queued, JobStatus.failed].toString == ["queued", "failed"]);
+  assert([JobStatus.queued, JobStatus.failed].toStrings == ["queued", "failed"]);
 }
 
 /// Target environment for deployments
@@ -304,7 +304,7 @@ unittest {
   assert(DeploymentEnvironment.other.toString == "other");
 
   assert(["cloud-foundry", "kyma"].toDeploymentEnvironment == [DeploymentEnvironment.cloudFoundry, DeploymentEnvironment.kyma]);
-  assert([DeploymentEnvironment.cloudFoundry, DeploymentEnvironment.kyma].toString == ["cloud-foundry", "kyma"]);
+  assert([DeploymentEnvironment.cloudFoundry, DeploymentEnvironment.kyma].toStrings == ["cloud-foundry", "kyma"]);
 }
 
 /// Status of a deployment
@@ -345,7 +345,7 @@ unittest {
   assert(DeploymentStatus.rolling_back.toString == "rolling-back"); 
 
   assert(["pending", "succeeded"].toDeploymentStatus == [DeploymentStatus.pending, DeploymentStatus.succeeded]);
-  assert([DeploymentStatus.pending, DeploymentStatus.succeeded].toString == ["pending", "succeeded"]);
+  assert([DeploymentStatus.pending, DeploymentStatus.succeeded].toStrings == ["pending", "succeeded"]);
 }
 
 /// Status of an AI code generation request
@@ -383,7 +383,7 @@ unittest {
   assert(AIRequestStatus.failed.toString == "failed");  
 
   assert(["pending", "completed"].toAIRequestStatus == [AIRequestStatus.pending, AIRequestStatus.completed]);
-  assert([AIRequestStatus.pending, AIRequestStatus.completed].toString == ["pending", "completed"]);
+  assert([AIRequestStatus.pending, AIRequestStatus.completed].toStrings == ["pending", "completed"]);
 } 
 
 /// Type of AI generation request
@@ -427,7 +427,7 @@ unittest {
   assert(AIGenerationType.fullApp.toString == "full-app");
 
   assert(["data-model", "service"].toAIGenerationType == [AIGenerationType.dataModel, AIGenerationType.service]);
-  assert([AIGenerationType.dataModel, AIGenerationType.service].toString == ["data-model", "service"]);
+  assert([AIGenerationType.dataModel, AIGenerationType.service].toStrings == ["data-model", "service"]);
 }
 
 /// State of a service binding
@@ -462,5 +462,5 @@ unittest {
   assert(BindingStatus.error_.toString == "error"); 
 
   assert(["active", "inactive"].toBindingStatus == [BindingStatus.active, BindingStatus.inactive_]);
-  assert([BindingStatus.active, BindingStatus.inactive_].toString == ["active", "inactive"]);
+  assert([BindingStatus.active, BindingStatus.inactive_].toStrings == ["active", "inactive"]);
 }

@@ -25,7 +25,7 @@ string toString(TlsProtocolVersion version_) {
     return version_.to!string;
 }
 string[] toStrings(TlsProtocolVersion[] versions) {
-    return versions.map!(toString).array;
+    return versions.map!toString.array;
 }
 ///
 unittest {
@@ -63,7 +63,7 @@ string toString(CipherSuiteStrength strength) {
     return strength.to!string;
 }
 string[] toStrings(CipherSuiteStrength[] strengths) {
-    return strengths.map!(toString).array;
+    return strengths.map!toString.array;
 }
 /// 
 unittest {

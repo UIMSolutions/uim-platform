@@ -866,7 +866,7 @@ string toString(ConnectionType type) {
   return type.to!string;
 }
 string[] toStrings(ConnectionType[] types) {
-  return types.map!(toString).array;
+  return types.map!toString.array;
 }
 ///
 unittest {
@@ -892,7 +892,7 @@ unittest {
   assert(ConnectionType.dotnet.toString == "dotnet");
 
   assert(["jdbc", "odbc", "java"].toConnectionType == [ConnectionType.jdbc, ConnectionType.odbc, ConnectionType.java]);
-  assert([ConnectionType.jdbc, ConnectionType.odbc, ConnectionType.java].toString == ["jdbc", "odbc", "java"]);
+  assert([ConnectionType.jdbc, ConnectionType.odbc, ConnectionType.java].toStrings == ["jdbc", "odbc", "java"]);
 }
 
 // Connection status

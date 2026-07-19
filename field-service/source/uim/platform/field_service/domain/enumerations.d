@@ -49,7 +49,7 @@ string toString(ServiceCallStatus status) {
     return cast(string)status;
 }
 string[] toStringArray(ServiceCallStatus[] statuses) {
-    return statuses.map!(toString).array;
+    return statuses.map!toString.array;
 }
 ///
 unittest {
@@ -100,7 +100,7 @@ string toString(ServiceCallPriority priority) {
     return priority.to!string;
 }
 string[] toStrings(ServiceCallPriority[] priorities) {
-    return priorities.map!(toString).array;
+    return priorities.map!toString.array;
 }
 ///
 unittest {
@@ -141,7 +141,7 @@ string toString(ServiceCallOrigin origin) {
     return origin.to!string;
 }
 string[] toStrings(ServiceCallOrigin[] origins) {
-    return origins.map!(toString).array;
+    return origins.map!toString.array;
 }
 /// 
 unittest {
@@ -188,7 +188,7 @@ string toString(ServiceCallCategory category) {
     return category.to!string;
 }
 string[] toStrings(ServiceCallCategory[] categories) {   
-    return categories.map!(toString).array;
+    return categories.map!toString.array;
 }
 ///
 unittest {
@@ -241,7 +241,7 @@ string toString(ActivityType activity) {
     return activity.to!string;
 }
 string[] toStrings(ActivityType[] activities) {   
-    return activities.map!(toString).array;
+    return activities.map!toString.array;
 }
 ///
 unittest {
@@ -298,7 +298,7 @@ string toString(ActivityStatus status) {
     return status.to!string;
 }
 string[] toStrings(ActivityStatus[] statuses) {
-    return statuses.map!(toString).array;
+    return statuses.map!toString.array;
 }   
 ///
 unittest {
@@ -348,7 +348,7 @@ string toString(AssignmentStatus status) {
     return status.to!string;
 }
 string[] toStrings(AssignmentStatus[] statuses) {
-    return statuses.map!(toString).array;
+    return statuses.map!toString.array;
 }
 /// 
 unittest {
@@ -394,7 +394,7 @@ string toString(EquipmentStatus status) {
     return status.to!string;
 }
 string[] toStrings(EquipmentStatus[] statuses) {
-    return statuses.map!(toString).array;
+    return statuses.map!toString.array;
 }
 /// 
 unittest {
@@ -440,7 +440,7 @@ string toString(EquipmentType type) {
     return type.to!string;
 }
 string[] toStrings(EquipmentType[] types) {
-    return types.map!(toString).array;
+    return types.map!toString.array;
 }
 ///
 unittest {
@@ -490,7 +490,7 @@ string toString(TechnicianStatus status) {
     return status.to!string;
 }
 string[] toStrings(TechnicianStatus[] statuses) {
-    return statuses.map!(toString).array;
+    return statuses.map!toString.array;
 }
 ///
 unittest {
@@ -532,7 +532,7 @@ string toString(CustomerType type) {
     return type.to!string;
 }
 string[] toStrings(CustomerType[] types) {
-    return types.map!(toString).array;
+    return types.map!toString.array;
 }
 /// 
 unittest {
@@ -573,7 +573,7 @@ string toString(CustomerStatus status) {
     return status.to!string;
 }
 string[] toStrings(CustomerStatus[] statuses) {
-    return statuses.map!(toString).array;
+    return statuses.map!toString.array;
 }
 ///
 unittest {
@@ -615,7 +615,7 @@ string toString(SkillCategory category) {
     return category.to!string;
 }
 string[] toStrings(SkillCategory[] categories) {
-    return categories.map!(toString).array;
+    return categories.map!toString.array;
 }
 ///
 unittest {
@@ -661,7 +661,7 @@ string toString(ProficiencyLevel level) {
     return level.to!string;
 }
 string[] toStrings(ProficiencyLevel[] levels) {
-    return levels.map!(toString).array;
+    return levels.map!toString.array;
 }
 ///
 unittest {
@@ -707,7 +707,7 @@ string toString(SmartformType type) {
     return type.to!string;
 }
 string[] toStrings(SmartformType[] types) {
-    return types.map!(toString).array;
+    return types.map!toString.array;
 }
 /// 
 unittest {
@@ -758,7 +758,7 @@ string toString(SmartformStatus status) {
     return status.to!string;
 }
 string[] toStrings(SmartformStatus[] statuses) {
-    return statuses.map!(toString).array;
+    return statuses.map!toString.array;
 }
 ///
 unittest {

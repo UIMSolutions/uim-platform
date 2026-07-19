@@ -28,7 +28,7 @@ string toString(ColumnRole role) {
   return role.to!string;
 }
 string[] toStrings(ColumnRole[] roles) {
-  return roles.map!(toString).array;
+  return roles.map!toString.array;
 }
 ///
 unittest {
@@ -87,7 +87,7 @@ string toString(ColumnDataType type) {
 }
 
 string[] toStrings(ColumnDataType[] types) {
-  return types.map!(toString).array;
+  return types.map!toString.array;
 }
 
 ///

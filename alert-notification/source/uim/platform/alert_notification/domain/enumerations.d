@@ -30,7 +30,7 @@ string toString(EventCategory category) {
     return cast(string)category;
 }
 string[] toStrings(EventCategory[] categories) {
-    return categories.map!(toString).array;
+    return categories.map!toString.array;
 }
 ///
 unittest {
@@ -78,7 +78,7 @@ string toString(EventSeverity severity) {
     return cast(string)severity;
 }
 string[] toStrings(EventSeverity[] severities) {
-    return severities.map!(toString).array;
+    return severities.map!toString.array;
 }
 /// 
 unittest {
@@ -118,7 +118,7 @@ string toString(EventStatus status) {
     return status.to!string;
 }
 string[] toStrings(EventStatus[] statuses) {
-    return statuses.map!(toString).array;
+    return statuses.map!toString.array;
 }
 ///
 unittest {
@@ -161,7 +161,7 @@ string toString(PropertyKey key) {
     return key.to!string;
 }
 string[] toStrings(PropertyKey[] keys) {
-    return keys.map!(toString).array;
+    return keys.map!toString.array;
 }
 ///
 unittest {
@@ -215,7 +215,7 @@ string toString(Predicate predicate) {
     return cast(string)predicate;
 }
 string[] toStrings(Predicate[] predicates) {
-    return predicates.map!(toString).array;
+    return predicates.map!toString.array;
 }
 /// 
 unittest {
@@ -261,7 +261,7 @@ string toString(ActionType type) {
     return type.to!string;
 }
 string[] toStrings(ActionType[] types) {
-    return types.map!(toString).array;
+    return types.map!toString.array;
 }
 ///
 unittest {
@@ -307,7 +307,7 @@ string toString(ResourceState state) {
     return state.to!string;
 }
 string[] toStrings(ResourceState[] states) {
-    return states.map!(toString).array;
+    return states.map!toString.array;
 }
 ///
 unittest {
