@@ -8,6 +8,7 @@ module uim.platform.connectivity.infrastructure.persistence.memory.connectors;
 // import uim.platform.connectivity.domain.entities.cloud_connector;
 // import uim.platform.connectivity.domain.ports.repositories.connectors;
 import uim.platform.connectivity;
+
 mixin(ShowModule!());
 
 @safe:

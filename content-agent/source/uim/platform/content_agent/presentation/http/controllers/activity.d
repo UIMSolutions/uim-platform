@@ -9,6 +9,7 @@ module uim.platform.content_agent.presentation.http.controllers.activity;
 // import uim.platform.content_agent.domain.entities.content_activity;
 
 import uim.platform.content_agent;
+
 mixin(ShowModule!());
 
 @safe:

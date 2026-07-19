@@ -12,6 +12,7 @@ module uim.platform.credential_store.application.usecases.manage.namespaces;
 
 
 import uim.platform.credential_store;
+
 mixin(ShowModule!());
 
 @safe:

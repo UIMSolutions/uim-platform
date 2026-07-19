@@ -13,6 +13,7 @@ module uim.platform.auditlog.application.usecases.write.security_event;
 
 // import uim.platform.auditlog.domain.ports.repositories.security_events;
 import uim.platform.auditlog;
+
 mixin(ShowModule!());
 @safe:
 class WriteSecurityEventUseCase { // TODO: UIMUseCase {

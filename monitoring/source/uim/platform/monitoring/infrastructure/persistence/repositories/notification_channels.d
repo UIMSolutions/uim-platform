@@ -9,6 +9,7 @@ module uim.platform.monitoring.infrastructure.persistence.repositories.notificat
 // import uim.platform.monitoring.domain.ports.repositories.notification_channels;
 
 import uim.platform.monitoring;
+
 mixin(ShowModule!());
 
 @safe:

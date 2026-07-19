@@ -6,6 +6,7 @@
 module uim.platform.events.presentation.http.controllers.message_client;
 
 import uim.platform.events;
+
 mixin(ShowModule!());
 
 @safe:

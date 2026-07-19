@@ -9,6 +9,7 @@ import uim.platform.postgres;
 import std.conv      : to;
 import std.algorithm : map;
 import std.array     : array;
+
 mixin(ShowModule!());
 
 @safe:

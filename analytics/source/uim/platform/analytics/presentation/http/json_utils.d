@@ -5,6 +5,7 @@ import std.string : indexOf;
 import vibe.data.json : Json;
 import vibe.http.server : HTTPServerRequest, HTTPServerResponse;
 import uim.platform.analytics;
+
 mixin(ShowModule!());
 
 @safe:

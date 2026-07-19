@@ -8,6 +8,7 @@ module uim.platform.postgres.presentation.cli.views.service_instance;
 import uim.platform.postgres;
 import std.stdio : writeln, writefln;
 import std.conv  : to;
+
 mixin(ShowModule!());
 
 @safe:

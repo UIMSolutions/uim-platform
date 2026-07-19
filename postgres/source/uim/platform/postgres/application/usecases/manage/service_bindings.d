@@ -6,6 +6,7 @@
 module uim.platform.postgres.application.usecases.manage.service_bindings;
 
 import uim.platform.postgres;
+
 mixin(ShowModule!());
 
 @safe:

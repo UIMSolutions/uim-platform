@@ -6,6 +6,7 @@
 module uim.platform.oauth.presentation.http.controllers.refresh_token;
 
 import uim.platform.oauth;
+
 mixin(ShowModule!());
 
 @safe:

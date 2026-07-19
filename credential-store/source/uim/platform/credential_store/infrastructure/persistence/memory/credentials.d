@@ -9,6 +9,7 @@ module uim.platform.credential_store.infrastructure.persistence.memory.credentia
 
  
 import uim.platform.credential_store;
+
 mixin(ShowModule!());
 
 @safe:

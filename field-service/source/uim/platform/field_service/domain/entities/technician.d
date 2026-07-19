@@ -6,6 +6,7 @@
 module uim.platform.field_service.domain.entities.technician;
 
 import uim.platform.field_service;
+
 mixin(ShowModule!());
 
 @safe:

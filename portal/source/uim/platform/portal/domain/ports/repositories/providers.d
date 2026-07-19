@@ -7,6 +7,7 @@ module uim.platform.portal.domain.ports.repositories.providers;
 // import uim.platform.portal.domain.entities.content_provider;
 // import uim.platform.portal.domain.types;
 import uim.platform.portal;
+
 mixin(ShowModule!());
 
 @safe:

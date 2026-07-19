@@ -6,6 +6,7 @@
 module uim.platform.buildcode.domain.types;
 
 import uim.platform.buildcode;
+
 mixin(ShowModule!());
 
 @safe:

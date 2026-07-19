@@ -6,6 +6,7 @@
 module uim.platform.event_mesh.application.usecases.manage.event_messages;
 
 import uim.platform.event_mesh;
+
 mixin(ShowModule!());
 
 @safe:

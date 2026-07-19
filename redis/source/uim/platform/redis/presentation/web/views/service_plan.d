@@ -8,6 +8,7 @@ module uim.platform.redis.presentation.web.views.service_plan;
 import uim.platform.redis;
 
 import std.format : format;
+
 mixin(ShowModule!());
 
 @safe:

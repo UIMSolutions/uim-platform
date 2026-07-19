@@ -6,6 +6,7 @@
 module uim.platform.events.application.usecases.manage.message_clients;
 
 import uim.platform.events;
+
 mixin(ShowModule!());
 
 @safe:

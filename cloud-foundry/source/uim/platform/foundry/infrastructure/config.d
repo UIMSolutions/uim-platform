@@ -7,6 +7,7 @@ module uim.platform.foundry.infrastructure.config;
 
 import std.process : environment;
 import uim.platform.foundry;
+
 mixin(ShowModule!());
 
 @safe:

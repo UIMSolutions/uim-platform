@@ -6,6 +6,7 @@
 module uim.platform.connectivity.domain.entities.access_rule;
 // import uim.platform.connectivity.domain.types;
 import uim.platform.connectivity;
+
 mixin(ShowModule!());
 
 @safe:

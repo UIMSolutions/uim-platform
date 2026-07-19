@@ -7,6 +7,7 @@ module uim.platform.oauth.infrastructure.config;
 import std.process : environment;
 
 import uim.platform.oauth;
+
 mixin(ShowModule!());
 
 @safe:

@@ -6,6 +6,7 @@
 module uim.platform.postgres.presentation.gui.models.database_extension;
 
 import uim.platform.postgres;
+
 mixin(ShowModule!());
 
 @safe:

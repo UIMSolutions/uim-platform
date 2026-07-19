@@ -6,6 +6,7 @@
 module uim.platform.redis.application.usecases.manage.configurations;
 
 import uim.platform.redis;
+
 mixin(ShowModule!());
 
 @safe:

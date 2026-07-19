@@ -1,5 +1,6 @@
 module uim.platform.object_store.domain.enumerations;
 import uim.platform.object_store;
+
 mixin(ShowModule!());
 
 @safe:

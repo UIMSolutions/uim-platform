@@ -10,6 +10,7 @@ module app;
 // import uim.platform.portal.infrastructure.container;
 
 import uim.platform.portal;
+
 mixin(ShowModule!());
 
 @safe:

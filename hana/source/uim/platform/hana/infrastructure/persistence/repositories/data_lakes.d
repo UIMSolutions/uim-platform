@@ -12,6 +12,7 @@ module uim.platform.hana.infrastructure.persistence.repositories.data_lakes;
  
 
 import uim.platform.hana;
+
 mixin(ShowModule!());
 
 @safe:

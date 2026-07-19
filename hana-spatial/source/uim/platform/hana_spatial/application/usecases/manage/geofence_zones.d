@@ -8,6 +8,7 @@ module uim.platform.hana_spatial.application.usecases.manage.geofence_zones;
 import uim.platform.hana_spatial;
 
 import std.math : sqrt, PI, sin, cos, atan2;
+
 mixin(ShowModule!());
 
 @safe:

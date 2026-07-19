@@ -9,6 +9,7 @@ import std.array : appender;
 import std.stdio : writeln;
 
 import uim.platform.event_mesh;
+
 mixin(ShowModule!());
 
 @safe:

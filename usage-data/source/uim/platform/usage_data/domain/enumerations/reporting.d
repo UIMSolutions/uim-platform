@@ -6,6 +6,7 @@
 module uim.platform.usage_data.domain.enumerations.reporting;
 
 import uim.platform.usage_data;
+
 mixin(ShowModule!());
 @safe:
 

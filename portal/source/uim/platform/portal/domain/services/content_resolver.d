@@ -11,6 +11,7 @@ module uim.platform.portal.domain.services.content_resolver;
 // import uim.platform.portal.domain.entities.menu_item;
 // import uim.platform.portal.domain.types;
 import uim.platform.portal;
+
 mixin(ShowModule!());
 
 @safe:

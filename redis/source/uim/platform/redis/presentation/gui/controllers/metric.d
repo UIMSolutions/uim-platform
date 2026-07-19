@@ -6,6 +6,7 @@
 module uim.platform.redis.presentation.gui.controllers.metric;
 
 import uim.platform.redis;
+
 mixin(ShowModule!());
 
 @safe:

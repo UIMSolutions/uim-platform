@@ -6,6 +6,7 @@
 module uim.platform.events.domain.services.events_validator;
 
 import uim.platform.events;
+
 mixin(ShowModule!());
 
 @safe:

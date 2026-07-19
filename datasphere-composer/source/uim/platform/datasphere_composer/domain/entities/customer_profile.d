@@ -6,6 +6,7 @@
 module uim.platform.datasphere_composer.domain.entities.customer_profile;
 
 import uim.platform.datasphere_composer;
+
 mixin(ShowModule!());
 
 @safe:

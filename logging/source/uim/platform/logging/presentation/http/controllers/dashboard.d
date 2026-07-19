@@ -10,6 +10,7 @@ module uim.platform.logging.presentation.http.controllers.dashboard;
 
 
 import uim.platform.logging;
+
 mixin(ShowModule!());
 
 @safe:

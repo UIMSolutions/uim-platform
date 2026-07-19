@@ -6,6 +6,7 @@
 module uim.platform.application_studio.presentation.http.controllers.project;
 
 import uim.platform.application_studio;
+
 mixin(ShowModule!());
 
 @safe:

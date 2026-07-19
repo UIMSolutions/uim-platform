@@ -6,6 +6,7 @@
 module uim.platform.portal.domain.entities.tile;
 // import uim.platform.portal.domain.types;
 import uim.platform.portal;
+
 mixin(ShowModule!());
 
 @safe:

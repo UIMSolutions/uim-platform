@@ -1,6 +1,7 @@
 module uim.platform.service.mixins.entities.resource;
 
 import uim.platform.service;
+
 mixin(ShowModule!());
 
 @safe:

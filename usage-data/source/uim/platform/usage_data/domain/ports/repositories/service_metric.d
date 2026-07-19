@@ -6,6 +6,7 @@
 module uim.platform.usage_data.domain.ports.repositories.service_metric;
 
 import uim.platform.usage_data;
+
 mixin(ShowModule!());
 @safe:
 /// Port: outgoing repository interface for ServiceMetric persistence.

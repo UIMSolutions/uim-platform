@@ -6,6 +6,7 @@
 module uim.platform.application_studio.domain.repositories.project_templates;
 
 import uim.platform.application_studio;
+
 mixin(ShowModule!());
 
 @safe:

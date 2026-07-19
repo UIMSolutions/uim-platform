@@ -1,5 +1,6 @@
 module uim.platform.data_retention.domain.ports.repositories.residence_rules;
 import uim.platform.data_retention;
+
 mixin(ShowModule!());
 
 @safe:

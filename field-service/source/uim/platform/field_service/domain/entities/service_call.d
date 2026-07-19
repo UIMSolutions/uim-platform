@@ -6,6 +6,7 @@
 module uim.platform.field_service.domain.entities.service_call;
 
 import uim.platform.field_service;
+
 mixin(ShowModule!());
 
 @safe:

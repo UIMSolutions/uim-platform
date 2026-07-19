@@ -9,6 +9,7 @@ module uim.platform.content_agent.infrastructure.persistence.memory.transport_qu
 // import uim.platform.content_agent.domain.ports.repositories.transport_queues;
 
 import uim.platform.content_agent;
+
 mixin(ShowModule!());
 
 @safe:

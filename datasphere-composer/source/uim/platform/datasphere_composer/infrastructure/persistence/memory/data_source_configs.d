@@ -6,6 +6,7 @@
 module uim.platform.datasphere_composer.infrastructure.persistence.memory.data_source_configs;
 
 import uim.platform.datasphere_composer;
+
 mixin(ShowModule!());
 
 @safe:

@@ -6,6 +6,7 @@
 module uim.platform.application_studio.application.usecases.manage.run_configurations;
 
 import uim.platform.application_studio;
+
 mixin(ShowModule!());
 
 @safe:

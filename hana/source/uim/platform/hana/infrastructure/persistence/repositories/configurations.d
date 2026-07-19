@@ -12,6 +12,7 @@ module uim.platform.hana.infrastructure.persistence.repositories.configurations;
  
 
 import uim.platform.hana;
+
 mixin(ShowModule!());
 
 @safe:

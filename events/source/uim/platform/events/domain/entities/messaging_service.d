@@ -6,6 +6,7 @@
 module uim.platform.events.domain.entities.messaging_service;
 
 import uim.platform.events;
+
 mixin(ShowModule!());
 
 @safe:

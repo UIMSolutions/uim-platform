@@ -6,6 +6,7 @@
 module uim.platform.postgres.domain.entities.maintenance_window;
 
 import uim.platform.postgres;
+
 mixin(ShowModule!());
 
 @safe:

@@ -5,6 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.health_fhir.infrastructure.persistence.memory.observations;
 import uim.platform.health_fhir;
+
 mixin(ShowModule!());
 
 @safe:

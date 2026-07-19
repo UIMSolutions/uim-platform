@@ -7,6 +7,7 @@ module uim.platform.auditlog.domain.ports.repositories.security_events;
 
 // import uim.platform.auditlog.domain.entities.security_event;
 import uim.platform.auditlog;
+
 mixin(ShowModule!());
 /// Port for persisting enriched security events.
 @safe:

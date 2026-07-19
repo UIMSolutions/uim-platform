@@ -1,5 +1,6 @@
 module uim.platform.integration_suite.domain.entities.message_mapping;
 import uim.platform.integration_suite;
+
 mixin(ShowModule!());
 @safe:
 

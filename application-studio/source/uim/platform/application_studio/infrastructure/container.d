@@ -6,6 +6,7 @@
 module uim.platform.application_studio.infrastructure.container;
 
 import uim.platform.application_studio;
+
 mixin(ShowModule!());
 
 @safe:

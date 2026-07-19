@@ -5,6 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.service.mixins.service;
 import uim.platform.service;
+
 mixin(ShowModule!());
 
 @safe:

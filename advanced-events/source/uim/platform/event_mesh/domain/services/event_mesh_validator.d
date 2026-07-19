@@ -6,6 +6,7 @@
 module uim.platform.event_mesh.domain.services.event_mesh_validator;
 
 import uim.platform.event_mesh;
+
 mixin(ShowModule!());
 
 @safe:

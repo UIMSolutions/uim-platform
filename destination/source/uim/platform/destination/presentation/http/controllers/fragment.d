@@ -10,6 +10,7 @@ module uim.platform.destination.presentation.http.controllers.fragment;
 // import uim.platform.destination.domain.entities.destination_fragment;
 // import uim.platform.destination.domain.types;
 import uim.platform.destination;
+
 mixin(ShowModule!());
 
 @safe:

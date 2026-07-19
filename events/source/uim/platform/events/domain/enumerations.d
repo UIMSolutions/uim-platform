@@ -1,6 +1,7 @@
 module uim.platform.events.domain.enumerations;
 
 import uim.platform.events;
+
 mixin(ShowModule!());
 
 @safe:

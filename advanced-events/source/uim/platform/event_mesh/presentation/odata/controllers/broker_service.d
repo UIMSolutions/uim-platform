@@ -6,6 +6,7 @@
 module uim.platform.event_mesh.presentation.odata.controllers.broker_service;
 
 import uim.platform.event_mesh;
+
 mixin(ShowModule!());
 
 @safe:

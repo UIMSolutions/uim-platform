@@ -6,6 +6,7 @@
 module uim.platform.buildcode.infrastructure.persistence.repositories.ai_requests;
 
 import uim.platform.buildcode;
+
 mixin(ShowModule!());
 
 @safe:

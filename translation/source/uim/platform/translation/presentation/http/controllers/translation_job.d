@@ -6,6 +6,7 @@
 module uim.platform.translation.presentation.http.controllers.translation_job;
 
 import uim.platform.translation;
+
 mixin(ShowModule!());
 
 @safe:

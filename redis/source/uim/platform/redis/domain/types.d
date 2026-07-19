@@ -6,6 +6,7 @@
 module uim.platform.redis.domain.types;
 
 import uim.platform.redis;
+
 mixin(ShowModule!());
 
 @safe:

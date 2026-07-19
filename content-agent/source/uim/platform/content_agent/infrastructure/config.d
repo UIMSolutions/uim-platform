@@ -7,6 +7,7 @@ module uim.platform.content_agent.infrastructure.config;
 import std.process : environment;
 
 import uim.platform.content_agent;
+
 mixin(ShowModule!());
 
 @safe:

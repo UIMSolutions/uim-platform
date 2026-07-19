@@ -8,6 +8,7 @@ module uim.platform.logging.domain.services.pattern_matcher;
 // import uim.platform.logging.domain.entities.log_entry;
 
 import uim.platform.logging;
+
 mixin(ShowModule!());
 
 @safe:

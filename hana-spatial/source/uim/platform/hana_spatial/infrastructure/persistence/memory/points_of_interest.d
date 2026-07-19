@@ -6,6 +6,7 @@
 module uim.platform.hana_spatial.infrastructure.persistence.memory.points_of_interest;
 
 import uim.platform.hana_spatial;
+
 mixin(ShowModule!());
 
 @safe:

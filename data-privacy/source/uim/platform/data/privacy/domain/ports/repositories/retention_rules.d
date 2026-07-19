@@ -7,6 +7,7 @@ module uim.platform.data.privacy.domain.ports.repositories.retention_rules;
 
 // import uim.platform.data.privacy.domain.entities.retention_rule;
 import uim.platform.data.privacy;
+
 mixin(ShowModule!());
 
 @safe:

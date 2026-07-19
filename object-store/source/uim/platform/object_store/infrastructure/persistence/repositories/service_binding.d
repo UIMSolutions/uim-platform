@@ -10,6 +10,7 @@ module uim.platform.object_store.infrastructure.persistence.repositories.service
 // import uim.platform.object_store.domain.ports.repositories.service_binding;
 
 import uim.platform.object_store;
+
 mixin(ShowModule!());
 
 @safe:

@@ -11,6 +11,7 @@ module uim.platform.logging.application.usecases.manage.log_streams;
 import std.conv : ConvException, to;
 import std.string : toLower;
 import uim.platform.logging;
+
 mixin(ShowModule!());
 
 @safe:

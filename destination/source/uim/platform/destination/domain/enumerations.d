@@ -1,5 +1,6 @@
 module uim.platform.destination.domain.enumerations;
 import uim.platform.destination;
+
 mixin(ShowModule!());
 
 @safe:

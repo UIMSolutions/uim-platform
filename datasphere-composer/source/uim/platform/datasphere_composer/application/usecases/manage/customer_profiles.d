@@ -6,6 +6,7 @@
 module uim.platform.datasphere_composer.application.usecases.manage.customer_profiles;
 
 import uim.platform.datasphere_composer;
+
 mixin(ShowModule!());
 
 @safe:

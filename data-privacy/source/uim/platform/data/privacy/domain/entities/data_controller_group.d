@@ -6,6 +6,7 @@
 module uim.platform.data.privacy.domain.entities.data_controller_group;
 
 import uim.platform.data.privacy;
+
 mixin(ShowModule!());
 
 @safe:

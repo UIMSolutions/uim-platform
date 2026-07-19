@@ -6,6 +6,7 @@
 module uim.platform.hana_spatial.infrastructure.persistence.memory.geocoding_results;
 
 import uim.platform.hana_spatial;
+
 mixin(ShowModule!());
 
 @safe:

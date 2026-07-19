@@ -6,6 +6,7 @@
 module uim.platform.dms_integration.domain.repositories.documents;
 
 import uim.platform.dms_integration;
+
 mixin(ShowModule!());
 
 @safe:

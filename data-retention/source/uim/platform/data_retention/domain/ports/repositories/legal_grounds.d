@@ -1,5 +1,6 @@
 module uim.platform.data_retention.domain.ports.repositories.legal_grounds;
 import uim.platform.data_retention;
+
 mixin(ShowModule!());
 
 @safe:

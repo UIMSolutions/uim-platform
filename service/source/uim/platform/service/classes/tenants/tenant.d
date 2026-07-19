@@ -6,6 +6,7 @@
 module uim.platform.service.classes.tenants.tenant;
 
 import uim.platform.service;
+
 mixin(ShowModule!());
 
 @safe:

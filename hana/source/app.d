@@ -8,6 +8,7 @@ module app;
 // import uim.platform.hana.infrastructure.container;
 
 import uim.platform.hana;
+
 mixin(ShowModule!());
 
 @safe:

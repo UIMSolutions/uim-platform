@@ -6,6 +6,7 @@
 module uim.platform.service.interfaces.stores.tenant;
 
 import uim.platform.service;
+
 mixin(ShowModule!());
 
 @safe:

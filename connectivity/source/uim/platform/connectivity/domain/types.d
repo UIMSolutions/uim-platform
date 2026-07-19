@@ -5,6 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.connectivity.domain.types;
 import uim.platform.connectivity;
+
 mixin(ShowModule!());
 
 @safe:

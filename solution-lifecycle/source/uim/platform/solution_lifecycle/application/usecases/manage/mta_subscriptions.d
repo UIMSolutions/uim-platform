@@ -6,6 +6,7 @@
 module uim.platform.solution_lifecycle.application.usecases.manage.mta_subscriptions;
 
 import uim.platform.solution_lifecycle;
+
 mixin(ShowModule!());
 
 @safe:

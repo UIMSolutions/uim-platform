@@ -5,6 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.private_link.domain.services.endpoint_resolver;
 import uim.platform.private_link;
+
 mixin(ShowModule!());
 
 @safe:

@@ -5,6 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.private_link.domain.types;
 import uim.platform.private_link;
+
 mixin(ShowModule!());
 
 @safe:

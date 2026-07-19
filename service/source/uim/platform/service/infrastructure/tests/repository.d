@@ -1,6 +1,7 @@
 module uim.platform.service.infrastructure.tests.repository;
 
 import uim.platform.service;
+
 mixin(ShowModule!());
 
 @safe:

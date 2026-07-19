@@ -6,6 +6,7 @@
 module uim.platform.datasphere_composer.domain.entities.data_provider;
 
 import uim.platform.datasphere_composer;
+
 mixin(ShowModule!());
 
 @safe:

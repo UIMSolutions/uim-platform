@@ -6,6 +6,7 @@
 module uim.platform.integration.automation.domain.entities.execution_log;
 
 import uim.platform.integration.automation;
+
 mixin(ShowModule!());
 
 @safe:

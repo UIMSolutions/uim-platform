@@ -1,6 +1,7 @@
 module uim.platform.service_manager.presentation.http.controllers.service_broker;
 
 import uim.platform.service_manager;
+
 mixin(ShowModule!());
 
 @safe:

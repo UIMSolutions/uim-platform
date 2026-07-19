@@ -6,6 +6,7 @@
 module uim.platform.events.infrastructure.persistence.memory.message_bindings;
 
 import uim.platform.events;
+
 mixin(ShowModule!());
 
 @safe:

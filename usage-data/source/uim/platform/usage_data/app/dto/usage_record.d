@@ -6,6 +6,7 @@
 module uim.platform.usage_data.app.dto.usage_record;
 
 import uim.platform.usage_data;
+
 mixin(ShowModule!());
 @safe:
 

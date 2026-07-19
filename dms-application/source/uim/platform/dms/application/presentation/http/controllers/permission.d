@@ -13,6 +13,7 @@ module uim.platform.dms.application.presentation.http.controllers.permission;
 // import uim.platform.dms.application.domain.types;
 
 import uim.platform.dms.application;
+
 mixin(ShowModule!());
 @safe:
 class PermissionController : ManageHttpController {

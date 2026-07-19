@@ -6,6 +6,7 @@
 module uim.platform.redis.domain.enumerations;
 
 import uim.platform.redis;
+
 mixin(ShowModule!());
 
 @safe:

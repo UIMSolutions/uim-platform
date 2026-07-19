@@ -1,6 +1,7 @@
 module uim.platform.service.infrastructure.stores.store;
 
 import uim.platform.service;
+
 mixin(ShowModule!());
 
 @safe:

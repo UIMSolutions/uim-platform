@@ -10,6 +10,7 @@ module uim.platform.auditlog.infrastructure.persistence.repositories.retention;
 // 
 // 
 import uim.platform.auditlog;
+
 mixin(ShowModule!());
 
 @safe:

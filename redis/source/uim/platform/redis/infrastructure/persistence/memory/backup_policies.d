@@ -8,6 +8,7 @@ module uim.platform.redis.infrastructure.persistence.memory.backup_policies;
 import uim.platform.redis;
 import std.algorithm : filter;
 import std.array : array;
+
 mixin(ShowModule!());
 
 @safe:

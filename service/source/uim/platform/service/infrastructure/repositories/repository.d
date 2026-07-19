@@ -6,6 +6,7 @@
 module uim.platform.service.infrastructure.repositories.repository;
 
 import uim.platform.service;
+
 mixin(ShowModule!());
 
 @safe:

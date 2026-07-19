@@ -10,6 +10,7 @@ module uim.platform.logging.application.usecases.search_logs;
 
 
 import uim.platform.logging;
+
 mixin(ShowModule!());
 
 @safe:

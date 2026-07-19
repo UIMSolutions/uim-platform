@@ -6,6 +6,7 @@
 module uim.platform.dms.application.infrastructure.config;
 import std.process : environment;
 import uim.platform.dms.application;
+
 mixin(ShowModule!());
 @safe:
 /// Service configuration.

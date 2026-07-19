@@ -8,6 +8,7 @@ module uim.platform.credential_store.domain.ports.repositories.keyring_versions;
 
 
 import uim.platform.credential_store;
+
 mixin(ShowModule!());
 
 @safe:

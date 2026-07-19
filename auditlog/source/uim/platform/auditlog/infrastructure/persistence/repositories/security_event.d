@@ -10,6 +10,7 @@ module uim.platform.auditlog.infrastructure.persistence.repositories.security_ev
 // 
 // 
 import uim.platform.auditlog;
+
 mixin(ShowModule!());
 
 @safe:

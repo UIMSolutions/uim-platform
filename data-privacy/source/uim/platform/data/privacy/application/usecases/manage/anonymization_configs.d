@@ -6,6 +6,7 @@
 module uim.platform.data.privacy.application.usecases.manage.anonymization_configs;
 
 import uim.platform.data.privacy;
+
 mixin(ShowModule!());
 
 @safe:

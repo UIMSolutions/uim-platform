@@ -6,6 +6,7 @@
 module uim.platform.data.privacy.domain.entities.legal_ground;
 
 import uim.platform.data.privacy;
+
 mixin(ShowModule!());
 
 @safe:

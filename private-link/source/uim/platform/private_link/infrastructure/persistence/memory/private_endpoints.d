@@ -5,6 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.private_link.infrastructure.persistence.memory.private_endpoints;
 import uim.platform.private_link;
+
 mixin(ShowModule!());
 
 @safe:

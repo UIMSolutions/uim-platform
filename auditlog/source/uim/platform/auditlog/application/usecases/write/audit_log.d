@@ -6,6 +6,7 @@
 module uim.platform.auditlog.application.usecases.write.audit_log;
 
 import uim.platform.auditlog;
+
 mixin(ShowModule!());
 
 @safe:

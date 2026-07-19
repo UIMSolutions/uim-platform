@@ -9,6 +9,7 @@ module uim.platform.print.infrastructure.persistence.mongo.print_queues;
 import uim.platform.print;
 import vibe.db.mongo.mongo;
 import vibe.data.bson;
+
 mixin(ShowModule!());
 
 @safe:

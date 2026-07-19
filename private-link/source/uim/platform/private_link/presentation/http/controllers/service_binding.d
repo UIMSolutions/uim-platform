@@ -5,6 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.private_link.presentation.http.controllers.service_binding;
 import uim.platform.private_link;
+
 mixin(ShowModule!());
 
 @safe:

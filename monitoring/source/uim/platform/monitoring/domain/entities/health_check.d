@@ -6,6 +6,7 @@
 module uim.platform.monitoring.domain.entities.health_check;
 // import uim.platform.monitoring.domain.types;
 import uim.platform.monitoring;
+
 mixin(ShowModule!());
 
 @safe:

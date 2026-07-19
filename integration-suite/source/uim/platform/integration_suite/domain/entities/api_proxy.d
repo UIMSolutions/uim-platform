@@ -1,5 +1,6 @@
 module uim.platform.integration_suite.domain.entities.api_proxy;
 import uim.platform.integration_suite;
+
 mixin(ShowModule!());
 @safe:
 

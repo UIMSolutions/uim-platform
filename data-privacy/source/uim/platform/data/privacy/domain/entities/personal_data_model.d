@@ -6,6 +6,7 @@
 module uim.platform.data.privacy.domain.entities.personal_data_model;
 
 import uim.platform.data.privacy;
+
 mixin(ShowModule!());
 
 @safe:

@@ -6,6 +6,7 @@
 module uim.platform.datasphere_composer.infrastructure.config;
 
 import uim.platform.datasphere_composer;
+
 mixin(ShowModule!());
 
 @safe:

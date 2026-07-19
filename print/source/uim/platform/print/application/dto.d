@@ -6,6 +6,7 @@
 module uim.platform.print.application.dto;
 
 import uim.platform.print;
+
 mixin(ShowModule!());
 
 @safe:

@@ -9,6 +9,7 @@ module uim.platform.portal.application.dto;
 // import uim.platform.portal.domain.entities.tile : TileConfiguration;
 // import uim.platform.portal.domain.entities.theme : ThemeColors, ThemeFonts;
 import uim.platform.portal;
+
 mixin(ShowModule!());
 
 @safe:

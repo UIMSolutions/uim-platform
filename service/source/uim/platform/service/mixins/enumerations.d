@@ -6,6 +6,7 @@
 module uim.platform.service.mixins.enumerations;
 
 import uim.platform.service;
+
 mixin(ShowModule!());
 
 @safe:

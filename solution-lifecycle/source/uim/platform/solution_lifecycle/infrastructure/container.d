@@ -6,6 +6,7 @@
 module uim.platform.solution_lifecycle.infrastructure.container;
 
 import uim.platform.solution_lifecycle;
+
 mixin(ShowModule!());
 
 @safe:

@@ -6,6 +6,7 @@
 module uim.platform.redis.presentation.web.models.service_binding;
 
 import uim.platform.redis;
+
 mixin(ShowModule!());
 
 @safe:

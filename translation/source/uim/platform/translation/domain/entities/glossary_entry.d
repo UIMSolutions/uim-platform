@@ -6,6 +6,7 @@
 module uim.platform.translation.domain.entities.glossary_entry;
 
 import uim.platform.translation;
+
 mixin(ShowModule!());
 
 @safe:

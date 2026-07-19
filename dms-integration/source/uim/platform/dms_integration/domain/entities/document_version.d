@@ -6,6 +6,7 @@
 module uim.platform.dms_integration.domain.entities.document_version;
 
 import uim.platform.dms_integration;
+
 mixin(ShowModule!());
 
 @safe:

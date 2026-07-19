@@ -6,6 +6,7 @@
 module uim.platform.print.domain.entities.print_client;
 
 import uim.platform.print;
+
 mixin(ShowModule!());
 
 @safe:

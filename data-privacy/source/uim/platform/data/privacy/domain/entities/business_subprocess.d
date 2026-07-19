@@ -6,6 +6,7 @@
 module uim.platform.data.privacy.domain.entities.business_subprocess;
 
 import uim.platform.data.privacy;
+
 mixin(ShowModule!());
 
 @safe:

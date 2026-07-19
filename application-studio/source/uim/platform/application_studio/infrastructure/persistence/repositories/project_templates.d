@@ -6,6 +6,7 @@
 module uim.platform.application_studio.infrastructure.persistence.repositories.project_templates;
 
 import uim.platform.application_studio;
+
 mixin(ShowModule!());
 
 @safe:

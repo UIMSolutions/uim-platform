@@ -7,6 +7,7 @@ module uim.platform.logging.application.dto;
 
 
 import uim.platform.logging;
+
 mixin(ShowModule!());
 
 @safe:

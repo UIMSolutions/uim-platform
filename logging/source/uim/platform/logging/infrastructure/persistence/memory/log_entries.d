@@ -10,6 +10,7 @@ module uim.platform.logging.infrastructure.persistence.memory.log_entries;
  
 // import std.string : indexOf;
 import uim.platform.logging;
+
 mixin(ShowModule!());
 
 @safe:

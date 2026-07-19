@@ -6,6 +6,7 @@
 module uim.platform.field_service.infrastructure.persistence.memory.service_calls;
 
 import uim.platform.field_service;
+
 mixin(ShowModule!());
 
 @safe:

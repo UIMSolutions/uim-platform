@@ -6,6 +6,7 @@
 module app;
 
 import uim.platform.oauth;
+
 mixin(ShowModule!());
 
 @safe:

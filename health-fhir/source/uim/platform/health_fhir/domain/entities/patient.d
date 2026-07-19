@@ -5,6 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.health_fhir.domain.entities.patient;
 import uim.platform.health_fhir;
+
 mixin(ShowModule!());
 
 @safe:

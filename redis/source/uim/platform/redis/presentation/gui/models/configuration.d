@@ -6,6 +6,7 @@
 module uim.platform.redis.presentation.gui.models.configuration;
 
 import uim.platform.redis;
+
 mixin(ShowModule!());
 
 @safe:

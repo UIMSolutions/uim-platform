@@ -6,6 +6,7 @@
 module uim.platform.events.domain.entities.event_channel;
 
 import uim.platform.events;
+
 mixin(ShowModule!());
 
 @safe:

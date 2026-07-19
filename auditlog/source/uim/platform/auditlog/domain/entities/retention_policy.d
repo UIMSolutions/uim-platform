@@ -5,6 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.auditlog.domain.entities.retention_policy;
 import uim.platform.auditlog;
+
 mixin(ShowModule!());
 /// Retention policy — how long audit data is kept.
 @safe:

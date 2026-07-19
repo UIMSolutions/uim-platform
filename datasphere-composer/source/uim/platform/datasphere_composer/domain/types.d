@@ -6,6 +6,7 @@
 module uim.platform.datasphere_composer.domain.types;
 
 import uim.platform.datasphere_composer;
+
 mixin(ShowModule!());
 
 @safe:

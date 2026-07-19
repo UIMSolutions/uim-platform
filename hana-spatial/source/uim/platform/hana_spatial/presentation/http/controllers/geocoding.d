@@ -6,6 +6,7 @@
 module uim.platform.hana_spatial.presentation.http.controllers.geocoding;
 
 import uim.platform.hana_spatial;
+
 mixin(ShowModule!());
 
 @safe:

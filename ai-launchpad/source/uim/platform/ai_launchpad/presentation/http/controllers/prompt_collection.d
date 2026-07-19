@@ -9,6 +9,7 @@ module uim.platform.ai_launchpad.presentation.http.controllers.prompt_collection
 // import uim.platform.ai_launchpad.application.dto;
 
 import uim.platform.ai_launchpad;
+
 mixin(ShowModule!());
 
 @safe:

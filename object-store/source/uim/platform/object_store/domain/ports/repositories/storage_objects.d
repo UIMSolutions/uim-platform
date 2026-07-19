@@ -8,6 +8,7 @@ module uim.platform.object_store.domain.ports.repositories.storage_objects;
 // import uim.platform.object_store.domain.entities.storage_object;
 // import uim.platform.object_store.domain.types;
 import uim.platform.object_store;
+
 mixin(ShowModule!());
 
 @safe:

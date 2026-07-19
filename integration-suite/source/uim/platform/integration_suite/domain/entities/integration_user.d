@@ -1,5 +1,6 @@
 module uim.platform.integration_suite.domain.entities.integration_user;
 import uim.platform.integration_suite;
+
 mixin(ShowModule!());
 @safe:
 

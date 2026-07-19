@@ -7,6 +7,7 @@ module uim.platform.destination.domain.services.destination_resolver;
 
 import uim.platform.destination;
 import std.base64 : Base64;
+
 mixin(ShowModule!());
 
 @safe:

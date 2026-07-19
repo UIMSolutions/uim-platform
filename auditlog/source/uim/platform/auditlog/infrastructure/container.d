@@ -33,6 +33,7 @@ module uim.platform.auditlog.infrastructure.container;
 // import uim.platform.auditlog.presentation.http.controllers.config_change;
 // import uim.platform.auditlog.presentation.http.controllers.health;
 import uim.platform.auditlog;
+
 mixin(ShowModule!());
 /// Dependency injection container — wires all layers together.
 @safe:

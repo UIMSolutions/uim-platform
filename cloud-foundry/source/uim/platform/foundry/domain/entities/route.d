@@ -8,6 +8,7 @@ module uim.platform.foundry.domain.entities.route;
 
 
 import uim.platform.foundry;
+
 mixin(ShowModule!());
 
 @safe:

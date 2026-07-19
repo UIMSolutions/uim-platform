@@ -6,6 +6,7 @@
 module uim.platform.task_center.infrastructure.persistence.repositories.substitution_rules;
 
 import uim.platform.task_center;
+
 mixin(ShowModule!());
 
 @safe:

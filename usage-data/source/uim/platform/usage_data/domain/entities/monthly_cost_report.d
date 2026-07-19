@@ -6,6 +6,7 @@
 module uim.platform.usage_data.domain.entities.monthly_cost_report;
 
 import uim.platform.usage_data;
+
 mixin(ShowModule!());
 @safe:
 

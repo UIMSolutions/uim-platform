@@ -6,6 +6,7 @@
 module uim.platform.dms_integration.application.usecases.manage.permissions;
 
 import uim.platform.dms_integration;
+
 mixin(ShowModule!());
 
 @safe:

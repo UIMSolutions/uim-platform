@@ -6,6 +6,7 @@
 module uim.platform.dms_integration.infrastructure.persistence.memory.document_versions;
 
 import uim.platform.dms_integration;
+
 mixin(ShowModule!());
 
 @safe:

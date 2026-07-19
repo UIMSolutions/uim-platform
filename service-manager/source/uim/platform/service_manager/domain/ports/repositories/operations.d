@@ -1,6 +1,7 @@
 module uim.platform.service_manager.domain.ports.repositories.operations;
 
 import uim.platform.service_manager;
+
 mixin(ShowModule!());
 
 @safe:

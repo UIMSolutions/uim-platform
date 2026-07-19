@@ -6,6 +6,7 @@
 module uim.platform.hana_spatial.domain.entities.spatial_feature;
 
 import uim.platform.hana_spatial;
+
 mixin(ShowModule!());
 
 @safe:

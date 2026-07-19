@@ -1,5 +1,6 @@
 module uim.platform.foundry.domain.enumerations.dnsrecord;
 import uim.platform.foundry;
+
 mixin(ShowModule!());
 
 @safe:

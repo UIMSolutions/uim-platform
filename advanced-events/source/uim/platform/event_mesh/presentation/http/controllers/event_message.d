@@ -8,6 +8,7 @@ module uim.platform.event_mesh.presentation.http.controllers.event_message;
 import std.uuid : randomUUID;
 
 import uim.platform.event_mesh;
+
 mixin(ShowModule!());
 
 @safe:

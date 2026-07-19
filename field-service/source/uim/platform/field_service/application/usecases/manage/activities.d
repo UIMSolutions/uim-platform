@@ -6,6 +6,7 @@
 module uim.platform.field_service.application.usecases.manage.activities;
 
 import uim.platform.field_service;
+
 mixin(ShowModule!());
 
 @safe:

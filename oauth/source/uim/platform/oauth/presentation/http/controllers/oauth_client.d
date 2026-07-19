@@ -6,6 +6,7 @@
 module uim.platform.oauth.presentation.http.controllers.oauth_client;
 
 import uim.platform.oauth;
+
 mixin(ShowModule!());
 
 @safe:

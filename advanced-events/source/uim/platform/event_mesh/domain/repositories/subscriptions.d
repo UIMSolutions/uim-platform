@@ -6,6 +6,7 @@
 module uim.platform.event_mesh.domain.repositories.subscriptions;
 
 import uim.platform.event_mesh;
+
 mixin(ShowModule!());
 
 @safe:

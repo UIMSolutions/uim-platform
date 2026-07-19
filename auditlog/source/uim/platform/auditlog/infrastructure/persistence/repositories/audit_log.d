@@ -11,6 +11,7 @@ module uim.platform.auditlog.infrastructure.persistence.repositories.audit_log;
 // import std.algorithm : filter, sort;
 // 
 import uim.platform.auditlog;
+
 mixin(ShowModule!());
 
 @safe:

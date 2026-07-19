@@ -1,5 +1,6 @@
 module uim.platform.snowflake.infrastructure.container;
 import uim.platform.snowflake;
+
 mixin(ShowModule!());
 @safe:
 struct Container {

@@ -6,6 +6,7 @@
 module uim.platform.hana_spatial.domain.types;
 
 import uim.platform.hana_spatial;
+
 mixin(ShowModule!());
 
 @safe:

@@ -1,5 +1,6 @@
 module uim.platform.data_retention.presentation.http.controllers.legal_ground;
 import uim.platform.data_retention;
+
 mixin(ShowModule!());
 
 @safe:

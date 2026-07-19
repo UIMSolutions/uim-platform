@@ -6,6 +6,7 @@
 module uim.platform.application_studio.domain.enumerations;
 
 import uim.platform.application_studio;
+
 mixin(ShowModule!());
 
 @safe:

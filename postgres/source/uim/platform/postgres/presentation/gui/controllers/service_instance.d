@@ -6,6 +6,7 @@
 module uim.platform.postgres.presentation.gui.controllers.service_instance;
 
 import uim.platform.postgres;
+
 mixin(ShowModule!());
 
 @safe:

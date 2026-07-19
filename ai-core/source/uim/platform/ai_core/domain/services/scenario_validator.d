@@ -6,6 +6,7 @@
 module uim.platform.ai_core.domain.services.scenario_validator;
 
 import uim.platform.ai_core;
+
 mixin(ShowModule!());
 
 @safe:

@@ -6,6 +6,7 @@
 module uim.platform.dms_integration.presentation.http.controllers.permission;
 
 import uim.platform.dms_integration;
+
 mixin(ShowModule!());
 
 @safe:

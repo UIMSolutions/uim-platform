@@ -9,6 +9,7 @@ import uim.platform.buildcode;
 import std.conv    : to;
 import std.random  : uniform;
 import std.format  : format;
+
 mixin(ShowModule!());
 
 @safe:

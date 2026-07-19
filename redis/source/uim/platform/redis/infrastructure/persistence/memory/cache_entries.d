@@ -8,6 +8,7 @@ module uim.platform.redis.infrastructure.persistence.memory.cache_entries;
 import uim.platform.redis;
 import std.algorithm : filter, any, count;
 import std.array : array;
+
 mixin(ShowModule!());
 
 @safe:

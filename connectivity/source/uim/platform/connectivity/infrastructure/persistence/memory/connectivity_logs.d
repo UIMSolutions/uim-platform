@@ -9,6 +9,7 @@ module uim.platform.connectivity.infrastructure.persistence.memory.connectivity_
 // import uim.platform.connectivity.domain.ports.repositories.connectivity_logs;
 
 import uim.platform.connectivity;
+
 mixin(ShowModule!());
 
 @safe:

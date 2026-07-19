@@ -8,6 +8,7 @@ module uim.platform.auditlog.infrastructure.config;
 import std.process : environment;
 /// Service configuration.
 import uim.platform.auditlog;
+
 mixin(ShowModule!());
 
 @safe:

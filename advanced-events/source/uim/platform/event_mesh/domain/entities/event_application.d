@@ -6,6 +6,7 @@
 module uim.platform.event_mesh.domain.entities.event_application;
 
 import uim.platform.event_mesh;
+
 mixin(ShowModule!());
 
 @safe:

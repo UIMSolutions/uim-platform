@@ -1,5 +1,6 @@
 module uim.platform.snowflake.infrastructure.persistence.memory.data_product_shares;
 import uim.platform.snowflake;
+
 mixin(ShowModule!());
 @safe:
 class MemoryDataProductShareRepository

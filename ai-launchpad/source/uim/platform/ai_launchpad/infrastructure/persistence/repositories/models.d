@@ -9,6 +9,7 @@ module uim.platform.ai_launchpad.infrastructure.persistence.repositories.models;
 // import uim.platform.ai_launchpad.domain.entities.model : Model;
 // import uim.platform.ai_launchpad.domain.types;
 import uim.platform.ai_launchpad;
+
 mixin(ShowModule!());
 
 @safe:

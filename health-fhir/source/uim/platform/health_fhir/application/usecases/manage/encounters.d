@@ -5,6 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.health_fhir.application.usecases.manage.encounters;
 import uim.platform.health_fhir;
+
 mixin(ShowModule!());
 
 @safe:

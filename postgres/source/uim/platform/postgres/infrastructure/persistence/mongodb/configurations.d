@@ -9,6 +9,7 @@ import uim.platform.postgres;
 import vibe.db.mongo.mongo : MongoCollection;
 import std.algorithm : filter;
 import std.array     : array;
+
 mixin(ShowModule!());
 
 @safe:

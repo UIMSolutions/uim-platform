@@ -6,6 +6,7 @@
 module uim.platform.translation.domain.types;
 
 import uim.platform.translation;
+
 mixin(ShowModule!());
 
 @safe:

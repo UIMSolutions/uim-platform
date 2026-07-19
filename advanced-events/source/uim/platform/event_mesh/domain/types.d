@@ -1,6 +1,7 @@
 module uim.platform.event_mesh.domain.types;
 
 import uim.platform.event_mesh;
+
 mixin(ShowModule!());
 
 @safe:

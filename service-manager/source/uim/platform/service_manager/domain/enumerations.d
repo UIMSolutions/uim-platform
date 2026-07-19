@@ -1,6 +1,7 @@
 module uim.platform.service_manager.domain.enumerations;
 
 import uim.platform.service_manager;
+
 mixin(ShowModule!());
 
 @safe:

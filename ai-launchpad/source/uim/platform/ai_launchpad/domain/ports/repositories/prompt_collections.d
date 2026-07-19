@@ -8,6 +8,7 @@ module uim.platform.ai_launchpad.domain.ports.repositories.prompt_collections;
 // import uim.platform.ai_launchpad.domain.types;
 // import uim.platform.ai_launchpad.domain.entities.prompt_collection : PromptCollection;
 import uim.platform.ai_launchpad;
+
 mixin(ShowModule!());
 
 @safe:

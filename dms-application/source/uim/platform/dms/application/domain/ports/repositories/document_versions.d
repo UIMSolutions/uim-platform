@@ -7,6 +7,7 @@ module uim.platform.dms.application.domain.ports.repositories.document_versions;
 // import uim.platform.dms.application.domain.entities.document_version;
 // import uim.platform.dms.application.domain.types;
 import uim.platform.dms.application;
+
 mixin(ShowModule!());
 @safe:
 interface IDocumentVersionRepository : ITenantRepository!(DocumentVersion, DocumentVersionId) {

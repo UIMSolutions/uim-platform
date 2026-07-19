@@ -5,6 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.private_link.domain.enumerations;
 import uim.platform.private_link;
+
 mixin(ShowModule!());
 
 @safe:

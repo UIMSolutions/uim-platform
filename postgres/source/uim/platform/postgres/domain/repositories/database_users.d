@@ -6,6 +6,7 @@
 module uim.platform.postgres.domain.repositories.database_users;
 
 import uim.platform.postgres;
+
 mixin(ShowModule!());
 
 @safe:

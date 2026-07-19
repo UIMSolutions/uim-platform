@@ -6,6 +6,7 @@
 module uim.platform.print.domain.repositories.print_queues;
 
 import uim.platform.print;
+
 mixin(ShowModule!());
 
 @safe:

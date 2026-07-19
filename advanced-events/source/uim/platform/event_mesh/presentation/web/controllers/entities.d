@@ -9,6 +9,7 @@ import std.conv : to;
 import std.string : lastIndexOf;
 
 import uim.platform.event_mesh;
+
 mixin(ShowModule!());
 
 @safe:

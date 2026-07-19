@@ -7,6 +7,7 @@ module uim.platform.private_link.infrastructure.config;
 
 import std.process : environment;
 import uim.platform.private_link;
+
 mixin(ShowModule!());
 
 @safe:

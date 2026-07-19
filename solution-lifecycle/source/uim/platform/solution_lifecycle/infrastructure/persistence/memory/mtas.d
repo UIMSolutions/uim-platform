@@ -3,9 +3,10 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.solution_lifecycle.infrastructure.persistence.memory.mtas;_repo;
+module uim.platform.solution_lifecycle.infrastructure.persistence.memory.mtas;
 
 import uim.platform.solution_lifecycle;
+
 mixin(ShowModule!());
 
 @safe:
@@ -14,8 +15,9 @@ class MemoryMtaRepository
     : TenantRepository!(Mta, MtaId),
       MtaRepository
 {
+    // size_t countByMta(
     /// Find all MTAs for a tenant with a given MTA application ID
-    Mta[] findByMtaId(TenantId tenantId, string mtaId) {
+    Mta[] findByMta(TenantId tenantId, string mtaId) {
         Mta[] result;
         foreach (m; findByTenant(tenantId))
             if (m.mtaId == mtaId) result ~= m;

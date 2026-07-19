@@ -1,6 +1,7 @@
 module uim.platform.service_manager.domain.services.catalog_aggregator;
 
 import uim.platform.service_manager;
+
 mixin(ShowModule!());
 
 @safe:

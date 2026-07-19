@@ -6,6 +6,7 @@
 module uim.platform.usage_data.infrastructure.web.middleware;
 
 import uim.platform.usage_data;
+
 mixin(ShowModule!());
 @safe:
 /// CORS middleware — adds cross-origin headers for browser access.

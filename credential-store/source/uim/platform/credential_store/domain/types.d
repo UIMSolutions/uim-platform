@@ -7,6 +7,7 @@ module uim.platform.credential_store.domain.types;
 
 import uim.platform.service.mixins.domain;
 import uim.platform.credential_store;
+
 mixin(ShowModule!());
 
 @safe:

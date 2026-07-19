@@ -9,6 +9,7 @@ module uim.platform.logging.application.usecases.manage.dashboards;
 
 
 import uim.platform.logging;
+
 mixin(ShowModule!());
 
 @safe:

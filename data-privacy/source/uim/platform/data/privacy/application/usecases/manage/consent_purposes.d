@@ -6,6 +6,7 @@
 module uim.platform.data.privacy.application.usecases.manage.consent_purposes;
 
 import uim.platform.data.privacy;
+
 mixin(ShowModule!());
 
 @safe:

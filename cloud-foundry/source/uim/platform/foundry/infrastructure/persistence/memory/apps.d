@@ -10,6 +10,7 @@ module uim.platform.foundry.infrastructure.persistence.memory.apps;
 // import uim.platform.foundry.domain.ports.repositories.app;
 
 import uim.platform.foundry;
+
 mixin(ShowModule!());
 
 @safe:

@@ -33,6 +33,7 @@ module uim.platform.object_store.infrastructure.container;
 // import uim.platform.object_store.presentation.http.controllers.service_binding;
 // import uim.platform.object_store.presentation.http.controllers.health;
 import uim.platform.object_store;
+
 mixin(ShowModule!());
 
 @safe:

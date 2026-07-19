@@ -1,5 +1,6 @@
 module uim.platform.data_retention.presentation.http.controllers.residence_rule;
 import uim.platform.data_retention;
+
 mixin(ShowModule!());
 
 @safe:

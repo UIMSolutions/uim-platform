@@ -6,6 +6,7 @@
 module uim.platform.oauth.infrastructure.persistence.memory.oauth_clients;
 
 import uim.platform.oauth;
+
 mixin(ShowModule!());
 
 @safe:

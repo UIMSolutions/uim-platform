@@ -6,6 +6,7 @@
 module uim.platform.identity.provisioning.domain.entities.transformation;
 
 import uim.platform.identity.provisioning;
+
 mixin(ShowModule!());
 
 @safe:

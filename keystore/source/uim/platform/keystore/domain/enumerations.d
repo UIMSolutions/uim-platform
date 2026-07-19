@@ -6,6 +6,7 @@
 module uim.platform.keystore.domain.enumerations;
 
 import uim.platform.keystore;
+
 mixin(ShowModule!());
 
 @safe:

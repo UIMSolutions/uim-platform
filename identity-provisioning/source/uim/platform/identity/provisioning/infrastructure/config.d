@@ -7,6 +7,7 @@ module uim.platform.identity.provisioning.infrastructure.config;
 
 import std.process : environment;
 import uim.platform.identity.provisioning;
+
 mixin(ShowModule!());
 
 @safe:

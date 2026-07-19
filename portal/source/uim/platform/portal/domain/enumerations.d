@@ -6,6 +6,7 @@
 module uim.platform.portal.domain.enumerations;
 
 import uim.platform.portal;
+
 mixin(ShowModule!());
 
 @safe:

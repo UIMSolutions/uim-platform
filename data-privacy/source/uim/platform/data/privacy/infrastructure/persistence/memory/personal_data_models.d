@@ -8,6 +8,7 @@ module uim.platform.data.privacy.infrastructure.persistence.memory.personal_data
 // import uim.platform.data.privacy.domain.entities.personal_data_model;
 // import uim.platform.data.privacy.domain.ports.repositories.personal_data_models;
 import uim.platform.data.privacy;
+
 mixin(ShowModule!());
 
 @safe:

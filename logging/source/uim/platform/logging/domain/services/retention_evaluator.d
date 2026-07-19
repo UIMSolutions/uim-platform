@@ -7,6 +7,7 @@ module uim.platform.logging.domain.services.retention_evaluator;
 // import uim.platform.logging.domain.entities.retention_policy;
 
 import uim.platform.logging;
+
 mixin(ShowModule!());
 
 @safe:

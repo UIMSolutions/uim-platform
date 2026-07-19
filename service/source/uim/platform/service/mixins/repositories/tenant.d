@@ -1,6 +1,7 @@
 module uim.platform.service.mixins.repositories.tenant;
 
 import uim.platform.service;
+
 mixin(ShowModule!());
 
 @safe:

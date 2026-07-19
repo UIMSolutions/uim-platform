@@ -9,6 +9,7 @@ module uim.platform.dms.application.infrastructure.persistence.memory.permission
 // import uim.platform.dms.application.domain.types;
 
 import uim.platform.dms.application;
+
 mixin(ShowModule!());
 @safe:
 class MemoryPermissionRepository : TenantRepository!(Permission, PermissionId), IPermissionRepository {

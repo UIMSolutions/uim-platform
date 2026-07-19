@@ -9,6 +9,7 @@ module uim.platform.ai_launchpad.infrastructure.persistence.repositories.resourc
 // import uim.platform.ai_launchpad.domain.entities.resource_group : ResourceGroup;
 // import uim.platform.ai_launchpad.domain.types;
 import uim.platform.ai_launchpad;
+
 mixin(ShowModule!());
 
 @safe:

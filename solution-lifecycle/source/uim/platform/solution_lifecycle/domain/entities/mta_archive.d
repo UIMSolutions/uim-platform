@@ -6,6 +6,7 @@
 module uim.platform.solution_lifecycle.domain.entities.mta_archive;
 
 import uim.platform.solution_lifecycle;
+
 mixin(ShowModule!());
 
 @safe:

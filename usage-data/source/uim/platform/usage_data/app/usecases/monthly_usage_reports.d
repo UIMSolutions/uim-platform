@@ -6,6 +6,7 @@
 module uim.platform.usage_data.app.usecases.monthly_usage_reports;
 
 import uim.platform.usage_data;
+
 mixin(ShowModule!());
 @safe:
 /// Application service: monthly usage report use cases.

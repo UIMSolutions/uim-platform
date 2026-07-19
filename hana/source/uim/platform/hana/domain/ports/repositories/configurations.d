@@ -7,6 +7,7 @@ module uim.platform.hana.domain.ports.repositories.configurations;
 // import uim.platform.hana.domain.types;
 // import uim.platform.hana.domain.entities.configuration;
 import uim.platform.hana;
+
 mixin(ShowModule!());
 
 @safe:

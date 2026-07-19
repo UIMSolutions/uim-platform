@@ -7,6 +7,7 @@ module uim.platform.ai_launchpad.domain.entities.usage_statistic;
 
 // import uim.platform.ai_launchpad.domain.types;
 import uim.platform.ai_launchpad;
+
 mixin(ShowModule!());
 
 @safe:

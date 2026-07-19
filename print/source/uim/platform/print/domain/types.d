@@ -6,6 +6,7 @@
 module uim.platform.print.domain.types;
 
 import uim.platform.print;
+
 mixin(ShowModule!());
 
 @safe:

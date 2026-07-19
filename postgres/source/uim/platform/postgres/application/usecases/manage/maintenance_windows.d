@@ -6,6 +6,7 @@
 module uim.platform.postgres.application.usecases.manage.maintenance_windows;
 
 import uim.platform.postgres;
+
 mixin(ShowModule!());
 
 @safe:

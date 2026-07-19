@@ -7,6 +7,7 @@ module uim.platform.content_agent.domain.ports.repositories.content_packages;
 // import uim.platform.content_agent.domain.entities.content_package;
 
 import uim.platform.content_agent;
+
 mixin(ShowModule!());
 
 @safe:

@@ -10,6 +10,7 @@ module uim.platform.datasphere.application.usecases.manage.views;
 // import uim.platform.datasphere.application.dto;
 
 import uim.platform.datasphere;
+
 mixin(ShowModule!()); 
 
 @safe:

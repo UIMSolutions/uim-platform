@@ -6,6 +6,7 @@
 module uim.platform.usage_data.infrastructure.web.handlers.monthly_usage_report;
 
 import uim.platform.usage_data;
+
 mixin(ShowModule!());
 @safe:
 

@@ -10,6 +10,7 @@ module app;
 // import uim.platform.data.privacy.infrastructure.container;
 
 import uim.platform.data.privacy;
+
 mixin(ShowModule!());
 
 @safe:

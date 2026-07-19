@@ -8,6 +8,7 @@ module uim.platform.foundry.domain.ports.repositories.app;
 
 // import uim.platform.foundry.domain.entities.application;
 import uim.platform.foundry;
+
 mixin(ShowModule!());
 
 @safe:

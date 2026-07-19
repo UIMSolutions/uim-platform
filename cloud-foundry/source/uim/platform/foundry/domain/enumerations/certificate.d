@@ -5,6 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.foundry.domain.enumerations.certificate;
 import uim.platform.foundry;
+
 mixin(ShowModule!());
 @safe:
 enum CertificateStatus {

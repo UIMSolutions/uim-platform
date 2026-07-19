@@ -6,6 +6,7 @@
 module uim.platform.buildcode.infrastructure.persistence.repositories.build_jobs;
 
 import uim.platform.buildcode;
+
 mixin(ShowModule!());
 
 @safe:

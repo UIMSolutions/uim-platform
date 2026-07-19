@@ -1,5 +1,6 @@
 module uim.platform.foundry.application.dto.organization;
  import uim.platform.foundry;
+
 mixin(ShowModule!());
 
 @safe:

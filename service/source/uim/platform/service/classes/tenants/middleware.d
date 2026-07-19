@@ -5,6 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.service.classes.tenants.middleware;
 import uim.platform.service;
+
 mixin(ShowModule!());
 
 @safe:

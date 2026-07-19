@@ -7,6 +7,7 @@ module uim.platform.auditlog.domain.ports.repositories.data_access_logs;
 
 // import uim.platform.auditlog.domain.entities.data_access_log;
 import uim.platform.auditlog;
+
 mixin(ShowModule!());
 /// Port for persisting data access log records.
 @safe:

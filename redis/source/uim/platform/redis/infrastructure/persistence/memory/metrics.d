@@ -8,6 +8,7 @@ module uim.platform.redis.infrastructure.persistence.memory.metrics;
 import uim.platform.redis;
 import std.algorithm : filter, sort;
 import std.array : array;
+
 mixin(ShowModule!());
 
 @safe:

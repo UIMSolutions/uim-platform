@@ -6,6 +6,7 @@
 module uim.platform.translation.application.usecases.manage.glossary_entries;
 
 import uim.platform.translation;
+
 mixin(ShowModule!());
 
 @safe:

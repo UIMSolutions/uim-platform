@@ -6,12 +6,13 @@
 module uim.platform.portal.domain.entities.translation;
 // import uim.platform.portal.domain.types;
 import uim.platform.portal;
+
 mixin(ShowModule!());
 
 @safe:
 /// Translation entry for portal content (i18n).
 struct Translation {
-  mixin TenantEntity!(TranslationId);
+  mixin TenantEntity!TranslationId;
 
   string resourceType; // "site", "page", "tile", "section", "menuItem"
   string resourceId; // ID of the resource

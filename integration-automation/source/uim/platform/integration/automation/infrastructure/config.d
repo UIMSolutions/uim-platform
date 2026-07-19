@@ -7,6 +7,7 @@ module uim.platform.integration.automation.infrastructure.config;
 import std.process : environment;
 
 import uim.platform.integration.automation;
+
 mixin(ShowModule!());
 
 @safe:

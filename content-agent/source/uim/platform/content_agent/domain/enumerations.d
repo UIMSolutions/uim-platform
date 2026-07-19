@@ -6,6 +6,7 @@
 module uim.platform.content_agent.domain.enumerations;
 
 import uim.platform.content_agent;
+
 mixin(ShowModule!());
 
 @safe:

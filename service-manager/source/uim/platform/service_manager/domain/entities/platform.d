@@ -1,6 +1,7 @@
 module uim.platform.service_manager.domain.entities.platform;
 
 import uim.platform.service_manager;
+
 mixin(ShowModule!());
 
 @safe:

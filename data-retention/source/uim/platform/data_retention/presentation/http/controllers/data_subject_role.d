@@ -1,5 +1,6 @@
 module uim.platform.data_retention.presentation.http.controllers.data_subject_role;
 import uim.platform.data_retention;
+
 mixin(ShowModule!());
 
 @safe:

@@ -6,6 +6,7 @@
 module uim.platform.task_center.application.usecases.manage.substitution_rules;
 
 import uim.platform.task_center;
+
 mixin(ShowModule!());
 
 @safe:

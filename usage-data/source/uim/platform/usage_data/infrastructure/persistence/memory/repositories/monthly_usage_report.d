@@ -6,6 +6,7 @@
 module uim.platform.usage_data.infrastructure.persistence.memory.repositories.monthly_usage_report;
 
 import uim.platform.usage_data;
+
 mixin(ShowModule!());
 @safe:
 /// In-memory adapter implementing MonthlyUsageReportRepository port.

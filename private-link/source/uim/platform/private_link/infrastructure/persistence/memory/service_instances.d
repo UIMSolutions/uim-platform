@@ -5,6 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.private_link.infrastructure.persistence.memory.service_instances;
 import uim.platform.private_link;
+
 mixin(ShowModule!());
 
 @safe:

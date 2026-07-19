@@ -1,5 +1,6 @@
 module uim.platform.data_retention.application.usecases.manage.data_subjects;
 import uim.platform.data_retention;
+
 mixin(ShowModule!());
 
 @safe:

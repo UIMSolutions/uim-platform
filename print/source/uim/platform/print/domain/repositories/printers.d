@@ -6,6 +6,7 @@
 module uim.platform.print.domain.repositories.printers;
 
 import uim.platform.print;
+
 mixin(ShowModule!());
 
 @safe:

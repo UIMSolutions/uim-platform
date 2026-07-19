@@ -7,6 +7,7 @@ module uim.platform.data.privacy.domain.ports.repositories.data_retrieval_reques
 
 // import uim.platform.data.privacy.domain.entities.data_retrieval_request;
 import uim.platform.data.privacy;
+
 mixin(ShowModule!());
 
 @safe:

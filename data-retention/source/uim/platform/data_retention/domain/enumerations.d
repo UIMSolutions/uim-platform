@@ -5,6 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.data_retention.domain.enumerations;
 import uim.platform.data_retention;
+
 mixin(ShowModule!());
 
 @safe:

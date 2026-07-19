@@ -5,6 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.auditlog.domain.entities.audit_config;
 import uim.platform.auditlog;
+
 mixin(ShowModule!());
 
 @safe:

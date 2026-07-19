@@ -6,6 +6,7 @@
 module uim.platform.task_center.application.dtos.usertaskfilter;
 
 import uim.platform.task_center;
+
 mixin(ShowModule!());
 
 @safe:

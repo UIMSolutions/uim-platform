@@ -6,6 +6,7 @@
 module uim.platform.application_studio.domain.entities.build_configuration;
 
 import uim.platform.application_studio;
+
 mixin(ShowModule!());
 
 @safe:

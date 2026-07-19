@@ -12,6 +12,7 @@ module uim.platform.object_store.infrastructure.persistence.repositories.cors_ru
 
  
 import uim.platform.object_store;
+
 mixin(ShowModule!());
 
 @safe:

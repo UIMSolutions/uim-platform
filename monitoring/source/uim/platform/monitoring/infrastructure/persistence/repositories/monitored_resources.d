@@ -9,6 +9,7 @@ module uim.platform.monitoring.infrastructure.persistence.repositories.monitored
 // import uim.platform.monitoring.domain.ports.repositories.monitored_resources;
 
 import uim.platform.monitoring;
+
 mixin(ShowModule!());
 
 @safe:

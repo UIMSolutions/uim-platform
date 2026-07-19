@@ -6,6 +6,7 @@
 module uim.platform.redis.domain.entities.metric;
 
 import uim.platform.redis;
+
 mixin(ShowModule!());
 
 @safe:

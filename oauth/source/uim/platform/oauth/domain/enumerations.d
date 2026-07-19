@@ -6,6 +6,7 @@
 module uim.platform.oauth.domain.enumerations;
 
 import uim.platform.oauth;
+
 mixin(ShowModule!());
 
 @safe:

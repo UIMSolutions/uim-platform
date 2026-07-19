@@ -6,6 +6,7 @@
 module uim.platform.events.application.dto;
 
 import uim.platform.events;
+
 mixin(ShowModule!());
 
 @safe:

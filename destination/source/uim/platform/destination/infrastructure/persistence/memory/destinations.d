@@ -10,6 +10,7 @@ module uim.platform.destination.infrastructure.persistence.memory.destinations;
 // 
 //  
 import uim.platform.destination;
+
 mixin(ShowModule!());
 
 @safe:

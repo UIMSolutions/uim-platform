@@ -6,6 +6,7 @@
 module uim.platform.events.domain.repositories.queue_subscriptions;
 
 import uim.platform.events;
+
 mixin(ShowModule!());
 
 @safe:

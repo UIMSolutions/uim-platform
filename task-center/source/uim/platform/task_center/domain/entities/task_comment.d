@@ -6,6 +6,7 @@
 module uim.platform.task_center.domain.entities.task_comment;
 
 import uim.platform.task_center;
+
 mixin(ShowModule!());
 
 @safe:

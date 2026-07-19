@@ -6,6 +6,7 @@
 module uim.platform.event_mesh.presentation.grpc.mvc;
 
 import uim.platform.event_mesh;
+
 mixin(ShowModule!());
 
 @safe:

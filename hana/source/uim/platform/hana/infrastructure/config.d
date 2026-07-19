@@ -8,6 +8,7 @@ module uim.platform.hana.infrastructure.config;
 import std.process : environment;
 
 import uim.platform.hana;
+
 mixin(ShowModule!());
 
 @safe:

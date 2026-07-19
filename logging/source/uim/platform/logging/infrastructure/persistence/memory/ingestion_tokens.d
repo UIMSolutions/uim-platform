@@ -8,6 +8,7 @@ module uim.platform.logging.infrastructure.persistence.memory.ingestion_tokens;
 // import uim.platform.logging.domain.ports.repositories.ingestion_tokens;
 
 import uim.platform.logging;
+
 mixin(ShowModule!());
 
 @safe:

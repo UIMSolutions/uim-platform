@@ -7,6 +7,7 @@ module uim.platform.data.privacy.domain.ports.repositories.information_reports;
 
 // import uim.platform.data.privacy.domain.entities.information_report;
 import uim.platform.data.privacy;
+
 mixin(ShowModule!());
 
 @safe:

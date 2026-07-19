@@ -11,6 +11,7 @@ module uim.platform.portal.presentation.http.controllers.translation;
 // import uim.platform.portal.domain.types;
 // import uim.platform.portal.application.usecases.manage;
 import uim.platform.portal;
+
 mixin(ShowModule!());
 
 @safe:
@@ -98,15 +99,17 @@ override protected Json updateHandler(HTTPServerRequest req) {
   auto data = precheck.data;
   auto updateReq = UpdateTranslationRequest(translationId, data.getString("value"),);
 
-  auto error = useCase.updateTranslation(tenantId, updateReq);
-  if (error.length > 0)
-    writeApiError(res, 404, error);
-  else
-    res.writeJsonBody(Json.emptyObject, 200);
-}
- catch (Exception e) {
-  writeApiError(res, 500, "Internal server error");
-}
+  auto result = useCase.updateTranslation(tenantId, updateReq);
+  if (result.hasError)
+    return errorResponse(result.message, 400);
+
+  return successResponse("Translation updated successfully", "Updated", 200, Json.emptyObject.set("id", result.id));
+    // writeApiError(res, 404, error);
+  // else
+    // res.writeJsonBody(Json.emptyObject, 200);
+// }
+//  catch (Exception e) {
+  // writeApiError(res, 500, "Internal server error");
 }
 
 override protected Json deleteHandler(HTTPServerRequest req) {
@@ -115,15 +118,23 @@ override protected Json deleteHandler(HTTPServerRequest req) {
     return precheck;
 
   auto tenantId = precheck.tenantId;
-  auto translationId = precheck.id;
-  auto error = useCase.deleteTranslation(tenantId, translationId);
-  if (error.length > 0)
-    writeApiError(res, 404, error);
-  else
-    res.writeJsonBody(Json.emptyObject, 204);
-}
- catch (Exception e) {
-  writeApiError(res, 500, "Internal server error");
-}
-}
+  auto id = TranslationId(precheck.id);
+  if (id.isNull)
+    return errorResponse("Invalid translation ID", 400);
+
+  auto result = useCase.deleteTranslation(tenantId, id);
+  if (result.hasError)
+    return errorResponse(result.message, 400);
+
+  return successResponse("Translation deleted successfully", "Deleted", 200, Json.emptyObject.set("id", result.id));
+    // writeApiError(res, 404, error);
+
+//   if (error.length > 0)
+//     writeApiError(res, 404, error);
+//   else
+//     res.writeJsonBody(Json.emptyObject, 204);
+// }
+//  catch (Exception e) {
+//   writeApiError(res, 500, "Internal server error");
+
 }

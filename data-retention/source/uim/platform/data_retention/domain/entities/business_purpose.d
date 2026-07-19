@@ -1,5 +1,6 @@
 module uim.platform.data_retention.domain.entities.business_purpose;
 import uim.platform.data_retention;
+
 mixin(ShowModule!());
 
 @safe:

@@ -6,6 +6,7 @@
 module uim.platform.translation.domain.entities.translation_job;
 
 import uim.platform.translation;
+
 mixin(ShowModule!());
 
 @safe:

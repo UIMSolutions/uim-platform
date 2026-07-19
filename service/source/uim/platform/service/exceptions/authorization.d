@@ -6,6 +6,7 @@
 module uim.platform.service.exceptions.authorization;
 
 import uim.platform.service;
+
 mixin(ShowModule!());
 
 @safe:

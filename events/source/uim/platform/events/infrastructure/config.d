@@ -7,6 +7,7 @@ module uim.platform.events.infrastructure.config;
 
 import std.process : environment;
 import uim.platform.events;
+
 mixin(ShowModule!());
 
 @safe:

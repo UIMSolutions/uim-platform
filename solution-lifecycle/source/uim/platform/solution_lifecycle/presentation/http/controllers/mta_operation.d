@@ -6,6 +6,7 @@
 module uim.platform.solution_lifecycle.presentation.http.controllers.mta_operation;
 
 import uim.platform.solution_lifecycle;
+
 mixin(ShowModule!());
 
 @safe:
@@ -20,11 +21,12 @@ class MtaOperationController : ManageHttpController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        router.get("/api/v1/slm/operations",          &handleList);
-        router.get("/api/v1/slm/operations/*",         &handleGet);
-        router.post("/api/v1/slm/operations/*/poll",  &handlePoll);
+
+        router.get("/api/v1/slm/operations", &handleList);
+        router.get("/api/v1/slm/operations/*", &handleGet);
+        router.post("/api/v1/slm/operations/*/poll", &handlePoll);
         router.post("/api/v1/slm/operations/*/abort", &handleAbort);
-        router.get("/api/v1/slm/operations/*/logs",   &handleLogs);
+        router.get("/api/v1/slm/operations/*/logs", &handleLogs);
     }
 
     override protected Json listHandler(HTTPServerRequest req) {
@@ -33,17 +35,9 @@ class MtaOperationController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-
-            auto ops = usecase.listOperations(tenantId);
-            auto arr = Json.emptyArray;
-            foreach (op; ops) arr ~= op.toJson;
-            res.writeJsonBody(
-                Json.emptyObject.set("count", ops.length).set("operations", arr),
-                200
-            );
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto ops = usecase.listOperations(tenantId).map!(op => op.toJson()).array.toJson;
+        return successResponse("Operations retrieved successfully", "Retrieved", 200, Json.emptyObject.set(
+                "operations", ops).set("count", ops.length));
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -52,74 +46,82 @@ class MtaOperationController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            auto path = precheck.path;
-            // /api/v1/slm/operations/{id}  — exclude sub-paths like /poll /abort /logs
-            auto id = MtaOperationId(precheck.id);
-            auto op = usecase.getOperation(tenantId, id);
-            if (op.isNull) { writeError(res, 404, "Operation not found"); return; }
-            res.writeJsonBody(op.toJson, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+        auto path = precheck.path;
+        // /api/v1/slm/operations/{id}  — exclude sub-paths like /poll /abort /logs
+        auto id = MtaOperationId(precheck.id);
+        auto op = usecase.getOperation(tenantId, id);
+        if (op.isNull)
+            return errorResponse("Operation not found", 404);
+
+        return successResponse("Operation retrieved successfully", "Retrieved", 200, op.toJson());
     }
 
-    protected void handlePoll(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = precheck.tenantId;
-            auto path = precheck.path;
-            // path: /api/v1/slm/operations/{id}/poll  — strip /poll suffix
-            import std.string : indexOf;
-            auto bare = path[0 .. path.indexOf("/poll")];
-            auto id = MtaOperationId(extractIdFromPath(bare));
-            auto result = usecase.pollOperation(tenantId, id);
-            if (result.hasError)
+    protected Json pollHandler(HTTPServerRequest req) {
+        auto precheck = super.postHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+        auto path = precheck.path;
+
+        // path: /api/v1/slm/operations/{id}/poll  — strip /poll suffix
+        import std.string : indexOf;
+
+        auto bare = path[0 .. path.indexOf("/poll")];
+        auto id = MtaOperationId(extractIdFromPath(bare));
+        auto result = usecase.pollOperation(tenantId, id);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto op = usecase.getOperation(tenantId, id);
-                res.writeJsonBody(op.toJson, 200);
-            } else {
-                writeError(res, 404, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+
+        auto op = usecase.getOperation(tenantId, id);
+        return successResponse("Operation polled successfully", "Polled", 200, op.toJson());
     }
 
-    protected void handleAbort(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
+    mixin(HandleTemplate!("handlePoll", "pollHandler"));
+
+    protected Json abortHandler(HTTPServerRequest req) {
+        auto precheck = super.postHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+        auto path = precheck.path;
+
+        
             auto data = precheck.data;
             AbortOperationRequest r;
-            r.tenantId    = tenantId;
+            r.tenantId = tenantId;
             auto path = precheck.path;
             import std.string : indexOf;
+
             auto bare = path[0 .. path.indexOf("/abort")];
             r.operationId = extractIdFromPath(bare);
-            r.abortedBy   = data.getString("abortedBy");
+            r.abortedBy = data.getString("abortedBy");
 
             auto result = usecase.abortOperation(r);
             if (result.hasError)
-            return errorResponse(result.message, 400);
-                res.writeJsonBody(Json.emptyObject.set("message", "Operation aborted"), 200);
-            } else {
-                writeError(res, 400, result.message);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+                return errorResponse(result.message, 400);
+            
+            return successResponse("Operation aborted successfully", "Aborted", 200, Json.emptyObject.set("id", r.operationId));
+}
 
-    protected void handleLogs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = precheck.tenantId;
-            auto path = precheck.path;
-            import std.string : indexOf;
-            auto bare = path[0 .. path.indexOf("/logs")];
-            auto id = MtaOperationId(extractIdFromPath(bare));
-            auto lines = usecase.getOperationLogs(tenantId, id);
-            auto arr = Json.emptyArray;
-            foreach (l; lines) arr ~= Json(l);
-            res.writeJsonBody(Json.emptyObject.set("logs", arr), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+mixin(HandleTemplate!("handleAbort", "abortHandler"));
+
+protected void handleLogs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+        auto tenantId = precheck.tenantId;
+        auto path = precheck.path;
+        import std.string : indexOf;
+
+        auto bare = path[0 .. path.indexOf("/logs")];
+        auto id = MtaOperationId(extractIdFromPath(bare));
+        auto lines = usecase.getOperationLogs(tenantId, id);
+        auto arr = Json.emptyArray;
+        foreach (l; lines)
+            arr ~= Json(l);
+        res.writeJsonBody(Json.emptyObject.set("logs", arr), 200);
+    } catch (Exception e) {
+        writeError(res, 500, "Internal server error");
     }
+}
 }

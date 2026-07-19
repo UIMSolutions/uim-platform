@@ -5,6 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.auditlog.infrastructure.persistence.repositories.config_change;
 import uim.platform.auditlog;
+
 mixin(ShowModule!());
 
 @safe:

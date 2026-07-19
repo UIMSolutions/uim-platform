@@ -6,6 +6,7 @@
 module uim.platform.redis.domain.repositories.metrics;
 
 import uim.platform.redis;
+
 mixin(ShowModule!());
 
 @safe:

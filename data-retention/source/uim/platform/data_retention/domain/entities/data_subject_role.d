@@ -1,5 +1,6 @@
 module uim.platform.data_retention.domain.entities.data_subject_role;
 import uim.platform.data_retention;
+
 mixin(ShowModule!());
 
 @safe:

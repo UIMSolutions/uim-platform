@@ -6,6 +6,7 @@
 module uim.platform.hana.domain.entities.replication_task;
 // import uim.platform.hana.domain.types;
 import uim.platform.hana;
+
 mixin(ShowModule!());
 
 @safe:

@@ -12,6 +12,7 @@ module uim.platform.logging.application.usecases.ingest_logs;
 
 // import std.format : format;
 import uim.platform.logging;
+
 mixin(ShowModule!());
 
 @safe:

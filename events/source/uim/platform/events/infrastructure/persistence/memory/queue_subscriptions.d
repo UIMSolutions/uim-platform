@@ -6,6 +6,7 @@
 module uim.platform.events.infrastructure.persistence.memory.queue_subscriptions;
 
 import uim.platform.events;
+
 mixin(ShowModule!());
 
 @safe:

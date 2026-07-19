@@ -6,6 +6,7 @@
 module uim.platform.print.infrastructure.container;
 
 import uim.platform.print;
+
 mixin(ShowModule!());
 
 @safe:

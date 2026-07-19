@@ -6,6 +6,7 @@
 module uim.platform.content_agent.domain.entities.import_job;
 
 import uim.platform.content_agent;
+
 mixin(ShowModule!());
 
 @safe:

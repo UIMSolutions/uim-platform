@@ -6,6 +6,7 @@
 module uim.platform.postgres.presentation.http.controllers.maintenance_window;
 
 import uim.platform.postgres;
+
 mixin(ShowModule!());
 
 @safe:

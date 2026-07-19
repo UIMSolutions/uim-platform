@@ -6,6 +6,7 @@
 module uim.platform.hana_spatial.infrastructure.persistence.memory.spatial_features;
 
 import uim.platform.hana_spatial;
+
 mixin(ShowModule!());
 
 @safe:

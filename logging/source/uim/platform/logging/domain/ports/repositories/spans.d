@@ -7,6 +7,7 @@ module uim.platform.logging.domain.ports.repositories.spans;
 // import uim.platform.logging.domain.entities.span;
 
 import uim.platform.logging;
+
 mixin(ShowModule!());
 
 @safe:

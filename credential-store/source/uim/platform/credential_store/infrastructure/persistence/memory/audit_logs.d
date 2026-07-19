@@ -12,6 +12,7 @@ module uim.platform.credential_store.infrastructure.persistence.memory.audit_log
  
 
 import uim.platform.credential_store;
+
 mixin(ShowModule!());
 
 @safe:

@@ -14,6 +14,7 @@ module uim.platform.logging.application.usecases.get_overview;
 
 
 import uim.platform.logging;
+
 mixin(ShowModule!());
 
 @safe:

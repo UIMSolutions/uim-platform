@@ -1,6 +1,7 @@
 module uim.platform.service_manager.application.usecases.manage.service_offerings;
 
 import uim.platform.service_manager;
+
 mixin(ShowModule!());
 
 @safe:
