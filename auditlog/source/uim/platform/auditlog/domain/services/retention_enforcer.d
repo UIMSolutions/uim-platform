@@ -4,7 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.auditlog.domain.services.retention_enforcer;
-// import uim.platform.auditlog.domain.types;
+
 // import uim.platform.auditlog.domain.ports.repositories.audit_logs;
 // import uim.platform.auditlog.domain.ports.repositories.retention_policys;
 // import uim.platform.auditlog.domain.ports.repositories.security_events;
@@ -17,15 +17,15 @@ mixin(ShowModule!());
 /// Domain service — enforces retention policies by purging expired entries.
 @safe:
 class RetentionEnforcer {
-  private AuditLogRepository auditRepo;
+  private IAuditLogRepository auditRepo;
   private RetentionPolicyRepository policyRepo;
   private SecurityEventRepository secRepo;
   private DataAccessLogRepository dalRepo;
-  private ConfigChangeLogRepository cclRepo;
+  private IConfigChangeLogRepository cclRepo;
 
-  this(AuditLogRepository auditRepo, RetentionPolicyRepository policyRepo,
+  this(IAuditLogRepository auditRepo, RetentionPolicyRepository policyRepo,
       SecurityEventRepository secRepo, DataAccessLogRepository dalRepo,
-      ConfigChangeLogRepository cclRepo) {
+      IConfigChangeLogRepository cclRepo) {
     this.auditRepo = auditRepo;
     this.policyRepo = policyRepo;
     this.secRepo = secRepo;

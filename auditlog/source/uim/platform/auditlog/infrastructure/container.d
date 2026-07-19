@@ -40,7 +40,7 @@ mixin(ShowModule!());
 @safe:
 struct Container {
   // Repositories (driven adapters)
-  MemoryAuditLogRepository auditLogRepo;
+  AuditLogRepository auditLogRepo;
   MemoryRetentionPolicyRepository retentionRepo;
   IAuditConfigRepository auditConfigRepo;
   ExportJobRepository exportRepo;
@@ -73,7 +73,7 @@ Container buildContainer(SrvConfig config) {
   Container c;
 
   // Infrastructure adapters
-  c.auditLogRepo = new MemoryAuditLogRepository();
+  c.auditLogRepo = new AuditLogRepository();
   c.retentionRepo = new MemoryRetentionPolicyRepository();
   c.auditConfigRepo = new AuditConfigRepository();
   c.exportRepo = new ExportJobRepository();

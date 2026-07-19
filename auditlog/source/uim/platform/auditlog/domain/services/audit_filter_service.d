@@ -4,7 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.auditlog.domain.services.audit_filter_service;
-// import uim.platform.auditlog.domain.types;
+
 // import uim.platform.auditlog.domain.entities.audit_log_entry;
 // import uim.platform.auditlog.domain.ports.repositories.audit_logs;
 
@@ -14,9 +14,9 @@ mixin(ShowModule!());
 /// Domain service — provides search and filtering over audit logs.
 @safe:
 class AuditFilterService {
-  private AuditLogRepository repo;
+  private IAuditLogRepository repo;
 
-  this(AuditLogRepository repo) {
+  this(IAuditLogRepository repo) {
     this.repo = repo;
   }
 

@@ -6,7 +6,7 @@
 module uim.platform.auditlog.application.usecases.write.audit_log;
 
 
-// import uim.platform.auditlog.domain.types;
+
 // import uim.platform.auditlog.domain.entities.audit_log_entry;
 // import uim.platform.auditlog.domain.ports.repositories.audit_logs;
 // import uim.platform.auditlog.domain.ports.repositories.audit_configs;
@@ -17,10 +17,10 @@ mixin(ShowModule!());
 
 @safe:
 class WriteAuditLogUseCase { // TODO: UIMUseCase {
-  private AuditLogRepository logRepo;
+  private IAuditLogRepository logRepo;
   private IAuditConfigRepository configRepo;
 
-  this(AuditLogRepository logRepo, IAuditConfigRepository configRepo) {
+  this(IAuditLogRepository logRepo, IAuditConfigRepository configRepo) {
     this.logRepo = logRepo;
     this.configRepo = configRepo;
   }

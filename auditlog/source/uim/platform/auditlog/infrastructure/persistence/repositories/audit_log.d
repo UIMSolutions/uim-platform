@@ -4,7 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.auditlog.infrastructure.persistence.repositories.audit_log;
-// import uim.platform.auditlog.domain.types;
+
 // import uim.platform.auditlog.domain.entities.audit_log_entry;
 // import uim.platform.auditlog.domain.ports.repositories.audit_logs;
 // 
@@ -16,7 +16,7 @@ import uim.platform.auditlog;
 mixin(ShowModule!());
 
 @safe:
-class MemoryAuditLogRepository : TenantRepository!(AuditLogEntry, AuditLogId), AuditLogRepository {
+class AuditLogRepository : TenantRepository!(AuditLogEntry, AuditLogId), IAuditLogRepository {
 
   // #region ByCategory
   size_t countByCategory(TenantId tenantId, AuditCategory category) {

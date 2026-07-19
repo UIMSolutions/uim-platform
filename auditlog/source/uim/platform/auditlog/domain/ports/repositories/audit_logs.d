@@ -4,7 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.auditlog.domain.ports.repositories.audit_logs;
-// import uim.platform.auditlog.domain.types;
+
 // import uim.platform.auditlog.domain.entities.audit_log_entry;
 
 import uim.platform.auditlog;
@@ -12,7 +12,7 @@ import uim.platform.auditlog;
 mixin(ShowModule!());
 /// Port for persisting and querying audit log entries.
 @safe:
-interface AuditLogRepository : ITenantRepository!(AuditLogEntry, AuditLogId) {
+interface IAuditLogRepository : ITenantRepository!(AuditLogEntry, AuditLogId) {
 
   AuditLogEntry[] findByCategory(TenantId tenantId, AuditCategory category);
   AuditLogEntry[] findByTimeRange(TenantId tenantId, long timeFrom, long timeTo);

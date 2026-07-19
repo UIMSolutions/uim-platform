@@ -425,7 +425,7 @@ package "Domain Layer  «core business logic»" as DOM <<Rectangle>> {
   }
 
   package "Ports  «interfaces»" as PORTS {
-    @safe: interface  AuditLogRepository << (P,#42A5F5) >> {
+    @safe: interface  IAuditLogRepository << (P,#42A5F5) >> {
       + findByTenant(tenantId) : AuditLogEntry[]
       + findById(tenantId, id) : AuditLogEntry*
       + search(tenantId, categories, from, to, limit, offset) : AuditLogEntry[]
@@ -476,7 +476,7 @@ package "Domain Layer  «core business logic»" as DOM <<Rectangle>> {
       + removeOlderThan(tenantId, before) : void
     }
 
-    @safe: interface  ConfigChangeLogRepository << (P,#42A5F5) >> {
+    @safe: interface  IConfigChangeLogRepository << (P,#42A5F5) >> {
       + findByTenant(tenantId) : ConfigChangeLog[]
       + findByUser(tenantId, userId) : ConfigChangeLog[]
       + findByConfigType(tenantId, type) : ConfigChangeLog[]
@@ -505,7 +505,7 @@ package "Domain Layer  «core business logic»" as DOM <<Rectangle>> {
 package "Infrastructure Layer  «driven adapters»" as INFRA <<Rectangle>> {
   skinparam packageBackgroundColor INFRA_COLOR
 
-  @safe: class MemoryAuditLogRepository << (A,#AB47BC) >>
+  @safe: class AuditLogRepository << (A,#AB47BC) >>
   @safe: class AuditConfigRepository << (A,#AB47BC) >>
   @safe: class MemoryRetentionPolicyRepository << (A,#AB47BC) >>
   @safe: class ExportJobRepository << (A,#AB47BC) >>
@@ -529,27 +529,27 @@ DataAccessController --> WriteDataAccessLogUseCase
 ConfigChangeController --> WriteConfigChangeUseCase
 
 ' Use Cases → Ports
-WriteAuditLogUseCase --> AuditLogRepository
+WriteAuditLogUseCase --> IAuditLogRepository
 WriteAuditLogUseCase --> AuditConfigRepository
-RetrieveAuditLogsUseCase --> AuditLogRepository
+RetrieveAuditLogsUseCase --> IAuditLogRepository
 ManageRetentionUseCase --> RetentionPolicyRepository
 ManageAuditConfigUseCase --> AuditConfigRepository
 ManageExportsUseCase --> IExportJobRepository
-ManageExportsUseCase --> AuditLogRepository
-WriteSecurityEventUseCase --> AuditLogRepository
+ManageExportsUseCase --> IAuditLogRepository
+WriteSecurityEventUseCase --> IAuditLogRepository
 WriteSecurityEventUseCase --> SecurityEventRepository
-WriteDataAccessLogUseCase --> AuditLogRepository
+WriteDataAccessLogUseCase --> IAuditLogRepository
 WriteDataAccessLogUseCase --> DataAccessLogRepository
-WriteConfigChangeUseCase --> AuditLogRepository
-WriteConfigChangeUseCase --> ConfigChangeLogRepository
+WriteConfigChangeUseCase --> IAuditLogRepository
+WriteConfigChangeUseCase --> IConfigChangeLogRepository
 
 ' Domain Services → Ports
-AuditFilterService --> AuditLogRepository
-RetentionEnforcer --> AuditLogRepository
+AuditFilterService --> IAuditLogRepository
+RetentionEnforcer --> IAuditLogRepository
 RetentionEnforcer --> RetentionPolicyRepository
 RetentionEnforcer --> SecurityEventRepository
 RetentionEnforcer --> DataAccessLogRepository
-RetentionEnforcer --> ConfigChangeLogRepository
+RetentionEnforcer --> IConfigChangeLogRepository
 
 ' Use Cases → Entities
 WriteAuditLogUseCase ..> AuditLogEntry
@@ -565,13 +565,13 @@ WriteConfigChangeUseCase ..> ConfigChangeLog
 WriteConfigChangeUseCase ..> AuditLogEntry
 
 ' Infrastructure implements Ports
-MemoryAuditLogRepository ..|> AuditLogRepository
+AuditLogRepository ..|> IAuditLogRepository
 AuditConfigRepository ..|> AuditConfigRepository
 MemoryRetentionPolicyRepository ..|> RetentionPolicyRepository
 ExportJobRepository ..|> IExportJobRepository
 MemorySecurityEventRepository ..|> SecurityEventRepository
 MemoryDataAccessLogRepository ..|> DataAccessLogRepository
-MemoryConfigChangeLogRepository ..|> ConfigChangeLogRepository
+MemoryConfigChangeLogRepository ..|> IConfigChangeLogRepository
 
 @enduml
 ```

@@ -6,7 +6,7 @@
 module uim.platform.auditlog.application.usecases.write.config_change;
 
 
-// import uim.platform.auditlog.domain.types;
+
 // import uim.platform.auditlog.domain.entities.audit_log_entry;
 // import uim.platform.auditlog.domain.entities.config_change_log;
 // import uim.platform.auditlog.domain.ports.repositories.audit_logs;
@@ -19,10 +19,10 @@ mixin(ShowModule!());
 
 @safe:
 class WriteConfigChangeUseCase { // TODO: UIMUseCase {
-  private AuditLogRepository auditRepo;
-  private ConfigChangeLogRepository cclRepo;
+  private IAuditLogRepository auditRepo;
+  private IConfigChangeLogRepository cclRepo;
 
-  this(AuditLogRepository auditRepo, ConfigChangeLogRepository cclRepo) {
+  this(IAuditLogRepository auditRepo, IConfigChangeLogRepository cclRepo) {
     this.auditRepo = auditRepo;
     this.cclRepo = cclRepo;
   }

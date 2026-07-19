@@ -4,7 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.auditlog.domain.ports.repositories.config_change_logs;
-// import uim.platform.auditlog.domain.types;
+
 // 
 // import uim.platform.auditlog;import uim.platform.auditlog.domain.entities.config_change_log;
 
@@ -15,7 +15,7 @@ mixin(ShowModule!());
 mixin(ShowModule!());
 /// Port for persisting configuration change log records.
 @safe:
-interface ConfigChangeLogRepository : ITenantRepository!(ConfigChangeLog, ConfigChangeLogId) {
+interface IConfigChangeLogRepository : ITenantRepository!(ConfigChangeLog, ConfigChangeLogId) {
   
   bool existsByAuditLogId(TenantId tenantId, AuditLogId auditLogId);
   ConfigChangeLog findByAuditLogId(TenantId tenantId, AuditLogId auditLogId);

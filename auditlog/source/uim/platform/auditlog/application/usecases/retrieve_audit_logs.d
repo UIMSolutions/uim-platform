@@ -4,7 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.auditlog.application.usecases.retrieve_audit_logs;
-// import uim.platform.auditlog.domain.types;
+
 // import uim.platform.auditlog.domain.entities.audit_log_entry;
 // import uim.platform.auditlog.domain.ports.repositories.audit_logs;
 
@@ -15,9 +15,9 @@ mixin(ShowModule!());
 
 @safe:
 class RetrieveAuditLogsUseCase { // TODO: UIMUseCase {
-  private AuditLogRepository repository;
+  private IAuditLogRepository repository;
 
-  this(AuditLogRepository repository) {
+  this(IAuditLogRepository repository) {
     this.repository = repository;
   }
 

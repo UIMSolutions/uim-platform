@@ -7,7 +7,7 @@ module uim.platform.auditlog.application.usecases.manage.exports;
 // 
 // 
 // 
-// import uim.platform.auditlog.domain.types;
+
 // import uim.platform.auditlog.domain.entities.export_job;
 // import uim.platform.auditlog.domain.ports.repositories.export_jobs;
 // import uim.platform.auditlog.domain.ports.repositories.audit_logs;
@@ -19,9 +19,9 @@ mixin(ShowModule!());
 @safe:
 class ManageExportsUseCase { // TODO: UIMUseCase {
   private IExportJobRepository jobs;
-  private AuditLogRepository audits;
+  private IAuditLogRepository audits;
 
-  this(IExportJobRepository jobs, AuditLogRepository audits) {
+  this(IExportJobRepository jobs, IAuditLogRepository audits) {
     this.jobs = jobs;
     this.audits = audits;
   }

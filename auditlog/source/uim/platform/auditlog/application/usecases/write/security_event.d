@@ -7,7 +7,7 @@ module uim.platform.auditlog.application.usecases.write.security_event;
 // 
 // 
 // 
-// import uim.platform.auditlog.domain.types;
+
 // import uim.platform.auditlog.domain.entities.audit_log_entry;
 // import uim.platform.auditlog.domain.entities.security_event;
 // import uim.platform.auditlog.domain.ports.repositories.audit_logs;
@@ -19,10 +19,10 @@ import uim.platform.auditlog;
 mixin(ShowModule!());
 @safe:
 class WriteSecurityEventUseCase { // TODO: UIMUseCase {
-  private AuditLogRepository auditRepo;
+  private IAuditLogRepository auditRepo;
   private SecurityEventRepository secRepo;
 
-  this(AuditLogRepository auditRepo, SecurityEventRepository secRepo) {
+  this(IAuditLogRepository auditRepo, SecurityEventRepository secRepo) {
     this.auditRepo = auditRepo;
     this.secRepo = secRepo;
   }
