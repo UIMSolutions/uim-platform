@@ -20,7 +20,7 @@ StorageClass[] toStorageClass(string[] values) {
 string toString(StorageClass value) {
   return value.to!string();
 }
-string[] toString(StorageClass[] values) {
+string[] toStrings(StorageClass[] values) {
   return values.map!(v => v.toString).array;
 }
 ///
@@ -57,7 +57,7 @@ BucketStatus[] toBucketStatus(string[] values) {
 string toString(BucketStatus value) {
   return value.to!string();
 }
-string[] toString(BucketStatus[] values) {
+string[] toStrings(BucketStatus[] values) {
   return values.map!(v => v.toString).array;
 }
 ///
@@ -92,7 +92,7 @@ ObjectStatus[] toObjectStatus(string[] values) {
 string toString(ObjectStatus value) {
   return value.to!string();
 }
-string[] toString(ObjectStatus[] values) {
+string[] toStrings(ObjectStatus[] values) {
   return values.map!(v => v.toString).array;
 }
 ///
@@ -129,7 +129,7 @@ EncryptionType[] toEncryptionType(string[] values) {
 string toString(EncryptionType value) {
   return value.to!string();
 }
-string[] toString(EncryptionType[] values) {
+string[] toStrings(EncryptionType[] values) {
   return values.map!(v => v.toString).array;
 }
 /// 
@@ -166,7 +166,7 @@ PolicyEffect[] toPolicyEffect(string[] values) {
 string toString(PolicyEffect value) {
   return value.to!string();
 }
-string[] toString(PolicyEffect[] values) {
+string[] toStrings(PolicyEffect[] values) {
   return values.map!(v => v.toString).array;
 }
 /// 
@@ -200,7 +200,7 @@ BindingPermission[] toBindingPermission(string[] values) {
 string toString(BindingPermission value) {
   return value.to!string();
 }
-string[] toString(BindingPermission[] values) {
+string[] toStrings(BindingPermission[] values) {
   return values.map!(v => v.toString).array;
 }
 /// 
@@ -236,7 +236,7 @@ BindingStatus[] toBindingStatus(string[] values) {
 string toString(BindingStatus value) {
   return value.to!string();
 }
-string[] toString(BindingStatus[] values) {
+string[] toStrings(BindingStatus[] values) {
   return values.map!(v => v.toString).array;
 }
 /// 
@@ -271,7 +271,7 @@ RuleStatus[] toRuleStatus(string[] values) {
 string toString(RuleStatus value) {
   return value.to!string();
 }
-string[] toString(RuleStatus[] values) {
+string[] toStrings(RuleStatus[] values) {
   return values.map!(v => v.toString).array;
 }
 /// 

@@ -18,6 +18,7 @@ class ObservationController : ManageHttpController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+    
     router.get("/fhir/R4/Observation", &handleList);
     router.get("/fhir/R4/Observation/*", &handleGet);
     router.post("/fhir/R4/Observation", &handleCreate);
@@ -49,19 +50,19 @@ class ObservationController : ManageHttpController {
     r.effectiveDateTime_ = data.getString("effectiveDateTime");
     r.note_ = data.getString("note");
 
-    auto subjJ = j.get("subject", Json.emptyObject);
+    auto subjJ = data.get("subject", Json.emptyObject);
     r.subject_ = FhirReference(subjJ.getString("reference"), subjJ.getString("display"));
 
     auto result = usecase.createObservation(r);
-    if (result.success)
-      res.writeJsonBody(Json.emptyObject.set("resourceType", "Observation")
-          .set("id", result.id), 201);
-    else
-      writeFhirError(res, 400, result.message);
-  }
- catch (Exception e) {
-  // writeFhirError(res, 500, "Internal server error");
-  }
+    if (result.hasError) 
+      return errorResponse(result.message, 400);
+
+    return successResponse("Observation created successfully", "Created", 201, Json.emptyObject.set("id", result.id));
+    // if (result.success)
+    //   res.writeJsonBody(Json.emptyObject.set("resourceType", "Observation")
+    //       .set("id", result.id), 201);
+    // else
+    //   writeFhirError(res, 400, result.message);
 }
 
 override protected Json listHandler(HTTPServerRequest req) {
@@ -77,18 +78,16 @@ override protected Json listHandler(HTTPServerRequest req) {
   else
     observations = usecase.listObservations(tenantId);
 
-  auto entries = Json.emptyArray;
-  foreach (o; observations)
-    entries ~= o.toJson();
-  res.writeJsonBody(
-    Json.emptyObject.set("resourceType", "Bundle").set("type", "searchset")
-      .set("total", observations.length).set("entry", entries),
-      200
-  );
-}
- catch (Exception e) {
-// writeFhirError(res, 500, "Internal server error");
-}
+  auto entries = observations.map!(o => 0.toJson()).array.toJson;
+  auto responseData = Json.emptyObject.set("resourceType", "Bundle").set("type", "searchset")
+    .set("total", observations.length).set("entry", entries);
+
+  return successResponse("Observations retrieved successfully", "Retrieved", 200, responseData);
+
+  // res.writeJsonBody(
+  //   Json.emptyObject.set("resourceType", "Bundle").set("type", "searchset")
+  //     .set("total", observations.length).set("entry", entries),
+  //     200
 }
 
 override protected Json getHandler(HTTPServerRequest req) {
@@ -98,16 +97,15 @@ override protected Json getHandler(HTTPServerRequest req) {
 
   auto tenantId = precheck.tenantId;
   auto id = ObservationId(precheck.id);
+  if (id.isNull)
+    return errorResponse("Invalid Observation ID", 400);
+
   auto o = usecase.getObservation(tenantId, id);
-  if (o.isNull) {
-    writeFhirError(res, 404, "Observation not found");
-    return;
-  }
-  res.writeJsonBody(o.toJson(), 200);
-}
- catch (Exception e) {
-// writeFhirError(res, 500, "Internal server error");
-}
+  if (o.isNull)
+    return errorResponse("Observation not found", 404);
+
+  return successResponse("Observation retrieved successfully", "Retrieved", 200, o.toJson());
+    // writeFhirError(res, 404, "Observation not found");
 }
 
 override protected Json updateHandler(HTTPServerRequest req) {
@@ -117,27 +115,26 @@ override protected Json updateHandler(HTTPServerRequest req) {
 
   auto tenantId = precheck.tenantId;
   auto id = ObservationId(precheck.id);
-  auto data = precheck.data;
+  if (id.isNull)
+    return errorResponse("Invalid Observation ID", 400);
 
+  auto data = precheck.data;
   UpdateObservationRequest r;
   r.tenantId = tenantId;
   r.observationId = id;
   r.status_ = data.getString("status");
   r.effectiveDateTime_ = data.getString("effectiveDateTime");
   r.note_ = data.getString("note");
-  auto subjJ = j.get("subject", Json.emptyObject);
+  auto subjJ = data.get("subject", Json.emptyObject);
   r.subject_ = FhirReference(subjJ.getString("reference"), subjJ.getString("display"));
 
   auto result = usecase.updateObservation(r);
-  if (result.success)
-    res.writeJsonBody(Json.emptyObject.set("resourceType", "Observation")
-        .set("id", result.id), 200);
-  else
-    writeFhirError(res, 400, result.message);
-}
- catch (Exception e) {
-// writeFhirError(res, 500, "Internal server error");
-}
+  if (result.hasError)
+    return errorResponse(result.message, 400);
+
+    return successResponse("Observation updated successfully", "Updated", 200, Json.emptyObject.set("id", result.id));
+    // res.writeJsonBody(Json.emptyObject.set("resourceType", "Observation")
+    //     .set("id", result.id), 200);
 }
 
 override protected Json deleteHandler(HTTPServerRequest req) {
@@ -147,9 +144,13 @@ override protected Json deleteHandler(HTTPServerRequest req) {
 
   auto tenantId = precheck.tenantId;
   auto id = ObservationId(precheck.id);
+  if (id.isNull)
+    return errorResponse("Invalid Observation ID", 400);
+    
   auto result = usecase.deleteObservation(tenantId, id);
-  if (result.haserror)
-    writeFhirError(res, 400, result.message);
+  if (result.hasError)
+    return errorResponse(result.message, 400);
+    // writeFhirError(res, 400, result.message);
 
   return successResponse("Observation deleted successfully", "Deleted", 200, Json.emptyObject.set("id", id));
 }

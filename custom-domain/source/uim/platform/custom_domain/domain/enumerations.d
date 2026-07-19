@@ -25,7 +25,7 @@ string toString(DomainStatus value) {
     return value.to!string();
 }
 
-string[] toString(DomainStatus[] values) {
+string[] toStrings(DomainStatus[] values) {
     return values.map!(v => v.toString).array;
 }
 ///
@@ -71,7 +71,7 @@ string toString(DomainEnvironment value) {
     return value.to!string();
 }
 
-string[] toString(DomainEnvironment[] values) {
+string[] toStrings(DomainEnvironment[] values) {
     return values.map!(v => v.toString).array;
 }
 ///
@@ -116,7 +116,7 @@ string toString(KeyAlgorithm value) {
     return value.to!string();
 }
 
-string[] toString(KeyAlgorithm[] values) {
+string[] toStrings(KeyAlgorithm[] values) {
     return values.map!(v => v.toString).array;
 }
 ///
@@ -160,7 +160,7 @@ string toString(KeyStatus value) {
     return value.to!string();
 }
 
-string[] toString(KeyStatus[] values) {
+string[] toStrings(KeyStatus[] values) {
     return values.map!(v => v.toString).array;
 }
 ///
@@ -206,7 +206,7 @@ string toString(CertificateStatus value) {
     return value.to!string();
 }
 
-string[] toString(CertificateStatus[] values) {
+string[] toStrings(CertificateStatus[] values) {
     return values.map!(v => v.toString).array;
 }
 /// 
@@ -252,7 +252,7 @@ string toString(CertificateType value) {
     return value.to!string();
 }
 
-string[] toString(CertificateType[] values) {
+string[] toStrings(CertificateType[] values) {
     return values.map!(v => v.toString).array;
 }
 ///
@@ -297,7 +297,7 @@ string toString(TlsProtocolVersion value) {
     return value.to!string();
 }
 
-string[] toString(TlsProtocolVersion[] values) {
+string[] toStrings(TlsProtocolVersion[] values) {
     return values.map!(v => v.toString).array;
 }
 
@@ -341,7 +341,7 @@ string toString(CipherSuiteStrength value) {
     return value.to!string();
 }
 
-string[] toString(CipherSuiteStrength[] values) {
+string[] toStrings(CipherSuiteStrength[] values) {
     return values.map!(v => v.toString).array;
 }
 
@@ -386,7 +386,7 @@ string toString(MappingStatus value) {
     return value.to!string();
 }
 
-string[] toString(MappingStatus[] values) {
+string[] toStrings(MappingStatus[] values) {
     return values.map!(v => v.toString).array;
 }
 ///
@@ -430,7 +430,7 @@ string toString(MappingType value) {
     return value.to!string();
 }
 
-string[] toString(MappingType[] values) {
+string[] toStrings(MappingType[] values) {
     return values.map!(v => v.toString).array;
 }
 ///
@@ -474,7 +474,7 @@ string toString(TrustedCertificateStatus value) {
     return value.to!string();
 }
 
-string[] toString(TrustedCertificateStatus[] values) {
+string[] toStrings(TrustedCertificateStatus[] values) {
     return values.map!(v => v.toString).array;
 }
 /// 
@@ -516,7 +516,7 @@ string toString(ClientAuthMode value) {
     return value.to!string();
 }
 
-string[] toString(ClientAuthMode[] values) {
+string[] toStrings(ClientAuthMode[] values) {
     return values.map!(v => v.toString).array;
 }
 ///
@@ -560,7 +560,7 @@ DnsRecordType[] toDnsRecordType(string[] values) {
 string toString(DnsRecordType value) {
     return value.to!string();
 }
-string[] toString(DnsRecordType[] values) {
+string[] toStrings(DnsRecordType[] values) {
     return values.map!(v => v.toString).array;
 }
 ///
@@ -609,7 +609,7 @@ string toString(DnsValidationStatus value) {
     return value.to!string();
 }
 
-string[] toString(DnsValidationStatus[] values) {
+string[] toStrings(DnsValidationStatus[] values) {
     return values.map!(v => v.toString).array;
 }
 ///
@@ -660,7 +660,7 @@ string toString(DashboardMetricType value) {
     return value.to!string();
 }
 
-string[] toString(DashboardMetricType[] values) {
+string[] toStrings(DashboardMetricType[] values) {
     return values.map!(v => v.toString).array;
 }
 ///
@@ -716,7 +716,7 @@ string toString(HealthStatus value) {
     return value.to!string();
 }
 
-string[] toString(HealthStatus[] values) {
+string[] toStrings(HealthStatus[] values) {
     return values.map!(v => v.toString).array;
 }
 ///
@@ -762,7 +762,7 @@ string toString(ExpirationSeverity value) {
     return value.to!string();
 }
 
-string[] toString(ExpirationSeverity[] values) {
+string[] toStrings(ExpirationSeverity[] values) {
     return values.map!(v => v.toString).array;
 }
 ///

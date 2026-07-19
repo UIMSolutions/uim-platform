@@ -31,7 +31,7 @@ AppPlatform[] toAppPlatform(string[] values) {
 string toString(AppPlatform value) {
     return value.to!string; // This will return the enum member name as a string, e.g. "ios", "android", etc
 }
-string[] toString(AppPlatform[] values) {
+string[] toStrings(AppPlatform[] values) {
     return values.map!(toString).array;
 }
 ///
@@ -77,7 +77,7 @@ AppStatus[] toAppStatus(string[] values) {
 string toString(AppStatus value) {
     return cast(string)value; // This will return the enum member name as a string, e.g. "draft", "active", etc
 }
-string[] toString(AppStatus[] values) {
+string[] toStrings(AppStatus[] values) {
     return values.map!(toString).array;
 }
 ///
@@ -119,7 +119,7 @@ DefinitionStatus[] toDefinitionStatus(string[] values) {
 string toString(DefinitionStatus value) {
     return value.to!string; // This will return the enum member name as a string, e.g. "draft", "published", etc
 }
-string[] toString(DefinitionStatus[] values) {
+string[] toStrings(DefinitionStatus[] values) {
     return values.map!(toString).array;
 }
 ///
@@ -205,7 +205,7 @@ DeviceStatus[] toDeviceStatus(string[] values) {
 string toString(DeviceStatus value) {
     return value.to!string; // This will return the enum member name as a string, e.g. "enrolled", "active", etc
 }
-string[] toString(DeviceStatus[] values) {
+string[] toStrings(DeviceStatus[] values) {
     return values.map!(toString).array;
 }
 ///
@@ -251,7 +251,7 @@ SyncStatus[] toSyncStatus(string[] values) {
 string toString(SyncStatus value) {
     return value.to!string; // This will return the enum member name as a string, e.g. "pending", "inProgress", etc
 }
-string[] toString(SyncStatus[] values) {
+string[] toStrings(SyncStatus[] values) {
     return values.map!(toString).array;
 }
 ///
@@ -295,7 +295,7 @@ SyncDirection[] toSyncDirection(string[] values) {
 string toString(SyncDirection value) {
     return value.to!string; // This will return the enum member name as a string, e.g. "upload", "download", etc
 }
-string[] toString(SyncDirection[] values) {
+string[] toStrings(SyncDirection[] values) {
     return values.map!(toString).array;
 }
 ///
@@ -339,7 +339,7 @@ BackendType[] toBackendType(string[] values) {
 string toString(BackendType value) {
     return value.to!string; // This will return the enum member name as a string, e.g. "s4hana", "ecc", etc
 }
-string[] toString(BackendType[] values) {
+string[] toStrings(BackendType[] values) {
     return values.map!(toString).array;
 }
 ///
@@ -384,7 +384,7 @@ ConnectionStatus[] toConnectionStatus(string[] values) {
 string toString(ConnectionStatus value) {
     return value.to!string; // This will return the enum member name as a string, e.g. "active", "inactive", etc
 }
-string[] toString(ConnectionStatus[] values) {
+string[] toStrings(ConnectionStatus[] values) {
     return values.map!(toString).array;
 }
 ///
@@ -430,7 +430,7 @@ DeploymentStatus[] toDeploymentStatus(string[] values) {
 string toString(DeploymentStatus value) {
     return value.to!string; // This will return the enum member name as a string, e.g. "pending", "deploying", etc
 }
-string[] toString(DeploymentStatus[] values) {
+string[] toStrings(DeploymentStatus[] values) {
     return values.map!(toString).array;
 }
 ///
@@ -474,7 +474,7 @@ DeploymentScope[] toDeploymentScope(string[] values) {
 string toString(DeploymentScope value) {
     return value.to!string; // This will return the enum member name as a string, e.g. "device", "group", etc
 }
-string[] toString(DeploymentScope[] values) {
+string[] toStrings(DeploymentScope[] values) {
     return values.map!(toString).array;
 }
 ///

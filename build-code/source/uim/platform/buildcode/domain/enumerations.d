@@ -32,7 +32,7 @@ ProjectType[] toProjectType(string[] values) {
 string toString(ProjectType value) {
   return value.to!string();
 }
-string[] toString(ProjectType[] values) {
+string[] toStrings(ProjectType[] values) {
   return values.map!(v => v.toString).array;
 }
 /// 
@@ -80,7 +80,7 @@ TechStack[] toTechStack(string[] values) {
 string toString(TechStack value) {
   return value.to!string();
 }
-string[] toString(TechStack[] values) {
+string[] toStrings(TechStack[] values) {
   return values.map!(v => v.toString()).array;
 }
 ///
@@ -125,7 +125,7 @@ ProjectStatus[] toProjectStatus(string[] values) {
 string toString(ProjectStatus value) {
   return value.to!string();
 }
-string[] toString(ProjectStatus[] values) {
+string[] toStrings(ProjectStatus[] values) {
   return values.map!(v => v.toString()).array;
 }
 ///
@@ -162,7 +162,7 @@ DevSpaceStatus[] toDevSpaceStatus(string[] values) {
 string toString(DevSpaceStatus value) {
   return cast(string)value;
 }
-string[] toString(DevSpaceStatus[] values) {
+string[] toStrings(DevSpaceStatus[] values) {
   return values.map!(v => v.toString()).array;
 }
 ///
@@ -202,7 +202,7 @@ PipelineStage[] toPipelineStage(string[] values) {
 string toString(PipelineStage value) {
   return value.to!string();
 }
-string[] toString(PipelineStage[] values) {
+string[] toStrings(PipelineStage[] values) {
   return values.map!(v => v.toString()).array;
 }
 ///
@@ -241,7 +241,7 @@ JobStatus[] toJobStatus(string[] values) {
 string toString(JobStatus value) {
   return value.to!string();
 }
-string[] toString(JobStatus[] values) {
+string[] toStrings(JobStatus[] values) {
   return values.map!(v => v.toString()).array;
 }
 ///
@@ -282,7 +282,7 @@ DeploymentEnvironment[] toDeploymentEnvironment(string[] values) {
 string toString(DeploymentEnvironment value) {
   return value.to!string();
 }
-string[] toString(DeploymentEnvironment[] values) {
+string[] toStrings(DeploymentEnvironment[] values) {
   return values.map!(v => v.toString()).array;
 }
 ///
@@ -323,7 +323,7 @@ DeploymentStatus[] toDeploymentStatus(string[] values) {
 string toString(DeploymentStatus value) {
   return value.to!string();
 }
-string[] toString(DeploymentStatus[] values) {
+string[] toStrings(DeploymentStatus[] values) {
   return values.map!(v => v.toString()).array;
 }
 ///
@@ -363,7 +363,7 @@ AIRequestStatus[] toAIRequestStatus(string[] values) {
 string toString(AIRequestStatus value) {
   return value.to!string();
 }
-string[] toString(AIRequestStatus[] values) {
+string[] toStrings(AIRequestStatus[] values) {
   return values.map!(v => v.toString()).array;
 }
 ///
@@ -403,7 +403,7 @@ AIGenerationType[] toAIGenerationType(string[] values) {
 string toString(AIGenerationType value) {
   return value.to!string();
 }
-string[] toString(AIGenerationType[] values) {
+string[] toStrings(AIGenerationType[] values) {
   return values.map!(v => v.toString()).array;
 }
 ///
@@ -444,7 +444,7 @@ BindingStatus[] toBindingStatus(string[] values) {
 string toString(BindingStatus value) {
   return value.to!string();
 }
-string[] toString(BindingStatus[] values) {
+string[] toStrings(BindingStatus[] values) {
   return values.map!(v => v.toString()).array;
 }
 ///

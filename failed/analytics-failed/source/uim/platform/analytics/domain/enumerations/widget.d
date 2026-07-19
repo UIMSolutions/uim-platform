@@ -52,7 +52,7 @@ FilterOperator[] toFilterOperator(string[] operators) {
 string toString(FilterOperator operator) {
   return cast(string)operator; // This will return the enum member name as a string,
 }
-string[] toString(FilterOperator[] operators) {
+string[] toStrings(FilterOperator[] operators) {
   return operators.map!(toString).array;
 }
 ///

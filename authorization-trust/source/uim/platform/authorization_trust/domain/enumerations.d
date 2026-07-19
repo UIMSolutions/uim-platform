@@ -47,7 +47,7 @@ string toString(GrantType g) @safe {
   return cast(string)g;
 }
 
-string[] toString(GrantType[] g) @safe {
+string[] toStrings(GrantType[] g) @safe {
   return g.map!(toString).array;
 }
 /// 
@@ -88,7 +88,7 @@ ClientType[] toClientTypes(string[] s) @safe {
 string toString(ClientType c) @safe {
   return (c == ClientType.confidential) ? "confidential" : "public";
 }
-string[] toString(ClientType[] c) @safe {
+string[] toStrings(ClientType[] c) @safe {
   return c.map!(toString).array;
 }
 ///
@@ -122,7 +122,7 @@ IdpType[] toIdpTypes(string[] s) @safe {
 string toString(IdpType type) @safe {
   return type.to!string;
 }
-string[] toString(IdpType[] i) @safe {
+string[] toStrings(IdpType[] i) @safe {
   return i.map!(toString).array;
 }
 ///

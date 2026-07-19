@@ -32,7 +32,7 @@ string toString(AppPlatform value) {
   return value.to!string();
 }
 
-string[] toString(AppPlatform[] values) {
+string[] toStrings(AppPlatform[] values) {
   return values.map!(toString).array;
 }
 ///
@@ -85,7 +85,7 @@ string toString(AppStatus value) {
   return cast(string)value; // This will return the enum member name as a string, e.g., "active", "inactive", etc.
 }
 
-string[] toString(AppStatus[] values) {
+string[] toStrings(AppStatus[] values) {
   return values.map!(toString).array;
 }
 ///
@@ -137,7 +137,7 @@ string toString(DeviceStatus value) {
   return value.to!string; // This will return the enum member name as a string, e.g., "registered", "locked", etc.
 }
 
-string[] toString(DeviceStatus[] values) {
+string[] toStrings(DeviceStatus[] values) {
   return values.map!(toString).array;
 }
 ///
@@ -189,7 +189,7 @@ string toString(PushProvider value) {
   return value.to!string; // This will return the enum member name as a string, e.g., "fcm", "apns", etc.
 }
 
-string[] toString(PushProvider[] values) {
+string[] toStrings(PushProvider[] values) {
   return values.map!(toString).array;
 }
 ///
@@ -242,7 +242,7 @@ string toString(NotificationStatus value) {
   return value.to!string; // This will return the enum member name as a string, e.g., "pending", "sent", etc.
 }
 
-string[] toString(NotificationStatus[] values) {
+string[] toStrings(NotificationStatus[] values) {
   return values.map!(toString).array;
 }
 ///
@@ -299,7 +299,7 @@ string toString(NotificationPriority value) {
   return value.to!string; // This will return the enum member name as a string, e.g., "normal", "low", etc.
 }
 
-string[] toString(NotificationPriority[] values) {
+string[] toStrings(NotificationPriority[] values) {
   return values.map!(toString).array;
 }
 ///
@@ -348,7 +348,7 @@ string toString(PushRegStatus value) {
   return value.to!string; // This will return the enum member name as a string, e.g., "active", "expired", etc.
 }
 
-string[] toString(PushRegStatus[] values) {
+string[] toStrings(PushRegStatus[] values) {
   return values.map!(toString).array;
 }
 ///
@@ -395,7 +395,7 @@ string toString(RestrictionType value) {
   return cast(string)value; // This will return the enum member name as a string, e.g., "boolean_", "percentage", etc.
 }
 
-string[] toString(RestrictionType[] values) {
+string[] toStrings(RestrictionType[] values) {
   return values.map!(toString).array;
 }
 /// 
@@ -447,7 +447,7 @@ string toString(ClientResourceType value) {
   return value.to!string; // This will return the enum member name as a string, e.g., "bundle", "configuration", etc.
 }
 
-string[] toString(ClientResourceType[] values) {
+string[] toStrings(ClientResourceType[] values) {
   return values.map!(toString).array;
 }
 ///
@@ -514,7 +514,7 @@ string toString(VersionStatus value) {
   return cast(string)value; // This will return the enum member name as a string, e.g., "draft", "published", etc.
 }
 
-string[] toString(VersionStatus[] values) {
+string[] toStrings(VersionStatus[] values) {
   return values.map!(toString).array;
 }
 ///
@@ -570,7 +570,7 @@ string toString(OfflineStoreType value) {
   return value.to!string; // This will return the enum member name as a string, e.g., "odata", "custom", etc.
 }
 
-string[] toString(OfflineStoreType[] values) {
+string[] toStrings(OfflineStoreType[] values) {
   return values.map!(toString).array;
 }
 ///
@@ -618,7 +618,7 @@ string toString(SyncStatus value) {
   return value.to!string; // This will return the enum member name as a string, e.g., "idle", "syncing", etc.
 }
 
-string[] toString(SyncStatus[] values) {
+string[] toStrings(SyncStatus[] values) {
   return values.map!(toString).array;
 }
 ///
@@ -671,7 +671,7 @@ string toString(SessionStatus value) {
   return value.to!string; // This will return the enum member name as a string, e.g., "active", "expired", etc.
 }
 
-string[] toString(SessionStatus[] values) {
+string[] toStrings(SessionStatus[] values) {
   return values.map!(toString).array;
 }
 ///
@@ -719,7 +719,7 @@ string toString(LogSource value) {
   return value.to!string; // This will return the enum member name as a string, e.g., "client", "server", etc.
 }
 
-string[] toString(LogSource[] values) {
+string[] toStrings(LogSource[] values) {
   return values.map!(toString).array;
 }
 ///
@@ -769,7 +769,7 @@ MetricType[] toMetricType(string[] values) {
 string toString(MetricType value) {
   return value.to!string; // This will return the enum member name as a string, e.g., "appLaunch", "screenView", etc.
 }
-string[] toString(MetricType[] values) {
+string[] toStrings(MetricType[] values) {
   return values.map!(toString).array;
 }
 ///
@@ -856,7 +856,7 @@ DataType[] toDataType(string[] values) {
 string toString(DataType value) {
   return cast(string)value; // This will return the enum member name as a string, e.g., "string", "integer", etc.
 }
-string[] toString(DataType[] values) {
+string[] toStrings(DataType[] values) {
   return values.map!(toString).array;
 }
 /// 

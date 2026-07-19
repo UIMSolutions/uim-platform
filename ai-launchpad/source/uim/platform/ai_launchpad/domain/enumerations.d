@@ -26,7 +26,7 @@ ConnectionStatus[] toConnectionStatus(string[] values) {
 string toString(ConnectionStatus status) {
   return status.to!string;
 }
-string[] toString(ConnectionStatus[] statuses) {
+string[] toStrings(ConnectionStatus[] statuses) {
   return statuses.map!(s => toString(s)).array;
 }
 ///
@@ -61,7 +61,7 @@ ConnectionType[] toConnectionType(string[] types) {
 string toString(ConnectionType type) {
   return type.to!string;
 }
-string[] toString(ConnectionType[] types) {
+string[] toStrings(ConnectionType[] types) {
   return types.map!(toString).array;
 }
 ///
@@ -98,7 +98,7 @@ ExecutionStatus[] toExecutionStatus(string[] values) {
 string toString(ExecutionStatus status) {
   return status.to!string;
 }
-string[] toString(ExecutionStatus[] statuses) {
+string[] toStrings(ExecutionStatus[] statuses) {
   return statuses.map!(toString).array;
 }
 ///
@@ -143,7 +143,7 @@ DeploymentStatus[] toDeploymentStatus(string[] values) {
 string toString(DeploymentStatus status) {
   return status.to!string;
 }
-string[] toString(DeploymentStatus[] statuses) {
+string[] toStrings(DeploymentStatus[] statuses) {
   return statuses.map!(toString).array;
 }
 ///
@@ -187,7 +187,7 @@ ModelStatus[] toModelStatus(string[] values) {
 string toString(ModelStatus status) {
   return cast(string) status;
 }
-string[] toString(ModelStatus[] statuses) {
+string[] toStrings(ModelStatus[] statuses) {
   return statuses.map!(toString).array;
 }
 ///
@@ -223,7 +223,7 @@ DatasetStatus[] toDatasetStatus(string[] values) {
 string toString(DatasetStatus status) {
   return status.to!string;
 }
-string[] toString(DatasetStatus[] statuses) {
+string[] toStrings(DatasetStatus[] statuses) {
   return statuses.map!(toString).array;
 }
 ///
@@ -259,7 +259,7 @@ WorkspaceStatus[] toWorkspaceStatus(string[] values) {
 string toString(WorkspaceStatus status) {
   return status.to!string;
 }
-string[] toString(WorkspaceStatus[] statuses) {
+string[] toStrings(WorkspaceStatus[] statuses) {
   return statuses.map!(toString).array;
 }
 ///
@@ -291,7 +291,7 @@ PromptRole[] toPromptRole(string[] roles) {
 }
 string toString(PromptRole role) {  return role.to!string;
 }
-string[] toString(PromptRole[] roles) {
+string[] toStrings(PromptRole[] roles) {
   return roles.map!(toString).array;
 }
 ///
@@ -325,7 +325,7 @@ PromptStatus[] toPromptStatus(string[] values) {
 string toString(PromptStatus status) {
   return status.to!string;
 }
-string[] toString(PromptStatus[] statuses) {
+string[] toStrings(PromptStatus[] statuses) {
   return statuses.map!(toString).array;
 }
 ///
@@ -361,7 +361,7 @@ ArtifactKind[] toArtifactKind(string[] kinds) {
 string toString(ArtifactKind kind) {
   return kind.to!string;
 }
-string[] toString(ArtifactKind[] kinds) {
+string[] toStrings(ArtifactKind[] kinds) {
   return kinds.map!(toString).array;
 }
 ///
@@ -404,7 +404,7 @@ TargetStatus[] toTargetStatus(string[] values) {
 string toString(TargetStatus status) {
   return status.to!string;
 }
-string[] toString(TargetStatus[] statuses) {
+string[] toStrings(TargetStatus[] statuses) {
   return statuses.map!(toString).array;
 }
 ///
@@ -446,7 +446,7 @@ MetricValueType[] toMetricValueType(string[] values) {
 string toString(MetricValueType type) {
   return cast(string)type;
 }
-string[] toString(MetricValueType[] types) {
+string[] toStrings(MetricValueType[] types) {
   return types.map!(toString).array;
 }
 ///
@@ -481,7 +481,7 @@ StatisticsPeriod[] toStatisticsPeriod(string[] values) {
 string toString(StatisticsPeriod period) {
   return period.to!string;
 }
-string[] toString(StatisticsPeriod[] periods) {
+string[] toStrings(StatisticsPeriod[] periods) {
   return periods.map!(toString).array;
 }
 ///
@@ -516,7 +516,7 @@ LogSeverity[] toLogSeverity(string[] values) {
 string toString(LogSeverity severity) {
   return severity.to!string;
 }
-string[] toString(LogSeverity[] severities) {
+string[] toStrings(LogSeverity[] severities) {
   return severities.map!(toString).array;
 }
 ///
@@ -550,7 +550,7 @@ ScheduleStatus[] toScheduleStatus(string[] values) {
 string toString(ScheduleStatus status) {
   return status.to!string;
 }
-string[] toString(ScheduleStatus[] statuses) {
+string[] toStrings(ScheduleStatus[] statuses) {
   return statuses.map!(toString).array;
 }
 ///

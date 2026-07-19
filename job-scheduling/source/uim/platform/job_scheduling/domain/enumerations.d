@@ -19,7 +19,7 @@ JobType[] toJobType(string[] values) @safe {
 string toString(JobType value) @safe {
     return value.to!string();
 }
-string[] toString(JobType[] values) @safe {
+string[] toStrings(JobType[] values) @safe {
     return values.map!(v => v.toString).array;
 }
 ///     
@@ -49,7 +49,7 @@ JobTriggerType[] toJobTriggerType(string[] values) @safe {
 string toString(JobTriggerType value) @safe {
     return value.to!string();
 }
-string[] toString(JobTriggerType[] values) @safe {
+string[] toStrings(JobTriggerType[] values) @safe {
     return values.map!(v => v.toString).array;
 }
 ///
@@ -79,7 +79,7 @@ JobStatus[] toJobStatus(string[] values) @safe {
 string toString(JobStatus value) @safe {
     return value.to!string();
 }
-string[] toString(JobStatus[] values) @safe {
+string[] toStrings(JobStatus[] values) @safe {
     return values.map!(v => v.toString()).array;
 }
 ///
@@ -109,7 +109,7 @@ ScheduleType[] toScheduleType(string[] values) @safe {
 string toString(ScheduleType value) @safe {
     return value.to!string();
 }
-string[] toString(ScheduleType[] values) @safe {
+string[] toStrings(ScheduleType[] values) @safe {
     return values.map!(v => v.toString()).array;
 }
 ///
@@ -141,7 +141,7 @@ ScheduleFormat[] toScheduleFormat(string[] values) @safe {
 string toString(ScheduleFormat value) @safe {
     return value.to!string();
 }
-string[] toString(ScheduleFormat[] values) @safe {
+string[] toStrings(ScheduleFormat[] values) @safe {
     return values.map!(v => v.toString()).array;
 }
 ///
@@ -176,7 +176,7 @@ JobScheduleStatus[] toJobScheduleStatus(string[] values) @safe {
 string toString(JobScheduleStatus value) @safe {
     return value.to!string();
 }
-string[] toString(JobScheduleStatus[] values) @safe {
+string[] toStrings(JobScheduleStatus[] values) @safe {
     return values.map!(v => v.toString()).array;
 }
 ///
@@ -210,7 +210,7 @@ RunStatus[] toRunStatus(string[] values) @safe {
 string toString(RunStatus value) @safe {
     return value.to!string();
 }
-string[] toString(RunStatus[] values) @safe {
+string[] toStrings(RunStatus[] values) @safe {
     return values.map!(v => v.toString()).array;
 }
 ///

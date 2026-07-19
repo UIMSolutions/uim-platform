@@ -47,7 +47,7 @@ string toString(RuleType type) {
   return type.to!string;
 }
 
-string[] toString(RuleType[] types) {
+string[] toStrings(RuleType[] types) {
   return types.map!(toString).array;
 }
 ///
@@ -96,7 +96,7 @@ string toString(RuleSeverity severity) {
   return severity.to!string;
 }
 
-string[] toString(RuleSeverity[] severities) {
+string[] toStrings(RuleSeverity[] severities) {
   return severities.map!(toString).array;
 }
 ///
@@ -138,7 +138,7 @@ RuleStatus[] toRuleStatuses(string[] values) {
 string toString(RuleStatus status) {
   return status.to!string;
 }
-string[] toString(RuleStatus[] statuses) {
+string[] toStrings(RuleStatus[] statuses) {
   return statuses.map!(toString).array;
 }
 ///

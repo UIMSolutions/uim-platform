@@ -31,7 +31,7 @@ string toString(DashboardMetricType t) {
     return t.to!string;
 }
 
-string[] toString(DashboardMetricType[] arr) {
+string[] toStrings(DashboardMetricType[] arr) {
     return arr.map!(toString).array;
 }
 /// 
@@ -120,7 +120,7 @@ string toString(HealthStatus t) {
     return t.to!string;
 }
 
-string[] toString(HealthStatus[] arr) {
+string[] toStrings(HealthStatus[] arr) {
     return arr.map!(toString).array;
 }
 ///
@@ -182,7 +182,7 @@ string toString(ExpirationSeverity t) {
     return t.to!string;
 }
 
-string[] toString(ExpirationSeverity[] arr) {
+string[] toStrings(ExpirationSeverity[] arr) {
     return arr.map!(toString).array;
 }
 ///

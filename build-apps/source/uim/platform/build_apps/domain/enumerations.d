@@ -25,7 +25,7 @@ ApplicationType[] toApplicationTypes(string[] values) {
 string toString(ApplicationType type) {
     return type.to!string;
 }
-string[] toString(ApplicationType[] types) {
+string[] toStrings(ApplicationType[] types) {
     return types.map!(toString).array;
 }
 ///
@@ -72,7 +72,7 @@ ApplicationStatus[] toApplicationStatuses(string[] values) {
 string toString(ApplicationStatus status) {
     return status.to!string;
 }
-string[] toString(ApplicationStatus[] statuses) {
+string[] toStrings(ApplicationStatus[] statuses) {
     return statuses.map!(toString).array;
 }
 /// 
@@ -129,7 +129,7 @@ PageType[] toPageTypes(string[] values) {
 string toString(PageType type) {
     return type.to!string;
 }
-string[] toString(PageType[] types) {
+string[] toStrings(PageType[] types) {
     return types.map!(toString).array;
 }
 /// 
@@ -197,7 +197,7 @@ PageStatus[] toPageStatuses(string[] values) {
 string toString(PageStatus status) {
     return status.to!string;
 }
-string[] toString(PageStatus[] statuses) {  
+string[] toStrings(PageStatus[] statuses) {  
     return statuses.map!(toString).array;
 }
 ///
@@ -257,7 +257,7 @@ ComponentCategory[] toComponentCategories(string[] values) {
 string toString(ComponentCategory category) {
     return category.to!string;
 }
-string[] toString(ComponentCategory[] categories) {
+string[] toStrings(ComponentCategory[] categories) {
     return categories.map!(toString).array;
 }
 ///
@@ -328,7 +328,7 @@ ComponentStatus[] toComponentStatus(string[] values) {
 string toString(ComponentStatus status) {
     return status.to!string;
 }
-string[] toString(ComponentStatus[] statuses) {
+string[] toStrings(ComponentStatus[] statuses) {
     return statuses.map!(toString).array;
 }
 ///
@@ -392,7 +392,7 @@ FieldType[] toFieldType(string[] values) {
 string toString(FieldType type) {
     return cast(string)type;
 }
-string[] toString(FieldType[] types) {
+string[] toStrings(FieldType[] types) {
     return types.map!(toString).array;
 }
 ///
@@ -460,7 +460,7 @@ DataEntityStatus[] toDataEntityStatus(string[] values) {
 string toString(DataEntityStatus status) {
     return status.to!string;
 }
-string[] toString(DataEntityStatus[] statuses) {
+string[] toStrings(DataEntityStatus[] statuses) {
     return statuses.map!(toString).array;
 }
 /// 

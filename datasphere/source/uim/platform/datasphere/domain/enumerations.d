@@ -37,7 +37,7 @@ string toString(ConnectionType type) {
   return type.to!string;
 }
 
-string[] toString(ConnectionType[] types) {
+string[] toStrings(ConnectionType[] types) {
   return types.map!(toString).array;
 }
 /// 
@@ -131,7 +131,7 @@ StorageType[] toStorageTypes(string[] values) {
 string toString(StorageType type) {
   return type.to!string;
 }
-string[] toString(StorageType[] types) {
+string[] toStrings(StorageType[] types) {
   return types.map!(toString).array;
 }
 /// 
@@ -177,7 +177,7 @@ FlowStatus[] toFlowStatuses(string[] values) {
 string toString(FlowStatus status) {
   return status.to!string;
 }
-string[] toString(FlowStatus[] statuses) {
+string[] toStrings(FlowStatus[] statuses) {
   return statuses.map!(toString).array;
 } 
 ///
@@ -238,7 +238,7 @@ ReplicationMode[] toReplicationModes(string[] values) {
 string toString(ReplicationMode mode) {
   return mode.to!string;
 }
-string[] toString(ReplicationMode[] modes) {
+string[] toStrings(ReplicationMode[] modes) {
   return modes.map!(toString).array;
 }
 ///
@@ -251,7 +251,7 @@ ReplicationMode[] toReplicationModes(string[] values) {
 string toString(ReplicationMode mode) {
   return mode.to!string;
 }
-string[] toString(ReplicationMode[] modes) {
+string[] toStrings(ReplicationMode[] modes) {
   return modes.map!(toString).array;
 }
 /// 

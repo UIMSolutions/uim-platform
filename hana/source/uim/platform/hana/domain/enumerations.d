@@ -28,7 +28,7 @@ InstanceType[] toInstanceType(string[] values) {
 string toString(InstanceType value) {
   return value.to!string;
 }
-string[] toString(InstanceType[] values) {
+string[] toStrings(InstanceType[] values) {
   return values.map!(v => toString(v)).array;
 }
 ///
@@ -67,7 +67,7 @@ InstanceStatus[] toInstanceStatus(string[] values) {
 string toString(InstanceStatus value) {
   return value.to!string; 
 }
-string[] toString(InstanceStatus[] values) {
+string[] toStrings(InstanceStatus[] values) {
   return values.map!(v => toString(v)).array;
 }
 ///
@@ -120,7 +120,7 @@ InstanceSize[] toInstanceSize(string[] values) {
 string toString(InstanceSize value) {
   return value.to!string;
 }
-string[] toString(InstanceSize[] values) {
+string[] toStrings(InstanceSize[] values) {
   return values.map!(v => toString(v)).array;
 }
 ///
@@ -165,7 +165,7 @@ StorageTier[] toStorageTier(string[] values) {
 string toString(StorageTier value) {
   return value.to!string;
 }
-string[] toString(StorageTier[] values) {
+string[] toStrings(StorageTier[] values) {
   return values.map!(v => toString(v)).array;
 }
 ///
@@ -204,7 +204,7 @@ DataLakeStatus[] toDataLakeStatus(string[] values) {
 string toString(DataLakeStatus value) {
   return value.to!string;
 }
-string[] toString(DataLakeStatus[] values) {
+string[] toStrings(DataLakeStatus[] values) {
   return values.map!(v => toString(v)).array;
 }
 /// 
@@ -247,7 +247,7 @@ FileFormat[] toFileFormat(string[] values) {
 string toString(FileFormat value) {
   return value.to!string;
 }
-string[] toString(FileFormat[] values) {
+string[] toStrings(FileFormat[] values) {
   return values.map!(v => toString(v)).array;
 } 
 ///
@@ -290,7 +290,7 @@ SchemaType[] toSchemaType(string[] values) {
 string toString(SchemaType value) {
   return value.to!string;
 }
-string[] toString(SchemaType[] values) {
+string[] toStrings(SchemaType[] values) {
   return values.map!(v => toString(v)).array;
 }
 ///
@@ -334,7 +334,7 @@ AuthType[] toAuthType(string[] values) {
 string toString(AuthType value) {
   return value.to!string;
 }
-string[] toString(AuthType[] values) {
+string[] toStrings(AuthType[] values) {
   return values.map!(v => toString(v)).array;
 }
 ///
@@ -378,7 +378,7 @@ UserStatus[] toUserStatus(string[] values) {
 string toString(UserStatus value) {
   return value.to!string;
 }
-string[] toString(UserStatus[] values) {
+string[] toStrings(UserStatus[] values) {
   return values.map!(v => toString(v)).array;
 }
 ///
@@ -420,7 +420,7 @@ PrivilegeType[] toPrivilegeType(string[] values) {
 string toString(PrivilegeType value) {
   return value.to!string;
 }
-string[] toString(PrivilegeType[] values) {
+string[] toStrings(PrivilegeType[] values) {
   return values.map!(v => toString(v)).array;
 }
 ///
@@ -465,7 +465,7 @@ BackupType[] toBackupType(string[] values) {
 string toString(BackupType value) {
   return value.to!string;
 }
-string[] toString(BackupType[] values) {
+string[] toStrings(BackupType[] values) {
   return values.map!(v => toString(v)).array;
 }
 ///
@@ -508,7 +508,7 @@ BackupStatus[] toBackupStatus(string[] values) {
 string toString(BackupStatus value) {
   return value.to!string;
 }
-string[] toString(BackupStatus[] values) {
+string[] toStrings(BackupStatus[] values) {
   return values.map!(v => toString(v)).array;
 }
 ///
@@ -550,7 +550,7 @@ AlertStatus[] toAlertStatus(string[] values) {
 string toString(AlertStatus value) {
   return value.to!string;
 }
-string[] toString(AlertStatus[] values) {
+string[] toStrings(AlertStatus[] values) {
   return values.map!(v => toString(v)).array;
 }
 ///
@@ -595,7 +595,7 @@ AlertCategory[] toAlertCategory(string[] values) {
 string toString(AlertCategory value) {
   return value.to!string;
 }
-string[] toString(AlertCategory[] values) {
+string[] toStrings(AlertCategory[] values) {
   return values.map!(v => toString(v)).array;
 }
 ///
@@ -646,7 +646,7 @@ HDIContainerStatus[] toHDIContainerStatus(string[] values) {
 string toString(HDIContainerStatus value) {
   return value.to!string;
 }
-string[] toString(HDIContainerStatus[] values) {
+string[] toStrings(HDIContainerStatus[] values) {
   return values.map!(v => toString(v)).array;
 }
 ///
@@ -689,7 +689,7 @@ ReplicationMode[] toReplicationMode(string[] values) {
 string toString(ReplicationMode value) {
   return value.to!string;
 }
-string[] toString(ReplicationMode[] values) {
+string[] toStrings(ReplicationMode[] values) {
   return values.map!(v => toString(v)).array;
 }
 ///
@@ -777,7 +777,7 @@ ConfigScope[] toConfigScope(string[] values) {
 string toString(ConfigScope value) {
   return value.to!string;
 }
-string[] toString(ConfigScope[] values) {
+string[] toStrings(ConfigScope[] values) {
   return values.map!(v => toString(v)).array;
 }
 ///
@@ -818,7 +818,7 @@ ConfigDataType[] toConfigDataType(string[] values) {
 string toString(ConfigDataType value) {
   return value.to!string;
 }
-string[] toString(ConfigDataType[] values) {
+string[] toStrings(ConfigDataType[] values) {
   return values.map!(v => toString(v)).array;
 }
 ///
@@ -864,7 +864,7 @@ ConnectionType[] toConnectionType(string[] values) {
 string toString(ConnectionType type) {
   return type.to!string;
 }
-string[] toString(ConnectionType[] types) {
+string[] toStrings(ConnectionType[] types) {
   return types.map!(toString).array;
 }
 ///

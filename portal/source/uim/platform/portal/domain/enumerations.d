@@ -27,7 +27,7 @@ SiteStatus[] toSiteStatus(string[] values) {
 string toString(SiteStatus status) {
   return status.to!string;
 }
-string[] toString(SiteStatus[] statuses) {
+string[] toStrings(SiteStatus[] statuses) {
   return statuses.map!(s => toString(s));
 }
 ///
@@ -66,7 +66,7 @@ PageLayout[] toPageLayout(string[] values) {
 string toString(PageLayout layout) {
   return layout.to!string;
 }
-string[] toString(PageLayout[] layouts) {
+string[] toStrings(PageLayout[] layouts) {
   return layouts.map!(l => toString(l));
 }
 ///
@@ -114,7 +114,7 @@ TileType[] toTileType(string[] values) {
 string toString(TileType type) {
   return cast(string)type;
 }
-string[] toString(TileType[] types) {
+string[] toStrings(TileType[] types) {
   return types.map!(t => toString(t));
 }
 ///
@@ -156,7 +156,7 @@ AppType[] toAppType(string[] values) {
 string toString(AppType type) {
   return type.to!string;
 }
-string[] toString(AppType[] types) {
+string[] toStrings(AppType[] types) {
   return types.map!(t => toString(t));
 }
 ///
@@ -197,7 +197,7 @@ ProviderType[] toProviderType(string[] values) {
 string toString(ProviderType type) {
   return type.to!string;
 }
-string[] toString(ProviderType[] types) {
+string[] toStrings(ProviderType[] types) {
   return types.map!(t => toString(t));
 }
 ///
@@ -233,7 +233,7 @@ ThemeMode[] toThemeMode(string[] values) {
 string toString(ThemeMode mode) {
   return mode.to!string;
 }
-string[] toString(ThemeMode[] modes) {
+string[] toStrings(ThemeMode[] modes) {
   return modes.map!(m => toString(m));
 }
 ///
@@ -270,7 +270,7 @@ NavigationTarget[] toNavigationTarget(string[] values) {
 string toString(NavigationTarget target) {
   return target.to!string;
 }
-string[] toString(NavigationTarget[] targets) {
+string[] toStrings(NavigationTarget[] targets) {
   return targets.map!(t => toString(t));
 }
 ///
@@ -306,7 +306,7 @@ TransportStatus[] toTransportStatus(string[] values) {
 string toString(TransportStatus status) {
   return status.to!string;
 }
-string[] toString(TransportStatus[] statuses) {
+string[] toStrings(TransportStatus[] statuses) {
   return statuses.map!(s => toString(s));
 }
 ///
@@ -344,7 +344,7 @@ RoleScope[] toRoleScope(string[] values) {
 string toString(RoleScope value) {
   return value.to!string;
 }
-string[] toString(RoleScope[] values) {
+string[] toStrings(RoleScope[] values) {
   return values.map!(v => toString(v));
 }
 ///

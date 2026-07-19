@@ -8,6 +8,7 @@ module uim.platform.hana.presentation.http.controllers.instance;
 // import uim.platform.hana.application.dto;
 
 import uim.platform.hana;
+
 mixin(ShowModule!());
 
 @safe:
@@ -189,25 +190,25 @@ class InstanceController : ManageHttpController {
     auto result = usecase.performAction(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
-    auto resp = Json.emptyObject
-      .set("id", result.id)
-      auto id = DatabaseInstanceId(precheck.id);
+
+    auto resp = Json.emptyObject.set("id", result.id);
+    auto id = DatabaseInstanceId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid instance ID", 400);
 
-    auto data = precheck.data;
-    InstanceActionRequest r;
-    r.tenantId = tenantId;
-    r.id = id;
-    r.action = data.getString("action");
+    // auto data = precheck.data;
+    // InstanceActionRequest r;
+    // r.tenantId = tenantId;
+    // r.id = id;
+    // r.action = data.getString("action");
 
-    auto result = usecase.performAction(r);
-    if (result.hasError)
-      return errorResponse(result.message, 400);
+    // auto result = usecase.performAction(r);
+    // if (result.hasError)
+    //   return errorResponse(result.message, 400);
 
-    auto resp = Json.emptyObject
-      .set("id", result.id)
-      .set("message", "Action performed: " ~ r.action);
+    // auto resp = Json.emptyObject
+    //   .set("id", result.id)
+    //   .set("message", "Action performed: " ~ r.action);
 
     return successResponse("Action performed successfully", "Performed", 200, resp);
   }
@@ -221,10 +222,14 @@ class InstanceController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto id = InstanceId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid instance ID", 400);
+      
     auto result = usecase.deleteInstance(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
-    
-    return successResponse("Instance deleted successfully", "Deleted", 200, Json.emptyObject.set("id", result.id));
-}
+
+    return successResponse("Instance deleted successfully", "Deleted", 200, Json.emptyObject.set("id", result
+        .id));
+  }
 }

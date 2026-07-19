@@ -27,7 +27,7 @@ ColumnRole[] toColumnRoles(string[] values) {
 string toString(ColumnRole role) {
   return role.to!string;
 }
-string[] toString(ColumnRole[] roles) {
+string[] toStrings(ColumnRole[] roles) {
   return roles.map!(toString).array;
 }
 ///
@@ -86,7 +86,7 @@ string toString(ColumnDataType type) {
   return cast(string)type;
 }
 
-string[] toString(ColumnDataType[] types) {
+string[] toStrings(ColumnDataType[] types) {
   return types.map!(toString).array;
 }
 

@@ -94,7 +94,7 @@ AppState[] toAppState(string[] values) {
 string toString(AppState value) {
   return value.to!string;
 }
-string[] toString(AppState[] values) { 
+string[] toStrings(AppState[] values) { 
   return values.map!(toString).array;
 }
 ///
@@ -175,7 +175,7 @@ ServiceInstanceStatus[] toServiceInstanceStatus(string[] values) {
 string toString(ServiceInstanceStatus value) {
   return value.to!string;
 }
-string[] toString(ServiceInstanceStatus[] values) {
+string[] toStrings(ServiceInstanceStatus[] values) {
   return values.map!(toString).array;
 }
 /// 
@@ -217,7 +217,7 @@ BindingStatus[] toBindingStatus(string[] values) {
 string toString(BindingStatus value) {
   return value.to!string;
 }
-string[] toString(BindingStatus[] values) {
+string[] toStrings(BindingStatus[] values) {
   return values.map!(toString).array;
 }
 /// 
@@ -255,7 +255,7 @@ RouteProtocol[] toRouteProtocol(string[] values) {
 string toString(RouteProtocol value) {
   return value.to!string;
 }
-string[] toString(RouteProtocol[] values) {
+string[] toStrings(RouteProtocol[] values) {
   return values.map!(toString).array;
 }
 /// 
@@ -290,7 +290,7 @@ DomainScope[] toDomainScope(string[] values) {
 string toString(DomainScope value) {
   return value.to!string;
 }
-string[] toString(DomainScope[] values) {
+string[] toStrings(DomainScope[] values) {
   return values.map!(toString).array;
 }
 ///
@@ -326,7 +326,7 @@ BuildpackType[] toBuildpackType(string[] values) {
 string toString(BuildpackType value) {
   return value.to!string;
 }
-string[] toString(BuildpackType[] values) {
+string[] toStrings(BuildpackType[] values) {
   return values.map!(toString).array;
 }
 /// 
@@ -361,7 +361,7 @@ HealthCheckType[] toHealthCheckType(string[] values) {
 string toString(HealthCheckType value) {
   return value.to!string;
 }
-string[] toString(HealthCheckType[] values) {
+string[] toStrings(HealthCheckType[] values) {
   return values.map!(toString).array;
 }
 ///

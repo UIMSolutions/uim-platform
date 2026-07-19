@@ -22,7 +22,7 @@ MessagingServiceStatus[] toMessagingServiceStatus(string[] values) {
 string toString(MessagingServiceStatus value) {
     return value.to!string();
 }
-string[] toString(MessagingServiceStatus[] values) {
+string[] toStrings(MessagingServiceStatus[] values) {
     return values.map!(v => v.toString).array;
 }
 ///
@@ -61,7 +61,7 @@ MessagingServicePlan[] toMessagingServicePlan(string[] values) {
 string toString(MessagingServicePlan value) {
     return value.to!string();
 }
-string[] toString(MessagingServicePlan[] values) {
+string[] toStrings(MessagingServicePlan[] values) {
     return values.map!(v => v.toString).array;
 }
 ///
@@ -95,7 +95,7 @@ MessageClientStatus[] toMessageClientStatus(string[] values) {
 string toString(MessageClientStatus value) {
     return value.to!string();
 }
-string[] toString(MessageClientStatus[] values) {
+string[] toStrings(MessageClientStatus[] values) {
     return values.map!(v => v.toString).array;
 }
 ///
@@ -130,7 +130,7 @@ MessageClientProtocol[] toMessageClientProtocol(string[] values) {
 string toString(MessageClientProtocol value) {
     return value.to!string();
 }
-string[] toString(MessageClientProtocol[] values) {
+string[] toStrings(MessageClientProtocol[] values) {
     return values.map!(v => v.toString).array;
 }
 ///
@@ -166,7 +166,7 @@ QueueStatus[] toQueueStatus(string[] values) {
 string toString(QueueStatus value) {
     return value.to!string();
 }
-string[] toString(QueueStatus[] values) {
+string[] toStrings(QueueStatus[] values) {
     return values.map!(toString).array;
 }
 ///
@@ -199,7 +199,7 @@ QueueAccessType[] toQueueAccessType(string[] values) {
 string toString(QueueAccessType value) {
     return value.to!string();
 }
-string[] toString(QueueAccessType[] values) {
+string[] toStrings(QueueAccessType[] values) {
     return values.map!(toString).array;
 }
 ///
@@ -231,7 +231,7 @@ QueueSubscriptionStatus[] toQueueSubscriptionStatus(string[] values) {
 string toString(QueueSubscriptionStatus value) {
     return value.to!string();
 }
-string[] toString(QueueSubscriptionStatus[] values) {
+string[] toStrings(QueueSubscriptionStatus[] values) {
     return values.map!(toString).array;
 }
 ///
@@ -266,7 +266,7 @@ WebhookStatus[] toWebhookStatus(string[] values) {
 string toString(WebhookStatus value) {
     return value.to!string();
 }
-string[] toString(WebhookStatus[] values) {
+string[] toStrings(WebhookStatus[] values) {
     return values.map!(toString).array;
 }
 ///
@@ -309,7 +309,7 @@ WebhookAuthType[] toWebhookAuthType(string[] values) {
 string toString(WebhookAuthType value) {
     return cast(string)value; // This will return the enum member name as a string, e.g., "none_", "oauth2", "basic", "apiKey"
 }
-string[] toString(WebhookAuthType[] values) {
+string[] toStrings(WebhookAuthType[] values) {
     return values.map!(toString).array;
 }
 ///
@@ -344,7 +344,7 @@ WebhookDeliveryMode[] toWebhookDeliveryMode(string[] values) {
 string toString(WebhookDeliveryMode value) {
     return value.to!string();
 }
-string[] toString(WebhookDeliveryMode[] values) {
+string[] toStrings(WebhookDeliveryMode[] values) {
     return values.map!(toString).array;
 }
 ///
@@ -381,7 +381,7 @@ EventChannelStatus[] toEventChannelStatus(string[] values) {
 string toString(EventChannelStatus value) {
     return cast(string)value; // This will return the enum member name as a string, e.g., "active", "inactive", "deprecated_"
 }
-string[] toString(EventChannelStatus[] values) {
+string[] toStrings(EventChannelStatus[] values) {
     return values.map!(toString).array;
 }
 ///
@@ -415,7 +415,7 @@ EventChannelType[] toEventChannelType(string[] values) {
 string toString(EventChannelType value) {
     return value.to!string();
 }
-string[] toString(EventChannelType[] values) {
+string[] toStrings(EventChannelType[] values) {
     return values.map!(toString).array;
 }
 ///
@@ -448,7 +448,7 @@ MessageBindingStatus[] toMessageBindingStatus(string[] values) {
 string toString(MessageBindingStatus value) {
     return value.to!string();
 }
-string[] toString(MessageBindingStatus[] values) {
+string[] toStrings(MessageBindingStatus[] values) {
     return values.map!(toString).array;
 }
 ///
@@ -481,7 +481,7 @@ MessageBindingPermission[] toMessageBindingPermission(string[] values) {
 string toString(MessageBindingPermission value) {
     return value.to!string();
 }
-string[] toString(MessageBindingPermission[] values) {
+string[] toStrings(MessageBindingPermission[] values) {
     return values.map!(toString).array;
 }
 ///

@@ -28,7 +28,7 @@ string toString(CatalogType type) {
     return type.to!string;
 }
 
-string[] toString(CatalogType[] types) {
+string[] toStrings(CatalogType[] types) {
     return types.map!(toString).array;
 }
 ///
@@ -68,7 +68,7 @@ string toString(CatalogStatus status) {
     return status.to!string;
 }
 
-string[] toString(CatalogStatus[] statuses) {
+string[] toStrings(CatalogStatus[] statuses) {
     return statuses.map!(toString).array;
 }
 ///
@@ -120,7 +120,7 @@ string toString(CommandStatus status) {
     return cast(string)status;
 }
 
-string[] toString(CommandStatus[] statuses) {
+string[] toStrings(CommandStatus[] statuses) {
     return statuses.map!(toString).array;
 }
 ///
@@ -168,7 +168,7 @@ string toString(CommandType type) {
     return type.to!string;
 }
 
-string[] toString(CommandType[] types) {
+string[] toStrings(CommandType[] types) {
     return types.map!(toString).array;
 }
 ///
@@ -220,7 +220,7 @@ string toString(ExecutionStatus status) {
     return status.to!string;
 }
 
-string[] toString(ExecutionStatus[] statuses) {
+string[] toStrings(ExecutionStatus[] statuses) {
     return statuses.map!(toString).array;
 }
 ///
@@ -280,7 +280,7 @@ string toString(ExecutionPriority priority) {
     return priority.to!string;
 }
 
-string[] toString(ExecutionPriority[] priorities) {
+string[] toStrings(ExecutionPriority[] priorities) {
     return priorities.map!(toString).array;
 }
 ///
@@ -329,7 +329,7 @@ string toString(ScheduleType type) {
     return type.to!string;
 }
 
-string[] toString(ScheduleType[] types) {
+string[] toStrings(ScheduleType[] types) {
     return types.map!(toString).array;
 }
 ///
@@ -374,7 +374,7 @@ string toString(ScheduleStatus status) {
     return status.to!string;
 }
 
-string[] toString(ScheduleStatus[] statuses) {
+string[] toStrings(ScheduleStatus[] statuses) {
     return statuses.map!(toString).array;
 }
 ///
@@ -424,7 +424,7 @@ string toString(TriggerType type) {
     return type.to!string;
 }
 
-string[] toString(TriggerType[] types) {
+string[] toStrings(TriggerType[] types) {
     return types.map!(toString).array;
 }
 ///
@@ -471,7 +471,7 @@ string toString(TriggerStatus status) {
     return status.to!string;
 }
 
-string[] toString(TriggerStatus[] statuses) {
+string[] toStrings(TriggerStatus[] statuses) {
     return statuses.map!(toString).array;
 }
 
@@ -530,7 +530,7 @@ string toString(InputType type) {
     return type.to!string;
 }
 
-string[] toString(InputType[] types) {
+string[] toStrings(InputType[] types) {
     return types.map!(toString).array;
 }
 ///
@@ -577,7 +577,7 @@ string toString(InputSensitivity sensitivity) {
     return sensitivity.to!string;
 }
 
-string[] toString(InputSensitivity[] sensitivities) {
+string[] toStrings(InputSensitivity[] sensitivities) {
     return sensitivities.map!(toString).array;
 }
 ///
@@ -620,7 +620,7 @@ string toString(ServiceAccountStatus status) {
     return status.to!string;
 }
 
-string[] toString(ServiceAccountStatus[] statuses) {
+string[] toStrings(ServiceAccountStatus[] statuses) {
     return statuses.map!(toString).array;
 }
 ///
@@ -664,7 +664,7 @@ string toString(ConnectorType type) {
     return type.to!string;
 }
 
-string[] toString(ConnectorType[] types) {
+string[] toStrings(ConnectorType[] types) {
     return types.map!(toString).array;
 }
 ///
@@ -709,7 +709,7 @@ string toString(ConnectorStatus status) {
     return status.to!string;
 }
 
-string[] toString(ConnectorStatus[] statuses) {
+string[] toStrings(ConnectorStatus[] statuses) {
     return statuses.map!(toString).array;
 }
 ///
@@ -753,7 +753,7 @@ string toString(BackupStatus status) {
     return status.to!string;
 }
 
-string[] toString(BackupStatus[] statuses) {
+string[] toStrings(BackupStatus[] statuses) {
     return statuses.map!(toString).array;
 }
 ///

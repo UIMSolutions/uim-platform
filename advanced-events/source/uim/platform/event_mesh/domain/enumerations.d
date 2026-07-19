@@ -39,7 +39,7 @@ string toString(BrokerServiceStatus status) {
   return status.to!string;
 }
 
-string[] toString(BrokerServiceStatus[] statuses) {
+string[] toStrings(BrokerServiceStatus[] statuses) {
   return statuses.map!(s => toString(s)).array;
 }
 /// 
@@ -91,7 +91,7 @@ string toString(BrokerServiceType type) {
   return type.to!string;
 }
 
-string[] toString(BrokerServiceType[] types) {
+string[] toStrings(BrokerServiceType[] types) {
   return types.map!(t => toString(t)).array;
 }
 ///
@@ -139,7 +139,7 @@ string toString(BrokerServiceClass serviceClass) {
   return serviceClass.to!string;
 }
 
-string[] toString(BrokerServiceClass[] serviceClasses) {
+string[] toStrings(BrokerServiceClass[] serviceClasses) {
   return serviceClasses.map!(sc => toString(sc)).array;
 }
 ///
@@ -190,7 +190,7 @@ string toString(CloudProvider provider) {
   return provider.to!string;
 }
 
-string[] toString(CloudProvider[] providers) {
+string[] toStrings(CloudProvider[] providers) {
   return providers.map!(p => toString(p)).array;
 }
 ///
@@ -235,7 +235,7 @@ string toString(QueueAccessType accessType) {
   return accessType.to!string;
 }
 
-string[] toString(QueueAccessType[] accessTypes) {
+string[] toStrings(QueueAccessType[] accessTypes) {
   return accessTypes.map!(at => toString(at)).array;
 }
 ///
@@ -277,7 +277,7 @@ string toString(QueueStatus status) {
   return status.to!string;
 }
 
-string[] toString(QueueStatus[] statuses) {
+string[] toStrings(QueueStatus[] statuses) {
   return statuses.map!(toString).array;
 }
 ///
@@ -321,7 +321,7 @@ string toString(QueueType type) {
   return type.to!string;
 }
 
-string[] toString(QueueType[] types) {
+string[] toStrings(QueueType[] types) {
   return types.map!(toString).array;
 }
 ///
@@ -363,7 +363,7 @@ string toString(TopicStatus status) {
   return status.to!string;
 }
 
-string[] toString(TopicStatus[] statuses) {
+string[] toStrings(TopicStatus[] statuses) {
   return statuses.map!(toString).array;
 }
 ///
@@ -405,7 +405,7 @@ string toString(SubscriptionStatus status) {
   return status.to!string;
 }
 
-string[] toString(SubscriptionStatus[] statuses) {
+string[] toStrings(SubscriptionStatus[] statuses) {
   return statuses.map!(toString).array;
 }
 ///
@@ -448,7 +448,7 @@ string toString(SubscriptionType type) {
   return type.to!string;
 }
 
-string[] toString(SubscriptionType[] types) {
+string[] toStrings(SubscriptionType[] types) {
   return types.map!(toString).array;
 }
 ///
@@ -491,7 +491,7 @@ string toString(DeliveryMode mode) {
   return mode.to!string;
 }
 
-string[] toString(DeliveryMode[] modes) {
+string[] toStrings(DeliveryMode[] modes) {
   return modes.map!(toString).array;
 }
 ///
@@ -536,7 +536,7 @@ string toString(MessageStatus status) {
   return status.to!string;
 }
 
-string[] toString(MessageStatus[] statuses) {
+string[] toStrings(MessageStatus[] statuses) {
   return statuses.map!(toString).array;
 }
 ///
@@ -585,7 +585,7 @@ string toString(MessagePriority priority) {
   return priority.to!string;
 }
 
-string[] toString(MessagePriority[] priorities) {
+string[] toStrings(MessagePriority[] priorities) {
   return priorities.map!(toString).array;
 }
 ///
@@ -631,7 +631,7 @@ string toString(SchemaFormat format) {
   return format.to!string;
 }
 
-string[] toString(SchemaFormat[] formats) {
+string[] toStrings(SchemaFormat[] formats) {
   return formats.map!(toString).array;
 }
 ///
@@ -689,7 +689,7 @@ string toString(SchemaStatus status) {
   return cast(string)status;
 }
 
-string[] toString(SchemaStatus[] statuses) {
+string[] toStrings(SchemaStatus[] statuses) {
   return statuses.map!(toString).array;
 }
 ///
@@ -736,7 +736,7 @@ string toString(EventApplicationStatus status) {
   return status.to!string;
 }
 
-string[] toString(EventApplicationStatus[] statuses) {
+string[] toStrings(EventApplicationStatus[] statuses) {
   return statuses.map!(s => toString(s)).array;
 }
 ///
@@ -781,7 +781,7 @@ string toString(EventApplicationType type) {
   return type.to!string;
 }
 
-string[] toString(EventApplicationType[] types) {
+string[] toStrings(EventApplicationType[] types) {
   return types.map!(toString).array;
 }
 ///
@@ -826,7 +826,7 @@ string toString(BridgeStatus status) {
   return status.to!string;
 }
 
-string[] toString(BridgeStatus[] statuses) {
+string[] toStrings(BridgeStatus[] statuses) {
   return statuses.map!(toString).array;
 }
 ///
@@ -875,7 +875,7 @@ string toString(BridgeType type) {
   return type.to!string;
 }
 
-string[] toString(BridgeType[] types) {
+string[] toStrings(BridgeType[] types) {
   return types.map!(toString).array;
 }
 ///
@@ -922,7 +922,7 @@ string toString(ProtocolType type) {
   return type.to!string;
 }
 
-string[] toString(ProtocolType[] types) {
+string[] toStrings(ProtocolType[] types) {
   return types.map!(toString).array;
 }
 ///

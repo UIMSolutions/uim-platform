@@ -23,7 +23,7 @@ ResourceType[] toResourceType(string[] values) {
 string toString(ResourceType value) {
   return value.to!string;
 }
-string[] toString(ResourceType[] values) {
+string[] toStrings(ResourceType[] values) {
   return values.map!(toString).array;
 }
 ///
@@ -73,7 +73,7 @@ ResourceState[] toResourceState(string[] values) {
 string toString(ResourceState state) {
   return state.to!string;
 }
-string[] toString(ResourceState[] states) {
+string[] toStrings(ResourceState[] states) {
   return states.map!(toString).array;
 }
 ///

@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.portal.presentation.http.controllers.tile;
 
-
 // import uim.platform.portal.application.usecases.manage.tiles;
 // import uim.platform.portal.application.dto;
 // import uim.platform.portal.domain.entities.tile;
@@ -13,6 +12,7 @@ module uim.platform.portal.presentation.http.controllers.tile;
 // .platform.identity.authentication.presentation.http
 // import uim.platform.portal.application.usecases.manage;
 import uim.platform.portal;
+
 mixin(ShowModule!());
 
 @safe:
@@ -35,136 +35,155 @@ class TileController : ManageHttpController {
   }
 
   override protected Json createHandler(HTTPServerRequest req) {
-        auto precheck = super.createHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.createHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
+    auto tenantId = precheck.tenantId;
 
-        auto data = precheck.data;
-      auto createReq = CreateTileRequest(req.headers.get("X-Tenant-Id", ""),
-        data.getString("catalogId"), data.getString("title"), data.getString("subtitle"),
-        data.getString("description"), data.getString("icon"), data.getString("info"),
-        jsonEnum!TileType(j, "tileType", TileType.static_), jsonEnum!AppType(j, "appType", AppType
-          .url),
-        data.getString("url"), data.getString("appId"), jsonEnum!NavigationTarget(j,
-          "navigationTarget", NavigationTarget.inPlace), getStrings(j,
-          "keywords"), data.getStrings("allowedRoleIds"), parseTileConfig(j),);
+    auto data = precheck.data;
+    auto createReq = CreateTileRequest();
+    createReq.tenantId = tenantId;
+    createReq.id = precheck.id;
+    createReq.title = data.getString("title");
+    createReq.subtitle = data.getString("subtitle");
+    createReq.description = data.getString("description");
+    createReq.icon = data.getString("icon");
+    createReq.info = data.getString("info");
+    createReq.tileType = jsonEnum!TileType(j, "tileType", TileType.static_);
+    createReq.appType = jsonEnum!AppType(j, "appType", AppType.url);
+    createReq.url = data.getString("url");
+    createReq.appId = data.getString("appId");
+    createReq.navigationTarget = jsonEnum!NavigationTarget(j, "navigationTarget", NavigationTarget
+        .inPlace);
+    createReq.keywords = getStrings(j, "keywords");
+    createReq.allowedRoleIds = data.getStrings("allowedRoleIds");
+    createReq.configuration = parseTileConfig(j);
 
-      auto result = useCase.createTile(createReq);
-      if (result.isSuccess()) {
-        auto response = Json.emptyObject;
-        response["id"] = Json(result.tileId);
-        res.writeJsonBody(response, 201);
-      } else {
-        writeApiError(res, 400, result.message);
-      }
-    } catch (Exception e) {
-      writeApiError(res, 500, "Internal server error");
-    }
+    auto result = useCase.createTile(createReq);
+    if (result.hasError())
+      return errorResponse(result.message, 400);
+
+    return successResponse("Tile created successfully", "Created", 201, Json.emptyObject.set("id", result
+        .tileId));
+    //    {
+    //     auto response = Json.emptyObject;
+    //     response["id"] = Json(result.tileId);
+    //     res.writeJsonBody(response, 201);
+    //   } else {
+    //     writeApiError(res, 400, result.message);
+    //   }
+    // } catch (Exception e) {
+    //   writeApiError(res, 500, "Internal server error");
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
-        auto precheck = super.listHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto tiles = useCase.listTiles(tenantId);
-      auto response = Json.emptyObject
+    auto tenantId = precheck.tenantId;
+    auto tiles = useCase.listTiles(tenantId);
+    auto response = Json.emptyObject
       .set("totalResults", tiles.length)
       .set("resources", tiles);
-      
-      res.writeJsonBody(response, 200);
-    } catch (Exception e) {
-      writeApiError(res, 500, "Internal server error");
-    }
+
+    return successResponse("Tiles retrieved successfully", "OK", 200, response);
   }
 
-  protected void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
-      auto query = req.headers.get("X-Search-Query", "");
-      auto tiles = useCase.searchTiles(tenantId, query);
-      auto response = Json.emptyObject;
-      response["totalResults"] = Json(tiles.length);
-      response["resources"] = toJsonArray(tiles);
-      res.writeJsonBody(response, 200);
-    } catch (Exception e) {
-      writeApiError(res, 500, "Internal server error");
-    }
+  protected Json searchHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto query = req.headers.get("X-Search-Query", "");
+    auto tiles = useCase.searchTiles(tenantId, query);
+    auto response = Json.emptyObject
+      .set("totalResults", tiles.length)
+      .set("resources", tiles);
+
+    return successResponse("Tiles retrieved successfully", "OK", 200, response);
   }
+
+  mixin(HandleTemplate!("handleSearch", "searchHandler"));
 
   override protected Json getHandler(HTTPServerRequest req) {
-        auto precheck = super.getHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto tileId = precheck.id;
-      auto tile = useCase.getTile(tileId);
-      if (tile.isNull) {
-        writeApiError(res, 404, "Tile not found");
-        return;
-      }
-      res.writeJsonBody(toJsonValue(tile), 200);
-    } catch (Exception e) {
-      writeApiError(res, 500, "Internal server error");
-    }
+    auto tenantId = precheck.tenantId;
+    auto tileId = precheck.id;
+    auto tile = useCase.getTile(tenantId, tileId);
+    if (tile.hasError)
+      return errorResponse(tile.message, 404);
+
+    return successResponse("Tile retrieved successfully", "Retrieved", 200, toJsonValue(tile));
+    //       writeApiError(res, 404, "Tile not found");
+    //       return;
+    //     }
+    //     res.writeJsonBody(toJsonValue(tile), 200);
+    //   }
+    //  catch (Exception e) {
+    //     writeApiError(res, 500, "Internal server error");
+
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
-        auto precheck = super.updateHandler(req);
-        if (precheck.hasError)
-            return precheck;
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-        auto tenantId = precheck.tenantId;
-      auto tileId = precheck.id;
-      auto data = precheck.data;
-      auto updateReq = UpdateTileRequest(tileId, data.getString("title"),
-        data.getString("subtitle"), data.getString("description"),
-        data.getString("icon"), data.getString("info"), jsonEnum!TileType(j,
-          "tileType", TileType.static_), jsonEnum!AppType(j, "appType", AppType.url),
-        data.getString("url"), data.getString("appId"), jsonEnum!NavigationTarget(j,
-          "navigationTarget", NavigationTarget.inPlace), getStrings(j,
-          "keywords"), data.getStrings("allowedRoleIds"), parseTileConfig(j),);
+    auto tenantId = precheck.tenantId;
+    auto tileId = precheck.id;
+    auto data = precheck.data;
+    auto updateReq = UpdateTileRequest(tileId, data.getString("title"),
+      data.getString("subtitle"), data.getString("description"),
+      data.getString("icon"), data.getString("info"), jsonEnum!TileType(j,
+        "tileType", TileType.static_), jsonEnum!AppType(j, "appType", AppType.url),
+      data.getString("url"), data.getString("appId"), jsonEnum!NavigationTarget(j,
+        "navigationTarget", NavigationTarget.inPlace), getStrings(j,
+        "keywords"), data.getStrings("allowedRoleIds"), parseTileConfig(j),);
 
-      auto error = useCase.updateTile(updateReq);
-      if (error.length > 0)
-        writeApiError(res, 404, error);
-      else
-        res.writeJsonBody(Json.emptyObject, 200);
-    } catch (Exception e) {
-      writeApiError(res, 500, "Internal server error");
-    }
+    auto error = useCase.updateTile(updateReq);
+    if (error.length > 0)
+      writeApiError(res, 404, error);
+    else
+      res.writeJsonBody(Json.emptyObject, 200);
   }
-
-  override protected Json deleteHandler(HTTPServerRequest req) {
-        auto precheck = super.deleteHandler(req);
-        if (precheck.hasError)
-            return precheck;
-
-        auto tenantId = precheck.tenantId;
-      auto tileId = precheck.id;
-      auto error = useCase.deleteTile(tileId);
-      if (error.length > 0)
-        writeApiError(res, 404, error);
-      else
-        res.writeJsonBody(Json.emptyObject, 204);
-    } catch (Exception e) {
-      writeApiError(res, 500, "Internal server error");
-    }
+ catch (Exception e) {
+    writeApiError(res, 500, "Internal server error");
   }
+}
 
-  private TileConfiguration parseTileConfig(Json j) {
-    import uim.platform.portal.domain.entities.tile : TileConfiguration;
+override protected Json deleteHandler(HTTPServerRequest req) {
+  auto precheck = super.deleteHandler(req);
+  if (precheck.hasError)
+    return precheck;
 
-    auto cfgJson = "configuration" in j;
-    if (cfgJson.isNull || (cfgJson).type != Json.Type.object)
-      return TileConfiguration.init;
-    auto c = *cfgJson;
-    return TileConfiguration(c.getString("serviceUrl"), c.getString("serviceRefreshInterval"),
-      c.getString("numberUnit"), c.getString("targetNumber"),
-      c.getString("indicatorColor"), c.getString("sizeBehavior"),);
-  }
+  auto tenantId = precheck.tenantId;
+  auto tileId = precheck.id;
+  auto error = useCase.deleteTile(tileId);
+  if (error.length > 0)
+    writeApiError(res, 404, error);
+  else
+    res.writeJsonBody(Json.emptyObject, 204);
+}
+ catch (Exception e) {
+  writeApiError(res, 500, "Internal server error");
+}
+}
+
+private TileConfiguration parseTileConfig(Json j) {
+  import uim.platform.portal.domain.entities.tile : TileConfiguration;
+
+  auto cfgJson = "configuration" in j;
+  if (cfgJson.isNull || (cfgJson).type != Json.Type.object)
+    return TileConfiguration.init;
+  auto c = *cfgJson;
+  return TileConfiguration(c.getString("serviceUrl"), c.getString("serviceRefreshInterval"),
+    c.getString("numberUnit"), c.getString("targetNumber"),
+    c.getString("indicatorColor"), c.getString("sizeBehavior"),);
+}
 }

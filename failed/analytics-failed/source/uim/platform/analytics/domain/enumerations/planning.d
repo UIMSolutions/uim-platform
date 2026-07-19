@@ -29,7 +29,7 @@ PlanningStatus[] toPlanningStatuses(string[] statuses) {
 string toString(PlanningStatus status) {
   return status.to!string;
 }
-string[] toString(PlanningStatus[] statuses) {
+string[] toStrings(PlanningStatus[] statuses) {
   return statuses.map!(toString).array;
 }
 ///
@@ -76,7 +76,7 @@ PlanningVersionType[] toPlanningVersionTypes(string[] types) {
 string toString(PlanningVersionType type) {
   return type.to!string;
 }
-string[] toString(PlanningVersionType[] types) {
+string[] toStrings(PlanningVersionType[] types) {
   return types.map!(toString).array;
 }
 ///

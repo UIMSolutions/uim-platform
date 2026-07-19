@@ -28,7 +28,7 @@ string toString(ExecutableType type) {
   return type.to!string; // This will return the enum member name as a string, e.g. "workflow", "serving"
 }
 
-string[] toString(ExecutableType[] types) {
+string[] toStrings(ExecutableType[] types) {
   return types.map!(toString).array;
 }
 ///
@@ -71,7 +71,7 @@ string toString(ExecutionStatus status) {
   return status.to!string; // This will return the enum member name as a string, e.g. "pending", "running", etc
 }
 
-string[] toString(ExecutionStatus[] statuses) {
+string[] toStrings(ExecutionStatus[] statuses) {
   return statuses.map!(toString).array;
 }
 ///
@@ -129,7 +129,7 @@ string toString(DeploymentStatus status) {
   return status.to!string; // This will return the enum member name as a string,  e.g. "pending", "running", etc
 }
 
-string[] toString(DeploymentStatus[] statuses) {
+string[] toStrings(DeploymentStatus[] statuses) {
   return statuses.map!(toString).array;
 }
 ///
@@ -179,7 +179,7 @@ string toString(ArtifactKind kind) {
   return kind.to!string; // This will return the enum member name as a string, e.g. "model", "dataset", etc
 }
 
-string[] toString(ArtifactKind[] kinds) {
+string[] toStrings(ArtifactKind[] kinds) {
   return kinds.map!(toString).array;
 }
 ///
@@ -240,7 +240,7 @@ string toString(TargetStatus status) {
   return cast(string)status; // This will return the enum member name as a string, e.g. "running", "stopped", etc
 }
 
-string[] toString(TargetStatus[] statuses) {
+string[] toStrings(TargetStatus[] statuses) {
   return statuses.map!(toString).array;
 }
 ///
@@ -300,7 +300,7 @@ string toString(MetricValueType type) {
   return cast(string)type; // This will return the enum member name as a string, e.g. "string_", "float_", "int_"
 }
 
-string[] toString(MetricValueType[] types) {
+string[] toStrings(MetricValueType[] types) {
   return types.map!(toString).array;
 }
 ///
@@ -346,7 +346,7 @@ string toString(LogSeverity severity) {
   return severity.to!string; // This will return the enum member name as a string, e.g. "info", "warn", "error"
 }
 
-string[] toString(LogSeverity[] severities) {
+string[] toStrings(LogSeverity[] severities) {
   return severities.map!(toString).array;
 }
 ///
@@ -431,7 +431,7 @@ string toString(ScheduleStatus status) {
   return status.to!string; // This will return the enum member name as a string, e.g. "active", "inactive", etc
 }
 
-string[] toString(ScheduleStatus[] statuses) {
+string[] toStrings(ScheduleStatus[] statuses) {
   return statuses.map!(toString).array;
 }
 ///

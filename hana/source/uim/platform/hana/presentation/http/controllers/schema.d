@@ -8,6 +8,7 @@ module uim.platform.hana.presentation.http.controllers.schema;
 // import uim.platform.hana.application.dto;
 
 import uim.platform.hana;
+
 mixin(ShowModule!());
 
 @safe:
@@ -76,71 +77,67 @@ class SchemaController : ManageHttpController {
       .set("count", schemas.length)
       .set("resources", list);
 
-    res.writeJsonBody(resp, 200);
+    return successResponse("Schema list retrieved successfully", "Retrieved", 200, resp);
   }
- catch (Exception e) {
-    writeError(res, 500, "Internal server error");
+
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto id = precheck.id;
+    auto s = usecase.getById(tenantId, id);
+    if (s.isNull)
+      return errorResponse("Schema not found", 404);
+
+    auto resp = Json.emptyObject
+      .set("id", s.id)
+      .set("instanceId", s.instanceId)
+      .set("name", s.name)
+      .set("owner", s.owner)
+      .set("tableCount", s.tableCount)
+      .set("viewCount", s.viewCount)
+      .set("procedureCount", s.procedureCount)
+      .set("sizeBytes", s.sizeBytes)
+      .set("createdAt", s.createdAt)
+      .set("updatedAt", s.updatedAt);
+
+    return successResponse("Schema retrieved successfully", "Retrieved", 200, resp);
   }
-}
 
-override protected Json getHandler(HTTPServerRequest req) {
-  auto precheck = super.getHandler(req);
-  if (precheck.hasError)
-    return precheck;
+  override protected Json updateHandler(HTTPServerRequest req) {
+    auto precheck = super.updateHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-  auto tenantId = precheck.tenantId;
-  auto id = precheck.id;
-  auto s = usecase.getById(tenantId, id);
-  if (s.isNull)
-    return errorResponse("Schema not found", 404);
+    auto tenantId = precheck.tenantId;
 
-  auto resp = Json.emptyObject
-    .set("id", s.id)
-    .set("instanceId", s.instanceId)
-    .set("name", s.name)
-    .set("owner", s.owner)
-    .set("tableCount", s.tableCount)
-    .set("viewCount", s.viewCount)
-    .set("procedureCount", s.procedureCount)
-    .set("sizeBytes", s.sizeBytes)
-    .set("createdAt", s.createdAt)
-    .set("updatedAt", s.updatedAt);
+    auto data = precheck.data;
+    UpdateSchemaRequest r;
+    r.tenantId = tenantId;
+    r.id = precheck.id;
+    r.owner = data.getString("owner");
 
-  return successResponse("Schema retrieved successfully", "Retrieved", 200, resp);
-}
+    auto result = usecase.update(r);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+    auto resp = Json.emptyObject
+      .set("id", result.id);
 
-override protected Json updateHandler(HTTPServerRequest req) {
-  auto precheck = super.updateHandler(req);
-  if (precheck.hasError)
-    return precheck;
+    return successResponse("Schema updated successfully", "Updated", 200, resp);
+  }
 
-  auto tenantId = precheck.tenantId;
+  override protected Json deleteHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-  auto data = precheck.data;
-  UpdateSchemaRequest r;
-  r.tenantId = tenantId;
-  r.id = precheck.id;
-  r.owner = data.getString("owner");
-
-  auto result = usecase.update(r);
-  if (result.hasError)
-    return errorResponse(result.message, 400);
-  auto resp = Json.emptyObject
-    .set("id", result.id);
-
-  return successResponse("Schema updated successfully", "Updated", 200, resp);
-}
-
-override protected Json deleteHandler(HTTPServerRequest req) {
-  auto precheck = super.deleteHandler(req);
-  if (precheck.hasError)
-    return precheck;
-
-  auto tenantId = precheck.tenantId;
-  auto id = SchemaId(precheck.id);
-  auto result = usecase.deleteSchema(id);
-  if (result.hasError)
-    return errorResponse(result.message, 400);
-  return successResponse("Schema deleted successfully", "Deleted", 204, Json.emptyObject);
-}
+    auto tenantId = precheck.tenantId;
+    auto id = SchemaId(precheck.id);
+    auto result = usecase.deleteSchema(id);
+    if (result.hasError)
+      return errorResponse(result.message, 400);
+    return successResponse("Schema deleted successfully", "Deleted", 204, Json.emptyObject);
+  }
 }

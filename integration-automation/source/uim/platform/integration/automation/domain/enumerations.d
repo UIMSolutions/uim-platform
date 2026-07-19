@@ -39,7 +39,7 @@ ScenarioStatus[] toScenarioStatus(string[] values) {
 string toString(ScenarioStatus value) {
   return value.to!string();
 }
-string[] toString(ScenarioStatus[] values) {
+string[] toStrings(ScenarioStatus[] values) {
   return values.map!(v => v.toString).array;
 }
 ///
@@ -78,7 +78,7 @@ WorkflowStatus[] toWorkflowStatus(string[] values) {
 string toString(WorkflowStatus value) {
   return value.to!string();
 }
-string[] toString(WorkflowStatus[] values) {
+string[] toStrings(WorkflowStatus[] values) {
   return values.map!(v => v.toString()).array;
 }
 ///
@@ -119,7 +119,7 @@ StepType[] toStepType(string[] values) {
 string toString(StepType value) {
   return value.to!string();
 }
-string[] toString(StepType[] values) {
+string[] toStrings(StepType[] values) {
   return values.map!(v => v.toString()).array;
 }
 ///
@@ -159,7 +159,7 @@ StepStatus[] toStepStatus(string[] values) {
 string toString(StepStatus value) {
   return value.to!string();
 }
-string[] toString(StepStatus[] values) {
+string[] toStrings(StepStatus[] values) {
   return values.map!(v => v.toString()).array;
 }
 ///
@@ -201,7 +201,7 @@ StepPriority[] toStepPriority(string[] values) {
 string toString(StepPriority value) {
   return value.to!string();
 }
-string[] toString(StepPriority[] values) {
+string[] toStrings(StepPriority[] values) {
   return values.map!(v => v.toString()).array;
 }
 ///
@@ -246,7 +246,7 @@ SystemType[] toSystemType(string[] values) {
 string toString(SystemType value) {
   return value.to!string();
 }
-string[] toString(SystemType[] values) {
+string[] toStrings(SystemType[] values) {
   return values.map!(v => v.toString()).array;
 }
 ///
@@ -298,7 +298,7 @@ ConnectionStatus[] toConnectionStatus(string[] values) {
 string toString(ConnectionStatus value) {
   return value.to!string();
 }
-string[] toString(ConnectionStatus[] values) {
+string[] toStrings(ConnectionStatus[] values) {
   return values.map!(v => v.toString()).array;
 }
 ///
@@ -337,7 +337,7 @@ DestinationType[] toDestinationType(string[] values) {
 string toString(DestinationType value) {
   return value.to!string();
 }
-string[] toString(DestinationType[] values) {
+string[] toStrings(DestinationType[] values) {
   return values.map!(v => v.toString()).array;
 }
 ///
@@ -380,7 +380,7 @@ AuthenticationType[] toAuthenticationType(string[] values) {
 string toString(AuthenticationType value) {
   return value.to!string();
 }
-string[] toString(AuthenticationType[] values) {
+string[] toStrings(AuthenticationType[] values) {
   return values.map!(v => v.toString()).array;
 }
 ///
@@ -423,7 +423,7 @@ ProxyType[] toProxyType(string[] values) {
 string toString(ProxyType value) {
   return value.to!string();
 }
-string[] toString(ProxyType[] values) {
+string[] toStrings(ProxyType[] values) {
   return values.map!(v => v.toString()).array;
 }
 ///
@@ -460,7 +460,7 @@ ExecutionOutcome[] toExecutionOutcome(string[] values) {
 string toString(ExecutionOutcome value) {
   return value.to!string();
 }
-string[] toString(ExecutionOutcome[] values) {
+string[] toStrings(ExecutionOutcome[] values) {
   return values.map!(v => v.toString()).array;
 } 
 ///
@@ -504,7 +504,7 @@ ScenarioCategory[] toScenarioCategory(string[] values) {
 string toString(ScenarioCategory value) {
   return value.to!string();
 }
-string[] toString(ScenarioCategory[] values) {
+string[] toStrings(ScenarioCategory[] values) {
   return values.map!(v => v.toString()).array;
 }
 ///
@@ -547,7 +547,7 @@ ScenarioType[] toScenarioType(string[] values) {
 string toString(ScenarioType value) {
   return value.to!string();
 }
-string[] toString(ScenarioType[] values) {
+string[] toStrings(ScenarioType[] values) {
   return values.map!(v => v.toString()).array;
 }
 ///

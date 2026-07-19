@@ -27,7 +27,7 @@ CustomerStatus[] toCustomerStatusArray (string[] values) {
 string toString (CustomerStatus status) {
     mixin(EnumToString!("CustomerStatus"));
 }
-string[] toString(CustomerStatus[] statuses) {
+string[] toStrings(CustomerStatus[] statuses) {
     return statuses.map!(toString).array;
 }
 ///
@@ -69,7 +69,7 @@ CustomerGender[] toCustomerGender (string[] values) {
 string toString (CustomerGender gender ) {
     return gender.to!string();
 }
-string[] toString(CustomerGender[] genders) {
+string[] toStrings(CustomerGender[] genders) {
     return genders.map!(toString).array;
 }
 /// 
@@ -113,7 +113,7 @@ LoginProvider[] toLoginProvider (string[] values) {
 string toString (LoginProvider provider) {
     return provider.to!string();
 }
-string[] toString(LoginProvider[] providers) {
+string[] toStrings(LoginProvider[] providers) {
     return providers.map!(toString).array;
 }
 /// 
@@ -160,7 +160,7 @@ SessionStatus[] toSessionStatus(string[] values) {
 string toString(SessionStatus status) {
     return status.to!string();
 }
-string[] toString(SessionStatus[] statuses) {
+string[] toStrings(SessionStatus[] statuses) {
     return statuses.map!(toString).array;
 }
 ///
@@ -197,7 +197,7 @@ SocialIdentityStatus[] toSocialIdentityStatus(string[] values) {
 string toString(SocialIdentityStatus status) {
     return status.to!string();
 }
-string[] toString(SocialIdentityStatus[] statuses) {
+string[] toStrings(SocialIdentityStatus[] statuses) {
     return statuses.map!(toString).array;
 }
 ///
@@ -238,7 +238,7 @@ ConsentType[] toConsentType(string[] values) {
 string toString(ConsentType type) {
     return type.to!string();
 }
-string[] toString(ConsentType[] types) {
+string[] toStrings(ConsentType[] types) {
     return types.map!(toString).array;
 }
 ///
@@ -286,7 +286,7 @@ LegalBasis[] toLegalBasis(string[] values) {
 string toString(LegalBasis basis) { 
     return basis.to!string();
 }
-string[] toString(LegalBasis[] bases) {
+string[] toStrings(LegalBasis[] bases) {
     return bases.map!(toString).array;
 }
 ///
@@ -341,7 +341,7 @@ AuditAction[] toAuditAction(string[] values) {
 string toString(AuditAction action) {
     return action.to!string();
 }
-string[] toString(AuditAction[] actions) {
+string[] toStrings(AuditAction[] actions) {
     return actions.map!(toString).array;
 }
 ///
@@ -406,7 +406,7 @@ ResourceType[] toResourceType(string[] values) {
 string toString(ResourceType type) {
     return type.to!string();
 }
-string[] toString(ResourceType[] types) {
+string[] toStrings(ResourceType[] types) {
     return types.map!(toString).array;
 }
 ///
@@ -452,7 +452,7 @@ IdentityProviderType[] toIdentityProviderType(string[] values) {
 string toString(IdentityProviderType type) {
     return type.to!string();
 }
-string[] toString(IdentityProviderType[] types) {
+string[] toStrings(IdentityProviderType[] types) {
     return types.map!(toString).array;
 }
 ///
@@ -491,7 +491,7 @@ IdentityProviderStatus[] toIdentityProviderStatus(string[] values) {
 string toString(IdentityProviderStatus status) {
     return status.to!string();
 }
-string[] toString(IdentityProviderStatus[] statuses) {
+string[] toStrings(IdentityProviderStatus[] statuses) {
     return statuses.map!(toString).array;
 }
 ///
@@ -531,7 +531,7 @@ ScreenSetFlowType[] toScreenSetFlowType(string[] values) {
 string toString(ScreenSetFlowType type) {
     return type.to!string();
 }
-string[] toString(ScreenSetFlowType[] types) {  
+string[] toStrings(ScreenSetFlowType[] types) {  
     return types.map!(toString).array;
 }   
 ///
@@ -574,7 +574,7 @@ ScreenSetStatus[] toScreenSetStatus(string[] values) {
 string toString(ScreenSetStatus status) {
     return status.to!string();
 }
-string[] toString(ScreenSetStatus[] statuses) {
+string[] toStrings(ScreenSetStatus[] statuses) {
     return statuses.map!(toString).array;
 }
 ///

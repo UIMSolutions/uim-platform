@@ -29,7 +29,7 @@ string toString(GlobalAccountStatus value) {
   return value.to!string();
 }
 
-string[] toString(GlobalAccountStatus[] values) {
+string[] toStrings(GlobalAccountStatus[] values) {
   return values.map!(v => v.toString).array;
 }
 /// 
@@ -78,7 +78,7 @@ string toString(LicenseType value) {
   return value.to!string();
 }
 
-string[] toString(LicenseType[] values) {
+string[] toStrings(LicenseType[] values) {
   return values.map!(v => v.toString).array;
 }
 ///
@@ -125,7 +125,7 @@ string toString(DirectoryStatus value) {
   return value.to!string();
 }
 
-string[] toString(DirectoryStatus[] values) {
+string[] toStrings(DirectoryStatus[] values) {
   return values.map!(v => v.toString()).array;
 }
 ///
@@ -184,7 +184,7 @@ string toString(DirectoryType value) {
   return value.to!string();
 }
 
-string[] toString(DirectoryType[] values) {
+string[] toStrings(DirectoryType[] values) {
   return values.map!(v => v.toString).array;
 }
 ///
@@ -241,7 +241,7 @@ string toString(DirectoryFeature value) {
   return value.to!string();
 }
 
-string[] toString(DirectoryFeature[] values) {
+string[] toStrings(DirectoryFeature[] values) {
   return values.map!(v => v.toString()).array;
 }
 ///
@@ -295,7 +295,7 @@ string toString(SubaccountStatus value) {
   return value.to!string();
 }
 
-string[] toString(SubaccountStatus[] values) {
+string[] toStrings(SubaccountStatus[] values) {
   return values.map!(v => v.toString()).array;
 }
 ///
@@ -357,7 +357,7 @@ string toString(SubaccountUsage value) {
   return value.to!string();
 }
 
-string[] toString(SubaccountUsage[] values) {
+string[] toStrings(SubaccountUsage[] values) {
   return values.map!(v => v.toString()).array;
 }
 ///
@@ -411,7 +411,7 @@ string toString(EntitlementStatus value) {
   return value.to!string();
 }
 
-string[] toString(EntitlementStatus[] values) {
+string[] toStrings(EntitlementStatus[] values) {
   return values.map!(v => v.toString()).array;
 }
 ///
@@ -461,7 +461,7 @@ string toString(ServicePlanCategory value) {
   return value.to!string();
 }
 
-string[] toString(ServicePlanCategory[] values) {
+string[] toStrings(ServicePlanCategory[] values) {
   return values.map!(v => v.toString()).array;
 }
 ///
@@ -518,7 +518,7 @@ string toString(ServicePlanStatus value) {
   return value.to!string();
 }
 
-string[] toString(ServicePlanStatus[] values) {
+string[] toStrings(ServicePlanStatus[] values) {
   return values.map!(v => v.toString()).array;
 }
 ///
@@ -566,7 +566,7 @@ string toString(PricingModel value) {
   return value.to!string();
 }
 
-string[] toString(PricingModel[] values) {
+string[] toStrings(PricingModel[] values) {
   return values.map!(v => v.toString()).array;
 }
 ///
@@ -623,7 +623,7 @@ string toString(QuotaStatus value) {
   return value.to!string();
 }
 
-string[] toString(QuotaStatus[] values) {
+string[] toStrings(QuotaStatus[] values) {
   return values.map!(v => v.toString()).array;
 }
 ///
@@ -694,7 +694,7 @@ string toString(SubscriptionStatus value) {
   return value.to!string();
 }
 
-string[] toString(SubscriptionStatus[] values) {
+string[] toStrings(SubscriptionStatus[] values) {
   return values.map!(v => v.toString()).array;
 }
 ///
@@ -747,7 +747,7 @@ ServiceInstanceStatus[] toServiceInstanceStatus(string[] values) {
 string toString(ServiceInstanceStatus value) {
   return value.to!string();
 }
-string[] toString(ServiceInstanceStatus[] values) {
+string[] toStrings(ServiceInstanceStatus[] values) {
   return values.map!(v => v.toString()).array;
 }
 ///
@@ -796,7 +796,7 @@ EnvironmentType[] toEnvironmentType(string[] values) {
 string toString(EnvironmentType value) {
   return value.to!string();
 }
-string[] toString(EnvironmentType[] values) {
+string[] toStrings(EnvironmentType[] values) {
   return values.map!(v => v.toString()).array;
 }
 /// 
@@ -851,7 +851,7 @@ EnvironmentEventCategory[] toEnvironmentEventCategory(string[] values) {
 string toString(EnvironmentEventCategory value) {
   return value.to!string();
 }
-string[] toString(EnvironmentEventCategory[] values) {
+string[] toStrings(EnvironmentEventCategory[] values) {
   return values.map!(v => v.toString()).array;
 }
 ///
@@ -907,7 +907,7 @@ EnvironmentEventSeverity[] toEnvironmentEventSeverity(string[] values) {
 string toString(EnvironmentEventSeverity value) {
   return value.to!string();
 }
-string[] toString(EnvironmentEventSeverity[] values) {
+string[] toStrings(EnvironmentEventSeverity[] values) {
   return values.map!(v => v.toString()).array;
 }
 ///
@@ -956,7 +956,7 @@ LabeledResourceType[] toLabeledResourceType(string[] values) {
 string toString(LabeledResourceType value) {
   return value.to!string(); 
 }
-string[] toString(LabeledResourceType[] values) {
+string[] toStrings(LabeledResourceType[] values) {
   return values.map!(v => v.toString()).array;
 }
 ///

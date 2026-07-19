@@ -46,7 +46,7 @@ class OrganizationController : ManageHttpController {
     r.tenantId = tenantId;
     r.organizationId = OrganizationId(precheck.id);
     r.name_ = data.getString("name");
-    r.active_ = j.get("active", Json(true)).get!bool;
+    r.active_ = data.get("active", Json(true)).get!bool;
     auto result = usecase.createOrganization(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
@@ -80,15 +80,11 @@ override protected Json getHandler(HTTPServerRequest req) {
   auto tenantId = precheck.tenantId;
   auto id = OrganizationId(precheck.id);
   auto o = usecase.getOrganization(tenantId, id);
-  if (o.isNull) {
-    writeFhirError(res, 404, "Organization not found");
-    return;
-  }
-  res.writeJsonBody(o.toJson(), 200);
-}
- catch (Exception e) {
-  // writeFhirError(res, 500, "Internal server error");
-}
+  if (o.isNull)
+    return errorResponse("Organization not found", 404);
+
+  return successResponse("Organization retrieved successfully", "OK", 200, o.toJson());  
+//    writeFhirError(res, 404, "Organization not found");
 }
 
 override protected Json updateHandler(HTTPServerRequest req) {

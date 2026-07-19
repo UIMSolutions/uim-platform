@@ -46,7 +46,7 @@ TrainingJobStatus[] toTrainingJobStatus(string[] values) {
 string toString(TrainingJobStatus status) {
     return status.to!string();
 }
-string[] toString(TrainingJobStatus[] statuses) {
+string[] toStrings(TrainingJobStatus[] statuses) {
     return statuses.map!(s => toString(s)).array;
 }
 ///
@@ -86,7 +86,7 @@ ExtractionMethod[] toExtractionMethod(string[] values) {
 string toString(ExtractionMethod method) {
     return method.to!string();
 }
-string[] toString(ExtractionMethod[] methods) {
+string[] toStrings(ExtractionMethod[] methods) {
     return methods.map!(m => toString(m)).array;
 }
 ///
@@ -133,7 +133,7 @@ DocumentCategory[] toDocumentCategory(string[] values) {
 string toString(DocumentCategory category) {
     return category.to!string();
 }
-string[] toString(DocumentCategory[] categories) {
+string[] toStrings(DocumentCategory[] categories) {
     return categories.map!(c => toString(c)).array;
 }
 ///
@@ -207,7 +207,7 @@ string toString(FieldValueType value) {
         case FieldValueType.line_items: return "line_items";
     }
 }
-string[] toString(FieldValueType[] values) {
+string[] toStrings(FieldValueType[] values) {
     return values.map!(v => toString(v)).array;
 }
 ///
@@ -250,7 +250,7 @@ ConfidenceLevel[] toConfidenceLevel(string[] values) {
 string toString(ConfidenceLevel value) {
     return value.to!string();
 }
-string[] toString(ConfidenceLevel[] values) {
+string[] toStrings(ConfidenceLevel[] values) {
     return values.map!(v => toString(v)).array;
 }
 ///
@@ -285,7 +285,7 @@ EnrichmentMatchStatus[] toEnrichmentMatchStatus(string[] values) {
 string toString(EnrichmentMatchStatus value) {
     return value.to!string();
 }
-string[] toString(EnrichmentMatchStatus[] values) {
+string[] toStrings(EnrichmentMatchStatus[] values) {
     return values.map!(v => toString(v)).array;
 }
 ///
@@ -323,7 +323,7 @@ FileType[] toFileType(string[] values) {
 string toString(FileType value) {
     return value.to!string();
 }
-string[] toString(FileType[] values) {
+string[] toStrings(FileType[] values) {
     return values.map!(v => toString(v)).array;
 }
 ///
@@ -364,7 +364,7 @@ SchemaStatus[] toSchemaStatus(string[] values) {
 string toString(SchemaStatus value) {
     return value.to!string();
 }
-string[] toString(SchemaStatus[] values) {
+string[] toStrings(SchemaStatus[] values) {
     return values.map!(v => toString(v)).array;
 }
 ///
@@ -399,7 +399,7 @@ TemplateStatus[] toTemplateStatus(string[] values) {
 string toString(TemplateStatus value) {
     return value.to!string();
 }
-string[] toString(TemplateStatus[] values) {
+string[] toStrings(TemplateStatus[] values) {
     return values.map!(v => toString(v)).array;
 }
 ///

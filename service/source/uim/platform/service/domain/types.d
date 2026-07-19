@@ -16,7 +16,7 @@ struct UserId {
 UserId[] toUserId(string[] ids) {
     return ids.map!(id => UserId(id)).array;
 }
-string[] toString(UserId[] ids) {
+string[] toStrings(UserId[] ids) {
     return ids.map!(id => id.value).array;
 }
 bool hasUserId(UserId[] ids, UserId id) {
@@ -32,7 +32,7 @@ struct GlobalAccountId {
 GlobalAccountId[] toGlobalAccountId(string[] ids) {
     return ids.map!(id => GlobalAccountId(id)).array;
 }
-string[] toString(GlobalAccountId[] ids) {
+string[] toStrings(GlobalAccountId[] ids) {
     return ids.map!(id => id.value).array;
 }
 bool hasGlobalAccountId(GlobalAccountId[] ids, GlobalAccountId id) {
@@ -49,7 +49,7 @@ struct SubaccountId {
 SubaccountId[] toSubaccountId(string[] ids) {
     return ids.map!(id => SubaccountId(id)).array;
 }
-string[] toString(SubaccountId[] ids) {
+string[] toStrings(SubaccountId[] ids) {
     return ids.map!(id => id.value).array;
 }
 bool hasSubaccountId(SubaccountId[] ids, SubaccountId id) {
@@ -67,7 +67,7 @@ struct ApplicationId {
 ApplicationId[] toApplicationId(string[] ids) {
     return ids.map!(id => ApplicationId(id)).array;
 }
-string[] toString(ApplicationId[] ids) {
+string[] toStrings(ApplicationId[] ids) {
     return ids.map!(id => id.value).array;
 }
 bool hasApplicationId(ApplicationId[] ids, ApplicationId id) {
@@ -83,7 +83,7 @@ struct ConnectionId {
 ConnectionId[] toConnectionId(string[] ids) {
     return ids.map!(id => ConnectionId(id)).array;
 }
-string[] toString(ConnectionId[] ids) {
+string[] toStrings(ConnectionId[] ids) {
     return ids.map!(id => id.value).array;
 }
 bool hasConnectionId(ConnectionId[] ids, ConnectionId id) {
@@ -99,7 +99,7 @@ struct OrganizationId {
 OrganizationId[] toOrganizationId(string[] ids) {
     return ids.map!(id => OrganizationId(id)).array;
 }
-string[] toString(OrganizationId[] ids) {
+string[] toStrings(OrganizationId[] ids) {
     return ids.map!(id => id.value).array;
 }
 bool hasOrganizationId(OrganizationId[] ids, OrganizationId id) {
@@ -115,7 +115,7 @@ struct OrgId {
 OrgId[] toOrgId(string[] ids) {
     return ids.map!(id => OrgId(id)).array;
 }
-string[] toString(OrgId[] ids) {
+string[] toStrings(OrgId[] ids) {
     return ids.map!(id => id.value).array;
 }
 bool hasOrgId(OrgId[] ids, OrgId id) {
@@ -130,7 +130,7 @@ struct ServiceBindingId {
 ServiceBindingId[] toServiceBindingId(string[] ids) {
     return ids.map!(id => ServiceBindingId(id)).array;
 }
-string[] toString(ServiceBindingId[] ids) {
+string[] toStrings(ServiceBindingId[] ids) {
     return ids.map!(id => id.value).array;
 }
 bool hasServiceBindingId(ServiceBindingId[] ids, ServiceBindingId id) {
@@ -146,7 +146,7 @@ struct SpaceId {
 SpaceId[] toSpaceId(string[] ids) {
     return ids.map!(id => SpaceId(id)).array;
 }
-string[] toString(SpaceId[] ids) {
+string[] toStrings(SpaceId[] ids) {
     return ids.map!(id => id.value).array;
 }
 bool hasSpaceId(SpaceId[] ids, SpaceId id) {
@@ -161,7 +161,7 @@ struct TenantId {
 TenantId[] toTenantId(string[] ids) {
     return ids.map!(id => TenantId(id)).array;
 }
-string[] toString(TenantId[] ids) {
+string[] toStrings(TenantId[] ids) {
     return ids.map!(id => id.value).array;
 }
 bool hasTenantId(TenantId[] ids, TenantId id) {
@@ -177,7 +177,7 @@ struct ServiceInstanceId {
 ServiceInstanceId[] toServiceInstanceId(string[] ids) {
     return ids.map!(id => ServiceInstanceId(id)).array;
 }
-string[] toString(ServiceInstanceId[] ids) {
+string[] toStrings(ServiceInstanceId[] ids) {
     return ids.map!(id => id.value).array;
 }
 bool hasServiceInstanceId(ServiceInstanceId[] ids, ServiceInstanceId id) {

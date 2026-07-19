@@ -23,7 +23,7 @@ LogisticsDirection[] toLogisticsDirection(string[] values) {
 string toString(LogisticsDirection value) {
   return value.to!string();
 }
-string[] toString(LogisticsDirection[] values) {
+string[] toStrings(LogisticsDirection[] values) {
   return values.map!(v => v.toString).array;
 }
 ///
@@ -58,7 +58,7 @@ FreightOrderStatus[] toFreightOrderStatus(string[] values) {
 string toString(FreightOrderStatus value) {
   return value.to!string(); 
 }
-string[] toString(FreightOrderStatus[] values) {
+string[] toStrings(FreightOrderStatus[] values) {
   return values.map!(v => v.toString()).array;
 }
 /// 
@@ -99,7 +99,7 @@ ShipmentStatus[] toShipmentStatus(string[] values) {
 string toString(ShipmentStatus value) {
   return value.to!string();
 }
-string[] toString(ShipmentStatus[] values) {
+string[] toStrings(ShipmentStatus[] values) {
   return values.map!(v => v.toString()).array;
 }
 /// 
@@ -141,7 +141,7 @@ DeliveryStatus[] toDeliveryStatus(string[] values) {
 string toString(DeliveryStatus value) {
   return value.to!string();
 }
-string[] toString(DeliveryStatus[] values) {
+string[] toStrings(DeliveryStatus[] values) {
   return values.map!(v => v.toString()).array;
 }
 /// 
@@ -184,7 +184,7 @@ WarehouseTaskType[] toWarehouseTaskType(string[] values) {
 string toString(WarehouseTaskType value) {
   return value.to!string();
 }
-string[] toString(WarehouseTaskType[] values) {
+string[] toStrings(WarehouseTaskType[] values) {
   return values.map!(v => v.toString()).array;
 }
 ///
@@ -224,7 +224,7 @@ WarehouseTaskStatus[] toWarehouseTaskStatus(string[] values) {
 string toString(WarehouseTaskStatus value) {
   return value.to!string();
 }
-string[] toString(WarehouseTaskStatus[] values) {
+string[] toStrings(WarehouseTaskStatus[] values) {
   return values.map!(v => v.toString()).array;
 }
 /// 
@@ -265,7 +265,7 @@ WarehouseOrderStatus[] toWarehouseOrderStatus(string[] values) {
 string toString(WarehouseOrderStatus value) {
   return value.to!string();
 }
-string[] toString(WarehouseOrderStatus[] values) {
+string[] toStrings(WarehouseOrderStatus[] values) {
   return values.map!(v => v.toString()).array;
 }
 ///
@@ -304,7 +304,7 @@ CarrierStatus[] toCarrierStatus(string[] values) {
 string toString(CarrierStatus value) {
   return value.to!string();
 }
-string[] toString(CarrierStatus[] values) {
+string[] toStrings(CarrierStatus[] values) {
   return values.map!(v => v.toString()).array;
 }
 ///
@@ -341,7 +341,7 @@ TransportMode[] toTransportMode(string[] values) {
 string toString(TransportMode value) {
   return value.to!string();
 }
-string[] toString(TransportMode[] values) {
+string[] toStrings(TransportMode[] values) {
   return values.map!(v => v.toString()).array;
 }
 ///
@@ -382,7 +382,7 @@ HandlingUnitType[] toHandlingUnitType(string[] values) {
 string toString(HandlingUnitType value) {
   return value.to!string();
 }
-string[] toString(HandlingUnitType[] values) {
+string[] toStrings(HandlingUnitType[] values) {
   return values.map!(v => v.toString()).array;
 }
 ///

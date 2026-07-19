@@ -23,7 +23,7 @@ TlsProtocolVersion[] toTlsProtocolVersion(string[] values) {
 string toString(TlsProtocolVersion version_) {
     return version_.to!string;
 }
-string[] toString(TlsProtocolVersion[] versions) {
+string[] toStrings(TlsProtocolVersion[] versions) {
     return versions.map!(toString).array;
 }
 ///
@@ -61,7 +61,7 @@ CipherSuiteStrength[] toCipherSuiteStrength(string[] values) {
 string toString(CipherSuiteStrength strength) {
     return strength.to!string;
 }
-string[] toString(CipherSuiteStrength[] strengths) {
+string[] toStrings(CipherSuiteStrength[] strengths) {
     return strengths.map!(toString).array;
 }
 /// 

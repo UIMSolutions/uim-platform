@@ -57,7 +57,7 @@ string toString(SystemPlan plan) {
   }
 }
 
-string[] toString(SystemPlan[] plans) {
+string[] toStrings(SystemPlan[] plans) {
   return plans.map!(p => toString(p)).array;
 }
 /// 
@@ -108,7 +108,7 @@ string toString(SystemStatus status) {
   return status.to!string;
 }
 
-string[] toString(SystemStatus[] statuses) {
+string[] toStrings(SystemStatus[] statuses) {
   return statuses.map!(s => toString(s)).array;
 }
 /// 
@@ -160,7 +160,7 @@ string toString(ComponentType type) {
   return type.to!string;
 }
 
-string[] toString(ComponentType[] types) {
+string[] toStrings(ComponentType[] types) {
   return types.map!(t => toString(t)).array;
 }
 ///
@@ -208,7 +208,7 @@ string toString(ComponentStatus status) {
   return status.to!string;
 }
 
-string[] toString(ComponentStatus[] statuses) {
+string[] toStrings(ComponentStatus[] statuses) {
   return statuses.map!(s => toString(s)).array;
 }
 ///
@@ -257,7 +257,7 @@ string toString(BranchStrategy strategy) {
   return strategy.to!string;
 }
 
-string[] toString(BranchStrategy[] strategies) {
+string[] toStrings(BranchStrategy[] strategies) {
   return strategies.map!(s => toString(s)).array;
 }
 ///
@@ -302,7 +302,7 @@ string toString(CommunicationDirection direction) {
   return direction.to!string;
 }
 
-string[] toString(CommunicationDirection[] directions) {
+string[] toStrings(CommunicationDirection[] directions) {
   return directions.map!(d => toString(d)).array;
 }
 ///
@@ -346,7 +346,7 @@ string toString(CommunicationProtocol protocol) {
   return protocol.to!string;
 }
 
-string[] toString(CommunicationProtocol[] protocols) {
+string[] toStrings(CommunicationProtocol[] protocols) {
   return protocols.map!(p => toString(p)).array;
 }
 ///
@@ -396,7 +396,7 @@ string toString(CommunicationAuthMethod method) {
   return method.to!string;
 }
 
-string[] toString(CommunicationAuthMethod[] methods) {
+string[] toStrings(CommunicationAuthMethod[] methods) {
   return methods.map!(m => toString(m)).array;
 }
 ///
@@ -454,7 +454,7 @@ string toString(ArrangementStatus status) {
   return status.to!string;
 }
 
-string[] toString(ArrangementStatus[] statuses) {
+string[] toStrings(ArrangementStatus[] statuses) {
   return statuses.map!(s => toString(s)).array;
 }
 ///
@@ -502,7 +502,7 @@ string toString(BindingType type) {
   return type.to!string;
 }
 
-string[] toString(BindingType[] types) {
+string[] toStrings(BindingType[] types) {
   return types.map!(t => toString(t)).array;
 }
 ///
@@ -560,7 +560,7 @@ string toString(BindingStatus status) {
   return cast(string)status;
 }
 
-string[] toString(BindingStatus[] statuses) {
+string[] toStrings(BindingStatus[] statuses) {
   return statuses.map!(s => toString(s)).array;
 }
 /// 
@@ -604,7 +604,7 @@ string toString(UserStatus status) {
   return status.to!string;
 }
 
-string[] toString(UserStatus[] statuses) {
+string[] toStrings(UserStatus[] statuses) {
   return statuses.map!(s => toString(s)).array;
 }
 /// 
@@ -649,7 +649,7 @@ string toString(RoleType type) {
   return type.to!string;
 }
 
-string[] toString(RoleType[] types) {
+string[] toStrings(RoleType[] types) {
   return types.map!(t => toString(t)).array;
 }
 ///
@@ -693,7 +693,7 @@ string toString(TransportType type) {
   return type.to!string;
 }
 
-string[] toString(TransportType[] types) {
+string[] toStrings(TransportType[] types) {
   return types.map!(t => toString(t)).array;
 }
 /// 
@@ -738,7 +738,7 @@ string toString(TransportStatus status) {
   return status.to!string;
 }
 
-string[] toString(TransportStatus[] statuses) {
+string[] toStrings(TransportStatus[] statuses) {
   return statuses.map!(s => toString(s)).array;
 }
 ///
@@ -787,7 +787,7 @@ string toString(JobFrequency frequency) {
   return frequency.to!string;
 }
 
-string[] toString(JobFrequency[] frequencies) {
+string[] toStrings(JobFrequency[] frequencies) {
   return frequencies.map!(f => toString(f)).array;
 }
 ///
@@ -836,7 +836,7 @@ string toString(JobStatus status) {
   return status.to!string;
 }
 
-string[] toString(JobStatus[] statuses) {
+string[] toStrings(JobStatus[] statuses) {
   return statuses.map!(s => toString(s)).array;
 }
 ///

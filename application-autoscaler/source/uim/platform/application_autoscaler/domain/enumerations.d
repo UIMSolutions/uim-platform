@@ -49,7 +49,7 @@ MetricType[] toMetricTypes(Json[] values) {
 string toString(MetricType metricType) {
   return metricType.to!string;
 }
-string[] toString(MetricType[] metricTypes) {
+string[] toStrings(MetricType[] metricTypes) {
   return metricTypes.map!(toString).array;
 }
 Json toJson(MetricType metricType) {
@@ -119,7 +119,7 @@ ScalingOperator[] toScalingOperators(string[] s) {
 string toString(ScalingOperator op) {
   return op.to!string;
 }
-string[] toString(ScalingOperator[] ops) {
+string[] toStrings(ScalingOperator[] ops) {
   return ops.map!(toString).array;
 }
 ///
@@ -169,7 +169,7 @@ ScalingDirection[] toScalingDirections(string[] s) {
 string toString(ScalingDirection direction) {
   return direction.to!string;
 }
-string[] toString(ScalingDirection[] directions) {
+string[] toStrings(ScalingDirection[] directions) {
   return directions.map!(toString).array;
 } 
 /// 
@@ -213,7 +213,7 @@ ScalingStatus[] toScalingStatuses(string[] s) {
 string toString(ScalingStatus status) {
   return status.to!string;
 }
-string[] toString(ScalingStatus[] statuses) {
+string[] toStrings(ScalingStatus[] statuses) {
   return statuses.map!(toString).array;
 }
 ///
@@ -262,7 +262,7 @@ PolicyStatus[] toPolicyStatuses(string[] s) {
 string toString(PolicyStatus status) {
   return status.to!string;
 }
-string[] toString(PolicyStatus[] statuses) {
+string[] toStrings(PolicyStatus[] statuses) {
   return statuses.map!(toString).array;
 }
 ///
@@ -303,7 +303,7 @@ MetricAllowFrom[] toMetricAllowFroms(string[] s) {
 string toString(MetricAllowFrom allowFrom) {
   return allowFrom.to!string;
 }
-string[] toString(MetricAllowFrom[] allowFroms) {
+string[] toStrings(MetricAllowFrom[] allowFroms) {
   return allowFroms.map!(toString).array;
 }
 /// 

@@ -22,7 +22,7 @@ WorkspaceStatus[] toWorkspaceStatuses(string[] values) {
 string toString(WorkspaceStatus status) {
   return status.to!string;
 }
-string[] toString(WorkspaceStatus[] statuses) {
+string[] toStrings(WorkspaceStatus[] statuses) {
   return statuses.map!(toString).array;
 }
 /// 
@@ -77,7 +77,7 @@ WorkspaceTier[] toWorkspaceTiers(string[] values) {
 string toString(WorkspaceTier tier) {
   return tier.to!string;
 }
-string[] toString(WorkspaceTier[] tiers) {
+string[] toStrings(WorkspaceTier[] tiers) {
   return tiers.map!(toString).array;
 }
 /// 

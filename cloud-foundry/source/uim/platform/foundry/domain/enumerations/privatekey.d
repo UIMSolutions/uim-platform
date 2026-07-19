@@ -28,7 +28,7 @@ KeyAlgorithm[] toKeyAlgorithm(string[] values) {
 string toString(KeyAlgorithm algorithm) {
     return algorithm.to!string;
 }
-string[] toString(KeyAlgorithm[] algorithms) {
+string[] toStrings(KeyAlgorithm[] algorithms) {
     return algorithms.map!(toString).array;
 }
 ///
@@ -69,7 +69,7 @@ KeyStatus[] toKeyStatus(string[] values) {
 string toString(KeyStatus status) {
     return status.to!string;
 }
-string[] toString(KeyStatus[] statuses) {
+string[] toStrings(KeyStatus[] statuses) {
     return statuses.map!(toString).array;
 }
 /// 

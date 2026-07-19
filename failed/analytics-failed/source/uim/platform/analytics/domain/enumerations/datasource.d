@@ -30,7 +30,7 @@ DataSourceType[] toDataSourceTypes(string[] types) {
 string toString(DataSourceType type) {
   return type.to!string;
 }
-string[] toString(DataSourceType[] types) {
+string[] toStrings(DataSourceType[] types) {
   return types.map!(toString).array;
 }
 ///
@@ -79,7 +79,7 @@ DataSourceStatus[] toDataSourceStatuses(string[] statuses) {
 string toString(DataSourceStatus status) {
   return status.to!string;
 }
-string[] toString(DataSourceStatus[] statuses) {
+string[] toStrings(DataSourceStatus[] statuses) {
   return statuses.map!(toString).array;
 }
 ///

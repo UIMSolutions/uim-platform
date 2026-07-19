@@ -27,7 +27,7 @@ FlagType[] toFlagType(string[] values) {
 string toString(FlagType value) {
     return value.to!string();
 }
-string[] toString(FlagType[] values) {
+string[] toStrings(FlagType[] values) {
     return values.map!(v => v.toString).array;
 }
 /// 
@@ -63,7 +63,7 @@ FlagState[] toFlagState(string[] values) {
 string toString(FlagState value) {
     return value.to!string();
 }
-string[] toString(FlagState[] values) {
+string[] toStrings(FlagState[] values) {
     return values.map!(v => v.toString()).array;
 }
 /// 
@@ -99,7 +99,7 @@ RuleType[] toRuleType(string[] values) {
 string toString(RuleType value) {
     return value.to!string();
 }
-string[] toString(RuleType[] values) {
+string[] toStrings(RuleType[] values) {
     return values.map!(v => v.toString()).array;
 }
 /// 
@@ -137,7 +137,7 @@ EvaluationKind[] toEvaluationKind(string[] values) {
 string toString(EvaluationKind value) {
     return value.to!string();
 }
-string[] toString(EvaluationKind[] values) {
+string[] toStrings(EvaluationKind[] values) {
     return values.map!(v => v.toString()).array;
 }
 ///
@@ -177,7 +177,7 @@ AuditAction[] toAuditAction(string[] values) {
 string toString(AuditAction value) {
     return value.to!string();
 }
-string[] toString(AuditAction[] values) {
+string[] toStrings(AuditAction[] values) {
     return values.map!(v => v.toString()).array;
 }   
 ///
@@ -218,7 +218,7 @@ StorageBackend[] toStorageBackend(string[] values) {
 string toString(StorageBackend value) {
     return value.to!string();
 }
-string[] toString(StorageBackend[] values) {
+string[] toStrings(StorageBackend[] values) {
     return values.map!(v => v.toString()).array;
 }
 ///

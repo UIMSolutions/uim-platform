@@ -22,7 +22,7 @@ MfaType[] toMfaType(string[] values) {
 string toString(MfaType value) {
   return value.to!string();
 }
-string[] toString(MfaType[] values) {
+string[] toStrings(MfaType[] values) {
   return values.map!(v => v.toString).array;
 }
 ///
@@ -59,7 +59,7 @@ UserStatus[] toUserStatus(string[] values) {
 string toString(UserStatus value) {
   return value.to!string();
 }
-string[] toString(UserStatus[] values) {
+string[] toStrings(UserStatus[] values) {
   return values.map!(v => v.toString).array;
 }
 ///
@@ -101,7 +101,7 @@ RiskLevel[] toRiskLevel(string[] values) {
 string toString(RiskLevel value) {
   return value.to!string();
 }
-string[] toString(RiskLevel[] values) {
+string[] toStrings(RiskLevel[] values) {
   return values.map!(v => v.toString()).array;
 }
 ///
@@ -141,7 +141,7 @@ TokenType[] toTokenType(string[] values) {
 string toString(TokenType value) {
   return value.to!string();
 }
-string[] toString(TokenType[] values) {
+string[] toStrings(TokenType[] values) {
   return values.map!(v => v.toString()).array;
 }
 ///
@@ -179,7 +179,7 @@ JobStatus[] toJobStatus(string[] values) {
 string toString(JobStatus value) {
   return value.to!string();
 }
-string[] toString(JobStatus[] values) {
+string[] toStrings(JobStatus[] values) {
   return values.map!(v => v.toString()).array;
 }
 ///
@@ -218,7 +218,7 @@ IdpType[] toIdpType(string[] values) {
 string toString(IdpType value) {
   return value.to!string();
 }
-string[] toString(IdpType[] values) {
+string[] toStrings(IdpType[] values) {
   return values.map!(v => v.toString()).array;
 }
 ///

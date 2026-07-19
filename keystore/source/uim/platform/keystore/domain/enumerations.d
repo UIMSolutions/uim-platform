@@ -26,7 +26,7 @@ KeystoreFormat[] toKeystoreFormat(string[] values) {
 string toString(KeystoreFormat value) {
   return value.to!string();
 }
-string[] toString(KeystoreFormat[] values) {
+string[] toStrings(KeystoreFormat[] values) {
   return values.map!(v => v.toString).array;
 }
 ///
@@ -63,7 +63,7 @@ KeystoreLevel[] toKeystoreLevel(string[] values) {
 string toString(KeystoreLevel value) {
   return value.to!string();
 }
-string[] toString(KeystoreLevel[] values) {
+string[] toStrings(KeystoreLevel[] values) {
   return values.map!(v => v.toString).array;
 }
 ///
@@ -99,7 +99,7 @@ KeyEntryType[] toKeyEntryType(string[] values) {
 string toString(KeyEntryType value) {
   return value.to!string();
 }
-string[] toString(KeyEntryType[] values) {
+string[] toStrings(KeyEntryType[] values) {
   return values.map!(v => v.toString).array;
 }
 ///

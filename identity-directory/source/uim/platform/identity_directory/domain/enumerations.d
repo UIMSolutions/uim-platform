@@ -29,7 +29,7 @@ UserStatus[] toUserStatus(string[] arr) {
 string toString(UserStatus status) {
   return status.to!string;
 }
-string[] toString(UserStatus[] statuses) {
+string[] toStrings(UserStatus[] statuses) {
   return statuses.map!(s => toString(s)).array;
 }
 ///
@@ -69,7 +69,7 @@ GroupType[] toGroupType(string[] arr) {
 string toString(GroupType type) {
   return type.to!string;
 }
-string[] toString(GroupType[] types) {
+string[] toStrings(GroupType[] types) {
   return types.map!(s => toString(s)).array;
 }
 ///
@@ -107,7 +107,7 @@ AttributeType[] toAttributeType(string[] arr) {
 string toString(AttributeType type) {
   return type.to!string;
 }
-string[] toString(AttributeType[] types) {
+string[] toStrings(AttributeType[] types) {
   return types.map!(s => toString(s)).array;
 }
 /// 
@@ -156,7 +156,7 @@ Mutability[] toMutability(string[] arr) {
 string toString(Mutability mut) {
   return mut.to!string;
 }
-string[] toString(Mutability[] muts) {
+string[] toStrings(Mutability[] muts) {
   return muts.map!(s => toString(s)).array;
 }
 ///
@@ -199,7 +199,7 @@ Returned[] toReturned(string[] arr) {
 string toString(Returned ret) {
   return ret.to!string;
 }
-string[] toString(Returned[] rets) {
+string[] toStrings(Returned[] rets) {
   return rets.map!(s => toString(s)).array;
 } 
 ///
@@ -235,7 +235,7 @@ Uniqueness[] toUniqueness(string[] arr) {
 string toString(Uniqueness uniq) {
   return uniq.to!string;
 }
-string[] toString(Uniqueness[] uniqs) {
+string[] toStrings(Uniqueness[] uniqs) {
   return uniqs.map!(s => toString(s)).array;
 }
 ///
@@ -270,7 +270,7 @@ PasswordStrength[] toPasswordStrength(string[] arr) {
 string toString(PasswordStrength strength) {
   return strength.to!string;
 }
-string[] toString(PasswordStrength[] strengths) {
+string[] toStrings(PasswordStrength[] strengths) {
   return strengths.map!(s => toString(s)).array;
 }
 ///
@@ -324,7 +324,7 @@ AuditEventType[] toAuditEventType(string[] arr) {
 string toString(AuditEventType eventType) {
   return eventType.to!string;
 }
-string[] toString(AuditEventType[] eventTypes) {
+string[] toStrings(AuditEventType[] eventTypes) {
   return eventTypes.map!(s => toString(s)).array;
 }
 ///
@@ -392,7 +392,7 @@ SortOrder[] toSortOrder(string[] arr) {
 string toString(SortOrder order) {
   return order.to!string;
 }
-string[] toString(SortOrder[] orders) {
+string[] toStrings(SortOrder[] orders) {
   return orders.map!(s => toString(s)).array;
 }
 ///

@@ -25,7 +25,7 @@ SsoProtocol[] toSsoProtocol(string[] values) {
 string toString(SsoProtocol protocol) {
   return protocol.to!string;
 }
-string[] toString(SsoProtocol[] protocols) {
+string[] toStrings(SsoProtocol[] protocols) {
   return protocols.map!(toString).array;
 }
 /// 
@@ -68,7 +68,7 @@ AuthMethod[] toAuthMethod(string[] values) {
 string toString(AuthMethod method) {
   return method.to!string;
 }
-string[] toString(AuthMethod[] methods) {
+string[] toStrings(AuthMethod[] methods) {
   return methods.map!(toString).array;
 }
 unittest {
@@ -126,7 +126,7 @@ PersistenceType[] toPersistenceType(string[] values) {
 string toString(PersistenceType type) {
   return type.to!string;
 }
-string[] toString(PersistenceType[] types) {
+string[] toStrings(PersistenceType[] types) {
   return types.map!(toString).array;
 }
 ///
@@ -175,7 +175,7 @@ AlertSeverity[] toAlertSeverity(string[] values) {
 string toString(AlertSeverity severity) {
   return severity.to!string;
 }
-string[] toString(AlertSeverity[] severities) {
+string[] toStrings(AlertSeverity[] severities) {
   return severities.map!(toString).array;
 }
 ///
@@ -226,7 +226,7 @@ LoggingLevel[] toLoggingLevel(string[] values, bool ignoreCase = true) {
 string toString(LoggingLevel level) {
   return cast(string)level;
 }
-string[] toString(LoggingLevel[] levels) {  
+string[] toStrings(LoggingLevel[] levels) {  
   return levels.map!(toString).array;
 }
 ///
@@ -279,7 +279,7 @@ HttpMethod[] toHttpMethod(string[] values, bool ignoreCase = true) {
 string toString(HttpMethod method) {
   return cast(string)method;
 }
-string[] toString(HttpMethod[] methods) {
+string[] toStrings(HttpMethod[] methods) {
   return methods.map!(toString).array;
 }
 ///

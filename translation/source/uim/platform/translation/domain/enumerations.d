@@ -47,7 +47,7 @@ ProjectStatus[] toProjectStatus(string[] values) {
 string toString(ProjectStatus value) {
     return value.to!string;
 }
-string[] toString(ProjectStatus[] values) {
+string[] toStrings(ProjectStatus[] values) {
     return values.map!(v => toString(v)).array;
 }
 /// 
@@ -93,7 +93,7 @@ TranslationProvider[] toTranslationProvider(string[] values) {
 string toString(TranslationProvider value) {
     return value.to!string;
 }
-string[] toString(TranslationProvider[] values) {
+string[] toStrings(TranslationProvider[] values) {
     return values.map!(toString).array;
 }
 ///
@@ -134,7 +134,7 @@ JobStatus[] toJobStatus(string[] values) {
 string toString(JobStatus value) {
     return value.to!string;
 }
-string[] toString(JobStatus[] values) {
+string[] toStrings(JobStatus[] values) {
     return values.map!(toString).array;
 }
 /// 
@@ -175,7 +175,7 @@ JobType[] toJobType(string[] values) {
 string toString(JobType value) {
     return value.to!string;
 }
-string[] toString(JobType[] values) {
+string[] toStrings(JobType[] values) {
     return values.map!(toString).array;
 }
 ///
@@ -214,7 +214,7 @@ QualityLevel[] toQualityLevel(string[] values) {
 string toString(QualityLevel value) {
     return value.to!string;
 }
-string[] toString(QualityLevel[] values) {
+string[] toStrings(QualityLevel[] values) {
     return values.map!(toString).array;
 }   
 ///

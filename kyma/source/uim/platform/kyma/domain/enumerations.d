@@ -23,7 +23,7 @@ EnvironmentStatus[] toEnvironmentStatus(string[] values) {
 string toString(EnvironmentStatus value) {
     return value.to!string;
 }
-string[] toString(EnvironmentStatus[] values) {
+string[] toStrings(EnvironmentStatus[] values) {
     return values.map!(v => toString(v)).array;
 }
 ///
@@ -71,7 +71,7 @@ KymaPlan[] toKymaPlan(string[] values) {
 string toString(KymaPlan value) {
     return value.to!string;
 }
-string[] toString(KymaPlan[] values) {
+string[] toStrings(KymaPlan[] values) {
     return values.map!(v => toString(v)).array;
 }
 ///
@@ -113,7 +113,7 @@ NamespaceStatus[] toNamespaceStatus(string[] values) {
 string toString(NamespaceStatus value) {
     return value.to!string;
 }
-string[] toString(NamespaceStatus[] values) {   
+string[] toStrings(NamespaceStatus[] values) {   
     return values.map!(v => toString(v)).array;
 }
 ///
@@ -191,7 +191,7 @@ FunctionStatus[] toFunctionStatus(string[] values) {
 string toString(FunctionStatus value) {
     return value.to!string;
 }
-string[] toString(FunctionStatus[] values) {
+string[] toStrings(FunctionStatus[] values) {
     return values.map!(v => toString(v)).array;
 }
 ///
@@ -235,7 +235,7 @@ ScalingType[] toScalingType(string[] values) {
 string toString(ScalingType value) {
     return value.to!string;
 }
-string[] toString(ScalingType[] values) {
+string[] toStrings(ScalingType[] values) {
     return values.map!(v => toString(v)).array;
 }
 ///

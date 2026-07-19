@@ -17,7 +17,7 @@ class ManageBusinessPurposesUseCase { // TODO: UIMUseCase {
         if (req.name.isEmpty)
             return CommandResult(false, "", "Business purpose name is required");
 
-        auto bp = BusinessPurpose(req.tenantId);y);
+        auto bp = BusinessPurpose(req.tenantId);
         bp.name = req.name;
         bp.description = req.description;
         bp.applicationGroupId = ApplicationGroupId(req.applicationGroupId);

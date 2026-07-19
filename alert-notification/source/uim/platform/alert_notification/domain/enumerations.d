@@ -29,7 +29,7 @@ EventCategory[] toEventCategory(string[] categories) {
 string toString(EventCategory category) {
     return cast(string)category;
 }
-string[] toString(EventCategory[] categories) {
+string[] toStrings(EventCategory[] categories) {
     return categories.map!(toString).array;
 }
 ///
@@ -77,7 +77,7 @@ EventSeverity[] toEventSeverity(string[] severities) {
 string toString(EventSeverity severity) {
     return cast(string)severity;
 }
-string[] toString(EventSeverity[] severities) {
+string[] toStrings(EventSeverity[] severities) {
     return severities.map!(toString).array;
 }
 /// 
@@ -117,7 +117,7 @@ EventStatus[] toEventStatus(string[] values) {
 string toString(EventStatus status) {
     return status.to!string;
 }
-string[] toString(EventStatus[] statuses) {
+string[] toStrings(EventStatus[] statuses) {
     return statuses.map!(toString).array;
 }
 ///
@@ -160,7 +160,7 @@ PropertyKey[] toPropertyKey(string[] values) {
 string toString(PropertyKey key) {
     return key.to!string;
 }
-string[] toString(PropertyKey[] keys) {
+string[] toStrings(PropertyKey[] keys) {
     return keys.map!(toString).array;
 }
 ///
@@ -214,7 +214,7 @@ Predicate[] toPredicate(string[] values) {
 string toString(Predicate predicate) {
     return cast(string)predicate;
 }
-string[] toString(Predicate[] predicates) {
+string[] toStrings(Predicate[] predicates) {
     return predicates.map!(toString).array;
 }
 /// 
@@ -260,7 +260,7 @@ ActionType[] toActionType(string[] values) {
 string toString(ActionType type) {
     return type.to!string;
 }
-string[] toString(ActionType[] types) {
+string[] toStrings(ActionType[] types) {
     return types.map!(toString).array;
 }
 ///
@@ -306,7 +306,7 @@ ResourceState[] toResourceState(string[] values) {
 string toString(ResourceState state) {
     return state.to!string;
 }
-string[] toString(ResourceState[] states) {
+string[] toStrings(ResourceState[] states) {
     return states.map!(toString).array;
 }
 ///

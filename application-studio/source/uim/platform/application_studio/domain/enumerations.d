@@ -43,7 +43,7 @@ DevSpaceStatus[] toDevSpaceStatuses(string[] statuses) {
 string toString(DevSpaceStatus status) {
     return status.to!string;
 }
-string[] toString(DevSpaceStatus[] statuses) {
+string[] toStrings(DevSpaceStatus[] statuses) {
     return statuses.map!(toString).array;
 }
 ///
@@ -100,7 +100,7 @@ DevSpacePlan[] toDevSpacePlans(string[] plans) {
 string toString(DevSpacePlan plan) {
     return plan.to!string;
 }
-string[] toString(DevSpacePlan[] plans) {
+string[] toStrings(DevSpacePlan[] plans) {
     return plans.map!(toString).array;
 }
 ///
@@ -141,7 +141,7 @@ DevSpaceTypeCategory[] toDevSpaceTypeCategories(string[] categories) {
 string toString(DevSpaceTypeCategory category) {
     return category.to!string;
 }
-string[] toString(DevSpaceTypeCategory[] categories) {
+string[] toStrings(DevSpaceTypeCategory[] categories) {
     return categories.map!(toString).array;
 }
 ///
@@ -182,7 +182,7 @@ ExtensionScope[] toExtensionScope(string[] scopes) {
 string toString(ExtensionScope value) {
     return value.to!string;
 }
-string[] toString(ExtensionScope[] scopes) {
+string[] toStrings(ExtensionScope[] scopes) {
     return scopes.map!(toString).array;
 }
 /// 
@@ -228,7 +228,7 @@ ExtensionStatus[] toExtensionStatus(string[] statuses) {
 string toString(ExtensionStatus status) {
     return cast(string)status;
 }
-string[] toString(ExtensionStatus[] statuses) {
+string[] toStrings(ExtensionStatus[] statuses) {
     return statuses.map!(toString).array;
 }
 ///
@@ -313,7 +313,7 @@ ProjectType[] toProjectTypes(string[] values) {
 string toString(ProjectType value) {
     return value.to!string;
 }
-string[] toString(ProjectType[] values) {
+string[] toStrings(ProjectType[] values) {
     return values.map!(toString).array;
 }
 /// 
@@ -402,7 +402,7 @@ ProjectStatus[] toProjectStatuses(string[] values) {
 string toString(ProjectStatus value) {
     return value.to!string;
 }
-string[] toString(ProjectStatus[] values) {
+string[] toStrings(ProjectStatus[] values) {
     return values.map!(toString).array;
 }
 ///
@@ -453,7 +453,7 @@ TemplateCategory[] toTemplateCategories(string[] categories) {
 string toString(TemplateCategory category) {
     return category.to!string;
 }
-string[] toString(TemplateCategory[] categories) {
+string[] toStrings(TemplateCategory[] categories) {
     return categories.map!(toString).array;
 }
 ///
@@ -504,7 +504,7 @@ ServiceProviderType[] toServiceProviderTypes(string[] types) {
 string toString(ServiceProviderType type) {
     return type.to!string;
 }
-string[] toString(ServiceProviderType[] types) {
+string[] toStrings(ServiceProviderType[] types) {
     return types.map!(toString).array;
 }
 ///
@@ -549,7 +549,7 @@ BindingStatus[] toBindingStatuses(string[] statuses) {
 string toString(BindingStatus status) {
     return status.to!string;
 }
-string[] toString(BindingStatus[] statuses) {
+string[] toStrings(BindingStatus[] statuses) {
     return statuses.map!(toString).array;
 }
 ///
@@ -598,7 +598,7 @@ RunMode[] toRunModes(string[] modes) {
 string toString(RunMode mode) {
     return cast(string)mode;
 }
-string[] toString(RunMode[] modes) {
+string[] toStrings(RunMode[] modes) {
     return modes.map!(toString).array;
 }
 /// 
@@ -644,7 +644,7 @@ RunStatus[] toRunStatuses(string[] statuses) {
 string toString(RunStatus status) {
     return status.to!string;
 }
-string[] toString(RunStatus[] statuses) {
+string[] toStrings(RunStatus[] statuses) {
     return statuses.map!(toString).array;
 }
 ///
@@ -691,7 +691,7 @@ BuildStatus[] toBuildStatuses(string[] statuses) {
 string toString(BuildStatus status) {
     return status.to!string;
 }
-string[] toString(BuildStatus[] statuses) {
+string[] toStrings(BuildStatus[] statuses) {
     return statuses.map!(toString).array;
 }
 ///
@@ -740,7 +740,7 @@ DeployTarget[] toDeployTargets(string[] targets) {
 string toString(DeployTarget target) {
     return target.to!string;
 }
-string[] toString(DeployTarget[] targets) {
+string[] toStrings(DeployTarget[] targets) {
     return targets.map!(toString).array;
 }
 ///

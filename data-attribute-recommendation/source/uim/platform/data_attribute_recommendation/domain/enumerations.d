@@ -27,7 +27,7 @@ DatasetStatus[] toDatasetStatuses(string[] values) {
 string toString(DatasetStatus status) {
   return status.to!string;
 }
-string[] toString(DatasetStatus[] statuses) {
+string[] toStrings(DatasetStatus[] statuses) {
   return statuses.map!(toString).array;
 }
 /// 

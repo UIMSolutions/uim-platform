@@ -29,7 +29,7 @@ PredictionType[] toPredictionTypes(string[] types) {
 string toString(PredictionType type) {
   return type.to!string;
 }
-string[] toString(PredictionType[] types) {
+string[] toStrings(PredictionType[] types) {
   return types.map!(toString).array;
 }
 ///
@@ -78,7 +78,7 @@ PredictionStatus[] toPredictionStatuses(string[] statuses) {
 string toString(PredictionStatus status) {
   return status.to!string;
 }
-string[] toString(PredictionStatus[] statuses) {
+string[] toStrings(PredictionStatus[] statuses) {
   return statuses.map!(toString).array;
 }
 ///
