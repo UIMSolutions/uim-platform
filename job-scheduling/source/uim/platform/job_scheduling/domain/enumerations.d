@@ -13,7 +13,7 @@ enum JobType {
 JobType toJobType(string value) @safe {
     mixin(EnumSwitch("JobType", "httpEndpoint"));
 }
-JobType[] toJobType(string[] values) @safe {
+JobType[] toJobTypes(string[] values) @safe {
     return values.map!(v => v.toJobType).array;
 }
 string toString(JobType value) @safe {
@@ -32,7 +32,7 @@ unittest {
     assert(JobType.httpEndpoint.toString == "httpEndpoint");
     assert(JobType.cloudFoundryTask.toString == "cloudFoundryTask");
 
-    assert(["httpEndpoint", "cloudFoundryTask"].toJobType == [JobType.httpEndpoint, JobType.cloudFoundryTask]);
+    assert(["httpEndpoint", "cloudFoundryTask"].toJobTypes == [JobType.httpEndpoint, JobType.cloudFoundryTask]);
     assert([JobType.httpEndpoint, JobType.cloudFoundryTask].toStrings == ["httpEndpoint", "cloudFoundryTask"]);
 }
 
@@ -43,7 +43,7 @@ enum JobTriggerType {
 JobTriggerType toJobTriggerType(string value) @safe {
     mixin(EnumSwitch("JobTriggerType", "timeBased"));
 }
-JobTriggerType[] toJobTriggerType(string[] values) @safe {
+JobTriggerType[] toJobTriggerTypes(string[] values) @safe {
     return values.map!(v => v.toJobTriggerType).array;
 }
 string toString(JobTriggerType value) @safe {
@@ -62,7 +62,7 @@ unittest {
     assert(JobTriggerType.timeBased.toString == "timeBased");
     assert(JobTriggerType.eventBased.toString == "eventBased");
 
-    assert([ "timeBased", "eventBased"].toJobTriggerType == [JobTriggerType.timeBased, JobTriggerType.eventBased]);
+    assert([ "timeBased", "eventBased"].toJobTriggerTypes == [JobTriggerType.timeBased, JobTriggerType.eventBased]);
     assert([JobTriggerType.timeBased, JobTriggerType.eventBased].toStrings == ["timeBased", "eventBased"]);
 }
 
@@ -92,7 +92,7 @@ unittest {
     assert(JobStatus.active.toString == "active");
     assert(JobStatus.inactive.toString == "inactive");
 
-    assert(["active", "inactive"].toJobStatus == [JobStatus.active, JobStatus.inactive]);
+    assert(["active", "inactive"].toJobStatuses == [JobStatus.active, JobStatus.inactive]);
     assert([JobStatus.active, JobStatus.inactive].toStrings == ["active", "inactive"]);
 }
 
@@ -103,7 +103,7 @@ enum ScheduleType {
 ScheduleType toScheduleType(string value) @safe {
     mixin(EnumSwitch("ScheduleType", "oneTime"));
 }
-ScheduleType[] toScheduleType(string[] values) @safe {
+ScheduleType[] toScheduleTypes(string[] values) @safe {
     return values.map!(v => v.toScheduleType).array;
 }
 string toString(ScheduleType value) @safe {
@@ -122,7 +122,7 @@ unittest {
     assert(ScheduleType.oneTime.toString == "oneTime");
     assert(ScheduleType.recurring.toString == "recurring");
 
-    assert(["oneTime", "recurring"].toScheduleType == [ScheduleType.oneTime, ScheduleType.recurring]);
+    assert(["oneTime", "recurring"].toScheduleTypes == [ScheduleType.oneTime, ScheduleType.recurring]);
     assert([ScheduleType.oneTime, ScheduleType.recurring].toStrings == ["oneTime", "recurring"]);
 }
 
@@ -135,7 +135,7 @@ enum ScheduleFormat {
 ScheduleFormat toScheduleFormat(string value) @safe {
     mixin(EnumSwitch("ScheduleFormat", "cron"));
 }
-ScheduleFormat[] toScheduleFormat(string[] values) @safe {
+ScheduleFormat[] toScheduleFormats(string[] values) @safe {
     return values.map!(v => v.toScheduleFormat).array;
 }
 string toString(ScheduleFormat value) @safe {
@@ -159,7 +159,7 @@ unittest {
     assert(ScheduleFormat.repeatInterval.toString == "repeatInterval");
     assert(ScheduleFormat.repeatAt.toString == "repeatAt");
 
-    assert(["cron", "humanReadable", "repeatInterval", "repeatAt"].toScheduleFormat == [ScheduleFormat.cron, ScheduleFormat.humanReadable, ScheduleFormat.repeatInterval, ScheduleFormat.repeatAt]);
+    assert(["cron", "humanReadable", "repeatInterval", "repeatAt"].toScheduleFormats == [ScheduleFormat.cron, ScheduleFormat.humanReadable, ScheduleFormat.repeatInterval, ScheduleFormat.repeatAt]);
     assert([ScheduleFormat.cron, ScheduleFormat.humanReadable, ScheduleFormat.repeatInterval, ScheduleFormat.repeatAt].toStrings == ["cron", "humanReadable", "repeatInterval", "repeatAt"]);
 }
 
@@ -189,7 +189,7 @@ unittest {
     assert(JobScheduleStatus.active.toString == "active");
     assert(JobScheduleStatus.inactive.toString == "inactive");
 
-    assert(["active", "inactive"].toJobScheduleStatus == [JobScheduleStatus.active, JobScheduleStatus.inactive]);
+    assert(["active", "inactive"].toJobScheduleStatuses == [JobScheduleStatus.active, JobScheduleStatus.inactive]);
     assert([JobScheduleStatus.active, JobScheduleStatus.inactive].toStrings == ["active", "inactive"]);
 }
 
@@ -232,6 +232,6 @@ unittest {
     assert(RunStatus.failed.toString == "failed");
     assert(RunStatus.deadLettered.toString == "deadLettered");
 
-    assert(["scheduled", "triggered", "running", "completed", "failed", "deadLettered"].toRunStatus == [RunStatus.scheduled, RunStatus.triggered, RunStatus.running, RunStatus.completed, RunStatus.failed, RunStatus.deadLettered]);
+    assert(["scheduled", "triggered", "running", "completed", "failed", "deadLettered"].toRunStatuses == [RunStatus.scheduled, RunStatus.triggered, RunStatus.running, RunStatus.completed, RunStatus.failed, RunStatus.deadLettered]);
     assert([RunStatus.scheduled, RunStatus.triggered, RunStatus.running, RunStatus.completed, RunStatus.failed, RunStatus.deadLettered].toStrings == ["scheduled", "triggered", "running", "completed", "failed", "deadLettered"]);
 }

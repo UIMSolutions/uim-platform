@@ -95,10 +95,8 @@ class EntityTypeController : ManageHttpController {
             return errorResponse("Invalid entity type ID", 400);
 
         auto et = usecase.getEntityType(tenantId, id);
-        if (et.isNull) {
-            writeError(res, 404, "Entity type not found");
-            return;
-        }
+        if (et.isNull) 
+            return errorResponse("Entity type not found", 404);
 
         auto resp = Json.emptyObject
             .set("id", et.id)

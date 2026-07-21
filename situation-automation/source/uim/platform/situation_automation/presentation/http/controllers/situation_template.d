@@ -56,6 +56,7 @@ class SituationTemplateController : ManageHttpController {
         auto result = usecase.createSituationTemplate(r);
         if (result.hasError)
             return errorResponse(result.message, 400);
+            
         auto resp = Json.emptyObject
             .set("id", result.id)
             .set("message", "Situation template created");
@@ -69,7 +70,6 @@ class SituationTemplateController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-
         auto templates = usecase.listSituationTemplates(tenantId);
 
         auto jarr = Json.emptyArray;
@@ -104,10 +104,8 @@ class SituationTemplateController : ManageHttpController {
         auto id = SituationTemplateId(precheck.id);
 
         auto t = usecase.getSituationTemplate(tenantId, id);
-        if (t.isNull) {
-            writeError(res, 404, "Situation template not found");
-            return;
-        }
+        if (t.isNull)
+            return errorResponse("Situation template not found", 404);
 
         auto resp = Json.emptyObject
             .set("id", t.id)
@@ -138,6 +136,8 @@ class SituationTemplateController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto id = SituationTemplateId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid situation template ID", 400);
 
         auto data = precheck.data;
         UpdateSituationTemplateRequest r;
@@ -156,6 +156,7 @@ class SituationTemplateController : ManageHttpController {
         auto result = usecase.updateSituationTemplate(r);
         if (result.hasError)
             return errorResponse(result.message, 400);
+
         auto resp = Json.emptyObject
             .set("id", result.id)
             .set("message", "Situation template updated");
@@ -169,11 +170,14 @@ class SituationTemplateController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-
         auto id = SituationTemplateId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid situation template ID", 400);
+
         auto result = usecase.deleteSituationTemplate(tenantId, id);
         if (result.hasError)
             return errorResponse(result.message, 400);
+
         auto resp = Json.emptyObject
             .set("id", result.id)
             .set("message", "Situation template deleted");

@@ -3,28 +3,32 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.situation_automation.infrastructure.persistence.memory.dashboards;
+module uim.platform.situation_automation.infrastructure.persistence.repositories.situation_actions;
 
 import uim.platform.situation_automation;
 
 mixin(ShowModule!());
 
 @safe:
-class MemoryDashboardRepository : TenantRepository!(Dashboard, DashboardId), DashboardRepository {
+
+class MemorySituationActionRepository : TenantRepository!(SituationAction, SituationActionId), SituationActionRepository {
 
     // #region ByType
-    size_t countByType(TenantId tenantId, DashboardType type) {
+    size_t countByType(TenantId tenantId, ActionType type) {
         return findByType(tenantId, type).length;
     }
-    Dashboard[] filterByType(Dashboard[] dashboards, DashboardType type) {
-        return dashboards.filter!(d => d.type == type).array;
+
+    SituationAction[] filterByType(SituationAction[] actions, ActionType type) {
+        return actions.filter!(a => a.type == type).array;
     }
-    Dashboard[] findByType(TenantId tenantId, DashboardType type) {
+
+    SituationAction[] findByType(TenantId tenantId, ActionType type) {
         return filterByType(findByTenant(tenantId), type);
     }
-    void removeByType(TenantId tenantId, DashboardType type) {
-        findByType(tenantId, type).each!(d => remove(d));
+
+    void removeByType(TenantId tenantId, ActionType type) {
+        findByType(tenantId, type).each!(a => remove(a));
     }
     // #endregion ByType
-
+    
 }

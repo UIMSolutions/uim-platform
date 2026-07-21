@@ -172,15 +172,14 @@ enum FlowStatus {
 FlowStatus toFlowStatus(string value) {
   mixin(EnumSwitch("FlowStatus", "active"));
 }
-FlowStatus[] toFlowStatuses(string[] values) {
-  return values.map!(toFlowStatus).array;
-}
-string toString(FlowStatus status) {
-  return status.to!string;
-}
-string[] toStrings(FlowStatus[] statuses) {
-  return statuses.map!toString.array;
-} 
+FlowStatus[] toFlowStatuses(string[] values)
+  => values.map!toFlowStatus.array;
+
+string toString(FlowStatus status)
+  => status.to!string;
+
+string[] toStrings(FlowStatus[] statuses)
+  => statuses.map!toString.array;
 ///
 unittest {
   mixin(ShowTest!("FlowStatus"));

@@ -44,7 +44,7 @@ class DataContextController : ManageHttpController {
         r.dataContextId = DataContextId(precheck.id);
         r.entityId = data.getString("entityId");
         r.entityTypeId = EntityTypeId(data.getString("entityTypeId"));
-        r.data = jsonKeyValuePairs(j, "data");
+        r.data = jsonKeyValuePairs(data, "data");
         r.sourceSystem = data.getString("sourceSystem");
         r.containsPersonalData = data.getBoolean("containsPersonalData");
         r.expiresAt = data.getLong("expiresAt");
@@ -92,11 +92,12 @@ class DataContextController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto id = DataContextId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid data context ID", 400);
+        
         auto d = usecase.getDataContext(tenantId, id);
-        if (d.isNull) {
-            writeError(res, 404, "Data context not found");
-            return;
-        }
+        if (d.isNull) 
+        return errorResponse("Data context not found", 404);
 
         auto resp = Json.emptyObject
             .set("id", d.id.value)

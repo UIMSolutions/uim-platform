@@ -47,7 +47,7 @@ class SituationInstanceController : ManageHttpController {
         r.severity = data.getString("severity").to!SituationSeverity;
         r.entityId = data.getString("entityId");
         r.entityTypeId = EntityTypeId(data.getString("entityTypeId"));
-        r.contextData = jsonKeyValuePairs(j, "contextData");
+        r.contextData = jsonKeyValuePairs(data, "contextData");
         r.assignedTo = data.getString("assignedTo");
         r.sourceSystem = data.getString("sourceSystem");
         r.sourceInstanceId = data.getString("sourceInstanceId");
@@ -104,10 +104,8 @@ class SituationInstanceController : ManageHttpController {
         auto id = SituationInstanceId(precheck.id);
 
         auto i = usecase.getSituationInstance(tenantId, id);
-        if (i.isNull) {
-            writeError(res, 404, "Situation instance not found");
-            return;
-        }
+        if (i.isNull)
+            return errorResponse("Situation instance not found", 404);
 
         auto resInfo = Json.emptyObject
             .set("type", i.resolution.type.to!string)
@@ -168,11 +166,11 @@ class SituationInstanceController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
+        auto path = req.path.to!string;
         auto resolveIdx = lastIndexOf(path, "/resolve");
-        if (resolveIdx < 0) {
-            writeError(res, 400, "Invalid resolve path");
-            return;
-        }
+        if (resolveIdx < 0)
+            return errorResponse("Invalid resolve path", 400);
+
         auto sub = path[0 .. resolveIdx];
         auto id = SituationInstanceId(extractIdFromPath(sub));
         // auto id = SituationInstanceId(precheck.id);

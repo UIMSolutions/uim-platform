@@ -38,15 +38,14 @@ enum DevSpaceStatus {
 DevSpaceStatus toDevSpaceStatus(string value) {
     mixin(EnumSwitch("DevSpaceStatus", "starting"));
 }
-DevSpaceStatus[] toDevSpaceStatuses(string[] statuses) {
-    return statuses.map!toDevSpaceStatus.array;
-}
-string toString(DevSpaceStatus status) {
-    return status.to!string;
-}
-string[] toStrings(DevSpaceStatus[] statuses) {
-    return statuses.map!toString.array;
-}
+DevSpaceStatus[] toDevSpaceStatuses(string[] statuses)
+    => statuses.map!toDevSpaceStatus.array;
+
+string toString(DevSpaceStatus status)
+    => status.to!string;
+
+string[] toStrings(DevSpaceStatus[] statuses)
+    => statuses.map!toString.array;
 ///
 unittest {
     mixin(ShowTest!("DevSpaceStatus"));
@@ -95,15 +94,15 @@ enum DevSpacePlan {
 DevSpacePlan toDevSpacePlan(string value) {
     mixin(EnumSwitch("DevSpacePlan", "free"));
 }
-DevSpacePlan[] toDevSpacePlans(string[] plans) {
-    return plans.map!toDevSpacePlan.array;
-}
-string toString(DevSpacePlan plan) {
-    return plan.to!string;
-}
-string[] toStrings(DevSpacePlan[] plans) {
-    return plans.map!toString.array;
-}
+
+DevSpacePlan[] toDevSpacePlans(string[] plans)
+    => plans.map!toDevSpacePlan.array;
+
+string toString(DevSpacePlan plan)
+    => plan.to!string;
+
+string[] toStrings(DevSpacePlan[] plans)
+    => plans.map!toString.array;
 ///
 unittest {
     mixin(ShowTest!("DevSpacePlan"));
@@ -136,15 +135,14 @@ enum DevSpaceTypeCategory {
 DevSpaceTypeCategory toDevSpaceTypeCategory(string value) {
     mixin(EnumSwitch("DevSpaceTypeCategory", "predefined"));
 }
-DevSpaceTypeCategory[] toDevSpaceTypeCategories(string[] categories) {
-    return categories.map!toDevSpaceTypeCategory.array;
-}
-string toString(DevSpaceTypeCategory category) {
-    return category.to!string;
-}
-string[] toStrings(DevSpaceTypeCategory[] categories) {
-    return categories.map!toString.array;
-}
+DevSpaceTypeCategory[] toDevSpaceTypeCategories(string[] categories)
+    => categories.map!toDevSpaceTypeCategory.array;
+
+string toString(DevSpaceTypeCategory category)
+    => category.to!string;
+
+string[] toStrings(DevSpaceTypeCategory[] categories)
+    => categories.map!toString.array;
 ///
 unittest {
     mixin(ShowTest!("DevSpaceTypeCategory"));
@@ -177,15 +175,14 @@ enum ExtensionScope {
 ExtensionScope toExtensionScope(string value) {
     mixin(EnumSwitch("ExtensionScope", "predefined"));
 }
-ExtensionScope[] toExtensionScopes(string[] scopes) {
-    return scopes.map!toExtensionScope.array;
-}
-string toString(ExtensionScope value) {
-    return value.to!string;
-}
-string[] toStrings(ExtensionScope[] scopes) {
-    return scopes.map!toString.array;
-}
+ExtensionScope[] toExtensionScopes(string[] scopes)
+    => scopes.map!toExtensionScope.array;   
+
+string toString(ExtensionScope value)
+    => value.to!string;
+
+string[] toStrings(ExtensionScope[] scopes)
+    => scopes.map!toString.array;
 /// 
 unittest {
     mixin(ShowTest!("ExtensionScope"));
@@ -226,12 +223,11 @@ ExtensionStatus toExtensionStatus(string s) {
 ExtensionStatus[] toExtensionStatuses(string[] statuses) {
     return statuses.map!toExtensionStatus.array;
 }
-string toString(ExtensionStatus status) {
-    return cast(string)status;
-}
-string[] toStrings(ExtensionStatus[] statuses) {
-    return statuses.map!toString.array;
-}
+string toString(ExtensionStatus status)
+    => cast(string)status;
+
+string[] toStrings(ExtensionStatus[] statuses)
+    => statuses.map!toString.array;
 ///
 unittest {
     mixin(ShowTest!("ExtensionStatus"));

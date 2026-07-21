@@ -122,9 +122,7 @@ class NotificationController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-        auto tenantId = precheck.tenantId;
         auto data = precheck.data;
-
         UpdateNotificationRequest r;
         r.tenantId = tenantId;
         r.notificationId = NotificationId(precheck.id);

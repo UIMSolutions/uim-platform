@@ -21,8 +21,8 @@ ExecutableType toExecutableType(string value) {
   mixin(EnumSwitch("ExecutableType", "workflow"));
 }
 
-ExecutableType[] toExecutableType(string[] values) {
-  return values.map!(toExecutableType).array;
+ExecutableType[] toExecutableTypes(string[] values) {
+  return values.map!toExecutableType.array;
 }
 
 string toString(ExecutableType type) {
@@ -43,7 +43,7 @@ unittest {
   assert(ExecutableType.workflow.toString == "workflow");
   assert(ExecutableType.serving.toString == "serving");
 
-  assert(toExecutableType(["workflow", "serving", "unknown"]) ==
+  assert(toExecutableTypes(["workflow", "serving", "unknown"]) ==
       [ExecutableType.workflow, ExecutableType.serving, ExecutableType.workflow]);
   assert(toString([ExecutableType.workflow, ExecutableType.serving]) ==
       ["workflow", "serving"]);
@@ -94,7 +94,7 @@ unittest {
   assert(ExecutionStatus.stopped.toString == "stopped");
   assert(ExecutionStatus.dead.toString == "dead");
 
-  assert(toExecutionStatus([
+  assert(toExecutionStatuses([
       "pending", "running", "completed", "failed", "stopped", "dead", "unknown"
     ]) ==
     [
@@ -148,7 +148,7 @@ unittest {
   assert(DeploymentStatus.stopped.toString == "stopped");
   assert(DeploymentStatus.dead.toString == "dead");
 
-  assert(toDeploymentStatus(["pending", "running", "stopped", "dead", "unknown"]) ==
+  assert(toDeploymentStatuses(["pending", "running", "stopped", "dead", "unknown"]) ==
       [
         DeploymentStatus.pending, DeploymentStatus.running,
         DeploymentStatus.stopped, DeploymentStatus.dead, DeploymentStatus.pending

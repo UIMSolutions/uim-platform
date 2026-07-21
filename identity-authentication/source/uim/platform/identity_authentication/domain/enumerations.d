@@ -16,15 +16,14 @@ enum MfaType {
 MfaType toMfaType(string value) {
   mixin(EnumSwitch("MfaType", "none"));
 }
-MfaType[] toMfaType(string[] values) {
-  return values.map!(v => v.toMfaType).array;
-}
-string toString(MfaType value) {
-  return value.to!string();
-}
-string[] toStrings(MfaType[] values) {
-  return values.map!(v => v.toString).array;
-}
+MfaType[] toMfaTypes(string[] values)
+  => values.map!toMfaType.array;
+
+string toString(MfaType value)
+  => value.to!string();
+
+string[] toStrings(MfaType[] values)
+  => values.map!(v => v.toString).array;
 ///
 unittest {
   mixin(ShowTest!("MfaType"));
@@ -39,7 +38,7 @@ unittest {
   assert(MfaType.sms.toString == "sms");
   assert(MfaType.email.toString == "email");
 
-  assert(["none", "totp"].toMfaType == [MfaType.none, MfaType.totp]);
+  assert(["none", "totp"].toMfaTypes == [MfaType.none, MfaType.totp]);
   assert([MfaType.none, MfaType.totp].toStrings == ["none", "totp"]);
 }
 
@@ -53,15 +52,13 @@ enum UserStatus {
 UserStatus toUserStatus(string value) {
   mixin(EnumSwitch("UserStatus", "active"));
 }
-UserStatus[] toUserStatuses(string[] values) {
-  return values.map!(v => v.toUserStatus).array;
-}
-string toString(UserStatus value) {
-  return value.to!string();
-}
-string[] toStrings(UserStatus[] values) {
-  return values.map!(v => v.toString).array;
-}
+UserStatus[] toUserStatuses(string[] values)
+  => values.map!toUserStatus.array;
+
+string toString(UserStatus value)
+    => value.to!string;
+string[] toStrings(UserStatus[] values)
+    => values.map!(v => v.toString).array;
 ///
 unittest {
   mixin(ShowTest!("UserStatus"));
@@ -95,15 +92,12 @@ enum RiskLevel {
 RiskLevel toRiskLevel(string value) {
   mixin(EnumSwitch("RiskLevel", "low"));
 }
-RiskLevel[] toRiskLevel(string[] values) {
-  return values.map!(v => v.toRiskLevel).array;
-}
-string toString(RiskLevel value) {
-  return value.to!string();
-}
-string[] toStrings(RiskLevel[] values) {
-  return values.map!(v => v.toString()).array;
-}
+RiskLevel[] toRiskLevels(string[] values)
+  => values.map!toRiskLevel.array;
+string toString(RiskLevel value)
+    => value.to!string;
+string[] toStrings(RiskLevel[] values)
+    => values.map!(v => v.toString()).array;
 ///
 unittest {
   mixin(ShowTest!("RiskLevel"));
@@ -121,7 +115,7 @@ unittest {
   assert(RiskLevel.high.toString == "high");
   assert(RiskLevel.critical.toString == "critical");    
  
-  assert(["low", "high"].toRiskLevel == [RiskLevel.low, RiskLevel.high]);
+  assert(["low", "high"].toRiskLevels == [RiskLevel.low, RiskLevel.high]);
   assert([RiskLevel.low, RiskLevel.high].toStrings == ["low", "high"]);
 }
 
@@ -135,15 +129,12 @@ enum TokenType {
 TokenType toTokenType(string value) {
   mixin(EnumSwitch("TokenType", "access"));
 }
-TokenType[] toTokenType(string[] values) {
-  return values.map!(v => v.toTokenType).array;
-}
-string toString(TokenType value) {
-  return value.to!string();
-}
-string[] toStrings(TokenType[] values) {
-  return values.map!(v => v.toString()).array;
-}
+TokenType[] toTokenTypes(string[] values)
+  => values.map!toTokenType.array;
+string toString(TokenType value)
+    => value.to!string;
+string[] toStrings(TokenType[] values)
+    => values.map!(v => v.toString()).array;
 ///
 unittest {
   mixin(ShowTest!("TokenType"));
@@ -159,7 +150,7 @@ unittest {
   assert(TokenType.idToken.toString == "idToken");
   assert(TokenType.samlAssertion.toString == "samlAssertion");
 
-  assert(["access", "idToken"].toTokenType == [TokenType.access, TokenType.idToken]);
+  assert(["access", "idToken"].toTokenTypes == [TokenType.access, TokenType.idToken]);
   assert([TokenType.access, TokenType.idToken].toStrings == ["access", "idToken"]);
 }
 
@@ -174,14 +165,12 @@ JobStatus toJobStatus(string value) {
   mixin(EnumSwitch("JobStatus", "pending"));
 }
 JobStatus[] toJobStatuses(string[] values) {
-  return values.map!(v => v.toJobStatus).array;
+  return values.map!toJobStatus.array;
 }
-string toString(JobStatus value) {
-  return value.to!string();
-}
-string[] toStrings(JobStatus[] values) {
-  return values.map!(v => v.toString()).array;
-}
+string toString(JobStatus value)
+    => value.to!string;
+string[] toStrings(JobStatus[] values)
+    => values.map!(v => v.toString()).array;
 ///
 unittest {
   mixin(ShowTest!("JobStatus"));
@@ -197,7 +186,7 @@ unittest {
   assert(JobStatus.completed.toString == "completed");
   assert(JobStatus.failed.toString == "failed");
 
-  assert(["pending", "completed"].toJobStatus == [JobStatus.pending, JobStatus.completed]);
+  assert(["pending", "completed"].toJobStatuses == [JobStatus.pending, JobStatus.completed]);
   assert([JobStatus.pending, JobStatus.completed].toStrings == ["pending", "completed"]);
 }
 
@@ -212,15 +201,12 @@ enum IdpType {
 IdpType toIdpType(string value) {
   mixin(EnumSwitch("IdpType", "local"));
 }
-IdpType[] toIdpType(string[] values) {
-  return values.map!(v => v.toIdpType).array;
-}
-string toString(IdpType value) {
-  return value.to!string();
-}
-string[] toStrings(IdpType[] values) {
-  return values.map!(v => v.toString()).array;
-}
+IdpType[] toIdpTypes(string[] values)
+  => values.map!toIdpType.array;
+string toString(IdpType value)
+    => value.to!string;
+string[] toStrings(IdpType[] values)
+    => values.map!(v => v.toString()).array;
 ///
 unittest {
   mixin(ShowTest!("IdpType"));
@@ -238,6 +224,6 @@ unittest {
   assert(IdpType.ldap.toString == "ldap");
   assert(IdpType.corporate.toString == "corporate");    
 
-  assert(["local", "saml"].toIdpType == [IdpType.local, IdpType.saml]);
+  assert(["local", "saml"].toIdpTypes == [IdpType.local, IdpType.saml]);
   assert([IdpType.local, IdpType.saml].toStrings == ["local", "saml"]);
 }
