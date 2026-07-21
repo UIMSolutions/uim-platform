@@ -62,11 +62,8 @@ class PerformTranslationUseCase {
 
     /// Translate a document or text synchronously — returns translated content inline.
     Json translateDocument(TranslateDocumentRequest r) {
-        if (r.content.length == 0) {
-            return Json.emptyObject
-                .set("status", "error")
-                .set("message", "Content is required");
-        }
+        if (r.content.length == 0)
+            return errorResponse("Content is required", 400);
 
         TranslationProvider prov = TranslationProvider.machineMt;
         if (r.provider.length > 0) {

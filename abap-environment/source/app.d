@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module app;
 
-
 // import uim.platform.abap_environment.infrastructure.config;
 // import uim.platform.abap_environment.infrastructure.container;
 import uim.platform.abap_environment;

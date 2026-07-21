@@ -35,9 +35,9 @@ class ApplicationJobController : ManageHttpController {
 
   override protected Json listHandler(HTTPServerRequest req) {
     auto precheck = super.listHandler(req);
-    if (precheck.hasError) {
+    if (precheck.hasError) 
       return precheck;
-    }
+    
 
     auto data = precheck.data;
     auto tenantId = precheck.tenantId;
@@ -54,9 +54,9 @@ class ApplicationJobController : ManageHttpController {
 
   override protected Json createHandler(HTTPServerRequest req) {
     auto precheck = super.createHandler(req);
-    if (precheck.hasError) {
+    if (precheck.hasError) 
       return precheck;
-    }
+    
 
     auto tenantId = precheck.tenantId;
     auto data = precheck.data;
@@ -81,9 +81,9 @@ class ApplicationJobController : ManageHttpController {
 
   override protected Json getHandler(HTTPServerRequest req) {
     auto precheck = super.createHandler(req);
-    if (precheck.hasError) {
+    if (precheck.hasError) 
       return precheck;
-    }
+    
     auto tenantId = precheck.tenantId;
     auto id = ApplicationJobId(precheck.id);
 
@@ -97,9 +97,9 @@ class ApplicationJobController : ManageHttpController {
 
   override protected Json updateHandler(HTTPServerRequest req) {
     auto precheck = super.createHandler(req);
-    if (precheck.hasError) {
+    if (precheck.hasError) 
       return precheck;
-    }
+    
 
     auto tenantId = precheck.tenantId;
     auto id = ApplicationJobId(precheck.id);

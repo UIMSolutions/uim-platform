@@ -53,19 +53,11 @@ class KeyEntryController : ManageHttpController {
     if (result.hasError)
       return errorResponse(result.message);
 
-    return successResponse("Key entry imported successfully", 201, Json.emptyObject.set("id", result
-        .id));
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Key entry imported successfully", 201, responseData);
   }
 
-  // POST /api/v1/keystores/{keystoreId}/entries
-  protected void handleImport(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto resp = importHandler(req);
-      res.writeJsonBody(resp, 201);
-    } catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
-  }
+  mixin(HandleTemplate!("handleImport", "importHandler"));
 
   override protected Json listHandler(HTTPServerRequest req) {
     auto precheck = super.listHandler(req);
@@ -93,10 +85,8 @@ class KeyEntryController : ManageHttpController {
         .set("createdAt", e.createdAt);
     }
 
-    return successResponse("Key entries retrieved successfully", 200,
-      Json.emptyObject
-        .set("items", jarr)
-        .set("totalCount", entries.length));
+    auto responseData = Json.emptyObject.set("items", jarr).set("totalCount", entries.length);
+    return successResponse("Key entries retrieved successfully", 200, responseData);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
@@ -106,24 +96,27 @@ class KeyEntryController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto id = KeyEntryId(extractSegment(precheck.path, 6)); // /api/v1/keystores/{id}/entries/{entryId}
+    if (id.isNull)
+      return errorResponse("Invalid key entry ID", 400);
+
     auto entry = usecase.getById(tenantId, id);
     if (entry.isNull)
       return errorResponse("Key entry not found", 404);
 
-    return successResponse("Key entry retrieved successfully", 200,
-      Json.emptyObject
-        .set("id", entry.id)
-        .set("keystoreId", entry.keystoreId)
-        .set("alias", entry.alias_)
-        .set("entryType", entry.entryType.to!string)
-        .set("content", entry.content)
-        .set("format", entry.format)
-        .set("subject", entry.subject)
-        .set("issuer", entry.issuer)
-        .set("serialNumber", entry.serialNumber)
-        .set("notBefore", entry.notBefore)
-        .set("notAfter", entry.notAfter)
-        .set("createdAt", entry.createdAt));
+    auto responseData = Json.emptyObject
+      .set("id", entry.id)
+      .set("keystoreId", entry.keystoreId)
+      .set("alias", entry.alias_)
+      .set("entryType", entry.entryType.to!string)
+      .set("content", entry.content)
+      .set("format", entry.format)
+      .set("subject", entry.subject)
+      .set("issuer", entry.issuer)
+      .set("serialNumber", entry.serialNumber)
+      .set("notBefore", entry.notBefore)
+      .set("notAfter", entry.notAfter)
+      .set("createdAt", entry.createdAt);
+    return successResponse("Key entry retrieved successfully", 200, responseData);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
@@ -133,11 +126,15 @@ class KeyEntryController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto id = KeyEntryId(extractSegment(req.requestPath.to!string, 6)); // /api/v1/keystores/{id}/entries/{entryId}
+    if (id.isNull)
+      return errorResponse("Invalid key entry ID", 400);
+
     auto result = usecase.deleteKeyEntry(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 404);
 
-    return successResponse("Key entry deleted successfully", 204);
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Key entry deleted successfully", 204, responseData);
   }
 
   // Extract path segment at 1-based position (split by '/')

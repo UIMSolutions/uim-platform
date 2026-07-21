@@ -3,9 +3,4 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.abap_environment.presentation.rest;
-
-public:
-    import uim.platform.abap_environment.presentation.rest.interfaces;
-    import uim.platform.abap_environment.presentation.rest.services;
-    import uim.platform.abap_environment.presentation.rest.tests;
+module uim.platform.keystore.presentation.rest.interfaces;

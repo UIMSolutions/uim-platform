@@ -44,124 +44,89 @@ class BusinessRoleController : ManageHttpController {
 
   override protected Json createHandler(HTTPServerRequest req) {
     auto precheck = super.createHandler(req);
-    if (precheck.hasError) {
+    if (precheck.hasError)
       return precheck;
-    }
 
     auto data = precheck.data;
     auto tenantId = TenantId(data.getString("tenantId"));
-
-    auto r = CreateBusinessRoleRequest(
-  tenantId : tenantId,
-  instanceId:
-      SystemInstanceId(data.getString("systemInstanceId")),
-  name:
-      data.getString("name"),
-  description:
-      data.getString("description"),
-  roleType:
-      data.getString("roleType"),
-  restrictionTypes:
-      getStrings(data, "restrictionTypes"));
-
+    auto r = CreateBusinessRoleRequest();
+    r.tenantId = tenantId;
+    r.instanceId = SystemInstanceId(data.getString("systemInstanceId"));
+    r.name = data.getString("name");
+    r.description = data.getString("description");
+    r.roleType = data.getString("roleType");
+    r.restrictionTypes = getStrings(data, "restrictionTypes");
     auto result = usecase.createBusinessRole(r);
-    if (result.hasError()) {
-      return Json.emptyObject
-        .set("status", "error")
-        .set("message", result.message)
-        .set("statusCode", 400);
-    }
+    if (result.hasError())
+      return errorResponse(result.message, 400);
 
-    return Json.emptyObject
+    auto responseData = Json.emptyObject
       .set("id", result.id)
       .set("message", "Business role created")
       .set("status", "created")
       .set("statusCode", 201);
+
+    return successResponse("Business role created successfully", "Created", 201, responseData);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
     auto precheck = super.listHandler(req);
-    if (precheck.hasError) {
+    if (precheck.hasError)
       return precheck;
-    }
 
     auto tenantId = precheck.tenantId;
-    if (tenantId.isNull) {
-      return Json.emptyObject
-        .set("status", "error")
-        .set("message", "Tenant ID is required")
-        .set("statusCode", 400);
-    }
+    if (tenantId.isNull)
+      return errorResponse("Tenant ID is required", 400);
 
     auto systemId = SystemInstanceId(req.headers.get("X-System-Id", ""));
-    if (systemId.isNull) {
-      return Json.emptyObject
-        .set("status", "error")
-        .set("message", "System Instance ID is required in X-System-Id header")
-        .set("statusCode", 400);
-    }
+    if (systemId.isNull)
+      return errorResponse("System Instance ID is required in X-System-Id header", 400);
 
     auto roles = usecase.listBusinessRoles(tenantId, systemId);
     auto arr = roles.map!(r => r.toJson).array.toJson;
 
-    return Json.emptyObject
+    auto responseData = Json.emptyObject
       .set("items", arr)
       .set("totalCount", roles.length)
       .set("message", "Business roles fetched")
       .set("status", "success")
       .set("statusCode", 200);
+    return successResponse("Business roles fetched successfully", 200, responseData);
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);
-    if (precheck.hasError) {
+    if (precheck.hasError)
       return precheck;
-    }
 
     auto tenantId = precheck.tenantId;
-    if (tenantId.isNull) {
-      return Json.emptyObject
-        .set("status", "error")
-        .set("message", "Tenant ID is required")
-        .set("statusCode", 400);
-    }
+    if (tenantId.isNull)
+      return errorResponse("Tenant ID is required", 400);
 
     auto id = BusinessRoleId(precheck.id);
-    if (id.isNull) {
-      return Json.emptyObject
-        .set("status", "error")
-        .set("message", "Business Role ID is required in the path")
-        .set("statusCode", 400);
-    }
+    if (id.isNull)
+      return errorResponse("Business Role ID is required in the path", 400);
 
     auto role = usecase.getBusinessRole(tenantId, id);
-    if (role.isNull) {
-      return Json.emptyObject
-        .set("status", "error")
-        .set("message", "Business role not found")
-        .set("statusCode", 404);
-    }
+    if (role.isNull)
+      return errorResponse("Business role not found", 404);
 
-    return Json.emptyObject
+    auto responseData = Json.emptyObject
       .set("entity", role.toJson)
       .set("message", "Business role fetched")
       .set("status", "success")
       .set("statusCode", 200);
+    return successResponse("Business role fetched successfully", "Success", 200, responseData);
   }
 
   override protected Json updateHandler(HTTPServerRequest req) {
     auto precheck = super.updateHandler(req);
-    if (precheck.hasError) {
+    if (precheck.hasError)
       return precheck;
-    }
 
     auto id = BusinessRoleId(precheck.id);
-    if (id.isNull) {
-      return Json.emptyObject
-        .set("status", "error")
-        .set("message", "Business Role ID is required in the path")
-        .set("statusCode", 400);
-    }
+    if (id.isNull)
+      return errorResponse("Business Role ID is required in the path", 400);
 
     auto data = precheck.data;
     auto tenantId = TenantId(data.getString("tenantId"));
@@ -174,47 +139,36 @@ class BusinessRoleController : ManageHttpController {
     r.restrictionTypes = getStrings(data, "restrictionTypes");
 
     auto result = usecase.updateBusinessRole(r);
-    if (result.hasError()) {
-      return Json.emptyObject
-        .set("status", "error")
-        .set("message", result.message)
-        .set("statusCode", 400);
-    }
+    if (result.hasError())
+      return errorResponse(result.message, 400);
 
-    return Json.emptyObject
+    auto responsedata = Json.emptyObject
       .set("status", "updated")
       .set("message", "Business role updated")
       .set("statusCode", 200);
+    return successResponse("Business role updated successfully", "Updated", 200, responsedata);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
     auto precheck = super.deleteHandler(req);
-    if (precheck.hasError) {
+    if (precheck.hasError)
       return precheck;
-    }
 
     auto id = BusinessRoleId(precheck.id);
-    if (id.isNull) {
-      return Json.emptyObject
-        .set("status", "error")
-        .set("message", "Business Role ID is required in the path")
-        .set("statusCode", 400);
-    }
+    if (id.isNull)
+      return errorResponse("Business Role ID is required in the path", 400);
 
     auto data = precheck.data;
     auto tenantId = TenantId(data.getString("tenantId"));
     auto result = usecase.deleteBusinessRole(tenantId, id);
-    if (result.hasError()) {
-      return Json.emptyObject
-        .set("status", "error")
-        .set("message", result.message)
-        .set("statusCode", 400);
-    }
+    if (result.hasError())
+      return errorResponse(result.message, 400);
 
-    return Json.emptyObject
+    auto responsedata = Json.emptyObject
       .set("status", "deleted")
       .set("message", "Business role deleted")
       .set("statusCode", 200);
+    return successResponse("Business role deleted successfully", "Deleted", 200, responsedata);
   }
 }
 /// 

@@ -67,14 +67,14 @@ class KeyPasswordController : ManageHttpController {
     }
 
     // Return alias and metadata only — never expose the stored value in clear text
-    auto j = Json.emptyObject
+    auto responseData = Json.emptyObject
       .set("id", kp.id)
       .set("alias", kp.alias_)
       .set("accountId", kp.accountId)
       .set("applicationId", kp.applicationId)
       .set("createdAt", kp.createdAt)
       .set("updatedAt", kp.updatedAt);
-    return successResponse("Password retrieved successfully", 200, j);
+    return successResponse("Password retrieved successfully", 200, responseData);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
@@ -90,11 +90,9 @@ class KeyPasswordController : ManageHttpController {
     auto result = usecase.deletePassword(tenantId, accountId, applicationId, alias_);
     if (result.hasError)
       return errorResponse(result.message, 400);
-    else if (result.isSuccess) {
-      return successResponse("Password deleted successfully", 204);
-    } else {
-      return errorResponse("Password not found", 404);
-    }
+
+    auto responseData = Json.emptyObject.set("id", result.id);
+    return successResponse("Password deleted successfully", 204, responseData);
   }
 
   override protected Json listHandler(HTTPServerRequest req) {
@@ -119,10 +117,9 @@ class KeyPasswordController : ManageHttpController {
         .set("updatedAt", kp.updatedAt);
     }
 
-    auto resp = Json.emptyObject
+    auto responseData = Json.emptyObject
       .set("items", jarr)
       .set("totalCount", passwords.length);
-
-    return successResponse("Passwords listed successfully", 200, resp);
+    return successResponse("Passwords listed successfully", 200, responseData);
   }
 }

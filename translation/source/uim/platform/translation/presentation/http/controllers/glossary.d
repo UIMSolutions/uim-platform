@@ -31,9 +31,8 @@ class GlossaryController : ManageHttpController {
 
     override protected Json createHandler(HTTPServerRequest req) {
         auto precheck = super.createHandler(req);
-        if (precheck.hasError) {
+        if (precheck.hasError) 
             return precheck;
-        }
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
@@ -48,26 +47,22 @@ class GlossaryController : ManageHttpController {
         r.mandatory = data.getBoolean("mandatory", false);
 
         auto result = usecase.createEntry(r);
-        if (result.hasError) {
-            return Json.emptyObject
-                .set("status", "error")
-                .set("message", result.message)
-                .set("statusCode", 400);
-        }
+        if (result.hasError)
+            return errorResponse(result.message, 400);
 
-        return Json.emptyObject
+        auto responseData = Json.emptyObject
             .set("status", "success")
             .set("id", result.id)
             .set("message", "Glossary entry created")
             .set("statusCode", 201);
+        return successResponse("Glossary entry created successfully", "Created", 201, responseData);
     }
 
     override protected Json listHandler(HTTPServerRequest req) {
         auto precheck = super.listHandler(req);
-        if (precheck.hasError) {
+        if (precheck.hasError)
             return precheck;
-        }
-
+        
         auto tenantId = precheck.tenantId;
 
         auto entries = usecase.listEntries(tenantId);
@@ -75,83 +70,83 @@ class GlossaryController : ManageHttpController {
             .array
             .to!Json;
 
-        return Json.emptyObject
+        auto responseData = Json.emptyObject
+            .set("status", "success")
+            .set("message", "Glossary entries retrieved")
             .set("count", entries.length)
             .set("entries", arr)
             .set("statusCode", 200);
+        return successResponse("Glossary entries retrieved successfully", "Retrieved", 200, responseData);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
         auto precheck = super.getHandler(req);
-        if (precheck.hasError) {
+        if (precheck.hasError) 
             return precheck;
-        }
+        
 
         auto tenantId = precheck.tenantId;
         auto id = GlossaryEntryId(precheck.id);
+        if (id.isNull) 
+            return errorResponse("Invalid glossary entry ID", 400);
 
         auto entry = usecase.getEntry(tenantId, id);
-        if (entry.isNull) {
-            return Json.emptyObject
-                .set("status", "error")
-                .set("message", "Glossary entry not found")
-                .set("statusCode", 404);
-        }
-        return Json.emptyObject
+        if (entry.isNull) 
+            return errorResponse("Glossary entry not found", 404);
+        
+        auto responseData = Json.emptyObject
             .set("status", "success")
             .set("id", entry.id)
             .set("message", "Glossary entry retrieved")
             .set("statusCode", 200);
+        return successResponse("Glossary entry retrieved successfully", "Retrieved", 200, responseData);
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
         auto precheck = super.updateHandler(req);
-        if (precheck.hasError) {
+        if (precheck.hasError) 
             return precheck;
-        }
-
+        
         auto tenantId = precheck.tenantId;
-        auto entryId = GlossaryEntryId(precheck.id);
+        auto id = GlossaryEntryId(precheck.id);
+        if (id.isNull) 
+            return errorResponse("Invalid glossary entry ID", 400);
+
         auto data = precheck.data;
         UpdateGlossaryEntryRequest r;
         r.tenantId = tenantId;
-        r.entryId = entryId;
+        r.entryId = id;
         r.targetTerm = data.getString("targetTerm");
         r.domainName = data.getString("domain");
         r.context = data.getString("context");
         r.mandatory = data.getBoolean("mandatory", false);
 
         auto result = usecase.updateEntry(r);
-        if (result.hasError) {
-            return Json.emptyObject
-                .set("status", "error")
-                .set("message", result.message)
-                .set("statusCode", 400);
-        }
+        if (result.hasError)
+            return errorResponse(result.message, 400);
 
-        return Json.emptyObject
+        auto responseData = Json.emptyObject
             .set("status", "success")
             .set("id", result.id)
             .set("message", "Glossary entry updated")
             .set("statusCode", 200);
+        return successResponse("Glossary entry updated successfully", "Updated", 200, responseData);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto precheck = super.deleteHandler(req);
-        if (precheck.hasError) {
+        if (precheck.hasError) 
             return precheck;
-        }
 
-        auto tenantId = TenantId(req.getTenantId);
-        auto entryId = GlossaryEntryId(precheck.id);
-        if (entryId.isNull) 
+        auto tenantId = precheck.tenantId;
+        auto id = GlossaryEntryId(precheck.id);
+        if (id.isNull) 
             return errorResponse("Invalid glossary entry ID", 400);
 
-        auto result = usecase.deleteEntry(tenantId, entryId);
+        auto result = usecase.deleteEntry(tenantId, id);
         if (result.hasError) 
             return errorResponse(result.message, 400);
-                .set("statusCode", 400);
-        
+
         return successResponse("Glossary entry deleted successfully", "Deleted", 200, Json.emptyObject.set("id", result.id));
     }
 }

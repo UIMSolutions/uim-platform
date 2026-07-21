@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryKeyPasswordRepository : TenantRepository!(KeyPassword, KeyPasswordId), IKeyPasswordRepository {
+class KeyPasswordRepository : TenantRepository!(KeyPassword, KeyPasswordId), IKeyPasswordRepository {
 
   bool existsByAlias(TenantId tenantId, string accountId, string applicationId, string alias_) {
     return findByApplication(tenantId, accountId, applicationId).any!(kp => kp.alias_ == alias_);
@@ -56,4 +56,204 @@ class MemoryKeyPasswordRepository : TenantRepository!(KeyPassword, KeyPasswordId
   }
   // #endregion ByApplication
 
+}
+///
+unittest {
+  mixin(ShowTest!("KeyPasswordRepository Tests"));
+
+  void testExistsByAlias() {
+    auto repo = new KeyPasswordRepository();
+    auto tenantId = TenantId("tenant1");
+    auto accountId = "account1";
+    auto applicationId = "app1";
+
+    // Add a key password
+    auto kp = KeyPassword.init;
+    kp.id = KeyPasswordId("kp1");
+    kp.tenantId = tenantId;
+    kp.accountId = accountId;
+    kp.applicationId = applicationId;
+    kp.alias_ = "myAlias";
+    repo.save(kp);
+
+    assert(repo.existsByAlias(tenantId, accountId, applicationId, "myAlias") == true);
+    assert(repo.existsByAlias(tenantId, accountId, applicationId, "nonExistentAlias") == false);
+  }
+
+  void testFindByAlias() {
+    auto repo = new KeyPasswordRepository();
+    auto tenantId = TenantId("tenant1");
+    auto accountId = "account1";
+    auto applicationId = "app1";
+
+    // Add a key password
+    auto kp = KeyPassword.init;
+    kp.id = KeyPasswordId("kp1");
+    kp.tenantId = tenantId;
+    kp.accountId = accountId;
+    kp.applicationId = applicationId;
+    kp.alias_ = "myAlias";
+    repo.save(kp);
+
+    auto foundKp = repo.findByAlias(tenantId, accountId, applicationId, "myAlias");
+    assert(foundKp.id == KeyPasswordId("kp1"));
+  }
+
+  void testRemoveByAlias() {
+    auto repo = new KeyPasswordRepository();
+    auto tenantId = TenantId("tenant1");
+    auto accountId = "account1";
+    auto applicationId = "app1";
+
+    // Add a key password
+    auto kp = KeyPassword.init;
+    kp.id = KeyPasswordId("kp1");
+    kp.tenantId = tenantId;
+    kp.accountId = accountId;
+    kp.applicationId = applicationId;
+    kp.alias_ = "myAlias";
+    repo.save(kp);
+
+    assert(repo.existsByAlias(tenantId, accountId, applicationId, "myAlias") == true);
+    repo.removeByAlias(tenantId, accountId, applicationId, "myAlias");
+    assert(repo.existsByAlias(tenantId, accountId, applicationId, "myAlias") == false);
+  }
+
+  void testCountByApplication() {
+    auto repo = new KeyPasswordRepository();
+    auto tenantId = TenantId("tenant1");
+    auto accountId = "account1";
+    auto applicationId = "app1";
+
+    // Add key passwords
+    auto kp1 = KeyPassword.init;
+    kp1.id = KeyPasswordId("kp1");
+    kp1.tenantId = tenantId;
+    kp1.accountId = accountId;
+    kp1.applicationId = applicationId;
+    repo.save(kp1);
+
+    auto kp2 = KeyPassword.init;
+    kp2.id = KeyPasswordId("kp2");
+    kp2.tenantId = tenantId;
+    kp2.accountId = accountId;
+    kp2.applicationId = applicationId;
+    repo.save(kp2);
+
+    assert(repo.countByApplication(tenantId, accountId, applicationId) == 2);
+  }
+
+  void testRemoveByApplication() {
+    auto repo = new KeyPasswordRepository();
+    auto tenantId = TenantId("tenant1");
+    auto accountId = "account1";
+    auto applicationId = "app1";
+
+    // Add key passwords
+    auto kp1 = KeyPassword.init;
+    kp1.id = KeyPasswordId("kp1");
+    kp1.tenantId = tenantId;
+    kp1.accountId = accountId;
+    kp1.applicationId = applicationId;
+    repo.save(kp1);
+
+    auto kp2 = KeyPassword.init;
+    kp2.id = KeyPasswordId("kp2");
+    kp2.tenantId = tenantId;
+    kp2.accountId = accountId;
+    kp2.applicationId = applicationId;
+    repo.save(kp2);
+
+    assert(repo.countByApplication(tenantId, accountId, applicationId) == 2);
+    repo.removeByApplication(tenantId, accountId, applicationId);
+    assert(repo.countByApplication(tenantId, accountId, applicationId) == 0);
+  }
+
+  void testFindByApplication() {
+    auto repo = new KeyPasswordRepository();
+    auto tenantId = TenantId("tenant1");
+    auto accountId = "account1";
+    auto applicationId = "app1";
+
+    // Add key passwords
+    auto kp1 = KeyPassword.init;
+    kp1.id = KeyPasswordId("kp1");
+    kp1.tenantId = tenantId;
+    kp1.accountId = accountId;
+    kp1.applicationId = applicationId;
+    repo.save(kp1);
+
+    auto kp2 = KeyPassword.init;
+    kp2.id = KeyPasswordId("kp2");
+    kp2.tenantId = tenantId;
+    kp2.accountId = accountId;
+    kp2.applicationId = applicationId;
+    repo.save(kp2);
+
+    auto passwords = repo.findByApplication(tenantId, accountId, applicationId);
+    assert(passwords.length == 2);
+  }
+
+  void testFilterByApplication() {
+    auto repo = new KeyPasswordRepository();
+    auto tenantId = TenantId("tenant1");
+    auto accountId = "account1";
+    auto applicationId = "app1";
+
+    // Add key passwords
+    auto kp1 = KeyPassword.init;
+    kp1.id = KeyPasswordId("kp1");
+    kp1.tenantId = tenantId;
+    kp1.accountId = accountId;
+    kp1.applicationId = applicationId;
+    repo.save(kp1);
+
+    auto kp2 = KeyPassword.init;
+    kp2.id = KeyPasswordId("kp2");
+    kp2.tenantId = tenantId;
+    kp2.accountId = accountId;
+    kp2.applicationId = applicationId;
+    repo.save(kp2);
+
+    auto allPasswords = repo.findByTenant(tenantId);
+    auto filteredPasswords = repo.filterByApplication(allPasswords, applicationId);
+    assert(filteredPasswords.length == 2);
+  }
+
+  void testFilterByAccount() {
+    auto repo = new KeyPasswordRepository();
+    auto tenantId = TenantId("tenant1");
+    auto accountId = "account1";
+    auto applicationId = "app1";
+
+    // Add key passwords
+    auto kp1 = KeyPassword.init;
+    kp1.id = KeyPasswordId("kp1");
+    kp1.tenantId = tenantId;
+    kp1.accountId = accountId;
+    kp1.applicationId = applicationId;
+    repo.save(kp1);
+
+    auto kp2 = KeyPassword.init;
+    kp2.id = KeyPasswordId("kp2");
+    kp2.tenantId = tenantId;
+    kp2.accountId = accountId;
+    kp2.applicationId = applicationId;
+    repo.save(kp2);
+
+    auto allPasswords = repo.findByTenant(tenantId);
+    auto filteredPasswords = repo.filterByAccount(allPasswords, accountId);
+    assert(filteredPasswords.length == 2);
+  }
+
+  void runAllTests() {
+    testExistsByAlias();
+    testFindByAlias();
+    testRemoveByAlias();
+    testCountByApplication();
+    testRemoveByApplication();
+    testFindByApplication();
+    testFilterByApplication();
+    testFilterByAccount();
+  }
 }

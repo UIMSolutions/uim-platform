@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 struct Container {
   // Repositories (driven adapters)
-  MemoryKeystoreRepository keystoreRepo;
-  MemoryKeyEntryRepository keyEntryRepo;
-  MemoryKeyPasswordRepository keyPasswordRepo;
+  KeystoreRepository keystoreRepo;
+  KeyEntryRepository keyEntryRepo;
+  KeyPasswordRepository keyPasswordRepo;
 
   // Domain services
   KeystoreSearchService keystoreSearch;
@@ -35,9 +35,9 @@ Container buildContainer(SrvConfig config) {
   Container c;
 
   // Infrastructure adapters
-  c.keystoreRepo = new MemoryKeystoreRepository();
-  c.keyEntryRepo = new MemoryKeyEntryRepository();
-  c.keyPasswordRepo = new MemoryKeyPasswordRepository();
+  c.keystoreRepo = new KeystoreRepository();
+  c.keyEntryRepo = new KeyEntryRepository();
+  c.keyPasswordRepo = new KeyPasswordRepository();
 
   // Domain services
   c.keystoreSearch = new KeystoreSearchService(c.keystoreRepo);
