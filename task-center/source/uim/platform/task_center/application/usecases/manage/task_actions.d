@@ -31,7 +31,7 @@ class ManageTaskActionsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createAction(PerformTaskActionRequest req) {
-        auto action = TaskAction(req.tenantId, req.actionId, req.createdBy);
+        auto action = TaskAction(req.tenantId, req.actionId); // , req.createdBy);
         action.taskId = req.taskId;
         action.performedBy = req.performedBy;
         action.forwardTo = req.forwardTo;

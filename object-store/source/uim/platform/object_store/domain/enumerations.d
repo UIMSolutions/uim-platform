@@ -1,3 +1,8 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module uim.platform.object_store.domain.enumerations;
 import uim.platform.object_store;
 
@@ -13,9 +18,9 @@ enum StorageClass {
 }
 
 StorageClass toStorageClass(string value) {
-  mixin(EnumSwitch("StorageClass", "StorageClass.standard"));
+  mixin(EnumSwitch("StorageClass", "standard"));
 }
-StorageClass[] toStorageClass(string[] values) {
+StorageClass[] toStorageClasses(string[] values) {
   return values.map!(v => v.toStorageClass).array;
 }
 string toString(StorageClass value) {
@@ -38,7 +43,7 @@ unittest {
   assert(StorageClass.nearline.toString == "nearline");
   assert(StorageClass.coldline.toString == "coldline");
 
-  assert(["standard", "archive"].toStorageClass == [StorageClass.standard, StorageClass.archive]);
+  assert(["standard", "archive"].toStorageClasses == [StorageClass.standard, StorageClass.archive]);
   assert([StorageClass.standard, StorageClass.archive].toStrings == ["standard", "archive"]);
 }
 
@@ -49,7 +54,7 @@ enum BucketStatus {
 }
 
 BucketStatus toBucketStatus(string value) {
-  mixin(EnumSwitch("BucketStatus", "BucketStatus.active"));
+  mixin(EnumSwitch("BucketStatus", "active"));
 }
 BucketStatus[] toBucketStatuses(string[] values) {
   return values.map!(v => v.toBucketStatus).array;
@@ -74,7 +79,7 @@ unittest {
   assert(BucketStatus.suspended.toString == "suspended");
   assert(BucketStatus.deleted.toString == "deleted");
 
-assert(["active", "suspended"].toBucketStatus == [BucketStatus.active, BucketStatus.suspended]);
+  assert(["active", "suspended"].toBucketStatuses == [BucketStatus.active, BucketStatus.suspended]);
   assert([BucketStatus.active, BucketStatus.suspended].toStrings == ["active", "suspended"]);
 }
 
@@ -85,7 +90,7 @@ enum ObjectStatus {
 }
 
 ObjectStatus toObjectStatus(string value) {
-  mixin(EnumSwitch("ObjectStatus", "ObjectStatus.active"));
+  mixin(EnumSwitch("ObjectStatus", "active"));
 }
 ObjectStatus[] toObjectStatuses(string[] values) {
   return values.map!(v => v.toObjectStatus).array;
@@ -109,7 +114,7 @@ unittest {
   assert(ObjectStatus.archived.toString == "archived");
   assert(ObjectStatus.deleted.toString == "deleted");
 
-  assert(["active", "archived"].toObjectStatus == [ObjectStatus.active, ObjectStatus.archived]);
+  assert(["active", "archived"].toObjectStatuses == [ObjectStatus.active, ObjectStatus.archived]);
   assert([ObjectStatus.active, ObjectStatus.archived].toStrings == ["active", "archived"]);
 }
 
@@ -121,9 +126,9 @@ enum EncryptionType {
 }
 
 EncryptionType toEncryptionType(string value) {
-  mixin(EnumSwitch("EncryptionType", "EncryptionType.none"));
+  mixin(EnumSwitch("EncryptionType", "none"));
 }
-EncryptionType[] toEncryptionType(string[] values) {
+EncryptionType[] toEncryptionTypes(string[] values) {
   return values.map!(v => v.toEncryptionType).array;
 }
 
@@ -148,7 +153,7 @@ unittest {
   assert(EncryptionType.sse_kms.toString == "sse_kms");
   assert(EncryptionType.sse_c.toString == "sse_c");
 
-  assert(["none", "sse_kms"].toEncryptionType == [EncryptionType.none, EncryptionType.sse_kms]);
+  assert(["none", "sse_kms"].toEncryptionTypes == [EncryptionType.none, EncryptionType.sse_kms]);
   assert([EncryptionType.none, EncryptionType.sse_kms].toStrings == ["none", "sse_kms"]);
 }
 
@@ -158,9 +163,9 @@ enum PolicyEffect {
 }
 
 PolicyEffect toPolicyEffect(string value) {
-  mixin(EnumSwitch("PolicyEffect", "PolicyEffect.allow"));
+  mixin(EnumSwitch("PolicyEffect", "allow"));
 }
-PolicyEffect[] toPolicyEffect(string[] values) {
+PolicyEffect[] toPolicyEffects(string[] values) {
   return values.map!(v => v.toPolicyEffect).array;
 }
 
@@ -181,7 +186,7 @@ unittest {
   assert(PolicyEffect.allow.toString == "allow");
   assert(PolicyEffect.deny.toString == "deny");
 
-  assert(["allow", "deny"].toPolicyEffect == [PolicyEffect.allow, PolicyEffect.deny]);
+  assert(["allow", "deny"].toPolicyEffects == [PolicyEffect.allow, PolicyEffect.deny]);
   assert([PolicyEffect.allow, PolicyEffect.deny].toStrings == ["allow", "deny"]);
 }
 
@@ -192,9 +197,9 @@ enum BindingPermission {
 }
 
 BindingPermission toBindingPermission(string value) {
-  mixin(EnumSwitch("BindingPermission", "BindingPermission.readOnly"));
+  mixin(EnumSwitch("BindingPermission", "readOnly"));
 }
-BindingPermission[] toBindingPermission(string[] values) {
+BindingPermission[] toBindingPermissions(string[] values) {
   return values.map!(v => v.toBindingPermission).array;
 }
 
@@ -217,7 +222,7 @@ unittest {
   assert(BindingPermission.readWrite.toString == "readWrite");
   assert(BindingPermission.admin.toString == "admin");
 
-  assert(["readOnly", "admin"].toBindingPermission == [BindingPermission.readOnly, BindingPermission.admin]);
+  assert(["readOnly", "admin"].toBindingPermissions == [BindingPermission.readOnly, BindingPermission.admin]);
   assert([BindingPermission.readOnly, BindingPermission.admin].toStrings == ["readOnly", "admin"]);
 }
 
@@ -228,17 +233,17 @@ enum BindingStatus {
 }
 
 BindingStatus toBindingStatus(string value) {
-  mixin(EnumSwitch("BindingStatus", "BindingStatus.active"));
+  mixin(EnumSwitch("BindingStatus", "active"));
 }
 BindingStatus[] toBindingStatuses(string[] values) {
-  return values.map!(v => v.toBindingStatus).array;
+  return values.map!toBindingStatus.array;
 }
 
 string toString(BindingStatus value) {
   return value.to!string();
 }
 string[] toStrings(BindingStatus[] values) {
-  return values.map!(v => v.toString).array;
+  return values.map!toString.array;
 }
 /// 
 unittest {
@@ -253,7 +258,7 @@ unittest {
   assert(BindingStatus.revoked.toString == "revoked");
   assert(BindingStatus.expired.toString == "expired");
 
-  assert(["active", "revoked"].toBindingStatus == [BindingStatus.active, BindingStatus.revoked]);
+  assert(["active", "revoked"].toBindingStatuses == [BindingStatus.active, BindingStatus.revoked]);
   assert([BindingStatus.active, BindingStatus.revoked].toStrings == ["active", "revoked"]);
 }
 
@@ -263,17 +268,17 @@ enum RuleStatus {
 }
 
 RuleStatus toRuleStatus(string value) {
-  mixin(EnumSwitch("RuleStatus", "RuleStatus.disabled"));
+  mixin(EnumSwitch("RuleStatus", "disabled"));
 }
 RuleStatus[] toRuleStatuses(string[] values) {
-  return values.map!(v => v.toRuleStatus).array;
+  return values.map!toRuleStatus.array;
 }
 
 string toString(RuleStatus value) {
   return value.to!string();
 }
 string[] toStrings(RuleStatus[] values) {
-  return values.map!(v => v.toString).array;
+  return values.map!toString.array;
 }
 /// 
 unittest {
@@ -286,6 +291,6 @@ unittest {
   assert(RuleStatus.enabled.toString == "enabled");
   assert(RuleStatus.disabled.toString == "disabled");
 
-  assert(["enabled", "disabled"].toRuleStatus == [RuleStatus.enabled, RuleStatus.disabled]);
+  assert(["enabled", "disabled"].toRuleStatuses == [RuleStatus.enabled, RuleStatus.disabled]);
   assert([RuleStatus.enabled, RuleStatus.disabled].toStrings == ["enabled", "disabled"]);
 }

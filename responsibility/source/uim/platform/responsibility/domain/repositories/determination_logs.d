@@ -12,8 +12,12 @@ mixin(ShowModule!());
 @safe:
 
 interface DeterminationLogRepository : ITenantRepository!(DeterminationLog, DeterminationLogId) {
+
     DeterminationLog[] findByContext(TenantId tenantId, string contextId);
+
     DeterminationLog[] findByObject(TenantId tenantId, string objectType, string objectId);
+
     DeterminationLog[] findByStatus(TenantId tenantId, DeterminationStatus status);
+
     void removeByTenant(TenantId tenantId);
 }
