@@ -25,7 +25,7 @@ mixin(ShowModule!());
 //     throw new Exception("Invalid value '" ~ s ~ "' for enumeration " ~ fullName);
 // }
 
-string EnumSwitch(string enumType, string defaultValue, bool ignoreCase = true) {
+string EnumSwitch(string enumType, string defaultvalue, bool ignoreCase = true) {
     return `
     switch (`
         ~ (ignoreCase ? "value.toLower()" : "value") ~ `) {
@@ -38,7 +38,7 @@ string EnumSwitch(string enumType, string defaultValue, bool ignoreCase = true) 
         }
     default:
         return `
-        ~ enumType ~ `.` ~ defaultValue ~ `;
+        ~ enumType ~ `.` ~ defaultvalue ~ `;
     }`;
 }
 ///

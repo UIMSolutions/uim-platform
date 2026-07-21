@@ -88,7 +88,7 @@ enum ContentCategory {
   accessPolicy,
   functionLibrary,
 }
-ContentCategory toContentCategory(string value, bool ignoreCase = true) {
+ContentCategory toContentCategory(string value) {
   switch (ignoreCase ? value.toLower() : value) {
     case "custom": return ContentCategory.custom;
     case "integrationflow": return ContentCategory.integrationFlow;

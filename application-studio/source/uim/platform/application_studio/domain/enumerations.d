@@ -39,7 +39,7 @@ DevSpaceStatus toDevSpaceStatus(string value) {
     mixin(EnumSwitch("DevSpaceStatus", "starting"));
 }
 DevSpaceStatus[] toDevSpaceStatuses(string[] statuses) {
-    return statuses.map!(toDevSpaceStatus).array;
+    return statuses.map!toDevSpaceStatus.array;
 }
 string toString(DevSpaceStatus status) {
     return status.to!string;
@@ -80,8 +80,8 @@ unittest {
 
     assert(["starting", "running", "stopped", "stopping", "error", "archived", "hibernated", "hibernating", "resuming", "deleting", "deleted"].toDevSpaceStatuses ==
            [DevSpaceStatus.starting, DevSpaceStatus.running, DevSpaceStatus.stopped, DevSpaceStatus.stopping, DevSpaceStatus.error, DevSpaceStatus.archived, DevSpaceStatus.hibernated, DevSpaceStatus.hibernating, DevSpaceStatus.resuming, DevSpaceStatus.deleting, DevSpaceStatus.deleted]);
-    assert(toString([DevSpaceStatus.starting, DevSpaceStatus.running, DevSpaceStatus.stopped, DevSpaceStatus.stopping, DevSpaceStatus.error, DevSpaceStatus.archived, DevSpaceStatus.hibernated, DevSpaceStatus.hibernating, DevSpaceStatus.resuming, DevSpaceStatus.deleting, DevSpaceStatus.deleted]) ==
-           ["starting", "running", "stopped", "stopping", "error", "archived", "hibernated", "hibernating", "resuming", "deleting", "deleted"]);    
+    assert([DevSpaceStatus.starting, DevSpaceStatus.running, DevSpaceStatus.stopped, DevSpaceStatus.stopping, DevSpaceStatus.error, DevSpaceStatus.archived, DevSpaceStatus.hibernated, DevSpaceStatus.hibernating, DevSpaceStatus.resuming, DevSpaceStatus.deleting, DevSpaceStatus.deleted].toStrings ==
+           ["starting", "running", "stopped", "stopping", "error", "archived", "hibernated", "hibernating", "resuming", "deleting", "deleted"]);
 }
 
 enum DevSpacePlan {
@@ -96,7 +96,7 @@ DevSpacePlan toDevSpacePlan(string value) {
     mixin(EnumSwitch("DevSpacePlan", "free"));
 }
 DevSpacePlan[] toDevSpacePlans(string[] plans) {
-    return plans.map!(toDevSpacePlan).array;
+    return plans.map!toDevSpacePlan.array;
 }
 string toString(DevSpacePlan plan) {
     return plan.to!string;
@@ -121,8 +121,8 @@ unittest {
 
     assert(["free", "standard", "professional"].toDevSpacePlans ==
            [DevSpacePlan.free, DevSpacePlan.standard, DevSpacePlan.professional]);
-    assert(toString([DevSpacePlan.free, DevSpacePlan.standard, DevSpacePlan.professional]) ==
-           ["free", "standard", "professional"]);    
+    assert([DevSpacePlan.free, DevSpacePlan.standard, DevSpacePlan.professional].toStrings ==
+           ["free", "standard", "professional"]);
 }
 
 enum DevSpaceTypeCategory {
@@ -137,7 +137,7 @@ DevSpaceTypeCategory toDevSpaceTypeCategory(string value) {
     mixin(EnumSwitch("DevSpaceTypeCategory", "predefined"));
 }
 DevSpaceTypeCategory[] toDevSpaceTypeCategories(string[] categories) {
-    return categories.map!(toDevSpaceTypeCategory).array;
+    return categories.map!toDevSpaceTypeCategory.array;
 }
 string toString(DevSpaceTypeCategory category) {
     return category.to!string;
@@ -162,7 +162,7 @@ unittest {
 
     assert(["predefined", "custom", "thirdParty"].toDevSpaceTypeCategories ==
            [DevSpaceTypeCategory.predefined, DevSpaceTypeCategory.custom, DevSpaceTypeCategory.thirdParty]);
-    assert(toString([DevSpaceTypeCategory.predefined, DevSpaceTypeCategory.custom, DevSpaceTypeCategory.thirdParty]) ==
+    assert([DevSpaceTypeCategory.predefined, DevSpaceTypeCategory.custom, DevSpaceTypeCategory.thirdParty].toStrings ==
            ["predefined", "custom", "thirdParty"]);
 }
 
@@ -177,8 +177,8 @@ enum ExtensionScope {
 ExtensionScope toExtensionScope(string value) {
     mixin(EnumSwitch("ExtensionScope", "predefined"));
 }
-ExtensionScope[] toExtensionScope(string[] scopes) {
-    return scopes.map!(toExtensionScope).array;
+ExtensionScope[] toExtensionScopes(string[] scopes) {
+    return scopes.map!toExtensionScope.array;
 }
 string toString(ExtensionScope value) {
     return value.to!string;
@@ -201,9 +201,9 @@ unittest {
     assert("additional".toExtensionScope == ExtensionScope.additional);
     assert("thirdParty".toExtensionScope == ExtensionScope.thirdParty);
 
-    assert(["predefined", "additional", "thirdParty"].toExtensionScope ==
+    assert(["predefined", "additional", "thirdParty"].toExtensionScopes ==
            [ExtensionScope.predefined, ExtensionScope.additional, ExtensionScope.thirdParty]);
-    assert(toString([ExtensionScope.predefined, ExtensionScope.additional, ExtensionScope.thirdParty]) ==
+    assert([ExtensionScope.predefined, ExtensionScope.additional, ExtensionScope.thirdParty].toStrings ==
            ["predefined", "additional", "thirdParty"]);
 }
 
@@ -224,7 +224,7 @@ ExtensionStatus toExtensionStatus(string s) {
     }
 }
 ExtensionStatus[] toExtensionStatuses(string[] statuses) {
-    return statuses.map!(toExtensionStatus).array;
+    return statuses.map!toExtensionStatus.array;
 }
 string toString(ExtensionStatus status) {
     return cast(string)status;
@@ -249,7 +249,7 @@ unittest {
 
     assert(["active", "inactive", "deprecated"].toExtensionStatus ==
            [ExtensionStatus.active, ExtensionStatus.inactive, ExtensionStatus.deprecated_]);
-    assert(toString([ExtensionStatus.active, ExtensionStatus.inactive, ExtensionStatus.deprecated_]) ==
+    assert([ExtensionStatus.active, ExtensionStatus.inactive, ExtensionStatus.deprecated_].toStrings ==
            ["active", "inactive", "deprecated"]);
 }
 
@@ -309,7 +309,7 @@ ProjectType toProjectType(string value) {
     mixin(EnumSwitch("ProjectType", "sapFiori"));
 }
 ProjectType[] toProjectTypes(string[] values) {
-    return values.map!(toProjectType).array;
+    return values.map!toProjectType.array;
 }
 string toString(ProjectType value) {
     return value.to!string;
@@ -378,7 +378,7 @@ unittest {
 
     assert(["sapFiori", "capNodeJs", "capJava", "hanaNative", "sapUi5", "mdk", "workflow", "multitarget", "basic", "cap", "sapFioriElements", "businessApplicationStudio", "s4hana", "successFactors", "ariba", "concur", "customerExperience", "iot", "analyticsCloud", "cpi", "cfx", "cpwf", "cpbm", "rpa", "ai"].toProjectTypes ==
            [ProjectType.sapFiori, ProjectType.capNodeJs, ProjectType.capJava, ProjectType.hanaNative, ProjectType.sapUi5, ProjectType.mdk, ProjectType.workflow, ProjectType.multitarget, ProjectType.basic, ProjectType.cap, ProjectType.sapFioriElements, ProjectType.businessApplicationStudio, ProjectType.s4hana, ProjectType.successFactors, ProjectType.ariba, ProjectType.concur, ProjectType.customerExperience, ProjectType.iot, ProjectType.analyticsCloud, ProjectType.cpi, ProjectType.cfx, ProjectType.cpwf, ProjectType.cpbm, ProjectType.rpa, ProjectType.ai]);
-    assert(toString([ProjectType.sapFiori, ProjectType.capNodeJs, ProjectType.capJava, ProjectType.hanaNative, ProjectType.sapUi5, ProjectType.mdk, ProjectType.workflow, ProjectType.multitarget, ProjectType.basic, ProjectType.cap, ProjectType.sapFioriElements, ProjectType.businessApplicationStudio, ProjectType.s4hana, ProjectType.successFactors, ProjectType.ariba, ProjectType.concur, ProjectType.customerExperience, ProjectType.iot, ProjectType.analyticsCloud, ProjectType.cpi, ProjectType.cfx, ProjectType.cpwf, ProjectType.cpbm, ProjectType.rpa, ProjectType.ai]) ==
+    assert([ProjectType.sapFiori, ProjectType.capNodeJs, ProjectType.capJava, ProjectType.hanaNative, ProjectType.sapUi5, ProjectType.mdk, ProjectType.workflow, ProjectType.multitarget, ProjectType.basic, ProjectType.cap, ProjectType.sapFioriElements, ProjectType.businessApplicationStudio, ProjectType.s4hana, ProjectType.successFactors, ProjectType.ariba, ProjectType.concur, ProjectType.customerExperience, ProjectType.iot, ProjectType.analyticsCloud, ProjectType.cpi, ProjectType.cfx, ProjectType.cpwf, ProjectType.cpbm, ProjectType.rpa, ProjectType.ai].toStrings ==
            ["sapFiori", "capNodeJs", "capJava", "hanaNative", "sapUi5", "mdk", "workflow", "multitarget", "basic", "cap", "sapFioriElements", "businessApplicationStudio", "s4hana", "successFactors", "ariba", "concur", "customerExperience", "iot", "analyticsCloud", "cpi", "cfx", "cpwf", "cpbm", "rpa", "ai"]);
 }
 
@@ -398,7 +398,7 @@ ProjectStatus toProjectStatus(string value) {
     mixin(EnumSwitch("ProjectStatus", "active"));
 }
 ProjectStatus[] toProjectStatuses(string[] values) {
-    return values.map!(toProjectStatus).array;
+    return values.map!toProjectStatus.array;
 }
 string toString(ProjectStatus value) {
     return value.to!string;
@@ -427,7 +427,7 @@ unittest {
 
     assert(["active", "archived", "building", "deploying", "error"].toProjectStatuses ==
            [ProjectStatus.active, ProjectStatus.archived, ProjectStatus.building, ProjectStatus.deploying, ProjectStatus.error]);
-    assert(toString([ProjectStatus.active, ProjectStatus.archived, ProjectStatus.building, ProjectStatus.deploying, ProjectStatus.error]) ==
+    assert([ProjectStatus.active, ProjectStatus.archived, ProjectStatus.building, ProjectStatus.deploying, ProjectStatus.error].toStrings ==
            ["active", "archived", "building", "deploying", "error"]);
 }
 
@@ -449,7 +449,7 @@ TemplateCategory toTemplateCategory(string value) {
     mixin(EnumSwitch("TemplateCategory", "general"));
 }
 TemplateCategory[] toTemplateCategories(string[] categories) {
-    return categories.map!(toTemplateCategory).array;
+    return categories.map!toTemplateCategory.array;
 }
 string toString(TemplateCategory category) {
     return category.to!string;
@@ -480,7 +480,7 @@ unittest {
 
     assert(["sapFiori", "sapCap", "sapHana", "sapMdk", "sapWorkflow", "general"].toTemplateCategories ==
            [TemplateCategory.sapFiori, TemplateCategory.sapCap, TemplateCategory.sapHana, TemplateCategory.sapMdk, TemplateCategory.sapWorkflow, TemplateCategory.general]);
-    assert(toString([TemplateCategory.sapFiori, TemplateCategory.sapCap, TemplateCategory.sapHana, TemplateCategory.sapMdk, TemplateCategory.sapWorkflow, TemplateCategory.general]) ==
+    assert([TemplateCategory.sapFiori, TemplateCategory.sapCap, TemplateCategory.sapHana, TemplateCategory.sapMdk, TemplateCategory.sapWorkflow, TemplateCategory.general].toStrings ==
            ["sapFiori", "sapCap", "sapHana", "sapMdk", "sapWorkflow", "general"]);
 }
 
@@ -500,7 +500,7 @@ ServiceProviderType toServiceProviderType(string value) {
     mixin(EnumSwitch("ServiceProviderType", "sapBtp"));
 }
 ServiceProviderType[] toServiceProviderTypes(string[] types) {
-    return types.map!(toServiceProviderType).array;
+    return types.map!toServiceProviderType.array;
 }
 string toString(ServiceProviderType type) {
     return type.to!string;
@@ -529,7 +529,7 @@ unittest {
 
     assert(["sapBtp", "sapS4Hana", "sapSuccessFactors", "externalOData", "externalRest"].toServiceProviderTypes ==
            [ServiceProviderType.sapBtp, ServiceProviderType.sapS4Hana, ServiceProviderType.sapSuccessFactors, ServiceProviderType.externalOData, ServiceProviderType.externalRest]);
-    assert(toString([ServiceProviderType.sapBtp, ServiceProviderType.sapS4Hana, ServiceProviderType.sapSuccessFactors, ServiceProviderType.externalOData, ServiceProviderType.externalRest]) ==
+    assert([ServiceProviderType.sapBtp, ServiceProviderType.sapS4Hana, ServiceProviderType.sapSuccessFactors, ServiceProviderType.externalOData, ServiceProviderType.externalRest].toStrings ==
            ["sapBtp", "sapS4Hana", "sapSuccessFactors", "externalOData", "externalRest"]);
 }
 
@@ -545,7 +545,7 @@ BindingStatus toBindingStatus(string value) {
     mixin(EnumSwitch("BindingStatus", "disconnected"));
 }
 BindingStatus[] toBindingStatuses(string[] statuses) {
-    return statuses.map!(toBindingStatus).array;
+    return statuses.map!toBindingStatus.array;
 }
 string toString(BindingStatus status) {
     return status.to!string;
@@ -570,7 +570,7 @@ unittest {
 
     assert(["connected", "disconnected", "error"].toBindingStatuses ==
            [BindingStatus.connected, BindingStatus.disconnected, BindingStatus.error]);
-    assert(toString([BindingStatus.connected, BindingStatus.disconnected, BindingStatus.error]) ==
+    assert([BindingStatus.connected, BindingStatus.disconnected, BindingStatus.error].toStrings ==
            ["connected", "disconnected", "error"]);
 }
 
@@ -594,7 +594,7 @@ RunMode toRunMode(string s) {
     }
 }
 RunMode[] toRunModes(string[] modes) {
-    return modes.map!(toRunMode).array;
+    return modes.map!toRunMode.array;
 }
 string toString(RunMode mode) {
     return cast(string)mode;
@@ -621,7 +621,7 @@ unittest {
 
     assert(["run", "debug", "test", "preview"].toRunModes ==
            [RunMode.run, RunMode.debug_, RunMode.test, RunMode.preview]);
-    assert(toString([RunMode.run, RunMode.debug_, RunMode.test, RunMode.preview]) ==
+    assert([RunMode.run, RunMode.debug_, RunMode.test, RunMode.preview].toStrings ==
            ["run", "debug", "test", "preview"]);
     
 }
@@ -640,7 +640,7 @@ RunStatus toRunStatus(string value) {
     mixin(EnumSwitch("RunStatus", "idle"));
 }
 RunStatus[] toRunStatuses(string[] statuses) {
-    return statuses.map!(toRunStatus).array;
+    return statuses.map!toRunStatus.array;
 }
 string toString(RunStatus status) {
     return status.to!string;
@@ -667,7 +667,7 @@ unittest {
 
     assert(["idle", "running", "stopped", "error"].toRunStatuses ==
            [RunStatus.idle, RunStatus.running, RunStatus.stopped, RunStatus.error]);
-    assert(toString([RunStatus.idle, RunStatus.running, RunStatus.stopped, RunStatus.error]) ==
+    assert([RunStatus.idle, RunStatus.running, RunStatus.stopped, RunStatus.error].toStrings ==
            ["idle", "running", "stopped", "error"]);
 }
 
@@ -687,7 +687,7 @@ BuildStatus toBuildStatus(string value) {
     mixin(EnumSwitch("BuildStatus", "pending"));
 }
 BuildStatus[] toBuildStatuses(string[] statuses) {
-    return statuses.map!(toBuildStatus).array;
+    return statuses.map!toBuildStatus.array;
 }
 string toString(BuildStatus status) {
     return status.to!string;
@@ -716,7 +716,7 @@ unittest {
 
     assert(["pending", "building", "succeeded", "failed", "cancelled"].toBuildStatuses ==
            [BuildStatus.pending, BuildStatus.building, BuildStatus.succeeded, BuildStatus.failed, BuildStatus.cancelled]);
-    assert(toString([BuildStatus.pending, BuildStatus.building, BuildStatus.succeeded, BuildStatus.failed, BuildStatus.cancelled]) ==
+    assert([BuildStatus.pending, BuildStatus.building, BuildStatus.succeeded, BuildStatus.failed, BuildStatus.cancelled].toStrings ==
            ["pending", "building", "succeeded", "failed", "cancelled"]);
 }
 
@@ -736,7 +736,7 @@ DeployTarget toDeployTarget(string value) {
     mixin(EnumSwitch("DeployTarget", "cloudFoundry"));
 }
 DeployTarget[] toDeployTargets(string[] targets) {
-    return targets.map!(toDeployTarget).array;
+    return targets.map!toDeployTarget.array;
 }
 string toString(DeployTarget target) {
     return target.to!string;
@@ -765,6 +765,6 @@ unittest {
 
     assert(["cloudFoundry", "kyma", "abap", "html5Repository", "docker"].toDeployTargets ==
            [DeployTarget.cloudFoundry, DeployTarget.kyma, DeployTarget.abap, DeployTarget.html5Repository, DeployTarget.docker]);
-    assert(toString([DeployTarget.cloudFoundry, DeployTarget.kyma, DeployTarget.abap, DeployTarget.html5Repository, DeployTarget.docker]) ==
+    assert([DeployTarget.cloudFoundry, DeployTarget.kyma, DeployTarget.abap, DeployTarget.html5Repository, DeployTarget.docker].toStrings ==
            ["cloudFoundry", "kyma", "abap", "html5Repository", "docker"]);
 }

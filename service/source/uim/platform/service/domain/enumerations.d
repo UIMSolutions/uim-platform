@@ -20,7 +20,7 @@ SsoProtocol toSsoProtocol(string value) {
   mixin(EnumSwitch("SsoProtocol", "saml"));
 }
 SsoProtocol[] toSsoProtocol(string[] values) {
-  return values.map!(toSsoProtocol).array;
+  return values.map!toSsoProtocol.array;
 }
 
 string toString(SsoProtocol protocol) {
@@ -211,8 +211,8 @@ enum LoggingLevel : string {
   fatal = "fatal",
   trace = "trace"
 }
-LoggingLevel toLoggingLevel(string value, bool ignoreCase = true) {
-  switch (ignoreCase ? value.toLower() : value) {
+LoggingLevel toLoggingLevel(string value) {
+  switch (value.toLower()) {
     case "debug": return LoggingLevel.debug_;
     case "info": return LoggingLevel.info;
     case "warning": return LoggingLevel.warning;
@@ -222,15 +222,15 @@ LoggingLevel toLoggingLevel(string value, bool ignoreCase = true) {
     default: return LoggingLevel.info; // default
   }
 }
-LoggingLevel[] toLoggingLevels(string[] values, bool ignoreCase = true) {
-  return values.map!(v => toLoggingLevel(v, ignoreCase)).array;
-}
-string toString(LoggingLevel level) {
-  return cast(string)level;
-}
-string[] toStrings(LoggingLevel[] levels) {  
-  return levels.map!toString.array;
-}
+
+LoggingLevel[] toLoggingLevels(string[] values)
+  => values.map!toLoggingLevel.array;
+
+string toString(LoggingLevel level)
+  => cast(string)level;
+
+string[] toStrings(LoggingLevel[] levels)
+  => levels.map!toString.array;
 ///
 unittest {
   mixin(ShowTest!("LoggingLevel Enum"));
@@ -266,8 +266,8 @@ enum HttpMethod {
   head_ = "HEAD",
   options_ = "OPTIONS",
 }
-HttpMethod toHttpMethod(string value, bool ignoreCase = true) {
-  switch (ignoreCase ? value.toLower() : value) {
+HttpMethod toHttpMethod(string value) {
+  switch (value.toLower()) {
     case "get": return HttpMethod.get_;
     case "post": return HttpMethod.post_;
     case "put": return HttpMethod.put_;
@@ -278,15 +278,12 @@ HttpMethod toHttpMethod(string value, bool ignoreCase = true) {
     default: return HttpMethod.get_; // default
   }
 }
-HttpMethod[] toHttpMethods(string[] values, bool ignoreCase = true) {
-  return values.map!(v => toHttpMethod(v, ignoreCase)).array;
-}
-string toString(HttpMethod method) {
-  return cast(string)method;
-}
-string[] toStrings(HttpMethod[] methods) {
-  return methods.map!toString.array;
-}
+HttpMethod[] toHttpMethods(string[] values)
+  => values.map!toHttpMethod.array;
+string toString(HttpMethod method)
+  => cast(string)method;
+string[] toStrings(HttpMethod[] methods)
+  => methods.map!toString.array;
 ///
 unittest {
   mixin(ShowTest!("HttpMethod Enum"));    

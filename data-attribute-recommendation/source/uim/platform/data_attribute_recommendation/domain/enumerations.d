@@ -115,7 +115,7 @@ enum ModelType {
   recommendation
 }
 
-ModelType toModelType(string value, bool ignoreCase = true) {
+ModelType toModelType(string value) {
   switch (ignoreCase ? value.toLower() : value) {
   case "classification":
     return ModelType.classification;
@@ -135,7 +135,7 @@ enum ModelConfigStatus {
   trained,
   failed
 }
-ModelConfigStatus toModelConfigStatus(string value, bool ignoreCase = true) {
+ModelConfigStatus toModelConfigStatus(string value) {
   switch (ignoreCase ? value.toLower() : value) {
   case "draft":
     return ModelConfigStatus.draft;
@@ -160,7 +160,7 @@ enum JobStatus {
   cancelled
 }
 
-JobStatus toJobStatus(string value, bool ignoreCase = true) {
+JobStatus toJobStatus(string value) {
   switch (ignoreCase ? value.toLower() : value) {
   case "queued":
     return JobStatus.queued;
@@ -184,7 +184,7 @@ enum DeploymentStatus {
   failed
 }
 
-DeploymentStatus toDeploymentStatus(string value, bool ignoreCase = true) {
+DeploymentStatus toDeploymentStatus(string value) {
   switch (ignoreCase ? value.toLower() : value) {
   case "deploying":
     return DeploymentStatus.deploying;
@@ -206,7 +206,7 @@ enum InferenceStatus {
   failed
 }
 
-InferenceStatus toInferenceStatus(string value, bool ignoreCase = true) {
+InferenceStatus toInferenceStatus(string value) {
   switch (ignoreCase ? value.toLower() : value) {
   case "pending":
     return InferenceStatus.pending;

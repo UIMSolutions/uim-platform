@@ -14,7 +14,7 @@ enum WorkspaceType {
   public_,
   external,
 }
-WorkspaceType toWorkspaceType(string value, bool ignoreCase = true) {
+WorkspaceType toWorkspaceType(string value) {
   switch (ignoreCase ? value.toLower() : value) {
     case "project": return WorkspaceType.project;
     case "team": return WorkspaceType.team;
@@ -62,7 +62,7 @@ enum CardType {
   component,
   calendar,
 }
-CardType toCardType(string value, bool ignoreCase = true) {
+CardType toCardType(string value) {
   switch (ignoreCase ? value.toLower() : value) {
     case "adaptive": return CardType.adaptive;
     case "analytical": return CardType.analytical;
@@ -214,7 +214,7 @@ enum AppStatus {
   inactive,
   deprecated_,
 }
-AppStatus toAppStatus(string value, bool ignoreCase = true) {
+AppStatus toAppStatus(string value) {
   switch (ignoreCase ? value.toLower() : value) {
     case "active": return AppStatus.active;
     case "inactive": return AppStatus.inactive;
@@ -372,7 +372,7 @@ enum NotificationStatus {
   dismissed,
   actionRequired,
 }
-NotificationStatus toNotificationStatus(string value, bool ignoreCase = true) {
+NotificationStatus toNotificationStatus(string value) {
   switch (ignoreCase ? value.toLower() : value) {
     case "unread": return NotificationStatus.unread;
     case "read": return NotificationStatus.read_;
@@ -455,7 +455,7 @@ enum PluginStatus {
   inactive,
   error,
 }
-PluginStatus toPluginStatus(string value, bool ignoreCase = true) {
+PluginStatus toPluginStatus(string value) {
   switch (ignoreCase ? value.toLower() : value) {
     case "active": return PluginStatus.active;
     case "inactive": return PluginStatus.inactive;
@@ -478,7 +478,7 @@ enum ProviderStatus {
   error,
 }
 
-ProviderStatus toProviderStatus(string value, bool ignoreCase = true) {
+ProviderStatus toProviderStatus(string value) {
   switch (ignoreCase ? value.toLower() : value) {
     case "connected": return ProviderStatus.connected;
     case "disconnected": return ProviderStatus.disconnected;
@@ -502,7 +502,7 @@ enum ProviderType {
   sapBtp,
   custom,
 }
-ProviderType toProviderType(string value, bool ignoreCase = true) {
+ProviderType toProviderType(string value) {
   switch (ignoreCase ? value.toLower() : value) {
     case "odata": return ProviderType.odata;
     case "rest": return ProviderType.rest;

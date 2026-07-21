@@ -23,8 +23,8 @@ EventCategory toEventCategory(string value) {
         default: return EventCategory.notification; // default
     }
 }
-EventCategory[] toEventCategory(string[] categories) {
-    return categories.map!(toEventCategory).array;
+EventCategory[] toEventCategories(string[] categories) {
+    return categories.map!toEventCategory.array;
 }
 string toString(EventCategory category) {
     return cast(string)category;
@@ -47,8 +47,8 @@ unittest {
     assert(EventCategory.alert.toString == "alert");
     assert(EventCategory.exception_.toString == "exception");
 
-    assert(toString([EventCategory.notification, EventCategory.alert]) == ["notification", "alert"]);
-    assert(toEventCategory(["notification", "alert"]) == [EventCategory.notification, EventCategory.alert]);
+    assert([EventCategory.notification, EventCategory.alert].toStrings == ["notification", "alert"]);
+    assert(["notification", "alert"].toEventCategories == [EventCategory.notification, EventCategory.alert]);
 }
 
 /// Severity of an alert event
@@ -71,8 +71,8 @@ EventSeverity toEventSeverity(string value) {
         default: return EventSeverity.info; // default
     }
 }   
-EventSeverity[] toEventSeverity(string[] severities) {
-    return severities.map!(toEventSeverity).array;
+EventSeverity[] toEventSeverities(string[] severities) {
+    return severities.map!toEventSeverity.array;
 }
 string toString(EventSeverity severity) {
     return cast(string)severity;
@@ -97,8 +97,8 @@ unittest {
     assert(EventSeverity.error_.toString == "error");
     assert(EventSeverity.fatal.toString == "fatal");
 
-    assert(toString([EventSeverity.info, EventSeverity.warning]) == ["info", "warning"]);
-    assert(toEventSeverity(["info", "warning"]) == [EventSeverity.info, EventSeverity.warning]);
+    assert([EventSeverity.info, EventSeverity.warning].toStrings == ["info", "warning"]);
+    assert(["info", "warning"].toEventSeverities == [EventSeverity.info, EventSeverity.warning]);
 }
 
 /// Lifecycle status of an alert event
@@ -137,8 +137,8 @@ unittest {
     assert(EventStatus.undelivered.toString == "undelivered");
     assert(EventStatus.matched.toString == "matched");
 
-    assert(toString([EventStatus.sent, EventStatus.buffered]) == ["sent", "buffered"]);
-    assert(toEventStatus(["sent", "buffered"]) == [EventStatus.sent, EventStatus.buffered]);
+    assert([EventStatus.sent, EventStatus.buffered].toStrings == ["sent", "buffered"]);
+    assert(["sent", "buffered"].toEventStatuses == [EventStatus.sent, EventStatus.buffered]);
 }
 
 /// The event property that a condition evaluates
@@ -154,8 +154,8 @@ enum PropertyKey : string {
 PropertyKey toPropertyKey(string value) {
     mixin(EnumSwitch!("PropertyKey", "eventType"));
 }
-PropertyKey[] toPropertyKey(string[] values) {
-    return values.map!(toPropertyKey).array;
+PropertyKey[] toPropertyKeys(string[] values) {
+    return values.map!toPropertyKey.array;
 }
 string toString(PropertyKey key) {
     return key.to!string;
@@ -186,8 +186,8 @@ unittest {
     assert(PropertyKey.resourceInstance.toString == "resourceInstance");
     assert(PropertyKey.tags.toString == "tags");
 
-    assert(toString([PropertyKey.eventType, PropertyKey.tags]) == ["eventType", "tags"]);
-    assert(toPropertyKey(["eventType", "tags"]) == [PropertyKey.eventType, PropertyKey.tags]);
+    assert([PropertyKey.eventType, PropertyKey.tags].toStrings == ["eventType", "tags"]);
+    assert(["eventType", "tags"].toPropertyKeys == [PropertyKey.eventType, PropertyKey.tags]);
 }
 
 /// Comparison operator used in condition evaluation
@@ -209,7 +209,7 @@ Predicate toPredicate(string value) {
     }
 }
 Predicate[] toPredicate(string[] values) {
-    return values.map!(toPredicate).array;
+    return values.map!toPredicate.array;
 }
 string toString(Predicate predicate) {
     return cast(string)predicate;
@@ -236,8 +236,8 @@ unittest {
     assert(Predicate.notEquals.toString == "notEquals");
     assert(Predicate.notContains.toString == "notContains");
 
-    assert(toString([Predicate.any_, Predicate.equals]) == ["any", "equals"]);
-    assert(toPredicate(["any", "equals"]) == [Predicate.any_, Predicate.equals]);
+    assert([Predicate.any_, Predicate.equals].toStrings == ["any", "equals"]);
+    assert(["any", "equals"].toPredicate == [Predicate.any_, Predicate.equals]);
 }
 
 /// Delivery channel / action type
@@ -252,10 +252,10 @@ enum ActionType : string {
     siem       = "SIEM"
 }
 ActionType toActionType(string value) {
-    mixin(EnumSwitch!("ActionType", "email"));
+    mixin(EnumSwitch("ActionType", "email"));
 }
-ActionType[] toActionType(string[] values) {
-    return values.map!(toActionType).array;
+ActionType[] toActionTypes(string[] values) {
+    return values.map!toActionType.array;
 }
 string toString(ActionType type) {
     return type.to!string;
@@ -288,8 +288,8 @@ unittest {
     assert(ActionType.serviceNow.toString == "serviceNow");
     assert(ActionType.siem.toString == "siem");
 
-    assert(toString([ActionType.email, ActionType.slack]) == ["email", "slack"]);
-    assert(toActionType(["email", "slack"]) == [ActionType.email, ActionType.slack]);
+    assert([ActionType.email, ActionType.slack].toStrings == ["email", "slack"]);
+    assert(["email", "slack"].toActionTypes == [ActionType.email, ActionType.slack]);
 }
 
 /// Operational state of an action or subscription
@@ -298,10 +298,10 @@ enum ResourceState : string {
     disabled = "DISABLED"
 }
 ResourceState toResourceState(string value) {
-    mixin(EnumSwitch!("ResourceState", "enabled"));
+    mixin(EnumSwitch("ResourceState", "enabled"));
 }
-ResourceState[] toResourceState(string[] values) {
-    return values.map!(toResourceState).array;
+ResourceState[] toResourceStates(string[] values) {
+    return values.map!toResourceState.array;
 }
 string toString(ResourceState state) {
     return state.to!string;
@@ -322,6 +322,6 @@ unittest {
     assert(ResourceState.enabled.toString == "enabled");
     assert(ResourceState.disabled.toString == "disabled");
 
-    assert(toString([ResourceState.enabled, ResourceState.disabled]) == ["enabled", "disabled"]);
-    assert(toResourceState(["enabled", "disabled"]) == [ResourceState.enabled, ResourceState.disabled]);
+    assert([ResourceState.enabled, ResourceState.disabled].toStrings == ["enabled", "disabled"]);
+    assert(["enabled", "disabled"].toResourceStates == [ResourceState.enabled, ResourceState.disabled]);
 }

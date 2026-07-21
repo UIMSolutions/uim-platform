@@ -18,7 +18,7 @@ enum StorageBackend {
   mongodb_
 }
 
-StorageBackend toStorageBackend(string value, bool ignoreCase = true) {
+StorageBackend toStorageBackend(string value) {
   switch (ignoreCase ? value.toLower() : value) {
     case "memory": return StorageBackend.memory_;
     case "files": return StorageBackend.files_;
@@ -35,7 +35,7 @@ enum ChangeLayer {
   customer_,  // Created by key user (tenant-level)
   user_       // Created by end user (personal)
 }
-ChangeLayer toChangeLayer(string value, bool ignoreCase = true) {
+ChangeLayer toChangeLayer(string value) {
   switch (ignoreCase ? value.toLower() : value) {
     case "vendor": return ChangeLayer.vendor_;
     case "customer": return ChangeLayer.customer_;
@@ -87,7 +87,7 @@ enum VariantType {
   dialog_,     // Dialog variant
   page_        // Page layout variant
 }
-VatiantType toVariantType(string value, bool ignoreCase = true) {
+VatiantType toVariantType(string value) {
   switch (ignoreCase ? value.toLower() : value) {
     case "filterbar": return VariantType.filterBar_;
     case "table": return VariantType.table_;
@@ -104,7 +104,7 @@ enum VersionStatus {
   active_,     // Currently active version
   archived_    // Superseded by newer version
 }
-VersionStatus toVersionStatus(string value, bool ignoreCase = true) {
+VersionStatus toVersionStatus(string value) {
   switch (ignoreCase ? value.toLower() : value) {
     case "draft": return VersionStatus.draft_;
     case "active": return VersionStatus.active_;
@@ -118,7 +118,7 @@ enum PersonalizationScope {
   page_,       // Full page personalization
   app_         // Application-level personalization
 }
-PersonalizationScope toPersonalizationScope(string value, bool ignoreCase = true) {
+PersonalizationScope toPersonalizationScope(string value) {
   switch (ignoreCase ? value.toLower() : value) {
     case "control": return PersonalizationScope.control_;
     case "page": return PersonalizationScope.page_;

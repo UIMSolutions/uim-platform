@@ -57,7 +57,7 @@ ConnectionType toConnectionType(string value) {
   mixin(EnumSwitch("ConnectionType", "custom"));
 }
 ConnectionType[] toConnectionTypes(string[] types) {
-  return types.map!(toConnectionType).array;
+  return types.map!toConnectionType.array;
 }
 string toString(ConnectionType type) {
   return type.to!string;
@@ -96,7 +96,7 @@ ExecutionStatus toExecutionStatus(string value) {
   mixin(EnumSwitch("ExecutionStatus", "unknown"));
 }
 ExecutionStatus[] toExecutionStatuses(string[] values) {
-  return values.map!(toExecutionStatus).array;
+  return values.map!toExecutionStatus.array;
 }
 string toString(ExecutionStatus status) {
   return status.to!string;
@@ -141,7 +141,7 @@ DeploymentStatus toDeploymentStatus(string value) {
   mixin(EnumSwitch("DeploymentStatus", "unknown"));
 }
 DeploymentStatus[] toDeploymentStatuses(string[] values) {
-  return values.map!(toDeploymentStatus).array;
+  return values.map!toDeploymentStatus.array;
 }
 string toString(DeploymentStatus status) {
   return status.to!string;
@@ -187,7 +187,7 @@ ModelStatus toModelStatus(string value) {
   }
 }
 ModelStatus[] toModelStatuses(string[] values) {
-  return values.map!(toModelStatus).array;
+  return values.map!toModelStatus.array;
 }
 string toString(ModelStatus status) {
   return cast(string) status;
@@ -223,7 +223,7 @@ DatasetStatus toDatasetStatus(string value) {
   mixin(EnumSwitch("DatasetStatus", "available"));
 }
 DatasetStatus[] toDatasetStatuses(string[] values) {
-  return values.map!(toDatasetStatus).array;
+  return values.map!toDatasetStatus.array;
 }
 string toString(DatasetStatus status) {
   return status.to!string;
@@ -259,7 +259,7 @@ WorkspaceStatus toWorkspaceStatus(string value) {
   mixin(EnumSwitch("WorkspaceStatus", "inactive"));
 }
 WorkspaceStatus[] toWorkspaceStatuses(string[] values) {
-  return values.map!(toWorkspaceStatus).array;
+  return values.map!toWorkspaceStatus.array;
 }
 string toString(WorkspaceStatus status) {
   return status.to!string;
@@ -292,7 +292,7 @@ PromptRole toPromptRole(string value) {
   mixin(EnumSwitch("PromptRole", "user"));
 }
 PromptRole[] toPromptRoles(string[] roles) {
-  return roles.map!(toPromptRole).array;
+  return roles.map!toPromptRole.array;
 }
 string toString(PromptRole role) {  return role.to!string;
 }
@@ -325,7 +325,7 @@ PromptStatus toPromptStatus(string value) {
   mixin(EnumSwitch("PromptStatus", "draft"));
 }
 PromptStatus[] toPromptStatuses(string[] values) {
-  return values.map!(toPromptStatus).array;
+  return values.map!toPromptStatus.array;
 }
 string toString(PromptStatus status) {
   return status.to!string;
@@ -361,7 +361,7 @@ ArtifactKind toArtifactKind(string value) {
   mixin(EnumSwitch("ArtifactKind", "other"));
 }
 ArtifactKind[] toArtifactKinds(string[] kinds) {
-  return kinds.map!(toArtifactKind).array;
+  return kinds.map!toArtifactKind.array;
 }
 string toString(ArtifactKind kind) {
   return kind.to!string;
@@ -404,7 +404,7 @@ TargetStatus toTargetStatus(string value) {
   }
 }
 TargetStatus[] toTargetStatuses(string[] values) {
-  return values.map!(toTargetStatus).array;
+  return values.map!toTargetStatus.array;
 }
 string toString(TargetStatus status) {
   return status.to!string;
@@ -418,16 +418,16 @@ unittest {
 
   assert("running".toTargetStatus == TargetStatus.running);
   assert("stopped".toTargetStatus == TargetStatus.stopped);
-  assert("deleted".toTargetStatus == TargetStatus.deleted_);
+  assert("deleted".toTargetStatus == TargetStatus.deleted);
   assert("completed".toTargetStatus == TargetStatus.completed);
   assert("unknown".toTargetStatus == TargetStatus.stopped); // default case
 
   assert(TargetStatus.running.toString == "running");
   assert(TargetStatus.stopped.toString == "stopped");
-  assert(TargetStatus.deleted_.toString == "deleted"); 
+  assert(TargetStatus.deleted.toString == "deleted");
   assert(TargetStatus.completed.toString == "completed");
 
-  assert(["running", "deleted", "unknown"]toTargetStatus == [TargetStatus.running, TargetStatus.deleted_, TargetStatus.stopped]);
+  assert(["running", "deleted", "unknown"].toTargetStatuses == [TargetStatus.running, TargetStatus.deleted, TargetStatus.stopped]);
   assert([TargetStatus.running, TargetStatus.completed].toStrings == ["running", "completed"]);
 }
 
@@ -461,6 +461,8 @@ unittest {
   assert("float".toMetricValueType == MetricValueType.float_);
   assert("int".toMetricValueType == MetricValueType.int_);
   assert("string".toMetricValueType == MetricValueType.string_);
+
+  assert("".toMetricValueType == MetricValueType.string_); // default case
   assert("unknown".toMetricValueType == MetricValueType.string_); // default case
 
   assert(MetricValueType.float_.toString == "float");
@@ -498,9 +500,9 @@ unittest {
   assert("monthly".toStatisticsPeriod == StatisticsPeriod.monthly);
   assert("unknown".toStatisticsPeriod == StatisticsPeriod.daily); // default case
 
-  assert(toString(StatisticsPeriod.daily) == "daily");
-  assert(toString(StatisticsPeriod.weekly) == "weekly");
-  assert(toString(StatisticsPeriod.monthly) == "monthly");
+  assert(StatisticsPeriod.daily.toString == "daily");
+  assert(StatisticsPeriod.weekly.toString == "weekly");
+  assert(StatisticsPeriod.monthly.toString == "monthly");
 
   assert(["daily", "weekly", "unknown"].toStatisticsPeriods == [StatisticsPeriod.daily, StatisticsPeriod.weekly, StatisticsPeriod.daily]);
   assert([StatisticsPeriod.daily, StatisticsPeriod.monthly].toStrings == ["daily", "monthly"]);
@@ -566,6 +568,8 @@ unittest {
 
   assert("active".toScheduleStatus == ScheduleStatus.active);
   assert("inactive".toScheduleStatus == ScheduleStatus.inactive);
+
+  assert("".toScheduleStatus == ScheduleStatus.inactive); // default case
   assert("unknown".toScheduleStatus == ScheduleStatus.inactive); // default case
 
   assert(ScheduleStatus.active.toString == "active");

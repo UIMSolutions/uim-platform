@@ -11,7 +11,7 @@ enum CredentialType {
   keyring,
 }
 
-CredentialType toCredentialType(string value, bool ignoreCase = true) {
+CredentialType toCredentialType(string value) {
   switch (ignoreCase ? value.toLower() : value) {
   case "password":
     return CredentialType.password;
@@ -30,7 +30,7 @@ enum CredentialStatus {
   deleted_,
 }
 
-CredentialStatus toCredentialStatus(string value, bool ignoreCase = true) {
+CredentialStatus toCredentialStatus(string value) {
   switch (ignoreCase ? value.toLower() : value) {
   case "active":
     return CredentialStatus.active;
@@ -55,7 +55,7 @@ enum OperationType {
   rotate,
 }
 
-OperationType toOperationType(string value, bool ignoreCase = true) {
+OperationType toOperationType(string value) {
   switch (ignoreCase ? value.toLower() : value) {
   case "create":
     return OperationType.create;
@@ -90,7 +90,7 @@ enum ResourceType {
   dek,
 }
 
-ResourceType toResourceType(string value, bool ignoreCase = true) {
+ResourceType toResourceType(string value) {
   switch (ignoreCase ? value.toLower() : value) {
   case "namespace":
     return ResourceType.namespace;
@@ -117,7 +117,7 @@ enum PermissionLevel {
   admin,
 }
 
-PermissionLevel toPermissionLevel(string value, bool ignoreCase = true) {
+PermissionLevel toPermissionLevel(string value) {
   switch (ignoreCase ? value.toLower() : value) {
   case "readwrite":
     return PermissionLevel.readWrite;
@@ -135,7 +135,7 @@ enum BindingStatus {
   revoked,
 }
 
-BindingStatus toBindingStatus(string value, bool ignoreCase = true) {
+BindingStatus toBindingStatus(string value) {
   switch (ignoreCase ? value.toLower() : value) {
   case "active":
     return BindingStatus.active;
@@ -154,7 +154,7 @@ enum KeyringRotationPeriod {
   days365 = 365,
 }
 
-KeyringRotationPeriod toKeyringRotationPeriod(string value, bool ignoreCase = true) {
+KeyringRotationPeriod toKeyringRotationPeriod(string value) {
   switch (ignoreCase ? value.toLower() : value) {
   case "30":
     return KeyringRotationPeriod.days30;

@@ -30,15 +30,15 @@ enum CertificateStatus {
 CertificateStatus toCertificateStatus(string value) {
     mixin(EnumSwitch("CertificateStatus", "draft"));
 }
-CertificateStatus[] toCertificateStatuses(string[] statuses) {
-    return statuses.map!(s => toCertificateStatus(s)).array;
-}
-string toString(CertificateStatus status) {
-    return status.to!string;
-}
-string[] toStrings(CertificateStatus[] statuses) {
-    return statuses.map!toString.array;
-}
+CertificateStatus[] toCertificateStatuses(string[] statuses) 
+    => statuses.map!toCertificateStatus.array;
+
+string toString(CertificateStatus status)
+    => status.to!string;
+
+string[] toStrings(CertificateStatus[] statuses)
+    => statuses.map!toString.array;
+
 ///
 unittest {
     mixin(ShowTest!("CertificateStatus"));
@@ -91,15 +91,14 @@ enum CertificateType {
 CertificateType toCertificateType(string value) {
     mixin(EnumSwitch("CertificateType", "standard"));
 }
-CertificateType[] toCertificateTypes(string[] values) {
-    return values.map!(s => toCertificateType(s)).array;
-}
-string toString(CertificateType type) {
-    return type.to!string;
-}
-string[] toStrings(CertificateType[] types) {
-    return types.map!toString.array;
-}
+CertificateType[] toCertificateTypes(string[] values)
+    => values.map!toCertificateType.array;
+
+string toString(CertificateType type)
+    => type.to!string;
+
+string[] toStrings(CertificateType[] types)
+    => types.map!toString.array;
 ///
 unittest {
     mixin(ShowTest!("CertificateType"));

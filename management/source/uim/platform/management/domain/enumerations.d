@@ -161,7 +161,7 @@ enum DirectoryType {
   custom,
 }
 
-DirectoryType toDirectoryType(string value, bool ignoreCase = true) {
+DirectoryType toDirectoryType(string value) {
   switch (ignoreCase ? value.toLower() : value) {
   case "default":
     return DirectoryType.default_;
@@ -220,7 +220,7 @@ enum DirectoryFeature {
   authorizations,
 }
 
-DirectoryFeature toDirectoryFeature(string value, bool ignoreCase = true) {
+DirectoryFeature toDirectoryFeature(string value) {
   switch (ignoreCase ? value.toLower() : value) {
   case "default":
     return DirectoryFeature.default_;
@@ -497,7 +497,7 @@ enum ServicePlanStatus {
   deleted,
 }
 
-ServicePlanStatus toServicePlanStatus(string value, bool ignoreCase = true) {
+ServicePlanStatus toServicePlanStatus(string value) {
   switch (ignoreCase ? value.toLower() : value) {
   case "active":
     return ServicePlanStatus.active;
@@ -602,7 +602,7 @@ enum QuotaStatus {
   deleted,
 }
 
-QuotaStatus toQuotaStatus(string value, bool ignoreCase = true) {
+QuotaStatus toQuotaStatus(string value) {
   switch (ignoreCase ? value.toLower() : value) {
   case "active":
     return QuotaStatus.active;

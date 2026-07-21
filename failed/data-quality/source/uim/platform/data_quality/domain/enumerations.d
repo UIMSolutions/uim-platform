@@ -16,7 +16,7 @@ enum RuleType : string{
   referenceData = "referenceData", // lookup against reference table
 }
 
-RuleType toRuleType(string value, bool ignoreCase = true) {
+RuleType toRuleType(string value) {
   switch (ignoreCase ? value.toLower() : value) {
   case "required":
     return RuleType.required;
