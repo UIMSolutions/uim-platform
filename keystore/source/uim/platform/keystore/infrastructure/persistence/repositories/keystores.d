@@ -4,9 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.keystore.infrastructure.persistence.repositories.keystores;
-// import uim.platform.keystore.domain.entities.keystore_entity;
-// import uim.platform.keystore.domain.ports.repositories.keystore_repository;
-// import uim.platform.keystore.domain.types;
 
 import uim.platform.keystore;
 
@@ -14,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryKeystoreRepository : TenantRepository!(Keystore, KeystoreId), KeystoreRepository {
+class MemoryKeystoreRepository : TenantRepository!(Keystore, KeystoreId), IKeystoreRepository {
 
   bool existsByName(TenantId tenantId, string accountId, string applicationId, KeystoreLevel level, string name) {
     return findByApplication(tenantId, accountId, applicationId).any!(ks => ks.level == level && ks.name == name);        

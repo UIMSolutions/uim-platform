@@ -4,11 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.abap_environment.application.usecases.manage.transport_requests;
-// import uim.platform.abap_environment.application.dto;
-// import uim.platform.abap_environment.domain.entities.transport_request;
-// import uim.platform.abap_environment.domain.ports.repositories.transport_request;
-// import uim.platform.abap_environment.domain.services.transport_release_validator;
-
 
 import uim.platform.abap_environment;
 

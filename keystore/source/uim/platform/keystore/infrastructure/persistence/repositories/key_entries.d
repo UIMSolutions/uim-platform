@@ -4,9 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.keystore.infrastructure.persistence.repositories.key_entries;
-// import uim.platform.keystore.domain.entities.key_entry;
-// import uim.platform.keystore.domain.ports.repositories.key_entry_repository;
-// import uim.platform.keystore.domain.types;
 
 import uim.platform.keystore;
 
@@ -14,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryKeyEntryRepository : TenantRepository!(KeyEntry, KeyEntryId), KeyEntryRepository {
+class MemoryKeyEntryRepository : TenantRepository!(KeyEntry, KeyEntryId), IKeyEntryRepository {
 
   bool existsByAlias(TenantId tenantId, KeystoreId keystoreId, string alias_) {
     return findByKeystore(tenantId, keystoreId).any!(e => e.alias_ == alias_);

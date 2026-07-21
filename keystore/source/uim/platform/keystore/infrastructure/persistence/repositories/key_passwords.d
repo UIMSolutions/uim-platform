@@ -4,9 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.keystore.infrastructure.persistence.repositories.key_passwords;
-// import uim.platform.keystore.domain.entities.key_password;
-// import uim.platform.keystore.domain.ports.repositories.key_password_repository;
-// import uim.platform.keystore.domain.types;
 
 import uim.platform.keystore;
 
@@ -14,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryKeyPasswordRepository : TenantRepository!(KeyPassword, KeyPasswordId), KeyPasswordRepository {
+class MemoryKeyPasswordRepository : TenantRepository!(KeyPassword, KeyPasswordId), IKeyPasswordRepository {
 
   bool existsByAlias(TenantId tenantId, string accountId, string applicationId, string alias_) {
     return findByApplication(tenantId, accountId, applicationId).any!(kp => kp.alias_ == alias_);

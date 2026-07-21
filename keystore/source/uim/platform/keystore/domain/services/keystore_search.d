@@ -4,9 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.keystore.domain.services.keystore_search;
-// import uim.platform.keystore.domain.entities.keystore_entity;
-// import uim.platform.keystore.domain.ports.repositories.keystore_repository;
-// import uim.platform.keystore.domain.types;
 
 import uim.platform.keystore;
 
@@ -16,9 +13,9 @@ mixin(ShowModule!());
 /// Implements the SAP BTP keystore search-order logic:
 /// subscription level -> application level -> account level.
 class KeystoreSearchService {
-  private KeystoreRepository repo;
+  private IKeystoreRepository repo;
 
-  this(KeystoreRepository repo) {
+  this(IKeystoreRepository repo) {
     this.repo = repo;
   }
 

@@ -4,10 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.keystore.application.usecases.manage.key_entries;
-// import uim.platform.keystore.domain.entities.key_entry;
-// import uim.platform.keystore.domain.ports.repositories.key_entry_repository;
-// import uim.platform.keystore.domain.types;
-// import uim.platform.keystore.application.dto;
 
 import uim.platform.keystore;
 
@@ -16,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageKeyEntriesUseCase {
-  private KeyEntryRepository repo;
+  private IKeyEntryRepository repo;
 
-  this(KeyEntryRepository repo) {
+  this(IKeyEntryRepository repo) {
     this.repo = repo;
   }
 

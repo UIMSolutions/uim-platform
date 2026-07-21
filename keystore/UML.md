@@ -66,8 +66,8 @@ sequenceDiagram
     participant O as Operator
     participant R as REST Handler
     participant UC as KeyEntryUseCases
-    participant KSR as KeystoreRepository
-    participant KER as KeyEntryRepository
+    participant KSR as IKeystoreRepository
+    participant KER as IKeyEntryRepository
 
     O->>R: POST /api/v1/key-entries {keystoreId, alias, certificate, privateKey}
     R->>UC: importKeyEntry(keystoreId, alias, cert, key)

@@ -21,14 +21,14 @@ enum KeystoreFormat {
 KeystoreFormat toKeystoreFormat(string value) {
   mixin(EnumSwitch("KeystoreFormat", "jks"));
 }
-KeystoreFormat[] toKeystoreFormat(string[] values) {
-  return values.map!(v => v.toKeystoreFormat).array;
+KeystoreFormat[] toKeystoreFormats(string[] values) {
+  return values.map!toKeystoreFormat.array;
 }
 string toString(KeystoreFormat value) {
   return value.to!string();
 }
 string[] toStrings(KeystoreFormat[] values) {
-  return values.map!(v => v.toString).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -38,6 +38,8 @@ unittest {
   assert("jceks".toKeystoreFormat == KeystoreFormat.jceks);
   assert("p12".toKeystoreFormat == KeystoreFormat.p12);
   assert("pem".toKeystoreFormat == KeystoreFormat.pem);
+
+  assert("".toKeystoreFormat == KeystoreFormat.jks);
   assert("unknown".toKeystoreFormat == KeystoreFormat.jks);
 
   assert(KeystoreFormat.jks.toString == "jks");
@@ -45,7 +47,7 @@ unittest {
   assert(KeystoreFormat.p12.toString == "p12");
   assert(KeystoreFormat.pem.toString == "pem");
 
-  assert(["jks", "p12"].toKeystoreFormat == [KeystoreFormat.jks, KeystoreFormat.p12]);
+  assert(["jks", "p12"].toKeystoreFormats == [KeystoreFormat.jks, KeystoreFormat.p12]);
   assert([KeystoreFormat.jks, KeystoreFormat.p12].toStrings == ["jks", "p12"]);
 }
 
@@ -58,14 +60,14 @@ enum KeystoreLevel {
 KeystoreLevel toKeystoreLevel(string value) {
  mixin(EnumSwitch("KeystoreLevel", "account"));
 }
-KeystoreLevel[] toKeystoreLevel(string[] values) {
-  return values.map!(v => v.toKeystoreLevel).array;
+KeystoreLevel[] toKeystoreLevels(string[] values) {
+  return values.map!toKeystoreLevel.array;
 }
 string toString(KeystoreLevel value) {
   return value.to!string();
 }
 string[] toStrings(KeystoreLevel[] values) {
-  return values.map!(v => v.toString).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -74,13 +76,15 @@ unittest {
   assert("account".toKeystoreLevel == KeystoreLevel.account);
   assert("application".toKeystoreLevel == KeystoreLevel.application);
   assert("subscription".toKeystoreLevel == KeystoreLevel.subscription);
+
+  assert("".toKeystoreLevel == KeystoreLevel.account);
   assert("unknown".toKeystoreLevel == KeystoreLevel.account);
 
   assert(KeystoreLevel.account.toString == "account");
   assert(KeystoreLevel.application.toString == "application");
   assert(KeystoreLevel.subscription.toString == "subscription");
 
-  assert(["account", "subscription"].toKeystoreLevel == [KeystoreLevel.account, KeystoreLevel.subscription]);
+  assert(["account", "subscription"].toKeystoreLevels == [KeystoreLevel.account, KeystoreLevel.subscription]);
   assert([KeystoreLevel.account, KeystoreLevel.subscription].toStrings == ["account", "subscription"]);
 }
 
@@ -94,14 +98,14 @@ enum KeyEntryType {
 KeyEntryType toKeyEntryType(string value) {
   mixin(EnumSwitch("KeyEntryType", "trustedCertificate"));
 }
-KeyEntryType[] toKeyEntryType(string[] values) {
-  return values.map!(v => v.toKeyEntryType).array;
+KeyEntryType[] toKeyEntryTypes(string[] values) {
+  return values.map!toKeyEntryType.array;
 }
 string toString(KeyEntryType value) {
   return value.to!string();
 }
 string[] toStrings(KeyEntryType[] values) {
-  return values.map!(v => v.toString).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -118,6 +122,6 @@ unittest {
   assert(KeyEntryType.certificate.toString == "certificate");
   assert(KeyEntryType.secretKey.toString == "secretKey");
 
-  assert(["trustedCertificate", "privateKey"].toKeyEntryType == [KeyEntryType.trustedCertificate, KeyEntryType.privateKey]);
+  assert(["trustedCertificate", "privateKey"].toKeyEntryTypes == [KeyEntryType.trustedCertificate, KeyEntryType.privateKey]);
   assert([KeyEntryType.trustedCertificate, KeyEntryType.privateKey].toStrings == ["trustedCertificate", "privateKey"]);
 }

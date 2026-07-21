@@ -4,8 +4,8 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.keystore.domain.ports.repositories.keystores;
-// import uim.platform.keystore.domain.entities.keystore_entity;
-// import uim.platform.keystore.domain.types;
+
+
 
 import uim.platform.keystore;
 
@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface KeystoreRepository : ITenantRepository!(Keystore, KeystoreId) {
+interface IKeystoreRepository : ITenantRepository!(Keystore, KeystoreId) {
 
   bool existsByName(TenantId tenantId, string accountId, string applicationId, KeystoreLevel level, string name);
   Keystore findByName(TenantId tenantId, string accountId, string applicationId, KeystoreLevel level, string name);

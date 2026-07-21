@@ -4,8 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.keystore.domain.ports.repositories.key_passwords;
-// import uim.platform.keystore.domain.entities.key_password;
-// import uim.platform.keystore.domain.types;
 
 import uim.platform.keystore;
 
@@ -13,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface KeyPasswordRepository : ITenantRepository!(KeyPassword, KeyPasswordId) {
+interface IKeyPasswordRepository : ITenantRepository!(KeyPassword, KeyPasswordId) {
 
   bool existsByAlias(TenantId tenantId, string accountId, string applicationId, string alias_);
   KeyPassword findByAlias(TenantId tenantId, string accountId, string applicationId, string alias_);
