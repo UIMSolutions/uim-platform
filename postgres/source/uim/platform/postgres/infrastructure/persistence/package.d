@@ -6,7 +6,7 @@
 module uim.platform.postgres.infrastructure.persistence;
 
 public {
-    import uim.platform.postgres.infrastructure.persistence.memory;
+    import uim.platform.postgres.infrastructure.persistence.repositories;
     import uim.platform.postgres.infrastructure.persistence.file;
     import uim.platform.postgres.infrastructure.persistence.mongodb;
 }

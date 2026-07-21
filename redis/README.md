@@ -130,7 +130,7 @@ Dependency rule: outer layers depend on inner layers; domain has **zero** infras
 
 | Backend | Module | Use Case |
 |---|---|---|
-| **Memory** | `infrastructure.persistence.memory` | Tests, quick demos |
+| **Memory** | `infrastructure.persistence.repositories` | Tests, quick demos |
 | **File** | `infrastructure.persistence.file` | Development, single-node |
 | **MongoDB** | `infrastructure.persistence.mongodb` | Production deployments |
 

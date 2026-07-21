@@ -3,15 +3,15 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.content_agent.infrastructure.persistence.memory;
+module uim.platform.content_agent.infrastructure.persistence.repositories;
 
 public {
-    import uim.platform.content_agent.infrastructure.persistence.memory.content_activities;
-    import uim.platform.content_agent.infrastructure.persistence.memory.content_packages;
-    import uim.platform.content_agent.infrastructure.persistence.memory.content_providers;
-    import uim.platform.content_agent.infrastructure.persistence.memory.export_jobs;
-    import uim.platform.content_agent.infrastructure.persistence.memory.import_jobs;
-    import uim.platform.content_agent.infrastructure.persistence.memory.transport_queues;
-    import uim.platform.content_agent.infrastructure.persistence.memory.transport_requests;
+    import uim.platform.content_agent.infrastructure.persistence.repositories.content_activities;
+    import uim.platform.content_agent.infrastructure.persistence.repositories.content_packages;
+    import uim.platform.content_agent.infrastructure.persistence.repositories.content_providers;
+    import uim.platform.content_agent.infrastructure.persistence.repositories.export_jobs;
+    import uim.platform.content_agent.infrastructure.persistence.repositories.import_jobs;
+    import uim.platform.content_agent.infrastructure.persistence.repositories.transport_queues;
+    import uim.platform.content_agent.infrastructure.persistence.repositories.transport_requests;
 
 }

@@ -6,7 +6,7 @@
 module uim.platform.feature_flags.infrastructure.persistence;
 
 public {
-    import uim.platform.feature_flags.infrastructure.persistence.memory;
+    import uim.platform.feature_flags.infrastructure.persistence.repositories;
     import uim.platform.feature_flags.infrastructure.persistence.file_;
     import uim.platform.feature_flags.infrastructure.persistence.mongodb_;
 }

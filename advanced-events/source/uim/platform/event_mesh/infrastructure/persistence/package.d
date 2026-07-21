@@ -2,5 +2,5 @@ module uim.platform.event_mesh.infrastructure.persistence;
 
 public {
     import uim.platform.event_mesh.infrastructure.persistence.files;
-    import uim.platform.event_mesh.infrastructure.persistence.memory;
+    import uim.platform.event_mesh.infrastructure.persistence.repositories;
 }

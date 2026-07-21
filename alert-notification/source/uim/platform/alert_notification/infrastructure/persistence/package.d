@@ -6,5 +6,5 @@
 module uim.platform.alert_notification.infrastructure.persistence;
 
 public {
-    import uim.platform.alert_notification.infrastructure.persistence.memory;
+    import uim.platform.alert_notification.infrastructure.persistence.repositories;
 }

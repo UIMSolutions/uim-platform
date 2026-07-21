@@ -1,5 +1,5 @@
 module uim.platform.data_retention.infrastructure.persistence;
 
 public {
-    import uim.platform.data_retention.infrastructure.persistence.memory;
+    import uim.platform.data_retention.infrastructure.persistence.repositories;
 }

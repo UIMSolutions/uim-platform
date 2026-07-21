@@ -3,12 +3,12 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.print.infrastructure.persistence.memory;
+module uim.platform.print.infrastructure.persistence.repositories;
 
 public {
-    import uim.platform.print.infrastructure.persistence.memory.print_queues;
-    import uim.platform.print.infrastructure.persistence.memory.print_tasks;
-    import uim.platform.print.infrastructure.persistence.memory.printers;
-    import uim.platform.print.infrastructure.persistence.memory.print_documents;
-    import uim.platform.print.infrastructure.persistence.memory.print_clients;
+    import uim.platform.print.infrastructure.persistence.repositories.print_queues;
+    import uim.platform.print.infrastructure.persistence.repositories.print_tasks;
+    import uim.platform.print.infrastructure.persistence.repositories.printers;
+    import uim.platform.print.infrastructure.persistence.repositories.print_documents;
+    import uim.platform.print.infrastructure.persistence.repositories.print_clients;
 }

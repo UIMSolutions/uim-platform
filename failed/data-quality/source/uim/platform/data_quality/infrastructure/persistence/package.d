@@ -7,6 +7,6 @@ module uim.platform.data_quality.infrastructure.persistence;
 
 public {
     import uim.platform.data_quality.infrastructure.persistence.files;
-    import uim.platform.data_quality.infrastructure.persistence.memory;
+    import uim.platform.data_quality.infrastructure.persistence.repositories;
     import uim.platform.data_quality.infrastructure.persistence.mongo;
 }

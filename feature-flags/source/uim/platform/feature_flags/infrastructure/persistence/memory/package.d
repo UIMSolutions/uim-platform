@@ -3,10 +3,10 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.feature_flags.infrastructure.persistence.memory;
+module uim.platform.feature_flags.infrastructure.persistence.repositories;
 
 public {
-    import uim.platform.feature_flags.infrastructure.persistence.memory.feature_flag_repo;
-    import uim.platform.feature_flags.infrastructure.persistence.memory.service_instance_repo;
-    import uim.platform.feature_flags.infrastructure.persistence.memory.audit_entry_repo;
+    import uim.platform.feature_flags.infrastructure.persistence.repositories.feature_flag_repo;
+    import uim.platform.feature_flags.infrastructure.persistence.repositories.service_instance_repo;
+    import uim.platform.feature_flags.infrastructure.persistence.repositories.audit_entry_repo;
 }

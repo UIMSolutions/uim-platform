@@ -6,7 +6,7 @@
 module uim.platform.document_ai.infrastructure.persistence;
 
 public {
-  import uim.platform.document_ai.infrastructure.persistence.memory;
+  import uim.platform.document_ai.infrastructure.persistence.repositories;
   import uim.platform.document_ai.infrastructure.persistence.files;
   import uim.platform.document_ai.infrastructure.persistence.mongo;
 }

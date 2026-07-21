@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.logistic_management.infrastructure.persistence;
 public {
-  import uim.platform.logistic_management.infrastructure.persistence.memory;
+  import uim.platform.logistic_management.infrastructure.persistence.repositories;
   import uim.platform.logistic_management.infrastructure.persistence.files;
   import uim.platform.logistic_management.infrastructure.persistence.mongo;
 }

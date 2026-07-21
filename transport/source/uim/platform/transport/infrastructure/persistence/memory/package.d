@@ -3,12 +3,12 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.transport.infrastructure.persistence.memory;
+module uim.platform.transport.infrastructure.persistence.repositories;
 
 public {
-    import uim.platform.transport.infrastructure.persistence.memory.transport_nodes;
-    import uim.platform.transport.infrastructure.persistence.memory.transport_routes;
-    import uim.platform.transport.infrastructure.persistence.memory.transport_requests;
-    import uim.platform.transport.infrastructure.persistence.memory.import_queue_entries;
-    import uim.platform.transport.infrastructure.persistence.memory.transport_actions;
+    import uim.platform.transport.infrastructure.persistence.repositories.transport_nodes;
+    import uim.platform.transport.infrastructure.persistence.repositories.transport_routes;
+    import uim.platform.transport.infrastructure.persistence.repositories.transport_requests;
+    import uim.platform.transport.infrastructure.persistence.repositories.import_queue_entries;
+    import uim.platform.transport.infrastructure.persistence.repositories.transport_actions;
 }

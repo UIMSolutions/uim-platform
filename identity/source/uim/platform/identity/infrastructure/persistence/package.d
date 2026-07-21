@@ -6,7 +6,7 @@
 module uim.platform.identity.infrastructure.persistence;
 
 public {
-    import uim.platform.identity.infrastructure.persistence.memory;
+    import uim.platform.identity.infrastructure.persistence.repositories;
     import uim.platform.identity.infrastructure.persistence.file_;
     import uim.platform.identity.infrastructure.persistence.mongo;
 }

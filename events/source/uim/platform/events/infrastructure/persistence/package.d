@@ -1,5 +1,5 @@
 module uim.platform.events.infrastructure.persistence;
 
 public {
-    import uim.platform.events.infrastructure.persistence.memory;
+    import uim.platform.events.infrastructure.persistence.repositories;
 }

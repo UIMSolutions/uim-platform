@@ -6,5 +6,5 @@
 module uim.platform.integration_delivery.infrastructure.persistence;
 
 public {
-    import uim.platform.integration_delivery.infrastructure.persistence.memory;
+    import uim.platform.integration_delivery.infrastructure.persistence.repositories;
 }

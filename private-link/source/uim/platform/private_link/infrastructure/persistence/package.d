@@ -5,5 +5,5 @@
 *****************************************************************************************************************/
 module uim.platform.private_link.infrastructure.persistence;
 public {
-  import uim.platform.private_link.infrastructure.persistence.memory;
+  import uim.platform.private_link.infrastructure.persistence.repositories;
 }

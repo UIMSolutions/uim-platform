@@ -1,8 +1,8 @@
-module uim.platform.application_autoscaler.infrastructure.persistence.memory;
+module uim.platform.application_autoscaler.infrastructure.persistence.repositories;
 
 public {
-  import uim.platform.application_autoscaler.infrastructure.persistence.memory.bindings;
-  import uim.platform.application_autoscaler.infrastructure.persistence.memory.custom_metrics;
-  import uim.platform.application_autoscaler.infrastructure.persistence.memory.policies;
-  import uim.platform.application_autoscaler.infrastructure.persistence.memory.scaling_history;
+  import uim.platform.application_autoscaler.infrastructure.persistence.repositories.bindings;
+  import uim.platform.application_autoscaler.infrastructure.persistence.repositories.custom_metrics;
+  import uim.platform.application_autoscaler.infrastructure.persistence.repositories.policies;
+  import uim.platform.application_autoscaler.infrastructure.persistence.repositories.scaling_history;
 }

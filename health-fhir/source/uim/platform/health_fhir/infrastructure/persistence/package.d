@@ -6,7 +6,7 @@
 module uim.platform.health_fhir.infrastructure.persistence;
 
 public {
-  import uim.platform.health_fhir.infrastructure.persistence.memory;
+  import uim.platform.health_fhir.infrastructure.persistence.repositories;
   import uim.platform.health_fhir.infrastructure.persistence.files;
   import uim.platform.health_fhir.infrastructure.persistence.mongodb;
 }

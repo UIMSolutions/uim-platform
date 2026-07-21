@@ -6,5 +6,5 @@
 module uim.platform.oauth.infrastructure.persistence;
 
 public {
-    import uim.platform.oauth.infrastructure.persistence.memory;
+    import uim.platform.oauth.infrastructure.persistence.repositories;
 }

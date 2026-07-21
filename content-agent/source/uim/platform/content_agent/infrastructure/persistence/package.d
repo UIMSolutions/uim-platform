@@ -6,7 +6,7 @@
 module uim.platform.content_agent.infrastructure.persistence;
 
 public {
-    import uim.platform.content_agent.infrastructure.persistence.memory;
+    import uim.platform.content_agent.infrastructure.persistence.repositories;
     import uim.platform.content_agent.infrastructure.persistence.files;
     import uim.platform.content_agent.infrastructure.persistence.mongo;
 }

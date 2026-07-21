@@ -6,5 +6,5 @@
 module uim.platform.transport.infrastructure.persistence;
 
 public {
-    import uim.platform.transport.infrastructure.persistence.memory;
+    import uim.platform.transport.infrastructure.persistence.repositories;
 }

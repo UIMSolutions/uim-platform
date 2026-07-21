@@ -6,7 +6,7 @@
 module uim.platform.redis.infrastructure.persistence;
 
 public {
-    import uim.platform.redis.infrastructure.persistence.memory;
+    import uim.platform.redis.infrastructure.persistence.repositories;
     import uim.platform.redis.infrastructure.persistence.file;
     import uim.platform.redis.infrastructure.persistence.mongodb;
 }

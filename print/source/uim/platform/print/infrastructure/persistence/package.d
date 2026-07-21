@@ -6,7 +6,7 @@
 module uim.platform.print.infrastructure.persistence;
 
 public {
-    import uim.platform.print.infrastructure.persistence.memory;
+    import uim.platform.print.infrastructure.persistence.repositories;
     import uim.platform.print.infrastructure.persistence.file_;
     import uim.platform.print.infrastructure.persistence.mongo;
 }

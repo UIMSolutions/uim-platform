@@ -6,5 +6,5 @@
 module uim.platform.hana_spatial.infrastructure.persistence;
 
 public {
-    import uim.platform.hana_spatial.infrastructure.persistence.memory;
+    import uim.platform.hana_spatial.infrastructure.persistence.repositories;
 }

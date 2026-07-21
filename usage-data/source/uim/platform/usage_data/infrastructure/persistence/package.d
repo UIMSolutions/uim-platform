@@ -5,4 +5,4 @@
 *****************************************************************************************************************/
 module uim.platform.usage_data.infrastructure.persistence;
 
-public import uim.platform.usage_data.infrastructure.persistence.memory;
+public import uim.platform.usage_data.infrastructure.persistence.repositories;

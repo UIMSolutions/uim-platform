@@ -6,5 +6,5 @@
 module uim.platform.datasphere_composer.infrastructure.persistence;
 
 public {
-  import uim.platform.datasphere_composer.infrastructure.persistence.memory;
+  import uim.platform.datasphere_composer.infrastructure.persistence.repositories;
 }

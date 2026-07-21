@@ -3,15 +3,15 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.postgres.infrastructure.persistence.memory;
+module uim.platform.postgres.infrastructure.persistence.repositories;
 
 public {
-    import uim.platform.postgres.infrastructure.persistence.memory.service_instances;
-    import uim.platform.postgres.infrastructure.persistence.memory.service_bindings;
-    import uim.platform.postgres.infrastructure.persistence.memory.service_plans;
-    import uim.platform.postgres.infrastructure.persistence.memory.configurations;
-    import uim.platform.postgres.infrastructure.persistence.memory.backup_policies;
-    import uim.platform.postgres.infrastructure.persistence.memory.database_users;
-    import uim.platform.postgres.infrastructure.persistence.memory.database_extensions;
-    import uim.platform.postgres.infrastructure.persistence.memory.maintenance_windows;
+    import uim.platform.postgres.infrastructure.persistence.repositories.service_instances;
+    import uim.platform.postgres.infrastructure.persistence.repositories.service_bindings;
+    import uim.platform.postgres.infrastructure.persistence.repositories.service_plans;
+    import uim.platform.postgres.infrastructure.persistence.repositories.configurations;
+    import uim.platform.postgres.infrastructure.persistence.repositories.backup_policies;
+    import uim.platform.postgres.infrastructure.persistence.repositories.database_users;
+    import uim.platform.postgres.infrastructure.persistence.repositories.database_extensions;
+    import uim.platform.postgres.infrastructure.persistence.repositories.maintenance_windows;
 }

@@ -7,6 +7,6 @@ module uim.platform.credential_store.infrastructure.persistence;
 
 public {
   import uim.platform.credential_store.infrastructure.persistence.files;
-  import uim.platform.credential_store.infrastructure.persistence.memory;
+  import uim.platform.credential_store.infrastructure.persistence.repositories;
   import uim.platform.credential_store.infrastructure.persistence.mongo;
 }

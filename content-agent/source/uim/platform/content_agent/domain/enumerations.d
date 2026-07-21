@@ -23,15 +23,7 @@ enum PackageStatus {
 }
 
 PackageStatus toPackageStatus(string status) {
-  switch (status) {
-    case "draft": return PackageStatus.draft;
-    case "assembled": return PackageStatus.assembled;
-    case "exported": return PackageStatus.exported;
-    case "intransport": return PackageStatus.inTransport;
-    case "delivered": return PackageStatus.delivered;
-    case "error": return PackageStatus.error;
-    default: return PackageStatus.draft; // default
-  }
+  mixin(EnumSwitch())
 }
 
 /// Content format for package assembly.

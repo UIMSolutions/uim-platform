@@ -1,5 +1,5 @@
 module uim.platform.field_service.infrastructure.persistence;
 
 public {
-    import uim.platform.field_service.infrastructure.persistence.memory;
+    import uim.platform.field_service.infrastructure.persistence.repositories;
 }
