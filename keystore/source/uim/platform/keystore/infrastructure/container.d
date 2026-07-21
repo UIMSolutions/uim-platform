@@ -7,9 +7,9 @@ module uim.platform.keystore.infrastructure.container;
 
 // import uim.platform.keystore.infrastructure.config;
 // // Repositories
-// import uim.platform.keystore.infrastructure.persistence.memory.keystores;
-// import uim.platform.keystore.infrastructure.persistence.memory.key_entries;
-// import uim.platform.keystore.infrastructure.persistence.memory.key_passwords;
+// import uim.platform.keystore.infrastructure.persistence.repositories.keystores;
+// import uim.platform.keystore.infrastructure.persistence.repositories.key_entries;
+// import uim.platform.keystore.infrastructure.persistence.repositories.key_passwords;
 // // Domain services
 // import uim.platform.keystore.domain.services.keystore_search;
 // // Use Cases

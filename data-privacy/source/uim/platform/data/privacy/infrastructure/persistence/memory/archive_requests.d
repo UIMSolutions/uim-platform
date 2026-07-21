@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.data.privacy.infrastructure.persistence.memory.archive_requests;
+module uim.platform.data.privacy.infrastructure.persistence.repositories.archive_requests;
 
 // import uim.platform.data.privacy.domain.entities.archive_request;
 // import uim.platform.data.privacy.domain.ports.archive_request_repository;

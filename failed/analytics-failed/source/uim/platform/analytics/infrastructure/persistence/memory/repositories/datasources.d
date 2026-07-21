@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.analytics.infrastructure.persistence.memory.repositories.datasources;
+module uim.platform.analytics.infrastructure.persistence.repositories.repositories.datasources;
 // import uim.platform.analytics.domain.entities.datasource;
 // import uim.platform.analytics.domain.repositories.datasource;
 import uim.platform.analytics;

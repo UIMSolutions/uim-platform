@@ -1,4 +1,4 @@
-module uim.platform.snowflake.infrastructure.persistence.memory.zerocopy_connectors;
+module uim.platform.snowflake.infrastructure.persistence.repositories.zerocopy_connectors;
 import uim.platform.snowflake;
 
 mixin(ShowModule!());

@@ -9,7 +9,7 @@ module app;
 // import vibe.core.log;
 // 
 // Infrastructure — persistence adapters (driven / outgoing)
-// import uim.platform.analytics.infrastructure.persistence.memory;
+// import uim.platform.analytics.infrastructure.persistence.repositories;
 // Infrastructure — external service adapters
 // import uim.platform.analytics.infrastructure.adapters;
 // Infrastructure — web layer

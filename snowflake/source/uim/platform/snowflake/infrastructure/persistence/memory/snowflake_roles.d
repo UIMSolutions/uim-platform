@@ -1,4 +1,4 @@
-module uim.platform.snowflake.infrastructure.persistence.memory.snowflake_roles;
+module uim.platform.snowflake.infrastructure.persistence.repositories.snowflake_roles;
 import uim.platform.snowflake;
 
 mixin(ShowModule!());

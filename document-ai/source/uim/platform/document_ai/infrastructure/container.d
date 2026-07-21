@@ -6,14 +6,14 @@
 module uim.platform.document_ai.infrastructure.container;
 // import uim.platform.document_ai.infrastructure.config;
 // Repositories
-// import uim.platform.document_ai.infrastructure.persistence.memory.document;
-// import uim.platform.document_ai.infrastructure.persistence.memory.extraction_result;
-// import uim.platform.document_ai.infrastructure.persistence.memory.schema;
-// import uim.platform.document_ai.infrastructure.persistence.memory.template;
-// import uim.platform.document_ai.infrastructure.persistence.memory.document_type;
-// import uim.platform.document_ai.infrastructure.persistence.memory.enrichment_data;
-// import uim.platform.document_ai.infrastructure.persistence.memory.training_job;
-// import uim.platform.document_ai.infrastructure.persistence.memory.client;
+// import uim.platform.document_ai.infrastructure.persistence.repositories.document;
+// import uim.platform.document_ai.infrastructure.persistence.repositories.extraction_result;
+// import uim.platform.document_ai.infrastructure.persistence.repositories.schema;
+// import uim.platform.document_ai.infrastructure.persistence.repositories.template;
+// import uim.platform.document_ai.infrastructure.persistence.repositories.document_type;
+// import uim.platform.document_ai.infrastructure.persistence.repositories.enrichment_data;
+// import uim.platform.document_ai.infrastructure.persistence.repositories.training_job;
+// import uim.platform.document_ai.infrastructure.persistence.repositories.client;
 // Use Cases
 // import uim.platform.document_ai.application.usecases.process_documents;
 // import uim.platform.document_ai.application.usecases.manage.schemas;

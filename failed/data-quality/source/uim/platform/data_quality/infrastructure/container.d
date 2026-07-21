@@ -6,13 +6,13 @@
 module uim.platform.data_quality.infrastructure.container;
 // import uim.platform.data_quality.infrastructure.config;
 // Repositories
-import uim.platform.data_quality.infrastructure.persistence.memory.validation_rules;
-import uim.platform.data_quality.infrastructure.persistence.memory.validation_results;
-import uim.platform.data_quality.infrastructure.persistence.memory.addresses;
-import uim.platform.data_quality.infrastructure.persistence.memory.match_groups;
-import uim.platform.data_quality.infrastructure.persistence.memory.data_profiles;
-import uim.platform.data_quality.infrastructure.persistence.memory.cleansing_rules;
-import uim.platform.data_quality.infrastructure.persistence.memory.cleansing_jobs;
+import uim.platform.data_quality.infrastructure.persistence.repositories.validation_rules;
+import uim.platform.data_quality.infrastructure.persistence.repositories.validation_results;
+import uim.platform.data_quality.infrastructure.persistence.repositories.addresses;
+import uim.platform.data_quality.infrastructure.persistence.repositories.match_groups;
+import uim.platform.data_quality.infrastructure.persistence.repositories.data_profiles;
+import uim.platform.data_quality.infrastructure.persistence.repositories.cleansing_rules;
+import uim.platform.data_quality.infrastructure.persistence.repositories.cleansing_jobs;
 // Domain services
 
 import uim.platform.data_quality.domain.services.address_cleanser;

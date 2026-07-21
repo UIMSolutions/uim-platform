@@ -6,13 +6,13 @@
 module uim.platform.html_repository.infrastructure.container;
 // import uim.platform.html_repository.infrastructure.config;
 // Repositories
-// import uim.platform.html_repository.infrastructure.persistence.memory.html_app_repository;
-// import uim.platform.html_repository.infrastructure.persistence.memory.app_version_repository;
-// import uim.platform.html_repository.infrastructure.persistence.memory.app_file_repository;
-// import uim.platform.html_repository.infrastructure.persistence.memory.service_instance_repository;
-// import uim.platform.html_repository.infrastructure.persistence.memory.deployment_record_repository;
-// import uim.platform.html_repository.infrastructure.persistence.memory.app_route_repository;
-// import uim.platform.html_repository.infrastructure.persistence.memory.content_cache_repository;
+// import uim.platform.html_repository.infrastructure.persistence.repositories.html_app_repository;
+// import uim.platform.html_repository.infrastructure.persistence.repositories.app_version_repository;
+// import uim.platform.html_repository.infrastructure.persistence.repositories.app_file_repository;
+// import uim.platform.html_repository.infrastructure.persistence.repositories.service_instance_repository;
+// import uim.platform.html_repository.infrastructure.persistence.repositories.deployment_record_repository;
+// import uim.platform.html_repository.infrastructure.persistence.repositories.app_route_repository;
+// import uim.platform.html_repository.infrastructure.persistence.repositories.content_cache_repository;
 // Use Cases
 // import uim.platform.html_repository.application.usecases.manage.html_apps;
 // import uim.platform.html_repository.application.usecases.manage.app_versions;

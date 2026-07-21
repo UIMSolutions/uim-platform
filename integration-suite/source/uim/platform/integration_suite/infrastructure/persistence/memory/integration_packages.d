@@ -1,4 +1,4 @@
-module uim.platform.integration_suite.infrastructure.persistence.memory.integration_packages;
+module uim.platform.integration_suite.infrastructure.persistence.repositories.integration_packages;
 import uim.platform.integration_suite;
 
 mixin(ShowModule!());

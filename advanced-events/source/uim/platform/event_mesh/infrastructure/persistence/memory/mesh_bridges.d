@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.event_mesh.infrastructure.persistence.memory.mesh_bridges;
+module uim.platform.event_mesh.infrastructure.persistence.repositories.mesh_bridges;
 
 import uim.platform.event_mesh;
 

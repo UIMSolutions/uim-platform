@@ -1,4 +1,4 @@
-module uim.platform.data_retention.infrastructure.persistence.memory.residence_rules;
+module uim.platform.data_retention.infrastructure.persistence.repositories.residence_rules;
 import uim.platform.data_retention;
 
 mixin(ShowModule!());

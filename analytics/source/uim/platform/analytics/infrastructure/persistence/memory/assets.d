@@ -1,4 +1,4 @@
-module uim.platform.analytics.infrastructure.persistence.memory.assets;
+module uim.platform.analytics.infrastructure.persistence.repositories.assets;
 
 import uim.platform.analytics.domain;
 

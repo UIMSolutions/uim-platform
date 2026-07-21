@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.health_fhir.infrastructure.persistence.memory.medication_requests;
+module uim.platform.health_fhir.infrastructure.persistence.repositories.medication_requests;
 import uim.platform.health_fhir;
 
 mixin(ShowModule!());

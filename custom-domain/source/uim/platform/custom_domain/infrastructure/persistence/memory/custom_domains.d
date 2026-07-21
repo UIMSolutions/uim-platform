@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.custom_domain.infrastructure.persistence.memory.custom_domains;
+module uim.platform.custom_domain.infrastructure.persistence.repositories.custom_domains;
 
 import uim.platform.custom_domain;
 

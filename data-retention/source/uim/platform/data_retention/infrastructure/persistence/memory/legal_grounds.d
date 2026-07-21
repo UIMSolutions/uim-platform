@@ -1,4 +1,4 @@
-module uim.platform.data_retention.infrastructure.persistence.memory.legal_grounds;
+module uim.platform.data_retention.infrastructure.persistence.repositories.legal_grounds;
 import uim.platform.data_retention;
 
 mixin(ShowModule!());

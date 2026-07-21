@@ -1,4 +1,4 @@
-module uim.platform.integration_suite.infrastructure.persistence.memory.trading_partners;
+module uim.platform.integration_suite.infrastructure.persistence.repositories.trading_partners;
 import uim.platform.integration_suite;
 
 mixin(ShowModule!());

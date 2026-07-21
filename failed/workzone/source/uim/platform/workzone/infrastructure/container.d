@@ -6,16 +6,16 @@
 module uim.platform.workzone.infrastructure.container;
 // import uim.platform.workzone.infrastructure.config;
 // Repositories
-// import uim.platform.workzone.infrastructure.persistence.memory.workspace;
-// import uim.platform.workzone.infrastructure.persistence.memory.workpage;
-// import uim.platform.workzone.infrastructure.persistence.memory.card;
-// import uim.platform.workzone.infrastructure.persistence.memory.content;
-// import uim.platform.workzone.infrastructure.persistence.memory.feed;
-// import uim.platform.workzone.infrastructure.persistence.memory.notification;
-// import uim.platform.workzone.infrastructure.persistence.memory.task;
-// import uim.platform.workzone.infrastructure.persistence.memory.channel;
-// import uim.platform.workzone.infrastructure.persistence.memory.app;
-// import uim.platform.workzone.infrastructure.persistence.memory.widget;
+// import uim.platform.workzone.infrastructure.persistence.repositories.workspace;
+// import uim.platform.workzone.infrastructure.persistence.repositories.workpage;
+// import uim.platform.workzone.infrastructure.persistence.repositories.card;
+// import uim.platform.workzone.infrastructure.persistence.repositories.content;
+// import uim.platform.workzone.infrastructure.persistence.repositories.feed;
+// import uim.platform.workzone.infrastructure.persistence.repositories.notification;
+// import uim.platform.workzone.infrastructure.persistence.repositories.task;
+// import uim.platform.workzone.infrastructure.persistence.repositories.channel;
+// import uim.platform.workzone.infrastructure.persistence.repositories.app;
+// import uim.platform.workzone.infrastructure.persistence.repositories.widget;
 // Use Cases
 // import uim.platform.workzone.application.usecases.manage.workspaces;
 // import uim.platform.workzone.application.usecases.manage.workpages;

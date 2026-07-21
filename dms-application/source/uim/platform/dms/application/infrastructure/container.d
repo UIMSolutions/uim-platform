@@ -7,13 +7,13 @@ module uim.platform.dms.application.infrastructure.container;
 // import uim.platform.dms.application.infrastructure.config;
 // 
 // Repositories
-// import uim.platform.dms.application.infrastructure.persistence.memory.repository;
-// import uim.platform.dms.application.infrastructure.persistence.memory.folder;
-// import uim.platform.dms.application.infrastructure.persistence.memory.document;
-// import uim.platform.dms.application.infrastructure.persistence.memory.document_version;
-// import uim.platform.dms.application.infrastructure.persistence.memory.share;
-// import uim.platform.dms.application.infrastructure.persistence.memory.permission;
-// import uim.platform.dms.application.infrastructure.persistence.memory.favorite;
+// import uim.platform.dms.application.infrastructure.persistence.repositories.repository;
+// import uim.platform.dms.application.infrastructure.persistence.repositories.folder;
+// import uim.platform.dms.application.infrastructure.persistence.repositories.document;
+// import uim.platform.dms.application.infrastructure.persistence.repositories.document_version;
+// import uim.platform.dms.application.infrastructure.persistence.repositories.share;
+// import uim.platform.dms.application.infrastructure.persistence.repositories.permission;
+// import uim.platform.dms.application.infrastructure.persistence.repositories.favorite;
 // 
 // Domain services
 // import uim.platform.dms.application.domain.services.versioning_service;

@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.automation_pilot.infrastructure.persistence.memory.content_connectors;
+module uim.platform.automation_pilot.infrastructure.persistence.repositories.content_connectors;
 
 import uim.platform.automation_pilot;
 

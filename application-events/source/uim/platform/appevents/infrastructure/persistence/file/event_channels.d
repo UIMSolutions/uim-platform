@@ -12,7 +12,7 @@ module uim.platform.appevents.infrastructure.persistence.file.event_channels;
 // import uim.platform.appevents.domain.enums.channel_type;
 // import uim.platform.appevents.domain.enums.channel_status;
 // import uim.platform.appevents.domain.enums.delivery_mode;
-// import uim.platform.appevents.infrastructure.persistence.memory.event_channels;
+// import uim.platform.appevents.infrastructure.persistence.repositories.event_channels;
 // import std.file  : mkdirRecurse, write, readText, exists;
 // import std.path  : buildPath, dirName;
 // import std.conv  : to;

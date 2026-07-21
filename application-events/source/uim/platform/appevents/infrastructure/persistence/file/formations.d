@@ -10,7 +10,7 @@ module uim.platform.appevents.infrastructure.persistence.file.formations;
 // import uim.platform.appevents.domain.repositories.formations;
 // import uim.platform.appevents.domain.valueobjects;
 // import uim.platform.appevents.domain.enums.formation_status;
-// import uim.platform.appevents.infrastructure.persistence.memory.formations;
+// import uim.platform.appevents.infrastructure.persistence.repositories.formations;
 // import std.file  : mkdirRecurse, write, readText, exists;
 // import std.path  : buildPath, dirName;
 // import std.conv  : to;

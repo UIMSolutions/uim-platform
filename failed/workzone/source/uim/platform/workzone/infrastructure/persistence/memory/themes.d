@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.workzone.infrastructure.persistence.memory.themes;
+module uim.platform.workzone.infrastructure.persistence.repositories.themes;
 // import uim.platform.workzone.domain.types;
 // import uim.platform.workzone.domain.entities.theme;
 // import uim.platform.workzone.domain.ports.repositories.themes;

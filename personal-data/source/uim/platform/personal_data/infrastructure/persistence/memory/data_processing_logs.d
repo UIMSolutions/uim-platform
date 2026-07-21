@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.personal_data.infrastructure.persistence.memory.data_processing_logs;
+module uim.platform.personal_data.infrastructure.persistence.repositories.data_processing_logs;
 
 import uim.platform.personal_data;
 

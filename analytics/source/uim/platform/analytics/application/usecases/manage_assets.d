@@ -90,7 +90,7 @@ class ManageAssetsUseCase {
 }
 
 unittest {
-  import uim.platform.analytics.infrastructure.persistence.memory.assets;
+  import uim.platform.analytics.infrastructure.persistence.repositories.assets;
 
   auto repo = new MemoryAssetRepository();
   auto useCase = new ManageAssetsUseCase(repo);

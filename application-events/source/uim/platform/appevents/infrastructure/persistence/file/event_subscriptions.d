@@ -10,7 +10,7 @@ module uim.platform.appevents.infrastructure.persistence.file.event_subscription
 // import uim.platform.appevents.domain.repositories.event_subscriptions;
 // import uim.platform.appevents.domain.valueobjects;
 // import uim.platform.appevents.domain.enums.subscription_status;
-// import uim.platform.appevents.infrastructure.persistence.memory.event_subscriptions;
+// import uim.platform.appevents.infrastructure.persistence.repositories.event_subscriptions;
 // import std.file : mkdirRecurse, write, readText, exists;
 // import std.path : buildPath, dirName;
 // 

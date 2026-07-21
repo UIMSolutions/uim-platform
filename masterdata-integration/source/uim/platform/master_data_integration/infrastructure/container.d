@@ -6,16 +6,16 @@
 module uim.platform.master_data_integration.infrastructure.container;
 // import uim.platform.master_data_integration.infrastructure.config;
 // Repositories
-// import uim.platform.master_data_integration.infrastructure.persistence.memory
+// import uim.platform.master_data_integration.infrastructure.persistence.repositories
 //   .master_data_object;
-// import uim.platform.master_data_integration.infrastructure.persistence.memory.data_model;
-// import uim.platform.master_data_integration.infrastructure.persistence.memory
+// import uim.platform.master_data_integration.infrastructure.persistence.repositories.data_model;
+// import uim.platform.master_data_integration.infrastructure.persistence.repositories
 //   .distribution_model;
-// import uim.platform.master_data_integration.infrastructure.persistence.memory.key_mapping;
-// import uim.platform.master_data_integration.infrastructure.persistence.memory.change_log;
-// import uim.platform.master_data_integration.infrastructure.persistence.memory.client;
-// import uim.platform.master_data_integration.infrastructure.persistence.memory.replication_job;
-// import uim.platform.master_data_integration.infrastructure.persistence.memory.filter_rule;
+// import uim.platform.master_data_integration.infrastructure.persistence.repositories.key_mapping;
+// import uim.platform.master_data_integration.infrastructure.persistence.repositories.change_log;
+// import uim.platform.master_data_integration.infrastructure.persistence.repositories.client;
+// import uim.platform.master_data_integration.infrastructure.persistence.repositories.replication_job;
+// import uim.platform.master_data_integration.infrastructure.persistence.repositories.filter_rule;
 // Domain services
 // import uim.platform.master_data_integration.domain.services.key_mapping_resolver;
 // import uim.platform.master_data_integration.domain.services.distribution_evaluator;

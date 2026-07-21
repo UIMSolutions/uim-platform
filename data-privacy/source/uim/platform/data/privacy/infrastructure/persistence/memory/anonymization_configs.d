@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.data.privacy.infrastructure.persistence.memory.anonymization_configs;
+module uim.platform.data.privacy.infrastructure.persistence.repositories.anonymization_configs;
 
 // import uim.platform.data.privacy.domain.entities.anonymization_config;
 // import uim.platform.data.privacy.domain.ports.anonymization_config_repository;

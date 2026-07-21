@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.data.privacy.infrastructure.persistence.memory.purpose_records;
+module uim.platform.data.privacy.infrastructure.persistence.repositories.purpose_records;
 
 // import uim.platform.data.privacy.domain.entities.purpose_record;
 // import uim.platform.data.privacy.domain.ports.repositories.purpose_records;

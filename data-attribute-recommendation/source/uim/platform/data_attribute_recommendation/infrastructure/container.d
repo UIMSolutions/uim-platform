@@ -7,14 +7,14 @@ module uim.platform.data_attribute_recommendation.infrastructure.container;
 
 // import uim.platform.data_attribute_recommendation.infrastructure.config;
 // Repositories
-// import uim.platform.data_attribute_recommendation.infrastructure.persistence.memory.dataset;
+// import uim.platform.data_attribute_recommendation.infrastructure.persistence.repositories.dataset;
 // import uim.platform.data_attribute_recommendation.infrastructure.persistence
 //   .memory.data_record;
 // import uim.platform.data_attribute_recommendation.infrastructure.persistence
 //   .memory.model_config;
 // import uim.platform.data_attribute_recommendation.infrastructure.persistence
 //   .memory.training_job;
-// import uim.platform.data_attribute_recommendation.infrastructure.persistence.memory.deployment;
+// import uim.platform.data_attribute_recommendation.infrastructure.persistence.repositories.deployment;
 // import uim.platform.data_attribute_recommendation.infrastructure.persistence
 //   .memory.inference_request;
 // import uim.platform.data_attribute_recommendation.infrastructure.persistence

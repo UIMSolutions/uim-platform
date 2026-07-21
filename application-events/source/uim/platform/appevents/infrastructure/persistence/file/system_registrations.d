@@ -11,7 +11,7 @@ module uim.platform.appevents.infrastructure.persistence.file.system_registratio
 // import uim.platform.appevents.domain.valueobjects;
 // import uim.platform.appevents.domain.enums.system_type;
 // import uim.platform.appevents.domain.enums.system_status;
-// import uim.platform.appevents.infrastructure.persistence.memory.system_registrations;
+// import uim.platform.appevents.infrastructure.persistence.repositories.system_registrations;
 // import std.file  : mkdirRecurse, write, readText, exists;
 // import std.path  : buildPath, dirName;
 // import std.conv  : to;

@@ -1,4 +1,4 @@
-module uim.platform.snowflake.infrastructure.persistence.memory.snowflake_accounts;
+module uim.platform.snowflake.infrastructure.persistence.repositories.snowflake_accounts;
 import uim.platform.snowflake;
 
 mixin(ShowModule!());

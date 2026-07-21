@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.redis.infrastructure.persistence.memory.access_controls;
+module uim.platform.redis.infrastructure.persistence.repositories.access_controls;
 
 import uim.platform.redis;
 import std.algorithm : filter, any;

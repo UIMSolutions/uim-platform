@@ -1,4 +1,4 @@
-module uim.platform.snowflake.infrastructure.persistence.memory.tenant_users;
+module uim.platform.snowflake.infrastructure.persistence.repositories.tenant_users;
 import uim.platform.snowflake;
 
 mixin(ShowModule!());

@@ -6,9 +6,9 @@
 module uim.platform.destination.infrastructure.container;
 // import uim.platform.destination.infrastructure.config;
 // Repositories
-// import uim.platform.destination.infrastructure.persistence.memory.destination;
-// import uim.platform.destination.infrastructure.persistence.memory.certificate;
-// import uim.platform.destination.infrastructure.persistence.memory.fragment;
+// import uim.platform.destination.infrastructure.persistence.repositories.destination;
+// import uim.platform.destination.infrastructure.persistence.repositories.certificate;
+// import uim.platform.destination.infrastructure.persistence.repositories.fragment;
 // Use Cases
 // import uim.platform.destination.application.usecases.manage.destinations;
 // import uim.platform.destination.application.usecases.manage.certificates;

@@ -1,4 +1,4 @@
-module uim.platform.integration_suite.infrastructure.persistence.memory.topic_subscriptions;
+module uim.platform.integration_suite.infrastructure.persistence.repositories.topic_subscriptions;
 import uim.platform.integration_suite;
 
 mixin(ShowModule!());

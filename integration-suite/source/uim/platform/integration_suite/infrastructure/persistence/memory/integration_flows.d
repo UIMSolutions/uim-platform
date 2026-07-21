@@ -1,4 +1,4 @@
-module uim.platform.integration_suite.infrastructure.persistence.memory.integration_flows;
+module uim.platform.integration_suite.infrastructure.persistence.repositories.integration_flows;
 import uim.platform.integration_suite;
 
 mixin(ShowModule!());

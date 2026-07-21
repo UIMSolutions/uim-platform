@@ -6,15 +6,15 @@
 module uim.platform.management.infrastructure.container;
 // import uim.platform.management.infrastructure.config;
 // Repositories
-// import uim.platform.management.infrastructure.persistence.memory.global_account;
-// import uim.platform.management.infrastructure.persistence.memory.directory;
-// import uim.platform.management.infrastructure.persistence.memory.subaccount;
-// import uim.platform.management.infrastructure.persistence.memory.entitlement;
-// import uim.platform.management.infrastructure.persistence.memory.environment_instance;
-// import uim.platform.management.infrastructure.persistence.memory.subscription;
-// import uim.platform.management.infrastructure.persistence.memory.service_plan;
-// import uim.platform.management.infrastructure.persistence.memory.platform_event;
-// import uim.platform.management.infrastructure.persistence.memory.label;
+// import uim.platform.management.infrastructure.persistence.repositories.global_account;
+// import uim.platform.management.infrastructure.persistence.repositories.directory;
+// import uim.platform.management.infrastructure.persistence.repositories.subaccount;
+// import uim.platform.management.infrastructure.persistence.repositories.entitlement;
+// import uim.platform.management.infrastructure.persistence.repositories.environment_instance;
+// import uim.platform.management.infrastructure.persistence.repositories.subscription;
+// import uim.platform.management.infrastructure.persistence.repositories.service_plan;
+// import uim.platform.management.infrastructure.persistence.repositories.platform_event;
+// import uim.platform.management.infrastructure.persistence.repositories.label;
 // Domain Services
 // import uim.platform.management.domain.services.entitlement_evaluator;
 // import uim.platform.management.domain.services.environment_provisioner;

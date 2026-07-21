@@ -6,16 +6,16 @@
 module uim.platform.logging.infrastructure.container;
 // import uim.platform.logging.infrastructure.config;
 // Repositories
-// import uim.platform.logging.infrastructure.persistence.memory.log_entry;
-// import uim.platform.logging.infrastructure.persistence.memory.log_stream;
-// import uim.platform.logging.infrastructure.persistence.memory.span;
-// import uim.platform.logging.infrastructure.persistence.memory.dashboard;
-// import uim.platform.logging.infrastructure.persistence.memory.retention_policy;
-// import uim.platform.logging.infrastructure.persistence.memory.alert_rule;
-// import uim.platform.logging.infrastructure.persistence.memory.alert;
-// import uim.platform.logging.infrastructure.persistence.memory.notification_channel;
-// import uim.platform.logging.infrastructure.persistence.memory.pipeline;
-// import uim.platform.logging.infrastructure.persistence.memory.ingestion_token;
+// import uim.platform.logging.infrastructure.persistence.repositories.log_entry;
+// import uim.platform.logging.infrastructure.persistence.repositories.log_stream;
+// import uim.platform.logging.infrastructure.persistence.repositories.span;
+// import uim.platform.logging.infrastructure.persistence.repositories.dashboard;
+// import uim.platform.logging.infrastructure.persistence.repositories.retention_policy;
+// import uim.platform.logging.infrastructure.persistence.repositories.alert_rule;
+// import uim.platform.logging.infrastructure.persistence.repositories.alert;
+// import uim.platform.logging.infrastructure.persistence.repositories.notification_channel;
+// import uim.platform.logging.infrastructure.persistence.repositories.pipeline;
+// import uim.platform.logging.infrastructure.persistence.repositories.ingestion_token;
 // Use Cases
 // import uim.platform.logging.application.usecases.ingest_logs;
 // import uim.platform.logging.application.usecases.ingest_traces;

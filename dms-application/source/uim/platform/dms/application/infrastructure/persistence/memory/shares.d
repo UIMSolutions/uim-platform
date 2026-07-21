@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.dms.application.infrastructure.persistence.memory.shares;
+module uim.platform.dms.application.infrastructure.persistence.repositories.shares;
 // import uim.platform.dms.application.domain.entities.share;
 // import uim.platform.dms.application.domain.ports.repositories.shares;
 // import uim.platform.dms.application.domain.types;

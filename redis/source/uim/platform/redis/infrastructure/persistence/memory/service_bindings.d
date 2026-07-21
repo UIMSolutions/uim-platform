@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.redis.infrastructure.persistence.memory.service_bindings;
+module uim.platform.redis.infrastructure.persistence.repositories.service_bindings;
 
 import uim.platform.redis;
 import std.algorithm : filter, any;

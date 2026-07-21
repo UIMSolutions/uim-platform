@@ -6,16 +6,16 @@
 module uim.platform.process_automation.infrastructure.container;
 // import uim.platform.process_automation.infrastructure.config;
 // Repositories
-// import uim.platform.process_automation.infrastructure.persistence.memory.processes;
-// import uim.platform.process_automation.infrastructure.persistence.memory.process_instances;
-// import uim.platform.process_automation.infrastructure.persistence.memory.tasks;
-// import uim.platform.process_automation.infrastructure.persistence.memory.decisions;
-// import uim.platform.process_automation.infrastructure.persistence.memory.forms;
-// import uim.platform.process_automation.infrastructure.persistence.memory.automations;
-// import uim.platform.process_automation.infrastructure.persistence.memory.triggers;
-// import uim.platform.process_automation.infrastructure.persistence.memory.actions;
-// import uim.platform.process_automation.infrastructure.persistence.memory.visibilities;
-// import uim.platform.process_automation.infrastructure.persistence.memory.artifacts;
+// import uim.platform.process_automation.infrastructure.persistence.repositories.processes;
+// import uim.platform.process_automation.infrastructure.persistence.repositories.process_instances;
+// import uim.platform.process_automation.infrastructure.persistence.repositories.tasks;
+// import uim.platform.process_automation.infrastructure.persistence.repositories.decisions;
+// import uim.platform.process_automation.infrastructure.persistence.repositories.forms;
+// import uim.platform.process_automation.infrastructure.persistence.repositories.automations;
+// import uim.platform.process_automation.infrastructure.persistence.repositories.triggers;
+// import uim.platform.process_automation.infrastructure.persistence.repositories.actions;
+// import uim.platform.process_automation.infrastructure.persistence.repositories.visibilities;
+// import uim.platform.process_automation.infrastructure.persistence.repositories.artifacts;
 // Use Cases
 // import uim.platform.process_automation.application.usecases.manage.processes;
 // import uim.platform.process_automation.application.usecases.manage.process_instances;

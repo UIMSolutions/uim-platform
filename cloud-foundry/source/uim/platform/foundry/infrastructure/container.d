@@ -8,14 +8,14 @@ module uim.platform.foundry.infrastructure.container;
 // import uim.platform.foundry.infrastructure.config;
 
 // Repositories
-// import uim.platform.foundry.infrastructure.persistence.memory.org;
-// import uim.platform.foundry.infrastructure.persistence.memory.space;
-// import uim.platform.foundry.infrastructure.persistence.memory.app;
-// import uim.platform.foundry.infrastructure.persistence.memory.service_instance;
-// import uim.platform.foundry.infrastructure.persistence.memory.service_binding;
-// import uim.platform.foundry.infrastructure.persistence.memory.route;
-// import uim.platform.foundry.infrastructure.persistence.memory.domain;
-// import uim.platform.foundry.infrastructure.persistence.memory.buildpack;
+// import uim.platform.foundry.infrastructure.persistence.repositories.org;
+// import uim.platform.foundry.infrastructure.persistence.repositories.space;
+// import uim.platform.foundry.infrastructure.persistence.repositories.app;
+// import uim.platform.foundry.infrastructure.persistence.repositories.service_instance;
+// import uim.platform.foundry.infrastructure.persistence.repositories.service_binding;
+// import uim.platform.foundry.infrastructure.persistence.repositories.route;
+// import uim.platform.foundry.infrastructure.persistence.repositories.domain;
+// import uim.platform.foundry.infrastructure.persistence.repositories.buildpack;
 
 // Domain Services
 // import uim.platform.foundry.domain.services.app_lifecycle_manager;

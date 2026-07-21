@@ -1,4 +1,4 @@
-module uim.platform.integration_suite.infrastructure.persistence.memory.message_queues;
+module uim.platform.integration_suite.infrastructure.persistence.repositories.message_queues;
 import uim.platform.integration_suite;
 
 mixin(ShowModule!());

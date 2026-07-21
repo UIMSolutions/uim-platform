@@ -1,4 +1,4 @@
-module uim.platform.snowflake.infrastructure.persistence.memory.data_product_shares;
+module uim.platform.snowflake.infrastructure.persistence.repositories.data_product_shares;
 import uim.platform.snowflake;
 
 mixin(ShowModule!());

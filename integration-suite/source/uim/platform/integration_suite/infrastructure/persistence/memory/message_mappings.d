@@ -1,4 +1,4 @@
-module uim.platform.integration_suite.infrastructure.persistence.memory.message_mappings;
+module uim.platform.integration_suite.infrastructure.persistence.repositories.message_mappings;
 import uim.platform.integration_suite;
 
 mixin(ShowModule!());

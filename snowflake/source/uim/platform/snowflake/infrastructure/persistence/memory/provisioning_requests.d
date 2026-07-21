@@ -1,4 +1,4 @@
-module uim.platform.snowflake.infrastructure.persistence.memory.provisioning_requests;
+module uim.platform.snowflake.infrastructure.persistence.repositories.provisioning_requests;
 import uim.platform.snowflake;
 
 mixin(ShowModule!());

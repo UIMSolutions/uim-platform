@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.datasphere_composer.infrastructure.persistence.memory.unification_rules;
+module uim.platform.datasphere_composer.infrastructure.persistence.repositories.unification_rules;
 
 import uim.platform.datasphere_composer;
 

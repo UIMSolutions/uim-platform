@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.data.privacy.infrastructure.persistence.memory.business_processes;
+module uim.platform.data.privacy.infrastructure.persistence.repositories.business_processes;
 
 // import uim.platform.data.privacy.domain.entities.business_process;
 // import uim.platform.data.privacy.domain.ports.business_process_repository;

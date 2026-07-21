@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.connectivity.infrastructure.persistence.memory.channels;
+module uim.platform.connectivity.infrastructure.persistence.repositories.channels;
 // import uim.platform.connectivity.domain.types;
 // import uim.platform.connectivity.domain.entities.service_channel;
 // import uim.platform.connectivity.domain.ports.repositories.channels;

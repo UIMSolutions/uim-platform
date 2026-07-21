@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.customer_identity.infrastructure.persistence.memory.social_identities;
+module uim.platform.customer_identity.infrastructure.persistence.repositories.social_identities;
 
 import uim.platform.customer_identity;
 

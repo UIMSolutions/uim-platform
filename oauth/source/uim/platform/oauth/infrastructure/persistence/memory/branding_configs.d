@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.oauth.infrastructure.persistence.memory.branding_configs;
+module uim.platform.oauth.infrastructure.persistence.repositories.branding_configs;
 
 import uim.platform.oauth;
 

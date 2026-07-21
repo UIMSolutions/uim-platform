@@ -1,4 +1,4 @@
-module uim.platform.integration_suite.infrastructure.persistence.memory.api_proxies;
+module uim.platform.integration_suite.infrastructure.persistence.repositories.api_proxies;
 import uim.platform.integration_suite;
 
 mixin(ShowModule!());
