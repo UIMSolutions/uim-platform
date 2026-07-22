@@ -22,7 +22,7 @@ mixin template TenantEntity(TId) {
 
   this(TenantId tenantId) {
     this.tenantId = tenantId;
-    this.id = randomUUID().toString;
+    this.id = TId(generateId);
     this.createdAt = Clock.currStdTime();
     this.updatedAt = createdAt;
   }

@@ -32,15 +32,12 @@ class ManageServiceInstancesUseCase {
         if (req.name.isEmpty)
             return FlagResult(false, "", "Instance name is required");
 
-        ServiceInstance inst;
+        ServiceInstance inst = ServiceInstance(req.tenantId); // tenantId passed via name context placeholder
         inst.id          = ServiceInstanceId(generateId());
-        inst.tenantId    = req.name;  // tenantId passed via name context placeholder
         inst.name        = req.name;
         inst.description = req.description;
         inst.bindingGuid = req.bindingGuid;
         inst.labels      = req.labels;
-        inst.createdAt   = currentTimestamp();
-        inst.updatedAt   = inst.createdAt;
         inst.createdBy   = req.createdBy;
 
         repo.save(inst);
@@ -87,11 +84,6 @@ class ManageServiceInstancesUseCase {
         entry.performedBy = performedBy;
         entry.performedAt = currentTimestamp();
         audit.append(entry);
-    }
-
-    string generateId() {
-        import std.uuid : randomUUID;
-        return randomUUID().toString();
     }
 
     string currentTimestamp() {

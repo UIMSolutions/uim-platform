@@ -276,6 +276,19 @@ long currentTimestamp() {
   return Clock.currStdTime();
 }
 
+/*
+    string currentTimestamp() {
+        import std.datetime : Clock, UTC;
+        return Clock.currTime(UTC()).toISOExtString();
+    }
+*/
+
 string generateId() {
   return randomUUID().toString();
 }
+/*
+  private string generateId() @safe {
+    import std.random : uniform;
+    return "pol-" ~ currentTimestamp.to!string ~ "-" ~ uniform(1000, 9999).to!string;
+  } 
+*/ 

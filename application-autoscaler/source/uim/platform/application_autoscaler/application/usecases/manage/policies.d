@@ -129,11 +129,4 @@ class ManageScalingPoliciesUseCase {
   ScalingPolicyEntity[] listPolicies(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
-
-  private string generateId() @safe {
-    
-    
-    import std.random : uniform;
-    return "pol-" ~ currentTimestamp.to!string ~ "-" ~ uniform(1000, 9999).to!string;
-  }
 }

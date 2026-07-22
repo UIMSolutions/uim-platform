@@ -62,7 +62,7 @@ unittest {
     assert([
         AppPlatform.ios, AppPlatform.android, AppPlatform.windows,
         AppPlatform.web, AppPlatform.cross
-    ]. ==
+    ].toStrings ==
         ["ios", "android", "windows", "web", "cross"]);
 }
 
@@ -79,7 +79,18 @@ enum AppStatus : string {
 }
 
 AppStatus toAppStatus(string value) {
-    mixin(EnumSwitch("AppStatus", "draft"));
+    switch(value.toLower) {
+    case "draft":
+            return AppStatus.draft;
+        case "active":
+            return AppStatus.active;
+        case "deprecated":
+            return AppStatus.deprecated_;
+        case "archived":
+            return AppStatus.archived;
+        default:
+            return AppStatus.draft; // Default to draft if the input string does not match any known status
+    }
 }
 
 AppStatus[] toAppStatuses(string[] values)
@@ -258,7 +269,7 @@ unittest {
     assert(DeviceStatus.suspended.toString == "suspended");
     assert(DeviceStatus.removed.toString == "removed");
 
-    assert(["enrolled", "active", "suspended", "removed"].toDeviceStatus ==
+    assert(["enrolled", "active", "suspended", "removed"].toDeviceStatuses ==
             [
                 DeviceStatus.enrolled, DeviceStatus.active, DeviceStatus.suspended,
                 DeviceStatus.removed
@@ -304,8 +315,8 @@ unittest {
     assert("failed".toSyncStatus == SyncStatus.failed);
     assert("cancelled".toSyncStatus == SyncStatus.cancelled);
 
-    assert("unknown".toSyncStatus == SyncStatus.pending);
     assert("".toSyncStatus == SyncStatus.pending);
+    assert("unknown".toSyncStatus == SyncStatus.pending);
 
     assert(SyncStatus.pending.toString == "pending");
     assert(SyncStatus.inProgress.toString == "inProgress");
@@ -313,7 +324,7 @@ unittest {
     assert(SyncStatus.failed.toString == "failed");
     assert(SyncStatus.cancelled.toString == "cancelled");
 
-    assert(["pending", "inProgress", "completed", "failed", "cancelled"].toSyncStatus ==
+    assert(["pending", "inProgress", "completed", "failed", "cancelled"].toSyncStatuses ==
             [
                 SyncStatus.pending, SyncStatus.inProgress, SyncStatus.completed,
                 SyncStatus.failed, SyncStatus.cancelled
@@ -353,14 +364,14 @@ unittest {
     assert("Download".toSyncDirection == SyncDirection.download);
     assert("BIDIRECTIONAL".toSyncDirection == SyncDirection.bidirectional);
 
-    assert("unknown".toSyncDirection == SyncDirection.bidirectional);
     assert("".toSyncDirection == SyncDirection.bidirectional);
+    assert("unknown".toSyncDirection == SyncDirection.bidirectional);
 
     assert(SyncDirection.upload.toString == "upload");
     assert(SyncDirection.download.toString == "download");
     assert(SyncDirection.bidirectional.toString == "bidirectional");
 
-    assert(["upload", "download", "bidirectional"].toSyncDirection ==
+    assert(["upload", "download", "bidirectional"].toSyncDirections ==
             [
                 SyncDirection.upload, SyncDirection.download,
                 SyncDirection.bidirectional
@@ -403,8 +414,8 @@ unittest {
     assert("BTP".toBackendType == BackendType.btp);
     assert("crm".toBackendType == BackendType.crm);
 
-    assert("unknown".toBackendType == BackendType.custom);
     assert("".toBackendType == BackendType.custom);
+    assert("unknown".toBackendType == BackendType.custom);
 
     assert(BackendType.s4hana.toString == "s4hana");
     assert(BackendType.ecc.toString == "ecc");
@@ -545,7 +556,7 @@ DeploymentScope toDeploymentScope(string value) {
     mixin(EnumSwitch("DeploymentScope", "tenant"));
 }
 
-DeploymentScope[] toDeploymentScope(string[] values)
+DeploymentScope[] toDeploymentScopes(string[] values)
     => values.map!(toDeploymentScope).array;
 string toString(DeploymentScope value)
     => value.to!string; // This will return the enum member name as a string, e.g. "device", "group", etc

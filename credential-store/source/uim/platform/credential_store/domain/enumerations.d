@@ -12,16 +12,37 @@ enum CredentialType {
 }
 
 CredentialType toCredentialType(string value) {
-  switch (ignoreCase ? value.toLower() : value) {
-  case "password":
-    return CredentialType.password;
-  case "key":
-    return CredentialType.key;
-  case "keyring":
-    return CredentialType.keyring;
-  default:
-    return CredentialType.password; // Default case
-  }
+  mixin(EnumSwitch("CredentialType", "password"));
+}
+
+CredentialType[] toCredentialTypes(string[] values)
+  => values.map!toCredentialType.array;
+
+string toString(CredentialType value)
+  => value.to!string;
+
+string[] toStrings(CredentialType[] values)
+  => values.map!toString.array;
+
+///
+unittest {
+  mixin(ShowTest!("CredentialType"));
+
+  assert("password".toCredentialType == CredentialType.password);
+  assert("key".toCredentialType == CredentialType.key);
+  assert("keyring".toCredentialType == CredentialType.keyring);
+
+  assert("".toCredentialType == CredentialType.password);
+  assert("unknown".toCredentialType == CredentialType.password);
+
+  assert(CredentialType.password.toString == "password");
+  assert(CredentialType.key.toString == "key");
+  assert(CredentialType.keyring.toString == "keyring");
+
+  assert(["password", "key"].toCredentialTypes == [
+      CredentialType.password, CredentialType.key
+    ]);
+  assert([CredentialType.password, CredentialType.key].toStrings == ["password", "key"]);
 }
 
 enum CredentialStatus {
@@ -31,7 +52,7 @@ enum CredentialStatus {
 }
 
 CredentialStatus toCredentialStatus(string value) {
-  switch (ignoreCase ? value.toLower() : value) {
+  switch (value.toLower()) {
   case "active":
     return CredentialStatus.active;
   case "disabled":
@@ -41,6 +62,39 @@ CredentialStatus toCredentialStatus(string value) {
   default:
     return CredentialStatus.active; // Default case
   }
+}
+
+CredentialStatus[] toCredentialStatuses(string[] values)
+  => values.map!toCredentialStatus.array;
+
+string toString(CredentialStatus value)
+  => value.to!string;
+
+string[] toStrings(CredentialStatus[] values)
+  => values.map!toString.array;
+
+///
+unittest {
+  mixin(ShowTest!("CredentialStatus"));
+
+  assert("active".toCredentialStatus == CredentialStatus.active);
+  assert("disabled".toCredentialStatus == CredentialStatus.disabled);
+  assert("deleted".toCredentialStatus == CredentialStatus.deleted_);
+
+  assert("".toCredentialStatus == CredentialStatus.active);
+  assert("unknown".toCredentialStatus == CredentialStatus.active);
+
+  assert(CredentialStatus.active.toString == "active");
+  assert(CredentialStatus.disabled.toString == "disabled");
+  assert(CredentialStatus.deleted_.toString == "deleted");
+
+  assert(["active", "disabled"].toCredentialStatuses == [
+      CredentialStatus.active, CredentialStatus.disabled
+    ]);
+  assert([CredentialStatus.active, CredentialStatus.disabled].toStrings == [
+      "active", "disabled"
+    ]);
+
 }
 
 enum OperationType {
@@ -56,7 +110,7 @@ enum OperationType {
 }
 
 OperationType toOperationType(string value) {
-  switch (ignoreCase ? value.toLower() : value) {
+  switch (value.toLower()) {
   case "create":
     return OperationType.create;
   case "read":
@@ -80,6 +134,50 @@ OperationType toOperationType(string value) {
   }
 }
 
+OperationType[] toOperationTypes(string[] values)
+  => values.map!toOperationType.array;
+
+string toString(OperationType value)
+  => value.to!string;
+
+string[] toStrings(OperationType[] values)  
+  => values.map!toString.array;
+
+/// 
+unittest {
+  mixin(ShowTest!("OperationType"));
+
+  assert("create".toOperationType == OperationType.create);
+  assert("read".toOperationType == OperationType.read);
+  assert("update".toOperationType == OperationType.update);
+  assert("delete".toOperationType == OperationType.delete_);
+  assert("list".toOperationType == OperationType.list);
+  assert("encrypt".toOperationType == OperationType.encrypt);
+  assert("decrypt".toOperationType == OperationType.decrypt);
+  assert("generate".toOperationType == OperationType.generate);
+  assert("rotate".toOperationType == OperationType.rotate);
+
+  assert("".toOperationType == OperationType.read);
+  assert("unknown".toOperationType == OperationType.read);
+
+  assert(OperationType.create.toString == "create");
+  assert(OperationType.read.toString == "read");
+  assert(OperationType.update.toString == "update");
+  assert(OperationType.delete_.toString == "delete_");
+  assert(OperationType.list.toString == "list");
+  assert(OperationType.encrypt.toString == "encrypt");
+  assert(OperationType.decrypt.toString == "decrypt");
+  assert(OperationType.generate.toString == "generate");
+  assert(OperationType.rotate.toString == "rotate");
+
+  assert(["create", "read"].toOperationTypes == [
+      OperationType.create, OperationType.read
+    ]);
+  assert([OperationType.create, OperationType.read].toStrings == [
+      "create", "read"
+    ]);
+}
+
 enum ResourceType {
   namespace,
   password,
@@ -91,24 +189,47 @@ enum ResourceType {
 }
 
 ResourceType toResourceType(string value) {
-  switch (ignoreCase ? value.toLower() : value) {
-  case "namespace":
-    return ResourceType.namespace;
-  case "password":
-    return ResourceType.password;
-  case "key":
-    return ResourceType.key;
-  case "keyring":
-    return ResourceType.keyring;
-  case "keyringversion":
-    return ResourceType.keyringVersion;
-  case "servicebinding":
-    return ResourceType.serviceBinding;
-  case "dek":
-    return ResourceType.dek;
-  default:
-    return ResourceType.namespace; // Default case
-  }
+  mixin(EnumSwitch("ResourceType", "namespace"));
+}
+
+ResourceType[] toResourceTypes(string[] values)
+  => values.map!toResourceType.array;
+
+string toString(ResourceType type)
+  => type.to!string;
+
+string[] toStrings(ResourceType[] values)
+  => values.map!toString.array;
+
+///
+unittest {
+  mixin(ShowTest!("ResourceType"));
+
+  assert("namespace".toResourceType == ResourceType.namespace);
+  assert("password".toResourceType == ResourceType.password);
+  assert("key".toResourceType == ResourceType.key);
+  assert("keyring".toResourceType == ResourceType.keyring); 
+  assert("keyringVersion".toResourceType == ResourceType.keyringVersion);
+  assert("serviceBinding".toResourceType == ResourceType.serviceBinding);
+  assert("dek".toResourceType == ResourceType.dek);
+
+  assert("".toResourceType == ResourceType.namespace);
+  assert("unknown".toResourceType == ResourceType.namespace);
+
+  assert(ResourceType.namespace.toString == "namespace");
+  assert(ResourceType.password.toString == "password");
+  assert(ResourceType.key.toString == "key");
+  assert(ResourceType.keyring.toString == "keyring");
+  assert(ResourceType.keyringVersion.toString == "keyringVersion");
+  assert(ResourceType.serviceBinding.toString == "serviceBinding");
+  assert(ResourceType.dek.toString == "dek");
+
+  assert(["namespace", "key"].toResourceTypes == [
+      ResourceType.namespace, ResourceType.key
+    ]);
+  assert([ResourceType.namespace, ResourceType.key].toStrings == [
+      "namespace", "key"
+    ]);
 }
 
 enum PermissionLevel {

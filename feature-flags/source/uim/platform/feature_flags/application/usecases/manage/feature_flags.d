@@ -166,13 +166,5 @@ class ManageFeatureFlagsUseCase {
         audit.append(entry);
     }
 
-    string generateId() {
-        import std.uuid : randomUUID;
-        return randomUUID().toString();
-    }
 
-    string currentTimestamp() {
-        import std.datetime : Clock, UTC;
-        return Clock.currTime(UTC()).toISOExtString();
-    }
 }

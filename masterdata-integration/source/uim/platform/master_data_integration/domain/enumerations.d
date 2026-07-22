@@ -26,27 +26,42 @@ enum MasterDataCategory {
   supplierMaterial,
   custom,
 }
-MasterDataCategory toMasterDataCategory(string s) {
-  const map = [
-    "businessPartner": MasterDataCategory.businessPartner,
-    "costCenter": MasterDataCategory.costCenter,
-    "profitCenter": MasterDataCategory.profitCenter,
-    "companyCode": MasterDataCategory.companyCode,
-    "workforcePerson": MasterDataCategory.workforcePerson,
-    "bankAccount": MasterDataCategory.bankAccount,
-    "plant": MasterDataCategory.plant,
-    "purchasingOrganization": MasterDataCategory.purchasingOrganization,
-    "salesOrganization": MasterDataCategory.salesOrganization,
-    "customerMaterial": MasterDataCategory.customerMaterial,
-    "supplierMaterial": MasterDataCategory.supplierMaterial,
-    "custom": MasterDataCategory.custom,
-  ];
-  return map.get(s.toLower, MasterDataCategory.custom);
+
+MasterDataCategory toMasterDataCategory(string value) {
+  mixin(EnumSwitch("MasterDataCategory", "custom"));
 }
 
-  MasterDataCategory[] toMasterDataCategories(string[] cats) {
-    return cats.map!(s => toMasterDataCategory(s)).array;
-  }
+MasterDataCategory[] toMasterDataCategories(string[] cats)
+  => cats.map!toMasterDataCategory.array;
+
+string toString(MasterDataCategory cat)
+  => cat.to!string;
+
+string[] toStrings(MasterDataCategory[] cats)
+  => cats.map!toString.array;
+
+///
+unittest {
+  mixin(ShowTest!("MasterDataCategory"));
+
+  assert("businessPartner".toMasterDataCategory == MasterDataCategory.businessPartner);
+  assert("costCenter".toMasterDataCategory == MasterDataCategory.costCenter);
+  assert("profitCenter".toMasterDataCategory == MasterDataCategory.profitCenter);
+  assert("companyCode".toMasterDataCategory == MasterDataCategory.companyCode);
+  assert("workforcePerson".toMasterDataCategory == MasterDataCategory.workforcePerson);
+  assert("bankAccount".toMasterDataCategory == MasterDataCategory.bankAccount);
+  assert("plant".toMasterDataCategory == MasterDataCategory.plant);
+  assert("purchasingOrganization".toMasterDataCategory == MasterDataCategory.purchasingOrganization);
+  assert("salesOrganization".toMasterDataCategory == MasterDataCategory.salesOrganization);
+  assert("customerMaterial".toMasterDataCategory == MasterDataCategory.customerMaterial);
+  assert("supplierMaterial".toMasterDataCategory == MasterDataCategory.supplierMaterial);
+  assert("custom".toMasterDataCategory == MasterDataCategory.custom);
+
+  assert(["businessPartner", "plant"].toMasterDataCategories == [
+      MasterDataCategory.businessPartner, MasterDataCategory.plant
+    ]);
+}
+
 /// Status of a master data record.
 enum RecordStatus {
   active,
@@ -54,14 +69,35 @@ enum RecordStatus {
   blocked,
   markedForDeletion,
 }
-RecordStatus toRecordStatus(string s) {
-  const map = [
-    "active": RecordStatus.active,
-    "inactive": RecordStatus.inactive,
-    "blocked": RecordStatus.blocked,
-    "markedForDeletion": RecordStatus.markedForDeletion,
-  ];
-  return map.get(s.toLower, RecordStatus.active);
+
+RecordStatus toRecordStatus(string value) {
+  mixin(EnumSwitch("RecordStatus", "active"));
+}
+
+RecordStatus[] toRecordStatuses(string[] values)
+  => values.map!toRecordStatus.array;
+
+string toString(RecordStatus value)
+  => value.to!string;
+
+string[] toStrings(RecordStatus[] values)
+  => values.map!toString.array;
+
+///
+unittest {
+  mixin(ShowTest!("RecordStatus"));
+
+  assert("active".toRecordStatus == RecordStatus.active);
+  assert("inactive".toRecordStatus == RecordStatus.inactive);
+  assert("blocked".toRecordStatus == RecordStatus.blocked);
+  assert("markedForDeletion".toRecordStatus == RecordStatus.markedForDeletion);
+
+  assert(["active", "blocked"].toRecordStatuses == [
+      RecordStatus.active, RecordStatus.blocked
+    ]);
+  assert([RecordStatus.active, RecordStatus.blocked].toStrings == [
+      "active", "blocked"
+    ]);
 }
 
 /// Type of change in a change log.
@@ -73,17 +109,36 @@ enum ChangeType {
   activate,
   deactivate,
 }
+
 ChangeType toChangeType(string s) {
-  const map = [
-    "create": ChangeType.create_,
-    "update": ChangeType.update_,
-    "delete": ChangeType.delete_,
-    "merge": ChangeType.merge,
-    "activate": ChangeType.activate,
-    "deactivate": ChangeType.deactivate,
-  ];
-  return map.get(s.toLower, ChangeType.create_);
+  switch (s.toLower) {
+  case "create":
+    return ChangeType.create_;
+  case "update":
+    return ChangeType.update_;
+  case "delete":
+    return ChangeType.delete_;
+  case "merge":
+    return ChangeType.merge;
+  case "activate":
+    return ChangeType.activate;
+  case "deactivate":
+    return ChangeType.deactivate;
+  default:
+    return ChangeType.update_; // Default case
+  }
 }
+
+ChangeType[] toChangeTypes(string[] values)
+  => values.map!toChangeType.array;
+
+string toString(ChangeType value)
+  => value.to!string;
+
+string[] toStrings(ChangeType[] values)
+  => values.map!toString.array;
+
+  
 
 /// Status of a distribution model.
 enum DistributionModelStatus {
@@ -91,6 +146,7 @@ enum DistributionModelStatus {
   inactive,
   draft,
 }
+
 DistributionModelStatus toDistributionModelStatus(string s) {
   const map = [
     "active": DistributionModelStatus.active,
@@ -106,6 +162,7 @@ enum DistributionDirection {
   inbound,
   bidirectional,
 }
+
 DistributionDirection toDistributionDirection(string s) {
   const map = [
     "outbound": DistributionDirection.outbound,
@@ -122,6 +179,7 @@ enum ClientStatus {
   error,
   suspended,
 }
+
 ClientStatus toClientStatus(string s) {
   const map = [
     "connected": ClientStatus.connected,
@@ -143,6 +201,7 @@ enum ClientType {
   thirdParty,
   custom,
 }
+
 ClientType toClientType(string s) {
   const map = [
     "saps4hana": ClientType.sapS4Hana,
@@ -166,6 +225,7 @@ enum ReplicationJobStatus {
   cancelled,
   paused,
 }
+
 ReplicationJobStatus toReplicationJobStatus(string s) {
   const map = [
     "pending": ReplicationJobStatus.pending,
@@ -185,6 +245,7 @@ enum ReplicationTrigger {
   eventDriven,
   onChange,
 }
+
 ReplicationTrigger toReplicationTrigger(string s) {
   const map = [
     "manual": ReplicationTrigger.manual,
@@ -210,6 +271,7 @@ enum FilterOperator {
   isNull,
   isNotNull,
 }
+
 FilterOperator toFilterOperator(string s) {
   const map = [
     "equals": FilterOperator.equals,
@@ -240,6 +302,7 @@ enum FieldType : string {
   array_ = "array",
   object_ = "object",
 }
+
 FieldType toFieldType(string s) {
   const map = [
     "string": FieldType.string_,
@@ -261,6 +324,7 @@ enum KeyMappingSourceType {
   remote,
   universal,
 }
+
 KeyMappingSourceType toKeyMappingSourceType(string s) {
   const map = [
     "local": KeyMappingSourceType.local,
