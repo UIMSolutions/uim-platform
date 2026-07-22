@@ -30,32 +30,26 @@ class ApplicationController : ManageHttpController {
 
     override protected Json listHandler(HTTPServerRequest req) {
         auto precheck = super.getHandler(req);
-        if (precheck.hasError) {
+        if (precheck.hasError) 
             return precheck;
-        }
 
         auto tenantId = precheck.tenantId;
-
         auto items = usecase.listApplications(tenantId).map!(e => e.toJson()).array.toJson;
 
-        return successResponse("Applications retrieved successfully", 200, Json.emptyObject.set("count", items.length).set("resources", items));
+        return successResponse("Applications retrieved successfully", 200, Json.emptyObject.set("count", items
+                .length).set("resources", items));
     }
 
     override protected Json createHandler(HTTPServerRequest req) {
         auto precheck = super.createHandler(req);
-        if (precheck.hasError) {
+        if (precheck.hasError) 
             return precheck;
-        }
 
         auto tenantId = precheck.tenantId;
         auto data = precheck.data;
         auto id = ApplicationId(precheck.id);
-        if (id.isNull) {
-            return Json.emptyObject
-                .set("error", "Invalid Application ID")
-                .set("status", "error")
-                .set("statusCode", 400);
-        }
+        if (id.isNull)
+            return errorResponse("Invalid Application ID", 400);
 
         ApplicationDTO dto;
         dto.applicationId = id;
@@ -73,42 +67,40 @@ class ApplicationController : ManageHttpController {
         dto.createdBy = UserId(data.getString("createdBy"));
 
         auto result = usecase.createApplication(dto);
-        if (result.hasError) 
+        if (result.hasError)
             return errorResponse(result.message, 400);
 
-        return successResponse("Application created successfully", 201, Json.emptyObject.set("id", result.id));
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Application created successfully", 201, responseData);
 
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
         auto precheck = super.getHandler(req);
-        if (precheck.hasError) {
+        if (precheck.hasError)
             return precheck;
-        }
 
         auto tenantId = precheck.tenantId;
-        auto path = precheck.path;
         auto id = ApplicationId(precheck.id);
-        if (id.isNull) 
+        if (id.isNull)
             return errorResponse("Invalid Application ID", 400);
 
         auto e = usecase.getApplication(tenantId, id);
-        if (e.isNull) 
-            return errorResponse("Application not found", 404); 
+        if (e.isNull)
+            return errorResponse("Application not found", 404);
 
-        return successResponse("Application retrieved successfully", "Retrieved", 200, Json.emptyObject.set("data", e.toJson()));
+        return successResponse("Application retrieved successfully", "Retrieved", 200, Json.emptyObject.set("data", e
+                .toJson()));
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
         auto precheck = super.updateHandler(req);
-        if (precheck.hasError) {
+        if (precheck.hasError)
             return precheck;
-        }
 
         auto tenantId = precheck.tenantId;
-        auto path = precheck.path;
         auto id = ApplicationId(precheck.id);
-        if (id.isNull) 
+        if (id.isNull)
             return errorResponse("Invalid Application ID", 400);
 
         auto data = precheck.data;
@@ -122,35 +114,26 @@ class ApplicationController : ManageHttpController {
         dto.updatedBy = UserId(data.getString("updatedBy"));
 
         auto result = usecase.updateApplication(dto);
-        if (result.hasError) 
-        return errorResponse(result.message, 400);
-        
-        return successResponse("Application updated successfully", 200, Json.emptyObject.set("id", result.id));
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Application updated successfully", 200, responseData);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
         auto precheck = super.deleteHandler(req);
-        if (precheck.hasError) {
-            return precheck
-                .set("status", "error")
-                .set("statusCode", 400);
-        }
+        if (precheck.hasError)
+            return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto path = precheck.path;
         auto applicationId = ApplicationId(precheck.id);
 
         auto result = usecase.deleteApplication(tenantId, applicationId);
-        if (result.hasError) {
-            return Json.emptyObject
-                .set("error", result.message)
-                .set("status", "error")
-                .set("statusCode", 404);
-        }
+        if (result.hasError)
+            return errorResponse(result.message, 404);
 
-        return Json.emptyObject
-            .set("message", "Application deleted")
-            .set("status", "success")
-            .set("statusCode", 200);
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Application deleted successfully", 200, responseData);
     }
 }

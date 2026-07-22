@@ -120,7 +120,7 @@ unittest {
     assert(ServiceCallPriority.critical.toString == "critical");
 
     assert(toServiceCallPriorityArray(["low", "medium", "high"]) == [ServiceCallPriority.low, ServiceCallPriority.medium, ServiceCallPriority.high]);
-    assert(toString([ServiceCallPriority.low, ServiceCallPriority.medium, ServiceCallPriority.high]) == ["low", "medium", "high"]);   
+    assert(toStrings([ServiceCallPriority.low, ServiceCallPriority.medium, ServiceCallPriority.high]) == ["low", "medium", "high"]);   
 }
 
 enum ServiceCallOrigin {
@@ -165,7 +165,7 @@ unittest {
     assert(ServiceCallOrigin.integration.toString == "integration");
 
     assert(toServiceCallOriginArray(["manual", "selfService", "email"]) == [ServiceCallOrigin.manual, ServiceCallOrigin.selfService, ServiceCallOrigin.email]);
-    assert(toString([ServiceCallOrigin.manual, ServiceCallOrigin.selfService, ServiceCallOrigin.email]) == ["manual", "selfService", "email"]);
+    assert(toStrings([ServiceCallOrigin.manual, ServiceCallOrigin.selfService, ServiceCallOrigin.email]) == ["manual", "selfService", "email"]);
 }
 
 enum ServiceCallCategory {
@@ -216,7 +216,7 @@ unittest {
     assert(ServiceCallCategory.other.toString == "other");
 
     assert(toServiceCallCategory(["repair", "installation", "maintenance"]) == [ServiceCallCategory.repair, ServiceCallCategory.installation, ServiceCallCategory.maintenance]);
-    assert(toString([ServiceCallCategory.repair, ServiceCallCategory.installation, ServiceCallCategory.maintenance]) == ["repair", "installation", "maintenance"]);   
+    assert(toStrings([ServiceCallCategory.repair, ServiceCallCategory.installation, ServiceCallCategory.maintenance]) == ["repair", "installation", "maintenance"]);   
 }
 
 enum ActivityType {
@@ -273,7 +273,7 @@ unittest {
     assert(ActivityType.maintenance.toString == "maintenance");
 
     assert(toActivityType(["serviceTask", "meeting", "phoneCall"]) == [ActivityType.serviceTask, ActivityType.meeting, ActivityType.phoneCall]);
-    assert(toString([ActivityType.serviceTask, ActivityType.meeting, ActivityType.phoneCall]) == ["serviceTask", "meeting", "phoneCall"]);   
+    assert(toStrings([ActivityType.serviceTask, ActivityType.meeting, ActivityType.phoneCall]) == ["serviceTask", "meeting", "phoneCall"]);   
 }
 
 enum ActivityStatus {
@@ -374,7 +374,7 @@ unittest {
     assert(AssignmentStatus.cancelled.toString == "cancelled");
 
     assert(toAssignmentStatus(["proposed", "assigned", "accepted"]) == [AssignmentStatus.proposed, AssignmentStatus.assigned, AssignmentStatus.accepted]);
-    assert(toString([AssignmentStatus.proposed, AssignmentStatus.assigned, AssignmentStatus.accepted]) == ["proposed", "assigned", "accepted"]);   
+    assert(toStrings([AssignmentStatus.proposed, AssignmentStatus.assigned, AssignmentStatus.accepted]) == ["proposed", "assigned", "accepted"]);   
 }
 
 enum EquipmentStatus {
@@ -416,7 +416,7 @@ unittest {
     assert(EquipmentStatus.scrapped.toString == "scrapped");
 
     assert(toEquipmentStatus(["active", "inactive", "inRepair"]) == [EquipmentStatus.active, EquipmentStatus.inactive, EquipmentStatus.inRepair]);
-    assert(toString([EquipmentStatus.active, EquipmentStatus.inactive, EquipmentStatus.inRepair]) == ["active", "inactive", "inRepair"]);   
+    assert(toStrings([EquipmentStatus.active, EquipmentStatus.inactive, EquipmentStatus.inRepair]) == ["active", "inactive", "inRepair"]);   
 }
 
 enum EquipmentType {
@@ -470,7 +470,7 @@ unittest {
     assert(EquipmentType.custom.toString == "custom");
 
     assert(toEquipmentType(["machine", "tool", "vehicle"]) == [EquipmentType.machine, EquipmentType.tool, EquipmentType.vehicle]);
-    assert(toString([EquipmentType.machine, EquipmentType.tool, EquipmentType.vehicle]) == ["machine", "tool", "vehicle"]);
+    assert(toStrings([EquipmentType.machine, EquipmentType.tool, EquipmentType.vehicle]) == ["machine", "tool", "vehicle"]);
 }
 
 enum TechnicianStatus {
@@ -512,7 +512,7 @@ unittest {
     assert(TechnicianStatus.inactive.toString == "inactive");
 
     assert(toTechnicianStatus(["available", "busy", "onLeave"]) == [TechnicianStatus.available, TechnicianStatus.busy, TechnicianStatus.onLeave]);
-    assert(toString([TechnicianStatus.available, TechnicianStatus.busy, TechnicianStatus.onLeave]) == ["available", "busy", "onLeave"]);
+    assert(toStrings([TechnicianStatus.available, TechnicianStatus.busy, TechnicianStatus.onLeave]) == ["available", "busy", "onLeave"]);
 }
 
 enum CustomerType {
@@ -554,7 +554,7 @@ unittest {
     assert(CustomerType.internal.toString == "internal");
 
     assert(toCustomerType(["commercial", "residential", "industrial"]) == [CustomerType.commercial, CustomerType.residential, CustomerType.industrial]);
-    assert(toString([CustomerType.commercial, CustomerType.residential, CustomerType.industrial]) == ["commercial", "residential", "industrial"]);
+    assert(toStrings([CustomerType.commercial, CustomerType.residential, CustomerType.industrial]) == ["commercial", "residential", "industrial"]);
 }
 
 enum CustomerStatus {
@@ -593,7 +593,7 @@ unittest {
     assert(CustomerStatus.blocked.toString == "blocked");
 
     assert(toCustomerStatus(["active", "inactive", "prospect"]) == [CustomerStatus.active, CustomerStatus.inactive, CustomerStatus.prospect]);
-    assert(toString([CustomerStatus.active, CustomerStatus.inactive, CustomerStatus.prospect]) == ["active", "inactive", "prospect"]);
+    assert(toStrings([CustomerStatus.active, CustomerStatus.inactive, CustomerStatus.prospect]) == ["active", "inactive", "prospect"]);
 }
 
 enum SkillCategory {
@@ -641,7 +641,7 @@ unittest {
     assert(SkillCategory.custom.toString == "custom");
 
     assert(toSkillCategory(["technical", "certification", "product"]) == [SkillCategory.technical, SkillCategory.certification, SkillCategory.product]);
-    assert(toString([SkillCategory.technical, SkillCategory.certification, SkillCategory.product]) == ["technical", "certification", "product"]);
+    assert(toStrings([SkillCategory.technical, SkillCategory.certification, SkillCategory.product]) == ["technical", "certification", "product"]);
 }
 
 enum ProficiencyLevel {
@@ -683,7 +683,7 @@ unittest {
     assert(ProficiencyLevel.master.toString == "master");   
 
     assert(toProficiencyLevel(["beginner", "intermediate", "advanced"]) == [ProficiencyLevel.beginner, ProficiencyLevel.intermediate, ProficiencyLevel.advanced]);
-    assert(toString([ProficiencyLevel.beginner, ProficiencyLevel.intermediate, ProficiencyLevel.advanced]) == ["beginner", "intermediate", "advanced"]);
+    assert(toStrings([ProficiencyLevel.beginner, ProficiencyLevel.intermediate, ProficiencyLevel.advanced]) == ["beginner", "intermediate", "advanced"]);
 }
 
 enum SmartformType {
@@ -737,7 +737,7 @@ unittest {
     assert(SmartformType.custom.toString == "custom");   
 
     assert(toSmartformType(["checklist", "serviceReport", "inspection"]) == [SmartformType.checklist, SmartformType.serviceReport, SmartformType.inspection]);
-    assert(toString([SmartformType.checklist, SmartformType.serviceReport, SmartformType.inspection]) == ["checklist", "serviceReport", "inspection"]);
+    assert(toStrings([SmartformType.checklist, SmartformType.serviceReport, SmartformType.inspection]) == ["checklist", "serviceReport", "inspection"]);
 }
 
 enum SmartformStatus {
@@ -782,5 +782,5 @@ unittest {
     assert(SmartformStatus.archived.toString == "archived");
 
     assert(toSmartformStatus(["draft", "inProgress", "submitted"]) == [SmartformStatus.draft, SmartformStatus.inProgress, SmartformStatus.submitted]);
-    assert(toString([SmartformStatus.draft, SmartformStatus.inProgress, SmartformStatus.submitted]) == ["draft", "inProgress", "submitted"]);
+    assert(toStrings([SmartformStatus.draft, SmartformStatus.inProgress, SmartformStatus.submitted]) == ["draft", "inProgress", "submitted"]);
 }

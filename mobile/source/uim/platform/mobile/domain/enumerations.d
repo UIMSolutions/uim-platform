@@ -108,7 +108,7 @@ unittest {
   assert(toString(AppStatus.inactive) == "inactive");
   assert(toString(AppStatus.suspended) == "suspended");
   assert(toString(AppStatus.deleted_) == "deleted");
-  assert(toString([
+  assert(toStrings([
       AppStatus.active, AppStatus.inactive, AppStatus.suspended,
       AppStatus.deleted_
     ]) == ["active", "inactive", "suspended", "deleted"]);
@@ -159,7 +159,7 @@ unittest {
   assert(toString(DeviceStatus.wiped) == "wiped");
   assert(toString(DeviceStatus.blocked) == "blocked");
 
-  assert(toString([
+  assert(toStrings([
       DeviceStatus.registered, DeviceStatus.locked, DeviceStatus.wiped,
       DeviceStatus.blocked
     ]) == ["registered", "locked", "wiped", "blocked"]);
@@ -213,7 +213,7 @@ unittest {
   assert(toString(PushProvider.wns) == "wns");
   assert(toString(PushProvider.w3c) == "w3c");
 
-  assert(toString([
+  assert(toStrings([
       PushProvider.fcm, PushProvider.apns, PushProvider.wns, PushProvider.w3c
     ]) == ["fcm", "apns", "wns", "w3c"]);
   assert([
@@ -268,7 +268,7 @@ unittest {
   assert(toString(NotificationStatus.failed) == "failed");
   assert(toString(NotificationStatus.expired) == "expired");
 
-  assert(toString([
+  assert(toStrings([
       NotificationStatus.pending, NotificationStatus.sent,
       NotificationStatus.delivered, NotificationStatus.failed,
       NotificationStatus.expired
@@ -319,7 +319,7 @@ unittest {
   assert(toString(NotificationPriority.low) == "low");
   assert(toString(NotificationPriority.high) == "high");
 
-  assert(toString([
+  assert(toStrings([
       NotificationPriority.normal, NotificationPriority.low,
       NotificationPriority.high
     ]) == ["normal", "low", "high"]);
@@ -368,7 +368,7 @@ unittest {
   assert(toString(PushRegStatus.expired) == "expired");
   assert(toString(PushRegStatus.revoked) == "revoked");
 
-  assert(toString([
+  assert(toStrings([
       PushRegStatus.active, PushRegStatus.expired, PushRegStatus.revoked
     ]) == ["active", "expired", "revoked"]);
   assert([PushRegStatus.active, PushRegStatus.expired, PushRegStatus.revoked].toStrings == [
@@ -417,7 +417,7 @@ unittest {
   assert(toString(RestrictionType.percentage) == "percentage");
   assert(toString(RestrictionType.whitelist) == "whitelist");
 
-  assert(toString([
+  assert(toStrings([
       RestrictionType.boolean_, RestrictionType.percentage,
       RestrictionType.whitelist
     ]) == ["boolean_", "percentage", "whitelist"]);
@@ -470,7 +470,7 @@ unittest {
   assert(toString(ClientResourceType.certificate) == "certificate");
   assert(toString(ClientResourceType.translation) == "translation");
 
-  assert(toString([
+  assert(toStrings([
       ClientResourceType.bundle, ClientResourceType.configuration,
       ClientResourceType.certificate, ClientResourceType.translation
     ]) == ["bundle", "configuration", "certificate", "translation"]);
@@ -542,7 +542,7 @@ unittest {
   assert(toString(VersionStatus.deprecated_) == "deprecated");
   assert(toString(VersionStatus.archived) == "archived");
 
-  assert(toString([
+  assert(toStrings([
       VersionStatus.draft, VersionStatus.published, VersionStatus.mandatory,
       VersionStatus.deprecated_, VersionStatus.archived
     ]) == ["draft", "published", "mandatory", "deprecated", "archived"]);
@@ -587,7 +587,7 @@ unittest {
   assert(toString(OfflineStoreType.odata) == "odata");
   assert(toString(OfflineStoreType.custom) == "custom");
 
-  assert(toString([OfflineStoreType.odata, OfflineStoreType.custom]) == [
+  assert(toStrings([OfflineStoreType.odata, OfflineStoreType.custom]) == [
       "odata", "custom"
     ]);
   assert([OfflineStoreType.odata, OfflineStoreType.custom].toStrings == [
@@ -644,7 +644,7 @@ unittest {
   assert(toString(SyncStatus.error) == "error");
   assert(toString(SyncStatus.completed) == "completed");
 
-  assert(toString([
+  assert(toStrings([
       SyncStatus.idle, SyncStatus.syncing, SyncStatus.error, SyncStatus.completed
     ]) == ["idle", "syncing", "error", "completed"]);
   assert([
@@ -691,7 +691,7 @@ unittest {
   assert(toString(SessionStatus.expired) == "expired");
   assert(toString(SessionStatus.terminated) == "terminated");
 
-  assert(toString([
+  assert(toStrings([
       SessionStatus.active, SessionStatus.expired, SessionStatus.terminated
     ]) == ["active", "expired", "terminated"]);
   assert([SessionStatus.active, SessionStatus.expired, SessionStatus.terminated].toStrings == [
@@ -742,7 +742,7 @@ unittest {
   assert(toString(LogSource.push) == "push");
   assert(toString(LogSource.sync) == "sync");
 
-  assert(toString([
+  assert(toStrings([
       LogSource.client, LogSource.server, LogSource.push, LogSource.sync
     ]) == ["client", "server", "push", "sync"]);
   assert([LogSource.client, LogSource.server, LogSource.push, LogSource.sync].toStrings == [
@@ -803,7 +803,7 @@ unittest {
   assert(toString(MetricType.crash) == "crash");
   assert(toString(MetricType.custom) == "custom");
 
-  assert(toString([
+  assert(toStrings([
       MetricType.appLaunch, MetricType.screenView, MetricType.apiCall,
       MetricType.pushReceived, MetricType.syncCompleted, MetricType.crash,
       MetricType.custom

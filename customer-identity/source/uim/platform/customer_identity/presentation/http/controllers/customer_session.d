@@ -76,9 +76,8 @@ class CustomerSessionController : ManageHttpController {
         auto path = precheck.path;
         auto id = CustomerSessionId(precheck.id);
         if (id.isNull)
-            return Json.emptyObject.set("error", "Invalid Session ID")
-                .set("status", "error").set("statusCode", 400);
-
+            return errorResponse("Invalid Session ID", 400);
+ 
         auto e = sessions.getSession(tenantId, id);
         if (e.isNull)
             return errorResponse("Session not found", 404);
@@ -95,8 +94,7 @@ class CustomerSessionController : ManageHttpController {
         auto path = precheck.path;
         auto id = CustomerSessionId(precheck.id);
         if (id.isNull)
-            return Json.emptyObject.set("error", "Invalid Session ID")
-                .set("status", "error").set("statusCode", 400);
+            return errorResponse("Invalid Session ID", 400);
 
         auto result = sessions.revokeSession(tenantId, id);
         if (result.hasError)

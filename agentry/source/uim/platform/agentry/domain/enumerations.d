@@ -4,9 +4,11 @@
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.agentry.domain.enumerations;
+
 import uim.platform.agentry;
 
 mixin(ShowModule!());
+
 @safe:
 
 /// Mobile application target platform
@@ -27,7 +29,7 @@ AppPlatform toAppPlatform(string value) {
     mixin(EnumSwitch("AppPlatform", "cross"));
 }
 
-AppPlatform[] toAppPlatform(string[] values)
+AppPlatform[] toAppPlatforms(string[] values)
     => values.map!toAppPlatform.array;
 
 string toString(AppPlatform value)
@@ -43,8 +45,8 @@ unittest {
     assert("web".toAppPlatform == AppPlatform.web);
     assert("cross".toAppPlatform == AppPlatform.cross);
 
-    assert("unknown".toAppPlatform == AppPlatform.cross);
     assert("".toAppPlatform == AppPlatform.cross);
+    assert("unknown".toAppPlatform == AppPlatform.cross);
 
     assert(AppPlatform.ios.toString == "ios");
     assert(AppPlatform.android.toString == "android");
@@ -52,15 +54,15 @@ unittest {
     assert(AppPlatform.web.toString == "web");
     assert(AppPlatform.cross.toString == "cross");
 
-    assert(["ios", "android", "windows", "web", "cross"].toAppPlatform ==
+    assert(["ios", "android", "windows", "web", "cross"].toAppPlatforms ==
             [
                 AppPlatform.ios, AppPlatform.android, AppPlatform.windows,
                 AppPlatform.web, AppPlatform.cross
             ]);
-    assert(toString([
-            AppPlatform.ios, AppPlatform.android, AppPlatform.windows,
-            AppPlatform.web, AppPlatform.cross
-        ]) ==
+    assert([
+        AppPlatform.ios, AppPlatform.android, AppPlatform.windows,
+        AppPlatform.web, AppPlatform.cross
+    ]. ==
         ["ios", "android", "windows", "web", "cross"]);
 }
 
@@ -93,20 +95,20 @@ unittest {
     assert("DEPRECATED".toAppStatus == AppStatus.deprecated_);
     assert("archived".toAppStatus == AppStatus.archived);
 
-    assert("unknown".toAppStatus == AppStatus.draft); // Default case
     assert("".toAppStatus == AppStatus.draft);
+    assert("unknown".toAppStatus == AppStatus.draft); // Default case
 
     assert(AppStatus.draft.toString == "draft");
     assert(AppStatus.active.toString == "active");
     assert(AppStatus.deprecated_.toString == "deprecated");
     assert(AppStatus.archived.toString == "archived");
 
-    assert(["draft", "active", "deprecated", "archived"].toAppStatus ==
+    assert(["draft", "active", "deprecated", "archived"].toAppStatuses ==
             [
                 AppStatus.draft, AppStatus.active, AppStatus.deprecated_,
                 AppStatus.archived
             ]);
-    assert(toString([
+    assert(toStrings([
             AppStatus.draft, AppStatus.active, AppStatus.deprecated_,
             AppStatus.archived
         ]) ==
@@ -139,19 +141,19 @@ unittest {
     assert("Published".toDefinitionStatus == DefinitionStatus.published);
     assert("ARCHIVED".toDefinitionStatus == DefinitionStatus.archived);
 
-    assert("unknown".toDefinitionStatus == DefinitionStatus.draft);
     assert("".toDefinitionStatus == DefinitionStatus.draft);
+    assert("unknown".toDefinitionStatus == DefinitionStatus.draft);
 
     assert(DefinitionStatus.draft.toString == "draft");
     assert(DefinitionStatus.published.toString == "published");
     assert(DefinitionStatus.archived.toString == "archived");
 
-    assert(["draft", "published", "archived"].toDefinitionStatus ==
+    assert(["draft", "published", "archived"].toDefinitionStatuses ==
             [
                 DefinitionStatus.draft, DefinitionStatus.published,
                 DefinitionStatus.archived
             ]);
-    assert(toString([
+    assert(toStrings([
             DefinitionStatus.draft, DefinitionStatus.published,
             DefinitionStatus.archived
         ]) ==
@@ -198,8 +200,8 @@ unittest {
     assert("DEPRECATED".toAppVersionStatus == AppVersionStatus.deprecated_);
     assert("withdrawn".toAppVersionStatus == AppVersionStatus.withdrawn);
 
-    assert("unknown".toAppVersionStatus == AppVersionStatus.pending);
     assert("".toAppVersionStatus == AppVersionStatus.pending);
+    assert("unknown".toAppVersionStatus == AppVersionStatus.pending);
 
     assert(AppVersionStatus.pending.toString == "pending");
     assert(AppVersionStatus.published.toString == "published");
@@ -212,7 +214,7 @@ unittest {
                 AppVersionStatus.pending, AppVersionStatus.published,
                 AppVersionStatus.deprecated_, AppVersionStatus.withdrawn
             ]);
-    assert(toString([
+    assert(toStrings([
             AppVersionStatus.pending, AppVersionStatus.published,
             AppVersionStatus.deprecated_, AppVersionStatus.withdrawn
         ]) ==
@@ -248,8 +250,8 @@ unittest {
     assert("SUSPENDED".toDeviceStatus == DeviceStatus.suspended);
     assert("removed".toDeviceStatus == DeviceStatus.removed);
 
-    assert("unknown".toDeviceStatus == DeviceStatus.enrolled);
     assert("".toDeviceStatus == DeviceStatus.enrolled);
+    assert("unknown".toDeviceStatus == DeviceStatus.enrolled);
 
     assert(DeviceStatus.enrolled.toString == "enrolled");
     assert(DeviceStatus.active.toString == "active");
@@ -261,7 +263,7 @@ unittest {
                 DeviceStatus.enrolled, DeviceStatus.active, DeviceStatus.suspended,
                 DeviceStatus.removed
             ]);
-    assert(toString([
+    assert(toStrings([
             DeviceStatus.enrolled, DeviceStatus.active, DeviceStatus.suspended,
             DeviceStatus.removed
         ]) ==
@@ -316,7 +318,7 @@ unittest {
                 SyncStatus.pending, SyncStatus.inProgress, SyncStatus.completed,
                 SyncStatus.failed, SyncStatus.cancelled
             ]);
-    assert(toString([
+    assert(toStrings([
             SyncStatus.pending, SyncStatus.inProgress, SyncStatus.completed,
             SyncStatus.failed, SyncStatus.cancelled
         ]) ==
@@ -342,7 +344,7 @@ SyncDirection[] toSyncDirections(string[] values)
 
 string toString(SyncDirection value)
     => value.to!string; // This will return the enum member name as a string, e.g. "upload", "download", etc
-    
+
 string[] toStrings(SyncDirection[] values)
     => values.map!toString.array;
 ///
@@ -363,7 +365,7 @@ unittest {
                 SyncDirection.upload, SyncDirection.download,
                 SyncDirection.bidirectional
             ]);
-    assert(toString([
+    assert(toStrings([
             SyncDirection.upload, SyncDirection.download,
             SyncDirection.bidirectional
         ]) ==

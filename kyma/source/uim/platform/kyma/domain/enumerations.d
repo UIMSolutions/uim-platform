@@ -214,7 +214,7 @@ unittest {
     assert(toString(FunctionStatus.inactive) == "inactive");
 
     assert(toFunctionStatus(["building", "running", "invalid"]) == [FunctionStatus.building, FunctionStatus.running, FunctionStatus.error]);
-    assert(toString([FunctionStatus.building, FunctionStatus.inactive]) == ["building", "inactive"]);
+    assert(toStrings([FunctionStatus.building, FunctionStatus.inactive]) == ["building", "inactive"]);
 }
 
 /// Scaling type for serverless functions.
@@ -252,7 +252,7 @@ unittest {
     assert(toString(ScalingType.fixed) == "fixed");
 
     assert(toScalingType(["auto", "fixed", "invalid"]) == [ScalingType.auto_, ScalingType.fixed, ScalingType.auto_]);
-    assert(toString([ScalingType.auto_, ScalingType.fixed]) == ["auto", "fixed"]);
+    assert(toStrings([ScalingType.auto_, ScalingType.fixed]) == ["auto", "fixed"]);
 }
 
 /// API rule access strategy.

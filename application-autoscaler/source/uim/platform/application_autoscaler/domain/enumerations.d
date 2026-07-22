@@ -87,7 +87,7 @@ unittest {
 
   assert(["memoryused", "memoryutil", "cpu", "cpuutil", "disk", "diskutil", "throughput", "responsetime", "custom"].toMetricTypes ==
          [MetricType.memoryused, MetricType.memoryutil, MetricType.cpu, MetricType.cpuutil, MetricType.disk, MetricType.diskutil, MetricType.throughput, MetricType.responsetime, MetricType.custom_]);
-  assert(toString([MetricType.memoryused, MetricType.memoryutil, MetricType.cpu, MetricType.cpuutil, MetricType.disk, MetricType.diskutil, MetricType.throughput, MetricType.responsetime, MetricType.custom_]) ==
+  assert(toStrings([MetricType.memoryused, MetricType.memoryutil, MetricType.cpu, MetricType.cpuutil, MetricType.disk, MetricType.diskutil, MetricType.throughput, MetricType.responsetime, MetricType.custom_]) ==
          ["memoryused", "memoryutil", "cpu", "cpuutil", "disk", "diskutil", "throughput", "responsetime", "custom"]); 
 }
 
@@ -145,7 +145,7 @@ unittest {
 
   assert(["<", ">", "<=", ">=", "lt", "gt", "lte", "gte"].toScalingOperators ==
          [ScalingOperator.lt, ScalingOperator.gt, ScalingOperator.lte, ScalingOperator.gte, ScalingOperator.lt, ScalingOperator.gt, ScalingOperator.lte, ScalingOperator.gte]);
-  assert(toString([ScalingOperator.lt, ScalingOperator.gt, ScalingOperator.lte, ScalingOperator.gte]) ==
+  assert(toStrings([ScalingOperator.lt, ScalingOperator.gt, ScalingOperator.lte, ScalingOperator.gte]) ==
          ["lt", "gt", "lte", "gte"]);
 }
 
@@ -189,7 +189,7 @@ unittest {
 
   assert(["scaleOut", "scaleIn", "none"].toScalingDirections ==
          [ScalingDirection.scaleOut, ScalingDirection.scaleIn, ScalingDirection.none]);
-  assert(toString([ScalingDirection.scaleOut, ScalingDirection.scaleIn, ScalingDirection.none]) ==
+  assert(toStrings([ScalingDirection.scaleOut, ScalingDirection.scaleIn, ScalingDirection.none]) ==
          ["scaleOut", "scaleIn", "none"]);
 }
 
@@ -233,7 +233,7 @@ unittest {
 
   assert(["succeeded", "failed", "ignored"].toScalingStatuses ==
          [ScalingStatus.succeeded, ScalingStatus.failed, ScalingStatus.ignored]);
-  assert(toString([ScalingStatus.succeeded, ScalingStatus.failed, ScalingStatus.ignored]) ==
+  assert(toStrings([ScalingStatus.succeeded, ScalingStatus.failed, ScalingStatus.ignored]) ==
          ["succeeded", "failed", "ignored"]);
 }
 
@@ -281,7 +281,7 @@ unittest {
 
   assert(["active", "inactive", "deleted"].toPolicyStatuses ==
          [PolicyStatus.active, PolicyStatus.inactive, PolicyStatus.deleted_]);
-  assert(toString([PolicyStatus.active, PolicyStatus.inactive, PolicyStatus.deleted_]) ==
+  assert(toStrings([PolicyStatus.active, PolicyStatus.inactive, PolicyStatus.deleted_]) ==
          ["active", "inactive", "deleted"]);
 }
 
@@ -321,6 +321,6 @@ unittest {
 
   assert(["sameApp", "boundApp"].toMetricAllowFroms ==
          [MetricAllowFrom.sameApp, MetricAllowFrom.boundApp]);
-  assert(toString([MetricAllowFrom.sameApp, MetricAllowFrom.boundApp]) ==
+  assert(toStrings([MetricAllowFrom.sameApp, MetricAllowFrom.boundApp]) ==
          ["sameApp", "boundApp"]);
 }

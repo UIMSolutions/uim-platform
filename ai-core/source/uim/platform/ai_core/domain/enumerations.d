@@ -45,7 +45,7 @@ unittest {
 
   assert(toExecutableTypes(["workflow", "serving", "unknown"]) ==
       [ExecutableType.workflow, ExecutableType.serving, ExecutableType.workflow]);
-  assert(toString([ExecutableType.workflow, ExecutableType.serving]) ==
+  assert(toStrings([ExecutableType.workflow, ExecutableType.serving]) ==
       ["workflow", "serving"]);
 }
 
@@ -102,7 +102,7 @@ unittest {
       ExecutionStatus.failed, ExecutionStatus.stopped, ExecutionStatus.dead,
       ExecutionStatus.pending
     ]);
-  assert(toString([
+  assert(toStrings([
       ExecutionStatus.pending, ExecutionStatus.running, ExecutionStatus.completed,
       ExecutionStatus.failed, ExecutionStatus.stopped, ExecutionStatus.dead
     ]) ==
@@ -153,7 +153,7 @@ unittest {
         DeploymentStatus.pending, DeploymentStatus.running,
         DeploymentStatus.stopped, DeploymentStatus.dead, DeploymentStatus.pending
       ]);
-  assert(toString([
+  assert(toStrings([
       DeploymentStatus.pending, DeploymentStatus.running, DeploymentStatus.stopped,
       DeploymentStatus.dead
     ]) ==
@@ -203,7 +203,7 @@ unittest {
         ArtifactKind.model, ArtifactKind.dataset, ArtifactKind.resultset,
         ArtifactKind.other, ArtifactKind.model
       ]);
-  assert(toString([
+  assert(toStrings([
       ArtifactKind.model, ArtifactKind.dataset, ArtifactKind.resultset,
       ArtifactKind.other
     ]) ==
@@ -266,7 +266,7 @@ unittest {
       TargetStatus.running, TargetStatus.stopped, TargetStatus.deleted_,
       TargetStatus.completed, TargetStatus.running
     ]);
-  assert(toString([
+  assert(toStrings([
       TargetStatus.running, TargetStatus.stopped, TargetStatus.deleted_,
       TargetStatus.completed
     ]) ==
@@ -322,7 +322,7 @@ unittest {
         MetricValueType.string_, MetricValueType.float_, MetricValueType.int_,
         MetricValueType.string_
       ]);
-  assert(toString([
+  assert(toStrings([
       MetricValueType.string_, MetricValueType.float_, MetricValueType.int_
     ]) ==
     ["string_", "float_", "int_"]);
@@ -365,7 +365,7 @@ unittest {
 
   assert(toLogSeverity(["info", "warn", "error", "unknown"]) ==
       [LogSeverity.info, LogSeverity.warn, LogSeverity.error, LogSeverity.info]);
-  assert(toString([LogSeverity.info, LogSeverity.warn, LogSeverity.error]) ==
+  assert(toStrings([LogSeverity.info, LogSeverity.warn, LogSeverity.error]) ==
       ["info", "warn", "error"]);
 }
 
@@ -481,7 +481,7 @@ unittest {
       ScheduleStatus.suspended_security, ScheduleStatus.suspended_policy,
       ScheduleStatus.suspended_other, ScheduleStatus.active
     ]);
-  assert(toString([
+  assert(toStrings([
       ScheduleStatus.active, ScheduleStatus.inactive, ScheduleStatus.deleted,
       ScheduleStatus.error, ScheduleStatus.completed, ScheduleStatus.deleting,
       ScheduleStatus.updated, ScheduleStatus.suspended_nonpayment,

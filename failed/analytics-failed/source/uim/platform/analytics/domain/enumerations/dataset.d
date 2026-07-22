@@ -52,7 +52,7 @@ unittest {
 
   assert(["dimension", "measure", "attribute"].toColumnRoles ==
          [ColumnRole.dimension, ColumnRole.measure, ColumnRole.attribute]);
-  assert(toString([ColumnRole.dimension, ColumnRole.measure, ColumnRole.attribute]) ==
+  assert(toStrings([ColumnRole.dimension, ColumnRole.measure, ColumnRole.attribute]) ==
          ["dimension", "measure", "attribute"]);
 }
 
@@ -124,6 +124,6 @@ unittest {
 
   assert(["string", "integer", "decimal", "date", "datetime", "boolean"].toColumnDataTypes ==
          [ColumnDataType.string_, ColumnDataType.integer, ColumnDataType.decimal, ColumnDataType.date, ColumnDataType.datetime, ColumnDataType.boolean]);
-  assert(toString([ColumnDataType.string_, ColumnDataType.integer, ColumnDataType.decimal, ColumnDataType.date, ColumnDataType.datetime, ColumnDataType.boolean]) ==
+  assert(toStrings([ColumnDataType.string_, ColumnDataType.integer, ColumnDataType.decimal, ColumnDataType.date, ColumnDataType.datetime, ColumnDataType.boolean]) ==
          ["string", "integer", "decimal", "date", "datetime", "boolean"]);
 }

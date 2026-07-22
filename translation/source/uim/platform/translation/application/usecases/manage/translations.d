@@ -22,16 +22,11 @@ class PerformTranslationUseCase {
     /// Translate an array of software / UI texts synchronously.
     /// Returns one translated item per input text.
     Json translateTexts(TranslateTextRequest r) {
-        if (r.texts.length == 0) {
-            return Json.emptyObject
-                .set("status", "error")
-                .set("message", "No texts provided");
-        }
-        if (r.sourceLanguage.length == 0 || r.targetLanguage.length == 0) {
-            return Json.emptyObject
-                .set("status", "error")
-                .set("message", "sourceLanguage and targetLanguage are required");
-        }
+        if (r.texts.isEmpty)
+            return errorResponse("No texts provided", 400);
+
+        if (r.sourceLanguage.isEmpty || r.targetLanguage.isEmpty)
+            return errorResponse("sourceLanguage and targetLanguage are required", 400);
 
         TranslationProvider prov = TranslationProvider.machineMt;
         if (r.provider.length > 0) {

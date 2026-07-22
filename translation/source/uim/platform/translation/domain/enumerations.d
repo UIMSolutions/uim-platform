@@ -115,7 +115,7 @@ unittest {
     assert(TranslationProvider.llm.toString == "llm");
 
     assert(toTranslationProviders(["mltr", "llm", "invalid"]) == [TranslationProvider.mltr, TranslationProvider.llm, TranslationProvider.mltr]);
-    assert(toString([TranslationProvider.mltr, TranslationProvider.companyMltr]) == ["mltr", "companyMltr"]);
+    assert(toStrings([TranslationProvider.mltr, TranslationProvider.companyMltr]) == ["mltr", "companyMltr"]);
 }
 
 /// Status of an async translation job

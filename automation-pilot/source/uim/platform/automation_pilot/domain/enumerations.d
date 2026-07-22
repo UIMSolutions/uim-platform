@@ -45,7 +45,7 @@ unittest {
     assert(toString(CatalogType.system) == "system");
     assert(toString(CatalogType.custom) == "custom");
 
-    assert(toString([CatalogType.system, CatalogType.custom]) == [
+    assert(toStrings([CatalogType.system, CatalogType.custom]) == [
             "system", "custom"
         ]);
 }
@@ -85,7 +85,7 @@ unittest {
     assert(toString(CatalogStatus.inactive) == "inactive");
     assert(toString(CatalogStatus.archived) == "archived");
 
-    assert(toString([
+    assert(toStrings([
             CatalogStatus.active, CatalogStatus.inactive, CatalogStatus.archived
         ]) == ["active", "inactive", "archived"]);
 }
@@ -143,7 +143,7 @@ unittest {
     assert(toString(CommandStatus.inactive) == "inactive");
     assert(toString(CommandStatus.deprecated_) == "deprecated");
 
-    assert(toString([
+    assert(toStrings([
             CommandStatus.active, CommandStatus.inactive,
             CommandStatus.deprecated_
         ]) == ["active", "inactive", "deprecated"]);
@@ -193,7 +193,7 @@ unittest {
     assert(toString(CommandType.httpRequest) == "httpRequest");
     assert(toString(CommandType.script) == "script");
 
-    assert(toString([
+    assert(toStrings([
             CommandType.simple, CommandType.composite, CommandType.httpRequest,
             CommandType.script
         ]) == ["simple", "composite", "httpRequest", "script"]);
@@ -252,7 +252,7 @@ unittest {
     assert(toString(ExecutionStatus.cancelled) == "cancelled");
     assert(toString(ExecutionStatus.timedOut) == "timedOut");
 
-    assert(toString([
+    assert(toStrings([
             ExecutionStatus.pending, ExecutionStatus.running,
             ExecutionStatus.completed, ExecutionStatus.failed,
             ExecutionStatus.cancelled, ExecutionStatus.timedOut
@@ -305,7 +305,7 @@ unittest {
     assert(toString(ExecutionPriority.high) == "high");
     assert(toString(ExecutionPriority.critical) == "critical");
 
-    assert(toString([
+    assert(toStrings([
             ExecutionPriority.low, ExecutionPriority.medium,
             ExecutionPriority.high, ExecutionPriority.critical
         ]) == ["low", "medium", "high", "critical"]);
@@ -350,7 +350,7 @@ unittest {
     assert(toString(ScheduleType.recurring) == "recurring");
     assert(toString(ScheduleType.cron) == "cron");
 
-    assert(toString([
+    assert(toStrings([
             ScheduleType.oneTime, ScheduleType.recurring, ScheduleType.cron
         ]) == ["oneTime", "recurring", "cron"]);
 }
@@ -399,7 +399,7 @@ unittest {
     assert(toString(ScheduleStatus.completed) == "completed");
     assert(toString(ScheduleStatus.expired) == "expired");
 
-    assert(toString([
+    assert(toStrings([
             ScheduleStatus.active, ScheduleStatus.paused, ScheduleStatus.completed,
             ScheduleStatus.expired
         ]) == ["active", "paused", "completed", "expired"]);
@@ -492,7 +492,7 @@ unittest {
     assert(toString(TriggerStatus.inactive) == "inactive");
     assert(toString(TriggerStatus.disabled) == "disabled");
 
-    assert(toString([
+    assert(toStrings([
             TriggerStatus.active, TriggerStatus.inactive, TriggerStatus.disabled
         ]) == ["active", "inactive", "disabled"]);
 }

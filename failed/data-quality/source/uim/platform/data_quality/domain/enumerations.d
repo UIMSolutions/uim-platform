@@ -72,7 +72,7 @@ unittest {
 
   assert(["required", "format", "range"].toRuleTypes ==
       [RuleType.required, RuleType.format_, RuleType.range]);
-  assert(toString([RuleType.required, RuleType.format_, RuleType.range]) ==
+  assert(toStrings([RuleType.required, RuleType.format_, RuleType.range]) ==
       ["required", "format_", "range"]);
 }
 
@@ -118,7 +118,7 @@ unittest {
 
   assert(["info", "warning", "error"].toRuleSeverities ==
       [RuleSeverity.info, RuleSeverity.warning, RuleSeverity.error]);
-  assert(toString([RuleSeverity.info, RuleSeverity.warning, RuleSeverity.error]) ==
+  assert(toStrings([RuleSeverity.info, RuleSeverity.warning, RuleSeverity.error]) ==
       ["info", "warning", "error"]);
 }
 
@@ -158,7 +158,7 @@ unittest {
 
   assert(["draft", "active", "inactive"].toRuleStatuses ==
       [RuleStatus.draft, RuleStatus.active, RuleStatus.inactive]);
-  assert(toString([RuleStatus.draft, RuleStatus.active, RuleStatus.inactive]) ==
+  assert(toStrings([RuleStatus.draft, RuleStatus.active, RuleStatus.inactive]) ==
       ["draft", "active", "inactive"]);
 }
 

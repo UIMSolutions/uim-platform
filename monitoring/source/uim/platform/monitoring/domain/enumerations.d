@@ -50,7 +50,7 @@ unittest {
   assert(ResourceType.customApplication.toString == "customApplication");
   assert(ResourceType.service.toString == "service");
 
-  assert(toString([ResourceType.javaApplication, ResourceType.service]) == ["javaApplication", "service"]);
+  assert(toStrings([ResourceType.javaApplication, ResourceType.service]) == ["javaApplication", "service"]);
   assert(toResourceType(["javaApplication", "service"]) == [ResourceType.javaApplication, ResourceType.service]);
 }
 
@@ -94,7 +94,7 @@ unittest {
   assert(ResourceState.stopped.toString == "stopped");
   assert(ResourceState.error.toString == "error");
 
-  assert(toString([ResourceState.unknown, ResourceState.error]) == ["unknown", "error"]);
+  assert(toStrings([ResourceState.unknown, ResourceState.error]) == ["unknown", "error"]);
   assert(toResourceState(["unknown", "error"]) == [ResourceState.unknown, ResourceState.error]);
 }
 

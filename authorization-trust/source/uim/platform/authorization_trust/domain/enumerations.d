@@ -68,7 +68,7 @@ unittest {
   assert(toString(GrantType.refreshToken) == "refresh_token");
   assert(toString(GrantType.implicit_) == "implicit");
   assert(toString(GrantType.clientCredentials) == "client_credentials");
-  assert(toString([GrantType.authorizationCode, GrantType.password_, GrantType.refreshToken, GrantType.implicit_, GrantType.clientCredentials]) == ["authorization_code", "password", "refresh_token", "implicit", "client_credentials"]);
+  assert(toStrings([GrantType.authorizationCode, GrantType.password_, GrantType.refreshToken, GrantType.implicit_, GrantType.clientCredentials]) == ["authorization_code", "password", "refresh_token", "implicit", "client_credentials"]);
 }
 // ---------------------------------------------------------------------------
 // OAuth 2.0 client types
@@ -104,7 +104,7 @@ unittest {
   assert(toString(ClientType.confidential) == "confidential");
   assert(toString(ClientType.public_) == "public");
 
-  assert(toString([ClientType.confidential, ClientType.public_]) == ["confidential", "public"]);
+  assert(toStrings([ClientType.confidential, ClientType.public_]) == ["confidential", "public"]);
 }
 // ---------------------------------------------------------------------------
 // Identity provider protocol types
@@ -138,5 +138,5 @@ unittest {
   assert(toString(IdpType.saml2) == "saml2");
   assert(toString(IdpType.oidc) == "oidc");
 
-  assert(toString([IdpType.saml2, IdpType.oidc]) == ["saml2", "oidc"]);
+  assert(toStrings([IdpType.saml2, IdpType.oidc]) == ["saml2", "oidc"]);
 }

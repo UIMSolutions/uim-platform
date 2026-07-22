@@ -58,7 +58,7 @@ unittest {
 
   assert(["provisioning", "running", "stopped", "failed", "deleted"].toWorkspaceStatuses ==
          [WorkspaceStatus.provisioning, WorkspaceStatus.running, WorkspaceStatus.stopped, WorkspaceStatus.failed, WorkspaceStatus.deleted]);
-  assert(toString([WorkspaceStatus.provisioning, WorkspaceStatus.running, WorkspaceStatus.stopped, WorkspaceStatus.failed, WorkspaceStatus.deleted]) ==
+  assert(toStrings([WorkspaceStatus.provisioning, WorkspaceStatus.running, WorkspaceStatus.stopped, WorkspaceStatus.failed, WorkspaceStatus.deleted]) ==
          ["provisioning", "running", "stopped", "failed", "deleted"]);
 }
 
@@ -105,7 +105,7 @@ unittest {
 
   assert(["standard", "premium", "enterprise"].toWorkspaceTiers ==
          [WorkspaceTier.standard, WorkspaceTier.premium, WorkspaceTier.enterprise]);
-  assert(toString([WorkspaceTier.standard, WorkspaceTier.premium, WorkspaceTier.enterprise]) ==
+  assert(toStrings([WorkspaceTier.standard, WorkspaceTier.premium, WorkspaceTier.enterprise]) ==
          ["standard", "premium", "enterprise"]);
 }
 

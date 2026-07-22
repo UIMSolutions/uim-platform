@@ -63,7 +63,7 @@ unittest {
 
   assert(["draft", "ready", "processing", "completed", "failed"].toDatasetStatuses ==
          [DatasetStatus.draft, DatasetStatus.ready, DatasetStatus.processing, DatasetStatus.completed, DatasetStatus.failed]);
-  assert(toString([DatasetStatus.draft, DatasetStatus.ready, DatasetStatus.processing, DatasetStatus.completed, DatasetStatus.failed]) ==
+  assert(toStrings([DatasetStatus.draft, DatasetStatus.ready, DatasetStatus.processing, DatasetStatus.completed, DatasetStatus.failed]) ==
          ["draft", "ready", "processing", "completed", "failed"]);
 }
 

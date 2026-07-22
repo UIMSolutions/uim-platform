@@ -53,7 +53,7 @@ unittest {
 
   assert(["draft", "inProgress", "locked", "approved", "published"].toPlanningStatuses ==
          [PlanningStatus.draft, PlanningStatus.inProgress, PlanningStatus.locked, PlanningStatus.approved, PlanningStatus.published]);
-  assert(toString([PlanningStatus.draft, PlanningStatus.inProgress, PlanningStatus.locked, PlanningStatus.approved, PlanningStatus.published]) ==
+  assert(toStrings([PlanningStatus.draft, PlanningStatus.inProgress, PlanningStatus.locked, PlanningStatus.approved, PlanningStatus.published]) ==
          ["draft", "inProgress", "locked", "approved", "published"]);
 }
 
@@ -95,6 +95,6 @@ unittest {
 
   assert(["actual", "plan", "forecast", "whatIf"].toPlanningVersionTypes ==
          [PlanningVersionType.actual, PlanningVersionType.plan, PlanningVersionType.forecast, PlanningVersionType.whatIf]);
-  assert(toString([PlanningVersionType.actual, PlanningVersionType.plan, PlanningVersionType.forecast, PlanningVersionType.whatIf]) ==
+  assert(toStrings([PlanningVersionType.actual, PlanningVersionType.plan, PlanningVersionType.forecast, PlanningVersionType.whatIf]) ==
          ["actual", "plan", "forecast", "whatIf"]);
 }

@@ -53,7 +53,7 @@ unittest {
 
   assert(["classification", "regression", "timeSeries", "clustering", "anomalyDetection"].toPredictionTypes ==
          [PredictionType.classification, PredictionType.regression, PredictionType.timeSeries, PredictionType.clustering, PredictionType.anomalyDetection]);
-  assert(toString([PredictionType.classification, PredictionType.regression, PredictionType.timeSeries, PredictionType.clustering, PredictionType.anomalyDetection]) ==
+  assert(toStrings([PredictionType.classification, PredictionType.regression, PredictionType.timeSeries, PredictionType.clustering, PredictionType.anomalyDetection]) ==
          ["classification", "regression", "timeSeries", "clustering", "anomalyDetection"]);
 }
 
@@ -102,7 +102,7 @@ unittest {
 
   assert(["created", "training", "ready", "failed", "archived"].toPredictionStatuses ==
          [PredictionStatus.created, PredictionStatus.training, PredictionStatus.ready, PredictionStatus.failed, PredictionStatus.archived]);
-  assert(toString([PredictionStatus.created, PredictionStatus.training, PredictionStatus.ready, PredictionStatus.failed, PredictionStatus.archived]) ==
+  assert(toStrings([PredictionStatus.created, PredictionStatus.training, PredictionStatus.ready, PredictionStatus.failed, PredictionStatus.archived]) ==
          ["created", "training", "ready", "failed", "archived"]);
 }
 

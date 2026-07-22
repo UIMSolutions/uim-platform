@@ -46,7 +46,7 @@ unittest {
 
   assert(toSiteStatus(["draft", "published", "unpublished", "archived", "unknown"]) ==
          [SiteStatus.draft, SiteStatus.published, SiteStatus.unpublished, SiteStatus.archived, SiteStatus.draft]);
-  assert(toString([SiteStatus.draft, SiteStatus.published, SiteStatus.unpublished, SiteStatus.archived]) ==
+  assert(toStrings([SiteStatus.draft, SiteStatus.published, SiteStatus.unpublished, SiteStatus.archived]) ==
          ["draft", "published", "unpublished", "archived"]);
 }
 
@@ -87,7 +87,7 @@ unittest {
 
   assert(toPageLayout(["freeform", "anchored", "twoColumn", "threeColumn", "dashboard", "unknown"]) ==
          [PageLayout.freeform, PageLayout.anchored, PageLayout.twoColumn, PageLayout.threeColumn, PageLayout.dashboard, PageLayout.freeform]);
-  assert(toString([PageLayout.freeform, PageLayout.anchored, PageLayout.twoColumn, PageLayout.threeColumn, PageLayout.dashboard]) ==
+  assert(toStrings([PageLayout.freeform, PageLayout.anchored, PageLayout.twoColumn, PageLayout.threeColumn, PageLayout.dashboard]) ==
          ["freeform", "anchored", "twoColumn", "threeColumn", "dashboard"]);
 }
 
@@ -135,7 +135,7 @@ unittest {
 
   assert(toTileType(["static_", "dynamic", "custom", "news", "kpi", "unknown"]) ==
          [TileType.static_, TileType.dynamic, TileType.custom, TileType.news, TileType.kpi, TileType.static_]);
-  assert(toString([TileType.static_, TileType.dynamic, TileType.custom, TileType.news, TileType.kpi]) ==
+  assert(toStrings([TileType.static_, TileType.dynamic, TileType.custom, TileType.news, TileType.kpi]) ==
          ["static_", "dynamic", "custom", "news", "kpi"]);
 }
 
@@ -179,7 +179,7 @@ unittest {
 
   assert(toAppType(["sapui5", "webDynpro", "sapGuiHtml", "url", "webComponent", "native", "unknown"]) ==
          [AppType.sapui5, AppType.webDynpro, AppType.sapGuiHtml, AppType.url, AppType.webComponent, AppType.native, AppType.sapui5]);
-  assert(toString([AppType.sapui5, AppType.webDynpro, AppType.sapGuiHtml, AppType.url, AppType.webComponent, AppType.native]) ==
+  assert(toStrings([AppType.sapui5, AppType.webDynpro, AppType.sapGuiHtml, AppType.url, AppType.webComponent, AppType.native]) ==
          ["sapui5", "webDynpro", "sapGuiHtml", "url", "webComponent", "native"]);
 }
 
@@ -214,7 +214,7 @@ unittest {
 
   assert(toProviderType(["local", "remote", "federated", "unknown"]) ==
          [ProviderType.local, ProviderType.remote, ProviderType.federated, ProviderType.local]);
-  assert(toString([ProviderType.local, ProviderType.remote, ProviderType.federated]) ==
+  assert(toStrings([ProviderType.local, ProviderType.remote, ProviderType.federated]) ==
          ["local", "remote", "federated"]);
 }
 
@@ -252,7 +252,7 @@ unittest {
 
   assert(toThemeMode(["light", "dark", "highContrast", "highContrastDark", "unknown"]) ==
          [ThemeMode.light, ThemeMode.dark, ThemeMode.highContrast, ThemeMode.highContrastDark, ThemeMode.light]);
-  assert(toString([ThemeMode.light, ThemeMode.dark, ThemeMode.highContrast, ThemeMode.highContrastDark]) ==
+  assert(toStrings([ThemeMode.light, ThemeMode.dark, ThemeMode.highContrast, ThemeMode.highContrastDark]) ==
          ["light", "dark", "highContrast", "highContrastDark"]);
 }
 
@@ -287,7 +287,7 @@ unittest {
 
   assert(toNavigationTarget(["inPlace", "newWindow", "embedded", "unknown"]) ==
          [NavigationTarget.inPlace, NavigationTarget.newWindow, NavigationTarget.embedded, NavigationTarget.inPlace]);
-  assert(toString([NavigationTarget.inPlace, NavigationTarget.newWindow, NavigationTarget.embedded]) ==
+  assert(toStrings([NavigationTarget.inPlace, NavigationTarget.newWindow, NavigationTarget.embedded]) ==
          ["inPlace", "newWindow", "embedded"]);
 }
 
@@ -325,7 +325,7 @@ unittest {
 
   assert(toTransportStatus(["pending", "inProgress", "completed", "failed", "unknown"]) ==
          [TransportStatus.pending, TransportStatus.inProgress, TransportStatus.completed, TransportStatus.failed, TransportStatus.pending]);
-  assert(toString([TransportStatus.pending, TransportStatus.inProgress, TransportStatus.completed, TransportStatus.failed]) ==
+  assert(toStrings([TransportStatus.pending, TransportStatus.inProgress, TransportStatus.completed, TransportStatus.failed]) ==
          ["pending", "inProgress", "completed", "failed"]);
 }
 
@@ -363,6 +363,6 @@ unittest {
 
   assert(toRoleScope(["site", "catalog", "group", "page", "unknown"]) ==
          [RoleScope.site, RoleScope.catalog, RoleScope.group, RoleScope.page, RoleScope.site]);
-  assert(toString([RoleScope.site, RoleScope.catalog, RoleScope.group, RoleScope.page]) ==
+  assert(toStrings([RoleScope.site, RoleScope.catalog, RoleScope.group, RoleScope.page]) ==
          ["site", "catalog", "group", "page"]);
 }

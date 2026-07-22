@@ -51,7 +51,7 @@ unittest {
     assert(toString(CustomerStatus.disabled) == "disabled");
     assert(toString(CustomerStatus.deleted) == "deleted");
 
-    assert(toString([CustomerStatus.pending, CustomerStatus.locked]) == ["pending", "locked"]);
+    assert(toStrings([CustomerStatus.pending, CustomerStatus.locked]) == ["pending", "locked"]);
 }
 
 enum CustomerGender {
@@ -91,7 +91,7 @@ unittest {
     assert(toString(CustomerGender.female) == "female");
     assert(toString(CustomerGender.other) == "other");  
 
-    assert(toString([CustomerGender.unspecified, CustomerGender.female]) == ["unspecified", "female"]);
+    assert(toStrings([CustomerGender.unspecified, CustomerGender.female]) == ["unspecified", "female"]);
 }
 
 enum LoginProvider {
@@ -143,7 +143,7 @@ unittest {
     assert(toString(LoginProvider.saml) == "saml");
     assert(toString(LoginProvider.oidc) == "oidc");
 
-    assert(toString([LoginProvider.site, LoginProvider.google]) == ["site", "google"]);
+    assert(toStrings([LoginProvider.site, LoginProvider.google]) == ["site", "google"]);
 }
 
 enum SessionStatus {
@@ -180,7 +180,7 @@ unittest {
     assert(toString(SessionStatus.expired) == "expired");
     assert(toString(SessionStatus.revoked) == "revoked");
 
-    assert(toString([SessionStatus.active, SessionStatus.revoked]) == ["active", "revoked"]);
+    assert(toStrings([SessionStatus.active, SessionStatus.revoked]) == ["active", "revoked"]);
 }
 
 enum SocialIdentityStatus {
@@ -217,7 +217,7 @@ unittest {
     assert(toString(SocialIdentityStatus.unlinked) == "unlinked");
     assert(toString(SocialIdentityStatus.error) == "error");
 
-    assert(toString([SocialIdentityStatus.linked, SocialIdentityStatus.error]) == ["linked", "error"]);
+    assert(toStrings([SocialIdentityStatus.linked, SocialIdentityStatus.error]) == ["linked", "error"]);
 }
 
 enum ConsentType {
@@ -266,7 +266,7 @@ unittest {
     assert(toString(ConsentType.dataProcessing) == "dataProcessing");
     assert(toString(ConsentType.newsletter) == "newsletter");
 
-    assert(toString([ConsentType.marketing, ConsentType.functional]) == ["marketing", "functional"]);
+    assert(toStrings([ConsentType.marketing, ConsentType.functional]) == ["marketing", "functional"]);
 }
 
 enum LegalBasis {
@@ -312,7 +312,7 @@ unittest {
     assert(toString(LegalBasis.publicTask) == "publicTask");
     assert(toString(LegalBasis.legitimateInterests) == "legitimateInterests");
 
-    assert(toString([LegalBasis.consent, LegalBasis.contract]) == ["consent", "contract"]);
+    assert(toStrings([LegalBasis.consent, LegalBasis.contract]) == ["consent", "contract"]);
 }
 
 enum AuditAction {
@@ -434,7 +434,7 @@ unittest {
     assert(toString(ResourceType.screenSet) == "screenSet");
     assert(toString(ResourceType.sitePolicy) == "sitePolicy");
 
-    assert(toString([ResourceType.customer, ResourceType.session]) == ["customer", "session"]);
+    assert(toStrings([ResourceType.customer, ResourceType.session]) == ["customer", "session"]);
 }
 
 enum IdentityProviderType {
@@ -474,7 +474,7 @@ unittest {
     assert(toString(IdentityProviderType.oauth2) == "oauth2");
     assert(toString(IdentityProviderType.ldap) == "ldap");
 
-    assert(toString([IdentityProviderType.saml, IdentityProviderType.oidc]) == ["saml", "oidc"]);
+    assert(toStrings([IdentityProviderType.saml, IdentityProviderType.oidc]) == ["saml", "oidc"]);
 }
 
 enum IdentityProviderStatus {
@@ -511,7 +511,7 @@ unittest {
     assert(toString(IdentityProviderStatus.inactive) == "inactive");
     assert(toString(IdentityProviderStatus.testing) == "testing");
 
-    assert(toString([IdentityProviderStatus.active, IdentityProviderStatus.testing]) == ["active", "testing"]);
+    assert(toStrings([IdentityProviderStatus.active, IdentityProviderStatus.testing]) == ["active", "testing"]);
 }
 
 enum ScreenSetFlowType {
@@ -557,7 +557,7 @@ unittest {
     assert(toString(ScreenSetFlowType.linkAccount) == "linkAccount");
     assert(toString(ScreenSetFlowType.liteRegistration) == "liteRegistration");
 
-    assert(toString([ScreenSetFlowType.registrationLogin, ScreenSetFlowType.forgotPassword]) == ["registrationLogin", "forgotPassword"]);
+    assert(toStrings([ScreenSetFlowType.registrationLogin, ScreenSetFlowType.forgotPassword]) == ["registrationLogin", "forgotPassword"]);
 }
 
 enum ScreenSetStatus {
@@ -594,7 +594,7 @@ unittest {
     assert(toString(ScreenSetStatus.active) == "active");
     assert(toString(ScreenSetStatus.archived) == "archived");
 
-    assert(toString([ScreenSetStatus.draft, ScreenSetStatus.archived]) == ["draft", "archived"]);
+    assert(toStrings([ScreenSetStatus.draft, ScreenSetStatus.archived]) == ["draft", "archived"]);
 }
 
 enum PolicyType {

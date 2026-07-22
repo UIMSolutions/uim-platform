@@ -80,5 +80,5 @@ unittest {
   assert(FilterOperator.isNotNull.toString == "isNotNull");
 
   assert(toFilterOperator(["equals", "notEquals", "greaterThan", "lessThan"]) == [FilterOperator.equals, FilterOperator.notEquals, FilterOperator.greaterThan, FilterOperator.lessThan]);
-  assert(toString([FilterOperator.equals, FilterOperator.notEquals, FilterOperator.greaterThan, FilterOperator.lessThan]) == ["equals", "notEquals", "greaterThan", "lessThan"]);
+  assert(toStrings([FilterOperator.equals, FilterOperator.notEquals, FilterOperator.greaterThan, FilterOperator.lessThan]) == ["equals", "notEquals", "greaterThan", "lessThan"]);
 }

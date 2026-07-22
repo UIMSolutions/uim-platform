@@ -59,7 +59,7 @@ unittest {
         ApplicationType.web, ApplicationType.mobile,
         ApplicationType.webAndMobile
       ]);
-  assert(toString([
+  assert(toStrings([
       ApplicationType.web, ApplicationType.mobile,
       ApplicationType.webAndMobile
     ]) ==
@@ -613,7 +613,7 @@ unittest {
         DataEntityStatus.draft, DataEntityStatus.active,
         DataEntityStatus.deprecated_
       ]);
-  assert(toString([
+  assert(toStrings([
       DataEntityStatus.draft, DataEntityStatus.active,
       DataEntityStatus.deprecated_
     ]) ==
