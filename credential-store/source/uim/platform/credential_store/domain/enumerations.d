@@ -45,10 +45,10 @@ unittest {
   assert([CredentialType.password, CredentialType.key].toStrings == ["password", "key"]);
 }
 
-enum CredentialStatus {
-  active,
-  disabled,
-  deleted_,
+enum CredentialStatus : string{
+  active = "active",
+  disabled = "disabled",
+  deleted_ = "deleted"
 }
 
 CredentialStatus toCredentialStatus(string value) {
@@ -68,7 +68,7 @@ CredentialStatus[] toCredentialStatuses(string[] values)
   => values.map!toCredentialStatus.array;
 
 string toString(CredentialStatus value)
-  => value.to!string;
+  => cast(string)value;
 
 string[] toStrings(CredentialStatus[] values)
   => values.map!toString.array;
@@ -239,16 +239,39 @@ enum PermissionLevel {
 }
 
 PermissionLevel toPermissionLevel(string value) {
-  switch (ignoreCase ? value.toLower() : value) {
-  case "readwrite":
-    return PermissionLevel.readWrite;
-  case "readonly":
-    return PermissionLevel.readOnly;
-  case "admin":
-    return PermissionLevel.admin;
-  default:
-    return PermissionLevel.readOnly; // Default case
-  }
+  mixin(EnumSwitch("PermissionLevel", "readWrite"));
+}
+
+PermissionLevel[] toPermissionLevels(string[] values)
+  => values.map!toPermissionLevel.array;  
+
+string toString(PermissionLevel value)
+  => value.to!string;
+
+string[] toStrings(PermissionLevel[] values)
+  => values.map!toString.array;
+
+///
+unittest {
+  mixin(ShowTest!("PermissionLevel"));
+
+  assert("readWrite".toPermissionLevel == PermissionLevel.readWrite);
+  assert("readOnly".toPermissionLevel == PermissionLevel.readOnly);
+  assert("admin".toPermissionLevel == PermissionLevel.admin);
+
+  assert("".toPermissionLevel == PermissionLevel.readWrite);
+  assert("unknown".toPermissionLevel == PermissionLevel.readWrite);
+
+  assert(PermissionLevel.readWrite.toString == "readWrite");
+  assert(PermissionLevel.readOnly.toString == "readOnly");
+  assert(PermissionLevel.admin.toString == "admin");
+
+  assert(["readWrite", "admin"].toPermissionLevels == [
+      PermissionLevel.readWrite, PermissionLevel.admin
+    ]);
+  assert([PermissionLevel.readWrite, PermissionLevel.admin].toStrings == [
+      "readWrite", "admin"
+    ]);
 }
 
 enum BindingStatus {
@@ -257,14 +280,37 @@ enum BindingStatus {
 }
 
 BindingStatus toBindingStatus(string value) {
-  switch (ignoreCase ? value.toLower() : value) {
-  case "active":
-    return BindingStatus.active;
-  case "revoked":
-    return BindingStatus.revoked;
-  default:
-    return BindingStatus.active; // Default case
-  }
+  mixin(EnumSwitch("BindingStatus", "active"));
+}
+
+BindingStatus[] toBindingStatuses(string[] values)
+  => values.map!toBindingStatus.array;
+
+string toString(BindingStatus value)
+  => value.to!string;
+
+string[] toStrings(BindingStatus[] values)
+  => values.map!toString.array;
+
+///
+unittest {
+  mixin(ShowTest!("BindingStatus"));
+
+  assert("active".toBindingStatus == BindingStatus.active);
+  assert("revoked".toBindingStatus == BindingStatus.revoked);
+
+  assert("".toBindingStatus == BindingStatus.active);
+  assert("unknown".toBindingStatus == BindingStatus.active);
+
+  assert(BindingStatus.active.toString == "active");
+  assert(BindingStatus.revoked.toString == "revoked");
+
+  assert(["active", "revoked"].toBindingStatuses == [
+      BindingStatus.active, BindingStatus.revoked
+    ]);
+  assert([BindingStatus.active, BindingStatus.revoked].toStrings == [
+      "active", "revoked"
+    ]);
 }
 
 enum KeyringRotationPeriod {
@@ -276,7 +322,7 @@ enum KeyringRotationPeriod {
 }
 
 KeyringRotationPeriod toKeyringRotationPeriod(string value) {
-  switch (ignoreCase ? value.toLower() : value) {
+  switch (value.toLower()) {
   case "30":
     return KeyringRotationPeriod.days30;
   case "60":
@@ -291,3 +337,39 @@ KeyringRotationPeriod toKeyringRotationPeriod(string value) {
     return KeyringRotationPeriod.days90; // Default case
   }
 }
+
+KeyringRotationPeriod[] toKeyringRotationPeriods(string[] values)
+  => values.map!toKeyringRotationPeriod.array;
+
+string toString(KeyringRotationPeriod value)
+  => value.to!string;
+
+string[] toStrings(KeyringRotationPeriod[] values)
+  => values.map!toString.array;
+
+///
+unittest {
+  mixin(ShowTest!("KeyringRotationPeriod"));
+
+  assert("30".toKeyringRotationPeriod == KeyringRotationPeriod.days30);
+  assert("60".toKeyringRotationPeriod == KeyringRotationPeriod.days60);
+  assert("90".toKeyringRotationPeriod == KeyringRotationPeriod.days90);
+  assert("180".toKeyringRotationPeriod == KeyringRotationPeriod.days180);
+  assert("365".toKeyringRotationPeriod == KeyringRotationPeriod.days365);
+
+  assert("".toKeyringRotationPeriod == KeyringRotationPeriod.days90);
+  assert("unknown".toKeyringRotationPeriod == KeyringRotationPeriod.days90);
+
+  assert(KeyringRotationPeriod.days30.toString == "30");
+  assert(KeyringRotationPeriod.days60.toString == "60");
+  assert(KeyringRotationPeriod.days90.toString == "90");
+  assert(KeyringRotationPeriod.days180.toString == "180");
+  assert(KeyringRotationPeriod.days365.toString == "365");
+
+  assert(["30", "90"].toKeyringRotationPeriods == [
+      KeyringRotationPeriod.days30, KeyringRotationPeriod.days90
+    ]);
+  assert([KeyringRotationPeriod.days30, KeyringRotationPeriod.days90].toStrings == [
+      "30", "90"
+    ]);
+} 

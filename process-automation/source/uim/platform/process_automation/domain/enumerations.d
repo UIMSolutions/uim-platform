@@ -75,71 +75,21 @@ enum ProcessStatus {
 }
 
 ProcessStatus toProcessStatus(string status) {
-    switch (status.toLower) {
-    case "draft":
-        return ProcessStatus.draft;
-    case "active":
-        return ProcessStatus.active;
-    case "inactive":
-        return ProcessStatus.inactive;
-    case "deprecated":
-        return ProcessStatus.deprecated_;
-    case "error":
-        return ProcessStatus.error;
-    case "archived":
-        return ProcessStatus.archived;
-    case "unknown":
-        return ProcessStatus.unknown;
-    case "deleted":
-        return ProcessStatus.deleted;
-    case "suspended":
-        return ProcessStatus.suspended;
-    case "completed":
-        return ProcessStatus.completed;
-    case "failed":
-        return ProcessStatus.failed;
-    case "cancelled":
-        return ProcessStatus.cancelled;
-    case "waiting":
-        return ProcessStatus.waiting;
-    case "terminated":
-        return ProcessStatus.terminated;
-    case "resumed":
-        return ProcessStatus.resumed;
-    case "rollingback":
-        return ProcessStatus.rollingBack;
-    case "rolledback":
-        return ProcessStatus.rolledBack;
-    case "migrating":
-        return ProcessStatus.migrating;
-    case "migrated":
-        return ProcessStatus.migrated;
-    case "versioning":
-        return ProcessStatus.versioning;
-    case "versioned":
-        return ProcessStatus.versioned;
-    case "cloning":
-        return ProcessStatus.cloning;
-    case "cloned":
-        return ProcessStatus.cloned;
-    case "testing":
-        return ProcessStatus.testing;
-    case "tested":
-        return ProcessStatus.tested;
-    case "validating":
-        return ProcessStatus.validating;
-    case "validated":
-        return ProcessStatus.validated;
-    case "releasing":
-        return ProcessStatus.releasing;
-    case "released":
-        return ProcessStatus.released;
-    default:
-        return ProcessStatus.unknown;
-    }
+    mixin(EnumSwitch("ProcessStatus", "unknown"));
 }
-/// 
+
+ProcessStatus[] toProcessStatuses(string[] statuses)
+    => statuses.map!toProcessStatus.array;
+
+string toString(ProcessStatus status)
+    => status.to!string;
+
+string[] toStrings(ProcessStatus[] statuses)
+    => statuses.map!toString.array;
+///
 unittest {
+    mixin(ShowTest!("ProcessStatus"));
+
     assert(toProcessStatus("active") == ProcessStatus.active);
     assert(toProcessStatus("inactive") == ProcessStatus.inactive);
     assert(toProcessStatus("deprecated") == ProcessStatus.deprecated_);
@@ -168,7 +118,48 @@ unittest {
     assert(toProcessStatus("validated") == ProcessStatus.validated);
     assert(toProcessStatus("releasing") == ProcessStatus.releasing);
     assert(toProcessStatus("released") == ProcessStatus.released);
-    // TODO: assert(toProcessStatus("invalid") == ProcessStatus.draft);
+
+    assert(toProcessStatus("") == ProcessStatus.unknown);
+    assert(toProcessStatus("unknown_status") == ProcessStatus.unknown);
+
+    assert(ProcessStatus.active.toString == "active");
+    assert(ProcessStatus.inactive.toString == "inactive");
+    assert(ProcessStatus.deprecated_.toString == "deprecated");
+    assert(ProcessStatus.error.toString == "error");
+    assert(ProcessStatus.archived.toString == "archived");
+    assert(ProcessStatus.unknown.toString == "unknown");
+    assert(ProcessStatus.deleted.toString == "deleted");
+    assert(ProcessStatus.suspended.toString == "suspended");
+    assert(ProcessStatus.completed.toString == "completed");
+    assert(ProcessStatus.failed.toString == "failed");
+    assert(ProcessStatus.cancelled.toString == "cancelled");
+    assert(ProcessStatus.waiting.toString == "waiting");
+    assert(ProcessStatus.terminated.toString == "terminated");
+    assert(ProcessStatus.resumed.toString == "resumed");
+    assert(ProcessStatus.rollingBack.toString == "rollingBack");
+    assert(ProcessStatus.rolledBack.toString == "rolledBack");
+    assert(ProcessStatus.migrating.toString == "migrating");
+    assert(ProcessStatus.migrated.toString == "migrated");
+    assert(ProcessStatus.versioning.toString == "versioning");
+    assert(ProcessStatus.versioned.toString == "versioned");
+    assert(ProcessStatus.cloning.toString == "cloning");
+    assert(ProcessStatus.cloned.toString == "cloned");
+    assert(ProcessStatus.testing.toString == "testing");
+    assert(ProcessStatus.tested.toString == "tested");
+    assert(ProcessStatus.validating.toString == "validating");
+    assert(ProcessStatus.validated.toString == "validated");
+    assert(ProcessStatus.releasing.toString == "releasing");
+    assert(ProcessStatus.released.toString == "released");
+
+    assert(["active", "inactive", "deprecated"].toProcessStatuses == [
+            ProcessStatus.active, ProcessStatus.inactive,
+            ProcessStatus.deprecated_
+        ]);
+    assert([
+        ProcessStatus.active, ProcessStatus.inactive, ProcessStatus.deprecated_
+    ].toStrings == [
+        "active", "inactive", "deprecated"
+    ]);
 }
 
 enum ProcessCategory {
@@ -187,23 +178,48 @@ enum ProcessCategory {
 }
 
 ProcessCategory toProcessCategory(string category) {
-    switch (category.toLower) {
-        static foreach (member; __traits(allMembers, ProcessCategory)) {
-    case member:
-            return __traits(getMember, ProcessCategory, member);
-        }
-    default:
-        return ProcessCategory.workflow;
-    }
+    mixin(EnumSwitch("ProcessCategory", "custom"));
 }
+
+ProcessCategory[] toProcessCategories(string[] categories)
+    => categories.map!toProcessCategory.array;
+
+string toString(ProcessCategory category)
+    => category.to!string;
+
+string[] toStrings(ProcessCategory[] categories)
+    => categories.map!toString.array;
 ///
 unittest {
-    assert(toProcessCategory("workflow") == ProcessCategory.workflow);
-    assert(toProcessCategory("approval") == ProcessCategory.approval);
-    assert(toProcessCategory("notification") == ProcessCategory.notification);
-    assert(toProcessCategory("automation") == ProcessCategory.automation);
-    assert(toProcessCategory("hybrid") == ProcessCategory.hybrid);
-    assert(toProcessCategory("custom") == ProcessCategory.custom);
+    mixin(ShowTest!("ProcessCategory"));
+
+    assert("workflow".toProcessCategory == ProcessCategory.workflow);
+    assert("approval".toProcessCategory == ProcessCategory.approval);
+    assert("notification".toProcessCategory == ProcessCategory.notification);
+    assert("automation".toProcessCategory == ProcessCategory.automation);
+    assert("hybrid".toProcessCategory == ProcessCategory.hybrid);
+    assert("custom".toProcessCategory == ProcessCategory.custom);
+
+    assert("".toProcessCategory == ProcessCategory.custom);
+    assert("unknown".toProcessCategory == ProcessCategory.custom);
+
+    assert(ProcessCategory.workflow.toString == "workflow");
+    assert(ProcessCategory.approval.toString == "approval");
+    assert(ProcessCategory.notification.toString == "notification");
+    assert(ProcessCategory.automation.toString == "automation");
+    assert(ProcessCategory.hybrid.toString == "hybrid");
+    assert(ProcessCategory.custom.toString == "custom");
+
+    assert(["workflow", "approval", "notification"].toProcessCategories == [
+            ProcessCategory.workflow, ProcessCategory.approval,
+            ProcessCategory.notification
+        ]);
+    assert([
+        ProcessCategory.workflow, ProcessCategory.approval,
+        ProcessCategory.notification
+    ].toStrings == [
+        "workflow", "approval", "notification"
+    ]);
 }
 
 enum StepType {
@@ -250,50 +266,73 @@ enum StepType {
 }
 
 StepType toStepType(string type) {
-    switch (type.toLower) {
-    case "start_event":
-        return StepType.startEvent;
-    case "end_event":
-        return StepType.endEvent;
-    case "user_task":
-        return StepType.userTask;
-    case "service_task":
-        return StepType.serviceTask;
-    case "script_task":
-        return StepType.scriptTask;
-    case "decision_task":
-        return StepType.decisionTask;
-    case "automation_task":
-        return StepType.automationTask;
-    case "mail_task":
-        return StepType.mailTask;
-    case "parallel_gateway":
-        return StepType.parallelGateway;
-    case "exclusive_gateway":
-        return StepType.exclusiveGateway;
-    case "inclusive_gateway":
-        return StepType.inclusiveGateway;
-    case "event_based_gateway":
-        return StepType.eventBasedGateway;
-    case "sub_process":
-        return StepType.subProcess;
-    case "call_activity":
-        return StepType.callActivity;
-    case "timer_event":
-        return StepType.timerEvent;
-    case "message_event":
-        return StepType.messageEvent;
-    case "signal_event":
-        return StepType.signalEvent;
-    case "error_event":
-        return StepType.errorEvent;
-    case "condition":
-        return StepType.condition;
-    case "custom":
-        return StepType.custom;
-    default:
-        return StepType.userTask;
-    }
+    mixin(EnumSwitch("StepType", "custom"));
+}
+
+StepType[] toStepTypes(string[] types)
+    => types.map!toStepType.array;
+
+string toString(StepType type)
+    => type.to!string;
+
+string[] toStrings(StepType[] types)
+    => types.map!toString.array;
+
+///
+unittest {
+    mixin(ShowTest!("StepType"));
+
+    assert(toStepType("startEvent") == StepType.startEvent);
+    assert(toStepType("endEvent") == StepType.endEvent);
+    assert(toStepType("userTask") == StepType.userTask);
+    assert(toStepType("serviceTask") == StepType.serviceTask);
+    assert(toStepType("scriptTask") == StepType.scriptTask);
+    assert(toStepType("decisionTask") == StepType.decisionTask);
+    assert(toStepType("automationTask") == StepType.automationTask);
+    assert(toStepType("mailTask") == StepType.mailTask);
+    assert(toStepType("parallelGateway") == StepType.parallelGateway);
+    assert(toStepType("exclusiveGateway") == StepType.exclusiveGateway);
+    assert(toStepType("inclusiveGateway") == StepType.inclusiveGateway);
+    assert(toStepType("eventBasedGateway") == StepType.eventBasedGateway);
+    assert(toStepType("subProcess") == StepType.subProcess);
+    assert(toStepType("callActivity") == StepType.callActivity);
+    assert(toStepType("timerEvent") == StepType.timerEvent);
+    assert(toStepType("messageEvent") == StepType.messageEvent);
+    assert(toStepType("signalEvent") == StepType.signalEvent);
+    assert(toStepType("errorEvent") == StepType.errorEvent);
+    assert(toStepType("condition") == StepType.condition);
+    assert(toStepType("custom") == StepType.custom);
+
+    assert(toStepType("") == StepType.custom);
+    assert(toStepType("unknown") == StepType.custom);
+
+    assert(StepType.startEvent.toString == "startEvent");
+    assert(StepType.endEvent.toString == "endEvent");
+    assert(StepType.userTask.toString == "userTask");
+    assert(StepType.serviceTask.toString == "serviceTask");
+    assert(StepType.scriptTask.toString == "scriptTask");
+    assert(StepType.decisionTask.toString == "decisionTask");
+    assert(StepType.automationTask.toString == "automationTask");
+    assert(StepType.mailTask.toString == "mailTask");
+    assert(StepType.parallelGateway.toString == "parallelGateway");
+    assert(StepType.exclusiveGateway.toString == "exclusiveGateway");
+    assert(StepType.inclusiveGateway.toString == "inclusiveGateway");
+    assert(StepType.eventBasedGateway.toString == "eventBasedGateway");
+    assert(StepType.subProcess.toString == "subProcess");
+    assert(StepType.callActivity.toString == "callActivity");
+    assert(StepType.timerEvent.toString == "timerEvent");
+    assert(StepType.messageEvent.toString == "messageEvent");
+    assert(StepType.signalEvent.toString == "signalEvent");
+    assert(StepType.errorEvent.toString == "errorEvent");
+    assert(StepType.condition.toString == "condition");
+    assert(StepType.custom.toString == "custom");
+
+    assert(["startEvent", "endEvent", "userTask"].toStepTypes == [
+            StepType.startEvent, StepType.endEvent, StepType.userTask
+        ]);
+    assert([StepType.startEvent, StepType.endEvent, StepType.userTask].toStrings == [
+            "startEvent", "endEvent", "userTask"
+        ]);
 }
 
 // --- Process Instance ---
@@ -317,14 +356,52 @@ enum InstanceStatus {
 }
 
 InstanceStatus toInstanceStatus(string status) {
-    switch (status.toLower) {
-        static foreach (member; __traits(allMembers, InstanceStatus)) {
-    case member:
-            return __traits(getMember, InstanceStatus, member);
-        }
-    default:
-        return InstanceStatus.unknown;
-    }
+    mixin(EnumSwitch("InstanceStatus", "unknown"));
+}
+
+InstanceStatus[] toInstanceStatuses(string[] statuses)
+    => statuses.map!toInstanceStatus.array;
+
+string toString(InstanceStatus status)
+    => status.to!string;
+
+string[] toStrings(InstanceStatus[] statuses)
+    => statuses.map!toString.array;
+///
+unittest {
+    mixin(ShowTest!("InstanceStatus"));
+
+    assert("running".toInstanceStatus == InstanceStatus.running);
+    assert("completed".toInstanceStatus == InstanceStatus.completed);
+    assert("failed".toInstanceStatus == InstanceStatus.failed);
+    assert("suspended".toInstanceStatus == InstanceStatus.suspended);
+    assert("cancelled".toInstanceStatus == InstanceStatus.cancelled);
+    assert("waiting".toInstanceStatus == InstanceStatus.waiting);
+    assert("error".toInstanceStatus == InstanceStatus.error);
+    assert("unknown".toInstanceStatus == InstanceStatus.unknown);
+
+    assert("".toInstanceStatus == InstanceStatus.unknown);
+    assert("some_unknown_status".toInstanceStatus == InstanceStatus.unknown);
+
+    assert(InstanceStatus.running.toString == "running");
+    assert(InstanceStatus.completed.toString == "completed");
+    assert(InstanceStatus.failed.toString == "failed");
+    assert(InstanceStatus.suspended.toString == "suspended");
+    assert(InstanceStatus.cancelled.toString == "cancelled");
+    assert(InstanceStatus.waiting.toString == "waiting");
+    assert(InstanceStatus.error.toString == "error");
+    assert(InstanceStatus.unknown.toString == "unknown");
+
+    assert(["running", "completed", "failed"].toInstanceStatuses == [
+            InstanceStatus.running, InstanceStatus.completed,
+            InstanceStatus.failed
+        ]);
+
+    assert([
+        InstanceStatus.running, InstanceStatus.completed, InstanceStatus.failed
+    ].toStrings == [
+        "running", "completed", "failed"
+    ]);
 }
 
 enum InstancePriority {
@@ -339,14 +416,44 @@ enum InstancePriority {
 }
 
 InstancePriority toInstancePriority(string priority) {
-    switch (priority.toLower) {
-        static foreach (member; __traits(allMembers, InstancePriority)) {
-    case member:
-            return __traits(getMember, InstancePriority, member);
-        }
-    default:
-        return InstancePriority.medium;
-    }
+    mixin(EnumSwitch("InstancePriority", "medium"));
+}
+
+InstancePriority[] toInstancePriorities(string[] priorities)
+    => priorities.map!toInstancePriority.array;
+
+string toString(InstancePriority priority)
+    => priority.to!string;
+
+string[] toStrings(InstancePriority[] priorities)
+    => priorities.map!toString.array;
+
+/// 
+unittest {
+    mixin(ShowTest!("InstancePriority"));
+
+    assert("low".toInstancePriority == InstancePriority.low);
+    assert("medium".toInstancePriority == InstancePriority.medium);
+    assert("high".toInstancePriority == InstancePriority.high);
+    assert("critical".toInstancePriority == InstancePriority.critical);
+
+    assert("".toInstancePriority == InstancePriority.medium);
+    assert("some_unknown_priority".toInstancePriority == InstancePriority.medium);
+
+    assert(InstancePriority.low.toString == "low");
+    assert(InstancePriority.medium.toString == "medium");
+    assert(InstancePriority.high.toString == "high");
+    assert(InstancePriority.critical.toString == "critical");
+
+    assert(["low", "medium", "high"].toInstancePriorities == [
+            InstancePriority.low, InstancePriority.medium, InstancePriority.high
+        ]);
+
+    assert([
+        InstancePriority.low, InstancePriority.medium, InstancePriority.high
+    ].toStrings == [
+        "low", "medium", "high"
+    ]);
 }
 
 // --- Event (for Alerting and Monitoring) ---
@@ -363,17 +470,55 @@ enum EventCategory : string {
 
 EventCategory toEventCategory(string category) {
     switch (category.toUpper) {
-        case "NOTIFICATION":
-            return EventCategory.notification;
-        case "ALERT":
-            return EventCategory.alert;
-        case "EXCEPTION":
-            return EventCategory.exception_;
-        case "CUSTOM":
-            return EventCategory.custom;
-        default:
-            return EventCategory.notification;
+    case "NOTIFICATION":
+        return EventCategory.notification;
+    case "ALERT":
+        return EventCategory.alert;
+    case "EXCEPTION":
+        return EventCategory.exception_;
+    case "CUSTOM":
+        return EventCategory.custom;
+    default:
+        return EventCategory.notification;
     }
+}
+
+EventCategory[] toEventCategories(string[] categories)
+    => categories.map!toEventCategory.array;
+
+string toString(EventCategory category)
+    => category.to!string;
+
+string[] toStrings(EventCategory[] categories)
+    => categories.map!toString.array;
+
+///
+unittest {
+    mixin(ShowTest!("EventCategory"));
+
+    assert("NOTIFICATION".toEventCategory == EventCategory.notification);
+    assert("ALERT".toEventCategory == EventCategory.alert);
+    assert("EXCEPTION".toEventCategory == EventCategory.exception_);
+    assert("CUSTOM".toEventCategory == EventCategory.custom);
+
+    assert("".toEventCategory == EventCategory.notification);
+    assert("some_unknown_category".toEventCategory == EventCategory.notification);
+
+    assert(EventCategory.notification.toString == "notification");
+    assert(EventCategory.alert.toString == "alert");
+    assert(EventCategory.exception_.toString == "exception_");
+    assert(EventCategory.custom.toString == "custom");
+
+    assert(["NOTIFICATION", "ALERT", "EXCEPTION"].toEventCategories == [
+            EventCategory.notification, EventCategory.alert,
+            EventCategory.exception_
+        ]);
+
+    assert([
+        EventCategory.notification, EventCategory.alert, EventCategory.exception_
+    ].toStrings == [
+        "notification", "alert", "exception_"
+    ]);
 }
 
 // --- PATask ---
@@ -398,26 +543,50 @@ enum TaskStatus {
 }
 
 TaskStatus toTaskStatus(string status) {
-    switch (status.toLower) {
-        case "ready":
-            return TaskStatus.ready;
-        case "reserved":
-            return TaskStatus.reserved;
-        case "in_progress":
-            return TaskStatus.inProgress;
-        case "completed":
-            return TaskStatus.completed;
-        case "failed":
-            return TaskStatus.failed;
-        case "cancelled":
-            return TaskStatus.cancelled;
-        case "forwarded":
-            return TaskStatus.forwarded;
-        case "unknown":
-            return TaskStatus.unknown;
-        default:
-            return TaskStatus.ready;
-    }
+    mixin(EnumSwitch("TaskStatus", "unknown"));
+}
+
+TaskStatus[] toTaskStatuses(string[] statuses)
+    => statuses.map!toTaskStatus.array;
+
+string toString(TaskStatus status)
+    => status.to!string;
+
+string[] toStrings(TaskStatus[] statuses)
+    => statuses.map!toString.array;
+
+/// 
+unittest {
+    mixin(ShowTest!("TaskStatus"));
+
+    assert("ready".toTaskStatus == TaskStatus.ready);
+    assert("reserved".toTaskStatus == TaskStatus.reserved);
+    assert("inProgress".toTaskStatus == TaskStatus.inProgress);
+    assert("completed".toTaskStatus == TaskStatus.completed);
+    assert("failed".toTaskStatus == TaskStatus.failed);
+    assert("cancelled".toTaskStatus == TaskStatus.cancelled);
+    assert("forwarded".toTaskStatus == TaskStatus.forwarded);
+    assert("unknown".toTaskStatus == TaskStatus.unknown);
+
+    assert("".toTaskStatus == TaskStatus.unknown);
+    assert("some_unknown_status".toTaskStatus == TaskStatus.unknown);
+
+    assert(TaskStatus.ready.toString == "ready");
+    assert(TaskStatus.reserved.toString == "reserved");
+    assert(TaskStatus.inProgress.toString == "inProgress");
+    assert(TaskStatus.completed.toString == "completed");
+    assert(TaskStatus.failed.toString == "failed");
+    assert(TaskStatus.cancelled.toString == "cancelled");
+    assert(TaskStatus.forwarded.toString == "forwarded");
+    assert(TaskStatus.unknown.toString == "unknown");
+
+    assert(["ready", "reserved", "inProgress"].toTaskStatuses == [
+            TaskStatus.ready, TaskStatus.reserved, TaskStatus.inProgress
+        ]);
+
+    assert([TaskStatus.ready, TaskStatus.reserved, TaskStatus.inProgress].toStrings == [
+            "ready", "reserved", "inProgress"
+        ]);
 }
 
 enum TaskPriority {
@@ -434,21 +603,17 @@ enum TaskPriority {
 }
 
 TaskPriority toTaskPriority(string priority) {
-    switch(priority.toLower) {
-        case "low":
-            return TaskPriority.low;
-        case "medium":
-            return TaskPriority.medium;
-        case "high":
-            return TaskPriority.high;
-        case "very_high", "veryhigh":
-            return TaskPriority.veryHigh;
-        case "unknown":
-            return TaskPriority.unknown;
-        default:
-            return TaskPriority.medium;
-    }   
+    mixin(EnumSwitch("TaskPriority", "unknown"));
 }
+
+TaskPriority[] toTaskPriorities(string[] priorities)
+    => priorities.map!toTaskPriority.array;
+
+string toString(TaskPriority priority)
+    => priority.to!string;
+
+string[] toStrings(TaskPriority[] priorities)
+    => priorities.map!toString.array;
 /// 
 unittest {
     assert(toTaskPriority("low") == TaskPriority.low);
@@ -466,7 +631,6 @@ unittest {
     assert(TaskPriority.unknown.to!string == "unknown");
 }
 
-
 enum TaskType {
     // Used for tasks that require approval from one or more stakeholders, which may involve routing, escalation, and tracking of approval requests and responses based on the process flow and requirements
     approval,
@@ -483,37 +647,92 @@ enum TaskType {
 }
 
 TaskType toTaskType(string type) {
-    const map = [
-        "approval": TaskType.approval,
-        "review": TaskType.review,
-        "form": TaskType.form,
-        "decision": TaskType.decision,
-        "notification": TaskType.notification,
-        "custom": TaskType.custom
-    ];
-    return map.get(type.toLower, TaskType.custom);
+    mixin(EnumSwitch("TaskType", "custom"));
 }
+
+TaskType[] toTaskTypes(string[] types)
+    => types.map!(t => toTaskType(t)).array;
+
+string toString(TaskType type)
+    => type.to!string;
+
+string[] toStrings(TaskType[] types)
+    => types.map!toString.array;
+
+///
+unittest {
+    assert(toString(TaskType.approval) == "approval");
+    assert(toString(TaskType.review) == "review");
+    assert(toString(TaskType.form) == "form");
+    assert(toString(TaskType.decision) == "decision");
+    assert(toString(TaskType.notification) == "notification");
+    assert(toString(TaskType.custom) == "custom");
+}
+
 // --- Decision (Business Rules) ---
 
-enum DecisionStatus {
+enum DecisionStatus : string {
     // Decision has  been created but not yet published, which may indicate that it is still being designed and may require further development and testing before it can be used in production
-    draft,
+    draft = "draft",
     // Decision has been published and is active, which may indicate that it is ready for use in production and may require monitoring and maintenance to ensure its continued effectiveness and relevance over time
-    active,
+    active = "active",
     // Decision has been temporarily disabled, which may indicate that it is not currently being used in production and may require resolution of underlying issues or conditions before it can be reactivated and used again
-    inactive,
+    inactive = "inactive",
     // Decision has been deprecated, which may indicate that it should not be used for new instances, but existing ones can continue to use them, which may require review and archiving before they can be reactivated or used again
-    deprecated_,
+    deprecated_ = "deprecated",
 }
 
-DecisionStatus toDecisionStatus(string status) {
-    const map = [
-        "draft": DecisionStatus.draft,
-        "active": DecisionStatus.active,
-        "inactive": DecisionStatus.inactive,
-        "deprecated": DecisionStatus.deprecated_
-    ];
-    return map.get(status.toLower, DecisionStatus.draft);
+DecisionStatus toDecisionStatus(string value) {
+    switch (value.toLower) {
+    case "draft":
+        return DecisionStatus.draft;
+    case "active":
+        return DecisionStatus.active;
+    case "inactive":
+        return DecisionStatus.inactive;
+    case "deprecated":
+        return DecisionStatus.deprecated_;
+    default:
+        return DecisionStatus.draft;
+    }
+}
+
+DecisionStatus[] toDecisionStatuses(string[] values)
+    => values.map!(v => toDecisionStatus(v)).array;
+
+string toString(DecisionStatus status)
+    => cast(string)status;
+
+string[] toStrings(DecisionStatus[] statuses)
+    => statuses.map!toString.array;
+
+/// 
+unittest {
+    mixin(ShowTest!("DecisionStatus"));
+
+    assert("draft".toDecisionStatus == DecisionStatus.draft);
+    assert("active".toDecisionStatus == DecisionStatus.active);
+    assert("inactive".toDecisionStatus == DecisionStatus.inactive);
+    assert("deprecated".toDecisionStatus == DecisionStatus.deprecated_);
+
+    assert("".toDecisionStatus == DecisionStatus.draft);
+    assert("some_unknown_status".toDecisionStatus == DecisionStatus.draft);
+
+    assert(DecisionStatus.draft.toString == "draft");
+    assert(DecisionStatus.active.toString == "active");
+    assert(DecisionStatus.inactive.toString == "inactive");
+    assert(DecisionStatus.deprecated_.toString == "deprecated");
+
+    assert(["draft", "active", "inactive"].toDecisionStatuses == [
+            DecisionStatus.draft, DecisionStatus.active,
+            DecisionStatus.inactive
+        ]);
+
+    assert([
+        DecisionStatus.draft, DecisionStatus.active, DecisionStatus.inactive
+    ].toStrings == [
+        "draft", "active", "inactive"
+    ]);
 }
 
 enum DecisionType {
@@ -527,14 +746,22 @@ enum DecisionType {
     decisionTree,
 }
 
-DecisionType toDecisionType(string type) {
-    const map = [
-        "decision_table": DecisionType.decisionTable,
-        "text_rule": DecisionType.textRule,
-        "expression": DecisionType.expression,
-        "decision_tree": DecisionType.decisionTree
-    ];
-    return map.get(type.toLower, DecisionType.decisionTable);
+DecisionType toDecisionType(string value) {
+    mixin(EnumSwitch("DecisionType", "decisionTable"));
+}
+
+DecisionType[] toDecisionTypes(string[] values)
+    => values.map!toDecisionType.array;
+
+string toString(DecisionType type)
+    => type.to!string;
+
+string[] toStrings(DecisionType[] types)
+    => types.map!toString.array;
+
+///
+unittest {
+
 }
 
 enum HitPolicy {
@@ -555,61 +782,167 @@ enum HitPolicy {
 }
 
 HitPolicy toHitPolicy(string policy) {
-    const map = [
-        "first": HitPolicy.first,
-        "any": HitPolicy.any,
-        "priority": HitPolicy.priority,
-        "unique": HitPolicy.unique,
-        "collect": HitPolicy.collect,
-        "rule_order": HitPolicy.ruleOrder,
-        "output_order": HitPolicy.outputOrder
-    ];
-    return map.get(policy.toLower, HitPolicy.first);
+    mixin(EnumSwitch("HitPolicy", "first"));
 }
 
-enum ConditionType {
+HitPolicy[] toHitPolicies(string[] policies)
+    => policies.map!toHitPolicy.array;
+
+string toString(HitPolicy policy)
+    => policy.to!string;
+
+string[] toStrings(HitPolicy[] policies)
+    => policies.map!toString.array;
+
+/// 
+unittest {
+    mixin(ShowTest!("HitPolicy"));
+
+    assert("first".toHitPolicy == HitPolicy.first);
+    assert("any".toHitPolicy == HitPolicy.any);
+    assert("priority".toHitPolicy == HitPolicy.priority);
+    assert("unique".toHitPolicy == HitPolicy.unique);
+    assert("collect".toHitPolicy == HitPolicy.collect);
+    assert("ruleOrder".toHitPolicy == HitPolicy.ruleOrder);
+    assert("outputOrder".toHitPolicy == HitPolicy.outputOrder);
+
+    assert("".toHitPolicy == HitPolicy.first);
+    assert("unknown".toHitPolicy == HitPolicy.first);
+
+    assert(HitPolicy.first.toString == "first");
+    assert(HitPolicy.any.toString == "any");
+    assert(HitPolicy.priority.toString == "priority");
+    assert(HitPolicy.unique.toString == "unique");
+    assert(HitPolicy.collect.toString == "collect");
+    assert(HitPolicy.ruleOrder.toString == "ruleOrder");
+    assert(HitPolicy.outputOrder.toString == "outputOrder");
+
+    assert([
+        "first", "any", "priority", "unique", "collect", "ruleOrder",
+        "outputOrder"
+    ].toHitPolicies == [
+        HitPolicy.first, HitPolicy.any, HitPolicy.priority, HitPolicy.unique,
+        HitPolicy.collect, HitPolicy.ruleOrder, HitPolicy.outputOrder
+    ]);
+    assert([
+        HitPolicy.first, HitPolicy.any, HitPolicy.priority, HitPolicy.unique,
+        HitPolicy.collect, HitPolicy.ruleOrder, HitPolicy.outputOrder
+    ].toStrings == [
+        "first", "any", "priority", "unique", "collect", "ruleOrder",
+        "outputOrder"
+    ]);
+}
+
+enum ConditionType : string {
     // Condition that checks for equality between values, which may indicate that the values must be the same for the condition to be satisfied based on the process flow and requirements
-    equals,
+    equals = "equals",
     // Condition that checks for inequality between values, which may indicate that the values must be different for the condition to be satisfied based on the process flow and requirements
-    notEquals,
+    notEquals = "not_equals",
     // Condition that checks if a value is greater than another value, which may indicate that the first value must be larger than the second value for the condition to be satisfied based on the process flow and requirements
-    greaterThan,
+    greaterThan = "greater_than",
     // Condition that checks if a value is less than another value, which may indicate that the first value must be smaller than the second value for the condition to be satisfied based on the process flow and requirements
-    lessThan,
+    lessThan = "less_than",
     // Condition that checks if a value is greater than or equal to another value, which may indicate that the first value must be larger than or equal to the second value for the condition to be satisfied based on the process flow and requirements
-    greaterOrEqual,
+    greaterOrEqual = "greater_or_equal",
     // Condition that checks if a value is less than or equal to another value, which may indicate that the first value must be smaller than or equal to the second value for the condition to be satisfied based on the process flow and requirements
-    lessOrEqual,
+    lessOrEqual = "less_or_equal",
     // Condition that checks if a value falls within a specified range between two values, which may indicate that the value must be greater than or equal to the lower bound and less than or equal to the upper bound for the condition to be satisfied based on the process flow and requirements
-    between,
+    between = "between",
     // Condition that checks if a value contains a specified substring, which may indicate that the value must include the substring for the condition to be satisfied based on the process flow and requirements
-    contains,
+    contains = "contains",
     // Condition that checks if a value starts with a specified substring, which may indicate that the value must begin with the substring for the condition to be satisfied based on the process flow and requirements
-    startsWith,
+    startsWith = "starts_with",
     // Condition that checks if a value ends with a specified substring, which may indicate that the value must end with the substring for the condition to be satisfied based on the process flow and requirements
-    endsWith,
+    endsWith = "ends_with",
     // Condition that checks if a value is within a specified set of values, which may indicate that the value must be one of the specified values for the condition to be satisfied based on the process flow and requirements
-    in_,
+    in_ = "in",
     // Condition that checks if a value is not within a specified set of values, which may indicate that the value must not be one of the specified values for the condition to be satisfied based on the process flow and requirements
-    notIn,
+    notIn = "not_in",
 }
 
-ConditionType toConditionType(string s) {
-    const map = [
-        "equals": ConditionType.equals,
-        "not_equals": ConditionType.notEquals,
-        "greater_than": ConditionType.greaterThan,
-        "less_than": ConditionType.lessThan,
-        "greater_or_equal": ConditionType.greaterOrEqual,
-        "less_or_equal": ConditionType.lessOrEqual,
-        "between": ConditionType.between,
-        "contains": ConditionType.contains,
-        "starts_with": ConditionType.startsWith,
-        "ends_with": ConditionType.endsWith,
-        "in": ConditionType.in_,
-        "not_in": ConditionType.notIn
-    ];
-    return map.get(s.toLower, ConditionType.equals);
+ConditionType toConditionType(string value) {
+    switch (value.toLower) {
+    case "equals":
+        return ConditionType.equals;
+    case "not_equals":
+        return ConditionType.notEquals;
+    case "greater_than":
+        return ConditionType.greaterThan;
+    case "less_than":
+        return ConditionType.lessThan;
+    case "greater_or_equal":
+        return ConditionType.greaterOrEqual;
+    case "less_or_equal":
+        return ConditionType.lessOrEqual;
+    case "between":
+        return ConditionType.between;
+    case "contains":
+        return ConditionType.contains;
+    case "starts_with":
+        return ConditionType.startsWith;
+    case "ends_with":
+        return ConditionType.endsWith;
+    case "in":
+        return ConditionType.in_;
+    case "not_in":
+        return ConditionType.notIn;
+    default:
+        return ConditionType.equals;
+    }
+}
+
+ConditionType[] toConditionTypes(string[] values)
+    => values.map!toConditionType.array;
+
+string toString(ConditionType type)
+    => cast(string)type;
+
+string[] toStrings(ConditionType[] types)
+    => types.map!toString.array;
+
+///
+unittest {
+    mixin(ShowTest!("ConditionType"));
+
+    assert("equals".toConditionType == ConditionType.equals);
+    assert("not_equals".toConditionType == ConditionType.notEquals);
+    assert("greater_than".toConditionType == ConditionType.greaterThan);
+    assert("less_than".toConditionType == ConditionType.lessThan);
+    assert("greater_or_equal".toConditionType == ConditionType.greaterOrEqual);
+    assert("less_or_equal".toConditionType == ConditionType.lessOrEqual);
+    assert("between".toConditionType == ConditionType.between);
+    assert("contains".toConditionType == ConditionType.contains);
+    assert("starts_with".toConditionType == ConditionType.startsWith);
+    assert("ends_with".toConditionType == ConditionType.endsWith);
+    assert("in".toConditionType == ConditionType.in_);
+    assert("not_in".toConditionType == ConditionType.notIn);
+
+    assert("".toConditionType == ConditionType.equals);
+    assert("some_unknown_condition".toConditionType == ConditionType.equals);
+
+    assert(ConditionType.equals.toString == "equals");
+    assert(ConditionType.notEquals.toString == "not_equals");
+    assert(ConditionType.greaterThan.toString == "greater_than");
+    assert(ConditionType.lessThan.toString == "less_than");
+    assert(ConditionType.greaterOrEqual.toString == "greater_or_equal");
+    assert(ConditionType.lessOrEqual.toString == "less_or_equal");
+    assert(ConditionType.between.toString == "between");
+    assert(ConditionType.contains.toString == "contains");
+    assert(ConditionType.startsWith.toString == "starts_with");
+    assert(ConditionType.endsWith.toString == "ends_with");
+    assert(ConditionType.in_.toString == "in");
+    assert(ConditionType.notIn.toString == "not_in");
+
+    assert([
+        ConditionType.equals, ConditionType.notEquals, ConditionType.greaterThan
+    ].toStrings == [
+        "equals", "not_equals", "greater_than"
+    ]);
+
+    assert(["equals", "not_equals", "greater_than"].toConditionTypes == [
+            ConditionType.equals, ConditionType.notEquals,
+            ConditionType.greaterThan
+        ]);
 }
 // --- Form ---
 
@@ -628,14 +961,61 @@ enum FormStatus {
     error,
 }
 
-FormStatus toFormStatus(string status) {
-    const map = [
-        "draft": FormStatus.draft,
-        "published": FormStatus.published,
-        "inactive": FormStatus.inactive,
-        "deprecated": FormStatus.deprecated_
-    ];
-    return map.get(status.toLower, FormStatus.draft);
+FormStatus toFormStatus(string value) {
+    switch (value.toLower) {
+    case "draft":
+        return FormStatus.draft;
+    case "published":
+        return FormStatus.published;
+    case "inactive":
+        return FormStatus.inactive;
+    case "deprecated":
+        return FormStatus.deprecated_;
+    case "archived":
+        return FormStatus.archived;
+    case "error":
+        return FormStatus.error;
+    default:
+        return FormStatus.draft;
+    }
+}
+
+FormStatus[] toFormStatuses(string[] values)
+    => values.map!(v => toFormStatus(v)).array;
+
+string toString(FormStatus status)
+    => cast(string)status;
+
+string[] toStrings(FormStatus[] statuses)
+    => statuses.map!toString.array;
+
+///
+unittest {
+    mixin(ShowTest!("FormStatus"));
+
+    assert("draft".toFormStatus == FormStatus.draft);
+    assert("published".toFormStatus == FormStatus.published);
+    assert("inactive".toFormStatus == FormStatus.inactive);
+    assert("deprecated".toFormStatus == FormStatus.deprecated_);
+    assert("archived".toFormStatus == FormStatus.archived);
+    assert("error".toFormStatus == FormStatus.error);
+
+    assert("".toFormStatus == FormStatus.draft);
+    assert("some_unknown_status".toFormStatus == FormStatus.draft);
+
+    assert(Formstatus.draft.toString == "draft");
+    assert(FormStatus.published.toString == "published");
+    assert(FormStatus.inactive.toString == "inactive");
+    assert(FormStatus.deprecated_.toString == "deprecated");
+    assert(FormStatus.archived.toString == "archived");
+    assert(FormStatus.error.toString == "error");
+
+    assert(["draft", "published", "inactive"].toFormStatuses == [
+            FormStatus.draft, FormStatus.published, FormStatus.inactive
+        ]);
+    assert([FormStatus.draft, FormStatus.published, FormStatus.inactive].toStrings == [
+            "draft", "published", "inactive"
+        ]);
 }
 
 enum FieldType {
@@ -672,24 +1052,58 @@ enum FieldType {
 }
 
 FieldType toFieldType(string type) {
-    const map = [
-        "text": FieldType.text,
-        "number": FieldType.number,
-        "date": FieldType.date,
-        "datetime": FieldType.datetime,
-        "boolean": FieldType.boolean_,
-        "dropdown": FieldType.dropdown,
-        "radio": FieldType.radio,
-        "checkbox": FieldType.checkbox,
-        "textarea": FieldType.textarea,
-        "file_upload": FieldType.fileUpload,
-        "table": FieldType.table,
-        "paragraph": FieldType.paragraph,
-        "headline": FieldType.headline,
-        "link": FieldType.link,
-        "image": FieldType.image
-    ];
-    return map.get(type.toLower, FieldType.text);
+    mixin(EnumSwitch("FieldType", "text"));
+}
+
+FieldType[] toFieldTypes(string[] types)
+    => types.map!toFieldType.array;
+
+///
+unittest {
+    mixin(ShowTest!("FieldType"));
+
+    assert("text".toFieldType == FieldType.text);
+    assert("number".toFieldType == FieldType.number);
+    assert("date".toFieldType == FieldType.date);
+    assert("datetime".toFieldType == FieldType.datetime);
+    assert("boolean".toFieldType == FieldType.boolean_);
+    assert("dropdown".toFieldType == FieldType.dropdown);
+    assert("radio".toFieldType == FieldType.radio);
+    assert("checkbox".toFieldType == FieldType.checkbox);
+    assert("textarea".toFieldType == FieldType.textarea);
+    assert("fileUpload".toFieldType == FieldType.fileUpload);
+    assert("table".toFieldType == FieldType.table);
+    assert("paragraph".toFieldType == FieldType.paragraph);
+    assert("headline".toFieldType == FieldType.headline);
+    assert("link".toFieldType == FieldType.link);
+    assert("image".toFieldType == FieldType.image);
+
+    assert("".toFieldType.toString == "text");
+    assert("unknown".toFieldType.toString == "text");
+
+    assert(FieldType.text.toString == "text");
+    assert(FieldType.number.toString == "number");
+    assert(FieldType.date.toString == "date");
+    assert(FieldType.datetime.toString == "datetime");
+    assert(FieldType.boolean_.toString == "boolean");
+    assert(FieldType.dropdown.toString == "dropdown");
+    assert(FieldType.radio.toString == "radio");
+    assert(FieldType.checkbox.toString == "checkbox");
+    assert(FieldType.textarea.toString == "textarea");
+    assert(FieldType.fileUpload.toString == "fileUpload");
+    assert(FieldType.table.toString == "table");
+    assert(FieldType.paragraph.toString == "paragraph");
+    assert(FieldType.headline.toString == "headline");
+    assert(FieldType.link.toString == "link");
+    assert(FieldType.image.toString == "image");
+
+    assert(["text", "number", "date"].toFieldTypes == [
+            FieldType.text, FieldType.number, FieldType.date
+        ]);
+
+    assert([FieldType.text, FieldType.number, FieldType.date].toStrings == [
+            "text", "number", "date"
+        ]);
 }
 // --- Automation (RPA Bot) ---
 
@@ -705,13 +1119,46 @@ enum AutomationStatus {
 }
 
 AutomationStatus toAutomationStatus(string status) {
-    const map = [
-        "draft": AutomationStatus.draft,
-        "active": AutomationStatus.active,
-        "inactive": AutomationStatus.inactive,
-        "error": AutomationStatus.error
-    ];
-    return map.get(status.toLower, AutomationStatus.draft);
+    mixin(EnumSwitch("AutomationStatus", "draft"));
+}
+
+AutomationStatus[] toAutomationStatuses(string[] statuses)
+    => statuses.map!toAutomationStatus.array;
+
+string toString(AutomationStatus status)
+    => status.to!string;
+
+string[] toStrings(AutomationStatus[] statuses)
+    => statuses.map!toString.array;
+
+///
+unittest {
+    mixin(ShowTest!("AutomationStatus"));
+
+    assert("draft".toAutomationStatus == AutomationStatus.draft);
+    assert("active".toAutomationStatus == AutomationStatus.active);
+    assert("inactive".toAutomationStatus == AutomationStatus.inactive);
+    assert("error".toAutomationStatus == AutomationStatus.error);
+
+    assert("".toAutomationStatus == AutomationStatus.draft);
+    assert("unknown".toAutomationStatus == AutomationStatus.draft);
+
+    assert(AutomationStatus.draft.toString == "draft");
+    assert(AutomationStatus.active.toString == "active");
+    assert(AutomationStatus.inactive.toString == "inactive");
+    assert(AutomationStatus.error.toString == "error");
+
+    assert(["draft", "active", "inactive"].toAutomationStatuses == [
+            AutomationStatus.draft, AutomationStatus.active,
+            AutomationStatus.inactive
+        ]);
+
+    assert([
+        AutomationStatus.draft, AutomationStatus.active, AutomationStatus.inactive
+    ].toStrings == [
+        "draft", "active", "inactive"
+    ]);
+
 }
 
 enum AutomationType {
@@ -726,13 +1173,44 @@ enum AutomationType {
 }
 
 AutomationType toAutomationType(string type) {
-    const map = [
-        "attended": AutomationType.attended,
-        "unattended": AutomationType.unattended,
-        "hybrid": AutomationType.hybrid,
-        "api": AutomationType.api
-    ];
-    return map.get(type.toLower, AutomationType.attended);
+    mixin(EnumSwitch("AutomationType", "attended"));
+}
+
+AutomationType[] toAutomationTypes(string[] types)
+    => types.map!toAutomationType.array;
+
+string toString(AutomationType type)
+    => type.to!string;
+
+string[] toStrings(AutomationType[] types)
+    => types.map!toString.array;
+
+///
+unittest {
+    mixin(ShowTest!("AutomationType"));
+
+    assert("attended".toAutomationType == AutomationType.attended);
+    assert("unattended".toAutomationType == AutomationType.unattended);
+    assert("hybrid".toAutomationType == AutomationType.hybrid);
+    assert("api".toAutomationType == AutomationType.api);
+
+    assert("".toAutomationType == AutomationType.attended);
+    assert("unknown".toAutomationType == AutomationType.attended);
+
+    assert(AutomationType.attended.toString == "attended");
+    assert(AutomationType.unattended.toString == "unattended");
+    assert(AutomationType.hybrid.toString == "hybrid");
+    assert(AutomationType.api.toString == "api");
+
+    assert(["attended", "unattended", "hybrid"].toAutomationTypes == [
+            AutomationType.attended, AutomationType.unattended,
+            AutomationType.hybrid
+        ]);
+    assert([
+        AutomationType.attended, AutomationType.unattended, AutomationType.hybrid
+    ].toStrings == [
+        "attended", "unattended", "hybrid"
+    ]);
 }
 
 enum AutomationRunStatus {
@@ -751,16 +1229,45 @@ enum AutomationRunStatus {
 }
 
 AutomationRunStatus toAutomationRunStatus(string status) {
-    const map = [
-        "queued": AutomationRunStatus.queued,
-        "running": AutomationRunStatus.running,
-        "completed": AutomationRunStatus.completed,
-        "failed": AutomationRunStatus.failed,
-        "cancelled": AutomationRunStatus.cancelled,
-        "timed_out": AutomationRunStatus.timedOut
-    ];
-    return map.get(status.toLower, AutomationRunStatus.queued);
+    mixin(EnumSwitch("AutomationRunStatus", "queued"));
 }
+
+AutomationRunStatus[] toAutomationRunStatuses(string[] statuses)
+    => statuses.map!toAutomationRunStatus.array;
+
+string toString(AutomationRunStatus status)
+    => status.to!string;
+
+string[] toStrings(AutomationRunStatus[] statuses)
+    => statuses.map!toString.array;
+
+///
+unittest {
+    mixin(ShowTest!("AutomationRunStatus"));
+
+    assert("queued".toAutomationRunStatus == AutomationRunStatus.queued);
+    assert("running".toAutomationRunStatus == AutomationRunStatus.running);
+    assert("completed".toAutomationRunStatus == AutomationRunStatus.completed);
+    assert("failed".toAutomationRunStatus == AutomationRunStatus.failed);
+    assert("cancelled".toAutomationRunStatus == AutomationRunStatus.cancelled);
+    assert("timedOut".toAutomationRunStatus == AutomationRunStatus.timedOut);
+
+    assert("".toAutomationRunStatus == AutomationRunStatus.queued);
+    assert("unknown".toAutomationRunStatus == AutomationRunStatus.queued);
+
+    assert(AutomationRunStatus.queued.toString == "queued");
+    assert(AutomationRunStatus.running.toString == "running");
+    assert(AutomationRunStatus.completed.toString == "completed");
+    assert(AutomationRunStatus.failed.toString == "failed");
+    assert(AutomationRunStatus.cancelled.toString == "cancelled");
+    assert(AutomationRunStatus.timedOut.toString == "timedOut");
+
+    assert(["queued", "running", "completed"].toAutomationRunStatuses == [
+            AutomationRunStatus.queued, AutomationRunStatus.running,
+            AutomationRunStatus.completed
+        ]);
+}
+
 // --- Trigger ---
 
 enum TriggerType {
@@ -780,17 +1287,48 @@ enum TriggerType {
     formSubmission,
 }
 
-TriggerType toTriggerType(string type) {
-    const map = [
-        "manual": TriggerType.manual,
-        "scheduled": TriggerType.scheduled,
-        "api": TriggerType.api,
-        "event": TriggerType.event,
-        "email": TriggerType.email,
-        "webhook": TriggerType.webhook,
-        "form_submission": TriggerType.formSubmission
-    ];
-    return map.get(type.toLower, TriggerType.manual);
+TriggerType toTriggerType(string value) {
+    mixin(EnumSwitch("TriggerType", "manual"));
+}
+
+TriggerType[] toTriggerTypes(string[] values)
+    => values.map!toTriggerType.array;
+
+string toString(TriggerType type)
+    => type.to!string;
+
+string[] toStrings(TriggerType[] types)
+    => types.map!toString.array;
+
+///
+unittest {
+    mixin(ShowTest!("TriggerType"));
+
+    assert("manual".toTriggerType == TriggerType.manual);
+    assert("scheduled".toTriggerType == TriggerType.scheduled);
+    assert("api".toTriggerType == TriggerType.api);
+    assert("event".toTriggerType == TriggerType.event);
+    assert("email".toTriggerType == TriggerType.email);
+    assert("webhook".toTriggerType == TriggerType.webhook);
+    assert("formSubmission".toTriggerType == TriggerType.formSubmission);
+
+    assert("".toTriggerType == TriggerType.manual);
+    assert("unknown".toTriggerType == TriggerType.manual);
+
+    assert(TriggerType.manual.toString == "manual");
+    assert(TriggerType.scheduled.toString == "scheduled");
+    assert(TriggerType.api.toString == "api");
+    assert(TriggerType.event.toString == "event");
+    assert(TriggerType.email.toString == "email");
+    assert(TriggerType.webhook.toString == "webhook");
+    assert(TriggerType.formSubmission.toString == "formSubmission");
+
+    assert(["manual", "scheduled", "api"].toTriggerType == [
+            TriggerType.manual, TriggerType.scheduled, TriggerType.api
+        ]);
+    assert([TriggerType.manual, TriggerType.scheduled, TriggerType.api].toStrings == [
+            "manual", "scheduled", "api"
+        ]);
 }
 
 enum TriggerStatus {
@@ -803,12 +1341,36 @@ enum TriggerStatus {
 }
 
 TriggerStatus toTriggerStatus(string status) {
-    const map = [
-        "active": TriggerStatus.active,
-        "inactive": TriggerStatus.inactive,
-        "error": TriggerStatus.error
-    ];
-    return map.get(status.toLower, TriggerStatus.inactive);
+    mixin(EnumSwitch("TriggerStatus", "active"));
+}
+TriggerStatus[] toTriggerStatuses(string[] statuses)
+    => statuses.map!toTriggerStatus.array;
+
+string toString(TriggerStatus status)
+    => status.to!string;
+
+string[] toStrings(TriggerStatus[] statuses)
+    => statuses.map!toString.array;
+
+///
+unittest {
+    mixin(ShowTest!("TriggerStatus"));
+
+    assert("active".toTriggerStatus == TriggerStatus.active);
+    assert("inactive".toTriggerStatus == TriggerStatus.inactive);
+    assert("error".toTriggerStatus == TriggerStatus.error);
+
+    assert("".toTriggerStatus == TriggerStatus.active);
+    assert("unknown".toTriggerStatus == TriggerStatus.active);
+
+    assert(TriggerStatus.active.toString == "active");
+    assert(TriggerStatus.inactive.toString == "inactive");
+    assert(TriggerStatus.error.toString == "error");
+
+    assert(["active", "inactive", "error"].toTriggerStatuses == [
+            TriggerStatus.active, TriggerStatus.inactive, TriggerStatus.error
+        ]);
+    assert([TriggerStatus.active, TriggerStatus.inactive, TriggerStatus.error].toStrings == ["active", "inactive", "error"]);
 }
 
 enum ScheduleFrequency {
@@ -831,18 +1393,50 @@ enum ScheduleFrequency {
 }
 
 ScheduleFrequency toScheduleFrequency(string freq) {
-    const map = [
-        "once": ScheduleFrequency.once,
-        "minutely": ScheduleFrequency.minutely,
-        "hourly": ScheduleFrequency.hourly,
-        "daily": ScheduleFrequency.daily,
-        "weekly": ScheduleFrequency.weekly,
-        "monthly": ScheduleFrequency.monthly,
-        "yearly": ScheduleFrequency.yearly,
-        "cron": ScheduleFrequency.cron
-    ];
-    return map.get(freq.toLower, ScheduleFrequency.once);
+    mixin(EnumSwitch("ScheduleFrequency", "once"));
 }
+
+ScheduleFrequency[] toScheduleFrequencies(string[] freqs)
+    => freqs.map!toScheduleFrequency.array;
+
+string toString(ScheduleFrequency frequency) 
+    => frequency.to!string;
+
+string[] toStrings(ScheduleFrequency[] frequencies)
+    => frequencies.map!toString.array;
+
+///
+unittest {
+    mixin(ShowTest!("ScheduleFrequency"));
+
+    assert("once".toScheduleFrequency == ScheduleFrequency.once);
+    assert("minutely".toScheduleFrequency == ScheduleFrequency.minutely);
+    assert("hourly".toScheduleFrequency == ScheduleFrequency.hourly);
+    assert("daily".toScheduleFrequency == ScheduleFrequency.daily);
+    assert("weekly".toScheduleFrequency == ScheduleFrequency.weekly);
+    assert("monthly".toScheduleFrequency == ScheduleFrequency.monthly);
+    assert("yearly".toScheduleFrequency == ScheduleFrequency.yearly);
+    assert("cron".toScheduleFrequency == ScheduleFrequency.cron);
+
+    assert("".toScheduleFrequency == ScheduleFrequency.once);
+    assert("unknown".toScheduleFrequency == ScheduleFrequency.once);
+
+    assert(ScheduleFrequency.once.toString == "once");
+    assert(ScheduleFrequency.minutely.toString == "minutely");
+    assert(ScheduleFrequency.hourly.toString == "hourly");
+    assert(ScheduleFrequency.daily.toString == "daily");
+    assert(ScheduleFrequency.weekly.toString == "weekly");
+    assert(ScheduleFrequency.monthly.toString == "monthly");
+    assert(ScheduleFrequency.yearly.toString == "yearly");
+    assert(ScheduleFrequency.cron.toString == "cron");
+
+    assert(["once", "hourly", "daily"].toScheduleFrequencies == [
+            ScheduleFrequency.once, ScheduleFrequency.hourly, ScheduleFrequency.daily
+        ]);
+    assert([ScheduleFrequency.once, ScheduleFrequency.hourly, ScheduleFrequency.daily].toStrings
+        == ["once", "hourly", "daily"]);
+}
+
 // --- Action (Integration) ---
 
 enum ActionStatus {
@@ -857,13 +1451,43 @@ enum ActionStatus {
 }
 
 ActionStatus toActionStatus(string status) {
-    const map = [
-        "draft": ActionStatus.draft,
-        "active": ActionStatus.active,
-        "inactive": ActionStatus.inactive,
-        "error": ActionStatus.error
-    ];
-    return map.get(status.toLower, ActionStatus.draft);
+    mixin(EnumSwitch("ActionStatus", "draft"));
+}
+
+ActionStatus[] toActionStatuses(string[] statuses)
+    => statuses.map!toActionStatus.array;
+
+string toString(ActionStatus status)
+    => status.to!string;
+
+string[] toStrings(ActionStatus[] statuses)
+    => statuses.map!toString.array;
+
+/// 
+unittest {
+    mixin(EnumSwitch("ActionStatus", "draft"));
+
+    assert(ActionStatus.draft.toString == "draft");
+    assert(ActionStatus.active.toString == "active");
+    assert(ActionStatus.inactive.toString == "inactive");
+    assert(ActionStatus.error.toString == "error");
+
+    assert("draft".toActionStatus == ActionStatus.draft);
+    assert("active".toActionStatus == ActionStatus.active);
+    assert("inactive".toActionStatus == ActionStatus.inactive);
+    assert("error".toActionStatus == ActionStatus.error);
+
+    assert("".toActionStatus == ActionStatus.draft);
+    assert("unknown".toActionStatus == ActionStatus.draft);
+
+    assert(["draft", "active", "inactive", "error"].toActionStatuses == [
+            ActionStatus.draft, ActionStatus.active, ActionStatus.inactive,
+            ActionStatus.error
+        ]);
+    assert([
+        ActionStatus.draft, ActionStatus.active, ActionStatus.inactive,
+        ActionStatus.error
+    ].toStrings == ["draft", "active", "inactive", "error"]);
 }
 
 enum ActionType {
@@ -882,15 +1506,46 @@ enum ActionType {
 }
 
 ActionType toActionType(string type) {
-    const map = [
-        "rest_api": ActionType.restApi,
-        "odata": ActionType.odata,
-        "rfc": ActionType.rfc,
-        "soap": ActionType.soap,
-        "graphql": ActionType.graphql,
-        "custom": ActionType.custom
-    ];
-    return map.get(type.toLower, ActionType.custom);
+    mixin(EnumSwitch("ActionType", "custom"));
+}
+
+ActionType[] toActionTypes(string[] types)
+    => types.map!toActionType.array;
+
+string toString(ActionType type)
+    => type.to!string;
+
+string[] toStrings(ActionType[] types)
+    => types.map!toString.array;
+
+///
+unittest {
+    assert(ActionType.restApi.toString == "restApi");
+    assert(ActionType.odata.toString == "odata");
+    assert(ActionType.rfc.toString == "rfc");
+    assert(ActionType.soap.toString == "soap");
+    assert(ActionType.graphql.toString == "graphql");
+    assert(ActionType.custom.toString == "custom");
+
+    assert("rest_api".toActionType == ActionType.restApi);
+    assert("odata".toActionType == ActionType.odata);
+    assert("rfc".toActionType == ActionType.rfc);
+    assert("soap".toActionType == ActionType.soap);
+    assert("graphql".toActionType == ActionType.graphql);
+    assert("custom".toActionType == ActionType.custom);
+
+    assert("".toActionType == ActionType.custom);
+    assert("unknown".toActionType == ActionType.custom);
+
+    assert(["rest_api", "odata", "rfc", "soap", "graphql", "custom"].toActionTypes == [
+            ActionType.restApi, ActionType.odata, ActionType.rfc,
+            ActionType.soap, ActionType.graphql, ActionType.custom
+        ]);
+    assert([
+        ActionType.restApi, ActionType.odata, ActionType.rfc, ActionType.soap,
+        ActionType.graphql, ActionType.custom
+    ].toStrings == ["restApi", "odata", "rfc", "soap", "graphql", "custom"]);
+
 }
 // --- Alerting and Monitoring ---
 
@@ -906,13 +1561,37 @@ enum VisibilityStatus {
 }
 
 VisibilityStatus toVisibilityStatus(string status) {
-    const map = [
-        "active": VisibilityStatus.active,
-        "inactive": VisibilityStatus.inactive,
-        "error": VisibilityStatus.error
-    ];
-    return map.get(status.toLower, VisibilityStatus.inactive);
+    mixin(EnumSwitch("VisibilityStatus", "active"));
 }
+
+VisibilityStatus[] toVisibilityStatuses(string[] statuses)
+    => statuses.map!toVisibilityStatus.array;
+
+string toString(VisibilityStatus status)
+    => status.to!string;
+
+string[] toStrings(VisibilityStatus[] statuses)
+    => statuses.map!toString.array;
+
+///
+unittest {
+    mixin(ShowTest!("VisibilityStatus"));
+
+    assert("active".toVisibilityStatus == VisibilityStatus.active);
+    assert("inactive".toVisibilityStatus == VisibilityStatus.inactive);
+    assert("error".toVisibilityStatus == VisibilityStatus.error);
+
+    assert("".toVisibilityStatus == VisibilityStatus.active);
+    assert("unknown".toVisibilityStatus == VisibilityStatus.active);
+
+    assert(VisibilityStatus.active.toString == "active");
+    assert(VisibilityStatus.inactive.toString == "inactive");
+    assert(VisibilityStatus.error.toString == "error");
+
+    assert(["active", "inactive", "error"].toVisibilityStatuses == [
+            VisibilityStatus.active, VisibilityStatus.inactive, VisibilityStatus.error
+        ]);
+} 
 
 enum DashboardType {
     // Used for dashboards that provide an overview of the entire process, which may include high-level metrics, key performance indicators (KPIs), and visualizations to monitor the overall health and performance of the process based on the process flow and requirements
@@ -932,16 +1611,7 @@ enum DashboardType {
 }
 
 DashboardType toDashboardType(string type) {
-    const map = [
-        "process_overview": DashboardType.processOverview,
-        "instance_detail": DashboardType.instanceDetail,
-        "task_analytics": DashboardType.taskAnalytics,
-        "performance_kpi": DashboardType.performanceKpi,
-        "bottleneck_analysis": DashboardType.bottleneckAnalysis,
-        "sla_compliance": DashboardType.slaCompliance,
-        "custom": DashboardType.custom
-    ];
-    return map.get(type.toLower, DashboardType.custom);
+    mixin(EnumSwitch("DashboardType", "custom"));
 }
 
 enum MetricType {
@@ -961,17 +1631,8 @@ enum MetricType {
     duration,
 }
 
-MetricType toMetricType(string type) {
-    const map = [
-        "count": MetricType.count,
-        "average": MetricType.average,
-        "sum": MetricType.sum,
-        "min": MetricType.min_,
-        "max": MetricType.max_,
-        "percentage": MetricType.percentage,
-        "duration": MetricType.duration
-    ];
-    return map.get(type.toLower, MetricType.count);
+MetricType toMetricType(string value) {
+    mixin(EnumSwitch("MetricType", "count"));
 }
 // --- Artifact Store ---
 
@@ -980,7 +1641,7 @@ enum ArtifactType {
     processTemplate,
     // Artifact that represents a reusable bot template, which may include predefined automation scripts, configurations, and best practices that can be used to accelerate the design and implementation of new automations based on the process flow and requirements
     botTemplate,
-    // Artifact that represents a reusable form template, which may include predefined form designs, configurations, and best practices that can be used to accelerate the design and implementation of new forms based on the process flow and requirements
+    // Artifact that represents a reusable form template , which may include predefined form designs, configurations, and best practices that can be used to accelerate the design and implementation of new forms based on the process flow and requirements
     formTemplate,
     // Artifact that represents a reusable decision template, which may include predefined decision models, configurations, and best practices that can be used to accelerate the design and implementation of new decisions based on the process flow and requirements
     decisionTemplate,
@@ -993,16 +1654,7 @@ enum ArtifactType {
 }
 
 ArtifactType toArtifactType(string type) {
-    const map = [
-        "process_template": ArtifactType.processTemplate,
-        "bot_template": ArtifactType.botTemplate,
-        "form_template": ArtifactType.formTemplate,
-        "decision_template": ArtifactType.decisionTemplate,
-        "action_template": ArtifactType.actionTemplate,
-        "connector": ArtifactType.connector,
-        "plugin": ArtifactType.plugin
-    ];
-    return map.get(type.toLower, ArtifactType.processTemplate);
+    mixin(EnumSwitch("ArtifactType", "processTemplate"));
 }
 
 enum ArtifactStatus {
@@ -1017,11 +1669,5 @@ enum ArtifactStatus {
 }
 
 ArtifactStatus toArtifactStatus(string status) {
-    const map = [
-        "available": ArtifactStatus.available,
-        "installed": ArtifactStatus.installed,
-        "update_available": ArtifactStatus.updateAvailable,
-        "deprecated": ArtifactStatus.deprecated_
-    ];
-    return map.get(status.toLower, ArtifactStatus.available);
+    mixin(EnumSwitch("ArtifactStatus", "available"));
 }
