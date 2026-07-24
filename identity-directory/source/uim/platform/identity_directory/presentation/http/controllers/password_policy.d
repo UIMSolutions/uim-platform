@@ -59,8 +59,9 @@ class PasswordPolicyController : ManageHttpController {
     if (result.hasError)
       return errorResponse(result.message);
 
-    auto response = Json.emptyObject;
-    response["policyId"] = Json(result.policyId);
+    auto response = Json.emptyObject
+      .set("message", "Password policy created successfully")
+      .set("id", result.id);
 
     return successResponse("Password policy created successfully", "", 201, response);
   }
@@ -87,9 +88,9 @@ class PasswordPolicyController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto policy = useCase.getActivePolicy(tenantId);
-    if (policy.isNull) 
+    if (policy.isNull)
       return errorResponse("No active password policy found", 404);
-    
+
     return successResponse("Active password policy retrieved successfully", "Retrieved", 200, policy
         .toJson);
   }
@@ -102,12 +103,15 @@ class PasswordPolicyController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto policyId = precheck.id;
-    auto policy = useCase.getPolicy(policyId);
+    auto id = PasswordPolicyId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid password policy ID", 400);
+
+    auto policy = useCase.getPolicy(tenantId, id);
     if (policy.isNull)
       return errorResponse("Password policy not found", 404);
 
-    return successResponse("Password policy retrieved successfully", "Retrieved", 200, policy
-        .toJson);
+    auto responseData = policy.toJson;
+    return successResponse("Password policy retrieved successfully", "Retrieved", 200, responseData);
   }
 }

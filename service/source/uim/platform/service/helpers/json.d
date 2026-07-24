@@ -30,7 +30,7 @@ unittest {
     assert(hasError(invalidJson) == true);
 }
 
-Json errorResponse(string message = "Internal Server Error", int code = 500) {
+Json errorResponse(string message = "Internal Server Error", uint code = 500) {
     return Json.emptyObject
         .set("status", "error")
         .set("message", message)
@@ -46,7 +46,7 @@ unittest {
     assert(response.getString("category") == "General");
 }
 
-Json errorResponse(string message = "Internal Server Error", string category, int code = 500) {
+Json errorResponse(string message = "Internal Server Error", string category, uint code = 500) {
     return Json.emptyObject
         .set("status", "error")
         .set("message", message)
@@ -62,7 +62,7 @@ unittest {
     assert(response.getString("category") == "General");
 }
 
-Json errorResponse(Json json, string message = "Internal Server Error", int code = 500) {
+Json errorResponse(Json json, string message = "Internal Server Error", uint code = 500) {
     return json.isObject ? json
         .set("status", "error")
         .set("message", message)
@@ -79,7 +79,7 @@ unittest {
 }
 
 
-Json successResponse(string message = "Success", int code = 200) {
+Json successResponse(string message = "Success", uint code = 200) {
     return Json.emptyObject
         .set("status", "success")
         .set("message", message)

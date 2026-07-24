@@ -1,0 +1,42 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module uim.platform.identity_provisioning.domain.entities.provisioning_job;
+
+import uim.platform.identity_provisioning;
+
+mixin(ShowModule!());
+
+@safe:
+/// A provisioning job that synchronises identities from a source
+/// system to a target system.
+struct ProvisioningJob {
+  mixin TenantEntity!ProvisioningJobId;
+
+  SourceSystemId sourceSystemId;
+  TargetSystemId targetSystemId;
+  JobType jobType = JobType.full;
+  JobStatus status = JobStatus.scheduled;
+  string schedule; // cron expression (empty = on-demand)
+  long totalEntities;
+  long processedEntities;
+  long failedEntities;
+  long startedAt;
+  long completedAt;
+
+  Json toJson() const {
+    return entityToJson
+      .set("sourceSystemId", sourceSystemId)
+      .set("targetSystemId", targetSystemId)
+      .set("jobType", jobType.to!string())
+      .set("status", status.to!string())
+      .set("schedule", schedule)
+      .set("totalEntities", totalEntities)
+      .set("processedEntities", processedEntities)
+      .set("failedEntities", failedEntities)
+      .set("startedAt", startedAt)
+      .set("completedAt", completedAt);
+  }
+}

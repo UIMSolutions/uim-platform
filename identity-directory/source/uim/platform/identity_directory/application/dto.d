@@ -54,15 +54,6 @@ struct UpdateUserRequest {
   ExtendedAttribute[] extendedAttributes;
 }
 
-struct UserResponse {
-  UserId userId;
-  bool error = false;
-  string message = "";
-
-  bool hasError() const {
-    return error;
-  }
-}
 /// --- IDGroup DTOs ---
 
 struct CreateGroupRequest {
@@ -120,13 +111,6 @@ struct UpdateSchemaRequest {
   string description;
   SchemaAttribute[] attributes;
 }
-
-struct SchemaResponse {
-  bool error = false;
-  SchemaId schemaId;
-  string message;
-  uint code;
-}
 /// --- Password Policy DTOs ---
 struct CreatePasswordPolicyRequest {
   TenantId tenantId;
@@ -148,14 +132,6 @@ struct CreatePasswordPolicyRequest {
   size_t expiryDays;
 }
 
-struct PasswordPolicyResponse {
-  PasswordPolicyId policyId;
-  string error;
-
-  bool hasError() const {
-    return error.length > 0;
-  }
-}
 /// --- API Client DTOs ---
 struct CreateApiClientRequest {
   TenantId tenantId;

@@ -28,9 +28,9 @@ class ManageSchemasUseCase { // TODO: UIMUseCase {
   }
 
   /// Create a new custom schema.
-  SchemaResponse createSchema(CreateSchemaRequest req) {
+  CommandResult createSchema(CreateSchemaRequest req) {
     if (schemaRepo.existsByName(req.tenantId, req.name))
-      return SchemaResponse(SchemaId(""), "Schema with this name already exists");
+      return CommandResult(false, "", "Schema with this name already exists", 409);
 
     auto schemaUrn = "urn:sap:cloud:scim:schemas:extension:custom:2.0:" ~ req.name;
     auto schema = Schema(req.tenantId);
@@ -50,7 +50,7 @@ class ManageSchemasUseCase { // TODO: UIMUseCase {
     event.description = "Schema created: " ~ req.name;
     auditRepo.save(event);
 
-    return SchemaResponse(SchemaId(schemaUrn), "");
+    return CommandResult(true, schema.id.value, schemaUrn, 200);
   }
 
   /// Get schema by ID.
@@ -67,7 +67,7 @@ class ManageSchemasUseCase { // TODO: UIMUseCase {
   CommandResult updateSchema(UpdateSchemaRequest req) {
     auto schema = schemaRepo.findById(req.tenantId, req.schemaId);
     if (schema.isNull)
-      return CommandResult(false, "", "Schema not found");
+      return CommandResult(false, "", "Schema not found", 404);
 
     if (req.name.length > 0)
       schema.name = req.name;
@@ -89,14 +89,14 @@ class ManageSchemasUseCase { // TODO: UIMUseCase {
     event.description = "Schema updated: " ~ schema.name;
     auditRepo.save(event);
 
-    return CommandResult(true, schema.id.value, "");
+    return CommandResult(true, schema.id.value, "", 200);
   }
 
   /// Delete a schema.
   CommandResult deleteSchema(TenantId tenantId, SchemaId id) {
     auto schema = schemaRepo.findById(tenantId, id);
     if (schema.isNull)
-      return CommandResult(false, "", "Schema not found");
+      return CommandResult(false, "", "Schema not found", 404);
 
     schemaRepo.remove(schema);
 
@@ -110,6 +110,6 @@ class ManageSchemasUseCase { // TODO: UIMUseCase {
     event.description = "Schema deleted: " ~ schema.name; 
     auditRepo.save(event);
 
-    return CommandResult(true, schema.id.value, "");
+    return CommandResult(true, schema.id.value, "", 200);
   }
 }

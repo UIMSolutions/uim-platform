@@ -108,7 +108,7 @@ class GroupController : ManageHttpController {
       data.getString("description"),);
     auto result = usecase.updateGroup(updateReq);
     if (result.hasError)
-      return errorResponse(result.errorMessage, 400);
+      return errorResponse(result.message, 400);
     // writeScimError(res, 404, result.errorMessage);
 
     return successResponse("Group updated successfully", "Updated", 200, Json.emptyObject.set("id", result
@@ -127,7 +127,7 @@ class GroupController : ManageHttpController {
 
     auto result = usecase.deleteGroup(tenantId, id);
     if (result.hasError)
-      return errorResponse(result.errorMessage, 404);
+      return errorResponse(result.message, 404);
 
     return successResponse("Group deleted successfully", "Deleted", 200, Json.emptyObject);
   }
@@ -148,7 +148,7 @@ class GroupController : ManageHttpController {
 
     auto result = usecase.addMember(addReq);
     if (result.hasError)
-      return errorResponse(result.errorMessage, 400);
+      return errorResponse(result.message, 400);
 
     // if (error.length > 0) {
     //   writeScimError(res, 400, error);
@@ -178,7 +178,7 @@ class GroupController : ManageHttpController {
 
     auto result = usecase.removeMember(removeReq);
     if (result.hasError)
-      return errorResponse(result.errorMessage, 400);
+      return errorResponse(result.message, 400);
 
     return successResponse("Member removed successfully", "Removed", 200, Json.emptyObject);
   }

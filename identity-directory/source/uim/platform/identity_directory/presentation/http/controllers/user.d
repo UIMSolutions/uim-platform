@@ -59,9 +59,9 @@ class UserController : ManageHttpController {
     if (result.hasError)
       return scimErrorResponse(result.message, 409);
 
-    auto response = Json.emptyObject;
-    response["id"] = result.userId.value;
-    response["schemas"] = Json.emptyArray;
+    auto response = Json.emptyObject
+    .set("id", result.id)
+    .set("schemas", Json.emptyArray);
     response["schemas"] ~= Json("urn:ietf:params:scim:schemas:core:2.0:IDUser");
     return successResponse("User created successfully", "Created", 201, response);
     // writeScimError(res, 409, result.message);
@@ -74,13 +74,13 @@ class UserController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto users = useCase.listUsers(tenantId);
-    auto response = Json.emptyObject;
-    response["schemas"] = Json.emptyArray;
+    auto response = Json.emptyObject
+    .set("schemas", Json.emptyArray)
+    .set("totalResults", users.length)
+    .set("startIndex", 1)
+    .set("itemsPerPage", users.length)
+    .set("Resources", users.map!(u => u.toJson).array.toJson);
     response["schemas"] ~= Json("urn:ietf:params:scim:api:messages:2.0:ListResponse");
-    response["totalResults"] = Json(users.length);
-    response["startIndex"] = Json(1L);
-    response["itemsPerPage"] = Json(users.length);
-    response["Resources"] = users.map!(u => u.toJson).array.toJson;
 
     return successResponse("Users retrieved successfully", "", 200, response);
   }
@@ -91,8 +91,8 @@ class UserController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto userId = precheck.id;
-    auto user = useCase.getUser(tenantId, userId);
+    auto id = UserId(precheck.id);
+    auto user = useCase.getUser(tenantId, id);
     if (user.isNull)
       return scimErrorResponse("User not found", 404);
 
@@ -106,11 +106,11 @@ class UserController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto userId = precheck.id;
+    auto id = UserId(precheck.id);
     auto data = precheck.data;
     auto request = UpdateUserRequest();
     request.tenantId = tenantId;
-    request.userId = userId;
+    request.userId = id;
     // request.externalId = data.getString("externalId");
     // request.userName = data.getString("userName");
     request.displayName = data.getString("displayName");
@@ -125,11 +125,11 @@ class UserController : ManageHttpController {
     request.extendedAttributes = []; // extendedAttributes
 
     auto result = useCase.updateUser(request);
-    if (result.error)
+    if (result.hasError)
       return errorResponse(result.message, 404);
     // writeScimError(res, 404, result.message);
-
-    auto response = Json.emptyObject.set("id", userId);
+  
+    auto response = Json.emptyObject.set("id", id.value);
     response["schemas"] = Json.emptyArray;
     response["schemas"] ~= Json("urn:ietf:params:scim:schemas:core:2.0:IDUser");
     return successResponse("User updated successfully", "", 200, response);
@@ -144,8 +144,8 @@ class UserController : ManageHttpController {
     auto id = UserId(precheck.id);
 
     auto result = useCase.deleteUser(tenantId, id);
-    if (result.error)
-      return errorResponse(result.message, 404);
+    if (result.hasError)
+      return errorResponse(result.message, result.code);
       // writeScimError(res, 404, result.message);
 
     return successResponse("User deleted successfully", "", 200, Json.emptyObject);
@@ -158,13 +158,16 @@ class UserController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto id = UserId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid user ID", 400);
 
     auto data = precheck.data;
     auto result = useCase.changePassword(tenantId, id,
       data.getString("currentPassword"), data.getString("newPassword"));
-    if (result.error)
-      return errorResponse(result.message, 400);
-      // return scimErrorResponse(result.message, 400);
+    if (result.hasError)
+    
+      return errorResponse(result.message, result.code);
+      // return scimErrorResponse(result.message, result.code);
 
     auto response = Json.emptyObject
       .set("status", "password_changed");

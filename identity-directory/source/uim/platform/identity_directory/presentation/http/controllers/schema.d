@@ -46,10 +46,10 @@ class SchemaController : ManageHttpController {
     request.attributes = parseSchemaAttributes(data);
 
     auto result = useCase.createSchema(request);
-    if (result.error)
+    if (result.hasError)
       return errorResponse(result.message, 400);
 
-    auto responseData = Json.emptyObject.set("id", result.schemaId.value);
+    auto responseData = Json.emptyObject.set("id", result.id).set("urn", result.message);
     return successResponse("Schema created successfully", "Created", 201, responseData);
     // writeScimError(res, 409, result.message);
   }
@@ -108,7 +108,7 @@ class SchemaController : ManageHttpController {
     updateReq.attributes = parseSchemaAttributes(data);
 
     auto result = useCase.updateSchema(updateReq);
-    if (result.error)
+    if (result.hasError)
       return errorResponse(result.message, 400);
 
     auto resp = Json.emptyObject
@@ -128,7 +128,7 @@ class SchemaController : ManageHttpController {
       return errorResponse("Invalid schema ID", 400);
 
     auto result = useCase.deleteSchema(tenantId, id);
-    if (result.error)
+    if (result.hasError)
       return errorResponse(result.message, 404);
 
     return successResponse("Schema deleted successfully", "Deleted", 200, Json.emptyObject);

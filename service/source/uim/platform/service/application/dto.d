@@ -13,10 +13,10 @@ struct CommandResult {
   /// A message providing additional information about the command result.
   string message;
   /// An optional error code associated with the command result.
-  size_t code;
+  uint code;
   
   ///
-  this(bool success, string id = "", string message = "", size_t code = 0) {
+  this(bool success, string id = "", string message = "", uint code = 0) {
     this.success = success;
     this.id = id;
     this.message = message;

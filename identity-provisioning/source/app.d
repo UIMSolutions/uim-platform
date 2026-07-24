@@ -5,10 +5,10 @@
 *****************************************************************************************************************/
 module app;
 
-// import uim.platform.identity.provisioning.infrastructure.config;
-// import uim.platform.identity.provisioning.infrastructure.container;
+// import uim.platform.identity_provisioning.infrastructure.config;
+// import uim.platform.identity_provisioning.infrastructure.container;
 
-import uim.platform.identity.provisioning;
+import uim.platform.identity_provisioning;
 
 mixin(ShowModule!());
 
