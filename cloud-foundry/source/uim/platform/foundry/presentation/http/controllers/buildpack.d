@@ -8,7 +8,6 @@ module uim.platform.foundry.presentation.http.controllers.buildpack;
 // import uim.platform.foundry.application.usecases.manage.buildpacks;
 // import uim.platform.foundry.application.dto;
 
-// import uim.platform.foundry.domain.entities.buildpack;
 import uim.platform.foundry;
 
 mixin(ShowModule!());

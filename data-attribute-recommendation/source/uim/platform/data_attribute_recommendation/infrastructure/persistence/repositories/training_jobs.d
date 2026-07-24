@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.data_attribute_recommendation.infrastructure.persistence.repositories.training_jobs;
 
-
 // import uim.platform.data_attribute_recommendation.domain.entities.training_job;
 // import uim.platform.data_attribute_recommendation.domain.ports.repositories.training_jobs;
 import uim.platform.data_attribute_recommendation;
@@ -13,7 +12,7 @@ import uim.platform.data_attribute_recommendation;
 mixin(ShowModule!());
 
 @safe:
-class MemoryTrainingJobRepository : TenantRepository!(TrainingJob, TrainingJobId), TrainingJobRepository {
+class MemoryTrainingJobRepository : TenantRepository!(TrainingJob, TrainingJobId), ITrainingJobRepository {
   
   size_t countByModelConfig(TenantId tenantId, ModelConfigurationId configId) {
     return findByModelConfig(tenantId, configId).length;

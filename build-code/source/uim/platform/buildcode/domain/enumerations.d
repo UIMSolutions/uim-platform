@@ -11,31 +11,32 @@ mixin(ShowModule!());
 
 @safe:
 
-
 // ── Enumerations ─────────────────────────────────────────────────────────────
 
 /// Type of project / dev-space template
-enum ProjectType : string {
-  cap      = "cap",
-  fiori    = "fiori",
-  sapui5   = "sapui5",
-  mobile   = "mobile",
-  java     = "java",
-  nodejs   = "nodejs",
-  other    = "other"
+enum ProjectType {
+  cap,
+  fiori,
+  sapui5,
+  mobile,
+  java,
+  nodejs,
+  other
 }
-ProjektType toProjectType(string value) {
+
+ProjectType toProjectType(string value) {
   mixin(EnumSwitch("ProjectType", "ProjectType.other"));
 }
-ProjectType[] toProjectType(string[] values) {
-  return values.map!(v => v.toProjectType).array;
-}
-string toString(ProjectType value) {
-  return value.to!string();
-}
-string[] toStrings(ProjectType[] values) {
-  return values.map!(v => v.toString).array;
-}
+
+ProjectType[] toProjectTypes(string[] values)
+  => values.map!toProjectType.array;
+
+string toString(ProjectType value)
+  => value.to!string;
+
+string[] toStrings(ProjectType[] values)
+  => values.map!toString.array;
+
 /// 
 unittest {
   mixin(ShowTest!("ProjectType"));
@@ -63,27 +64,28 @@ unittest {
 
 /// Runtime framework within a project
 enum TechStack : string {
-  capJava   = "cap-java",
+  capJava = "cap-java",
   capNodejs = "cap-nodejs",
-  sapui5    = "sapui5",
-  fiori     = "fiori-elements",
-  mobile    = "mobile-services",
+  sapui5 = "sapui5",
+  fiori = "fiori-elements",
+  mobile = "mobile-services",
   springBoot = "spring-boot",
-  nodejs    = "nodejs",
-  other     = "other"
+  nodejs = "nodejs",
+  other = "other"
 }
+
 TechStack toTechStack(string value) {
   mixin(EnumSwitch("TechStack", "TechStack.other"));
 }
-TechStack[] toTechStack(string[] values) {
-  return values.map!(v => v.toTechStack).array;
-}
-string toString(TechStack value) {
-  return value.to!string();
-}
-string[] toStrings(TechStack[] values) {
-  return values.map!(v => v.toString()).array;
-}
+
+TechStack[] toTechStacks(string[] values)
+  => values.map!toTechStack.array;
+
+string toString(TechStack value)
+  => value.to!string; 
+
+string[] toStrings(TechStack[] values)
+  => values.map!toString.array;
 ///
 unittest {
   mixin(ShowTest!("TechStack"));
@@ -105,29 +107,37 @@ unittest {
   assert(TechStack.mobile.toString == "mobile-services");
   assert(TechStack.springBoot.toString == "spring-boot");
   assert(TechStack.nodejs.toString == "nodejs");
-  assert(TechStack.other.toString == "other");  
+  assert(TechStack.other.toString == "other");
 
-  assert(["cap-java", "sapui5"].toTechStack == [TechStack.capJava, TechStack.sapui5]);
-  assert([TechStack.capJava, TechStack.sapui5].toStrings == ["cap-java", "sapui5"]);
-} 
+  assert(["cap-java", "sapui5"].toTechStack == [
+      TechStack.capJava, TechStack.sapui5
+    ]);
+  assert([TechStack.capJava, TechStack.sapui5].toStrings == [
+      "cap-java", "sapui5"
+    ]);
+}
 
 /// Status of a project
 enum ProjectStatus : string {
-  active    = "active",
-  inactive  = "inactive",
-  archived  = "archived"
+  active = "active",
+  inactive = "inactive",
+  archived = "archived"
 }
+
 ProjectStatus toProjectStatus(string value) {
   mixin(EnumSwitch("ProjectStatus", "ProjectStatus.inactive"));
 }
+
 ProjectStatus[] toProjectStatuses(string[] values) {
   return values.map!(v => v.toProjectStatus).array;
 }
+
 string toString(ProjectStatus value) {
-  return value.to!string();
+  return value.to!string;
 }
+
 string[] toStrings(ProjectStatus[] values) {
-  return values.map!(v => v.toString()).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -140,31 +150,39 @@ unittest {
 
   assert(ProjectStatus.active.toString == "active");
   assert(ProjectStatus.inactive.toString == "inactive");
-  assert(ProjectStatus.archived.toString == "archived");  
+  assert(ProjectStatus.archived.toString == "archived");
 
-  assert(["active", "archived"].toProjectStatus == [ProjectStatus.active, ProjectStatus.archived]);
-  assert([ProjectStatus.active, ProjectStatus.archived].toStrings == ["active", "archived"]);
-} 
+  assert(["active", "archived"].toProjectStatus == [
+      ProjectStatus.active, ProjectStatus.archived
+    ]);
+  assert([ProjectStatus.active, ProjectStatus.archived].toStrings == [
+      "active", "archived"
+    ]);
+}
 
 /// Status of a dev space
 enum DevSpaceStatus : string {
-  starting   = "starting",
-  running    = "running",
-  stopped    = "stopped",
-  stopping   = "stopping",
-  error_     = "error" 
+  starting = "starting",
+  running = "running",
+  stopped = "stopped",
+  stopping = "stopping",
+  error_ = "error"
 }
+
 DevSpaceStatus toDevSpaceStatus(string value) {
   mixin(EnumSwitch("DevSpaceStatus", "DevSpaceStatus.stopped"));
 }
+
 DevSpaceStatus[] toDevSpaceStatuses(string[] values) {
   return values.map!(v => v.toDevSpaceStatus).array;
 }
+
 string toString(DevSpaceStatus value) {
   return cast(string)value;
 }
+
 string[] toStrings(DevSpaceStatus[] values) {
-  return values.map!(v => v.toString()).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -183,28 +201,36 @@ unittest {
   assert(DevSpaceStatus.stopping.toString == "stopping");
   assert(DevSpaceStatus.error_.toString == "error");
 
-  assert(["starting", "stopped"].toDevSpaceStatus == [DevSpaceStatus.starting, DevSpaceStatus.stopped]);
-  assert([DevSpaceStatus.starting, DevSpaceStatus.stopped].toStrings == ["starting", "stopped"]);
-} 
+  assert(["starting", "stopped"].toDevSpaceStatus == [
+      DevSpaceStatus.starting, DevSpaceStatus.stopped
+    ]);
+  assert([DevSpaceStatus.starting, DevSpaceStatus.stopped].toStrings == [
+      "starting", "stopped"
+    ]);
+}
 
 /// Stage of a CI/CD pipeline
 enum PipelineStage : string {
-  build   = "build",
-  test    = "test",
-  deploy  = "deploy",
-  full    = "full"
+  build = "build",
+  test = "test",
+  deploy = "deploy",
+  full = "full"
 }
+
 PipelineStage toPipelineStage(string value) {
   mixin(EnumSwitch("PipelineStage", "PipelineStage.build"));
 }
-PipelineStage[] toPipelineStage(string[] values) {
-  return values.map!(v => v.toPipelineStage).array;
-}
+
+PipelineStage[] toPipelineStages(string[] values)
+  => values.map!toPipelineStage.array;
+
+
 string toString(PipelineStage value) {
-  return value.to!string();
+  return value.to!string;
 }
+
 string[] toStrings(PipelineStage[] values) {
-  return values.map!(v => v.toString()).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -219,31 +245,39 @@ unittest {
   assert(PipelineStage.build.toString == "build");
   assert(PipelineStage.test.toString == "test");
   assert(PipelineStage.deploy.toString == "deploy");
-  assert(PipelineStage.full.toString == "full");  
+  assert(PipelineStage.full.toString == "full");
 
-  assert(["build", "deploy"].toPipelineStage == [PipelineStage.build, PipelineStage.deploy]);
-  assert([PipelineStage.build, PipelineStage.deploy].toStrings == ["build", "deploy"]);
+  assert(["build", "deploy"].toPipelineStage == [
+      PipelineStage.build, PipelineStage.deploy
+    ]);
+  assert([PipelineStage.build, PipelineStage.deploy].toStrings == [
+      "build", "deploy"
+    ]);
 }
 
 /// Status of a pipeline run or build job
 enum JobStatus : string {
-  queued     = "queued",
-  running    = "running",
-  succeeded  = "succeeded",
-  failed     = "failed",
-  cancelled  = "cancelled"
+  queued = "queued",
+  running = "running",
+  succeeded = "succeeded",
+  failed = "failed",
+  cancelled = "cancelled"
 }
+
 JobStatus toJobStatus(string value) {
   mixin(EnumSwitch("JobStatus", "JobStatus.queued"));
 }
+
 JobStatus[] toJobStatuses(string[] values) {
   return values.map!(v => v.toJobStatus).array;
 }
+
 string toString(JobStatus value) {
-  return value.to!string();
+  return value.to!string;
 }
+
 string[] toStrings(JobStatus[] values) {
-  return values.map!(v => v.toString()).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -262,29 +296,35 @@ unittest {
   assert(JobStatus.failed.toString == "failed");
   assert(JobStatus.cancelled.toString == "cancelled");
 
-  assert(["queued", "failed"].toJobStatus == [JobStatus.queued, JobStatus.failed]);
+  assert(["queued", "failed"].toJobStatus == [
+      JobStatus.queued, JobStatus.failed
+    ]);
   assert([JobStatus.queued, JobStatus.failed].toStrings == ["queued", "failed"]);
 }
 
 /// Target environment for deployments
 enum DeploymentEnvironment : string {
   cloudFoundry = "cloud-foundry",
-  kyma         = "kyma",
-  abapCloud    = "abap-cloud",
-  neo          = "neo",
-  other        = "other"
+  kyma = "kyma",
+  abapCloud = "abap-cloud",
+  neo = "neo",
+  other = "other"
 }
+
 DeploymentEnvironment toDeploymentEnvironment(string value) {
   mixin(EnumSwitch("DeploymentEnvironment", "DeploymentEnvironment.other"));
 }
+
 DeploymentEnvironment[] toDeploymentEnvironment(string[] values) {
   return values.map!(v => v.toDeploymentEnvironment).array;
 }
+
 string toString(DeploymentEnvironment value) {
-  return value.to!string();
+  return value.to!string;
 }
+
 string[] toStrings(DeploymentEnvironment[] values) {
-  return values.map!(v => v.toString()).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -295,7 +335,7 @@ unittest {
   assert("abap-cloud".toDeploymentEnvironment == DeploymentEnvironment.abapCloud);
   assert("neo".toDeploymentEnvironment == DeploymentEnvironment.neo);
   assert("other".toDeploymentEnvironment == DeploymentEnvironment.other);
-  assert("unknown".toDeploymentEnvironment == DeploymentEnvironment.other); 
+  assert("unknown".toDeploymentEnvironment == DeploymentEnvironment.other);
 
   assert(DeploymentEnvironment.cloudFoundry.toString == "cloud-foundry");
   assert(DeploymentEnvironment.kyma.toString == "kyma");
@@ -303,29 +343,37 @@ unittest {
   assert(DeploymentEnvironment.neo.toString == "neo");
   assert(DeploymentEnvironment.other.toString == "other");
 
-  assert(["cloud-foundry", "kyma"].toDeploymentEnvironment == [DeploymentEnvironment.cloudFoundry, DeploymentEnvironment.kyma]);
-  assert([DeploymentEnvironment.cloudFoundry, DeploymentEnvironment.kyma].toStrings == ["cloud-foundry", "kyma"]);
+  assert(["cloud-foundry", "kyma"].toDeploymentEnvironment == [
+      DeploymentEnvironment.cloudFoundry, DeploymentEnvironment.kyma
+    ]);
+  assert([DeploymentEnvironment.cloudFoundry, DeploymentEnvironment.kyma].toStrings == [
+      "cloud-foundry", "kyma"
+    ]);
 }
 
 /// Status of a deployment
 enum DeploymentStatus : string {
-  pending    = "pending",
-  deploying  = "deploying",
-  succeeded  = "succeeded",
-  failed     = "failed",
+  pending = "pending",
+  deploying = "deploying",
+  succeeded = "succeeded",
+  failed = "failed",
   rolling_back = "rolling-back"
 }
+
 DeploymentStatus toDeploymentStatus(string value) {
   mixin(EnumSwitch("DeploymentStatus", "DeploymentStatus.pending"));
 }
+
 DeploymentStatus[] toDeploymentStatuses(string[] values) {
   return values.map!(v => v.toDeploymentStatus).array;
 }
+
 string toString(DeploymentStatus value) {
-  return value.to!string();
+  return value.to!string;
 }
+
 string[] toStrings(DeploymentStatus[] values) {
-  return values.map!(v => v.toString()).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -342,30 +390,38 @@ unittest {
   assert(DeploymentStatus.deploying.toString == "deploying");
   assert(DeploymentStatus.succeeded.toString == "succeeded");
   assert(DeploymentStatus.failed.toString == "failed");
-  assert(DeploymentStatus.rolling_back.toString == "rolling-back"); 
+  assert(DeploymentStatus.rolling_back.toString == "rolling-back");
 
-  assert(["pending", "succeeded"].toDeploymentStatus == [DeploymentStatus.pending, DeploymentStatus.succeeded]);
-  assert([DeploymentStatus.pending, DeploymentStatus.succeeded].toStrings == ["pending", "succeeded"]);
+  assert(["pending", "succeeded"].toDeploymentStatus == [
+      DeploymentStatus.pending, DeploymentStatus.succeeded
+    ]);
+  assert([DeploymentStatus.pending, DeploymentStatus.succeeded].toStrings == [
+      "pending", "succeeded"
+    ]);
 }
 
 /// Status of an AI code generation request
 enum AIRequestStatus : string {
-  pending    = "pending",
+  pending = "pending",
   processing = "processing",
-  completed  = "completed",
-  failed     = "failed"
+  completed = "completed",
+  failed = "failed"
 }
+
 AIRequestStatus toAIRequestStatus(string value) {
   mixin(EnumSwitch("AIRequestStatus", "AIRequestStatus.pending"));
 }
+
 AIRequestStatus[] toAIRequestStatuses(string[] values) {
   return values.map!(v => v.toAIRequestStatus).array;
 }
+
 string toString(AIRequestStatus value) {
-  return value.to!string();
+  return value.to!string;
 }
+
 string[] toStrings(AIRequestStatus[] values) {
-  return values.map!(v => v.toString()).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -380,32 +436,40 @@ unittest {
   assert(AIRequestStatus.pending.toString == "pending");
   assert(AIRequestStatus.processing.toString == "processing");
   assert(AIRequestStatus.completed.toString == "completed");
-  assert(AIRequestStatus.failed.toString == "failed");  
+  assert(AIRequestStatus.failed.toString == "failed");
 
-  assert(["pending", "completed"].toAIRequestStatus == [AIRequestStatus.pending, AIRequestStatus.completed]);
-  assert([AIRequestStatus.pending, AIRequestStatus.completed].toStrings == ["pending", "completed"]);
-} 
+  assert(["pending", "completed"].toAIRequestStatus == [
+      AIRequestStatus.pending, AIRequestStatus.completed
+    ]);
+  assert([AIRequestStatus.pending, AIRequestStatus.completed].toStrings == [
+      "pending", "completed"
+    ]);
+}
 
 /// Type of AI generation request
 enum AIGenerationType : string {
-  dataModel    = "data-model",
-  service      = "service",
-  sampleData   = "sample-data",
-  uitPage      = "ui-page",
+  dataModel = "data-model",
+  service = "service",
+  sampleData = "sample-data",
+  uitPage = "ui-page",
   codeFragment = "code-fragment",
-  fullApp      = "full-app"
+  fullApp = "full-app"
 }
+
 AIGenerationType toAIGenerationType(string value) {
   mixin(EnumSwitch("AIGenerationType", "AIGenerationType.codeFragment"));
 }
+
 AIGenerationType[] toAIGenerationType(string[] values) {
   return values.map!(v => v.toAIGenerationType).array;
 }
+
 string toString(AIGenerationType value) {
-  return value.to!string();
+  return value.to!string;
 }
+
 string[] toStrings(AIGenerationType[] values) {
-  return values.map!(v => v.toString()).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -426,27 +490,35 @@ unittest {
   assert(AIGenerationType.codeFragment.toString == "code-fragment");
   assert(AIGenerationType.fullApp.toString == "full-app");
 
-  assert(["data-model", "service"].toAIGenerationType == [AIGenerationType.dataModel, AIGenerationType.service]);
-  assert([AIGenerationType.dataModel, AIGenerationType.service].toStrings == ["data-model", "service"]);
+  assert(["data-model", "service"].toAIGenerationType == [
+      AIGenerationType.dataModel, AIGenerationType.service
+    ]);
+  assert([AIGenerationType.dataModel, AIGenerationType.service].toStrings == [
+      "data-model", "service"
+    ]);
 }
 
 /// State of a service binding
 enum BindingStatus : string {
-  active    = "active",
+  active = "active",
   inactive_ = "inactive",
-  error_    = "error"
+  error_ = "error"
 }
+
 BindingStatus toBindingStatus(string value) {
   mixin(EnumSwitch("BindingStatus", "BindingStatus.inactive_"));
 }
+
 BindingStatus[] toBindingStatuses(string[] values) {
   return values.map!(v => v.toBindingStatus).array;
 }
+
 string toString(BindingStatus value) {
-  return value.to!string();
+  return value.to!string;
 }
+
 string[] toStrings(BindingStatus[] values) {
-  return values.map!(v => v.toString()).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -459,8 +531,12 @@ unittest {
 
   assert(BindingStatus.active.toString == "active");
   assert(BindingStatus.inactive_.toString == "inactive");
-  assert(BindingStatus.error_.toString == "error"); 
+  assert(BindingStatus.error_.toString == "error");
 
-  assert(["active", "inactive"].toBindingStatus == [BindingStatus.active, BindingStatus.inactive_]);
-  assert([BindingStatus.active, BindingStatus.inactive_].toStrings == ["active", "inactive"]);
+  assert(["active", "inactive"].toBindingStatus == [
+      BindingStatus.active, BindingStatus.inactive_
+    ]);
+  assert([BindingStatus.active, BindingStatus.inactive_].toStrings == [
+      "active", "inactive"
+    ]);
 }

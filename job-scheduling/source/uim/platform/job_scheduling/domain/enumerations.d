@@ -17,10 +17,10 @@ JobType[] toJobTypes(string[] values) @safe {
     return values.map!(v => v.toJobType).array;
 }
 string toString(JobType value) @safe {
-    return value.to!string();
+    return value.to!string;
 }
 string[] toStrings(JobType[] values) @safe {
-    return values.map!(v => v.toString).array;
+    return values.map!toString.array;
 }
 ///     
 unittest {
@@ -47,10 +47,10 @@ JobTriggerType[] toJobTriggerTypes(string[] values) @safe {
     return values.map!(v => v.toJobTriggerType).array;
 }
 string toString(JobTriggerType value) @safe {
-    return value.to!string();
+    return value.to!string;
 }
 string[] toStrings(JobTriggerType[] values) @safe {
-    return values.map!(v => v.toString).array;
+    return values.map!toString.array;
 }
 ///
 unittest {
@@ -77,10 +77,10 @@ JobStatus[] toJobStatuses(string[] values) @safe {
     return values.map!(v => v.toJobStatus).array;
 }
 string toString(JobStatus value) @safe {
-    return value.to!string();
+    return value.to!string;
 }
 string[] toStrings(JobStatus[] values) @safe {
-    return values.map!(v => v.toString()).array;
+    return values.map!toString.array;
 }
 ///
 unittest {
@@ -107,10 +107,10 @@ ScheduleType[] toScheduleTypes(string[] values) @safe {
     return values.map!(v => v.toScheduleType).array;
 }
 string toString(ScheduleType value) @safe {
-    return value.to!string();
+    return value.to!string;
 }
 string[] toStrings(ScheduleType[] values) @safe {
-    return values.map!(v => v.toString()).array;
+    return values.map!toString.array;
 }
 ///
 unittest {
@@ -139,10 +139,10 @@ ScheduleFormat[] toScheduleFormats(string[] values) @safe {
     return values.map!(v => v.toScheduleFormat).array;
 }
 string toString(ScheduleFormat value) @safe {
-    return value.to!string();
+    return value.to!string;
 }
 string[] toStrings(ScheduleFormat[] values) @safe {
-    return values.map!(v => v.toString()).array;
+    return values.map!toString.array;
 }
 ///
 unittest {
@@ -174,10 +174,10 @@ JobScheduleStatus[] toJobScheduleStatuses(string[] values) @safe {
     return values.map!(v => v.toJobScheduleStatus).array;
 }
 string toString(JobScheduleStatus value) @safe {
-    return value.to!string();
+    return value.to!string;
 }
 string[] toStrings(JobScheduleStatus[] values) @safe {
-    return values.map!(v => v.toString()).array;
+    return values.map!toString.array;
 }
 ///
 unittest {
@@ -208,10 +208,10 @@ RunStatus[] toRunStatuses(string[] values) @safe {
     return values.map!(v => v.toRunStatus).array;
 }
 string toString(RunStatus value) @safe {
-    return value.to!string();
+    return value.to!string;
 }
 string[] toStrings(RunStatus[] values) @safe {
-    return values.map!(v => v.toString()).array;
+    return values.map!toString.array;
 }
 ///
 unittest {

@@ -14,6 +14,7 @@ struct CommandResult {
   string message;
   /// An optional error code associated with the command result.
   size_t code;
+  
   ///
   this(bool success, string id = "", string message = "", size_t code = 0) {
     this.success = success;
@@ -28,10 +29,6 @@ struct CommandResult {
 
   bool hasError() const {
     return !success && message.length > 0;
-  }
-
-  string errorMessage() const {
-    return hasError() ? message : "";
   }
 
   Json toJson() const {

@@ -10,7 +10,7 @@ import uim.platform.data_attribute_recommendation;
 mixin(ShowModule!());
 
 @safe:
-interface DatasetRepository : ITenantRepository!(Dataset, DatasetId) {
+interface IDatasetRepository : ITenantRepository!(Dataset, DatasetId) {
 
   bool existsByName(TenantId tenantId, string name);
   Dataset findByName(TenantId tenantId, string name);

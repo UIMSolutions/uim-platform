@@ -5,14 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.data_attribute_recommendation.domain.ports.deployments;
 
-
 // import uim.platform.data_attribute_recommendation.domain.entities.model_deployment;
 import uim.platform.data_attribute_recommendation;
 
 mixin(ShowModule!());
 
 @safe:
-interface DeploymentRepository : ITenantRepository!(ModelDeployment, DeploymentId) {
+interface IDeploymentRepository : ITenantRepository!(ModelDeployment, DeploymentId) {
 
   bool existsByTrainingJob(TenantId tenantId, TrainingJobId jobId);
   ModelDeployment findByTrainingJob(TenantId tenantId, TrainingJobId jobId);

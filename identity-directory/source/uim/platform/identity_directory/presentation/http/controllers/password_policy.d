@@ -57,7 +57,7 @@ class PasswordPolicyController : ManageHttpController {
 
     auto result = useCase.createPolicy(request);
     if (result.hasError)
-      return errorResponse(result.errorMessage);
+      return errorResponse(result.message);
 
     auto response = Json.emptyObject;
     response["policyId"] = Json(result.policyId);

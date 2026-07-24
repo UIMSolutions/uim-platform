@@ -30,7 +30,7 @@ string toString(UserStatus status) {
   return status.to!string;
 }
 string[] toStrings(UserStatus[] statuses) {
-  return statuses.map!(s => toString(s)).array;
+  return statuses.map!toString.array;
 }
 ///
 unittest {
@@ -50,7 +50,7 @@ unittest {
   assert(toString(UserStatus.provisioning) == "provisioning");
   assert(toString(UserStatus.pending) == "pending");
 
-  assert([UserStatus.active, UserStatus.inactive, UserStatus.locked, UserStatus.staged, UserStatus.provisioning, UserStatus.pending].map!(s => toString(s)).array == ["active", "inactive", "locked", "staged", "provisioning", "pending"]);
+  assert([UserStatus.active, UserStatus.inactive, UserStatus.locked, UserStatus.staged, UserStatus.provisioning, UserStatus.pending].map!toString.array == ["active", "inactive", "locked", "staged", "provisioning", "pending"]);
   assert(["active", "inactive", "locked", "staged", "provisioning", "pending"].map!(s => toUserStatus(s)).array == [UserStatus.active, UserStatus.inactive, UserStatus.locked, UserStatus.staged, UserStatus.provisioning, UserStatus.pending]);
 }
 
@@ -63,14 +63,14 @@ enum GroupType {
 GroupType toGroupType(string value) {
   mixin(EnumSwitch("GroupType", "standard"));
 }
-GroupType[] toGroupType(string[] arr) {
-  return arr.map!(s => toGroupType(s)).array;
+GroupType[] toGroupTypes(string[] arr) {
+  return arr.map!toGroupType.array;
 }
 string toString(GroupType type) {
   return type.to!string;
 }
 string[] toStrings(GroupType[] types) {
-  return types.map!(s => toString(s)).array;
+  return types.map!toString.array;
 }
 ///
 unittest {
@@ -84,8 +84,8 @@ unittest {
   assert(toString(GroupType.dynamic) == "dynamic");
   assert(toString(GroupType.nested) == "nested");
 
-  assert([GroupType.standard, GroupType.dynamic, GroupType.nested].map!(s => toString(s)).array == ["standard", "dynamic", "nested"]);
-  assert(["standard", "dynamic", "nested"].map!(s => toGroupType(s)).array == [GroupType.standard, GroupType.dynamic, GroupType.nested]);
+  assert([GroupType.standard, GroupType.dynamic, GroupType.nested].toStrings == ["standard", "dynamic", "nested"]);
+  assert(["standard", "dynamic", "nested"].toGroupTypes == [GroupType.standard, GroupType.dynamic, GroupType.nested]);
 }
 
 /// Attribute data types for custom schemas.
@@ -101,15 +101,14 @@ enum AttributeType {
 AttributeType toAttributeType(string value) {
   mixin(EnumSwitch("AttributeType", "stringType"));
 }
-AttributeType[] toAttributeType(string[] arr) {
-  return arr.map!(s => toAttributeType(s)).array;
-}
-string toString(AttributeType type) {
-  return type.to!string;
-}
-string[] toStrings(AttributeType[] types) {
-  return types.map!(s => toString(s)).array;
-}
+AttributeType[] toAttributeTypes(string[] arr)
+  => arr.map!toAttributeType.array;
+
+string toString(AttributeType type)
+  => type.to!string;
+
+string[] toStrings(AttributeType[] types)
+  => types.map!toString.array;
 /// 
 unittest {
   mixin(ShowTest!("AttributeType"));
@@ -130,7 +129,7 @@ unittest {
   assert(AttributeType.complexType.toString == "complexType");
   assert(AttributeType.binaryType.toString == "binaryType");
 
-  assert([AttributeType.stringType, AttributeType.integerType, AttributeType.booleanType, AttributeType.dateTimeType, AttributeType.referenceType, AttributeType.complexType, AttributeType.binaryType].map!(s => toString(s)).array == ["stringType", "integerType", "booleanType", "dateTimeType", "referenceType", "complexType", "binaryType"]);
+  assert([AttributeType.stringType, AttributeType.integerType, AttributeType.booleanType, AttributeType.dateTimeType, AttributeType.referenceType, AttributeType.complexType, AttributeType.binaryType].map!toString.array == ["stringType", "integerType", "booleanType", "dateTimeType", "referenceType", "complexType", "binaryType"]);
   assert(["stringType", "integerType", "booleanType", "dateTimeType", "referenceType", "complexType", "binaryType"].map!(s => toAttributeType(s)).array == [AttributeType.stringType, AttributeType.integerType, AttributeType.booleanType, AttributeType.dateTimeType, AttributeType.referenceType, AttributeType.complexType, AttributeType.binaryType]);
 }
 
@@ -150,30 +149,30 @@ Mutability toMutability(string s) {
     default: return Mutability.readWrite; // default to readWrite if unknown
   }
 }
-Mutability[] toMutability(string[] arr) {
-  return arr.map!(s => toMutability(s)).array;
+Mutability[] toMutabilities(string[] arr) {
+  return arr.map!toMutability.array;
 }
 string toString(Mutability mut) {
   return mut.to!string;
 }
 string[] toStrings(Mutability[] muts) {
-  return muts.map!(s => toString(s)).array;
+  return muts.map!toString.array;
 }
 ///
 unittest {
   mixin(ShowTest!("Mutability"));
 
-  assert(toMutability("readWrite") == Mutability.readWrite);
-  assert(toMutability("readOnly") == Mutability.readOnly);
-  assert(toMutability("writeOnly") == Mutability.writeOnly);
-  assert(toMutability("immutable") == Mutability.immutable_);
+  assert("readWrite".toMutability == Mutability.readWrite);
+  assert("readOnly".toMutability == Mutability.readOnly);
+  assert("writeOnly".toMutability == Mutability.writeOnly);
+  assert("immutable".toMutability == Mutability.immutable_);
 
-  assert(toString(Mutability.readWrite) == "readWrite");
-  assert(toString(Mutability.readOnly) == "readOnly");
-  assert(toString(Mutability.writeOnly) == "writeOnly");
-  assert(toString(Mutability.immutable_) == "immutable");
+  assert(Mutability.readWrite.toString == "readWrite");
+  assert(Mutability.readOnly.toString == "readOnly");
+  assert(Mutability.writeOnly.toString == "writeOnly");
+  assert(Mutability.immutable_.toString == "immutable");
 
-  assert([Mutability.readWrite, Mutability.readOnly, Mutability.writeOnly, Mutability.immutable_].map!(s => toString(s)).array == ["readWrite", "readOnly", "writeOnly", "immutable"]);
+  assert([Mutability.readWrite, Mutability.readOnly, Mutability.writeOnly, Mutability.immutable_].toStrings == ["readWrite", "readOnly", "writeOnly", "immutable"]);
   assert(["readWrite", "readOnly", "writeOnly", "immutable"].map!(s => toMutability(s)).array == [Mutability.readWrite, Mutability.readOnly, Mutability.writeOnly, Mutability.immutable_]);
 }
 
@@ -200,7 +199,7 @@ string toString(Returned ret) {
   return ret.to!string;
 }
 string[] toStrings(Returned[] rets) {
-  return rets.map!(s => toString(s)).array;
+  return rets.map!toString.array;
 } 
 ///
 unittest {
@@ -216,7 +215,7 @@ unittest {
   assert(toString(Returned.default_) == "default");
   assert(toString(Returned.request) == "request");
 
-  assert([Returned.always, Returned.never, Returned.default_, Returned.request].map!(s => toString(s)).array == ["always", "never", "default", "request"]);
+  assert([Returned.always, Returned.never, Returned.default_, Returned.request].map!toString.array == ["always", "never", "default", "request"]);
   assert(["always", "never", "default", "request"].map!(s => toReturned(s)).array == [Returned.always, Returned.never, Returned.default_, Returned.request]);
 }
 
@@ -236,7 +235,7 @@ string toString(Uniqueness uniq) {
   return uniq.to!string;
 }
 string[] toStrings(Uniqueness[] uniqs) {
-  return uniqs.map!(s => toString(s)).array;
+  return uniqs.map!toString.array;
 }
 ///
 unittest {
@@ -250,7 +249,7 @@ unittest {
   assert(toString(Uniqueness.server) == "server");
   assert(toString(Uniqueness.global) == "global");
 
-  assert([Uniqueness.none, Uniqueness.server, Uniqueness.global].map!(s => toString(s)).array == ["none", "server", "global"]);
+  assert([Uniqueness.none, Uniqueness.server, Uniqueness.global].map!toString.array == ["none", "server", "global"]);
   assert(["none", "server", "global"].map!(s => toUniqueness(s)).array == [Uniqueness.none, Uniqueness.server, Uniqueness.global]);
 }
 
@@ -271,7 +270,7 @@ string toString(PasswordStrength strength) {
   return strength.to!string;
 }
 string[] toStrings(PasswordStrength[] strengths) {
-  return strengths.map!(s => toString(s)).array;
+  return strengths.map!toString.array;
 }
 ///
 unittest {
@@ -287,7 +286,7 @@ unittest {
   assert(toString(PasswordStrength.strong) == "strong");
   assert(toString(PasswordStrength.enterprise) == "enterprise");
 
-  assert([PasswordStrength.weak, PasswordStrength.standard, PasswordStrength.strong, PasswordStrength.enterprise].map!(s => toString(s)).array == ["weak", "standard", "strong", "enterprise"]);
+  assert([PasswordStrength.weak, PasswordStrength.standard, PasswordStrength.strong, PasswordStrength.enterprise].map!toString.array == ["weak", "standard", "strong", "enterprise"]);
   assert(["weak", "standard", "strong", "enterprise"].map!(s => toPasswordStrength(s)).array == [PasswordStrength.weak, PasswordStrength.standard, PasswordStrength.strong, PasswordStrength.enterprise]);
 }
 
@@ -325,7 +324,7 @@ string toString(AuditEventType eventType) {
   return eventType.to!string;
 }
 string[] toStrings(AuditEventType[] eventTypes) {
-  return eventTypes.map!(s => toString(s)).array;
+  return eventTypes.map!toString.array;
 }
 ///
 unittest {
@@ -374,7 +373,7 @@ unittest {
   assert(AuditEventType.apiClientRevoked.toString == "apiClientRevoked");
   assert(AuditEventType.loginSuccess.toString == "loginSuccess");
   assert(AuditEventType.loginFailure.toString == "loginFailure");
-  assert([AuditEventType.userCreated, AuditEventType.userUpdated, AuditEventType.userDeleted, AuditEventType.userActivated, AuditEventType.userDeactivated, AuditEventType.userLocked, AuditEventType.userUnlocked, AuditEventType.passwordChanged, AuditEventType.passwordReset, AuditEventType.groupCreated, AuditEventType.groupUpdated, AuditEventType.groupDeleted, AuditEventType.memberAdded, AuditEventType.memberRemoved, AuditEventType.schemaCreated, AuditEventType.schemaUpdated, AuditEventType.schemaDeleted, AuditEventType.apiClientCreated, AuditEventType.apiClientRevoked, AuditEventType.loginSuccess, AuditEventType.loginFailure].map!(s => toString(s)).array == ["userCreated", "userUpdated", "userDeleted", "userActivated", "userDeactivated", "userLocked", "userUnlocked", "passwordChanged", "passwordReset", "groupCreated", "groupUpdated", "groupDeleted", "memberAdded", "memberRemoved", "schemaCreated", "schemaUpdated", "schemaDeleted", "apiClientCreated", "apiClientRevoked", "loginSuccess", "loginFailure"]);
+  assert([AuditEventType.userCreated, AuditEventType.userUpdated, AuditEventType.userDeleted, AuditEventType.userActivated, AuditEventType.userDeactivated, AuditEventType.userLocked, AuditEventType.userUnlocked, AuditEventType.passwordChanged, AuditEventType.passwordReset, AuditEventType.groupCreated, AuditEventType.groupUpdated, AuditEventType.groupDeleted, AuditEventType.memberAdded, AuditEventType.memberRemoved, AuditEventType.schemaCreated, AuditEventType.schemaUpdated, AuditEventType.schemaDeleted, AuditEventType.apiClientCreated, AuditEventType.apiClientRevoked, AuditEventType.loginSuccess, AuditEventType.loginFailure].map!toString.array == ["userCreated", "userUpdated", "userDeleted", "userActivated", "userDeactivated", "userLocked", "userUnlocked", "passwordChanged", "passwordReset", "groupCreated", "groupUpdated", "groupDeleted", "memberAdded", "memberRemoved", "schemaCreated", "schemaUpdated", "schemaDeleted", "apiClientCreated", "apiClientRevoked", "loginSuccess", "loginFailure"]);
   assert(["userCreated", "userUpdated", "userDeleted", "userActivated", "userDeactivated", "userLocked", "userUnlocked", "passwordChanged", "passwordReset", "groupCreated", "groupUpdated", "groupDeleted", "memberAdded", "memberRemoved", "schemaCreated", "schemaUpdated", "schemaDeleted", "apiClientCreated", "apiClientRevoked", "loginSuccess", "loginFailure"].map!(s => toAuditEventType(s)).array == [AuditEventType.userCreated, AuditEventType.userUpdated, AuditEventType.userDeleted, AuditEventType.userActivated, AuditEventType.userDeactivated, AuditEventType.userLocked, AuditEventType.userUnlocked, AuditEventType.passwordChanged, AuditEventType.passwordReset, AuditEventType.groupCreated, AuditEventType.groupUpdated, AuditEventType.groupDeleted, AuditEventType.memberAdded, AuditEventType.memberRemoved, AuditEventType.schemaCreated, AuditEventType.schemaUpdated, AuditEventType.schemaDeleted, AuditEventType.apiClientCreated, AuditEventType.apiClientRevoked, AuditEventType.loginSuccess, AuditEventType.loginFailure]); 
 }
 
@@ -393,7 +392,7 @@ string toString(SortOrder order) {
   return order.to!string;
 }
 string[] toStrings(SortOrder[] orders) {
-  return orders.map!(s => toString(s)).array;
+  return orders.map!toString.array;
 }
 ///
 unittest {
@@ -405,6 +404,6 @@ unittest {
   assert(toString(SortOrder.ascending) == "ascending");
   assert(toString(SortOrder.descending) == "descending");
 
-  assert([SortOrder.ascending, SortOrder.descending].map!(s => toString(s)).array == ["ascending", "descending"]);
+  assert([SortOrder.ascending, SortOrder.descending].map!toString.array == ["ascending", "descending"]);
   assert(["ascending", "descending"].map!(s => toSortOrder(s)).array == [SortOrder.ascending, SortOrder.descending]);
 }

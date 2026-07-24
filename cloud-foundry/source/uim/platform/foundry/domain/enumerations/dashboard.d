@@ -24,7 +24,7 @@ DashboardMetricType toDashboardMetricType(string value) {
     mixin(EnumSwitch("DashboardMetricType", "certificateExpiration"));
 }
 
-DashboardMetricType[] toDashboardMetricType(string[] arr) {
+DashboardMetricType[] toDashboardMetricTypes(string[] arr) {
     return arr.map!(toDashboardMetricType).array;
 }
 
@@ -39,36 +39,35 @@ string[] toStrings(DashboardMetricType[] arr) {
 unittest {
     mixin(ShowTest!("DashboardMetricType"));
 
-    assert(toDashboardMetricType(
-            "certificateExpiration") == DashboardMetricType.certificateExpiration);
-    assert(toDashboardMetricType("domainHealth") == DashboardMetricType.domainHealth);
-    assert(toDashboardMetricType("requestVolume") == DashboardMetricType.requestVolume);
-    assert(toDashboardMetricType("tlsHandshakeErrors") == DashboardMetricType.tlsHandshakeErrors);
-    assert(toDashboardMetricType("dnsResolutionTime") == DashboardMetricType.dnsResolutionTime);
-    assert(toDashboardMetricType("certificateCount") == DashboardMetricType.certificateCount);
-    assert(toDashboardMetricType("domainCount") == DashboardMetricType.domainCount);
-    assert(toDashboardMetricType("mappingCount") == DashboardMetricType.mappingCount);
-    assert(toDashboardMetricType("unknown") == DashboardMetricType.certificateExpiration);
+    assert("certificateExpiration".toDashboardMetricType == DashboardMetricType.certificateExpiration);
+    assert("domainHealth".toDashboardMetricType == DashboardMetricType.domainHealth);
+    assert("requestVolume".toDashboardMetricType == DashboardMetricType.requestVolume);
+    assert("tlsHandshakeErrors".toDashboardMetricType == DashboardMetricType.tlsHandshakeErrors);
+    assert("dnsResolutionTime".toDashboardMetricType == DashboardMetricType.dnsResolutionTime);
+    assert("certificateCount".toDashboardMetricType == DashboardMetricType.certificateCount);
+    assert("domainCount".toDashboardMetricType == DashboardMetricType.domainCount);
+    assert("mappingCount".toDashboardMetricType == DashboardMetricType.mappingCount);
+    assert("unknown".toDashboardMetricType == DashboardMetricType.certificateExpiration);
 
-    assert(toString(DashboardMetricType.certificateExpiration) == "certificateExpiration");
-    assert(toString(DashboardMetricType.domainHealth) == "domainHealth");
-    assert(toString(DashboardMetricType.requestVolume) == "requestVolume");
-    assert(toString(DashboardMetricType.tlsHandshakeErrors) == "tlsHandshakeErrors");
-    assert(toString(DashboardMetricType.dnsResolutionTime) == "dnsResolutionTime");
-    assert(toString(DashboardMetricType.certificateCount) == "certificateCount");
-    assert(toString(DashboardMetricType.domainCount) == "domainCount");
-    assert(toString(DashboardMetricType.mappingCount) == "mappingCount");
+    assert(DashboardMetricType.certificateExpiration.toString == "certificateExpiration");
+    assert(DashboardMetricType.domainHealth.toString == "domainHealth");
+    assert(DashboardMetricType.requestVolume.toString == "requestVolume");
+    assert(DashboardMetricType.tlsHandshakeErrors.toString == "tlsHandshakeErrors");
+    assert(DashboardMetricType.dnsResolutionTime.toString == "dnsResolutionTime");
+    assert(DashboardMetricType.certificateCount.toString == "certificateCount");
+    assert(DashboardMetricType.domainCount.toString == "domainCount");
+    assert(DashboardMetricType.mappingCount.toString == "mappingCount");
 
     assert([
-        toString(DashboardMetricType.certificateExpiration),
-        toString(DashboardMetricType.domainHealth),
-        toString(DashboardMetricType.requestVolume),
-        toString(DashboardMetricType.tlsHandshakeErrors),
-        toString(DashboardMetricType.dnsResolutionTime),
-        toString(DashboardMetricType.certificateCount),
-        toString(DashboardMetricType.domainCount),
-        toString(DashboardMetricType.mappingCount)
-    ] ==
+        DashboardMetricType.certificateExpiration,
+        DashboardMetricType.domainHealth,
+        DashboardMetricType.requestVolume,
+        DashboardMetricType.tlsHandshakeErrors,
+        DashboardMetricType.dnsResolutionTime,
+        DashboardMetricType.certificateCount,
+        DashboardMetricType.domainCount,
+        DashboardMetricType.mappingCount
+    ].toStrings ==
         [
             "certificateExpiration",
             "domainHealth",
@@ -81,15 +80,15 @@ unittest {
         ]);
 
     assert([
-        toDashboardMetricType("certificateExpiration"),
-        toDashboardMetricType("domainHealth"),
-        toDashboardMetricType("requestVolume"),
-        toDashboardMetricType("tlsHandshakeErrors"),
-        toDashboardMetricType("dnsResolutionTime"),
-        toDashboardMetricType("certificateCount"),
-        toDashboardMetricType("domainCount"),
-        toDashboardMetricType("mappingCount")
-    ] ==
+        "certificateExpiration",
+        "domainHealth",
+        "requestVolume",
+        "tlsHandshakeErrors",
+        "dnsResolutionTime",
+        "certificateCount",
+        "domainCount",
+        "mappingCount"
+    ].toDashboardMetricTypes ==
         [
             DashboardMetricType.certificateExpiration,
             DashboardMetricType.domainHealth,
@@ -128,33 +127,33 @@ string[] toStrings(HealthStatus[] arr) {
 unittest {
     mixin(ShowTest!("HealthStatus"));
 
-    assert(toHealthStatus("healthy") == HealthStatus.healthy);
-    assert(toHealthStatus("warning") == HealthStatus.warning);
-    assert(toHealthStatus("critical") == HealthStatus.critical);
-    assert(toHealthStatus("unknown") == HealthStatus.unknown);
-    assert(toHealthStatus("invalid") == HealthStatus.unknown);
+    assert("healthy".toHealthStatus == HealthStatus.healthy);
+    assert("warning".toHealthStatus == HealthStatus.warning);
+    assert("critical".toHealthStatus == HealthStatus.critical);
+    assert("unknown".toHealthStatus == HealthStatus.unknown);
+    assert("invalid".toHealthStatus == HealthStatus.unknown);
 
-    assert(toString(HealthStatus.healthy) == "healthy");
-    assert(toString(HealthStatus.warning) == "warning");
-    assert(toString(HealthStatus.critical) == "critical");
-    assert(toString(HealthStatus.unknown) == "unknown");
+    assert(HealthStatus.healthy.toString == "healthy");
+    assert(HealthStatus.warning.toString == "warning");
+    assert(HealthStatus.critical.toString == "critical");
+    assert(HealthStatus.unknown.toString == "unknown");
     assert([
-        toString(HealthStatus.healthy),
-        toString(HealthStatus.warning),
-        toString(HealthStatus.critical),
-        toString(HealthStatus.unknown)
-    ] ==
+        HealthStatus.healthy,
+        HealthStatus.warning,
+        HealthStatus.critical,
+        HealthStatus.unknown
+    ].toStrings ==
         ["healthy",
             "warning",
             "critical",
             "unknown"]);
 
     assert([
-        toHealthStatus("healthy"),
-        toHealthStatus("warning"),
-        toHealthStatus("critical"),
-        toHealthStatus("unknown")
-    ] ==
+        "healthy",
+        "warning",
+        "critical",
+        "unknown"
+    ].toHealthStatuses ==
         [
             HealthStatus.healthy,
             HealthStatus.warning,
@@ -175,17 +174,15 @@ ExpirationSeverity toExpirationSeverity(string value) {
     mixin(EnumSwitch("ExpirationSeverity", "none"));
 }
 
-ExpirationSeverity[] toExpirationSeverities(string[] arr) {
-    return arr.map!(toExpirationSeverity).array;
-}
+ExpirationSeverity[] toExpirationSeverities(string[] arr)
+    => arr.map!(toExpirationSeverity).array;
 
-string toString(ExpirationSeverity t) {
-    return t.to!string;
-}
+string toString(ExpirationSeverity t)
+    => t.to!string;
 
-string[] toStrings(ExpirationSeverity[] arr) {
-    return arr.map!toString.array;
-}
+string[] toStrings(ExpirationSeverity[] arr)
+    => arr.map!toString.array;
+
 ///
 unittest {
     mixin(ShowTest!("ExpirationSeverity"));
@@ -199,11 +196,11 @@ unittest {
     assert("".toExpirationSeverity == ExpirationSeverity.none);
     assert("invalid".toExpirationSeverity == ExpirationSeverity.none);
 
-    assert(toString(ExpirationSeverity.none) == "none");
-    assert(toString(ExpirationSeverity.info) == "info");
-    assert(toString(ExpirationSeverity.warning) == "warning");
-    assert(toString(ExpirationSeverity.critical) == "critical");
-    assert(toString(ExpirationSeverity.expired) == "expired");
+    assert(ExpirationSeverity.none.toString == "none");
+    assert(ExpirationSeverity.info.toString == "info");
+    assert(ExpirationSeverity.warning.toString == "warning");
+    assert(ExpirationSeverity.critical.toString == "critical");
+    assert(ExpirationSeverity.expired.toString == "expired");
 
     assert([
         ExpirationSeverity.none,

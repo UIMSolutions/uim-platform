@@ -42,13 +42,13 @@ ServiceCallStatus toServiceCallStatus(string status) {
         default: return ServiceCallStatus.draft; // Default to draft if unknown
     }
 }
-ServiceCallStatus[] toServiceCallStatusArray(string[] statuses) {
-    return statuses.map!(toServiceCallStatus).array;
+ServiceCallStatus[] toServiceCallStatuses(string[] statuses) {
+    return statuses.map!toServiceCallStatus.array;
 }
 string toString(ServiceCallStatus status) {
     return cast(string)status;
 }
-string[] toStringArray(ServiceCallStatus[] statuses) {
+string[] toStrings(ServiceCallStatus[] statuses) {
     return statuses.map!toString.array;
 }
 ///
@@ -76,8 +76,8 @@ unittest {
     assert(ServiceCallStatus.closed.toString == "closed");
     assert(ServiceCallStatus.cancelled.toString == "cancelled");
 
-    assert(toServiceCallStatusArray(["draft", "new", "assigned"]) == [ServiceCallStatus.draft, ServiceCallStatus.new_, ServiceCallStatus.assigned]);
-    assert(toStringArray([ServiceCallStatus.draft, ServiceCallStatus.new_, ServiceCallStatus.assigned]) == ["draft", "new", "assigned"]);   
+    assert(toServiceCallStatuses(["draft", "new", "assigned"]) == [ServiceCallStatus.draft, ServiceCallStatus.new_, ServiceCallStatus.assigned]);
+    assert(toStrings([ServiceCallStatus.draft, ServiceCallStatus.new_, ServiceCallStatus.assigned]) == ["draft", "new", "assigned"]);   
 }
 
 enum ServiceCallPriority {

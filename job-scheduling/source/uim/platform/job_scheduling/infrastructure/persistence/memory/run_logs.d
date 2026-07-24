@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.job_scheduling.infrastructure.persistence.repositories.run_log;
 
-
 // import uim.platform.job_scheduling.domain.entities.run_log;
 // import uim.platform.job_scheduling.domain.ports.repositories.run_logs;
 

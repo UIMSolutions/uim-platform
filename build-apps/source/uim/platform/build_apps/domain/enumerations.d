@@ -351,14 +351,14 @@ unittest {
   assert("noexists".toComponentCategory == ComponentCategory.basic); // Default case
   assert("".toComponentCategory == ComponentCategory.basic); // Default case  
 
-  assert(toString(ComponentCategory.basic) == "basic");
-  assert(toString(ComponentCategory.layout) == "layout");
-  assert(toString(ComponentCategory.input) == "input");
-  assert(toString(ComponentCategory.display) == "display");
-  assert(toString(ComponentCategory.navigation) == "navigation");
-  assert(toString(ComponentCategory.media) == "media");
-  assert(toString(ComponentCategory.chart) == "chart");
-  assert(toString(ComponentCategory.custom) == "custom");
+  assert(ComponentCategory.basic.toString == "basic");
+  assert(ComponentCategory.layout.toString == "layout");
+  assert(ComponentCategory.input.toString == "input");
+  assert(ComponentCategory.display.toString == "display");
+  assert(ComponentCategory.navigation.toString == "navigation");
+  assert(ComponentCategory.media.toString == "media");
+  assert(ComponentCategory.chart.toString == "chart");
+  assert(ComponentCategory.custom.toString == "custom");
 
   assert([
     "basic", "layout", "input", "display", "navigation", "media", "chart",

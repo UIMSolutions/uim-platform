@@ -55,3 +55,13 @@ UserName toUserName(Json json) {
 
   return userName;
 }
+
+void writeScimError(scope HTTPServerResponse res, int status, string detail) {
+  auto errRes = Json.emptyObject;
+  errRes["schemas"] = Json.emptyArray;
+  errRes["schemas"] ~= Json("urn:ietf:params:scim:api:messages:2.0:Error");
+  errRes["detail"] = Json(detail);
+
+  errRes["status"] = Json(status.to!string);
+  res.writeJsonBody(errRes, status);
+}

@@ -52,23 +52,24 @@ string[] toStrings(GrantType[] g) @safe {
 }
 /// 
 unittest {
-  assert(toGrantType("authorization_code") == GrantType.authorizationCode);
-  assert(toGrantType("password") == GrantType.password_);
-  assert(toGrantType("refresh_token") == GrantType.refreshToken);
-  assert(toGrantType("implicit") == GrantType.implicit_);
-  assert(toGrantType("client_credentials") == GrantType.clientCredentials);
+  assert("authorization_code".toGrantType == GrantType.authorizationCode);
+  assert("password".toGrantType == GrantType.password_);
+  assert("refresh_token".toGrantType == GrantType.refreshToken);
+  assert("implicit".toGrantType == GrantType.implicit_);
+  assert("client_credentials".toGrantType == GrantType.clientCredentials);
 
-  assert(toGrantType("") == GrantType.clientCredentials);
-  assert(toGrantType("unknown") == GrantType.clientCredentials);
+  assert("".toGrantType == GrantType.clientCredentials);
+  assert("unknown".toGrantType == GrantType.clientCredentials);
   
-  assert(toGrantTypes(["authorization_code", "password", "refresh_token", "implicit", "client_credentials", "unknown"]) == [GrantType.authorizationCode, GrantType.password_, GrantType.refreshToken, GrantType.implicit_, GrantType.clientCredentials, GrantType.clientCredentials]);
+  assert(["authorization_code", "password", "refresh_token", "implicit", "client_credentials", "unknown"].toGrantTypes == [GrantType.authorizationCode, GrantType.password_, GrantType.refreshToken, GrantType.implicit_, GrantType.clientCredentials, GrantType.clientCredentials]);
   
-  assert(toString(GrantType.authorizationCode) == "authorization_code");
-  assert(toString(GrantType.password_) == "password");
-  assert(toString(GrantType.refreshToken) == "refresh_token");
-  assert(toString(GrantType.implicit_) == "implicit");
-  assert(toString(GrantType.clientCredentials) == "client_credentials");
-  assert(toStrings([GrantType.authorizationCode, GrantType.password_, GrantType.refreshToken, GrantType.implicit_, GrantType.clientCredentials]) == ["authorization_code", "password", "refresh_token", "implicit", "client_credentials"]);
+  assert(GrantType.authorizationCode.toString == "authorization_code");
+  assert(GrantType.password_.toString == "password");
+  assert(GrantType.refreshToken.toString == "refresh_token");
+  assert(GrantType.implicit_.toString == "implicit");
+  assert(GrantType.clientCredentials.toString == "client_credentials");
+
+  assert([GrantType.authorizationCode, GrantType.password_, GrantType.refreshToken, GrantType.implicit_, GrantType.clientCredentials].toStrings == ["authorization_code", "password", "refresh_token", "implicit", "client_credentials"]);
 }
 // ---------------------------------------------------------------------------
 // OAuth 2.0 client types
@@ -93,18 +94,18 @@ string[] toStrings(ClientType[] c) @safe {
 }
 ///
 unittest {
-  assert(toClientType("confidential") == ClientType.confidential);
-  assert(toClientType("public") == ClientType.public_);
+  assert("confidential".toClientType == ClientType.confidential);
+  assert("public".toClientType == ClientType.public_);
 
-  assert(toClientType("") == ClientType.confidential);
-  assert(toClientType("unknown") == ClientType.confidential);
+  assert("".toClientType == ClientType.confidential);
+  assert("unknown".toClientType == ClientType.confidential);
   
-  assert(toClientTypes(["confidential", "public", "unknown"]) == [ClientType.confidential, ClientType.public_, ClientType.confidential]);
+  assert(["confidential", "public", "unknown"].toClientTypes == [ClientType.confidential, ClientType.public_, ClientType.confidential]);
   
-  assert(toString(ClientType.confidential) == "confidential");
-  assert(toString(ClientType.public_) == "public");
+  assert(ClientType.confidential.toString == "confidential");
+  assert(ClientType.public_.toString == "public");
 
-  assert(toStrings([ClientType.confidential, ClientType.public_]) == ["confidential", "public"]);
+  assert([ClientType.confidential, ClientType.public_].toStrings == ["confidential", "public"]);
 }
 // ---------------------------------------------------------------------------
 // Identity provider protocol types
@@ -127,16 +128,16 @@ string[] toStrings(IdpType[] i) @safe {
 }
 ///
 unittest {
-  assert(toIdpType("saml2") == IdpType.saml2);
-  assert(toIdpType("oidc") == IdpType.oidc);
+  assert("saml2".toIdpType == IdpType.saml2);
+  assert("oidc".toIdpType == IdpType.oidc);
 
-  assert(toIdpType("") == IdpType.saml2);
-  assert(toIdpType("unknown") == IdpType.saml2);
+  assert("".toIdpType == IdpType.saml2);
+  assert("unknown".toIdpType == IdpType.saml2);
   
-  assert(toIdpTypes(["saml2", "oidc", "unknown"]) == [IdpType.saml2, IdpType.oidc, IdpType.saml2]);
+  assert(["saml2", "oidc", "unknown"].toIdpTypes == [IdpType.saml2, IdpType.oidc, IdpType.saml2]);
   
-  assert(toString(IdpType.saml2) == "saml2");
-  assert(toString(IdpType.oidc) == "oidc");
+  assert(IdpType.saml2.toString == "saml2");
+  assert(IdpType.oidc.toString == "oidc");
 
-  assert(toStrings([IdpType.saml2, IdpType.oidc]) == ["saml2", "oidc"]);
+  assert([IdpType.saml2, IdpType.oidc].toStrings == ["saml2", "oidc"]);
 }

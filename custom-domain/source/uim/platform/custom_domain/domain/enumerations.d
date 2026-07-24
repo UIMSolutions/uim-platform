@@ -18,15 +18,15 @@ DomainStatus toDomainStatus(string value) {
 }
 
 DomainStatus[] toDomainStatuses(string[] values) {
-    return values.map!(v => v.toDomainStatus).array;
+    return values.map!toDomainStatus.array;
 }
 
 string toString(DomainStatus value) {
-    return value.to!string();
+    return value.to!string;
 }
 
 string[] toStrings(DomainStatus[] values) {
-    return values.map!(v => v.toString).array;
+    return values.map!toString.array;
 }
 ///
 unittest {
@@ -45,7 +45,7 @@ unittest {
     assert(DomainStatus.error.toString == "error");
     assert(DomainStatus.deactivated.toString == "deactivated");
 
-    assert(["pending", "active", "inactive"].toDomainStatus == [
+    assert(["pending", "active", "inactive"].toDomainStatuses == [
             DomainStatus.pending, DomainStatus.active, DomainStatus.inactive
         ]);
     assert([DomainStatus.pending, DomainStatus.active, DomainStatus.inactive].toStrings == [
@@ -63,17 +63,15 @@ DomainEnvironment toDomainEnvironment(string value) {
     mixin(EnumSwitch("DomainEnvironment", "cloudFoundry"));
 }
 
-DomainEnvironment[] toDomainEnvironment(string[] values) {
-    return values.map!(v => v.toDomainEnvironment).array;
-}
+DomainEnvironment[] toDomainEnvironments(string[] values)
+    => values.map!toDomainEnvironment.array;
 
-string toString(DomainEnvironment value) {
-    return value.to!string();
-}
+string toString(DomainEnvironment value)
+    => value.to!string;
 
-string[] toStrings(DomainEnvironment[] values) {
-    return values.map!(v => v.toString).array;
-}
+string[] toStrings(DomainEnvironment[] values)
+    => values.map!toString.array;
+
 ///
 unittest {
     mixin(ShowTest!("DomainEnvironment"));
@@ -87,7 +85,7 @@ unittest {
     assert(DomainEnvironment.kyma.toString == "kyma");
     assert(DomainEnvironment.neo.toString == "neo");
 
-    assert(["cloudFoundry", "kyma"].toDomainEnvironment == [
+    assert(["cloudFoundry", "kyma"].toDomainEnvironments == [
             DomainEnvironment.cloudFoundry, DomainEnvironment.kyma
         ]);
     assert([DomainEnvironment.cloudFoundry, DomainEnvironment.kyma].toStrings == [
@@ -108,17 +106,15 @@ KeyAlgorithm toKeyAlgorithm(string value) {
     mixin(EnumSwitch("KeyAlgorithm", "rsa2048"));
 }
 
-KeyAlgorithm[] toKeyAlgorithm(string[] values) {
-    return values.map!(v => v.toKeyAlgorithm).array;
-}
+KeyAlgorithm[] toKeyAlgorithms(string[] values)
+    => values.map!toKeyAlgorithm.array;
 
-string toString(KeyAlgorithm value) {
-    return value.to!string();
-}
+string toString(KeyAlgorithm value)
+    => value.to!string;
 
-string[] toStrings(KeyAlgorithm[] values) {
-    return values.map!(v => v.toString).array;
-}
+string[] toStrings(KeyAlgorithm[] values)
+    => values.map!toString.array;
+
 ///
 unittest {
     mixin(ShowTest!("KeyAlgorithm"));
@@ -134,7 +130,7 @@ unittest {
     assert(KeyAlgorithm.ecdsaP256.toString == "ecdsaP256");
     assert(KeyAlgorithm.ecdsaP384.toString == "ecdsaP384");
 
-    assert(["rsa2048", "ecdsaP256"].toKeyAlgorithm == [
+    assert(["rsa2048", "ecdsaP256"].toKeyAlgorithms == [
             KeyAlgorithm.rsa2048, KeyAlgorithm.ecdsaP256
         ]);
     assert([KeyAlgorithm.rsa2048, KeyAlgorithm.ecdsaP256].toStrings == [
@@ -153,16 +149,16 @@ KeyStatus toKeyStatus(string value) {
 }
 
 KeyStatus[] toKeyStatuses(string[] values) {
-    return values.map!(v => v.toKeyStatus).array;
+    return values.map!toKeyStatus.array;
 }
 
 string toString(KeyStatus value) {
-    return value.to!string();
+    return value.to!string;
 }
 
-string[] toStrings(KeyStatus[] values) {
-    return values.map!(v => v.toString).array;
-}
+string[] toStrings(KeyStatus[] values)
+    => values.map!toString.array;
+
 ///
 unittest {
     mixin(ShowTest!("KeyStatus"));
@@ -176,7 +172,7 @@ unittest {
     assert(KeyStatus.inactive.toString == "inactive");
     assert(KeyStatus.deleted.toString == "deleted");
 
-    assert(["active", "inactive"].toKeyStatus == [
+    assert(["active", "inactive"].toKeyStatuses == [
             KeyStatus.active, KeyStatus.inactive
         ]);
     assert([KeyStatus.active, KeyStatus.inactive].toStrings == [
@@ -199,15 +195,15 @@ CertificateStatus toCertificateStatus(string value) {
 }
 
 CertificateStatus[] toCertificateStatuses(string[] values) {
-    return values.map!(v => v.toCertificateStatus).array;
+    return values.map!toCertificateStatus.array;
 }
 
 string toString(CertificateStatus value) {
-    return value.to!string();
+    return value.to!string;
 }
 
 string[] toStrings(CertificateStatus[] values) {
-    return values.map!(v => v.toString).array;
+    return values.map!toString.array;
 }
 /// 
 unittest {
@@ -226,7 +222,7 @@ unittest {
     assert(CertificateStatus.revoked.toString == "revoked");
     assert(CertificateStatus.deactivated.toString == "deactivated");
 
-    assert(["pending", "active"].toCertificateStatus == [
+    assert(["pending", "active"].toCertificateStatuses == [
             CertificateStatus.pending, CertificateStatus.active
         ]);
     assert([CertificateStatus.pending, CertificateStatus.active].toStrings == [
@@ -244,17 +240,15 @@ CertificateType toCertificateType(string value) {
     mixin(EnumSwitch("CertificateType", "standard"));
 }
 
-CertificateType[] toCertificateType(string[] values) {
-    return values.map!(v => v.toCertificateType).array;
-}
+CertificateType[] toCertificateTypes(string[] values)
+    => values.map!toCertificateType.array;
 
-string toString(CertificateType value) {
-    return value.to!string();
-}
+string toString(CertificateType value)
+    => value.to!string;
 
-string[] toStrings(CertificateType[] values) {
-    return values.map!(v => v.toString).array;
-}
+string[] toStrings(CertificateType[] values)
+    => values.map!toString.array;
+
 ///
 unittest {
     mixin(ShowTest!("CertificateType"));
@@ -268,7 +262,7 @@ unittest {
     assert(CertificateType.wildcard.toString == "wildcard");
     assert(CertificateType.multiDomain.toString == "multiDomain");
 
-    assert(["standard", "wildcard"].toCertificateType == [
+    assert(["standard", "wildcard"].toCertificateTypes == [
             CertificateType.standard, CertificateType.wildcard
         ]);
     assert([CertificateType.standard, CertificateType.wildcard].toStrings == [
@@ -289,17 +283,14 @@ TlsProtocolVersion toTlsProtocolVersion(string value) {
     mixin(EnumSwitch("TlsProtocolVersion", "tls1_2"));
 }
 
-TlsProtocolVersion[] toTlsProtocolVersion(string[] values) {
-    return values.map!(v => v.toTlsProtocolVersion).array;
-}
+TlsProtocolVersion[] toTlsProtocolVersions(string[] values)
+    => values.map!toTlsProtocolVersion.array;
 
-string toString(TlsProtocolVersion value) {
-    return value.to!string();
-}
+string toString(TlsProtocolVersion value)
+    => value.to!string;
 
-string[] toStrings(TlsProtocolVersion[] values) {
-    return values.map!(v => v.toString).array;
-}
+string[] toStrings(TlsProtocolVersion[] values)
+    => values.map!toString.array;
 
 unittest {
     mixin(ShowTest!("TlsProtocolVersion"));
@@ -315,7 +306,7 @@ unittest {
     assert(TlsProtocolVersion.tls1_2.toString == "tls1_2");
     assert(TlsProtocolVersion.tls1_3.toString == "tls1_3");
 
-    assert(["tls1_0", "tls1_2"].toTlsProtocolVersion == [
+    assert(["tls1_0", "tls1_2"].toTlsProtocolVersions == [
             TlsProtocolVersion.tls1_0, TlsProtocolVersion.tls1_2
         ]);
     assert([TlsProtocolVersion.tls1_0, TlsProtocolVersion.tls1_2].toStrings == [
@@ -333,17 +324,14 @@ CipherSuiteStrength toCipherSuiteStrength(string value) {
     mixin(EnumSwitch("CipherSuiteStrength", "strong"));
 }
 
-CipherSuiteStrength[] toCipherSuiteStrength(string[] values) {
-    return values.map!(v => v.toCipherSuiteStrength).array;
-}
+CipherSuiteStrength[] toCipherSuiteStrengths(string[] values)
+    => values.map!toCipherSuiteStrength.array;
 
-string toString(CipherSuiteStrength value) {
-    return value.to!string();
-}
+string toString(CipherSuiteStrength value)
+    => value.to!string;
 
-string[] toStrings(CipherSuiteStrength[] values) {
-    return values.map!(v => v.toString).array;
-}
+string[] toStrings(CipherSuiteStrength[] values)
+    => values.map!toString.array;
 
 unittest {
     mixin(ShowTest!("CipherSuiteStrength"));
@@ -357,7 +345,7 @@ unittest {
     assert(CipherSuiteStrength.medium.toString == "medium");
     assert(CipherSuiteStrength.weak.toString == "weak");
 
-    assert(["strong", "weak"].toCipherSuiteStrength == [
+    assert(["strong", "weak"].toCipherSuiteStrengths == [
             CipherSuiteStrength.strong, CipherSuiteStrength.weak
         ]);
     assert([CipherSuiteStrength.strong, CipherSuiteStrength.weak].toStrings == [
@@ -378,17 +366,14 @@ MappingStatus toMappingStatus(string value) {
     mixin(EnumSwitch("MappingStatus", "active"));
 }
 
-MappingStatus[] toMappingStatuses(string[] values) {
-    return values.map!(v => v.toMappingStatus).array;
-}
+MappingStatus[] toMappingStatuses(string[] values)
+    => values.map!(v => v.toMappingStatus).array;
 
-string toString(MappingStatus value) {
-    return value.to!string();
-}
+string toString(MappingStatus value)
+    => value.to!string;
 
-string[] toStrings(MappingStatus[] values) {
-    return values.map!(v => v.toString).array;
-}
+string[] toStrings(MappingStatus[] values)
+    => values.map!toString.array;
 ///
 unittest {
     mixin(ShowTest!("MappingStatus"));
@@ -404,7 +389,7 @@ unittest {
     assert(MappingStatus.pending.toString == "pending");
     assert(MappingStatus.error.toString == "error");
 
-    assert(["active", "pending"].toMappingStatus == [
+    assert(["active", "pending"].toMappingStatuses == [
             MappingStatus.active, MappingStatus.pending
         ]);
     assert([MappingStatus.active, MappingStatus.pending].toStrings == [
@@ -422,17 +407,15 @@ MappingType toMappingType(string value) {
     mixin(EnumSwitch("MappingType", "applicationRoute"));
 }
 
-MappingType[] toMappingType(string[] values) {
-    return values.map!(v => v.toMappingType).array;
-}
+MappingType[] toMappingTypes(string[] values)
+    => values.map!toMappingType.array;
 
-string toString(MappingType value) {
-    return value.to!string();
-}
+string toString(MappingType value)
+    => value.to!string;
 
-string[] toStrings(MappingType[] values) {
-    return values.map!(v => v.toString).array;
-}
+string[] toStrings(MappingType[] values)
+    => values.map!toString.array;
+
 ///
 unittest {
     mixin(ShowTest!("MappingType"));
@@ -446,7 +429,7 @@ unittest {
     assert(MappingType.saasRoute.toString == "saasRoute");
     assert(MappingType.staticRoute.toString == "staticRoute");
 
-    assert(["applicationRoute", "staticRoute"].toMappingType == [
+    assert(["applicationRoute", "staticRoute"].toMappingTypes == [
             MappingType.applicationRoute, MappingType.staticRoute
         ]);
     assert([MappingType.applicationRoute, MappingType.staticRoute].toStrings == [
@@ -466,17 +449,14 @@ TrustedCertificateStatus toTrustedCertificateStatus(string value) {
     mixin(EnumSwitch("TrustedCertificateStatus", "active"));
 }
 
-TrustedCertificateStatus[] toTrustedCertificateStatuses(string[] values) {
-    return values.map!(v => v.toTrustedCertificateStatus).array;
-}
+TrustedCertificateStatus[] toTrustedCertificateStatuses(string[] values)
+    => values.map!(v => v.toTrustedCertificateStatus).array;
 
-string toString(TrustedCertificateStatus value) {
-    return value.to!string();
-}
+string toString(TrustedCertificateStatus value)
+    => value.to!string;
 
-string[] toStrings(TrustedCertificateStatus[] values) {
-    return values.map!(v => v.toString).array;
-}
+string[] toStrings(TrustedCertificateStatus[] values)
+    => values.map!toString.array;
 /// 
 unittest {
     mixin(ShowTest!("TrustedCertificateStatus"));
@@ -490,7 +470,7 @@ unittest {
     assert(TrustedCertificateStatus.inactive.toString == "inactive");
     assert(TrustedCertificateStatus.expired.toString == "expired");
 
-    assert(["active", "expired"].toTrustedCertificateStatus == [
+    assert(["active", "expired"].toTrustedCertificateStatuses == [
             TrustedCertificateStatus.active, TrustedCertificateStatus.expired
         ]);
     assert([TrustedCertificateStatus.active, TrustedCertificateStatus.expired].toStrings == [
@@ -508,17 +488,14 @@ ClientAuthMode toClientAuthMode(string value) {
     mixin(EnumSwitch("ClientAuthMode", "required"));
 }
 
-ClientAuthMode[] toClientAuthMode(string[] values) {
-    return values.map!(v => v.toClientAuthMode).array;
-}
+ClientAuthMode[] toClientAuthModes(string[] values)
+    => values.map!toClientAuthMode.array;
 
-string toString(ClientAuthMode value) {
-    return value.to!string();
-}
+string toString(ClientAuthMode value)
+    => value.to!string;
 
-string[] toStrings(ClientAuthMode[] values) {
-    return values.map!(v => v.toString).array;
-}
+string[] toStrings(ClientAuthMode[] values)
+    => values.map!toString.array;
 ///
 unittest {
     mixin(ShowTest!("ClientAuthMode"));
@@ -532,7 +509,7 @@ unittest {
     assert(ClientAuthMode.optional.toString == "optional");
     assert(ClientAuthMode.disabled.toString == "disabled");
 
-    assert(["required", "disabled"].toClientAuthMode == [
+    assert(["required", "disabled"].toClientAuthModes == [
             ClientAuthMode.required, ClientAuthMode.disabled
         ]);
     assert([ClientAuthMode.required, ClientAuthMode.disabled].toStrings == [
@@ -553,16 +530,15 @@ enum DnsRecordType {
 DnsRecordType toDnsRecordType(string value) {
     mixin(EnumSwitch("DnsRecordType", "aRecord"));
 }
-DnsRecordType[] toDnsRecordType(string[] values) {
-    return values.map!(v => v.toDnsRecordType).array;
-}
 
-string toString(DnsRecordType value) {
-    return value.to!string();
-}
-string[] toStrings(DnsRecordType[] values) {
-    return values.map!(v => v.toString).array;
-}
+DnsRecordType[] toDnsRecordTypes(string[] values)
+    => values.map!toDnsRecordType.array;
+
+string toString(DnsRecordType value)
+    => value.to!string;
+
+string[] toStrings(DnsRecordType[] values)
+    => values.map!toString.array;
 ///
 unittest {
     mixin(ShowTest!("DnsRecordType"));
@@ -580,7 +556,7 @@ unittest {
     assert(DnsRecordType.txtRecord.toString == "txtRecord");
     assert(DnsRecordType.mxRecord.toString == "mxRecord");
 
-    assert(["aRecord", "txtRecord"].toDnsRecordType == [
+    assert(["aRecord", "txtRecord"].toDnsRecordTypes == [
             DnsRecordType.aRecord, DnsRecordType.txtRecord
         ]);
     assert([DnsRecordType.aRecord, DnsRecordType.txtRecord].toStrings == [
@@ -601,17 +577,15 @@ DnsValidationStatus toDnsValidationStatus(string value) {
     mixin(EnumSwitch("DnsValidationStatus", "pending"));
 }
 
-DnsValidationStatus[] toDnsValidationStatuses(string[] values) {
-    return values.map!(v => v.toDnsValidationStatus).array;
-}
+DnsValidationStatus[] toDnsValidationStatuses(string[] values)
+    => values.map!toDnsValidationStatus.array;
 
-string toString(DnsValidationStatus value) {
-    return value.to!string();
-}
+string toString(DnsValidationStatus value)
+    => value.to!string;
 
-string[] toStrings(DnsValidationStatus[] values) {
-    return values.map!(v => v.toString).array;
-}
+string[] toStrings(DnsValidationStatus[] values)
+    => values.map!toString.array;
+
 ///
 unittest {
     mixin(ShowTest!("DnsValidationStatus"));
@@ -627,7 +601,7 @@ unittest {
     assert(DnsValidationStatus.failed.toString == "failed");
     assert(DnsValidationStatus.expired.toString == "expired");
 
-    assert(["pending", "validated"].toDnsValidationStatus == [
+    assert(["pending", "validated"].toDnsValidationStatuses == [
             DnsValidationStatus.pending, DnsValidationStatus.validated
         ]);
     assert([DnsValidationStatus.pending, DnsValidationStatus.validated].toStrings == [
@@ -652,17 +626,15 @@ DashboardMetricType toDashboardMetricType(string value) {
     mixin(EnumSwitch("DashboardMetricType", "certificateExpiration"));
 }
 
-DashboardMetricType[] toDashboardMetricType(string[] values) {
-    return values.map!(v => v.toDashboardMetricType).array;
-}
+DashboardMetricType[] toDashboardMetricTypes(string[] values)
+    => values.map!toDashboardMetricType.array;
 
-string toString(DashboardMetricType value) {
-    return value.to!string();
-}
+string toString(DashboardMetricType value)
+    => value.to!string;
 
-string[] toStrings(DashboardMetricType[] values) {
-    return values.map!(v => v.toString).array;
-}
+string[] toStrings(DashboardMetricType[] values)
+    => values.map!toString.array;
+
 ///
 unittest {
     mixin(ShowTest!("DashboardMetricType"));
@@ -687,7 +659,7 @@ unittest {
     assert(DashboardMetricType.domainCount.toString == "domainCount");
     assert(DashboardMetricType.mappingCount.toString == "mappingCount");
 
-    assert(["certificateExpiration", "domainHealth"].toDashboardMetricType == [
+    assert(["certificateExpiration", "domainHealth"].toDashboardMetricTypes == [
             DashboardMetricType.certificateExpiration,
             DashboardMetricType.domainHealth
         ]);
@@ -708,17 +680,15 @@ HealthStatus toHealthStatus(string value) {
     mixin(EnumSwitch("HealthStatus", "unknown"));
 }
 
-HealthStatus[] toHealthStatuses(string[] values) {
-    return values.map!(v => v.toHealthStatus).array;
-}
+HealthStatus[] toHealthStatuses(string[] values)
+    => values.map!toHealthStatus.array;
 
-string toString(HealthStatus value) {
-    return value.to!string();
-}
+string toString(HealthStatus value)
+    => value.to!string;
 
-string[] toStrings(HealthStatus[] values) {
-    return values.map!(v => v.toString).array;
-}
+string[] toStrings(HealthStatus[] values)
+    => values.map!toString.array;
+
 ///
 unittest {
     mixin(ShowTest!("HealthStatus"));
@@ -734,7 +704,7 @@ unittest {
     assert(HealthStatus.critical.toString == "critical");
     assert(HealthStatus.unknown.toString == "unknown");
 
-    assert(["healthy", "critical"].toHealthStatus == [
+    assert(["healthy", "critical"].toHealthStatuses == [
             HealthStatus.healthy, HealthStatus.critical
         ]);
     assert([HealthStatus.healthy, HealthStatus.critical].toStrings == [
@@ -754,17 +724,15 @@ ExpirationSeverity toExpirationSeverity(string value) {
     mixin(EnumSwitch("ExpirationSeverity", "none"));
 }
 
-ExpirationSeverity[] toExpirationSeverity(string[] values) {
-    return values.map!(v => v.toExpirationSeverity).array;
-}
+ExpirationSeverity[] toExpirationSeverities(string[] values)
+    => values.map!toExpirationSeverity.array;
 
-string toString(ExpirationSeverity value) {
-    return value.to!string();
-}
+string toString(ExpirationSeverity value)
+    => value.to!string;
 
-string[] toStrings(ExpirationSeverity[] values) {
-    return values.map!(v => v.toString).array;
-}
+string[] toStrings(ExpirationSeverity[] values)
+    => values.map!toString.array;
+
 ///
 unittest {
     mixin(ShowTest!("ExpirationSeverity"));
@@ -782,7 +750,7 @@ unittest {
     assert(ExpirationSeverity.critical.toString == "critical");
     assert(ExpirationSeverity.expired.toString == "expired");
 
-    assert(["none", "warning"].toExpirationSeverity == [
+    assert(["none", "warning"].toExpirationSeverities == [
             ExpirationSeverity.none, ExpirationSeverity.warning
         ]);
     assert([ExpirationSeverity.none, ExpirationSeverity.warning].toStrings == [

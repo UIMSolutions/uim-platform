@@ -5,14 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.data_attribute_recommendation.domain.ports.inference_results;
 
-
 // import uim.platform.data_attribute_recommendation.domain.entities.inference_result;
 import uim.platform.data_attribute_recommendation;
 
 mixin(ShowModule!());
 
 @safe:
-interface InferenceResultRepository : ITenantRepository!(InferenceResult, InferenceResultId) {
+interface IInferenceResultRepository : ITenantRepository!(InferenceResult, InferenceResultId) {
 
   size_t countByPredictions(TenantId tenantId, string predictions);
   InferenceResult[] findByPredictions(TenantId tenantId, string predictions);

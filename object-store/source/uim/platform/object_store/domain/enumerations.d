@@ -24,10 +24,10 @@ StorageClass[] toStorageClasses(string[] values) {
   return values.map!(v => v.toStorageClass).array;
 }
 string toString(StorageClass value) {
-  return value.to!string();
+  return value.to!string;
 }
 string[] toStrings(StorageClass[] values) {
-  return values.map!(v => v.toString).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -61,10 +61,10 @@ BucketStatus[] toBucketStatuses(string[] values) {
 }
 
 string toString(BucketStatus value) {
-  return value.to!string();
+  return value.to!string;
 }
 string[] toStrings(BucketStatus[] values) {
-  return values.map!(v => v.toString).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -96,10 +96,10 @@ ObjectStatus[] toObjectStatuses(string[] values) {
   return values.map!(v => v.toObjectStatus).array;
 } 
 string toString(ObjectStatus value) {
-  return value.to!string();
+  return value.to!string;
 }
 string[] toStrings(ObjectStatus[] values) {
-  return values.map!(v => v.toString).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -133,10 +133,10 @@ EncryptionType[] toEncryptionTypes(string[] values) {
 }
 
 string toString(EncryptionType value) {
-  return value.to!string();
+  return value.to!string;
 }
 string[] toStrings(EncryptionType[] values) {
-  return values.map!(v => v.toString).array;
+  return values.map!toString.array;
 }
 /// 
 unittest {
@@ -170,10 +170,10 @@ PolicyEffect[] toPolicyEffects(string[] values) {
 }
 
 string toString(PolicyEffect value) {
-  return value.to!string();
+  return value.to!string;
 }
 string[] toStrings(PolicyEffect[] values) {
-  return values.map!(v => v.toString).array;
+  return values.map!toString.array;
 }
 /// 
 unittest {
@@ -204,10 +204,10 @@ BindingPermission[] toBindingPermissions(string[] values) {
 }
 
 string toString(BindingPermission value) {
-  return value.to!string();
+  return value.to!string;
 }
 string[] toStrings(BindingPermission[] values) {
-  return values.map!(v => v.toString).array;
+  return values.map!toString.array;
 }
 /// 
 unittest {
@@ -240,7 +240,7 @@ BindingStatus[] toBindingStatuses(string[] values) {
 }
 
 string toString(BindingStatus value) {
-  return value.to!string();
+  return value.to!string;
 }
 string[] toStrings(BindingStatus[] values) {
   return values.map!toString.array;
@@ -275,7 +275,7 @@ RuleStatus[] toRuleStatuses(string[] values) {
 }
 
 string toString(RuleStatus value) {
-  return value.to!string();
+  return value.to!string;
 }
 string[] toStrings(RuleStatus[] values) {
   return values.map!toString.array;

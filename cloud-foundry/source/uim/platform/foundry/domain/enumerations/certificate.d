@@ -30,6 +30,7 @@ enum CertificateStatus {
 CertificateStatus toCertificateStatus(string value) {
     mixin(EnumSwitch("CertificateStatus", "draft"));
 }
+
 CertificateStatus[] toCertificateStatuses(string[] statuses) 
     => statuses.map!toCertificateStatus.array;
 
@@ -91,6 +92,7 @@ enum CertificateType {
 CertificateType toCertificateType(string value) {
     mixin(EnumSwitch("CertificateType", "standard"));
 }
+
 CertificateType[] toCertificateTypes(string[] values)
     => values.map!toCertificateType.array;
 

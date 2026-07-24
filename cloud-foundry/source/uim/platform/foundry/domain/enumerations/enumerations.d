@@ -30,7 +30,7 @@ string[] toStringArray(OrgStatus[] values) {
 }
 ///
 unittest {
-  mixin(ShowTest!"OrgStatus");
+  mixin(ShowTest!("OrgStatus"));
 
   assert("active".toOrgStatus == OrgStatus.active);
   assert("suspended".toOrgStatus == OrgStatus.suspended);
@@ -38,11 +38,11 @@ unittest {
   assert("".toOrgStatus == OrgStatus.active); // Default value for unknown strings is "active"
   assert("unknown".toOrgStatus == OrgStatus.active); // Default value for unknown strings is "active"
 
-  assert(toString(OrgStatus.active) == "active");
-  assert(toString(OrgStatus.suspended) == "suspended");
+  assert(OrgStatus.active.toString == "active");
+  assert(OrgStatus.suspended.toString == "suspended");
 
-  assert(toStringArray([OrgStatus.active, OrgStatus.suspended]) == ["active", "suspended"]);
-  assert(toOrgStatuses(["active", "suspended"]) == [OrgStatus.active, OrgStatus.suspended]);
+  assert([OrgStatus.active, OrgStatus.suspended].toStringArray == ["active", "suspended"]);
+  assert(["active", "suspended"].toOrgStatuses == [OrgStatus.active, OrgStatus.suspended]);
 }
 
 /// Space lifecycle status.
@@ -64,7 +64,7 @@ string[] toStrings(SpaceStatus[] values) {
 }
 /// 
 unittest {
-  mixin(ShowTest!"SpaceStatus");
+  mixin(ShowTest!("SpaceStatus"));
 
   assert("active".toSpaceStatus == SpaceStatus.active);
   assert("suspended".toSpaceStatus == SpaceStatus.suspended);
@@ -100,7 +100,7 @@ string[] toStrings(AppState[] values) {
 }
 ///
 unittest {
-  mixin(ShowTest!"AppState");
+  mixin(ShowTest!("AppState"));
 
   assert("stopped".toAppState == AppState.stopped);
   assert("started".toAppState == AppState.started);
@@ -110,13 +110,13 @@ unittest {
   assert("".toAppState == AppState.stopped); // Default value for unknown strings is "stopped"
   assert("unknown".toAppState == AppState.stopped); // Default value for unknown strings is "stopped"
 
-  assert(toString(AppState.stopped) == "stopped");
-  assert(toString(AppState.started) == "started");
-  assert(toString(AppState.staging) == "staging");
-  assert(toString(AppState.crashed) == "crashed");
+  assert(AppState.stopped.toString == "stopped");
+  assert(AppState.started.toString == "started");
+  assert(AppState.staging.toString == "staging");
+  assert(AppState.crashed.toString == "crashed");
 
-  assert(toStrings([AppState.stopped, AppState.started, AppState.crashed]) == ["stopped", "started", "crashed"]);
-  assert(toAppStates(["stopped", "started", "crashed"]) == [AppState.stopped, AppState.started, AppState.crashed]);
+  assert([AppState.stopped, AppState.started, AppState.staging, AppState.crashed].toStrings == ["stopped", "started", "staging", "crashed"]);
+  assert(["stopped", "started", "staging", "crashed"].toAppStates == [AppState.stopped, AppState.started, AppState.staging, AppState.crashed]);
 }
 
 /// Individual application instance state.
@@ -155,8 +155,8 @@ unittest {
   assert(toString(InstanceState.starting) == "starting");
   assert(toString(InstanceState.down) == "down");
 
-  assert(toStrings([InstanceState.running, InstanceState.crashed, InstanceState.down]) == ["running", "crashed", "down"]);
-  assert(toInstanceStates(["running", "crashed", "down"]) == [InstanceState.running, InstanceState.crashed, InstanceState.down]);
+  assert([InstanceState.running, InstanceState.crashed, InstanceState.starting, InstanceState.down].toStrings == ["running", "crashed", "starting", "down"]);
+  assert(["running", "crashed", "starting", "down"].toInstanceStates == [InstanceState.running, InstanceState.crashed, InstanceState.starting, InstanceState.down]);
 } 
 
 /// Service instance provisioning status.
@@ -192,14 +192,14 @@ unittest {
   assert("".toServiceInstanceStatus == ServiceInstanceStatus.creating); // Default value for unknown strings is "creating"
   assert("unknown".toServiceInstanceStatus == ServiceInstanceStatus.creating); // Default value for unknown strings is "creating"
 
-  assert(toString(ServiceInstanceStatus.creating) == "creating");
-  assert(toString(ServiceInstanceStatus.active) == "active");
-  assert(toString(ServiceInstanceStatus.updateInProgress) == "updateInProgress");
-  assert(toString(ServiceInstanceStatus.deleteInProgress) == "deleteInProgress");
-  assert(toString(ServiceInstanceStatus.failed) == "failed");
+  assert(ServiceInstanceStatus.creating.toString == "creating");
+  assert(ServiceInstanceStatus.active.toString == "active");
+  assert(ServiceInstanceStatus.updateInProgress.toString == "updateInProgress");
+  assert(ServiceInstanceStatus.deleteInProgress.toString == "deleteInProgress");
+  assert(ServiceInstanceStatus.failed.toString == "failed");
 
-  assert(toStrings([ServiceInstanceStatus.creating, ServiceInstanceStatus.active, ServiceInstanceStatus.failed]) == ["creating", "active", "failed"]);
-  assert(toServiceInstanceStatuses(["creating", "active", "failed"]) == [ServiceInstanceStatus.creating, ServiceInstanceStatus.active, ServiceInstanceStatus.failed]);
+  assert([ServiceInstanceStatus.creating, ServiceInstanceStatus.active, ServiceInstanceStatus.updateInProgress, ServiceInstanceStatus.deleteInProgress, ServiceInstanceStatus.failed].toStrings == ["creating", "active", "updateInProgress", "deleteInProgress", "failed"]);
+  assert(["creating", "active", "updateInProgress", "deleteInProgress", "failed"].toServiceInstanceStatuses == [ServiceInstanceStatus.creating, ServiceInstanceStatus.active, ServiceInstanceStatus.updateInProgress, ServiceInstanceStatus.deleteInProgress, ServiceInstanceStatus.failed]);
 }
 
 /// Service binding lifecycle status.
@@ -233,10 +233,10 @@ unittest {
   assert("".toBindingStatus == BindingStatus.creating); // Default value for unknown strings is "creating"
   assert("unknown".toBindingStatus == BindingStatus.creating); // Default value for unknown strings is "creating"
 
-  assert(toString(BindingStatus.creating) == "creating");
-  assert(toString(BindingStatus.active) == "active");
-  assert(toString(BindingStatus.deleteInProgress) == "deleteInProgress");
-  assert(toString(BindingStatus.failed) == "failed");
+  assert(BindingStatus.creating.toString == "creating");
+  assert(BindingStatus.active.toString == "active");
+  assert(BindingStatus.deleteInProgress.toString == "deleteInProgress");
+  assert(BindingStatus.failed.toString == "failed");
 
   assert([BindingStatus.creating, BindingStatus.active, BindingStatus.failed].toStrings == ["creating", "active", "failed"]);
   assert(["creating", "active", "failed"].toBindingStatuses == [BindingStatus.creating, BindingStatus.active, BindingStatus.failed]);
@@ -269,8 +269,8 @@ unittest {
   assert("".toRouteProtocol == RouteProtocol.http); // Default value for unknown strings is "http"
   assert("unknown".toRouteProtocol == RouteProtocol.http); // Default value for unknown strings is "http"
 
-  assert(toString(RouteProtocol.http) == "http");
-  assert(toString(RouteProtocol.tcp) == "tcp"); 
+  assert(RouteProtocol.http.toString == "http");
+  assert(RouteProtocol.tcp.toString == "tcp");
 
   assert([RouteProtocol.http, RouteProtocol.tcp].toStrings == ["http", "tcp"]);
   assert(["http", "tcp"].toRouteProtocols == [RouteProtocol.http, RouteProtocol.tcp]);
@@ -310,12 +310,12 @@ unittest {
   assert("".toDomainScope == DomainScope.shared_); // Default value for unknown strings is "shared"
   assert("unknown".toDomainScope == DomainScope.shared_); // Default value for unknown strings is "shared"
 
-  assert(toString(DomainScope.shared_) == "shared");
-  assert(toString(DomainScope.private_) == "private"); 
-  assert(toString(DomainScope.internal_) == "internal"); 
+  assert(DomainScope.shared_.toString == "shared");
+  assert(DomainScope.private_.toString == "private"); 
+  assert(DomainScope.internal_.toString == "internal");
 
-  assert(toStrings([DomainScope.shared_, DomainScope.private_, DomainScope.internal_]) == ["shared", "private", "internal"]);
-  assert(toDomainScopes(["shared", "private", "internal"]) == [DomainScope.shared_, DomainScope.private_, DomainScope.internal_]);
+  assert([DomainScope.shared_, DomainScope.private_, DomainScope.internal_].toStrings == ["shared", "private", "internal"]);
+  assert(["shared", "private", "internal"].toDomainScopes == [DomainScope.shared_, DomainScope.private_, DomainScope.internal_]);
 }
 
 /// Buildpack origin type.
@@ -345,11 +345,11 @@ unittest {
   assert("".toBuildpackType == BuildpackType.system); // Default value for unknown strings is "system"
   assert("unknown".toBuildpackType == BuildpackType.system); // Default value for unknown strings is "system"
 
-  assert(toString(BuildpackType.system) == "system");
-  assert(toString(BuildpackType.custom) == "custom");
+  assert(BuildpackType.system.toString == "system");
+  assert(BuildpackType.custom.toString == "custom");
 
-  assert(toStrings([BuildpackType.system, BuildpackType.custom]) == ["system", "custom"]);
-  assert(toBuildpackTypes(["system", "custom"]) == [BuildpackType.system, BuildpackType.custom]);
+  assert([BuildpackType.system, BuildpackType.custom].toStrings == ["system", "custom"]);
+  assert(["system", "custom"].toBuildpackTypes == [BuildpackType.system, BuildpackType.custom]);
 }
 
 /// Application health check strategy.
@@ -381,10 +381,10 @@ unittest {
   assert("".toHealthCheckType == HealthCheckType.http); // Default value for unknown strings is "http"
   assert("unknown".toHealthCheckType == HealthCheckType.http); // Default value for unknown strings is "http"
 
-  assert(toString(HealthCheckType.http) == "http");
-  assert(toString(HealthCheckType.port) == "port");
-  assert(toString(HealthCheckType.process) == "process");
+  assert(HealthCheckType.http.toString == "http");
+  assert(HealthCheckType.port.toString == "port");
+  assert(HealthCheckType.process.toString == "process");
 
-  assert(toStrings([HealthCheckType.http, HealthCheckType.port, HealthCheckType.process]) == ["http", "port", "process"]);
-  assert(toHealthCheckTypes(["http", "port", "process"]) == [HealthCheckType.http, HealthCheckType.port, HealthCheckType.process]);
+  assert([HealthCheckType.http, HealthCheckType.port, HealthCheckType.process].toStrings == ["http", "port", "process"]);
+  assert(["http", "port", "process"].toHealthCheckTypes == [HealthCheckType.http, HealthCheckType.port, HealthCheckType.process]);
 }

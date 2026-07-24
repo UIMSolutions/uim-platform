@@ -21,13 +21,13 @@ mixin(ShowModule!());
 /// validates dataset readiness, creates training jobs, and
 /// simulates training with quality metrics.
 class ModelTrainer {
-  private DatasetRepository datasetRepo;
-  private ModelConfigRepository configRepo;
-  private TrainingJobRepository jobRepo;
-  private DataRecordRepository recordRepo;
+  private IDatasetRepository datasetRepo;
+  private IModelConfigRepository configRepo;
+  private ITrainingJobRepository jobRepo;
+  private IDataRecordRepository recordRepo;
 
-  this(DatasetRepository datasetRepo, ModelConfigRepository configRepo,
-      TrainingJobRepository jobRepo, DataRecordRepository recordRepo) {
+  this(IDatasetRepository datasetRepo, IModelConfigRepository configRepo,
+      ITrainingJobRepository jobRepo, IDataRecordRepository recordRepo) {
     this.datasetRepo = datasetRepo;
     this.configRepo = configRepo;
     this.jobRepo = jobRepo;

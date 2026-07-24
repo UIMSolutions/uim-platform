@@ -95,8 +95,10 @@ AppStatus toAppStatus(string value) {
 
 AppStatus[] toAppStatuses(string[] values)
     => values.map!toAppStatus.array;
+
 string toString(AppStatus value)
     => cast(string)value; // This will return the enum member name as a string, e.g. "draft", "active", etc
+
 string[] toStrings(AppStatus[] values)
     => values.map!toString.array;
 ///
@@ -119,10 +121,10 @@ unittest {
                 AppStatus.draft, AppStatus.active, AppStatus.deprecated_,
                 AppStatus.archived
             ]);
-    assert(toStrings([
+    assert([
             AppStatus.draft, AppStatus.active, AppStatus.deprecated_,
             AppStatus.archived
-        ]) ==
+        ].toStrings ==
         ["draft", "active", "deprecated", "archived"]);
 }
 
@@ -142,8 +144,10 @@ DefinitionStatus toDefinitionStatus(string value) {
 
 DefinitionStatus[] toDefinitionStatuses(string[] values)
     => values.map!toDefinitionStatus.array;
+
 string toString(DefinitionStatus value)
     => value.to!string; // This will return the enum member name as a string, e.g. "draft", "published", etc
+
 string[] toStrings(DefinitionStatus[] values)
     => values.map!toString.array;
 ///
@@ -164,10 +168,10 @@ unittest {
                 DefinitionStatus.draft, DefinitionStatus.published,
                 DefinitionStatus.archived
             ]);
-    assert(toStrings([
+    assert([
             DefinitionStatus.draft, DefinitionStatus.published,
             DefinitionStatus.archived
-        ]) ==
+        ].toStrings ==
         ["draft", "published", "archived"]);
 }
 
@@ -225,10 +229,10 @@ unittest {
                 AppVersionStatus.pending, AppVersionStatus.published,
                 AppVersionStatus.deprecated_, AppVersionStatus.withdrawn
             ]);
-    assert(toStrings([
+    assert([
             AppVersionStatus.pending, AppVersionStatus.published,
             AppVersionStatus.deprecated_, AppVersionStatus.withdrawn
-        ]) ==
+        ].toStrings ==
         ["pending", "published", "deprecated", "withdrawn"]);
 }
 

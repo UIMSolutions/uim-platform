@@ -37,10 +37,10 @@ ScenarioStatus[] toScenarioStatuses(string[] values) {
   return values.map!toScenarioStatus.array;
 }
 string toString(ScenarioStatus value) {
-  return value.to!string();
+  return value.to!string;
 }
 string[] toStrings(ScenarioStatus[] values) {
-  return values.map!(v => v.toString).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -76,10 +76,10 @@ WorkflowStatus[] toWorkflowStatuses(string[] values) {
   return values.map!(v => v.toWorkflowStatus).array;
 }
 string toString(WorkflowStatus value) {
-  return value.to!string();
+  return value.to!string;
 }
 string[] toStrings(WorkflowStatus[] values) {
-  return values.map!(v => v.toString()).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -117,10 +117,10 @@ StepType[] toStepTypes(string[] values) {
   return values.map!toStepType.array;
 }
 string toString(StepType value) {
-  return value.to!string();
+  return value.to!string;
 }
 string[] toStrings(StepType[] values) {
-  return values.map!(v => v.toString()).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -157,10 +157,10 @@ StepStatus[] toStepStatuses(string[] values) {
   return values.map!(v => v.toStepStatus).array;
 }
 string toString(StepStatus value) {
-  return value.to!string();
+  return value.to!string;
 }
 string[] toStrings(StepStatus[] values) {
-  return values.map!(v => v.toString()).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -199,10 +199,10 @@ StepPriority[] toStepPriorities(string[] values) {
   return values.map!toStepPriority.array;
 }
 string toString(StepPriority value) {
-  return value.to!string();
+  return value.to!string;
 }
 string[] toStrings(StepPriority[] values) {
-  return values.map!(v => v.toString()).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -244,10 +244,10 @@ SystemType[] toSystemTypes(string[] values) {
   return values.map!toSystemType.array;
 }
 string toString(SystemType value) {
-  return value.to!string();
+  return value.to!string;
 }
 string[] toStrings(SystemType[] values) {
-  return values.map!(v => v.toString()).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -296,10 +296,10 @@ ConnectionStatus[] toConnectionStatuses(string[] values) {
   return values.map!(v => v.toConnectionStatus).array;
 }
 string toString(ConnectionStatus value) {
-  return value.to!string();
+  return value.to!string;
 }
 string[] toStrings(ConnectionStatus[] values) {
-  return values.map!(v => v.toString()).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -335,10 +335,10 @@ DestinationType[] toDestinationTypes(string[] values) {
   return values.map!toDestinationType.array;
 }
 string toString(DestinationType value) {
-  return value.to!string();
+  return value.to!string;
 }
 string[] toStrings(DestinationType[] values) {
-  return values.map!(v => v.toString()).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -378,10 +378,10 @@ AuthenticationType[] toAuthenticationTypes(string[] values) {
   return values.map!toAuthenticationType.array;
 }
 string toString(AuthenticationType value) {
-  return value.to!string();
+  return value.to!string;
 }
 string[] toStrings(AuthenticationType[] values) {
-  return values.map!(v => v.toString()).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -421,10 +421,10 @@ ProxyType[] toProxyTypes(string[] values) {
   return values.map!toProxyType.array;
 }
 string toString(ProxyType value) {
-  return value.to!string();
+  return value.to!string;
 }
 string[] toStrings(ProxyType[] values) {
-  return values.map!(v => v.toString()).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -458,10 +458,10 @@ ExecutionOutcome[] toExecutionOutcomes(string[] values) {
   return values.map!toExecutionOutcome.array;
 }
 string toString(ExecutionOutcome value) {
-  return value.to!string();
+  return value.to!string;
 }
 string[] toStrings(ExecutionOutcome[] values) {
-  return values.map!(v => v.toString()).array;
+  return values.map!toString.array;
 } 
 ///
 unittest {
@@ -502,10 +502,10 @@ ScenarioCategory[] toScenarioCategories(string[] values) {
   return values.map!toScenarioCategory.array;
 }
 string toString(ScenarioCategory value) {
-  return value.to!string();
+  return value.to!string;
 }
 string[] toStrings(ScenarioCategory[] values) {
-  return values.map!(v => v.toString()).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -545,9 +545,9 @@ ScenarioType[] toScenarioTypes(string[] values) {
   return values.map!toScenarioType.array;
 }
 string toString(ScenarioType value)
-  => value.to!string();
+  => value.to!string;
 string[] toStrings(ScenarioType[] values)
-  => values.map!(v => v.toString()).array;
+  => values.map!toString.array;
 ///
 unittest {
   mixin(ShowTest!("ScenarioType"));

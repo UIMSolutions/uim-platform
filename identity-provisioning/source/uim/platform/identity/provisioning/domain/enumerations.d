@@ -23,7 +23,7 @@ enum SystemType {
   custom // Custom system type
 }
 
-SystemType toSystemType(string s) {
+SystemType toSystemType(string value) {
   mixin(EnumSwitch("SystemType", "custom"));
 }
 
@@ -73,7 +73,7 @@ enum SystemStatus {
   configuring // System connection is being configured or tested
 }
 
-SystemStatus toSystemStatus(string s) {
+SystemStatus toSystemStatus(string value) {
   mixin(EnumSwitch("SystemStatus", "active"));
 }
 
@@ -116,7 +116,7 @@ enum SystemRole {
   proxy // System acts as a proxy or middleware in the provisioning flow
 }
 
-SystemRole toSystemRole(string s) {
+SystemRole toSystemRole(string value) {
   mixin(EnumSwitch("SystemRole", "source"));
 }
 
@@ -157,7 +157,7 @@ enum JobType {
   simulate // Simulation mode - provisioning logic is executed but no actual changes are made to target systems
 }
 
-JobType toJobType(string s) {
+JobType toJobType(string value) {
   mixin(EnumSwitch("JobType", "full"));
 }
 
@@ -200,7 +200,7 @@ enum JobStatus {
   cancelled // Job has been cancelled
 }
 
-JobStatus toJobStatus(string s) {
+JobStatus toJobStatus(string value) {
   mixin(EnumSwitch("JobStatus", "scheduled"));
 }
 
@@ -301,7 +301,7 @@ enum LogStatus {
   skipped // Operation was skipped
 }
 
-LogStatus toLogStatus(string s) {
+LogStatus toLogStatus(string value) {
   mixin(EnumSwitch("LogStatus", "success"));
 }
 
@@ -341,7 +341,7 @@ enum EntityType {
   group // Group or role entity
 }
 
-EntityType toEntityType(string s) {
+EntityType toEntityType(string value) {
   mixin(EnumSwitch("EntityType", "user"));
 }
 

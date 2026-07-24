@@ -200,7 +200,7 @@ enum DistributionDirection {
   bidirectional,
 }
 
-DistributionDirection toDistributionDirection(string s) {
+DistributionDirection toDistributionDirection(string value) {
   mixin(EnumSwitch("DistributionDirection", "outbound"));
 }
 
@@ -237,7 +237,7 @@ enum ClientStatus {
   suspended,
 }
 
-ClientStatus toClientStatus(string s) {
+ClientStatus toClientStatus(string value) {
   mixin(EnumSwitch("ClientStatus", "disconnected"));
 }
 
@@ -279,7 +279,7 @@ enum ClientType {
   custom,
 }
 
-ClientType toClientType(string s) {
+ClientType toClientType(string value) {
   mixin(EnumSwitch("ClientType", "custom"));
 }
 
@@ -362,7 +362,7 @@ enum ReplicationTrigger {
   onChange,
 }
 
-ReplicationTrigger toReplicationTrigger(string s) {
+ReplicationTrigger toReplicationTrigger(string value) {
   mixin(EnumSwitch("ReplicationTrigger", "manual"));
 }
 
@@ -522,7 +522,7 @@ enum KeyMappingSourceType {
   universal,
 }
 
-KeyMappingSourceType toKeyMappingSourceType(string s) {
+KeyMappingSourceType toKeyMappingSourceType(string value) {
   mixin(EnumSwitch("KeyMappingSourceType", "local"));
 }
 

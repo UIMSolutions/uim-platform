@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module app;
 
-
 // import uim.platform.identity.provisioning.infrastructure.config;
 // import uim.platform.identity.provisioning.infrastructure.container;
 

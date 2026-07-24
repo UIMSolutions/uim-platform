@@ -89,13 +89,13 @@ struct PipelineSummary {
 }
 
 class MonitorTrainingUseCase { // TODO: UIMUseCase {
-  private TrainingJobRepository jobRepo;
-  private DeploymentRepository deploymentRepo;
-  private ModelConfigRepository configRepo;
-  private InferenceRequestRepository inferenceRepo;
+  private ITrainingJobRepository jobRepo;
+  private IDeploymentRepository deploymentRepo;
+  private IModelConfigRepository configRepo;
+  private IInferenceRequestRepository inferenceRepo;
 
-  this(TrainingJobRepository jobRepo, DeploymentRepository deploymentRepo,
-    ModelConfigRepository configRepo, InferenceRequestRepository inferenceRepo) {
+  this(ITrainingJobRepository jobRepo, IDeploymentRepository deploymentRepo,
+    IModelConfigRepository configRepo, IInferenceRequestRepository inferenceRepo) {
     this.jobRepo = jobRepo;
     this.deploymentRepo = deploymentRepo;
     this.configRepo = configRepo;

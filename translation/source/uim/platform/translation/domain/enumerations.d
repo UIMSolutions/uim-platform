@@ -21,14 +21,14 @@ enum ProjectType {
 ProjectType toProjectType(string value) {
     mixin(EnumSwitch!"ProjectType", "file");
 }
-ProjectType[] toProjectTypeArray(string[] values) {
+ProjectType[] toProjectTypes(string[] values) {
     return values.map!(v => toProjectType(v)).array;
 }
 string toString(ProjectType value) {
     return value.to!string;
 }
 string[] toStringArray(ProjectType[] values) {
-    return values.map!(v => toString(v)).array;
+    return values.map!toString.array;
 }
 
 /// Lifecycle status of a translation project
@@ -49,29 +49,29 @@ string toString(ProjectStatus value) {
     return value.to!string;
 }
 string[] toStrings(ProjectStatus[] values) {
-    return values.map!(v => toString(v)).array;
+    return values.map!toString.array;
 }
 /// 
 unittest {
     mixin(ShowTest!"ProjectStatus");
 
-    assert(toProjectStatus("draft") == ProjectStatus.draft);
-    assert(toProjectStatus("active") == ProjectStatus.active);
-    assert(toProjectStatus("inProgress") == ProjectStatus.inProgress);
-    assert(toProjectStatus("completed") == ProjectStatus.completed);
-    assert(toProjectStatus("archived") == ProjectStatus.archived);
+    assert("draft".toProjectStatus == ProjectStatus.draft);
+    assert("active".toProjectStatus == ProjectStatus.active);
+    assert("inProgress".toProjectStatus == ProjectStatus.inProgress);
+    assert("completed".toProjectStatus == ProjectStatus.completed);
+    assert("archived".toProjectStatus == ProjectStatus.archived);
     
     assert(toProjectStatus("") == ProjectStatus.draft);
     assert(toProjectStatus("invalid") == ProjectStatus.draft);
 
-    assert(toString(ProjectStatus.draft) == "draft");
-    assert(toString(ProjectStatus.active) == "active");
-    assert(toString(ProjectStatus.inProgress) == "inProgress");
-    assert(toString(ProjectStatus.completed) == "completed");
-    assert(toString(ProjectStatus.archived) == "archived");
+    assert(ProjectStatus.draft.toString == "draft");
+    assert(ProjectStatus.active.toString == "active");
+    assert(ProjectStatus.inProgress.toString == "inProgress");
+    assert(ProjectStatus.completed.toString == "completed");
+    assert(ProjectStatus.archived.toString == "archived");
 
-    assert(toProjectStatusArray(["draft", "completed", "invalid"]) == [ProjectStatus.draft, ProjectStatus.completed, ProjectStatus.draft]);
-    assert(toStringArray([ProjectStatus.draft, ProjectStatus.archived]) == ["draft", "archived"]);
+    assert(["draft", "completed", "invalid"].toProjectStatuses == [ProjectStatus.draft, ProjectStatus.completed, ProjectStatus.draft]);
+    assert([ProjectStatus.draft, ProjectStatus.archived].toStrings == ["draft", "archived"]);
 }
 
 /// Translation engine / provider

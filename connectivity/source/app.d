@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module app;
 
-
 // import uim.platform.connectivity.infrastructure.config;
 // import uim.platform.connectivity.infrastructure.container;
 

@@ -33,7 +33,7 @@ string toString(RepositoryType value) {
 }
 
 string[] toStrings(RepositoryType[] values) {
-    return values.map!(v => v.toString()).array;
+    return values.map!toString.array;
 }
 ///
 unittest {
@@ -80,7 +80,7 @@ string toString(RepositoryStatus value) {
 }
 
 string[] toStrings(RepositoryStatus[] values) {
-    return values.map!(v => v.toString()).array;
+    return values.map!toString.array;
 }
 ///
 unittest {
@@ -126,7 +126,7 @@ string toString(CredentialType value) {
 }
 
 string[] toStrings(CredentialType[] values) {
-    return values.map!(v => v.toString()).array;
+    return values.map!toString.array;
 }
 ///
 unittest {
@@ -174,7 +174,7 @@ string toString(CredentialStatus value) {
 }
 
 string[] toStrings(CredentialStatus[] values) {
-    return values.map!(v => v.toString()).array;
+    return values.map!toString.array;
 }
 ///
 unittest {
@@ -223,7 +223,7 @@ string toString(PipelineType value) {
 }
 
 string[] toStrings(PipelineType[] values) {
-    return values.map!(v => v.toString()).array;
+    return values.map!toString.array;
 }
 ///
 unittest {
@@ -275,7 +275,7 @@ string toString(PipelineStatus value) {
 }
 
 string[] toStrings(PipelineStatus[] values) {
-    return values.map!(v => v.toString()).array;
+    return values.map!toString.array;
 }
 ///
 unittest {
@@ -319,7 +319,7 @@ string toString(JobStatus value) {
 }
 
 string[] toStrings(JobStatus[] values) {
-    return values.map!(v => v.toString()).array;
+    return values.map!toString.array;
 }
 ///
 unittest {
@@ -365,7 +365,7 @@ string toString(TriggerMode value) {
 }
 
 string[] toStrings(TriggerMode[] values) {
-    return values.map!(v => v.toString()).array;
+    return values.map!toString.array;
 }
 ///
 unittest {
@@ -410,7 +410,7 @@ string toString(BuildStatus value) {
 }
 
 string[] toStrings(BuildStatus[] values) {
-    return values.map!(v => v.toString()).array;
+    return values.map!toString.array;
 }
 ///
 unittest {
@@ -463,7 +463,7 @@ string toString(BuildTrigger value) {
 }
 
 string[] toStrings(BuildTrigger[] values) {
-    return values.map!(v => v.toString()).array;
+    return values.map!toString.array;
 }
 ///
 unittest {
@@ -516,7 +516,7 @@ string toString(StageType value) {
 }
 
 string[] toStrings(StageType[] values) {
-    return values.map!(v => v.toString()).array;
+    return values.map!toString.array;
 }
 ///
 unittest {
@@ -573,7 +573,7 @@ string toString(StageStatus value) {
     return value.to!string;
 }
 string[] toStrings(StageStatus[] values) {
-    return values.map!(v => v.toString()).array;
+    return values.map!toString.array;
 }
 ///
 unittest {
@@ -621,7 +621,7 @@ string toString(WebhookStatus value) {
     return value.to!string;
 }
 string[] toStrings(WebhookStatus[] values) {
-    return values.map!(v => v.toString()).array;
+    return values.map!toString.array;
 }
 ///
 unittest {
@@ -663,7 +663,7 @@ string toString(WebhookEvent value) {
     return value.to!string;
 }
 string[] toStrings(WebhookEvent[] values) {
-    return values.map!(v => v.toString()).array;
+    return values.map!toString.array;
 }   
 /// 
 unittest {
@@ -707,7 +707,7 @@ string toString(DeploymentTargetType value) {
     return value.to!string;
 }
 string[] toStrings(DeploymentTargetType[] values) {
-    return values.map!(v => v.toString()).array;
+    return values.map!toString.array;
 }
 ///
 unittest {
@@ -750,7 +750,7 @@ string toString(DeploymentTargetStatus value) {
     return value.to!string;
 }
 string[] toStrings(DeploymentTargetStatus[] values) {
-    return values.map!(v => v.toString()).array;
+    return values.map!toString.array;
 }
 ///
 unittest {

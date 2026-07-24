@@ -13,17 +13,19 @@ enum MfaType {
   sms,
   email,
 } 
+
 MfaType toMfaType(string value) {
   mixin(EnumSwitch("MfaType", "none"));
 }
+
 MfaType[] toMfaTypes(string[] values)
   => values.map!toMfaType.array;
 
 string toString(MfaType value)
-  => value.to!string();
+  => value.to!string;
 
 string[] toStrings(MfaType[] values)
-  => values.map!(v => v.toString).array;
+  => values.map!toString.array;
 ///
 unittest {
   mixin(ShowTest!("MfaType"));
@@ -52,13 +54,16 @@ enum UserStatus {
 UserStatus toUserStatus(string value) {
   mixin(EnumSwitch("UserStatus", "active"));
 }
-UserStatus[] toUserStatuses(string[] values)
+
+UserStatus[] toUserStatuseses(string[] values)
   => values.map!toUserStatus.array;
 
 string toString(UserStatus value)
     => value.to!string;
+
 string[] toStrings(UserStatus[] values)
-    => values.map!(v => v.toString).array;
+    => values.map!toString.array;
+
 ///
 unittest {
   mixin(ShowTest!("UserStatus"));
@@ -74,7 +79,7 @@ unittest {
   assert(UserStatus.locked.toString == "locked");
   assert(UserStatus.pendingVerification.toString == "pendingVerification");
 
-  assert(["active", "locked"].toUserStatus == [UserStatus.active, UserStatus.locked]);
+  assert(["active", "locked"].toUserStatuseses == [UserStatus.active, UserStatus.locked]);
   assert([UserStatus.active, UserStatus.locked].toStrings == ["active", "locked"]);
 }
 
@@ -89,15 +94,19 @@ enum RiskLevel {
   /// Critical risk level.
   critical,
 }
+
 RiskLevel toRiskLevel(string value) {
   mixin(EnumSwitch("RiskLevel", "low"));
 }
+
 RiskLevel[] toRiskLevels(string[] values)
   => values.map!toRiskLevel.array;
+
 string toString(RiskLevel value)
     => value.to!string;
+
 string[] toStrings(RiskLevel[] values)
-    => values.map!(v => v.toString()).array;
+    => values.map!toString.array;
 ///
 unittest {
   mixin(ShowTest!("RiskLevel"));
@@ -134,7 +143,7 @@ TokenType[] toTokenTypes(string[] values)
 string toString(TokenType value)
     => value.to!string;
 string[] toStrings(TokenType[] values)
-    => values.map!(v => v.toString()).array;
+    => values.map!toString.array;
 ///
 unittest {
   mixin(ShowTest!("TokenType"));
@@ -170,7 +179,7 @@ JobStatus[] toJobStatuses(string[] values) {
 string toString(JobStatus value)
     => value.to!string;
 string[] toStrings(JobStatus[] values)
-    => values.map!(v => v.toString()).array;
+    => values.map!toString.array;
 ///
 unittest {
   mixin(ShowTest!("JobStatus"));
@@ -198,15 +207,19 @@ enum IdpType {
   ldap,
   corporate,
 }
+
 IdpType toIdpType(string value) {
   mixin(EnumSwitch("IdpType", "local"));
 }
+
 IdpType[] toIdpTypes(string[] values)
   => values.map!toIdpType.array;
+
 string toString(IdpType value)
     => value.to!string;
+
 string[] toStrings(IdpType[] values)
-    => values.map!(v => v.toString()).array;
+    => values.map!toString.array;
 ///
 unittest {
   mixin(ShowTest!("IdpType"));

@@ -26,7 +26,7 @@ ClientType[] toClientType(string[] values) {
     return values.map!(toClientType).array;
 }
 string toString(ClientType value) {
-    return value.to!string();
+    return value.to!string;
 }
 string[] toStrings(ClientType[] values) {
     return values.map!toString.array;
@@ -61,7 +61,7 @@ ClientStatus[] toClientStatuses(string[] values) {
     return values.map!(toClientStatus).array;
 }
 string toString(ClientStatus value) {
-    return value.to!string();
+    return value.to!string;
 }
 string[] toStrings(ClientStatus[] values) {
     return values.map!toString.array;

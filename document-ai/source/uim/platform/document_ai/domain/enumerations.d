@@ -44,10 +44,10 @@ TrainingJobStatus[] toTrainingJobStatuses(string[] values) {
     return values.map!(v => toTrainingJobStatus(v)).array;
 }
 string toString(TrainingJobStatus status) {
-    return status.to!string();
+    return status.to!string;
 }
 string[] toStrings(TrainingJobStatus[] statuses) {
-    return statuses.map!(s => toString(s)).array;
+    return statuses.map!toString.array;
 }
 ///
 unittest {
@@ -80,14 +80,14 @@ enum ExtractionMethod {
 ExtractionMethod toExtractionMethod(string value) {
     mixin(EnumSwitch("ExtractionMethod", "ExtractionMethod.ml_model"));
 }
-ExtractionMethod[] toExtractionMethod(string[] values) {
-    return values.map!(v => toExtractionMethod(v)).array;
+ExtractionMethod[] toExtractionMethods(string[] values) {
+    return values.map!toExtractionMethod.array;
 }
 string toString(ExtractionMethod method) {
-    return method.to!string();
+    return method.to!string;
 }
 string[] toStrings(ExtractionMethod[] methods) {
-    return methods.map!(m => toString(m)).array;
+    return methods.map!toString.array;
 }
 ///
 unittest {
@@ -104,7 +104,7 @@ unittest {
     assert(ExtractionMethod.template_based.toString == "template_based");
     assert(ExtractionMethod.hybrid.toString == "hybrid");
 
-    assert(["ml_model", "hybrid"].toExtractionMethod == [ExtractionMethod.ml_model, ExtractionMethod.hybrid]);
+    assert(["ml_model", "hybrid"].toExtractionMethods == [ExtractionMethod.ml_model, ExtractionMethod.hybrid]);
     assert([ExtractionMethod.ml_model, ExtractionMethod.hybrid].toStrings == ["ml_model", "hybrid"]);
 }
 
@@ -127,11 +127,11 @@ enum DocumentCategory {
 DocumentCategory toDocumentCategory(string value) {
     mixin(EnumSwitch("DocumentCategory", "DocumentCategory.general"));
 }
-DocumentCategory[] toDocumentCategory(string[] values) {
+DocumentCategory[] toDocumentCategories(string[] values) {
     return values.map!(v => toDocumentCategory(v)).array;
 }
 string toString(DocumentCategory category) {
-    return category.to!string();
+    return category.to!string;
 }
 string[] toStrings(DocumentCategory[] categories) {
     return categories.map!(c => toString(c)).array;
@@ -167,7 +167,7 @@ unittest {
     assert(DocumentCategory.letter_of_credit.toString == "letter_of_credit");
     assert(DocumentCategory.general.toString == "general");
 
-    assert(["invoice", "receipt"].toDocumentCategory == [DocumentCategory.invoice, DocumentCategory.receipt]);
+    assert(["invoice", "receipt"].toDocumentCategories == [DocumentCategory.invoice, DocumentCategory.receipt]);
     assert([DocumentCategory.invoice, DocumentCategory.receipt].toStrings == ["invoice", "receipt"]);
 }
 
@@ -193,9 +193,9 @@ FieldValueType toFieldValueType(string value) {
         default: return FieldValueType.string_; // default case
     }
 }
-FieldValueType[] toFieldValueType(string[] values) {
-    return values.map!(v => toFieldValueType(v)).array;
-}
+FieldValueType[] toFieldValueType(string[] values)
+    => values.map!toFieldValueType.array;
+
 string toString(FieldValueType value) {
     switch(value) {
         case FieldValueType.string_: return "string";
@@ -207,9 +207,9 @@ string toString(FieldValueType value) {
         case FieldValueType.line_items: return "line_items";
     }
 }
-string[] toStrings(FieldValueType[] values) {
-    return values.map!(v => toString(v)).array;
-}
+string[] toStrings(FieldValueType[] values)
+    => values.map!toString.array;
+
 ///
 unittest {
     mixin(ShowTest!("FieldValueType"));
@@ -242,17 +242,18 @@ enum ConfidenceLevel {
   low,
 }
 ConfidenceLevel toConfidenceLevel(string value) {
-    mixin(EnumSwitch("ConfidenceLevel", "ConfidenceLevel.medium"));
+    mixin(EnumSwitch!"ConfidenceLevel", "medium");
 }
-ConfidenceLevel[] toConfidenceLevel(string[] values) {
-    return values.map!(v => toConfidenceLevel(v)).array;
-}
-string toString(ConfidenceLevel value) {
-    return value.to!string();
-}
-string[] toStrings(ConfidenceLevel[] values) {
-    return values.map!(v => toString(v)).array;
-}
+
+ConfidenceLevel[] toConfidenceLevels(string[] values)
+    => values.map!toConfidenceLevel.array;
+
+string toString(ConfidenceLevel value)
+    => value.to!string;
+
+string[] toStrings(ConfidenceLevel[] values)
+    => values.map!toString.array;
+    
 ///
 unittest {
     mixin(ShowTest!("ConfidenceLevel"));
@@ -266,7 +267,7 @@ unittest {
     assert(ConfidenceLevel.medium.toString == "medium");
     assert(ConfidenceLevel.low.toString == "low");  
 
-    assert(["high", "low"].toConfidenceLevel == [ConfidenceLevel.high, ConfidenceLevel.low]);
+    assert(["high", "low"].toConfidenceLevels == [ConfidenceLevel.high, ConfidenceLevel.low]);
     assert([ConfidenceLevel.high, ConfidenceLevel.low].toStrings == ["high", "low"]);
 }
 
@@ -276,17 +277,21 @@ enum EnrichmentMatchStatus {
   unmatched,
   ambiguous,
 }
+
 EnrichmentMatchStatus toEnrichmentMatchStatus(string value) {
     mixin(EnumSwitch("EnrichmentMatchStatus", "EnrichmentMatchStatus.unmatched"));
 }   
+
 EnrichmentMatchStatus[] toEnrichmentMatchStatuses(string[] values) {
     return values.map!(v => toEnrichmentMatchStatus(v)).array;
 }
+
 string toString(EnrichmentMatchStatus value) {
-    return value.to!string();
+    return value.to!string;
 }
+
 string[] toStrings(EnrichmentMatchStatus[] values) {
-    return values.map!(v => toString(v)).array;
+    return values.map!toString.array;
 }
 ///
 unittest {
@@ -300,8 +305,8 @@ unittest {
     assert(EnrichmentMatchStatus.matched.toString == "matched");
     assert(EnrichmentMatchStatus.unmatched.toString == "unmatched");
     assert(EnrichmentMatchStatus.ambiguous.toString == "ambiguous");    
-
-    assert(["matched", "ambiguous"].toEnrichmentMatchStatus == [EnrichmentMatchStatus.matched, EnrichmentMatchStatus.ambiguous]);
+    
+    assert(["matched", "ambiguous"].toEnrichmentMatchStatuses == [EnrichmentMatchStatus.matched, EnrichmentMatchStatus.ambiguous]);
     assert([EnrichmentMatchStatus.matched, EnrichmentMatchStatus.ambiguous].toStrings == ["matched", "ambiguous"]);
 }
 
@@ -317,15 +322,16 @@ enum FileType {
 FileType toFileType(string value) {
     mixin(EnumSwitch("FileType", "FileType.pdf"));
 }   
-FileType[] toFileType(string[] values) {
-    return values.map!(v => toFileType(v)).array;
-}
+
+FileType[] toFileTypes(string[] values)
+    => values.map!toFileType.array;
+
 string toString(FileType value) {
-    return value.to!string();
+    return value.to!string;
 }
-string[] toStrings(FileType[] values) {
-    return values.map!(v => toString(v)).array;
-}
+string[] toStrings(FileType[] values)
+    => values.map!toString.array;
+
 ///
 unittest {
     mixin(ShowTest!("FileType"));
@@ -355,18 +361,20 @@ enum SchemaStatus {
   inactive,
   draft,
 }
+
 SchemaStatus toSchemaStatus(string value) {
     mixin(EnumSwitch("SchemaStatus", "SchemaStatus.active"));
 }
-SchemaStatus[] toSchemaStatuses(string[] values) {
-    return values.map!(v => toSchemaStatus(v)).array;
-}
-string toString(SchemaStatus value) {
-    return value.to!string();
-}
-string[] toStrings(SchemaStatus[] values) {
-    return values.map!(v => toString(v)).array;
-}
+
+SchemaStatus[] toSchemaStatuses(string[] values)
+    => values.map!toSchemaStatus.array;
+
+string toString(SchemaStatus value)
+    => value.to!string;
+
+string[] toStrings(SchemaStatus[] values)
+    => values.map!toString.array;
+
 ///
 unittest {
     mixin(ShowTest!("SchemaStatus"));
@@ -380,7 +388,7 @@ unittest {
     assert(SchemaStatus.inactive.toString == "inactive");
     assert(SchemaStatus.draft.toString == "draft");
 
-    assert(["active", "draft"].toSchemaStatus == [SchemaStatus.active, SchemaStatus.draft]);
+    assert(["active", "draft"].toSchemaStatuses == [SchemaStatus.active, SchemaStatus.draft]);
     assert([SchemaStatus.active, SchemaStatus.draft].toStrings == ["active", "draft"]);
 }
 
@@ -390,18 +398,19 @@ enum TemplateStatus {
   inactive,
   draft,
 }
+
 TemplateStatus toTemplateStatus(string value) {
     mixin(EnumSwitch("TemplateStatus", "TemplateStatus.active"));
 }
-TemplateStatus[] toTemplateStatuses(string[] values) {
-    return values.map!(v => toTemplateStatus(v)).array;
-}
-string toString(TemplateStatus value) {
-    return value.to!string();
-}
-string[] toStrings(TemplateStatus[] values) {
-    return values.map!(v => toString(v)).array;
-}
+
+TemplateStatus[] toTemplateStatuses(string[] values)
+    => values.map!toTemplateStatus.array;
+
+string toString(TemplateStatus value)
+    => value.to!string;
+
+string[] toStrings(TemplateStatus[] values)
+    => values.map!toString.array;
 ///
 unittest {
     mixin(ShowTest!("TemplateStatus"));
@@ -415,6 +424,6 @@ unittest {
     assert(TemplateStatus.inactive.toString == "inactive");
     assert(TemplateStatus.draft.toString == "draft");   
 
-    assert(["active", "draft"].toTemplateStatus == [TemplateStatus.active, TemplateStatus.draft]);
+    assert(["active", "draft"].toTemplateStatuses == [TemplateStatus.active, TemplateStatus.draft]);
     assert([TemplateStatus.active, TemplateStatus.draft].toStrings == ["active", "draft"]);
 }

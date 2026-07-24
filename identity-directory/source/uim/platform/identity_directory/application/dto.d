@@ -122,12 +122,10 @@ struct UpdateSchemaRequest {
 }
 
 struct SchemaResponse {
+  bool error = false;
   SchemaId schemaId;
-  string error;
-
-  bool hasError() const {
-    return error.length > 0;
-  }
+  string message;
+  uint code;
 }
 /// --- Password Policy DTOs ---
 struct CreatePasswordPolicyRequest {

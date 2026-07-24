@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.data_attribute_recommendation.application.usecases.manage.deployments;
 
-
 // import uim.platform.data_attribute_recommendation.domain.entities.model_deployment;
 // import uim.platform.data_attribute_recommendation.domain.entities.training_job;
 // import uim.platform.data_attribute_recommendation.domain.ports.repositories.deployments;
@@ -18,11 +17,11 @@ mixin(ShowModule!());
 
 @safe:
 class ManageDeploymentsUseCase { // TODO: UIMUseCase {
-  private DeploymentRepository repo;
-  private TrainingJobRepository jobRepo;
-  private ModelConfigRepository configRepo;
+  private IDeploymentRepository repo;
+  private ITrainingJobRepository jobRepo;
+  private IModelConfigRepository configRepo;
 
-  this(DeploymentRepository repo, TrainingJobRepository jobRepo, ModelConfigRepository configRepo) {
+  this(IDeploymentRepository repo, ITrainingJobRepository jobRepo, IModelConfigRepository configRepo) {
     this.repo = repo;
     this.jobRepo = jobRepo;
     this.configRepo = configRepo;

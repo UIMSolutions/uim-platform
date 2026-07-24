@@ -21,17 +21,14 @@ GlobalAccountStatus toGlobalAccountStatus(string value) {
   mixin(EnumSwitch("GlobalAccountStatus", "active"));
 }
 
-GlobalAccountStatus[] toGlobalAccountStatuses(string[] values) {
-  return values.map!(v => v.toGlobalAccountStatus).array;
-}
+GlobalAccountStatus[] toGlobalAccountStatuses(string[] values)
+  => values.map!toGlobalAccountStatus.array;
 
-string toString(GlobalAccountStatus value) {
-  return value.to!string();
-}
+string toString(GlobalAccountStatus value)
+  => value.to!string;
 
-string[] toStrings(GlobalAccountStatus[] values) {
-  return values.map!(v => v.toString).array;
-}
+string[] toStrings(GlobalAccountStatus[] values)
+  => values.map!toString.array;
 /// 
 unittest {
   mixin(ShowTest!("GlobalAccountStatus"));
@@ -46,7 +43,7 @@ unittest {
   assert(GlobalAccountStatus.terminated.toString == "terminated");
   assert(GlobalAccountStatus.migrating.toString == "migrating");
 
-  assert(["active", "suspended"].toGlobalAccountStatus == [
+  assert(["active", "suspended"].toGlobalAccountStatuses == [
       GlobalAccountStatus.active, GlobalAccountStatus.suspended
     ]);
   assert([GlobalAccountStatus.active, GlobalAccountStatus.suspended].toStrings == [
@@ -70,16 +67,16 @@ LicenseType toLicenseType(string value) {
   mixin(EnumSwitch("LicenseType", "enterprise"));
 }
 
-LicenseType[] toLicenseType(string[] values) {
-  return values.map!(v => v.toLicenseType).array;
+LicenseType[] toLicenseTypes(string[] values) {
+  return values.map!toLicenseType.array;
 }
 
 string toString(LicenseType value) {
-  return value.to!string();
+  return value.to!string;
 }
 
 string[] toStrings(LicenseType[] values) {
-  return values.map!(v => v.toString).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -95,7 +92,7 @@ unittest {
   assert(LicenseType.partner.toString == "partner");
   assert(LicenseType.internal.toString == "internal");
 
-  assert(["enterprise", "trial"].toLicenseType == [
+  assert(["enterprise", "trial"].toLicenseTypes == [
       LicenseType.enterprise, LicenseType.trial
     ]);
   assert([LicenseType.enterprise, LicenseType.trial].toStrings == [
@@ -122,11 +119,11 @@ DirectoryStatus[] toDirectoryStatuses(string[] values) {
 }
 
 string toString(DirectoryStatus value) {
-  return value.to!string();
+  return value.to!string;
 }
 
 string[] toStrings(DirectoryStatus[] values) {
-  return values.map!(v => v.toString()).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -141,7 +138,7 @@ unittest {
   assert(DirectoryStatus.inactive.toString == "inactive");
   assert(DirectoryStatus.deleting.toString == "deleting");
 
-  assert(["active", "inactive"].toDirectoryStatus == [
+  assert(["active", "inactive"].toDirectoryStatuses == [
       DirectoryStatus.active, DirectoryStatus.inactive
     ]);
   assert([DirectoryStatus.active, DirectoryStatus.inactive].toStrings == [
@@ -162,7 +159,7 @@ enum DirectoryType {
 }
 
 DirectoryType toDirectoryType(string value) {
-  switch (ignoreCase ? value.toLower() : value) {
+  switch (value.toLower()) {
   case "default":
     return DirectoryType.default_;
   case "ldap":
@@ -176,16 +173,16 @@ DirectoryType toDirectoryType(string value) {
   }
 }
 
-DirectoryType[] toDirectoryType(string[] values) {
-  return values.map!(v => v.toDirectoryType).array;
+DirectoryType[] toDirectoryTypes(string[] values) {
+  return values.map!toDirectoryType.array;
 }
 
 string toString(DirectoryType value) {
-  return value.to!string();
+  return value.to!string;
 }
 
 string[] toStrings(DirectoryType[] values) {
-  return values.map!(v => v.toString).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -202,7 +199,7 @@ unittest {
   assert(DirectoryType.scim.toString == "scim");
   assert(DirectoryType.custom.toString == "custom");
 
-  assert(["default", "ldap"].toDirectoryType == [
+  assert(["default", "ldap"].toDirectoryTypes == [
       DirectoryType.default_, DirectoryType.ldap
     ]);
   assert([DirectoryType.default_, DirectoryType.ldap].toStrings == [
@@ -221,7 +218,7 @@ enum DirectoryFeature {
 }
 
 DirectoryFeature toDirectoryFeature(string value) {
-  switch (ignoreCase ? value.toLower() : value) {
+  switch (value.toLower) {
   case "default":
     return DirectoryFeature.default_;
   case "entitlements":
@@ -233,16 +230,16 @@ DirectoryFeature toDirectoryFeature(string value) {
   }
 }
 
-DirectoryFeature[] toDirectoryFeature(string[] values) {
-  return values.map!(v => v.toDirectoryFeature).array;
+DirectoryFeature[] toDirectoryFeatures(string[] values) {
+  return values.map!toDirectoryFeature.array;
 }
 
 string toString(DirectoryFeature value) {
-  return value.to!string();
+  return value.to!string;
 }
 
 string[] toStrings(DirectoryFeature[] values) {
-  return values.map!(v => v.toString()).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -257,7 +254,7 @@ unittest {
   assert(DirectoryFeature.entitlements.toString == "entitlements");
   assert(DirectoryFeature.authorizations.toString == "authorizations");
 
-  assert(["default", "entitlements"].toDirectoryFeature == [
+  assert(["default", "entitlements"].toDirectoryFeatures == [
       DirectoryFeature.default_, DirectoryFeature.entitlements
     ]);
   assert([DirectoryFeature.default_, DirectoryFeature.entitlements].toStrings == [
@@ -288,15 +285,15 @@ SubaccountStatus toSubaccountStatus(string value) {
 }
 
 SubaccountStatus[] toSubaccountStatuses(string[] values) {
-  return values.map!(v => v.toSubaccountStatus).array;
+  return values.map!toSubaccountStatus.array;
 }
 
 string toString(SubaccountStatus value) {
-  return value.to!string();
+  return value.to!string;
 }
 
 string[] toStrings(SubaccountStatus[] values) {
-  return values.map!(v => v.toString()).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -349,16 +346,16 @@ SubaccountUsage toSubaccountUsage(string value) {
   mixin(EnumSwitch("SubaccountUsage", "unset"));
 }
 
-SubaccountUsage[] toSubaccountUsage(string[] values) {
-  return values.map!(v => v.toSubaccountUsage).array;
+SubaccountUsage[] toSubaccountUsages(string[] values) {
+  return values.map!toSubaccountUsage.array;
 }
 
 string toString(SubaccountUsage value) {
-  return value.to!string();
+  return value.to!string;
 }
 
 string[] toStrings(SubaccountUsage[] values) {
-  return values.map!(v => v.toString()).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -389,14 +386,10 @@ unittest {
 
 /// Status of an entitlement assignment.
 enum EntitlementStatus {
-  /// Default status when the entitlement status is unknown or not reported.
-  active,
-  /// The entitlement is pending approval or activation.
-  pending,
-  /// The entitlement has been revoked.
-  revoked,
-  /// The entitlement has expired.
-  expired,
+  active, // Default status when the entitlement status is unknown or not reported.
+  pending, // The entitlement is pending approval or activation.
+  revoked, // The entitlement has been revoked and is no longer valid.
+  expired, // The entitlement has expired and is no longer valid.
 }
 
 EntitlementStatus toEntitlementStatus(string value) {
@@ -408,11 +401,11 @@ EntitlementStatus[] toEntitlementStatuses(string[] values) {
 }
 
 string toString(EntitlementStatus value) {
-  return value.to!string();
+  return value.to!string;
 }
 
 string[] toStrings(EntitlementStatus[] values) {
-  return values.map!(v => v.toString()).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -429,7 +422,7 @@ unittest {
   assert(EntitlementStatus.revoked.toString == "revoked");
   assert(EntitlementStatus.expired.toString == "expired");
 
-  assert(["active", "pending"].toEntitlementStatus == [
+  assert(["active", "pending"].toEntitlementStatuses == [
       EntitlementStatus.active, EntitlementStatus.pending
     ]);
   assert([EntitlementStatus.active, EntitlementStatus.pending].toStrings == [
@@ -453,16 +446,16 @@ ServicePlanCategory toServicePlanCategory(string value) {
   mixin(EnumSwitch("ServicePlanCategory", "service"));
 }
 
-ServicePlanCategory[] toServicePlanCategory(string[] values) {
-  return values.map!(v => v.toServicePlanCategory).array;
+ServicePlanCategory[] toServicePlanCategories(string[] values) {
+  return values.map!toServicePlanCategory.array;
 }
 
 string toString(ServicePlanCategory value) {
-  return value.to!string();
+  return value.to!string;
 }
 
 string[] toStrings(ServicePlanCategory[] values) {
-  return values.map!(v => v.toString()).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -479,7 +472,7 @@ unittest {
   assert(ServicePlanCategory.environment.toString == "environment");
   assert(ServicePlanCategory.elasticService.toString == "elasticService");
 
-  assert(["service", "application"].toServicePlanCategory == [
+  assert(["service", "application"].toServicePlanCategories == [
       ServicePlanCategory.service, ServicePlanCategory.application
     ]);
   assert([ServicePlanCategory.service, ServicePlanCategory.application].toStrings == [
@@ -498,7 +491,7 @@ enum ServicePlanStatus {
 }
 
 ServicePlanStatus toServicePlanStatus(string value) {
-  switch (ignoreCase ? value.toLower() : value) {
+  switch (value.toLower()) {
   case "active":
     return ServicePlanStatus.active;
   case "deprecated":
@@ -515,11 +508,11 @@ ServicePlanStatus[] toServicePlanStatuses(string[] values) {
 }
 
 string toString(ServicePlanStatus value) {
-  return value.to!string();
+  return value.to!string;
 }
 
 string[] toStrings(ServicePlanStatus[] values) {
-  return values.map!(v => v.toString()).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -534,7 +527,7 @@ unittest {
   assert(ServicePlanStatus.deprecated_.toString == "deprecated_");
   assert(ServicePlanStatus.deleted.toString == "deleted");
 
-  assert(["active", "deprecated"].toServicePlanStatus == [
+  assert(["active", "deprecated"].toServicePlanStatuses == [
       ServicePlanStatus.active, ServicePlanStatus.deprecated_
     ]);
   assert([ServicePlanStatus.active, ServicePlanStatus.deprecated_].toStrings == [
@@ -558,16 +551,16 @@ PricingModel toPricingModel(string value) {
   mixin(EnumSwitch("PricingModel", "free"));
 }
 
-PricingModel[] toPricingModel(string[] values) {
-  return values.map!(v => v.toPricingModel).array;
+PricingModel[] toPricingModels(string[] values) {
+  return values.map!toPricingModel.array;
 }
 
 string toString(PricingModel value) {
-  return value.to!string();
+  return value.to!string;
 }
 
 string[] toStrings(PricingModel[] values) {
-  return values.map!(v => v.toString()).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -584,7 +577,7 @@ unittest {
   assert(PricingModel.consumption.toString == "consumption");
   assert(PricingModel.byol.toString == "byol");
 
-  assert(["free", "subscription"].toPricingModel == [
+  assert(["free", "subscription"].toPricingModels == [
       PricingModel.free, PricingModel.subscription
     ]);
   assert([PricingModel.free, PricingModel.subscription].toStrings == [
@@ -594,16 +587,13 @@ unittest {
 
 /// Status of a quota definition.
 enum QuotaStatus {
-  /// Default status when the quota status is unknown or not reported.
-  active,
-  /// The quota is deprecated and may be removed in the future.
-  deprecated_,
-  /// The quota is deleted and no longer available.
-  deleted,
+  active, // Default status when the quota status is unknown or not reported.
+  deprecated_, // The quota is deprecated and may be removed in the future.
+  deleted, // The quota is deleted and no longer available.
 }
 
 QuotaStatus toQuotaStatus(string value) {
-  switch (ignoreCase ? value.toLower() : value) {
+  switch (value.toLower()) {
   case "active":
     return QuotaStatus.active;
   case "deprecated":
@@ -620,11 +610,11 @@ QuotaStatus[] toQuotaStatuses(string[] values) {
 }
 
 string toString(QuotaStatus value) {
-  return value.to!string();
+  return value.to!string;
 }
 
 string[] toStrings(QuotaStatus[] values) {
-  return values.map!(v => v.toString()).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -639,7 +629,7 @@ unittest {
   assert(QuotaStatus.deprecated_.toString == "deprecated_");
   assert(QuotaStatus.deleted.toString == "deleted");
 
-  assert(["active", "deprecated"].toQuotaStatus == [
+  assert(["active", "deprecated"].toQuotaStatuses == [
       QuotaStatus.active, QuotaStatus.deprecated_
     ]);
   assert([QuotaStatus.active, QuotaStatus.deprecated_].toStrings == [
@@ -687,15 +677,15 @@ SubscriptionStatus toSubscriptionStatus(string value) {
 }
 
 SubscriptionStatus[] toSubscriptionStatuses(string[] values) {
-  return values.map!(v => v.toSubscriptionStatus).array;
+  return values.map!toSubscriptionStatus.array;
 }
 
 string toString(SubscriptionStatus value) {
-  return value.to!string();
+  return value.to!string;
 }
 
 string[] toStrings(SubscriptionStatus[] values) {
-  return values.map!(v => v.toString()).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -726,29 +716,27 @@ unittest {
 
 /// Status of a service instance.
 enum ServiceInstanceStatus {
-  /// Default status when the service instance status is unknown or not reported.
-  creating,
-  /// The service instance is ready and operational.
-  ready,
-  /// The service instance has encountered an error and is not operational.
-  failed,
-  /// The service instance is being deleted.
-  deleting,
-  /// The service instance is being updated.
-  updating,
+  creating, // Default status when the service instance status is unknown or not reported.
+  ready, // The service instance is ready and operational.
+  failed, // The service instance has encountered an error and is not operational.
+  deleting, // The service instance is being deleted.
+  updating, // The service instance is being updated.
 }
 
 ServiceInstanceStatus toServiceInstanceStatus(string value) {
   mixin(EnumSwitch("ServiceInstanceStatus", "creating"));
 }
+
 ServiceInstanceStatus[] toServiceInstanceStatuses(string[] values) {
   return values.map!(v => v.toServiceInstanceStatus).array;
 }
+
 string toString(ServiceInstanceStatus value) {
-  return value.to!string();
+  return value.to!string;
 }
+
 string[] toStrings(ServiceInstanceStatus[] values) {
-  return values.map!(v => v.toString()).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -790,14 +778,17 @@ enum EnvironmentType {
 EnvironmentType toEnvironmentType(string value) {
   mixin(EnumSwitch("EnvironmentType", "cloudFoundry"));
 }
-EnvironmentType[] toEnvironmentType(string[] values) {
+
+EnvironmentType[] toEnvironmentTypes(string[] values) {
   return values.map!(v => v.toEnvironmentType).array;
 }
+
 string toString(EnvironmentType value) {
-  return value.to!string();
+  return value.to!string;
 }
+
 string[] toStrings(EnvironmentType[] values) {
-  return values.map!(v => v.toString()).array;
+  return values.map!toString.array;
 }
 /// 
 unittest {
@@ -814,7 +805,7 @@ unittest {
   assert(EnvironmentType.abap.toString == "abap");
   assert(EnvironmentType.neo.toString == "neo");
 
-  assert(["cloudFoundry", "kyma"].toEnvironmentType == [
+  assert(["cloudFoundry", "kyma"].toEnvironmentTypes == [
       EnvironmentType.cloudFoundry, EnvironmentType.kyma
     ]);
   assert([EnvironmentType.cloudFoundry, EnvironmentType.kyma].toStrings == [
@@ -845,25 +836,36 @@ enum EnvironmentEventCategory {
 EnvironmentEventCategory toEnvironmentEventCategory(string value) {
   mixin(EnumSwitch("EnvironmentEventCategory", "subaccountLifecycle"));
 }
-EnvironmentEventCategory[] toEnvironmentEventCategory(string[] values) {
+
+EnvironmentEventCategory[] toEnvironmentEventCategories(string[] values) {
   return values.map!(v => v.toEnvironmentEventCategory).array;
 }
+
 string toString(EnvironmentEventCategory value) {
-  return value.to!string();
+  return value.to!string;
 }
+
 string[] toStrings(EnvironmentEventCategory[] values) {
-  return values.map!(v => v.toString()).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
   mixin(ShowTest!("EnvironmentEventCategory"));
 
-  assert("subaccountLifecycle".toEnvironmentEventCategory == EnvironmentEventCategory.subaccountLifecycle);
-  assert("entitlementChange".toEnvironmentEventCategory == EnvironmentEventCategory.entitlementChange);
-  assert("environmentLifecycle".toEnvironmentEventCategory == EnvironmentEventCategory.environmentLifecycle);
-  assert("subscriptionLifecycle".toEnvironmentEventCategory == EnvironmentEventCategory.subscriptionLifecycle);
+  assert(
+    "subaccountLifecycle".toEnvironmentEventCategory == EnvironmentEventCategory
+      .subaccountLifecycle);
+  assert(
+    "entitlementChange".toEnvironmentEventCategory == EnvironmentEventCategory.entitlementChange);
+  assert(
+    "environmentLifecycle".toEnvironmentEventCategory == EnvironmentEventCategory
+      .environmentLifecycle);
+  assert("subscriptionLifecycle".toEnvironmentEventCategory == EnvironmentEventCategory
+      .subscriptionLifecycle);
   assert("directoryChange".toEnvironmentEventCategory == EnvironmentEventCategory.directoryChange);
-  assert("globalAccountChange".toEnvironmentEventCategory == EnvironmentEventCategory.globalAccountChange);
+  assert(
+    "globalAccountChange".toEnvironmentEventCategory == EnvironmentEventCategory
+      .globalAccountChange);
   assert("quotaChange".toEnvironmentEventCategory == EnvironmentEventCategory.quotaChange);
   assert("securityEvent".toEnvironmentEventCategory == EnvironmentEventCategory.securityEvent);
   assert("unknown".toEnvironmentEventCategory == EnvironmentEventCategory.subaccountLifecycle); // default
@@ -877,14 +879,17 @@ unittest {
   assert(EnvironmentEventCategory.quotaChange.toString == "quotaChange");
   assert(EnvironmentEventCategory.securityEvent.toString == "securityEvent");
 
-  assert(["subaccountLifecycle", "entitlementChange"].toEnvironmentEventCategory == [
-      EnvironmentEventCategory.subaccountLifecycle, EnvironmentEventCategory.entitlementChange
+  assert(["subaccountLifecycle", "entitlementChange"].toEnvironmentEventCategories == [
+      EnvironmentEventCategory.subaccountLifecycle,
+      EnvironmentEventCategory.entitlementChange
     ]);
-  assert([EnvironmentEventCategory.subaccountLifecycle, EnvironmentEventCategory.entitlementChange].toStrings == [
-      "subaccountLifecycle", "entitlementChange"
-    ]);
+  assert([
+    EnvironmentEventCategory.subaccountLifecycle,
+    EnvironmentEventCategory.entitlementChange
+  ].toStrings == [
+    "subaccountLifecycle", "entitlementChange"
+  ]);
 }
-
 
 /// Severity of a platform event.
 enum EnvironmentEventSeverity {
@@ -901,14 +906,17 @@ enum EnvironmentEventSeverity {
 EnvironmentEventSeverity toEnvironmentEventSeverity(string value) {
   mixin(EnumSwitch("EnvironmentEventSeverity", "info"));
 }
-EnvironmentEventSeverity[] toEnvironmentEventSeverity(string[] values) {
+
+EnvironmentEventSeverity[] toEnvironmentEventSeverities(string[] values) {
   return values.map!(v => v.toEnvironmentEventSeverity).array;
 }
+
 string toString(EnvironmentEventSeverity value) {
-  return value.to!string();
+  return value.to!string;
 }
+
 string[] toStrings(EnvironmentEventSeverity[] values) {
-  return values.map!(v => v.toString()).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -925,11 +933,11 @@ unittest {
   assert(EnvironmentEventSeverity.error.toString == "error");
   assert(EnvironmentEventSeverity.critical.toString == "critical");
 
-  assert(["info", "warning"].toEnvironmentEventSeverity == [
+  assert(["info", "warning"].toEnvironmentEventSeverities == [
       EnvironmentEventSeverity.info, EnvironmentEventSeverity.warning
     ]);
   assert([EnvironmentEventSeverity.info, EnvironmentEventSeverity.warning].toStrings == [
-      "info", "warning" 
+      "info", "warning"
     ]);
 }
 
@@ -950,14 +958,17 @@ enum LabeledResourceType {
 LabeledResourceType toLabeledResourceType(string value) {
   mixin(EnumSwitch("LabeledResourceType", "subaccount"));
 }
-LabeledResourceType[] toLabeledResourceType(string[] values) {
+
+LabeledResourceType[] toLabeledResourceTypes(string[] values) {
   return values.map!(v => v.toLabeledResourceType).array;
 }
+
 string toString(LabeledResourceType value) {
-  return value.to!string(); 
+  return value.to!string;
 }
+
 string[] toStrings(LabeledResourceType[] values) {
-  return values.map!(v => v.toString()).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -966,7 +977,7 @@ unittest {
   assert("subaccount".toLabeledResourceType == LabeledResourceType.subaccount);
   assert("globalAccount".toLabeledResourceType == LabeledResourceType.globalAccount);
   assert("directory".toLabeledResourceType == LabeledResourceType.directory);
-  assert("environment".toLabeledResourceType == LabeledResourceType.environment); 
+  assert("environment".toLabeledResourceType == LabeledResourceType.environment);
   assert("subscription".toLabeledResourceType == LabeledResourceType.subscription);
   assert("unknown".toLabeledResourceType == LabeledResourceType.subaccount); //
 
@@ -974,9 +985,9 @@ unittest {
   assert(LabeledResourceType.globalAccount.toString == "globalAccount");
   assert(LabeledResourceType.directory.toString == "directory");
   assert(LabeledResourceType.environment.toString == "environment");
-  assert(LabeledResourceType.subscription.toString == "subscription");  
+  assert(LabeledResourceType.subscription.toString == "subscription");
 
-  assert(["subaccount", "globalAccount"].toLabeledResourceType == [
+  assert(["subaccount", "globalAccount"].toLabeledResourceTypes == [
       LabeledResourceType.subaccount, LabeledResourceType.globalAccount
     ]);
   assert([LabeledResourceType.subaccount, LabeledResourceType.globalAccount].toStrings == [

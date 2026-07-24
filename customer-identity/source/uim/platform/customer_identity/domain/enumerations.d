@@ -63,11 +63,11 @@ enum CustomerGender {
 CustomerGender toCustomerGender (string value) {
     mixin(EnumSwitch!("CustomerGender", "unspecified"));
 }
-CustomerGender[] toCustomerGender (string[] values) {
+CustomerGender[] toCustomerGenders (string[] values) {
     return values.map!(toCustomerGender).array;
 }
 string toString (CustomerGender gender ) {
-    return gender.to!string();
+    return gender.to!string;
 }
 string[] toStrings(CustomerGender[] genders) {
     return genders.map!toString.array;
@@ -76,22 +76,22 @@ string[] toStrings(CustomerGender[] genders) {
 unittest {
     mixin(ShowTest!("CustomerGender"));
 
-    assert(toCustomerGender("unspecified") == CustomerGender.unspecified);
-    assert(toCustomerGender("male") == CustomerGender.male);
-    assert(toCustomerGender("female") == CustomerGender.female);
-    assert(toCustomerGender("other") == CustomerGender.other);  
+    assert("unspecified".toCustomerGender == CustomerGender.unspecified);
+    assert("male".toCustomerGender == CustomerGender.male);
+    assert("female".toCustomerGender == CustomerGender.female);
+    assert("other".toCustomerGender == CustomerGender.other);  
 
-    assert(toCustomerGender("") == CustomerGender.unspecified);
-    assert(toCustomerGender("unknown") == CustomerGender.unspecified);
+    assert("".toCustomerGender == CustomerGender.unspecified);
+    assert("unknown".toCustomerGender == CustomerGender.unspecified);
 
-    assert(toCustomerGender(["unspecified", "female"]) == [CustomerGender.unspecified, CustomerGender.female]);
+    assert(["unspecified", "female"].toCustomerGenders == [CustomerGender.unspecified, CustomerGender.female]);
 
-    assert(toString(CustomerGender.unspecified) == "unspecified");
-    assert(toString(CustomerGender.male) == "male");
-    assert(toString(CustomerGender.female) == "female");
-    assert(toString(CustomerGender.other) == "other");  
+    assert(CustomerGender.unspecified.toString == "unspecified");
+    assert(CustomerGender.male.toString == "male");
+    assert(CustomerGender.female.toString == "female");
+    assert(CustomerGender.other.toString == "other");  
 
-    assert(toStrings([CustomerGender.unspecified, CustomerGender.female]) == ["unspecified", "female"]);
+    assert([CustomerGender.unspecified, CustomerGender.female].toStrings == ["unspecified", "female"]);
 }
 
 enum LoginProvider {
@@ -107,11 +107,11 @@ enum LoginProvider {
 LoginProvider toLoginProvider (string value) {
     mixin(EnumSwitch!("LoginProvider", "site"));
 }
-LoginProvider[] toLoginProvider (string[] values) {
+LoginProvider[] toLoginProviders (string[] values) {
     return values.map!(toLoginProvider).array;
 }
 string toString (LoginProvider provider) {
-    return provider.to!string();
+    return provider.to!string;
 }
 string[] toStrings(LoginProvider[] providers) {
     return providers.map!toString.array;
@@ -132,7 +132,7 @@ unittest {
     assert(toLoginProvider("") == LoginProvider.site);
     assert(toLoginProvider("unknown") == LoginProvider.site);
 
-    assert(toLoginProvider(["site", "google"]) == [LoginProvider.site, LoginProvider.google]);
+    assert(["site", "google"].toLoginProviders == [LoginProvider.site, LoginProvider.google]);
 
     assert(toString(LoginProvider.site) == "site");
     assert(toString(LoginProvider.google) == "google");
@@ -158,7 +158,7 @@ SessionStatus[] toSessionStatuses(string[] values) {
     return values.map!(toSessionStatus).array;
 }
 string toString(SessionStatus status) {
-    return status.to!string();
+    return status.to!string;
 }
 string[] toStrings(SessionStatus[] statuses) {
     return statuses.map!toString.array;
@@ -174,7 +174,7 @@ unittest {
     assert(toSessionStatus("") == SessionStatus.active);
     assert(toSessionStatus("unknown") == SessionStatus.active);
 
-    assert(toSessionStatus(["active", "revoked"]) == [SessionStatus.active, SessionStatus.revoked]);
+    assert(["active", "revoked"].toSessionStatuses == [SessionStatus.active, SessionStatus.revoked]);
 
     assert(toString(SessionStatus.active) == "active");
     assert(toString(SessionStatus.expired) == "expired");
@@ -195,7 +195,7 @@ SocialIdentityStatus[] toSocialIdentityStatuses(string[] values) {
     return values.map!(toSocialIdentityStatus).array;
 }
 string toString(SocialIdentityStatus status) {
-    return status.to!string();
+    return status.to!string;
 }
 string[] toStrings(SocialIdentityStatus[] statuses) {
     return statuses.map!toString.array;
@@ -211,7 +211,7 @@ unittest {
     assert(toSocialIdentityStatus("") == SocialIdentityStatus.linked);
     assert(toSocialIdentityStatus("unknown") == SocialIdentityStatus.linked);
 
-    assert(toSocialIdentityStatus(["linked", "error"]) == [SocialIdentityStatus.linked, SocialIdentityStatus.error]);
+    assert(["linked", "error"].toSocialIdentityStatuses == [SocialIdentityStatus.linked, SocialIdentityStatus.error]);
 
     assert(toString(SocialIdentityStatus.linked) == "linked");
     assert(toString(SocialIdentityStatus.unlinked) == "unlinked");
@@ -232,11 +232,11 @@ enum ConsentType {
 ConsentType toConsentType(string value) {
     mixin(EnumSwitch!("ConsentType", "marketing"));
 }
-ConsentType[] toConsentType(string[] values) {
+ConsentType[] toConsentTypes(string[] values) {
     return values.map!(toConsentType).array;
 }
 string toString(ConsentType type) {
-    return type.to!string();
+    return type.to!string;
 }
 string[] toStrings(ConsentType[] types) {
     return types.map!toString.array;
@@ -245,18 +245,18 @@ string[] toStrings(ConsentType[] types) {
 unittest {
     mixin(ShowTest!("ConsentType"));
 
-    assert(toConsentType("marketing") == ConsentType.marketing);
-    assert(toConsentType("analytics") == ConsentType.analytics);
-    assert(toConsentType("functional") == ConsentType.functional);
-    assert(toConsentType("necessary") == ConsentType.necessary);
-    assert(toConsentType("thirdParty") == ConsentType.thirdParty);
-    assert(toConsentType("dataProcessing") == ConsentType.dataProcessing);
-    assert(toConsentType("newsletter") == ConsentType.newsletter);
+    assert("marketing".toConsentType == ConsentType.marketing);
+    assert("analytics".toConsentType == ConsentType.analytics);
+    assert("functional".toConsentType == ConsentType.functional);
+    assert("necessary".toConsentType == ConsentType.necessary);
+    assert("thirdParty".toConsentType == ConsentType.thirdParty);
+    assert("dataProcessing".toConsentType == ConsentType.dataProcessing);
+    assert("newsletter".toConsentType == ConsentType.newsletter);
 
     assert(toConsentType("") == ConsentType.marketing);
     assert(toConsentType("unknown") == ConsentType.marketing);
 
-    assert(toConsentType(["marketing", "functional"]) == [ConsentType.marketing, ConsentType.functional]);
+    assert(["marketing", "functional"].toConsentTypes == [ConsentType.marketing, ConsentType.functional]);
 
     assert(toString(ConsentType.marketing) == "marketing");
     assert(toString(ConsentType.analytics) == "analytics");
@@ -280,11 +280,11 @@ enum LegalBasis {
 LegalBasis toLegalBasis(string value) {
     mixin(EnumSwitch!("LegalBasis", "consent"));
 }
-LegalBasis[] toLegalBasis(string[] values) {
+LegalBasis[] toLegalBases(string[] values) {
     return values.map!(toLegalBasis).array;
 }
 string toString(LegalBasis basis) { 
-    return basis.to!string();
+    return basis.to!string;
 }
 string[] toStrings(LegalBasis[] bases) {
     return bases.map!toString.array;
@@ -303,7 +303,7 @@ unittest {
     assert(toLegalBasis("") == LegalBasis.consent);
     assert(toLegalBasis("unknown") == LegalBasis.consent);
 
-    assert(toLegalBasis(["consent", "contract"]) == [LegalBasis.consent, LegalBasis.contract]);
+    assert(["consent", "contract"].toLegalBases == [LegalBasis.consent, LegalBasis.contract]);
 
     assert(toString(LegalBasis.consent) == "consent");
     assert(toString(LegalBasis.contract) == "contract");
@@ -335,11 +335,11 @@ enum AuditAction {
 AuditAction toAuditAction(string value) {
     mixin(EnumSwitch!("AuditAction", "register"));
 }
-AuditAction[] toAuditAction(string[] values) {
+AuditAction[] toAuditActions(string[] values) {
     return values.map!(toAuditAction).array;
 }
 string toString(AuditAction action) {
-    return action.to!string();
+    return action.to!string;
 }
 string[] toStrings(AuditAction[] actions) {
     return actions.map!toString.array;
@@ -367,7 +367,7 @@ unittest {
     assert("".toAuditAction == AuditAction.register);
     assert("unknown".toAuditAction == AuditAction.register);
 
-    assert(["register", "login"].toAuditAction == [AuditAction.register, AuditAction.login]);
+    assert(["register", "login"].toAuditActions == [AuditAction.register, AuditAction.login]);
 
     assert(AuditAction.register.toString == "register");
     assert(AuditAction.login.toString == "login");
@@ -400,11 +400,11 @@ enum ResourceType {
 ResourceType toResourceType(string value) {
     mixin(EnumSwitch!("ResourceType", "customer"));
 }
-ResourceType[] toResourceType(string[] values) {
+ResourceType[] toResourceTypes(string[] values) {
     return values.map!(toResourceType).array;
 }
 string toString(ResourceType type) {
-    return type.to!string();
+    return type.to!string;
 }
 string[] toStrings(ResourceType[] types) {
     return types.map!toString.array;
@@ -424,17 +424,17 @@ unittest {
     assert(toResourceType("") == ResourceType.customer);
     assert(toResourceType("unknown") == ResourceType.customer);
 
-    assert(toResourceType(["customer", "session"]) == [ResourceType.customer, ResourceType.session]);
+    assert(["customer", "session"].toResourceTypes == [ResourceType.customer, ResourceType.session]);
 
-    assert(toString(ResourceType.customer) == "customer");
-    assert(toString(ResourceType.session) == "session");
-    assert(toString(ResourceType.socialIdentity) == "socialIdentity");
-    assert(toString(ResourceType.consentRecord) == "consentRecord");
-    assert(toString(ResourceType.identityProvider) == "identityProvider");
-    assert(toString(ResourceType.screenSet) == "screenSet");
-    assert(toString(ResourceType.sitePolicy) == "sitePolicy");
+    assert(ResourceType.customer.toString == "customer");
+    assert(ResourceType.session.toString == "session");
+    assert(ResourceType.socialIdentity.toString == "socialIdentity");
+    assert(ResourceType.consentRecord.toString == "consentRecord");
+    assert(ResourceType.identityProvider.toString == "identityProvider");
+    assert(ResourceType.screenSet.toString == "screenSet");
+    assert(ResourceType.sitePolicy.toString == "sitePolicy");
 
-    assert(toStrings([ResourceType.customer, ResourceType.session]) == ["customer", "session"]);
+    assert([ResourceType.customer, ResourceType.session].toStrings == ["customer", "session"]);
 }
 
 enum IdentityProviderType {
@@ -446,11 +446,11 @@ enum IdentityProviderType {
 IdentityProviderType toIdentityProviderType(string value) {
     mixin(EnumSwitch!("IdentityProviderType", "saml"));
 }
-IdentityProviderType[] toIdentityProviderType(string[] values) {
+IdentityProviderType[] toIdentityProviderTypes(string[] values) {
     return values.map!(toIdentityProviderType).array;
 }
 string toString(IdentityProviderType type) {
-    return type.to!string();
+    return type.to!string;
 }
 string[] toStrings(IdentityProviderType[] types) {
     return types.map!toString.array;
@@ -467,12 +467,12 @@ unittest {
     assert(toIdentityProviderType("") == IdentityProviderType.saml);
     assert(toIdentityProviderType("unknown") == IdentityProviderType.saml);
 
-    assert(toIdentityProviderType(["saml", "oidc"]) == [IdentityProviderType.saml, IdentityProviderType.oidc]);
+    assert(["saml", "oidc"].toIdentityProviderTypes == [IdentityProviderType.saml, IdentityProviderType.oidc]);
 
-    assert(toString(IdentityProviderType.saml) == "saml");
-    assert(toString(IdentityProviderType.oidc) == "oidc");
-    assert(toString(IdentityProviderType.oauth2) == "oauth2");
-    assert(toString(IdentityProviderType.ldap) == "ldap");
+    assert(IdentityProviderType.saml.toString == "saml");
+    assert(IdentityProviderType.oidc.toString == "oidc");
+    assert(IdentityProviderType.oauth2.toString == "oauth2");
+    assert(IdentityProviderType.ldap.toString == "ldap");
 
     assert(toStrings([IdentityProviderType.saml, IdentityProviderType.oidc]) == ["saml", "oidc"]);
 }
@@ -489,7 +489,7 @@ IdentityProviderStatus[] toIdentityProviderStatuses(string[] values) {
     return values.map!(toIdentityProviderStatus).array;
 }
 string toString(IdentityProviderStatus status) {
-    return status.to!string();
+    return status.to!string;
 }
 string[] toStrings(IdentityProviderStatus[] statuses) {
     return statuses.map!toString.array;
@@ -498,20 +498,20 @@ string[] toStrings(IdentityProviderStatus[] statuses) {
 unittest {
     mixin(ShowTest!("IdentityProviderStatus"));
 
-    assert(toIdentityProviderStatus("active") == IdentityProviderStatus.active);
-    assert(toIdentityProviderStatus("inactive") == IdentityProviderStatus.inactive);
-    assert(toIdentityProviderStatus("testing") == IdentityProviderStatus.testing);
+    assert("active".toIdentityProviderStatus == IdentityProviderStatus.active);
+    assert("inactive".toIdentityProviderStatus == IdentityProviderStatus.inactive);
+    assert("testing".toIdentityProviderStatus == IdentityProviderStatus.testing);
 
-    assert(toIdentityProviderStatus("") == IdentityProviderStatus.active);
-    assert(toIdentityProviderStatus("unknown") == IdentityProviderStatus.active);
+    assert("".toIdentityProviderStatus == IdentityProviderStatus.active);
+    assert("unknown".toIdentityProviderStatus == IdentityProviderStatus.active);
 
-    assert(toIdentityProviderStatus(["active", "testing"]) == [IdentityProviderStatus.active, IdentityProviderStatus.testing]);
+    assert(["active", "testing"].toIdentityProviderStatuses == [IdentityProviderStatus.active, IdentityProviderStatus.testing]);
 
-    assert(toString(IdentityProviderStatus.active) == "active");
-    assert(toString(IdentityProviderStatus.inactive) == "inactive");
-    assert(toString(IdentityProviderStatus.testing) == "testing");
+    assert(IdentityProviderStatus.active.toString == "active");
+    assert(IdentityProviderStatus.inactive.toString == "inactive");
+    assert(IdentityProviderStatus.testing.toString == "testing");
 
-    assert(toStrings([IdentityProviderStatus.active, IdentityProviderStatus.testing]) == ["active", "testing"]);
+    assert([IdentityProviderStatus.active, IdentityProviderStatus.testing].toStrings == ["active", "testing"]);
 }
 
 enum ScreenSetFlowType {
@@ -525,11 +525,11 @@ enum ScreenSetFlowType {
 ScreenSetFlowType toScreenSetFlowType(string value) {
     mixin(EnumSwitch!("ScreenSetFlowType", "registrationLogin"));
 }
-ScreenSetFlowType[] toScreenSetFlowType(string[] values) {
+ScreenSetFlowType[] toScreenSetFlowTypes(string[] values) {
     return values.map!(toScreenSetFlowType).array;
 }
 string toString(ScreenSetFlowType type) {
-    return type.to!string();
+    return type.to!string;
 }
 string[] toStrings(ScreenSetFlowType[] types) {  
     return types.map!toString.array;
@@ -538,26 +538,26 @@ string[] toStrings(ScreenSetFlowType[] types) {
 unittest {
     mixin(ShowTest!("ScreenSetFlowType"));
 
-    assert(toScreenSetFlowType("registrationLogin") == ScreenSetFlowType.registrationLogin);
-    assert(toScreenSetFlowType("profileUpdate") == ScreenSetFlowType.profileUpdate);
-    assert(toScreenSetFlowType("forgotPassword") == ScreenSetFlowType.forgotPassword);
-    assert(toScreenSetFlowType("reAuthentication") == ScreenSetFlowType.reAuthentication);
-    assert(toScreenSetFlowType("linkAccount") == ScreenSetFlowType.linkAccount);
-    assert(toScreenSetFlowType("liteRegistration") == ScreenSetFlowType.liteRegistration);
+    assert("registrationLogin".toScreenSetFlowType == ScreenSetFlowType.registrationLogin);
+    assert("profileUpdate".toScreenSetFlowType == ScreenSetFlowType.profileUpdate);
+    assert("forgotPassword".toScreenSetFlowType == ScreenSetFlowType.forgotPassword);
+    assert("reAuthentication".toScreenSetFlowType == ScreenSetFlowType.reAuthentication);
+    assert("linkAccount".toScreenSetFlowType == ScreenSetFlowType.linkAccount);
+    assert("liteRegistration".toScreenSetFlowType == ScreenSetFlowType.liteRegistration);
 
-    assert(toScreenSetFlowType("") == ScreenSetFlowType.registrationLogin);
-    assert(toScreenSetFlowType("unknown") == ScreenSetFlowType.registrationLogin);
+    assert("".toScreenSetFlowType == ScreenSetFlowType.registrationLogin);
+    assert("unknown".toScreenSetFlowType == ScreenSetFlowType.registrationLogin);
 
-    assert(toScreenSetFlowType(["registrationLogin", "forgotPassword"]) == [ScreenSetFlowType.registrationLogin, ScreenSetFlowType.forgotPassword]);    
+    assert(["registrationLogin", "forgotPassword"].toScreenSetFlowTypes == [ScreenSetFlowType.registrationLogin, ScreenSetFlowType.forgotPassword]);
 
-    assert(toString(ScreenSetFlowType.registrationLogin) == "registrationLogin");
-    assert(toString(ScreenSetFlowType.profileUpdate) == "profileUpdate");
-    assert(toString(ScreenSetFlowType.forgotPassword) == "forgotPassword");
-    assert(toString(ScreenSetFlowType.reAuthentication) == "reAuthentication");
-    assert(toString(ScreenSetFlowType.linkAccount) == "linkAccount");
-    assert(toString(ScreenSetFlowType.liteRegistration) == "liteRegistration");
+    assert(ScreenSetFlowType.registrationLogin.toString == "registrationLogin");
+    assert(ScreenSetFlowType.profileUpdate.toString == "profileUpdate");
+    assert(ScreenSetFlowType.forgotPassword.toString == "forgotPassword");
+    assert(ScreenSetFlowType.reAuthentication.toString == "reAuthentication");
+    assert(ScreenSetFlowType.linkAccount.toString == "linkAccount");
+    assert(ScreenSetFlowType.liteRegistration.toString == "liteRegistration");
 
-    assert(toStrings([ScreenSetFlowType.registrationLogin, ScreenSetFlowType.forgotPassword]) == ["registrationLogin", "forgotPassword"]);
+    assert([ScreenSetFlowType.registrationLogin, ScreenSetFlowType.forgotPassword].toStrings == ["registrationLogin", "forgotPassword"]);
 }
 
 enum ScreenSetStatus {
@@ -572,7 +572,7 @@ ScreenSetStatus[] toScreenSetStatuses(string[] values) {
     return values.map!(toScreenSetStatus).array;
 }
 string toString(ScreenSetStatus status) {
-    return status.to!string();
+    return status.to!string;
 }
 string[] toStrings(ScreenSetStatus[] statuses) {
     return statuses.map!toString.array;
@@ -581,14 +581,14 @@ string[] toStrings(ScreenSetStatus[] statuses) {
 unittest {
     mixin(ShowTest!("ScreenSetStatus"));
 
-    assert(toScreenSetStatus("draft") == ScreenSetStatus.draft);
-    assert(toScreenSetStatus("active") == ScreenSetStatus.active);
-    assert(toScreenSetStatus("archived") == ScreenSetStatus.archived);
+    assert("draft".toScreenSetStatus == ScreenSetStatus.draft);
+    assert("active".toScreenSetStatus == ScreenSetStatus.active);
+    assert("archived".toScreenSetStatus == ScreenSetStatus.archived);
 
-    assert(toScreenSetStatus("") == ScreenSetStatus.draft);
-    assert(toScreenSetStatus("unknown") == ScreenSetStatus.draft);
+    assert("".toScreenSetStatus == ScreenSetStatus.draft);
+    assert("unknown".toScreenSetStatus == ScreenSetStatus.draft);
 
-    assert(toScreenSetStatus(["draft", "archived"]) == [ScreenSetStatus.draft, ScreenSetStatus.archived]);
+    assert(["draft", "archived"].toScreenSetStatuses == [ScreenSetStatus.draft, ScreenSetStatus.archived]);
 
     assert(toString(ScreenSetStatus.draft) == "draft");
     assert(toString(ScreenSetStatus.active) == "active");
@@ -605,6 +605,43 @@ enum PolicyType {
     mfa,
     consent
 }
+PolicyType toPolicyType(string value) {
+    mixin(EnumSwitch!("PolicyType", "password"));
+}
+PolicyType[] toPolicyTypes(string[] values) {
+    return values.map!(toPolicyType).array;
+}
+string toString(PolicyType type) {
+    return type.to!string;
+}
+string[] toStrings(PolicyType[] types) {
+    return types.map!toString.array;
+}
+///
+unittest {
+    mixin(ShowTest!("PolicyType"));
+
+    assert(toPolicyType("password") == PolicyType.password);
+    assert(toPolicyType("session") == PolicyType.session);
+    assert(toPolicyType("registration") == PolicyType.registration);
+    assert(toPolicyType("login") == PolicyType.login);
+    assert(toPolicyType("mfa") == PolicyType.mfa);
+    assert(toPolicyType("consent") == PolicyType.consent);
+
+    assert(toPolicyType("") == PolicyType.password);
+    assert(toPolicyType("unknown") == PolicyType.password);
+
+    assert(["password", "mfa"].toPolicyTypes == [PolicyType.password, PolicyType.mfa]);
+
+    assert(PolicyType.password.toString == "password");
+    assert(PolicyType.session.toString == "session");
+    assert(PolicyType.registration.toString == "registration");
+    assert(PolicyType.login.toString == "login");
+    assert(PolicyType.mfa.toString == "mfa");
+    assert(PolicyType.consent.toString == "consent");
+
+    assert(toStrings([PolicyType.password, PolicyType.mfa]) == ["password", "mfa"]);
+}   
 
 enum MfaMethod {
     none,
@@ -614,9 +651,78 @@ enum MfaMethod {
     push
 }
 
+MfaMethod toMfaMethod(string value) {
+    mixin(EnumSwitch!("MfaMethod", "none"));
+}
+MfaMethod[] toMfaMethods(string[] values) {
+    return values.map!(toMfaMethod).array;
+}
+string toString(MfaMethod method) {
+    return method.to!string;
+}
+string[] toStrings(MfaMethod[] methods) {
+    return methods.map!toString.array;
+}
+///
+unittest {
+    mixin(ShowTest!("MfaMethod"));
+
+    assert(toMfaMethod("none") == MfaMethod.none);
+    assert(toMfaMethod("email") == MfaMethod.email);
+    assert(toMfaMethod("sms") == MfaMethod.sms);
+    assert(toMfaMethod("totp") == MfaMethod.totp);
+    assert(toMfaMethod("push") == MfaMethod.push);
+
+    assert(toMfaMethod("") == MfaMethod.none);
+    assert(toMfaMethod("unknown") == MfaMethod.none);
+
+    assert(["none", "email"].toMfaMethods == [MfaMethod.none, MfaMethod.email]);
+
+    assert(toString(MfaMethod.none) == "none");
+    assert(toString(MfaMethod.email) == "email");
+    assert(toString(MfaMethod.sms) == "sms");
+    assert(toString(MfaMethod.totp) == "totp");
+    assert(toString(MfaMethod.push) == "push"); 
+
+    assert(toStrings([MfaMethod.none, MfaMethod.email]) == ["none", "email"]);
+}
+
 enum PasswordComplexity {
     low,
     medium,
     high,
     custom
+}
+PasswordComplexity toPasswordComplexity(string value) {
+    mixin(EnumSwitch!("PasswordComplexity", "low"));
+}
+PasswordComplexity[] toPasswordComplexities(string[] values) {
+    return values.map!(toPasswordComplexity).array;
+}
+string toString(PasswordComplexity complexity) {
+    return complexity.to!string;
+}
+string[] toStrings(PasswordComplexity[] complexities) {
+    return complexities.map!toString.array;
+}
+///
+unittest {
+    mixin(ShowTest!("PasswordComplexity")); 
+
+    assert(toPasswordComplexity("low") == PasswordComplexity.low);
+    assert(toPasswordComplexity("medium") == PasswordComplexity.medium);
+    assert(toPasswordComplexity("high") == PasswordComplexity.high);
+    assert(toPasswordComplexity("custom") == PasswordComplexity.custom);    
+
+    assert(toPasswordComplexity("") == PasswordComplexity.low);
+    assert(toPasswordComplexity("unknown") == PasswordComplexity.low);
+
+    assert(["low", "high"].toPasswordComplexities == [PasswordComplexity.low, PasswordComplexity.high]);    
+
+    assert(toString(PasswordComplexity.low) == "low");
+    assert(toString(PasswordComplexity.medium) == "medium");
+    assert(toString(PasswordComplexity.high) == "high");
+    assert(toString(PasswordComplexity.custom) == "custom");
+
+    assert(toStrings([PasswordComplexity.low, PasswordComplexity.high]) == ["low", "high"]);
 }

@@ -144,9 +144,9 @@ class UserController : ManageHttpController {
     auto id = UserId(precheck.id);
 
     auto result = useCase.deleteUser(tenantId, id);
-    if (result.hasError)
-      return errorResponse(result.errorMessage, 404);
-      // writeScimError(res, 404, result.errorMessage);
+    if (result.error)
+      return errorResponse(result.message, 404);
+      // writeScimError(res, 404, result.message);
 
     return successResponse("User deleted successfully", "", 200, Json.emptyObject);
   }
@@ -162,9 +162,9 @@ class UserController : ManageHttpController {
     auto data = precheck.data;
     auto result = useCase.changePassword(tenantId, id,
       data.getString("currentPassword"), data.getString("newPassword"));
-    if (result.hasError)
-      return errorResponse(result.errorMessage, 400);
-      // return scimErrorResponse(result.errorMessage, 400);
+    if (result.error)
+      return errorResponse(result.message, 400);
+      // return scimErrorResponse(result.message, 400);
 
     auto response = Json.emptyObject
       .set("status", "password_changed");

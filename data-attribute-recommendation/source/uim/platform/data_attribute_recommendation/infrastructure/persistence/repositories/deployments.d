@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.data_attribute_recommendation.infrastructure.persistence.repositories.deployments;
 
-
 // import uim.platform.data_attribute_recommendation.domain.entities.model_deployment;
 // import uim.platform.data_attribute_recommendation.domain.ports.repositories.deployments;
 import uim.platform.data_attribute_recommendation;
@@ -13,7 +12,7 @@ import uim.platform.data_attribute_recommendation;
 mixin(ShowModule!());
 
 @safe:
-class MemoryDeploymentRepository : TenantRepository!(ModelDeployment, DeploymentId), DeploymentRepository {
+class MemoryDeploymentRepository : TenantRepository!(ModelDeployment, DeploymentId), IDeploymentRepository {
 
   bool existsByTrainingJob(TenantId tenantId, TrainingJobId jobId) {
     return findByTenant(tenantId).any!(e => e.trainingJobId == jobId);
@@ -62,4 +61,157 @@ class MemoryDeploymentRepository : TenantRepository!(ModelDeployment, Deployment
     findByStatus(tenantId, status).each!(e => remove(e));
   }
 
+}
+///
+unittest {
+  import uim.platform.data_attribute_recommendation.domain.entities.model_deployment;
+  import uim.platform.data_attribute_recommendation.domain.ports.model_configs;
+  import uim.platform.data_attribute_recommendation.domain.ports.training_jobs;
+  import uim.platform.data_attribute_recommendation.domain.ports.deployments;
+
+  void testDeploymentRepository() {
+    auto repo = new MemoryDeploymentRepository();
+    auto tenantId = TenantId("1");
+    
+    auto deployment1 = ModelDeployment(tenantId);
+    deployment1.modelConfigId = ModelConfigurationId("1");
+    deployment1.trainingJobId = TrainingJobId("1");
+    deployment1.status = DeploymentStatus.active;
+    repo.save(deployment1);
+
+    auto deployment2 = ModelDeployment(tenantId);
+    deployment2.modelConfigId = ModelConfigurationId("1");
+    deployment2.trainingJobId = TrainingJobId("2");
+    deployment2.status = DeploymentStatus.inactive;
+    repo.save(deployment2);
+
+    assert(repo.countByModelConfig(tenantId, ModelConfigurationId("1")) == 2);
+    assert(repo.countByStatus(tenantId, DeploymentStatus.active) == 1);
+    assert(repo.countByStatus(tenantId, DeploymentStatus.inactive) == 1);
+
+    repo.removeByTrainingJob(tenantId, TrainingJobId("1"));
+    assert(repo.countByModelConfig(tenantId, ModelConfigurationId("1")) == 1);
+    assert(repo.countByStatus(tenantId, DeploymentStatus.active) == 0);
+  }
+
+  void testDeploymentRepositoryWithEmptyTenant() {
+    auto repo = new MemoryDeploymentRepository();
+    auto tenantId = TenantId("1");
+    
+    auto deployment1 = ModelDeployment(tenantId);
+    deployment1.modelConfigId = ModelConfigurationId("1");
+    deployment1.trainingJobId = TrainingJobId("1");
+    deployment1.status = DeploymentStatus.active;
+    repo.save(deployment1);
+
+    auto deployment2 = ModelDeployment(tenantId);
+    deployment2.modelConfigId = ModelConfigurationId("1");
+    deployment2.trainingJobId = TrainingJobId("2");
+    deployment2.status = DeploymentStatus.inactive;
+    repo.save(deployment2);
+
+    auto emptyTenantId = TenantId("2");
+    assert(repo.countByModelConfig(emptyTenantId, ModelConfigurationId("1")) == 0);
+    assert(repo.countByStatus(emptyTenantId, DeploymentStatus.active) == 0);
+    assert(repo.countByStatus(emptyTenantId, DeploymentStatus.inactive) == 0);
+
+    repo.removeByTrainingJob(emptyTenantId, TrainingJobId("1"));
+    assert(repo.countByModelConfig(emptyTenantId, ModelConfigurationId("1")) == 0);
+    assert(repo.countByStatus(emptyTenantId, DeploymentStatus.active) == 0);
+  }
+
+  void testDeploymentRepositoryWithNonExistentTrainingJob() {
+    auto repo = new MemoryDeploymentRepository();
+    auto tenantId = TenantId("1");
+    
+    auto deployment1 = ModelDeployment(tenantId);
+    deployment1.modelConfigId = ModelConfigurationId("1");
+    deployment1.trainingJobId = TrainingJobId("1");
+    deployment1.status = DeploymentStatus.active;
+    repo.save(deployment1);
+
+    auto deployment2 = ModelDeployment(tenantId);
+    deployment2.modelConfigId = ModelConfigurationId("1");
+    deployment2.trainingJobId = TrainingJobId("2");
+    deployment2.status = DeploymentStatus.inactive;
+    repo.save(deployment2);
+
+    assert(repo.countByModelConfig(tenantId, ModelConfigurationId("1")) == 2);
+    assert(repo.countByStatus(tenantId, DeploymentStatus.active) == 1);
+    assert(repo.countByStatus(tenantId, DeploymentStatus.inactive) == 1);
+
+    repo.removeByTrainingJob(tenantId, TrainingJobId("3")); // Non-existent training job
+    assert(repo.countByModelConfig(tenantId, ModelConfigurationId("1")) == 2);
+    assert(repo.countByStatus(tenantId, DeploymentStatus.active) == 1);
+  }
+
+  void testDeploymentRepositoryByModelConfig() {
+    auto repo = new MemoryDeploymentRepository();
+    auto tenantId = TenantId("1");
+    
+    auto deployment1 = ModelDeployment(tenantId);
+    deployment1.modelConfigId = ModelConfigurationId("1");
+    deployment1.trainingJobId = TrainingJobId("1");
+    deployment1.status = DeploymentStatus.active;
+    repo.save(deployment1);
+
+    auto deployment2 = ModelDeployment(tenantId);
+    deployment2.modelConfigId = ModelConfigurationId("1");
+    deployment2.trainingJobId = TrainingJobId("2");
+    deployment2.status = DeploymentStatus.inactive;
+    repo.save(deployment2);
+    
+    auto deployment3 = ModelDeployment(tenantId);
+    deployment3.modelConfigId = ModelConfigurationId("2");
+    deployment3.trainingJobId = TrainingJobId("3");
+    deployment3.status = DeploymentStatus.active;
+    repo.save(deployment3);
+
+    assert(repo.countByModelConfig(tenantId, ModelConfigurationId("1")) == 2);
+    assert(repo.countByModelConfig(tenantId, ModelConfigurationId("2")) == 1);
+
+    repo.removeByModelConfig(tenantId, ModelConfigurationId("1"));
+    assert(repo.countByModelConfig(tenantId, ModelConfigurationId("1")) == 0);
+    assert(repo.countByModelConfig(tenantId, ModelConfigurationId("2")) == 1);
+  } 
+
+  void testDeploymentRepositoryByStatus() {
+    auto repo = new MemoryDeploymentRepository();
+    auto tenantId = TenantId("1");
+    
+    auto deployment1 = ModelDeployment(tenantId);
+    deployment1.modelConfigId = ModelConfigurationId("1");
+    deployment1.trainingJobId = TrainingJobId("1");
+    deployment1.status = DeploymentStatus.active;
+    repo.save(deployment1);
+
+    auto deployment2 = ModelDeployment(tenantId);
+    deployment2.modelConfigId = ModelConfigurationId("1");
+    deployment2.trainingJobId = TrainingJobId("2");
+    deployment2.status = DeploymentStatus.inactive;
+    repo.save(deployment2);
+    
+    auto deployment3 = ModelDeployment(tenantId);
+    deployment3.modelConfigId = ModelConfigurationId("2");
+    deployment3.trainingJobId = TrainingJobId("3");
+    deployment3.status = DeploymentStatus.active;
+    repo.save(deployment3); 
+
+    assert(repo.countByStatus(tenantId, DeploymentStatus.active) == 2);
+    assert(repo.countByStatus(tenantId, DeploymentStatus.inactive) == 1); 
+
+    repo.removeByStatus(tenantId, DeploymentStatus.active);
+    assert(repo.countByStatus(tenantId, DeploymentStatus.active) == 0);
+    assert(repo.countByStatus(tenantId, DeploymentStatus.inactive) == 1); 
+  }
+
+  void allTests() {
+    testDeploymentRepository();
+    testDeploymentRepositoryWithEmptyTenant();
+    testDeploymentRepositoryWithNonExistentTrainingJob();
+    testDeploymentRepositoryByModelConfig();
+    testDeploymentRepositoryByStatus();
+  };
+
+  allTests();
 }

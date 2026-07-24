@@ -29,7 +29,7 @@ AppPlatform[] toAppPlatform(string[] values) {
 }
 
 string toString(AppPlatform value) {
-  return value.to!string();
+  return value.to!string;
 }
 
 string[] toStrings(AppPlatform[] values) {
@@ -247,32 +247,27 @@ string[] toStrings(NotificationStatus[] values) {
 }
 ///
 unittest {
-  assert(toNotificationStatus("pending") == NotificationStatus.pending);
-  assert(toNotificationStatus("sent") == NotificationStatus.sent);
-  assert(toNotificationStatus("delivered") == NotificationStatus.delivered);
-  assert(toNotificationStatus("failed") == NotificationStatus.failed);
-  assert(toNotificationStatus("expired") == NotificationStatus.expired);
-  assert(toNotificationStatus("unknown") == NotificationStatus.pending);
-  assert(toNotificationStatus("PENDING") == NotificationStatus.pending);
-  assert(toNotificationStatus("SENT") == NotificationStatus.sent);
-  assert(toNotificationStatus("DELIVERED") == NotificationStatus.delivered);
-  assert(toNotificationStatus("FAILED") == NotificationStatus.failed);
-  assert(toNotificationStatus("EXPIRED") == NotificationStatus.expired);
+  assert("pending".toNotificationStatus == NotificationStatus.pending);
+  assert("sent".toNotificationStatus == NotificationStatus.sent);
+  assert("delivered".toNotificationStatus == NotificationStatus.delivered);
+  assert("failed".toNotificationStatus == NotificationStatus.failed);
+  assert("expired".toNotificationStatus == NotificationStatus.expired);
+  assert("unknown".toNotificationStatus == NotificationStatus.pending);
+  assert("PENDING".toNotificationStatus == NotificationStatus.pending);
+  assert("SENT".toNotificationStatus == NotificationStatus.sent);
+  assert("DELIVERED".toNotificationStatus == NotificationStatus.delivered);
+  assert("FAILED".toNotificationStatus == NotificationStatus.failed);
+  assert("EXPIRED".toNotificationStatus == NotificationStatus.expired);
 
-  assert(toNotificationStatus("") == NotificationStatus.pending);
-  assert(toNotificationStatus("UNKNOWN") == NotificationStatus.pending);
+  assert("".toNotificationStatus == NotificationStatus.pending);
+  assert("UNKNOWN".toNotificationStatus == NotificationStatus.pending);
 
-  assert(toString(NotificationStatus.pending) == "pending");
-  assert(toString(NotificationStatus.sent) == "sent");
-  assert(toString(NotificationStatus.delivered) == "delivered");
-  assert(toString(NotificationStatus.failed) == "failed");
-  assert(toString(NotificationStatus.expired) == "expired");
+  assert(NotificationStatus.pending.toString == "pending");
+  assert(NotificationStatus.sent.toString == "sent");
+  assert(NotificationStatus.delivered.toString == "delivered");
+  assert(NotificationStatus.failed.toString == "failed");
+  assert(NotificationStatus.expired.toString == "expired");
 
-  assert(toStrings([
-      NotificationStatus.pending, NotificationStatus.sent,
-      NotificationStatus.delivered, NotificationStatus.failed,
-      NotificationStatus.expired
-    ]) == ["pending", "sent", "delivered", "failed", "expired"]);
   assert([
     NotificationStatus.pending, NotificationStatus.sent,
     NotificationStatus.delivered, NotificationStatus.failed,
@@ -291,38 +286,36 @@ NotificationPriority toNotificationPriority(string value) {
   mixin(EnumSwitch("NotificationPriority", "normal"));
 }
 
-NotificationPriority[] toNotificationPriority(string[] values) {
-  return values.map!(toNotificationPriority).array;
-}
+NotificationPriority[] toNotificationPriorities(string[] values)
+  => values.map!(toNotificationPriority).array;
 
-string toString(NotificationPriority value) {
-  return value.to!string; // This will return the enum member name as a string, e.g., "normal", "low", etc.
-}
+string toString(NotificationPriority value)
+  => value.to!string; // This will return the enum member name as a string, e.g., "normal", "low", etc.
 
-string[] toStrings(NotificationPriority[] values) {
-  return values.map!toString.array;
-}
+string[] toStrings(NotificationPriority[] values)
+  => values.map!toString.array;
+
 ///
 unittest {
-  assert(toNotificationPriority("normal") == NotificationPriority.normal);
-  assert(toNotificationPriority("low") == NotificationPriority.low);
-  assert(toNotificationPriority("high") == NotificationPriority.high);
-  assert(toNotificationPriority("NORMAL") == NotificationPriority.normal);
-  assert(toNotificationPriority("LOW") == NotificationPriority.low);
-  assert(toNotificationPriority("HIGH") == NotificationPriority.high);
+  assert("normal".toNotificationPriority == NotificationPriority.normal);
+  assert("low".toNotificationPriority == NotificationPriority.low);
+  assert("high".toNotificationPriority == NotificationPriority.high);
+  assert("NORMAL".toNotificationPriority == NotificationPriority.normal);
+  assert("LOW".toNotificationPriority == NotificationPriority.low);
+  assert("HIGH".toNotificationPriority == NotificationPriority.high);
 
-  assert(toNotificationPriority("") == NotificationPriority.normal);
-  assert(toNotificationPriority("unknown") == NotificationPriority.normal);
-  assert(toNotificationPriority("UNKNOWN") == NotificationPriority.normal);
+  assert("".toNotificationPriority == NotificationPriority.normal);
+  assert("unknown".toNotificationPriority == NotificationPriority.normal);
+  assert("UNKNOWN".toNotificationPriority == NotificationPriority.normal);
 
-  assert(toString(NotificationPriority.normal) == "normal");
-  assert(toString(NotificationPriority.low) == "low");
-  assert(toString(NotificationPriority.high) == "high");
+  assert(NotificationPriority.normal.toString == "normal");
+  assert(NotificationPriority.low.toString == "low");
+  assert(NotificationPriority.high.toString == "high");
 
-  assert(toStrings([
-      NotificationPriority.normal, NotificationPriority.low,
-      NotificationPriority.high
-    ]) == ["normal", "low", "high"]);
+  assert([
+    NotificationPriority.normal, NotificationPriority.low,
+    NotificationPriority.high
+  ].toStrings == ["normal", "low", "high"]);
   assert([
     NotificationPriority.normal, NotificationPriority.low,
     NotificationPriority.high
@@ -371,8 +364,8 @@ unittest {
   assert(toStrings([
       PushRegStatus.active, PushRegStatus.expired, PushRegStatus.revoked
     ]) == ["active", "expired", "revoked"]);
-  assert([PushRegStatus.active, PushRegStatus.expired, PushRegStatus.revoked].toStrings == [
-      "active", "expired", "revoked"
+  assert(["active", "expired", "revoked"].toPushRegStatuses == [
+      PushRegStatus.active, PushRegStatus.expired, PushRegStatus.revoked
     ]);
 }
 
@@ -383,21 +376,18 @@ enum RestrictionType : string {
   whitelist = "whitelist", // specific users/devices
 }
 
-RestrictionType toRestrictionType(string value) {
-  mixin(EnumSwitch("RestrictionType", "boolean_"));
-}
+RestrictionType toRestrictionType(string value)
+  => mixin(EnumSwitch("RestrictionType", "boolean_"));
 
-RestrictionType[] toRestrictionType(string[] values) {
-  return values.map!(toRestrictionType).array;
-}
+RestrictionType[] toRestrictionTypes(string[] values)
+  => values.map!(toRestrictionType).array;
 
-string toString(RestrictionType value) {
-  return cast(string)value; // This will return the enum member name as a string, e.g., "boolean_", "percentage", etc.
-}
+string toString(RestrictionType value)
+  => cast(string)value; // This will return the enum member name as a string, e.g., "boolean_", "percentage", etc.
 
-string[] toStrings(RestrictionType[] values) {
-  return values.map!toString.array;
-}
+string[] toStrings(RestrictionType[] values)
+  => values.map!toString.array;
+
 /// 
 unittest {
   mixin(ShowTest!("RestrictionType"));
@@ -439,41 +429,39 @@ ClientResourceType toClientResourceType(string value) {
   mixin(EnumSwitch("ClientResourceType", "bundle"));
 }
 
-ClientResourceType[] toClientResourceType(string[] values) {
-  return values.map!(toClientResourceType).array;
-}
+ClientResourceType[] toClientResourceTypes(string[] values)
+  => values.map!(toClientResourceType).array;
 
-string toString(ClientResourceType value) {
-  return value.to!string; // This will return the enum member name as a string, e.g., "bundle", "configuration", etc.
-}
+string toString(ClientResourceType value)
+  => value.to!string; // This will return the enum member name as a string, e.g., "bundle", "configuration", etc.
 
-string[] toStrings(ClientResourceType[] values) {
-  return values.map!toString.array;
-}
+string[] toStrings(ClientResourceType[] values)
+  => values.map!toString.array;
+
 ///
 unittest {
-  assert(toClientResourceType("bundle") == ClientResourceType.bundle);
-  assert(toClientResourceType("configuration") == ClientResourceType.configuration);
-  assert(toClientResourceType("certificate") == ClientResourceType.certificate);
-  assert(toClientResourceType("translation") == ClientResourceType.translation);
-  assert(toClientResourceType("unknown") == ClientResourceType.bundle);
-  assert(toClientResourceType("BUNDLE") == ClientResourceType.bundle);
-  assert(toClientResourceType("CONFIGURATION") == ClientResourceType.configuration);
-  assert(toClientResourceType("CERTIFICATE") == ClientResourceType.certificate);
-  assert(toClientResourceType("TRANSLATION") == ClientResourceType.translation);
+  assert("bundle".toClientResourceType == ClientResourceType.bundle);
+  assert("configuration".toClientResourceType == ClientResourceType.configuration);
+  assert("certificate".toClientResourceType == ClientResourceType.certificate);
+  assert("translation".toClientResourceType == ClientResourceType.translation);
+  assert("unknown".toClientResourceType == ClientResourceType.bundle);
+  assert("BUNDLE".toClientResourceType == ClientResourceType.bundle);
+  assert("CONFIGURATION".toClientResourceType == ClientResourceType.configuration);
+  assert("CERTIFICATE".toClientResourceType == ClientResourceType.certificate);
+  assert("TRANSLATION".toClientResourceType == ClientResourceType.translation);
 
-  assert(toClientResourceType("") == ClientResourceType.bundle);
-  assert(toClientResourceType("UNKNOWN") == ClientResourceType.bundle);
+  assert("".toClientResourceType == ClientResourceType.bundle);
+  assert("UNKNOWN".toClientResourceType == ClientResourceType.bundle);
 
-  assert(toString(ClientResourceType.bundle) == "bundle");
-  assert(toString(ClientResourceType.configuration) == "configuration");
-  assert(toString(ClientResourceType.certificate) == "certificate");
-  assert(toString(ClientResourceType.translation) == "translation");
+  assert(ClientResourceType.bundle.toString == "bundle");
+  assert(ClientResourceType.configuration.toString == "configuration");
+  assert(ClientResourceType.certificate.toString == "certificate");
+  assert(ClientResourceType.translation.toString == "translation");
 
-  assert(toStrings([
+  assert(["bundle", "configuration", "certificate", "translation"].toClientResourceTypes == [
       ClientResourceType.bundle, ClientResourceType.configuration,
       ClientResourceType.certificate, ClientResourceType.translation
-    ]) == ["bundle", "configuration", "certificate", "translation"]);
+    ]);
   assert([
     ClientResourceType.bundle, ClientResourceType.configuration,
     ClientResourceType.certificate, ClientResourceType.translation
@@ -521,26 +509,26 @@ string[] toStrings(VersionStatus[] values) {
 unittest {
   mixin(ShowTest!("VersionStatus"));
 
-  assert(toVersionStatus("draft") == VersionStatus.draft);
-  assert(toVersionStatus("published") == VersionStatus.published);
-  assert(toVersionStatus("mandatory") == VersionStatus.mandatory);
-  assert(toVersionStatus("deprecated") == VersionStatus.deprecated_);
-  assert(toVersionStatus("archived") == VersionStatus.archived);
-  assert(toVersionStatus("unknown") == VersionStatus.draft);
-  assert(toVersionStatus("DRAFT") == VersionStatus.draft);
-  assert(toVersionStatus("PUBLISHED") == VersionStatus.published);
-  assert(toVersionStatus("MANDATORY") == VersionStatus.mandatory);
-  assert(toVersionStatus("DEPRECATED") == VersionStatus.deprecated_);
-  assert(toVersionStatus("ARCHIVED") == VersionStatus.archived);
+  assert("draft".toVersionStatus == VersionStatus.draft);
+  assert("published".toVersionStatus == VersionStatus.published);
+  assert("mandatory".toVersionStatus == VersionStatus.mandatory);
+  assert("deprecated".toVersionStatus == VersionStatus.deprecated_);
+  assert("archived".toVersionStatus == VersionStatus.archived);
+  assert("unknown".toVersionStatus == VersionStatus.draft);
+  assert("DRAFT".toVersionStatus == VersionStatus.draft);
+  assert("PUBLISHED".toVersionStatus == VersionStatus.published);
+  assert("MANDATORY".toVersionStatus == VersionStatus.mandatory);
+  assert("DEPRECATED".toVersionStatus == VersionStatus.deprecated_);
+  assert("ARCHIVED".toVersionStatus == VersionStatus.archived);
 
-  assert(toVersionStatus("") == VersionStatus.draft);
-  assert(toVersionStatus("UNKNOWN") == VersionStatus.draft);
+  assert("".toVersionStatus == VersionStatus.draft);
+  assert("UNKNOWN".toVersionStatus == VersionStatus.draft);
 
-  assert(toString(VersionStatus.draft) == "draft");
-  assert(toString(VersionStatus.published) == "published");
-  assert(toString(VersionStatus.mandatory) == "mandatory");
-  assert(toString(VersionStatus.deprecated_) == "deprecated");
-  assert(toString(VersionStatus.archived) == "archived");
+  assert(VersionStatus.draft.toString == "draft");
+  assert(VersionStatus.published.toString == "published");
+  assert(VersionStatus.mandatory.toString == "mandatory");
+  assert(VersionStatus.deprecated_.toString == "deprecated");
+  assert(VersionStatus.archived.toString == "archived");
 
   assert(toStrings([
       VersionStatus.draft, VersionStatus.published, VersionStatus.mandatory,
@@ -562,7 +550,7 @@ OfflineStoreType toOfflineStoreType(string value) {
   mixin(EnumSwitch("OfflineStoreType", "odata"));
 }
 
-OfflineStoreType[] toOfflineStoreType(string[] values) {
+OfflineStoreType[] toOfflineStoreTypes(string[] values) {
   return values.map!(toOfflineStoreType).array;
 }
 
@@ -575,26 +563,23 @@ string[] toStrings(OfflineStoreType[] values) {
 }
 ///
 unittest {
-  assert(toOfflineStoreType("odata") == OfflineStoreType.odata);
-  assert(toOfflineStoreType("custom") == OfflineStoreType.custom);
-  assert(toOfflineStoreType("unknown") == OfflineStoreType.odata);
-  assert(toOfflineStoreType("ODATA") == OfflineStoreType.odata);
-  assert(toOfflineStoreType("CUSTOM") == OfflineStoreType.custom);
+  assert("odata".toOfflineStoreType == OfflineStoreType.odata);
+  assert("custom".toOfflineStoreType == OfflineStoreType.custom);
+  assert("unknown".toOfflineStoreType == OfflineStoreType.odata);
+  assert("ODATA".toOfflineStoreType == OfflineStoreType.odata);
+  assert("CUSTOM".toOfflineStoreType == OfflineStoreType.custom);
 
-  assert(toOfflineStoreType("") == OfflineStoreType.odata);
-  assert(toOfflineStoreType("UNKNOWN") == OfflineStoreType.odata);
+  assert("".toOfflineStoreType == OfflineStoreType.odata);
+  assert("UNKNOWN".toOfflineStoreType == OfflineStoreType.odata);
 
-  assert(toString(OfflineStoreType.odata) == "odata");
-  assert(toString(OfflineStoreType.custom) == "custom");
+  assert(OfflineStoreType.odata.toString == "odata");
+  assert(OfflineStoreType.custom.toString == "custom");
 
-  assert(toStrings([OfflineStoreType.odata, OfflineStoreType.custom]) == [
-      "odata", "custom"
+  assert(["odata", "custom"].toOfflineStoreTypes == [
+      OfflineStoreType.odata, OfflineStoreType.custom
     ]);
   assert([OfflineStoreType.odata, OfflineStoreType.custom].toStrings == [
       "odata", "custom"
-    ]);
-  assert(["odata", "custom"].toOfflineStoreType == [
-      OfflineStoreType.odata, OfflineStoreType.custom
     ]);
 }
 
@@ -610,46 +595,44 @@ SyncStatus toSyncStatus(string value) {
   mixin(EnumSwitch("SyncStatus", "idle"));
 }
 
-SyncStatus[] toSyncStatuses(string[] values) {
-  return values.map!(toSyncStatus).array;
-}
+SyncStatus[] toSyncStatuses(string[] values)
+  => values.map!(toSyncStatus).array;
 
-string toString(SyncStatus value) {
-  return value.to!string; // This will return the enum member name as a string, e.g., "idle", "syncing", etc.
-}
+string toString(SyncStatus value)
+  => value.to!string; // This will return the enum member name as a string, e.g., "idle", "syncing", etc.
 
-string[] toStrings(SyncStatus[] values) {
-  return values.map!toString.array;
-}
+string[] toStrings(SyncStatus[] values)
+  => values.map!toString.array;
+
 ///
 unittest {
   mixin(ShowTest!("SyncStatus"));
 
-  assert(toSyncStatus("idle") == SyncStatus.idle);
-  assert(toSyncStatus("syncing") == SyncStatus.syncing);
-  assert(toSyncStatus("error") == SyncStatus.error);
-  assert(toSyncStatus("completed") == SyncStatus.completed);
+  assert("idle".toSyncStatus == SyncStatus.idle);
+  assert("syncing".toSyncStatus == SyncStatus.syncing);
+  assert("error".toSyncStatus == SyncStatus.error);
+  assert("completed".toSyncStatus == SyncStatus.completed);
 
-  assert(toSyncStatus("unknown") == SyncStatus.idle);
-  assert(toSyncStatus("IDLE") == SyncStatus.idle);
-  assert(toSyncStatus("SYNCING") == SyncStatus.syncing);
-  assert(toSyncStatus("ERROR") == SyncStatus.error);
-  assert(toSyncStatus("COMPLETED") == SyncStatus.completed);
+  assert("unknown".toSyncStatus == SyncStatus.idle);
+  assert("IDLE".toSyncStatus == SyncStatus.idle);
+  assert("SYNCING".toSyncStatus == SyncStatus.syncing);
+  assert("ERROR".toSyncStatus == SyncStatus.error);
+  assert("COMPLETED".toSyncStatus == SyncStatus.completed);
 
-  assert(toSyncStatus("") == SyncStatus.idle);
-  assert(toSyncStatus("UNKNOWN") == SyncStatus.idle);
+  assert("".toSyncStatus == SyncStatus.idle);
+  assert("UNKNOWN".toSyncStatus == SyncStatus.idle);
 
-  assert(toString(SyncStatus.idle) == "idle");
-  assert(toString(SyncStatus.syncing) == "syncing");
-  assert(toString(SyncStatus.error) == "error");
-  assert(toString(SyncStatus.completed) == "completed");
+  assert(SyncStatus.idle.toString == "idle");
+  assert(SyncStatus.syncing.toString == "syncing");
+  assert(SyncStatus.error.toString == "error");
+  assert(SyncStatus.completed.toString == "completed");
 
-  assert(toStrings([
-      SyncStatus.idle, SyncStatus.syncing, SyncStatus.error, SyncStatus.completed
-    ]) == ["idle", "syncing", "error", "completed"]);
   assert([
     SyncStatus.idle, SyncStatus.syncing, SyncStatus.error, SyncStatus.completed
   ].toStrings == ["idle", "syncing", "error", "completed"]);
+  assert(["idle", "syncing", "error", "completed"].toSyncStatuses == [
+      SyncStatus.idle, SyncStatus.syncing, SyncStatus.error, SyncStatus.completed
+    ]);
 }
 
 // Session status
@@ -663,37 +646,35 @@ SessionStatus toSessionStatus(string value) {
   mixin(EnumSwitch("SessionStatus", "active"));
 }
 
-SessionStatus[] toSessionStatuses(string[] values) {
-  return values.map!(toSessionStatus).array;
-}
+SessionStatus[] toSessionStatuses(string[] values)
+  => values.map!(toSessionStatus).array;
 
-string toString(SessionStatus value) {
-  return value.to!string; // This will return the enum member name as a string, e.g., "active", "expired", etc.
-}
+string toString(SessionStatus value)
+  => value.to!string; // This will return the enum member name as a string, e.g., "active", "expired", etc.
 
-string[] toStrings(SessionStatus[] values) {
-  return values.map!toString.array;
-}
+string[] toStrings(SessionStatus[] values)
+  => values.map!toString.array;
+
 ///
 unittest {
-  assert(toSessionStatus("active") == SessionStatus.active);
-  assert(toSessionStatus("expired") == SessionStatus.expired);
-  assert(toSessionStatus("terminated") == SessionStatus.terminated);
-  assert(toSessionStatus("unknown") == SessionStatus.active);
-  assert(toSessionStatus("ACTIVE") == SessionStatus.active);
-  assert(toSessionStatus("EXPIRED") == SessionStatus.expired);
-  assert(toSessionStatus("TERMINATED") == SessionStatus.terminated);
+  assert("active".toSessionStatus == SessionStatus.active);
+  assert("expired".toSessionStatus == SessionStatus.expired);
+  assert("terminated".toSessionStatus == SessionStatus.terminated);
+  assert("unknown".toSessionStatus == SessionStatus.active);
+  assert("ACTIVE".toSessionStatus == SessionStatus.active);
+  assert("EXPIRED".toSessionStatus == SessionStatus.expired);
+  assert("TERMINATED".toSessionStatus == SessionStatus.terminated);
 
-  assert(toSessionStatus("") == SessionStatus.active);
-  assert(toSessionStatus("UNKNOWN") == SessionStatus.active);
+  assert("".toSessionStatus == SessionStatus.active);
+  assert("UNKNOWN".toSessionStatus == SessionStatus.active);
 
-  assert(toString(SessionStatus.active) == "active");
-  assert(toString(SessionStatus.expired) == "expired");
-  assert(toString(SessionStatus.terminated) == "terminated");
+  assert(SessionStatus.active.toString == "active");
+  assert(SessionStatus.expired.toString == "expired");
+  assert(SessionStatus.terminated.toString == "terminated");
 
-  assert(toStrings([
+  assert(["active", "expired", "terminated"].toSessionStatuses == [
       SessionStatus.active, SessionStatus.expired, SessionStatus.terminated
-    ]) == ["active", "expired", "terminated"]);
+    ]);
   assert([SessionStatus.active, SessionStatus.expired, SessionStatus.terminated].toStrings == [
       "active", "expired", "terminated"
     ]);
@@ -711,36 +692,34 @@ LogSource toLogSource(string value) {
   mixin(EnumSwitch("LogSource", "client"));
 }
 
-LogSource[] toLogSource(string[] values) {
-  return values.map!(toLogSource).array;
-}
+LogSource[] toLogSources(string[] values)
+  => values.map!(toLogSource).array;
 
-string toString(LogSource value) {
-  return value.to!string; // This will return the enum member name as a string, e.g., "client", "server", etc.
-}
+string toString(LogSource value)
+  => value.to!string; // This will return the enum member name as a string, e.g., "client", "server", etc.
 
-string[] toStrings(LogSource[] values) {
-  return values.map!toString.array;
-}
+string[] toStrings(LogSource[] values)
+  => values.map!toString.array;
+
 ///
 unittest {
-  assert(toLogSource("client") == LogSource.client);
-  assert(toLogSource("server") == LogSource.server);
-  assert(toLogSource("push") == LogSource.push);
-  assert(toLogSource("sync") == LogSource.sync);
-  assert(toLogSource("unknown") == LogSource.client);
-  assert(toLogSource("CLIENT") == LogSource.client);
-  assert(toLogSource("SERVER") == LogSource.server);
-  assert(toLogSource("PUSH") == LogSource.push);
-  assert(toLogSource("SYNC") == LogSource.sync);
+  assert("client".toLogSource == LogSource.client);
+  assert("server".toLogSource == LogSource.server);
+  assert("push".toLogSource == LogSource.push);
+  assert("sync".toLogSource == LogSource.sync);
+  assert("unknown".toLogSource == LogSource.client);
+  assert("CLIENT".toLogSource == LogSource.client);
+  assert("SERVER".toLogSource == LogSource.server);
+  assert("PUSH".toLogSource == LogSource.push);
+  assert("SYNC".toLogSource == LogSource.sync);
 
-  assert(toLogSource("") == LogSource.client);
-  assert(toLogSource("UNKNOWN") == LogSource.client);
+  assert("".toLogSource == LogSource.client);
+  assert("UNKNOWN".toLogSource == LogSource.client);
 
-  assert(toString(LogSource.client) == "client");
-  assert(toString(LogSource.server) == "server");
-  assert(toString(LogSource.push) == "push");
-  assert(toString(LogSource.sync) == "sync");
+  assert(LogSource.client.toString == "client");
+  assert(LogSource.server.toString == "server");
+  assert(LogSource.push.toString == "push");
+  assert(LogSource.sync.toString == "sync");
 
   assert(toStrings([
       LogSource.client, LogSource.server, LogSource.push, LogSource.sync
@@ -752,67 +731,77 @@ unittest {
 
 // Usage metric type
 enum MetricType {
-  appLaunch,
-  screenView,
-  apiCall,
-  pushReceived,
-  syncCompleted,
-  crash,
-  custom,
+  appLaunch, // App launch (e.g., for tracking app usage)
+  screenView, // Screen view (e.g., for tracking screen views in the app)
+  apiCall, // API call (e.g., for tracking API usage)
+  pushReceived, // Push notification received (e.g., for tracking push notification open rate)
+  syncCompleted, // Sync completed (e.g., offline store sync)
+  crash, // Crash (e.g., for tracking app crashes)
+  custom, // Custom metric (e.g., for tracking custom events)
 }
+
 MetricType toMetricType(string value) {
   mixin(EnumSwitch("MetricType", "appLaunch"));
 }
-MetricType[] toMetricType(string[] values) {
+
+MetricType[] toMetricTypes(string[] values) {
   return values.map!(toMetricType).array;
 }
+
 string toString(MetricType value) {
   return value.to!string; // This will return the enum member name as a string, e.g., "appLaunch", "screenView", etc.
 }
+
 string[] toStrings(MetricType[] values) {
   return values.map!toString.array;
 }
 ///
 unittest {
-  mixin (ShowTest!("MetricType"));
+  mixin(ShowTest!("MetricType"));
 
-  assert(toMetricType("appLaunch") == MetricType.appLaunch);
-  assert(toMetricType("screenView") == MetricType.screenView);
-  assert(toMetricType("apiCall") == MetricType.apiCall);  
-  assert(toMetricType("pushReceived") == MetricType.pushReceived);
-  assert(toMetricType("syncCompleted") == MetricType.syncCompleted);
-  assert(toMetricType("crash") == MetricType.crash);
-  assert(toMetricType("custom") == MetricType.custom);
-  assert(toMetricType("unknown") == MetricType.appLaunch);
-  assert(toMetricType("APPLAUNCH") == MetricType.appLaunch);
-  assert(toMetricType("SCREENVIEW") == MetricType.screenView);
-  assert(toMetricType("APICALL") == MetricType.apiCall);
-  assert(toMetricType("PUSHRECEIVED") == MetricType.pushReceived);
-  assert(toMetricType("SYNCCOMPLETED") == MetricType.syncCompleted);
-  assert(toMetricType("CRASH") == MetricType.crash);
-  assert(toMetricType("CUSTOM") == MetricType.custom);  
+  assert("appLaunch".toMetricType == MetricType.appLaunch);
+  assert("screenView".toMetricType == MetricType.screenView);
+  assert("apiCall".toMetricType == MetricType.apiCall);
+  assert("pushReceived".toMetricType == MetricType.pushReceived);
+  assert("syncCompleted".toMetricType == MetricType.syncCompleted);
+  assert("crash".toMetricType == MetricType.crash);
+  assert("custom".toMetricType == MetricType.custom);
+  assert("unknown".toMetricType == MetricType.appLaunch);
+  assert("APPLAUNCH".toMetricType == MetricType.appLaunch);
+  assert("SCREENVIEW".toMetricType == MetricType.screenView);
+  assert("APICALL".toMetricType == MetricType.apiCall);
+  assert("PUSHRECEIVED".toMetricType == MetricType.pushReceived);
+  assert("SYNCCOMPLETED".toMetricType == MetricType.syncCompleted);
+  assert("CRASH".toMetricType == MetricType.crash);
+  assert("CUSTOM".toMetricType == MetricType.custom);
 
-  assert(toMetricType("") == MetricType.appLaunch);
-  assert(toMetricType("UNKNOWN") == MetricType.appLaunch);
+  assert("".toMetricType == MetricType.appLaunch);
+  assert("UNKNOWN".toMetricType == MetricType.appLaunch);
 
-  assert(toString(MetricType.appLaunch) == "appLaunch");
-  assert(toString(MetricType.screenView) == "screenView");
-  assert(toString(MetricType.apiCall) == "apiCall");
-  assert(toString(MetricType.pushReceived) == "pushReceived");
-  assert(toString(MetricType.syncCompleted) == "syncCompleted");
-  assert(toString(MetricType.crash) == "crash");
-  assert(toString(MetricType.custom) == "custom");
+  assert(MetricType.appLaunch.toString == "appLaunch");
+  assert(MetricType.screenView.toString == "screenView");
+  assert(MetricType.apiCall.toString == "apiCall");
+  assert(MetricType.pushReceived.toString == "pushReceived");
+  assert(MetricType.syncCompleted.toString == "syncCompleted");
+  assert(MetricType.crash.toString == "crash");
+  assert(MetricType.custom.toString == "custom");
 
   assert(toStrings([
       MetricType.appLaunch, MetricType.screenView, MetricType.apiCall,
       MetricType.pushReceived, MetricType.syncCompleted, MetricType.crash,
       MetricType.custom
-    ]) == ["appLaunch", "screenView", "apiCall", "pushReceived", "syncCompleted", "crash", "custom"]);
+    ]) == [
+    "appLaunch", "screenView", "apiCall", "pushReceived", "syncCompleted", "crash",
+    "custom"
+  ]);
   assert([
     MetricType.appLaunch, MetricType.screenView, MetricType.apiCall,
     MetricType.pushReceived, MetricType.syncCompleted, MetricType.crash,
     MetricType.custom
-  ].toStrings == ["appLaunch", "screenView", "apiCall", "pushReceived", "syncCompleted", "crash", "custom"]);
+  ].toStrings == [
+    "appLaunch", "screenView", "apiCall", "pushReceived", "syncCompleted", "crash",
+    "custom"
+  ]);
 }
 
 enum DataType : string {
@@ -825,64 +814,83 @@ enum DataType : string {
   time = "time",
   binary = "binary",
   json = "json",
-} 
+}
+
 DataType toDataType(string value) {
-  switch(value.toLower) {
-    case "string":
-      return DataType.string_;
-    case "integer":
-      return DataType.integer;
-    case "float":
-      return DataType.float_;
-    case "boolean":
-      return DataType.boolean_;
-    case "date":
-      return DataType.date;
-    case "datetime":
-      return DataType.datetime;
-    case "time":
-      return DataType.time;
-    case "binary":
-      return DataType.binary;
-    case "json":
-      return DataType.json;
-    default:
-      return DataType.string_;
+  switch (value.toLower) {
+  case "string":
+    return DataType.string_;
+  case "integer":
+    return DataType.integer;
+  case "float":
+    return DataType.float_;
+  case "boolean":
+    return DataType.boolean_;
+  case "date":
+    return DataType.date;
+  case "datetime":
+    return DataType.datetime;
+  case "time":
+    return DataType.time;
+  case "binary":
+    return DataType.binary;
+  case "json":
+    return DataType.json;
+  default:
+    return DataType.string_;
   }
 }
-DataType[] toDataType(string[] values) {
-  return values.map!(toDataType).array;
-}
-string toString(DataType value) {
-  return cast(string)value; // This will return the enum member name as a string, e.g., "string", "integer", etc.
-}
-string[] toStrings(DataType[] values) {
-  return values.map!toString.array;
-}
+
+DataType[] toDataTypes(string[] values)
+  => values.map!(toDataType).array;
+
+string toString(DataType value)
+  => cast(string)value; // This will return the enum member name as a string, e.g., "string", "integer", etc.
+
+string[] toStrings(DataType[] values)
+  => values.map!toString.array;
+
 /// 
-unittest { 
+unittest {
   mixin(ShowTest!("DataType"));
 
-  assert(toDataType("string") == DataType.string_);
-  assert(toDataType("integer") == DataType.integer);
-  assert(toDataType("float") == DataType.float_);
-  assert(toDataType("boolean") == DataType.boolean_);
-  assert(toDataType("date") == DataType.date);
-  assert(toDataType("datetime") == DataType.datetime);
-  assert(toDataType("time") == DataType.time);
-  assert(toDataType("binary") == DataType.binary);
-  assert(toDataType("json") == DataType.json);
+  assert("string".toDataType == DataType.string_);
+  assert("integer".toDataType == DataType.integer);
+  assert("float".toDataType == DataType.float_);
+  assert("boolean".toDataType == DataType.boolean_);
+  assert("date".toDataType == DataType.date);
+  assert("datetime".toDataType == DataType.datetime);
+  assert("time".toDataType == DataType.time);
+  assert("binary".toDataType == DataType.binary);
+  assert("json".toDataType == DataType.json);
 
   assert(toDataType("unknown") == DataType.string_);
   assert(toDataType("") == DataType.string_);
 
-  assert(toString(DataType.string_) == "string");
-  assert(toString(DataType.integer) == "integer");
-  assert(toString(DataType.float_) == "float");
-  assert(toString(DataType.boolean_) == "boolean");
-  assert(toString(DataType.date) == "date");
-  assert(toString(DataType.datetime) == "datetime");
-  assert(toString(DataType.time) == "time");
-  assert(toString(DataType.binary) == "binary");
-  assert(toString(DataType.json) == "json");
+  assert(DataType.string_.toString == "string");
+  assert(DataType.integer.toString == "integer");
+  assert(DataType.float_.toString == "float");
+  assert(DataType.boolean_.toString == "boolean");
+  assert(DataType.date.toString == "date");
+  assert(DataType.datetime.toString == "datetime");
+  assert(DataType.time.toString == "time");
+  assert(DataType.binary.toString == "binary");
+  assert(DataType.json.toString == "json");
+
+  assert([
+    "string", "integer", "float", "boolean", "date", "datetime", "time", "binary",
+    "json"
+  ].toDataTypes == [
+    DataType.string_, DataType.integer, DataType.float_, DataType.boolean_,
+    DataType.date, DataType.datetime, DataType.time, DataType.binary,
+    DataType.json
+  ]);
+  assert([
+    DataType.string_, DataType.integer, DataType.float_, DataType.boolean_,
+    DataType.date, DataType.datetime, DataType.time, DataType.binary,
+    DataType.json
+  ].toStrings == [
+    "string", "integer", "float", "boolean", "date", "datetime", "time", "binary",
+    "json"
+  ]);
 }

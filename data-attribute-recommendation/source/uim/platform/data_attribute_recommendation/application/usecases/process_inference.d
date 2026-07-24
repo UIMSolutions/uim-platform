@@ -17,12 +17,12 @@ mixin(ShowModule!());
 
 @safe:
 class ProcessInferenceUseCase { // TODO: UIMUseCase {
-  private InferenceRequestRepository requestRepo;
-  private InferenceResultRepository resultRepo;
+  private IInferenceRequestRepository requestRepo;
+  private IInferenceResultRepository resultRepo;
   private InferenceEngine engine;
 
-  this(InferenceRequestRepository requestRepo,
-    InferenceResultRepository resultRepo, InferenceEngine engine) {
+  this(IInferenceRequestRepository requestRepo,
+    IInferenceResultRepository resultRepo, InferenceEngine engine) {
     this.requestRepo = requestRepo;
     this.resultRepo = resultRepo;
     this.engine = engine;

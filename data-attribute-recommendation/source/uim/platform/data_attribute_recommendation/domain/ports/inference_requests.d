@@ -5,14 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.data_attribute_recommendation.domain.ports.inference_requests;
 
-
 // import uim.platform.data_attribute_recommendation.domain.entities.inference_request;
 import uim.platform.data_attribute_recommendation;
 
 mixin(ShowModule!());
 
 @safe:
-interface InferenceRequestRepository : ITenantRepository!(InferenceRequest, InferenceRequestId) {
+interface IInferenceRequestRepository : ITenantRepository!(InferenceRequest, InferenceRequestId) {
 
   size_t countByDeployment(TenantId tenantId, DeploymentId deploymentId);
   InferenceRequest[] findByDeployment(TenantId tenantId, DeploymentId deploymentId);

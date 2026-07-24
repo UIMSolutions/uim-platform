@@ -401,7 +401,7 @@ enum TransportMode {
   directExport,
   fileDownload,
 }
-TransportMode toTransportMode(string s) {
+TransportMode toTransportMode(string value) {
   mixin(EnumSwitch("TransportMode", "cloudTransportManagement"));
 }
 
@@ -445,7 +445,7 @@ enum QueueType {
   ctsPlus,
   local,
 }
-QueueType toQueueType(string s) {
+QueueType toQueueType(string value) {
   mixin(EnumSwitch("QueueType", "cloudTMS"));
 }
 
@@ -501,7 +501,7 @@ enum ActivityType {
   importFailed,
   queueConfigured,
 }
-ActivityType toActivityType(string s) {
+ActivityType toActivityType(string value) {
   mixin(EnumSwitch("ActivityType", "packageCreated"));
 }
 
@@ -572,7 +572,7 @@ enum ActivitySeverity {
   warning,
   error,
 }
-ActivitySeverity toActivitySeverity(string s) {
+ActivitySeverity toActivitySeverity(string value) {
   mixin(EnumSwitch("ActivitySeverity", "info"));
 }
 

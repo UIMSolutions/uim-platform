@@ -5,14 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.data_attribute_recommendation.domain.ports.model_configs;
 
-
 // import uim.platform.data_attribute_recommendation.domain.entities.model_configuration;
 import uim.platform.data_attribute_recommendation;
 
 mixin(ShowModule!());
 
 @safe:
-interface ModelConfigRepository : ITenantRepository!(ModelConfiguration, ModelConfigurationId) {
+interface IModelConfigRepository : ITenantRepository!(ModelConfiguration, ModelConfigurationId) {
 
   bool existsByName(TenantId tenantId, string name);
   ModelConfiguration findByName(TenantId tenantId, string name);

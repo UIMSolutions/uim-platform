@@ -73,7 +73,7 @@ enum PersonalDataCategory {
   location, // GPS, IP-based geolocation
   behavioral, // browsing, purchase history
 }
-PersonalDataCategory toPersonalDataCategory(string s) {
+PersonalDataCategory toPersonalDataCategory(string value) {
   mixin(EnumSwitch("PersonalDataCategory", "identification"));
 }
 PersonalDataCategory[] toPersonalDataCategories(string[] values) {

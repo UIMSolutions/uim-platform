@@ -9,7 +9,6 @@ module uim.platform.portal.application.usecases.manage.translations;
 // import uim.platform.portal.domain.ports.repositories.translations;
 // import uim.platform.portal.application.dto;
 
-
 // import uim.platform.portal.application.dto;
 // import uim.platform.portal.domain.types;
 import uim.platform.portal;

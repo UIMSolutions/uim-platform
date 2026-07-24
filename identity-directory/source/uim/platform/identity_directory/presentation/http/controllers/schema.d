@@ -46,13 +46,11 @@ class SchemaController : ManageHttpController {
     request.attributes = parseSchemaAttributes(data);
 
     auto result = useCase.createSchema(request);
-    if (result.hasError)
-      return errorResponse(result.errorMessage);
+    if (result.error)
+      return errorResponse(result.message, 400);
 
-    auto response = Json.emptyObject;
-    response["id"] = Json(result.schemaId.value);
-
-    return successResponse("Schema created successfully", "Created", 201, response);
+    auto responseData = Json.emptyObject.set("id", result.schemaId.value);
+    return successResponse("Schema created successfully", "Created", 201, responseData);
     // writeScimError(res, 409, result.message);
   }
 
@@ -100,17 +98,18 @@ class SchemaController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto schemaId = precheck.id;
+    auto id = SchemaId(precheck.id);
     auto data = precheck.data;
-    auto updateReq = UpdateSchemaRequest(tenantId);
-    updateReq.schemaId = schemaId;
+    auto updateReq = UpdateSchemaRequest();
+    updateReq.tenantId = tenantId;
+    updateReq.schemaId = id;
     updateReq.name = data.getString("name");
     updateReq.description = data.getString("description");
     updateReq.attributes = parseSchemaAttributes(data);
 
     auto result = useCase.updateSchema(updateReq);
-    if (result.hasError)
-      return errorResponse(result.errorMessage);
+    if (result.error)
+      return errorResponse(result.message, 400);
 
     auto resp = Json.emptyObject
       .set("status", "updated");
@@ -129,8 +128,8 @@ class SchemaController : ManageHttpController {
       return errorResponse("Invalid schema ID", 400);
 
     auto result = useCase.deleteSchema(tenantId, id);
-    if (result.hasError)
-      return errorResponse(result.errorMessage);
+    if (result.error)
+      return errorResponse(result.message, 404);
 
     return successResponse("Schema deleted successfully", "Deleted", 200, Json.emptyObject);
 
@@ -150,22 +149,15 @@ private SchemaAttribute[] parseSchemaAttributes(Json j) {
   SchemaAttribute[] result;
   if (!j.isObject)
     return result;
+
   // auto val = "attributes" in j;
   // if (val.isNull || (val).type != Json.Type.array.toJson)
   //   return result;
   foreach (item; j.getArray("attributes")) {
-    result ~= SchemaAttribute(item.getString("id"), item.getString("name"),
+    result ~= SchemaAttribute(AttributeId(item.getString("id")), item.getString("name"),
       item.getString("description"),);
   }
+
   return result;
 }
 
-private void writeScimError(scope HTTPServerResponse res, int status, string detail) {
-  auto errRes = Json.emptyObject;
-  errRes["schemas"] = Json.emptyArray;
-  errRes["schemas"] ~= Json("urn:ietf:params:scim:api:messages:2.0:Error");
-  errRes["detail"] = Json(detail);
-
-  errRes["status"] = Json(status.to!string);
-  res.writeJsonBody(errRes, status);
-}

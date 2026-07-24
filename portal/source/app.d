@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module app;
 
-
 // import uim.platform.portal.infrastructure.config;
 // import uim.platform.portal.infrastructure.container;
 

@@ -27,7 +27,7 @@ TaskStatus[] toTaskStatuses(string[] values) {
     return values.map!toTaskStatus.array;
 }
 string toString(TaskStatus value) {
-    return value.to!string();
+    return value.to!string;
 }
 string[] toStrings(TaskStatus[] values) {
     return values.map!toString.array;
@@ -72,7 +72,7 @@ TaskPriority[] toTaskPriorities(string[] values) {
     return values.map!toTaskPriority.array;
 }
 string toString(TaskPriority value) {
-    return value.to!string();
+    return value.to!string;
 }
 string[] toStrings(TaskPriority[] values) {
     return values.map!toString.array;
@@ -114,7 +114,7 @@ TaskCategory[] toTaskCategories(string[] values) {
     return values.map!toTaskCategory.array;
 }
 string toString(TaskCategory value) {
-    return value.to!string();
+    return value.to!string;
 }
 string[] toStrings(TaskCategory[] values) {
     return values.map!toString.array;
@@ -162,7 +162,7 @@ ProviderType[] toProviderTypes(string[] values) {
     return values.map!toProviderType.array;
 }
 string toString(ProviderType value) {
-    return value.to!string();
+    return value.to!string;
 }
 string[] toStrings(ProviderType[] values) {
     return values.map!toString.array;
@@ -207,7 +207,7 @@ ProviderStatus[] toProviderStatuses(string[] values) {
     return values.map!toProviderStatus.array;
 }
 string toString(ProviderStatus value) {
-    return value.to!string();
+    return value.to!string;
 }
 string[] toStrings(ProviderStatus[] values) {
     return values.map!toString.array;
@@ -247,7 +247,7 @@ AuthenticationType[] toAuthenticationTypes(string[] values) {
     return values.map!toAuthenticationType.array;
 }
 string toString(AuthenticationType value) {
-    return value.to!string();
+    return value.to!string;
 }
 string[] toStrings(AuthenticationType[] values) {
     return values.map!toString.array;
@@ -293,7 +293,7 @@ ActionType[] toActionTypes(string[] values) {
     return values.map!toActionType.array;
 }
 string toString(ActionType value) {
-    return value.to!string();
+    return value.to!string;
 }
 string[] toStrings(ActionType[] values) {
     return values.map!toString.array;
@@ -342,7 +342,7 @@ SubstitutionStatus[] toSubstitutionStatuses(string[] values) {
     return values.map!toSubstitutionStatus.array;
 }
 string toString(SubstitutionStatus value) {
-    return value.to!string();
+    return value.to!string;
 }
 string[] toStrings(SubstitutionStatus[] values) {
     return values.map!toString.array;
@@ -382,7 +382,7 @@ AttachmentStatus[] toAttachmentStatuses(string[] values) {
     return values.map!toAttachmentStatus.array;
 }
 string toString(AttachmentStatus value) {
-    return value.to!string();
+    return value.to!string;
 }
 string[] toStrings(AttachmentStatus[] values) {
     return values.map!toString.array;
@@ -425,7 +425,7 @@ FilterCriterionType[] toFilterCriterionTypes(string[] values) {
     return values.map!toFilterCriterionType.array;
 }
 string toString(FilterCriterionType value) {
-    return value.to!string();
+    return value.to!string;
 }
 string[] toStrings(FilterCriterionType[] values) {
     return values.map!toString.array;

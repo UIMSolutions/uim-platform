@@ -45,7 +45,7 @@ mixin(ShowModule!());
 struct Container {
   // Repositories (driven adapters)
   MemoryDatasetRepository datasetRepo;
-  MemoryDataRecordRepository recordRepo;
+  DataRecordRepository recordRepo;
   MemoryModelConfigRepository configRepo;
   MemoryTrainingJobRepository jobRepo;
   MemoryDeploymentRepository deploymentRepo;
@@ -79,7 +79,7 @@ Container buildContainer(SrvConfig config) {
 
   // Infrastructure adapters
   c.datasetRepo = new MemoryDatasetRepository();
-  c.recordRepo = new MemoryDataRecordRepository();
+  c.recordRepo = new DataRecordRepository();
   c.configRepo = new MemoryModelConfigRepository();
   c.jobRepo = new MemoryTrainingJobRepository();
   c.deploymentRepo = new MemoryDeploymentRepository();

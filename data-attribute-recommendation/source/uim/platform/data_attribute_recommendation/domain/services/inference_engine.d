@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.data_attribute_recommendation.domain.services.inference_engine;
 
-
 // import uim.platform.data_attribute_recommendation.domain.entities.model_deployment;
 // import uim.platform.data_attribute_recommendation.domain.entities.inference_request;
 // import uim.platform.data_attribute_recommendation.domain.entities.inference_result;
@@ -19,12 +18,12 @@ mixin(ShowModule!());
 @safe:/// Domain service that processes inference requests against deployed
 /// models. Validates deployment state and generates simulated predictions.
 class InferenceEngine {
-  private DeploymentRepository deploymentRepo;
-  private InferenceRequestRepository requestRepo;
-  private InferenceResultRepository resultRepo;
+  private IDeploymentRepository deploymentRepo;
+  private IInferenceRequestRepository requestRepo;
+  private IInferenceResultRepository resultRepo;
 
-  this(DeploymentRepository deploymentRepo,
-      InferenceRequestRepository requestRepo, InferenceResultRepository resultRepo) {
+  this(IDeploymentRepository deploymentRepo,
+      IInferenceRequestRepository requestRepo, IInferenceResultRepository resultRepo) {
     this.deploymentRepo = deploymentRepo;
     this.requestRepo = requestRepo;
     this.resultRepo = resultRepo;

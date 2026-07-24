@@ -30,17 +30,15 @@ ProgramType toProgramType(string value) {
     mixin(EnumSwitch("ProgramType", "unknown"));
 }
 
-ProgramType[] toProgramTypes(string[] values) {
-    return values.map!toProgramType.array;
-}
+ProgramType[] toProgramTypes(string[] values)
+    => values.map!toProgramType.array;
 
-string toString(ProgramType type) {
-    return type.to!string();
-}
+string toString(ProgramType type)
+    => type.to!string;
 
-string[] toStrings(ProgramType[] types) {
-    return types.map!toString.array;
-}
+string[] toStrings(ProgramType[] types)
+    => types.map!toString.array;
+
 ///
 unittest {
     assert("report".toProgramType == ProgramType.report);
@@ -99,17 +97,14 @@ TokenType toTokenType(string value) {
     mixin(EnumSwitch("TokenType", "unknown"));
 }
 
-TokenType[] toTokenTypes(string[] values) {
-    return values.map!toTokenType.array;
-}
+TokenType[] toTokenTypes(string[] values)
+    => values.map!toTokenType.array;
 
-string toString(TokenType type) {
-    return type.to!string();
-}
+string toString(TokenType type)
+    => type.to!string;
 
-string[] toStrings(TokenType[] types) {
-    return types.map!toString.array;
-}
+string[] toStrings(TokenType[] types)
+    => types.map!toString.array;
 ///
 unittest {
     assert("keyword".toTokenType == TokenType.keyword);
@@ -179,9 +174,8 @@ OOVisibility toOOVisibility(string value) {
     }
 }
 
-OOVisibility[] toOOVisibilities(string[] values) {
-    return values.map!(v => toOOVisibility(v)).array;
-}
+OOVisibility[] toOOVisibilities(string[] values)
+    => values.map!toOOVisibility.array;
 
 string toString(OOVisibility visibility) {
     switch (visibility) {
@@ -196,9 +190,8 @@ string toString(OOVisibility visibility) {
     }
 }
 
-string[] toStrings(OOVisibility[] visibilities) {
-    return visibilities.map!(v => toString(v)).array;
-}
+string[] toStrings(OOVisibility[] visibilities)
+    => visibilities.map!toString.array;
 ///
 unittest {
     assert("public".toOOVisibility == OOVisibility.public_);
@@ -231,17 +224,14 @@ ProcessingMode toProcessingMode(string value) {
     mixin(EnumSwitch("ProcessingMode", "normal"));
 }
 
-ProcessingMode[] toProcessingModes(string[] values) {
-    return values.map!toProcessingMode.array;
-}
+ProcessingMode[] toProcessingModes(string[] values)
+    => values.map!toProcessingMode.array;
 
-string toString(ProcessingMode mode) {
-    return mode.to!string();
-}
+string toString(ProcessingMode mode)
+    => mode.to!string;
 
-string[] toStrings(ProcessingMode[] modes) {
-    return modes.map!toString.array;
-}
+string[] toStrings(ProcessingMode[] modes)
+    => modes.map!toString.array;
 ///
 unittest {
     assert("normal".toProcessingMode == ProcessingMode.normal);
@@ -252,10 +242,10 @@ unittest {
     assert("".toProcessingMode == ProcessingMode.normal);
     assert("unknown".toProcessingMode == ProcessingMode.normal);
 
-    assert(toString(ProcessingMode.normal) == "normal");
-    assert(toString(ProcessingMode.dialog) == "dialog");
-    assert(toString(ProcessingMode.batch) == "batch");
-    assert(toString(ProcessingMode.rfc) == "rfc");
+    assert(ProcessingMode.normal.toString == "normal");
+    assert(ProcessingMode.dialog.toString == "dialog");
+    assert(ProcessingMode.batch.toString == "batch");
+    assert(ProcessingMode.rfc.toString == "rfc");
 
     assert(["normal", "batch"].toProcessingModes == [
             ProcessingMode.normal, ProcessingMode.batch
@@ -279,17 +269,14 @@ DiagnosticSeverity toDiagnosticSeverity(string value) {
     mixin(EnumSwitch("DiagnosticSeverity", "error"));
 }
 
-DiagnosticSeverity[] toDiagnosticSeverities(string[] values) {
-    return values.map!(v => toDiagnosticSeverity(v)).array;
-}
+DiagnosticSeverity[] toDiagnosticSeverities(string[] values)
+    => values.map!toDiagnosticSeverity.array;
 
-string toString(DiagnosticSeverity severity) {
-    return severity.to!string();
-}
+string toString(DiagnosticSeverity severity)
+    => severity.to!string;
 
-string[] toStrings(DiagnosticSeverity[] severities) {
-    return severities.map!toString.array;
-}
+string[] toStrings(DiagnosticSeverity[] severities)
+    => severities.map!toString.array;
 ///
 unittest {
     assert("error".toDiagnosticSeverity == DiagnosticSeverity.error);
@@ -300,10 +287,10 @@ unittest {
     assert("".toDiagnosticSeverity == DiagnosticSeverity.error);
     assert("unknown".toDiagnosticSeverity == DiagnosticSeverity.error);
 
-    assert(toString(DiagnosticSeverity.error) == "error");
-    assert(toString(DiagnosticSeverity.warning) == "warning");
-    assert(toString(DiagnosticSeverity.info) == "info");
-    assert(toString(DiagnosticSeverity.hint) == "hint");
+    assert(DiagnosticSeverity.error.toString == "error");
+    assert(DiagnosticSeverity.warning.toString == "warning");
+    assert(DiagnosticSeverity.info.toString == "info");
+    assert(DiagnosticSeverity.hint.toString == "hint");
 
     assert(["error", "info"].toDiagnosticSeverities == [
             DiagnosticSeverity.error, DiagnosticSeverity.info
@@ -328,17 +315,14 @@ CompilationStatus toCompilationStatus(string value) {
     mixin(EnumSwitch("CompilationStatus", "pending"));
 }
 
-CompilationStatus[] toCompilationStatuses(string[] values) {
-    return values.map!toCompilationStatus.array;
-}
+CompilationStatus[] toCompilationStatuses(string[] values)
+    => values.map!toCompilationStatus.array;
 
-string toString(CompilationStatus status) {
-    return status.to!string();
-}
+string toString(CompilationStatus status)
+    => status.to!string;
 
-string[] toStrings(CompilationStatus[] statuses) {
-    return statuses.map!toString.array;
-}
+string[] toStrings(CompilationStatus[] statuses)
+    => statuses.map!toString.array;
 ///
 unittest {
     assert("pending".toCompilationStatus == CompilationStatus.pending);

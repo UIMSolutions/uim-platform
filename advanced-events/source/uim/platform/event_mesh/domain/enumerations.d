@@ -32,17 +32,14 @@ BrokerServiceStatus toBrokerServiceStatus(string value) {
   mixin(EnumSwitch("BrokerServiceStatus", "failed"));
 }
 
-BrokerServiceStatus[] toBrokerServiceStatuses(string[] values) {
-  return values.map!toBrokerServiceStatus.array;
-}
+BrokerServiceStatus[] toBrokerServiceStatuses(string[] values)
+  => values.map!toBrokerServiceStatus.array;
 
-string toString(BrokerServiceStatus status) {
-  return status.to!string;
-}
+string toString(BrokerServiceStatus status)
+  => status.to!string;
 
-string[] toStrings(BrokerServiceStatus[] statuses) {
-  return statuses.map!toString.array;
-}
+string[] toStrings(BrokerServiceStatus[] statuses)
+  => statuses.map!toString.array;
 /// 
 unittest {
   mixin(ShowTest!("BrokerServiceStatus Enum Conversion"));
@@ -84,17 +81,14 @@ BrokerServiceType toBrokerServiceType(string value) {
   mixin(EnumSwitch("BrokerServiceType", "standard"));
 }
 
-BrokerServiceType[] toBrokerServiceTypes(string[] values) {
-  return values.map!toBrokerServiceType.array;
-}
+BrokerServiceType[] toBrokerServiceTypes(string[] values)
+  => values.map!toBrokerServiceType.array;
 
-string toString(BrokerServiceType type) {
-  return type.to!string;
-}
+string toString(BrokerServiceType type)
+  => type.to!string;
 
-string[] toStrings(BrokerServiceType[] types) {
-  return types.map!(t => toString(t)).array;
-}
+string[] toStrings(BrokerServiceType[] types)
+  => types.map!toString.array;
 ///
 unittest {
   mixin(ShowTest!("BrokerServiceType Enum Conversion"));
@@ -132,17 +126,14 @@ BrokerServiceClass toBrokerServiceClass(string value) {
   mixin(EnumSwitch("BrokerServiceClass", "standardKilo"));
 }
 
-BrokerServiceClass[] toBrokerServiceClasses(string[] values) {
-  return values.map!toBrokerServiceClass.array;
-}
+BrokerServiceClass[] toBrokerServiceClasses(string[] values)
+  => values.map!toBrokerServiceClass.array;
 
-string toString(BrokerServiceClass serviceClass) {
-  return serviceClass.to!string;
-}
+string toString(BrokerServiceClass serviceClass)
+  => serviceClass.to!string;
 
-string[] toStrings(BrokerServiceClass[] serviceClasses) {
-  return serviceClasses.map!toString.array;
-}
+string[] toStrings(BrokerServiceClass[] serviceClasses)
+  => serviceClasses.map!toString.array;
 ///
 unittest {
   mixin(ShowTest!("BrokerServiceClass Enum Conversion"));
@@ -168,7 +159,9 @@ unittest {
       BrokerServiceClass.enterpriseKilo, BrokerServiceClass.standardKilo,
       BrokerServiceClass.standardMega
     ]);
-  assert([BrokerServiceClass.developerKilo, BrokerServiceClass.enterpriseGiga].toStrings == ["developerKilo", "enterpriseGiga"]);
+  assert([
+      BrokerServiceClass.developerKilo, BrokerServiceClass.enterpriseGiga
+    ].toStrings == ["developerKilo", "enterpriseGiga"]);
 }
 
 enum CloudProvider {
@@ -183,17 +176,14 @@ CloudProvider toCloudProvider(string value) {
   mixin(EnumSwitch("CloudProvider", "sap"));
 }
 
-CloudProvider[] toCloudProviders(string[] providers) {
-  return providers.map!toCloudProvider.array;
-}
+CloudProvider[] toCloudProviders(string[] providers)
+  => providers.map!toCloudProvider.array;
 
-string toString(CloudProvider provider) {
-  return provider.to!string;
-}
+string toString(CloudProvider provider)
+  => provider.to!string;
 
-string[] toStrings(CloudProvider[] providers) {
-  return providers.map!toString.array;
-}
+string[] toStrings(CloudProvider[] providers)
+  => providers.map!toString.array;
 ///
 unittest {
   mixin(ShowTest!("CloudProvider Enum Conversion"));
@@ -230,17 +220,14 @@ QueueAccessType toQueueAccessType(string value) {
   mixin(EnumSwitch("QueueAccessType", "exclusive"));
 }
 
-QueueAccessType[] toQueueAccessTypes(string[] values) {
-  return values.map!toQueueAccessType.array;
-}
+QueueAccessType[] toQueueAccessTypes(string[] values)
+  => values.map!toQueueAccessType.array;
 
-string toString(QueueAccessType accessType) {
-  return accessType.to!string;
-}
+string toString(QueueAccessType accessType)
+  => accessType.to!string;
 
-string[] toStrings(QueueAccessType[] accessTypes) {
-  return accessTypes.map!toString.array;
-}
+string[] toStrings(QueueAccessType[] accessTypes)
+  => accessTypes.map!toString.array;
 ///
 unittest {
   mixin(ShowTest!("QueueAccessType Enum Conversion"));
@@ -252,7 +239,8 @@ unittest {
   assert("unknown".toQueueAccessType == QueueAccessType.exclusive); // default case
 
   assert(["exclusive", "unknown", "nonexclusive"].toQueueAccessTypes == [
-      QueueAccessType.exclusive, QueueAccessType.exclusive, QueueAccessType.nonExclusive
+      QueueAccessType.exclusive, QueueAccessType.exclusive,
+      QueueAccessType.nonExclusive
     ]);
 
   assert(QueueAccessType.exclusive.toString == "exclusive");
@@ -278,17 +266,14 @@ QueueStatus toQueueStatus(string value) {
   mixin(EnumSwitch("QueueStatus", "inactive"));
 }
 
-QueueStatus[] toQueueStatuses(string[] values) {
-  return values.map!toQueueStatus.array;
-}
+QueueStatus[] toQueueStatuses(string[] values)
+  => values.map!toQueueStatus.array;
 
-string toString(QueueStatus status) {
-  return status.to!string;
-}
+string toString(QueueStatus status)
+  => status.to!string;
 
-string[] toStrings(QueueStatus[] statuses) {
-  return statuses.map!toString.array;
-}
+string[] toStrings(QueueStatus[] statuses)
+  => statuses.map!toString.array;
 ///
 unittest {
   mixin(ShowTest!("QueueStatus Enum Conversion"));
@@ -322,17 +307,14 @@ QueueType toQueueType(string value) {
   mixin(EnumSwitch("QueueType", "durable"));
 }
 
-QueueType[] toQueueTypes(string[] values) {
-  return values.map!toQueueType.array;
-}
+QueueType[] toQueueTypes(string[] values)
+  => values.map!toQueueType.array;
 
-string toString(QueueType type) {
-  return type.to!string;
-}
+string toString(QueueType type)
+  => type.to!string;
 
-string[] toStrings(QueueType[] types) {
-  return types.map!toString.array;
-}
+string[] toStrings(QueueType[] types)
+  => types.map!toString.array;
 ///
 unittest {
   mixin(ShowTest!("QueueType Enum Conversion"));
@@ -364,17 +346,15 @@ TopicStatus toTopicStatus(string value) {
   mixin(EnumSwitch("TopicStatus", "inactive"));
 }
 
-TopicStatus[] toTopicStatuses(string[] values) {
-  return values.map!toTopicStatus.array;
-}
+TopicStatus[] toTopicStatuses(string[] values)
 
-string toString(TopicStatus status) {
-  return status.to!string;
-}
+  => values.map!toTopicStatus.array;
 
-string[] toStrings(TopicStatus[] statuses) {
-  return statuses.map!toString.array;
-}
+string toString(TopicStatus status)
+  => status.to!string;
+
+string[] toStrings(TopicStatus[] statuses)
+  => statuses.map!toString.array;
 ///
 unittest {
   mixin(ShowTest!("TopicStatus Enum Conversion"));
@@ -389,7 +369,8 @@ unittest {
   assert(TopicStatus.pendingDelete.toString == "pendingDelete");
 
   assert(["active", "unknown", "pendingdelete"].toTopicStatuses == [
-      TopicStatus.active, TopicStatus.inactive, TopicStatus.pendingDelete
+      TopicStatus.active, TopicStatus.inactive,
+      TopicStatus.pendingDelete
     ]);
   assert([TopicStatus.inactive, TopicStatus.pendingDelete].toStrings == [
       "inactive", "pendingDelete"
@@ -406,17 +387,15 @@ SubscriptionStatus toSubscriptionStatus(string value) {
   mixin(EnumSwitch("SubscriptionStatus", "suspended"));
 }
 
-SubscriptionStatus[] toSubscriptionStatuses(string[] values) {
-  return values.map!toSubscriptionStatus.array;
-}
+SubscriptionStatus[] toSubscriptionStatuses(string[] values)
 
-string toString(SubscriptionStatus status) {
-  return status.to!string;
-}
+  => values.map!toSubscriptionStatus.array;
 
-string[] toStrings(SubscriptionStatus[] statuses) {
-  return statuses.map!toString.array;
-}
+string toString(SubscriptionStatus status)
+  => status.to!string;
+
+string[] toStrings(SubscriptionStatus[] statuses)
+  => statuses.map!toString.array;
 ///
 unittest {
   mixin(ShowTest!("SubscriptionStatus Enum Conversion"));
@@ -434,7 +413,9 @@ unittest {
       SubscriptionStatus.active, SubscriptionStatus.suspended,
       SubscriptionStatus.pendingDelete
     ]);
-  assert([SubscriptionStatus.suspended, SubscriptionStatus.pendingDelete].toStrings == ["suspended", "pendingDelete"]);
+  assert([
+      SubscriptionStatus.suspended, SubscriptionStatus.pendingDelete
+    ].toStrings == ["suspended", "pendingDelete"]);
 }
 
 enum SubscriptionType {
@@ -447,17 +428,14 @@ SubscriptionType toSubscriptionType(string value) {
   mixin(EnumSwitch("SubscriptionType", "direct"));
 }
 
-SubscriptionType[] toSubscriptionTypes(string[] values) {
-  return values.map!toSubscriptionType.array;
-}
+SubscriptionType[] toSubscriptionTypes(string[] values)
+  => values.map!toSubscriptionType.array;
 
-string toString(SubscriptionType type) {
-  return type.to!string;
-}
+string toString(SubscriptionType type)
+  => type.to!string;
 
-string[] toStrings(SubscriptionType[] types) {
-  return types.map!toString.array;
-}
+string[] toStrings(SubscriptionType[] types)
+  => types.map!toString.array;
 ///
 unittest {
   mixin(ShowTest!("SubscriptionType Enum Conversion"));
@@ -475,7 +453,9 @@ unittest {
       SubscriptionType.direct, SubscriptionType.direct,
       SubscriptionType.queueBased
     ]);
-  assert([SubscriptionType.queueBased, SubscriptionType.topicEndpoint].toStrings == ["queueBased", "topicEndpoint"]);
+  assert([
+      SubscriptionType.queueBased, SubscriptionType.topicEndpoint
+    ].toStrings == ["queueBased", "topicEndpoint"]);
 }
 
 enum DeliveryMode {
@@ -488,17 +468,14 @@ DeliveryMode toDeliveryMode(string value) {
   mixin(EnumSwitch("DeliveryMode", "direct"));
 }
 
-DeliveryMode[] toDeliveryModes(string[] values) {
-  return values.map!toDeliveryMode.array;
-}
+DeliveryMode[] toDeliveryModes(string[] values)
+  => values.map!toDeliveryMode.array;
 
-string toString(DeliveryMode mode) {
-  return mode.to!string;
-}
+string toString(DeliveryMode mode)
+  => mode.to!string;
 
-string[] toStrings(DeliveryMode[] modes) {
-  return modes.map!toString.array;
-}
+string[] toStrings(DeliveryMode[] modes)
+  => modes.map!toString.array;
 ///
 unittest {
   mixin(ShowTest!("DeliveryMode Enum Conversion"));
@@ -513,7 +490,8 @@ unittest {
   assert(DeliveryMode.nonPersistent.toString == "nonPersistent");
 
   assert(["direct", "unknown", "persistent"].toDeliveryModes == [
-      DeliveryMode.direct, DeliveryMode.direct, DeliveryMode.persistent
+      DeliveryMode.direct, DeliveryMode.direct,
+      DeliveryMode.persistent
     ]);
   assert([DeliveryMode.persistent, DeliveryMode.nonPersistent].toStrings == [
       "persistent", "nonPersistent"
@@ -533,17 +511,14 @@ MessageStatus toMessageStatus(string value) {
   mixin(EnumSwitch("MessageStatus", "pending"));
 }
 
-MessageStatus[] toMessageStatuses(string[] values) {
-  return values.map!toMessageStatus.array;
-}
+MessageStatus[] toMessageStatuses(string[] values)
+  => values.map!toMessageStatus.array;
 
-string toString(MessageStatus status) {
-  return status.to!string;
-}
+string toString(MessageStatus status)
+  => status.to!string;
 
-string[] toStrings(MessageStatus[] statuses) {
-  return statuses.map!toString.array;
-}
+string[] toStrings(MessageStatus[] statuses)
+  => statuses.map!toString.array;
 ///
 unittest {
   mixin(ShowTest!("MessageStatus Enum Conversion"));
@@ -564,7 +539,8 @@ unittest {
   assert(MessageStatus.deadLettered.toString == "deadLettered");
 
   assert(["pending", "unknown", "delivered"].toMessageStatuses == [
-      MessageStatus.pending, MessageStatus.pending, MessageStatus.delivered
+      MessageStatus.pending, MessageStatus.pending,
+      MessageStatus.delivered
     ]);
   assert([MessageStatus.acknowledged, MessageStatus.rejected].toStrings == [
       "acknowledged", "rejected"
@@ -582,17 +558,15 @@ MessagePriority toMessagePriority(string value) {
   mixin(EnumSwitch("MessagePriority", "normal"));
 }
 
-MessagePriority[] toMessagePriorities(string[] values) {
-  return values.map!toMessagePriority.array;
-}
+MessagePriority[] toMessagePriorities(string[] values)
+  => values.map!toMessagePriority.array;
 
-string toString(MessagePriority priority) {
-  return priority.to!string;
-}
+string toString(MessagePriority priority)
+  => priority.to!string;
 
-string[] toStrings(MessagePriority[] priorities) {
-  return priorities.map!toString.array;
-}
+string[] toStrings(MessagePriority[] priorities)
+  => priorities.map!toString.array;
+
 ///
 unittest {
   mixin(ShowTest!("MessagePriority Enum Conversion"));
@@ -609,7 +583,8 @@ unittest {
   assert(MessagePriority.urgent.toString == "urgent");
 
   assert(["low", "unknown", "high"].toMessagePriorities == [
-      MessagePriority.low, MessagePriority.normal, MessagePriority.high
+      MessagePriority.low, MessagePriority.normal,
+      MessagePriority.high
     ]);
   assert([MessagePriority.normal, MessagePriority.urgent].toStrings == [
       "normal", "urgent"
@@ -742,7 +717,7 @@ string toString(EventApplicationStatus status) {
 }
 
 string[] toStrings(EventApplicationStatus[] statuses) {
-  return statuses.map!(s => toString(s)).array;
+  return statuses.map!toString.array;
 }
 ///
 unittest {
@@ -751,7 +726,8 @@ unittest {
   assert("registered".toEventApplicationStatus == EventApplicationStatus.registered);
   assert("active".toEventApplicationStatus == EventApplicationStatus.active);
   assert("suspended".toEventApplicationStatus == EventApplicationStatus.suspended);
-  assert("deregistered".toEventApplicationStatus == EventApplicationStatus.deregistered);
+  assert(
+    "deregistered".toEventApplicationStatus == EventApplicationStatus.deregistered);
   assert("unknown".toEventApplicationStatus == EventApplicationStatus.registered); // default case
 
   assert(EventApplicationStatus.registered.toString == "registered");
@@ -760,10 +736,14 @@ unittest {
   assert(EventApplicationStatus.deregistered.toString == "deregistered");
 
   assert(["active", "unknown", "suspended"].toEventApplicationStatuses == [
-      EventApplicationStatus.active, EventApplicationStatus.registered,
+      EventApplicationStatus.active,
+      EventApplicationStatus.registered,
       EventApplicationStatus.suspended
     ]);
-  assert([EventApplicationStatus.active, EventApplicationStatus.deregistered].toStrings == ["active", "deregistered"]);
+  assert([
+      EventApplicationStatus.active,
+      EventApplicationStatus.deregistered
+    ].toStrings == ["active", "deregistered"]);
 }
 
 enum EventApplicationType {
@@ -806,7 +786,9 @@ unittest {
       EventApplicationType.publisher, EventApplicationType.both,
       EventApplicationType.subscriber
     ]);
-  assert([EventApplicationType.subscriber, EventApplicationType.both].toStrings == [
+  assert([
+      EventApplicationType.subscriber, EventApplicationType.both
+    ].toStrings == [
       "subscriber", "both"
     ]);
 }
@@ -854,7 +836,8 @@ unittest {
   assert(BridgeStatus.failed.toString == "failed");
 
   assert(["active", "unknown", "degraded"].toBridgeStatuses == [
-      BridgeStatus.active, BridgeStatus.failed, BridgeStatus.degraded
+      BridgeStatus.active, BridgeStatus.failed,
+      BridgeStatus.degraded
     ]);
   assert([BridgeStatus.inactive, BridgeStatus.failed].toStrings == [
       "inactive", "failed"
@@ -904,7 +887,9 @@ unittest {
   assert(["vpn", "unknown", "rest"].toBridgeTypes == [
       BridgeType.vpn, BridgeType.mesh, BridgeType.rest
     ]);
-  assert([BridgeType.kafka, BridgeType.jms].toStrings == ["kafka", "jms"]);
+  assert([BridgeType.kafka, BridgeType.jms].toStrings == [
+      "kafka", "jms"
+    ]);
 }
 
 enum ProtocolType {
@@ -941,7 +926,7 @@ unittest {
   assert("rest".toProtocolType == ProtocolType.rest);
   assert("jms".toProtocolType == ProtocolType.jms);
   assert("websocket".toProtocolType == ProtocolType.websocket);
-  
+
   assert("unknown".toProtocolType == ProtocolType.mqtt); // default case
   assert("".toProtocolType == ProtocolType.mqtt); // default case
 

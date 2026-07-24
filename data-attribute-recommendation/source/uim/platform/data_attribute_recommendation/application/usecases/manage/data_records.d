@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.data_attribute_recommendation.application.usecases.manage.data_records;
 
-
 // import uim.platform.data_attribute_recommendation.domain.entities.data_record;
 
 
@@ -18,10 +17,10 @@ mixin(ShowModule!());
 
 @safe:
 class ManageDataRecordsUseCase { // TODO: UIMUseCase {
-  private DataRecordRepository repo;
-  private DatasetRepository datasetRepo;
+  private IDataRecordRepository repo;
+  private IDatasetRepository datasetRepo;
 
-  this(DataRecordRepository repo, DatasetRepository datasetRepo) {
+  this(IDataRecordRepository repo, IDatasetRepository datasetRepo) {
     this.repo = repo;
     this.datasetRepo = datasetRepo;
   }

@@ -9,16 +9,11 @@ import uim.platform.abap_environment;
 // ─── System Instance ───
 /// ABAP system provisioning plan.
 enum SystemPlan : string {
-  /// Standard plan with full features and capabilities.
-  standard = "standard",
-  /// Free plan with limited features and capabilities, suitable for small-scale or personal use.
-  free_ = "free",
-  /// Development plan for testing and development purposes, with limited features and capabilities.
-  development = "development",
-  /// Test plan for testing purposes, with limited features and capabilities.
-  test = "test",
-  /// Production plan for production use, with full features and capabilities.
-  production = "production",
+  standard = "standard", // Standard plan with full features and capabilities.
+  free_ = "free", // Free plan with limited features and capabilities, suitable for small-scale or personal use.
+  development = "development", // Development plan for testing and development purposes, with limited features and capabilities.
+  test = "test", // Test plan for testing purposes, with limited features and capabilities.
+  production = "production", // Production plan for production use, with full features and capabilities.
 }
 
 SystemPlan toSystemPlan(string plan) {
@@ -38,7 +33,7 @@ SystemPlan toSystemPlan(string plan) {
   }
 }
 
-SystemPlan[] toSystemPlan(string[] plans) {
+SystemPlan[] toSystemPlans(string[] plans) {
   return plans.map!(p => toSystemPlan(p)).array;
 }
 
@@ -64,20 +59,20 @@ string[] toStrings(SystemPlan[] plans) {
 unittest {
   mixin(ShowTest!("SystemPlan Enumeration"));
 
-  assert(toSystemPlan("standard") == SystemPlan.standard);
-  assert(toSystemPlan("free") == SystemPlan.free_);
-  assert(toSystemPlan("development") == SystemPlan.development);
-  assert(toSystemPlan("test") == SystemPlan.test);
-  assert(toSystemPlan("production") == SystemPlan.production);
-  assert(toSystemPlan("unknown") == SystemPlan.standard); // default case
+  assert("standard".toSystemPlan == SystemPlan.standard);
+  assert("free".toSystemPlan == SystemPlan.free_);
+  assert("development".toSystemPlan == SystemPlan.development);
+  assert("test".toSystemPlan == SystemPlan.test);
+  assert("production".toSystemPlan == SystemPlan.production);
+  assert("unknown".toSystemPlan == SystemPlan.standard); // default case
 
-  assert(toString(SystemPlan.standard) == "standard");
-  assert(toString(SystemPlan.free_) == "free");
-  assert(toString(SystemPlan.development) == "development");
-  assert(toString(SystemPlan.test) == "test");
-  assert(toString(SystemPlan.production) == "production");
+  assert(SystemPlan.standard.toString == "standard");
+  assert(SystemPlan.free_.toString == "free");
+  assert(SystemPlan.development.toString == "development");
+  assert(SystemPlan.test.toString == "test");
+  assert(SystemPlan.production.toString == "production");
 
-  assert(toSystemPlan(["standard", "free", "unknown"]) == [
+  assert(toSystemPlans(["standard", "free", "unknown"]) == [
       SystemPlan.standard, SystemPlan.free_, SystemPlan.standard
     ]);
   assert(toStrings([SystemPlan.standard, SystemPlan.free_]) == [
@@ -101,7 +96,7 @@ SystemStatus toSystemStatus(string value) {
 }
 
 SystemStatus[] toSystemStatuses(string[] values) {
-  return values.map!(v => toSystemStatus(v)).array;
+  return values.map!toSystemStatus.array;
 }
 
 string toString(SystemStatus status) {
@@ -109,33 +104,33 @@ string toString(SystemStatus status) {
 }
 
 string[] toStrings(SystemStatus[] statuses) {
-  return statuses.map!(s => toString(s)).array;
+  return statuses.map!toString.array;
 }
 /// 
 unittest {
   mixin(ShowTest!("SystemStatus Enumeration"));
 
-  assert(toSystemStatus("active") == SystemStatus.active);
-  assert(toSystemStatus("provisioning") == SystemStatus.provisioning);
-  assert(toSystemStatus("updating") == SystemStatus.updating);
-  assert(toSystemStatus("suspended") == SystemStatus.suspended);
-  assert(toSystemStatus("deleting") == SystemStatus.deleting);
-  assert(toSystemStatus("deleted") == SystemStatus.deleted);
-  assert(toSystemStatus("error") == SystemStatus.error);
-  assert(toSystemStatus("unknown") == SystemStatus.active); // default case
+  assert("active".toSystemStatus == SystemStatus.active);
+  assert("provisioning".toSystemStatus == SystemStatus.provisioning);
+  assert("updating".toSystemStatus == SystemStatus.updating);
+  assert("suspended".toSystemStatus == SystemStatus.suspended);
+  assert("deleting".toSystemStatus == SystemStatus.deleting);
+  assert("deleted".toSystemStatus == SystemStatus.deleted);
+  assert("error".toSystemStatus == SystemStatus.error);
+  assert("unknown".toSystemStatus == SystemStatus.active); // default case
 
-  assert(toString(SystemStatus.active) == "active");
-  assert(toString(SystemStatus.provisioning) == "provisioning");
-  assert(toString(SystemStatus.updating) == "updating");
-  assert(toString(SystemStatus.suspended) == "suspended");
-  assert(toString(SystemStatus.deleting) == "deleting");
-  assert(toString(SystemStatus.deleted) == "deleted");
-  assert(toString(SystemStatus.error) == "error");
+  assert(SystemStatus.active.toString == "active");
+  assert(SystemStatus.provisioning.toString == "provisioning");
+  assert(SystemStatus.updating.toString == "updating");
+  assert(SystemStatus.suspended.toString == "suspended");
+  assert(SystemStatus.deleting.toString == "deleting");
+  assert(SystemStatus.deleted.toString == "deleted");
+  assert(SystemStatus.error.toString == "error");
 
-  assert(toSystemStatus(["active", "provisioning", "unknown"]) == [
+  assert(["active", "provisioning", "unknown"].toSystemStatuses == [
       SystemStatus.active, SystemStatus.provisioning, SystemStatus.active
     ]);
-  assert(toStrings([SystemStatus.active, SystemStatus.error]) == [
+  assert([SystemStatus.active, SystemStatus.error].toStrings == [
       "active", "error"
     ]);
 }
@@ -152,7 +147,7 @@ ComponentType toComponentType(string value) {
   mixin(EnumSwitch("ComponentType", "developmentPackage"));
 }
 
-ComponentType[] toComponentType(string[] values) {
+ComponentType[] toComponentTypes(string[] values) {
   return values.map!(v => toComponentType(v)).array;
 }
 
@@ -161,24 +156,24 @@ string toString(ComponentType type) {
 }
 
 string[] toStrings(ComponentType[] types) {
-  return types.map!(t => toString(t)).array;
+  return types.map!toString.array;
 }
 ///
 unittest {
   mixin(ShowTest!("ComponentType Enumeration"));
 
-  assert(toComponentType("developmentPackage") == ComponentType.developmentPackage);
-  assert(toComponentType("businessConfiguration") == ComponentType.businessConfiguration);
-  assert(toComponentType("extensibility") == ComponentType.extensibility);
-  assert(toComponentType("customCode") == ComponentType.customCode);
-  assert(toComponentType("unknown") == ComponentType.developmentPackage); // default case
+  assert("developmentPackage".toComponentType == ComponentType.developmentPackage);
+  assert("businessConfiguration".toComponentType == ComponentType.businessConfiguration);
+  assert("extensibility".toComponentType == ComponentType.extensibility);
+  assert("customCode".toComponentType == ComponentType.customCode);
+  assert("unknown".toComponentType == ComponentType.developmentPackage); // default case
 
-  assert(toString(ComponentType.developmentPackage) == "developmentPackage");
-  assert(toString(ComponentType.businessConfiguration) == "businessConfiguration");
-  assert(toString(ComponentType.extensibility) == "extensibility");
-  assert(toString(ComponentType.customCode) == "customCode");
+  assert(ComponentType.developmentPackage.toString == "developmentPackage");
+  assert(ComponentType.businessConfiguration.toString == "businessConfiguration");
+  assert(ComponentType.extensibility.toString == "extensibility");
+  assert(ComponentType.customCode.toString == "customCode");
 
-  assert(toComponentType(["developmentPackage", "extensibility", "unknown"]) == [
+  assert(toComponentTypes(["developmentPackage", "extensibility", "unknown"]) == [
       ComponentType.developmentPackage, ComponentType.extensibility,
       ComponentType.developmentPackage
     ]);
@@ -209,30 +204,30 @@ string toString(ComponentStatus status) {
 }
 
 string[] toStrings(ComponentStatus[] statuses) {
-  return statuses.map!(s => toString(s)).array;
+  return statuses.map!toString.array;
 }
 ///
 unittest {
   mixin(ShowTest!("ComponentStatus Enumeration"));
 
-  assert(toComponentStatus("notCloned") == ComponentStatus.notCloned);
-  assert(toComponentStatus("cloning") == ComponentStatus.cloning);
-  assert(toComponentStatus("cloned") == ComponentStatus.cloned);
-  assert(toComponentStatus("pulling") == ComponentStatus.pulling);
-  assert(toComponentStatus("error") == ComponentStatus.error);
-  assert(toComponentStatus("unknown") == ComponentStatus.notCloned); // default case  
+  assert("notCloned".toComponentStatus == ComponentStatus.notCloned);
+  assert("cloning".toComponentStatus == ComponentStatus.cloning);
+  assert("cloned".toComponentStatus == ComponentStatus.cloned);
+  assert("pulling".toComponentStatus == ComponentStatus.pulling);
+  assert("error".toComponentStatus == ComponentStatus.error);
+  assert("unknown".toComponentStatus == ComponentStatus.notCloned); // default case  
 
-  assert(toString(ComponentStatus.notCloned) == "notCloned");
-  assert(toString(ComponentStatus.cloning) == "cloning");
-  assert(toString(ComponentStatus.cloned) == "cloned");
-  assert(toString(ComponentStatus.pulling) == "pulling");
-  assert(toString(ComponentStatus.error) == "error");
+  assert(ComponentStatus.notCloned.toString == "notCloned");
+  assert(ComponentStatus.cloning.toString == "cloning");
+  assert(ComponentStatus.cloned.toString == "cloned");
+  assert(ComponentStatus.pulling.toString == "pulling");
+  assert(ComponentStatus.error.toString == "error");
 
-  assert(toComponentStatus(["notCloned", "cloning", "unknown"]) == [
+  assert(["notCloned", "cloning", "unknown"].toComponentStatuses == [
       ComponentStatus.notCloned, ComponentStatus.cloning,
       ComponentStatus.notCloned
     ]);
-  assert(toStrings([ComponentStatus.cloned, ComponentStatus.error]) == [
+  assert([ComponentStatus.cloned, ComponentStatus.error].toStrings == [
       "cloned", "error"
     ]);
 }
@@ -249,7 +244,7 @@ BranchStrategy toBranchStrategy(string value) {
   mixin(EnumSwitch("BranchStrategy", "main"));
 }
 
-BranchStrategy[] toBranchStrategy(string[] values) {
+BranchStrategy[] toBranchStrategies(string[] values) {
   return values.map!(v => toBranchStrategy(v)).array;
 }
 
@@ -258,27 +253,27 @@ string toString(BranchStrategy strategy) {
 }
 
 string[] toStrings(BranchStrategy[] strategies) {
-  return strategies.map!(s => toString(s)).array;
+  return strategies.map!toString.array;
 }
 ///
 unittest {
   mixin(ShowTest!("BranchStrategy Enumeration"));
 
-  assert(toBranchStrategy("main") == BranchStrategy.main);
-  assert(toBranchStrategy("release") == BranchStrategy.release);
-  assert(toBranchStrategy("feature") == BranchStrategy.feature);
-  assert(toBranchStrategy("correction") == BranchStrategy.correction);
-  assert(toBranchStrategy("unknown") == BranchStrategy.main); // default case
+  assert("main".toBranchStrategy == BranchStrategy.main);
+  assert("release".toBranchStrategy == BranchStrategy.release);
+  assert("feature".toBranchStrategy == BranchStrategy.feature);
+  assert("correction".toBranchStrategy == BranchStrategy.correction);
+  assert("unknown".toBranchStrategy == BranchStrategy.main); // default case
 
-  assert(toString(BranchStrategy.main) == "main");
-  assert(toString(BranchStrategy.release) == "release");
-  assert(toString(BranchStrategy.feature) == "feature");
-  assert(toString(BranchStrategy.correction) == "correction");
+  assert(BranchStrategy.main.toString == "main");
+  assert(BranchStrategy.release.toString == "release");
+  assert(BranchStrategy.feature.toString == "feature");
+  assert(BranchStrategy.correction.toString == "correction");
 
-  assert(toBranchStrategy(["main", "feature", "unknown"]) == [
+  assert(["main", "feature", "unknown"].toBranchStrategies == [
       BranchStrategy.main, BranchStrategy.feature, BranchStrategy.main
     ]);
-  assert(toStrings([BranchStrategy.release, BranchStrategy.correction]) == [
+  assert([BranchStrategy.release, BranchStrategy.correction].toStrings == [
       "release", "correction"
     ]);
 }
@@ -294,7 +289,7 @@ CommunicationDirection toCommunicationDirection(string value) {
   mixin(EnumSwitch("CommunicationDirection", "inbound"));
 }
 
-CommunicationDirection[] toCommunicationDirection(string[] values) {
+CommunicationDirection[] toCommunicationDirections(string[] values) {
   return values.map!(v => toCommunicationDirection(v)).array;
 }
 
@@ -309,20 +304,18 @@ string[] toStrings(CommunicationDirection[] directions) {
 unittest {
   mixin(ShowTest!("CommunicationDirection Enumeration"));
 
-  assert(toCommunicationDirection("inbound") == CommunicationDirection.inbound);
-  assert(toCommunicationDirection("outbound") == CommunicationDirection.outbound);
-  assert(toCommunicationDirection("unknown") == CommunicationDirection.inbound); // default case  
+  assert("inbound".toCommunicationDirection == CommunicationDirection.inbound);
+  assert("outbound".toCommunicationDirection == CommunicationDirection.outbound);
+  assert("unknown".toCommunicationDirection == CommunicationDirection.inbound); // default case  
 
-  assert(toString(CommunicationDirection.inbound) == "inbound");
-  assert(toString(CommunicationDirection.outbound) == "outbound");
+  assert(CommunicationDirection.inbound.toString == "inbound");
+  assert(CommunicationDirection.outbound.toString == "outbound");
 
-  assert(toCommunicationDirection(["inbound", "outbound", "unknown"]) == [
+  assert(["inbound", "outbound", "unknown"].toCommunicationDirections == [
       CommunicationDirection.inbound, CommunicationDirection.outbound,
       CommunicationDirection.inbound
     ]);
-  assert(toStrings([
-      CommunicationDirection.inbound, CommunicationDirection.outbound
-    ]) == ["inbound", "outbound"]);
+  assert([CommunicationDirection.inbound, CommunicationDirection.outbound].toStrings == ["inbound", "outbound"]);
 }
 
 /// Communication protocol.
@@ -338,7 +331,7 @@ CommunicationProtocol toCommunicationProtocol(string value) {
   mixin(EnumSwitch("CommunicationProtocol", "httpRest"));
 }
 
-CommunicationProtocol[] toCommunicationProtocol(string[] values) {
+CommunicationProtocol[] toCommunicationProtocols(string[] values) {
   return values.map!(v => toCommunicationProtocol(v)).array;
 }
 
@@ -353,26 +346,24 @@ string[] toStrings(CommunicationProtocol[] protocols) {
 unittest {
   mixin(ShowTest!("CommunicationProtocol Enumeration"));
 
-  assert(toCommunicationProtocol("httpRest") == CommunicationProtocol.httpRest);
-  assert(toCommunicationProtocol("httpSoap") == CommunicationProtocol.httpSoap);
-  assert(toCommunicationProtocol("rfc") == CommunicationProtocol.rfc);
-  assert(toCommunicationProtocol("odataV2") == CommunicationProtocol.odataV2);
-  assert(toCommunicationProtocol("odataV4") == CommunicationProtocol.odataV4);
-  assert(toCommunicationProtocol("unknown") == CommunicationProtocol.httpRest); // default case
+  assert("httpRest".toCommunicationProtocol == CommunicationProtocol.httpRest);
+  assert("httpSoap".toCommunicationProtocol == CommunicationProtocol.httpSoap);
+  assert("rfc".toCommunicationProtocol == CommunicationProtocol.rfc);
+  assert("odataV2".toCommunicationProtocol == CommunicationProtocol.odataV2);
+  assert("odataV4".toCommunicationProtocol == CommunicationProtocol.odataV4);
+  assert("unknown".toCommunicationProtocol == CommunicationProtocol.httpRest); // default case
 
-  assert(toString(CommunicationProtocol.httpRest) == "httpRest");
-  assert(toString(CommunicationProtocol.httpSoap) == "httpSoap");
-  assert(toString(CommunicationProtocol.rfc) == "rfc");
-  assert(toString(CommunicationProtocol.odataV2) == "odataV2");
-  assert(toString(CommunicationProtocol.odataV4) == "odataV4");
+  assert(CommunicationProtocol.httpRest.toString == "httpRest");
+  assert(CommunicationProtocol.httpSoap.toString == "httpSoap");
+  assert(CommunicationProtocol.rfc.toString == "rfc");
+  assert(CommunicationProtocol.odataV2.toString == "odataV2");
+  assert(CommunicationProtocol.odataV4.toString == "odataV4");
 
-  assert(toCommunicationProtocol(["httpRest", "rfc", "unknown"]) == [
+  assert(["httpRest", "rfc", "unknown"].toCommunicationProtocols == [
       CommunicationProtocol.httpRest, CommunicationProtocol.rfc,
       CommunicationProtocol.httpRest
     ]);
-  assert(toStrings([
-      CommunicationProtocol.httpSoap, CommunicationProtocol.odataV2
-    ]) == ["httpSoap", "odataV2"]);
+  assert([CommunicationProtocol.httpSoap, CommunicationProtocol.odataV2].toStrings == ["httpSoap", "odataV2"]);
 }
 
 /// Authentication method used in communication arrangements.
@@ -388,7 +379,7 @@ CommunicationAuthMethod toCommunicationAuthMethod(string value) {
   mixin(EnumSwitch("CommunicationAuthMethod", "basicAuthentication"));
 }
 
-CommunicationAuthMethod[] toCommunicationAuthMethod(string[] values) {
+CommunicationAuthMethod[] toCommunicationAuthMethods(string[] values) {
   return values.map!(v => toCommunicationAuthMethod(v)).array;
 }
 
@@ -403,36 +394,26 @@ string[] toStrings(CommunicationAuthMethod[] methods) {
 unittest {
   mixin(ShowTest!("CommunicationAuthMethod Enumeration"));
 
-  assert(toCommunicationAuthMethod(
-      "basicAuthentication") == CommunicationAuthMethod.basicAuthentication);
-  assert(toCommunicationAuthMethod(
-      "oauth2ClientCredentials") == CommunicationAuthMethod.oauth2ClientCredentials);
-  assert(toCommunicationAuthMethod(
-      "oauth2SAMLBearerAssertion") == CommunicationAuthMethod.oauth2SAMLBearerAssertion);
-  assert(toCommunicationAuthMethod(
-      "clientCertificate") == CommunicationAuthMethod.clientCertificate);
-  assert(toCommunicationAuthMethod("noAuthentication") == CommunicationAuthMethod
-      .noAuthentication);
-  assert(toCommunicationAuthMethod("unknown") == CommunicationAuthMethod.basicAuthentication); // default case
+  assert("basicAuthentication".toCommunicationAuthMethod == CommunicationAuthMethod.basicAuthentication);
+  assert("oauth2ClientCredentials".toCommunicationAuthMethod == CommunicationAuthMethod.oauth2ClientCredentials);
+  assert("oauth2SAMLBearerAssertion".toCommunicationAuthMethod == CommunicationAuthMethod.oauth2SAMLBearerAssertion);
+  assert("clientCertificate".toCommunicationAuthMethod == CommunicationAuthMethod.clientCertificate);
+  assert("noAuthentication".toCommunicationAuthMethod == CommunicationAuthMethod.noAuthentication);
+  assert("unknown".toCommunicationAuthMethod == CommunicationAuthMethod.basicAuthentication); // default case
 
-  assert(toString(CommunicationAuthMethod.basicAuthentication) == "basicAuthentication");
-  assert(toString(CommunicationAuthMethod.oauth2ClientCredentials) == "oauth2ClientCredentials");
-  assert(toString(
-      CommunicationAuthMethod.oauth2SAMLBearerAssertion) == "oauth2SAMLBearerAssertion");
-  assert(toString(CommunicationAuthMethod.clientCertificate) == "clientCertificate");
-  assert(toString(CommunicationAuthMethod.noAuthentication) == "noAuthentication");
+  assert(CommunicationAuthMethod.basicAuthentication.toString == "basicAuthentication");
+  assert(CommunicationAuthMethod.oauth2ClientCredentials.toString == "oauth2ClientCredentials");
+  assert(CommunicationAuthMethod.oauth2SAMLBearerAssertion.toString == "oauth2SAMLBearerAssertion");
+  assert(CommunicationAuthMethod.clientCertificate.toString == "clientCertificate");
+  assert(CommunicationAuthMethod.noAuthentication.toString == "noAuthentication");
 
-  assert(toCommunicationAuthMethod([
-      "basicAuthentication", "clientCertificate", "unknown"
-    ]) == [
+  assert(["basicAuthentication", "clientCertificate", "unknown"].toCommunicationAuthMethods == [
     CommunicationAuthMethod.basicAuthentication,
     CommunicationAuthMethod.clientCertificate,
     CommunicationAuthMethod.basicAuthentication
   ]);
-  assert(toStrings([
-      CommunicationAuthMethod.oauth2ClientCredentials,
-      CommunicationAuthMethod.noAuthentication
-    ]) == ["oauth2ClientCredentials", "noAuthentication"]);
+  assert([CommunicationAuthMethod.oauth2ClientCredentials,
+      CommunicationAuthMethod.noAuthentication].toStrings == ["oauth2ClientCredentials", "noAuthentication"]);
 }
 
 /// Status of a communication arrangement.
@@ -455,26 +436,26 @@ string toString(ArrangementStatus status) {
 }
 
 string[] toStrings(ArrangementStatus[] statuses) {
-  return statuses.map!(s => toString(s)).array;
+  return statuses.map!toString.array;
 }
 ///
 unittest {
   mixin(ShowTest!("ArrangementStatus Enumeration"));
 
-  assert(toArrangementStatus("active") == ArrangementStatus.active);
-  assert(toArrangementStatus("inactive") == ArrangementStatus.inactive);
-  assert(toArrangementStatus("error") == ArrangementStatus.error);
-  assert(toArrangementStatus("unknown") == ArrangementStatus.active); // default case
+  assert("active".toArrangementStatus == ArrangementStatus.active);
+  assert("inactive".toArrangementStatus == ArrangementStatus.inactive);
+  assert("error".toArrangementStatus == ArrangementStatus.error);
+  assert("unknown".toArrangementStatus == ArrangementStatus.active); // default case
 
-  assert(toString(ArrangementStatus.active) == "active");
-  assert(toString(ArrangementStatus.inactive) == "inactive");
-  assert(toString(ArrangementStatus.error) == "error");
+  assert(ArrangementStatus.active.toString == "active");
+  assert(ArrangementStatus.inactive.toString == "inactive");
+  assert(ArrangementStatus.error.toString == "error");
 
-  assert(toArrangementStatus(["active", "inactive", "unknown"]) == [
+  assert(["active", "inactive", "unknown"].toArrangementStatuses == [
       ArrangementStatus.active, ArrangementStatus.inactive,
       ArrangementStatus.active
     ]);
-  assert(toStrings([ArrangementStatus.active, ArrangementStatus.error]) == [
+  assert([ArrangementStatus.active, ArrangementStatus.error].toStrings == [
       "active", "error"
     ]);
 }
@@ -494,7 +475,7 @@ BindingType toBindingType(string value) {
   mixin(EnumSwitch("BindingType", "odataV4"));
 }
 
-BindingType[] toBindingType(string[] values) {
+BindingType[] toBindingTypes(string[] values) {
   return values.map!(v => toBindingType(v)).array;
 }
 
@@ -503,31 +484,31 @@ string toString(BindingType type) {
 }
 
 string[] toStrings(BindingType[] types) {
-  return types.map!(t => toString(t)).array;
+  return types.map!toString.array;
 }
 ///
 unittest {
   mixin(ShowTest!("BindingType Enumeration"));
 
-  assert(toBindingType("odataV4") == BindingType.odataV4);
-  assert(toBindingType("odataV2") == BindingType.odataV2);
-  assert(toBindingType("soapHttp") == BindingType.soapHttp);
-  assert(toBindingType("restHttp") == BindingType.restHttp);
-  assert(toBindingType("sql") == BindingType.sql);
-  assert(toBindingType("inboundRfc") == BindingType.inboundRfc);
-  assert(toBindingType("unknown") == BindingType.odataV4); // default case
+  assert("odataV4".toBindingType == BindingType.odataV4);
+  assert("odataV2".toBindingType == BindingType.odataV2);
+  assert("soapHttp".toBindingType == BindingType.soapHttp);
+  assert("restHttp".toBindingType == BindingType.restHttp);
+  assert("sql".toBindingType == BindingType.sql);
+  assert("inboundRfc".toBindingType == BindingType.inboundRfc);
+  assert("unknown".toBindingType == BindingType.odataV4); // default case
 
-  assert(toString(BindingType.odataV4) == "odataV4");
-  assert(toString(BindingType.odataV2) == "odataV2");
-  assert(toString(BindingType.soapHttp) == "soapHttp");
-  assert(toString(BindingType.restHttp) == "restHttp");
-  assert(toString(BindingType.sql) == "sql");
-  assert(toString(BindingType.inboundRfc) == "inboundRfc");
+  assert(BindingType.odataV4.toString == "odataV4");
+  assert(BindingType.odataV2.toString == "odataV2");
+  assert(BindingType.soapHttp.toString == "soapHttp");
+  assert(BindingType.restHttp.toString == "restHttp");
+  assert(BindingType.sql.toString == "sql");
+  assert(BindingType.inboundRfc.toString == "inboundRfc");
 
-  assert(toBindingType(["odataV4", "restHttp", "unknown"]) == [
+  assert(["odataV4", "restHttp", "unknown"].toBindingTypes == [
       BindingType.odataV4, BindingType.restHttp, BindingType.odataV4
     ]);
-  assert(toStrings([BindingType.soapHttp, BindingType.sql]) == [
+  assert([BindingType.soapHttp, BindingType.sql].toStrings == [
       "soapHttp", "sql"
     ]);
 }
@@ -561,25 +542,25 @@ string toString(BindingStatus status) {
 }
 
 string[] toStrings(BindingStatus[] statuses) {
-  return statuses.map!(s => toString(s)).array;
+  return statuses.map!toString.array;
 }
 /// 
 unittest {
   mixin(ShowTest!("BindingStatus Enumeration"));
 
-  assert(toBindingStatus("active") == BindingStatus.active);
-  assert(toBindingStatus("inactive") == BindingStatus.inactive);
-  assert(toBindingStatus("deprecated") == BindingStatus.deprecated_);
-  assert(toBindingStatus("unknown") == BindingStatus.active); // default case
+  assert("active".toBindingStatus == BindingStatus.active);
+  assert("inactive".toBindingStatus == BindingStatus.inactive);
+  assert("deprecated".toBindingStatus == BindingStatus.deprecated_);
+  assert("unknown".toBindingStatus == BindingStatus.active); // default case
 
-  assert(toString(BindingStatus.active) == "active");
-  assert(toString(BindingStatus.inactive) == "inactive");
-  assert(toString(BindingStatus.deprecated_) == "deprecated");
+  assert(BindingStatus.active.toString == "active");
+  assert(BindingStatus.inactive.toString == "inactive");
+  assert(BindingStatus.deprecated_.toString == "deprecated");
 
-  assert(toBindingStatus(["active", "deprecated", "unknown"]) == [
+  assert(["active", "deprecated", "unknown"].toBindingStatuses == [
       BindingStatus.active, BindingStatus.deprecated_, BindingStatus.active
     ]);
-  assert(toStrings([BindingStatus.inactive, BindingStatus.deprecated_]) == [
+  assert([BindingStatus.inactive, BindingStatus.deprecated_].toStrings == [
       "inactive", "deprecated"
     ]);
 }
@@ -597,7 +578,7 @@ UserStatus toUserStatus(string value) {
 }
 
 UserStatus[] toUserStatuses(string[] values) {
-  return values.map!(v => toUserStatus(v)).array;
+  return values.map!toUserStatus.array;
 }
 
 string toString(UserStatus status) {
@@ -605,27 +586,27 @@ string toString(UserStatus status) {
 }
 
 string[] toStrings(UserStatus[] statuses) {
-  return statuses.map!(s => toString(s)).array;
+  return statuses.map!toString.array;
 }
 /// 
 unittest {
   mixin(ShowTest!("UserStatus Enumeration"));
 
-  assert(toUserStatus("active") == UserStatus.active);
-  assert(toUserStatus("inactive") == UserStatus.inactive);
-  assert(toUserStatus("locked") == UserStatus.locked);
-  assert(toUserStatus("passwordLocked") == UserStatus.passwordLocked);
-  assert(toUserStatus("unknown") == UserStatus.active); // default case
+  assert("active".toUserStatus == UserStatus.active);
+  assert("inactive".toUserStatus == UserStatus.inactive);
+  assert("locked".toUserStatus == UserStatus.locked);
+  assert("passwordLocked".toUserStatus == UserStatus.passwordLocked);
+  assert("unknown".toUserStatus == UserStatus.active); // default case
 
-  assert(toString(UserStatus.active) == "active");
-  assert(toString(UserStatus.inactive) == "inactive");
-  assert(toString(UserStatus.locked) == "locked");
-  assert(toString(UserStatus.passwordLocked) == "passwordLocked");
+  assert(UserStatus.active.toString == "active");
+  assert(UserStatus.inactive.toString == "inactive");
+  assert(UserStatus.locked.toString == "locked");
+  assert(UserStatus.passwordLocked.toString == "passwordLocked");
 
-  assert(toUserStatus(["active", "locked", "unknown"]) == [
+  assert(["active", "locked", "unknown"].toUserStatuses == [
       UserStatus.active, UserStatus.locked, UserStatus.active
     ]);
-  assert(toStrings([UserStatus.inactive, UserStatus.passwordLocked]) == [
+  assert([UserStatus.inactive, UserStatus.passwordLocked].toStrings == [
       "inactive", "passwordLocked"
     ]);
 }
@@ -641,8 +622,8 @@ RoleType toRoleType(string value) {
   mixin(EnumSwitch("RoleType", "unrestricted"));
 }
 
-RoleType[] toRoleType(string[] values) {
-  return values.map!(v => toRoleType(v)).array;
+RoleType[] toRoleTypes(string[] values) {
+  return values.map!toRoleType.array;
 }
 
 string toString(RoleType type) {
@@ -650,25 +631,25 @@ string toString(RoleType type) {
 }
 
 string[] toStrings(RoleType[] types) {
-  return types.map!(t => toString(t)).array;
+  return types.map!toString.array;
 }
 ///
 unittest {
   mixin(ShowTest!("RoleType Enumeration"));
 
-  assert(toRoleType("unrestricted") == RoleType.unrestricted);
-  assert(toRoleType("restricted") == RoleType.restricted);
-  assert(toRoleType("custom") == RoleType.custom);
-  assert(toRoleType("unknown") == RoleType.unrestricted); // default case
+  assert("unrestricted".toRoleType == RoleType.unrestricted);
+  assert("restricted".toRoleType == RoleType.restricted);
+  assert("custom".toRoleType == RoleType.custom);
+  assert("unknown".toRoleType == RoleType.unrestricted); // default case
 
-  assert(toString(RoleType.unrestricted) == "unrestricted");
-  assert(toString(RoleType.restricted) == "restricted");
-  assert(toString(RoleType.custom) == "custom");
+  assert(RoleType.unrestricted.toString == "unrestricted");
+  assert(RoleType.restricted.toString == "restricted");
+  assert(RoleType.custom.toString == "custom");
 
-  assert(toRoleType(["unrestricted", "custom", "unknown"]) == [
+  assert(["unrestricted", "custom", "unknown"].toRoleTypes == [
       RoleType.unrestricted, RoleType.custom, RoleType.unrestricted
     ]);
-  assert(toStrings([RoleType.restricted, RoleType.custom]) == [
+  assert([RoleType.restricted, RoleType.custom].toStrings == [
       "restricted", "custom"
     ]);
 }
@@ -685,8 +666,8 @@ TransportType toTransportType(string value) {
   mixin(EnumSwitch("TransportType", "workbench"));
 }
 
-TransportType[] toTransportType(string[] values) {
-  return values.map!(v => toTransportType(v)).array;
+TransportType[] toTransportTypes(string[] values) {
+  return values.map!toTransportType.array;
 }
 
 string toString(TransportType type) {
@@ -694,26 +675,26 @@ string toString(TransportType type) {
 }
 
 string[] toStrings(TransportType[] types) {
-  return types.map!(t => toString(t)).array;
+  return types.map!toString.array;
 }
 /// 
 unittest {
   mixin(ShowTest!("TransportType Enumeration"));
 
-  assert(toTransportType("workbench") == TransportType.workbench);
-  assert(toTransportType("customizing") == TransportType.customizing);
-  assert(toTransportType("transportOfCopies") == TransportType.transportOfCopies);
-  assert(toTransportType("unknown") == TransportType.workbench); // default case
+  assert("workbench".toTransportType == TransportType.workbench);
+  assert("customizing".toTransportType == TransportType.customizing);
+  assert("transportOfCopies".toTransportType == TransportType.transportOfCopies);
+  assert("unknown".toTransportType == TransportType.workbench); // default case
 
-  assert(toString(TransportType.workbench) == "workbench");
-  assert(toString(TransportType.customizing) == "customizing");
-  assert(toString(TransportType.transportOfCopies) == "transportOfCopies");
+  assert(TransportType.workbench.toString == "workbench");
+  assert(TransportType.customizing.toString == "customizing");
+  assert(TransportType.transportOfCopies.toString == "transportOfCopies");
 
-  assert(toTransportType(["workbench", "customizing", "unknown"]) == [
+  assert(["workbench", "customizing", "unknown"].toTransportTypes == [
       TransportType.workbench, TransportType.customizing,
       TransportType.workbench
     ]);
-  assert(toStrings([TransportType.workbench, TransportType.transportOfCopies]) == [
+  assert([TransportType.workbench, TransportType.transportOfCopies].toStrings == [
       "workbench", "transportOfCopies"
     ]);
 }
@@ -739,28 +720,28 @@ string toString(TransportStatus status) {
 }
 
 string[] toStrings(TransportStatus[] statuses) {
-  return statuses.map!(s => toString(s)).array;
+  return statuses.map!toString.array;
 }
 ///
 unittest {
   mixin(ShowTest!("TransportStatus Enumeration"));
 
-  assert(toTransportStatus("modifiable") == TransportStatus.modifiable);
-  assert(toTransportStatus("released") == TransportStatus.released);
-  assert(toTransportStatus("imported") == TransportStatus.imported);
-  assert(toTransportStatus("error") == TransportStatus.error);
-  assert(toTransportStatus("unknown") == TransportStatus.modifiable); // default case
+  assert("modifiable".toTransportStatus == TransportStatus.modifiable);
+  assert("released".toTransportStatus == TransportStatus.released);
+  assert("imported".toTransportStatus == TransportStatus.imported);
+  assert("error".toTransportStatus == TransportStatus.error);
+  assert("unknown".toTransportStatus == TransportStatus.modifiable); // default case
 
-  assert(toString(TransportStatus.modifiable) == "modifiable");
-  assert(toString(TransportStatus.released) == "released");
-  assert(toString(TransportStatus.imported) == "imported");
-  assert(toString(TransportStatus.error) == "error");
+  assert(TransportStatus.modifiable.toString == "modifiable");
+  assert(TransportStatus.released.toString == "released");
+  assert(TransportStatus.imported.toString == "imported");
+  assert(TransportStatus.error.toString == "error");
 
-  assert(toTransportStatus(["modifiable", "released", "unknown"]) == [
+  assert(["modifiable", "released", "unknown"].toTransportStatuses == [
       TransportStatus.modifiable, TransportStatus.released,
       TransportStatus.modifiable
     ]);
-  assert(toStrings([TransportStatus.imported, TransportStatus.error]) == [
+  assert([TransportStatus.imported, TransportStatus.error].toStrings == [
       "imported", "error"
     ]);
 }
@@ -779,7 +760,7 @@ JobFrequency toJobFrequency(string value) {
   mixin(EnumSwitch("JobFrequency", "once"));
 }
 
-JobFrequency[] toJobFrequency(string[] values) {
+JobFrequency[] toJobFrequencies(string[] values) {
   return values.map!(v => toJobFrequency(v)).array;
 }
 
@@ -794,20 +775,20 @@ string[] toStrings(JobFrequency[] frequencies) {
 unittest {
   mixin(ShowTest!("JobFrequency Enumeration"));
 
-  assert(toJobFrequency("once") == JobFrequency.once);
-  assert(toJobFrequency("hourly") == JobFrequency.hourly);
-  assert(toJobFrequency("daily") == JobFrequency.daily);
-  assert(toJobFrequency("weekly") == JobFrequency.weekly);
-  assert(toJobFrequency("monthly") == JobFrequency.monthly);
-  assert(toJobFrequency("unknown") == JobFrequency.once); // default case
+  assert("once".toJobFrequency == JobFrequency.once);
+  assert("hourly".toJobFrequency == JobFrequency.hourly);
+  assert("daily".toJobFrequency == JobFrequency.daily);
+  assert("weekly".toJobFrequency == JobFrequency.weekly);
+  assert("monthly".toJobFrequency == JobFrequency.monthly);
+  assert("unknown".toJobFrequency == JobFrequency.once); // default case
 
-  assert(toString(JobFrequency.once) == "once");
-  assert(toString(JobFrequency.hourly) == "hourly");
-  assert(toString(JobFrequency.daily) == "daily");
-  assert(toString(JobFrequency.weekly) == "weekly");
-  assert(toString(JobFrequency.monthly) == "monthly");
+  assert(JobFrequency.once.toString == "once");
+  assert(JobFrequency.hourly.toString == "hourly");
+  assert(JobFrequency.daily.toString == "daily");
+  assert(JobFrequency.weekly.toString == "weekly");
+  assert(JobFrequency.monthly.toString == "monthly");
 
-  assert(toJobFrequency(["once", "daily", "unknown"]) == [
+  assert(["once", "daily", "unknown"].toJobFrequencies == [
       JobFrequency.once, JobFrequency.daily, JobFrequency.once
     ]);
   assert(toStrings([JobFrequency.hourly, JobFrequency.weekly]) == [
@@ -837,29 +818,29 @@ string toString(JobStatus status) {
 }
 
 string[] toStrings(JobStatus[] statuses) {
-  return statuses.map!(s => toString(s)).array;
+  return statuses.map!toString.array;
 }
 ///
 unittest {
   mixin(ShowTest!("JobStatus Enumeration"));
 
-  assert(toJobStatus("scheduled") == JobStatus.scheduled);
-  assert(toJobStatus("running") == JobStatus.running);
-  assert(toJobStatus("completed") == JobStatus.completed);
-  assert(toJobStatus("failed") == JobStatus.failed);
-  assert(toJobStatus("canceled") == JobStatus.canceled);
-  assert(toJobStatus("unknown") == JobStatus.scheduled); // default case
+  assert("scheduled".toJobStatus == JobStatus.scheduled);
+  assert("running".toJobStatus == JobStatus.running);
+  assert("completed".toJobStatus == JobStatus.completed);
+  assert("failed".toJobStatus == JobStatus.failed);
+  assert("canceled".toJobStatus == JobStatus.canceled);
+  assert("unknown".toJobStatus == JobStatus.scheduled); // default case
 
-  assert(toString(JobStatus.scheduled) == "scheduled");
-  assert(toString(JobStatus.running) == "running");
-  assert(toString(JobStatus.completed) == "completed");
-  assert(toString(JobStatus.failed) == "failed");
-  assert(toString(JobStatus.canceled) == "canceled");
+  assert(JobStatus.scheduled.toString == "scheduled");
+  assert(JobStatus.running.toString == "running");
+  assert(JobStatus.completed.toString == "completed");
+  assert(JobStatus.failed.toString == "failed");
+  assert(JobStatus.canceled.toString == "canceled");
 
-  assert(toJobStatus(["scheduled", "running", "unknown"]) == [
+  assert(["scheduled", "running", "unknown"].toJobStatuses == [
       JobStatus.scheduled, JobStatus.running, JobStatus.scheduled
     ]);
-  assert(toStrings([JobStatus.completed, JobStatus.failed]) == [
+  assert([JobStatus.completed, JobStatus.failed].toStrings == [
       "completed", "failed"
     ]);
 }

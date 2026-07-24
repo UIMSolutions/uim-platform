@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.integration.automation.application.usecases.manage.destinations;
 
-
 // import uim.platform.integration.automation.domain.entities.destination;
 // import uim.platform.integration.automation.domain.ports.repositories.destinations;
 // import uim.platform.integration.automation.domain.ports.repositories.systems;

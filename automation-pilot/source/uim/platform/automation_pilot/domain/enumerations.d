@@ -125,28 +125,28 @@ string[] toStrings(CommandStatus[] statuses) {
 }
 ///
 unittest {
-    assert(toCommandStatus("active") == CommandStatus.active);
-    assert(toCommandStatus("inactive") == CommandStatus.inactive);
-    assert(toCommandStatus("draft") == CommandStatus.draft);
-    assert(toCommandStatus("deprecated") == CommandStatus.deprecated_);
+    assert("active".toCommandStatus == CommandStatus.active);
+    assert("inactive".toCommandStatus == CommandStatus.inactive);
+    assert("draft".toCommandStatus == CommandStatus.draft);
+    assert("deprecated".toCommandStatus == CommandStatus.deprecated_);
 
-    assert(toCommandStatus("") == CommandStatus.active);
-    assert(toCommandStatus("unknown") == CommandStatus.active);
+    assert("".toCommandStatus == CommandStatus.active);
+    assert("unknown".toCommandStatus == CommandStatus.active);
 
-    assert(toCommandStatus(["active", "inactive", "deprecated", "unknown"]) == [
+    assert(["active", "inactive", "deprecated", "unknown"].toCommandStatuses == [
             CommandStatus.active, CommandStatus.inactive,
             CommandStatus.deprecated_,
             CommandStatus.active
         ]);
 
-    assert(toString(CommandStatus.active) == "active");
-    assert(toString(CommandStatus.inactive) == "inactive");
-    assert(toString(CommandStatus.deprecated_) == "deprecated");
+    assert(CommandStatus.active.toString == "active");
+    assert(CommandStatus.inactive.toString == "inactive");
+    assert(CommandStatus.deprecated_.toString == "deprecated");
 
-    assert(toStrings([
+    assert([
             CommandStatus.active, CommandStatus.inactive,
             CommandStatus.deprecated_
-        ]) == ["active", "inactive", "deprecated"]);
+        ].toStrings == ["active", "inactive", "deprecated"]);
 }
 
 enum CommandType {
@@ -173,30 +173,30 @@ string[] toStrings(CommandType[] types) {
 }
 ///
 unittest {
-    assert(toCommandType("simple") == CommandType.simple);
-    assert(toCommandType("composite") == CommandType.composite);
-    assert(toCommandType("httpRequest") == CommandType.httpRequest);
-    assert(toCommandType("script") == CommandType.script);
+    assert("simple".toCommandType == CommandType.simple);
+    assert("composite".toCommandType == CommandType.composite);
+    assert("httpRequest".toCommandType == CommandType.httpRequest);
+    assert("script".toCommandType == CommandType.script);
 
-    assert(toCommandType("") == CommandType.simple);
-    assert(toCommandType("unknown") == CommandType.simple);
+    assert("".toCommandType == CommandType.simple);
+    assert("unknown".toCommandType == CommandType.simple);
 
-    assert(toCommandTypes([
+    assert([
             "simple", "composite", "httpRequest", "script", "unknown"
-        ]) == [
+        ].toCommandTypes == [
         CommandType.simple, CommandType.composite, CommandType.httpRequest,
         CommandType.script, CommandType.simple
     ]);
 
-    assert(toString(CommandType.simple) == "simple");
-    assert(toString(CommandType.composite) == "composite");
-    assert(toString(CommandType.httpRequest) == "httpRequest");
-    assert(toString(CommandType.script) == "script");
+    assert(CommandType.simple.toString == "simple");
+    assert(CommandType.composite.toString == "composite");
+    assert(CommandType.httpRequest.toString == "httpRequest");
+    assert(CommandType.script.toString == "script");
 
-    assert(toStrings([
+    assert([
             CommandType.simple, CommandType.composite, CommandType.httpRequest,
             CommandType.script
-        ]) == ["simple", "composite", "httpRequest", "script"]);
+        ].toStrings == ["simple", "composite", "httpRequest", "script"]);
 }
 
 enum ExecutionStatus {
@@ -213,7 +213,7 @@ ExecutionStatus toExecutionStatus(string value) {
 }
 
 ExecutionStatus[] toExecutionStatuses(string[] s) {
-    return s.map!(toExecutionStatus).array;
+    return s.map!toExecutionStatus.array;
 }
 
 string toString(ExecutionStatus status) {
@@ -225,38 +225,38 @@ string[] toStrings(ExecutionStatus[] statuses) {
 }
 ///
 unittest {
-    assert(toExecutionStatus("pending") == ExecutionStatus.pending);
-    assert(toExecutionStatus("running") == ExecutionStatus.running);
-    assert(toExecutionStatus("completed") == ExecutionStatus.completed);
-    assert(toExecutionStatus("failed") == ExecutionStatus.failed);
-    assert(toExecutionStatus("cancelled") == ExecutionStatus.cancelled);
-    assert(toExecutionStatus("timedOut") == ExecutionStatus.timedOut);
+    assert("pending".toExecutionStatus == ExecutionStatus.pending);
+    assert("running".toExecutionStatus == ExecutionStatus.running);
+    assert("completed".toExecutionStatus == ExecutionStatus.completed);
+    assert("failed".toExecutionStatus == ExecutionStatus.failed);
+    assert("cancelled".toExecutionStatus == ExecutionStatus.cancelled);
+    assert("timedOut".toExecutionStatus == ExecutionStatus.timedOut);
 
-    assert(toExecutionStatus("") == ExecutionStatus.pending);
-    assert(toExecutionStatus("unknown") == ExecutionStatus.pending);
+    assert("".toExecutionStatus == ExecutionStatus.pending);
+    assert("unknown".toExecutionStatus == ExecutionStatus.pending);
 
-    assert(toExecutionStatuses([
+    assert([
             "pending", "running", "completed", "failed", "cancelled", "timedOut",
             "unknown"
-        ]) == [
+        ].toExecutionStatuses == [
         ExecutionStatus.pending, ExecutionStatus.running,
         ExecutionStatus.completed, ExecutionStatus.failed,
         ExecutionStatus.cancelled, ExecutionStatus.timedOut,
         ExecutionStatus.pending
     ]);
 
-    assert(toString(ExecutionStatus.pending) == "pending");
-    assert(toString(ExecutionStatus.running) == "running");
-    assert(toString(ExecutionStatus.completed) == "completed");
-    assert(toString(ExecutionStatus.failed) == "failed");
-    assert(toString(ExecutionStatus.cancelled) == "cancelled");
-    assert(toString(ExecutionStatus.timedOut) == "timedOut");
+    assert(ExecutionStatus.pending.toString == "pending");
+    assert(ExecutionStatus.running.toString == "running");
+    assert(ExecutionStatus.completed.toString == "completed");
+    assert(ExecutionStatus.failed.toString == "failed");
+    assert(ExecutionStatus.cancelled.toString == "cancelled");
+    assert(ExecutionStatus.timedOut.toString == "timedOut");
 
-    assert(toStrings([
+    assert([
             ExecutionStatus.pending, ExecutionStatus.running,
             ExecutionStatus.completed, ExecutionStatus.failed,
             ExecutionStatus.cancelled, ExecutionStatus.timedOut
-        ]) == [
+        ].toStrings == [
         "pending", "running", "completed", "failed", "cancelled", "timedOut"
     ]);
 }
@@ -285,30 +285,30 @@ string[] toStrings(ExecutionPriority[] priorities) {
 }
 ///
 unittest {
-    assert(toExecutionPriority("low") == ExecutionPriority.low);
-    assert(toExecutionPriority("medium") == ExecutionPriority.medium);
-    assert(toExecutionPriority("high") == ExecutionPriority.high);
-    assert(toExecutionPriority("critical") == ExecutionPriority.critical);
+    assert("low".toExecutionPriority == ExecutionPriority.low);
+    assert("medium".toExecutionPriority == ExecutionPriority.medium);
+    assert("high".toExecutionPriority == ExecutionPriority.high);
+    assert("critical".toExecutionPriority == ExecutionPriority.critical);
 
-    assert(toExecutionPriority("") == ExecutionPriority.medium);
-    assert(toExecutionPriority("unknown") == ExecutionPriority.medium);
+    assert("".toExecutionPriority == ExecutionPriority.medium);
+    assert("unknown".toExecutionPriority == ExecutionPriority.medium);
 
-    assert(toExecutionPriorities([
+    assert([
             "low", "medium", "high", "critical", "unknown"
-        ]) == [
+        ].toExecutionPriorities == [
         ExecutionPriority.low, ExecutionPriority.medium, ExecutionPriority.high,
         ExecutionPriority.critical, ExecutionPriority.medium
     ]);
 
-    assert(toString(ExecutionPriority.low) == "low");
-    assert(toString(ExecutionPriority.medium) == "medium");
-    assert(toString(ExecutionPriority.high) == "high");
-    assert(toString(ExecutionPriority.critical) == "critical");
+    assert(ExecutionPriority.low.toString == "low");
+    assert(ExecutionPriority.medium.toString == "medium");
+    assert(ExecutionPriority.high.toString == "high");
+    assert(ExecutionPriority.critical.toString == "critical");
 
-    assert(toStrings([
+    assert([
             ExecutionPriority.low, ExecutionPriority.medium,
             ExecutionPriority.high, ExecutionPriority.critical
-        ]) == ["low", "medium", "high", "critical"]);
+        ].toStrings == ["low", "medium", "high", "critical"]);
 }
 
 enum ScheduleType {
@@ -334,25 +334,25 @@ string[] toStrings(ScheduleType[] types) {
 }
 ///
 unittest {
-    assert(toScheduleType("oneTime") == ScheduleType.oneTime);
-    assert(toScheduleType("recurring") == ScheduleType.recurring);
-    assert(toScheduleType("cron") == ScheduleType.cron);
+    assert("oneTime".toScheduleType == ScheduleType.oneTime);
+    assert("recurring".toScheduleType == ScheduleType.recurring);
+    assert("cron".toScheduleType == ScheduleType.cron);
 
-    assert(toScheduleType("") == ScheduleType.oneTime);
-    assert(toScheduleType("unknown") == ScheduleType.oneTime);
+    assert("".toScheduleType == ScheduleType.oneTime);
+    assert("unknown".toScheduleType == ScheduleType.oneTime);
 
-    assert(toScheduleTypes(["oneTime", "recurring", "cron", "unknown"]) == [
+    assert(["oneTime", "recurring", "cron", "unknown"].toScheduleTypes == [
             ScheduleType.oneTime, ScheduleType.recurring, ScheduleType.cron,
             ScheduleType.oneTime
         ]);
 
-    assert(toString(ScheduleType.oneTime) == "oneTime");
-    assert(toString(ScheduleType.recurring) == "recurring");
-    assert(toString(ScheduleType.cron) == "cron");
+    assert(ScheduleType.oneTime.toString == "oneTime");
+    assert(ScheduleType.recurring.toString == "recurring");
+    assert(ScheduleType.cron.toString == "cron");
 
-    assert(toStrings([
+    assert([
             ScheduleType.oneTime, ScheduleType.recurring, ScheduleType.cron
-        ]) == ["oneTime", "recurring", "cron"]);
+        ].toStrings == ["oneTime", "recurring", "cron"]);
 }
 
 enum ScheduleStatus {
@@ -379,30 +379,30 @@ string[] toStrings(ScheduleStatus[] statuses) {
 }
 ///
 unittest {
-    assert(toScheduleStatus("active") == ScheduleStatus.active);
-    assert(toScheduleStatus("paused") == ScheduleStatus.paused);
-    assert(toScheduleStatus("completed") == ScheduleStatus.completed);
-    assert(toScheduleStatus("expired") == ScheduleStatus.expired);
+    assert("active".toScheduleStatus == ScheduleStatus.active);
+    assert("paused".toScheduleStatus == ScheduleStatus.paused);
+    assert("completed".toScheduleStatus == ScheduleStatus.completed);
+    assert("expired".toScheduleStatus == ScheduleStatus.expired);
 
-    assert(toScheduleStatus("") == ScheduleStatus.active);
-    assert(toScheduleStatus("unknown") == ScheduleStatus.active);
+    assert("".toScheduleStatus == ScheduleStatus.active);
+    assert("unknown".toScheduleStatus == ScheduleStatus.active);
 
-    assert(toScheduleStatuses([
+    assert([
             "active", "paused", "completed", "expired", "unknown"
-        ]) == [
+        ].toScheduleStatuses == [
         ScheduleStatus.active, ScheduleStatus.paused, ScheduleStatus.completed,
         ScheduleStatus.expired, ScheduleStatus.active
     ]);
 
-    assert(toString(ScheduleStatus.active) == "active");
-    assert(toString(ScheduleStatus.paused) == "paused");
-    assert(toString(ScheduleStatus.completed) == "completed");
-    assert(toString(ScheduleStatus.expired) == "expired");
+    assert(ScheduleStatus.active.toString == "active");
+    assert(ScheduleStatus.paused.toString == "paused");
+    assert(ScheduleStatus.completed.toString == "completed");
+    assert(ScheduleStatus.expired.toString == "expired");
 
-    assert(toStrings([
+    assert([
             ScheduleStatus.active, ScheduleStatus.paused, ScheduleStatus.completed,
             ScheduleStatus.expired
-        ]) == ["active", "paused", "completed", "expired"]);
+        ].toStrings == ["active", "paused", "completed", "expired"]);
 }
 
 enum TriggerType {
@@ -476,25 +476,25 @@ string[] toStrings(TriggerStatus[] statuses) {
 }
 
 unittest {
-    assert(toTriggerStatus("active") == TriggerStatus.active);
-    assert(toTriggerStatus("inactive") == TriggerStatus.inactive);
-    assert(toTriggerStatus("disabled") == TriggerStatus.disabled);
+    assert("active".toTriggerStatus == TriggerStatus.active);
+    assert("inactive".toTriggerStatus == TriggerStatus.inactive);
+    assert("disabled".toTriggerStatus == TriggerStatus.disabled);
 
-    assert(toTriggerStatus("") == TriggerStatus.active);
-    assert(toTriggerStatus("unknown") == TriggerStatus.active);
+    assert("".toTriggerStatus == TriggerStatus.active);
+    assert("unknown".toTriggerStatus == TriggerStatus.active);
 
-    assert(toTriggerStatuses(["active", "inactive", "disabled", "unknown"]) == [
+    assert(["active", "inactive", "disabled", "unknown"].toTriggerStatuses == [
             TriggerStatus.active, TriggerStatus.inactive, TriggerStatus.disabled,
             TriggerStatus.active
         ]);
 
-    assert(toString(TriggerStatus.active) == "active");
-    assert(toString(TriggerStatus.inactive) == "inactive");
-    assert(toString(TriggerStatus.disabled) == "disabled");
+    assert(TriggerStatus.active.toString == "active");
+    assert(TriggerStatus.inactive.toString == "inactive");
+    assert(TriggerStatus.disabled.toString == "disabled");
 
-    assert(toStrings([
+    assert([
             TriggerStatus.active, TriggerStatus.inactive, TriggerStatus.disabled
-        ]) == ["active", "inactive", "disabled"]);
+        ].toStrings == ["active", "inactive", "disabled"]);
 }
 
 enum InputType : string {
@@ -582,9 +582,9 @@ string[] toStrings(InputSensitivity[] sensitivities) {
 }
 ///
 unittest {
-    assert(toInputSensitivity("normal") == InputSensitivity.normal);
-    assert(toInputSensitivity("sensitive") == InputSensitivity.sensitive);
-    assert(toInputSensitivity("secret") == InputSensitivity.secret);
+    assert("normal".toInputSensitivity == InputSensitivity.normal);
+    assert("sensitive".toInputSensitivity == InputSensitivity.sensitive);
+    assert("secret".toInputSensitivity == InputSensitivity.secret);
 
     assert("".toInputSensitivity == InputSensitivity.normal);
     assert("unknown".toInputSensitivity == InputSensitivity.normal);
@@ -625,14 +625,14 @@ string[] toStrings(ServiceAccountStatus[] statuses) {
 }
 ///
 unittest {
-    assert(toServiceAccountStatus("active") == ServiceAccountStatus.active);
-    assert(toServiceAccountStatus("inactive") == ServiceAccountStatus.inactive);
-    assert(toServiceAccountStatus("revoked") == ServiceAccountStatus.revoked);
+    assert("active".toServiceAccountStatus == ServiceAccountStatus.active);
+    assert("inactive".toServiceAccountStatus == ServiceAccountStatus.inactive);
+    assert("revoked".toServiceAccountStatus == ServiceAccountStatus.revoked);
 
     assert("".toServiceAccountStatus == ServiceAccountStatus.active);
     assert("unknown".toServiceAccountStatus == ServiceAccountStatus.active);
 
-    assert(["active", "inactive"].toServiceAccountStatus == [
+    assert(["active", "inactive"].toServiceAccountStatuses == [
             ServiceAccountStatus.active, ServiceAccountStatus.inactive
         ]);
 
@@ -669,10 +669,10 @@ string[] toStrings(ConnectorType[] types) {
 }
 ///
 unittest {
-    assert(toConnectorType("github") == ConnectorType.github);
-    assert(toConnectorType("gitLab") == ConnectorType.gitLab);
-    assert(toConnectorType("bitbucket") == ConnectorType.bitbucket);
-    assert(toConnectorType("s3") == ConnectorType.s3);
+    assert("github".toConnectorType == ConnectorType.github);
+    assert("gitLab".toConnectorType == ConnectorType.gitLab);
+    assert("bitbucket".toConnectorType == ConnectorType.bitbucket);
+    assert("s3".toConnectorType == ConnectorType.s3);
 
     assert("".toConnectorType == ConnectorType.github);
     assert("unknown".toConnectorType == ConnectorType.github);
@@ -714,9 +714,9 @@ string[] toStrings(ConnectorStatus[] statuses) {
 }
 ///
 unittest {
-    assert(toConnectorStatus("connected") == ConnectorStatus.connected);
-    assert(toConnectorStatus("disconnected") == ConnectorStatus.disconnected);
-    assert(toConnectorStatus("error") == ConnectorStatus.error);
+    assert("connected".toConnectorStatus == ConnectorStatus.connected);
+    assert("disconnected".toConnectorStatus == ConnectorStatus.disconnected);
+    assert("error".toConnectorStatus == ConnectorStatus.error);
 
     assert("".toConnectorStatus == ConnectorStatus.connected);
     assert("unknown".toConnectorStatus == ConnectorStatus.connected);
@@ -758,10 +758,10 @@ string[] toStrings(BackupStatus[] statuses) {
 }
 ///
 unittest {
-    assert(toBackupStatus("pending") == BackupStatus.pending);
-    assert(toBackupStatus("inProgress") == BackupStatus.inProgress);
-    assert(toBackupStatus("completed") == BackupStatus.completed);
-    assert(toBackupStatus("failed") == BackupStatus.failed);
+    assert("pending".toBackupStatus == BackupStatus.pending);
+    assert("inProgress".toBackupStatus == BackupStatus.inProgress);
+    assert("completed".toBackupStatus == BackupStatus.completed);
+    assert("failed".toBackupStatus == BackupStatus.failed);
 
     assert("".toBackupStatus == BackupStatus.pending);
     assert("unknown".toBackupStatus == BackupStatus.pending);

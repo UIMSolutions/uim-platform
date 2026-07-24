@@ -43,7 +43,7 @@ ArtifactStatus[] toArtifactStatuses(string[] values)
 string toString(ArtifactStatus value)
   => value.to!string;
 string[] toStrings(ArtifactStatus[] values)
-  => values.map!(v => v.toString()).array;
+  => values.map!toString.array;
 ///
 unittest {
   mixin(ShowTest!("ArtifactStatus"));
@@ -86,7 +86,7 @@ FlowDirection[] toFlowDirections(string[] values)
 string toString(FlowDirection value)
   => value.to!string;
 string[] toStrings(FlowDirection[] values)
-  => values.map!(v => v.toString()).array;
+  => values.map!toString.array;
 ///
 unittest {
   mixin(ShowTest!("FlowDirection"));
@@ -165,7 +165,7 @@ AdapterType[] toAdapterTypes(string[] values)
 string toString(AdapterType value)
   => cast(string)value;
 string[] toStrings(AdapterType[] values)
-  => values.map!(v => v.toString()).array;
+  => values.map!toString.array;
 /// 
 unittest {
   mixin(ShowTest!("AdapterType"));
@@ -227,7 +227,7 @@ PolicyType[] toPolicyTypes(string[] values)
 string toString(PolicyType value)
   => value.to!string;
 string[] toStrings(PolicyType[] values)
-  => values.map!(v => v.toString()).array;
+  => values.map!toString.array;
 /// 
 unittest {
   mixin(ShowTest!("PolicyType"));
@@ -275,7 +275,7 @@ ApiProxyStatus[] toApiProxyStatuses(string[] values)
 string toString(ApiProxyStatus value)
   => value.to!string;
 string[] toStrings(ApiProxyStatus[] values)
-  => values.map!(v => v.toString()).array;
+  => values.map!toString.array;
 ///
 unittest {
   mixin(ShowTest!("ApiProxyStatus"));
@@ -323,7 +323,7 @@ QueueStatus[] toQueueStatuses(string[] values)
 string toString(QueueStatus value)
   => value.to!string;
 string[] toStrings(QueueStatus[] values)
-  => values.map!(v => v.toString()).array;
+  => values.map!toString.array;
 ///
 unittest {
   mixin(ShowTest!("QueueStatus"));
@@ -369,7 +369,7 @@ SubscriptionStatus[] toSubscriptionStatuses(string[] values)
 string toString(SubscriptionStatus value)
   => value.to!string;
 string[] toStrings(SubscriptionStatus[] values)
-  => values.map!(v => v.toString()).array;
+  => values.map!toString.array;
 ///
 unittest {
   mixin(ShowTest!("SubscriptionStatus"));
@@ -412,7 +412,7 @@ B2bStandard[] toB2bStandards(string[] values)
 string toString(B2bStandard value)
   => value.to!string;
 string[] toStrings(B2bStandard[] values)
-  => values.map!(v => v.toString()).array;
+  => values.map!toString.array;
   /// unittest {
   mixin(ShowTest!("B2bStandard"));
 
@@ -497,7 +497,7 @@ MappingStatus[] toMappingStatuses(string[] values)
 string toString(MappingStatus value)
   => value.to!string;
 string[] toStrings(MappingStatus[] values)
-  => values.map!(v => v.toString()).array;
+  => values.map!toString.array;
 ///
 unittest {
   mixin(ShowTest!("MappingStatus"));
@@ -537,7 +537,7 @@ DeploymentStatus[] toDeploymentStatuses(string[] values)
 string toString(DeploymentStatus value)
   => value.to!string;
 string[] toStrings(DeploymentStatus[] values)
-  => values.map!(v => v.toString()).array;
+  => values.map!toString.array;
 ///
 unittest {
   mixin(ShowTest!("DeploymentStatus"));
@@ -582,7 +582,7 @@ IntegrationUserRole[] toIntegrationUserRoles(string[] values)
 string toString(IntegrationUserRole value)
   => value.to!string;
 string[] toStrings(IntegrationUserRole[] values)  
-  => values.map!(v => v.toString()).array;
+  => values.map!toString.array;
 ///
 unittest {
   mixin(ShowTest!("IntegrationUserRole"));  

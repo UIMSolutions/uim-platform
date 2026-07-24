@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.job_scheduling.infrastructure.persistence.repositories.job;
 
-
 // import uim.platform.job_scheduling.domain.entities.job;
 // import uim.platform.job_scheduling.domain.ports.repositories.jobs;
 

@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.data_attribute_recommendation.application.usecases.manage.models;
 
-
 // import uim.platform.data_attribute_recommendation.domain.entities.model_configuration;
 // import uim.platform.data_attribute_recommendation.domain.entities.training_job;
 // import uim.platform.data_attribute_recommendation.domain.ports.repositories.model_configs;
@@ -18,11 +17,11 @@ mixin(ShowModule!());
 
 @safe:
 class ManageModelsUseCase { // TODO: UIMUseCase {
-  private ModelConfigRepository repo;
-  private DatasetRepository datasetRepo;
+  private IModelConfigRepository repo;
+  private IDatasetRepository datasetRepo;
   private ModelTrainer trainer;
 
-  this(ModelConfigRepository repo, DatasetRepository datasetRepo, ModelTrainer trainer) {
+  this(IModelConfigRepository repo, IDatasetRepository datasetRepo, ModelTrainer trainer) {
     this.repo = repo;
     this.datasetRepo = datasetRepo;
     this.trainer = trainer;

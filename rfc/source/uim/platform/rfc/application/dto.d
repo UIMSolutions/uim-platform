@@ -121,8 +121,3 @@ struct ProcessQueueResponse {
 // Generic command result
 // ---------------------------------------------------------------------------
 
-struct CommandResult {
-    bool   success;
-    string id;
-    string error;
-}

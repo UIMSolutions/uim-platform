@@ -14,10 +14,10 @@ mixin(ShowModule!());
 
 @safe:
 class ManageDatasetsUseCase { // TODO: UIMUseCase {
-  private DatasetRepository repo;
-  private DataRecordRepository recordRepo;
+  private IDatasetRepository repo;
+  private IDataRecordRepository recordRepo;
 
-  this(DatasetRepository repo, DataRecordRepository recordRepo) {
+  this(IDatasetRepository repo, IDataRecordRepository recordRepo) {
     this.repo = repo;
     this.recordRepo = recordRepo;
   }

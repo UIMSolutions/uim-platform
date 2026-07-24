@@ -21,10 +21,10 @@ MessagingServiceStatus[] toMessagingServiceStatuses(string[] values) {
     return values.map!(v => v.toMessagingServiceStatus).array;
 }
 string toString(MessagingServiceStatus value) {
-    return value.to!string();
+    return value.to!string;
 }
 string[] toStrings(MessagingServiceStatus[] values) {
-    return values.map!(v => v.toString).array;
+    return values.map!toString.array;
 }
 ///
 unittest {
@@ -60,10 +60,10 @@ MessagingServicePlan[] toMessagingServicePlan(string[] values) {
     return values.map!(v => v.toMessagingServicePlan).array;
 }
 string toString(MessagingServicePlan value) {
-    return value.to!string();
+    return value.to!string;
 }
 string[] toStrings(MessagingServicePlan[] values) {
-    return values.map!(v => v.toString).array;
+    return values.map!toString.array;
 }
 ///
 unittest {
@@ -94,10 +94,10 @@ MessageClientStatus[] toMessageClientStatuses(string[] values) {
     return values.map!(v => v.toMessageClientStatus).array;
 }
 string toString(MessageClientStatus value) {
-    return value.to!string();
+    return value.to!string;
 }
 string[] toStrings(MessageClientStatus[] values) {
-    return values.map!(v => v.toString).array;
+    return values.map!toString.array;
 }
 ///
 unittest {
@@ -129,10 +129,10 @@ MessageClientProtocol[] toMessageClientProtocol(string[] values) {
     return values.map!(v => v.toMessageClientProtocol).array;
 }
 string toString(MessageClientProtocol value) {
-    return value.to!string();
+    return value.to!string;
 }
 string[] toStrings(MessageClientProtocol[] values) {
-    return values.map!(v => v.toString).array;
+    return values.map!toString.array;
 }
 ///
 unittest {
@@ -165,7 +165,7 @@ QueueStatus[] toQueueStatuses(string[] values) {
     return values.map!(toQueueStatus).array;
 }
 string toString(QueueStatus value) {
-    return value.to!string();
+    return value.to!string;
 }
 string[] toStrings(QueueStatus[] values) {
     return values.map!toString.array;
@@ -198,7 +198,7 @@ QueueAccessType[] toQueueAccessType(string[] values) {
     return values.map!(v => v.toQueueAccessType).array;
 }
 string toString(QueueAccessType value) {
-    return value.to!string();
+    return value.to!string;
 }
 string[] toStrings(QueueAccessType[] values) {
     return values.map!toString.array;
@@ -230,7 +230,7 @@ QueueSubscriptionStatus[] toQueueSubscriptionStatuses(string[] values) {
     return values.map!(toQueueSubscriptionStatus).array;
 }
 string toString(QueueSubscriptionStatus value) {
-    return value.to!string();
+    return value.to!string;
 }
 string[] toStrings(QueueSubscriptionStatus[] values) {
     return values.map!toString.array;
@@ -265,7 +265,7 @@ WebhookStatus[] toWebhookStatuses(string[] values) {
     return values.map!(toWebhookStatus).array;
 }
 string toString(WebhookStatus value) {
-    return value.to!string();
+    return value.to!string;
 }
 string[] toStrings(WebhookStatus[] values) {
     return values.map!toString.array;
@@ -343,7 +343,7 @@ WebhookDeliveryMode[] toWebhookDeliveryMode(string[] values) {
     return values.map!(toWebhookDeliveryMode).array;
 }
 string toString(WebhookDeliveryMode value) {
-    return value.to!string();
+    return value.to!string;
 }
 string[] toStrings(WebhookDeliveryMode[] values) {
     return values.map!toString.array;
@@ -414,7 +414,7 @@ EventChannelType[] toEventChannelType(string[] values) {
     return values.map!(toEventChannelType).array;
 }
 string toString(EventChannelType value) {
-    return value.to!string();
+    return value.to!string;
 }
 string[] toStrings(EventChannelType[] values) {
     return values.map!toString.array;
@@ -447,7 +447,7 @@ MessageBindingStatus[] toMessageBindingStatuses(string[] values) {
     return values.map!(toMessageBindingStatus).array;
 }
 string toString(MessageBindingStatus value) {
-    return value.to!string();
+    return value.to!string;
 }
 string[] toStrings(MessageBindingStatus[] values) {
     return values.map!toString.array;
@@ -480,7 +480,7 @@ MessageBindingPermission[] toMessageBindingPermission(string[] values) {
     return values.map!(toMessageBindingPermission).array;
 }
 string toString(MessageBindingPermission value) {
-    return value.to!string();
+    return value.to!string;
 }
 string[] toStrings(MessageBindingPermission[] values) {
     return values.map!toString.array;

@@ -25,10 +25,10 @@ FlagType[] toFlagType(string[] values) {
     return values.map!(v => v.toFlagType).array;
 }
 string toString(FlagType value) {
-    return value.to!string();
+    return value.to!string;
 }
 string[] toStrings(FlagType[] values) {
-    return values.map!(v => v.toString).array;
+    return values.map!toString.array;
 }
 /// 
 unittest {
@@ -61,10 +61,10 @@ FlagState[] toFlagState(string[] values) {
     return values.map!(v => v.toFlagState).array;
 }
 string toString(FlagState value) {
-    return value.to!string();
+    return value.to!string;
 }
 string[] toStrings(FlagState[] values) {
-    return values.map!(v => v.toString()).array;
+    return values.map!toString.array;
 }
 /// 
 unittest {
@@ -97,10 +97,10 @@ RuleType[] toRuleType(string[] values) {
     return values.map!(v => v.toRuleType).array;
 }
 string toString(RuleType value) {
-    return value.to!string();
+    return value.to!string;
 }
 string[] toStrings(RuleType[] values) {
-    return values.map!(v => v.toString()).array;
+    return values.map!toString.array;
 }
 /// 
 unittest {
@@ -135,10 +135,10 @@ EvaluationKind[] toEvaluationKind(string[] values) {
     return values.map!(v => v.toEvaluationKind).array;
 }
 string toString(EvaluationKind value) {
-    return value.to!string();
+    return value.to!string;
 }
 string[] toStrings(EvaluationKind[] values) {
-    return values.map!(v => v.toString()).array;
+    return values.map!toString.array;
 }
 ///
 unittest {
@@ -175,10 +175,10 @@ AuditAction[] toAuditAction(string[] values) {
     return values.map!(v => v.toAuditAction).array;
 }
 string toString(AuditAction value) {
-    return value.to!string();
+    return value.to!string;
 }
 string[] toStrings(AuditAction[] values) {
-    return values.map!(v => v.toString()).array;
+    return values.map!toString.array;
 }   
 ///
 unittest {
@@ -216,10 +216,10 @@ StorageBackend[] toStorageBackend(string[] values) {
     return values.map!(v => v.toStorageBackend).array;
 }
 string toString(StorageBackend value) {
-    return value.to!string();
+    return value.to!string;
 }
 string[] toStrings(StorageBackend[] values) {
-    return values.map!(v => v.toString()).array;
+    return values.map!toString.array;
 }
 ///
 unittest {

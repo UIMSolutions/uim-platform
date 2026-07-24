@@ -12,11 +12,6 @@ mixin(ShowModule!());
 
 // ─── Generic command result ───────────────────────────────────────────────────
 
-struct CommandResult {
-  bool success;
-  string id;
-  string errorMessage;
-}
 
 // ─── FlexChange DTOs ─────────────────────────────────────────────────────────
 

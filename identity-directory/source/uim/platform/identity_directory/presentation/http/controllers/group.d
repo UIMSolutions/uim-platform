@@ -170,7 +170,12 @@ class GroupController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto data = precheck.data;
-    auto removeReq = RemoveMemberRequest(tenantId, data.getString("groupId"), data.getString("memberId"),);
+    
+    auto removeReq = RemoveMemberRequest();
+    removeReq.tenantId = tenantId;
+    removeReq.groupId = data.getString("groupId");
+    removeReq.memberId = data.getString("memberId");
+
     auto result = usecase.removeMember(removeReq);
     if (result.hasError)
       return errorResponse(result.errorMessage, 400);

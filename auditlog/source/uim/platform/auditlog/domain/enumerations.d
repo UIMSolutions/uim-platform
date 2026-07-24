@@ -94,7 +94,7 @@ AuditSeverity[] toAuditSeverities(string[] values) {
 }
 
 string toString(AuditSeverity s) {
-  return s.to!string();
+  return s.to!string;
 }
 
 string[] toStrings(AuditSeverity[] severities) {
@@ -271,7 +271,7 @@ AuditOutcome[] toAuditOutcomes(string[] values) {
 }
 
 string toString(AuditOutcome o) {
-  return o.to!string();
+  return o.to!string;
 }
 
 string[] toStrings(AuditOutcome[] outcomes) {
@@ -315,11 +315,11 @@ RetentionStatus[] toRetentionStatuses(string[] values) {
 }
 
 string toString(RetentionStatus s) {
-  return s.to!string();
+  return s.to!string;
 }
 
 string[] toStrings(RetentionStatus[] statuses) {
-  return statuses.map!(s => toString(s)).array;
+  return statuses.map!toString.array;
 }
 /// 
 unittest {
@@ -358,7 +358,7 @@ ExportStatus[] toExportStatuses(string[] values) {
 }
 
 string toString(ExportStatus s) {
-  return s.to!string();
+  return s.to!string;
 }
 
 string[] toStrings(ExportStatus[] statuses) {
@@ -401,7 +401,7 @@ ExportFormat[] toExportFormats(string[] values) {
 }
 
 string toString(ExportFormat f) {
-  return f.to!string();
+  return f.to!string;
 }
 
 string[] toStrings(ExportFormat[] formats) {
@@ -438,7 +438,7 @@ ConfigStatus[] toConfigStatuses(string[] values) {
 }
 
 string toString(ConfigStatus s) {
-  return s.to!string();
+  return s.to!string;
 }
 
 string[] toStrings(ConfigStatus[] statuses) {

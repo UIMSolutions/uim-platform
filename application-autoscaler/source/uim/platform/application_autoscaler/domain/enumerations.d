@@ -281,7 +281,7 @@ unittest {
 
   assert(["active", "inactive", "deleted"].toPolicyStatuses ==
          [PolicyStatus.active, PolicyStatus.inactive, PolicyStatus.deleted_]);
-  assert(toStrings([PolicyStatus.active, PolicyStatus.inactive, PolicyStatus.deleted_]) ==
+  assert([PolicyStatus.active, PolicyStatus.inactive, PolicyStatus.deleted_].toStrings ==
          ["active", "inactive", "deleted"]);
 }
 
@@ -321,6 +321,6 @@ unittest {
 
   assert(["sameApp", "boundApp"].toMetricAllowFroms ==
          [MetricAllowFrom.sameApp, MetricAllowFrom.boundApp]);
-  assert(toStrings([MetricAllowFrom.sameApp, MetricAllowFrom.boundApp]) ==
+  assert([MetricAllowFrom.sameApp, MetricAllowFrom.boundApp].toStrings ==
          ["sameApp", "boundApp"]);
 }

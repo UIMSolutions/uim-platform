@@ -20,7 +20,7 @@ enum InstanceType {
   trial,
   free,
 }
-InstanceType toInstanceType(string s) {
+InstanceType toInstanceType(string value) {
   mixin(EnumSwitch!"InstanceType", "free");
 }
 InstanceType[] toInstanceType(string[] values) {
@@ -30,7 +30,7 @@ string toString(InstanceType value) {
   return value.to!string;
 }
 string[] toStrings(InstanceType[] values) {
-  return values.map!(v => toString(v)).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -69,7 +69,7 @@ string toString(InstanceStatus value) {
   return value.to!string; 
 }
 string[] toStrings(InstanceStatus[] values) {
-  return values.map!(v => toString(v)).array;
+  return values.map!toString.array;
 }
 ///
 unittest { 
@@ -122,7 +122,7 @@ string toString(InstanceSize value) {
   return value.to!string;
 }
 string[] toStrings(InstanceSize[] values) {
-  return values.map!(v => toString(v)).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -157,7 +157,7 @@ enum StorageTier {
   warm,
   cold,
 }
-StorageTier toStorageTier(string s) {
+StorageTier toStorageTier(string value) {
   mixin(EnumSwitch!"StorageTier", "cold");
 } 
 StorageTier[] toStorageTier(string[] values) {
@@ -167,7 +167,7 @@ string toString(StorageTier value) {
   return value.to!string;
 }
 string[] toStrings(StorageTier[] values) {
-  return values.map!(v => toString(v)).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -206,7 +206,7 @@ string toString(DataLakeStatus value) {
   return value.to!string;
 }
 string[] toStrings(DataLakeStatus[] values) {
-  return values.map!(v => toString(v)).array;
+  return values.map!toString.array;
 }
 /// 
 unittest {
@@ -239,7 +239,7 @@ enum FileFormat {
   json,
   avro,
 }
-FileFormat toFileFormat(string s) {
+FileFormat toFileFormat(string value) {
   mixin(EnumSwitch!"FileFormat", "parquet");
 }
 FileFormat[] toFileFormat(string[] values) {
@@ -249,7 +249,7 @@ string toString(FileFormat value) {
   return value.to!string;
 }
 string[] toStrings(FileFormat[] values) {
-  return values.map!(v => toString(v)).array;
+  return values.map!toString.array;
 } 
 ///
 unittest {
@@ -282,7 +282,7 @@ enum SchemaType {
   system,
   temporary,
 }
-SchemaType toSchemaType(string s) {
+SchemaType toSchemaType(string value) {
   mixin(EnumSwitch!"SchemaType", "standard");
 }
 SchemaType[] toSchemaType(string[] values) {
@@ -292,7 +292,7 @@ string toString(SchemaType value) {
   return value.to!string;
 }
 string[] toStrings(SchemaType[] values) {
-  return values.map!(v => toString(v)).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -326,7 +326,7 @@ enum AuthType {
   jwt,
   ldap,
 }
-AuthType toAuthType(string s) {
+AuthType toAuthType(string value) {
   mixin(EnumSwitch!"AuthType", "password");
 }
 AuthType[] toAuthType(string[] values) {
@@ -336,7 +336,7 @@ string toString(AuthType value) {
   return value.to!string;
 }
 string[] toStrings(AuthType[] values) {
-  return values.map!(v => toString(v)).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -370,7 +370,7 @@ enum UserStatus {
   locked,
   expired,
 }
-UserStatus toUserStatus(string s) {
+UserStatus toUserStatus(string value) {
   mixin(EnumSwitch!"UserStatus", "active");
 }
 UserStatus[] toUserStatuses(string[] values) {
@@ -380,7 +380,7 @@ string toString(UserStatus value) {
   return value.to!string;
 }
 string[] toStrings(UserStatus[] values) {
-  return values.map!(v => toString(v)).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -412,7 +412,7 @@ enum PrivilegeType {
   application,
   role,
 }
-PrivilegeType toPrivilegeType(string s) {
+PrivilegeType toPrivilegeType(string value) {
   mixin(EnumSwitch!"PrivilegeType", "system");
 } 
 PrivilegeType[] toPrivilegeType(string[] values) {
@@ -422,7 +422,7 @@ string toString(PrivilegeType value) {
   return value.to!string;
 }
 string[] toStrings(PrivilegeType[] values) {
-  return values.map!(v => toString(v)).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -457,7 +457,7 @@ enum BackupType {
   log,
   snapshot,
 }
-BackupType toBackupType(string s) {
+BackupType toBackupType(string value) {
   mixin(EnumSwitch!"BackupType", "full");
 }
 BackupType[] toBackupType(string[] values) {
@@ -467,7 +467,7 @@ string toString(BackupType value) {
   return value.to!string;
 }
 string[] toStrings(BackupType[] values) {
-  return values.map!(v => toString(v)).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -500,7 +500,7 @@ enum BackupStatus {
   failed,
   cancelled,
 }
-BackupStatus toBackupStatus(string s) {
+BackupStatus toBackupStatus(string value) {
   mixin(EnumSwitch!"BackupStatus", "scheduled");
 }
 BackupStatus[] toBackupStatuses(string[] values) {
@@ -510,7 +510,7 @@ string toString(BackupStatus value) {
   return value.to!string;
 }
 string[] toStrings(BackupStatus[] values) {
-  return values.map!(v => toString(v)).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -542,7 +542,7 @@ enum AlertStatus {
   resolved,
   suppressed,
 }
-AlertStatus toAlertStatus(string s) {
+AlertStatus toAlertStatus(string value) {
   mixin(EnumSwitch!"AlertStatus", "active");
 }
 AlertStatus[] toAlertStatuses(string[] values) {
@@ -552,7 +552,7 @@ string toString(AlertStatus value) {
   return value.to!string;
 }
 string[] toStrings(AlertStatus[] values) {
-  return values.map!(v => toString(v)).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -587,18 +587,18 @@ enum AlertCategory {
   security,
   configuration,
 }
-AlertCategory toAlertCategory(string s) {
+AlertCategory toAlertCategory(string value) {
   mixin(EnumSwitch!"AlertCategory", "performance");
 }
-AlertCategory[] toAlertCategory(string[] values) {
-  return values.map!(v => toAlertCategory(v)).array;
-}
-string toString(AlertCategory value) {
-  return value.to!string;
-}
-string[] toStrings(AlertCategory[] values) {
-  return values.map!(v => toString(v)).array;
-}
+AlertCategory[] toAlertCategories(string[] values)
+  => values.map!toAlertCategory.array;
+
+string toString(AlertCategory value)
+  => value.to!string;
+
+string[] toStrings(AlertCategory[] values)
+  => values.map!toString.array;
+
 ///
 unittest {
   mixin(ShowTest!"AlertCategory");
@@ -638,7 +638,7 @@ enum HDIContainerStatus {
   error,
   deleting,
 }
-HDIContainerStatus toHDIContainerStatus(string s) {
+HDIContainerStatus toHDIContainerStatus(string value) {
   mixin(EnumSwitch!"HDIContainerStatus", "error");
 }
 HDIContainerStatus[] toHDIContainerStatuses(string[] values) {
@@ -648,7 +648,7 @@ string toString(HDIContainerStatus value) {
   return value.to!string;
 }
 string[] toStrings(HDIContainerStatus[] values) {
-  return values.map!(v => toString(v)).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -691,7 +691,7 @@ string toString(ReplicationMode value) {
   return value.to!string;
 }
 string[] toStrings(ReplicationMode[] values) {
-  return values.map!(v => toString(v)).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -735,7 +735,7 @@ string toString(ReplicationTaskStatus value) {
   return value.to!string;
 }
 string[] toStringArray(ReplicationTaskStatus[] values) {
-  return values.map!(v => toString(v)).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -769,7 +769,7 @@ enum ConfigScope {
   tenant,
   session,
 }
-ConfigScope toConfigScope(string s) {
+ConfigScope toConfigScope(string value) {
   mixin(EnumSwitch!"ConfigScope", "system");
 }
 ConfigScope[] toConfigScope(string[] values) {
@@ -779,7 +779,7 @@ string toString(ConfigScope value) {
   return value.to!string;
 }
 string[] toStrings(ConfigScope[] values) {
-  return values.map!(v => toString(v)).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -810,7 +810,7 @@ enum ConfigDataType {
   decimal,
   duration,
 }
-ConfigDataType toConfigDataType(string s) {
+ConfigDataType toConfigDataType(string value) {
   mixin(EnumSwitch!"ConfigDataType", "string_");
 }
 ConfigDataType[] toConfigDataType(string[] values) {
@@ -820,7 +820,7 @@ string toString(ConfigDataType value) {
   return value.to!string;
 }
 string[] toStrings(ConfigDataType[] values) {
-  return values.map!(v => toString(v)).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -859,7 +859,7 @@ enum ConnectionType {
 ConnectionType toConnectionType(string value) {
   mixin(EnumSwitch!"ConnectionType", "jdbc");
 } 
-ConnectionType[] toConnectionType(string[] values) {
+ConnectionType[] toConnectionTypes(string[] values) {
   return values.map!(toConnectionType).array;
 }
 string toString(ConnectionType type) {
@@ -891,7 +891,7 @@ unittest {
   assert(ConnectionType.go.toString == "go");
   assert(ConnectionType.dotnet.toString == "dotnet");
 
-  assert(["jdbc", "odbc", "java"].toConnectionType == [ConnectionType.jdbc, ConnectionType.odbc, ConnectionType.java]);
+  assert(["jdbc", "odbc", "java"].toConnectionTypes == [ConnectionType.jdbc, ConnectionType.odbc, ConnectionType.java]);
   assert([ConnectionType.jdbc, ConnectionType.odbc, ConnectionType.java].toStrings == ["jdbc", "odbc", "java"]);
 }
 
@@ -902,17 +902,17 @@ enum ConnectionStatus {
   error,
   pooled,
 }
-ConnectionStatus toConnectionStatus(string s) {
+ConnectionStatus toConnectionStatus(string value) {
   mixin(EnumSwitch!"ConnectionStatus", "inactive");
 }
-ConnectionStatus[] toConnectionStatusArray(string[] values) {
+ConnectionStatus[] toConnectionStatuses(string[] values) {
   return values.map!(v => toConnectionStatus(v)).array;
 }
 string toString(ConnectionStatus value) {
   return value.to!string;
 }
 string[] toStringArray(ConnectionStatus[] values) {
-  return values.map!(v => toString(v)).array;
+  return values.map!toString.array;
 }
 ///
 unittest {
@@ -931,6 +931,6 @@ unittest {
   assert(toString(ConnectionStatus.error) == "error");
   assert(toString(ConnectionStatus.pooled) == "pooled");
 
-  assert(toConnectionStatusArray(["active", "error", "unknown"]) == [ConnectionStatus.active, ConnectionStatus.error, ConnectionStatus.inactive]);
+  assert(toConnectionStatuses(["active", "error", "unknown"]) == [ConnectionStatus.active, ConnectionStatus.error, ConnectionStatus.inactive]);
   assert(toStringArray([ConnectionStatus.active, ConnectionStatus.pooled]) == ["active", "pooled"]);
 }

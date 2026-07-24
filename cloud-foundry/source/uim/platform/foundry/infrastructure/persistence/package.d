@@ -7,6 +7,4 @@ module uim.platform.foundry.infrastructure.persistence;
 
 public {
   import uim.platform.foundry.infrastructure.persistence.repositories;
-  import uim.platform.foundry.infrastructure.persistence.files;
-  import uim.platform.foundry.infrastructure.persistence.mongo;
 }

@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module app;
 
-
 // import uim.platform.monitoring.infrastructure.config;
 // import uim.platform.monitoring.infrastructure.container;
 
