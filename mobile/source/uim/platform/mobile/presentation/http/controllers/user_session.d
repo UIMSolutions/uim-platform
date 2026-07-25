@@ -87,20 +87,24 @@ class UserSessionController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto id = UserSessionId(precheck.id);
-    auto result = usecase.getUserSession(tenantId, id);
-    if (result.hasError)
-      return errorResponse(result.message, 400);
+    if (id.isNull)
+      return errorResponse("Invalid user session ID", 400);
+      
+    auto userSession = usecase.getUserSession(tenantId, id);
+    if (userSession.isNull)
+      return errorResponse("User session not found", 404);
+
     auto resp = Json.emptyObject
-      .set("id", result.data.id)
-      .set("tenantId", result.data.tenantId)
-      .set("appId", result.data.appId)
-      .set("deviceId", result.data.deviceId)
-      .set("userId", result.data.userId)
-      .set("ipAddress", result.data.ipAddress)
-      .set("userAgent", result.data.userAgent)
-      .set("platform", result.data.platform)
-      .set("appVersion", result.data.appVersion)
-      .set("status", result.data.status);
+      .set("id", userSession.id)
+      .set("tenantId", userSession.tenantId)
+      .set("appId", userSession.appId)
+      .set("deviceId", userSession.deviceId)
+      .set("userId", userSession.userId)
+      .set("ipAddress", userSession.ipAddress)
+      .set("userAgent", userSession.userAgent)
+      .set("platform", userSession.platform)
+      .set("appVersion", userSession.appVersion)
+      .set("status", userSession.status);
 
     return successResponse("User session retrieved successfully", "Retrieved", 200, resp);
   }

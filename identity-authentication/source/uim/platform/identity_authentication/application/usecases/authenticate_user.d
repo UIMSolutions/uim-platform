@@ -76,7 +76,7 @@ class AuthenticateUserUseCase { // TODO: UIMUseCase {
 
     // Create session
     auto now = currentTimestamp();
-    auto session = IASession(req.tenantId, SessionId(randomUUID().toString()), user.id);
+    auto session = IASession(req.tenantId, SessionId(generateId), user.id);
     session.applicationId = req.applicationId;
     session.authMethod = AuthMethod.form;
     // TODO: session.requiredMfa = requiredMfa;

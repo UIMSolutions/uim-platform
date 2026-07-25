@@ -19,7 +19,7 @@ class ManageApplicationGroupsUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Application group name is required");
 
         ApplicationGroup ag;
-        ag.id = ApplicationGroupId(randomUUID().toString());
+        ag.id = ApplicationGroupId(generateId);
         ag.tenantId = req.tenantId;
         ag.name = req.name;
         ag.description = req.description;
@@ -62,7 +62,7 @@ class ManageApplicationGroupsUseCase { // TODO: UIMUseCase {
     }
 
     ApplicationGroup[] listApplicationGroups(TenantId tenantId) {
-        return appGroupRepository.findAll(tenantId);
+        return appGroupRepository.findByTenant(tenantId);
     }
 
     CommandResult deleteApplicationGroup(TenantId tenantId, ApplicationGroupId id) {

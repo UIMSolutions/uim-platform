@@ -54,7 +54,7 @@ class ManageResidenceRulesUseCase { // TODO: UIMUseCase {
     }
 
     ResidenceRule[] listResidenceRules(TenantId tenantId) {
-        return repo.findAll(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     ResidenceRule[] listResidenceRules(TenantId tenantId, BusinessPurposeId purposeId) {

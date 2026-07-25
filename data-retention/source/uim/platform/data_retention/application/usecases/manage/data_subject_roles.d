@@ -19,7 +19,7 @@ class ManageDataSubjectRolesUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Data subject role name is required");
 
         DataSubjectRole dsr;
-        dsr.id = DataSubjectRoleId(randomUUID().toString());
+        dsr.id = DataSubjectRoleId(generateId);
         dsr.tenantId = req.tenantId;
         dsr.name = req.name;
         dsr.description = req.description;

@@ -13,14 +13,14 @@ mixin(ShowModule!());
 @safe:
 class MemoryCarrierRepository : TenantRepository!(Carrier, CarrierId), CarrierRepository {
   override Carrier[] findByStatus(TenantId tenantId, CarrierStatus status) {
-    return findAll(tenantId).filter!(c => c.status == status).array;
+    return findByTenant(tenantId).filter!(c => c.status == status).array;
   }
 
   override Carrier[] findByName(TenantId tenantId, string name) {
-    return findAll(tenantId).filter!(c => c.name == name).array;
+    return findByTenant(tenantId).filter!(c => c.name == name).array;
   }
 
   override bool existsByName(TenantId tenantId, string name) {
-    return findAll(tenantId).any!(c => c.name == name);
+    return findByTenant(tenantId).any!(c => c.name == name);
   }
 }

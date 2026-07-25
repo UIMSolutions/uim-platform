@@ -82,7 +82,7 @@ class QueueController : ManageHttpController {
             }
         }
         if (createId.isEmpty)
-            createId = randomUUID().toString();
+            createId = generateId;
 
         QueueDTO dto;
         dto.queueId = QueueId(createId);

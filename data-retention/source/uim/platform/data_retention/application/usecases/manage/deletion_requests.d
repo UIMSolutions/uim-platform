@@ -23,9 +23,7 @@ class ManageDeletionRequestsUseCase { // TODO: UIMUseCase {
         if (req.dataSubjectId.length == 0)
             return CommandResult(false, "", "Data subject ID is required");
 
-        DeletionRequest dr;
-        dr.id = DeletionRequestId(randomUUID().toString());
-        dr.tenantId = req.tenantId;
+        DeletionRequest dr = DeletionRequest(req.tenantId, DeletionRequestId(generateId));
         dr.dataSubjectId = DataSubjectId(req.dataSubjectId);
         dr.applicationGroupId = ApplicationGroupId(req.applicationGroupId);
         dr.actionType = toDeletionActionType(req.actionType);
@@ -65,7 +63,7 @@ class ManageDeletionRequestsUseCase { // TODO: UIMUseCase {
     }
 
     DeletionRequest[] listDeletionRequests(TenantId tenantId) {
-        return repo.findAll(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     DeletionRequest[] listDeletionRequestsByStatus(TenantId tenantId, DeletionRequestStatus status) {

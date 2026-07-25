@@ -26,7 +26,7 @@ class ManageIdentityProvidersUseCase {
 
     import std.uuid : randomUUID;
     IdentityProvider idp;
-    idp.id          = randomUUID().toString();
+    idp.id          = generateId;
     idp.alias_      = r.alias_;
     idp.displayName = r.displayName;
     idp.idpType     = r.idpType.toIdpType;

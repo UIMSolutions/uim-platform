@@ -19,7 +19,7 @@ class ManageLegalGroundsUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Legal ground name is required");
 
         LegalGround lg;
-        lg.id = LegalGroundId(randomUUID().toString());
+        lg.id = LegalGroundId(generateId);
         lg.tenantId = req.tenantId;
         lg.businessPurposeId = BusinessPurposeId(req.businessPurposeId);
         lg.name = req.name;
@@ -62,7 +62,7 @@ class ManageLegalGroundsUseCase { // TODO: UIMUseCase {
     }
 
     LegalGround[] listLegalGrounds(TenantId tenantId) {
-        return repo.findAll(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     LegalGround[] listLegalGrounds(TenantId tenantId, BusinessPurposeId purposeId) {

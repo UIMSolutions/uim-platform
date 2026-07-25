@@ -13,19 +13,19 @@ mixin(ShowModule!());
 @safe:
 class MemoryWarehouseTaskRepository : TenantRepository!(WarehouseTask, WarehouseTaskId), WarehouseTaskRepository {
   override WarehouseTask[] findByWarehouseOrder(TenantId tenantId, WarehouseOrderId orderId) {
-    return findAll(tenantId).filter!(t => t.warehouseOrderId.value == orderId.value).array;
+    return findByTenant(tenantId).filter!(t => t.warehouseOrderId.value == orderId.value).array;
   }
 
   override WarehouseTask[] findByStatus(TenantId tenantId, WarehouseTaskStatus status) {
-    return findAll(tenantId).filter!(t => t.status == status).array;
+    return findByTenant(tenantId).filter!(t => t.status == status).array;
   }
 
   override WarehouseTask[] findByTaskType(TenantId tenantId, WarehouseTaskType taskType) {
-    return findAll(tenantId).filter!(t => t.taskType == taskType).array;
+    return findByTenant(tenantId).filter!(t => t.taskType == taskType).array;
   }
 
   override WarehouseTask[] findByAssignee(TenantId tenantId, string assignedTo) {
-    return findAll(tenantId).filter!(t => t.assignedTo == assignedTo).array;
+    return findByTenant(tenantId).filter!(t => t.assignedTo == assignedTo).array;
   }
 
   override void removeByWarehouseOrder(TenantId tenantId, WarehouseOrderId orderId) {

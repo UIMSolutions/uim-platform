@@ -76,7 +76,7 @@ struct RfcCall {
         
         import std.uuid  : randomUUID;
         RfcCall c;
-        c.id             = randomUUID().toString();
+        c.id             = generateId;
         c.tenantId       = tenantId;
         c.destinationId  = dest;
         c.functionModule = fm;

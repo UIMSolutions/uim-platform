@@ -19,7 +19,7 @@ class ManageLegalEntitiesUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Legal entity name is required");
 
         LegalEntity le;
-        le.id = LegalEntityId(randomUUID().toString());
+        le.id = LegalEntityId(generateId);
         le.tenantId = req.tenantId;
         le.name = req.name;
         le.description = req.description;
@@ -62,7 +62,7 @@ class ManageLegalEntitiesUseCase { // TODO: UIMUseCase {
     }
 
     LegalEntity[] listLegalEntities(TenantId tenantId) {
-        return repo.findAll(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     CommandResult deleteLegalEntity(TenantId tenantId, LegalEntityId id) {

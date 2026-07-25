@@ -55,7 +55,7 @@ class ResponsibilityRuleController : ManageHttpController {
         auto data     = pre["data"];
 
         import std.uuid : randomUUID;
-        auto id = ResponsibilityRuleId(data.getString("ruleId", randomUUID().toString()));
+        auto id = ResponsibilityRuleId(data.getString("ruleId", generateId));
         ResponsibilityRuleDTO dto;
         dto.ruleId      = id;
         dto.tenantId    = tenantId;

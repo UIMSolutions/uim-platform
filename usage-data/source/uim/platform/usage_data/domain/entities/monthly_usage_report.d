@@ -64,7 +64,7 @@ struct MonthlyUsageReport {
 
   static MonthlyUsageReport create(string globalAccountId, int year, int month) {
     MonthlyUsageReport r;
-    r.id = MonthlyUsageReportId(randomUUID().toString());
+    r.id = MonthlyUsageReportId(generateId);
     r.globalAccountId = globalAccountId;
     r.reportingYear = year;
     r.reportingMonth = month;

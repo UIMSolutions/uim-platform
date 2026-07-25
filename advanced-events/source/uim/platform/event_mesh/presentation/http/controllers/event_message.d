@@ -86,7 +86,7 @@ class EventMessageController : ManageHttpController {
             }
         }
         if (createId.isEmpty)
-            createId = randomUUID().toString();
+            createId = generateId;
 
         EventMessageDTO dto;
         dto.messageId = EventMessageId(createId);

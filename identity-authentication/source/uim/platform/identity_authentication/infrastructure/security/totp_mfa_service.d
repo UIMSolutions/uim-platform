@@ -19,7 +19,7 @@ mixin(ShowModule!());
 /// In production, implement with proper RFC 6238 TOTP and SMS/email gateways.
 class TotpMfaService : MfaService {
   string generateSecret(MfaType mfaType) {
-    return randomUUID().toString();
+    return generateId;
   }
 
   bool validateCode(MfaType mfaType, string secret, string code) {

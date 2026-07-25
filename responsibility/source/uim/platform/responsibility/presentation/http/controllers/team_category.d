@@ -54,7 +54,7 @@ class TeamCategoryController : ManageHttpController {
         auto data = pre["data"];
         import std.uuid : randomUUID;
         TeamCategoryDTO dto;
-        dto.categoryId  = TeamCategoryId(data.getString("categoryId", randomUUID().toString()));
+        dto.categoryId  = TeamCategoryId(data.getString("categoryId", generateId));
         dto.tenantId    = tenantId;
         dto.name        = data.getString("name", "");
         dto.description = data.getString("description", "");

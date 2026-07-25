@@ -18,7 +18,7 @@ class ManageArchivingJobsUseCase { // TODO: UIMUseCase {
         if (req.applicationGroupId.isEmpty)
             return CommandResult(false, "", "Application group ID is required");
 
-        auto aj = ArchivingJob(req.tenantId, ArchivingJobId(randomUUID().toString()), req.createdBy);
+        auto aj = ArchivingJob(req.tenantId, ArchivingJobId(generateId), req.createdBy);
         aj.applicationGroupId = ApplicationGroupId(req.applicationGroupId);
         aj.operationType = toArchivingJobOperationType(req.operationType);
         aj.status = ArchivingJobStatus.scheduled;
@@ -62,7 +62,7 @@ class ManageArchivingJobsUseCase { // TODO: UIMUseCase {
     }
 
     ArchivingJob[] listArchivingJobs(TenantId tenantId) {
-        return repo.findAll(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     ArchivingJob[] listArchivingJobs(TenantId tenantId, ArchivingJobStatus status) {

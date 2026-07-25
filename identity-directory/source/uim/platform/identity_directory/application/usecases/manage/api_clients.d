@@ -29,10 +29,10 @@ class ManageApiClientsUseCase { // TODO: UIMUseCase {
   /// Create a new API client.
   ApiClientResponse createClient(CreateApiClientRequest req) {
     auto now = currentTimestamp();
-    auto clientId = randomUUID().toString(); /// ~ "-" ~ randomUUID().toString();
-    auto clientSecret = randomUUID().toString() ~ "-" ~ randomUUID().toString();
+    auto clientId = generateId; /// ~ "-" ~ generateId;
+    auto clientSecret = generateId ~ "-" ~ generateId;
 
-    auto client = ApiClient(req.tenantId, ApiClientId(randomUUID().toString()));
+    auto client = ApiClient(req.tenantId, ApiClientId(generateId));
     client.name = req.name;
     client.description = req.description;
     client.scopes = req.scopes;
@@ -45,7 +45,7 @@ class ManageApiClientsUseCase { // TODO: UIMUseCase {
     clientRepo.save(client);
 
     auto event = AuditEvent(req.tenantId);
-    event.id = randomUUID().toString(); 
+    event.id = generateId; 
     event.eventType = AuditEventType.apiClientCreated;
     event.actorId = "system";
     // event.actorName = "System";
@@ -82,7 +82,7 @@ class ManageApiClientsUseCase { // TODO: UIMUseCase {
     clientRepo.update(client);
 
     auto event = AuditEvent(tenantId);
-    event.id = randomUUID().toString();
+    event.id = generateId;
     event.eventType = AuditEventType.apiClientRevoked;
     event.actorId = "system";
     // event.actorName = "System";

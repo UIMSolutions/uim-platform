@@ -63,7 +63,7 @@ class TopicController : ManageHttpController {
       }
     }
     if (createId.isEmpty)
-      createId = randomUUID().toString();
+      createId = generateId;
 
     TopicDTO dto;
     dto.topicId = TopicId(createId);

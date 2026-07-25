@@ -84,7 +84,7 @@ class BrokerServiceController : ManageHttpController {
       }
     }
     if (createId.isEmpty)
-      createId = randomUUID().toString();
+      createId = generateId;
 
     BrokerServiceDTO dto;
     dto.serviceId = BrokerServiceId(createId);

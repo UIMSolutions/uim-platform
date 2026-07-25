@@ -107,7 +107,7 @@ class PushNotificationController : ManageHttpController {
       .set("targetTopics", notification.targetTopics.toJson)
       .set("scheduledAt", notification.scheduledAt)
       .set("expiresAt", notification.expiresAt)
-      .set("status", notification.status)
+      .set("status", notification.status.toString)
       .set("createdBy", notification.createdBy)
       .set("message", "Push notification retrieved successfully");
 

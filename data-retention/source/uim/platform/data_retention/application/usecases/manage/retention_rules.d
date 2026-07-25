@@ -19,7 +19,7 @@ class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Duration must be positive");
 
         RetentionRule rr;
-        rr.id = RetentionRuleId(randomUUID().toString());
+        rr.id = RetentionRuleId(generateId);
         rr.tenantId = req.tenantId;
         rr.businessPurposeId = BusinessPurposeId(req.businessPurposeId);
         rr.legalGroundId = LegalGroundId(req.legalGroundId);
@@ -61,7 +61,7 @@ class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
     }
 
     RetentionRule[] list(TenantId tenantId) {
-        return repo.findAll(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     RetentionRule[] listByBusinessPurpose(TenantId tenantId, BusinessPurposeId purposeId) {

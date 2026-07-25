@@ -79,7 +79,7 @@ public:
   }
 
   WarehouseOrder[] listWarehouseOrders(TenantId tenantId) {
-    return _repo.findAll(tenantId);
+    return _repo.findByTenant(tenantId);
   }
 
   WarehouseOrder[] listByDelivery(TenantId tenantId, DeliveryId deliveryId) {

@@ -35,6 +35,7 @@ class UsageReportController : ManageHttpController {
       return precheck;
     auto tenantId = precheck.tenantId;
     auto data = precheck.data;
+
     CreateUsageReportRequest r;
     r.tenantId = tenantId;
     r.appId = data.getString("appId");
@@ -47,6 +48,7 @@ class UsageReportController : ManageHttpController {
     r.platform = data.getString("platform");
     r.appVersion = data.getString("appVersion");
     r.timestamp = data.getLong("timestamp");
+
     auto result = usecase.report(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
@@ -63,7 +65,7 @@ class UsageReportController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto results = usecase.list(tenantId);
+    auto results = usecase.listUsageReports(tenantId);
     auto items = Json.emptyArray;
     foreach (item; results) {
       items ~= Json.emptyObject
@@ -86,24 +88,25 @@ class UsageReportController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
-    auto result = usecase.get(id);
-    if (result.hasError)
-      return errorResponse(result.message, 400);
-    auto resp = Json.emptyObject
-      .set("id", result.data.id)
-      .set("tenantId", result.data.tenantId)
-      .set("appId", result.data.appId)
-      .set("deviceId", result.data.deviceId)
-      .set("userId", result.data.userId)
-      .set("metricType", result.data.metricType)
-      .set("metricKey", result.data.metricKey)
-      .set("metricValue", result.data.metricValue)
-      .set("sessionId", result.data.sessionId)
-      .set("platform", result.data.platform)
-      .set("appVersion", result.data.appVersion)
-      .set("timestamp", result.data.timestamp);
+    auto id = UsageReportId(precheck.id);
+    auto report = usecase.getUsageReport(tenantId, id);
+    if (report.isNull)
+      return errorResponse("Usage report not found", 400);
 
-    return successResponse("Usage report retrieved successfully", "Retrieved", 200, resp);
+    auto responseData = Json.emptyObject
+      .set("id", report.id)
+      .set("tenantId", report.tenantId)
+      .set("appId", report.appId)
+      .set("deviceId", report.deviceId)
+      .set("userId", report.userId)
+      .set("metricType", report.metricType.toString)
+      .set("metricKey", report.metricKey)
+      .set("metricValue", report.metricValue)
+      .set("sessionId", report.sessionId)
+      .set("platform", report.platform)
+      .set("appVersion", report.appVersion)
+      .set("timestamp", report.timestamp);
+
+    return successResponse("Usage report retrieved successfully", "Retrieved", 200, responseData);
   }
 }

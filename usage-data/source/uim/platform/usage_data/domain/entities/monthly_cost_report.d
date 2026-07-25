@@ -73,7 +73,7 @@ struct MonthlyCostReport {
   static MonthlyCostReport create(string globalAccountId, string subaccountId,
       int year, int month, string currency) {
     MonthlyCostReport r;
-    r.id = MonthlyCostReportId(randomUUID().toString());
+    r.id = MonthlyCostReportId(generateId);
     r.globalAccountId = globalAccountId;
     r.subaccountId = subaccountId;
     r.reportingYear = year;

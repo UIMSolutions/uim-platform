@@ -85,7 +85,7 @@ public:
   }
 
   Shipment[] listShipments(TenantId tenantId) {
-    return _repo.findAll(tenantId);
+    return _repo.findByTenant(tenantId);
   }
 
   Shipment[] listByFreightOrder(TenantId tenantId, FreightOrderId foId) {

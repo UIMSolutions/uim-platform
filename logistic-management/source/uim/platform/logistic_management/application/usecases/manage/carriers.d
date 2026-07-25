@@ -104,7 +104,7 @@ public:
   }
 
   Carrier[] listCarriers(TenantId tenantId) {
-    return _repo.findAll(tenantId);
+    return _repo.findByTenant(tenantId);
   }
 
   Carrier[] listByStatus(TenantId tenantId, CarrierStatus status) {

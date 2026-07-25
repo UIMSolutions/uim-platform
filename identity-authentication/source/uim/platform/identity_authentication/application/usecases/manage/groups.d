@@ -29,7 +29,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
 
   GroupResponse createGroup(CreateGroupRequest req) {
     auto group = IAGroup(req.tenantId);
-    group.id = GroupId(randomUUID().toString());
+    group.id = GroupId(generateId);
     group.name = req.name;
     group.description = req.description;
     group.memberUserIds = [];

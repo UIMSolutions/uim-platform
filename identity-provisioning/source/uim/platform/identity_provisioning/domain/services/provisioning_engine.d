@@ -122,7 +122,7 @@ class ProvisioningEngine {
       auto entity = ProvisionedEntity(tenantId); 
 
       entity.externalId = eType == EntityType.user ? "user-" ~ randomUUID()
-        .toString()[0 .. 8] : "group-" ~ randomUUID().toString()[0 .. 8];
+        .toString()[0 .. 8] : "group-" ~ generateId[0 .. 8];
       entity.entityType = eType;
       entity.sourceSystemId = job.sourceSystemId;
       entity.targetSystemId = job.targetSystemId;

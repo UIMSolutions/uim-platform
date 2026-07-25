@@ -215,7 +215,7 @@ sequenceDiagram
 
     Consumer->>MatchedEventController: GET /api/v1/alert-notification/matched-events
     MatchedEventController->>ConsumeMatchedEventsUseCase: listMatchedEvents(tenantId)
-    ConsumeMatchedEventsUseCase->>MatchedEventRepository: findAll(tenantId)
+    ConsumeMatchedEventsUseCase->>MatchedEventRepository: findByTenant(tenantId)
     MatchedEventRepository-->>ConsumeMatchedEventsUseCase: MatchedEvent[]
     ConsumeMatchedEventsUseCase-->>MatchedEventController: QueryResult(data)
     MatchedEventController-->>Consumer: 200 OK [JSON array]

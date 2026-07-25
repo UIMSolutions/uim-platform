@@ -47,7 +47,7 @@ struct RfcQueueEntry {
         
         import std.uuid  : randomUUID;
         RfcQueueEntry e;
-        e.id          = randomUUID().toString();
+        e.id          = generateId;
         e.tenantId    = tenantId;
         e.queueName   = queueName;
         e.direction   = dir;

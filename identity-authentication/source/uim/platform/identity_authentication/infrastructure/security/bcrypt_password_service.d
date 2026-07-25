@@ -16,7 +16,7 @@ mixin(ShowModule!());
 class Sha256PasswordService : PasswordService {
   string hashPassword(string plaintext) {
     // Generate salt
-    auto salt = randomUUID().toString()[0 .. 8];
+    auto salt = generateId[0 .. 8];
     auto salted = salt ~ plaintext;
 
     SHA256 hasher;

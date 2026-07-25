@@ -13,14 +13,14 @@ mixin(ShowModule!());
 @safe:
 class MemoryFreightOrderRepository : TenantRepository!(FreightOrder, FreightOrderId), FreightOrderRepository {
   override FreightOrder[] findByStatus(TenantId tenantId, FreightOrderStatus status) {
-    return findAll(tenantId).filter!(o => o.status == status).array;
+    return findByTenant(tenantId).filter!(o => o.status == status).array;
   }
 
   override FreightOrder[] findByCarrier(TenantId tenantId, CarrierId carrierId) {
-    return findAll(tenantId).filter!(o => o.carrierId.value == carrierId.value).array;
+    return findByTenant(tenantId).filter!(o => o.carrierId.value == carrierId.value).array;
   }
 
   override FreightOrder[] findByOrderNumber(TenantId tenantId, string orderNumber) {
-    return findAll(tenantId).filter!(o => o.orderNumber == orderNumber).array;
+    return findByTenant(tenantId).filter!(o => o.orderNumber == orderNumber).array;
   }
 }

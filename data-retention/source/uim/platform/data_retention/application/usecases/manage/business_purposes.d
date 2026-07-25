@@ -75,7 +75,7 @@ class ManageBusinessPurposesUseCase { // TODO: UIMUseCase {
     }
 
     BusinessPurpose[] listBusinessPurposes(TenantId tenantId) {
-        return repo.findAll(tenantId);
+        return repo.findByTenant(tenantId);
     }
 
     BusinessPurpose[] listBusinessPurposes(TenantId tenantId, ApplicationGroupId groupId) {

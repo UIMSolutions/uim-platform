@@ -16,7 +16,7 @@ mixin(ShowModule!());
 /// SHA-256 password hashing adapter (production: replace with bcrypt/argon2).
 class Sha256PasswordService : PasswordService {
   string hashPassword(string plaintext) {
-    auto salt = randomUUID().toString()[0 .. 8];
+    auto salt = generateId[0 .. 8];
     auto hash = sha256Of(/* cast(ubyte[])*/ (plaintext ~ salt).representation);
     return salt ~ "$" ~ toHexString(hash).idup;
   }

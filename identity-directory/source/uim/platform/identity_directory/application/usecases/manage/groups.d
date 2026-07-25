@@ -56,7 +56,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
     }
 
     auto event = AuditEvent(req.tenantId);
-    event.id = randomUUID().toString();
+    event.id = generateId;
     event.eventType = AuditEventType.groupCreated;
     event.actorId = "system";
     event.targetId = group.id.value;
@@ -98,7 +98,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
     groupRepo.update(group);
 
     auto event = AuditEvent(req.tenantId);
-    event.id = randomUUID().toString();
+    event.id = generateId;
     event.eventType = AuditEventType.groupUpdated;
     event.actorId = "system";
     event.targetId = group.id.value;
@@ -138,7 +138,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
     }
 
     auto event = AuditEvent(req.tenantId);
-    event.id = randomUUID().toString();
+    event.id = generateId;
     event.eventType = AuditEventType.memberAdded;
     event.actorId = "system";
     event.targetId = req.groupId.value;
@@ -176,7 +176,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
     }
 
     auto event = AuditEvent(req.tenantId);
-    event.id = randomUUID().toString();
+    event.id = generateId;
     event.eventType = AuditEventType.memberRemoved;
     event.actorId = "system";
     event.targetId = req.groupId.value;
@@ -211,7 +211,7 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
     groupRepo.remove(group);
 
     auto event = AuditEvent(tenantId);
-    event.id = randomUUID().toString();
+    event.id = generateId;
     event.eventType = AuditEventType.groupDeleted;
     event.actorId = "system";
     event.targetId = id.value;

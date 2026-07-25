@@ -13,7 +13,7 @@ struct EntityId {
   string value;
 
   static EntityId generate() {
-    return EntityId(randomUUID().toString());
+    return EntityId(generateId);
   }
 
   bool opEquals(const EntityId other) const {

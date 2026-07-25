@@ -83,7 +83,7 @@ class MeshBridgeController : ManageHttpController {
             }
         }
         if (createId.isEmpty)
-            createId = randomUUID().toString();
+            createId = generateId;
 
         MeshBridgeDTO dto;
         dto.bridgeId = MeshBridgeId(createId);

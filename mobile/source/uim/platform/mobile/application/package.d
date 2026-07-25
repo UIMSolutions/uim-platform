@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.application;
 
-public {
+public:
   import uim.platform.mobile.application.dto;
   import uim.platform.mobile.application.usecases;
-}
+

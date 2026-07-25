@@ -296,3 +296,17 @@ struct OverviewSummary {
   long totalActiveSessions;
   long totalLogEntries;
 }
+
+struct CreateUsageReportRequest {
+  TenantId tenantId;
+  MobileAppId appId;
+  string deviceId;
+  UserId userId;
+  string metricType;
+  string metricKey;
+  string metricValue;
+  string sessionId;
+  string platform;
+  string appVersion;
+  long timestamp;
+}

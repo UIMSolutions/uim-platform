@@ -62,7 +62,7 @@ class SubscriptionController : ManageHttpController {
             }
         }
         if (createId.isEmpty)
-            createId = randomUUID().toString();
+            createId = generateId;
 
         SubscriptionDTO dto;
         dto.subscriptionId = EventSubscriptionId(createId);

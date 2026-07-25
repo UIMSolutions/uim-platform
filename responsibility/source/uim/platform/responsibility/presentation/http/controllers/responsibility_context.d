@@ -54,7 +54,7 @@ class ResponsibilityContextController : ManageHttpController {
         auto data = pre["data"];
         import std.uuid : randomUUID;
         ResponsibilityContextDTO dto;
-        dto.contextId   = ResponsibilityContextId(data.getString("contextId", randomUUID().toString()));
+        dto.contextId   = ResponsibilityContextId(data.getString("contextId", generateId));
         dto.tenantId    = tenantId;
         dto.name        = data.getString("name", "");
         dto.description = data.getString("description", "");

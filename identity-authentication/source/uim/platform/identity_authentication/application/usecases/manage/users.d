@@ -45,7 +45,7 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
     user.phoneNumber = req.phoneNumber;
     user.createdAt = now;
     user.updatedAt = now;
-    user.globalUserId = randomUUID().toString();
+    user.globalUserId = generateId;
 
     userRepo.save(user);
     return UserResponse(user.id, "");

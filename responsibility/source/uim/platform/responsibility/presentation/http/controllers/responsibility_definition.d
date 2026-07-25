@@ -54,7 +54,7 @@ class ResponsibilityDefinitionController : ManageHttpController {
         auto data = pre["data"];
         import std.uuid : randomUUID;
         ResponsibilityDefinitionDTO dto;
-        dto.definitionId = ResponsibilityDefinitionId(data.getString("definitionId", randomUUID().toString()));
+        dto.definitionId = ResponsibilityDefinitionId(data.getString("definitionId", generateId));
         dto.tenantId     = tenantId;
         dto.name         = data.getString("name", "");
         dto.description  = data.getString("description", "");

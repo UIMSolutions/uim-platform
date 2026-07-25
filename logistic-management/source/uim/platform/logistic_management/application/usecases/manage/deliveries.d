@@ -108,7 +108,7 @@ public:
   }
 
   Delivery[] listDeliveries(TenantId tenantId) {
-    return _repo.findAll(tenantId);
+    return _repo.findByTenant(tenantId);
   }
 
   Delivery[] listByShipment(TenantId tenantId, ShipmentId shipmentId) {

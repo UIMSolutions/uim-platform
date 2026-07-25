@@ -16,7 +16,7 @@ mixin(ShowModule!());
 @safe:
 
 string createId() {
-  return randomUUID().toString();
+  return generateId;
 }
 
 string envOr(string key, string fallback) {
@@ -284,7 +284,7 @@ long currentTimestamp() {
 */
 
 string generateId() {
-  return randomUUID().toString();
+  return generateId;
 }
 /*
   private string generateId() @safe {

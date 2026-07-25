@@ -193,7 +193,7 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
     event.description = "User deleted: " ~ user.userName;
     event.details = null;
     event.timestamp = event.createdAt;
-    // auditRepo.save(AuditEvent(randomUUID().toString(), user.tenantId,
+    // auditRepo.save(AuditEvent(generateId, user.tenantId,
     //     AuditEventType.userDeleted, "system", "System", user.id, "User",
     //     "User deleted: " ~ user.userName, "", "", null, Clock.currStdTime(),));
     auditRepo.save(event);

@@ -43,7 +43,7 @@ struct DailyUsageReport {
   static DailyUsageReport create(string globalAccountId, string subaccountId,
       int year, int month, int day) {
     DailyUsageReport r;
-    r.id = DailyUsageReportId(randomUUID().toString());
+    r.id = DailyUsageReportId(generateId);
     r.globalAccountId = globalAccountId;
     r.subaccountId = subaccountId;
     r.reportYear = year;

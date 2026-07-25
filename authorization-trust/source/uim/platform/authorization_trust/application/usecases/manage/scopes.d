@@ -27,7 +27,7 @@ class ManageScopesUseCase {
     import std.uuid : randomUUID;
     ScopeEntity s;
     s.tenantId    = r.tenantId;
-    s.id          = randomUUID().toString();
+    s.id          = generateId;
     s.name        = r.name;
     s.description = r.description;
     s.appId       = r.appId;

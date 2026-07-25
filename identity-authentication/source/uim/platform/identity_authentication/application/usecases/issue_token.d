@@ -64,7 +64,7 @@ class IssueTokenUseCase { // TODO: UIMUseCase {
     auto accessTokenValue = tokenSvc.generateToken(user, app, TokenType.access, req.scopes);
     auto accessToken = Token();
     accessToken.tenantId = session.tenantId;
-    accessToken.id = randomUUID().toString();
+    accessToken.id = generateId;
     accessToken.userId = user.id;
     // accessToken.appId = app.id;
     accessToken.tokenType = TokenType.access;
@@ -78,7 +78,7 @@ class IssueTokenUseCase { // TODO: UIMUseCase {
     // Generate refresh token
     auto refreshTokenValue = tokenSvc.generateToken(user, app, TokenType.refresh, req.scopes);
     auto refreshToken = Token();
-    refreshToken.id = randomUUID().toString();
+    refreshToken.id = generateId;
     refreshToken.userId = user.id;
     refreshToken.tenantId = session.tenantId;
     // refreshToken.appId = app.id;

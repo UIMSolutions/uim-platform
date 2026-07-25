@@ -45,7 +45,7 @@ struct Tid {
         
         import std.uuid  : randomUUID;
         Tid t;
-        t.value         = randomUUID().toString()[0 .. 24]; // 24-char TID
+        t.value         = generateId[0 .. 24]; // 24-char TID
         t.tenantId      = tenantId;
         t.destinationId = dest;
         t.status        = LuwStatus.open;

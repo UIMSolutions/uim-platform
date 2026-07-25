@@ -29,8 +29,8 @@ class ManageApplicationsUseCase { // TODO: UIMUseCase {
     app.name = req.name;
     app.description = req.description;
     app.protocol = req.protocol;
-    app.clientId = randomUUID().toString();
-    app.clientSecret = randomUUID().toString();
+    app.clientId = generateId;
+    app.clientSecret = generateId;
     app.redirectUris = req.redirectUris;
     app.allowedScopes = req.allowedScopes;
     app.samlEntityId = req.samlEntityId;

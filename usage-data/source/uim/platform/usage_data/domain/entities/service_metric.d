@@ -44,7 +44,7 @@ struct ServiceMetric {
       string planId, string planName, string metricName,
       MetricUnit unit, bool isBillable) {
     ServiceMetric m;
-    m.id = ServiceMetricId(randomUUID().toString());
+    m.id = ServiceMetricId(generateId);
     m.serviceId = serviceId;
     m.serviceName = serviceName;
     m.planId = planId;

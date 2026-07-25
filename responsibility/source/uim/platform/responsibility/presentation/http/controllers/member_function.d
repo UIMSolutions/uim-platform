@@ -54,7 +54,7 @@ class MemberFunctionController : ManageHttpController {
         auto data = pre["data"];
         import std.uuid : randomUUID;
         MemberFunctionDTO dto;
-        dto.functionId  = MemberFunctionId(data.getString("functionId", randomUUID().toString()));
+        dto.functionId  = MemberFunctionId(data.getString("functionId", generateId));
         dto.tenantId    = tenantId;
         dto.name        = data.getString("name", "");
         dto.description = data.getString("description", "");

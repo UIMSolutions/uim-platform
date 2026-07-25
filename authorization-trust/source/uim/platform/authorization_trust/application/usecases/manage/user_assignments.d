@@ -34,7 +34,7 @@ class ManageUserAssignmentsUseCase {
 
     UserAssignment ua;
     ua.tenantId = r.tenantId;
-    ua.id = randomUUID().toString();
+    ua.id = generateId;
     ua.userId = r.userId;
     ua.userEmail = r.userEmail;
     ua.roleCollectionId = r.roleCollectionId;

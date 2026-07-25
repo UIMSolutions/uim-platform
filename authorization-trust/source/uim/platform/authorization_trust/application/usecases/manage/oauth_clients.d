@@ -28,7 +28,7 @@ class ManageOAuthClientsUseCase {
 
     import std.uuid : randomUUID;
     OAuthClient c;
-    c.id          = randomUUID().toString();
+    c.id          = generateId;
     c.tenantId    = r.tenantId;
     c.clientId    = r.clientId;
     c.clientSecret = r.clientSecret.length > 0 ? TokenService.hashSecret(r.clientSecret) : "";

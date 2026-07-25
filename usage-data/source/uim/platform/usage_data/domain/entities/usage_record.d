@@ -56,7 +56,7 @@ struct UsageRecord {
       string serviceId, string serviceName, string metricName, double value,
       Environment env, string region) {
     UsageRecord r;
-    r.id = UsageRecordId(randomUUID().toString());
+    r.id = UsageRecordId(generateId);
     r.globalAccountId = globalAccountId;
     r.subaccountId = subaccountId;
     r.serviceId = serviceId;

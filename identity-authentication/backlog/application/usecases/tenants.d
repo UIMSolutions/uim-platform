@@ -28,7 +28,7 @@ class ManageTenantsUseCase { // TODO: UIMUseCase {
       return TenantResponse("", "Subdomain already in use");
 
     auto now = currentTimestamp();
-    auto tenant = Tenant(randomUUID().toString(), req.name, req.subdomain,
+    auto tenant = Tenant(generateId, req.name, req.subdomain,
         req.defaultSsoProtocol, req.allowedAuthMethods, req.mfaEnforced, [], now, now);
     tenantRepo.save(tenant);
     return TenantResponse(tenant.id.value, "");

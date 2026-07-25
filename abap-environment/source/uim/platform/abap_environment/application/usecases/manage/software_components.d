@@ -70,7 +70,7 @@ class ManageSoftwareComponentsUseCase { // TODO: UIMUseCase {
 
     // Simulate successful clone
     comp.status = ComponentStatus.cloned;
-    comp.currentCommitId = req.commitId.length > 0 ? req.commitId : randomUUID().toString()[0 .. 8];
+    comp.currentCommitId = req.commitId.length > 0 ? req.commitId : generateId[0 .. 8];
 
     ComponentCommit commit;
     commit.commitId = comp.currentCommitId;
@@ -98,7 +98,7 @@ class ManageSoftwareComponentsUseCase { // TODO: UIMUseCase {
 
     // Simulate pull
     comp.status = ComponentStatus.cloned;
-    comp.currentCommitId = req.commitId.length > 0 ? req.commitId : randomUUID().toString()[0 .. 8];
+    comp.currentCommitId = req.commitId.length > 0 ? req.commitId : generateId[0 .. 8];
     comp.lastPulledAt = now;
     comp.updatedAt = now;
 

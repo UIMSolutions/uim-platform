@@ -65,7 +65,7 @@ class EventApplicationController : ManageHttpController {
             }
         }
         if (createId.isEmpty)
-            createId = randomUUID().toString();
+            createId = generateId;
 
         EventApplicationDTO dto;
         dto.applicationId = EventApplicationId(createId);
