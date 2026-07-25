@@ -284,7 +284,7 @@ long currentTimestamp() {
 */
 
 string generateId() {
-  return generateId;
+  return randomUUID().toString;
 }
 /*
   private string generateId() @safe {

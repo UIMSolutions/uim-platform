@@ -15,7 +15,7 @@ enum WorkspaceType {
   external,
 }
 WorkspaceType toWorkspaceType(string value) {
-  switch (ignoreCase ? value.toLower() : value) {
+  switch (value.toLower) {
     case "project": return WorkspaceType.project;
     case "team": return WorkspaceType.team;
     case "department": return WorkspaceType.department;
@@ -63,7 +63,7 @@ enum CardType {
   calendar,
 }
 CardType toCardType(string value) {
-  switch (ignoreCase ? value.toLower() : value) {
+  switch (value.toLower) {
     case "adaptive": return CardType.adaptive;
     case "analytical": return CardType.analytical;
     case "list": return CardType.list;
@@ -215,7 +215,7 @@ enum AppStatus {
   deprecated_,
 }
 AppStatus toAppStatus(string value) {
-  switch (ignoreCase ? value.toLower() : value) {
+  switch (value.toLower) {
     case "active": return AppStatus.active;
     case "inactive": return AppStatus.inactive;
     case "deprecated": return AppStatus.deprecated_;
@@ -373,7 +373,7 @@ enum NotificationStatus {
   actionRequired,
 }
 NotificationStatus toNotificationStatus(string value) {
-  switch (ignoreCase ? value.toLower() : value) {
+  switch (value.toLower) {
     case "unread": return NotificationStatus.unread;
     case "read": return NotificationStatus.read_;
     case "dismissed": return NotificationStatus.dismissed;
@@ -456,7 +456,7 @@ enum PluginStatus {
   error,
 }
 PluginStatus toPluginStatus(string value) {
-  switch (ignoreCase ? value.toLower() : value) {
+  switch (value.toLower) {
     case "active": return PluginStatus.active;
     case "inactive": return PluginStatus.inactive;
     case "error": return PluginStatus.error;
@@ -479,7 +479,7 @@ enum ProviderStatus {
 }
 
 ProviderStatus toProviderStatus(string value) {
-  switch (ignoreCase ? value.toLower() : value) {
+  switch (value.toLower) {
     case "connected": return ProviderStatus.connected;
     case "disconnected": return ProviderStatus.disconnected;
     case "error": return ProviderStatus.error;
@@ -503,7 +503,7 @@ enum ProviderType {
   custom,
 }
 ProviderType toProviderType(string value) {
-  switch (ignoreCase ? value.toLower() : value) {
+  switch (value.toLower) {
     case "odata": return ProviderType.odata;
     case "rest": return ProviderType.rest;
     case "graphql": return ProviderType.graphql;

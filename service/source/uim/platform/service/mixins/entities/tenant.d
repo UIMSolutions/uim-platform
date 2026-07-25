@@ -21,18 +21,24 @@ mixin template TenantEntity(TId) {
   long updatedAt; // timestamp of when the entity was last updated
 
   this(TenantId tenantId) {
+    writeln("Initializing TenantEntity with tenantId: ", tenantId);
     this.tenantId = tenantId;
+    writeln("Generating new ID for TenantEntity...");
     this.id = TId(generateId);
+    writeln("Generated ID: ", this.id);
+    writeln("Setting createdAt and updatedAt timestamps...");
     this.createdAt = Clock.currStdTime();
     this.updatedAt = createdAt;
   }
 
   this(TenantId tenantId, TId id) {
+    writeln("Initializing TenantEntity with tenantId: ", tenantId, " and id: ", id);
     this(tenantId);
     this.id = id;
   }
 
   this(TenantId tenantId, TId id, UserId byUser) {
+    writeln("Initializing TenantEntity with tenantId: ", tenantId, ", id: ", id, ", and byUser: ", byUser);
     this(tenantId, id);
     this.createdBy = byUser;
     this.updatedBy = byUser;

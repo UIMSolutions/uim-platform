@@ -20,15 +20,19 @@ enum DataSubjectType {
   partner,
   applicant,
 }
+
 DataSubjectType toDataSubjectType(string value) {
   mixin(EnumSwitch("DataSubjectType", "naturalPerson"));
 }
+
 DataSubjectType[] toDataSubjectTypes(string[] values) {
   return values.map!(v => toDataSubjectType(v)).array;
 }
+
 string toString(DataSubjectType type) {
   return type.to!string;
 }
+
 string[] toStrings(DataSubjectType[] types) {
   return types.map!(t => t.to!string).array;
 }
@@ -53,8 +57,12 @@ unittest {
   assert(DataSubjectType.partner.toString == "partner");
   assert(DataSubjectType.applicant.toString == "applicant");
 
-  assert([DataSubjectType.naturalPerson, DataSubjectType.employee].toStrings == ["naturalPerson", "employee"]);
-  assert(["naturalPerson", "employee"].toDataSubjectTypes == [DataSubjectType.naturalPerson, DataSubjectType.employee]);
+  assert([DataSubjectType.naturalPerson, DataSubjectType.employee].toStrings == [
+      "naturalPerson", "employee"
+    ]);
+  assert(["naturalPerson", "employee"].toDataSubjectTypes == [
+      DataSubjectType.naturalPerson, DataSubjectType.employee
+    ]);
 }
 
 /// Categories of personal data (GDPR Art. 9 special categories marked).
@@ -73,15 +81,19 @@ enum PersonalDataCategory {
   location, // GPS, IP-based geolocation
   behavioral, // browsing, purchase history
 }
+
 PersonalDataCategory toPersonalDataCategory(string value) {
   mixin(EnumSwitch("PersonalDataCategory", "identification"));
 }
+
 PersonalDataCategory[] toPersonalDataCategories(string[] values) {
   return values.map!(v => toPersonalDataCategory(v)).array;
 }
+
 string toString(PersonalDataCategory category) {
   return category.to!string;
 }
+
 string[] toStrings(PersonalDataCategory[] categories) {
   return categories.map!(c => c.to!string).array;
 }
@@ -117,11 +129,15 @@ unittest {
   assert(PersonalDataCategory.tradeUnion.toString == "tradeUnion");
   assert(PersonalDataCategory.genetic.toString == "genetic");
   assert(PersonalDataCategory.criminal.toString == "criminal");
-  assert(PersonalDataCategory.location.toString == "location");   
+  assert(PersonalDataCategory.location.toString == "location");
   assert(PersonalDataCategory.behavioral.toString == "behavioral");
 
-  assert([PersonalDataCategory.identification, PersonalDataCategory.contact].toStrings == ["identification", "contact"]);
-  assert(["identification", "contact"].toPersonalDataCategories == [PersonalDataCategory.identification, PersonalDataCategory.contact]);
+  assert([PersonalDataCategory.identification, PersonalDataCategory.contact].toStrings == [
+      "identification", "contact"
+    ]);
+  assert(["identification", "contact"].toPersonalDataCategories == [
+      PersonalDataCategory.identification, PersonalDataCategory.contact
+    ]);
 }
 
 /// Legal basis for processing personal data (GDPR Art. 6).
@@ -133,15 +149,19 @@ enum LegalBasis {
   publicTask, // Art. 6(1)(e)
   legitimateInterest, // Art. 6(1)(f)
 }
+
 LegalBasis toLegalBasis(string value) {
   mixin(EnumSwitch("LegalBasis", "consent"));
 }
+
 LegalBasis[] toLegalBases(string[] values) {
-  return values.map!(v => toLegalBasis(v, ignoreCase)).array;
+  return values.map!toLegalBasis.array;
 }
+
 string toString(LegalBasis basis) {
   return basis.to!string;
 }
+
 string[] toStrings(LegalBasis[] bases) {
   return bases.map!toString.array;
 }
@@ -166,8 +186,12 @@ unittest {
   assert(LegalBasis.publicTask.toString == "publicTask");
   assert(LegalBasis.legitimateInterest.toString == "legitimateInterest");
 
-  assert([LegalBasis.consent, LegalBasis.contract].toStrings == ["consent", "contract"]);
-  assert(["consent", "contract"].toLegalBases == [LegalBasis.consent, LegalBasis.contract]);
+  assert([LegalBasis.consent, LegalBasis.contract].toStrings == [
+      "consent", "contract"
+    ]);
+  assert(["consent", "contract"].toLegalBases == [
+      LegalBasis.consent, LegalBasis.contract
+    ]);
 }
 
 /// Purpose for which personal data is processed.
@@ -186,12 +210,15 @@ enum ProcessingPurpose {
 ProcessingPurpose toProcessingPurpose(string value) {
   mixin(EnumSwitch("ProcessingPurpose", "serviceDelivery"));
 }
-toProcessingPurpose[] toProcessingPurposes(string[] values) {
-  return values.map!(v => toProcessingPurpose(v, ignoreCase)).array;
+
+ProcessingPurpose[] toProcessingPurposes(string[] values) {
+  return values.map!toProcessingPurpose.array;
 }
+
 string toString(ProcessingPurpose purpose) {
   return purpose.to!string;
 }
+
 string[] toStrings(ProcessingPurpose[] purposes) {
   return purposes.map!toString.array;
 }
@@ -222,8 +249,12 @@ unittest {
   assert(ProcessingPurpose.security.toString == "security");
   assert(ProcessingPurpose.research.toString == "research");
 
-  assert([ProcessingPurpose.serviceDelivery, ProcessingPurpose.marketing].toStrings == ["serviceDelivery", "marketing"]);
-  assert(["serviceDelivery", "marketing"].toProcessingPurposes == [ProcessingPurpose.serviceDelivery, ProcessingPurpose.marketing]);
+  assert([ProcessingPurpose.serviceDelivery, ProcessingPurpose.marketing].toStrings == [
+      "serviceDelivery", "marketing"
+    ]);
+  assert(["serviceDelivery", "marketing"].toProcessingPurposes == [
+      ProcessingPurpose.serviceDelivery, ProcessingPurpose.marketing
+    ]);
 }
 
 /// Status of a consent record.
@@ -233,18 +264,23 @@ enum ConsentStatus {
   revoked,
   expired,
 }
+
 ConsentStatus toConsentStatus(string value) {
   mixin(EnumSwitch("ConsentStatus", "pending"));
 }
+
 ConsentStatus[] toConsentStatuses(string[] values) {
-  return values.map!(v => toConsentStatus(v, ignoreCase)).array;
+  return values.map!toConsentStatus.array;
 }
+
 string toString(ConsentStatus status) {
   return status.to!string;
 }
+
 string[] toStrings(ConsentStatus[] statuses) {
   return statuses.map!toString.array;
 }
+
 unittest {
   mixin(ShowTest!("ConsentStatus"));
 
@@ -261,8 +297,12 @@ unittest {
   assert(ConsentStatus.revoked.toString == "revoked");
   assert(ConsentStatus.expired.toString == "expired");
 
-  assert([ConsentStatus.pending, ConsentStatus.granted].toStrings == ["pending", "granted"]);
-  assert(["pending", "granted"].toConsentStatuses == [ConsentStatus.pending, ConsentStatus.granted]);
+  assert([ConsentStatus.pending, ConsentStatus.granted].toStrings == [
+      "pending", "granted"
+    ]);
+  assert(["pending", "granted"].toConsentStatuses == [
+      ConsentStatus.pending, ConsentStatus.granted
+    ]);
 }
 
 /// Status of a data deletion request (GDPR Art. 17).
@@ -273,15 +313,19 @@ enum DeletionStatus {
   failed,
   blocked,
 }
+
 DeletionStatus toDeletionStatus(string value) {
   mixin(EnumSwitch("DeletionStatus", "requested"));
 }
+
 DeletionStatus[] toDeletionStatuses(string[] values) {
-  return values.map!(v => toDeletionStatus(v, ignoreCase)).array;
+  return values.map!toDeletionStatus.array;
 }
+
 string toString(DeletionStatus status) {
   return status.to!string;
 }
+
 string[] toStrings(DeletionStatus[] statuses) {
   return statuses.map!toString.array;
 }
@@ -304,8 +348,12 @@ unittest {
   assert(DeletionStatus.failed.toString == "failed");
   assert(DeletionStatus.blocked.toString == "blocked");
 
-  assert([DeletionStatus.requested, DeletionStatus.inProgress].toStrings == ["requested", "inProgress"]);
-  assert(["requested", "inProgress"].toDeletionStatuses == [DeletionStatus.requested, DeletionStatus.inProgress]);    
+  assert([DeletionStatus.requested, DeletionStatus.inProgress].toStrings == [
+      "requested", "inProgress"
+    ]);
+  assert(["requested", "inProgress"].toDeletionStatuses == [
+      DeletionStatus.requested, DeletionStatus.inProgress
+    ]);
 }
 
 /// Status of a data blocking / restriction request (GDPR Art. 18).
@@ -314,15 +362,19 @@ enum BlockingStatus {
   active,
   released,
 }
+
 BlockingStatus toBlockingStatus(string value) {
   mixin(EnumSwitch("BlockingStatus", "requested"));
 }
+
 BlockingStatus[] toBlockingStatuses(string[] values) {
-  return values.map!(v => toBlockingStatus(v, ignoreCase)).array;
+  return values.map!toBlockingStatus.array;
 }
+
 string toString(BlockingStatus status) {
   return status.to!string;
 }
+
 string[] toStrings(BlockingStatus[] statuses) {
   return statuses.map!toString.array;
 }
@@ -341,8 +393,12 @@ unittest {
   assert(BlockingStatus.active.toString == "active");
   assert(BlockingStatus.released.toString == "released");
 
-  assert([BlockingStatus.requested, BlockingStatus.active].toStrings == ["requested", "active"]);
-  assert(["requested", "active"].toBlockingStatuses == [BlockingStatus.requested, BlockingStatus.active]);
+  assert([BlockingStatus.requested, BlockingStatus.active].toStrings == [
+      "requested", "active"
+    ]);
+  assert(["requested", "active"].toBlockingStatuses == [
+      BlockingStatus.requested, BlockingStatus.active
+    ]);
 }
 
 /// Status of a data retrieval / access request (GDPR Art. 15).
@@ -352,15 +408,19 @@ enum RetrievalStatus {
   completed,
   failed,
 }
+
 RetrievalStatus toRetrievalStatus(string value) {
   mixin(EnumSwitch("RetrievalStatus", "requested"));
 }
+
 RetrievalStatus[] toRetrievalStatuses(string[] values) {
-  return values.map!(v => toRetrievalStatus(v, ignoreCase)).array;
+  return values.map!toRetrievalStatus.array;
 }
+
 string toString(RetrievalStatus status) {
   return status.to!string;
 }
+
 string[] toStrings(RetrievalStatus[] statuses) {
   return statuses.map!toString.array;
 }
@@ -381,8 +441,12 @@ unittest {
   assert(RetrievalStatus.completed.toString == "completed");
   assert(RetrievalStatus.failed.toString == "failed");
 
-  assert([RetrievalStatus.requested, RetrievalStatus.inProgress].toStrings == ["requested", "inProgress"]);
-  assert(["requested", "inProgress"].toRetrievalStatuses == [RetrievalStatus.requested, RetrievalStatus.inProgress]);
+  assert([RetrievalStatus.requested, RetrievalStatus.inProgress].toStrings == [
+      "requested", "inProgress"
+    ]);
+  assert(["requested", "inProgress"].toRetrievalStatuses == [
+      RetrievalStatus.requested, RetrievalStatus.inProgress
+    ]);
 }
 
 /// Sensitivity classification for personal data fields.
@@ -391,15 +455,19 @@ enum DataSensitivity {
   sensitive, // GDPR Art. 9 special categories
   highlyConfidential,
 }
+
 DataSensitivity toDataSensitivity(string value) {
   mixin(EnumSwitch("DataSensitivity", "standard"));
 }
+
 DataSensitivity[] toDataSensitivities(string[] values) {
-  return values.map!(v => toDataSensitivity(v, ignoreCase)).array;
+  return values.map!toDataSensitivity.array;
 }
+
 string toString(DataSensitivity sensitivity) {
   return sensitivity.to!string;
 }
+
 string[] toStrings(DataSensitivity[] sensitivities) {
   return sensitivities.map!toString.array;
 }
@@ -418,8 +486,12 @@ unittest {
   assert(DataSensitivity.sensitive.toString == "sensitive");
   assert(DataSensitivity.highlyConfidential.toString == "highlyConfidential");
 
-  assert([DataSensitivity.standard, DataSensitivity.sensitive].toStrings == ["standard", "sensitive"]);
-  assert(["standard", "sensitive"].toDataSensitivities == [DataSensitivity.standard, DataSensitivity.sensitive]);
+  assert([DataSensitivity.standard, DataSensitivity.sensitive].toStrings == [
+      "standard", "sensitive"
+    ]);
+  assert(["standard", "sensitive"].toDataSensitivities == [
+      DataSensitivity.standard, DataSensitivity.sensitive
+    ]);
 }
 
 /// Type of data subject rights request.
@@ -431,17 +503,22 @@ enum RequestType {
   restriction, // Art. 18
   objection, // Art. 21
 }
+
 RequestType toRequestType(string value) {
   mixin(EnumSwitch("RequestType", "access"));
 }
+
 RequestType[] toRequestTypes(string[] values) {
-  return values.map!(v => toRequestType(v, ignoreCase)).array;
+  return values.map!toRequestType.array;
 }
+
 string toString(RequestType type) {
   return type.to!string;
 }
+
 string[] toStrings(RequestType[] types) {
   return types.map!toString.array;
+}
 
 /// Retention rule status.
 enum RetentionRuleStatus {
@@ -451,7 +528,7 @@ enum RetentionRuleStatus {
 }
 
 RetentionRuleStatus toRetentionRuleStatus(string value) {
-  switch (ignoreCase ? value.toLower() : value) {
+  switch (value.toLower) {
   case "inactive":
     return RetentionRuleStatus.inactive;
   case "expired":
@@ -468,8 +545,9 @@ enum CorrectionStatus {
   completed,
   rejected,
 }
+
 CorrectionStatus toCorrectionStatus(string value) {
-  switch (ignoreCase ? value.toLower() : value) {
+  switch (value.toLower) {
   case "inprogress":
     return CorrectionStatus.inProgress;
   case "completed":
@@ -487,8 +565,9 @@ enum ArchiveStatus {
   completed,
   failed,
 }
+
 ArchiveStatus toArchiveStatus(string value) {
-  switch (ignoreCase ? value.toLower() : value) {
+  switch (value.toLower) {
   case "scheduled":
     return ArchiveStatus.scheduled;
   case "inprogress":
@@ -508,8 +587,9 @@ enum PortabilityStatus {
   completed,
   failed,
 }
+
 PortabilityStatus toPortabilityStatus(string value) {
-  switch (ignoreCase ? value.toLower() : value) {
+  switch (value.toLower) {
   case "inprogress":
     return PortabilityStatus.inProgress;
   case "completed":
@@ -527,8 +607,9 @@ enum DestructionStatus {
   completed,
   failed,
 }
+
 DestructionStatus toDestructionStatus(string value) {
-  switch (ignoreCase ? value.toLower() : value) {
+  switch (value.toLower) {
   case "scheduled":
     return DestructionStatus.scheduled;
   case "inprogress":
@@ -548,27 +629,58 @@ enum PurposeRecordStatus {
   expired,
   deactivated,
 }
+
 PurposeRecordStatus toPurposeRecordStatus(string value) {
-  switch (ignoreCase ? value.toLower() : value) {
-  case "expiring":
-    return PurposeRecordStatus.expiring;
-  case "expired":
-    return PurposeRecordStatus.expired;
-  case "deactivated":
-    return PurposeRecordStatus.deactivated;
-  default:
-    return PurposeRecordStatus.active; // default
-  }
+  mixin(EnumSwitch("PurposeRecordStatus", "active"));
 }
+
+PurposeRecordStatus[] toPurposeRecordStatuses(string[] values) {
+  return values.map!toPurposeRecordStatus.array;
+}
+
+string toString(PurposeRecordStatus status) {
+  return status.to!string;
+}
+
+string[] toStrings(PurposeRecordStatus[] statuses) {
+  return statuses.map!toString.array;
+}
+
+///
+unittest {
+  mixin(ShowTest!("PurposeRecordStatus"));
+
+  assert("active".toPurposeRecordStatus == PurposeRecordStatus.active);
+  assert("expiring".toPurposeRecordStatus == PurposeRecordStatus.expiring);
+  assert("expired".toPurposeRecordStatus == PurposeRecordStatus.expired);
+  assert("deactivated".toPurposeRecordStatus == PurposeRecordStatus.deactivated);
+
+  assert("".toPurposeRecordStatus == PurposeRecordStatus.active);
+  assert("unknown".toPurposeRecordStatus == PurposeRecordStatus.active);
+
+  assert(PurposeRecordStatus.active.toString == "active");
+  assert(PurposeRecordStatus.expiring.toString == "expiring");
+  assert(PurposeRecordStatus.expired.toString == "expired");
+  assert(PurposeRecordStatus.deactivated.toString == "deactivated");
+
+  assert([PurposeRecordStatus.active, PurposeRecordStatus.expiring].toStrings == [
+      "active", "expiring"
+    ]);
+  assert(["active", "expiring"].toPurposeRecordStatuses == [
+      PurposeRecordStatus.active, PurposeRecordStatus.expiring
+    ]);
+}
+
 /// Status of a consent purpose configuration.
-enum ConsentPurposeStatus {
-  draft,
-  active,
-  inactive,
-  deprecated_,
+enum ConsentPurposeStatus : string {
+  draft = "draft",
+  active = "active",
+  inactive = "inactive",
+  deprecated_ = "deprecated",
 }
+
 ConsentPurposeStatus toConsentPurposeStatus(string value) {
-  switch (ignoreCase ? value.toLower() : value) {
+  switch (value.toLower) {
   case "draft":
     return ConsentPurposeStatus.draft;
   case "inactive":
@@ -579,22 +691,90 @@ ConsentPurposeStatus toConsentPurposeStatus(string value) {
     return ConsentPurposeStatus.active; // default
   }
 }
+
+ConsentPurposeStatus [] toConsentPurposeStatuses(string[] values) {
+  return values.map!toConsentPurposeStatus.array;
+}
+
+string toString(ConsentPurposeStatus status) {
+  return cast(string) status;
+}
+
+string[] toStrings(ConsentPurposeStatus[] statuses) {
+  return statuses.map!toString.array;
+}
+
+///
+unittest {
+  mixin(ShowTest!("ConsentPurposeStatus"));
+
+  assert("draft".toConsentPurposeStatus == ConsentPurposeStatus.draft);
+  assert("active".toConsentPurposeStatus == ConsentPurposeStatus.active);
+  assert("inactive".toConsentPurposeStatus == ConsentPurposeStatus.inactive);
+  assert("deprecated".toConsentPurposeStatus == ConsentPurposeStatus.deprecated_);
+
+  assert("".toConsentPurposeStatus == ConsentPurposeStatus.active);
+  assert("unknown".toConsentPurposeStatus == ConsentPurposeStatus.active);
+
+  assert(ConsentPurposeStatus.draft.toString == "draft");
+  assert(ConsentPurposeStatus.active.toString == "active");
+  assert(ConsentPurposeStatus.inactive.toString == "inactive");
+  assert(ConsentPurposeStatus.deprecated_.toString == "deprecated");
+
+  assert([ConsentPurposeStatus.draft, ConsentPurposeStatus.active].toStrings == [
+      "draft", "active"
+    ]);
+  assert(["draft", "active"].toConsentPurposeStatuses == [
+      ConsentPurposeStatus.draft, ConsentPurposeStatus.active
+    ]);
+}
+
 /// Status of a rule set.
 enum RuleSetStatus {
   draft,
   active,
   inactive,
 }
+
 RuleSetStatus toRuleSetStatus(string value) {
-  switch (ignoreCase ? value.toLower() : value) {
-  case "draft":
-    return RuleSetStatus.draft;
-  case "inactive":
-    return RuleSetStatus.inactive;
-  default:
-    return RuleSetStatus.active; // default
-  }
+  mixin(EnumSwitch("RuleSetStatus", "draft"));
 }
+
+RuleSetStatus[] toRuleSetStatuses(string[] values) {
+  return values.map!toRuleSetStatus.array;
+}
+
+string toString(RuleSetStatus status) {
+  return status.to!string;
+}
+
+string[] toStrings(RuleSetStatus[] statuses) {
+  return statuses.map!toString.array;
+}
+
+/// 
+unittest {
+  mixin(ShowTest!("RuleSetStatus"));
+
+  assert("draft".toRuleSetStatus == RuleSetStatus.draft);
+  assert("active".toRuleSetStatus == RuleSetStatus.active);
+  assert("inactive".toRuleSetStatus == RuleSetStatus.inactive);
+
+  assert("".toRuleSetStatus == RuleSetStatus.draft);
+  assert("unknown".toRuleSetStatus == RuleSetStatus.draft);
+
+  assert(RuleSetStatus.draft.toString == "draft");
+  assert(RuleSetStatus.active.toString == "active");
+  assert(RuleSetStatus.inactive.toString == "inactive");
+
+  assert([RuleSetStatus.draft, RuleSetStatus.active].toStrings == [
+      "draft", "active"
+    ]);
+  assert(["draft", "active"].toRuleSetStatuses == [
+      RuleSetStatus.draft, RuleSetStatus.active
+    ]);
+}
+
 /// Status of an information report.
 enum InformationReportStatus {
   requested,
@@ -602,18 +782,47 @@ enum InformationReportStatus {
   completed,
   failed,
 }
+
 InformationReportStatus toInformationReportStatus(string value) {
-  switch (ignoreCase ? value.toLower() : value) {
-  case "generating":
-    return InformationReportStatus.generating;
-  case "completed":
-    return InformationReportStatus.completed;
-  case "failed":
-    return InformationReportStatus.failed;
-  default:
-    return InformationReportStatus.requested; // default
-  }
+  mixin(EnumSwitch("InformationReportStatus", "requested"));
 }
+
+InformationReportStatus[] toInformationReportStatuses(string[] values) {
+  return values.map!toInformationReportStatus.array;
+}
+
+string toString(InformationReportStatus status) {
+  return status.to!string;
+}
+
+string[] toStrings(InformationReportStatus[] statuses) {
+  return statuses.map!toString.array;
+}
+///
+unittest {
+  mixin(ShowTest!("InformationReportStatus"));
+
+  assert("requested".toInformationReportStatus == InformationReportStatus.requested);
+  assert("generating".toInformationReportStatus == InformationReportStatus.generating);
+  assert("completed".toInformationReportStatus == InformationReportStatus.completed);
+  assert("failed".toInformationReportStatus == InformationReportStatus.failed);
+
+  assert("".toInformationReportStatus == InformationReportStatus.requested);
+  assert("unknown".toInformationReportStatus == InformationReportStatus.requested);
+
+  assert(InformationReportStatus.requested.toString == "requested");
+  assert(InformationReportStatus.generating.toString == "generating");
+  assert(InformationReportStatus.completed.toString == "completed");
+  assert(InformationReportStatus.failed.toString == "failed");
+
+  assert([InformationReportStatus.requested, InformationReportStatus.generating].toStrings == [
+      "requested", "generating"
+    ]);
+  assert(["requested", "generating"].toInformationReportStatuses == [
+      InformationReportStatus.requested, InformationReportStatus.generating
+    ]);
+}
+
 /// Export format for information reports.
 enum ExportFormat {
   pdf,
@@ -621,33 +830,94 @@ enum ExportFormat {
   xml,
   csv,
 }
+
 ExportFormat toExportFormat(string value) {
-  switch (ignoreCase ? value.toLower() : value) {
-  case "json":
-    return ExportFormat.json;
-  case "xml":
-    return ExportFormat.xml;  
-  case "csv":
-    return ExportFormat.csv;
-  default:    return ExportFormat.pdf; // default
-  }
+  mixin(EnumSwitch("ExportFormat", "pdf"));
 }
+
+ExportFormat[] toExportFormats(string[] values) {
+  return values.map!toExportFormat.array;
+}
+
+string toString(ExportFormat format) {
+  return format.to!string;
+}
+
+string[] toStrings(ExportFormat[] formats) {
+  return formats.map!toString.array;
+}
+
+/// 
+unittest {
+  mixin(ShowTest!("ExportFormat"));
+
+  assert("pdf".toExportFormat == ExportFormat.pdf);
+  assert("json".toExportFormat == ExportFormat.json);
+  assert("xml".toExportFormat == ExportFormat.xml);
+  assert("csv".toExportFormat == ExportFormat.csv);
+
+  assert("".toExportFormat == ExportFormat.pdf);
+  assert("unknown".toExportFormat == ExportFormat.pdf);
+
+  assert(ExportFormat.pdf.toString == "pdf");
+  assert(ExportFormat.json.toString == "json");
+  assert(ExportFormat.xml.toString == "xml");
+  assert(ExportFormat.csv.toString == "csv");
+
+  assert([ExportFormat.pdf, ExportFormat.json].toStrings == [
+      "pdf", "json"
+    ]);
+  assert(["pdf", "json"].toExportFormats == [
+      ExportFormat.pdf, ExportFormat.json
+    ]);
+}
+
 /// Status of a business context version.
 enum BusinessContextStatus {
   draft,
   active,
   inactive,
 }
+
 BusinessContextStatus toBusinessContextStatus(string value) {
-  switch (ignoreCase ? value.toLower() : value) {
-  case "draft":
-    return BusinessContextStatus.draft;
-  case "inactive":
-    return BusinessContextStatus.inactive;
-  default:
-    return BusinessContextStatus.active; // default
-  }
+  mixin(EnumSwitch("BusinessContextStatus", "draft"));
 }
+
+BusinessContextStatus[] toBusinessContextStatuses(string[] values) {
+  return values.map!toBusinessContextStatus.array;
+}
+
+string toString(BusinessContextStatus status) {
+  return status.to!string;
+}
+
+string[] toStrings(BusinessContextStatus[] statuses) {
+  return statuses.map!toString.array;
+}
+
+///
+unittest {
+  mixin(ShowTest!("BusinessContextStatus"));
+
+  assert("draft".toBusinessContextStatus == BusinessContextStatus.draft);
+  assert("active".toBusinessContextStatus == BusinessContextStatus.active);
+  assert("inactive".toBusinessContextStatus == BusinessContextStatus.inactive);
+
+  assert("".toBusinessContextStatus == BusinessContextStatus.draft);
+  assert("unknown".toBusinessContextStatus == BusinessContextStatus.draft);
+
+  assert(BusinessContextStatus.draft.toString == "draft");
+  assert(BusinessContextStatus.active.toString == "active");
+  assert(BusinessContextStatus.inactive.toString == "inactive");
+
+  assert([BusinessContextStatus.draft, BusinessContextStatus.active].toStrings == [
+      "draft", "active"
+    ]);
+  assert(["draft", "active"].toBusinessContextStatuses == [
+      BusinessContextStatus.draft, BusinessContextStatus.active
+    ]);
+}
+
 /// Anonymization method.
 enum AnonymizationMethod {
   masking,
@@ -657,52 +927,114 @@ enum AnonymizationMethod {
   tokenization,
   noise,
 }
+
 AnonymizationMethod toAnonymizationMethod(string value) {
-  switch (ignoreCase ? value.toLower() : value) {
-  case "generalization":
-    return AnonymizationMethod.generalization;
-  case "suppression":
-    return AnonymizationMethod.suppression;
-  case "pseudonymization":
-    return AnonymizationMethod.pseudonymization;
-  case "tokenization":
-    return AnonymizationMethod.tokenization;
-  case "noise":
-    return AnonymizationMethod.noise;
-  default:
-    return AnonymizationMethod.masking; // default
-  }
+  mixin(EnumSwitch("AnonymizationMethod", "masking"));
 }
+
+AnonymizationMethod[] toAnonymizationMethods(string[] values) {
+  return values.map!toAnonymizationMethod.array;
+}
+
+string toString(AnonymizationMethod method) {
+  return method.to!string;
+}
+
+string[] toStrings(AnonymizationMethod[] methods) {
+  return methods.map!toString.array;
+}
+
+///
+unittest {
+  mixin(ShowTest!("AnonymizationMethod"));
+
+  assert("masking".toAnonymizationMethod == AnonymizationMethod.masking);
+  assert("generalization".toAnonymizationMethod == AnonymizationMethod.generalization);
+  assert("suppression".toAnonymizationMethod == AnonymizationMethod.suppression);
+  assert("pseudonymization".toAnonymizationMethod == AnonymizationMethod.pseudonymization);
+  assert("tokenization".toAnonymizationMethod == AnonymizationMethod.tokenization);
+  assert("noise".toAnonymizationMethod == AnonymizationMethod.noise);
+
+  assert("".toAnonymizationMethod == AnonymizationMethod.masking);
+  assert("unknown".toAnonymizationMethod == AnonymizationMethod.masking);
+
+  assert(AnonymizationMethod.masking.toString == "masking");
+  assert(AnonymizationMethod.generalization.toString == "generalization");
+  assert(AnonymizationMethod.suppression.toString == "suppression");
+  assert(AnonymizationMethod.pseudonymization.toString == "pseudonymization");
+  assert(AnonymizationMethod.tokenization.toString == "tokenization");
+  assert(AnonymizationMethod.noise.toString == "noise");
+
+  assert([AnonymizationMethod.masking, AnonymizationMethod.generalization].toStrings == [
+      "masking", "generalization"
+    ]);
+  assert(["masking", "generalization"].toAnonymizationMethods == [
+      AnonymizationMethod.masking, AnonymizationMethod.generalization
+    ]);
+}
+
+
 /// Status of an anonymization config.
 enum AnonymizationConfigStatus {
   draft,
   active,
   inactive,
 }
+
 AnonymizationConfigStatus toAnonymizationConfigStatus(string value) {
-  switch (ignoreCase ? value.toLower() : value) {
-  case "draft":
-    return AnonymizationConfigStatus.draft;
-  case "inactive":
-    return AnonymizationConfigStatus.inactive;
-  default:
-    return AnonymizationConfigStatus.active; // default
-  }
-} 
-/// Rule operator for rule set conditions.
-enum RuleOperator {
-  equals,
-  notEquals,
-  contains,
-  startsWith,
-  endsWith,
-  greaterThan,
-  lessThan,
-  in_,
-  notIn,
+  mixin(EnumSwitch("AnonymizationConfigStatus", "draft"));
 }
+
+AnonymizationConfigStatus[] toAnonymizationConfigStatuses(string[] values) {
+  return values.map!toAnonymizationConfigStatus.array;
+}
+
+string toString(AnonymizationConfigStatus status) {
+  return status.to!string;
+}
+
+string[] toStrings(AnonymizationConfigStatus[] statuses) {
+  return statuses.map!toString.array;
+}
+
+///
+unittest {
+  mixin(ShowTest!("AnonymizationConfigStatus"));
+
+  assert("draft".toAnonymizationConfigStatus == AnonymizationConfigStatus.draft);
+  assert("active".toAnonymizationConfigStatus == AnonymizationConfigStatus.active);
+  assert("inactive".toAnonymizationConfigStatus == AnonymizationConfigStatus.inactive);
+
+  assert("".toAnonymizationConfigStatus == AnonymizationConfigStatus.draft);
+  assert("unknown".toAnonymizationConfigStatus == AnonymizationConfigStatus.draft);
+
+  assert(AnonymizationConfigStatus.draft.toString == "draft");
+  assert(AnonymizationConfigStatus.active.toString == "active");
+  assert(AnonymizationConfigStatus.inactive.toString == "inactive");
+
+  assert([AnonymizationConfigStatus.draft, AnonymizationConfigStatus.active].toStrings == [
+      "draft", "active"
+    ]);
+  assert(["draft", "active"].toAnonymizationConfigStatuses == [
+      AnonymizationConfigStatus.draft, AnonymizationConfigStatus.active
+    ]);
+}
+
+/// Rule operator for rule set conditions.
+enum RuleOperator : string {
+  equals = "equals",
+  notEquals = "notEquals",
+  contains = "contains",
+  startsWith = "startsWith",
+  endsWith = "endsWith",
+  greaterThan = "greaterThan",
+  lessThan = "lessThan",
+  in_ = "in",
+  notIn = "notIn",
+}
+
 RuleOperator toRuleOperator(string value) {
-  switch (ignoreCase ? value.toLower() : value) {
+  switch (value.toLower) {
   case "notequals":
     return RuleOperator.notEquals;
   case "contains":
@@ -722,4 +1054,51 @@ RuleOperator toRuleOperator(string value) {
   default:
     return RuleOperator.equals; // default
   }
+}
+
+RuleOperator[] toRuleOperators(string[] values) {
+  return values.map!toRuleOperator.array;
+}
+
+string toString(RuleOperator op) {
+  return cast(string) op;
+}
+
+string[] toStrings(RuleOperator[] ops) {
+  return ops.map!toString.array;
+}
+
+///
+unittest {
+  mixin(ShowTest!("RuleOperator"));
+
+  assert("equals".toRuleOperator == RuleOperator.equals);
+  assert("notEquals".toRuleOperator == RuleOperator.notEquals);
+  assert("contains".toRuleOperator == RuleOperator.contains);
+  assert("startsWith".toRuleOperator == RuleOperator.startsWith);
+  assert("endsWith".toRuleOperator == RuleOperator.endsWith);
+  assert("greaterThan".toRuleOperator == RuleOperator.greaterThan);
+  assert("lessThan".toRuleOperator == RuleOperator.lessThan);
+  assert("in".toRuleOperator == RuleOperator.in_);
+  assert("notIn".toRuleOperator == RuleOperator.notIn);
+
+  assert("".toRuleOperator == RuleOperator.equals);
+  assert("unknown".toRuleOperator == RuleOperator.equals);
+
+  assert(RuleOperator.equals.toString == "equals");
+  assert(RuleOperator.notEquals.toString == "notEquals");
+  assert(RuleOperator.contains.toString == "contains");
+  assert(RuleOperator.startsWith.toString == "startsWith");
+  assert(RuleOperator.endsWith.toString == "endsWith");
+  assert(RuleOperator.greaterThan.toString == "greaterThan");
+  assert(RuleOperator.lessThan.toString == "lessThan");
+  assert(RuleOperator.in_.toString == "in");
+  assert(RuleOperator.notIn.toString == "notIn");
+
+  assert([RuleOperator.equals, RuleOperator.notEquals].toStrings == [
+      "equals", "notEquals"
+    ]);
+  assert(["equals", "notEquals"].toRuleOperators == [
+      RuleOperator.equals, RuleOperator.notEquals
+    ]);
 }

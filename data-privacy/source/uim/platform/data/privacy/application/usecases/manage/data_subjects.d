@@ -23,8 +23,8 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
   CommandResult createSubject(CreateDataSubjectRequest req) {
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
-    if (req.displayname.isEmpty)
-      return CommandResult(false, "", "Display name is required");
+    /* TODO: if (req.displayname.isEmpty)
+      return CommandResult(false, "", "Display name is required");*/
 
     // Check for duplicate external ID
     if (req.externalId.length > 0) {

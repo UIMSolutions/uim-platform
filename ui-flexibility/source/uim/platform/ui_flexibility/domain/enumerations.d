@@ -19,7 +19,7 @@ enum StorageBackend {
 }
 
 StorageBackend toStorageBackend(string value) {
-  switch (ignoreCase ? value.toLower() : value) {
+  switch (value.toLower) {
     case "memory": return StorageBackend.memory_;
     case "files": return StorageBackend.files_;
     case "mongodb": return StorageBackend.mongodb_;
@@ -36,7 +36,7 @@ enum ChangeLayer {
   user_       // Created by end user (personal)
 }
 ChangeLayer toChangeLayer(string value) {
-  switch (ignoreCase ? value.toLower() : value) {
+  switch (value.toLower) {
     case "vendor": return ChangeLayer.vendor_;
     case "customer": return ChangeLayer.customer_;
     case "user": return ChangeLayer.user_;
@@ -88,7 +88,7 @@ enum VariantType {
   page_        // Page layout variant
 }
 VatiantType toVariantType(string value) {
-  switch (ignoreCase ? value.toLower() : value) {
+  switch (value.toLower) {
     case "filterbar": return VariantType.filterBar_;
     case "table": return VariantType.table_;
     case "chart": return VariantType.chart_;
@@ -105,7 +105,7 @@ enum VersionStatus {
   archived_    // Superseded by newer version
 }
 VersionStatus toVersionStatus(string value) {
-  switch (ignoreCase ? value.toLower() : value) {
+  switch (value.toLower) {
     case "draft": return VersionStatus.draft_;
     case "active": return VersionStatus.active_;
     case "archived": return VersionStatus.archived_;
@@ -119,7 +119,7 @@ enum PersonalizationScope {
   app_         // Application-level personalization
 }
 PersonalizationScope toPersonalizationScope(string value) {
-  switch (ignoreCase ? value.toLower() : value) {
+  switch (value.toLower) {
     case "control": return PersonalizationScope.control_;
     case "page": return PersonalizationScope.page_;
     case "app": return PersonalizationScope.app_;

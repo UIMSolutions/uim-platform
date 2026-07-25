@@ -17,7 +17,7 @@ enum RuleType : string{
 }
 
 RuleType toRuleType(string value) {
-  switch (ignoreCase ? value.toLower() : value) {
+  switch (value.toLower) {
   case "required":
     return RuleType.required;
   case "format":

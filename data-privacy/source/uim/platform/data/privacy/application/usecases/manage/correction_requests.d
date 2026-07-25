@@ -24,9 +24,9 @@ class ManageCorrectionRequestsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Tenant ID is required");
     if (req.subjectId.isEmpty)
       return CommandResult(false, "", "Data subject ID is required");
-    if (req.fieldname.isEmpty)
-      return CommandResult(false, "", "Field name is required");
-
+    // if (req.fieldname.isEmpty)
+      // return CommandResult(false, "", "Field name is required");
+// 
     auto subject = dsRepo.findById(req.tenantId, req.subjectId);
     if (subject.isNull)
       return CommandResult(false, "", "Data subject not found");
