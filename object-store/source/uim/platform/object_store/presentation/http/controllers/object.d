@@ -56,7 +56,7 @@ class ObjectController : ManageHttpController {
 
     auto result = usecase.createObject(r);
     if (result.hasError)
-      return errorResponse(result.errorMessage);
+      return errorResponse(result.message);
 
     auto responseData = Json.emptyObject.set("id", result.id);
     return successResponse("Object created successfully", "Created", 201, responseData);
@@ -122,8 +122,7 @@ class ObjectController : ManageHttpController {
 
     auto result = usecase.updateObjectMetadata(r);
     if (result.hasError)
-      return errorResponse(result.errorMessage == "Object not found" ? "Not Found" : "Bad Request", result
-          .errorMessage == "Object not found" ? 404 : 400);
+      return errorResponse(result.message == "Object not found" ? "Not Found" : "Bad Request", result.message == "Object not found" ? 404 : 400);
 
     auto responseData = Json.emptyObject.set("id", result.id);
     return successResponse("Object metadata updated successfully", "Updated", 200, responseData);
@@ -143,8 +142,7 @@ class ObjectController : ManageHttpController {
 
     auto result = usecase.deleteObject(tenantId, id);
     if (result.hasError)
-      return errorResponse(result.errorMessage == "Object not found" ? "Not Found" : "Bad Request", result
-          .errorMessage == "Object not found" ? 404 : 400);
+      return errorResponse(result.message == "Object not found" ? "Not Found" : "Bad Request", result.message == "Object not found" ? 404 : 400);
 
     auto resp = Json.emptyObject
       .set("id", result.id);
@@ -169,7 +167,7 @@ class ObjectController : ManageHttpController {
 
     auto result = usecase.copyObject(r);
     if (result.hasError)
-      return errorResponse(result.errorMessage, 400);
+      return errorResponse(result.message, 400);
 
     auto resp = Json.emptyObject
       .set("id", result.id);

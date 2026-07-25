@@ -161,8 +161,8 @@ class FeatureRestrictionController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto data = precheck.data;
-    auto featureId = data.getString("featureId");
-    auto userId = data.getString("userId");
+    auto featureId = FeatureRestrictionId(data.getString("featureId"));
+    auto userId = UserId(data.getString("userId"));
     auto deviceId = data.getString("deviceId");
     auto result = usecase.evaluateRestriction(tenantId, featureId, userId, deviceId);
     auto resp = Json.emptyObject

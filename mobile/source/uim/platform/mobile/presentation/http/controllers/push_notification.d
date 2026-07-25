@@ -73,8 +73,8 @@ class PushNotificationController : ManageHttpController {
         .set("id", item.id)
         .set("appId", item.appId)
         .set("title", item.title)
-        .set("provider", item.provider)
-        .set("status", item.status);
+        .set("provider", item.provider.toString)
+        .set("status", item.status.toString);
     }
     auto resp = Json.emptyObject
       .set("items", items)
@@ -89,10 +89,10 @@ class PushNotificationController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
+    auto id = PushNotificationId(precheck.id);
     auto notification = usecase.getNotification(tenantId, id);
     if (notification.isNull)
-      return errorResponse("Push notification not found", 400);
+      return errorResponse("Push notification not found", 404);
       
     auto resp = Json.emptyObject
       .set("id", notification.id)
@@ -102,9 +102,9 @@ class PushNotificationController : ManageHttpController {
       .set("body", notification.body_)
       .set("payload", notification.payload)
       .set("provider", notification.provider)
-      .set("priority", notification.priority)
-      .set("targetDevices", toJsonArray(notification.targetDevices))
-      .set("targetTopics", toJsonArray(notification.targetTopics))
+      .set("priority", notification.priority.toString)
+      .set("targetDevices", notification.targetDevices.toJson)
+      .set("targetTopics", notification.targetTopics.toJson)
       .set("scheduledAt", notification.scheduledAt)
       .set("expiresAt", notification.expiresAt)
       .set("status", notification.status)

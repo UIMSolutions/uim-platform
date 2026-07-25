@@ -233,7 +233,7 @@ unittest {
   assert(MetricUnit.milliseconds.toString == "milliseconds");
   assert(MetricUnit.seconds.toString == "seconds");
   assert(MetricUnit.count.toString == "count");
-  assert(MetricUnit.countPerSecond.toString == "countpersecond");
+  assert(MetricUnit.countPerSecond.toString == "countPerSecond");
   assert(MetricUnit.boolean_.toString == "boolean");
   assert(MetricUnit.none.toString == "none");
 

@@ -371,13 +371,23 @@ unittest {
 
 // Feature restriction type
 enum RestrictionType : string {
-  boolean_ = "boolean_", // on/off toggle
+  boolean_ = "boolean", // on/off toggle
   percentage = "percentage", // gradual rollout
   whitelist = "whitelist", // specific users/devices
 }
 
-RestrictionType toRestrictionType(string value)
-  => mixin(EnumSwitch("RestrictionType", "boolean_"));
+RestrictionType toRestrictionType(string value) {
+  switch(value.lower) {
+    case "boolean":
+      return RestrictionType.boolean_;
+    case "percentage":
+      return RestrictionType.percentage;
+    case "whitelist":
+      return RestrictionType.whitelist;
+    default:
+      return RestrictionType.boolean_;
+  }
+}
 
 RestrictionType[] toRestrictionTypes(string[] values)
   => values.map!(toRestrictionType).array;
@@ -392,29 +402,29 @@ string[] toStrings(RestrictionType[] values)
 unittest {
   mixin(ShowTest!("RestrictionType"));
 
-  assert(toRestrictionType("boolean_") == RestrictionType.boolean_);
+  assert(toRestrictionType("boolean") == RestrictionType.boolean_);
   assert(toRestrictionType("percentage") == RestrictionType.percentage);
   assert(toRestrictionType("whitelist") == RestrictionType.whitelist);
   assert(toRestrictionType("unknown") == RestrictionType.boolean_);
-  assert(toRestrictionType("BOOLEAN_") == RestrictionType.boolean_);
+  assert(toRestrictionType("BOOLEAN") == RestrictionType.boolean_);
   assert(toRestrictionType("PERCENTAGE") == RestrictionType.percentage);
   assert(toRestrictionType("WHITELIST") == RestrictionType.whitelist);
 
   assert(toRestrictionType("") == RestrictionType.boolean_);
   assert(toRestrictionType("UNKNOWN") == RestrictionType.boolean_);
 
-  assert(toString(RestrictionType.boolean_) == "boolean_");
+  assert(toString(RestrictionType.boolean_) == "boolean");
   assert(toString(RestrictionType.percentage) == "percentage");
   assert(toString(RestrictionType.whitelist) == "whitelist");
 
   assert(toStrings([
       RestrictionType.boolean_, RestrictionType.percentage,
       RestrictionType.whitelist
-    ]) == ["boolean_", "percentage", "whitelist"]);
+    ]) == ["boolean", "percentage", "whitelist"]);
   assert([
     RestrictionType.boolean_, RestrictionType.percentage,
     RestrictionType.whitelist
-  ].toStrings == ["boolean_", "percentage", "whitelist"]);
+  ].toStrings == ["boolean", "percentage", "whitelist"]);
 }
 
 // Resource type

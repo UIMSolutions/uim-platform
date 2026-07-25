@@ -100,7 +100,7 @@ class AppVersionController : ManageHttpController {
       .set("appId", appVersion.appId)
       .set("versionCode", appVersion.versionCode)
       .set("buildNumber", appVersion.buildNumber)
-      .set("platform", appVersion.platform)
+      .set("platform", appVersion.platform.toString)
       .set("releaseNotes", appVersion.releaseNotes)
       .set("downloadUrl", appVersion.downloadUrl)
       .set("sizeBytes", appVersion.sizeBytes)

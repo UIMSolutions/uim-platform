@@ -104,7 +104,7 @@ class DeviceRegistrationController : ManageHttpController {
       .set("platform", result.platform)
       .set("userId", result.userId)
       .set("deviceToken", result.deviceToken)
-      .set("status", result.status);
+      .set("status", result.status.toString);
 
     return successResponse("Device registration retrieved successfully", "Retrieved", 200, resp);
   }

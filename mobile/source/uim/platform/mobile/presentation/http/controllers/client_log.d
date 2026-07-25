@@ -104,7 +104,7 @@ class ClientLogController : ManageHttpController {
       .set("message", result.message)
       .set("stackTrace", result.stackTrace)
       .set("metadata", result.metadata)
-      .set("platform", result.platform)
+      .set("platform", result.platform.toString)
       .set("appVersion", result.appVersion)
       .set("timestamp", result.timestamp);
 

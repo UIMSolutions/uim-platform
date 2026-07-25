@@ -48,7 +48,7 @@ class UserSessionController : ManageHttpController {
     r.userAgent = data.getString("userAgent");
     r.platform = data.getString("platform");
     r.appVersion = data.getString("appVersion");
-    auto result = usecase.create(r);
+    auto result = usecase.createUserSession(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
     auto resp = Json.emptyObject.set("id", result.id);
@@ -62,7 +62,7 @@ class UserSessionController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto results = usecase.list(tenantId);
+    auto results = usecase.listUserSessions(tenantId);
     auto items = Json.emptyArray;
     foreach (item; results) {
       items ~= Json.emptyObject
@@ -86,8 +86,8 @@ class UserSessionController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
-    auto result = usecase.get(id);
+    auto id = UserSessionId(precheck.id);
+    auto result = usecase.getUserSession(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
     auto resp = Json.emptyObject
@@ -115,7 +115,7 @@ class UserSessionController : ManageHttpController {
     if (id.isNull)
       return errorResponse("Invalid user session ID", 400);
 
-    auto result = usecase.terminate(id);
+    auto result = usecase.terminateUserSession(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
 
@@ -137,7 +137,7 @@ class UserSessionController : ManageHttpController {
     if (id.isNull)
       return errorResponse("Invalid user session ID", 400);
 
-    auto result = usecase.delete(tenantId, id);
+    auto result = usecase.deleteUserSession(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
 

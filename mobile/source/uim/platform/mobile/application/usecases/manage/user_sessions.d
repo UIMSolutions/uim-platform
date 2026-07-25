@@ -53,7 +53,11 @@ class ManageUserSessionsUseCase { // TODO: UIMUseCase {
         return repo.findById(tenantId, id);
     }
 
-    UserSession[] listUserSessionsByApp(TenantId tenantId, MobileAppId appId) {
+    UserSession[] listUserSessions(TenantId tenantId) {
+        return repo.findByTenant(tenantId);
+    }
+
+    UserSession[] listUserSessions(TenantId tenantId, MobileAppId appId) {
         return repo.findByApp(tenantId, appId);
     }
 

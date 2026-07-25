@@ -6,9 +6,9 @@
 module uim.platform.identity_provisioning.presentation.http.controllers;
 
 public:
-    import uim.platform.identity_provisioning.presentation.http.controllers.source_systems;
-    import uim.platform.identity_provisioning.presentation.http.controllers.target_systems;
-    import uim.platform.identity_provisioning.presentation.http.controllers.proxy_systems;
-    import uim.platform.identity_provisioning.presentation.http.controllers.transformations; 
+    import uim.platform.identity_provisioning.presentation.http.controllers.source_system;
+    import uim.platform.identity_provisioning.presentation.http.controllers.target_system;
+    import uim.platform.identity_provisioning.presentation.http.controllers.proxy_system;
+    import uim.platform.identity_provisioning.presentation.http.controllers.transformation; 
     import uim.platform.identity_provisioning.presentation.http.controllers.monitoring; 
     import uim.platform.identity_provisioning.presentation.http.controllers.provisioning_job;

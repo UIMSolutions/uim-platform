@@ -318,7 +318,7 @@ unittest {
   assert(SubaccountStatus.moveInProgress.toString == "moveInProgress");
   assert(SubaccountStatus.moveFailed.toString == "moveFailed");
 
-  assert(["active", "suspended"].toSubaccountStatus == [
+  assert(["active", "suspended"].toSubaccountStatuses == [
       SubaccountStatus.active, SubaccountStatus.suspended
     ]);
   assert([SubaccountStatus.active, SubaccountStatus.suspended].toStrings == [
@@ -376,7 +376,7 @@ unittest {
   assert(SubaccountUsage.staging.toString == "staging");
   assert(SubaccountUsage.demo.toString == "demo");
 
-  assert(["unset", "production"].toSubaccountUsage == [
+  assert(["unset", "production"].toSubaccountUsages == [
       SubaccountUsage.unset, SubaccountUsage.production
     ]);
   assert([SubaccountUsage.unset, SubaccountUsage.production].toStrings == [
@@ -706,7 +706,7 @@ unittest {
   assert(SubscriptionStatus.error.toString == "error");
   assert(SubscriptionStatus.suspended.toString == "suspended");
 
-  assert(["subscribed", "subscribing"].toSubscriptionStatus == [
+  assert(["subscribed", "subscribing"].toSubscriptionStatuses == [
       SubscriptionStatus.subscribed, SubscriptionStatus.subscribing
     ]);
   assert([SubscriptionStatus.subscribed, SubscriptionStatus.subscribing].toStrings == [
@@ -755,7 +755,7 @@ unittest {
   assert(ServiceInstanceStatus.deleting.toString == "deleting");
   assert(ServiceInstanceStatus.updating.toString == "updating");
 
-  assert(["creating", "ready"].toServiceInstanceStatus == [
+  assert(["creating", "ready"].toServiceInstanceStatuses == [
       ServiceInstanceStatus.creating, ServiceInstanceStatus.ready
     ]);
   assert([ServiceInstanceStatus.creating, ServiceInstanceStatus.ready].toStrings == [

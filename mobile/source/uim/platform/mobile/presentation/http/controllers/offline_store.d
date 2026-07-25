@@ -99,7 +99,7 @@ class OfflineStoreController : ManageHttpController {
       .set("appId", store.appId)
       .set("name", store.name)
       .set("description", store.description)
-      .set("storeType", store.storeType)
+      .set("storeType", store.storeType.toString)
       // TODO: ?.set("syncPolicy", store.syncPolicy)
       // TODO: ?.set("status", store.status)
       .set("createdBy", store.createdBy);

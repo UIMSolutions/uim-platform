@@ -68,7 +68,7 @@ class PushRegistrationController : ManageHttpController {
         .set("appId", item.appId)
         .set("deviceId", item.deviceId)
         .set("provider", item.provider)
-        .set("status", item.status);
+        .set("status", item.status.toString);
     }
     auto resp = Json.emptyObject
       .set("items", items)
@@ -98,7 +98,7 @@ class PushRegistrationController : ManageHttpController {
       .set("deviceId", registration.deviceId)
       .set("provider", registration.provider)
       .set("pushToken", registration.pushToken)
-      .set("topics", toJsonArray(registration.topics))
+      .set("topics", registration.topics.toJson)
       .set("status", registration.status);
 
     return successResponse("Push registration retrieved successfully", "Retrieved", 200, resp);
