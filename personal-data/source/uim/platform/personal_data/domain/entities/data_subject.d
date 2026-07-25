@@ -40,6 +40,6 @@ struct DataSubject {
             .set("organizationName", organizationName)
             .set("organizationId", organizationId)
             .set("externalId", externalId)  
-            .set("applicationIds", applicationIds); 
+            .set("applicationIds", applicationIds.toJson); 
     }
 }

@@ -155,14 +155,19 @@ class DataSubjectController : ManageHttpController {
             return errorResponse(result.message, 400);
         auto resp = Json.emptyObject.set("id", result.id);
         return successResponse("Data subject updated successfully", 200, resp);
-}
+    }
 
-protected void handleBlock(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+    protected Json blockHandler(HTTPServerRequest req) {
+        auto precheck = super.postHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
         auto tenantId = precheck.tenantId;
         auto path = precheck.path;
         auto stripped = path[0 .. $ - 6]; // remove "/block"
         auto id = DataSubjectId(extractIdFromPath(stripped));
+        if (id.isNull)
+            return errorResponse("Invalid data subject ID", 400);
 
         auto result = usecase.block(tenantId, id);
         if (result.hasError)
@@ -171,21 +176,22 @@ protected void handleBlock(scope HTTPServerRequest req, scope HTTPServerResponse
             .set("id", result.id)
             .set("message", "Data subject blocked");
 
-        res.writeJsonBody(resp, 200);
-    } else {
-        writeError(res, 404, result.message);
+        return successResponse("Data subject blocked successfully", 200, resp);
     }
-} catch (Exception e) {
-    writeError(res, 500, "Internal server error");
-}
-}
 
-protected void handleErase(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+    mixin(HandleTemplate!("handleBlock", "blockHandler"));
+
+    protected Json eraseHandler(HTTPServerRequest req) {
+        auto precheck = super.postHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
         auto tenantId = precheck.tenantId;
         auto path = precheck.path;
         auto stripped = path[0 .. $ - 6]; // remove "/erase"
         auto id = DataSubjectId(extractIdFromPath(stripped));
+        if (id.isNull)
+            return errorResponse("Invalid data subject ID", 400);
 
         auto result = usecase.eraseDataSubject(tenantId, id);
         if (result.hasError)
@@ -194,33 +200,29 @@ protected void handleErase(scope HTTPServerRequest req, scope HTTPServerResponse
             .set("id", result.id)
             .set("message", "Data subject erased (anonymized)");
 
-        res.writeJsonBody(resp, 200);
-    } else {
-        writeError(res, 404, result.message);
+        return successResponse("Data subject erased successfully", 200, resp);
     }
-} catch (Exception e) {
-    writeError(res, 500, "Internal server error");
-}
-}
 
-override protected Json deleteHandler(HTTPServerRequest req) {
-    auto precheck = super.deleteHandler(req);
-    if (precheck.hasError)
-        return precheck;
+    mixin(HandleTemplate!("handleErase", "eraseHandler"));
 
-    auto tenantId = precheck.tenantId;
-    auto id = DataSubjectId(precheck.id);
-    if (id.isNull)
-        return errorResponse("Invalid data subject ID", 400);
+    override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-    auto result = usecase.deleteDataSubject(tenantId, id);
-    if (result.hasError)
-        return errorResponse(result.message, 400);
-        
-    auto resp = Json.emptyObject
-        .set("id", result.id)
-        .set("message", "Data subject deleted");
+        auto tenantId = precheck.tenantId;
+        auto id = DataSubjectId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid data subject ID", 400);
 
-    return successResponse("Data subject deleted successfully", 200, resp);
-}
+        auto result = usecase.deleteDataSubject(tenantId, id);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Data subject deleted");
+
+        return successResponse("Data subject deleted successfully", 200, resp);
+    }
 }

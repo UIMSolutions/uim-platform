@@ -24,7 +24,7 @@ class ManageProcessingPurposesUseCase { // TODO: UIMUseCase {
         if (r.legalBasis.length == 0) return CommandResult(false, "", "Legal basis is required");
 
         ProcessingPurpose p;
-        p.id = r.id;
+        p.id = r.purposeId;
         p.tenantId = r.tenantId;
         p.name = r.name;
         p.description = r.description;
@@ -36,7 +36,7 @@ class ManageProcessingPurposesUseCase { // TODO: UIMUseCase {
         p.dataProtectionOfficer = r.dataProtectionOfficer;
         p.requiresConsent = r.requiresConsent;
         p.createdBy = r.createdBy;
-        p.createdAt = clockTime();
+        p.createdAt = currentTimestamp();
 
         repo.save(p);
         return CommandResult(true, p.id.value, "");
@@ -51,11 +51,9 @@ class ManageProcessingPurposesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateProcessingPurpose(UpdateProcessingPurposeRequest r) {
-        auto existing = repo.findById(r.tenantId, r.id);
+        auto existing = repo.findById(r.tenantId, r.purposeId);
         if (existing.isNull)
             return CommandResult(false, "", "Processing purpose not found");
-
-        
 
         if (r.name.length > 0) existing.name = r.name;
         if (r.description.length > 0) existing.description = r.description;
@@ -64,7 +62,7 @@ class ManageProcessingPurposesUseCase { // TODO: UIMUseCase {
         if (r.dataProtectionOfficer.length > 0) existing.dataProtectionOfficer = r.dataProtectionOfficer;
         existing.requiresConsent = r.requiresConsent;
         existing.updatedBy = r.updatedBy;
-        existing.updatedAt = clockTime();
+        existing.updatedAt = currentTimestamp();
 
         repo.update(existing);
         return CommandResult(true, existing.id.value, "");

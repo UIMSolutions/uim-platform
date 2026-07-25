@@ -38,7 +38,7 @@ class ManageDataSubjectRequestsUseCase { // TODO: UIMUseCase {
         req.assignedTo = r.assignedTo;
         req.dueDate = r.dueDate;
         req.createdBy = r.createdBy;
-        req.createdAt = clockTime();
+        req.createdAt = currentTimestamp();
 
         repo.save(req);
         return CommandResult(true, req.id.value, "");
@@ -61,7 +61,7 @@ class ManageDataSubjectRequestsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateDataSubjectRequest(UpdateDataSubjectRequestRequest r) {
-        auto request = repo.findById(r.id);
+        auto request = repo.findById(r.tenantId, r.id);
         if (request.isNull)
             return CommandResult(false, "", "Data subject request not found");
 
@@ -70,7 +70,7 @@ class ManageDataSubjectRequestsUseCase { // TODO: UIMUseCase {
         if (r.status.length > 0) {
             request.status = r.status.to!RequestStatus;
             if (request.status == RequestStatus.completed)
-                request.completedAt = clockTime();
+                request.completedAt = currentTimestamp();
         }
         if (r.assignedTo.length > 0) request.assignedTo = r.assignedTo;
         if (r.rejectionReason.length > 0) request.rejectionReason = r.rejectionReason;
@@ -79,12 +79,12 @@ class ManageDataSubjectRequestsUseCase { // TODO: UIMUseCase {
             ProcessingComment c;
             c.author = r.commentAuthor;
             c.comment = r.commentText;
-            c.createdAt = clockTime();
+            c.createdAt = currentTimestamp();
             request.comments ~= c;
         }
 
         request.updatedBy = r.updatedBy;
-        request.updatedAt = clockTime();
+        request.updatedAt = currentTimestamp();
 
         repo.update(request);
         return CommandResult(true, request.id.value, "");

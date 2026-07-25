@@ -19,11 +19,11 @@ class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createRetentionRule(CreateRetentionRuleRequest r) {
-        if (r.isNull) return CommandResult(false, "", "ID is required");
+        if (r.ruleId.isNull) return CommandResult(false, "", "ID is required");
         if (r.name.isEmpty) return CommandResult(false, "", "Rule name is required");
 
         RetentionRule rule;
-        rule.id = r.id;
+        rule.id = r.ruleId;
         rule.tenantId = r.tenantId;
         rule.name = r.name;
         rule.description = r.description;
@@ -37,7 +37,7 @@ class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
         rule.notifyBeforeExpiry = r.notifyBeforeExpiry;
         rule.notifyDaysBefore = r.notifyDaysBefore;
         rule.createdBy = r.createdBy;
-        rule.createdAt = clockTime();
+        rule.createdAt = currentTimestamp();
 
         repo.save(rule);
         return CommandResult(true, rule.id.value, "");
@@ -52,7 +52,7 @@ class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateRetentionRule(UpdateRetentionRuleRequest r) {
-        auto existing = repo.findById(r.tenantId, r.id);
+        auto existing = repo.findById(r.tenantId, r.ruleId);
         if (existing.isNull)
             return CommandResult(false, "", "Retention rule not found");
 
@@ -64,7 +64,7 @@ class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
         existing.notifyBeforeExpiry = r.notifyBeforeExpiry;
         existing.notifyDaysBefore = r.notifyDaysBefore;
         existing.updatedBy = r.updatedBy;
-        existing.updatedAt = clockTime();
+        existing.updatedAt = currentTimestamp();
 
         repo.update(existing);
         return CommandResult(true, existing.id.value, "");

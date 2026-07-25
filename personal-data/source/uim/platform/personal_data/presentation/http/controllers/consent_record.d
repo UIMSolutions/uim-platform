@@ -24,7 +24,7 @@ class ConsentRecordController : ManageHttpController {
         router.get("/api/v1/personal-data/consents", &handleList);
         router.get("/api/v1/personal-data/consents/*", &handleGet);
         router.post("/api/v1/personal-data/consents", &handleCreate);
-        router.post("/api/v1/personal-data/consents/*/withdraw", &handleWithdraw);
+        router.post("/api/v1/personal-data/consents/*/withdraw", &handleWithDraw);
         router.delete_("/api/v1/personal-data/consents/*", &handleDelete);
     }
 
@@ -101,47 +101,51 @@ class ConsentRecordController : ManageHttpController {
                 .toJson);
     }
 
-    protected void handleWithdraw(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto path = precheck.path;
-            auto stripped = path[0 .. $ - 9]; // remove "/withdraw"
-            auto id = ConsentRecordId(extractIdFromPath(stripped));
+    protected Json withDrawHandler(HTTPServerRequest req) {
+        auto precheck = super.postHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-            auto data = precheck.data;
-            WithdrawConsentRequest r;
-            r.id = id;
-            r.reason = data.getString("reason");
-            r.updatedBy = UserId(data.getString("updatedBy"));
+        auto tenantId = precheck.tenantId;
+        auto path = precheck.path;
+        auto stripped = path[0 .. $ - 9]; // remove "/withdraw"
+        auto id = ConsentRecordId(extractIdFromPath(stripped));
 
-            auto result = usecase.withdraw(r);
-            if (result.hasError)
-                return errorResponse(result.message, 400);
-            auto resp = Json.emptyObject
-                .set("id", result.id)
-                .set("message", "Consent withdrawn");
+        auto data = precheck.data;
+        WithdrawConsentRequest r;
+        r.tenantId = tenantId;
+        r.id = id;
+        r.reason = data.getString("reason");
+        r.updatedBy = UserId(data.getString("updatedBy"));
 
-            res.writeJsonBody(resp, 200);
-        } else {
-            writeError(res, 404, result.message);
-        }
-    } catch (Exception e) {
-        writeError(res, 500, "Internal server error");
+        auto result = usecase.withdraw(r);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Consent withdrawn");
+
+        return successResponse("Consent record withdrawn successfully", "Withdrawn", 200, resp);
     }
-}
 
-override protected Json deleteHandler(HTTPServerRequest req) {
-    auto precheck = super.deleteHandler(req);
-    if (precheck.hasError)
-        return precheck;
+    mixin(HandleTemplate!("handleWithDraw", "withDrawHandler"));
 
-    auto tenantId = precheck.tenantId;
-    auto id = ConsentRecordId(precheck.id);
+    override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-    auto result = usecase.deleteConsentRecord(tenantId, id);
-    if (result.hasError)
-        return errorResponse(result.message, 400);
+        auto tenantId = precheck.tenantId;
+        auto id = ConsentRecordId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid consent record ID", 400);
 
-    auto resp = Json.emptyObject.set("id", result.id);
-    return successResponse("Consent record deleted successfully", "Deleted", 200, resp);}
-}
+        auto result = usecase.deleteConsentRecord(tenantId, id);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
+
+        auto resp = Json.emptyObject.set("id", result.id);
+        return successResponse("Consent record deleted successfully", "Deleted", 200, resp);
+    }
 }

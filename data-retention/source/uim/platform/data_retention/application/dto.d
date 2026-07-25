@@ -50,6 +50,7 @@ struct UpdateLegalGroundRequest {
 
 struct CreateRetentionRuleRequest {
     TenantId tenantId;
+    ResidenceRuleId ruleId;
     string businessPurposeId;
     string legalGroundId;
     int duration;
@@ -59,6 +60,8 @@ struct CreateRetentionRuleRequest {
 }
 
 struct UpdateRetentionRuleRequest {
+    TenantId tenantId;
+    ResidenceRuleId ruleId;
     int duration;
     string periodUnit;
     string actionOnExpiry;

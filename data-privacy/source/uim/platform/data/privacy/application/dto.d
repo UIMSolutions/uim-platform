@@ -131,8 +131,8 @@ struct CreateRetentionRuleRequest {
 }
 
 struct UpdateRetentionRuleRequest {
-  RetentionRuleId id;
   TenantId tenantId;
+  RetentionRuleId ruleId;
   string name;
   string description;
   int retentionDays;
@@ -144,6 +144,7 @@ struct UpdateRetentionRuleRequest {
 
 struct CreateConsentRecordRequest {
   TenantId tenantId;
+  ConsentRecordId recordId;
   DataSubjectId dataSubjectId;
 
   string purpose;
@@ -156,7 +157,7 @@ struct CreateConsentRecordRequest {
 }
 
 struct RevokeConsentRequest {
-  ConsentRecordId id;
+  ConsentRecordId recordId;
   TenantId tenantId;
 }
 // ──────────────── Data Retrieval Request DTOs ────────────────

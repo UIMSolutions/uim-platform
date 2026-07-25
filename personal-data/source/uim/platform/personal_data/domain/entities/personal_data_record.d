@@ -33,7 +33,7 @@ struct PersonalDataRecord {
             .set("dataSubjectId", dataSubjectId.value)
             .set("applicationId", applicationId.value)
             .set("dataCategoryId", dataCategoryId)
-            .set("sensitivity", sensitivity.toString())
+            // .set("sensitivity", sensitivity.toString())
             .set("fieldName", fieldName)
             .set("fieldValue", fieldValue)
             .set("purposeId", purposeId)

@@ -40,7 +40,7 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
         ds.organizationId = r.organizationId;
         ds.externalId = r.externalId;
         ds.createdBy = r.createdBy;
-        ds.createdAt = clockTime();
+        ds.createdAt = currentTimestamp();
 
         repo.save(ds);
         return CommandResult(true, ds.id.value, "");
@@ -73,7 +73,7 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
         if (r.phoneNumber.length > 0) existing.phoneNumber = r.phoneNumber;
         if (r.organizationName.length > 0) existing.organizationName = r.organizationName;
         existing.updatedBy = r.updatedBy;
-        existing.updatedAt = clockTime();
+        existing.updatedAt = currentTimestamp();
 
         repo.update(existing);
         return CommandResult(true, existing.id.value, "");
@@ -85,7 +85,7 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Data subject not found");
 
         existing.status = DataSubjectStatus.blocked;
-        existing.updatedAt = clockTime();
+        existing.updatedAt = currentTimestamp();
         repo.update(existing);
         return CommandResult(true, existing.id.value, "");
     }
@@ -101,7 +101,7 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
         existing.email = "***";
         existing.phoneNumber = "***";
         existing.dateOfBirth = "";
-        existing.updatedAt = clockTime();
+        existing.updatedAt = currentTimestamp();
         repo.update(existing);
         return CommandResult(true, existing.id.value, "");
     }

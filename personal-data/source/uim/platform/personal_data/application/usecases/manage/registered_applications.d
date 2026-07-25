@@ -35,13 +35,13 @@ class ManageRegisteredApplicationsUseCase { // TODO: UIMUseCase {
         app.contactEmail = r.contactEmail;
         app.contactName = r.contactName;
         app.registeredBy = r.registeredBy;
-        app.registeredAt = clockTime();
+        app.registeredAt = currentTimestamp();
 
         repo.save(app);
         return CommandResult(true, app.id.value, "");
     }
 
-    RegisteredApplication getApplication(RegisteredApplicationId id) {
+    RegisteredApplication getApplication(TenantId tenantId, RegisteredApplicationId id) {
         return repo.findById(tenantId, id);
     }
 
@@ -50,7 +50,7 @@ class ManageRegisteredApplicationsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateApplication(UpdateRegisteredApplicationRequest r) {
-        auto existing = repo.findById(r.id);
+        auto existing = repo.findById(r.tenantId, r.id);
         if (existing.isNull)
             return CommandResult(false, "", "Application not found");
 
@@ -61,33 +61,33 @@ class ManageRegisteredApplicationsUseCase { // TODO: UIMUseCase {
         if (r.contactEmail.length > 0) existing.contactEmail = r.contactEmail;
         if (r.contactName.length > 0) existing.contactName = r.contactName;
         existing.updatedBy = r.updatedBy;
-        existing.updatedAt = clockTime();
+        existing.updatedAt = currentTimestamp();
 
         repo.update(existing);
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult activateApplication(RegisteredApplicationId id) {
+    CommandResult activateApplication(TenantId tenantId, RegisteredApplicationId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Application not found");
         existing.status = ApplicationStatus.active;
-        existing.updatedAt = clockTime();
+        existing.updatedAt = currentTimestamp();
         repo.update(existing);
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult suspendApplication(RegisteredApplicationId id) {
+    CommandResult suspendApplication(TenantId tenantId, RegisteredApplicationId id) {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Application not found");
         existing.status = ApplicationStatus.suspended;
-        existing.updatedAt = clockTime();
+        existing.updatedAt = currentTimestamp();
         repo.update(existing);
         return CommandResult(true, existing.id.value, "");
     }
 
-    CommandResult deleteApplication(RegisteredApplicationId id) {
+    CommandResult deleteApplication(TenantId tenantId, RegisteredApplicationId id) {
         auto application = repo.findById(tenantId, id);
         if (application.isNull)
             return CommandResult(false, "", "Application not found");

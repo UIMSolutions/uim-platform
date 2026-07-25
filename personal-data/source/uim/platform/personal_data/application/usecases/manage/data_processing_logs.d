@@ -19,12 +19,11 @@ class ManageDataProcessingLogsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createProcessingLog(CreateDataProcessingLogRequest r) {
-        if (r.isNull)
-            return CommandResult(false, "", "ID is required");
+        if (r.tenantId.isNull)
+            return CommandResult(false, "", "Request is null");
 
-        DataProcessingLog entry;
-        entry.id = r.id;
-        entry.tenantId = r.tenantId;
+        DataProcessingLog entry = DataProcessingLog(r.tenantId);
+        entry.id = r.logId;
         entry.entryType = r.entryType.length > 0 ? r.entryType.to!LogEntryType
             : LogEntryType.access;
         entry.severity = r.severity.length > 0 ? r.severity.to!LogSeverity : LogSeverity.info;
@@ -36,7 +35,7 @@ class ManageDataProcessingLogsUseCase { // TODO: UIMUseCase {
         entry.details = r.details;
         entry.affectedFields = r.affectedFields;
         entry.ipAddress = r.ipAddress;
-        entry.createdAt = clockTime();
+        entry.createdAt = currentTimestamp();
 
         repo.save(entry);
         return CommandResult(true, entry.id.value, "");

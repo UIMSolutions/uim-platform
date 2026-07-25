@@ -43,9 +43,9 @@ struct DataSubjectRequest {
     Json toJson() const {
         auto j = entityToJson
             .set("dataSubjectId", dataSubjectId.value)
-            .set("requestType", requestType)
-            .set("status", status)
-            .set("priority", priority)
+            // .set("requestType", requestType.toString)
+            // .set("status", status.toString)
+            // .set("priority", priority.toString)
             .set("description", description)
             .set("applicationIds", applicationIds)
             .set("dataCategoryIds", dataCategoryIds)

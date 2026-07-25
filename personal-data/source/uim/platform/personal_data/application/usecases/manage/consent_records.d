@@ -26,21 +26,20 @@ class ManageConsentRecordsUseCase { // TODO: UIMUseCase {
         if (r.purposeId.isEmpty)
             return CommandResult(false, "", "Purpose ID is required");
 
-        ConsentRecord cr;
-        cr.id = r.id;
-        cr.tenantId = r.tenantId;
+        ConsentRecord cr = ConsentRecord(r.tenantId);
+        cr.id = r.recordId;
         cr.dataSubjectId = r.dataSubjectId;
         cr.purposeId = r.purposeId;
         cr.status = ConsentStatus.given;
         cr.consentText = r.consentText;
         cr.consentVersion = r.consentVersion;
-        cr.givenAt = clockTime();
+        cr.givenAt = currentTimestamp();
         cr.expiresAt = r.expiresAt;
         cr.ipAddress = r.ipAddress;
         cr.userAgent = r.userAgent;
         cr.source = r.source;
         cr.createdBy = r.createdBy;
-        cr.createdAt = clockTime();
+        cr.createdAt = currentTimestamp();
 
         repo.save(cr);
         return CommandResult(true, cr.id.value, "");
@@ -50,7 +49,7 @@ class ManageConsentRecordsUseCase { // TODO: UIMUseCase {
         return repo.existsById(tenantId, id);
     }
 
-    ConsentRecord getConsentRecord(ConsentRecordId id) {
+    ConsentRecord getConsentRecord(TenantId tenantId, ConsentRecordId id) {
         return repo.findById(tenantId, id);
     }
 
@@ -63,13 +62,13 @@ class ManageConsentRecordsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult withdrawConsentRecord(WithdrawConsentRequest r) {
-        auto existing = repo.findById(r.tenantId, r.id);
+        auto existing = repo.findById(r.tenantId, r.recordId);
         if (existing.isNull)
             return CommandResult(false, "", "Consent record not found");
 
         existing.status = ConsentStatus.withdrawn;
-        existing.withdrawnAt = clockTime();
-        existing.updatedAt = clockTime();
+        existing.withdrawnAt = currentTimestamp();
+        existing.updatedAt = currentTimestamp();
 
         repo.update(existing);
         return CommandResult(true, existing.id.value, "");

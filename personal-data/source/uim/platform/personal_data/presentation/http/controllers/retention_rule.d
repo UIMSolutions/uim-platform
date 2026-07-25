@@ -85,17 +85,15 @@ override protected Json getHandler(HTTPServerRequest req) {
 
     auto tenantId = precheck.tenantId;
 
-    auto id = precheck.id;
+    auto id = RetentionRuleId(precheck.id);
+    if (id.isNull)
+        return errorResponse("Invalid retention rule ID", 400);
+        
     auto r = usecase.getById(tenantId, id);
-    if (r.isNull) {
-        writeError(res, 404, "Retention rule not found");
-        return;
-    }
-    res.writeJsonBody(toJson(r), 200);
-}
- catch (Exception e) {
-    writeError(res, 500, "Internal server error");
-}
+    if (r.isNull)
+        return errorResponse("Retention rule not found", 404);
+
+    return successResponse("Retention rule retrieved successfully", 200, r.toJson);    
 }
 
 override protected Json updateHandler(HTTPServerRequest req) {
@@ -121,6 +119,7 @@ override protected Json updateHandler(HTTPServerRequest req) {
     auto result = usecase.update(r);
     if (result.hasError)
         return errorResponse(result.message, 400);
+
     auto resp = Json.emptyObject
         .set("id", result.id)
         .set("message", "Retention rule updated");
@@ -134,9 +133,9 @@ override protected Json deleteHandler(HTTPServerRequest req) {
         return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
+    auto id = RetentionRuleId(precheck.id);
 
-    auto result = usecase.deleteRetentionRule(id);
+    auto result = usecase.deleteRetentionRule(tenantId, id);
     if (result.hasError)
         return errorResponse(result.message, 400);
     auto resp = Json.emptyObject

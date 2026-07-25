@@ -24,7 +24,7 @@ class MemoryDataProcessingLogRepository : TenantRepository!(DataProcessingLog, D
         return result;
     }
     void removeByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
-        findByDataSubject(tenantId, dataSubjectId).each!(v => store.remove(v));
+        findByDataSubject(tenantId, dataSubjectId).each!(v => remove(v));
     }
     // #endregion ByDataSubject
 

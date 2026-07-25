@@ -30,7 +30,7 @@ struct RetentionRule {
         return entityToJson
             .set("name", name)
             .set("description", description)
-            .set("status", status)
+            // .set("status", status.toString)
             .set("retentionPeriod", retentionPeriod)
             .set("periodUnit", periodUnit)
             .set("dataCategoryIds", dataCategoryIds)

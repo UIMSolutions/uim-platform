@@ -38,7 +38,7 @@ class ManagePersonalDataRecordsUseCase { // TODO: UIMUseCase {
         rec.sourceSystem = r.sourceSystem;
         rec.retentionRuleId = r.retentionRuleId;
         rec.createdBy = r.createdBy;
-        rec.createdAt = clockTime();
+        rec.createdAt = currentTimestamp();
 
         repo.save(rec);
         return CommandResult(true, rec.id.value, "");
