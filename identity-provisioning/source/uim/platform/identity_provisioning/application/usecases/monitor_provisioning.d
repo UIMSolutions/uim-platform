@@ -61,14 +61,14 @@ struct ProvisioningSummary {
 
 class MonitorProvisioningUseCase { // TODO: UIMUseCase {
   private IProvisioningJobRepository jobRepo;
-  private ProvisioningLogRepository logRepo;
+  private IProvisioningLogRepository logRepo;
   private IProvisionedEntityRepository entityRepo;
-  private SourceSystemRepository sourceRepo;
-  private TargetSystemRepository targetRepo;
+  private ISourceSystemRepository sourceRepo;
+  private ITargetSystemRepository targetRepo;
 
-  this(IProvisioningJobRepository jobRepo, ProvisioningLogRepository logRepo,
-      IProvisionedEntityRepository entityRepo, SourceSystemRepository sourceRepo,
-      TargetSystemRepository targetRepo) {
+  this(IProvisioningJobRepository jobRepo, IProvisioningLogRepository logRepo,
+      IProvisionedEntityRepository entityRepo, ISourceSystemRepository sourceRepo,
+      ITargetSystemRepository targetRepo) {
     this.jobRepo = jobRepo;
     this.logRepo = logRepo;
     this.entityRepo = entityRepo;

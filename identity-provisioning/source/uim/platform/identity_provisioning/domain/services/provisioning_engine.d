@@ -25,14 +25,14 @@ mixin(ShowModule!());
 /// reads entities from a source, applies transformations, and writes
 /// to a target system.
 class ProvisioningEngine {
-  private SourceSystemRepository sourceRepo;
-  private TargetSystemRepository targetRepo;
+  private ISourceSystemRepository sourceRepo;
+  private ITargetSystemRepository targetRepo;
   private IProvisioningJobRepository jobRepo;
-  private ProvisioningLogRepository logRepo;
+  private IProvisioningLogRepository logRepo;
   private IProvisionedEntityRepository entityRepo;
 
-  this(SourceSystemRepository sourceRepo, TargetSystemRepository targetRepo, IProvisioningJobRepository jobRepo,
-      ProvisioningLogRepository logRepo, IProvisionedEntityRepository entityRepo) {
+  this(ISourceSystemRepository sourceRepo, ITargetSystemRepository targetRepo, IProvisioningJobRepository jobRepo,
+      IProvisioningLogRepository logRepo, IProvisionedEntityRepository entityRepo) {
     this.sourceRepo = sourceRepo;
     this.targetRepo = targetRepo;
     this.jobRepo = jobRepo;

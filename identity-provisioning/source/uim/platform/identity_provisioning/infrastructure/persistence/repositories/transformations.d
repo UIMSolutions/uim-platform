@@ -5,15 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.identity_provisioning.infrastructure.persistence.repositories.transformations;
 
-
-// import uim.platform.identity_provisioning.domain.entities.transformation;
-// import uim.platform.identity_provisioning.domain.ports.repositories.transformations;
 import uim.platform.identity_provisioning;
 
 mixin(ShowModule!());
 
 @safe:
-class MemoryTransformationRepository : TenantRepository!(Transformation, TransformationId), TransformationRepository {
+class TransformationRepository : TenantRepository!(Transformation, TransformationId), ITransformationRepository {
 
   // #region BySystem
   size_t countBySystem(TenantId tenantId, string systemId) {

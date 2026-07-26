@@ -12,7 +12,7 @@ import uim.platform.identity_provisioning;
 mixin(ShowModule!());
 
 @safe:
-interface SourceSystemRepository : ITenantRepository!(SourceSystem, SourceSystemId) {
+interface ISourceSystemRepository : ITenantRepository!(SourceSystem, SourceSystemId) {
   
   bool existsByName(TenantId tenantId, string name);
   SourceSystem findByName(TenantId tenantId, string name);

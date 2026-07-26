@@ -15,9 +15,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageSourceSystemsUseCase { // TODO: UIMUseCase {
-  private SourceSystemRepository repo;
+  private ISourceSystemRepository repo;
 
-  this(SourceSystemRepository repo) {
+  this(ISourceSystemRepository repo) {
     this.repo = repo;
   }
 

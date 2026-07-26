@@ -17,12 +17,12 @@ mixin(ShowModule!());
 
 @safe:
 class ManageProxySystemsUseCase { // TODO: UIMUseCase {
-  private ProxySystemRepository repo;
-  private SourceSystemRepository sourceRepo;
-  private TargetSystemRepository targetRepo;
+  private IProxySystemRepository repo;
+  private ISourceSystemRepository sourceRepo;
+  private ITargetSystemRepository targetRepo;
 
-  this(ProxySystemRepository repo, SourceSystemRepository sourceRepo,
-      TargetSystemRepository targetRepo) {
+  this(IProxySystemRepository repo, ISourceSystemRepository sourceRepo,
+      ITargetSystemRepository targetRepo) {
     this.repo = repo;
     this.sourceRepo = sourceRepo;
     this.targetRepo = targetRepo;

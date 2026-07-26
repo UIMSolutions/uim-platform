@@ -5,15 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.identity_provisioning.infrastructure.persistence.repositories.proxy_systems;
 
-
-// import uim.platform.identity_provisioning.domain.entities.proxy_system;
-// import uim.platform.identity_provisioning.domain.ports.repositories.proxy_systems;
 import uim.platform.identity_provisioning;
 
 mixin(ShowModule!());
 
 @safe:
-class MemoryProxySystemRepository : TenantRepository!(ProxySystem, ProxySystemId), ProxySystemRepository {
+class ProxySystemRepository : TenantRepository!(ProxySystem, ProxySystemId), IProxySystemRepository {
 
   bool existsByName(TenantId tenantId, string name) {
     return findByTenant(tenantId).any!(e => e.name == name);

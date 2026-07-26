@@ -5,14 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.identity_provisioning.domain.ports.repositories.transformations;
 
-
-// import uim.platform.identity_provisioning.domain.entities.transformation;
 import uim.platform.identity_provisioning;
 
 mixin(ShowModule!());
 
 @safe:  
-interface TransformationRepository : ITenantRepository!(Transformation, TransformationId) {
+interface ITransformationRepository : ITenantRepository!(Transformation, TransformationId) {
 
   size_t countBySystem(TenantId tenantId, string systemId);
   Transformation[] findBySystem(TenantId tenantId, string systemId);

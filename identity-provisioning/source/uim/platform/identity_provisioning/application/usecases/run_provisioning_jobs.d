@@ -20,13 +20,13 @@ mixin(ShowModule!());
 @safe:
 class RunProvisioningJobsUseCase { // TODO: UIMUseCase {
   private IProvisioningJobRepository repo;
-  private SourceSystemRepository sourceRepo;
-  private TargetSystemRepository targetRepo;
-  private ProvisioningLogRepository logRepo;
+  private ISourceSystemRepository sourceRepo;
+  private ITargetSystemRepository targetRepo;
+  private IProvisioningLogRepository logRepo;
   private ProvisioningEngine engine;
 
-  this(IProvisioningJobRepository repo, SourceSystemRepository sourceRepo,
-      TargetSystemRepository targetRepo, ProvisioningLogRepository logRepo,
+  this(IProvisioningJobRepository repo, ISourceSystemRepository sourceRepo,
+      ITargetSystemRepository targetRepo, IProvisioningLogRepository logRepo,
       ProvisioningEngine engine) {
     this.repo = repo;
     this.sourceRepo = sourceRepo;

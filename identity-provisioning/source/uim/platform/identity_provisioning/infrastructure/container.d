@@ -39,13 +39,13 @@ mixin(ShowModule!());
 /// Dependency injection container - wires all layers together.
 struct Container {
   // Repositories (driven adapters)
-  MemorySourceSystemRepository sourceRepo;
-  MemoryTargetSystemRepository targetRepo;
-  MemoryProxySystemRepository proxyRepo;
-  MemoryTransformationRepository transformRepo;
-  MemoryProvisioningJobRepository jobRepo;
-  MemoryProvisioningLogRepository logRepo;
-  MemoryProvisionedEntityRepository entityRepo;
+  ISourceSystemRepository sourceRepo;
+  ITargetSystemRepository targetRepo;
+  IProxySystemRepository proxyRepo;
+  ITransformationRepository transformRepo;
+  IProvisioningJobRepository jobRepo;
+  IProvisioningLogRepository logRepo;
+  IProvisionedEntityRepository entityRepo;
 
   // Domain services
   ProvisioningEngine provisioningEngine;
@@ -73,13 +73,13 @@ Container buildContainer(SrvConfig config) {
   Container c;
 
   // Infrastructure adapters
-  c.sourceRepo = new MemorySourceSystemRepository();
-  c.targetRepo = new MemoryTargetSystemRepository();
-  c.proxyRepo = new MemoryProxySystemRepository();
-  c.transformRepo = new MemoryTransformationRepository();
-  c.jobRepo = new MemoryProvisioningJobRepository();
-  c.logRepo = new MemoryProvisioningLogRepository();
-  c.entityRepo = new MemoryProvisionedEntityRepository();
+  c.sourceRepo = new SourceSystemRepository();
+  c.targetRepo = new TargetSystemRepository();
+  c.proxyRepo = new ProxySystemRepository();
+  c.transformRepo = new TransformationRepository();
+  c.jobRepo = new ProvisioningJobRepository();
+  c.logRepo = new ProvisioningLogRepository();
+  c.entityRepo = new ProvisionedEntityRepository();
 
   // Domain services
   c.provisioningEngine = new ProvisioningEngine(c.sourceRepo, c.targetRepo,

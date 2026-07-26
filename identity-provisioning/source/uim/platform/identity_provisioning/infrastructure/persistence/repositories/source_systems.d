@@ -5,15 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.identity_provisioning.infrastructure.persistence.repositories.source_systems;
 
-
-// import uim.platform.identity_provisioning.domain.entities.source_system;
-// import uim.platform.identity_provisioning.domain.ports.repositories.source_systems;
 import uim.platform.identity_provisioning;
 
 mixin(ShowModule!());
 
 @safe:
-class MemorySourceSystemRepository : TenantRepository!(SourceSystem, SourceSystemId), SourceSystemRepository {
+class SourceSystemRepository : TenantRepository!(SourceSystem, SourceSystemId), ISourceSystemRepository {
 
   bool existsByName(TenantId tenantId, string name) {
     return findByTenant(tenantId).any!((e) => e.name == name);

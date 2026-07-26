@@ -12,7 +12,7 @@ import uim.platform.identity_provisioning;
 mixin(ShowModule!());
 
 @safe:
-interface ProxySystemRepository : ITenantRepository!(ProxySystem, ProxySystemId) {
+interface IProxySystemRepository : ITenantRepository!(ProxySystem, ProxySystemId) {
 
   bool existsByName(TenantId tenantId, string name);
   ProxySystem findByName(TenantId tenantId, string name);

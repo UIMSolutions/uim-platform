@@ -5,15 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.identity_provisioning.infrastructure.persistence.repositories.target_systems;
 
-
-// import uim.platform.identity_provisioning.domain.entities.target_system;
-// import uim.platform.identity_provisioning.domain.ports.repositories.target_systems;
 import uim.platform.identity_provisioning;
 
 mixin(ShowModule!());
 
 @safe:
-class MemoryTargetSystemRepository : TenantRepository!(TargetSystem, TargetSystemId), TargetSystemRepository {
+class TargetSystemRepository : TenantRepository!(TargetSystem, TargetSystemId), ITargetSystemRepository {
 
   bool existsByName(TenantId tenantId, string name) {
     return findByTenant(tenantId).any!(e => e.name == name);
@@ -24,6 +21,7 @@ class MemoryTargetSystemRepository : TenantRepository!(TargetSystem, TargetSyste
         return e;
     return TargetSystem.init;
   }
+  
   void removeByName(TenantId tenantId, string name) {
     auto entry = findByName(tenantId, name);
     if (entry.id != TargetSystemId.init) {

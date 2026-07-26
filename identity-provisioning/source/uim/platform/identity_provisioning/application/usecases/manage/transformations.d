@@ -16,10 +16,10 @@ mixin(ShowModule!());
 
 @safe:
 class ManageTransformationsUseCase { // TODO: UIMUseCase {
-  private TransformationRepository repo;
+  private ITransformationRepository repo;
   private TransformationEngine engine;
 
-  this(TransformationRepository repo, TransformationEngine engine) {
+  this(ITransformationRepository repo, TransformationEngine engine) {
     this.repo = repo;
     this.engine = engine;
   }
