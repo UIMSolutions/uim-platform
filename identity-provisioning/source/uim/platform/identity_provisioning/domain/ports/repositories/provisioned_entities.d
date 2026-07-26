@@ -5,14 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.identity_provisioning.domain.ports.repositories.provisioned_entities;
 
-// import uim.platform.identity_provisioning.domain.types;
+
 // import uim.platform.identity_provisioning.domain.entities.provisioned_entity;
 import uim.platform.identity_provisioning;
 
 mixin(ShowModule!());
 
 @safe:
-interface ProvisionedEntityRepository : ITenantRepository!(ProvisionedEntity, ProvisionedEntityId) {
+interface IProvisionedEntityRepository : ITenantRepository!(ProvisionedEntity, ProvisionedEntityId) {
 
   bool existsByExternalId(TenantId tenantId, string externalId, TargetSystemId targettenantId);
   ProvisionedEntity findByExternalId(TenantId tenantId, string externalId, TargetSystemId targettenantId);
@@ -29,5 +29,9 @@ interface ProvisionedEntityRepository : ITenantRepository!(ProvisionedEntity, Pr
   size_t countByType(TenantId tenantId, EntityType entityType);
   ProvisionedEntity[] findByType(TenantId tenantId, EntityType entityType);
   void removeByType(TenantId tenantId, EntityType entityType);
+
+  size_t countByTarget(TenantId tenantId, TargetSystemId id);
+  ProvisionedEntity[] findByTarget(TenantId tenantId, TargetSystemId id);
+  void removeByTarget(TenantId tenantId, TargetSystemId id);
 
 }

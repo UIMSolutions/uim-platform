@@ -6,6 +6,7 @@
 module uim.platform.identity_provisioning.infrastructure;
 
 public {
+    import uim.platform.identity_provisioning.infrastructure.container;
     import uim.platform.identity_provisioning.infrastructure.config;
     import uim.platform.identity_provisioning.infrastructure.persistence;
 }

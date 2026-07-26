@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.identity_provisioning.infrastructure.persistence.repositories.provisioned_entities;
 
-// import uim.platform.identity_provisioning.domain.types;
+
 // import uim.platform.identity_provisioning.domain.entities.provisioned_entity;
 // import uim.platform.identity_provisioning.domain.ports.repositories.provisioned_entitys;
 import uim.platform.identity_provisioning;
@@ -13,7 +13,7 @@ import uim.platform.identity_provisioning;
 mixin(ShowModule!());
 
 @safe:
-class MemoryProvisionedEntityRepository : TenantRepository!(ProvisionedEntity, ProvisionedEntityId), ProvisionedEntityRepository {
+class MemoryProvisionedEntityRepository : TenantRepository!(ProvisionedEntity, ProvisionedEntityId), IProvisionedEntityRepository {
 
   bool existsByExternalId(TenantId tenantId, string externalId, TargetSystemId targetId) {
     foreach (e; findByTenant(tenantId))
@@ -40,7 +40,7 @@ class MemoryProvisionedEntityRepository : TenantRepository!(ProvisionedEntity, P
   }
 
   ProvisionedEntity[] filterBySource(ProvisionedEntity[] entities, SourceSystemId sourceId) {
-    return entities.filter!(e => e.tenantId == tenantId && e.sourceSystemId == sourceId).array;
+    return entities.filter!(e => e.sourceSystemId == sourceId).array;
   }
 
   ProvisionedEntity[] findBySource(TenantId tenantId, SourceSystemId sourceId) {

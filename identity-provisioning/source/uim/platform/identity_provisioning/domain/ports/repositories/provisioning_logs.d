@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.identity_provisioning.domain.ports.repositories.provisioning_logs;
 
-// import uim.platform.identity_provisioning.domain.types;
+
 // import uim.platform.identity_provisioning.domain.entities.provisioning_log;
 import uim.platform.identity_provisioning;
 

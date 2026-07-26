@@ -5,14 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.identity_provisioning.domain.ports.repositories.provisioning_jobs;
 
-// import uim.platform.identity_provisioning.domain.types;
+
 // import uim.platform.identity_provisioning.domain.entities.provisioning_job;
 import uim.platform.identity_provisioning;
 
 mixin(ShowModule!());
 
 @safe:
-interface ProvisioningJobRepository : ITenantRepository!(ProvisioningJob, ProvisioningJobId) {
+interface IProvisioningJobRepository : ITenantRepository!(ProvisioningJob, ProvisioningJobId) {
 
   size_t countBySource(TenantId tenantId, SourceSystemId sourceSystemId);
   ProvisioningJob[] findBySource(TenantId tenantId, SourceSystemId sourceSystemId);

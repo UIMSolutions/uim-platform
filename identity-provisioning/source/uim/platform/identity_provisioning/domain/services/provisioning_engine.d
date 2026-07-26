@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.identity_provisioning.domain.services.provisioning_engine;
 
-// import uim.platform.identity_provisioning.domain.types;
+
 // import uim.platform.identity_provisioning.domain.entities.source_system;
 // import uim.platform.identity_provisioning.domain.entities.target_system;
 // import uim.platform.identity_provisioning.domain.entities.provisioning_job;
@@ -27,12 +27,12 @@ mixin(ShowModule!());
 class ProvisioningEngine {
   private SourceSystemRepository sourceRepo;
   private TargetSystemRepository targetRepo;
-  private ProvisioningJobRepository jobRepo;
+  private IProvisioningJobRepository jobRepo;
   private ProvisioningLogRepository logRepo;
-  private ProvisionedEntityRepository entityRepo;
+  private IProvisionedEntityRepository entityRepo;
 
-  this(SourceSystemRepository sourceRepo, TargetSystemRepository targetRepo, ProvisioningJobRepository jobRepo,
-      ProvisioningLogRepository logRepo, ProvisionedEntityRepository entityRepo) {
+  this(SourceSystemRepository sourceRepo, TargetSystemRepository targetRepo, IProvisioningJobRepository jobRepo,
+      ProvisioningLogRepository logRepo, IProvisionedEntityRepository entityRepo) {
     this.sourceRepo = sourceRepo;
     this.targetRepo = targetRepo;
     this.jobRepo = jobRepo;
@@ -61,7 +61,7 @@ class ProvisioningEngine {
   ProvisioningJob runJob(TenantId tenantId, ProvisioningJobId jobId) {
     auto job = jobRepo.findById(tenantId, jobId);
     if (job.isNull)
-      return null;
+      return ProvisioningJob.init;
 
     auto now = currentTimestamp();
 
@@ -114,7 +114,7 @@ class ProvisioningEngine {
     return true;
   }
 
-  private void simulateEntities(TenantId tenantId, ProvisioningJob* job,
+  private void simulateEntities(TenantId tenantId, ProvisioningJob job,
       string srcName, string tgtName, EntityType eType, int count) {
     auto now = currentTimestamp();
     foreach (i; 0 .. count) {

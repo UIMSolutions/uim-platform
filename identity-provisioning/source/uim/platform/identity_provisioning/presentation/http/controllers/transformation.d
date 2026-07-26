@@ -8,7 +8,7 @@ module uim.platform.identity_provisioning.presentation.http.controllers.transfor
 // import uim.platform.identity_provisioning.application.usecases.manage.transformations;
 // import uim.platform.identity_provisioning.application.dto;
 // import uim.platform.identity_provisioning.domain.entities.transformation;
-// import uim.platform.identity_provisioning.domain.types;
+
 import uim.platform.identity_provisioning;
 
 mixin(ShowModule!());

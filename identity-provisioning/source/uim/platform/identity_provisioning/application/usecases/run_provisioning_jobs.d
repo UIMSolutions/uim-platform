@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.identity_provisioning.application.usecases.run_provisioning_jobs;
 
-// import uim.platform.identity_provisioning.domain.types;
+
 // import uim.platform.identity_provisioning.domain.entities.provisioning_job;
 // import uim.platform.identity_provisioning.domain.ports.repositories.provisioning_jobs;
 // import uim.platform.identity_provisioning.domain.ports.repositories.source_systems;
@@ -19,13 +19,13 @@ mixin(ShowModule!());
 
 @safe:
 class RunProvisioningJobsUseCase { // TODO: UIMUseCase {
-  private ProvisioningJobRepository repo;
+  private IProvisioningJobRepository repo;
   private SourceSystemRepository sourceRepo;
   private TargetSystemRepository targetRepo;
   private ProvisioningLogRepository logRepo;
   private ProvisioningEngine engine;
 
-  this(ProvisioningJobRepository repo, SourceSystemRepository sourceRepo,
+  this(IProvisioningJobRepository repo, SourceSystemRepository sourceRepo,
       TargetSystemRepository targetRepo, ProvisioningLogRepository logRepo,
       ProvisioningEngine engine) {
     this.repo = repo;

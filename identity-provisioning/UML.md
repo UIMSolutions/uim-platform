@@ -128,7 +128,7 @@ sequenceDiagram
     participant JC as ProvisioningJobController
     participant JUC as ManageProvisioningJobsUseCase
     participant LR as ProvisioningLogRepository
-    participant ER as ProvisionedEntityRepository
+    participant ER as IProvisionedEntityRepository
 
     Admin->>JC: POST /provisioning-jobs { sourceId, targetId, jobType=full }
     JC->>JUC: createJob(dto)

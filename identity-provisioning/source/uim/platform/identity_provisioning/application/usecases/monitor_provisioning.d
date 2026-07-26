@@ -4,7 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.identity_provisioning.application.usecases.monitor_provisioning;
-// import uim.platform.identity_provisioning.domain.types;
+
 // import uim.platform.identity_provisioning.domain.entities.provisioning_job;
 // import uim.platform.identity_provisioning.domain.entities.provisioning_log;
 // import uim.platform.identity_provisioning.domain.entities.provisioned_entity;
@@ -52,7 +52,7 @@ struct ProvisioningSummary {
   int activeSourceSystems;
   int totalTargetSystems;
   int activeTargetSystems;
-  int totalJobs;
+  size_t totalJobs;
   int completedJobs;
   int failedJobs;
   int runningJobs;
@@ -60,14 +60,14 @@ struct ProvisioningSummary {
 }
 
 class MonitorProvisioningUseCase { // TODO: UIMUseCase {
-  private ProvisioningJobRepository jobRepo;
+  private IProvisioningJobRepository jobRepo;
   private ProvisioningLogRepository logRepo;
-  private ProvisionedEntityRepository entityRepo;
+  private IProvisionedEntityRepository entityRepo;
   private SourceSystemRepository sourceRepo;
   private TargetSystemRepository targetRepo;
 
-  this(ProvisioningJobRepository jobRepo, ProvisioningLogRepository logRepo,
-      ProvisionedEntityRepository entityRepo, SourceSystemRepository sourceRepo,
+  this(IProvisioningJobRepository jobRepo, ProvisioningLogRepository logRepo,
+      IProvisionedEntityRepository entityRepo, SourceSystemRepository sourceRepo,
       TargetSystemRepository targetRepo) {
     this.jobRepo = jobRepo;
     this.logRepo = logRepo;
