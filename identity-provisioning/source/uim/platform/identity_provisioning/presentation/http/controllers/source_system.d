@@ -82,8 +82,10 @@ override protected Json getHandler(HTTPServerRequest req) {
     return precheck;
 
   auto tenantId = precheck.tenantId;
-  auto id = precheck.id;
-  auto tenantId = precheck.tenantId;
+  auto id = SourceSystemId(precheck.id);
+  if (id.isNull)
+    return errorResponse("Invalid source system ID", 400);
+
   auto sys = usecase.getSourceSystem(tenantId, id);
   if (sys.isNull)
     return errorResponse("Source system not found", 404);
@@ -98,10 +100,13 @@ override protected Json updateHandler(HTTPServerRequest req) {
     return precheck;
 
   auto tenantId = precheck.tenantId;
-  auto id = precheck.id;
+  auto id = SourceSystemId(precheck.id);
+  if (id.isNull)
+    return errorResponse("Invalid source system ID", 400);
+
   auto data = precheck.data;
   auto r = UpdateSourceSystemRequest();
-  r.id = id;
+  r.systemId = id;
   r.tenantId = tenantId;
   r.name = data.getString("name");
   r.description = data.getString("description");
@@ -115,45 +120,46 @@ override protected Json updateHandler(HTTPServerRequest req) {
   return successResponse("Source system updated successfully", 200, responseData);
 }
 
-protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-  try {
-    auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
-    auto tenantId = precheck.tenantId;
-    auto result = usecase.activateSystem(tenantId, id);
-    if (result.isSuccess) {
-      auto resp = Json.emptyObject
-        .set("id", result.id)
-        .set("status", "active");
+protected Json activateHandler(HTTPServerRequest req) {
+  auto precheck = super.postHandler(req);
+  if (precheck.hasError)
+    return precheck;
 
-      res.writeJsonBody(resp, 200);
-    } else {
-      auto status = result.message == "Source system not found" ? 404 : 400;
-      writeError(res, status, result.message);
-    }
-  } catch (Exception e) {
-    writeError(res, 500, "Internal server error");
-  }
+  auto tenantId = precheck.tenantId;
+  auto id = SourceSystemId(precheck.id);
+  if (id.isNull)
+    return errorResponse("Invalid source system ID", 400);
+
+  auto result = usecase.activateSystem(tenantId, id);
+  if (result.hasError)
+    return errorResponse(result.message, 400);
+
+  auto responseData = Json.emptyObject.set("id", result.id);
+  return successResponse("Source system activated successfully", 200, responseData);
 }
 
-protected void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-  try {
-    auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
-    auto tenantId = precheck.tenantId;
-    auto result = usecase.deactivateSystem(tenantId, id);
-    if (result.isSuccess) {
-      auto resp = Json.emptyObject
-        .set("id", result.id)
-        .set("status", "inactive");
+mixin(HandleTemplate!("handleActivate", "activateHandler"));
 
-      res.writeJsonBody(resp, 200);
-    } else
-      writeError(res, 404, result.message);
-  } catch (Exception e) {
-    writeError(res, 500, "Internal server error");
-  }
+
+protected Json deactivateHandler(HTTPServerRequest req) {
+  auto precheck = super.postHandler(req);
+  if (precheck.hasError)
+    return precheck;
+
+  auto tenantId = precheck.tenantId;
+  auto id = SourceSystemId(precheck.id);
+  if (id.isNull)
+    return errorResponse("Invalid source system ID", 400);
+
+  auto result = usecase.deactivateSystem(tenantId, id);
+  if (result.hasError)
+    return errorResponse(result.message, 400);
+
+  auto responseData = Json.emptyObject.set("id", result.id);
+  return successResponse("Source system deactivated successfully", 200, responseData);
 }
+
+mixin(HandleTemplate!("handleDeactivate", "deactivateHandler"));
 
 override protected Json deleteHandler(HTTPServerRequest req) {
   auto precheck = super.deleteHandler(req);
@@ -161,8 +167,10 @@ override protected Json deleteHandler(HTTPServerRequest req) {
     return precheck;
 
   auto tenantId = precheck.tenantId;
-  auto id = precheck.id;
-  auto tenantId = precheck.tenantId;
+  auto id = SourceSystemId(precheck.id);
+  if (id.isNull)
+    return errorResponse("Invalid source system ID", 400);
+
   auto result = usecase.deleteSourceSystem(tenantId, id);
   if (result.hasError)
     return errorResponse(result.message, 400);

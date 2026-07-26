@@ -79,9 +79,10 @@ class ProxySystemController : ManageHttpController {
     auto precheck = super.getHandler(req);
     if (precheck.hasError)
       return precheck;
+    
     auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
-    auto tenantId = precheck.tenantId;
+    auto id = ProxySystemId(precheck.id);
+
     auto sys = usecase.getProxySystem(tenantId, id);
     if (sys.isNull)
       return errorResponse("Proxy system not found", 404);
@@ -122,46 +123,45 @@ class ProxySystemController : ManageHttpController {
     // }
 }
 
-protected void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-  try {
-    auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
-    auto tenantId = precheck
-      .tenantId;
-    auto result = usecase.activateSystem(tenantId, id);
-    if (result.isSuccess) {
-      auto resp = Json.emptyObject
-        .set("id", result.id)
-        .set("status", "active");
-      res.writeJsonBody(resp, 200);
-    } else {
-      auto status = result.message == "Proxy system not found" ? 404 : 400;
-      writeError(res, status, result.message);
-    }
-  } catch (Exception e) {
-    writeError(res, 500, "Internal server error");
-  }
+protected Json activateHandler(HTTPServerRequest req) {
+  auto precheck = super.postHandler(req);
+  if (precheck.hasError)
+    return precheck;
+
+  auto tenantId = precheck.tenantId;
+  auto id = ProxySystemId(precheck.id);
+
+  auto result = usecase.activateSystem(tenantId, id);
+  if (result.hasError)
+    return errorResponse(result.message, 404);
+
+  auto resp = Json.emptyObject
+    .set("id", result.id)
+    .set("status", "active");
+  return successResponse("Proxy system activated successfully", 200, resp);
 }
 
-protected void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-  try {
-    auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
-    auto tenantId = precheck
-      .tenantId;
-    auto result = usecase.deactivateSystem(tenantId, id);
-    if (result.isSuccess) {
-      auto resp = Json.emptyObject
-        .set("id", result.id)
-        .set("status", "inactive");
-      res.writeJsonBody(resp, 200);
-    } else {
-      writeError(res, 404, result.message);
-    }
-  } catch (Exception e) {
-    writeError(res, 500, "Internal server error");
-  }
+mixin(HandleTemplate!("handleActivate", "activateHandler"));
+
+protected Json deactivateHandler(HTTPServerRequest req) {
+  auto precheck = super.postHandler(req);
+  if (precheck.hasError)
+    return precheck;
+
+  auto tenantId = precheck.tenantId;
+  auto id = ProxySystemId(precheck.id);
+
+  auto result = usecase.deactivateSystem(tenantId, id);
+  if (result.hasError)
+    return errorResponse(result.message, 404);
+
+  auto resp = Json.emptyObject
+    .set("id", result.id)
+    .set("status", "inactive");
+  return successResponse("Proxy system deactivated successfully", 200, resp);
 }
+
+mixin(HandleTemplate!("handleDeactivate", "deactivateHandler"));
 
 override protected Json deleteHandler(HTTPServerRequest req) {
   auto precheck = super.deleteHandler(req);

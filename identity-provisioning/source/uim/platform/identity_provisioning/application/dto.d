@@ -21,7 +21,7 @@ struct CreateSourceSystemRequest {
 }
 
 struct UpdateSourceSystemRequest {
-  SourceSystemId id;
+  SourceSystemId systemId;
   TenantId tenantId;
   string name;
   string description;
@@ -39,7 +39,7 @@ struct CreateTargetSystemRequest {
 }
 
 struct UpdateTargetSystemRequest {
-  TargetSystemId id;
+  TargetSystemId systemId;
   TenantId tenantId;
   string name;
   string description;

@@ -80,7 +80,7 @@ class RunProvisioningJobsUseCase { // TODO: UIMUseCase {
     if (!createResult.isSuccess)
       return createResult;
 
-    return runJob(req.tenantId, createResult.id);
+    return runJob(req.tenantId, ProvisioningJobId(createResult.id));
   }
 
   CommandResult cancelJob(TenantId tenantId, ProvisioningJobId id) {

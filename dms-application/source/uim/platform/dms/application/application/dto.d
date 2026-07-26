@@ -4,7 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.dms.application.application.dto;
-// import uim.platform.dms.application.domain.types;
+
 // --- DmsRepository DTOs ---
 import uim.platform.dms.application;
 

@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.dms.application.domain.ports.repositories.documents;
 // import uim.platform.dms.application.domain.entities.document;
-// import uim.platform.dms.application.domain.types;
+
 import uim.platform.dms.application;
 
 mixin(ShowModule!());

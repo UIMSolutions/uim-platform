@@ -50,15 +50,15 @@ class ProvisioningEngine {
     if (src.isNull || src.status != SystemStatus.active)
       return false;
 
-    auto tgt = targetRepo.findById(tenantId, job.targetSystemId);
-    if (tgt.isNull || tgt.status != SystemStatus.active)
+    auto targetSystem = targetRepo.findById(tenantId, job.targetSystemId);
+    if (targetSystem.isNull || targetSystem.status != SystemStatus.active)
       return false;
 
     return job.status == JobStatus.scheduled;
   }
 
   /// Execute a provisioning job (simulated).
-  ProvisioningJob* runJob(TenantId tenantId, ProvisioningJobId jobId) {
+  ProvisioningJob runJob(TenantId tenantId, ProvisioningJobId jobId) {
     auto job = jobRepo.findById(tenantId, jobId);
     if (job.isNull)
       return null;
@@ -70,10 +70,10 @@ class ProvisioningEngine {
     job.startedAt = now;
     jobRepo.update(job);
 
-    auto src = sourceRepo.findById(tenantId, job.sourceSystemId);
-    auto tgt = targetRepo.findById(tenantId, job.targetSystemId);
-    string srcName = src !is null ? src.name : job.sourceSystemId;
-    string tgtName = tgt !is null ? tgt.name : job.targetSystemId;
+    auto sourceSystem = sourceRepo.findById(tenantId, job.sourceSystemId);
+    auto targetSystem = targetRepo.findById(tenantId, job.targetSystemId);
+    string srcName = sourceSystem.isNull ? job.sourceSystemId.value : sourceSystem.name;
+    string tgtName = targetSystem.isNull ? job.targetSystemId.value : targetSystem.name;
 
     // Simulate provisioning 5 users and 2 groups
     simulateEntities(tenantId, job, srcName, tgtName, EntityType.user, 5);
@@ -88,13 +88,13 @@ class ProvisioningEngine {
     jobRepo.update(job);
 
     // Update system sync timestamps
-    if (src !is null) {
-      src.lastSyncAt = job.completedAt;
-      sourceRepo.update(src);
+    if (!sourceSystem.isNull) {
+      sourceSystem.lastSyncAt = job.completedAt;
+      sourceRepo.update(sourceSystem);
     }
-    if (tgt !is null) {
-      tgt.lastSyncAt = job.completedAt;
-      targetRepo.update(tgt);
+    if (!targetSystem.isNull) {
+      targetSystem.lastSyncAt = job.completedAt;
+      targetRepo.update(targetSystem);
     }
 
     return job;
@@ -122,7 +122,7 @@ class ProvisioningEngine {
       auto entity = ProvisionedEntity(tenantId); 
 
       entity.externalId = eType == EntityType.user ? "user-" ~ randomUUID()
-        .toString()[0 .. 8] : "group-" ~ generateId[0 .. 8];
+        .toString()[0 .. 8] : "group-" ~ generateId()[0 .. 8];
       entity.entityType = eType;
       entity.sourceSystemId = job.sourceSystemId;
       entity.targetSystemId = job.targetSystemId;
@@ -135,7 +135,7 @@ class ProvisioningEngine {
       entityRepo.save(entity);
 
       // Create log entry
-      auto log = ProvisioningLog(tenantId, job.createdBy);
+      auto log = ProvisioningLog(tenantId); //, job.createdBy);
       log.jobId = job.id;
       log.entityType = eType;
       log.entityId = entity.externalId;
@@ -143,7 +143,7 @@ class ProvisioningEngine {
       log.status = LogStatus.success;
       log.sourceSystem = srcName;
       log.targetSystem = tgtName;
-      log.details = `{"action":"created","entityId":"` ~ entity.id ~ `"}`;
+      log.details = `{"action":"created","entityId":"` ~ entity.id.value ~ `"}`;
 
       logRepo.save(log);
     }

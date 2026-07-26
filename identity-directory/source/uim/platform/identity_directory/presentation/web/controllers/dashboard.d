@@ -6,6 +6,7 @@
 module uim.platform.identity_directory.presentation.web.controllers.dashboard;
 
 import uim.platform.identity_directory;
+import webModels = uim.platform.identity_directory.presentation.web.models.dashboard;
 
 mixin(ShowModule!());
 
@@ -44,7 +45,7 @@ class IdentityDirectoryWebController {
 
   private void handleDashboard(HTTPServerRequest req, HTTPServerResponse res) {
     auto tenantId = req.query.get("tenantId", "default");
-    auto model = buildDashboardModel(tenantId, apiClients.listClients(TenantId(tenantId)).length,
+    auto model = webModels.buildDashboardModel(tenantId, apiClients.listClients(TenantId(tenantId)).length,
         auditLog.listEvents(TenantId(tenantId)).length,
         users.listUsers(TenantId(tenantId)).length,
         groups.listGroups(TenantId(tenantId)).length,
@@ -57,37 +58,37 @@ class IdentityDirectoryWebController {
 
   private void handleApiClients(HTTPServerRequest req, HTTPServerResponse res) {
     auto tenantId = req.query.get("tenantId", "default");
-    auto model = buildApiClientsModel(tenantId, apiClients.listClients(TenantId(tenantId)));
+    auto model = webModels.buildApiClientsModel(tenantId, apiClients.listClients(TenantId(tenantId)));
     res.writeBody(view.renderPage(model), cast(int)HTTPStatus.ok, "text/html; charset=utf-8");
   }
 
   private void handleAudit(HTTPServerRequest req, HTTPServerResponse res) {
     auto tenantId = req.query.get("tenantId", "default");
-    auto model = buildAuditModel(tenantId, auditLog.listEvents(TenantId(tenantId)));
+    auto model = webModels.buildAuditModel(tenantId, auditLog.listEvents(TenantId(tenantId)));
     res.writeBody(view.renderPage(model), cast(int)HTTPStatus.ok, "text/html; charset=utf-8");
   }
 
   private void handleUsers(HTTPServerRequest req, HTTPServerResponse res) {
     auto tenantId = req.query.get("tenantId", "default");
-    auto model = buildUsersModel(tenantId, users.listUsers(TenantId(tenantId)));
+    auto model = webModels.buildUsersModel(tenantId, users.listUsers(TenantId(tenantId)));
     res.writeBody(view.renderPage(model), cast(int)HTTPStatus.ok, "text/html; charset=utf-8");
   }
 
   private void handleGroups(HTTPServerRequest req, HTTPServerResponse res) {
     auto tenantId = req.query.get("tenantId", "default");
-    auto model = buildGroupsModel(tenantId, groups.listGroups(TenantId(tenantId)));
+    auto model = webModels.buildGroupsModel(tenantId, groups.listGroups(TenantId(tenantId)));
     res.writeBody(view.renderPage(model), cast(int)HTTPStatus.ok, "text/html; charset=utf-8");
   }
 
   private void handleSchemas(HTTPServerRequest req, HTTPServerResponse res) {
     auto tenantId = req.query.get("tenantId", "default");
-    auto model = buildSchemasModel(tenantId, schemas.listSchemas(TenantId(tenantId)));
+    auto model = webModels.buildSchemasModel(tenantId, schemas.listSchemas(TenantId(tenantId)));
     res.writeBody(view.renderPage(model), cast(int)HTTPStatus.ok, "text/html; charset=utf-8");
   }
 
   private void handlePasswordPolicies(HTTPServerRequest req, HTTPServerResponse res) {
     auto tenantId = req.query.get("tenantId", "default");
-    auto model = buildPasswordPoliciesModel(tenantId,
+    auto model = webModels.buildPasswordPoliciesModel(tenantId,
         passwordPolicies.listPolicies(TenantId(tenantId)));
     res.writeBody(view.renderPage(model), cast(int)HTTPStatus.ok, "text/html; charset=utf-8");
   }

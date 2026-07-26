@@ -31,7 +31,7 @@ class ManageTargetSystemsUseCase { // TODO: UIMUseCase {
     if (!existing.isNull)
       return CommandResult(false, "", "Target system with this name already exists");
 
-    auto sys = TargetSystem(req.tenantId, req.createdBy);
+    auto sys = TargetSystem(req.tenantId); //, req.createdBy);
     sys.name = req.name;
     sys.description = req.description;
     sys.systemType = req.systemType;
@@ -61,7 +61,7 @@ class ManageTargetSystemsUseCase { // TODO: UIMUseCase {
     if (existing.isNull)
       return CommandResult(false, "", "Target system not found");
 
-    auto updated = *existing;
+    auto updated = existing;
     if (req.name.length > 0)
       updated.name = req.name;
     if (req.description.length > 0)

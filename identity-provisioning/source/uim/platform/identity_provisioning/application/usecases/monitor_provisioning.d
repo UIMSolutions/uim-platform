@@ -78,10 +78,7 @@ class MonitorProvisioningUseCase { // TODO: UIMUseCase {
 
   JobSummary[] listJobSummaries(TenantId tenantId) {
     auto jobs = jobRepo.findByTenant(tenantId);
-    JobSummary[] result;
-    foreach (j; jobs)
-      result ~= buildJobSummary(j, tenantId);
-    return result;
+    return jobs.map!(job => buildJobSummary(tenantId, job)).array;
   }
 
   JobSummary getJobSummary(TenantId tenantId, ProvisioningJobId jobId) {
@@ -89,7 +86,7 @@ class MonitorProvisioningUseCase { // TODO: UIMUseCase {
     if (job.isNull)
       return JobSummary.init;
 
-    return buildJobSummary(tenantId, *job);
+    return buildJobSummary(tenantId, job);
   }
 
   ProvisioningLog[] getJobLogs(TenantId tenantId, ProvisioningJobId jobId) {
@@ -147,11 +144,11 @@ class MonitorProvisioningUseCase { // TODO: UIMUseCase {
     s.startedAt = job.startedAt;
     s.completedAt = job.completedAt;
 
-    auto src = sourceRepo.findById(job.sourceSystemtenantId, id);
+    auto src = sourceRepo.findById(tenantId, job.sourceSystemId);
     if (!src.isNull)
       s.sourceName = src.name;
 
-    auto tgt = targetRepo.findById(job.targetSystemtenantId, id);
+    auto tgt = targetRepo.findById(tenantId, job.targetSystemId);
     if (!tgt.isNull)
       s.targetName = tgt.name;
 

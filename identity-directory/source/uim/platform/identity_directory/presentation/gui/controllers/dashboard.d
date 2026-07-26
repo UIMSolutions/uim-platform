@@ -8,11 +8,7 @@ module uim.platform.identity_directory.presentation.gui.controllers.dashboard;
 import std.stdio : writeln;
 
 import uim.platform.identity_directory;
-import uim.platform.identity_directory.presentation.gui.models.dashboard;
-
-version (Have_gtkd) {
-    import gtk.Application : Application;
-}
+import guiModels = uim.platform.identity_directory.presentation.gui.models.dashboard;
 
 mixin(ShowModule!());
 
@@ -44,44 +40,40 @@ final class IdentityDirectoryGuiController {
             import uim.platform.identity_directory.presentation.gui.views.dashboard : IdentityDirectoryGuiWindow;
 
             auto app = new Application("org.uim.identity-directory.gui", ApplicationFlags.FLAGS_NONE);
-            app.addOnActivate((_) { onActivate(app, tenantId); });
+            app.addOnActivate((_) {
+                auto dashboard = guiModels.buildDashboardModel(tenantId.value,
+                    apiClients.listClients(tenantId).length,
+                    auditLog.listEvents(tenantId).length,
+                    users.listUsers(tenantId).length,
+                    groups.listGroups(tenantId).length,
+                    schemas.listSchemas(tenantId).length,
+                    passwordPolicies.listPolicies(tenantId).length);
+                auto window = new IdentityDirectoryGuiWindow(app, dashboard, buildPages(tenantId));
+                window.present();
+            });
             return app.run(args);
         }
         else {
-            auto dashboard = buildDashboardModel(tenantId.value,
+            auto dashboard = guiModels.buildDashboardModel(tenantId.value,
                 apiClients.listClients(tenantId).length,
                 auditLog.listEvents(tenantId).length,
                 users.listUsers(tenantId).length,
                 groups.listGroups(tenantId).length,
                 schemas.listSchemas(tenantId).length,
                 passwordPolicies.listPolicies(tenantId).length);
-            writeln(renderTextReport(dashboard, buildPages(tenantId)));
+            writeln(guiModels.renderTextReport(dashboard, buildPages(tenantId)));
             return 0;
         }
     }
 
-    private void onActivate(Application app, TenantId tenantId) {
-        import uim.platform.identity_directory.presentation.gui.views.dashboard : IdentityDirectoryGuiWindow;
-
-        auto dashboard = buildDashboardModel(tenantId.value,
-            apiClients.listClients(tenantId).length,
-            auditLog.listEvents(tenantId).length,
-            users.listUsers(tenantId).length,
-            groups.listGroups(tenantId).length,
-            schemas.listSchemas(tenantId).length,
-            passwordPolicies.listPolicies(tenantId).length);
-        auto window = new IdentityDirectoryGuiWindow(app, dashboard, buildPages(tenantId));
-        window.present();
-    }
-
-    private GuiPageModel[] buildPages(TenantId tenantId) {
+    private guiModels.GuiPageModel[] buildPages(TenantId tenantId) {
         return [
-            buildApiClientsModel(tenantId.value, apiClients.listClients(tenantId)),
-            buildAuditModel(tenantId.value, auditLog.listEvents(tenantId)),
-            buildUsersModel(tenantId.value, users.listUsers(tenantId)),
-            buildGroupsModel(tenantId.value, groups.listGroups(tenantId)),
-            buildSchemasModel(tenantId.value, schemas.listSchemas(tenantId)),
-            buildPasswordPoliciesModel(tenantId.value, passwordPolicies.listPolicies(tenantId)),
+            guiModels.buildApiClientsModel(tenantId.value, apiClients.listClients(tenantId)),
+            guiModels.buildAuditModel(tenantId.value, auditLog.listEvents(tenantId)),
+            guiModels.buildUsersModel(tenantId.value, users.listUsers(tenantId)),
+            guiModels.buildGroupsModel(tenantId.value, groups.listGroups(tenantId)),
+            guiModels.buildSchemasModel(tenantId.value, schemas.listSchemas(tenantId)),
+            guiModels.buildPasswordPoliciesModel(tenantId.value, passwordPolicies.listPolicies(tenantId)),
         ];
     }
 }

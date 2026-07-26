@@ -59,16 +59,16 @@ class ManageTransformationsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateTransformation(UpdateTransformationRequest req) {
-    if (req.isNull)
+    if (req.transformationId.isNull)
       return CommandResult(false, "", "Transformation ID is required");
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
 
-    auto existing = repo.findById(req.tenantId, req.id);
+    auto existing = repo.findById(req.tenantId, req.transformationId);
     if (existing.isNull)
       return CommandResult(false, "", "Transformation not found");
 
-    auto updated = *existing;
+    auto updated = existing;
     if (req.name.length > 0)
       updated.name = req.name;
     if (req.mappingRules.length > 0) {
@@ -86,7 +86,7 @@ class ManageTransformationsUseCase { // TODO: UIMUseCase {
 
   /// Test a transformation with sample input.
   string testTransformation(TenantId tenantId, string inputAttributes, string systemId) {
-    return engine.applyTransformations(inputAttributes, systemId, tenantId);
+    return engine.applyTransformations(tenantId, inputAttributes, systemId);
   }
 
   CommandResult deleteTransformation(TenantId tenantId, TransformationId id) {

@@ -50,7 +50,8 @@ class ManageProxySystemsUseCase { // TODO: UIMUseCase {
     if (!existing.isNull)
       return CommandResult(false, "", "Proxy system with this name already exists");
 
-    auto sys = ProxySystem(req.tenantId, req.createdBy);
+    auto sys = ProxySystem(req.tenantId);
+    // , req.createdBy);
     sys.name = req.name;
     sys.description = req.description;
     sys.systemType = req.systemType;
@@ -72,16 +73,16 @@ class ManageProxySystemsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateProxySystem(UpdateProxySystemRequest req) {
-    if (req.isNull)
+    if (req.systemId.isNull)
       return CommandResult(false, "", "System ID is required");
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
 
-    auto existing = repo.findById(req.tenantId, req.id);
+    auto existing = repo.findById(req.tenantId, req.systemId);
     if (existing.isNull)
       return CommandResult(false, "", "Proxy system not found");
 
-    auto updated = *existing;
+    auto updated = existing;
     if (req.name.length > 0)
       updated.name = req.name;
     if (req.description.length > 0)

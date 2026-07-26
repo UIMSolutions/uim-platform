@@ -45,7 +45,7 @@ class TransformationController : ManageHttpController {
     auto r = CreateTransformationRequest();
     r.tenantId = tenantId;
     r.systemId = data.getString("systemId");
-    r.systemRole = parseSystemRole(data.getString("systemRole"));
+    r.systemRole = data.getString("systemRole").toSystemRole;
     r.name = data.getString("name");
     r.mappingRules = data.getString("mappingRules");
     r.conditions = data.getString("conditions");
@@ -80,8 +80,7 @@ class TransformationController : ManageHttpController {
     if (precheck.hasError)
       return precheck;
     auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
-    auto tenantId = precheck.tenantId;
+    auto id = TransformationId(precheck.id);
     auto t = usecase.getTransformation(tenantId, id);
     if (t.isNull)
       return errorResponse("Transformation not found", 404);
@@ -98,8 +97,8 @@ class TransformationController : ManageHttpController {
     auto id = precheck.id;
     auto data = precheck.data;
     auto r = UpdateTransformationRequest();
-    r.id = id;
     r.tenantId = tenantId;
+    r.transformationId = TransformationId(id);
     r.name = data.getString("name");
     r.mappingRules = data.getString(
       "mappingRules");

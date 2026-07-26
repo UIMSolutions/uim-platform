@@ -10,7 +10,7 @@ module uim.platform.dms.application.presentation.http.controllers.document;
 // import uim.platform.dms.application.application.usecases.manage.documents;
 // import uim.platform.dms.application.application.dto;
 // import uim.platform.dms.application.domain.entities.document;
-// import uim.platform.dms.application.domain.types;
+
 
 import uim.platform.dms.application;
 

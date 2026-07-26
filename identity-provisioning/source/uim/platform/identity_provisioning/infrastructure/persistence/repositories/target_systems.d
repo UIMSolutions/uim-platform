@@ -13,7 +13,7 @@ import uim.platform.identity_provisioning;
 mixin(ShowModule!());
 
 @safe:
-class MemoryTargetSystemRepository : TargetSystemRepository {
+class MemoryTargetSystemRepository : TenantRepository!(TargetSystem, TargetSystemId), TargetSystemRepository {
 
   bool existsByName(TenantId tenantId, string name) {
     return findByTenant(tenantId).any!(e => e.name == name);
@@ -23,6 +23,12 @@ class MemoryTargetSystemRepository : TargetSystemRepository {
       if (e.name == name)
         return e;
     return TargetSystem.init;
+  }
+  void removeByName(TenantId tenantId, string name) {
+    auto entry = findByName(tenantId, name);
+    if (entry.id != TargetSystemId.init) {
+      remove(entry);
+    }
   }
 
   size_t countByType(TenantId tenantId, SystemType systemType) {
@@ -38,6 +44,7 @@ class MemoryTargetSystemRepository : TargetSystemRepository {
   void removeByType(TenantId tenantId, SystemType systemType) {
     findByType(tenantId, systemType).each!(e => remove(e));
   }
+
   size_t countByStatus(TenantId tenantId, SystemStatus status) {
     return findByStatus(tenantId, status).length;
   }

@@ -25,6 +25,13 @@ class MemoryProxySystemRepository : TenantRepository!(ProxySystem, ProxySystemId
         return e;
     return ProxySystem.init; // null object pattern
   }
+  
+  void removeByName(TenantId tenantId, string name) {
+    auto entry = findByName(tenantId, name);
+    if (entry.id != ProxySystemId.init) {
+      remove(entry);
+    }
+  }
 
   size_t countBySource(TenantId tenantId, SourceSystemId sourceId) {
     return findBySource(tenantId, sourceId).length;
