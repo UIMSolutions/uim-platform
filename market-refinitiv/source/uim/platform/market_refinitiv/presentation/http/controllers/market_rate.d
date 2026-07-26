@@ -52,8 +52,8 @@ class MarketRateController : SAPController {
     }
 
     UploadRatesRequest ucReq;
-    ucReq.tenantId    = TenantId(jsonStr(body_, "tenantId", "default"));
-    ucReq.requestedBy = jsonStr(body_, "requestedBy");
+    ucReq.tenantId    = TenantId(body_.getString("tenantId", "default"));
+    ucReq.requestedBy = body_.getString("requestedBy");
 
     auto recordsJson = body_["records"];
     if (recordsJson.isArray) {
@@ -102,11 +102,11 @@ class MarketRateController : SAPController {
     }
 
     DownloadRatesRequest ucReq;
-    ucReq.tenantId    = TenantId(jsonStr(body_, "tenantId", "default"));
-    ucReq.requestedBy = jsonStr(body_, "requestedBy");
-    ucReq.providerCode = jsonStr(body_, "providerCode");
-    ucReq.fromDate    = jsonStr(body_, "fromDate");
-    ucReq.toDate      = jsonStr(body_, "toDate");
+    ucReq.tenantId    = TenantId(body_.getString("tenantId", "default"));
+    ucReq.requestedBy = body_.getString("requestedBy");
+    ucReq.providerCode = body_.getString("providerCode");
+    ucReq.fromDate    = body_.getString("fromDate");
+    ucReq.toDate      = body_.getString("toDate");
     ucReq.latestOnly  = jsonBool(body_, "latestOnly", false);
 
     auto instrJson = body_["instruments"];
@@ -178,12 +178,12 @@ class MarketRateController : SAPController {
     auto body_ = req.json;
 
     DeleteRatesRequest ucReq;
-    ucReq.tenantId    = TenantId(jsonStr(body_, "tenantId", "default"));
-    ucReq.requestedBy = jsonStr(body_, "requestedBy");
-    ucReq.providerCode = jsonStr(body_, "providerCode");
-    ucReq.category    = jsonStr(body_, "category");
-    ucReq.fromDate    = jsonStr(body_, "fromDate");
-    ucReq.toDate      = jsonStr(body_, "toDate");
+    ucReq.tenantId    = TenantId(body_.getString("tenantId", "default"));
+    ucReq.requestedBy = body_.getString("requestedBy");
+    ucReq.providerCode = body_.getString("providerCode");
+    ucReq.category    = body_.getString("category");
+    ucReq.fromDate    = body_.getString("fromDate");
+    ucReq.toDate      = body_.getString("toDate");
 
     auto result = ratesUC.deleteRate(ucReq);
 
@@ -218,12 +218,12 @@ class MarketRateController : SAPController {
     }
 
     CreateProviderRequest ucReq;
-    ucReq.tenantId    = TenantId(jsonStr(body_, "tenantId", "default"));
-    ucReq.requestedBy = jsonStr(body_, "requestedBy");
-    ucReq.code        = jsonStr(body_, "code");
-    ucReq.name        = jsonStr(body_, "name");
-    ucReq.description = jsonStr(body_, "description");
-    ucReq.contactEmail = jsonStr(body_, "contactEmail");
+    ucReq.tenantId    = TenantId(body_.getString("tenantId", "default"));
+    ucReq.requestedBy = body_.getString("requestedBy");
+    ucReq.code        = body_.getString("code");
+    ucReq.name        = body_.getString("name");
+    ucReq.description = body_.getString("description");
+    ucReq.contactEmail = body_.getString("contactEmail");
 
     auto result = providersUC.createProvider(ucReq);
     if (!result.success) {
@@ -258,11 +258,11 @@ class MarketRateController : SAPController {
     }
 
     UpdateProviderRequest ucReq;
-    ucReq.tenantId    = TenantId(jsonStr(body_, "tenantId", "default"));
+    ucReq.tenantId    = TenantId(body_.getString("tenantId", "default"));
     ucReq.providerId  = ProviderId(id);
-    ucReq.name        = jsonStr(body_, "name");
-    ucReq.description = jsonStr(body_, "description");
-    ucReq.contactEmail = jsonStr(body_, "contactEmail");
+    ucReq.name        = body_.getString("name");
+    ucReq.description = body_.getString("description");
+    ucReq.contactEmail = body_.getString("contactEmail");
     ucReq.isActive    = jsonBool(body_, "isActive", true);
 
     auto result = providersUC.updateProvider(ucReq);

@@ -28,7 +28,7 @@ public:
     router.post(basePath ~ "/*/transition", &transitionHandler);
   }
 
-  void transitionHandler(HTTPServerRequest req, HTTPServerResponse res) @safe {
+  void transitionHandler(HTTPServerRequest req) @safe {
     auto tenantId = getTenantId(req);
     auto rawPath = req.requestPath.to!string;
     // Extract ID between last two segments: /api/v1/freight-orders/{id}/transition
@@ -41,8 +41,8 @@ public:
 
     auto body_ = req.json;
     TransitionFreightOrderRequest dto;
-    dto.status = jsonStr(body_, "status");
-    dto.statusMessage = jsonStr(body_, "statusMessage");
+    dto.status = body_.getString("status");
+    dto.statusMessage = body_.getString("statusMessage");
     dto.actualDepartureAt = jsonInt(body_, "actualDepartureAt");
     dto.actualArrivalAt = jsonInt(body_, "actualArrivalAt");
 
@@ -56,7 +56,7 @@ public:
   }
 
 protected:
-  override Json listHandler(HTTPServerRequest req, HTTPServerResponse res) {
+  override Json listHandler(HTTPServerRequest req) {
     auto tenantId = getTenantId(req);
     auto orders = _useCase.listFreightOrders(tenantId);
     import std.algorithm : map;
@@ -64,18 +64,18 @@ protected:
     return jsonArray(orders.map!(o => o.toJson).array);
   }
 
-  override Json createHandler(HTTPServerRequest req, HTTPServerResponse res) {
+  override Json createHandler(HTTPServerRequest req) {
     auto tenantId = getTenantId(req);
     auto body_ = req.json;
     CreateFreightOrderRequest dto;
-    dto.orderNumber = jsonStr(body_, "orderNumber");
-    dto.description = jsonStr(body_, "description");
-    dto.originName = jsonStr(body_, "originName");
-    dto.originAddress = jsonStr(body_, "originAddress");
-    dto.destinationName = jsonStr(body_, "destinationName");
-    dto.destinationAddress = jsonStr(body_, "destinationAddress");
-    dto.carrierId = jsonStr(body_, "carrierId");
-    dto.transportMode = jsonStr(body_, "transportMode");
+    dto.orderNumber = body_.getString("orderNumber");
+    dto.description = body_.getString("description");
+    dto.originName = body_.getString("originName");
+    dto.originAddress = body_.getString("originAddress");
+    dto.destinationName = body_.getString("destinationName");
+    dto.destinationAddress = body_.getString("destinationAddress");
+    dto.carrierId = body_.getString("carrierId");
+    dto.transportMode = body_.getString("transportMode");
     dto.weightKg = body_["weightKg"].isFloat ? body_["weightKg"].get!double : 0.0;
     dto.volumeM3 = body_["volumeM3"].isFloat ? body_["volumeM3"].get!double : 0.0;
     dto.plannedDepartureAt = jsonInt(body_, "plannedDepartureAt");
@@ -89,7 +89,7 @@ protected:
     return Json(["id": Json(result.id), "statusCode": Json(201)]);
   }
 
-  override Json getHandler(HTTPServerRequest req, HTTPServerResponse res) {
+  override Json getHandler(HTTPServerRequest req) {
     auto tenantId = getTenantId(req);
     auto id = FreightOrderId(extractIdFromPath(req.requestPath.to!string));
     auto fo = _useCase.getFreightOrder(tenantId, id);
@@ -99,18 +99,18 @@ protected:
     return successResponse("Freight order retrieved successfully", "OK", 200, fo.toJson());
   }
 
-  override Json updateHandler(HTTPServerRequest req, HTTPServerResponse res) {
+  override Json updateHandler(HTTPServerRequest req) {
     auto tenantId = getTenantId(req);
     auto id = FreightOrderId(extractIdFromPath(req.requestPath.to!string));
     auto body_ = req.json;
     UpdateFreightOrderRequest dto;
-    dto.description = jsonStr(body_, "description");
-    dto.originName = jsonStr(body_, "originName");
-    dto.originAddress = jsonStr(body_, "originAddress");
-    dto.destinationName = jsonStr(body_, "destinationName");
-    dto.destinationAddress = jsonStr(body_, "destinationAddress");
-    dto.carrierId = jsonStr(body_, "carrierId");
-    dto.transportMode = jsonStr(body_, "transportMode");
+    dto.description = body_.getString("description");
+    dto.originName = body_.getString("originName");
+    dto.originAddress = body_.getString("originAddress");
+    dto.destinationName = body_.getString("destinationName");
+    dto.destinationAddress = body_.getString("destinationAddress");
+    dto.carrierId = body_.getString("carrierId");
+    dto.transportMode = body_.getString("transportMode");
     dto.weightKg = body_["weightKg"].isFloat ? body_["weightKg"].get!double : 0.0;
     dto.volumeM3 = body_["volumeM3"].isFloat ? body_["volumeM3"].get!double : 0.0;
     dto.plannedDepartureAt = jsonInt(body_, "plannedDepartureAt");
@@ -122,7 +122,7 @@ protected:
     return successResponse("Freight order updated successfully", "OK", 200, Json(["id": Json(result.id)]));
   }
 
-  override Json deleteHandler(HTTPServerRequest req, HTTPServerResponse res) {
+  override Json deleteHandler(HTTPServerRequest req) {
     auto tenantId = getTenantId(req);
     auto id = FreightOrderId(extractIdFromPath(req.requestPath.to!string));
     if (id.isNull)

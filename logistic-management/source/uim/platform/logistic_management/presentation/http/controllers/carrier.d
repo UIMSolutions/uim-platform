@@ -15,11 +15,14 @@ private:
 
 public:
   this(ManageCarriersUseCase useCase) {
-    super("/api/v1/carriers");
+    super();
     _useCase = useCase;
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+
+    string basePath = "/api/v1/carriers"; 
     router.get(basePath, &listHandler);
     router.post(basePath, &createHandler);
     router.get(basePath ~ "/*", &getHandler);
@@ -27,84 +30,81 @@ public:
     router.delete_(basePath ~ "/*", &deleteHandler);
   }
 
-protected:
-  override Json listHandler(HTTPServerRequest req, HTTPServerResponse res) {
+override protected Json listHandler(HTTPServerRequest req) {
     auto tenantId = getTenantId(req);
     auto carriers = _useCase.listCarriers(tenantId);
     import std.algorithm : map;
     import std.array : array;
-    return jsonArray(carriers.map!(c => c.toJson).array);
+    return carriers.map!(c => c.toJson).array.toJson;
   }
 
-  override Json createHandler(HTTPServerRequest req, HTTPServerResponse res) {
+  override protected Json createHandler(HTTPServerRequest req) {
     auto tenantId = getTenantId(req);
     auto body_ = req.json;
     CreateCarrierRequest dto;
-    dto.name = jsonStr(body_, "name");
-    dto.description = jsonStr(body_, "description");
-    dto.contactEmail = jsonStr(body_, "contactEmail");
-    dto.contactPhone = jsonStr(body_, "contactPhone");
-    dto.addressStreet = jsonStr(body_, "addressStreet");
-    dto.addressCity = jsonStr(body_, "addressCity");
-    dto.addressCountry = jsonStr(body_, "addressCountry");
-    dto.taxId = jsonStr(body_, "taxId");
+    dto.name = body_.getString("name");
+    dto.description = body_.getString("description");
+    dto.contactEmail = body_.getString("contactEmail");
+    dto.contactPhone = body_.getString("contactPhone");
+    dto.addressStreet = body_.getString("addressStreet");
+    dto.addressCity = body_.getString("addressCity");
+    dto.addressCountry = body_.getString("addressCountry");
+    dto.taxId = body_.getString("taxId");
     auto modes = body_["supportedModes"];
     if (modes.isArray) {
       foreach (m; modes.byValue) dto.supportedModes ~= m.get!string;
     }
     auto result = _useCase.createCarrier(tenantId, dto);
-    if (!result.success) {
-      res.statusCode = cast(int) HTTPStatus.badRequest;
-      return writeError(result.message);
-    }
-    res.statusCode = cast(int) HTTPStatus.created;
-    return Json(["id": Json(result.id), "statusCode": Json(201)]);
-  }
+    if (result.hasError)
+      return errorResponse(result.message, cast(int) HTTPStatus.badRequest);
 
-  override Json getHandler(HTTPServerRequest req, HTTPServerResponse res) {
+    return successResponse("Carrier created successfully", cast(int) HTTPStatus.created);
+  }
+  //   res.statusCode = cast(int) HTTPStatus.created;
+  //   return Json(["id": Json(result.id), "statusCode": Json(201)]);
+  // }
+
+  override protected Json getHandler(HTTPServerRequest req) {
     auto tenantId = getTenantId(req);
     auto id = CarrierId(extractIdFromPath(req.requestPath.to!string));
     auto carrier = _useCase.getCarrier(tenantId, id);
-    if (carrier.isNull) {
-      res.statusCode = cast(int) HTTPStatus.notFound;
-      return writeError("Carrier not found");
-    }
-    return carrier.toJson;
+    if (carrier.isNull)
+      return errorResponse("Carrier not found", cast(int) HTTPStatus.notFound);
+
+    auto responseData = carrier.toJson;
+    return successResponse("Carrier retrieved successfully", cast(int) HTTPStatus.ok, responseData);
   }
 
-  override Json updateHandler(HTTPServerRequest req, HTTPServerResponse res) {
+  override protected Json updateHandler(HTTPServerRequest req) {
     auto tenantId = getTenantId(req);
     auto id = CarrierId(extractIdFromPath(req.requestPath.to!string));
     auto body_ = req.json;
     UpdateCarrierRequest dto;
-    dto.description = jsonStr(body_, "description");
-    dto.contactEmail = jsonStr(body_, "contactEmail");
-    dto.contactPhone = jsonStr(body_, "contactPhone");
-    dto.addressStreet = jsonStr(body_, "addressStreet");
-    dto.addressCity = jsonStr(body_, "addressCity");
-    dto.addressCountry = jsonStr(body_, "addressCountry");
-    dto.status = jsonStr(body_, "status");
+    dto.description = body_.getString("description");
+    dto.contactEmail = body_.getString("contactEmail");
+    dto.contactPhone = body_.getString("contactPhone");
+    dto.addressStreet = body_.getString("addressStreet");
+    dto.addressCity = body_.getString("addressCity");
+    dto.addressCountry = body_.getString("addressCountry");
+    dto.status = body_.getString("status");
     auto modes = body_["supportedModes"];
     if (modes.isArray) {
       foreach (m; modes.byValue) dto.supportedModes ~= m.get!string;
     }
     auto result = _useCase.updateCarrier(tenantId, id, dto);
-    if (!result.success) {
-      res.statusCode = cast(int) HTTPStatus.badRequest;
-      return writeError(result.message);
-    }
-    return Json(["id": Json(result.id), "statusCode": Json(200)]);
+    if (result.hasError)
+      return errorResponse(result.message, cast(int) HTTPStatus.badRequest);
+
+    return successResponse("Carrier updated successfully", cast(int) HTTPStatus.ok, Json(["id": Json(result.id)]));
   }
 
-  override Json deleteHandler(HTTPServerRequest req, HTTPServerResponse res) {
+  override protected Json deleteHandler(HTTPServerRequest req) {
     auto tenantId = getTenantId(req);
     auto id = CarrierId(extractIdFromPath(req.requestPath.to!string));
     auto result = _useCase.deleteCarrier(tenantId, id);
-    if (!result.success) {
-      res.statusCode = cast(int) HTTPStatus.notFound;
-      return writeError(result.message);
-    }
-    res.statusCode = cast(int) HTTPStatus.noContent;
-    return Json(["statusCode": Json(204)]);
+    if (result.hasError)
+      return errorResponse(result.message, cast(int) HTTPStatus.notFound);
+    
+    return successResponse(null, cast(int) HTTPStatus.noContent);
   }
 }

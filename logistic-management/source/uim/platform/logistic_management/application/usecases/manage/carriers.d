@@ -36,7 +36,7 @@ public:
     c.addressCountry = req.addressCountry;
     c.taxId = req.taxId;
     c.status = CarrierStatus.active;
-    c.createdAt = currentTimeMs();
+    c.createdAt = currentTimestamp();
     c.updatedAt = c.createdAt;
 
     foreach (m; req.supportedModes) {
@@ -66,7 +66,7 @@ public:
     updated.addressCountry = req.addressCountry.length > 0 ? req.addressCountry : c.addressCountry;
     updated.taxId = c.taxId;
     updated.createdAt = c.createdAt;
-    updated.updatedAt = currentTimeMs();
+    updated.updatedAt = currentTimestamp();
 
     if (req.status.length > 0) {
       try {

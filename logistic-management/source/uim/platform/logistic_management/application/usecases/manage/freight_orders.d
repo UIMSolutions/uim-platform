@@ -50,7 +50,7 @@ public:
       } catch (Exception) {
       }
     }
-    fo.createdAt = currentTimeMs();
+    fo.createdAt = currentTimestamp();
     fo.updatedAt = fo.createdAt;
     _repo.save(fo);
     return CommandResult(true, "", fo.id.value);
@@ -86,7 +86,7 @@ public:
     updated.actualDepartureAt = fo.actualDepartureAt;
     updated.actualArrivalAt = fo.actualArrivalAt;
     updated.createdAt = fo.createdAt;
-    updated.updatedAt = currentTimeMs();
+    updated.updatedAt = currentTimestamp();
     if (req.transportMode.length > 0) {
       try {
         updated.transportMode = req.transportMode.to!TransportMode;
@@ -136,7 +136,7 @@ public:
       : fo.actualDepartureAt;
     updated.actualArrivalAt = req.actualArrivalAt > 0 ? req.actualArrivalAt : fo.actualArrivalAt;
     updated.createdAt = fo.createdAt;
-    updated.updatedAt = currentTimeMs();
+    updated.updatedAt = currentTimestamp();
     _repo.save(updated);
     return CommandResult(true, "", id.value);
   }

@@ -44,7 +44,7 @@ unittest {
     assert(MessagingServiceStatus.deleting.toString == "deleting");
     assert(MessagingServiceStatus.failed.toString == "failed");
 
-    assert(["creating", "active"].toMessagingServiceStatus == [MessagingServiceStatus.creating, MessagingServiceStatus.active]);
+    assert(["creating", "active"].toMessagingServiceStatuses == [MessagingServiceStatus.creating, MessagingServiceStatus.active]);
     assert([MessagingServiceStatus.creating, MessagingServiceStatus.active].toStrings == ["creating", "active"]);
 }
 
@@ -56,7 +56,7 @@ enum MessagingServicePlan {
 MessagingServicePlan toMessagingServicePlan(string value) {
     mixin(EnumSwitch("MessagingServicePlan", "dev"));
 }
-MessagingServicePlan[] toMessagingServicePlan(string[] values) {
+MessagingServicePlan[] toMessagingServicePlans(string[] values) {
     return values.map!(v => v.toMessagingServicePlan).array;
 }
 string toString(MessagingServicePlan value) {
@@ -78,7 +78,7 @@ unittest {
     assert(MessagingServicePlan.standard.toString == "standard");
     assert(MessagingServicePlan.premium.toString == "premium");
 
-    assert(["dev", "standard"].toMessagingServicePlan == [MessagingServicePlan.dev, MessagingServicePlan.standard]);
+    assert(["dev", "standard"].toMessagingServicePlans == [MessagingServicePlan.dev, MessagingServicePlan.standard]);
     assert([MessagingServicePlan.dev, MessagingServicePlan.standard].toStrings == ["dev", "standard"]);
 }
 
@@ -112,7 +112,7 @@ unittest {
     assert(MessageClientStatus.inactive.toString == "inactive");
     assert(MessageClientStatus.suspended.toString == "suspended");  
 
-    assert(["active", "inactive"].toMessageClientStatus == [MessageClientStatus.active, MessageClientStatus.inactive]);
+    assert(["active", "inactive"].toMessageClientStatuses == [MessageClientStatus.active, MessageClientStatus.inactive]);
     assert([MessageClientStatus.active, MessageClientStatus.inactive].toStrings == ["active", "inactive"]);
 }
 
@@ -125,7 +125,7 @@ enum MessageClientProtocol {
 MessageClientProtocol toMessageClientProtocol(string value) {
     mixin(EnumSwitch("MessageClientProtocol", "amqp10"));
 }
-MessageClientProtocol[] toMessageClientProtocol(string[] values) {
+MessageClientProtocol[] toMessageClientProtocols(string[] values) {
     return values.map!(v => v.toMessageClientProtocol).array;
 }
 string toString(MessageClientProtocol value) {
@@ -149,7 +149,7 @@ unittest {
     assert(MessageClientProtocol.mqtt500.toString == "mqtt500");
     assert(MessageClientProtocol.httprest.toString == "httprest");
 
-    assert(["amqp10", "mqtt311"].toMessageClientProtocol == [MessageClientProtocol.amqp10, MessageClientProtocol.mqtt311]);
+    assert(["amqp10", "mqtt311"].toMessageClientProtocols == [MessageClientProtocol.amqp10, MessageClientProtocol.mqtt311]);
     assert([MessageClientProtocol.amqp10, MessageClientProtocol.mqtt311].toStrings == ["amqp10", "mqtt311"]);
 }
 
@@ -183,7 +183,7 @@ unittest {
     assert(QueueStatus.inactive.toString == "inactive");
     assert(QueueStatus.pendingDelete.toString == "pendingDelete");
 
-    assert(["active", "inactive"].toQueueStatus == [QueueStatus.active, QueueStatus.inactive]);
+    assert(["active", "inactive"].toQueueStatuses == [QueueStatus.active, QueueStatus.inactive]);
     assert([QueueStatus.active, QueueStatus.inactive].toStrings == ["active", "inactive"]);
 }
 
@@ -194,8 +194,8 @@ enum QueueAccessType {
 QueueAccessType toQueueAccessType(string value) {
     mixin(EnumSwitch("QueueAccessType", "exclusive"));
 }
-QueueAccessType[] toQueueAccessType(string[] values) {
-    return values.map!(v => v.toQueueAccessType).array;
+QueueAccessType[] toQueueAccessTypes(string[] values) {
+    return values.map!toQueueAccessType.array;
 }
 string toString(QueueAccessType value) {
     return value.to!string;
@@ -214,7 +214,7 @@ unittest {
     assert(QueueAccessType.exclusive.toString == "exclusive");
     assert(QueueAccessType.nonExclusive.toString == "nonExclusive");    
 
-    assert(["exclusive", "nonExclusive"].toQueueAccessType == [QueueAccessType.exclusive, QueueAccessType.nonExclusive]);
+    assert(["exclusive", "nonExclusive"].toQueueAccessTypes == [QueueAccessType.exclusive, QueueAccessType.nonExclusive]);
     assert([QueueAccessType.exclusive, QueueAccessType.nonExclusive].toStrings == ["exclusive", "nonExclusive"]);
 }
 
@@ -248,7 +248,7 @@ unittest {
     assert(QueueSubscriptionStatus.inactive.toString == "inactive");
     assert(QueueSubscriptionStatus.pendingDelete.toString == "pendingDelete");
 
-    assert(["active", "inactive"].toQueueSubscriptionStatus == [QueueSubscriptionStatus.active, QueueSubscriptionStatus.inactive]);
+    assert(["active", "inactive"].toQueueSubscriptionStatuses == [QueueSubscriptionStatus.active, QueueSubscriptionStatus.inactive]);
     assert([QueueSubscriptionStatus.active, QueueSubscriptionStatus.inactive].toStrings == ["active", "inactive"]);
 }
 
@@ -285,7 +285,7 @@ unittest {
     assert(WebhookStatus.inactive.toString == "inactive");
     assert(WebhookStatus.failed.toString == "failed");
 
-    assert(["active", "paused"].toWebhookStatus == [WebhookStatus.active, WebhookStatus.paused]);
+    assert(["active", "paused"].toWebhookStatuses == [WebhookStatus.active, WebhookStatus.paused]);
     assert([WebhookStatus.active, WebhookStatus.paused].toStrings == ["active", "paused"]);  
 }
 
@@ -304,7 +304,7 @@ WebhookAuthType toWebhookAuthType(string value) {
         default: return WebhookAuthType.none_;
     }   
 }
-WebhookAuthType[] toWebhookAuthType(string[] values) {
+WebhookAuthType[] toWebhookAuthTypes(string[] values) {
     return values.map!(toWebhookAuthType).array;
 }
 string toString(WebhookAuthType value) {
@@ -328,7 +328,7 @@ unittest {
     assert(WebhookAuthType.basic.toString == "basic");
     assert(WebhookAuthType.apiKey.toString == "apiKey");
 
-    assert(["none", "oauth2"].toWebhookAuthType == [WebhookAuthType.none_, WebhookAuthType.oauth2]);
+    assert(["none", "oauth2"].toWebhookAuthTypes == [WebhookAuthType.none_, WebhookAuthType.oauth2]);
     assert([WebhookAuthType.none_, WebhookAuthType.oauth2].toStrings == ["none", "oauth2"]);  
 }
 
@@ -339,7 +339,7 @@ enum WebhookDeliveryMode {
 WebhookDeliveryMode toWebhookDeliveryMode(string value) {
     mixin(EnumSwitch("WebhookDeliveryMode", "atLeastOnce"));
 }
-WebhookDeliveryMode[] toWebhookDeliveryMode(string[] values) {
+WebhookDeliveryMode[] toWebhookDeliveryModes(string[] values) {
     return values.map!(toWebhookDeliveryMode).array;
 }
 string toString(WebhookDeliveryMode value) {
@@ -359,7 +359,7 @@ unittest {
     assert(WebhookDeliveryMode.atLeastOnce.toString == "atLeastOnce");
     assert(WebhookDeliveryMode.atMostOnce.toString == "atMostOnce");    
 
-    assert(["atLeastOnce", "atMostOnce"].toWebhookDeliveryMode == [WebhookDeliveryMode.atLeastOnce, WebhookDeliveryMode.atMostOnce]);
+    assert(["atLeastOnce", "atMostOnce"].toWebhookDeliveryModes == [WebhookDeliveryMode.atLeastOnce, WebhookDeliveryMode.atMostOnce]);
     assert([WebhookDeliveryMode.atLeastOnce, WebhookDeliveryMode.atMostOnce].toStrings == ["atLeastOnce", "atMostOnce"]);  
 }
 
@@ -398,7 +398,7 @@ unittest {
     assert(EventChannelStatus.inactive.toString == "inactive");
     assert(EventChannelStatus.deprecated_.toString == "deprecated");        
 
-    assert(["active", "inactive"].toEventChannelStatus == [EventChannelStatus.active, EventChannelStatus.inactive]);
+    assert(["active", "inactive"].toEventChannelStatuses == [EventChannelStatus.active, EventChannelStatus.inactive]);
     assert([EventChannelStatus.active, EventChannelStatus.inactive].toStrings == ["active", "inactive"]);
 }
 
@@ -410,7 +410,7 @@ enum EventChannelType {
 EventChannelType toEventChannelType(string value) {
     mixin(EnumSwitch("EventChannelType", "queue"));
 }
-EventChannelType[] toEventChannelType(string[] values) {
+EventChannelType[] toEventChannelTypes(string[] values) {
     return values.map!(toEventChannelType).array;
 }
 string toString(EventChannelType value) {
@@ -432,7 +432,7 @@ unittest {
     assert(EventChannelType.topic.toString == "topic");
     assert(EventChannelType.eventChannel.toString == "eventChannel");   
 
-    assert(["queue", "topic", "eventChannel"].toEventChannelType == [EventChannelType.queue, EventChannelType.topic, EventChannelType.eventChannel]);
+    assert(["queue", "topic", "eventChannel"].toEventChannelTypes == [EventChannelType.queue, EventChannelType.topic, EventChannelType.eventChannel]);
     assert([EventChannelType.queue, EventChannelType.topic, EventChannelType.eventChannel].toStrings == ["queue", "topic", "eventChannel"]);
 }
 
@@ -463,7 +463,7 @@ unittest {
     assert(MessageBindingStatus.active.toString == "active");
     assert(MessageBindingStatus.inactive.toString == "inactive");
 
-    assert(["active", "inactive"].toMessageBindingStatus == [MessageBindingStatus.active, MessageBindingStatus.inactive]);
+    assert(["active", "inactive"].toMessageBindingStatuses == [MessageBindingStatus.active, MessageBindingStatus.inactive]);
     assert([MessageBindingStatus.active, MessageBindingStatus.inactive].toStrings == ["active", "inactive"]);
 }
 
@@ -476,7 +476,7 @@ enum MessageBindingPermission {
 MessageBindingPermission toMessageBindingPermission(string value) {
     mixin(EnumSwitch("MessageBindingPermission", "publish"));
 }
-MessageBindingPermission[] toMessageBindingPermission(string[] values) {
+MessageBindingPermission[] toMessageBindingPermissions(string[] values) {
     return values.map!(toMessageBindingPermission).array;
 }
 string toString(MessageBindingPermission value) {
@@ -500,6 +500,6 @@ unittest {
     assert(MessageBindingPermission.manage.toString == "manage");
     assert(MessageBindingPermission.publishSubscribe.toString == "publishSubscribe");   
 
-    assert(["publish", "subscribe"].toMessageBindingPermission == [MessageBindingPermission.publish, MessageBindingPermission.subscribe]);
+    assert(["publish", "subscribe"].toMessageBindingPermissions == [MessageBindingPermission.publish, MessageBindingPermission.subscribe]);
     assert([MessageBindingPermission.publish, MessageBindingPermission.subscribe].toStrings == ["publish", "subscribe"]);
 }

@@ -38,7 +38,7 @@ class ManageServiceInstancesUseCase {
     inst.region = req.region;
     inst.subaccountId = req.subaccountId;
     inst.status = InstanceStatus.pending;
-    inst.createdAt = currentTimeMs();
+    inst.createdAt = currentTimestamp();
     inst.updatedAt = inst.createdAt;
 
     instances.save(inst);
@@ -55,7 +55,7 @@ class ManageServiceInstancesUseCase {
       updated.description = req.description;
     if (req.statusMessage.length > 0)
       updated.statusMessage = req.statusMessage;
-    updated.updatedAt = currentTimeMs();
+    updated.updatedAt = currentTimestamp();
 
     instances.update(updated);
     return CommandResult(true, req.instanceId.value, "Service instance updated");

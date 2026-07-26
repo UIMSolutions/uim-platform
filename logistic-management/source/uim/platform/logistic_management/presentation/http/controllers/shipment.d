@@ -28,7 +28,7 @@ public:
   }
 
 protected:
-  override Json listHandler(HTTPServerRequest req, HTTPServerResponse res) {
+  override Json listHandler(HTTPServerRequest req) {
     auto tenantId = getTenantId(req);
     auto items = _useCase.listShipments(tenantId);
     import std.algorithm : map;
@@ -36,18 +36,18 @@ protected:
     return jsonArray(items.map!(s => s.toJson).array);
   }
 
-  override Json createHandler(HTTPServerRequest req, HTTPServerResponse res) {
+  override Json createHandler(HTTPServerRequest req) {
     auto tenantId = getTenantId(req);
     auto body_ = req.json;
     CreateShipmentRequest dto;
-    dto.shipmentNumber = jsonStr(body_, "shipmentNumber");
-    dto.description = jsonStr(body_, "description");
-    dto.direction = jsonStr(body_, "direction");
-    dto.freightOrderId = jsonStr(body_, "freightOrderId");
-    dto.warehouseId = jsonStr(body_, "warehouseId");
-    dto.partnerId = jsonStr(body_, "partnerId");
-    dto.partnerName = jsonStr(body_, "partnerName");
-    dto.trackingNumber = jsonStr(body_, "trackingNumber");
+    dto.shipmentNumber = body_.getString("shipmentNumber");
+    dto.description = body_.getString("description");
+    dto.direction = body_.getString("direction");
+    dto.freightOrderId = body_.getString("freightOrderId");
+    dto.warehouseId = body_.getString("warehouseId");
+    dto.partnerId = body_.getString("partnerId");
+    dto.partnerName = body_.getString("partnerName");
+    dto.trackingNumber = body_.getString("trackingNumber");
     dto.plannedDate = jsonInt(body_, "plannedDate");
     auto result = _useCase.createShipment(tenantId, dto);
     if (!result.success) {
@@ -58,7 +58,7 @@ protected:
     return Json(["id": Json(result.id), "statusCode": Json(201)]);
   }
 
-  override Json getHandler(HTTPServerRequest req, HTTPServerResponse res) {
+  override Json getHandler(HTTPServerRequest req) {
     auto tenantId = getTenantId(req);
     auto id = ShipmentId(extractIdFromPath(req.requestPath.to!string));
     auto s = _useCase.getShipment(tenantId, id);
@@ -69,14 +69,14 @@ protected:
     return s.toJson;
   }
 
-  override Json updateHandler(HTTPServerRequest req, HTTPServerResponse res) {
+  override Json updateHandler(HTTPServerRequest req) {
     auto tenantId = getTenantId(req);
     auto id = ShipmentId(extractIdFromPath(req.requestPath.to!string));
     auto body_ = req.json;
     UpdateShipmentRequest dto;
-    dto.description = jsonStr(body_, "description");
-    dto.status = jsonStr(body_, "status");
-    dto.trackingNumber = jsonStr(body_, "trackingNumber");
+    dto.description = body_.getString("description");
+    dto.status = body_.getString("status");
+    dto.trackingNumber = body_.getString("trackingNumber");
     dto.actualDate = jsonInt(body_, "actualDate");
     auto result = _useCase.updateShipment(tenantId, id, dto);
     if (!result.success) {
@@ -86,7 +86,7 @@ protected:
     return Json(["id": Json(result.id), "statusCode": Json(200)]);
   }
 
-  override Json deleteHandler(HTTPServerRequest req, HTTPServerResponse res) {
+  override Json deleteHandler(HTTPServerRequest req) {
     auto tenantId = getTenantId(req);
     auto id = ShipmentId(extractIdFromPath(req.requestPath.to!string));
     auto result = _useCase.deleteShipment(tenantId, id);

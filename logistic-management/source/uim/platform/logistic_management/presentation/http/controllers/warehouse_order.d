@@ -20,6 +20,8 @@ public:
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+
     router.get(basePath, &listHandler);
     router.post(basePath, &createHandler);
     router.get(basePath ~ "/*", &getHandler);
@@ -28,7 +30,7 @@ public:
   }
 
 protected:
-  override Json listHandler(HTTPServerRequest req, HTTPServerResponse res) {
+  override Json listHandler(HTTPServerRequest req) {
     auto tenantId = getTenantId(req);
     auto items = _useCase.listWarehouseOrders(tenantId);
     import std.algorithm : map;
@@ -36,15 +38,15 @@ protected:
     return jsonArray(items.map!(wo => wo.toJson).array);
   }
 
-  override Json createHandler(HTTPServerRequest req, HTTPServerResponse res) {
+  override Json createHandler(HTTPServerRequest req) {
     auto tenantId = getTenantId(req);
     auto body_ = req.json;
     CreateWarehouseOrderRequest dto;
-    dto.orderNumber = jsonStr(body_, "orderNumber");
-    dto.description = jsonStr(body_, "description");
-    dto.deliveryId = jsonStr(body_, "deliveryId");
-    dto.warehouseId = jsonStr(body_, "warehouseId");
-    dto.assignedTo = jsonStr(body_, "assignedTo");
+    dto.orderNumber = body_.getString("orderNumber");
+    dto.description = body_.getString("description");
+    dto.deliveryId = body_.getString("deliveryId");
+    dto.warehouseId = body_.getString("warehouseId");
+    dto.assignedTo = body_.getString("assignedTo");
     dto.dueAt = jsonInt(body_, "dueAt");
     auto result = _useCase.createWarehouseOrder(tenantId, dto);
     if (!result.success) {
@@ -55,7 +57,7 @@ protected:
     return Json(["id": Json(result.id), "statusCode": Json(201)]);
   }
 
-  override Json getHandler(HTTPServerRequest req, HTTPServerResponse res) {
+  override Json getHandler(HTTPServerRequest req) {
     auto tenantId = getTenantId(req);
     auto id = WarehouseOrderId(extractIdFromPath(req.requestPath.to!string));
     auto wo = _useCase.getWarehouseOrder(tenantId, id);
@@ -66,14 +68,14 @@ protected:
     return wo.toJson;
   }
 
-  override Json updateHandler(HTTPServerRequest req, HTTPServerResponse res) {
+  override Json updateHandler(HTTPServerRequest req) {
     auto tenantId = getTenantId(req);
     auto id = WarehouseOrderId(extractIdFromPath(req.requestPath.to!string));
     auto body_ = req.json;
     UpdateWarehouseOrderRequest dto;
-    dto.description = jsonStr(body_, "description");
-    dto.status = jsonStr(body_, "status");
-    dto.assignedTo = jsonStr(body_, "assignedTo");
+    dto.description = body_.getString("description");
+    dto.status = body_.getString("status");
+    dto.assignedTo = body_.getString("assignedTo");
     dto.dueAt = jsonInt(body_, "dueAt");
     auto result = _useCase.updateWarehouseOrder(tenantId, id, dto);
     if (!result.success) {
@@ -83,7 +85,7 @@ protected:
     return Json(["id": Json(result.id), "statusCode": Json(200)]);
   }
 
-  override Json deleteHandler(HTTPServerRequest req, HTTPServerResponse res) {
+  override Json deleteHandler(HTTPServerRequest req ) {
     auto tenantId = getTenantId(req);
     auto id = WarehouseOrderId(extractIdFromPath(req.requestPath.to!string));
     auto result = _useCase.deleteWarehouseOrder(tenantId, id);

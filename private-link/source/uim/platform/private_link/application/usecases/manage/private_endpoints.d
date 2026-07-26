@@ -39,7 +39,7 @@ class ManagePrivateEndpointsUseCase {
     ep.iaasProvider = toIaasProvider(req.iaasProvider);
     ep.region = req.region;
     ep.status = EndpointStatus.pendingAcceptance;
-    ep.createdAt = currentTimeMs();
+    ep.createdAt = currentTimestamp();
     ep.updatedAt = ep.createdAt;
 
     endpoints.save(ep);
@@ -65,7 +65,7 @@ class ManagePrivateEndpointsUseCase {
     updated.privateIpAddress = req.privateIpAddress;
     updated.hostname = req.hostname;
     updated.port = req.port;
-    updated.approvedAt = currentTimeMs();
+    updated.approvedAt = currentTimestamp();
     updated.updatedAt = updated.approvedAt;
 
     endpoints.update(updated);
@@ -90,7 +90,7 @@ class ManagePrivateEndpointsUseCase {
     auto updated = ep;
     updated.status = toEndpointStatus(req.status);
     updated.statusMessage = req.statusMessage;
-    updated.updatedAt = currentTimeMs();
+    updated.updatedAt = currentTimestamp();
 
     endpoints.update(updated);
     return CommandResult(true, ep.id.value, "Endpoint status updated");

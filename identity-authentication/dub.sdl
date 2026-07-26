@@ -1,4 +1,4 @@
-name "identity_authentication"
+name "identity-authentication"
 description "BTP Site Manager style design-time service using D, uim-framework and vibe.d"
 homepage "https://github.com/UIMSolutions/uim/platform/identity_authentication"
 authors "Ozan Nurettin Süel" "UI Manufaktur (R.I.P)"

@@ -38,7 +38,7 @@ public:
     if (req.direction.length > 0) {
       try { s.direction = req.direction.to!LogisticsDirection; } catch (Exception) {}
     }
-    s.createdAt = currentTimeMs();
+    s.createdAt = currentTimestamp();
     s.updatedAt = s.createdAt;
     _repo.save(s);
     return CommandResult(true, "", s.id.value);
@@ -63,7 +63,7 @@ public:
     updated.plannedDate = s.plannedDate;
     updated.actualDate = req.actualDate > 0 ? req.actualDate : s.actualDate;
     updated.createdAt = s.createdAt;
-    updated.updatedAt = currentTimeMs();
+    updated.updatedAt = currentTimestamp();
     if (req.status.length > 0) {
       try { updated.status = req.status.to!ShipmentStatus; } catch (Exception) { updated.status = s.status; }
     } else {

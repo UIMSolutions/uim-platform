@@ -28,7 +28,7 @@ public:
     router.post(basePath ~ "/*/confirm", &confirmHandler);
   }
 
-  void confirmHandler(HTTPServerRequest req, HTTPServerResponse res) @safe {
+  void confirmHandler(HTTPServerRequest req) @safe {
     auto tenantId = getTenantId(req);
     auto rawPath = req.requestPath.to!string;
     import std.string : lastIndexOf;
@@ -39,7 +39,7 @@ public:
 
     auto body_ = req.json;
     ConfirmWarehouseTaskRequest dto;
-    dto.assignedTo = jsonStr(body_, "assignedTo");
+    dto.assignedTo = body_.getString("assignedTo");
     dto.confirmedAt = jsonInt(body_, "confirmedAt");
 
     auto result = _useCase.confirmTask(tenantId, id, dto);
@@ -52,7 +52,7 @@ public:
   }
 
 protected:
-  override Json listHandler(HTTPServerRequest req, HTTPServerResponse res) {
+  override Json listHandler(HTTPServerRequest req) {
     auto tenantId = getTenantId(req);
     auto items = _useCase.listWarehouseTasks(tenantId);
     import std.algorithm : map;
@@ -60,21 +60,21 @@ protected:
     return jsonArray(items.map!(t => t.toJson).array);
   }
 
-  override Json createHandler(HTTPServerRequest req, HTTPServerResponse res) {
+  override Json createHandler(HTTPServerRequest req) {
     auto tenantId = getTenantId(req);
     auto body_ = req.json;
     CreateWarehouseTaskRequest dto;
-    dto.taskNumber = jsonStr(body_, "taskNumber");
-    dto.taskType = jsonStr(body_, "taskType");
-    dto.warehouseOrderId = jsonStr(body_, "warehouseOrderId");
-    dto.warehouseId = jsonStr(body_, "warehouseId");
-    dto.sourceStorageBin = jsonStr(body_, "sourceStorageBin");
-    dto.destinationStorageBin = jsonStr(body_, "destinationStorageBin");
-    dto.productId = jsonStr(body_, "productId");
-    dto.productDescription = jsonStr(body_, "productDescription");
+    dto.taskNumber = body_.getString("taskNumber");
+    dto.taskType = body_.getString("taskType");
+    dto.warehouseOrderId = body_.getString("warehouseOrderId");
+    dto.warehouseId = body_.getString("warehouseId");
+    dto.sourceStorageBin = body_.getString("sourceStorageBin");
+    dto.destinationStorageBin = body_.getString("destinationStorageBin");
+    dto.productId = body_.getString("productId");
+    dto.productDescription = body_.getString("productDescription");
     dto.quantity = body_["quantity"].isFloat ? body_["quantity"].get!double : 0.0;
-    dto.unit = jsonStr(body_, "unit");
-    dto.assignedTo = jsonStr(body_, "assignedTo");
+    dto.unit = body_.getString("unit");
+    dto.assignedTo = body_.getString("assignedTo");
     auto result = _useCase.createWarehouseTask(tenantId, dto);
     if (!result.success) {
       res.statusCode = cast(int) HTTPStatus.badRequest;
@@ -84,7 +84,7 @@ protected:
     return Json(["id": Json(result.id), "statusCode": Json(201)]);
   }
 
-  override Json getHandler(HTTPServerRequest req, HTTPServerResponse res) {
+  override Json getHandler(HTTPServerRequest req) {
     auto precheck = super.getHandler(req);
     if (precheck.hasError)
       return precheck;
@@ -100,13 +100,13 @@ protected:
     return wt.toJson;
   }
 
-  override Json updateHandler(HTTPServerRequest req, HTTPServerResponse res) {
+  override Json updateHandler(HTTPServerRequest req) {
     // Warehouse tasks are updated via confirm endpoint; this handles re-assignment only
     res.statusCode = cast(int) HTTPStatus.methodNotAllowed;
     return writeError("Use POST /confirm to update warehouse task status");
   }
 
-  override Json deleteHandler(HTTPServerRequest req, HTTPServerResponse res) {
+  override Json deleteHandler(HTTPServerRequest req) {
     auto precheck = super.deleteHandler(req);
     if (precheck.hasError)
       return precheck;

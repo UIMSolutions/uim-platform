@@ -4,6 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.logistic_management.domain.enumerations;
+
 import uim.platform.logistic_management;
 
 mixin(ShowModule!());
@@ -15,10 +16,10 @@ enum LogisticsDirection {
   inbound,
 }
 LogisticsDirection toLogisticsDirection(string value) {
-  mixin(EnumSwitch("LogisticsDirection", "LogisticsDirection.outbound"));
+  mixin(EnumSwitch("LogisticsDirection", "outbound"));
 }
-LogisticsDirection[] toLogisticsDirection(string[] values) {
-  return values.map!(v => v.toLogisticsDirection).array;
+LogisticsDirection[] toLogisticsDirections(string[] values) {
+  return values.map!toLogisticsDirection.array;
 }
 string toString(LogisticsDirection value) {
   return value.to!string;
@@ -50,10 +51,10 @@ enum FreightOrderStatus {
   cancelled,
 }
 FreightOrderStatus toFreightOrderStatus(string value) {
-  mixin(EnumSwitch("FreightOrderStatus", "FreightOrderStatus.draft"));
+  mixin(EnumSwitch("FreightOrderStatus", "draft"));
 }
 FreightOrderStatus[] toFreightOrderStatuses(string[] values) {
-  return values.map!(v => v.toFreightOrderStatus).array;
+  return values.map!toFreightOrderStatus.array;
 }
 string toString(FreightOrderStatus value) {
   return value.to!string; 
@@ -78,7 +79,7 @@ unittest {
   assert(FreightOrderStatus.delivered.toString == "delivered");
   assert(FreightOrderStatus.cancelled.toString == "cancelled");
 
-  assert(["draft", "planned"].toFreightOrderStatus == [FreightOrderStatus.draft, FreightOrderStatus.planned]);
+  assert(["draft", "planned"].toFreightOrderStatuses == [FreightOrderStatus.draft, FreightOrderStatus.planned]);
   assert([FreightOrderStatus.draft, FreightOrderStatus.planned].toStrings == ["draft", "planned"]);
 }
 
@@ -91,10 +92,10 @@ enum ShipmentStatus {
   cancelled,
 }
 ShipmentStatus toShipmentStatus(string value) {
-  mixin(EnumSwitch("ShipmentStatus", "ShipmentStatus.created"));
+  mixin(EnumSwitch("ShipmentStatus", "created"));
 }
 ShipmentStatus[] toShipmentStatuses(string[] values) {
-  return values.map!(v => v.toShipmentStatus).array;
+  return values.map!toShipmentStatus.array;
 }
 string toString(ShipmentStatus value) {
   return value.to!string;
@@ -119,7 +120,7 @@ unittest {
   assert(ShipmentStatus.delivered.toString == "delivered");
   assert(ShipmentStatus.cancelled.toString == "cancelled");
 
-  assert(["created", "shipped"].toShipmentStatus == [ShipmentStatus.created, ShipmentStatus.shipped]);
+  assert(["created", "shipped"].toShipmentStatuses == [ShipmentStatus.created, ShipmentStatus.shipped]);
   assert([ShipmentStatus.created, ShipmentStatus.shipped].toStrings == ["created", "shipped"]);
 }
 
@@ -133,7 +134,7 @@ enum DeliveryStatus {
   cancelled,
 }
 DeliveryStatus toDeliveryStatus(string value) {
-  mixin(EnumSwitch("DeliveryStatus", "DeliveryStatus.created"));
+  mixin(EnumSwitch("DeliveryStatus", "created"));
 }
 DeliveryStatus[] toDeliveryStatuses(string[] values) {
   return values.map!(v => v.toDeliveryStatus).array;
@@ -163,7 +164,7 @@ unittest {
   assert(DeliveryStatus.delivered.toString == "delivered");
   assert(DeliveryStatus.cancelled.toString == "cancelled");
 
-  assert(["created", "shipped"].toDeliveryStatus == [DeliveryStatus.created, DeliveryStatus.shipped]);
+  assert(["created", "shipped"].toDeliveryStatuses == [DeliveryStatus.created, DeliveryStatus.shipped]);
   assert([DeliveryStatus.created, DeliveryStatus.shipped].toStrings == ["created", "shipped"]);
 }
 
@@ -176,10 +177,10 @@ enum WarehouseTaskType {
   counting,
 }
 WarehouseTaskType toWarehouseTaskType(string value) {
-  mixin(EnumSwitch("WarehouseTaskType", "WarehouseTaskType.picking"));
+  mixin(EnumSwitch("WarehouseTaskType", "picking"));
 }
-WarehouseTaskType[] toWarehouseTaskType(string[] values) {
-  return values.map!(v => v.toWarehouseTaskType).array;
+WarehouseTaskType[] toWarehouseTaskTypes(string[] values) {
+  return values.map!toWarehouseTaskType.array;
 }
 string toString(WarehouseTaskType value) {
   return value.to!string;
@@ -204,7 +205,7 @@ unittest {
   assert(WarehouseTaskType.transfer.toString == "transfer");
   assert(WarehouseTaskType.counting.toString == "counting");
 
-  assert(["picking", "packing"].toWarehouseTaskType == [WarehouseTaskType.picking, WarehouseTaskType.packing]);
+  assert(["picking", "packing"].toWarehouseTaskTypes == [WarehouseTaskType.picking, WarehouseTaskType.packing]);
   assert([WarehouseTaskType.picking, WarehouseTaskType.packing].toStrings == ["picking", "packing"]);
 }
 
@@ -216,7 +217,7 @@ enum WarehouseTaskStatus {
   cancelled,
 }
 WarehouseTaskStatus toWarehouseTaskStatus(string value) {
-  mixin(EnumSwitch("WarehouseTaskStatus", "WarehouseTaskStatus.created"));
+  mixin(EnumSwitch("WarehouseTaskStatus", "created"));
 }
 WarehouseTaskStatus[] toWarehouseTaskStatuses(string[] values) {
   return values.map!(v => v.toWarehouseTaskStatus).array;
@@ -257,10 +258,10 @@ enum WarehouseOrderStatus {
   cancelled,
 }
 WarehouseOrderStatus toWarehouseOrderStatus(string value) {
-  mixin(EnumSwitch("WarehouseOrderStatus", "WarehouseOrderStatus.created"));
+  mixin(EnumSwitch("WarehouseOrderStatus", "created"));
 }
 WarehouseOrderStatus[] toWarehouseOrderStatuses(string[] values) {
-  return values.map!(v => v.toWarehouseOrderStatus).array;
+  return values.map!toWarehouseOrderStatus.array;
 }
 string toString(WarehouseOrderStatus value) {
   return value.to!string;
@@ -285,7 +286,7 @@ unittest {
   assert(WarehouseOrderStatus.completed.toString == "completed"); 
   assert(WarehouseOrderStatus.cancelled.toString == "cancelled");
 
-  assert(["created", "inProgress"].toWarehouseOrderStatus == [WarehouseOrderStatus.created, WarehouseOrderStatus.inProgress]);
+  assert(["created", "inProgress"].toWarehouseOrderStatuses == [WarehouseOrderStatus.created, WarehouseOrderStatus.inProgress]);
   assert([WarehouseOrderStatus.created, WarehouseOrderStatus.inProgress].toStrings == ["created", "inProgress"]);
 }
 
@@ -296,10 +297,10 @@ enum CarrierStatus {
   suspended,
 }
 CarrierStatus toCarrierStatus(string value) {
-  mixin(EnumSwitch("CarrierStatus", "CarrierStatus.active"));
+  mixin(EnumSwitch("CarrierStatus", "active"));
 } 
 CarrierStatus[] toCarrierStatuses(string[] values) {
-  return values.map!(v => v.toCarrierStatus).array;
+  return values.map!toCarrierStatus.array;
 }
 string toString(CarrierStatus value) {
   return value.to!string;
@@ -320,7 +321,7 @@ unittest {
   assert(CarrierStatus.inactive.toString == "inactive");
   assert(CarrierStatus.suspended.toString == "suspended");
 
-  assert(["active", "inactive"].toCarrierStatus == [CarrierStatus.active, CarrierStatus.inactive]);
+  assert(["active", "inactive"].toCarrierStatuses == [CarrierStatus.active, CarrierStatus.inactive]);
   assert([CarrierStatus.active, CarrierStatus.inactive].toStrings == ["active", "inactive"]);
 }
 
@@ -333,10 +334,10 @@ enum TransportMode {
   multimodal,
 }
 TransportMode toTransportMode(string value) {
-  mixin(EnumSwitch("TransportMode", "TransportMode.road"));
+  mixin(EnumSwitch("TransportMode", "road"));
 }
-TransportMode[] toTransportMode(string[] values) {
-  return values.map!(v => v.toTransportMode).array;
+TransportMode[] toTransportModes(string[] values) {
+  return values.map!toTransportMode.array;
 }
 string toString(TransportMode value) {
   return value.to!string;
@@ -361,7 +362,7 @@ unittest {
   assert(TransportMode.air.toString == "air");
   assert(TransportMode.multimodal.toString == "multimodal");
 
-  assert(["road", "sea"].toTransportMode == [TransportMode.road, TransportMode.sea]);
+  assert(["road", "sea"].toTransportModes == [TransportMode.road, TransportMode.sea]);
   assert([TransportMode.road, TransportMode.sea].toStrings == ["road", "sea"]);
 }
 
@@ -374,10 +375,10 @@ enum HandlingUnitType {
   drum,
 }
 HandlingUnitType toHandlingUnitType(string value) {
-  mixin(EnumSwitch("HandlingUnitType", "HandlingUnitType.pallet"));
+  mixin(EnumSwitch("HandlingUnitType", "pallet"));
 }
-HandlingUnitType[] toHandlingUnitType(string[] values) {
-  return values.map!(v => v.toHandlingUnitType).array;
+HandlingUnitType[] toHandlingUnitTypes(string[] values) {
+  return values.map!toHandlingUnitType.array;
 }
 string toString(HandlingUnitType value) {
   return value.to!string;
@@ -402,6 +403,6 @@ unittest {
   assert(HandlingUnitType.container.toString == "container");
   assert(HandlingUnitType.drum.toString == "drum");
 
-  assert(["pallet", "crate"].toHandlingUnitType == [HandlingUnitType.pallet, HandlingUnitType.crate]);
+  assert(["pallet", "crate"].toHandlingUnitTypes == [HandlingUnitType.pallet, HandlingUnitType.crate]);
   assert([HandlingUnitType.pallet, HandlingUnitType.crate].toStrings == ["pallet", "crate"]);
 }

@@ -46,7 +46,7 @@ class ManageServiceBindingsUseCase {
     binding.privateIpAddress = ep.privateIpAddress;
     binding.port = ep.port;
     binding.status = BindingStatus.active;
-    binding.createdAt = currentTimeMs();
+    binding.createdAt = currentTimestamp();
 
     bindings.save(binding);
     return CommandResult(true, binding.id.value, "Service binding created");

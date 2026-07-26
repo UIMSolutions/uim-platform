@@ -53,7 +53,7 @@ public:
       item.volumeM3 = ir.volumeM3;
       d.items ~= item;
     }
-    d.createdAt = currentTimeMs();
+    d.createdAt = currentTimestamp();
     d.updatedAt = d.createdAt;
     _repo.save(d);
     return CommandResult(true, "", d.id.value);
@@ -89,7 +89,7 @@ public:
     updated.actualDate = req.actualDate > 0 ? req.actualDate : d.actualDate;
     updated.status = newStatus;
     updated.createdAt = d.createdAt;
-    updated.updatedAt = currentTimeMs();
+    updated.updatedAt = currentTimestamp();
     _repo.save(updated);
     return CommandResult(true, "", id.value);
   }

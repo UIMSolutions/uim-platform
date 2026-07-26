@@ -44,7 +44,7 @@ public:
     if (req.taskType.length > 0) {
       try { wt.taskType = req.taskType.to!WarehouseTaskType; } catch (Exception) {}
     }
-    wt.createdAt = currentTimeMs();
+    wt.createdAt = currentTimestamp();
     wt.updatedAt = wt.createdAt;
     _repo.save(wt);
     return CommandResult(true, "", wt.id.value);
@@ -70,10 +70,10 @@ public:
     updated.quantity = wt.quantity;
     updated.unit = wt.unit;
     updated.assignedTo = req.assignedTo.length > 0 ? req.assignedTo : wt.assignedTo;
-    updated.confirmedAt = req.confirmedAt > 0 ? req.confirmedAt : currentTimeMs();
+    updated.confirmedAt = req.confirmedAt > 0 ? req.confirmedAt : currentTimestamp();
     updated.status = WarehouseTaskStatus.confirmed;
     updated.createdAt = wt.createdAt;
-    updated.updatedAt = currentTimeMs();
+    updated.updatedAt = currentTimestamp();
     _repo.save(updated);
     return CommandResult(true, "", id.value);
   }

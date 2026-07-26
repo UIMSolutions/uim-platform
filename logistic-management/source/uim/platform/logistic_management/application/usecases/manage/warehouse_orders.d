@@ -34,7 +34,7 @@ public:
     wo.assignedTo = req.assignedTo;
     wo.dueAt = req.dueAt;
     wo.status = WarehouseOrderStatus.created;
-    wo.createdAt = currentTimeMs();
+    wo.createdAt = currentTimestamp();
     wo.updatedAt = wo.createdAt;
     _repo.save(wo);
     return CommandResult(true, "", wo.id.value);
@@ -55,7 +55,7 @@ public:
     updated.assignedTo = req.assignedTo.length > 0 ? req.assignedTo : wo.assignedTo;
     updated.dueAt = req.dueAt > 0 ? req.dueAt : wo.dueAt;
     updated.createdAt = wo.createdAt;
-    updated.updatedAt = currentTimeMs();
+    updated.updatedAt = currentTimestamp();
     if (req.status.length > 0) {
       try { updated.status = req.status.to!WarehouseOrderStatus; } catch (Exception) { updated.status = wo.status; }
     } else {
