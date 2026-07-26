@@ -62,6 +62,7 @@ struct Container {
   PasswordPolicyController passwordPolicyController;
   ApiClientController apiClientController;
   AuditController auditController;
+  IdentityDirectoryWebController webController;
   PwaController pwaController;
   HealthController healthController;
 }
@@ -95,6 +96,8 @@ Container buildContainer(SrvConfig config) {
   c.passwordPolicyController = new PasswordPolicyController(c.managePasswordPolicies);
   c.apiClientController = new ApiClientController(c.manageApiClients);
   c.auditController = new AuditController(c.queryAuditLog);
+  c.webController = new IdentityDirectoryWebController(c.manageApiClients, c.queryAuditLog,
+      c.manageUsers, c.manageGroups, c.manageSchemas, c.managePasswordPolicies);
   c.pwaController = new PwaController();
   c.healthController = new HealthController("identity-directory");
 

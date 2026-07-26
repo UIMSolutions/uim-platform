@@ -208,8 +208,8 @@ struct PwaDashboardView {
       "  });",
       "",
       "  copyButton.addEventListener('click', async () => {",
-      const preview = `${method.value} ${path.value}\\n` +
-        `X-Tenant-Id: ${tenantId.value || 'default'}\\n\\n${body.value}`;
+      "    const preview = `${method.value} ${path.value}\\n` +",
+      "      `X-Tenant-Id: ${tenantId.value || 'default'}\\n\\n${body.value}`;",
       "    await navigator.clipboard.writeText(preview);",
       "    output.textContent = 'Copied the current request sketch to the clipboard.';",
       "  });",
@@ -447,7 +447,7 @@ struct PwaDashboardView {
   private static string escapeHtml(string value) {
     string result;
     foreach (character; value) {
-      final switch (character) {
+      switch (character) {
       case '&': result ~= "&amp;"; break;
       case '<': result ~= "&lt;"; break;
       case '>': result ~= "&gt;"; break;

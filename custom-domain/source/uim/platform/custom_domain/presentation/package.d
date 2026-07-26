@@ -7,4 +7,5 @@ module uim.platform.custom_domain.presentation;
 
 public {
     import uim.platform.custom_domain.presentation.http;
+    import uim.platform.custom_domain.presentation.web;
 }

@@ -34,6 +34,7 @@ struct Container {
 
     // Controllers (driving adapters)
     CustomDomainController domainController;
+    CustomDomainWebController webController;
     PrivateKeyController keyController;
     CertificateController certController;
     TlsConfigurationController tlsController;
@@ -69,6 +70,9 @@ Container buildContainer(SrvConfig config) {
 
     // Presentation controllers
     c.domainController = new CustomDomainController(c.manageDomains);
+    c.webController = new CustomDomainWebController(c.manageDomains, c.manageTlsConfigs,
+        c.manageMappings, c.manageDnsRecords, c.manageKeys, c.manageCertificates,
+        c.manageTrustedCerts, c.manageDashboards);
     c.keyController = new PrivateKeyController(c.manageKeys);
     c.certController = new CertificateController(c.manageCertificates);
     c.tlsController = new TlsConfigurationController(c.manageTlsConfigs);

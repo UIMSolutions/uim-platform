@@ -20,6 +20,7 @@ version (unittest) {
 
         // Register all controller routes (driving adapters)
         container.domainController.registerRoutes(router);
+        container.webController.registerRoutes(router);
         container.keyController.registerRoutes(router);
         container.certController.registerRoutes(router);
         container.tlsController.registerRoutes(router);
@@ -47,6 +48,7 @@ version (unittest) {
         writefln("    CR+D   /api/v1/custom-domain/mappings                 ");
         writefln("    CR+D   /api/v1/custom-domain/trusted-certificates     ");
         writefln("    CRUD   /api/v1/custom-domain/dns-records              ");
+        writefln("    UI     /web/custom-domain                             ");
         writefln("    GET+R  /api/v1/custom-domain/dashboard                ");
         writefln("                                                          ");
         writefln("  Health:                                                 ");

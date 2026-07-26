@@ -33,6 +33,7 @@ version (unittest) {
     container.passwordPolicyController.registerRoutes(router);
     container.apiClientController.registerRoutes(router);
     container.auditController.registerRoutes(router);
+    container.webController.registerRoutes(router);
     container.pwaController.registerRoutes(router);
     container.healthController.registerRoutes(router);
 
@@ -56,6 +57,7 @@ version (unittest) {
     writefln("║    CRUD /api/v1/password-policies                    ║");
     writefln("║    CRUD /api/v1/api-clients                          ║");
     writefln("║     GET /api/v1/audit-logs                           ║");
+    writefln("║      UI /web/identity-directory                      ║");
     writefln("║      UI /pwa                                          ║");
     writefln("║     GET /api/v1/health                               ║");
     writefln("╚══════════════════════════════════════════════════════╝");

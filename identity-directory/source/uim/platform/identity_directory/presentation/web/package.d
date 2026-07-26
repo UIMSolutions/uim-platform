@@ -4,3 +4,8 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.identity_directory.presentation.web;
+
+public:
+    import uim.platform.identity_directory.presentation.web.views;
+    import uim.platform.identity_directory.presentation.web.models;
+    import uim.platform.identity_directory.presentation.web.controllers;

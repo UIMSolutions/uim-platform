@@ -4,3 +4,11 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.identity_directory.presentation.gui;
+
+public {
+	import uim.platform.identity_directory.presentation.gui.models;
+	import uim.platform.identity_directory.presentation.gui.controllers;
+	version (Have_gtkd) {
+		import uim.platform.identity_directory.presentation.gui.views;
+	}
+}
