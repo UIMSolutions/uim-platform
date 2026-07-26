@@ -33,9 +33,9 @@ struct RetentionRule {
             // .set("status", status.toString)
             .set("retentionPeriod", retentionPeriod)
             .set("periodUnit", periodUnit)
-            .set("dataCategoryIds", dataCategoryIds)
-            .set("applicationIds", applicationIds)
-            .set("purposeIds", purposeIds)
+            .set("dataCategoryIds", dataCategoryIds.toJson)
+            .set("applicationIds", applicationIds.toJson)
+            .set("purposeIds", purposeIds.toJson)
             .set("autoDelete", autoDelete)
             .set("notifyBeforeExpiry", notifyBeforeExpiry)
             .set("notifyDaysBefore", notifyDaysBefore);
