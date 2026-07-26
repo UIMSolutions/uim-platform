@@ -1,0 +1,12 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module uim.platform.identity_directory.presentation.pwa;
+
+public:
+  import uim.platform.identity_directory.presentation.pwa.controllers;
+  import uim.platform.identity_directory.presentation.pwa.models;
+  import uim.platform.identity_directory.presentation.pwa.views;
+

@@ -9,4 +9,5 @@ public:
     import uim.platform.identity_directory.presentation.cli;
     import uim.platform.identity_directory.presentation.gui;
     import uim.platform.identity_directory.presentation.http;
+    import uim.platform.identity_directory.presentation.pwa;
     import uim.platform.identity_directory.presentation.web;

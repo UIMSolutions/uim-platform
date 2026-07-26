@@ -62,6 +62,7 @@ struct Container {
   PasswordPolicyController passwordPolicyController;
   ApiClientController apiClientController;
   AuditController auditController;
+  PwaController pwaController;
   HealthController healthController;
 }
 /// Build the full dependency graph.
@@ -94,6 +95,7 @@ Container buildContainer(SrvConfig config) {
   c.passwordPolicyController = new PasswordPolicyController(c.managePasswordPolicies);
   c.apiClientController = new ApiClientController(c.manageApiClients);
   c.auditController = new AuditController(c.queryAuditLog);
+  c.pwaController = new PwaController();
   c.healthController = new HealthController("identity-directory");
 
   return c;
