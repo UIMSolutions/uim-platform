@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface RefreshTokenRepository : ITenantRepository!(RefreshToken, RefreshTokenId) {
+interface IRefreshTokenRepository : ITenantRepository!(RefreshToken, RefreshTokenId) {
 
     bool existsByTokenValue(TenantId tenantId, string tokenValue);
     RefreshToken findByTokenValue(TenantId tenantId, string tokenValue);

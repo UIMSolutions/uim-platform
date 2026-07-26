@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryAccessTokenRepository : TenantRepository!(AccessToken, AccessTokenId), AccessTokenRepository {
+class AccessTokenRepository : TenantRepository!(AccessToken, AccessTokenId), IAccessTokenRepository {
 
     bool existsByTokenValue(TenantId tenantId, string tokenValue) {
         foreach (e; findByTenant(tenantId))

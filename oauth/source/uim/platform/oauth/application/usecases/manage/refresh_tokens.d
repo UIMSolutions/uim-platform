@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageRefreshTokensUseCase { // TODO: UIMUseCase {
-    private RefreshTokenRepository repo;
+    private IRefreshTokenRepository repo;
 
-    this(RefreshTokenRepository repo) {
+    this(IRefreshTokenRepository repo) {
         this.repo = repo;
     }
 

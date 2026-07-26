@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageOAuthClientsUseCase { // TODO: UIMUseCase {
-    private OAuthClientRepository repo;
+    private IOAuthClientRepository repo;
 
-    this(OAuthClientRepository repo) {
+    this(IOAuthClientRepository repo) {
         this.repo = repo;
     }
 

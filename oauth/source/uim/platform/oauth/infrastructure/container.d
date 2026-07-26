@@ -34,9 +34,9 @@ Container buildContainer(SrvConfig config) {
     // Repositories
     auto oauthClientRepo = new MemoryOAuthClientRepository();
     auto oauthScopeRepo = new MemoryOAuthScopeRepository();
-    auto accessTokenRepo = new MemoryAccessTokenRepository();
+    auto accessTokenRepo = new AccessTokenRepository();
     auto refreshTokenRepo = new MemoryRefreshTokenRepository();
-    auto authorizationCodeRepo = new MemoryAuthorizationCodeRepository();
+    auto authorizationCodeRepo = new AuthorizationCodeRepository();
     auto brandingConfigRepo = new MemoryBrandingConfigRepository();
 
     // Use Cases

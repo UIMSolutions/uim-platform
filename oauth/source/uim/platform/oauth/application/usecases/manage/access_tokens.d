@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageAccessTokensUseCase { // TODO: UIMUseCase {
-    private AccessTokenRepository repo;
+    private IAccessTokenRepository repo;
 
-    this(AccessTokenRepository repo) {
+    this(IAccessTokenRepository repo) {
         this.repo = repo;
     }
 

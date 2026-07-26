@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageAuthorizationCodesUseCase { // TODO: UIMUseCase {
-    private AuthorizationCodeRepository repo;
+    private IAuthorizationCodeRepository repo;
 
-    this(AuthorizationCodeRepository repo) {
+    this(IAuthorizationCodeRepository repo) {
         this.repo = repo;
     }
 

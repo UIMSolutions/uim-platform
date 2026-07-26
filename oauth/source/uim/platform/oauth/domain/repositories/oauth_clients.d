@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface OAuthClientRepository : ITenantRepository!(OAuthClient, OAuthClientId) {
+interface IOAuthClientRepository : ITenantRepository!(OAuthClient, OAuthClientId) {
 
     bool existsByClient(TenantId tenantId, string clientId);
     OAuthClient findByClient(TenantId tenantId, string clientId);

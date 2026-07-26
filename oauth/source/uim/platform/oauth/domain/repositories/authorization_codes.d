@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface AuthorizationCodeRepository : ITenantRepository!(AuthorizationCode, AuthorizationCodeId) {
+interface IAuthorizationCodeRepository : ITenantRepository!(AuthorizationCode, AuthorizationCodeId) {
 
     bool existsByCode(TenantId tenantId, string code);
     AuthorizationCode findByCode(TenantId tenantId, string code);

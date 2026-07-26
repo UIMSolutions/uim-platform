@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface OAuthScopeRepository  : ITenantRepository!(OAuthScope, OAuthScopeId) {
+interface IOAuthScopeRepository  : ITenantRepository!(OAuthScope, OAuthScopeId) {
 
     size_t countByApplication(TenantId tenantId, string applicationId);
     OAuthScope[] findByApplication(TenantId tenantId, string applicationId);

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryAuthorizationCodeRepository : TenantRepository!(AuthorizationCode, AuthorizationCodeId), AuthorizationCodeRepository {
+class AuthorizationCodeRepository : TenantRepository!(AuthorizationCode, AuthorizationCodeId), IAuthorizationCodeRepository {
 
     // #region ByCode
     bool existsByCode(TenantId tenantId, string code) {

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface BrandingConfigRepository : ITenantRepository!(BrandingConfig, BrandingConfigId) {
+interface IBrandingConfigRepository : ITenantRepository!(BrandingConfig, BrandingConfigId) {
 
     bool existsByName(TenantId tenantId, string name);
     BrandingConfig findByName(TenantId tenantId, string name);

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface AccessTokenRepository : ITenantRepository!(AccessToken, AccessTokenId) {
+interface IAccessTokenRepository : ITenantRepository!(AccessToken, AccessTokenId) {
 
     bool existsByTokenValue(TenantId tenantId, string tokenValue);
     AccessToken findByTokenValue(TenantId tenantId, string tokenValue);

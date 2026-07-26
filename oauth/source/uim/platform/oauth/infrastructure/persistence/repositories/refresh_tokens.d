@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryRefreshTokenRepository : TenantRepository!(RefreshToken, RefreshTokenId), RefreshTokenRepository {
+class MemoryRefreshTokenRepository : TenantRepository!(RefreshToken, RefreshTokenId), IRefreshTokenRepository {
 
     // #region ByTokenValue
     bool existsByTokenValue(TenantId tenantId, string tokenValue) {

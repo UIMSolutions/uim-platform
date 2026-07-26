@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryBrandingConfigRepository : TenantRepository!(BrandingConfig, BrandingConfigId), BrandingConfigRepository {
+class MemoryBrandingConfigRepository : TenantRepository!(BrandingConfig, BrandingConfigId), IBrandingConfigRepository {
     
     bool existsByName(TenantId tenantId, string name) {
         return findByName(tenantId, name).id != BrandingConfigId.init;
