@@ -1,0 +1,12 @@
+FROM dlanguage/dmd:latest AS builder
+WORKDIR /workspace
+COPY . .
+RUN dub build --config=defaultRun
+
+FROM debian:bookworm-slim
+WORKDIR /app
+COPY --from=builder /workspace/build/uim-authorization-platform-service /app/uim-authorization-platform-service
+EXPOSE 8117
+ENV AUTHORIZATION_HOST=0.0.0.0
+ENV AUTHORIZATION_PORT=8117
+CMD ["/app/uim-authorization-platform-service"]
