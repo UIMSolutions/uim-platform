@@ -1,5 +1,8 @@
 module uim.platform.authorization.application.usecases.manage_policies;
 
+import std.algorithm : filter;
+import std.algorithm.searching : canFind;
+import std.array : array;
 import std.uuid : randomUUID;
 import uim.platform.authorization;
 
@@ -84,5 +87,51 @@ class ManagePoliciesUseCase {
 
   AuthorizationPolicy getPolicy(string tenantId, string policyId) {
     return repo.findPolicyById(tenantId, policyId);
+  }
+
+  AuthorizationPolicy[] seedBasePolicies(string tenantId, string applicationId) {
+    auto app = repo.findApplicationById(tenantId, applicationId);
+    if (app.id.isEmpty) {
+      return [];
+    }
+
+    auto existingBase = repo
+      .listBasePolicies(tenantId)
+      .filter!(p => p.applicationId == applicationId)
+      .array;
+
+    static struct BaseTemplate {
+      string name;
+      string description;
+      string resource;
+      string action;
+    }
+
+    auto templates = [
+      BaseTemplate("admin", "Administrative full access", "*", "*"),
+      BaseTemplate("reader", "Read-only access", "*", "Read"),
+      BaseTemplate("support", "Support read access for incident-like resources", "Incident", "Read")
+    ];
+
+    foreach (t; templates) {
+      if (existingBase.map!(p => p.name).array.canFind(t.name)) {
+        continue;
+      }
+
+      CreatePolicyRequest req;
+      req.tenantId = tenantId;
+      req.applicationId = applicationId;
+      req.name = t.name;
+      req.description = t.description;
+      req.resource = t.resource;
+      req.action = t.action;
+      req.isBasePolicy = true;
+      createPolicy(req);
+    }
+
+    return repo
+      .listBasePolicies(tenantId)
+      .filter!(p => p.applicationId == applicationId)
+      .array;
   }
 }

@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: authorization-config
+data:
+  AUTHORIZATION_HOST: "0.0.0.0"
+  AUTHORIZATION_PORT: "8117"
+  AUTHORIZATION_STORAGE_BACKEND: "MEMORY"
+  AUTHORIZATION_FILE_PATH: "/data/authorization"
+  AUTHORIZATION_MONGO_URI: "mongodb://mongodb:27017"
+  AUTHORIZATION_MONGO_DB: "uim_authorization"
+  AUTHORIZATION_MONGO_COLLECTION: "tenant_state"
+  AUTHORIZATION_SEED_BASE_POLICIES: "true"
+  AUTHORIZATION_SEED_TENANT_ID: "default"
+  AUTHORIZATION_SEED_APP_NAME: "authorization-management"
+  AUTHORIZATION_SEED_ORGANIZATION_ID: "global"

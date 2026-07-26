@@ -12,9 +12,7 @@ sourcePaths "source"
 importPaths "source"
 
 dependency "uim-platform:service" path=".."
-dependency "vibe-d" version="~>0.10.2"
-
-subConfiguration "vibe-d" "core"
+dependency "vibe-d" version="~>0.10.3"
 
 buildRequirements "allowWarnings" "silenceDeprecations"
 buildOptions "ignoreDeprecations" "debugInfo"

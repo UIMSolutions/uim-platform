@@ -1,0 +1,455 @@
+openapi: 3.0.3
+info:
+  title: Authorization Management Service API
+  version: 1.0.0
+  description: |
+    AMS-compatible authorization service for application, policy, assignment, and evaluation workflows.
+servers:
+- url: http://localhost:8117
+paths:
+  /api/v1/health:
+    get:
+      summary: Service health
+      responses:
+        '200':
+          description: Health response
+
+  /api/v1/applications:
+    get:
+      summary: List applications
+      parameters:
+      - $ref: '#/components/parameters/TenantHeader'
+      responses:
+        '200':
+          description: Applications
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListApplicationsResponse'
+    post:
+      summary: Create application
+      parameters:
+      - $ref: '#/components/parameters/TenantHeader'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateApplicationRequest'
+      responses:
+        '201':
+          description: Created
+
+  /api/v1/applications/{id}:
+    get:
+      summary: Get application
+      parameters:
+      - $ref: '#/components/parameters/TenantHeader'
+      - $ref: '#/components/parameters/IdPath'
+      responses:
+        '200':
+          description: Application
+    put:
+      summary: Update application
+      parameters:
+      - $ref: '#/components/parameters/TenantHeader'
+      - $ref: '#/components/parameters/IdPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateApplicationRequest'
+      responses:
+        '200':
+          description: Updated
+    delete:
+      summary: Delete application
+      parameters:
+      - $ref: '#/components/parameters/TenantHeader'
+      - $ref: '#/components/parameters/IdPath'
+      responses:
+        '200':
+          description: Deleted
+
+  /api/v1/application-apis:
+    get:
+      summary: List application APIs
+      parameters:
+      - $ref: '#/components/parameters/TenantHeader'
+      responses:
+        '200':
+          description: APIs
+    post:
+      summary: Create application API
+      parameters:
+      - $ref: '#/components/parameters/TenantHeader'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateApplicationApiRequest'
+      responses:
+        '201':
+          description: Created
+
+  /api/v1/application-apis/{id}:
+    get:
+      summary: Get application API
+      parameters:
+      - $ref: '#/components/parameters/TenantHeader'
+      - $ref: '#/components/parameters/IdPath'
+      responses:
+        '200':
+          description: Application API
+    put:
+      summary: Update application API
+      parameters:
+      - $ref: '#/components/parameters/TenantHeader'
+      - $ref: '#/components/parameters/IdPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateApplicationApiRequest'
+      responses:
+        '200':
+          description: Updated
+    delete:
+      summary: Delete application API
+      parameters:
+      - $ref: '#/components/parameters/TenantHeader'
+      - $ref: '#/components/parameters/IdPath'
+      responses:
+        '200':
+          description: Deleted
+
+  /api/v1/policies:
+    get:
+      summary: List policies
+      parameters:
+      - $ref: '#/components/parameters/TenantHeader'
+      responses:
+        '200':
+          description: Policies
+    post:
+      summary: Create policy
+      parameters:
+      - $ref: '#/components/parameters/TenantHeader'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePolicyRequest'
+      responses:
+        '201':
+          description: Created
+
+  /api/v1/policies/base:
+    get:
+      summary: List base policies
+      parameters:
+      - $ref: '#/components/parameters/TenantHeader'
+      responses:
+        '200':
+          description: Base policies
+
+  /api/v1/policies/seed-base:
+    post:
+      summary: Seed base policies
+      description: |
+        Creates default base policies (admin, reader, support) for an application in the given tenant.
+        If applicationId is omitted, applicationName is used to locate or create an application.
+      parameters:
+      - $ref: '#/components/parameters/TenantHeader'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SeedBasePoliciesRequest'
+      responses:
+        '201':
+          description: Seeded
+
+  /api/v1/policies/{id}:
+    get:
+      summary: Get policy
+      parameters:
+      - $ref: '#/components/parameters/TenantHeader'
+      - $ref: '#/components/parameters/IdPath'
+      responses:
+        '200':
+          description: Policy
+    put:
+      summary: Update policy
+      parameters:
+      - $ref: '#/components/parameters/TenantHeader'
+      - $ref: '#/components/parameters/IdPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePolicyRequest'
+      responses:
+        '200':
+          description: Updated
+    delete:
+      summary: Delete policy
+      parameters:
+      - $ref: '#/components/parameters/TenantHeader'
+      - $ref: '#/components/parameters/IdPath'
+      responses:
+        '200':
+          description: Deleted
+
+  /api/v1/policy-assignments:
+    get:
+      summary: List policy assignments
+      parameters:
+      - $ref: '#/components/parameters/TenantHeader'
+      responses:
+        '200':
+          description: Assignments
+    post:
+      summary: Create policy assignment
+      parameters:
+      - $ref: '#/components/parameters/TenantHeader'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePolicyAssignmentRequest'
+      responses:
+        '201':
+          description: Created
+
+  /api/v1/policy-assignments/{id}:
+    get:
+      summary: Get policy assignment
+      parameters:
+      - $ref: '#/components/parameters/TenantHeader'
+      - $ref: '#/components/parameters/IdPath'
+      responses:
+        '200':
+          description: Assignment
+    delete:
+      summary: Delete policy assignment
+      parameters:
+      - $ref: '#/components/parameters/TenantHeader'
+      - $ref: '#/components/parameters/IdPath'
+      responses:
+        '200':
+          description: Deleted
+
+  /api/v1/authorization/evaluate:
+    post:
+      summary: Evaluate authorization
+      parameters:
+      - $ref: '#/components/parameters/TenantHeader'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EvaluateAuthorizationRequest'
+      responses:
+        '200':
+          description: Decision
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthorizationDecision'
+
+components:
+  parameters:
+    TenantHeader:
+      in: header
+      name: X-Tenant-Id
+      required: true
+      schema:
+        type: string
+    IdPath:
+      in: path
+      name: id
+      required: true
+      schema:
+        type: string
+
+  schemas:
+    CreateApplicationRequest:
+      type: object
+      required: [ name ]
+      properties:
+        name:
+          type: string
+        organizationId:
+          type: string
+        description:
+          type: string
+
+    UpdateApplicationRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        organizationId:
+          type: string
+        description:
+          type: string
+
+    CreateApplicationApiRequest:
+      type: object
+      required: [ applicationId, name, endpoint ]
+      properties:
+        applicationId:
+          type: string
+        name:
+          type: string
+        endpoint:
+          type: string
+        operations:
+          type: array
+          items:
+            type: string
+
+    UpdateApplicationApiRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        endpoint:
+          type: string
+        operations:
+          type: array
+          items:
+            type: string
+
+    PolicyCondition:
+      type: object
+      required: [ attribute, op, value ]
+      properties:
+        attribute:
+          type: string
+        op:
+          type: string
+        value:
+          type: string
+
+    CreatePolicyRequest:
+      type: object
+      required: [ applicationId, name, resource, action ]
+      properties:
+        applicationId:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        resource:
+          type: string
+        action:
+          type: string
+        isBasePolicy:
+          type: boolean
+        conditions:
+          type: array
+          items:
+            $ref: '#/components/schemas/PolicyCondition'
+
+    UpdatePolicyRequest:
+      type: object
+      properties:
+        description:
+          type: string
+        resource:
+          type: string
+        action:
+          type: string
+        conditions:
+          type: array
+          items:
+            $ref: '#/components/schemas/PolicyCondition'
+
+    SeedBasePoliciesRequest:
+      type: object
+      properties:
+        applicationId:
+          type: string
+        applicationName:
+          type: string
+        organizationId:
+          type: string
+
+    CreatePolicyAssignmentRequest:
+      type: object
+      required: [ policyId, principalType, principalId ]
+      properties:
+        policyId:
+          type: string
+        principalType:
+          type: string
+          enum: [ user, group ]
+        principalId:
+          type: string
+
+    EvaluateAuthorizationRequest:
+      type: object
+      required: [ principalId, applicationId, resource, action ]
+      properties:
+        principalId:
+          type: string
+        applicationId:
+          type: string
+        resource:
+          type: string
+        action:
+          type: string
+        attributes:
+          type: object
+          additionalProperties:
+            type: string
+
+    AuthorizationDecision:
+      type: object
+      properties:
+        tenantId:
+          type: string
+        principalId:
+          type: string
+        applicationId:
+          type: string
+        resource:
+          type: string
+        action:
+          type: string
+        allowed:
+          type: boolean
+        reason:
+          type: string
+        matchedPolicyIds:
+          type: array
+          items:
+            type: string
+
+    ListApplicationsResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        code:
+          type: integer
+        data:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                type: object
+            totalCount:
+              type: integer

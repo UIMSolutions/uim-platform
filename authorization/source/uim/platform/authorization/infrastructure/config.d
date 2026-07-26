@@ -2,6 +2,7 @@ module uim.platform.authorization.infrastructure.config;
 
 import std.conv : ConvException, to;
 import std.process : environment;
+import std.string : toLower;
 import uim.platform.authorization;
 
 mixin(ShowModule!());
@@ -17,6 +18,17 @@ struct SrvConfig {
   string mongoUri = "mongodb://localhost:27017";
   string mongoDb = "uim_authorization";
   string mongoCollection = "tenant_state";
+
+  bool seedBasePoliciesOnStartup = true;
+  string seedTenantId = "default";
+  string seedApplicationName = "authorization-management";
+  string seedApplicationOrganizationId = "global";
+}
+
+private bool parseBoolEnv(string value, bool fallback) {
+  if (value.length == 0) return fallback;
+  auto v = toLower(value);
+  return v == "1" || v == "true" || v == "yes" || v == "on";
 }
 
 SrvConfig loadConfig() {
@@ -48,6 +60,20 @@ SrvConfig loadConfig() {
 
   auto mongoCollection = environment.get("AUTHORIZATION_MONGO_COLLECTION", "");
   if (mongoCollection.length) cfg.mongoCollection = mongoCollection;
+
+  cfg.seedBasePoliciesOnStartup = parseBoolEnv(
+    environment.get("AUTHORIZATION_SEED_BASE_POLICIES", ""),
+    cfg.seedBasePoliciesOnStartup
+  );
+
+  auto seedTenant = environment.get("AUTHORIZATION_SEED_TENANT_ID", "");
+  if (seedTenant.length) cfg.seedTenantId = seedTenant;
+
+  auto seedAppName = environment.get("AUTHORIZATION_SEED_APP_NAME", "");
+  if (seedAppName.length) cfg.seedApplicationName = seedAppName;
+
+  auto seedOrg = environment.get("AUTHORIZATION_SEED_ORGANIZATION_ID", "");
+  if (seedOrg.length) cfg.seedApplicationOrganizationId = seedOrg;
 
   return cfg;
 }

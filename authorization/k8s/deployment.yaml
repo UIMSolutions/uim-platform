@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: authorization
+  labels:
+    app: authorization
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: authorization
+  template:
+    metadata:
+      labels:
+        app: authorization
+    spec:
+      containers:
+      - name: authorization
+        image: uim-authorization:latest
+        imagePullPolicy: IfNotPresent
+        envFrom:
+        - configMapRef:
+            name: authorization-config
+        ports:
+        - containerPort: 8117
+        readinessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8117
+          initialDelaySeconds: 3
+          periodSeconds: 5
+        livenessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8117
+          initialDelaySeconds: 8
+          periodSeconds: 10

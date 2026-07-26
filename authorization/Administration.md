@@ -9,6 +9,10 @@
 - AUTHORIZATION_MONGO_URI
 - AUTHORIZATION_MONGO_DB
 - AUTHORIZATION_MONGO_COLLECTION
+- AUTHORIZATION_SEED_BASE_POLICIES
+- AUTHORIZATION_SEED_TENANT_ID
+- AUTHORIZATION_SEED_APP_NAME
+- AUTHORIZATION_SEED_ORGANIZATION_ID
 
 ## Backend Selection
 
@@ -17,6 +21,19 @@ Set AUTHORIZATION_STORAGE_BACKEND:
 - MEMORY
 - FILE
 - MONGODB
+
+## Base Policy Bootstrap
+
+Startup bootstrap:
+
+- Enable with AUTHORIZATION_SEED_BASE_POLICIES=true
+- Tenant is selected by AUTHORIZATION_SEED_TENANT_ID
+- Application name is selected by AUTHORIZATION_SEED_APP_NAME
+
+Runtime seeding endpoint:
+
+- POST /api/v1/policies/seed-base
+- If applicationId is omitted, applicationName is used (or created automatically)
 
 ## Docker and Podman
 

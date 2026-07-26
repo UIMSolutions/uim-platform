@@ -33,6 +33,7 @@ version (unittest) {
     writefln("    POST/GET/PUT/DELETE  /api/v1/applications");
     writefln("    POST/GET/PUT/DELETE  /api/v1/application-apis");
     writefln("    POST/GET/PUT/DELETE  /api/v1/policies");
+    writefln("    POST                 /api/v1/policies/seed-base");
     writefln("    POST/GET/DELETE      /api/v1/policy-assignments");
     writefln("    POST                 /api/v1/authorization/evaluate");
     writefln("==============================================================");

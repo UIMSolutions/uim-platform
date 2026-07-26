@@ -42,6 +42,7 @@ All API calls require X-Tenant-Id header.
 - DELETE /api/v1/application-apis/{id}
 
 - POST /api/v1/policies
+- POST /api/v1/policies/seed-base
 - GET /api/v1/policies
 - GET /api/v1/policies/base
 - GET /api/v1/policies/{id}
@@ -74,6 +75,14 @@ Environment variables:
 - AUTHORIZATION_MONGO_URI (default mongodb://localhost:27017)
 - AUTHORIZATION_MONGO_DB (default uim_authorization)
 - AUTHORIZATION_MONGO_COLLECTION (default tenant_state)
+- AUTHORIZATION_SEED_BASE_POLICIES (default true)
+- AUTHORIZATION_SEED_TENANT_ID (default default)
+- AUTHORIZATION_SEED_APP_NAME (default authorization-management)
+- AUTHORIZATION_SEED_ORGANIZATION_ID (default global)
+
+## OpenAPI
+
+- OpenAPI contract: openapi.yaml
 
 ## Build and Run
 

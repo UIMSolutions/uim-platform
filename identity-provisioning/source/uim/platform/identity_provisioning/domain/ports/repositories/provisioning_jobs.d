@@ -14,13 +14,13 @@ mixin(ShowModule!());
 @safe:
 interface ProvisioningJobRepository : ITenantRepository!(ProvisioningJob, ProvisioningJobId) {
 
-  size_t countBySource(TenantId tenantId, TenantSourceSystemId sourceSystemId);
-  ProvisioningJob[] findBySource(TenantId tenantId, TenantSourceSystemId sourceSystemId);
-  void removeBySource(TenantId tenantId, TenantSourceSystemId sourceSystemId);
+  size_t countBySource(TenantId tenantId, SourceSystemId sourceSystemId);
+  ProvisioningJob[] findBySource(TenantId tenantId, SourceSystemId sourceSystemId);
+  void removeBySource(TenantId tenantId, SourceSystemId sourceSystemId);
 
-  size_t countByTarget(TenantId tenantId, TenantTargetSystemId targetSystemId);
-  ProvisioningJob[] findByTarget(TenantId tenantId, TenantTargetSystemId targetSystemId);
-  void removeByTarget(TenantId tenantId, TenantTargetSystemId targetSystemId);
+  size_t countByTarget(TenantId tenantId, TargetSystemId targetSystemId);
+  ProvisioningJob[] findByTarget(TenantId tenantId, TargetSystemId targetSystemId);
+  void removeByTarget(TenantId tenantId, TargetSystemId targetSystemId);
 
   size_t countByStatus(TenantId tenantId, JobStatus status);
   ProvisioningJob[] findByStatus(TenantId tenantId, JobStatus status);

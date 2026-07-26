@@ -17,7 +17,7 @@ class MongoAuthorizationRepository : MemoryAuthorizationRepository {
 
   this(string connectionUri, string dbName, string collectionName) @trusted {
     try {
-      auto db = connectMongoDB(connectionUri)[dbName];
+      auto db = connectMongoDB(connectionUri).getDatabase(dbName);
       this.collection = db[collectionName];
       this.isConnected = true;
     } catch (Exception ex) {

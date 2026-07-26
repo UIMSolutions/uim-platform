@@ -14,9 +14,9 @@ mixin(ShowModule!());
 @safe:  
 interface TransformationRepository : ITenantRepository!(Transformation, TransformationId) {
 
-  size_t countBySystem(TenantId tenantId, string systemtenantId);
-  Transformation[] findBySystem(TenantId tenantId, string systemtenantId);
-  void removeBySystem(TenantId tenantId, string systemtenantId);
+  size_t countBySystem(TenantId tenantId, string systemId);
+  Transformation[] findBySystem(TenantId tenantId, string systemId);
+  void removeBySystem(TenantId tenantId, string systemId);
 
   size_t countBySystemRole(TenantId tenantId, SystemRole role);
   Transformation[] findBySystemRole(TenantId tenantId, SystemRole role);
