@@ -147,3 +147,8 @@ class AuditLogRepository : TenantRepository!(AuditLogEntry, AuditLogId), IAuditL
       .each!(e => remove(e));
   }
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new AuditLogRepository()));
+}

@@ -155,3 +155,19 @@ class MonitorProvisioningUseCase { // TODO: UIMUseCase {
     return s;
   }
 }
+
+///
+unittest {
+    auto iProvisioningJobRepository = new IProvisioningJobRepository();
+    auto iProvisioningLogRepository = new IProvisioningLogRepository();
+    auto iProvisionedEntityRepository = new IProvisionedEntityRepository();
+    auto iSourceSystemRepository = new ISourceSystemRepository();
+    auto iTargetSystemRepository = new ITargetSystemRepository();
+    auto usecase = new MonitorProvisioningUseCase(iProvisioningJobRepository, iProvisioningLogRepository, iProvisionedEntityRepository, iSourceSystemRepository, iTargetSystemRepository);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listJobSummaries(tenantId);
+    assert(items !is null);
+
+}

@@ -62,3 +62,8 @@ class ProxySystemRepository : TenantRepository!(ProxySystem, ProxySystemId), IPr
     findByTarget(tenantId, targetId).each!(e => remove(e));
   }
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new ProxySystemRepository()));
+}

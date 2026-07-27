@@ -191,3 +191,18 @@ class MonitorTrainingUseCase { // TODO: UIMUseCase {
     return s;
   }
 }
+
+///
+unittest {
+    auto iTrainingJobRepository = new ITrainingJobRepository();
+    auto iDeploymentRepository = new IDeploymentRepository();
+    auto iModelConfigRepository = new IModelConfigRepository();
+    auto iInferenceRequestRepository = new IInferenceRequestRepository();
+    auto usecase = new MonitorTrainingUseCase(iTrainingJobRepository, iDeploymentRepository, iModelConfigRepository, iInferenceRequestRepository);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listTrainingJobs(tenantId);
+    assert(items !is null);
+
+}

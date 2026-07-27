@@ -124,3 +124,16 @@ class ManageFoldersUseCase { // TODO: UIMUseCase {
     return CommandResult(true, folder.id.value, "");
   }
 }
+
+///
+unittest {
+    auto iFolderRepository = new IFolderRepository();
+    auto iRepositoryRepository = new IRepositoryRepository();
+    auto usecase = new ManageFoldersUseCase(iFolderRepository, iRepositoryRepository);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listFolders(tenantId);
+    assert(items !is null);
+
+}

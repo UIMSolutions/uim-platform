@@ -83,3 +83,8 @@ class AccessTokenRepository : TenantRepository!(AccessToken, AccessTokenId), IAc
     }
 
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new AccessTokenRepository()));
+}

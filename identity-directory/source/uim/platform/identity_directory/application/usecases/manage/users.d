@@ -243,3 +243,18 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
     return CommandResult(true, id.value, "", 200);
   }
 }
+
+///
+unittest {
+    auto userRepository = new UserRepository();
+    auto passwordService = new PasswordService();
+    auto passwordPolicyRepository = new PasswordPolicyRepository();
+    auto auditRepository = new AuditRepository();
+    auto usecase = new ManageUsersUseCase(userRepository, passwordService, passwordPolicyRepository, auditRepository);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listUsers(tenantId);
+    assert(items !is null);
+
+}

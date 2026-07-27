@@ -52,3 +52,8 @@ class ProvisioningJobRepository : TenantRepository!(ProvisioningJob, Provisionin
   }
 
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new ProvisioningJobRepository()));
+}

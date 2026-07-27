@@ -163,3 +163,16 @@ class ManageMasterDataObjectsUseCase { // TODO: UIMUseCase {
     changeLogRepo.save(entry);
   }
 }
+
+///
+unittest {
+    auto masterDataObjectRepository = new MasterDataObjectRepository();
+    auto changeLogRepository = new ChangeLogRepository();
+    auto usecase = new ManageMasterDataObjectsUseCase(masterDataObjectRepository, changeLogRepository);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listObjects(tenantId);
+    assert(items !is null);
+
+}

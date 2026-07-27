@@ -135,3 +135,12 @@ class ManageKeyringsUseCase { // TODO: UIMUseCase {
   }
 
 }
+
+///
+unittest {
+    auto credentialRepository = new CredentialRepository();
+    auto keyringVersionRepository = new KeyringVersionRepository();
+    auto usecase = new ManageKeyringsUseCase(credentialRepository, keyringVersionRepository);
+    auto tenantId = TenantId("test-tenant");
+
+}

@@ -152,3 +152,17 @@ class ManageRoutesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, domain.id.value, "");
   }
 }
+
+///
+unittest {
+    auto iRouteRepository = new IRouteRepository();
+    auto iDomainRepository = new IDomainRepository();
+    auto routeResolver = new RouteResolver();
+    auto usecase = new ManageRoutesUseCase(iRouteRepository, iDomainRepository, routeResolver);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listRoutes(tenantId);
+    assert(items !is null);
+
+}

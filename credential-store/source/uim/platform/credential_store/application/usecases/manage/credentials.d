@@ -150,3 +150,11 @@ class ManageCredentialsUseCase { // TODO: UIMUseCase {
   }
 
 }
+
+///
+unittest {
+    auto credentialRepository = new CredentialRepository();
+    auto usecase = new ManageCredentialsUseCase(credentialRepository);
+    auto tenantId = TenantId("test-tenant");
+
+}

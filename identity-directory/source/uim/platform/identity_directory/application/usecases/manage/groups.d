@@ -226,3 +226,13 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, id.value, "Group deleted successfully.");
   }
 }
+
+///
+unittest {
+    auto groupRepository = new GroupRepository();
+    auto userRepository = new UserRepository();
+    auto auditRepository = new AuditRepository();
+    auto usecase = new ManageGroupsUseCase(groupRepository, userRepository, auditRepository);
+    auto tenantId = TenantId("test-tenant");
+
+}

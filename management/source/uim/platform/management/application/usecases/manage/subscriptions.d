@@ -109,3 +109,13 @@ class ManageSubscriptionsUseCase { // TODO: UIMUseCase {
     return repo.findBySubaccount(tenantId, subId);
   }
 }
+
+///
+unittest {
+    auto subscriptionRepository = new SubscriptionRepository();
+    auto environmentEventRepository = new EnvironmentEventRepository();
+    auto usecase = new ManageSubscriptionsUseCase(subscriptionRepository, environmentEventRepository);
+    auto tenantId = TenantId("test-tenant");
+
+    assert(usecase !is null);
+}

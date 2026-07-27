@@ -53,3 +53,16 @@ class DelegatedAuthUseCase { // TODO: UIMUseCase {
     return idpRepo.findByTenant(tenantId);
   }
 }
+
+///
+unittest {
+    auto idpConfigRepository = new IdpConfigRepository();
+    auto userRepository = new UserRepository();
+    auto usecase = new DelegatedAuthUseCase(idpConfigRepository, userRepository);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listIdps(tenantId);
+    assert(items !is null);
+
+}

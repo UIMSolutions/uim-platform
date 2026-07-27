@@ -186,3 +186,16 @@ class ManageAppsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, app.id.value, "");
   }
 }
+
+///
+unittest {
+    auto iAppRepository = new IAppRepository();
+    auto appLifecycleManager = new AppLifecycleManager();
+    auto usecase = new ManageAppsUseCase(iAppRepository, appLifecycleManager);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listApps(tenantId);
+    assert(items !is null);
+
+}

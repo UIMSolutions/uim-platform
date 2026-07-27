@@ -78,3 +78,13 @@ class WriteSecurityEventUseCase { // TODO: UIMUseCase {
       ~ " outcome=" ~ req.outcome.to!string;
   }
 }
+
+///
+unittest {
+    auto iAuditLogRepository = new IAuditLogRepository();
+    auto iSecurityEventRepository = new ISecurityEventRepository();
+    auto usecase = new WriteSecurityEventUseCase(iAuditLogRepository, iSecurityEventRepository);
+    auto tenantId = TenantId("test-tenant");
+
+    assert(usecase !is null);
+}

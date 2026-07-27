@@ -55,3 +55,8 @@ class ProvisioningLogRepository : TenantRepository!(ProvisioningLog, Provisionin
     return filterByStatus(findByJob(tenantId, jobId), status).length;
   }
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new ProvisioningLogRepository()));
+}

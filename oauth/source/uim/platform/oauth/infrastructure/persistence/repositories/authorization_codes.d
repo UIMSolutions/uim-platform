@@ -62,3 +62,8 @@ class AuthorizationCodeRepository : TenantRepository!(AuthorizationCode, Authori
     // #endregion ByStatus
 
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new AuthorizationCodeRepository()));
+}

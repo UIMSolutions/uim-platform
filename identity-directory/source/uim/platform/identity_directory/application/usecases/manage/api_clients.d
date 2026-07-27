@@ -99,3 +99,13 @@ class ManageApiClientsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, client.id.value, "API client revoked successfully.");
   }
 }
+
+///
+unittest {
+    auto apiClientRepository = new ApiClientRepository();
+    auto auditRepository = new AuditRepository();
+    auto usecase = new ManageApiClientsUseCase(apiClientRepository, auditRepository);
+    auto tenantId = TenantId("test-tenant");
+
+    assert(usecase !is null);
+}

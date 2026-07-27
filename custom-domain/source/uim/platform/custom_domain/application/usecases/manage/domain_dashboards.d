@@ -88,3 +88,15 @@ class ManageDomainDashboardsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, dashboard.id.value, "");
     }
 }
+
+///
+unittest {
+    auto domainDashboardRepository = new DomainDashboardRepository();
+    auto customDomainRepository = new CustomDomainRepository();
+    auto certificateRepository = new CertificateRepository();
+    auto domainMappingRepository = new DomainMappingRepository();
+    auto usecase = new ManageDomainDashboardsUseCase(domainDashboardRepository, customDomainRepository, certificateRepository, domainMappingRepository);
+    auto tenantId = TenantId("test-tenant");
+
+    assert(usecase !is null);
+}

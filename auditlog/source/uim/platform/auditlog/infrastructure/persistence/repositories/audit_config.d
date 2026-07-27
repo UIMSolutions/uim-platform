@@ -27,3 +27,7 @@ class AuditConfigRepository : TenantRepository!(AuditConfig, AuditConfigId), IAu
   }
 }
 
+///
+unittest {
+    assert(tenantRepositoryTest(new AuditConfigRepository()));
+}

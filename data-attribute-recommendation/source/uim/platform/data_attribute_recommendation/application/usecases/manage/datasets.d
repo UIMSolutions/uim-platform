@@ -129,3 +129,16 @@ class ManageDatasetsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, existing.id.value, "");
   }
 }
+
+///
+unittest {
+    auto iDatasetRepository = new IDatasetRepository();
+    auto iDataRecordRepository = new IDataRecordRepository();
+    auto usecase = new ManageDatasetsUseCase(iDatasetRepository, iDataRecordRepository);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listDatasets(tenantId);
+    assert(items !is null);
+
+}

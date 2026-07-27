@@ -68,3 +68,13 @@ class WriteAuditLogUseCase { // TODO: UIMUseCase {
     return CommandResult(true, entry.id.value, "");
   }
 }
+
+///
+unittest {
+    auto iAuditLogRepository = new IAuditLogRepository();
+    auto iAuditConfigRepository = new IAuditConfigRepository();
+    auto usecase = new WriteAuditLogUseCase(iAuditLogRepository, iAuditConfigRepository);
+    auto tenantId = TenantId("test-tenant");
+
+    assert(usecase !is null);
+}

@@ -75,3 +75,17 @@ class ProcessInferenceUseCase { // TODO: UIMUseCase {
     return requestRepo.findByDeployment(tenantId, deploymentId);
   }
 }
+
+///
+unittest {
+    auto iInferenceRequestRepository = new IInferenceRequestRepository();
+    auto iInferenceResultRepository = new IInferenceResultRepository();
+    auto inferenceEngine = new InferenceEngine();
+    auto usecase = new ProcessInferenceUseCase(iInferenceRequestRepository, iInferenceResultRepository, inferenceEngine);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listInferenceRequests(tenantId);
+    assert(items !is null);
+
+}

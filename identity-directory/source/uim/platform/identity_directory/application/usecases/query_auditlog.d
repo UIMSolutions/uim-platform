@@ -46,3 +46,15 @@ class QueryAuditLogUseCase { // TODO: UIMUseCase {
     return auditRepo.findByTimeRange(tenantId, from, to); // , offset, limit);
   }
 }
+
+///
+unittest {
+    auto auditRepository = new AuditRepository();
+    auto usecase = new QueryAuditLogUseCase(auditRepository);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listEvents(tenantId);
+    assert(items !is null);
+
+}

@@ -76,3 +76,11 @@ class ManageApplicationsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, app.id.value, "Application deleted successfully.");
   }
 }
+
+///
+unittest {
+    auto applicationRepository = new ApplicationRepository();
+    auto usecase = new ManageApplicationsUseCase(applicationRepository);
+    auto tenantId = TenantId("test-tenant");
+
+}

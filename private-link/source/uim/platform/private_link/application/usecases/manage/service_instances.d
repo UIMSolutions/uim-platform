@@ -101,3 +101,16 @@ class ManageServiceInstancesUseCase {
     return s == "premium" ? ServicePlan.premium : ServicePlan.standard;
   }
 }
+
+///
+unittest {
+    auto serviceInstanceRepository = new ServiceInstanceRepository();
+    auto privateEndpointRepository = new PrivateEndpointRepository();
+    auto usecase = new ManageServiceInstancesUseCase(serviceInstanceRepository, privateEndpointRepository);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listInstances(tenantId);
+    assert(items !is null);
+
+}

@@ -77,3 +77,16 @@ class ManageSharesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, share.id.value, "");
   }
 }
+
+///
+unittest {
+    auto iShareRepository = new IShareRepository();
+    auto iDocumentRepository = new IDocumentRepository();
+    auto usecase = new ManageSharesUseCase(iShareRepository, iDocumentRepository);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listShares(tenantId);
+    assert(items !is null);
+
+}

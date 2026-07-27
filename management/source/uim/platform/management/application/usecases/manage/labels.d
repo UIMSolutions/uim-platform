@@ -77,3 +77,11 @@ class ManageLabelsUseCase { // TODO: UIMUseCase {
   }
 
 }
+
+///
+unittest {
+    auto labelRepository = new LabelRepository();
+    auto usecase = new ManageLabelsUseCase(labelRepository);
+    auto tenantId = TenantId("test-tenant");
+
+}

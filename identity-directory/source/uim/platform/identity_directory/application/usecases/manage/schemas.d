@@ -113,3 +113,12 @@ class ManageSchemasUseCase { // TODO: UIMUseCase {
     return CommandResult(true, schema.id.value, "", 200);
   }
 }
+
+///
+unittest {
+    auto schemaRepository = new SchemaRepository();
+    auto auditRepository = new AuditRepository();
+    auto usecase = new ManageSchemasUseCase(schemaRepository, auditRepository);
+    auto tenantId = TenantId("test-tenant");
+
+}

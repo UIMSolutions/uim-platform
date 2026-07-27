@@ -62,3 +62,8 @@ class ExportJobRepository : TenantRepository!(ExportJob, ExportJobId), IExportJo
     findByStatus(tenantId, status).each!(e => remove(e));
   }
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new ExportJobRepository()));
+}

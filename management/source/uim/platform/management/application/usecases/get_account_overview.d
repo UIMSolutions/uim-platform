@@ -75,3 +75,17 @@ class GetAccountOverviewUseCase { // TODO: UIMUseCase {
     return ov;
   }
 }
+
+///
+unittest {
+    auto subaccountRepository = new SubaccountRepository();
+    auto directoryRepository = new DirectoryRepository();
+    auto entitlementRepository = new EntitlementRepository();
+    auto environmentRepository = new EnvironmentRepository();
+    auto subscriptionRepository = new SubscriptionRepository();
+    auto environmentEventRepository = new EnvironmentEventRepository();
+    auto usecase = new GetAccountOverviewUseCase(subaccountRepository, directoryRepository, entitlementRepository, environmentRepository, subscriptionRepository, environmentEventRepository);
+    auto tenantId = TenantId("test-tenant");
+
+    assert(usecase !is null);
+}

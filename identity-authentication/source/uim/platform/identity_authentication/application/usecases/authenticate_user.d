@@ -90,3 +90,16 @@ class AuthenticateUserUseCase { // TODO: UIMUseCase {
     return AuthResult(true, "Authentication successful", false, MfaType.none, session.id.value, user.id);
   }
 }
+
+///
+unittest {
+    auto userRepository = new UserRepository();
+    auto passwordService = new PasswordService();
+    auto sessionRepository = new SessionRepository();
+    auto riskRuleRepository = new RiskRuleRepository();
+    auto mfaService = new MfaService();
+    auto usecase = new AuthenticateUserUseCase(userRepository, passwordService, sessionRepository, riskRuleRepository, mfaService);
+    auto tenantId = TenantId("test-tenant");
+
+    assert(usecase !is null);
+}

@@ -76,3 +76,15 @@ class ManageAuditConfigUseCase { // } { // TODO: UIMUseCase {
     return CommandResult(true, entity.id.value, ""); 
   }
 }
+
+///
+unittest {
+    auto iAuditConfigRepository = new IAuditConfigRepository();
+    auto usecase = new ManageAuditConfigUseCase(iAuditConfigRepository);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listAuditConfigs(tenantId);
+    assert(items !is null);
+
+}

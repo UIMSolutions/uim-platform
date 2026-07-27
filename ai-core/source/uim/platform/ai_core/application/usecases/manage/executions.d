@@ -109,3 +109,13 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
   }
 
 }
+
+///
+unittest {
+    auto executionRepository = new ExecutionRepository();
+    auto configurationRepository = new ConfigurationRepository();
+    auto usecase = new ManageExecutionsUseCase(executionRepository, configurationRepository);
+    auto tenantId = TenantId("test-tenant");
+
+    assert(usecase !is null);
+}

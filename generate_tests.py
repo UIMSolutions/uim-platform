@@ -46,8 +46,17 @@ def extract_class_name(content, pattern=r'class\s+(\w+)'):
 
 
 def extract_memory_repo_class(content):
-    """Extract Memory*Repository class name from infrastructure repo file."""
+    """Extract repository class name from infrastructure repo file (Memory* or plain XxxRepository)."""
+    # Prefer Memory-prefixed
     m = re.search(r'class\s+(Memory\w+Repository)', content)
+    if m:
+        return m.group(1)
+    # Fall back to any XxxRepository that extends TenantRepository
+    m = re.search(r'class\s+(\w+Repository)\s*:\s*TenantRepository', content)
+    if m:
+        return m.group(1)
+    # Fall back to any XxxRepository class
+    m = re.search(r'^class\s+(\w+Repository)', content, re.MULTILINE)
     return m.group(1) if m else None
 
 
@@ -57,10 +66,33 @@ def extract_usecase_class(content):
     return m.group(1) if m else None
 
 
+def extract_constructor_params(content):
+    """Extract all constructor parameters as list of (type, name) tuples."""
+    # Find the constructor
+    m = re.search(r'this\s*\(([^)]+)\)', content)
+    if not m:
+        return []
+    params_str = m.group(1)
+    params = []
+    for param in params_str.split(','):
+        param = param.strip()
+        # Match "Type name" or "Type name = default"
+        pm = re.match(r'(\w+)\s+(\w+)', param)
+        if pm:
+            params.append((pm.group(1), pm.group(2)))
+    return params
+
+
 def extract_constructor_repo_type(content):
     """Extract the repo type from the constructor 'this(IXxxRepository repo)'."""
-    m = re.search(r'this\(\s*(\w+)\s+repo\s*\)', content)
-    return m.group(1) if m else None
+    params = extract_constructor_params(content)
+    for ptype, pname in params:
+        if 'Repository' in ptype or 'repository' in pname.lower() or pname == 'repo':
+            return ptype
+    # Fallback: first param
+    if params:
+        return params[0][0]
+    return None
 
 
 def extract_constructor_repo_type2(content):
@@ -137,17 +169,17 @@ def find_memory_class_for_interface(iface_type, pkg_dir):
 
 
 def find_memory_class_for_repo_type(repo_type, pkg_dir):
-    """Find Memory implementation - handles both I-prefixed and direct names."""
-    # First try direct lookup
+    """Find Memory or concrete implementation for a given repository type."""
+    # Direct lookup by interface name
     result = find_memory_class_for_interface(repo_type, pkg_dir)
     if result:
         return result
     
     # If it's a plain class name like AlertRepository (not IAlertRepository)
-    # Try to find Memory{Something}Repository in infra dir
+    # It might itself BE the implementation - check in infra dir
     infra_dir = os.path.join(pkg_dir, "infrastructure", "persistence", "repositories")
     if not os.path.isdir(infra_dir):
-        return None
+        return repo_type  # Return as-is; may be directly instantiable
     
     for root, dirs, files in os.walk(infra_dir):
         for f in files:
@@ -161,6 +193,18 @@ def find_memory_class_for_repo_type(repo_type, pkg_dir):
                     m = re.search(r'class\s+(Memory\w+Repository)', c)
                     if m:
                         return m.group(1)
+                    # Check if repo_type itself is the class (non-Memory)
+                    m2 = re.search(r'class\s+(' + re.escape(repo_type) + r')\b', c)
+                    if m2:
+                        return m2.group(1)
+                    # Any XxxRepository class in that file
+                    m3 = re.search(r'class\s+(\w+Repository)\s*:', c)
+                    if m3 and repo_type.replace('I', '', 1) in m3.group(1):
+                        return m3.group(1)
+    
+    # If still not found, return the type as-is if it doesn't start with I
+    if not repo_type.startswith('I'):
+        return repo_type
     return None
 
 
@@ -217,16 +261,34 @@ def generate_usecase_test(info):
     update_method = info['update_method']
     update_dto = info['update_dto']
     delete_method = info['delete_method']
+    ctor_vars = info.get('ctor_vars', [])
+    ctor_args = info.get('ctor_args', [])
 
-    if not memory_repo and not repo_type:
+    if not memory_repo and not repo_type and not ctor_args:
         return None
 
     repo_class = memory_repo or repo_type
     entity_var = camel_to_var(entity_type) if entity_type else "entity"
     
     lines = ["", "///", "unittest {"]
-    lines.append(f"    auto repo = new {repo_class}();")
-    lines.append(f"    auto usecase = new {class_name}(repo);")
+    
+    # Declare and instantiate all constructor dependencies
+    if ctor_vars:
+        for var_name, class_type in ctor_vars:
+            lines.append(f"    auto {var_name} = new {class_type}();")
+        # Use first repo as the primary one for tenantRepositoryTest reference
+        if ctor_args:
+            lines.append(f"    auto usecase = new {class_name}({', '.join(ctor_args)});")
+        else:
+            lines.append(f"    auto {camel_to_var(repo_class or 'repo')} = new {repo_class}();")
+            lines.append(f"    auto usecase = new {class_name}({camel_to_var(repo_class or 'repo')});")
+    elif repo_class:
+        repo_var = camel_to_var(repo_class)
+        lines.append(f"    auto {repo_var} = new {repo_class}();")
+        lines.append(f"    auto usecase = new {class_name}({repo_var});")
+    else:
+        lines.append(f"    auto usecase = new {class_name}();")
+    
     lines.append(f'    auto tenantId = TenantId("test-tenant");')
     lines.append("")
 
@@ -241,7 +303,6 @@ def generate_usecase_test(info):
         lines.append(f"    // Test create")
         lines.append(f"    {create_dto} createDto;")
         lines.append(f"    createDto.tenantId = tenantId;")
-        # Try to set an ID field
         if id_type:
             id_field = camel_to_var(id_type)
             lines.append(f'    createDto.{id_field} = {id_type}("{id_val}");')
@@ -271,7 +332,6 @@ def generate_usecase_test(info):
         lines.append(f"    // Test update")
         lines.append(f"    {update_dto} updateDto;")
         lines.append(f"    updateDto.tenantId = tenantId;")
-        # Try to find the ID field in update DTO
         id_field = camel_to_var(id_type)
         lines.append(f'    updateDto.{id_field} = {id_type}("{id_val}");')
         lines.append(f'    updateDto.name = "Updated {entity_type or "Entity"}";')
@@ -342,17 +402,46 @@ def process_usecase(filepath, pkg_dir, pkg_source_dir):
 
     class_name = extract_usecase_class(content)
     if not class_name:
-        return False
+        # Try any class name
+        m = re.search(r'^class\s+(\w+)', content, re.MULTILINE)
+        if not m:
+            return False
+        class_name = m.group(1)
 
-    # Get repo type
-    repo_type = extract_constructor_repo_type(content)
-    if not repo_type:
-        repo_type = extract_constructor_repo_type2(content)
+    # Get all constructor params
+    params = extract_constructor_params(content)
+    
+    # Identify the primary repo (first repo-typed param)
+    repo_type = None
+    for ptype, pname in params:
+        if 'Repository' in ptype:
+            repo_type = ptype
+            break
+    if not repo_type and params:
+        repo_type = params[0][0] if 'Repository' in params[0][0] else None
 
     # Find memory repo
     memory_repo = None
     if repo_type:
         memory_repo = find_memory_class_for_repo_type(repo_type, pkg_dir)
+
+    # Build the constructor call with all dependencies
+    ctor_args = []
+    ctor_vars = []
+    for ptype, pname in params:
+        var_name = camel_to_var(ptype)
+        if 'Repository' in ptype:
+            concrete = find_memory_class_for_repo_type(ptype, pkg_dir)
+            if concrete:
+                ctor_vars.append((var_name, concrete))
+                ctor_args.append(var_name)
+            else:
+                # Cannot instantiate - skip test
+                ctor_args.append(f"null  /* {ptype} not found */")
+        else:
+            # Non-repository dependency - try to instantiate directly
+            ctor_vars.append((var_name, ptype))
+            ctor_args.append(var_name)
 
     # Extract method info
     entity_type, list_method = extract_list_method(content)
@@ -377,6 +466,8 @@ def process_usecase(filepath, pkg_dir, pkg_source_dir):
         'update_method': update_method,
         'update_dto': update_dto,
         'delete_method': delete_method,
+        'ctor_vars': ctor_vars,
+        'ctor_args': ctor_args,
     }
 
     test_code = generate_usecase_test(info)

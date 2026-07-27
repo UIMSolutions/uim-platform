@@ -127,3 +127,16 @@ class ManageOrgsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, org.id.value, "");
   }
 }
+
+///
+unittest {
+    auto iOrgRepository = new IOrgRepository();
+    auto iSpaceRepository = new ISpaceRepository();
+    auto usecase = new ManageOrgsUseCase(iOrgRepository, iSpaceRepository);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listOrgs(tenantId);
+    assert(items !is null);
+
+}

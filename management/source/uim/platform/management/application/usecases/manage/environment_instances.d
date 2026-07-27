@@ -126,3 +126,14 @@ class ManageEnvironmentsUseCase { // TODO: UIMUseCase {
     return repo.findByType(tenantId, subId, envType.toEnvironmentType);
   }
 }
+
+///
+unittest {
+    auto environmentRepository = new EnvironmentRepository();
+    auto subaccountRepository = new SubaccountRepository();
+    auto environmentProvisioner = new EnvironmentProvisioner();
+    auto usecase = new ManageEnvironmentsUseCase(environmentRepository, subaccountRepository, environmentProvisioner);
+    auto tenantId = TenantId("test-tenant");
+
+    assert(usecase !is null);
+}

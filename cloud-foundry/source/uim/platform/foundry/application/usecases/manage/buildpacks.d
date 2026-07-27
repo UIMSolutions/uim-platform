@@ -96,3 +96,15 @@ class ManageBuildpacksUseCase { // TODO: UIMUseCase {
     return CommandResult(true, buildpack.id.value, "");
   }
 }
+
+///
+unittest {
+    auto iBuildpackRepository = new IBuildpackRepository();
+    auto usecase = new ManageBuildpacksUseCase(iBuildpackRepository);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listBuildpacks(tenantId);
+    assert(items !is null);
+
+}

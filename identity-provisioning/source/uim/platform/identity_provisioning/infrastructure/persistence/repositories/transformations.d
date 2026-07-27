@@ -49,3 +49,8 @@ class TransformationRepository : TenantRepository!(Transformation, Transformatio
   // #endregion BySystemRole
 
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new TransformationRepository()));
+}

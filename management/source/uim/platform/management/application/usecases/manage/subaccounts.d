@@ -184,3 +184,12 @@ class ManageSubaccountsUseCase { // TODO: UIMUseCase {
     eventRepo.save(event);
   }
 }
+
+///
+unittest {
+    auto subaccountRepository = new SubaccountRepository();
+    auto environmentEventRepository = new EnvironmentEventRepository();
+    auto usecase = new ManageSubaccountsUseCase(subaccountRepository, environmentEventRepository);
+    auto tenantId = TenantId("test-tenant");
+
+}

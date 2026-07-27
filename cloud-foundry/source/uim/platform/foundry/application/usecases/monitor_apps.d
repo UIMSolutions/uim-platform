@@ -138,3 +138,17 @@ class MonitorAppsUseCase { // TODO: UIMUseCase {
     return h;
   }
 }
+
+///
+unittest {
+    auto iAppRepository = new IAppRepository();
+    auto iServiceInstanceRepository = new IServiceInstanceRepository();
+    auto iRouteRepository = new IRouteRepository();
+    auto usecase = new MonitorAppsUseCase(iAppRepository, iServiceInstanceRepository, iRouteRepository);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listAppHealth(tenantId);
+    assert(items !is null);
+
+}

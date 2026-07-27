@@ -140,3 +140,16 @@ class ManageHealthChecksUseCase { // TODO: UIMUseCase {
   }
 
 }
+
+///
+unittest {
+    auto healthCheckRepository = new HealthCheckRepository();
+    auto healthCheckResultRepository = new HealthCheckResultRepository();
+    auto usecase = new ManageHealthChecksUseCase(healthCheckRepository, healthCheckResultRepository);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listChecks(tenantId);
+    assert(items !is null);
+
+}

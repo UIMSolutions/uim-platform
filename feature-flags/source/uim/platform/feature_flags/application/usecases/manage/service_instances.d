@@ -91,3 +91,16 @@ class ManageServiceInstancesUseCase {
         return Clock.currTime(UTC()).toISOExtString();
     }
 }
+
+///
+unittest {
+    auto serviceInstanceRepository = new ServiceInstanceRepository();
+    auto auditEntryRepository = new AuditEntryRepository();
+    auto usecase = new ManageServiceInstancesUseCase(serviceInstanceRepository, auditEntryRepository);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listInstances(tenantId);
+    assert(items !is null);
+
+}

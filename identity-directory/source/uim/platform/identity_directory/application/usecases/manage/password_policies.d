@@ -78,3 +78,16 @@ class ManagePasswordPoliciesUseCase { // TODO: UIMUseCase {
     return policyRepo.findActiveForTenant(tenantId);
   }
 }
+
+///
+unittest {
+    auto passwordPolicyRepository = new PasswordPolicyRepository();
+    auto auditRepository = new AuditRepository();
+    auto usecase = new ManagePasswordPoliciesUseCase(passwordPolicyRepository, auditRepository);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listPolicies(tenantId);
+    assert(items !is null);
+
+}

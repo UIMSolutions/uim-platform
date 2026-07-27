@@ -73,3 +73,16 @@ class ManageExportsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, job.id.value, "");
   }
 }
+
+///
+unittest {
+    auto iExportJobRepository = new IExportJobRepository();
+    auto iAuditLogRepository = new IAuditLogRepository();
+    auto usecase = new ManageExportsUseCase(iExportJobRepository, iAuditLogRepository);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listExports(tenantId);
+    assert(items !is null);
+
+}

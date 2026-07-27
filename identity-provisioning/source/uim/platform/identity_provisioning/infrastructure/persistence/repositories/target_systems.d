@@ -56,3 +56,8 @@ class TargetSystemRepository : TenantRepository!(TargetSystem, TargetSystemId), 
     findByStatus(tenantId, status).each!(e => remove(e));
   }
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new TargetSystemRepository()));
+}

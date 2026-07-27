@@ -106,3 +106,13 @@ class ManageUsersUseCase { // TODO: UIMUseCase {
     return CommandResult(true, user.id.value, "Password changed successfully.");
   }
 }
+
+///
+unittest {
+    auto userRepository = new UserRepository();
+    auto passwordService = new PasswordService();
+    auto usecase = new ManageUsersUseCase(userRepository, passwordService);
+    auto tenantId = TenantId("test-tenant");
+
+    assert(usecase !is null);
+}

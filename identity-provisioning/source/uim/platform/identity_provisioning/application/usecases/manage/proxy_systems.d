@@ -131,3 +131,17 @@ class ManageProxySystemsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, existing.id.value, "");
   }
 }
+
+///
+unittest {
+    auto iProxySystemRepository = new IProxySystemRepository();
+    auto iSourceSystemRepository = new ISourceSystemRepository();
+    auto iTargetSystemRepository = new ITargetSystemRepository();
+    auto usecase = new ManageProxySystemsUseCase(iProxySystemRepository, iSourceSystemRepository, iTargetSystemRepository);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listProxySystems(tenantId);
+    assert(items !is null);
+
+}

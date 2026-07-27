@@ -137,3 +137,16 @@ class ManagePrivateEndpointsUseCase {
     }
   }
 }
+
+///
+unittest {
+    auto privateEndpointRepository = new PrivateEndpointRepository();
+    auto serviceInstanceRepository = new ServiceInstanceRepository();
+    auto usecase = new ManagePrivateEndpointsUseCase(privateEndpointRepository, serviceInstanceRepository);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listEndpoints(tenantId);
+    assert(items !is null);
+
+}

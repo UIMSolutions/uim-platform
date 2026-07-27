@@ -168,3 +168,16 @@ class ManageFeatureFlagsUseCase {
 
 
 }
+
+///
+unittest {
+    auto featureFlagRepository = new FeatureFlagRepository();
+    auto auditEntryRepository = new AuditEntryRepository();
+    auto usecase = new ManageFeatureFlagsUseCase(featureFlagRepository, auditEntryRepository);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listFlags(tenantId);
+    assert(items !is null);
+
+}

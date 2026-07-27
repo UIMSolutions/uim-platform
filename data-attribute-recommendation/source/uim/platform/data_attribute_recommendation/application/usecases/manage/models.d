@@ -142,3 +142,17 @@ class ManageModelsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, existing.id.value, "");
   }
 }
+
+///
+unittest {
+    auto iModelConfigRepository = new IModelConfigRepository();
+    auto iDatasetRepository = new IDatasetRepository();
+    auto modelTrainer = new ModelTrainer();
+    auto usecase = new ManageModelsUseCase(iModelConfigRepository, iDatasetRepository, modelTrainer);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listModelConfigs(tenantId);
+    assert(items !is null);
+
+}

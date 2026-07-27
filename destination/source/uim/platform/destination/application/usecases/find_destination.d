@@ -118,3 +118,14 @@ class FindDestinationUseCase { // TODO: UIMUseCase {
     return resp;
   }
 }
+
+///
+unittest {
+    auto destinationRepository = new DestinationRepository();
+    auto fragmentRepository = new FragmentRepository();
+    auto certificateRepository = new CertificateRepository();
+    auto usecase = new FindDestinationUseCase(destinationRepository, fragmentRepository, certificateRepository);
+    auto tenantId = TenantId("test-tenant");
+
+    assert(usecase !is null);
+}

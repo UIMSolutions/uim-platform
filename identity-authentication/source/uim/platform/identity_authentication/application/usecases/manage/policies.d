@@ -52,3 +52,15 @@ class ManagePoliciesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, policy.id.value, "Policy deleted successfully.");
   }
 }
+
+///
+unittest {
+    auto policyRepository = new PolicyRepository();
+    auto usecase = new ManagePoliciesUseCase(policyRepository);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listPolicies(tenantId);
+    assert(items !is null);
+
+}

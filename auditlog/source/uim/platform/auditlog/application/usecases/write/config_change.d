@@ -52,3 +52,13 @@ class WriteConfigChangeUseCase { // TODO: UIMUseCase {
     return CommandResult(true, entry.id.value, "");
   }
 }
+
+///
+unittest {
+    auto iAuditLogRepository = new IAuditLogRepository();
+    auto iConfigChangeLogRepository = new IConfigChangeLogRepository();
+    auto usecase = new WriteConfigChangeUseCase(iAuditLogRepository, iConfigChangeLogRepository);
+    auto tenantId = TenantId("test-tenant");
+
+    assert(usecase !is null);
+}

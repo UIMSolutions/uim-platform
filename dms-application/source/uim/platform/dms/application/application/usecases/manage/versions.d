@@ -51,3 +51,12 @@ class ManageVersionsUseCase { // TODO: UIMUseCase {
     return versioningService.getCurrentVersion(tenantId, docId);
   }
 }
+
+///
+unittest {
+    auto versioningService = new VersioningService();
+    auto usecase = new ManageVersionsUseCase(versioningService);
+    auto tenantId = TenantId("test-tenant");
+
+    assert(usecase !is null);
+}

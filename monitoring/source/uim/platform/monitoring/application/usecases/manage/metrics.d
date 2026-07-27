@@ -167,3 +167,16 @@ class ManageMetricsUseCase { // TODO: UIMUseCase {
     return s;
   }
 }
+
+///
+unittest {
+    auto metricRepository = new MetricRepository();
+    auto metricDefinitionRepository = new MetricDefinitionRepository();
+    auto usecase = new ManageMetricsUseCase(metricRepository, metricDefinitionRepository);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listDefinitions(tenantId);
+    assert(items !is null);
+
+}

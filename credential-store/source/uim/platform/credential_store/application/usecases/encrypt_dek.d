@@ -75,3 +75,13 @@ class EncryptDekUseCase { // TODO: UIMUseCase {
     return DecryptDekResponse(true, dek, "");
   }
 }
+
+///
+unittest {
+    auto credentialRepository = new CredentialRepository();
+    auto keyringVersionRepository = new KeyringVersionRepository();
+    auto usecase = new EncryptDekUseCase(credentialRepository, keyringVersionRepository);
+    auto tenantId = TenantId("test-tenant");
+
+    assert(usecase !is null);
+}

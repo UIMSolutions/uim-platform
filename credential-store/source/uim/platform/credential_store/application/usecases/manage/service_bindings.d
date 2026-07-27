@@ -89,3 +89,15 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
   }
 
 }
+
+///
+unittest {
+    auto serviceBindingRepository = new ServiceBindingRepository();
+    auto usecase = new ManageServiceBindingsUseCase(serviceBindingRepository);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listServiceBindings(tenantId);
+    assert(items !is null);
+
+}

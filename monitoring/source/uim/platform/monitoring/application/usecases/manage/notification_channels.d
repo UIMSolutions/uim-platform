@@ -120,3 +120,15 @@ class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
   }
 
 }
+
+///
+unittest {
+    auto notificationChannelRepository = new NotificationChannelRepository();
+    auto usecase = new ManageNotificationChannelsUseCase(notificationChannelRepository);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listChannels(tenantId);
+    assert(items !is null);
+
+}

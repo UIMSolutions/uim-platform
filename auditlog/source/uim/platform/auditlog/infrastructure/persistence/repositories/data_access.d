@@ -80,3 +80,8 @@ class DataAccessLogRepository : TenantRepository!(DataAccessLog, DataAccessLogId
     findByTenant(tenantId).filter!(e => e.timestamp < beforeTimestamp).each!(e => remove(e));
   }
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new DataAccessLogRepository()));
+}

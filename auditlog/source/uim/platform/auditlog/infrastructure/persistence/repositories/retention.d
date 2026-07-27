@@ -26,3 +26,8 @@ class RetentionPolicyRepository : TenantRepository!(RetentionPolicy, RetentionPo
     return RetentionPolicy.init;
   }
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new RetentionPolicyRepository()));
+}

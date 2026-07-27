@@ -89,3 +89,14 @@ class EvaluateMetricsUseCase { // TODO: UIMUseCase {
 
   
 }
+
+///
+unittest {
+    auto alertRuleRepository = new AlertRuleRepository();
+    auto metricRepository = new MetricRepository();
+    auto manageAlertsUseCase = new ManageAlertsUseCase();
+    auto usecase = new EvaluateMetricsUseCase(alertRuleRepository, metricRepository, manageAlertsUseCase);
+    auto tenantId = TenantId("test-tenant");
+
+    assert(usecase !is null);
+}

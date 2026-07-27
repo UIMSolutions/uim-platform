@@ -120,3 +120,13 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
     return deployments.countByResourceGroup(tenantId, rgId);
   }
 }
+
+///
+unittest {
+    auto deploymentRepository = new DeploymentRepository();
+    auto configurationRepository = new ConfigurationRepository();
+    auto usecase = new ManageDeploymentsUseCase(deploymentRepository, configurationRepository);
+    auto tenantId = TenantId("test-tenant");
+
+    assert(usecase !is null);
+}

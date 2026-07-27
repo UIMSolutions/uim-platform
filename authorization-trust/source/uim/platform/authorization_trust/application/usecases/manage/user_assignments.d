@@ -66,3 +66,16 @@ class ManageUserAssignmentsUseCase {
     return repo.findByUser(tenantId, userId);
   }
 }
+
+///
+unittest {
+    auto userAssignmentRepository = new UserAssignmentRepository();
+    auto roleCollectionRepository = new RoleCollectionRepository();
+    auto usecase = new ManageUserAssignmentsUseCase(userAssignmentRepository, roleCollectionRepository);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listAssignments(tenantId);
+    assert(items !is null);
+
+}

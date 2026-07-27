@@ -110,4 +110,15 @@ class ManageKeyMappingsUseCase { // TODO: UIMUseCase {
   }
 }
 
+///
+unittest {
+    auto keyMappingRepository = new KeyMappingRepository();
+    auto keyMappingResolver = new KeyMappingResolver();
+    auto usecase = new ManageKeyMappingsUseCase(keyMappingRepository, keyMappingResolver);
+    auto tenantId = TenantId("test-tenant");
 
+    // Test list
+    auto items = usecase.listMappings(tenantId);
+    assert(items !is null);
+
+}

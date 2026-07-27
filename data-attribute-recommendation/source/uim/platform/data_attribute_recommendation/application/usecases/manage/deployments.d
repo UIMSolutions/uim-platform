@@ -109,3 +109,17 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, existing.id.value, "");
   }
 }
+
+///
+unittest {
+    auto iDeploymentRepository = new IDeploymentRepository();
+    auto iTrainingJobRepository = new ITrainingJobRepository();
+    auto iModelConfigRepository = new IModelConfigRepository();
+    auto usecase = new ManageDeploymentsUseCase(iDeploymentRepository, iTrainingJobRepository, iModelConfigRepository);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listDeployments(tenantId);
+    assert(items !is null);
+
+}

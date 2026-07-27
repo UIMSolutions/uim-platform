@@ -108,3 +108,12 @@ class ManageEntitlementsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, entity.id.value, "");
   }
 }
+
+///
+unittest {
+    auto entitlementRepository = new EntitlementRepository();
+    auto entitlementEvaluator = new EntitlementEvaluator();
+    auto usecase = new ManageEntitlementsUseCase(entitlementRepository, entitlementEvaluator);
+    auto tenantId = TenantId("test-tenant");
+
+}

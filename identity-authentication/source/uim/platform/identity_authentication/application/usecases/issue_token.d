@@ -119,3 +119,16 @@ struct TokenResponse {
     return error.length == 0;
   }
 }
+
+///
+unittest {
+    auto userRepository = new UserRepository();
+    auto applicationRepository = new ApplicationRepository();
+    auto tokenRepository = new TokenRepository();
+    auto sessionRepository = new SessionRepository();
+    auto tokenService = new TokenService();
+    auto usecase = new IssueTokenUseCase(userRepository, applicationRepository, tokenRepository, sessionRepository, tokenService);
+    auto tenantId = TenantId("test-tenant");
+
+    assert(usecase !is null);
+}

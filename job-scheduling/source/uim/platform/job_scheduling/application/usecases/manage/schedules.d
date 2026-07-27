@@ -130,3 +130,11 @@ class ManageSchedulesUseCase { // TODO: UIMUseCase {
     }
 
 }
+
+///
+unittest {
+    auto scheduleRepository = new ScheduleRepository();
+    auto usecase = new ManageSchedulesUseCase(scheduleRepository);
+    auto tenantId = TenantId("test-tenant");
+
+}

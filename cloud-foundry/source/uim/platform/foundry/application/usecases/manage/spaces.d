@@ -96,3 +96,16 @@ class ManageSpacesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, space.id.value, "");
   }
 }
+
+///
+unittest {
+    auto iSpaceRepository = new ISpaceRepository();
+    auto iOrgRepository = new IOrgRepository();
+    auto usecase = new ManageSpacesUseCase(iSpaceRepository, iOrgRepository);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listSpaces(tenantId);
+    assert(items !is null);
+
+}

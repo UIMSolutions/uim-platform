@@ -103,3 +103,11 @@ class ManageApplicationJobsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, job.id.value, "");
   }
 }
+
+///
+unittest {
+    auto applicationJobRepository = new ApplicationJobRepository();
+    auto usecase = new ManageApplicationJobsUseCase(applicationJobRepository);
+    auto tenantId = TenantId("test-tenant");
+
+}

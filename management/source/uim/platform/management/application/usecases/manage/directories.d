@@ -97,3 +97,11 @@ class ManageDirectoriesUseCase { // TODO: UIMUseCase {
   }
 
 }
+
+///
+unittest {
+    auto directoryRepository = new DirectoryRepository();
+    auto usecase = new ManageDirectoriesUseCase(directoryRepository);
+    auto tenantId = TenantId("test-tenant");
+
+}

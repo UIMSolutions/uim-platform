@@ -69,3 +69,8 @@ class SourceSystemRepository : TenantRepository!(SourceSystem, SourceSystemId), 
   }
 
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new SourceSystemRepository()));
+}

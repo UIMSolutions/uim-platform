@@ -86,3 +86,17 @@ class GetDashboardUseCase { // TODO: UIMUseCase {
     return summary;
   }
 }
+
+///
+unittest {
+    auto monitoredResourceRepository = new MonitoredResourceRepository();
+    auto alertRepository = new AlertRepository();
+    auto healthCheckRepository = new HealthCheckRepository();
+    auto healthCheckResultRepository = new HealthCheckResultRepository();
+    auto metricDefinitionRepository = new MetricDefinitionRepository();
+    auto notificationChannelRepository = new NotificationChannelRepository();
+    auto usecase = new GetDashboardUseCase(monitoredResourceRepository, alertRepository, healthCheckRepository, healthCheckResultRepository, metricDefinitionRepository, notificationChannelRepository);
+    auto tenantId = TenantId("test-tenant");
+
+    assert(usecase !is null);
+}

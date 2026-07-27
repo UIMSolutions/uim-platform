@@ -132,3 +132,16 @@ class ManageGlobalAccountsUseCase { // TODO: UIMUseCase {
   }
 
 }
+
+///
+unittest {
+    auto globalAccountRepository = new GlobalAccountRepository();
+    auto environmentEventRepository = new EnvironmentEventRepository();
+    auto usecase = new ManageGlobalAccountsUseCase(globalAccountRepository, environmentEventRepository);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listAccounts(tenantId);
+    assert(items !is null);
+
+}

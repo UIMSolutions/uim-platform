@@ -55,3 +55,15 @@ class GetOverviewUseCase { // TODO: UIMUseCase {
     return s;
   }
 }
+
+///
+unittest {
+    auto namespaceRepository = new NamespaceRepository();
+    auto credentialRepository = new CredentialRepository();
+    auto serviceBindingRepository = new ServiceBindingRepository();
+    auto auditLogRepository = new AuditLogRepository();
+    auto usecase = new GetOverviewUseCase(namespaceRepository, credentialRepository, serviceBindingRepository, auditLogRepository);
+    auto tenantId = TenantId("test-tenant");
+
+    assert(usecase !is null);
+}

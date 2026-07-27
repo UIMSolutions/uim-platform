@@ -72,3 +72,18 @@ class ManageServiceBindingsUseCase {
     return bindings.findByServiceInstance(tenantId, instanceId);
   }
 }
+
+///
+unittest {
+    auto serviceBindingRepository = new ServiceBindingRepository();
+    auto serviceInstanceRepository = new ServiceInstanceRepository();
+    auto privateEndpointRepository = new PrivateEndpointRepository();
+    auto endpointResolver = new EndpointResolver();
+    auto usecase = new ManageServiceBindingsUseCase(serviceBindingRepository, serviceInstanceRepository, privateEndpointRepository, endpointResolver);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listBindings(tenantId);
+    assert(items !is null);
+
+}

@@ -96,3 +96,12 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, group.id.value, "");
   }
 }
+
+///
+unittest {
+    auto groupRepository = new GroupRepository();
+    auto userRepository = new UserRepository();
+    auto usecase = new ManageGroupsUseCase(groupRepository, userRepository);
+    auto tenantId = TenantId("test-tenant");
+
+}

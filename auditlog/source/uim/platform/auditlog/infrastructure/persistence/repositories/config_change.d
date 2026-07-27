@@ -73,3 +73,8 @@ class ConfigChangeLogRepository : TenantRepository!(ConfigChangeLog, ConfigChang
       .each!(e => remove(e));
   }
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new ConfigChangeLogRepository()));
+}

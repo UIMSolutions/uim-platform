@@ -97,3 +97,8 @@ class ProvisionedEntityRepository : TenantRepository!(ProvisionedEntity, Provisi
   }
 
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new ProvisionedEntityRepository()));
+}
