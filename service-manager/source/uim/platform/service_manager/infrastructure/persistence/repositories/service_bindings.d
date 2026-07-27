@@ -6,7 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryServiceBindingRepository : TenantRepository!(ServiceBinding, ServiceBindingId), ServiceBindingRepository {
+class MemoryServiceBindingRepository : TenantRepository!(ServiceBinding, ServiceBindingId), IServiceBindingRepository {
 
     size_t countByStatus(TenantId tenantId, ServiceBindingStatus status) {
         return this.findByStatus(tenantId, status).length;

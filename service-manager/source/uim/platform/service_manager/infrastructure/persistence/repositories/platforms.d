@@ -6,7 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryPlatformRepository : TenantRepository!(Platform, PlatformId), PlatformRepository {
+class MemoryPlatformRepository : TenantRepository!(Platform, PlatformId), IPlatformRepository {
     
     size_t countByType(TenantId tenantId, PlatformType type) {
         return this.findByType(tenantId, type).length;

@@ -6,7 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryOperationRepository : TenantRepository!(Operation, OperationId), OperationRepository {
+class MemoryOperationRepository : TenantRepository!(Operation, OperationId), IOperationRepository {
 
     // #region ByOperationType
     size_t countByOperationType(TenantId tenantId, OperationType type) {

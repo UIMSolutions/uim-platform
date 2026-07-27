@@ -7,9 +7,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageServiceOfferingsUseCase { // TODO: UIMUseCase {
-    private ServiceOfferingRepository repo;
+    private IServiceOfferingRepository repo;
 
-    this(ServiceOfferingRepository repo) {
+    this(IServiceOfferingRepository repo) {
         this.repo = repo;
     }
 

@@ -7,9 +7,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageOperationsUseCase { // TODO: UIMUseCase {
-    private OperationRepository repo;
+    private IOperationRepository repo;
 
-    this(OperationRepository repo) {
+    this(IOperationRepository repo) {
         this.repo = repo;
     }
 

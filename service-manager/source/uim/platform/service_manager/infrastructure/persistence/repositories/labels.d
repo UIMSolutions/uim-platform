@@ -6,7 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryLabelRepository : TenantRepository!(Label, LabelId), LabelRepository {
+class MemoryLabelRepository : TenantRepository!(Label, LabelId), ILabelRepository {
 
     size_t countByResource(TenantId tenantId, string resourceType, string resourceId) {
         return findByResource(tenantId, resourceType, resourceId).length;

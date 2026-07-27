@@ -6,7 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface LabelRepository : ITenantRepository!(Label, LabelId) {
+interface ILabelRepository : ITenantRepository!(Label, LabelId) {
 
     size_t countByResource(TenantId tenantId, string resourceType, string resourceId);
     Label[] findByResource(TenantId tenantId, string resourceType, string resourceId);

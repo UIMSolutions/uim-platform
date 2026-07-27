@@ -6,7 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ServiceBindingRepository : ITenantRepository!(ServiceBinding, ServiceBindingId) {
+interface IServiceBindingRepository : ITenantRepository!(ServiceBinding, ServiceBindingId) {
 
     size_t countByStatus(TenantId tenantId, ServiceBindingStatus status);
     ServiceBinding[] findByStatus(TenantId tenantId, ServiceBindingStatus status);

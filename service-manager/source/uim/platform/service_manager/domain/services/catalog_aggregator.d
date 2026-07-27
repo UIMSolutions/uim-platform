@@ -8,10 +8,10 @@ mixin(ShowModule!());
 
 /// Aggregates service offerings and plans from registered brokers
 class CatalogAggregator {
-    private ServiceOfferingRepository offeringRepo;
-    private ServicePlanRepository planRepo;
+    private IServiceOfferingRepository offeringRepo;
+    private IServicePlanRepository planRepo;
 
-    this(ServiceOfferingRepository offeringRepo, ServicePlanRepository planRepo) {
+    this(IServiceOfferingRepository offeringRepo, IServicePlanRepository planRepo) {
         this.offeringRepo = offeringRepo;
         this.planRepo = planRepo;
     }

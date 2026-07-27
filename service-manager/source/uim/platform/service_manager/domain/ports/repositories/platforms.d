@@ -6,7 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface PlatformRepository : ITenantRepository!(Platform, PlatformId) {
+interface IPlatformRepository : ITenantRepository!(Platform, PlatformId) {
 
     size_t countByType(TenantId tenantId, PlatformType type);
     Platform[] findByType(TenantId tenantId, PlatformType type);

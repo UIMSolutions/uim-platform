@@ -7,9 +7,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageLabelsUseCase { // TODO: UIMUseCase {
-    private LabelRepository repo;
+    private ILabelRepository repo;
 
-    this(LabelRepository repo) {
+    this(ILabelRepository repo) {
         this.repo = repo;
     }
 

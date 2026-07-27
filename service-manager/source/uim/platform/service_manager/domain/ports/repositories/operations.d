@@ -6,7 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface OperationRepository : ITenantRepository!(Operation, OperationId) {
+interface IOperationRepository : ITenantRepository!(Operation, OperationId) {
 
     size_t countByOperationType(TenantId tenantId, OperationType type);
     Operation[] findByOperationType(TenantId tenantId, OperationType type);

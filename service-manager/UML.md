@@ -113,7 +113,7 @@ sequenceDiagram
     participant UC as ServiceInstanceUseCases
     participant PR as PlanRepository
     participant IR as InstanceRepository
-    participant OR as OperationRepository
+    participant OR as IOperationRepository
 
     C->>R: POST /v1/service-instances {planId, name, parameters}
     R->>UC: provisionInstance(planId, name, parameters)

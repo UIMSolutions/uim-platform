@@ -6,7 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryServiceInstanceRepository : TenantRepository!(ServiceInstance, ServiceInstanceId), ServiceInstanceRepository {
+class MemoryServiceInstanceRepository : TenantRepository!(ServiceInstance, ServiceInstanceId), IServiceInstanceRepository {
 
     size_t countByStatus(TenantId tenantId, ServiceInstanceStatus status) {
         return this.findByStatus(tenantId, status).length;

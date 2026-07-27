@@ -6,7 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ServiceBrokerRepository : ITenantRepository!(ServiceBroker, ServiceBrokerId) {
+interface IServiceBrokerRepository : ITenantRepository!(ServiceBroker, ServiceBrokerId) {
 
     size_t countByStatus(TenantId tenantId, ServiceBrokerStatus status);
     ServiceBroker[] findByStatus(TenantId tenantId, ServiceBrokerStatus status);

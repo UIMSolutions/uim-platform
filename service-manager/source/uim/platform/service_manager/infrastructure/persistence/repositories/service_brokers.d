@@ -6,7 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryServiceBrokerRepository : TenantRepository!(ServiceBroker, ServiceBrokerId), ServiceBrokerRepository {
+class MemoryServiceBrokerRepository : TenantRepository!(ServiceBroker, ServiceBrokerId), IServiceBrokerRepository {
 
     size_t countByStatus(TenantId tenantId, ServiceBrokerStatus status) {
         return findByStatus(tenantId, status).length;

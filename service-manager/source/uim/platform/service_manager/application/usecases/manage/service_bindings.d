@@ -7,9 +7,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
-    private ServiceBindingRepository repo;
+    private IServiceBindingRepository repo;
 
-    this(ServiceBindingRepository repo) {
+    this(IServiceBindingRepository repo) {
         this.repo = repo;
     }
 
