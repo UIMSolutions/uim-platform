@@ -17,3 +17,10 @@ class IdUseCase {
     return true;
   }
 }
+
+///
+unittest {
+    auto usecase = new IdUseCase();
+    assert(usecase !is null);
+    assert(usecase.execute(["key": Json("value")]));
+}
