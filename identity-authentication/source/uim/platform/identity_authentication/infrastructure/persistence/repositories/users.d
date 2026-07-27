@@ -71,3 +71,8 @@ class MemoryUserRepository : TenantRepository!(IAUser, UserId), UserRepository {
   }
 
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryUserRepository()));
+}

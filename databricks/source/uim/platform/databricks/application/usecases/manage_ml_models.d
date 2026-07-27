@@ -68,3 +68,12 @@ public:
     return UseCaseResult!bool(true, "ML model deleted", true);
   }
 }
+
+///
+unittest {
+    auto repo = new MlModelRepository();
+    auto usecase = new ManageMlModelsUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    assert(usecase !is null);
+}

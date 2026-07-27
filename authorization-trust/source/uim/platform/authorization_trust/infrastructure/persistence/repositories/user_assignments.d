@@ -42,3 +42,8 @@ class MemoryUserAssignmentRepository : TenantRepository!(UserAssignment, UserAss
   }
 
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryUserAssignmentRepository()));
+}

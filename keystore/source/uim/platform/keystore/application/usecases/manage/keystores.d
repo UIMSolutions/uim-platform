@@ -99,3 +99,11 @@ class ManageKeystoresUseCase {
     return CommandResult(true, ks.id.value, "");
   }
 }
+
+///
+unittest {
+    auto repo = new IKeystoreRepository();
+    auto usecase = new ManageKeystoresUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+}

@@ -68,3 +68,8 @@ class MemoryFavoriteRepository : TenantRepository!(Favorite, FavoriteId), IFavor
     findByResource(tenantId, resourceId).each!(e => remove(e));
   }
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryFavoriteRepository()));
+}

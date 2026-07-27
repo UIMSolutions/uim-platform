@@ -54,3 +54,8 @@ class MemoryBusinessRoleRepository : TenantRepository!(BusinessRole, BusinessRol
   // #endregion BySystem
 
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryBusinessRoleRepository()));
+}

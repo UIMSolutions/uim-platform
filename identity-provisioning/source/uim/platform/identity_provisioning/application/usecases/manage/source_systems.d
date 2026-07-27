@@ -109,3 +109,15 @@ class ManageSourceSystemsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, existing.id.value, "");
   }
 }
+
+///
+unittest {
+    auto repo = new ISourceSystemRepository();
+    auto usecase = new ManageSourceSystemsUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listSourceSystems(tenantId);
+    assert(items !is null);
+
+}

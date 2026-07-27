@@ -77,3 +77,15 @@ class ManageEventMessagesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, message.id.value, "");
     }
 }
+
+///
+unittest {
+    auto repo = new EventMessageRepository();
+    auto usecase = new ManageEventMessagesUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listMessages(tenantId);
+    assert(items !is null);
+
+}

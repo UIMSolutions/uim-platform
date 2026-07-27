@@ -109,3 +109,15 @@ class ManageDashboardsUseCase { // TODO: UIMUseCase {
 
 
 }
+
+///
+unittest {
+    auto repo = new DashboardRepository();
+    auto usecase = new ManageDashboardsUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listDashboards(tenantId);
+    assert(items !is null);
+
+}

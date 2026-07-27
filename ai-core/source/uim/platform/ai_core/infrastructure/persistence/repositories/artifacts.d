@@ -92,3 +92,8 @@ class MemoryArtifactRepository : TenantRepository!(Artifact, ArtifactId), Artifa
   }
 
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryArtifactRepository()));
+}

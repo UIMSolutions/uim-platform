@@ -84,3 +84,11 @@ class ManageBusinessRolesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, role.id.value, "");
   }
 }
+
+///
+unittest {
+    auto repo = new BusinessRoleRepository();
+    auto usecase = new ManageBusinessRolesUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+}

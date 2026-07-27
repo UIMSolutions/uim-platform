@@ -64,3 +64,15 @@ class ManageRolesUseCase {
     return repo.findByTenant(tenantId);
   }
 }
+
+///
+unittest {
+    auto repo = new RoleRepository();
+    auto usecase = new ManageRolesUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listRoles(tenantId);
+    assert(items !is null);
+
+}

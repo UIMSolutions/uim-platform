@@ -54,3 +54,8 @@ class MemoryTokenRepository : TenantRepository!(Token, TokenId), TokenRepository
     }
   }
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryTokenRepository()));
+}

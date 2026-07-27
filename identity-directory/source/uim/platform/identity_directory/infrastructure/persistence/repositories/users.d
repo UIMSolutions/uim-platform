@@ -114,3 +114,8 @@ class MemoryUserRepository : TenantRepository!(IDUser, UserId), UserRepository {
   }
 
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryUserRepository()));
+}

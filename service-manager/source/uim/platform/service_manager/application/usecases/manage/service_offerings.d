@@ -65,3 +65,40 @@ class ManageServiceOfferingsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, offering.id.value, "");
     }
 }
+
+///
+unittest {
+    auto repo = new IServiceOfferingRepository();
+    auto usecase = new ManageServiceOfferingsUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test create
+    CreateServiceOfferingRequest createDto;
+    createDto.tenantId = tenantId;
+    createDto.serviceOfferingId = ServiceOfferingId("serviceOffering-1");
+    createDto.name = "Test ServiceOffering";
+    auto createResult = usecase.createOffering(createDto);
+    assert(createResult.success, createResult.message);
+
+    // Test list
+    auto items = usecase.listOfferings(tenantId);
+    assert(items.length == 1);
+
+    // Test get
+    auto item = usecase.getOffering(tenantId, ServiceOfferingId("serviceOffering-1"));
+    assert(!item.isNull);
+
+    // Test update
+    UpdateServiceOfferingRequest updateDto;
+    updateDto.tenantId = tenantId;
+    updateDto.serviceOfferingId = ServiceOfferingId("serviceOffering-1");
+    updateDto.name = "Updated ServiceOffering";
+    auto updateResult = usecase.updateOffering(updateDto);
+    assert(updateResult.success, updateResult.message);
+
+    // Test delete
+    auto deleteResult = usecase.deleteOffering(tenantId, ServiceOfferingId("serviceOffering-1"));
+    assert(deleteResult.success, deleteResult.message);
+    assert(usecase.listOfferings(tenantId).length == 0);
+
+}

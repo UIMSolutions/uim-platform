@@ -36,3 +36,8 @@ class MemoryNotebookRepository : TenantRepository!(Notebook, NotebookId), Notebo
     return results.empty ? Notebook.init : results.front;
   }
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryNotebookRepository()));
+}

@@ -56,3 +56,8 @@ class MemoryIdpConfigRepository : TenantRepository!(IdpConfig, IdpConfigId), Idp
   }
 
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryIdpConfigRepository()));
+}

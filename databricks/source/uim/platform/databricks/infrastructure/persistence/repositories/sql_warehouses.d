@@ -33,3 +33,8 @@ class MemorySqlWarehouseRepository : TenantRepository!(SqlWarehouse, SqlWarehous
     return findByState(tenantId, WarehouseState.running);
   }
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemorySqlWarehouseRepository()));
+}

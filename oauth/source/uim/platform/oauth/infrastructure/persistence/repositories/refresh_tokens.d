@@ -71,3 +71,8 @@ class MemoryRefreshTokenRepository : TenantRepository!(RefreshToken, RefreshToke
     // #endregion ByStatus
 
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryRefreshTokenRepository()));
+}

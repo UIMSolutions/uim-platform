@@ -64,3 +64,40 @@ class ManageWebhooksUseCase {
         return CommandResult(true, wh.id.value, "");
     }
 }
+
+///
+unittest {
+    auto repo = new WebhookRepository();
+    auto usecase = new ManageWebhooksUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test create
+    WebhookDTO createDto;
+    createDto.tenantId = tenantId;
+    createDto.webhookId = WebhookId("webhook-1");
+    createDto.name = "Test Webhook";
+    auto createResult = usecase.createWebhook(createDto);
+    assert(createResult.success, createResult.message);
+
+    // Test list
+    auto items = usecase.listWebhooks(tenantId);
+    assert(items.length == 1);
+
+    // Test get
+    auto item = usecase.getWebhook(tenantId, WebhookId("webhook-1"));
+    assert(!item.isNull);
+
+    // Test update
+    WebhookDTO updateDto;
+    updateDto.tenantId = tenantId;
+    updateDto.webhookId = WebhookId("webhook-1");
+    updateDto.name = "Updated Webhook";
+    auto updateResult = usecase.updateWebhook(updateDto);
+    assert(updateResult.success, updateResult.message);
+
+    // Test delete
+    auto deleteResult = usecase.deleteWebhook(tenantId, WebhookId("webhook-1"));
+    assert(deleteResult.success, deleteResult.message);
+    assert(usecase.listWebhooks(tenantId).length == 0);
+
+}

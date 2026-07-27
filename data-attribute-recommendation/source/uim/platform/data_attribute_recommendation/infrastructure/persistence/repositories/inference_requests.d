@@ -46,3 +46,8 @@ class MemoryInferenceRequestRepository : TenantRepository!(InferenceRequest, Inf
   // #endregion ByStatus
 
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryInferenceRequestRepository()));
+}

@@ -72,3 +72,40 @@ class ManageTopicsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, entity.id.value, "");
     }
 }
+
+///
+unittest {
+    auto repo = new TopicRepository();
+    auto usecase = new ManageTopicsUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test create
+    TopicDTO createDto;
+    createDto.tenantId = tenantId;
+    createDto.topicId = TopicId("topic-1");
+    createDto.name = "Test Topic";
+    auto createResult = usecase.createTopic(createDto);
+    assert(createResult.success, createResult.message);
+
+    // Test list
+    auto items = usecase.listTopics(tenantId);
+    assert(items.length == 1);
+
+    // Test get
+    auto item = usecase.getTopic(tenantId, TopicId("topic-1"));
+    assert(!item.isNull);
+
+    // Test update
+    TopicDTO updateDto;
+    updateDto.tenantId = tenantId;
+    updateDto.topicId = TopicId("topic-1");
+    updateDto.name = "Updated Topic";
+    auto updateResult = usecase.updateTopic(updateDto);
+    assert(updateResult.success, updateResult.message);
+
+    // Test delete
+    auto deleteResult = usecase.deleteTopic(tenantId, TopicId("topic-1"));
+    assert(deleteResult.success, deleteResult.message);
+    assert(usecase.listTopics(tenantId).length == 0);
+
+}

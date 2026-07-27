@@ -105,3 +105,15 @@ class ManageCustomDomainsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, domain.id.value, "");
     }
 }
+
+///
+unittest {
+    auto repo = new CustomDomainRepository();
+    auto usecase = new ManageCustomDomainsUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listDomains(tenantId);
+    assert(items !is null);
+
+}

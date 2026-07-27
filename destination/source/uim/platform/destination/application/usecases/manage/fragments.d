@@ -128,3 +128,11 @@ class ManageFragmentsUseCase { // TODO: UIMUseCase {
     }
   }
 }
+
+///
+unittest {
+    auto repo = new FragmentRepository();
+    auto usecase = new ManageFragmentsUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+}

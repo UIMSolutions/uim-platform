@@ -90,3 +90,15 @@ class ManageResourceGroupsUseCase { // TODO: UIMUseCase {
   }
 
 }
+
+///
+unittest {
+    auto repo = new ResourceGroupRepository();
+    auto usecase = new ManageResourceGroupsUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listResourceGroups(tenantId);
+    assert(items !is null);
+
+}

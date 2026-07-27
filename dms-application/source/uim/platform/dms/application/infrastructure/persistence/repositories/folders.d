@@ -55,3 +55,8 @@ class MemoryFolderRepository : TenantRepository!(DmsFolder, FolderId), IFolderRe
     findByParent(tenantId, parentFolderId).each!(e => remove(e));
   }
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryFolderRepository()));
+}

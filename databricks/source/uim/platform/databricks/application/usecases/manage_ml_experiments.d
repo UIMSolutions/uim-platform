@@ -67,3 +67,12 @@ public:
     return UseCaseResult!bool(true, "ML experiment deleted", true);
   }
 }
+
+///
+unittest {
+    auto repo = new MlExperimentRepository();
+    auto usecase = new ManageMlExperimentsUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    assert(usecase !is null);
+}

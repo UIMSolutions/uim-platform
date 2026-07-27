@@ -110,3 +110,40 @@ class ManageRepositoriesUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 }
+
+///
+unittest {
+    auto repo = new RepositoryRepository();
+    auto usecase = new ManageRepositoriesUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test create
+    RepositoryDTO createDto;
+    createDto.tenantId = tenantId;
+    createDto.repositoryId = RepositoryId("repository_-1");
+    createDto.name = "Test Repository_";
+    auto createResult = usecase.createRepository(createDto);
+    assert(createResult.success, createResult.message);
+
+    // Test list
+    auto items = usecase.listRepositories(tenantId);
+    assert(items.length == 1);
+
+    // Test get
+    auto item = usecase.getRepository(tenantId, RepositoryId("repository_-1"));
+    assert(!item.isNull);
+
+    // Test update
+    RepositoryDTO updateDto;
+    updateDto.tenantId = tenantId;
+    updateDto.repositoryId = RepositoryId("repository_-1");
+    updateDto.name = "Updated Repository_";
+    auto updateResult = usecase.updateRepository(updateDto);
+    assert(updateResult.success, updateResult.message);
+
+    // Test delete
+    auto deleteResult = usecase.deleteRepository(tenantId, RepositoryId("repository_-1"));
+    assert(deleteResult.success, deleteResult.message);
+    assert(usecase.listRepositories(tenantId).length == 0);
+
+}

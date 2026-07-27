@@ -48,3 +48,8 @@ class MemorySpaceRepository : TenantRepository!(Space, SpaceId), ISpaceRepositor
   }
 
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemorySpaceRepository()));
+}

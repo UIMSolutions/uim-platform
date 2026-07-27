@@ -109,3 +109,15 @@ class ManageSystemInstancesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, inst.id.value, "");
   }
 }
+
+///
+unittest {
+    auto repo = new SystemInstanceRepository();
+    auto usecase = new ManageSystemInstancesUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listInstances(tenantId);
+    assert(items !is null);
+
+}

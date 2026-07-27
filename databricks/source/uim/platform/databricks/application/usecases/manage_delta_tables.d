@@ -71,3 +71,12 @@ public:
     return UseCaseResult!bool(true, "Delta table deleted", true);
   }
 }
+
+///
+unittest {
+    auto repo = new DeltaTableRepository();
+    auto usecase = new ManageDeltaTablesUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    assert(usecase !is null);
+}

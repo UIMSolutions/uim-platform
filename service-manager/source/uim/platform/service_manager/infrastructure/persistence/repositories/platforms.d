@@ -35,3 +35,8 @@ class MemoryPlatformRepository : TenantRepository!(Platform, PlatformId), IPlatf
     }
     
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryPlatformRepository()));
+}

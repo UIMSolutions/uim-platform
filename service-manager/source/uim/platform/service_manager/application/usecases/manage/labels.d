@@ -65,3 +65,40 @@ class ManageLabelsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, label.id.value, "");
     }
 }
+
+///
+unittest {
+    auto repo = new ILabelRepository();
+    auto usecase = new ManageLabelsUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test create
+    CreateLabelRequest createDto;
+    createDto.tenantId = tenantId;
+    createDto.labelId = LabelId("label-1");
+    createDto.name = "Test Label";
+    auto createResult = usecase.createLabel(createDto);
+    assert(createResult.success, createResult.message);
+
+    // Test list
+    auto items = usecase.listLabels(tenantId);
+    assert(items.length == 1);
+
+    // Test get
+    auto item = usecase.getLabel(tenantId, LabelId("label-1"));
+    assert(!item.isNull);
+
+    // Test update
+    UpdateLabelRequest updateDto;
+    updateDto.tenantId = tenantId;
+    updateDto.labelId = LabelId("label-1");
+    updateDto.name = "Updated Label";
+    auto updateResult = usecase.updateLabel(updateDto);
+    assert(updateResult.success, updateResult.message);
+
+    // Test delete
+    auto deleteResult = usecase.deleteLabel(tenantId, LabelId("label-1"));
+    assert(deleteResult.success, deleteResult.message);
+    assert(usecase.listLabels(tenantId).length == 0);
+
+}

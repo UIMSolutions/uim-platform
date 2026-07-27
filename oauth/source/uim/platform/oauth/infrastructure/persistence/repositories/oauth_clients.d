@@ -49,3 +49,8 @@ class MemoryOAuthClientRepository : TenantRepository!(OAuthClient, OAuthClientId
     // #endregion ByStatus
 
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryOAuthClientRepository()));
+}

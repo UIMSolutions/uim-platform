@@ -59,3 +59,8 @@ class MemoryMetricRepository : TenantRepository!(Metric, MetricId), MetricReposi
   // #endregion ByExecution
 
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryMetricRepository()));
+}

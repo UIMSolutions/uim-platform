@@ -76,3 +76,40 @@ class ManageAppVersionsUseCase {
         return CommandResult(true, entity.id.value, "");
     }
 }
+
+///
+unittest {
+    auto repo = new IAppVersionRepository();
+    auto usecase = new ManageAppVersionsUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test create
+    AppVersionDTO createDto;
+    createDto.tenantId = tenantId;
+    createDto.appVersionId = AppVersionId("appVersion-1");
+    createDto.name = "Test AppVersion";
+    auto createResult = usecase.createAppVersion(createDto);
+    assert(createResult.success, createResult.message);
+
+    // Test list
+    auto items = usecase.listAppVersions(tenantId);
+    assert(items.length == 1);
+
+    // Test get
+    auto item = usecase.getAppVersion(tenantId, AppVersionId("appVersion-1"));
+    assert(!item.isNull);
+
+    // Test update
+    AppVersionDTO updateDto;
+    updateDto.tenantId = tenantId;
+    updateDto.appVersionId = AppVersionId("appVersion-1");
+    updateDto.name = "Updated AppVersion";
+    auto updateResult = usecase.updateAppVersion(updateDto);
+    assert(updateResult.success, updateResult.message);
+
+    // Test delete
+    auto deleteResult = usecase.deleteAppVersion(tenantId, AppVersionId("appVersion-1"));
+    assert(deleteResult.success, deleteResult.message);
+    assert(usecase.listAppVersions(tenantId).length == 0);
+
+}

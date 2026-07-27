@@ -72,3 +72,8 @@ class MemoryDomainRepository : TenantRepository!(CfDomain, CfDomainId), IDomainR
   // #endregion Shared
   
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryDomainRepository()));
+}

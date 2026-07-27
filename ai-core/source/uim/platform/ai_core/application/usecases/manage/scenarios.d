@@ -66,3 +66,12 @@ class ManageScenariosUseCase { // TODO: UIMUseCase {
     return repo.countByResourceGroup(tenantId, rgId);
   }
 }
+
+///
+unittest {
+    auto repo = new ScenarioRepository();
+    auto usecase = new ManageScenariosUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    assert(usecase !is null);
+}

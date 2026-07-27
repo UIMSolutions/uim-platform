@@ -29,3 +29,8 @@ class MemoryWorkspaceRepository : TenantRepository!(Workspace, WorkspaceId), Wor
     return findByTenant(tenantId).filter!(w => w.tier == tier).array;
   }
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryWorkspaceRepository()));
+}

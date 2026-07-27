@@ -81,3 +81,8 @@ class MemoryConfigurationRepository : TenantRepository!(Configuration, Configura
   }
 
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryConfigurationRepository()));
+}

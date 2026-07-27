@@ -59,3 +59,40 @@ class ManageEventChannelsUseCase {
         return CommandResult(true, ec.id.value, "");
     }
 }
+
+///
+unittest {
+    auto repo = new EventChannelRepository();
+    auto usecase = new ManageEventChannelsUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test create
+    EventChannelDTO createDto;
+    createDto.tenantId = tenantId;
+    createDto.eventChannelId = EventChannelId("eventChannel-1");
+    createDto.name = "Test EventChannel";
+    auto createResult = usecase.createChannel(createDto);
+    assert(createResult.success, createResult.message);
+
+    // Test list
+    auto items = usecase.listChannels(tenantId);
+    assert(items.length == 1);
+
+    // Test get
+    auto item = usecase.getChannel(tenantId, EventChannelId("eventChannel-1"));
+    assert(!item.isNull);
+
+    // Test update
+    EventChannelDTO updateDto;
+    updateDto.tenantId = tenantId;
+    updateDto.eventChannelId = EventChannelId("eventChannel-1");
+    updateDto.name = "Updated EventChannel";
+    auto updateResult = usecase.updateChannel(updateDto);
+    assert(updateResult.success, updateResult.message);
+
+    // Test delete
+    auto deleteResult = usecase.deleteChannel(tenantId, EventChannelId("eventChannel-1"));
+    assert(deleteResult.success, deleteResult.message);
+    assert(usecase.listChannels(tenantId).length == 0);
+
+}

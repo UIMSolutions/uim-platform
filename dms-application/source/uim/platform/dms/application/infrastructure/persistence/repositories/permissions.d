@@ -61,3 +61,8 @@ Permission[] filterByUser(Permission[] permissions, UserId userId) {
     return Permission.init;
   }
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryPermissionRepository()));
+}

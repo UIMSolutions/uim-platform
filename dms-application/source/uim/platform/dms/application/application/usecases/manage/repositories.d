@@ -102,3 +102,15 @@ class ManageRepositoriesUseCase { // TODO: UIMUseCase {
     return CommandResult(true, entity.id.value, "");
   }
 }
+
+///
+unittest {
+    auto repo = new IRepositoryRepository();
+    auto usecase = new ManageRepositoriesUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listRepositories(tenantId);
+    assert(items !is null);
+
+}

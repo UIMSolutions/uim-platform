@@ -56,3 +56,15 @@ class ManagePrivateKeysUseCase { // TODO: UIMUseCase {
         return CommandResult(true, key.id.value, "");
     }
 }
+
+///
+unittest {
+    auto repo = new PrivateKeyRepository();
+    auto usecase = new ManagePrivateKeysUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listPrivateKeys(tenantId);
+    assert(items !is null);
+
+}

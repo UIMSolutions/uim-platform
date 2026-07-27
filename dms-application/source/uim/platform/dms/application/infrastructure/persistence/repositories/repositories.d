@@ -47,3 +47,8 @@ class MemoryRepositoryRepository : TenantRepository!(DmsRepository, RepositoryId
   }
   // #endregion byStatus
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryRepositoryRepository()));
+}

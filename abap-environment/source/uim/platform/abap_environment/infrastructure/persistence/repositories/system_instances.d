@@ -45,3 +45,8 @@ class MemorySystemInstanceRepository : TenantRepository!(SystemInstance, SystemI
   }
 
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemorySystemInstanceRepository()));
+}

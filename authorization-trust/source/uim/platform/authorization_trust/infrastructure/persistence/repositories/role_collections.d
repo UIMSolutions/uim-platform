@@ -28,3 +28,8 @@ class MemoryRoleCollectionRepository : TenantRepository!(RoleCollectionEntity, R
     remove(findByName(tenantId, name));
   }
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryRoleCollectionRepository()));
+}

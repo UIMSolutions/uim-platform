@@ -44,3 +44,8 @@ class MemoryOperationRepository : TenantRepository!(Operation, OperationId), IOp
     }
     // #endregion ByOperationStatus
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryOperationRepository()));
+}

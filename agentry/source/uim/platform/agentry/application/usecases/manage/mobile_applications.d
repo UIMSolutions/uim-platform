@@ -82,3 +82,40 @@ class ManageMobileApplicationsUseCase {
         return CommandResult(true, entity.id.value, "");
     }
 }
+
+///
+unittest {
+    auto repo = new IMobileApplicationRepository();
+    auto usecase = new ManageMobileApplicationsUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test create
+    MobileApplicationDTO createDto;
+    createDto.tenantId = tenantId;
+    createDto.mobileApplicationId = MobileApplicationId("mobileApplication-1");
+    createDto.name = "Test MobileApplication";
+    auto createResult = usecase.createMobileApplication(createDto);
+    assert(createResult.success, createResult.message);
+
+    // Test list
+    auto items = usecase.listMobileApplications(tenantId);
+    assert(items.length == 1);
+
+    // Test get
+    auto item = usecase.getMobileApplication(tenantId, MobileApplicationId("mobileApplication-1"));
+    assert(!item.isNull);
+
+    // Test update
+    MobileApplicationDTO updateDto;
+    updateDto.tenantId = tenantId;
+    updateDto.mobileApplicationId = MobileApplicationId("mobileApplication-1");
+    updateDto.name = "Updated MobileApplication";
+    auto updateResult = usecase.updateMobileApplication(updateDto);
+    assert(updateResult.success, updateResult.message);
+
+    // Test delete
+    auto deleteResult = usecase.deleteMobileApplication(tenantId, MobileApplicationId("mobileApplication-1"));
+    assert(deleteResult.success, deleteResult.message);
+    assert(usecase.listMobileApplications(tenantId).length == 0);
+
+}

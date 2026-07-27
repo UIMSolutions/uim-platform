@@ -107,4 +107,14 @@ class ManageDataModelsUseCase { // TODO: UIMUseCase {
   }
 }
 
+///
+unittest {
+    auto repo = new DataModelRepository();
+    auto usecase = new ManageDataModelsUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
 
+    // Test list
+    auto items = usecase.listModelsByTenant(tenantId);
+    assert(items !is null);
+
+}

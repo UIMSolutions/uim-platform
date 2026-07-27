@@ -73,3 +73,40 @@ class ManageSyncSessionsUseCase {
         return CommandResult(true, entity.id.value, "");
     }
 }
+
+///
+unittest {
+    auto repo = new ISyncSessionRepository();
+    auto usecase = new ManageSyncSessionsUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test create
+    SyncSessionDTO createDto;
+    createDto.tenantId = tenantId;
+    createDto.syncSessionId = SyncSessionId("syncSession-1");
+    createDto.name = "Test SyncSession";
+    auto createResult = usecase.createSyncSession(createDto);
+    assert(createResult.success, createResult.message);
+
+    // Test list
+    auto items = usecase.listSyncSessions(tenantId);
+    assert(items.length == 1);
+
+    // Test get
+    auto item = usecase.getSyncSession(tenantId, SyncSessionId("syncSession-1"));
+    assert(!item.isNull);
+
+    // Test update
+    SyncSessionDTO updateDto;
+    updateDto.tenantId = tenantId;
+    updateDto.syncSessionId = SyncSessionId("syncSession-1");
+    updateDto.name = "Updated SyncSession";
+    auto updateResult = usecase.updateSyncSession(updateDto);
+    assert(updateResult.success, updateResult.message);
+
+    // Test delete
+    auto deleteResult = usecase.deleteSyncSession(tenantId, SyncSessionId("syncSession-1"));
+    assert(deleteResult.success, deleteResult.message);
+    assert(usecase.listSyncSessions(tenantId).length == 0);
+
+}

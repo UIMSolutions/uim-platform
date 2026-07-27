@@ -37,3 +37,8 @@ class MemoryDocumentVersionRepository : TenantRepository!(DocumentVersion, Docum
     return DocumentVersion.init;
   }
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryDocumentVersionRepository()));
+}

@@ -96,4 +96,10 @@ class ManageCommunicationArrangementsUseCase { // TODO: UIMUseCase {
   }
 }
 
+///
+unittest {
+    auto repo = new CommunicationArrangementRepository();
+    auto usecase = new ManageCommunicationArrangementsUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
 
+}

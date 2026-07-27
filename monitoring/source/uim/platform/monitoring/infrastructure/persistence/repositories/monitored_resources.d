@@ -50,3 +50,8 @@ class MemoryMonitoredResourceRepository : TenantRepository!(MonitoredResource, M
     findByType(tenantId, type).each!(res => remove(res));
   }
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryMonitoredResourceRepository()));
+}

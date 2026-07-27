@@ -55,3 +55,8 @@ class MemoryAlertRuleRepository : TenantRepository!(AlertRule, AlertRuleId), Ale
   }
 
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryAlertRuleRepository()));
+}

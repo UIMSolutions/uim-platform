@@ -64,3 +64,40 @@ class ManageExecutionsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, entity.id.value, "");
     }
 }
+
+///
+unittest {
+    auto repo = new ExecutionRepository();
+    auto usecase = new ManageExecutionsUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test create
+    ExecutionDTO createDto;
+    createDto.tenantId = tenantId;
+    createDto.executionId = ExecutionId("execution-1");
+    createDto.name = "Test Execution";
+    auto createResult = usecase.createExecution(createDto);
+    assert(createResult.success, createResult.message);
+
+    // Test list
+    auto items = usecase.listExecutions(tenantId);
+    assert(items.length == 1);
+
+    // Test get
+    auto item = usecase.getExecution(tenantId, ExecutionId("execution-1"));
+    assert(!item.isNull);
+
+    // Test update
+    ExecutionDTO updateDto;
+    updateDto.tenantId = tenantId;
+    updateDto.executionId = ExecutionId("execution-1");
+    updateDto.name = "Updated Execution";
+    auto updateResult = usecase.updateExecution(updateDto);
+    assert(updateResult.success, updateResult.message);
+
+    // Test delete
+    auto deleteResult = usecase.deleteExecution(tenantId, ExecutionId("execution-1"));
+    assert(deleteResult.success, deleteResult.message);
+    assert(usecase.listExecutions(tenantId).length == 0);
+
+}

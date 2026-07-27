@@ -72,3 +72,12 @@ public:
     return UseCaseResult!bool(true, "Data product removed", true);
   }
 }
+
+///
+unittest {
+    auto repo = new DataProductRepository();
+    auto usecase = new ManageDataProductsUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    assert(usecase !is null);
+}

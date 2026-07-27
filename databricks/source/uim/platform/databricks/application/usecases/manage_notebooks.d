@@ -69,3 +69,12 @@ public:
     return UseCaseResult!bool(true, "Notebook deleted", true);
   }
 }
+
+///
+unittest {
+    auto repo = new NotebookRepository();
+    auto usecase = new ManageNotebooksUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    assert(usecase !is null);
+}

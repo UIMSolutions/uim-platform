@@ -46,3 +46,8 @@ class MemoryTrainingJobRepository : TenantRepository!(TrainingJob, TrainingJobId
     findByStatus(tenantId, status).each!(e => remove(e));
   }
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryTrainingJobRepository()));
+}

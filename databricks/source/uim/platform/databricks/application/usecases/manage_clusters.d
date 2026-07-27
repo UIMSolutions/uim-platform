@@ -70,3 +70,12 @@ public:
     return UseCaseResult!bool(true, "Cluster terminated", true);
   }
 }
+
+///
+unittest {
+    auto repo = new ClusterRepository();
+    auto usecase = new ManageClustersUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    assert(usecase !is null);
+}

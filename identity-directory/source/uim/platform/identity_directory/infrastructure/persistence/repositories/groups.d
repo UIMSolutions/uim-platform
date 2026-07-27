@@ -45,3 +45,8 @@ class MemoryGroupRepository : TenantRepository!(IDGroup, GroupId), GroupReposito
     findByMember(tenantId, memberId).each!(g => remove(g)); // Update the group in the store after modification
   }
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryGroupRepository()));
+}

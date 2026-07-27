@@ -31,3 +31,8 @@ class MemoryPasswordPolicyRepository : TenantRepository!(PasswordPolicy, Passwor
     remove(findActiveForTenant(tenantId));
   }
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryPasswordPolicyRepository()));
+}

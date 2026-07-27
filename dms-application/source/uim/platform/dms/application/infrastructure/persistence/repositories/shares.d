@@ -50,3 +50,8 @@ class MemoryShareRepository : TenantRepository!(Share, ShareId), IShareRepositor
     findByStatus(tenantId, status).each!(e => remove(e));
   }
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryShareRepository()));
+}

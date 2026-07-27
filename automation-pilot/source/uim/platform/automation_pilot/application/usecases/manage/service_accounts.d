@@ -63,3 +63,40 @@ class ManageServiceAccountsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, entity.id.value, "");
     }
 }
+
+///
+unittest {
+    auto repo = new ServiceAccountRepository();
+    auto usecase = new ManageServiceAccountsUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test create
+    ServiceAccountDTO createDto;
+    createDto.tenantId = tenantId;
+    createDto.serviceAccountId = ServiceAccountId("serviceAccount-1");
+    createDto.name = "Test ServiceAccount";
+    auto createResult = usecase.createServiceAccount(createDto);
+    assert(createResult.success, createResult.message);
+
+    // Test list
+    auto items = usecase.listServiceAccounts(tenantId);
+    assert(items.length == 1);
+
+    // Test get
+    auto item = usecase.getServiceAccount(tenantId, ServiceAccountId("serviceAccount-1"));
+    assert(!item.isNull);
+
+    // Test update
+    ServiceAccountDTO updateDto;
+    updateDto.tenantId = tenantId;
+    updateDto.serviceAccountId = ServiceAccountId("serviceAccount-1");
+    updateDto.name = "Updated ServiceAccount";
+    auto updateResult = usecase.updateServiceAccount(updateDto);
+    assert(updateResult.success, updateResult.message);
+
+    // Test delete
+    auto deleteResult = usecase.deleteServiceAccount(tenantId, ServiceAccountId("serviceAccount-1"));
+    assert(deleteResult.success, deleteResult.message);
+    assert(usecase.listServiceAccounts(tenantId).length == 0);
+
+}

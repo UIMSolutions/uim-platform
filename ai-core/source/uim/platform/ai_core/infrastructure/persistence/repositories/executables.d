@@ -63,3 +63,8 @@ class MemoryExecutableRepository : TenantRepository!(Executable, ExecutableId), 
   }
 
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryExecutableRepository()));
+}

@@ -25,3 +25,8 @@ class MemoryServiceBrokerRepository : TenantRepository!(ServiceBroker, ServiceBr
     }
 
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryServiceBrokerRepository()));
+}

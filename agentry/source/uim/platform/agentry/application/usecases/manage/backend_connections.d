@@ -80,3 +80,40 @@ class ManageBackendConnectionsUseCase {
         return CommandResult(true, entity.id.value, "");
     }
 }
+
+///
+unittest {
+    auto repo = new IBackendConnectionRepository();
+    auto usecase = new ManageBackendConnectionsUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test create
+    BackendConnectionDTO createDto;
+    createDto.tenantId = tenantId;
+    createDto.backendConnectionId = BackendConnectionId("backendConnection-1");
+    createDto.name = "Test BackendConnection";
+    auto createResult = usecase.createBackendConnection(createDto);
+    assert(createResult.success, createResult.message);
+
+    // Test list
+    auto items = usecase.listBackendConnections(tenantId);
+    assert(items.length == 1);
+
+    // Test get
+    auto item = usecase.getBackendConnection(tenantId, BackendConnectionId("backendConnection-1"));
+    assert(!item.isNull);
+
+    // Test update
+    BackendConnectionDTO updateDto;
+    updateDto.tenantId = tenantId;
+    updateDto.backendConnectionId = BackendConnectionId("backendConnection-1");
+    updateDto.name = "Updated BackendConnection";
+    auto updateResult = usecase.updateBackendConnection(updateDto);
+    assert(updateResult.success, updateResult.message);
+
+    // Test delete
+    auto deleteResult = usecase.deleteBackendConnection(tenantId, BackendConnectionId("backendConnection-1"));
+    assert(deleteResult.success, deleteResult.message);
+    assert(usecase.listBackendConnections(tenantId).length == 0);
+
+}

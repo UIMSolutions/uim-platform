@@ -90,3 +90,12 @@ class GetMetricsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, metric.id.value, "");
   }
 }
+
+///
+unittest {
+    auto repo = new MetricRepository();
+    auto usecase = new GetMetricsUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    assert(usecase !is null);
+}

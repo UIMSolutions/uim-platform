@@ -90,3 +90,8 @@ class MemoryMetricRepository : TenantRepository!(Metric, MetricId), MetricReposi
       .each!(metric => remove(metric));
   }
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryMetricRepository()));
+}

@@ -64,3 +64,12 @@ public:
     return UseCaseResult!bool(true, "Job run deleted", true);
   }
 }
+
+///
+unittest {
+    auto repo = new JobRunRepository();
+    auto usecase = new ManageJobRunsUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    assert(usecase !is null);
+}

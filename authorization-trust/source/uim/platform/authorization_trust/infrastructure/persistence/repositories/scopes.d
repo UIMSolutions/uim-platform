@@ -41,3 +41,8 @@ class MemoryScopeRepository : TenantRepository!(ScopeEntity, ScopeId), ScopeRepo
   }
 
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryScopeRepository()));
+}

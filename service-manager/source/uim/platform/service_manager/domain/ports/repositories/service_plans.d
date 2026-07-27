@@ -6,7 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ServicePlanRepository : ITenantRepository!(ServicePlan, ServicePlanId) {
+interface IServicePlanRepository : ITenantRepository!(ServicePlan, ServicePlanId) {
     
     size_t countByPricing(TenantId tenantId, ServicePlanPricing pricing);
     ServicePlan[] findByPricing(TenantId tenantId, ServicePlanPricing pricing);

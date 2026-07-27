@@ -56,3 +56,40 @@ class ManageQueueSubscriptionsUseCase {
         return CommandResult(true, qs.id.value, "");
     }
 }
+
+///
+unittest {
+    auto repo = new QueueSubscriptionRepository();
+    auto usecase = new ManageQueueSubscriptionsUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test create
+    QueueSubscriptionDTO createDto;
+    createDto.tenantId = tenantId;
+    createDto.queueSubscriptionId = QueueSubscriptionId("queueSubscription-1");
+    createDto.name = "Test QueueSubscription";
+    auto createResult = usecase.createSubscription(createDto);
+    assert(createResult.success, createResult.message);
+
+    // Test list
+    auto items = usecase.listSubscriptions(tenantId);
+    assert(items.length == 1);
+
+    // Test get
+    auto item = usecase.getSubscription(tenantId, QueueSubscriptionId("queueSubscription-1"));
+    assert(!item.isNull);
+
+    // Test update
+    QueueSubscriptionDTO updateDto;
+    updateDto.tenantId = tenantId;
+    updateDto.queueSubscriptionId = QueueSubscriptionId("queueSubscription-1");
+    updateDto.name = "Updated QueueSubscription";
+    auto updateResult = usecase.updateSubscription(updateDto);
+    assert(updateResult.success, updateResult.message);
+
+    // Test delete
+    auto deleteResult = usecase.deleteSubscription(tenantId, QueueSubscriptionId("queueSubscription-1"));
+    assert(deleteResult.success, deleteResult.message);
+    assert(usecase.listSubscriptions(tenantId).length == 0);
+
+}

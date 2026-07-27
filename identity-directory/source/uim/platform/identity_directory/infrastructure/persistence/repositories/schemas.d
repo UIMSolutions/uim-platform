@@ -32,3 +32,8 @@ class MemorySchemaRepository : TenantRepository!(Schema, SchemaId), SchemaReposi
   }
 
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemorySchemaRepository()));
+}

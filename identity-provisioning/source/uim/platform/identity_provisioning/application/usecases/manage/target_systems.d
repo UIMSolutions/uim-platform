@@ -108,3 +108,15 @@ class ManageTargetSystemsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, existing.id.value, "");
   }
 }
+
+///
+unittest {
+    auto repo = new ITargetSystemRepository();
+    auto usecase = new ManageTargetSystemsUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listTargetSystems(tenantId);
+    assert(items !is null);
+
+}

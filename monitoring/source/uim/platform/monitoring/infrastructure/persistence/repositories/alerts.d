@@ -80,3 +80,8 @@ class MemoryAlertRepository : TenantRepository!(Alert, AlertId), AlertRepository
   }
 
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryAlertRepository()));
+}

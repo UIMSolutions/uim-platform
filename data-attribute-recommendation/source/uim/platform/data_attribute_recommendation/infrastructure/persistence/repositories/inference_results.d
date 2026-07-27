@@ -50,3 +50,8 @@ class MemoryInferenceResultRepository : TenantRepository!(InferenceResult, Infer
   }
 
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryInferenceResultRepository()));
+}

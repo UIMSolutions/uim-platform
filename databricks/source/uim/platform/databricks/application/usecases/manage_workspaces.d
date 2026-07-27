@@ -65,3 +65,12 @@ public:
     return UseCaseResult!bool(true, "Workspace deleted", true);
   }
 }
+
+///
+unittest {
+    auto repo = new WorkspaceRepository();
+    auto usecase = new ManageWorkspacesUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    assert(usecase !is null);
+}

@@ -24,3 +24,8 @@ class MemoryServiceInstanceRepository : TenantRepository!(ServiceInstance, Servi
         this.findByStatus(tenantId, status).each!(i => this.remove(i));
     }
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryServiceInstanceRepository()));
+}

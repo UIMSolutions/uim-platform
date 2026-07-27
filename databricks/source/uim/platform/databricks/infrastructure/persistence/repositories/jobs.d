@@ -29,3 +29,8 @@ class MemoryJobRepository : TenantRepository!(Job, JobId), JobRepository {
     return findByTenant(tenantId).filter!(j => j.creatorId == creatorId).array;
   }
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryJobRepository()));
+}

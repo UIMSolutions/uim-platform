@@ -63,3 +63,40 @@ class ManageServiceBrokersUseCase { // TODO: UIMUseCase {
         return CommandResult(true, broker.id.value, "");
     }
 }
+
+///
+unittest {
+    auto repo = new IServiceBrokerRepository();
+    auto usecase = new ManageServiceBrokersUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test create
+    CreateServiceBrokerRequest createDto;
+    createDto.tenantId = tenantId;
+    createDto.serviceBrokerId = ServiceBrokerId("serviceBroker-1");
+    createDto.name = "Test ServiceBroker";
+    auto createResult = usecase.createBroker(createDto);
+    assert(createResult.success, createResult.message);
+
+    // Test list
+    auto items = usecase.listBrokers(tenantId);
+    assert(items.length == 1);
+
+    // Test get
+    auto item = usecase.getBroker(tenantId, ServiceBrokerId("serviceBroker-1"));
+    assert(!item.isNull);
+
+    // Test update
+    UpdateServiceBrokerRequest updateDto;
+    updateDto.tenantId = tenantId;
+    updateDto.serviceBrokerId = ServiceBrokerId("serviceBroker-1");
+    updateDto.name = "Updated ServiceBroker";
+    auto updateResult = usecase.updateBroker(updateDto);
+    assert(updateResult.success, updateResult.message);
+
+    // Test delete
+    auto deleteResult = usecase.deleteBroker(tenantId, ServiceBrokerId("serviceBroker-1"));
+    assert(deleteResult.success, deleteResult.message);
+    assert(usecase.listBrokers(tenantId).length == 0);
+
+}

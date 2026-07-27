@@ -30,3 +30,8 @@ class MemoryMlExperimentRepository : TenantRepository!(MlExperiment, MlExperimen
     return results.empty ? MlExperiment.init : results.front;
   }
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryMlExperimentRepository()));
+}

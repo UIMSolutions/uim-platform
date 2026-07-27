@@ -45,3 +45,8 @@ class MemoryServiceBindingRepository : TenantRepository!(ServiceBinding, Service
   // #endregion ByType
   
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryServiceBindingRepository()));
+}

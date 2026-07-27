@@ -56,3 +56,40 @@ class ManageMessageBindingsUseCase {
         return CommandResult(true, mb.id.value, "");
     }
 }
+
+///
+unittest {
+    auto repo = new MessageBindingRepository();
+    auto usecase = new ManageMessageBindingsUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test create
+    MessageBindingDTO createDto;
+    createDto.tenantId = tenantId;
+    createDto.messageBindingId = MessageBindingId("messageBinding-1");
+    createDto.name = "Test MessageBinding";
+    auto createResult = usecase.createBinding(createDto);
+    assert(createResult.success, createResult.message);
+
+    // Test list
+    auto items = usecase.listBindings(tenantId);
+    assert(items.length == 1);
+
+    // Test get
+    auto item = usecase.getBinding(tenantId, MessageBindingId("messageBinding-1"));
+    assert(!item.isNull);
+
+    // Test update
+    MessageBindingDTO updateDto;
+    updateDto.tenantId = tenantId;
+    updateDto.messageBindingId = MessageBindingId("messageBinding-1");
+    updateDto.name = "Updated MessageBinding";
+    auto updateResult = usecase.updateBinding(updateDto);
+    assert(updateResult.success, updateResult.message);
+
+    // Test delete
+    auto deleteResult = usecase.deleteBinding(tenantId, MessageBindingId("messageBinding-1"));
+    assert(deleteResult.success, deleteResult.message);
+    assert(usecase.listBindings(tenantId).length == 0);
+
+}

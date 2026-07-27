@@ -116,3 +116,15 @@ class ManageJobsUseCase { // TODO: UIMUseCase {
         }
     }
 }
+
+///
+unittest {
+    auto repo = new JobRepository();
+    auto usecase = new ManageJobsUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listJobs(tenantId);
+    assert(items !is null);
+
+}

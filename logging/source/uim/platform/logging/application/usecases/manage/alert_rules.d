@@ -99,3 +99,15 @@ class ManageAlertRulesUseCase { // TODO: UIMUseCase {
   }
   
 }
+
+///
+unittest {
+    auto repo = new AlertRuleRepository();
+    auto usecase = new ManageAlertRulesUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listRules(tenantId);
+    assert(items !is null);
+
+}

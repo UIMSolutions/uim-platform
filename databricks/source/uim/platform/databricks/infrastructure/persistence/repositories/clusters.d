@@ -29,3 +29,8 @@ class MemoryClusterRepository : TenantRepository!(Cluster, ClusterId), ClusterRe
     return findByTenant(tenantId).filter!(c => c.clusterType == clusterType).array;
   }
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryClusterRepository()));
+}

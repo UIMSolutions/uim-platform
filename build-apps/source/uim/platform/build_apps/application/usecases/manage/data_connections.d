@@ -77,3 +77,40 @@ class ManageDataConnectionsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, entity.id.value, "");
     }
 }
+
+///
+unittest {
+    auto repo = new DataConnectionRepository();
+    auto usecase = new ManageDataConnectionsUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test create
+    DataConnectionDTO createDto;
+    createDto.tenantId = tenantId;
+    createDto.dataConnectionId = DataConnectionId("dataConnection-1");
+    createDto.name = "Test DataConnection";
+    auto createResult = usecase.createDataConnection(createDto);
+    assert(createResult.success, createResult.message);
+
+    // Test list
+    auto items = usecase.listDataConnections(tenantId);
+    assert(items.length == 1);
+
+    // Test get
+    auto item = usecase.getDataConnection(tenantId, DataConnectionId("dataConnection-1"));
+    assert(!item.isNull);
+
+    // Test update
+    DataConnectionDTO updateDto;
+    updateDto.tenantId = tenantId;
+    updateDto.dataConnectionId = DataConnectionId("dataConnection-1");
+    updateDto.name = "Updated DataConnection";
+    auto updateResult = usecase.updateDataConnection(updateDto);
+    assert(updateResult.success, updateResult.message);
+
+    // Test delete
+    auto deleteResult = usecase.deleteDataConnection(tenantId, DataConnectionId("dataConnection-1"));
+    assert(deleteResult.success, deleteResult.message);
+    assert(usecase.listDataConnections(tenantId).length == 0);
+
+}

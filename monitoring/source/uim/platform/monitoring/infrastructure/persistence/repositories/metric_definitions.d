@@ -53,3 +53,8 @@ class MemoryMetricDefinitionRepository : TenantRepository!(MetricDefinition, Met
   }
 
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryMetricDefinitionRepository()));
+}

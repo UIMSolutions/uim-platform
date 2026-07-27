@@ -55,3 +55,40 @@ class ManageOperationsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, operation.id.value, "");
     }
 }
+
+///
+unittest {
+    auto repo = new IOperationRepository();
+    auto usecase = new ManageOperationsUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test create
+    CreateOperationRequest createDto;
+    createDto.tenantId = tenantId;
+    createDto.operationId = OperationId("operation-1");
+    createDto.name = "Test Operation";
+    auto createResult = usecase.createOperation(createDto);
+    assert(createResult.success, createResult.message);
+
+    // Test list
+    auto items = usecase.listOperations(tenantId);
+    assert(items.length == 1);
+
+    // Test get
+    auto item = usecase.getOperation(tenantId, OperationId("operation-1"));
+    assert(!item.isNull);
+
+    // Test update
+    UpdateOperationRequest updateDto;
+    updateDto.tenantId = tenantId;
+    updateDto.operationId = OperationId("operation-1");
+    updateDto.name = "Updated Operation";
+    auto updateResult = usecase.updateOperation(updateDto);
+    assert(updateResult.success, updateResult.message);
+
+    // Test delete
+    auto deleteResult = usecase.deleteOperation(tenantId, OperationId("operation-1"));
+    assert(deleteResult.success, deleteResult.message);
+    assert(usecase.listOperations(tenantId).length == 0);
+
+}

@@ -31,3 +31,12 @@ class TenantUseCase(TRepository, TEntity, TId) {
     return repository.findByTenant(tenantId);
   }
 }
+
+///
+unittest {
+    auto repo = new TRepository();
+    auto usecase = new TenantUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    assert(usecase !is null);
+}

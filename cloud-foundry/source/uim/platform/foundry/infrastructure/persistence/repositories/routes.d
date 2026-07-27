@@ -90,3 +90,8 @@ class MemoryRouteRepository : TenantRepository!(Route, RouteId), IRouteRepositor
   }
   // #endregion BySpace
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryRouteRepository()));
+}

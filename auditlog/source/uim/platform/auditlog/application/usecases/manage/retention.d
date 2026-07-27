@@ -85,3 +85,15 @@ class ManageRetentionUseCase { // TODO: UIMUseCase {
     return CommandResult(true, policy.id.value, "");
   }
 }
+
+///
+unittest {
+    auto repo = new IRetentionPolicyRepository();
+    auto usecase = new ManageRetentionUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listPolicies(tenantId);
+    assert(items !is null);
+
+}

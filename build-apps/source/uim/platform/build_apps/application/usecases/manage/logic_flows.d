@@ -76,3 +76,40 @@ class ManageLogicFlowsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, entity.id.value, "");
     }
 }
+
+///
+unittest {
+    auto repo = new LogicFlowRepository();
+    auto usecase = new ManageLogicFlowsUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test create
+    LogicFlowDTO createDto;
+    createDto.tenantId = tenantId;
+    createDto.logicFlowId = LogicFlowId("logicFlow-1");
+    createDto.name = "Test LogicFlow";
+    auto createResult = usecase.createLogicFlow(createDto);
+    assert(createResult.success, createResult.message);
+
+    // Test list
+    auto items = usecase.listLogicFlows(tenantId);
+    assert(items.length == 1);
+
+    // Test get
+    auto item = usecase.getLogicFlow(tenantId, LogicFlowId("logicFlow-1"));
+    assert(!item.isNull);
+
+    // Test update
+    LogicFlowDTO updateDto;
+    updateDto.tenantId = tenantId;
+    updateDto.logicFlowId = LogicFlowId("logicFlow-1");
+    updateDto.name = "Updated LogicFlow";
+    auto updateResult = usecase.updateLogicFlow(updateDto);
+    assert(updateResult.success, updateResult.message);
+
+    // Test delete
+    auto deleteResult = usecase.deleteLogicFlow(tenantId, LogicFlowId("logicFlow-1"));
+    assert(deleteResult.success, deleteResult.message);
+    assert(usecase.listLogicFlows(tenantId).length == 0);
+
+}

@@ -70,3 +70,12 @@ public:
     return UseCaseResult!bool(true, "SQL warehouse deleted", true);
   }
 }
+
+///
+unittest {
+    auto repo = new SqlWarehouseRepository();
+    auto usecase = new ManageSqlWarehousesUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    assert(usecase !is null);
+}

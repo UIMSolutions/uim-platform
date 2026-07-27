@@ -70,3 +70,40 @@ class ManageUIComponentsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, entity.id.value, "");
     }
 }
+
+///
+unittest {
+    auto repo = new UIComponentRepository();
+    auto usecase = new ManageUIComponentsUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test create
+    UIComponentDTO createDto;
+    createDto.tenantId = tenantId;
+    createDto.uIComponentId = UIComponentId("uIComponent-1");
+    createDto.name = "Test UIComponent";
+    auto createResult = usecase.createUIComponent(createDto);
+    assert(createResult.success, createResult.message);
+
+    // Test list
+    auto items = usecase.listUIComponents(tenantId);
+    assert(items.length == 1);
+
+    // Test get
+    auto item = usecase.getUIComponent(tenantId, UIComponentId("uIComponent-1"));
+    assert(!item.isNull);
+
+    // Test update
+    UIComponentDTO updateDto;
+    updateDto.tenantId = tenantId;
+    updateDto.uIComponentId = UIComponentId("uIComponent-1");
+    updateDto.name = "Updated UIComponent";
+    auto updateResult = usecase.updateUIComponent(updateDto);
+    assert(updateResult.success, updateResult.message);
+
+    // Test delete
+    auto deleteResult = usecase.deleteUIComponent(tenantId, UIComponentId("uIComponent-1"));
+    assert(deleteResult.success, deleteResult.message);
+    assert(usecase.listUIComponents(tenantId).length == 0);
+
+}

@@ -62,3 +62,32 @@ class ManageAuthorizationCodesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, code.id.value, "");
     }
 }
+
+///
+unittest {
+    auto repo = new IAuthorizationCodeRepository();
+    auto usecase = new ManageAuthorizationCodesUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test create
+    AuthorizationCodeDTO createDto;
+    createDto.tenantId = tenantId;
+    createDto.authorizationCodeId = AuthorizationCodeId("authorizationCode-1");
+    createDto.name = "Test AuthorizationCode";
+    auto createResult = usecase.createCode(createDto);
+    assert(createResult.success, createResult.message);
+
+    // Test list
+    auto items = usecase.listCodes(tenantId);
+    assert(items.length == 1);
+
+    // Test get
+    auto item = usecase.getCode(tenantId, AuthorizationCodeId("authorizationCode-1"));
+    assert(!item.isNull);
+
+    // Test delete
+    auto deleteResult = usecase.deleteCode(tenantId, AuthorizationCodeId("authorizationCode-1"));
+    assert(deleteResult.success, deleteResult.message);
+    assert(usecase.listCodes(tenantId).length == 0);
+
+}

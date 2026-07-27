@@ -43,3 +43,8 @@ class MemoryIdentityProviderRepository : TenantRepository!(IdentityProvider, Ide
     remove(findDefault(tenantId));
   }
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryIdentityProviderRepository()));
+}

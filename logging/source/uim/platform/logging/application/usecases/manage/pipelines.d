@@ -163,3 +163,15 @@ class ManagePipelinesUseCase { // TODO: UIMUseCase {
   }
 
 }
+
+///
+unittest {
+    auto repo = new PipelineRepository();
+    auto usecase = new ManagePipelinesUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listPipelines(tenantId);
+    assert(items !is null);
+
+}

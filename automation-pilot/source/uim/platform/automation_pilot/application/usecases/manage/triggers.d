@@ -70,3 +70,40 @@ class ManageTriggersUseCase { // TODO: UIMUseCase {
         return CommandResult(true, entity.id.value, "");
     }
 }
+
+///
+unittest {
+    auto repo = new TriggerRepository();
+    auto usecase = new ManageTriggersUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test create
+    TriggerDTO createDto;
+    createDto.tenantId = tenantId;
+    createDto.triggerId = TriggerId("trigger-1");
+    createDto.name = "Test Trigger";
+    auto createResult = usecase.createTrigger(createDto);
+    assert(createResult.success, createResult.message);
+
+    // Test list
+    auto items = usecase.listTriggers(tenantId);
+    assert(items.length == 1);
+
+    // Test get
+    auto item = usecase.getTrigger(tenantId, TriggerId("trigger-1"));
+    assert(!item.isNull);
+
+    // Test update
+    TriggerDTO updateDto;
+    updateDto.tenantId = tenantId;
+    updateDto.triggerId = TriggerId("trigger-1");
+    updateDto.name = "Updated Trigger";
+    auto updateResult = usecase.updateTrigger(updateDto);
+    assert(updateResult.success, updateResult.message);
+
+    // Test delete
+    auto deleteResult = usecase.deleteTrigger(tenantId, TriggerId("trigger-1"));
+    assert(deleteResult.success, deleteResult.message);
+    assert(usecase.listTriggers(tenantId).length == 0);
+
+}

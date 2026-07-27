@@ -68,3 +68,12 @@ class ManageKeyPasswordsUseCase {
     return CommandResult(true, kp.id.value, "");
   }
 }
+
+///
+unittest {
+    auto repo = new IKeyPasswordRepository();
+    auto usecase = new ManageKeyPasswordsUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    assert(usecase !is null);
+}

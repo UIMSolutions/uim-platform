@@ -45,3 +45,8 @@ class MemoryAbapProgramRepository : TenantRepository!(AbapProgram, AbapProgramId
         findByLanguage(tenantId, language).each!(p => remove(p));
     }
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryAbapProgramRepository()));
+}

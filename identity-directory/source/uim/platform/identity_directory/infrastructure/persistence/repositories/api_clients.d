@@ -30,3 +30,8 @@ class MemoryApiClientRepository : TenantRepository!(ApiClient, ApiClientId), Api
     remove(findByClient(tenantId, clientId));
   }
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryApiClientRepository()));
+}

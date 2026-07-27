@@ -158,3 +158,11 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
     return CommandResult(true, entity.id.value, "");
   }
 }
+
+///
+unittest {
+    auto repo = new DestinationRepository();
+    auto usecase = new ManageDestinationsUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+}

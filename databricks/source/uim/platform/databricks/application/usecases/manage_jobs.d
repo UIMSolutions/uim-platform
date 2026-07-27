@@ -73,3 +73,12 @@ public:
     return UseCaseResult!bool(true, "Job deleted", true);
   }
 }
+
+///
+unittest {
+    auto repo = new JobRepository();
+    auto usecase = new ManageJobsUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    assert(usecase !is null);
+}

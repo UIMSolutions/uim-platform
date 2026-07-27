@@ -111,3 +111,15 @@ class ManageAlertsUseCase { // TODO: UIMUseCase {
   }
 
 }
+
+///
+unittest {
+    auto repo = new AlertRepository();
+    auto usecase = new ManageAlertsUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listAlerts(tenantId);
+    assert(items !is null);
+
+}

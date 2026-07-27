@@ -34,3 +34,8 @@ class MemoryOrgRepository : TenantRepository!(Organization, OrgId), IOrgReposito
   }
   
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryOrgRepository()));
+}

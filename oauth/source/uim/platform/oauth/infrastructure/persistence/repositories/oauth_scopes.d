@@ -57,3 +57,8 @@ class MemoryOAuthScopeRepository : TenantRepository!(OAuthScope, OAuthScopeId), 
 
 
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryOAuthScopeRepository()));
+}

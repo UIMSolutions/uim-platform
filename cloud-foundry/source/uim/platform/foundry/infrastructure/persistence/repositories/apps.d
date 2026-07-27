@@ -67,3 +67,8 @@ class MemoryAppRepository : TenantRepository!(Application, AppId), IAppRepositor
   // #endregion ByState
   
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryAppRepository()));
+}

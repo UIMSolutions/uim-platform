@@ -44,3 +44,12 @@ class RetrieveAuditLogsUseCase { // TODO: UIMUseCase {
     return repository.countByTenant(tenantId);
   }
 }
+
+///
+unittest {
+    auto repo = new IAuditLogRepository();
+    auto usecase = new RetrieveAuditLogsUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    assert(usecase !is null);
+}

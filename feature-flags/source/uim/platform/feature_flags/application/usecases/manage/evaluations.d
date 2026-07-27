@@ -37,3 +37,12 @@ class EvaluateFlagsUseCase {
         return results;
     }
 }
+
+///
+unittest {
+    auto repo = new FeatureFlagRepository();
+    auto usecase = new EvaluateFlagsUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    assert(usecase !is null);
+}

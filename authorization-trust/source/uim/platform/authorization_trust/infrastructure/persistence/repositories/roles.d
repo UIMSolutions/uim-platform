@@ -45,3 +45,8 @@ class MemoryRoleRepository : TenantRepository!(RoleEntity, RoleId), RoleReposito
   }
 
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryRoleRepository()));
+}

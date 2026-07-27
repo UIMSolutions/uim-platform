@@ -64,3 +64,40 @@ class ManageMessageClientsUseCase {
         return CommandResult(true, c.id.value, "");
     }
 }
+
+///
+unittest {
+    auto repo = new MessageClientRepository();
+    auto usecase = new ManageMessageClientsUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test create
+    MessageClientDTO createDto;
+    createDto.tenantId = tenantId;
+    createDto.messageClientId = MessageClientId("messageClient-1");
+    createDto.name = "Test MessageClient";
+    auto createResult = usecase.createClient(createDto);
+    assert(createResult.success, createResult.message);
+
+    // Test list
+    auto items = usecase.listClients(tenantId);
+    assert(items.length == 1);
+
+    // Test get
+    auto item = usecase.getClient(tenantId, MessageClientId("messageClient-1"));
+    assert(!item.isNull);
+
+    // Test update
+    MessageClientDTO updateDto;
+    updateDto.tenantId = tenantId;
+    updateDto.messageClientId = MessageClientId("messageClient-1");
+    updateDto.name = "Updated MessageClient";
+    auto updateResult = usecase.updateClient(updateDto);
+    assert(updateResult.success, updateResult.message);
+
+    // Test delete
+    auto deleteResult = usecase.deleteClient(tenantId, MessageClientId("messageClient-1"));
+    assert(deleteResult.success, deleteResult.message);
+    assert(usecase.listClients(tenantId).length == 0);
+
+}

@@ -31,3 +31,8 @@ class MemoryApplicationRepository : TenantRepository!(Application, ApplicationId
     remove(findByClient(tenantId, clientId));
   }
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryApplicationRepository()));
+}

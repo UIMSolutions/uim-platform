@@ -34,3 +34,8 @@ class MemoryPolicyRepository : TenantRepository!(AuthorizationPolicy, PolicyId),
   }
 
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryPolicyRepository()));
+}

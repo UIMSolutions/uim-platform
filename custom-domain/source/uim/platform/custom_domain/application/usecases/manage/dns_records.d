@@ -81,3 +81,15 @@ class ManageDnsRecordsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, record.id.value, "");
     }
 }
+
+///
+unittest {
+    auto repo = new DnsRecordRepository();
+    auto usecase = new ManageDnsRecordsUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listDnsRecords(tenantId);
+    assert(items !is null);
+
+}

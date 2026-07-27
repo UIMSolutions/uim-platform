@@ -49,3 +49,15 @@ class QueryChangeLogUseCase { // TODO: UIMUseCase {
     return repo.findSinceDeltaToken(tenantId, deltaToken);
   }
 }
+
+///
+unittest {
+    auto repo = new ChangeLogRepository();
+    auto usecase = new QueryChangeLogUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listByTenant(tenantId);
+    assert(items !is null);
+
+}

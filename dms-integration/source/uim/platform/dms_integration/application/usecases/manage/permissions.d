@@ -86,3 +86,15 @@ class ManagePermissionsUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 }
+
+///
+unittest {
+    auto repo = new PermissionRepository();
+    auto usecase = new ManagePermissionsUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listPermissions(tenantId);
+    assert(items !is null);
+
+}

@@ -84,3 +84,12 @@ class QueryEnvironmentEventsUseCase { // TODO: UIMUseCase {
     }
   }
 }
+
+///
+unittest {
+    auto repo = new EnvironmentEventRepository();
+    auto usecase = new QueryEnvironmentEventsUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    assert(usecase !is null);
+}

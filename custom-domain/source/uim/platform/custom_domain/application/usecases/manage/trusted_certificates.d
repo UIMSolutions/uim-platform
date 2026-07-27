@@ -60,3 +60,15 @@ class ManageTrustedCertificatesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, certificate.id.value, "");
     }
 }
+
+///
+unittest {
+    auto repo = new TrustedCertificateRepository();
+    auto usecase = new ManageTrustedCertificatesUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listCertificates(tenantId);
+    assert(items !is null);
+
+}

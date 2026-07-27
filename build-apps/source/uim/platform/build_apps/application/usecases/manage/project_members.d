@@ -69,3 +69,40 @@ class ManageProjectMembersUseCase { // TODO: UIMUseCase {
         return CommandResult(true, entity.id.value, "");
     }
 }
+
+///
+unittest {
+    auto repo = new ProjectMemberRepository();
+    auto usecase = new ManageProjectMembersUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test create
+    ProjectMemberDTO createDto;
+    createDto.tenantId = tenantId;
+    createDto.projectMemberId = ProjectMemberId("projectMember-1");
+    createDto.name = "Test ProjectMember";
+    auto createResult = usecase.createProjectMember(createDto);
+    assert(createResult.success, createResult.message);
+
+    // Test list
+    auto items = usecase.listProjectMembers(tenantId);
+    assert(items.length == 1);
+
+    // Test get
+    auto item = usecase.getProjectMember(tenantId, ProjectMemberId("projectMember-1"));
+    assert(!item.isNull);
+
+    // Test update
+    ProjectMemberDTO updateDto;
+    updateDto.tenantId = tenantId;
+    updateDto.projectMemberId = ProjectMemberId("projectMember-1");
+    updateDto.name = "Updated ProjectMember";
+    auto updateResult = usecase.updateProjectMember(updateDto);
+    assert(updateResult.success, updateResult.message);
+
+    // Test delete
+    auto deleteResult = usecase.deleteProjectMember(tenantId, ProjectMemberId("projectMember-1"));
+    assert(deleteResult.success, deleteResult.message);
+    assert(usecase.listProjectMembers(tenantId).length == 0);
+
+}

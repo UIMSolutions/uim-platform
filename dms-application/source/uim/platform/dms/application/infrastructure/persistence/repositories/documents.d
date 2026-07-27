@@ -64,3 +64,8 @@ class MemoryDocumentRepository : TenantRepository!(Document, DocumentId), IDocum
     findByName(tenantId, name).each!(e => remove(e));
   }
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryDocumentRepository()));
+}

@@ -42,3 +42,8 @@ class MemoryHealthCheckRepository : TenantRepository!(HealthCheck, HealthCheckId
   }
 
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryHealthCheckRepository()));
+}

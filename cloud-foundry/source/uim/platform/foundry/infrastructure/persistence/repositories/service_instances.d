@@ -66,3 +66,8 @@ class MemoryServiceInstanceRepository : TenantRepository!(ServiceInstance, Servi
   }
 
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryServiceInstanceRepository()));
+}

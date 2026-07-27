@@ -30,3 +30,8 @@ class MemoryMlModelRepository : TenantRepository!(MlModel, MlModelId), MlModelRe
     return results.empty ? MlModel.init : results.front;
   }
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryMlModelRepository()));
+}

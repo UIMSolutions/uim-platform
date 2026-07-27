@@ -31,3 +31,8 @@ class MemoryResourceGroupRepository : TenantRepository!(ResourceGroup, ResourceG
     findByStatus(tenantId, status).each!(rg => remove(rg));
   }
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryResourceGroupRepository()));
+}

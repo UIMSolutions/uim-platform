@@ -71,3 +71,12 @@ class ManageRunLogsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, runlog.id.value, "");
     }
 }
+
+///
+unittest {
+    auto repo = new RunLogRepository();
+    auto usecase = new ManageRunLogsUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    assert(usecase !is null);
+}

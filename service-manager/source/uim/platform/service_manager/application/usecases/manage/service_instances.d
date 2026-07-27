@@ -70,3 +70,40 @@ class ManageServiceInstancesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, instance.id.value, "");
     }
 }
+
+///
+unittest {
+    auto repo = new IServiceInstanceRepository();
+    auto usecase = new ManageServiceInstancesUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test create
+    CreateServiceInstanceRequest createDto;
+    createDto.tenantId = tenantId;
+    createDto.serviceInstanceId = ServiceInstanceId("serviceInstance-1");
+    createDto.name = "Test ServiceInstance";
+    auto createResult = usecase.createInstance(createDto);
+    assert(createResult.success, createResult.message);
+
+    // Test list
+    auto items = usecase.listInstances(tenantId);
+    assert(items.length == 1);
+
+    // Test get
+    auto item = usecase.getInstance(tenantId, ServiceInstanceId("serviceInstance-1"));
+    assert(!item.isNull);
+
+    // Test update
+    UpdateServiceInstanceRequest updateDto;
+    updateDto.tenantId = tenantId;
+    updateDto.serviceInstanceId = ServiceInstanceId("serviceInstance-1");
+    updateDto.name = "Updated ServiceInstance";
+    auto updateResult = usecase.updateInstance(updateDto);
+    assert(updateResult.success, updateResult.message);
+
+    // Test delete
+    auto deleteResult = usecase.deleteInstance(tenantId, ServiceInstanceId("serviceInstance-1"));
+    assert(deleteResult.success, deleteResult.message);
+    assert(usecase.listInstances(tenantId).length == 0);
+
+}

@@ -67,3 +67,12 @@ class ManageExecutablesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, executable.id.value, "");
     }
 }
+
+///
+unittest {
+    auto repo = new ExecutableRepository();
+    auto usecase = new ManageExecutablesUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    assert(usecase !is null);
+}

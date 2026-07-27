@@ -76,3 +76,40 @@ class ManageOAuthClientsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, client.id.value, "");
     }
 }
+
+///
+unittest {
+    auto repo = new IOAuthClientRepository();
+    auto usecase = new ManageOAuthClientsUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test create
+    OAuthClientDTO createDto;
+    createDto.tenantId = tenantId;
+    createDto.oAuthClientId = OAuthClientId("oAuthClient-1");
+    createDto.name = "Test OAuthClient";
+    auto createResult = usecase.createClient(createDto);
+    assert(createResult.success, createResult.message);
+
+    // Test list
+    auto items = usecase.listClients(tenantId);
+    assert(items.length == 1);
+
+    // Test get
+    auto item = usecase.getClient(tenantId, OAuthClientId("oAuthClient-1"));
+    assert(!item.isNull);
+
+    // Test update
+    OAuthClientDTO updateDto;
+    updateDto.tenantId = tenantId;
+    updateDto.oAuthClientId = OAuthClientId("oAuthClient-1");
+    updateDto.name = "Updated OAuthClient";
+    auto updateResult = usecase.updateClient(updateDto);
+    assert(updateResult.success, updateResult.message);
+
+    // Test delete
+    auto deleteResult = usecase.deleteClient(tenantId, OAuthClientId("oAuthClient-1"));
+    assert(deleteResult.success, deleteResult.message);
+    assert(usecase.listClients(tenantId).length == 0);
+
+}

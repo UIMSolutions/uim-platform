@@ -86,3 +86,15 @@ class ManageOAuthClientsUseCase {
     return repo.findByApp(tenantId, appId);
   }
 }
+
+///
+unittest {
+    auto repo = new OAuthClientRepository();
+    auto usecase = new ManageOAuthClientsUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listClients(tenantId);
+    assert(items !is null);
+
+}

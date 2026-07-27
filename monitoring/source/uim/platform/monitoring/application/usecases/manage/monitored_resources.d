@@ -95,3 +95,15 @@ class ManageMonitoredResourcesUseCase { // TODO: UIMUseCase {
   }
 
 }
+
+///
+unittest {
+    auto repo = new MonitoredResourceRepository();
+    auto usecase = new ManageMonitoredResourcesUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listResources(tenantId);
+    assert(items !is null);
+
+}

@@ -48,3 +48,8 @@ class MemoryNotificationChannelRepository : TenantRepository!(NotificationChanne
   }
 
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryNotificationChannelRepository()));
+}

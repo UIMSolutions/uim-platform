@@ -26,3 +26,8 @@ class MemoryOAuthClientRepository : TenantRepository!(OAuthClient, OAuthClientId
     findByApp(tenantId, appId).each!(c => remove(c));
   }
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryOAuthClientRepository()));
+}

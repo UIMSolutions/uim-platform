@@ -67,3 +67,15 @@ class ManageRoleCollectionsUseCase {
     return repo.findByTenant(tenantId);
   }
 }
+
+///
+unittest {
+    auto repo = new RoleCollectionRepository();
+    auto usecase = new ManageRoleCollectionsUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listRoleCollections(tenantId);
+    assert(items !is null);
+
+}

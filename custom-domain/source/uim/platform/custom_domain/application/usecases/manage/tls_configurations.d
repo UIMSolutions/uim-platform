@@ -73,3 +73,15 @@ class ManageTlsConfigurationsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, config.id.value, "");
     }
 }
+
+///
+unittest {
+    auto repo = new TlsConfigurationRepository();
+    auto usecase = new ManageTlsConfigurationsUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listTlsConfigurations(tenantId);
+    assert(items !is null);
+
+}

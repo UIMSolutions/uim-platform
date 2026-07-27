@@ -80,3 +80,40 @@ class ManageMeshBridgesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, bridge.id.value, "");
     }
 }
+
+///
+unittest {
+    auto repo = new MeshBridgeRepository();
+    auto usecase = new ManageMeshBridgesUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test create
+    MeshBridgeDTO createDto;
+    createDto.tenantId = tenantId;
+    createDto.meshBridgeId = MeshBridgeId("meshBridge-1");
+    createDto.name = "Test MeshBridge";
+    auto createResult = usecase.createBridge(createDto);
+    assert(createResult.success, createResult.message);
+
+    // Test list
+    auto items = usecase.listBridges(tenantId);
+    assert(items.length == 1);
+
+    // Test get
+    auto item = usecase.getBridge(tenantId, MeshBridgeId("meshBridge-1"));
+    assert(!item.isNull);
+
+    // Test update
+    MeshBridgeDTO updateDto;
+    updateDto.tenantId = tenantId;
+    updateDto.meshBridgeId = MeshBridgeId("meshBridge-1");
+    updateDto.name = "Updated MeshBridge";
+    auto updateResult = usecase.updateBridge(updateDto);
+    assert(updateResult.success, updateResult.message);
+
+    // Test delete
+    auto deleteResult = usecase.deleteBridge(tenantId, MeshBridgeId("meshBridge-1"));
+    assert(deleteResult.success, deleteResult.message);
+    assert(usecase.listBridges(tenantId).length == 0);
+
+}

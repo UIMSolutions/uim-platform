@@ -71,3 +71,40 @@ class ManageDataEntitiesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, entity.id.value, "");
     }
 }
+
+///
+unittest {
+    auto repo = new DataEntityRepository();
+    auto usecase = new ManageDataEntitiesUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test create
+    DataEntityDTO createDto;
+    createDto.tenantId = tenantId;
+    createDto.dataEntityId = DataEntityId("dataEntity-1");
+    createDto.name = "Test DataEntity";
+    auto createResult = usecase.createDataEntity(createDto);
+    assert(createResult.success, createResult.message);
+
+    // Test list
+    auto items = usecase.listDataEntities(tenantId);
+    assert(items.length == 1);
+
+    // Test get
+    auto item = usecase.getDataEntity(tenantId, DataEntityId("dataEntity-1"));
+    assert(!item.isNull);
+
+    // Test update
+    DataEntityDTO updateDto;
+    updateDto.tenantId = tenantId;
+    updateDto.dataEntityId = DataEntityId("dataEntity-1");
+    updateDto.name = "Updated DataEntity";
+    auto updateResult = usecase.updateDataEntity(updateDto);
+    assert(updateResult.success, updateResult.message);
+
+    // Test delete
+    auto deleteResult = usecase.deleteDataEntity(tenantId, DataEntityId("dataEntity-1"));
+    assert(deleteResult.success, deleteResult.message);
+    assert(usecase.listDataEntities(tenantId).length == 0);
+
+}

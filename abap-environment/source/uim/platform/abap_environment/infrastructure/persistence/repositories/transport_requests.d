@@ -70,3 +70,8 @@ TransportRequest[] filterByStatus(  TransportRequest[] requests, TransportStatus
   // #endregion ByOwner
 
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryTransportRequestRepository()));
+}

@@ -67,3 +67,11 @@ class ManageKeyEntriesUseCase {
     return CommandResult(true, entry.id.value, "");
   }
 }
+
+///
+unittest {
+    auto repo = new IKeyEntryRepository();
+    auto usecase = new ManageKeyEntriesUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+}

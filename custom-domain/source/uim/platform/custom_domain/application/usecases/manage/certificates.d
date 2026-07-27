@@ -108,3 +108,15 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, entity.id.value, "");
     }
 }
+
+///
+unittest {
+    auto repo = new CertificateRepository();
+    auto usecase = new ManageCertificatesUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listCertificates(tenantId);
+    assert(items !is null);
+
+}

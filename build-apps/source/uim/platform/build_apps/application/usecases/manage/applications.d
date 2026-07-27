@@ -72,3 +72,40 @@ class ManageApplicationsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, entity.id.value, "");
     }
 }
+
+///
+unittest {
+    auto repo = new ApplicationRepository();
+    auto usecase = new ManageApplicationsUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test create
+    ApplicationDTO createDto;
+    createDto.tenantId = tenantId;
+    createDto.applicationId = ApplicationId("application-1");
+    createDto.name = "Test Application";
+    auto createResult = usecase.createApplication(createDto);
+    assert(createResult.success, createResult.message);
+
+    // Test list
+    auto items = usecase.listApplications(tenantId);
+    assert(items.length == 1);
+
+    // Test get
+    auto item = usecase.getApplication(tenantId, ApplicationId("application-1"));
+    assert(!item.isNull);
+
+    // Test update
+    ApplicationDTO updateDto;
+    updateDto.tenantId = tenantId;
+    updateDto.applicationId = ApplicationId("application-1");
+    updateDto.name = "Updated Application";
+    auto updateResult = usecase.updateApplication(updateDto);
+    assert(updateResult.success, updateResult.message);
+
+    // Test delete
+    auto deleteResult = usecase.deleteApplication(tenantId, ApplicationId("application-1"));
+    assert(deleteResult.success, deleteResult.message);
+    assert(usecase.listApplications(tenantId).length == 0);
+
+}

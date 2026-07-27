@@ -68,3 +68,8 @@ class MemoryAuditRepository : TenantRepository!(AuditEvent, AuditEventId), Audit
   }
   
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryAuditRepository()));
+}

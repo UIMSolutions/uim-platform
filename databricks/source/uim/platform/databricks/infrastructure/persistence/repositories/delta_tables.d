@@ -37,3 +37,8 @@ class MemoryDeltaTableRepository : TenantRepository!(DeltaTable, DeltaTableId), 
     return findByTenant(tenantId).filter!(t => t.tableType == tableType).array;
   }
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryDeltaTableRepository()));
+}

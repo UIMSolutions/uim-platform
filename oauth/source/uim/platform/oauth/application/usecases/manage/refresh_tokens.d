@@ -67,3 +67,32 @@ class ManageRefreshTokensUseCase { // TODO: UIMUseCase {
         return CommandResult(true, token.id.value, "");
     }
 }
+
+///
+unittest {
+    auto repo = new IRefreshTokenRepository();
+    auto usecase = new ManageRefreshTokensUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test create
+    RefreshTokenDTO createDto;
+    createDto.tenantId = tenantId;
+    createDto.refreshTokenId = RefreshTokenId("refreshToken-1");
+    createDto.name = "Test RefreshToken";
+    auto createResult = usecase.createToken(createDto);
+    assert(createResult.success, createResult.message);
+
+    // Test list
+    auto items = usecase.listTokens(tenantId);
+    assert(items.length == 1);
+
+    // Test get
+    auto item = usecase.getToken(tenantId, RefreshTokenId("refreshToken-1"));
+    assert(!item.isNull);
+
+    // Test delete
+    auto deleteResult = usecase.deleteToken(tenantId, RefreshTokenId("refreshToken-1"));
+    assert(deleteResult.success, deleteResult.message);
+    assert(usecase.listTokens(tenantId).length == 0);
+
+}

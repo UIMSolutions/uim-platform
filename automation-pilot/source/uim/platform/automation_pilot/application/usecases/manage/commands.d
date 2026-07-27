@@ -74,3 +74,40 @@ class ManageCommandsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, entity.id.value, "");
     }
 }
+
+///
+unittest {
+    auto repo = new CommandRepository();
+    auto usecase = new ManageCommandsUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test create
+    CommandDTO createDto;
+    createDto.tenantId = tenantId;
+    createDto.commandId = CommandId("command-1");
+    createDto.name = "Test Command";
+    auto createResult = usecase.createCommand(createDto);
+    assert(createResult.success, createResult.message);
+
+    // Test list
+    auto items = usecase.listCommands(tenantId);
+    assert(items.length == 1);
+
+    // Test get
+    auto item = usecase.getCommand(tenantId, CommandId("command-1"));
+    assert(!item.isNull);
+
+    // Test update
+    CommandDTO updateDto;
+    updateDto.tenantId = tenantId;
+    updateDto.commandId = CommandId("command-1");
+    updateDto.name = "Updated Command";
+    auto updateResult = usecase.updateCommand(updateDto);
+    assert(updateResult.success, updateResult.message);
+
+    // Test delete
+    auto deleteResult = usecase.deleteCommand(tenantId, CommandId("command-1"));
+    assert(deleteResult.success, deleteResult.message);
+    assert(usecase.listCommands(tenantId).length == 0);
+
+}

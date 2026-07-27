@@ -59,3 +59,8 @@ class MemorySessionRepository : TenantRepository!(IASession, SessionId), Session
     ids.each!(id => removeById(tenantId, id));
   }
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemorySessionRepository()));
+}

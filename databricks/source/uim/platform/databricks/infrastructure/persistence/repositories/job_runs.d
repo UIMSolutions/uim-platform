@@ -33,3 +33,8 @@ class MemoryJobRunRepository : TenantRepository!(JobRun, JobRunId), JobRunReposi
     return findByState(tenantId, RunState.running);
   }
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryJobRunRepository()));
+}

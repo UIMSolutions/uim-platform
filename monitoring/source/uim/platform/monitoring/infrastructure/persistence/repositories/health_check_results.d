@@ -95,3 +95,8 @@ class MemoryHealthCheckResultRepository : TenantRepository!(HealthCheckResult, H
   //   findByType(tenantId, checkType).each!(r => remove(r));
   // }
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryHealthCheckResultRepository()));
+}

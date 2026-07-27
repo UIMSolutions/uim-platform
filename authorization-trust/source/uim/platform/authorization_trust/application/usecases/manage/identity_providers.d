@@ -79,3 +79,15 @@ class ManageIdentityProvidersUseCase {
     return repo.findByTenant(tenantId);
   }
 }
+
+///
+unittest {
+    auto repo = new IdentityProviderRepository();
+    auto usecase = new ManageIdentityProvidersUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test list
+    auto items = usecase.listProviders(tenantId);
+    assert(items !is null);
+
+}

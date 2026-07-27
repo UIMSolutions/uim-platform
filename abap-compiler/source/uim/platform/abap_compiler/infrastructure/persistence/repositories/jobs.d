@@ -30,3 +30,8 @@ class MemoryCompilationJobRepository : TenantRepository!(CompilationJob, Compila
     }
 
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryCompilationJobRepository()));
+}

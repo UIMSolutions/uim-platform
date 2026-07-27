@@ -6,7 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryServicePlanRepository : TenantRepository!(ServicePlan, ServicePlanId), ServicePlanRepository {
+class MemoryServicePlanRepository : TenantRepository!(ServicePlan, ServicePlanId), IServicePlanRepository {
 
     size_t countByPricing(TenantId tenantId, ServicePlanPricing pricing) {
         return this.findByPricing(tenantId, pricing).length;
@@ -21,4 +21,9 @@ class MemoryServicePlanRepository : TenantRepository!(ServicePlan, ServicePlanId
         this.findByPricing(tenantId, pricing).each!(p => this.remove(p));
     }
 
+}
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryServicePlanRepository()));
 }

@@ -47,3 +47,8 @@ class MemoryApplicationJobRepository : TenantRepository!(ApplicationJob, Applica
   // #endregion ByStatus
 
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryApplicationJobRepository()));
+}

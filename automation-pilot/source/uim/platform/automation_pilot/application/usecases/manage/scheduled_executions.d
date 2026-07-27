@@ -69,3 +69,40 @@ class ManageScheduledExecutionsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, entity.id.value, "");
     }
 }
+
+///
+unittest {
+    auto repo = new ScheduledExecutionRepository();
+    auto usecase = new ManageScheduledExecutionsUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test create
+    ScheduledExecutionDTO createDto;
+    createDto.tenantId = tenantId;
+    createDto.scheduledExecutionId = ScheduledExecutionId("scheduledExecution-1");
+    createDto.name = "Test ScheduledExecution";
+    auto createResult = usecase.createScheduledExecution(createDto);
+    assert(createResult.success, createResult.message);
+
+    // Test list
+    auto items = usecase.listScheduledExecutions(tenantId);
+    assert(items.length == 1);
+
+    // Test get
+    auto item = usecase.getScheduledExecution(tenantId, ScheduledExecutionId("scheduledExecution-1"));
+    assert(!item.isNull);
+
+    // Test update
+    ScheduledExecutionDTO updateDto;
+    updateDto.tenantId = tenantId;
+    updateDto.scheduledExecutionId = ScheduledExecutionId("scheduledExecution-1");
+    updateDto.name = "Updated ScheduledExecution";
+    auto updateResult = usecase.updateScheduledExecution(updateDto);
+    assert(updateResult.success, updateResult.message);
+
+    // Test delete
+    auto deleteResult = usecase.deleteScheduledExecution(tenantId, ScheduledExecutionId("scheduledExecution-1"));
+    assert(deleteResult.success, deleteResult.message);
+    assert(usecase.listScheduledExecutions(tenantId).length == 0);
+
+}

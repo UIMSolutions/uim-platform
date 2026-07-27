@@ -30,3 +30,8 @@ class MemoryBrandingConfigRepository : TenantRepository!(BrandingConfig, Brandin
     }
 
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryBrandingConfigRepository()));
+}

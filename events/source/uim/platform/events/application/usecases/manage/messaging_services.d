@@ -75,3 +75,40 @@ class ManageMessagingServicesUseCase {
         return CommandResult(true, s.id.value, "");
     }
 }
+
+///
+unittest {
+    auto repo = new MessagingServiceRepository();
+    auto usecase = new ManageMessagingServicesUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test create
+    MessagingServiceDTO createDto;
+    createDto.tenantId = tenantId;
+    createDto.messagingServiceId = MessagingServiceId("messagingService-1");
+    createDto.name = "Test MessagingService";
+    auto createResult = usecase.createService(createDto);
+    assert(createResult.success, createResult.message);
+
+    // Test list
+    auto items = usecase.listServices(tenantId);
+    assert(items.length == 1);
+
+    // Test get
+    auto item = usecase.getService(tenantId, MessagingServiceId("messagingService-1"));
+    assert(!item.isNull);
+
+    // Test update
+    MessagingServiceDTO updateDto;
+    updateDto.tenantId = tenantId;
+    updateDto.messagingServiceId = MessagingServiceId("messagingService-1");
+    updateDto.name = "Updated MessagingService";
+    auto updateResult = usecase.updateService(updateDto);
+    assert(updateResult.success, updateResult.message);
+
+    // Test delete
+    auto deleteResult = usecase.deleteService(tenantId, MessagingServiceId("messagingService-1"));
+    assert(deleteResult.success, deleteResult.message);
+    assert(usecase.listServices(tenantId).length == 0);
+
+}

@@ -66,3 +66,8 @@ class MemoryBuildpackRepository : TenantRepository!(Buildpack, BuildpackId), IBu
   // #endregion ByStack
 
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryBuildpackRepository()));
+}

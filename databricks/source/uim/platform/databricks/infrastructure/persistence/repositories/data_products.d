@@ -35,3 +35,8 @@ class MemoryDataProductRepository : TenantRepository!(DataProduct, DataProductId
     return findByTenant(tenantId).filter!(dp => dp.shareMode == shareMode).array;
   }
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryDataProductRepository()));
+}

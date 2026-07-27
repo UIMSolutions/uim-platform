@@ -46,3 +46,8 @@ class MemoryScenarioRepository : TenantRepository!(Scenario, ScenarioId), Scenar
   }
 
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryScenarioRepository()));
+}

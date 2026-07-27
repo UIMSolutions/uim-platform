@@ -91,3 +91,8 @@ class MemoryDeploymentRepository : TenantRepository!(Deployment, DeploymentId), 
   }
 
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryDeploymentRepository()));
+}

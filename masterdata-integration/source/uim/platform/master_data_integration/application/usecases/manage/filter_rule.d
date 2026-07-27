@@ -98,4 +98,14 @@ class ManageFilterRulesUseCase { // TODO: UIMUseCase {
   }
 }
 
+///
+unittest {
+    auto repo = new FilterRuleRepository();
+    auto usecase = new ManageFilterRulesUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
 
+    // Test list
+    auto items = usecase.listRules(tenantId);
+    assert(items !is null);
+
+}

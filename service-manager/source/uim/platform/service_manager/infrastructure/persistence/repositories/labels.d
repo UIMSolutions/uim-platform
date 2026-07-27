@@ -24,3 +24,8 @@ class MemoryLabelRepository : TenantRepository!(Label, LabelId), ILabelRepositor
         findByResource(tenantId, resourceType, resourceId).each!(e => remove(e));
     }
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryLabelRepository()));
+}

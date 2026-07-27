@@ -53,3 +53,8 @@ class MemoryCommunicationArrangementRepository : TenantRepository!(Communication
   // #endregion ByDirection
 
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryCommunicationArrangementRepository()));
+}

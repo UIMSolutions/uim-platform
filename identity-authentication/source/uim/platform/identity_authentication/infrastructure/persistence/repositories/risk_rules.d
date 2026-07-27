@@ -32,3 +32,8 @@ class MemoryRiskRuleRepository : TenantRepository!(RiskRule, RiskRuleId), RiskRu
     }
 
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryRiskRuleRepository()));
+}

@@ -38,3 +38,8 @@ class MemoryGroupRepository : TenantRepository!(IAGroup, GroupId), GroupReposito
     }
 
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryGroupRepository()));
+}

@@ -65,3 +65,8 @@ class MemoryBusinessUserRepository : TenantRepository!(BusinessUser, BusinessUse
   }
 
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemoryBusinessUserRepository()));
+}

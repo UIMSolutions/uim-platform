@@ -186,3 +186,40 @@ class ManageDocumentsUseCase {
         return CommandResult(true, existing.id.value, "");
     }
 }
+
+///
+unittest {
+    auto repo = new DocumentRepository();
+    auto usecase = new ManageDocumentsUseCase(repo);
+    auto tenantId = TenantId("test-tenant");
+
+    // Test create
+    DocumentDTO createDto;
+    createDto.tenantId = tenantId;
+    createDto.documentId = DocumentId("document-1");
+    createDto.name = "Test Document";
+    auto createResult = usecase.createDocument(createDto);
+    assert(createResult.success, createResult.message);
+
+    // Test list
+    auto items = usecase.listDocuments(tenantId);
+    assert(items.length == 1);
+
+    // Test get
+    auto item = usecase.getDocument(tenantId, DocumentId("document-1"));
+    assert(!item.isNull);
+
+    // Test update
+    DocumentDTO updateDto;
+    updateDto.tenantId = tenantId;
+    updateDto.documentId = DocumentId("document-1");
+    updateDto.name = "Updated Document";
+    auto updateResult = usecase.updateDocument(updateDto);
+    assert(updateResult.success, updateResult.message);
+
+    // Test delete
+    auto deleteResult = usecase.deleteDocument(tenantId, DocumentId("document-1"));
+    assert(deleteResult.success, deleteResult.message);
+    assert(usecase.listDocuments(tenantId).length == 0);
+
+}

@@ -48,3 +48,8 @@ class MemorySoftwareComponentRepository : TenantRepository!(SoftwareComponent, S
     findBySystem(tenantId, systemId).each!(e => remove(e));
   }
 }
+
+///
+unittest {
+    assert(tenantRepositoryTest(new MemorySoftwareComponentRepository()));
+}
