@@ -13,7 +13,7 @@ import uim.platform.monitoring;
 mixin(ShowModule!());
 
 @safe:
-class MemoryHealthCheckResultRepository : TenantRepository!(HealthCheckResult, HealthCheckResultId), HealthCheckResultRepository {
+class HealthCheckResultRepository : TenantRepository!(HealthCheckResult, HealthCheckResultId), IHealthCheckResultRepository {
 
   HealthCheckResult findLatestByCheck(TenantId tenantId, HealthCheckId checkId) {
     HealthCheckResult latest;
@@ -98,5 +98,5 @@ class MemoryHealthCheckResultRepository : TenantRepository!(HealthCheckResult, H
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryHealthCheckResultRepository()));
+    assert(tenantRepositoryTest(new HealthCheckResultRepository()));
 }

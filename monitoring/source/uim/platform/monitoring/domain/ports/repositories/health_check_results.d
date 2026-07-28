@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing - health check result persistence.
-interface HealthCheckResultRepository : ITenantRepository!(HealthCheckResult, HealthCheckResultId) {
+interface IHealthCheckResultRepository : ITenantRepository!(HealthCheckResult, HealthCheckResultId) {
 
   HealthCheckResult findLatestByCheck(TenantId tenantId, HealthCheckId checkId);
 

@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing - health check configuration persistence.
-interface HealthCheckRepository : ITenantRepository!(HealthCheck, HealthCheckId) {
+interface IHealthCheckRepository : ITenantRepository!(HealthCheck, HealthCheckId) {
 
   size_t countByResource(TenantId tenantId, MonitoredResourceId resourceId);
   HealthCheck[] findByResource(TenantId tenantId, MonitoredResourceId resourceId);

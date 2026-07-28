@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing - notification channel persistence.
-interface NotificationChannelRepository : ITenantRepository!(NotificationChannel, NotificationChannelId) {
+interface INotificationChannelRepository : ITenantRepository!(NotificationChannel, NotificationChannelId) {
 
   size_t countByType(TenantId tenantId, NotificationChannelType channelType);
   NotificationChannel[] findByType(TenantId tenantId, NotificationChannelType channelType);

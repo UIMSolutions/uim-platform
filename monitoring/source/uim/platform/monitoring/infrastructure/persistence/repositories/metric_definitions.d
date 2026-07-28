@@ -13,7 +13,7 @@ import uim.platform.monitoring;
 mixin(ShowModule!());
 
 @safe:
-class MemoryMetricDefinitionRepository : TenantRepository!(MetricDefinition, MetricDefinitionId), MetricDefinitionRepository {
+class MetricDefinitionRepository : TenantRepository!(MetricDefinition, MetricDefinitionId), IMetricDefinitionRepository {
 
   bool existsByName(TenantId tenantId, string name) {
     return findByTenant(tenantId).any!(e => e.name == name);
@@ -56,5 +56,5 @@ class MemoryMetricDefinitionRepository : TenantRepository!(MetricDefinition, Met
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryMetricDefinitionRepository()));
+    assert(tenantRepositoryTest(new MetricDefinitionRepository()));
 }

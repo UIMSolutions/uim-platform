@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing - monitored resource persistence.
-interface MonitoredResourceRepository : ITenantRepository!(MonitoredResource, MonitoredResourceId) {
+interface IMonitoredResourceRepository : ITenantRepository!(MonitoredResource, MonitoredResourceId) {
 
   bool existsByName(TenantId tenantId, string name);
   MonitoredResource findByName(TenantId tenantId, string name);

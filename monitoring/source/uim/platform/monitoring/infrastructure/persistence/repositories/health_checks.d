@@ -13,7 +13,7 @@ import uim.platform.monitoring;
 mixin(ShowModule!());
 
 @safe:
-class MemoryHealthCheckRepository : TenantRepository!(HealthCheck, HealthCheckId), HealthCheckRepository {
+class HealthCheckRepository : TenantRepository!(HealthCheck, HealthCheckId), IHealthCheckRepository {
 
   size_t countByResource(TenantId tenantId, MonitoredResourceId resourceId) {
     return findByResource(tenantId, resourceId).length;
@@ -42,8 +42,7 @@ class MemoryHealthCheckRepository : TenantRepository!(HealthCheck, HealthCheckId
   }
 
 }
-
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryHealthCheckRepository()));
+    assert(tenantRepositoryTest(new HealthCheckRepository()));
 }

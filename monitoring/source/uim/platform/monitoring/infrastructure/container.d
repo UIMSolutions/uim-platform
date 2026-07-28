@@ -33,6 +33,7 @@ import uim.platform.monitoring.presentation.http.controllers.alert_rule;
 import uim.platform.monitoring.presentation.http.controllers.alert;
 import uim.platform.monitoring.presentation.http.controllers.channel;
 import uim.platform.monitoring.presentation.http.controllers.dashboard;
+import uim.platform.monitoring;
 import uim.platform.service;
 
 mixin(ShowModule!());
@@ -41,14 +42,14 @@ mixin(ShowModule!());
 /// Dependency injection container - wires all layers together.
 struct Container {
   // Repositories (driven adapters)
-  MemoryMonitoredResourceRepository resourceRepo;
-  MemoryMetricDefinitionRepository metricDefRepo;
-  MemoryMetricRepository metricRepo;
-  MemoryHealthCheckRepository checkRepo;
-  MemoryHealthCheckResultRepository checkResultRepo;
-  MemoryAlertRuleRepository ruleRepo;
-  MemoryAlertRepository alertRepo;
-  MemoryNotificationChannelRepository channelRepo;
+  IMonitoredResourceRepository resourceRepo;
+  IMetricDefinitionRepository metricDefRepo;
+  IMetricRepository metricRepo;
+  IHealthCheckRepository checkRepo;
+  IHealthCheckResultRepository checkResultRepo;
+  IAlertRuleRepository ruleRepo;
+  IAlertRepository alertRepo;
+  INotificationChannelRepository channelRepo;
 
   // Use cases (application layer)
   ManageMonitoredResourcesUseCase manageResources;
@@ -76,14 +77,14 @@ Container buildContainer(SrvConfig config) {
   Container c;
 
   // Infrastructure adapters
-  c.resourceRepo = new MemoryMonitoredResourceRepository();
-  c.metricDefRepo = new MemoryMetricDefinitionRepository();
-  c.metricRepo = new MemoryMetricRepository();
-  c.checkRepo = new MemoryHealthCheckRepository();
-  c.checkResultRepo = new MemoryHealthCheckResultRepository();
-  c.ruleRepo = new MemoryAlertRuleRepository();
-  c.alertRepo = new MemoryAlertRepository();
-  c.channelRepo = new MemoryNotificationChannelRepository();
+  c.resourceRepo = new MonitoredResourceRepository();
+  c.metricDefRepo = new MetricDefinitionRepository();
+  c.metricRepo = new MetricRepository();
+  c.checkRepo = new HealthCheckRepository();
+  c.checkResultRepo = new HealthCheckResultRepository();
+  c.ruleRepo = new AlertRuleRepository();
+  c.alertRepo = new AlertRepository();
+  c.channelRepo = new NotificationChannelRepository();
 
   // Application use cases
   c.manageResources = new ManageMonitoredResourcesUseCase(c.resourceRepo);

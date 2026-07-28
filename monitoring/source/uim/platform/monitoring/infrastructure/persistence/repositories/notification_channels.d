@@ -13,7 +13,7 @@ import uim.platform.monitoring;
 mixin(ShowModule!());
 
 @safe:
-class MemoryNotificationChannelRepository : TenantRepository!(NotificationChannel, NotificationChannelId), NotificationChannelRepository {
+class NotificationChannelRepository : TenantRepository!(NotificationChannel, NotificationChannelId), INotificationChannelRepository {
 
   size_t countByType(TenantId tenantId, NotificationChannelType channelType) {
     return findByType(tenantId, channelType).length;
@@ -48,8 +48,7 @@ class MemoryNotificationChannelRepository : TenantRepository!(NotificationChanne
   }
 
 }
-
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryNotificationChannelRepository()));
+    assert(tenantRepositoryTest(new NotificationChannelRepository()));
 }

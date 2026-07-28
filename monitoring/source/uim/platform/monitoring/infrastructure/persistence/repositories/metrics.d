@@ -13,7 +13,7 @@ import uim.platform.monitoring;
 mixin(ShowModule!());
 
 @safe:
-class MemoryMetricRepository : TenantRepository!(Metric, MetricId), MetricRepository {
+class MetricRepository : TenantRepository!(Metric, MetricId), IMetricRepository {
 
   bool existsByName(TenantId tenantId, string metricName) {
     return findByTenant(tenantId).any!(m => m.name == metricName);
@@ -93,5 +93,5 @@ class MemoryMetricRepository : TenantRepository!(Metric, MetricId), MetricReposi
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryMetricRepository()));
+    assert(tenantRepositoryTest(new MetricRepository()));
 }

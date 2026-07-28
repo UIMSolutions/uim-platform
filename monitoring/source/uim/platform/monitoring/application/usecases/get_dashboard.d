@@ -22,16 +22,16 @@ mixin(ShowModule!());
 @safe:
 /// Application service: aggregates monitoring data for dashboard overview.
 class GetDashboardUseCase { // TODO: UIMUseCase {
-  private MonitoredResourceRepository resourceRepo;
-  private AlertRepository alertRepo;
-  private HealthCheckRepository checkRepo;
-  private HealthCheckResultRepository checkResultRepo;
-  private MetricDefinitionRepository metricDefRepo;
-  private NotificationChannelRepository channelRepo;
+  private IMonitoredResourceRepository resourceRepo;
+  private IAlertRepository alertRepo;
+  private IHealthCheckRepository checkRepo;
+  private IHealthCheckResultRepository checkResultRepo;
+  private IMetricDefinitionRepository metricDefRepo;
+  private INotificationChannelRepository channelRepo;
 
-  this(MonitoredResourceRepository resourceRepo, AlertRepository alertRepo,
-      HealthCheckRepository checkRepo, HealthCheckResultRepository checkResultRepo,
-      MetricDefinitionRepository metricDefRepo, NotificationChannelRepository channelRepo) {
+  this(IMonitoredResourceRepository resourceRepo, IAlertRepository alertRepo,
+      IHealthCheckRepository checkRepo, IHealthCheckResultRepository checkResultRepo,
+      IMetricDefinitionRepository metricDefRepo, INotificationChannelRepository channelRepo) {
     this.resourceRepo = resourceRepo;
     this.alertRepo = alertRepo;
     this.checkRepo = checkRepo;

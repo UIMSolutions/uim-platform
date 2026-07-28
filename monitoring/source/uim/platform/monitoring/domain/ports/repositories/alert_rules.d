@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing - alert rule persistence.
-interface AlertRuleRepository : ITenantRepository!(AlertRule, AlertRuleId) {
+interface IAlertRuleRepository : ITenantRepository!(AlertRule, AlertRuleId) {
 
   size_t countByResource(TenantId tenantId, MonitoredResourceId resourceId);
   AlertRule[] findByResource(TenantId tenantId, MonitoredResourceId resourceId);
