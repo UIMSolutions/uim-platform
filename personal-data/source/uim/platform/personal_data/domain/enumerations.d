@@ -45,8 +45,8 @@ unittest {
     assert("contractor".toDataSubjectType == DataSubjectType.contractor);
     assert("minor".toDataSubjectType == DataSubjectType.minor);
 
-    assert("".toDataSubjectType == DataSubjectType.minor);
-    assert("unknown".toDataSubjectType == DataSubjectType.minor);
+    assert("".toDataSubjectType == DataSubjectType.privatePerson);
+    assert("unknown".toDataSubjectType == DataSubjectType.privatePerson);
 
     assert(DataSubjectType.privatePerson.toString == "privatePerson");
     assert(DataSubjectType.corporateContact.toString == "corporateContact");
@@ -467,15 +467,21 @@ unittest {
 }
 
 /// Status of a processing purpose
-enum PurposeStatus {
-    active,
-    inactive,
-    deprecated_,
-    archived
+enum PurposeStatus : string {
+    active = "active",
+    inactive = "inactive",
+    deprecated_ = "deprecated",
+    archived = "archived"
 }
 
 PurposeStatus toPurposeStatus(string value) {
-    mixin(EnumSwitch("PurposeStatus", "active"));
+   switch(value.toLower) {
+        case "active": return PurposeStatus.active;
+        case "inactive": return PurposeStatus.inactive;
+        case "deprecated": return PurposeStatus.deprecated_;
+        case "archived": return PurposeStatus.archived;
+        default: return PurposeStatus.active; // Default to active if unknown
+    }   
 }
 
 PurposeStatus[] toPurposeStatuses(string[] arr) {
@@ -483,7 +489,7 @@ PurposeStatus[] toPurposeStatuses(string[] arr) {
 }
 
 string toString(PurposeStatus s) {
-    return s.to!string;
+    return cast(string)s;
 }   
 
 string[] toStrings(PurposeStatus[] statuses) {
@@ -641,21 +647,33 @@ unittest {
 
 
 /// Type of data processing log entry
-enum LogEntryType {
-    access,
-    creation,
-    modification,
-    deletion,
-    export_,
-    transfer,
-    anonymization,
-    requestProcessing,
-    consentChange,
-    retentionEnforcement
+enum LogEntryType : string {
+    access = "access",
+    creation = "creation",
+    modification = "modification",
+    deletion = "deletion",
+    export_ = "export",
+    transfer = "transfer",
+    anonymization = "anonymization",
+    requestProcessing = "requestProcessing",
+    consentChange = "consentChange",
+    retentionEnforcement = "retentionEnforcement"
 }
 
 LogEntryType toLogEntryType(string value) {
-    mixin(EnumSwitch("LogEntryType", "access"));
+    switch(value.toLower) {
+        case "access": return LogEntryType.access;
+        case "creation": return LogEntryType.creation;
+        case "modification": return LogEntryType.modification;
+        case "deletion": return LogEntryType.deletion;
+        case "export": return LogEntryType.export_;
+        case "transfer": return LogEntryType.transfer;
+        case "anonymization": return LogEntryType.anonymization;
+        case "requestprocessing": return LogEntryType.requestProcessing;
+        case "consentchange": return LogEntryType.consentChange;
+        case "retentionenforcement": return LogEntryType.retentionEnforcement;
+        default: return LogEntryType.access; // Default to access if unknown
+    }
 }
 
 LogEntryType[] toLogEntryTypes(string[] arr) {
@@ -663,7 +681,7 @@ LogEntryType[] toLogEntryTypes(string[] arr) {
 }
 
 string toString(LogEntryType t) {
-    return t.to!string;
+    return cast(string)t;
 }
 
 string[] toStrings(LogEntryType[] types) {

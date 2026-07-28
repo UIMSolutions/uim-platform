@@ -62,12 +62,13 @@ class ConsentRecordController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
+        auto id = DataSubjectId(precheck.data.getString("dataSubjectId"));
+        if (id.isNull)
+            return errorResponse("Invalid data subject ID", 400);
 
-        auto dataSubjectId = precheck.data.getString("dataSubjectId");
-
-        ConsentRecord[] consents = dataSubjectId.isEmpty
+        ConsentRecord[] consents = id.isEmpty
             ? usecase.listConsentRecords(tenantId) 
-            : usecase.listConsentRecords(tenantId, dataSubjectId);
+            : usecase.listConsentRecords(tenantId, id);
 
         auto jarr = consents.map!(c => c.toJson).array.toJson;
         auto response = Json.emptyObject

@@ -39,12 +39,12 @@ class DataSubjectRequestController : ManageHttpController {
         CreateDataSubjectRequestRequest r;
         r.tenantId = tenantId;
         // TODO: r.id = precheck.id;
-        r.dataSubjectId = data.getString("dataSubjectId");
+        r.subjectId = data.getString("dataSubjectId");
         r.requestType = data.getString("requestType");
         r.priority = data.getString("priority");
         r.description = data.getString("description");
         r.assignedTo = data.getString("assignedTo");
-        r.dueDate = data.getString("dueDate");
+        // TODO: r.dueDate = data.getString("dueDate");
         r.createdBy = UserId(data.getString("createdBy"));
 
         auto result = usecase.createDataSubjectRequest(r);
@@ -61,14 +61,16 @@ class DataSubjectRequestController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-
         auto data = precheck.data;
-        auto dataSubjectId = DataSubjectId(data.getString("dataSubjectId", ""));
+        auto id = DataSubjectId(data.getString("dataSubjectId", ""));
+        if (id.isNull)
+            return errorResponse("Invalid data subject ID", 400);
+            
         auto statusFilter = data.getString("status", "");
 
         DataSubjectRequest[] requests;
-        if (!dataSubjectId.isEmpty) {
-            requests = usecase.listDataSubjectRequests(tenantId, dataSubjectId);
+        if (!id.isEmpty) {
+            requests = usecase.listDataSubjectRequests(tenantId, id);
         } else if (!statusFilter.isEmpty) {
             try {
                 auto s = statusFilter.toRequestStatus;
