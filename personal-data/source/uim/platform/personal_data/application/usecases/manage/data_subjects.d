@@ -19,14 +19,12 @@ class ManageDataSubjectsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createDataSubject(CreateDataSubjectRequest r) {
-        if (r.isNull) return CommandResult(false, "", "ID is required");
-        if (r.firstname.isEmpty && r.lastname.isEmpty)
+        if (r.tenantId.isNull) return CommandResult(false, "", "Tenant ID is required");
+        if (r.firstName.isEmpty && r.lastName.isEmpty)
             return CommandResult(false, "", "First name or last name is required");
 
-        
-
-        DataSubject ds;
-        ds.id = r.id;
+        DataSubject ds = DataSubject();
+        // TODO: ds.id = r.subjectId;
         ds.tenantId = r.tenantId;
         ds.subjectType = r.subjectType.length > 0 ? r.subjectType.to!DataSubjectType : DataSubjectType.privatePerson;
         ds.status = DataSubjectStatus.active;

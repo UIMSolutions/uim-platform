@@ -37,7 +37,7 @@ class DataProcessingLogController : ManageHttpController {
         auto data = precheck.data;
         CreateDataProcessingLogRequest r;
         r.tenantId = tenantId;
-        r.id = precheck.id;
+        r.logId = DataProcessingLogId(precheck.id);
         r.dataSubjectId = data.getString("dataSubjectId");
         r.requestId = data.getString("requestId");
         r.applicationId = data.getString("applicationId");
@@ -63,9 +63,9 @@ class DataProcessingLogController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-        auto params = req.queryParams();
-        auto dataSubjectId = params.get("dataSubjectId", "");
-        auto requestId = params.get("requestId", "");
+        auto data = precheck.data;
+        auto dataSubjectId = DataSubjectId(data.getString("dataSubjectId"));
+        auto requestId = DataSubjectRequestId(data.getString("requestId", ""));
 
         DataProcessingLog[] logs;
         if (!dataSubjectId.isEmpty) {
@@ -91,6 +91,9 @@ class DataProcessingLogController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto id = DataProcessingLogId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid processing log entry ID", 400);
+
         auto l = usecase.getProcessingLog(tenantId, id);
         if (l.isNull)
             return errorResponse("Processing log entry not found", 404);
@@ -106,16 +109,14 @@ class DataProcessingLogController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto id = DataProcessingLogId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid processing log entry ID", 400);
 
         auto result = usecase.deleteProcessingLog(tenantId, id);
         if (result.hasError)
             return errorResponse(result.message, 400);
-        auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Processing log entry deleted");
 
+        auto resp = Json.emptyObject.set("id", result.id);
         return successResponse("Data Processing log entry deleted successfully", "Deleted", 200, resp);
-
     }
-
 }

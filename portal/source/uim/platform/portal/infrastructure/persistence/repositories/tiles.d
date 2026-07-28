@@ -15,17 +15,23 @@ mixin(ShowModule!());
 @safe:
 class MemoryTileRepository : TenantRepository!(Tile, TileId), TileRepository {
 
-  size_t countByCatalog(CatalogId catalogId) {
-    return findByCatalog(catalogId).length;
+  // #region ByCatalog
+  size_t countByCatalog(TenantId tenantId, CatalogId catalogId) {
+    return findByCatalog(tenantId, catalogId).length;
   }
 
-  Tile[] findByCatalog(CatalogId catalogId) {
-    return findByTenant(tenantId).filter!(t => t.catalogId == catalogId).array;
+  Tile[] filterByCatalog(Tile[] tiles, CatalogId catalogId) {
+    return tiles.filter!(t => t.catalogId == catalogId).array;
   }
 
-  void removeByCatalog(CatalogId catalogId) {
-    findByCatalog(catalogId).each!(t => store.remove(t));
+  Tile[] findByCatalog(TenantId tenantId, CatalogId catalogId) {
+    return filterByCatalog(findByTenant(tenantId), catalogId);
   }
+
+  void removeByCatalog(TenantId tenantId, CatalogId catalogId) {
+    findByCatalog(tenantId, catalogId).each!(t => remove(t));
+  }
+  // #endregion ByCatalog
 
   Tile[] search(TenantId tenantId, string query, size_t offset = 0, size_t limit = 100) {
     Tile[] result;

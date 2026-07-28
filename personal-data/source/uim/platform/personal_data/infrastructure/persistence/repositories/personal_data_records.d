@@ -12,21 +12,22 @@ mixin(ShowModule!());
 @safe:
 
 class MemoryPersonalDataRecordRepository : TenantRepository!(PersonalDataRecord, PersonalDataRecordId), PersonalDataRecordRepository {
-    
+
     // #region ByDataSubject
     size_t countByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
         return findByDataSubject(tenantId, dataSubjectId).length;
     }
 
-    PersonalDataRecord[] filterByDataSubject(PersonalDataRecord[] records, DataSubjectId dataSubjectId, size_t offset = 0, size_t limit = 0) {
-        return (limit == 0)
-            ? records.filter!(v => v.dataSubjectId == dataSubjectId).skip(offset)
-            .array : records.filter!(v => v.dataSubjectId == dataSubjectId)
-            .skip(offset).take(limit).array;
+    PersonalDataRecord[] filterByDataSubject(PersonalDataRecord[] records, DataSubjectId dataSubjectId) { // }, size_t offset = 0, size_t limit = 0) {
+        return records.filter!(v => v.dataSubjectId == dataSubjectId).array;
+        // return (limit == 0)
+        //     ? records.filter!(v => v.dataSubjectId == dataSubjectId).skip(offset)
+        //     .array : records.filter!(v => v.dataSubjectId == dataSubjectId)
+        //     .skip(offset).take(limit).array;
     }
 
     PersonalDataRecord[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
-        return filterByDataSubject(findByTenant(tenantId), dataSubjectId, 0, 0);
+        return filterByDataSubject(findByTenant(tenantId), dataSubjectId);
     }
 
     void removeByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
@@ -39,15 +40,12 @@ class MemoryPersonalDataRecordRepository : TenantRepository!(PersonalDataRecord,
         return findByApplication(tenantId, applicationId).length;
     }
 
-    PersonalDataRecord[] filterByApplication(PersonalDataRecord[] records, RegisteredApplicationId applicationId, size_t offset = 0, size_t limit = 0) {
-        return (limit == 0)
-            ? records.filter!(v => v.applicationId == applicationId).skip(offset)
-            .array : records.filter!(v => v.applicationId == applicationId)
-            .skip(offset).take(limit).array;
+    PersonalDataRecord[] filterByApplication(PersonalDataRecord[] records, RegisteredApplicationId applicationId) {
+        return records.filter!(v => v.applicationId == applicationId).array;
     }
 
     PersonalDataRecord[] findByApplication(TenantId tenantId, RegisteredApplicationId applicationId) {
-        return filterByApplication(findByTenant(tenantId), applicationId, 0, 0);
+        return filterByApplication(findByTenant(tenantId), applicationId);
     }
 
     void removeByApplication(TenantId tenantId, RegisteredApplicationId applicationId) {
@@ -60,20 +58,15 @@ class MemoryPersonalDataRecordRepository : TenantRepository!(PersonalDataRecord,
         return findByDataSubjectAndApplication(tenantId, dataSubjectId, applicationId).length;
     }
 
-    PersonalDataRecord[] filterByDataSubjectAndApplication(TenantId tenantId, PersonalDataRecord[] records, DataSubjectId dataSubjectId, RegisteredApplicationId applicationId, size_t offset = 0, size_t limit = 0) {
-        return (limit == 0)
-            ? records.filter!(v => v.dataSubjectId == dataSubjectId && v.applicationId == applicationId).skip(offset)
-            .array
-            : records.filter!(v => v.dataSubjectId == dataSubjectId && v.applicationId == applicationId).skip(offset)
-            .take(limit).array;
-    }
-
     PersonalDataRecord[] findByDataSubjectAndApplication(TenantId tenantId, DataSubjectId dataSubjectId, RegisteredApplicationId applicationId) {
-        return filterByDataSubjectAndApplication(findByTenant(tenantId), dataSubjectId, applicationId, 0, 0);
+        return filterByApplication(
+            filterByDataSubject(
+                findByTenant(tenantId), dataSubjectId), applicationId);
     }
 
     void removeByDataSubjectAndApplication(TenantId tenantId, DataSubjectId dataSubjectId, RegisteredApplicationId applicationId) {
-        findByDataSubjectAndApplication(tenantId, dataSubjectId, applicationId).each!(v => remove(v));
+        findByDataSubjectAndApplication(tenantId, dataSubjectId, applicationId).each!(
+            v => remove(v));
     }
     // #endregion ByDataSubjectAndApplication
 

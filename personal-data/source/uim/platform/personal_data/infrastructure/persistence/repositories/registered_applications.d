@@ -26,7 +26,7 @@ class MemoryRegisteredApplicationRepository : TenantRepository!(RegisteredApplic
     void removeByName(TenantId tenantId, string name) {
         foreach (v; findByTenant(tenantId))
             if (v.name == name) {
-                store.remove(v.id);
+                remove(v);
                 return;
             }
     }
@@ -44,7 +44,7 @@ class MemoryRegisteredApplicationRepository : TenantRepository!(RegisteredApplic
     }
 
     void removeByStatus(TenantId tenantId, ApplicationStatus status) {
-        findByStatus(tenantId, status).each!(v => remove(v.id));
+        findByStatus(tenantId, status).each!(v => remove(v));
     }
 
 }

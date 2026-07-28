@@ -51,6 +51,6 @@ class MemoryConsentRecordRepository : TenantRepository!(ConsentRecord, ConsentRe
         return ConsentRecord.init;
     }
     void removeByDataSubjectAndPurpose(TenantId tenantId, DataSubjectId dataSubjectId, ProcessingPurposeId purposeId) {
-        findByDataSubjectAndPurpose(tenantId, dataSubjectId, purposeId).each!(v => remove(v));
+        remove(findByDataSubjectAndPurpose(tenantId, dataSubjectId, purposeId));
     }
 }

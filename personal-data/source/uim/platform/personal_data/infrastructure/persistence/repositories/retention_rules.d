@@ -17,17 +17,17 @@ class MemoryRetentionRuleRepository : TenantRepository!(RetentionRule, Retention
         return findByApplication(tenantId, applicationId).length;
     }
     RetentionRule[] filterByApplication(RetentionRule[] rules, RegisteredApplicationId applicationId) {
-        return rules.filter!(v => v.applicationIds.canFind(applicationId)).array;
+        return rules.filter!(v => v.applicationIds.canFind(applicationId.value)).array;
     }   
     RetentionRule[] findByApplication(TenantId tenantId, RegisteredApplicationId applicationId) {
         import std.algorithm : canFind;
         RetentionRule[] result;
         foreach (v; findByTenant(tenantId))
-            if (v.applicationIds.canFind(applicationId)) result ~= v;
+            if (v.applicationIds.canFind(applicationId.value)) result ~= v;
         return result;
     }
     void removeByApplication(TenantId tenantId, RegisteredApplicationId applicationId) {
-        findByApplication(tenantId, applicationId).each!(v => store.remove(v));
+        findByApplication(tenantId, applicationId).each!(v => remove(v));
     }
 
     size_t countByStatus(TenantId tenantId, RetentionRuleStatus status) {
@@ -40,7 +40,7 @@ class MemoryRetentionRuleRepository : TenantRepository!(RetentionRule, Retention
         return filterByStatus(findByTenant(tenantId), status);
     }
     void removeByStatus(TenantId tenantId, RetentionRuleStatus status) {
-        findByStatus(tenantId,status).each!(v => store.remove(v));
+        findByStatus(tenantId,status).each!(v => remove(v));
     }
 
 }

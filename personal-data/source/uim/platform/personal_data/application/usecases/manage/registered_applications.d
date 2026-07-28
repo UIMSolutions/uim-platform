@@ -19,11 +19,13 @@ class ManageRegisteredApplicationsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createApplication(CreateRegisteredApplicationRequest r) {
-        if (r.isNull) return CommandResult(false, "", "ID is required");
+        if (r.tenantId.isNull) return CommandResult(false, "", "Tenant ID is required");
+        if (r.applicationId.isNull) return CommandResult(false, "", "Application ID is required");
+
         if (r.name.isEmpty) return CommandResult(false, "", "Application name is required");
 
         RegisteredApplication app;
-        app.id = r.id;
+        app.id = r.applicationId;
         app.tenantId = r.tenantId;
         app.name = r.name;
         app.description = r.description;
@@ -50,7 +52,7 @@ class ManageRegisteredApplicationsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateApplication(UpdateRegisteredApplicationRequest r) {
-        auto existing = repo.findById(r.tenantId, r.id);
+        auto existing = repo.findById(r.tenantId, r.applicationId);
         if (existing.isNull)
             return CommandResult(false, "", "Application not found");
 
@@ -81,6 +83,7 @@ class ManageRegisteredApplicationsUseCase { // TODO: UIMUseCase {
         auto existing = repo.findById(tenantId, id);
         if (existing.isNull)
             return CommandResult(false, "", "Application not found");
+            
         existing.status = ApplicationStatus.suspended;
         existing.updatedAt = currentTimestamp();
         repo.update(existing);

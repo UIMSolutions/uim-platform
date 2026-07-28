@@ -48,7 +48,7 @@ class ConsentRecordController : ManageHttpController {
         r.source = data.getString("source");
         r.createdBy = UserId(data.getString("createdBy"));
 
-        auto result = usecase.create(r);
+        auto result = usecase.createConsentRecord(r);
         if (result.hasError)
             return errorResponse(result.message, 400);
 
@@ -63,15 +63,13 @@ class ConsentRecordController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-        auto params = req.queryParams();
-        auto dataSubjectId = params.get("dataSubjectId", "");
+        auto dataSubjectId = precheck.data.getString("dataSubjectId");
 
         ConsentRecord[] consents = dataSubjectId.isEmpty
-            ? usecase.listConsentRecords(
-                tenantId) : usecase.listConsentRecords(tenantId, dataSubjectId);
+            ? usecase.listConsentRecords(tenantId) 
+            : usecase.listConsentRecords(tenantId, dataSubjectId);
 
         auto jarr = consents.map!(c => c.toJson).array.toJson;
-
         auto response = Json.emptyObject
             .set("count", consents.length)
             .set("resources", jarr);
@@ -87,7 +85,7 @@ class ConsentRecordController : ManageHttpController {
         auto tenantId = precheck.tenantId;
         auto path = precheck.path;
         if (path.length > 9 && path[$ - 9 .. $] == "/withdraw")
-            return;
+            return successResponse("Consent record withdrawn successfully", "Withdrawn", 200, Json.emptyObject); // TODO:
 
         auto id = ConsentRecordId(precheck.id);
         if (id.isNull)
@@ -110,22 +108,21 @@ class ConsentRecordController : ManageHttpController {
         auto path = precheck.path;
         auto stripped = path[0 .. $ - 9]; // remove "/withdraw"
         auto id = ConsentRecordId(extractIdFromPath(stripped));
+        if (id.isNull)
+            return errorResponse("Invalid consent record ID", 400);
 
         auto data = precheck.data;
         WithdrawConsentRequest r;
         r.tenantId = tenantId;
-        r.id = id;
-        r.reason = data.getString("reason");
-        r.updatedBy = UserId(data.getString("updatedBy"));
+        r.recordId = id;
+        // r.reason = data.getString("reason");
+        // r.updatedBy = UserId(data.getString("updatedBy"));
 
-        auto result = usecase.withdraw(r);
+        auto result = usecase.withdrawConsentRecord(r);
         if (result.hasError)
             return errorResponse(result.message, 400);
 
-        auto resp = Json.emptyObject
-            .set("id", result.id)
-            .set("message", "Consent withdrawn");
-
+        auto resp = Json.emptyObject.set("id", result.id);
         return successResponse("Consent record withdrawn successfully", "Withdrawn", 200, resp);
     }
 

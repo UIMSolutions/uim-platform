@@ -41,14 +41,14 @@ struct DataSubjectRequest {
     string rejectionReason;
 
     Json toJson() const {
-        auto j = entityToJson
+        auto j = entityToJson()
             .set("dataSubjectId", dataSubjectId.value)
             // .set("requestType", requestType.toString)
             // .set("status", status.toString)
             // .set("priority", priority.toString)
             .set("description", description)
-            .set("applicationIds", applicationIds)
-            .set("dataCategoryIds", dataCategoryIds)
+            .set("applicationIds", applicationIds.toJson)
+            .set("dataCategoryIds", dataCategoryIds.toJson)
             .set("comments", comments.map!(c => c.toJson()).array.toJson)
             .set("assignedTo", assignedTo)
             .set("dueDate", dueDate)

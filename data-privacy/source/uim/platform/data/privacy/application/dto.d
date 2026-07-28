@@ -14,6 +14,8 @@ mixin(ShowModule!());
 
 struct CreateDataSubjectRequest {
   TenantId tenantId;
+  DataSubjectId subjectId;
+
   DataSubjectType subjectType;
   string externalId;
   string displayName;
@@ -23,7 +25,7 @@ struct CreateDataSubjectRequest {
 }
 
 struct UpdateDataSubjectRequest {
-  DataSubjectId id;
+  DataSubjectId subjectId;
   TenantId tenantId;
   DataSubjectType subjectType;
   string displayName;
@@ -36,6 +38,8 @@ struct UpdateDataSubjectRequest {
 
 struct CreatePersonalDataModelRequest {
   TenantId tenantId;
+  PersonalDataModelId id;
+
   string fieldName;
   string fieldDescription;
   string category;
@@ -48,8 +52,8 @@ struct CreatePersonalDataModelRequest {
 }
 
 struct UpdatePersonalDataModelRequest {
-  PersonalDataModelId id;
   TenantId tenantId;
+  PersonalDataModelId id;
   string fieldName;
   string fieldDescription;
   string category;
@@ -121,6 +125,8 @@ struct UpdateLegalGroundRequest {
 
 struct CreateRetentionRuleRequest {
   TenantId tenantId;
+  RetentionRuleId ruleId;
+
   string name;
   string description;
   string purpose;
@@ -157,8 +163,8 @@ struct CreateConsentRecordRequest {
 }
 
 struct RevokeConsentRequest {
-  ConsentRecordId recordId;
   TenantId tenantId;
+  ConsentRecordId recordId;
 }
 // ──────────────── Data Retrieval Request DTOs ────────────────
 
@@ -174,8 +180,8 @@ struct CreateDataRetrievalRequest {
 }
 
 struct UpdateRetrievalStatusRequest {
-  DataRetrievalRequestId requestId;
   TenantId tenantId;
+  DataRetrievalRequestId requestId;
   string status;
   string downloadUrl;
   long totalFields;
@@ -200,8 +206,9 @@ struct CreateDataControllerRequest {
 }
 
 struct UpdateDataControllerRequest {
-  DataControllerId controllerId;
   TenantId tenantId;
+  DataControllerId controllerId;
+
   string name;
   string description;
   string legalEntityName;
@@ -225,8 +232,9 @@ struct CreateDataControllerGroupRequest {
 }
 
 struct UpdateDataControllerGroupRequest {
-  DataControllerGroupId groupId;
   TenantId tenantId;
+  DataControllerGroupId groupId;
+
   string name;
   string description;
   DataControllerId[] controllerIds;
@@ -248,8 +256,9 @@ struct CreateBusinessContextRequest {
 }
 
 struct UpdateBusinessContextRequest {
-  BusinessContextId contextId;
   TenantId tenantId;
+  BusinessContextId contextId;
+
   string name;
   string description;
   string[] dataCategories;
@@ -277,8 +286,9 @@ struct CreateBusinessProcessRequest {
 }
 
 struct UpdateBusinessProcessRequest {
-  BusinessProcessId processId;
   TenantId tenantId;
+  BusinessProcessId processId;
+  
   string name;
   string description;
   string[] purposes;

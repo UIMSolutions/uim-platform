@@ -63,7 +63,7 @@ class SubstitutionRuleController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-        // auto params = req.queryParams();
+        // auto data = precheck.data;
         auto userId = UserId(precheck.data.getString("userId", ""));
 
         SubstitutionRule[] rules;

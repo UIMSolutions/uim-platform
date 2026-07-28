@@ -38,7 +38,7 @@ class ProcessingPurposeController : ManageHttpController {
         auto data = precheck.data;
         CreateProcessingPurposeRequest r;
         r.tenantId = tenantId;
-        r.id = precheck.id;
+        // TODO: r.id = precheck.id;
         r.name = data.getString("name");
         r.description = data.getString("description");
         r.legalBasis = data.getString("legalBasis");
@@ -47,14 +47,14 @@ class ProcessingPurposeController : ManageHttpController {
         r.requiresConsent = data.getBoolean("requiresConsent");
         r.createdBy = UserId(data.getString("createdBy"));
 
-        auto result = usecase.create(r);
+        auto result = usecase.createProcessingPurpose(r);
         if (result.hasError)
             return errorResponse(result.message, 400);
         auto resp = Json.emptyObject
             .set("id", result.id)
             .set("message", "Processing purpose created");
 
-        return successResponse("Processing purpose created successfully", 201, resp);
+        return successResponse("Processing purpose created successfully", "Created", 201, resp);
     }
 
     override protected Json listHandler(HTTPServerRequest req) {
@@ -64,16 +64,16 @@ class ProcessingPurposeController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-        auto purposes = usecase.list(tenantId);
+        auto purposes = usecase.listProcessingPurposes(tenantId);
 
-        auto jarr = purposes.map!(p => toJson(p)).array.toJson;
+        auto jarr = purposes.map!(p => p.toJson).array.toJson;
 
         auto resp = Json.emptyObject
             .set("count", purposes.length)
             .set("resources", jarr)
             .set("message", "Processing purpose list retrieved successfully");
 
-        return successResponse("Processing purpose list retrieved successfully", 200, resp);
+        return successResponse("Processing purpose list retrieved successfully", "Retrieved", 200, resp);
     }
 
     override protected Json getHandler(HTTPServerRequest req) {
@@ -83,13 +83,16 @@ class ProcessingPurposeController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-        auto id = precheck.id;
-        auto p = usecase.getById(tenantId, id);
+        auto id = ProcessingPurposeId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid processing purpose ID", 400);
+
+        auto p = usecase.getProcessingPurpose(tenantId, id);
         if (p.isNull)
             return errorResponse("Processing purpose not found", 404);
 
         auto resp = p.toJson;
-        return successResponse("Processing purpose retrieved successfully", 200, resp);
+        return successResponse("Processing purpose retrieved successfully", "Retrieved", 200, resp);
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -102,7 +105,7 @@ class ProcessingPurposeController : ManageHttpController {
         auto data = precheck.data;
         UpdateProcessingPurposeRequest r;
         r.tenantId = tenantId;
-        r.id = precheck.id;
+        // TODO: r.id = precheck.id;
         r.name = data.getString("name");
         r.description = data.getString("description");
         r.legalBasis = data.getString("legalBasis");
@@ -111,11 +114,12 @@ class ProcessingPurposeController : ManageHttpController {
         r.requiresConsent = data.getBoolean("requiresConsent");
         r.updatedBy = UserId(data.getString("updatedBy"));
 
-        auto result = usecase.update(r);
+        auto result = usecase.updateProcessingPurpose(r);
         if (result.hasError)
             return errorResponse(result.message, 400);
+
         auto resp = Json.emptyObject.set("id", result.id);
-        return successResponse("Processing purpose updated successfully", 200, resp);
+        return successResponse("Processing purpose updated successfully", "Updated", 200, resp);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -124,12 +128,15 @@ class ProcessingPurposeController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto id = precheck.id;
+        auto id = ProcessingPurposeId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid processing purpose ID", 400);
+
         auto result = usecase.deleteProcessingPurpose(tenantId, id);
         if (result.hasError)
             return errorResponse(result.message, 400);
 
-        auto resp = Json.emptyObject.set("id", result.id);
-        return successResponse("Processing purpose deleted successfully", "Deleted", 200, resp);
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Processing purpose deleted successfully", "Deleted", 200, responseData);
     }
 }

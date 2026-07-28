@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 struct RegisteredApplication {
-    mixin TenantEntity!(RegisteredApplicationId);
+    mixin TenantEntity!RegisteredApplicationId;
 
     string name;
     string description;
@@ -34,8 +34,8 @@ struct RegisteredApplication {
             // .set("status", status.toString())
             .set("endpointUrl", endpointUrl)
             .set("apiVersion", apiVersion)
-            .set("dataCategoryIds", dataCategoryIds)
-            .set("purposeIds", purposeIds)
+            .set("dataCategoryIds", dataCategoryIds.toJson)
+            .set("purposeIds", purposeIds.toJson)
             .set("contactEmail", contactEmail)
             .set("contactName", contactName)
             .set("registeredBy", registeredBy)

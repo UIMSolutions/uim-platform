@@ -90,8 +90,6 @@ class ManageSchedulesUseCase { // TODO: UIMUseCase {
         existing.startTime = request.startTime;
         existing.endTime = request.endTime;
 
-        
-
         existing.updatedAt = currentTimestamp;
 
         schedules.update(existing);

@@ -21,8 +21,8 @@ interface DataSubjectRepository : ITenantRepository!(DataSubject, DataSubjectId)
     DataSubject[] findByName(TenantId tenantId, string firstName, string lastName);
     void removeByName(TenantId tenantId, string firstName, string lastName);
 
-    size_t countByOrganization(TenantId tenantId, string organizationId);
-    DataSubject[] findByOrganization(TenantId tenantId, string organizationId);
-    void removeByOrganization(TenantId tenantId, string organizationId);
+    size_t countByOrganization(TenantId tenantId, OrganizationId organizationId);
+    DataSubject[] findByOrganization(TenantId tenantId, OrganizationId organizationId);
+    void removeByOrganization(TenantId tenantId, OrganizationId organizationId);
     
 }

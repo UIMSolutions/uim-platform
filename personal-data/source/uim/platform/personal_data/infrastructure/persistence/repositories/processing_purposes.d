@@ -23,20 +23,20 @@ class MemoryProcessingPurposeRepository : TenantRepository!(ProcessingPurpose, P
         return filterByLegalBasis(findByTenant(tenantId), basis);
     }
     void removeByLegalBasis(TenantId tenantId, LegalBasis basis) {
-        findByLegalBasis(tenantId, basis).each!(v => remove(v.id));
+        findByLegalBasis(tenantId, basis).each!(v => remove(v));
     }
 
     size_t countByApplication(TenantId tenantId, RegisteredApplicationId applicationId) {
         return findByApplication(tenantId, applicationId).length;
     }
     ProcessingPurpose[] filterByApplication(ProcessingPurpose[] purposes, RegisteredApplicationId applicationId) {
-        return purposes.filter!(v => v.applicationIds.canFind(applicationId)).array;
+        return purposes.filter!(v => v.applicationIds.canFind(applicationId.value)).array;
     }
     ProcessingPurpose[] findByApplication(TenantId tenantId, RegisteredApplicationId applicationId) {
         return filterByApplication(findByTenant(tenantId), applicationId);
     }
     void removeByApplication(TenantId tenantId, RegisteredApplicationId applicationId) {
-        findByApplication(applicationId).each!(v => remove(v.id));
+        findByApplication(tenantId, applicationId).each!(v => remove(v));
     }
 
 }

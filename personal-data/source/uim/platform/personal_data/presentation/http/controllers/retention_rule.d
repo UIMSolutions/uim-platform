@@ -34,21 +34,22 @@ class RetentionRuleController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
+        auto id = RetentionRuleId(precheck.id);
 
         auto data = precheck.data;
         CreateRetentionRuleRequest r;
         r.tenantId = tenantId;
-        r.id = precheck.id;
+        r.ruleId = id;
         r.name = data.getString("name");
         r.description = data.getString("description");
-        r.retentionPeriod = data.getString("retentionPeriod");
+        // TODO: r.retentionPeriod = data.getString("retentionPeriod");
         r.periodUnit = data.getString("periodUnit");
         r.autoDelete = data.getBoolean("autoDelete");
         r.notifyBeforeExpiry = data.getBoolean("notifyBeforeExpiry");
-        r.notifyDaysBefore = data.getString("notifyDaysBefore");
+        // TODO: r.notifyDaysBefore = data.getString("notifyDaysBefore");
         r.createdBy = UserId(data.getString("createdBy"));
 
-        auto result = usecase.create(r);
+        auto result = usecase.createRetentionRule(r);
         if (result.hasError)
             return errorResponse(result.message, 400);
 
@@ -57,90 +58,87 @@ class RetentionRuleController : ManageHttpController {
             .set("message", "Retention rule created");
 
         return successResponse("Retention rule created successfully", 201, resp);
-}
+    }
 
-override protected Json listHandler(HTTPServerRequest req) {
-    auto precheck = super.listHandler(req);
-    if (precheck.hasError)
-        return precheck;
+    override protected Json listHandler(HTTPServerRequest req) {
+        auto precheck = super.listHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-    auto tenantId = precheck.tenantId;
+        auto tenantId = precheck.tenantId;
+        auto rules = usecase.listRetentionRules(tenantId).map!(r => r.toJson).array.toJson;
 
-    auto rules = usecase.list(tenantId);
+        auto resp = Json.emptyObject
+            .set("count", rules.length)
+            .set("resources", rules)
+            .set("message", "Retention rule list retrieved successfully");
 
-    auto jarr = rules.map!(r => toJson(r)).array.toJson;
+        return successResponse("Retention rule list retrieved successfully", 200, resp);
+    }
 
-    auto resp = Json.emptyObject
-        .set("count", rules.length)
-        .set("resources", jarr)
-        .set("message", "Retention rule list retrieved successfully");
+    override protected Json getHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-    return successResponse("Retention rule list retrieved successfully", 200, resp);
-}
+        auto tenantId = precheck.tenantId;
+        auto id = RetentionRuleId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid retention rule ID", 400);
 
-override protected Json getHandler(HTTPServerRequest req) {
-    auto precheck = super.getHandler(req);
-    if (precheck.hasError)
-        return precheck;
+        auto r = usecase.getRetentionRule(tenantId, id);
+        if (r.isNull)
+            return errorResponse("Retention rule not found", 404);
 
-    auto tenantId = precheck.tenantId;
+        return successResponse("Retention rule retrieved successfully", 200, r.toJson);
+    }
 
-    auto id = RetentionRuleId(precheck.id);
-    if (id.isNull)
-        return errorResponse("Invalid retention rule ID", 400);
-        
-    auto r = usecase.getById(tenantId, id);
-    if (r.isNull)
-        return errorResponse("Retention rule not found", 404);
+    override protected Json updateHandler(HTTPServerRequest req) {
+        auto precheck = super.updateHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-    return successResponse("Retention rule retrieved successfully", 200, r.toJson);    
-}
+        auto tenantId = precheck.tenantId;
 
-override protected Json updateHandler(HTTPServerRequest req) {
-    auto precheck = super.updateHandler(req);
-    if (precheck.hasError)
-        return precheck;
+        auto data = precheck.data;
+        UpdateRetentionRuleRequest r;
+        r.tenantId = tenantId;
+        // TODO: r.id = precheck.id;
+        r.name = data.getString("name");
+        r.description = data.getString("description");
+        // TODO: r.retentionPeriod = data.getString("retentionPeriod");
+        r.periodUnit = data.getString("periodUnit");
+        r.autoDelete = data.getBoolean("autoDelete");
+        r.notifyBeforeExpiry = data.getBoolean("notifyBeforeExpiry");
+        // TODO: r.notifyDaysBefore = data.getString("notifyDaysBefore");
+        r.updatedBy = UserId(data.getString("updatedBy"));
 
-    auto tenantId = precheck.tenantId;
+        auto result = usecase.updateRetentionRule(r);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
 
-    auto data = precheck.data;
-    UpdateRetentionRuleRequest r;
-    r.tenantId = tenantId;
-    r.id = precheck.id;
-    r.name = data.getString("name");
-    r.description = data.getString("description");
-    r.retentionPeriod = data.getString("retentionPeriod");
-    r.periodUnit = data.getString("periodUnit");
-    r.autoDelete = data.getBoolean("autoDelete");
-    r.notifyBeforeExpiry = data.getBoolean("notifyBeforeExpiry");
-    r.notifyDaysBefore = data.getString("notifyDaysBefore");
-    r.updatedBy = UserId(data.getString("updatedBy"));
+        auto resp = Json.emptyObject
+            .set("id", result.id)
+            .set("message", "Retention rule updated");
 
-    auto result = usecase.update(r);
-    if (result.hasError)
-        return errorResponse(result.message, 400);
+        return successResponse("Retention rule updated successfully", 200, resp);
+    }
 
-    auto resp = Json.emptyObject
-        .set("id", result.id)
-        .set("message", "Retention rule updated");
+    override protected Json deleteHandler(HTTPServerRequest req) {
+        auto precheck = super.deleteHandler(req);
+        if (precheck.hasError)
+            return precheck;
 
-    return successResponse("Retention rule updated successfully", 200, resp);
-}
+        auto tenantId = precheck.tenantId;
+        auto id = RetentionRuleId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid retention rule ID", 400);
 
-override protected Json deleteHandler(HTTPServerRequest req) {
-    auto precheck = super.deleteHandler(req);
-    if (precheck.hasError)
-        return precheck;
+        auto result = usecase.deleteRetentionRule(tenantId, id);
+        if (result.hasError)
+            return errorResponse(result.message, 400);
 
-    auto tenantId = precheck.tenantId;
-    auto id = RetentionRuleId(precheck.id);
-
-    auto result = usecase.deleteRetentionRule(tenantId, id);
-    if (result.hasError)
-        return errorResponse(result.message, 400);
-    auto resp = Json.emptyObject
-        .set("id", result.id);
-
-    return successResponse("Retention rule deleted successfully", 200, resp);
-}
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Retention rule deleted successfully", 200, responseData);
+    }
 }

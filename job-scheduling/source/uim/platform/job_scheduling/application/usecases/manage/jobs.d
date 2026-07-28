@@ -78,8 +78,6 @@ class ManageJobsUseCase { // TODO: UIMUseCase {
         existing.startTime = r.startTime;
         existing.endTime = r.endTime;
 
-        
-
         existing.updatedAt = currentTimestamp;
 
         repo.update(existing);

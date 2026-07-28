@@ -27,7 +27,7 @@ class MemoryStepRepository : TenantRepository!(WorkflowStep, StepId), StepReposi
     return result;
   }
   void removeByWorkflow(TenantId tenantId, WorkflowId workflowId) {
-    findByWorkflow(tenantId, workflowId).each!(s => store.remove(s));
+    findByWorkflow(tenantId, workflowId).each!(s => remove(s));
   }
 
   WorkflowStep findById(TenantId tenantId, StepId id) {

@@ -38,7 +38,7 @@ class DataSubjectRequestController : ManageHttpController {
         auto data = precheck.data;
         CreateDataSubjectRequestRequest r;
         r.tenantId = tenantId;
-        r.id = precheck.id;
+        // TODO: r.id = precheck.id;
         r.dataSubjectId = data.getString("dataSubjectId");
         r.requestType = data.getString("requestType");
         r.priority = data.getString("priority");
@@ -47,12 +47,11 @@ class DataSubjectRequestController : ManageHttpController {
         r.dueDate = data.getString("dueDate");
         r.createdBy = UserId(data.getString("createdBy"));
 
-        auto result = usecase.create(r);
+        auto result = usecase.createDataSubjectRequest(r);
         if (result.hasError)
             return errorResponse(result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
-
         return successResponse("Data subject request created successfully", "Created", 201, responseData);
     }
 
@@ -63,17 +62,17 @@ class DataSubjectRequestController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-        auto params = req.queryParams();
-        auto dataSubjectId = params.get("dataSubjectId", "");
-        auto statusFilter = params.get("status", "");
+        auto data = precheck.data;
+        auto dataSubjectId = DataSubjectId(data.getString("dataSubjectId", ""));
+        auto statusFilter = data.getString("status", "");
 
         DataSubjectRequest[] requests;
         if (!dataSubjectId.isEmpty) {
-            requests = usecase.listDataSubjectRequests(dataSubjectId);
+            requests = usecase.listDataSubjectRequests(tenantId, dataSubjectId);
         } else if (!statusFilter.isEmpty) {
             try {
-                auto s = statusFilter.to!RequestStatus;
-                requests = usecase.listDataSubjectRequests(s);
+                auto s = statusFilter.toRequestStatus;
+                requests = usecase.listDataSubjectRequests(tenantId, s);
             } catch (Exception) {
                 requests = usecase.listDataSubjectRequests(tenantId);
             }
@@ -81,7 +80,7 @@ class DataSubjectRequestController : ManageHttpController {
             requests = usecase.listDataSubjectRequests(tenantId);
         }
 
-        auto jarr = requests.map!(r => toJson(r)).array.toJson;
+        auto jarr = requests.map!(r => r.toJson).array.toJson;
 
         auto resp = Json.emptyObject
             .set("count", requests.length)
@@ -96,11 +95,14 @@ class DataSubjectRequestController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-
         auto id = DataSubjectRequestId(precheck.id);
-        auto r = usecase.getDataSubjectRequest(id);
+        if (id.isNull)
+            return errorResponse("Invalid data subject request ID", 400);
+
+        auto r = usecase.getDataSubjectRequest(tenantId, id);
         if (r.isNull)
             return errorResponse("Data subject request not found", 404);
+
         return successResponse("Data subject request retrieved successfully", "Retrieved", 200, r
                 .toJson);
 
@@ -115,18 +117,19 @@ class DataSubjectRequestController : ManageHttpController {
         auto data = precheck.data;
         UpdateDataSubjectRequestRequest r;
         r.tenantId = tenantId;
-        r.dataSubjectRequestId = DataSubjectRequestId(precheck.id);
+        // TODO: r.dataSubjectRequestId = DataSubjectRequestId(precheck.id);
         r.status = data.getString("status");
-        r.priority = data.getString("priority");
+        // TODO: r.priority = data.getString("priority");
         r.assignedTo = data.getString("assignedTo");
-        r.dueDate = data.getString("dueDate");
-        r.comment = data.getString("comment");
+        // TODO: r.dueDate = data.getString("dueDate");
+        // TODO: r.comment = data.getString("comment");
         r.rejectionReason = data.getString("rejectionReason");
         r.updatedBy = UserId(data.getString("updatedBy"));
 
-        auto result = usecase.update(r);
+        auto result = usecase.updateDataSubjectRequest(r);
         if (result.hasError)
             return errorResponse(result.message, 400);
+
         auto resp = Json.emptyObject.set("id", result.id);
         return successResponse("Data subject request updated successfully", "Updated", 200, resp);
     }

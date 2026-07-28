@@ -17,12 +17,15 @@ class MemoryDataProcessingLogRepository : TenantRepository!(DataProcessingLog, D
     size_t countByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
         return findByDataSubject(tenantId, dataSubjectId).length;
     }
-    DataProcessingLog[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
-        DataProcessingLog[] result;
-        foreach (v; findByTenant(tenantId))
-            if (v.dataSubjectId == dataSubjectId) result ~= v;
-        return result;
+
+    DataProcessingLog[] filterByDataSubject(DataProcessingLog[] logs, DataSubjectId dataSubjectId) {
+        return logs.filter!(v => v.dataSubjectId == dataSubjectId).array;
     }
+
+    DataProcessingLog[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
+        return filterByDataSubject(findByTenant(tenantId), dataSubjectId);
+    }
+
     void removeByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
         findByDataSubject(tenantId, dataSubjectId).each!(v => remove(v));
     }
@@ -32,14 +35,17 @@ class MemoryDataProcessingLogRepository : TenantRepository!(DataProcessingLog, D
     size_t countByRequest(TenantId tenantId, DataSubjectRequestId requestId) {
         return findByRequest(tenantId, requestId).length;
     }
-    DataProcessingLog[] findByRequest(TenantId tenantId, DataSubjectRequestId requestId) {
-        DataProcessingLog[] result;
-        foreach (v; findByTenant(tenantId))
-            if (v.requestId == requestId) result ~= v;
-        return result;
+
+    DataProcessingLog[] filterByRequest(DataProcessingLog[] logs, DataSubjectRequestId requestId) {
+        return logs.filter!(v => v.id.value == requestId.value).array;
     }
+
+    DataProcessingLog[] findByRequest(TenantId tenantId, DataSubjectRequestId requestId) {
+        return filterByRequest(findByTenant(tenantId), requestId);
+    }
+
     void removeByRequest(TenantId tenantId, DataSubjectRequestId requestId) {
-        findByRequest(tenantId, requestId).each!(v => store.remove(v));
+        findByRequest(tenantId, requestId).each!(v => remove(v));
     }
     // #endregion ByRequest
 
@@ -47,14 +53,16 @@ class MemoryDataProcessingLogRepository : TenantRepository!(DataProcessingLog, D
     size_t countByApplication(TenantId tenantId, string applicationId) {
         return findByApplication(tenantId, applicationId).length;
     }
+
+    DataProcessingLog[] filterByApplication(DataProcessingLog[] logs, string applicationId) {
+        return logs.filter!(v => v.applicationId == applicationId).array;
+    }
+
     DataProcessingLog[] findByApplication(TenantId tenantId, string applicationId) {
-        DataProcessingLog[] result;
-        foreach (v; findByTenant(tenantId))
-            if (v.applicationId == applicationId) result ~= v;
-        return result;
+        return filterByApplication(findByTenant(tenantId), applicationId);
     }
     void removeByApplication(TenantId tenantId, string applicationId) {
-        findByApplication(tenantId, applicationId).each!(v => store.remove(v));
+        findByApplication(tenantId, applicationId).each!(v => remove(v));
     }
     // #endregion ByApplication
 }

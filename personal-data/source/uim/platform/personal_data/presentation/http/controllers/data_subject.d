@@ -41,19 +41,19 @@ class DataSubjectController : ManageHttpController {
         auto data = precheck.data;
         CreateDataSubjectRequest r;
         r.tenantId = tenantId;
-        r.id = precheck.id;
+        // TODO: r.id = precheck.id;
         r.subjectType = data.getString("subjectType");
         r.firstName = data.getString("firstName");
         r.lastName = data.getString("lastName");
         r.email = data.getString("email");
-        r.phone = data.getString("phone");
+        // TODO: r.phone = data.getString("phone");
         r.dateOfBirth = data.getString("dateOfBirth");
         r.organizationName = data.getString("organizationName");
         r.organizationId = data.getString("organizationId");
         r.externalId = data.getString("externalId");
         r.createdBy = UserId(data.getString("createdBy"));
 
-        auto result = usecase.create(r);
+        auto result = usecase.createDataSubject(r);
         if (result.hasError)
             return errorResponse(result.message, 400);
         auto resp = Json.emptyObject.set("id", result.id);
@@ -66,45 +66,45 @@ class DataSubjectController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-
-        auto subjects = usecase.listDataSubjects(tenantId);
-
-        auto jarr = subjects.map!(s => s.toJson).array.toJson;
-
+        auto subjects = usecase.listDataSubjects(tenantId).map!(s => s.toJson).array.toJson;
         auto resp = Json.emptyObject
             .set("count", subjects.length)
+            .set("resources", subjects);
+
+        return successResponse("Data subjects retrieved successfully", "Retrieved", 200, resp);
+    }
+
+    protected Json searchHandler(HTTPServerRequest req) {
+        auto precheck = super.getHandler(req);
+        if (precheck.hasError)
+            return precheck;
+
+        auto tenantId = precheck.tenantId;
+
+        auto data = precheck.data;
+        auto firstName = data.getString("firstName", "");
+        auto lastName = data.getString("lastName", "");
+        auto email = data.getString("email", "");
+
+        DataSubject[] results;
+        if (!email.isEmpty) {
+            auto s = usecase.findDataSubjectByEmail(tenantId, email);
+            if (!s.isNull)
+                results ~= s;
+        } else {
+            results = usecase.searchDataSubjectsByName(tenantId, firstName, lastName);
+        }
+
+        auto jarr = results.map!(s => s.toJson).array.toJson;
+
+        auto resp = Json.emptyObject
+            .set("count", results.length)
             .set("resources", jarr);
 
         return successResponse("Data subjects retrieved successfully", "Retrieved", 200, resp);
     }
 
-    protected void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = precheck.tenantId;
-            auto params = req.queryParams();
-            auto firstName = params.get("firstName", "");
-            auto lastName = params.get("lastName", "");
-            auto email = params.get("email", "");
-
-            DataSubject[] results;
-            if (!email.isEmpty) {
-                auto s = usecase.findByEmail(email);
-                if (!s.isNull)
-                    results ~= s;
-            } else {
-                results = usecase.searchDataSubjects(tenantId, firstName, lastName);
-            }
-
-            auto jarr = results.map!(s => s.toJson).array.toJson;
-
-            auto resp = Json.emptyObject
-                .set("count", results.length)
-                .set("resources", list);
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+    mixin(HandleTemplate!("handleSearch", "searchHandler"));
 
     override protected Json getHandler(HTTPServerRequest req) {
         auto precheck = super.getHandler(req);
@@ -114,9 +114,10 @@ class DataSubjectController : ManageHttpController {
         auto tenantId = precheck.tenantId;
         auto path = precheck.path;
         if (path.length > 6 && path[$ - 6 .. $] == "/block")
-            return;
+            return successResponse("Data subject blocked successfully", "Blocked", 200, Json.emptyObject); // TODO:
+
         if (path.length > 6 && path[$ - 6 .. $] == "/erase")
-            return;
+            return successResponse("Data subject erased successfully", "Erased", 200, Json.emptyObject);// TODO:
 
         auto id = DataSubjectId(precheck.id);
         if (id.isNull)
@@ -140,12 +141,12 @@ class DataSubjectController : ManageHttpController {
         auto data = precheck.data;
         UpdateDataSubjectRequest request;
         request.tenantId = tenantId;
-        request.id = DataSubjectId(precheck.id);
+        request.requestId = DataSubjectRequestId(precheck.id);
         request.firstName = data.getString("firstName");
         request.lastName = data.getString("lastName");
         request.email = data.getString("email");
-        request.phone = data.getString("phone");
-        request.dateOfBirth = data.getString("dateOfBirth");
+        request.phoneNumber = data.getString("phone");
+        // TODO: request.dateOfBirth = data.getString("dateOfBirth");
         request.organizationName = data.getString("organizationName");
         request.organizationId = data.getString("organizationId");
         request.updatedBy = UserId(data.getString("updatedBy"));
@@ -169,7 +170,7 @@ class DataSubjectController : ManageHttpController {
         if (id.isNull)
             return errorResponse("Invalid data subject ID", 400);
 
-        auto result = usecase.block(tenantId, id);
+        auto result = usecase.blockDataSubject(tenantId, id);
         if (result.hasError)
             return errorResponse(result.message, 400);
         auto resp = Json.emptyObject

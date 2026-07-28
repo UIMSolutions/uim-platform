@@ -32,7 +32,7 @@ struct RetentionRule {
             .set("description", description)
             // .set("status", status.toString)
             .set("retentionPeriod", retentionPeriod)
-            .set("periodUnit", periodUnit)
+            .set("periodUnit", periodUnit.toString)
             .set("dataCategoryIds", dataCategoryIds.toJson)
             .set("applicationIds", applicationIds.toJson)
             .set("purposeIds", purposeIds.toJson)

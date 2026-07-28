@@ -14,7 +14,8 @@ mixin(ShowModule!());
 // --- Data Subject ---
 struct CreateDataSubjectRequest {
     TenantId tenantId;
-    string id;
+    DataSubjectRequestId requestId;
+
     string subjectType;
     string firstName;
     string lastName;
@@ -30,7 +31,11 @@ struct CreateDataSubjectRequest {
 
 struct UpdateDataSubjectRequest {
     TenantId tenantId;
-    string id;
+    DataSubjectRequestId requestId;
+    OrganizationId organizationId;
+    DataSubjectId subjectId;
+
+
     string firstName;
     string lastName;
     string email;
@@ -42,21 +47,21 @@ struct UpdateDataSubjectRequest {
 // --- Data Subject Request ---
 struct CreateDataSubjectRequestRequest {
     TenantId tenantId;
-    string id;
-    string dataSubjectId;
+    DataSubjectRequestId requestId;
+    DataSubjectId subjectId;
     string requestType;
     string priority;
     string description;
     string[] applicationIds;
     string[] dataCategoryIds;
-    string assignedTo;
-    string dueDate;
+    UserId assignedTo;
+    long dueDate;
     UserId createdBy;
 }
 
 struct UpdateDataSubjectRequestRequest {
     TenantId tenantId;
-    string id;
+    DataSubjectRequestId requestId;
     string status;
     string assignedTo;
     string rejectionReason;
@@ -85,7 +90,8 @@ struct CreatePersonalDataRecordRequest {
 // --- Registered Application ---
 struct CreateRegisteredApplicationRequest {
     TenantId tenantId;
-    string id;
+    RegisteredApplicationId applicationId;
+
     string name;
     string description;
     string endpointUrl;

@@ -38,7 +38,7 @@ class RegisteredApplicationController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto apps = usecase.listApplications(tenantId);
-        auto jarr = apps.map!(a => appToJson(a)).array.toJson;
+        auto jarr = apps.map!(a => a.toJson).array.toJson;
 
         return successResponse("Applications retrieved", "Retrieved", 200, Json.emptyObject
                 .set("count", apps.length)
@@ -56,14 +56,14 @@ class RegisteredApplicationController : ManageHttpController {
 
         CreateRegisteredApplicationRequest r;
         r.tenantId = tenantId;
-        r.id = id;
+        // TODO: r.id = id;
         r.name = data.getString("name");
         r.description = data.getString("description");
         r.endpointUrl = data.getString("endpointUrl");
         r.apiVersion = data.getString("apiVersion");
         r.contactEmail = data.getString("contactEmail");
         r.contactName = data.getString("contactName");
-        r.createdBy = UserId(data.getString("createdBy"));
+        // TODO: r.createdBy = UserId(data.getString("createdBy"));
 
         auto result = usecase.createApplication(r);
         if (result.hasError)

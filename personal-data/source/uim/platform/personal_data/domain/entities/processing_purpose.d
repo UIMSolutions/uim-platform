@@ -30,8 +30,8 @@ struct ProcessingPurpose {
             .set("description", description)
             // .set("legalBasis", legalBasis.toString())
             // .set("status", status.toString())
-            .set("dataCategoryIds", dataCategoryIds)
-            .set("applicationIds", applicationIds)
+            .set("dataCategoryIds", dataCategoryIds.toJson)
+            .set("applicationIds", applicationIds.toJson)
             .set("retentionPeriod", retentionPeriod)
             .set("dataProtectionOfficer", dataProtectionOfficer)
             .set("requiresConsent", requiresConsent);

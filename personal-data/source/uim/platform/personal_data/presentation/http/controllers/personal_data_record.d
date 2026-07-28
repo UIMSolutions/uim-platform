@@ -35,26 +35,26 @@ class PersonalDataRecordController : ManageHttpController {
         auto tenantId = precheck.tenantId;
 
         auto data = precheck.data;
-            CreatePersonalDataRecordRequest r;
-            r.tenantId = tenantId;
-            r.id = precheck.id;
-            r.dataSubjectId = data.getString("dataSubjectId");
-            r.applicationId = data.getString("applicationId");
-            r.dataCategory = data.getString("dataCategory");
-            r.sensitivity = data.getString("sensitivity");
-            r.fieldName = data.getString("fieldName");
-            r.fieldValue = data.getString("fieldValue");
-            r.purposeId = data.getString("purposeId");
-            r.legalBasis = data.getString("legalBasis");
-            r.retentionRuleId = data.getString("retentionRuleId");
-            r.createdBy = UserId(data.getString("createdBy"));
+        CreatePersonalDataRecordRequest r;
+        r.tenantId = tenantId;
+        r.id = precheck.id;
+        r.dataSubjectId = data.getString("dataSubjectId");
+        r.applicationId = data.getString("applicationId");
+        // TODO: r.dataCategory = data.getString("dataCategory");
+        r.sensitivity = data.getString("sensitivity");
+        r.fieldName = data.getString("fieldName");
+        r.fieldValue = data.getString("fieldValue");
+        r.purposeId = data.getString("purposeId");
+        r.legalBasis = data.getString("legalBasis");
+        r.retentionRuleId = data.getString("retentionRuleId");
+        r.createdBy = UserId(data.getString("createdBy"));
 
-            auto result = usecase.create(r);
-            if (result.hasError)
+        auto result = usecase.createPersonalDataRecord(r);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                    .set("id", result.id);
-                return successResponse("Personal data record created successfully", "Created", 201, resp);
+        auto resp = Json.emptyObject
+            .set("id", result.id);
+        return successResponse("Personal data record created successfully", "Created", 201, resp);
     }
 
     override protected Json listHandler(HTTPServerRequest req) {
@@ -64,40 +64,46 @@ class PersonalDataRecordController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
 
-            auto params = req.queryParams();
-            auto dataSubjectId = params.get("dataSubjectId", "");
-            auto applicationId = params.get("applicationId", "");
+        auto data = precheck.data;
+        auto dataSubjectId = DataSubjectId(data.getString("dataSubjectId"));
+        auto applicationId = RegisteredApplicationId(data.getString("applicationId"));
 
-            PersonalDataRecord[] records;
-            if (!dataSubjectId.isEmpty && !applicationId.isEmpty) {
-                records = usecase.listPersonalDataRecords(tenantId, dataSubjectId, applicationId);
-            } else if (!dataSubjectId.isEmpty) {
-                records = usecase.listPersonalDataRecords(tenantId, dataSubjectId);
-            } else if (!applicationId.isEmpty) {
-                records = usecase.listPersonalDataRecords(tenantId, applicationId);
-            } else {
-                records = usecase.list(tenantId);
-            }
+        PersonalDataRecord[] records;
+        if (!dataSubjectId.isEmpty && !applicationId.isEmpty) {
+            records = usecase.listPersonalDataRecords(tenantId, dataSubjectId, applicationId);
+        } else if (!dataSubjectId.isEmpty) {
+            records = usecase.listPersonalDataRecords(tenantId, dataSubjectId);
+        } else if (!applicationId.isEmpty) {
+            records = usecase.listPersonalDataRecords(tenantId, applicationId);
+        } else {
+            records = usecase.listPersonalDataRecords(tenantId);
+        }
 
-            auto jarr = records.map!(r => toJson(r)).array.toJson;
+        auto jarr = records.map!(r => r.toJson).array.toJson;
 
-            auto resp = Json.emptyObject
-                .set("count", records.length)
-                .set("resources", jarr);
+        auto resp = Json.emptyObject
+            .set("count", records.length)
+            .set("resources", jarr);
 
-    return successResponse("Personal data records retrieved successfully", "Retrieved", 200, resp);
+        return successResponse("Personal data records retrieved successfully", "Retrieved", 200, resp);
     }
 
     override Json getHandler(HTTPServerRequest req) {
         auto precheck = super.getHandler(req);
-        if (precheck.hasError)            return precheck;
-            
-            auto id = precheck.id;
-            auto r = usecase.getById(tenantId, id);
-            if (r.isNull)
-                return errorResponse("Personal data record not found", 404);
+        if (precheck.hasError)
+            return precheck;
 
-        return successResponse("Personal data record retrieved successfully", "Retrieved", 200, r.toJson);
+        auto tenantId = precheck.tenantId;
+        auto id = PersonalDataRecordId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid personal data record ID", 400);
+
+        auto r = usecase.getPersonalDataRecord(tenantId, id);
+        if (r.isNull)
+            return errorResponse("Personal data record not found", 404);
+
+        return successResponse("Personal data record retrieved successfully", "Retrieved", 200, r
+                .toJson);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -106,15 +112,15 @@ class PersonalDataRecordController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-            
+        auto id = PersonalDataRecordId(precheck.id);
+        if (id.isNull)
+            return errorResponse("Invalid personal data record ID", 400);
 
-            auto id = precheck.id;
-            auto result = usecase.deletePersonalDataRecord(id);
-            if (result.hasError)
+        auto result = usecase.deletePersonalDataRecord(tenantId, id);
+        if (result.hasError)
             return errorResponse(result.message, 400);
-                auto resp = Json.emptyObject
-                  .set("id", result.id);
 
-        return successResponse("Personal data record deleted successfully", "Deleted", 200, resp);
+        auto responseData = Json.emptyObject.set("id", result.id);
+        return successResponse("Personal data record deleted successfully", "Deleted", 200, responseData);
     }
 }

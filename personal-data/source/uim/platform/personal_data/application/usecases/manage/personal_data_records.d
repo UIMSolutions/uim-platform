@@ -19,7 +19,7 @@ class ManagePersonalDataRecordsUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult createPersonalDataRecord(CreatePersonalDataRecordRequest r) {
-        if (r.isNull) return CommandResult(false, "", "ID is required");
+        if (r.tenantId.isNull) return CommandResult(false, "", "Tenant ID is required");
         if (r.dataSubjectId.isEmpty) return CommandResult(false, "", "Data subject ID is required");
 
         
