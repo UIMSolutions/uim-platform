@@ -21,7 +21,7 @@ string jsonStr(Json j, string key, string def = "") {
 bool jsonBool(Json j, string key, bool def = false) {
   if (j.type != Json.Type.object) return def;
   auto v = j[key];
-  if (v.isBoolean_) return v.get!bool;
+  if (v.isBoolean) return v.get!bool;
   return def;
 }
 
@@ -61,11 +61,12 @@ string extractIdFromPath(HTTPServerRequest req) {
   if (idx < 0) return p;
   return p[idx + 1 .. $];
 }
-
+// 
 // Standard error response
-void writeError(HTTPServerResponse res, int status, string message) {
-  auto j = Json.emptyObject;
-  j["error"]   = Json(message);
-  j["status"]  = Json(status);
-  res.writeJsonBody(j, cast(int) status);
-}
+// void writeError(HTTPServerResponse res, int status, string message) {
+  // auto j = Json.emptyObject;
+  // j["error"]   = Json(message);
+  // j["status"]  = Json(status);
+  // res.writeJsonBody(j, cast(int) status);
+// }
+// 

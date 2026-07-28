@@ -26,7 +26,7 @@ class ManageAuditLogsUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    AuditLog[] listByActor(TenantId tenantId, string actorId) {
+    AuditLog[] listAuditLogs(TenantId tenantId, string actorId) {
         return repo.findByActor(tenantId, actorId);
     }
 

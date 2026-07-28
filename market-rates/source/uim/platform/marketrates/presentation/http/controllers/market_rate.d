@@ -58,20 +58,20 @@ class MarketRateController : ManageHttpController {
 
     foreach (r; data.getArray("records")) {
       UploadRateRecord rec;
-      rec.providerCode = jsonStr(r, "providerCode");
-      rec.dataSource = jsonStr(r, "dataSource");
-      rec.category = jsonStr(r, "category");
-      rec.key1 = jsonStr(r, "key1");
-      rec.key2 = jsonStr(r, "key2");
-      rec.marketDataProperty = jsonStr(r, "marketDataProperty");
-      rec.effectiveDate = jsonStr(r, "effectiveDate");
-      rec.effectiveTime = jsonStr(r, "effectiveTime", "000000");
+      rec.providerCode = r.getString("providerCode");
+      rec.dataSource = r.getString("dataSource");
+      rec.category = r.getString("category");
+      rec.key1 = r.getString("key1");
+      rec.key2 = r.getString("key2");
+      rec.marketDataProperty = r.getString("marketDataProperty");
+      rec.effectiveDate = r.getString("effectiveDate");
+      rec.effectiveTime = r.getString("effectiveTime", "000000");
       rec.marketDataValue = jsonDouble(r, "marketDataValue");
-      rec.securityCurrency = jsonStr(r, "securityCurrency");
-      rec.fromFactor = jsonInt(r, "fromFactor", 1);
-      rec.toFactor = jsonInt(r, "toFactor", 1);
-      rec.priceQuotation = jsonStr(r, "priceQuotation", "direct");
-      rec.additionalKey = jsonStr(r, "additionalKey");
+      rec.securityCurrency = r.getString("securityCurrency");
+      rec.fromFactor = r.getInteger("fromFactor", 1);
+      rec.toFactor = r.getInteger("toFactor", 1);
+      rec.priceQuotation = r.getString("priceQuotation", "direct");
+      rec.additionalKey = r.getString("additionalKey");
       ucReq.records ~= rec;
     }
 
@@ -211,8 +211,8 @@ class MarketRateController : ManageHttpController {
 
     DeleteRatesRequest ucReq;
     ucReq.tenantId = tenantId;
-    ucReq.key1 = key1;
-    ucReq.key2 = key2;
+    // TODO:  ucReq.key1 = key1;
+    // TODO:  ucReq.key2 = key2;
     ucReq.category = category;
     ucReq.fromDate = fromDate;
     ucReq.toDate = toDate;
@@ -342,7 +342,7 @@ class MarketRateController : ManageHttpController {
     auto j = Json.emptyObject.set("deleted", true);
     return successResponse(j, "Provider deleted successfully", 200);
   }
-  
+
   mixin(HandleTemplate!("handleDeleteProvider", "deleteProviderHandler"));
 
 }

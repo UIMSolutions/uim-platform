@@ -82,7 +82,7 @@ class ManageMarketRatesUseCase {
       ? OperationStatus.success
       : (accepted.length > 0 ? OperationStatus.warning : OperationStatus.failed);
 
-    logAudit(req.tenantId, req.requestedBy, AuditOperation.upload,
+    logAudit(req.tenantId, UserId(req.requestedBy), AuditOperation.upload,
              req.records.length > 0 ? req.records[0].providerCode : "",
              req.records.length > 0
                ? cast(MarketDataCategory)(req.records[0].category)
@@ -178,7 +178,7 @@ class ManageMarketRatesUseCase {
                          string fromDate, string toDate) {
     auto entry = AuditLog(tenantId); //, UserId("test-user"));
     entry.operation   = op;
-    entry.requestedBy = requestedBy;
+    entry.requestedBy = requestedBy.value;
     entry.providerCode = providerCode;
     entry.category    = category;
     entry.status      = status;

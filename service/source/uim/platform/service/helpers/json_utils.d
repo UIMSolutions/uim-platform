@@ -86,9 +86,9 @@ string[][] jsonMessageArray(Json j, string key) {
 }
 /// Write a JSON error response.
 void writeError(scope HTTPServerResponse res, int status, string message) {
-  auto error = Json.emptyObject;
-  error["error"] = Json(message);
-  error["status"] = Json(status);
+  auto error = Json.emptyObject
+    .set("error",  message)
+    .set("status", status);
   // j["code"] = Json(code);
   res.writeJsonBody(error, status);
 }

@@ -18,6 +18,8 @@ class AuditLogController : ManageHttpController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+
     router.get("/api/v1/marketrates/auditlogs",   &handleList);
     router.get("/api/v1/marketrates/auditlogs/*", &handleGet);
   }
@@ -28,7 +30,7 @@ class AuditLogController : ManageHttpController {
       return precheck; // Return error response from precheck
 
     auto tenantId = precheck.tenantId;
-    auto logs     = uc.list(tenantId).map!(l => l.toJson()).array.toJson;
+    auto logs     = uc.listLogs(tenantId).map!(l => l.toJson()).array.toJson;
 
     auto responseData = Json.emptyObject
     .set("data", logs)
@@ -42,8 +44,11 @@ class AuditLogController : ManageHttpController {
       return precheck; // Return error response from precheck
 
     auto id       = AuditLogId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid audit log ID", 400);
+
     auto tenantId = precheck.tenantId;
-    auto entry    = uc.getById(tenantId, id);
+    auto entry    = uc.getLog(tenantId, id);
 
     if (entry.isNull)
       return errorResponse("Audit log entry not found", 404);

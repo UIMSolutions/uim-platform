@@ -42,7 +42,7 @@ struct UploadRatesResponse {
   OperationStatus status;
   int             acceptedCount;
   int             rejectedCount;
-  string[]        errors;
+  string[]        messages;
 }
 
 // ---------------------------------------------------------------------------
