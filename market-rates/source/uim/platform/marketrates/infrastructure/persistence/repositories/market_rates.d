@@ -14,57 +14,97 @@ mixin(ShowModule!());
 
 class MemoryMarketRateRepository : TenantRepository!(MarketRate, MarketRateId), MarketRateRepository {
 
-  size_t countByProvider(TenantId t, string code) {
-    return findByProvider(t, code).length;
+  size_t countByProvider(TenantId tenantId, string code) {
+    return findByProvider(tenantId, code).length;
   }
 
   MarketRate[] filterByProvider(MarketRate[] rates, string code) {
     return rates.filter!(r => r.providerCode == code).array;
   }
 
-  MarketRate[] findByProvider(TenantId t, string code) {
-    return filterByProvider(findByTenant(t).array, code);
+  MarketRate[] findByProvider(TenantId tenantId, string code) {
+    return filterByProvider(findByTenant(tenantId), code);
   }
 
-  void removeByProvider(TenantId t, string code) {
-    findByProvider(t, code).each!(r => remove(r));
+  void removeByProvider(TenantId tenantId, string code) {
+    findByProvider(tenantId, code).each!(r => remove(r));
   }
 
-  size_t countByCategory(TenantId t, MarketDataCategory cat) {
-    return findByCategory(t, cat).length;
+  size_t countByCategory(TenantId tenantId, MarketDataCategory cat) {
+    return findByCategory(tenantId, cat).length;
   }
 
   MarketRate[] filterByCategory(MarketRate[] rates, MarketDataCategory cat) {
     return rates.filter!(r => r.category == cat).array;
   }
-  MarketRate[] findByCategory(TenantId t, MarketDataCategory cat) {
-    return findByTenant(t).filter!(r => r.category == cat).array;
+
+  MarketRate[] findByCategory(TenantId tenantId, MarketDataCategory cat) {
+    return filterByCategory(findByTenant(tenantId), cat);
   }
 
+  void removeByCategory(TenantId tenantId, MarketDataCategory cat) {
+    findByCategory(tenantId, cat).each!(r => remove(r));
+  }
 
-  MarketRate[] findByDateRange(TenantId t, string from_, string to_) {
-    return findByTenant(t).filter!(r =>
+  size_t countByDateRange(TenantId tenantId, string from_, string to_) {
+    return findByDateRange(tenantId, from_, to_).length;
+  }
+
+  MarketRate[] filterByDateRange(MarketRate[] rates, string from_, string to_) {
+    return rates.filter!(r =>
         r.effectiveDate >= from_ &&
         (to_.length == 0 || r.effectiveDate <= to_)
     ).array;
   }
 
-  MarketRate[] findByProviderAndCategory(TenantId t, string code, MarketDataCategory cat) {
-    return findByTenant(t).filter!(r => r.providerCode == code && r.category == cat).array;
+  MarketRate[] findByDateRange(TenantId tenantId, string from_, string to_) {
+    return filterByDateRange(findByTenant(tenantId), from_, to_);
   }
 
-  MarketRate[] findByKey(TenantId t, string key1, string key2, MarketDataCategory cat) {
-    return findByTenant(t).filter!(r =>
-        r.key1 == key1 &&
-        r.key2 == key2 &&
-        r.category == cat
-    ).array;
+  void removeByDateRange(TenantId tenantId, string from_, string to_) {
+    findByDateRange(tenantId, from_, to_).each!(r => remove(r));
   }
 
-  MarketRate[] findLatest(TenantId t, string code, MarketDataCategory cat) {
+  size_t countByProviderAndCategory(TenantId tenantId, string code, MarketDataCategory cat) {
+    return findByProviderAndCategory(tenantId, code, cat).length;
+  }
+
+  MarketRate[] filterByProviderAndCategory(MarketRate[] rates, string code, MarketDataCategory cat) {
+    return rates.filter!(r => r.providerCode == code && r.category == cat).array;
+  }
+
+  MarketRate[] findByProviderAndCategory(TenantId tenantId, string code, MarketDataCategory cat) {
+    return filterByProviderAndCategory(findByTenant(tenantId), code, cat);
+  }
+
+  void removeByProviderAndCategory(TenantId tenantId, string code, MarketDataCategory cat) {
+    findByProviderAndCategory(tenantId, code, cat).each!(r => remove(r));
+  }
+
+  size_t countByKey(TenantId tenantId, string key1, string key2, MarketDataCategory cat) {
+    return findByKey(tenantId, key1, key2, cat).length;
+  }
+
+  MarketRate[] filterByKey(MarketRate[] rates, string key1, string key2, MarketDataCategory cat) {
+    return rates.filter!(r => r.key1 == key1 && r.key2 == key2 && r.category == cat).array;
+  }
+
+  MarketRate[] findByKey(TenantId tenantId, string key1, string key2, MarketDataCategory cat) {
+    return filterByKey(findByTenant(tenantId), key1, key2, cat);
+  }
+
+  void removeByKey(TenantId tenantId, string key1, string key2, MarketDataCategory cat) {
+    findByKey(tenantId, key1, key2, cat).each!(r => remove(r));
+  }
+
+  size_t countLatest(TenantId tenantId, string code, MarketDataCategory cat) {
+    return findLatest(tenantId, code, cat).length;
+  }
+
+  MarketRate[] findLatest(TenantId tenantId, string code, MarketDataCategory cat) {
     import std.algorithm : sort, uniq;
 
-    auto all = findByProviderAndCategory(t, code, cat);
+    auto all = findByProviderAndCategory(tenantId, code, cat);
     if (all.length == 0)
       return all;
     all.sort!((a, b) => a.effectiveDate > b.effectiveDate);
@@ -73,27 +113,7 @@ class MemoryMarketRateRepository : TenantRepository!(MarketRate, MarketRateId), 
     return all.filter!(r => r.effectiveDate == latestDate).array;
   }
 
-  // --- Bulk removal ---
-  void removeByProvider(TenantId t, string code) {
-    foreach (key, r; findByTenant(t))
-      if (r.providerCode == code)
-        store.remove(key);
-  }
-
-  void removeByCategory(TenantId t, MarketDataCategory cat) {
-    foreach (key, r; findByTenant(t))
-      if (r.category == cat)
-        store.remove(key);
-  }
-
-  void removeByDateRange(TenantId t, string from_, string to_) {
-    foreach (key, r; findByTenant(t))
-      if (r.effectiveDate >= from_ &&
-        (to_.length == 0 || r.effectiveDate <= to_))
-        store.remove(key);
-  }
-
-  size_t countByProvider(TenantId t, string code) {
-    return findByProvider(t, code).length;
+  void saveAll(MarketRate[] rates) {
+    rates.each!(r => save(r));
   }
 }

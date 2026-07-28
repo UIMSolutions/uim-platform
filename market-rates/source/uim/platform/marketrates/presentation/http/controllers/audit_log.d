@@ -22,28 +22,33 @@ class AuditLogController : ManageHttpController {
     router.get("/api/v1/marketrates/auditlogs/*", &handleGet);
   }
 
-  private void handleList(HTTPServerRequest req, HTTPServerResponse res) {
-    auto tenantId = TenantId(req.query.get("tenantId", "default"));
-    auto logs     = uc.list(tenantId);
+  override protected Json listHandler(HTTPServerRequest req) {
+    auto precheck = super.listHandler(req);
+    if (precheck.hasError)
+      return precheck; // Return error response from precheck
 
-    auto arr = Json.emptyArray;
-    foreach (l; logs) arr ~= l.toJson();
+    auto tenantId = precheck.tenantId;
+    auto logs     = uc.list(tenantId).map!(l => l.toJson()).array.toJson;
 
-    auto j = Json.emptyObject;
-    j["data"]  = arr;
-    j["count"] = Json(cast(int) logs.length);
-    res.writeJsonBody(j, 200);
+    auto responseData = Json.emptyObject
+    .set("data", logs)
+    .set("count", logs.length);
+    return successResponse("Audit log list retrieved successfully", "OK", 200, responseData);
   }
 
-  private void handleGet(HTTPServerRequest req, HTTPServerResponse res) {
-    auto id       = precheck.id;
-    auto tenantId = TenantId(req.query.get("tenantId", "default"));
-    auto entry    = uc.getById(tenantId, AuditLogId(id));
+  override protected Json getHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck; // Return error response from precheck
 
-    if (entry.isNull) {
-      writeError(res, 404, "Audit log entry not found");
-      return;
-    }
-    res.writeJsonBody(entry.toJson(), 200);
+    auto id       = AuditLogId(precheck.id);
+    auto tenantId = precheck.tenantId;
+    auto entry    = uc.getById(tenantId, id);
+
+    if (entry.isNull)
+      return errorResponse("Audit log entry not found", 404);
+
+    return successResponse("Audit log entry retrieved successfully", "OK", 200, entry.toJson());
   }
+
 }

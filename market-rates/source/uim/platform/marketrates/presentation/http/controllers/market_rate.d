@@ -6,7 +6,6 @@
 module uim.platform.marketrates.presentation.http.controllers.market_rate;
 import uim.platform.marketrates;
 
-
 mixin(ShowModule!());
 
 @safe:
@@ -15,105 +14,106 @@ mixin(ShowModule!());
 // and provider CRUD – the primary HTTP driving adapter.
 class MarketRateController : ManageHttpController {
   private ManageMarketRatesUseCase ratesUC;
-  private ManageProvidersUseCase   providersUC;
+  private ManageProvidersUseCase providersUC;
 
   this(ManageMarketRatesUseCase ratesUC, ManageProvidersUseCase providersUC) {
-    this.ratesUC     = ratesUC;
+    this.ratesUC = ratesUC;
     this.providersUC = providersUC;
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+
     // Upload / download
-    router.post("/api/v1/marketrates/upload",   &handleUpload);
+    router.post("/api/v1/marketrates/upload", &handleUpload);
     router.post("/api/v1/marketrates/download", &handleDownload);
 
     // Rate records
-    router.get ("/api/v1/marketrates/rates",    &handleListRates);
-    router.get ("/api/v1/marketrates/rates/*",  &handleGetRate);
+    router.get("/api/v1/marketrates/rates", &handleListRates);
+    router.get("/api/v1/marketrates/rates/*", &handleGetRate);
     router.delete_("/api/v1/marketrates/rates", &handleDeleteRates);
 
     // Provider management
-    router.get   ("/api/v1/marketrates/providers",    &handleListProviders);
-    router.post  ("/api/v1/marketrates/providers",    &handleCreateProvider);
-    router.get   ("/api/v1/marketrates/providers/*",  &handleGetProvider);
-    router.put   ("/api/v1/marketrates/providers/*",  &handleUpdateProvider);
+    router.get("/api/v1/marketrates/providers", &handleListProviders);
+    router.post("/api/v1/marketrates/providers", &handleCreateProvider);
+    router.get("/api/v1/marketrates/providers/*", &handleGetProvider);
+    router.put("/api/v1/marketrates/providers/*", &handleUpdateProvider);
     router.delete_("/api/v1/marketrates/providers/*", &handleDeleteProvider);
   }
 
   // ------------------------------------------------------------------
   // Upload
   // ------------------------------------------------------------------
-  private void handleUpload(HTTPServerRequest req, HTTPServerResponse res) {
-    auto body_ = req.json;
-    if (body_.type == Json.Type.undefined) {
-      writeError(res, 400, "Request body must be JSON");
-      return;
-    }
+  protected Json uploadHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
 
     UploadRatesRequest ucReq;
-    ucReq.tenantId    = TenantId(body_.getString("tenantId", "default"));
-    ucReq.requestedBy = body_.getString("requestedBy");
+    ucReq.tenantId = tenantId;
+    ucReq.requestedBy = data.getString("requestedBy");
 
-    auto recordsJson = body_["records"];
-    if (recordsJson.isArray) {
-      foreach (r; recordsJson.byValue) {
-        UploadRateRecord rec;
-        rec.providerCode       = jsonStr(r, "providerCode");
-        rec.dataSource         = jsonStr(r, "dataSource");
-        rec.category           = jsonStr(r, "category");
-        rec.key1               = jsonStr(r, "key1");
-        rec.key2               = jsonStr(r, "key2");
-        rec.marketDataProperty = jsonStr(r, "marketDataProperty");
-        rec.effectiveDate      = jsonStr(r, "effectiveDate");
-        rec.effectiveTime      = jsonStr(r, "effectiveTime", "000000");
-        rec.marketDataValue    = jsonDouble(r, "marketDataValue");
-        rec.securityCurrency   = jsonStr(r, "securityCurrency");
-        rec.fromFactor         = jsonInt(r, "fromFactor", 1);
-        rec.toFactor           = jsonInt(r, "toFactor", 1);
-        rec.priceQuotation     = jsonStr(r, "priceQuotation", "direct");
-        rec.additionalKey      = jsonStr(r, "additionalKey");
-        ucReq.records ~= rec;
-      }
+    foreach (r; data.getArray("records")) {
+      UploadRateRecord rec;
+      rec.providerCode = jsonStr(r, "providerCode");
+      rec.dataSource = jsonStr(r, "dataSource");
+      rec.category = jsonStr(r, "category");
+      rec.key1 = jsonStr(r, "key1");
+      rec.key2 = jsonStr(r, "key2");
+      rec.marketDataProperty = jsonStr(r, "marketDataProperty");
+      rec.effectiveDate = jsonStr(r, "effectiveDate");
+      rec.effectiveTime = jsonStr(r, "effectiveTime", "000000");
+      rec.marketDataValue = jsonDouble(r, "marketDataValue");
+      rec.securityCurrency = jsonStr(r, "securityCurrency");
+      rec.fromFactor = jsonInt(r, "fromFactor", 1);
+      rec.toFactor = jsonInt(r, "toFactor", 1);
+      rec.priceQuotation = jsonStr(r, "priceQuotation", "direct");
+      rec.additionalKey = jsonStr(r, "additionalKey");
+      ucReq.records ~= rec;
     }
 
     auto result = ratesUC.upload(ucReq);
 
-    auto j = Json.emptyObject;
-    j["status"]        = Json(result.status.to!string);
-    j["acceptedCount"] = Json(result.acceptedCount);
-    j["rejectedCount"] = Json(result.rejectedCount);
-    auto errArr = Json.emptyArray;
-    foreach (e; result.messages) errArr ~= Json(e);
-    j["errors"] = errArr;
+    auto responseData = Json.emptyObject
+      .set("status", result.status.to!string)
+      .set("acceptedCount", result.acceptedCount)
+      .set("rejectedCount", result.rejectedCount)
+      .set("errors", result.messages.map!(e => Json(e)).array.toJson);
 
     int statusCode = result.status == OperationStatus.failed ? 422 : 200;
-    res.writeJsonBody(j, cast(int) statusCode);
+    return successResponse("Upload completed", statusCode, responseData);
   }
+
+  mixin(HandleTemplate!("handleUpload", "uploadHandler"));
 
   // ------------------------------------------------------------------
   // Download
   // ------------------------------------------------------------------
-  private void handleDownload(HTTPServerRequest req, HTTPServerResponse res) {
-    auto body_ = req.json;
-    if (body_.type == Json.Type.undefined) {
-      writeError(res, 400, "Request body must be JSON");
-      return;
-    }
+  protected Json downloadHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
 
     DownloadRatesRequest ucReq;
-    ucReq.tenantId    = TenantId(body_.getString("tenantId", "default"));
-    ucReq.requestedBy = body_.getString("requestedBy");
-    ucReq.providerCode = body_.getString("providerCode");
-    ucReq.fromDate    = body_.getString("fromDate");
-    ucReq.toDate      = body_.getString("toDate");
-    ucReq.latestOnly  = jsonBool(body_, "latestOnly", false);
+    ucReq.tenantId = tenantId;
+    ucReq.requestedBy = data.getString("requestedBy");
+    ucReq.providerCode = data.getString("providerCode");
+    ucReq.fromDate = data.getString("fromDate");
+    ucReq.toDate = data.getString("toDate");
+    ucReq.latestOnly = jsonBool(data, "latestOnly", false);
 
-    auto instrJson = body_["instruments"];
+    auto instrJson = data["instruments"];
     if (instrJson.isArray) {
       foreach (i; instrJson.byValue) {
         DownloadInstrument instr;
-        instr.key1     = jsonStr(i, "key1");
-        instr.key2     = jsonStr(i, "key2");
+        instr.key1 = jsonStr(i, "key1");
+        instr.key2 = jsonStr(i, "key2");
         instr.category = jsonStr(i, "category");
         ucReq.instruments ~= instr;
       }
@@ -122,165 +122,227 @@ class MarketRateController : ManageHttpController {
     auto result = ratesUC.download(ucReq);
 
     auto ratesArr = Json.emptyArray;
-    foreach (r; result.rates) ratesArr ~= r.toJson();
+    foreach (r; result.rates)
+      ratesArr ~= r.toJson();
 
     auto j = Json.emptyObject;
-    j["status"]     = Json(result.status.to!string);
+    j["status"] = Json(result.status.to!string);
     j["totalCount"] = Json(result.totalCount);
-    j["rates"]      = ratesArr;
-    res.writeJsonBody(j, 200);
+    j["rates"] = ratesArr;
+
+    return successResponse("Download completed", 200, j);
   }
+
+  mixin(HandleTemplate!("handleDownload", "downloadHandler"));
 
   // ------------------------------------------------------------------
   // List rates (management UI query)
   // ------------------------------------------------------------------
-  private void handleListRates(HTTPServerRequest req, HTTPServerResponse res) {
+  protected Json listRatesHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto providerCode = req.query.get("providerCode", "");
+    auto category = req.query.get("category", "");
+    auto fromDate = req.query.get("fromDate", "");
+    auto toDate = req.query.get("toDate", "");
+    auto key1 = req.query.get("key1", "");
+    auto key2 = req.query.get("key2", "");
+
     QueryRatesRequest ucReq;
-    ucReq.tenantId     = TenantId(req.query.get("tenantId", "default"));
-    ucReq.providerCode = req.query.get("providerCode", "");
-    ucReq.category     = req.query.get("category", "");
-    ucReq.fromDate     = req.query.get("fromDate", "");
-    ucReq.toDate       = req.query.get("toDate", "");
-    ucReq.key1         = req.query.get("key1", "");
-    ucReq.key2         = req.query.get("key2", "");
+    ucReq.tenantId = tenantId;
+    ucReq.providerCode = providerCode;
+    ucReq.category = category;
+    ucReq.fromDate = fromDate;
+    ucReq.toDate = toDate;
+    ucReq.key1 = key1;
+    ucReq.key2 = key2;
 
     auto rates = ratesUC.query(ucReq);
 
     auto arr = Json.emptyArray;
-    foreach (r; rates) arr ~= r.toJson();
+    foreach (r; rates)
+      arr ~= r.toJson();
 
     auto j = Json.emptyObject;
-    j["data"]  = arr;
-    j["count"] = Json(cast(int) rates.length);
-    res.writeJsonBody(j, 200);
+    j["data"] = arr;
+    j["count"] = Json(cast(int)rates.length);
+    return successResponse(j, "Rates retrieved successfully", 200);
   }
+
+  mixin(HandleTemplate!("handleListRates", "listRatesHandler"));
 
   // ------------------------------------------------------------------
   // Get single rate
   // ------------------------------------------------------------------
-  private void handleGetRate(HTTPServerRequest req, HTTPServerResponse res) {
-    auto id       = precheck.id;
+  protected Json getRateHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto id = precheck.id;
     auto tenantId = TenantId(req.query.get("tenantId", "default"));
-    auto rate     = ratesUC.getById(tenantId, MarketRateId(id));
+    auto rate = ratesUC.getById(tenantId, MarketRateId(id));
 
     if (rate.isNull) {
-      writeError(res, 404, "Market rate not found");
-      return;
+      return errorResponse("Market rate not found", 404);
     }
-    res.writeJsonBody(rate.toJson(), 200);
+    return successResponse(rate.toJson(), "Market rate retrieved successfully", 200);
   }
+
+  mixin(HandleTemplate!("handleGetRate", "getRateHandler"));
 
   // ------------------------------------------------------------------
   // Delete rates
   // ------------------------------------------------------------------
-  private void handleDeleteRates(HTTPServerRequest req, HTTPServerResponse res) {
-    auto body_ = req.json;
+  protected Json deleteRatesHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto key1 = req.query.get("key1", "");
+    auto key2 = req.query.get("key2", "");
+    auto category = req.query.get("category", "");
+    auto fromDate = req.query.get("fromDate", "");
+    auto toDate = req.query.get("toDate", "");
 
     DeleteRatesRequest ucReq;
-    ucReq.tenantId    = TenantId(body_.getString("tenantId", "default"));
-    ucReq.requestedBy = body_.getString("requestedBy");
-    ucReq.providerCode = body_.getString("providerCode");
-    ucReq.category    = body_.getString("category");
-    ucReq.fromDate    = body_.getString("fromDate");
-    ucReq.toDate      = body_.getString("toDate");
+    ucReq.tenantId = tenantId;
+    ucReq.key1 = key1;
+    ucReq.key2 = key2;
+    ucReq.category = category;
+    ucReq.fromDate = fromDate;
+    ucReq.toDate = toDate;
 
     auto result = ratesUC.deleteRate(ucReq);
 
     if (!result.success) {
-      writeError(res, 422, result.message);
-      return;
+      return errorResponse(result.message, 422);
     }
-    res.writeJsonBody(Json.emptyObject.set("deleted", true), 200);
+
+    auto j = Json.emptyObject.set("deleted", true);
+    return successResponse(j, "Rates deleted successfully", 200);
   }
+
+  mixin(HandleTemplate!("handleDeleteRates", "deleteRatesHandler"));
 
   // ------------------------------------------------------------------
   // Provider CRUD
   // ------------------------------------------------------------------
-  private void handleListProviders(HTTPServerRequest req, HTTPServerResponse res) {
-    auto tenantId = TenantId(req.query.get("tenantId", "default"));
+  protected Json listProvidersHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
     auto providers = providersUC.list(tenantId);
 
     auto arr = Json.emptyArray;
-    foreach (p; providers) arr ~= p.toJson();
+    foreach (p; providers)
+      arr ~= p.toJson();
 
     auto j = Json.emptyObject;
-    j["data"]  = arr;
-    j["count"] = Json(cast(int) providers.length);
-    res.writeJsonBody(j, 200);
+    j["data"] = arr;
+    j["count"] = Json(cast(int)providers.length);
+    return successResponse(j, "Providers retrieved successfully", 200);
   }
 
-  private void handleCreateProvider(HTTPServerRequest req, HTTPServerResponse res) {
-    auto body_ = req.json;
-    if (body_.type == Json.Type.undefined) {
-      writeError(res, 400, "Request body must be JSON");
-      return;
-    }
+  mixin(HandleTemplate!("handleListProviders", "listProvidersHandler"));
+
+  protected Json createProviderHandler(HTTPServerRequest req) {
+    auto precheck = super.postHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto data = precheck.data;
 
     CreateProviderRequest ucReq;
-    ucReq.tenantId    = TenantId(body_.getString("tenantId", "default"));
-    ucReq.requestedBy = body_.getString("requestedBy");
-    ucReq.code        = body_.getString("code");
-    ucReq.name        = body_.getString("name");
-    ucReq.description = body_.getString("description");
-    ucReq.contactEmail = body_.getString("contactEmail");
+    ucReq.tenantId = tenantId;
+    ucReq.requestedBy = data.getString("requestedBy");
+    ucReq.code = data.getString("code");
+    ucReq.name = data.getString("name");
+    ucReq.description = data.getString("description");
+    ucReq.contactEmail = data.getString("contactEmail");
 
     auto result = providersUC.createProvider(ucReq);
     if (!result.success) {
-      writeError(res, 422, result.message);
-      return;
+      return errorResponse(result.message, 422);
     }
 
-    auto j = Json.emptyObject;
-    j["id"]      = Json(result.id);
-    j["created"] = Json(true);
-    res.writeJsonBody(j, 201);
+    auto j = Json.emptyObject.set("id", result.id).set("created", true);
+    return successResponse(j, "Provider created successfully", 201);
   }
 
-  private void handleGetProvider(HTTPServerRequest req, HTTPServerResponse res) {
-    auto id       = precheck.id;
+  mixin(HandleTemplate!("handleCreateProvider", "createProviderHandler"));
+
+  protected Json getProviderHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto id = precheck.id;
     auto tenantId = TenantId(req.query.get("tenantId", "default"));
-    auto p        = providersUC.getById(tenantId, ProviderId(id));
+    auto p = providersUC.getById(tenantId, ProviderId(id));
 
-    if (p.isNull) {
-      writeError(res, 404, "Provider not found");
-      return;
-    }
-    res.writeJsonBody(p.toJson(), 200);
+    if (p.isNull)
+      return errorResponse("Provider not found", 404);
+
+    auto responseData = p.toJson();
+    return successResponse("Provider retrieved successfully", "OK", 200, responseData);
   }
 
-  private void handleUpdateProvider(HTTPServerRequest req, HTTPServerResponse res) {
-    auto id    = precheck.id;
-    auto body_ = req.json;
-    if (body_.type == Json.Type.undefined) {
-      writeError(res, 400, "Request body must be JSON");
-      return;
-    }
+  mixin(HandleTemplate!("handleGetProvider", "getProviderHandler"));
+
+  protected Json updateProviderHandler(HTTPServerRequest req) {
+    auto precheck = super.putHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto id = precheck.id;
+    auto data = precheck.data;
 
     UpdateProviderRequest ucReq;
-    ucReq.tenantId    = TenantId(body_.getString("tenantId", "default"));
-    ucReq.providerId  = ProviderId(id);
-    ucReq.name        = body_.getString("name");
-    ucReq.description = body_.getString("description");
-    ucReq.contactEmail = body_.getString("contactEmail");
-    ucReq.isActive    = jsonBool(body_, "isActive", true);
+    ucReq.tenantId = precheck.tenantId;
+    ucReq.providerId = ProviderId(id);
+    ucReq.name = data.getString("name");
+    ucReq.description = data.getString("description");
+    ucReq.contactEmail = data.getString("contactEmail");
+    ucReq.isActive = jsonBool(data, "isActive", true);
 
     auto result = providersUC.updateProvider(ucReq);
     if (!result.success) {
-      writeError(res, 422, result.message);
-      return;
+      return errorResponse(result.message, 422);
     }
-    res.writeJsonBody(Json.emptyObject.set("updated", true), 200);
+
+    auto j = Json.emptyObject.set("updated", true);
+    return successResponse(j, "Provider updated successfully", 200);
   }
 
-  private void handleDeleteProvider(HTTPServerRequest req, HTTPServerResponse res) {
-    auto id       = precheck.id;
+  mixin(HandleTemplate!("handleUpdateProvider", "updateProviderHandler"));
+
+
+
+  protected Json deleteProviderHandler(HTTPServerRequest req) {
+    auto precheck = super.deleteHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto id = precheck.id;
     auto tenantId = TenantId(req.query.get("tenantId", "default"));
 
     auto result = providersUC.deleteProvider(tenantId, ProviderId(id));
     if (!result.success) {
-      writeError(res, 404, result.message);
-      return;
+      return errorResponse(result.message, 404);
     }
-    res.writeJsonBody(Json.emptyObject.set("deleted", true), 200);
+
+    auto j = Json.emptyObject.set("deleted", true);
+    return successResponse(j, "Provider deleted successfully", 200);
   }
+  
+  mixin(HandleTemplate!("handleDeleteProvider", "deleteProviderHandler"));
+
 }

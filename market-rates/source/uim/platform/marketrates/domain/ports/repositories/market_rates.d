@@ -18,11 +18,12 @@ interface MarketRateRepository : ITenantRepository!(MarketRate, MarketRateId) {
   MarketRate[] findByKey(TenantId tenantId, string key1, string key2, MarketDataCategory category);
   MarketRate[] findLatest(TenantId tenantId, string providerCode, MarketDataCategory category);
 
-  void saveAll(MarketRate[] rates);
   void removeByProvider(TenantId tenantId, string providerCode);
   void removeByCategory(TenantId tenantId, MarketDataCategory category);
   void removeByDateRange(TenantId tenantId, string fromDate, string toDate);
 
-  size_t countByTenant(TenantId tenantId);
   size_t countByProvider(TenantId tenantId, string providerCode);
+
+  void saveAll(MarketRate[] rates);
+
 }

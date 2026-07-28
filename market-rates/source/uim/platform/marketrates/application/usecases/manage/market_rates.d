@@ -27,7 +27,7 @@ class ManageMarketRatesUseCase {
     // Quota: batch size
     auto quotaErr = QuotaService.checkBatchSize(req.records.length);
     if (quotaErr.length > 0) {
-      logAudit(req.tenantId, req.requestedBy, AuditOperation.upload, "",
+      logAudit(req.tenantId, UserId(req.requestedBy), AuditOperation.upload, "",
                MarketDataCategory.exchangeRates, OperationStatus.failed, quotaErr, 0, "", "");
       return UploadRatesResponse(OperationStatus.failed, 0, cast(int) req.records.length, [quotaErr]);
     }
@@ -122,7 +122,7 @@ class ManageMarketRatesUseCase {
       result ~= rates;
     }
 
-    logAudit(req.tenantId, req.requestedBy, AuditOperation.download,
+    logAudit(req.tenantId, UserId(req.requestedBy), AuditOperation.download,
              req.providerCode,
              req.instruments.length > 0
                ? cast(MarketDataCategory)(req.instruments[0].category)
@@ -163,7 +163,7 @@ class ManageMarketRatesUseCase {
       return CommandResult(false, "", "Either providerCode or date range is required for deletion");
     }
 
-    logAudit(req.tenantId, req.requestedBy, AuditOperation.delete_,
+    logAudit(req.tenantId, UserId(req.requestedBy), AuditOperation.delete_,
              req.providerCode, MarketDataCategory.exchangeRates,
              OperationStatus.success, "Deleted", 0, req.fromDate, req.toDate);
 

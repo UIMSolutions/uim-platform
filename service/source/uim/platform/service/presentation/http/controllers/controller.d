@@ -115,6 +115,12 @@ class HttpController {
 
   // #region post
   protected Json postHandler(HTTPServerRequest req) {
+    // auto body_ = req.json;
+    // if (body_.type == Json.Type.undefined) {
+      // writeError(res, 400, "Request body must be JSON");
+      // return;
+    // }
+
     auto precheck = precheckHandler(req);
     if (precheck.hasError)
       return precheck; // Return error response from precheck

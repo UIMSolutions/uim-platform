@@ -22,8 +22,31 @@ class MemoryAuditLogRepository : TenantRepository!(AuditLog, AuditLogId), AuditL
     return logs.filter!(l => l.operation == op).array;
   }
 
+  AuditLog[] findByOperation(TenantId tenantId, AuditOperation op) {
+    return filterByOperation(findByTenant(tenantId).array, op);
+  }
+
+  void removeByOperation(TenantId tenantId, AuditOperation op) {
+    findByOperation(tenantId, op).each!(l => remove(l));
+  }
+
+  size_t countByDateRange(TenantId tenantId, string from_, string to_) {
+    return findByDateRange(tenantId, from_, to_).length;
+  }
+
+  AuditLog[] filterByDateRange(AuditLog[] logs, string from_, string to_) {
+    return logs.filter!(l =>
+        l.fromDate >= from_ &&
+        (to_.length == 0 || l.toDate <= to_)
+    ).array;
+  }
+
   AuditLog[] findByDateRange(TenantId tenantId, string from_, string to_) {
     return filterByDateRange(findByTenant(tenantId).array, from_, to_);
+  }
+
+  void removeByDateRange(TenantId tenantId, string from_, string to_) {
+    findByDateRange(tenantId, from_, to_).each!(l => remove(l));
   }
 
   size_t countByProvider(TenantId tenantId, string code) {
@@ -58,22 +81,5 @@ class MemoryAuditLogRepository : TenantRepository!(AuditLog, AuditLogId), AuditL
     findByStatus(tenantId, status).each!(l => remove(l));
   }
 
-  size_t countByDateRange(TenantId tenantId, string from_, string to_) {
-    return findByDateRange(tenantId, from_, to_).length;
-  }
-
-  AuditLog[] filterByDateRange(AuditLog[] logs, string from_, string to_) {
-    return logs.filter!(l =>
-        l.fromDate >= from_ &&
-        (to_.length == 0 || l.toDate <= to_)
-    ).array;
-  }
-
-  AuditLog[] findByDateRange(TenantId tenantId, string from_, string to_) {
-    return filterByDateRange(findByTenant(tenantId).array, from_, to_);
-  }
-
-  void removeByDateRange(TenantId tenantId, string from_, string to_) {
-    findByDateRange(tenantId, from_, to_).each!(l => remove(l));
-  }
+  
 }

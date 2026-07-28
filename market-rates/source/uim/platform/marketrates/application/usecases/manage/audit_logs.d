@@ -17,23 +17,23 @@ class ManageAuditLogsUseCase {
     this.repo = repo;
   }
 
-  AuditLog[] list(TenantId tenantId) {
+  AuditLog[] listLogs(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  AuditLog[] listByOperation(TenantId tenantId, AuditOperation op) {
+  AuditLog[] listLogs(TenantId tenantId, AuditOperation op) {
     return repo.findByOperation(tenantId, op);
   }
 
-  AuditLog[] listByProvider(TenantId tenantId, string providerCode) {
+  AuditLog[] listLogs(TenantId tenantId, string providerCode) {
     return repo.findByProvider(tenantId, providerCode);
   }
 
-  AuditLog[] listByStatus(TenantId tenantId, OperationStatus status) {
+  AuditLog[] listLogs(TenantId tenantId, OperationStatus status) {
     return repo.findByStatus(tenantId, status);
   }
 
-  AuditLog getById(TenantId tenantId, AuditLogId id) {
+  AuditLog getLog(TenantId tenantId, AuditLogId id) {
     return repo.findById(tenantId, id);
   }
 }
