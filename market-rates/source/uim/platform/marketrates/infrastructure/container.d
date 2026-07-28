@@ -4,6 +4,7 @@
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.marketrates.infrastructure.container;
+
 import uim.platform.marketrates;
 
 mixin(ShowModule!());
@@ -12,9 +13,9 @@ mixin(ShowModule!());
 
 struct Container {
   // Repositories (driven adapters)
-  MarketRateRepository rateRepo;
-  ProviderRepository   providerRepo;
-  AuditLogRepository   auditRepo;
+  IMarketRateRepository rateRepo;
+  IProviderRepository   providerRepo;
+  IAuditLogRepository   auditRepo;
 
   // Use cases (application core)
   ManageMarketRatesUseCase ratesUseCase;
@@ -31,9 +32,9 @@ Container buildContainer(AppConfig cfg) {
   Container c;
 
   // 1. Repositories
-  c.rateRepo     = new MemoryMarketRateRepository();
-  c.providerRepo = new MemoryProviderRepository();
-  c.auditRepo    = new MemoryAuditLogRepository();
+  c.rateRepo     = new MarketRateRepository();
+  c.providerRepo = new ProviderRepository();
+  c.auditRepo    = new AuditLogRepository();
 
   // 2. Use cases
   c.ratesUseCase     = new ManageMarketRatesUseCase(c.rateRepo, c.auditRepo);

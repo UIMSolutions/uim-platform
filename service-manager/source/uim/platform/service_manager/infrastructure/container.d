@@ -31,14 +31,14 @@ Container buildContainer(SrvConfig config) {
     Container c;
 
     // Repositories
-    auto platformRepo = new MemoryPlatformRepository();
-    auto serviceBrokerRepo = new MemoryServiceBrokerRepository();
-    auto serviceOfferingRepo = new MemoryServiceOfferingRepository();
-    auto servicePlanRepo = new MemoryServicePlanRepository();
-    auto serviceInstanceRepo = new MemoryServiceInstanceRepository();
-    auto serviceBindingRepo = new MemoryServiceBindingRepository();
-    auto operationRepo = new MemoryOperationRepository();
-    auto labelRepo = new MemoryLabelRepository();
+    auto platformRepo = new PlatformRepository();
+    auto serviceBrokerRepo = new ServiceBrokerRepository();
+    auto serviceOfferingRepo = new ServiceOfferingRepository();
+    auto servicePlanRepo = new ServicePlanRepository();
+    auto serviceInstanceRepo = new ServiceInstanceRepository();
+    auto serviceBindingRepo = new ServiceBindingRepository();
+    auto operationRepo = new OperationRepository();
+    auto labelRepo = new LabelRepository();
 
     // Use Cases
     c.managePlatformsUseCase = new ManagePlatformsUseCase(platformRepo);

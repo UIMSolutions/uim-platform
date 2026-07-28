@@ -1,3 +1,8 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module uim.platform.service_manager.application.usecases.manage.service_offerings;
 
 import uim.platform.service_manager;
@@ -68,14 +73,14 @@ class ManageServiceOfferingsUseCase { // TODO: UIMUseCase {
 
 ///
 unittest {
-    auto repo = new IServiceOfferingRepository();
+    auto repo = new ServiceOfferingRepository();
     auto usecase = new ManageServiceOfferingsUseCase(repo);
     auto tenantId = TenantId("test-tenant");
 
     // Test create
     CreateServiceOfferingRequest createDto;
     createDto.tenantId = tenantId;
-    createDto.serviceOfferingId = ServiceOfferingId("serviceOffering-1");
+    createDto.offeringId = ServiceOfferingId("serviceOffering-1");
     createDto.name = "Test ServiceOffering";
     auto createResult = usecase.createOffering(createDto);
     assert(createResult.success, createResult.message);
@@ -91,7 +96,7 @@ unittest {
     // Test update
     UpdateServiceOfferingRequest updateDto;
     updateDto.tenantId = tenantId;
-    updateDto.serviceOfferingId = ServiceOfferingId("serviceOffering-1");
+    updateDto.offeringId = ServiceOfferingId("serviceOffering-1");
     updateDto.name = "Updated ServiceOffering";
     auto updateResult = usecase.updateOffering(updateDto);
     assert(updateResult.success, updateResult.message);

@@ -1,3 +1,8 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module uim.platform.service_manager.infrastructure.persistence.repositories.platforms;
 
 import uim.platform.service_manager;
@@ -6,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryPlatformRepository : TenantRepository!(Platform, PlatformId), IPlatformRepository {
+class PlatformRepository : TenantRepository!(Platform, PlatformId), IPlatformRepository {
     
     size_t countByType(TenantId tenantId, PlatformType type) {
         return this.findByType(tenantId, type).length;
@@ -38,5 +43,5 @@ class MemoryPlatformRepository : TenantRepository!(Platform, PlatformId), IPlatf
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryPlatformRepository()));
+    assert(tenantRepositoryTest(new PlatformRepository()));
 }

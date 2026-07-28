@@ -1,3 +1,8 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module uim.platform.service_manager.infrastructure.persistence.repositories.service_bindings;
 
 import uim.platform.service_manager;
@@ -6,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryServiceBindingRepository : TenantRepository!(ServiceBinding, ServiceBindingId), IServiceBindingRepository {
+class ServiceBindingRepository : TenantRepository!(ServiceBinding, ServiceBindingId), IServiceBindingRepository {
 
     size_t countByStatus(TenantId tenantId, ServiceBindingStatus status) {
         return this.findByStatus(tenantId, status).length;
@@ -25,5 +30,5 @@ class MemoryServiceBindingRepository : TenantRepository!(ServiceBinding, Service
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryServiceBindingRepository()));
+    assert(tenantRepositoryTest(new ServiceBindingRepository()));
 }

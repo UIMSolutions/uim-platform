@@ -6,7 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryOperationRepository : TenantRepository!(Operation, OperationId), IOperationRepository {
+class OperationRepository : TenantRepository!(Operation, OperationId), IOperationRepository {
 
     // #region ByOperationType
     size_t countByOperationType(TenantId tenantId, OperationType type) {
@@ -47,5 +47,5 @@ class MemoryOperationRepository : TenantRepository!(Operation, OperationId), IOp
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryOperationRepository()));
+    assert(tenantRepositoryTest(new OperationRepository()));
 }

@@ -6,7 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryServiceInstanceRepository : TenantRepository!(ServiceInstance, ServiceInstanceId), IServiceInstanceRepository {
+class ServiceInstanceRepository : TenantRepository!(ServiceInstance, ServiceInstanceId), IServiceInstanceRepository {
 
     size_t countByStatus(TenantId tenantId, ServiceInstanceStatus status) {
         return this.findByStatus(tenantId, status).length;
@@ -27,5 +27,5 @@ class MemoryServiceInstanceRepository : TenantRepository!(ServiceInstance, Servi
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryServiceInstanceRepository()));
+    assert(tenantRepositoryTest(new ServiceInstanceRepository()));
 }

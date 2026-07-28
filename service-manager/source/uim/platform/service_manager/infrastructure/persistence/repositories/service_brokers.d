@@ -1,3 +1,8 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module uim.platform.service_manager.infrastructure.persistence.repositories.service_brokers;
 
 import uim.platform.service_manager;
@@ -6,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryServiceBrokerRepository : TenantRepository!(ServiceBroker, ServiceBrokerId), IServiceBrokerRepository {
+class ServiceBrokerRepository : TenantRepository!(ServiceBroker, ServiceBrokerId), IServiceBrokerRepository {
 
     size_t countByStatus(TenantId tenantId, ServiceBrokerStatus status) {
         return findByStatus(tenantId, status).length;
@@ -28,5 +33,5 @@ class MemoryServiceBrokerRepository : TenantRepository!(ServiceBroker, ServiceBr
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryServiceBrokerRepository()));
+    assert(tenantRepositoryTest(new ServiceBrokerRepository()));
 }

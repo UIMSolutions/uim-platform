@@ -6,7 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryLabelRepository : TenantRepository!(Label, LabelId), ILabelRepository {
+class LabelRepository : TenantRepository!(Label, LabelId), ILabelRepository {
 
     size_t countByResource(TenantId tenantId, string resourceType, string resourceId) {
         return findByResource(tenantId, resourceType, resourceId).length;
@@ -27,5 +27,5 @@ class MemoryLabelRepository : TenantRepository!(Label, LabelId), ILabelRepositor
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryLabelRepository()));
+    assert(tenantRepositoryTest(new LabelRepository()));
 }
