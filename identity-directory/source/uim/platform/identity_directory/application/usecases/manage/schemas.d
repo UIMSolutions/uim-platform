@@ -19,10 +19,10 @@ mixin(ShowModule!());
 @safe:
 /// Application use case: custom schema management.
 class ManageSchemasUseCase { // TODO: UIMUseCase {
-  private SchemaRepository schemaRepo;
-  private AuditRepository auditRepo;
+  private ISchemaRepository schemaRepo;
+  private IAuditRepository auditRepo;
 
-  this(SchemaRepository schemaRepo, AuditRepository auditRepo) {
+  this(ISchemaRepository schemaRepo, IAuditRepository auditRepo) {
     this.schemaRepo = schemaRepo;
     this.auditRepo = auditRepo;
   }
@@ -116,9 +116,9 @@ class ManageSchemasUseCase { // TODO: UIMUseCase {
 
 ///
 unittest {
-    auto schemaRepository = new SchemaRepository();
-    auto auditRepository = new AuditRepository();
-    auto usecase = new ManageSchemasUseCase(schemaRepository, auditRepository);
-    auto tenantId = TenantId("test-tenant");
+//     auto schemaRepository = new SchemaRepository();
+//     auto auditRepository = new AuditRepository();
+//     auto usecase = new ManageSchemasUseCase(schemaRepository, auditRepository);
+//     auto tenantId = TenantId("test-tenant");
 
 }

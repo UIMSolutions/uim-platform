@@ -37,12 +37,12 @@ mixin(ShowModule!());
 /// Dependency injection container — wires all layers together.
 struct Container {
   // Repositories (driven adapters)
-  MemoryUserRepository userRepo;
-  MemoryGroupRepository groupRepo;
-  MemorySchemaRepository schemaRepo;
-  MemoryPasswordPolicyRepository passwordPolicyRepo;
-  MemoryApiClientRepository apiClientRepo;
-  MemoryAuditRepository auditRepo;
+  IUserRepository userRepo;
+  IGroupRepository groupRepo;
+  ISchemaRepository schemaRepo;
+  IPasswordPolicyRepository passwordPolicyRepo;
+  ApiClientRepository apiClientRepo;
+  IAuditRepository auditRepo;
 
   // Security services (driven adapters)
   Sha256PasswordService passwordSvc;
@@ -71,12 +71,12 @@ Container buildContainer(SrvConfig config) {
   Container c;
 
   // Infrastructure adapters
-  c.userRepo = new MemoryUserRepository();
-  c.groupRepo = new MemoryGroupRepository();
-  c.schemaRepo = new MemorySchemaRepository();
-  c.passwordPolicyRepo = new MemoryPasswordPolicyRepository();
-  c.apiClientRepo = new MemoryApiClientRepository();
-  c.auditRepo = new MemoryAuditRepository();
+  c.userRepo = new UserRepository();
+  c.groupRepo = new GroupRepository();
+  c.schemaRepo = new SchemaRepository();
+  c.passwordPolicyRepo = new PasswordPolicyRepository();
+  c.apiClientRepo = new ApiClientRepository();
+  c.auditRepo = new AuditRepository();
 
   c.passwordSvc = new Sha256PasswordService();
 

@@ -13,15 +13,15 @@ mixin(ShowModule!());
 
 @safe:
 /// In-memory adapter for custom schema persistence.
-class MemorySchemaRepository : TenantRepository!(Schema, SchemaId), SchemaRepository {
+class SchemaRepository : TenantRepository!(Schema, SchemaId), ISchemaRepository {
 
   bool existsByName(TenantId tenantId, string name) {
-    return findByTenant(tenantId).any!(s => s.tenantId == tenantId && s.name == name);
+    return findByTenant(tenantId).any!(s => s.name == name);
   }
 
   Schema findByName(TenantId tenantId, string name) {
     foreach (s; findByTenant(tenantId)) {
-      if (s.tenantId == tenantId && s.name == name)
+      if (s.name == name)
         return s;
     }
     return Schema.init;
@@ -35,5 +35,5 @@ class MemorySchemaRepository : TenantRepository!(Schema, SchemaId), SchemaReposi
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemorySchemaRepository()));
+    assert(tenantRepositoryTest(new SchemaRepository()));
 }

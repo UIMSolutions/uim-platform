@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 /// SHA-256 password hashing adapter (production: replace with bcrypt/argon2).
-class Sha256PasswordService : PasswordService {
+class Sha256PasswordService : IPasswordService {
   string hashPassword(string plaintext) {
     auto salt = generateId[0 .. 8];
     auto hash = sha256Of(/* cast(ubyte[])*/ (plaintext ~ salt).representation);

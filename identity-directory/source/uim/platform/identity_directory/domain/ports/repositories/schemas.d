@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — custom schema persistence.
-interface SchemaRepository : ITenantRepository!(Schema, SchemaId) {
+interface ISchemaRepository : ITenantRepository!(Schema, SchemaId) {
 
   bool existsByName(TenantId tenantId, string name);
   Schema findByName(TenantId tenantId, string name);

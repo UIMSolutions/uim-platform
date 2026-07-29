@@ -74,9 +74,9 @@ flowchart TB
         AUDIT["AuditEvent"]
     end
     subgraph Infrastructure["Infrastructure Layer"]
-        USER_REPO["InMemoryUserRepository"]
-        GROUP_REPO["InMemoryGroupRepository"]
-        AUDIT_REPO["InMemoryAuditRepository"]
+        USER_REPO["InUserRepository"]
+        GROUP_REPO["InGroupRepository"]
+        AUDIT_REPO["InAuditRepository"]
     end
 
     REST --> Application

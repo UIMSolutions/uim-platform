@@ -153,7 +153,7 @@ Mutability[] toMutabilities(string[] arr) {
   return arr.map!toMutability.array;
 }
 string toString(Mutability mut) {
-  return mut.to!string;
+  return cast(string)mut;
 }
 string[] toStrings(Mutability[] muts) {
   return muts.map!toString.array;
@@ -196,7 +196,7 @@ Returned[] toReturned(string[] arr) {
   return arr.map!(s => toReturned(s)).array;
 }
 string toString(Returned ret) {
-  return ret.to!string;
+  return cast(string)ret;
 }
 string[] toStrings(Returned[] rets) {
   return rets.map!toString.array;

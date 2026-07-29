@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — API client persistence.
-interface ApiClientRepository : ITenantRepository!(ApiClient, ApiClientId) {
+interface IApiClientRepository : ITenantRepository!(ApiClient, ApiClientId) {
 
   bool existsByClient(TenantId tenantId, string clientId);
   ApiClient findByClient(TenantId tenantId, string clientId);

@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — user persistence (SCIM 2.0 compliant).
-interface UserRepository : ITenantRepository!(IDUser, UserId) {
+interface IUserRepository : ITenantRepository!(IDUser, UserId) {
 
   bool existsByUserName(TenantId tenantId, string userName);
   IDUser findByUserName(TenantId tenantId, string userName);

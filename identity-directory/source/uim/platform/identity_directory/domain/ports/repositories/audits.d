@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — audit event persistence.
-interface AuditRepository : ITenantRepository!(AuditEvent, AuditEventId) {
+interface IAuditRepository : ITenantRepository!(AuditEvent, AuditEventId) {
 
   size_t countByActor(TenantId tenantId, string actorId);
   AuditEvent[] findByActor(TenantId tenantId, string actorId); //, size_t offset = 0, size_t limit = 100);

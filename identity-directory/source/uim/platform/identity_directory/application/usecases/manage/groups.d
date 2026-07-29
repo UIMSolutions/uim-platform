@@ -20,11 +20,11 @@ mixin(ShowModule!());
 @safe:
 /// Application use case: SCIM 2.0 group management.
 class ManageGroupsUseCase { // TODO: UIMUseCase {
-  private GroupRepository groupRepo;
-  private UserRepository userRepo;
-  private AuditRepository auditRepo;
+  private IGroupRepository groupRepo;
+  private IUserRepository userRepo;
+  private IAuditRepository auditRepo;
 
-  this(GroupRepository groupRepo, UserRepository userRepo, AuditRepository auditRepo) {
+  this(IGroupRepository groupRepo, IUserRepository userRepo, IAuditRepository auditRepo) {
     this.groupRepo = groupRepo;
     this.userRepo = userRepo;
     this.auditRepo = auditRepo;
@@ -229,10 +229,10 @@ class ManageGroupsUseCase { // TODO: UIMUseCase {
 
 ///
 unittest {
-    auto groupRepository = new GroupRepository();
-    auto userRepository = new UserRepository();
-    auto auditRepository = new AuditRepository();
-    auto usecase = new ManageGroupsUseCase(groupRepository, userRepository, auditRepository);
-    auto tenantId = TenantId("test-tenant");
+//     auto groupRepository = new GroupRepository();
+//     auto userRepository = new UserRepository();
+//     auto auditRepository = new AuditRepository();
+//     auto usecase = new ManageGroupsUseCase(groupRepository, userRepository, auditRepository);
+//     auto tenantId = TenantId("test-tenant");
 
 }

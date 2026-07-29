@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 /// In-memory adapter for group persistence.
-class MemoryGroupRepository : TenantRepository!(IDGroup, GroupId), GroupRepository {
+class GroupRepository : TenantRepository!(IDGroup, GroupId), IGroupRepository {
 
   bool existsByDisplayName(TenantId tenantId, string displayName) {
     return findByTenant(tenantId).any!(g => g.displayName == displayName);
@@ -48,5 +48,5 @@ class MemoryGroupRepository : TenantRepository!(IDGroup, GroupId), GroupReposito
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryGroupRepository()));
+    assert(tenantRepositoryTest(new GroupRepository()));
 }

@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 /// Port: outgoing — password hashing and validation.
-interface PasswordService {
+interface IPasswordService {
   string hashPassword(string plaintext);
   bool verifyPassword(string plaintext, string hash);
 }

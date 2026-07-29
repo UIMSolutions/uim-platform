@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 /// In-memory adapter for password policy persistence.
-class MemoryPasswordPolicyRepository : TenantRepository!(PasswordPolicy, PasswordPolicyId), PasswordPolicyRepository {
+class PasswordPolicyRepository : TenantRepository!(PasswordPolicy, PasswordPolicyId), IPasswordPolicyRepository {
 
   bool existsActiveForTenant(TenantId tenantId) {
     return findByTenant(tenantId).any!(p => p.active);
@@ -34,5 +34,5 @@ class MemoryPasswordPolicyRepository : TenantRepository!(PasswordPolicy, Passwor
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryPasswordPolicyRepository()));
+    assert(tenantRepositoryTest(new PasswordPolicyRepository()));
 }

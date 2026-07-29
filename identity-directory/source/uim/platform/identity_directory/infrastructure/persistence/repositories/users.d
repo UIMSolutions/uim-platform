@@ -15,7 +15,7 @@ mixin(ShowModule!());
 // import std.algorithm : canFind;
 // import std.string : toLower, indexOf;
 /// In-memory adapter for user persistence.
-class MemoryUserRepository : TenantRepository!(IDUser, UserId), UserRepository {
+class UserRepository : TenantRepository!(IDUser, UserId), IUserRepository {
 
   bool existsByUserName(TenantId tenantId, string userName) {
     return findByTenant(tenantId).any!(u => u.userName == userName);
@@ -117,5 +117,5 @@ class MemoryUserRepository : TenantRepository!(IDUser, UserId), UserRepository {
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryUserRepository()));
+    assert(tenantRepositoryTest(new UserRepository()));
 }

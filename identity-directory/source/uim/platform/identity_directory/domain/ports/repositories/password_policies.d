@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — password policy persistence.
-interface PasswordPolicyRepository : ITenantRepository!(PasswordPolicy, PasswordPolicyId) {
+interface IPasswordPolicyRepository : ITenantRepository!(PasswordPolicy, PasswordPolicyId) {
 
   bool existsActiveForTenant(TenantId tenantId);
   PasswordPolicy findActiveForTenant(TenantId tenantId);

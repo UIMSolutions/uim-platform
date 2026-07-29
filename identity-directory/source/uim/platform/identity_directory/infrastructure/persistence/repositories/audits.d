@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 /// In-memory adapter for audit event persistence (append-only).
-class MemoryAuditRepository : TenantRepository!(AuditEvent, AuditEventId), AuditRepository {
+class AuditRepository : TenantRepository!(AuditEvent, AuditEventId), IAuditRepository {
 
   size_t countByActor(TenantId tenantId, string actorId) {
     return findByActor(tenantId, actorId).length;
@@ -71,5 +71,5 @@ class MemoryAuditRepository : TenantRepository!(AuditEvent, AuditEventId), Audit
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryAuditRepository()));
+    assert(tenantRepositoryTest(new AuditRepository()));
 }
