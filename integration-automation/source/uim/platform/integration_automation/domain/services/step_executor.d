@@ -27,7 +27,7 @@ class StepExecutor {
   }
 
   /// Mark a manual step as started.
-  bool startStep(TenantId tenantId, StepId stepId, UserId executedBy) {
+  bool startStep(TenantId tenantId, WorkflowStepId stepId, UserId executedBy) {
     auto step = stepRepo.findById(tenantId, stepId);
     if (step.isNull)
       return false;
@@ -44,7 +44,7 @@ class StepExecutor {
   }
 
   /// Complete a manual step with a result.
-  bool completeStep(TenantId tenantId, StepId stepId, UserId executedBy, string result) {
+  bool completeStep(TenantId tenantId, WorkflowStepId stepId, UserId executedBy, string result) {
     auto step = stepRepo.findById(tenantId, stepId);
     if (step.isNull)
       return false;
@@ -66,7 +66,7 @@ class StepExecutor {
   }
 
   /// Mark a step as failed.
-  bool failStep(TenantId tenantId, StepId stepId, UserId executedBy, string errorMessage) {
+  bool failStep(TenantId tenantId, WorkflowStepId stepId, UserId executedBy, string errorMessage) {
     auto step = stepRepo.findById(tenantId, stepId);
     if (step.isNull)
       return false;
@@ -82,7 +82,7 @@ class StepExecutor {
   }
 
   /// Skip a step.
-  bool skipStep(TenantId tenantId, StepId stepId, UserId executedBy, string reason) {
+  bool skipStep(TenantId tenantId, WorkflowStepId stepId, UserId executedBy, string reason) {
     auto step = stepRepo.findById(tenantId, stepId);
     if (step.isNull)
       return false;
@@ -97,7 +97,7 @@ class StepExecutor {
     return true;
   }
 
-  private void recordLog(TenantId tenantId, WorkflowId workflowId, StepId stepId, string action,
+  private void recordLog(TenantId tenantId, WorkflowId workflowId, WorkflowStepId stepId, string action,
       ExecutionOutcome outcome, string message, string executedBy, long durationMs = 0) {
     auto log = ExecutionLog(tenantId);
     log.workflowId = workflowId;

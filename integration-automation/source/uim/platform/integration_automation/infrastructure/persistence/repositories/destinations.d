@@ -45,11 +45,11 @@ class DestinationRepository : TenantRepository!(Destination, DestinationId), IDe
       .each!(d => remove(d));
   }
 
-  size_t countByEnabled(TenantId tenantId) {
+  size_t countEnabled(TenantId tenantId) {
     return findEnabled(tenantId).length;
   }
 
-  Destination[] filterByEnabled(Destination[] destinations, size_t offset = 0, size_t limit = 0) {
+  Destination[] filterEnabled(Destination[] destinations, size_t offset = 0, size_t limit = 0) {
     return destinations.filter!(d => d.isEnabled).array.skip(offset).take(limit).array;
   }
 
@@ -57,7 +57,7 @@ class DestinationRepository : TenantRepository!(Destination, DestinationId), IDe
     return findByTenant(tenantId).filter!(d => d.isEnabled).array;
   }
 
-  void removeByEnabled(TenantId tenantId) {
+  void removeEnabled(TenantId tenantId) {
     findEnabled(tenantId).each!(d => remove(d));
   }
 

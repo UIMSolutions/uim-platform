@@ -56,7 +56,7 @@ unittest {
   assert(ScenarioStatus.deprecated_.toString == "deprecated_");
   assert(ScenarioStatus.archived.toString == "archived");
 
-  assert(["draft", "active"].toScenarioStatus == [ScenarioStatus.draft, ScenarioStatus.active]);
+  assert(["draft", "active"].toScenarioStatuses == [ScenarioStatus.draft, ScenarioStatus.active]);
   assert([ScenarioStatus.draft, ScenarioStatus.active].toStrings == ["draft", "active"]);
 }
 
@@ -99,7 +99,7 @@ unittest {
   assert(WorkflowStatus.failed.toString == "failed");
   assert(WorkflowStatus.suspended.toString == "suspended");
 
-  assert(["planned", "completed"].toWorkflowStatus == [WorkflowStatus.planned, WorkflowStatus.completed]);
+  assert(["planned", "completed"].toWorkflowStatuses == [WorkflowStatus.planned, WorkflowStatus.completed]);
   assert([WorkflowStatus.planned, WorkflowStatus.completed].toStrings == ["planned", "completed"]);
 }
 
@@ -181,7 +181,7 @@ unittest {
   assert(StepStatus.failed.toString == "failed");
   assert(StepStatus.blocked.toString == "blocked");
 
-  assert(["pending", "completed"].toStepStatus == [StepStatus.pending, StepStatus.completed]);
+  assert(["pending", "completed"].toStepStatuses == [StepStatus.pending, StepStatus.completed]);
   assert([StepStatus.pending, StepStatus.completed].toStrings == ["pending", "completed"]);
 }
 
@@ -264,6 +264,8 @@ unittest {
   assert("sapBuildWorkZone".toSystemType == SystemType.sapBuildWorkZone);
   assert("onPremise".toSystemType == SystemType.onPremise);
   assert("thirdParty".toSystemType == SystemType.thirdParty); 
+
+  assert("".toSystemType == SystemType.sapS4Hana); // default
   assert("unknown".toSystemType == SystemType.sapS4Hana); // default
 
   assert(SystemType.sapS4Hana.toString == "sapS4Hana");

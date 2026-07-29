@@ -19,7 +19,7 @@ struct WorkflowId {
   mixin(IdTemplate);
 }
 
-struct StepId {
+struct WorkflowStepId {
   mixin(IdTemplate);
 }
 

@@ -12,7 +12,7 @@ module uim.platform.integration_automation.application.usecases.manage.workflows
 // import uim.platform.integration_automation.domain.ports.repositories.steps;
 // import uim.platform.integration_automation.domain.ports.repositories.scenarios;
 // import uim.platform.integration_automation.domain.services.workflow_engine;
-// import uim.platform.integration_automation.application.dto;
+
 import uim.platform.integration_automation;
 
 mixin(ShowModule!());
@@ -44,14 +44,14 @@ class ManageWorkflowsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Active workflow limit (15) reached for this tenant");
 
     // Validate scenario exists and is active
-    auto scenario = scenarioRepo.findById(req.scenarioId, req.tenantId);
+    auto scenario = scenarioRepo.findById(req.tenantId, req.scenarioId);
     if (scenario.isNull)
       return CommandResult(false, "", "Scenario not found");
 
     if (scenario.status != ScenarioStatus.active)
       return CommandResult(false, "", "Scenario is not active");
 
-    auto wf = Workflow(req.tenantId, req.createdBy);
+    auto wf = Workflow(req.tenantId); // , req.createdBy);
     wf.scenarioId = req.scenarioId;
     wf.name = req.name.length > 0 ? req.name : scenario.name;
     wf.description = req.description.length > 0 ? req.description : scenario.description;

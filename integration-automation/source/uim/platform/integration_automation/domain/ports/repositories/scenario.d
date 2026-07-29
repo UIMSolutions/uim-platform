@@ -5,14 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.integration_automation.domain.ports.repositories.scenario;
 
-// import uim.platform.integration_automation.domain.entities.integration_scenario;
 import uim.platform.integration_automation;
 
 mixin(ShowModule!());
 
 @safe:
 /// Port for persisting and querying integration scenarios.
-interface IScenarioRepository : ITenantRepository!(IntegrationScenario, IntegrationScenarioId) {
+interface IScenarioRepository : ITenantRepository!(IntegrationScenario, ScenarioId) {
   
   size_t countByCategory(TenantId tenantId, ScenarioCategory category);
   IntegrationScenario[] findByCategory(TenantId tenantId, ScenarioCategory category);

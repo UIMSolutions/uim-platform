@@ -31,7 +31,7 @@ class MonitorExecutionsUseCase { // TODO: UIMUseCase {
     return logRepo.findByWorkflow(tenantId, workflowId);
   }
 
-  ExecutionLog[] getStepLogs(TenantId tenantId, StepId stepId) {
+  ExecutionLog[] getStepLogs(TenantId tenantId, WorkflowStepId stepId) {
     return logRepo.findByStep(tenantId, stepId);
   }
 

@@ -5,15 +5,11 @@
 *****************************************************************************************************************/
 module uim.platform.integration_automation.infrastructure.persistence.repositories.execution_logs;
 
-// import uim.platform.integration_automation.domain.entities.execution_log;
-// import uim.platform.integration_automation.domain.ports.repositories.execution_logs;
-
 import uim.platform.integration_automation;
 
 mixin(ShowModule!());
 
 @safe:
-;
 
 class ExecutionLogRepository : TenantRepository!(ExecutionLog, ExecutionLogId), IExecutionLogRepository {
 
@@ -36,21 +32,21 @@ class ExecutionLogRepository : TenantRepository!(ExecutionLog, ExecutionLogId), 
       .array;
   }
 
-  size_t countByStep(TenantId tenantId, StepId stepId) {
+  size_t countByStep(TenantId tenantId, WorkflowStepId stepId) {
     return findByStep(tenantId, stepId).length;
   }
 
-  ExecutionLog[] filterByStep(TenantId tenantId, ExecutionLog[] logs, StepId stepId, size_t offset = 0, size_t limit = 0) {
+  ExecutionLog[] filterByStep(TenantId tenantId, ExecutionLog[] logs, WorkflowStepId stepId, size_t offset = 0, size_t limit = 0) {
     return (limit == 0)
       ? logs.filter!(e => e.stepId == stepId).skip(offset).array
       : logs.filter!(e => e.stepId == stepId).skip(offset).take(limit).array;
   }
 
-  ExecutionLog[] findByStep(TenantId tenantId, StepId stepId) {
+  ExecutionLog[] findByStep(TenantId tenantId, WorkflowStepId stepId) {
     return findByTenant(tenantId).filter!(e => e.stepId == stepId).array;
   }
 
-  void removeByStep(TenantId tenantId, StepId stepId) {
+  void removeByStep(TenantId tenantId, WorkflowStepId stepId) {
     findByTenant(tenantId).filter!(e => !(e.stepId == stepId))
       .each!(e => remove(e));
   }
@@ -107,6 +103,10 @@ class ExecutionLogRepository : TenantRepository!(ExecutionLog, ExecutionLogId), 
         return false;
       return true;
     }).array;
+  }
+
+  void removeByTimeRange(TenantId tenantId, long timeFrom, long timeTo) {
+    findByTimeRange(tenantId, timeFrom, timeTo).each!(e => remove(e));
   }
 
   void removeOlderThan(TenantId tenantId, long beforeTimestamp) {

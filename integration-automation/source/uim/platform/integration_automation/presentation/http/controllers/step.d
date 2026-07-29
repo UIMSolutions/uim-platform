@@ -3,10 +3,10 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.integration_automation.presentation.http.step;
+module uim.platform.integration_automation.presentation.http.controllers.step;
 
 // import uim.platform.integration_automation.application.usecases.manage.steps;
-// import uim.platform.integration_automation.application.dto;
+
 
 // import uim.platform.integration_automation.domain.entities.workflow_step;
 import uim.platform.integration_automation;
@@ -122,7 +122,7 @@ class StepController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = StepId(precheck.id);
+    auto id = WorkflowStepId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid Step ID", 400);
 
@@ -153,7 +153,7 @@ class StepController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = StepId(precheck.id);
+    auto id = WorkflowStepId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid Step ID", 400);
 
@@ -183,7 +183,7 @@ class StepController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = StepId(precheck.id);
+    auto id = WorkflowStepId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid Step ID", 400);
 
@@ -214,7 +214,7 @@ class StepController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = StepId(precheck.id);
+    auto id = WorkflowStepId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid Step ID", 400);
 

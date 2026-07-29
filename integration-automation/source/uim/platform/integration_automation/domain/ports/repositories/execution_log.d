@@ -18,9 +18,9 @@ interface IExecutionLogRepository : ITenantRepository!(ExecutionLog, ExecutionLo
   ExecutionLog[] findByWorkflow(TenantId tenantId, WorkflowId workflowId);
   void removeByWorkflow(TenantId tenantId, WorkflowId workflowId);
 
-  size_t countByStep(TenantId tenantId, StepId stepId);
-  ExecutionLog[] findByStep(TenantId tenantId, StepId stepId);
-  void removeByStep(TenantId tenantId, StepId stepId);
+  size_t countByStep(TenantId tenantId, WorkflowStepId stepId);
+  ExecutionLog[] findByStep(TenantId tenantId, WorkflowStepId stepId);
+  void removeByStep(TenantId tenantId, WorkflowStepId stepId);
 
   size_t countByOutcome(TenantId tenantId, ExecutionOutcome outcome);
   ExecutionLog[] findByOutcome(TenantId tenantId, ExecutionOutcome outcome);

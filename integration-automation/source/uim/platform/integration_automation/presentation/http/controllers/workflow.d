@@ -3,10 +3,10 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.integration_automation.presentation.http.workflow;
+module uim.platform.integration_automation.presentation.http.controllers.workflow;
 
 // import uim.platform.integration_automation.application.usecases.manage.workflows;
-// import uim.platform.integration_automation.application.dto;
+
 
 // import uim.platform.integration_automation.domain.entities.workflow;
 import uim.platform.integration_automation;

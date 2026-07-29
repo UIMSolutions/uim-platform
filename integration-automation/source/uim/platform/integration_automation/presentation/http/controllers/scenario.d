@@ -3,12 +3,8 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.integration_automation.presentation.http.scenario;
+module uim.platform.integration_automation.presentation.http.controllers.scenario;
 
-// import uim.platform.integration_automation.application.usecases.manage.scenarios;
-// import uim.platform.integration_automation.application.dto;
-
-// import uim.platform.integration_automation.domain.entities.integration_scenario;
 import uim.platform.integration_automation;
 
 mixin(ShowModule!());

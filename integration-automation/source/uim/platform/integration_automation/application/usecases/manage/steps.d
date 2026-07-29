@@ -9,7 +9,7 @@ module uim.platform.integration_automation.application.usecases.manage.steps;
 // import uim.platform.integration_automation.domain.ports.repositories.steps;
 // import uim.platform.integration_automation.domain.services.step_executor;
 // import uim.platform.integration_automation.domain.services.workflow_engine;
-// import uim.platform.integration_automation.application.dto;
+
 
 import uim.platform.integration_automation;
 
@@ -31,7 +31,7 @@ class ManageStepsUseCase { // TODO: UIMUseCase {
     return repo.findByWorkflow(tenantId, workflowId);
   }
 
-  WorkflowStep getStep(TenantId tenantId, StepId stepId) {
+  WorkflowStep getStep(TenantId tenantId, WorkflowStepId stepId) {
     return repo.findById(tenantId, stepId);
   }
 
@@ -44,7 +44,7 @@ class ManageStepsUseCase { // TODO: UIMUseCase {
   }
 
   /// Start a step (mark as in-progress).
-  CommandResult startStep(TenantId tenantId, StepId stepId, UserId userId) {
+  CommandResult startStep(TenantId tenantId, WorkflowStepId stepId, UserId userId) {
     if (!engine.areDependenciesMet(repo.findById(tenantId, stepId), tenantId))
       return CommandResult(false, "", "Step dependencies are not yet met");
 
@@ -60,39 +60,39 @@ class ManageStepsUseCase { // TODO: UIMUseCase {
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
 
-    if (!executor.completeStep(req.tenantId, req.id, req.completedBy, req.result))
+    if (!executor.completeStep(req.tenantId, req.stepId, req.completedBy, req.result))
       return CommandResult(false, "", "Cannot complete step — not found or not in progress");
 
     // Try to advance the workflow
-    auto step = repo.findById(req.tenantId, req.id);
+    auto step = repo.findById(req.tenantId, req.stepId);
     if (step !is null)
-      engine.advanceWorkflow(step.workflowId, req.tenantId);
+      engine.advanceWorkflow(req.tenantId, step.workflowId);
 
-    return CommandResult(true, req.id.value, "");
+    return CommandResult(true, req.stepId.value, "");
   }
 
   /// Mark a step as failed.
   CommandResult failStep(FailStepRequest req) {
-    if (!executor.failStep(req.tenantId, req.id, req.reportedBy, req.errorMessage))
+    if (!executor.failStep(req.tenantId, req.stepId, req.reportedBy, req.errorMessage))
       return CommandResult(false, "", "Cannot fail step — not found");
-    return CommandResult(true, req.id.value, "");
+    return CommandResult(true, req.stepId.value, "");
   }
 
   /// Skip a step and advance the workflow.
   CommandResult skipStep(SkipStepRequest req) {
-    if (!executor.skipStep(req.tenantId, req.id, req.skippedBy, req.reason))
+    if (!executor.skipStep(req.tenantId, req.stepId, req.skippedBy, req.reason))
       return CommandResult(false, "", "Cannot skip step — not found");
 
-    auto step = repo.findById(req.tenantId, req.id);
-    if (step !is null)
+    auto step = repo.findById(req.tenantId, req.stepId);
+    if (!step.isNull)
       engine.advanceWorkflow(step.workflowId, req.tenantId);
 
-    return CommandResult(true, req.id.value, "");
+    return CommandResult(true, req.stepId.value, "");
   }
 
   /// Assign a step to a user.
   CommandResult assignStep(AssignStepRequest req) {
-    auto step = repo.findById(req.tenantId, req.id  );
+    auto step = repo.findById(req.tenantId, req.stepId  );
     if (step.isNull)
       return CommandResult(false, "", "Step not found");
 
@@ -100,6 +100,6 @@ class ManageStepsUseCase { // TODO: UIMUseCase {
     if (req.assignedRole.length > 0)
       step.assignedRole = req.assignedRole;
     repo.update(step);
-    return CommandResult(true, req.id.value, "");
+    return CommandResult(true, req.stepId.value, "");
   }
 }

@@ -16,7 +16,7 @@ struct ExecutionLog {
   mixin TenantEntity!ExecutionLogId;
 
   WorkflowId workflowId;
-  StepId stepId;
+  WorkflowStepId stepId;
   string action; // e.g. "step.started", "step.completed"
   ExecutionOutcome outcome;
   string message;

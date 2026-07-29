@@ -5,16 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.integration_automation.infrastructure.persistence.repositories.steps;
 
-// import uim.platform.integration_automation.domain.entities.workflow_step;
-// import uim.platform.integration_automation.domain.ports.repositories.steps;
-
 import uim.platform.integration_automation;
 
 mixin(ShowModule!());
 
 @safe:
 
-class StepRepository : TenantRepository!(WorkflowStep, StepId), IStepRepository {
+class StepRepository : TenantRepository!(WorkflowStep, WorkflowStepId), IStepRepository {
 
   size_t countByWorkflow(TenantId tenantId, WorkflowId workflowId) {
     return findByWorkflow(tenantId, workflowId).length;
@@ -86,6 +83,10 @@ class StepRepository : TenantRepository!(WorkflowStep, StepId), IStepRepository 
     findByStatus(tenantId, workflowId, status).each!(s => remove(s));
   }
 
+  bool existsBySequence(TenantId tenantId, WorkflowId workflowId, int sequenceNumber) {
+    return !findBySequence(tenantId, workflowId, sequenceNumber).isNull;
+  }
+  
   WorkflowStep findBySequence(TenantId tenantId, WorkflowId workflowId, int sequenceNumber) {
     foreach (s; findByTenant(tenantId))
       if (s.workflowId == workflowId && s.tenantId == tenantId && s.sequenceNumber == sequenceNumber)
@@ -93,8 +94,14 @@ class StepRepository : TenantRepository!(WorkflowStep, StepId), IStepRepository 
     return null;
   }
 
+  void removeBySequence(TenantId tenantId, WorkflowId workflowId, int sequenceNumber) {
+    auto step = findBySequence(tenantId, workflowId, sequenceNumber);
+    if (!step.isNull)
+      remove(step);
+  }
+
   // void removeByWorkflow(TenantId tenantId, WorkflowId workflowId) {
-    // StepId[] toRemove;
+    // WorkflowStepId[] toRemove;
     // foreach (kv; store.byKeyValue())
       // if (kv.value.workflowId == workflowId && kv.value.tenantId == tenantId)
         // toRemove ~= kv.key;

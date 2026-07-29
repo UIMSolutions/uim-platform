@@ -71,33 +71,33 @@ struct CreateStepRequest {
   string automationPayload;
   SystemConnectionId sourceSystemConnectionId;
   SystemConnectionId targetSystemConnectionId;
-  StepId[] dependencies;
+  WorkflowStepId[] dependencies;
   int estimatedDurationMinutes;
 }
 
 struct CompleteStepRequest {
-  StepId stepId;
+  WorkflowStepId stepId;
   TenantId tenantId;
   UserId completedBy;
   string result;
 }
 
 struct FailStepRequest {
-  StepId stepId;
+  WorkflowStepId stepId;
   TenantId tenantId;
   UserId reportedBy;
   string errorMessage;
 }
 
 struct SkipStepRequest {
-  StepId stepId;
+  WorkflowStepId stepId;
   TenantId tenantId;
   UserId skippedBy;
   string reason;
 }
 
 struct AssignStepRequest {
-  StepId stepId;
+  WorkflowStepId stepId;
   TenantId tenantId;
   UserId assignedTo;
   string assignedRole;

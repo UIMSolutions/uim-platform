@@ -9,16 +9,16 @@ module uim.platform.integration_automation.application.usecases.manage.systems;
 
 // import uim.platform.integration_automation.domain.entities.system_connection;
 // import uim.platform.integration_automation.domain.ports.repositories.systems;
-// import uim.platform.integration_automation.application.dto;
+
 import uim.platform.integration_automation;
 
 mixin(ShowModule!());
 
 @safe:
 class ManageSystemsUseCase { // TODO: UIMUseCase {
-  private SystemRepository repo;
+  private ISystemRepository repo;
 
-  this(SystemRepository repo) {
+  this(ISystemRepository repo) {
     this.repo = repo;
   }
 
@@ -43,7 +43,7 @@ class ManageSystemsUseCase { // TODO: UIMUseCase {
     sys.environment = req.environment;
     sys.region = req.region;
     sys.systemId = req.systemId;
-    sys.tenant = req.tenant;
+    sys.tenantId = req.tenantId;
 
     repo.save(sys);
     return CommandResult(true, sys.id.value, "");
@@ -72,7 +72,7 @@ class ManageSystemsUseCase { // TODO: UIMUseCase {
     if (existing.isNull)
       return CommandResult(false, "", "System not found");
 
-    auto updated = *existing;
+    auto updated = existing;
     if (req.name.length > 0)
       updated.name = req.name;
     if (req.description.length > 0)
@@ -93,8 +93,8 @@ class ManageSystemsUseCase { // TODO: UIMUseCase {
       updated.region = req.region;
     if (req.systemId.length > 0)
       updated.systemId = req.systemId;
-    if (req.tenant.length > 0)
-      updated.tenant = req.tenant;
+    if (req.tenantId.length > 0)
+      updated.tenantId = req.tenantId;
     updated.updatedAt = currentTimestamp();
 
     repo.update(updated);

@@ -195,7 +195,7 @@ CIA_HOST=127.0.0.1 CIA_PORT=9090 ./build/uim-integration-automation-platform-ser
 |---|---|---|
 | `ScenarioId` | `string` | Integration scenario identifier |
 | `WorkflowId` | `string` | Workflow instance identifier |
-| `StepId` | `string` | Workflow step identifier |
+| `WorkflowStepId` | `string` | Workflow step identifier |
 | `SystemConnectionId` | `string` | System landscape entry identifier |
 | `DestinationId` | `string` | Destination endpoint identifier |
 | `TaskAssignmentId` | `string` | Task assignment identifier |
@@ -289,7 +289,7 @@ CIA_HOST=127.0.0.1 CIA_PORT=9090 ./build/uim-integration-automation-platform-ser
 
 | Field | Type | Description |
 |---|---|---|
-| `id` | `StepId` | Unique step identifier |
+| `id` | `WorkflowStepId` | Unique step identifier |
 | `workflowId` | `WorkflowId` | Parent workflow |
 | `tenantId` | `TenantId` | Owning tenant |
 | `name` | `string` | Step name |
@@ -305,7 +305,7 @@ CIA_HOST=127.0.0.1 CIA_PORT=9090 ./build/uim-integration-automation-platform-ser
 | `automationPayload` | `string` | Payload for automated execution |
 | `sourceSystemConnectionId` | `SystemConnectionId` | Source system reference |
 | `targetSystemConnectionId` | `SystemConnectionId` | Target system reference |
-| `dependencies` | `StepId[]` | IDs of steps that must complete first |
+| `dependencies` | `WorkflowStepId[]` | IDs of steps that must complete first |
 | `result` | `string` | Outcome details / response |
 | `errorMessage` | `string` | Error message on failure |
 | `startedAt` | `long` | Step start timestamp |
@@ -365,7 +365,7 @@ CIA_HOST=127.0.0.1 CIA_PORT=9090 ./build/uim-integration-automation-platform-ser
 |---|---|---|
 | `id` | `ExecutionLogId` | Unique log identifier |
 | `workflowId` | `WorkflowId` | Parent workflow |
-| `stepId` | `StepId` | Related step |
+| `stepId` | `WorkflowStepId` | Related step |
 | `tenantId` | `TenantId` | Owning tenant |
 | `action` | `string` | Action name (e.g. "step.started", "step.completed") |
 | `outcome` | `ExecutionOutcome` | Execution outcome |

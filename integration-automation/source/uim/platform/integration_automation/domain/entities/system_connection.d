@@ -13,7 +13,7 @@ mixin(ShowModule!());
 /// A system in the customer landscape — represents an endpoint
 /// that participates in integration scenarios.
 struct SystemConnection {  
-  mixin(TenantEntity!SystemConnectionId);
+  mixin TenantEntity!SystemConnectionId;
 
   string name; // e.g. "Production S/4HANA"
   string description;
@@ -26,7 +26,6 @@ struct SystemConnection {
   string environment; // e.g. "production", "staging", "dev"
   string region; // e.g. "eu10", "us20"
   string systemId; // SAP SID
-  string tenant; // subaccount / tenant identifier
 
   Json toJson() const {
       return entityToJson()
@@ -40,7 +39,6 @@ struct SystemConnection {
           .set("status", status.to!string)
           .set("environment", environment)
           .set("region", region)
-          .set("systemId", systemId)
-          .set("tenant", tenant);
+          .set("systemId", systemId);
   }
 }

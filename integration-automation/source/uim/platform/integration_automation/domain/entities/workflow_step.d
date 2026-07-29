@@ -13,7 +13,7 @@ mixin(ShowModule!());
 /// An individual step / task within a workflow instance.
 /// Can be manual (requires user action) or automated (executed via API).
 struct WorkflowStep {
-  mixin TenantEntity!StepId;
+  mixin TenantEntity!WorkflowStepId;
 
   WorkflowId workflowId;
   string name;
@@ -29,7 +29,7 @@ struct WorkflowStep {
   string automationPayload; // payload for automated execution
   SystemConnectionId sourceSystemConnectionId;
   SystemConnectionId targetSystemConnectionId;
-  StepId[] dependencies; // IDs of steps that must complete first
+  WorkflowStepId[] dependencies; // IDs of steps that must complete first
   string result; // outcome details / response
   string errorMessage;
   long startedAt;
@@ -52,7 +52,7 @@ struct WorkflowStep {
       .set("automationPayload", automationPayload)
       .set("sourceSystemConnectionId", sourceSystemConnectionId)
       .set("targetSystemConnectionId", targetSystemConnectionId)
-      .set("dependencies", dependencies)
+      .set("dependencies", dependencies.map!(d => d.value).array.toJson)
       .set("result", result)
       .set("errorMessage", errorMessage)
       .set("startedAt", startedAt)

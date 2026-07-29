@@ -13,7 +13,7 @@ mixin(ShowModule!());
 /// A workflow instance — a running execution of an integration scenario
 /// for a specific tenant. Contains the current execution progress.
 struct Workflow {
-  mixin(TenantEntity!WorkflowId);
+  mixin TenantEntity!WorkflowId;
 
   ScenarioId scenarioId;
   string name;
@@ -32,7 +32,7 @@ struct Workflow {
       .set("scenarioId", scenarioId.value)
       .set("name", name)
       .set("description", description)
-      .set("status", status.to!string)
+      .set("status", status.toString)
       .set("currentStepIndex", currentStepIndex)
       .set("totalSteps", totalSteps)
       .set("completedSteps", completedSteps)
