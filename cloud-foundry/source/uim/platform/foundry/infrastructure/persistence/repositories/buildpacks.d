@@ -10,7 +10,7 @@ import uim.platform.foundry;
 mixin(ShowModule!());
 
 @safe:
-class MemoryBuildpackRepository : TenantRepository!(Buildpack, BuildpackId), IBuildpackRepository {
+class BuildpackRepository : TenantRepository!(Buildpack, BuildpackId), IBuildpackRepository {
 
   bool existsByName(TenantId tenantId, string name) {
     return findByTenant(tenantId).any!(e => e.name == name);
@@ -69,5 +69,5 @@ class MemoryBuildpackRepository : TenantRepository!(Buildpack, BuildpackId), IBu
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryBuildpackRepository()));
+    assert(tenantRepositoryTest(new BuildpackRepository()));
 }

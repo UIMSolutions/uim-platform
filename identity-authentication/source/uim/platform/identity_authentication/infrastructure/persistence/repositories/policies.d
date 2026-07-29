@@ -15,7 +15,7 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// In-memory adapter for authorization policy persistence.
-class MemoryPolicyRepository : TenantRepository!(AuthorizationPolicy, PolicyId), PolicyRepository {
+class PolicyRepository : TenantRepository!(AuthorizationPolicy, PolicyId), IPolicyRepository {
 
   size_t countByApplication(TenantId tenantId, ApplicationId appId) {
     return findByApplication(tenantId, appId).length;
@@ -37,5 +37,5 @@ class MemoryPolicyRepository : TenantRepository!(AuthorizationPolicy, PolicyId),
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryPolicyRepository()));
+    assert(tenantRepositoryTest(new PolicyRepository()));
 }

@@ -11,7 +11,7 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// Port: outgoing — risk rule persistence.
-interface RiskRuleRepository : ITenantRepository!(RiskRule, RiskRuleId) {
+interface IRiskRuleRepository : ITenantRepository!(RiskRule, RiskRuleId) {
 
     size_t countByRiskLevel(TenantId tenantId, RiskLevel riskLevel);
     RiskRule[] findByRiskLevel(TenantId tenantId, RiskLevel riskLevel); // Todo Next: size_t offset = 0, size_t limit = 100);

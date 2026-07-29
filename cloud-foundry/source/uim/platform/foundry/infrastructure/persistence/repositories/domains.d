@@ -14,7 +14,7 @@ import uim.platform.foundry;
 mixin(ShowModule!());
 
 @safe:
-class MemoryDomainRepository : TenantRepository!(CfDomain, CfDomainId), IDomainRepository {
+class DomainRepository : TenantRepository!(CfDomain, CfDomainId), IDomainRepository {
 
   // #region ByName
   bool existsByName(TenantId tenantId, string name) {
@@ -75,5 +75,5 @@ class MemoryDomainRepository : TenantRepository!(CfDomain, CfDomainId), IDomainR
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryDomainRepository()));
+    assert(tenantRepositoryTest(new DomainRepository()));
 }

@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — external IdP configuration persistence.
-interface IdpConfigRepository : ITenantRepository!(IdpConfig, IdpConfigId) {
+interface IIdpConfigRepository : ITenantRepository!(IdpConfig, IdpConfigId) {
 
   bool existsDefault(TenantId tenantId);
   IdpConfig findDefault(TenantId tenantId);

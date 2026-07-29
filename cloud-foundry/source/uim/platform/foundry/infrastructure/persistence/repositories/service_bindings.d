@@ -14,7 +14,7 @@ import uim.platform.foundry;
 mixin(ShowModule!());
 
 @safe:
-class MemoryServiceBindingRepository : TenantRepository!(ServiceBinding, ServiceBindingId), IServiceBindingRepository {
+class ServiceBindingRepository : TenantRepository!(ServiceBinding, ServiceBindingId), IServiceBindingRepository {
 
   size_t countByApp(TenantId tenantId, AppId appId) {
     return findByApp(tenantId, appId).length;
@@ -52,5 +52,5 @@ class MemoryServiceBindingRepository : TenantRepository!(ServiceBinding, Service
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryServiceBindingRepository()));
+    assert(tenantRepositoryTest(new ServiceBindingRepository()));
 }

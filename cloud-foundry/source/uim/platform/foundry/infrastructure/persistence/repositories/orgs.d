@@ -14,7 +14,7 @@ import uim.platform.foundry;
 mixin(ShowModule!());
 
 @safe:
-class MemoryOrgRepository : TenantRepository!(Organization, OrgId), IOrgRepository {
+class OrgRepository : TenantRepository!(Organization, OrgId), IOrgRepository {
   
   bool existsByName(TenantId tenantId, string name) {
     return !findByName(tenantId, name).isNull;
@@ -37,5 +37,5 @@ class MemoryOrgRepository : TenantRepository!(Organization, OrgId), IOrgReposito
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryOrgRepository()));
+    assert(tenantRepositoryTest(new OrgRepository()));
 }

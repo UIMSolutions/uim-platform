@@ -13,7 +13,7 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// In-memory adapter for token persistence.
-class MemoryTokenRepository : TenantRepository!(Token, TokenId), TokenRepository {
+class TokenRepository : TenantRepository!(Token, TokenId), ITokenRepository {
 
   bool existsByValue(TenantId tenantId, string tokenValue) {
     return findByTenant(tenantId).any!(t => t.tokenValue == tokenValue);
@@ -57,5 +57,5 @@ class MemoryTokenRepository : TenantRepository!(Token, TokenId), TokenRepository
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryTokenRepository()));
+    assert(tenantRepositoryTest(new TokenRepository()));
 }

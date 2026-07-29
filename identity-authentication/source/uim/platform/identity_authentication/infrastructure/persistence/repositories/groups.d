@@ -13,7 +13,7 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// In-memory adapter for group persistence.
-class MemoryGroupRepository : TenantRepository!(IAGroup, GroupId), GroupRepository {
+class GroupRepository : TenantRepository!(IAGroup, GroupId), IGroupRepository {
 
     bool existsByName(TenantId tenantId, string name) {
         return findByTenant(tenantId).any!(e => e.name == name);
@@ -41,5 +41,5 @@ class MemoryGroupRepository : TenantRepository!(IAGroup, GroupId), GroupReposito
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryGroupRepository()));
+    assert(tenantRepositoryTest(new GroupRepository()));
 }

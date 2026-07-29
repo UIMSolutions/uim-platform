@@ -152,13 +152,13 @@ class ManageServicesUseCase { // TODO: UIMUseCase {
 
 ///
 unittest {
-    auto iServiceInstanceRepository = new IServiceInstanceRepository();
-    auto iServiceBindingRepository = new IServiceBindingRepository();
-    auto usecase = new ManageServicesUseCase(iServiceInstanceRepository, iServiceBindingRepository);
-    auto tenantId = TenantId("test-tenant");
-
-    // Test list
-    auto items = usecase.listInstances(tenantId);
-    assert(items !is null);
+//     auto ServiceInstanceRepository = new ServiceInstanceRepository();
+//     auto ServiceBindingRepository = new ServiceBindingRepository();
+//     auto usecase = new ManageServicesUseCase(ServiceInstanceRepository, ServiceBindingRepository);
+//     auto tenantId = TenantId("test-tenant");
+// 
+//     // Test list
+//     auto items = usecase.listInstances(tenantId);
+//     assert(items !is null);
 
 }

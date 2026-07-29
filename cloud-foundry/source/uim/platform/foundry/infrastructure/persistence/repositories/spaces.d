@@ -14,7 +14,7 @@ import uim.platform.foundry;
 mixin(ShowModule!());
 
 @safe:
-class MemorySpaceRepository : TenantRepository!(Space, SpaceId), ISpaceRepository {
+class SpaceRepository : TenantRepository!(Space, SpaceId), ISpaceRepository {
 
   bool existsByName(TenantId tenantId, OrgId orgId, string name) {
     return findByTenant(tenantId).any!(e => e.orgId == orgId && e.name == name);
@@ -51,5 +51,5 @@ class MemorySpaceRepository : TenantRepository!(Space, SpaceId), ISpaceRepositor
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemorySpaceRepository()));
+    assert(tenantRepositoryTest(new SpaceRepository()));
 }

@@ -14,7 +14,7 @@ import uim.platform.foundry;
 mixin(ShowModule!());
 
 @safe:
-class MemoryServiceInstanceRepository : TenantRepository!(ServiceInstance, ServiceInstanceId), IServiceInstanceRepository {
+class ServiceInstanceRepository : TenantRepository!(ServiceInstance, ServiceInstanceId), IServiceInstanceRepository {
 
   bool existsByName(TenantId tenantId, SpaceId spaceId, string name) {
     return findByName(tenantId, spaceId, name).id.value != "";
@@ -69,5 +69,5 @@ class MemoryServiceInstanceRepository : TenantRepository!(ServiceInstance, Servi
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryServiceInstanceRepository()));
+    assert(tenantRepositoryTest(new ServiceInstanceRepository()));
 }

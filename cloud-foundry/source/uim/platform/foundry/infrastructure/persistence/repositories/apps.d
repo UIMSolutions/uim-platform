@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryAppRepository : TenantRepository!(Application, AppId), IAppRepository {
+class AppRepository : TenantRepository!(Application, AppId), IAppRepository {
 
   bool existsByName(TenantId tenantId, SpaceId spaceId, string name) {
     return findByTenant(tenantId).any!(e => e.spaceId == spaceId && e.name == name);
@@ -70,5 +70,5 @@ class MemoryAppRepository : TenantRepository!(Application, AppId), IAppRepositor
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryAppRepository()));
+    assert(tenantRepositoryTest(new AppRepository()));
 }

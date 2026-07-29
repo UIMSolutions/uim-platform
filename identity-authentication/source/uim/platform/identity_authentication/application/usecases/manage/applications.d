@@ -18,9 +18,9 @@ mixin(ShowModule!());
 @safe:
 /// Application use case: service provider / application registration.
 class ManageApplicationsUseCase { // TODO: UIMUseCase {
-  private ApplicationRepository appRepo;
+  private IApplicationRepository appRepo;
 
-  this(ApplicationRepository appRepo) {
+  this(IApplicationRepository appRepo) {
     this.appRepo = appRepo;
   }
 

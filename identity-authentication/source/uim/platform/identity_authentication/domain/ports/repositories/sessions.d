@@ -11,7 +11,7 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// Port: outgoing — session persistence.
-interface SessionRepository : ITenantRepository!(IASession, SessionId) {
+interface ISessionRepository : ITenantRepository!(IASession, SessionId) {
 
   IASession[] findByUser(TenantId tenantId, UserId userId);
   

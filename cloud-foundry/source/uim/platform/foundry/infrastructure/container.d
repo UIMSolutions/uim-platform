@@ -47,14 +47,14 @@ mixin(ShowModule!());
 /// Dependency injection container — wires all layers together.
 struct Container {
   // Repositories (driven adapters)
-  MemoryOrgRepository orgRepo;
-  MemorySpaceRepository spaceRepo;
-  MemoryAppRepository appRepo;
-  MemoryServiceInstanceRepository serviceInstanceRepo;
-  MemoryServiceBindingRepository serviceBindingRepo;
-  MemoryRouteRepository routeRepo;
-  MemoryDomainRepository domainRepo;
-  MemoryBuildpackRepository buildpackRepo;
+  IOrgRepository orgRepo;
+  ISpaceRepository spaceRepo;
+  IAppRepository appRepo;
+  IServiceInstanceRepository serviceInstanceRepo;
+  IServiceBindingRepository serviceBindingRepo;
+  IRouteRepository routeRepo;
+  IDomainRepository domainRepo;
+  IBuildpackRepository buildpackRepo;
 
   // Domain services
   AppLifecycleManager appLifecycle;
@@ -85,14 +85,14 @@ Container buildContainer(SrvConfig config) {
   Container c;
 
   // Infrastructure adapters (driven ports)
-  c.orgRepo = new MemoryOrgRepository();
-  c.spaceRepo = new MemorySpaceRepository();
-  c.appRepo = new MemoryAppRepository();
-  c.serviceInstanceRepo = new MemoryServiceInstanceRepository();
-  c.serviceBindingRepo = new MemoryServiceBindingRepository();
-  c.routeRepo = new MemoryRouteRepository();
-  c.domainRepo = new MemoryDomainRepository();
-  c.buildpackRepo = new MemoryBuildpackRepository();
+  c.orgRepo = new OrgRepository();
+  c.spaceRepo = new SpaceRepository();
+  c.appRepo = new AppRepository();
+  c.serviceInstanceRepo = new ServiceInstanceRepository();
+  c.serviceBindingRepo = new ServiceBindingRepository();
+  c.routeRepo = new RouteRepository();
+  c.domainRepo = new DomainRepository();
+  c.buildpackRepo = new BuildpackRepository();
 
   // Domain services
   c.appLifecycle = new AppLifecycleManager(c.appRepo, c.orgRepo, c.spaceRepo);

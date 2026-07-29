@@ -47,15 +47,15 @@ mixin(ShowModule!());
 /// Dependency injection container — wires all layers together.
 struct Container {
   // Repositories (driven adapters)
-  MemoryUserRepository userRepo;
-  MemoryGroupRepository groupRepo;
+  IUserRepository userRepo;
+  IGroupRepository groupRepo;
   // MemoryTenantRepository tenantRepo;
-  MemoryApplicationRepository appRepo;
-  MemorySessionRepository sessionRepo;
-  MemoryTokenRepository tokenRepo;
-  MemoryPolicyRepository policyRepo;
-  MemoryIdpConfigRepository idpConfigRepo;
-  MemoryRiskRuleRepository riskRuleRepo;
+  IApplicationRepository appRepo;
+  ISessionRepository sessionRepo;
+  ITokenRepository tokenRepo;
+  IPolicyRepository policyRepo;
+  IIdpConfigRepository idpConfigRepo;
+  IRiskRuleRepository riskRuleRepo;
 
   // Security services (driven adapters)
   Sha256PasswordService passwordSvc;
@@ -85,15 +85,15 @@ Container buildContainer(SrvConfig config) {
   Container c;
 
   // Infrastructure adapters
-  c.userRepo = new MemoryUserRepository();
-  c.groupRepo = new MemoryGroupRepository();
-  // c.tenantRepo = new MemoryTenantRepository();
-  c.appRepo = new MemoryApplicationRepository();
-  c.sessionRepo = new MemorySessionRepository();
-  c.tokenRepo = new MemoryTokenRepository();
-  c.policyRepo = new MemoryPolicyRepository();
-  c.idpConfigRepo = new MemoryIdpConfigRepository();
-  c.riskRuleRepo = new MemoryRiskRuleRepository();
+  c.userRepo = new UserRepository();
+  c.groupRepo = new GroupRepository();
+  // c.tenantRepo = new TenantRepository();
+  c.appRepo = new ApplicationRepository();
+  c.sessionRepo = new SessionRepository();
+  c.tokenRepo = new TokenRepository();
+  c.policyRepo = new PolicyRepository();
+  c.idpConfigRepo = new IdpConfigRepository();
+  c.riskRuleRepo = new RiskRuleRepository();
 
   c.passwordSvc = new Sha256PasswordService();
   c.tokenSvc = new JwtTokenService(config.jwtSecret);

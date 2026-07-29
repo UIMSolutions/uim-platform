@@ -15,7 +15,7 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// In-memory adapter for session persistence.
-class MemorySessionRepository : TenantRepository!(IASession, SessionId), SessionRepository {
+class SessionRepository : TenantRepository!(IASession, SessionId), ISessionRepository {
 
   size_t countByUser(TenantId tenantId, UserId userId) {
     return findByUser(tenantId, userId).length;
@@ -62,5 +62,5 @@ class MemorySessionRepository : TenantRepository!(IASession, SessionId), Session
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemorySessionRepository()));
+    assert(tenantRepositoryTest(new SessionRepository()));
 }

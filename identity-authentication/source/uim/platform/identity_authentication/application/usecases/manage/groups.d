@@ -19,10 +19,10 @@ mixin(ShowModule!());
 @safe:
 /// Application use case: group management (CRUD + membership).
 class ManageGroupsUseCase { // TODO: UIMUseCase {
-  private GroupRepository groupRepo;
-  private UserRepository userRepo;
+  private IGroupRepository groupRepo;
+  private IUserRepository userRepo;
 
-  this(GroupRepository groupRepo, UserRepository userRepo) {
+  this(IGroupRepository groupRepo, IUserRepository userRepo) {
     this.groupRepo = groupRepo;
     this.userRepo = userRepo;
   }
