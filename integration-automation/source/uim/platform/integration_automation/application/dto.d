@@ -15,25 +15,25 @@ struct CreateScenarioRequest {
   TenantId tenantId;
   string name;
   string description;
-  ScenarioCategory category;
+  string category;
   string version_;
-  SystemType sourceSystemType;
-  SystemType targetSystemType;
+  string sourceSystemType;
+  string targetSystemType;
   string[] prerequisites;
   ScenarioStepTemplate[] stepTemplates;
   UserId createdBy;
 }
 
 struct UpdateScenarioRequest {
-  ScenarioId scenarioId;
   TenantId tenantId;
+  ScenarioId scenarioId;
   string name;
   string description;
-  ScenarioCategory category;
+  string category;
   string version_;
-  ScenarioStatus status;
-  SystemType sourceSystemType;
-  SystemType targetSystemType;
+  string status;
+  string sourceSystemType;
+  string targetSystemType;
   string[] prerequisites;
   ScenarioStepTemplate[] stepTemplates;
 }
@@ -61,8 +61,8 @@ struct CreateStepRequest {
   TenantId tenantId;
   string name;
   string description;
-  StepType type_;
-  StepPriority priority;
+  string type_;
+  string priority;
   int sequenceNumber;
   string assignedTo;
   string assignedRole;
@@ -133,7 +133,6 @@ struct UpdateSystemRequest {
   ConnectionStatus status;
   string environment;
   string region;
-  string systemId;
   string tenant;
 }
 // ──────────────── Destination DTOs ────────────────
@@ -143,6 +142,7 @@ struct CreateDestinationRequest {
   string name;
   string description;
   SystemConnectionId connectionId;
+
   DestinationType destinationType;
   string url;
   AuthenticationType authenticationType;

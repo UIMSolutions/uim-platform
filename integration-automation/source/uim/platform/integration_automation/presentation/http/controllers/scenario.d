@@ -39,12 +39,12 @@ class ScenarioController : ManageHttpController {
     r.tenantId = tenantId;
     r.name = data.getString("name");
     r.description = data.getString("description");
-    r.category = parseScenarioCategory(data.getString("category"));
+    r.category = data.getString("category");
     r.version_ = data.getString("version");
-    r.sourceSystemType = toSystemType(data.getString("sourceSystemType"));
-    r.targetSystemType = toSystemType(data.getString("targetSystemType"));
+    r.sourceSystemType = data.getString("sourceSystemType");
+    r.targetSystemType = data.getString("targetSystemType");
     r.prerequisites = data.getStrings("prerequisites");
-    r.stepTemplates = parseStepTemplates(j);
+    r.stepTemplates = parseStepTemplates(data);
     r.createdBy = UserId(data.getString("createdBy"));
 
     auto result = useCase.createScenario(r);
@@ -107,13 +107,13 @@ class ScenarioController : ManageHttpController {
     r.tenantId = tenantId;
     r.name = data.getString("name");
     r.description = data.getString("description");
-    r.category = parseScenarioCategory(data.getString("category"));
+    r.category = data.getString("category");
     r.version_ = data.getString("version");
-    r.status = parseScenarioStatus(data.getString("status"));
-    r.sourceSystemType = toSystemType(data.getString("sourceSystemType"));
-    r.targetSystemType = toSystemType(data.getString("targetSystemType"));
+    r.status = data.getString("status");
+    r.sourceSystemType = data.getString("sourceSystemType");
+    r.targetSystemType = data.getString("targetSystemType");
     r.prerequisites = data.getStrings("prerequisites");
-    r.stepTemplates = parseStepTemplates(j);
+    r.stepTemplates = parseStepTemplates(data);
 
     auto result = useCase.updateScenario(r);
     if (result.hasError)
@@ -129,8 +129,10 @@ class ScenarioController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
-    auto tenantId = precheck.tenantId;
+    auto id = ScenarioId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid Scenario ID", 400);
+
     auto result = useCase.deleteScenario(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);
@@ -141,10 +143,8 @@ class ScenarioController : ManageHttpController {
 
   private static ScenarioStepTemplate[] parseStepTemplates(Json j) {
     ScenarioStepTemplate[] result;
-    auto v = "stepTemplates" in j;
-    if (v.isNull || (v).type != Json.Type.array.toJson)
-      return result;
-    foreach (item; *v) {
+
+    foreach (item; j.getArray("stepTemplates")) {
       if (item.isObject) {
         ScenarioStepTemplate t;
         t.name = item.getString("name");
@@ -162,6 +162,7 @@ class ScenarioController : ManageHttpController {
         result ~= t;
       }
     }
+    
     return result;
   }
 }

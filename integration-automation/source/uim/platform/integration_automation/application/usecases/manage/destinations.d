@@ -13,10 +13,10 @@ mixin(ShowModule!());
 
 @safe:
 class ManageDestinationsUseCase { // TODO: UIMUseCase {
-  private DestinationRepository repo;
-  private SystemRepository systemRepo;
+  private IDestinationRepository repo;
+  private ISystemRepository systemRepo;
 
-  this(DestinationRepository repo, SystemRepository systemRepo) {
+  this(IDestinationRepository repo, ISystemRepository systemRepo) {
     this.repo = repo;
     this.systemRepo = systemRepo;
   }
@@ -35,18 +35,16 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Destination with this name already exists");
 
     // Validate linked system if provided
-    if (req.systemId.length > 0) {
-      auto sys = systemRepo.findById(req.tenantId, req.systemId);
+    if (!req.connectionId.isNull) {
+      auto sys = systemRepo.findById(req.tenantId, req.connectionId);
       if (sys.isNull)
         return CommandResult(false, "", "Linked system not found");
     }
 
-    auto now = currentTimestamp();
-
     auto dest = Destination(req.tenantId); //, req.createdBy);
     dest.name = req.name;
     dest.description = req.description;
-    dest.systemId = req.systemId;
+    dest.systemId = req.connectionId;
     dest.destinationType = req.destinationType;
     dest.url = req.url;
     dest.authenticationType = req.authenticationType;
@@ -80,22 +78,22 @@ class ManageDestinationsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateDestination(UpdateDestinationRequest req) {
-    if (req.isNull)
+    if (req.destinationId.isNull)
       return CommandResult(false, "", "Destination ID is required");
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
 
-    auto existing = repo.findById(req.tenantId, req.id);
+    auto existing = repo.findById(req.tenantId, req.destinationId);
     if (existing.isNull)
       return CommandResult(false, "", "Destination not found");
 
-    auto updated = *existing;
+    auto updated = existing;
     if (req.name.length > 0)
       updated.name = req.name;
     if (req.description.length > 0)
       updated.description = req.description;
-    if (req.systemId.length > 0)
-      updated.systemId = req.systemId;
+    if (!req.connectionId.isNull)
+      updated.connectionId = req.connectionId;
     updated.destinationType = req.destinationType;
     if (req.url.length > 0)
       updated.url = req.url;

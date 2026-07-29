@@ -13,7 +13,7 @@ import uim.platform.integration_automation;
 mixin(ShowModule!());
 
 @safe:
-class MonitoringController : HttpController {
+class MonitoringController : ManageHttpController {
   private MonitorExecutionsUseCase useCase;
 
   this(MonitorExecutionsUseCase useCase) {
@@ -22,7 +22,7 @@ class MonitoringController : HttpController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.get("/api/v1/monitoring/logs", &handleGetLogs);
     router.get("/api/v1/monitoring/logs/workflow/*", &handleWorkflowLogs);
     router.get("/api/v1/monitoring/logs/step/*", &handleStepLogs);
@@ -30,91 +30,96 @@ class MonitoringController : HttpController {
     router.get("/api/v1/monitoring/summary/*", &handleSummary);
   }
 
-  protected void handleLogs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
+  protected Json getLogsHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto logs = useCase.getAllLogs(tenantId);
-      auto arr = logs.map!(l => l.toJson).array.toJson;
+    auto tenantId = precheck.tenantId;
+    auto logs = useCase.getAllLogs(tenantId);
+    auto arr = logs.map!(l => l.toJson).array.toJson;
 
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", logs.length)
-        .set("message", "Execution logs retrieved successfully");
+    auto resp = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", logs.length)
+      .set("message", "Execution logs retrieved successfully");
 
-      res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    return successResponse("Execution logs retrieved successfully", 200, resp);
   }
 
-  protected void handleWorkflowLogs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto workflowId = precheck.id;
-      auto tenantId = precheck.tenantId;
+  mixin(HandleTemplate!("handleGetLogs", "getLogsHandler"));
 
-      auto logs = useCase.getWorkflowLogs(tenantId, workflowId);
-      auto arr = logs.map!(l => l.toJson).array.toJson;
+  protected Json getWorkflowLogsHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", logs.length)
-        .set("message", "Workflow execution logs retrieved successfully");
+    auto workflowId = precheck.id;
+    auto tenantId = precheck.tenantId;
 
-      res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto logs = useCase.getWorkflowLogs(tenantId, workflowId);
+    auto arr = logs.map!(l => l.toJson).array.toJson;
+
+    auto resp = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", logs.length)
+      .set("message", "Workflow execution logs retrieved successfully");
+
+    return successResponse("Workflow execution logs retrieved successfully", 200, resp);
   }
 
-  protected void handleStepLogs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto stepId = precheck.id;
-      auto tenantId = precheck.tenantId;
-      auto logs = useCase.getStepLogs(tenantId, stepId);
+  mixin(HandleTemplate!("handleWorkflowLogs", "getWorkflowLogsHandler"));
 
-      auto arr = logs.map!(l => l.toJson).array.toJson;
+  protected Json getStepLogsHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
 
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", logs.length)
-        .set("message", "Step logs retrieved successfully");
+    auto stepId = precheck.id;
+    auto tenantId = precheck.tenantId;
+    auto logs = useCase.getStepLogs(tenantId, stepId);
 
-      res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+    auto arr = logs.map!(l => l.toJson).array.toJson;
+
+    auto resp = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", logs.length)
+      .set("message", "Step logs retrieved successfully");
+
+    return successResponse("Step logs retrieved successfully", 200, resp);
   }
 
-  protected void handleFailures(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto tenantId = precheck.tenantId;
-      
-      auto items = useCase.getFailures(tenantId);
-      auto arr = items.map!(l => l.toJson).array.toJson;
+  mixin(HandleTemplate!("handleStepLogs", "getStepLogsHandler"));
 
-      auto resp = Json.emptyObject
-        .set("items", arr)
-        .set("totalCount", items.length)
-        .set("message", "Failures retrieved successfully");
-        
-      res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+  protected Json failuresHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto tenantId = precheck.tenantId;
+    auto items = useCase.getFailures(tenantId);
+    auto arr = items.map!(l => l.toJson).array.toJson;
+
+    auto resp = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", items.length)
+      .set("message", "Failures retrieved successfully");
+
+    return successResponse("Failures retrieved successfully", 200, resp);
   }
 
-  protected void handleSummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
-      auto workflowId = precheck.id;
-      auto tenantId = precheck.tenantId;
-      auto summary = useCase.getWorkflowSummary(tenantId, workflowId);
+  mixin(HandleTemplate!("handleFailures", "failuresHandler"));
 
-      auto j = Json.emptyObject
+  protected Json summaryHandler(HTTPServerRequest req) {
+    auto precheck = super.getHandler(req);
+    if (precheck.hasError)
+      return precheck;
+
+    auto workflowId = precheck.id;
+    auto tenantId = precheck.tenantId;
+    auto summary = useCase.getWorkflowSummary(tenantId, workflowId);
+
+    auto j = Json.emptyObject
       .set("workflowId", summary.workflowId)
       .set("workflowName", summary.workflowName)
       .set("status", summary.status.to!string)
@@ -125,11 +130,10 @@ class MonitoringController : HttpController {
       .set("failedSteps", summary.failedSteps)
       .set("skippedSteps", summary.skippedSteps)
       .set("totalLogEntries", summary.totalLogEntries);
-      
-      res.writeJsonBody(j, 200);
-    }
-    catch (Exception e) {
-      writeError(res, 500, "Internal server error");
-    }
+
+    return successResponse("Workflow summary retrieved successfully", 200, j);
   }
+
+  mixin(HandleTemplate!("handleSummary", "summaryHandler"));
+
 }

@@ -70,7 +70,7 @@ enum WorkflowStatus {
   suspended,
 }
 WorkflowStatus toWorkflowStatus(string value) {
-  mixin(EnumSwitch("WorkflowStatus", "WorkflowStatus.planned"));
+  mixin(EnumSwitch("WorkflowStatus", "planned"));
 }
 WorkflowStatus[] toWorkflowStatuses(string[] values) {
   return values.map!(v => v.toWorkflowStatus).array;
@@ -111,7 +111,7 @@ enum StepType {
   notification,
 }
 StepType toStepType(string value) {
-  mixin(EnumSwitch("StepType", "StepType.manual"));
+  mixin(EnumSwitch("StepType", "manual"));
 }
 StepType[] toStepTypes(string[] values) {
   return values.map!toStepType.array;
@@ -151,7 +151,7 @@ enum StepStatus {
   blocked,
 }
 StepStatus toStepStatus(string value) {
-  mixin(EnumSwitch("StepStatus", "StepStatus.pending"));
+  mixin(EnumSwitch("StepStatus", "pending"));
 }
 StepStatus[] toStepStatuses(string[] values) {
   return values.map!(v => v.toStepStatus).array;
@@ -193,7 +193,7 @@ enum StepPriority {
   critical,
 }
 StepPriority toStepPriority(string value) {
-  mixin(EnumSwitch("StepPriority", "StepPriority.low"));
+  mixin(EnumSwitch("StepPriority", "low"));
 }
 StepPriority[] toStepPriorities(string[] values) {
   return values.map!toStepPriority.array;
@@ -238,7 +238,7 @@ enum SystemType {
   thirdParty,
 }
 SystemType toSystemType(string value) {
-  mixin(EnumSwitch("SystemType", "SystemType.sapS4Hana"));
+  mixin(EnumSwitch("SystemType", "sapS4Hana"));
 }
 SystemType[] toSystemTypes(string[] values) {
   return values.map!toSystemType.array;
@@ -292,7 +292,7 @@ enum ConnectionStatus {
   testing,
 }
 ConnectionStatus toConnectionStatus(string value) {
-  mixin(EnumSwitch("ConnectionStatus", "ConnectionStatus.active"));
+  mixin(EnumSwitch("ConnectionStatus", "active"));
 }
 ConnectionStatus[] toConnectionStatuses(string[] values) {
   return values.map!(v => v.toConnectionStatus).array;
@@ -331,7 +331,7 @@ enum DestinationType {
   restApi,
 }
 DestinationType toDestinationType(string value) {
-  mixin(EnumSwitch("DestinationType", "DestinationType.http"));
+  mixin(EnumSwitch("DestinationType", "http"));
 }
 DestinationType[] toDestinationTypes(string[] values) {
   return values.map!toDestinationType.array;
@@ -374,7 +374,7 @@ enum AuthenticationType {
   noAuthentication,
 }
 AuthenticationType toAuthenticationType(string value) {
-  mixin(EnumSwitch("AuthenticationType", "AuthenticationType.basic"));
+  mixin(EnumSwitch("AuthenticationType", "basic"));
 }
 AuthenticationType[] toAuthenticationTypes(string[] values) {
   return values.map!toAuthenticationType.array;
@@ -417,7 +417,7 @@ enum ProxyType {
   privateLink,
 }
 ProxyType toProxyType(string value) {
-  mixin(EnumSwitch("ProxyType", "ProxyType.internet"));
+  mixin(EnumSwitch("ProxyType", "internet"));
 }
 ProxyType[] toProxyTypes(string[] values) {
   return values.map!toProxyType.array;
@@ -454,7 +454,7 @@ enum ExecutionOutcome {
   error,
 }
 ExecutionOutcome toExecutionOutcome(string value) {
-  mixin(EnumSwitch("ExecutionOutcome", "ExecutionOutcome.success"));
+  mixin(EnumSwitch("ExecutionOutcome", "success"));
 }
 ExecutionOutcome[] toExecutionOutcomes(string[] values) {
   return values.map!toExecutionOutcome.array;
@@ -498,7 +498,7 @@ enum ScenarioCategory {
   custom,
 }
 ScenarioCategory toScenarioCategory(string value) {
-  mixin(EnumSwitch("ScenarioCategory", "ScenarioCategory.custom"));
+  mixin(EnumSwitch("ScenarioCategory", "custom"));
 }
 ScenarioCategory[] toScenarioCategories(string[] values) {
   return values.map!toScenarioCategory.array;
@@ -521,7 +521,9 @@ unittest {
   assert("s4HanaIntegration".toScenarioCategory == ScenarioCategory.s4HanaIntegration);
   assert("communicationManagement".toScenarioCategory == ScenarioCategory.communicationManagement);
   assert("custom".toScenarioCategory == ScenarioCategory.custom);
-  assert("unknown".toScenarioCategory.toScenarioCategory == ScenarioCategory.custom); // default
+
+  assert("".toScenarioCategory == ScenarioCategory.custom); // default
+  assert("unknown".toScenarioCategory == ScenarioCategory.custom); // default
 
   assert(ScenarioCategory.leadToCash.toString == "leadToCash");
   assert(ScenarioCategory.sourceToPay.toString == "sourceToPay");
@@ -540,8 +542,8 @@ enum ScenarioType {
   standard,
   custom,
 }
-ScenarioType toScenarioType(string s) { 
-  mixin(EnumSwitch("ScenarioType", "ScenarioType.custom"));
+ScenarioType toScenarioType(string value) { 
+  mixin(EnumSwitch("ScenarioType", "custom"));
 }
 ScenarioType[] toScenarioTypes(string[] values) {
   return values.map!toScenarioType.array;
@@ -556,7 +558,9 @@ unittest {
 
   assert("standard".toScenarioType == ScenarioType.standard);
   assert("custom".toScenarioType == ScenarioType.custom);
-  assert("unknown".toScenarioType.toScenarioType == ScenarioType.custom); // default  
+
+  assert("".toScenarioType == ScenarioType.custom); // default  
+  assert("unknown".toScenarioType == ScenarioType.custom); // default  
 
   assert(ScenarioType.standard.toString == "standard");
   assert(ScenarioType.custom.toString == "custom"); 

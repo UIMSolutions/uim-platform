@@ -50,12 +50,13 @@ class ManageStepsUseCase { // TODO: UIMUseCase {
 
     if (executor.startStep(tenantId, stepId, userId))
       return CommandResult(true, stepId.value, "");
+
     return CommandResult(false, "", "Cannot start step — not found or not in pending state");
   }
 
   /// Complete a step and advance the workflow.
   CommandResult completeStep(CompleteStepRequest req) {
-    if (req.isNull)
+    if (req.stepId.isNull)
       return CommandResult(false, "", "Step ID is required");
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
@@ -65,7 +66,7 @@ class ManageStepsUseCase { // TODO: UIMUseCase {
 
     // Try to advance the workflow
     auto step = repo.findById(req.tenantId, req.stepId);
-    if (step !is null)
+    if (!step.isNull)
       engine.advanceWorkflow(req.tenantId, step.workflowId);
 
     return CommandResult(true, req.stepId.value, "");
@@ -85,7 +86,7 @@ class ManageStepsUseCase { // TODO: UIMUseCase {
 
     auto step = repo.findById(req.tenantId, req.stepId);
     if (!step.isNull)
-      engine.advanceWorkflow(step.workflowId, req.tenantId);
+      engine.advanceWorkflow(req.tenantId, step.workflowId);
 
     return CommandResult(true, req.stepId.value, "");
   }
@@ -96,7 +97,7 @@ class ManageStepsUseCase { // TODO: UIMUseCase {
     if (step.isNull)
       return CommandResult(false, "", "Step not found");
 
-    step.assignedTo = req.assignedTo;
+    // TOD: step.assignedTo = req.assignedTo;
     if (req.assignedRole.length > 0)
       step.assignedRole = req.assignedRole;
     repo.update(step);

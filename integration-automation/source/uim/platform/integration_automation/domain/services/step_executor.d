@@ -38,8 +38,8 @@ class StepExecutor {
     step.startedAt = currentTimestamp();
     stepRepo.update(step);
 
-    recordLog(tenantId, step.workflowId, stepId, "step.started",
-        ExecutionOutcome.success, "Step started", executedBy);
+    // recordLog(tenantId, step.workflowId, stepId, "step.started",
+    //     ExecutionOutcome.success, "Step started", executedBy);
     return true;
   }
 
@@ -60,8 +60,8 @@ class StepExecutor {
     stepRepo.update(step);
 
     long durationMs = (endTime - startTime) / 10_000; // hnsecs to ms
-    recordLog(tenantId, step.workflowId, stepId, "step.completed",
-        ExecutionOutcome.success, result, executedBy, durationMs);
+    // recordLog(tenantId, step.workflowId, stepId, "step.completed",
+    //     ExecutionOutcome.success, result, executedBy, durationMs);
     return true;
   }
 
@@ -77,7 +77,7 @@ class StepExecutor {
     stepRepo.update(step);
 
     recordLog(tenantId, step.workflowId, stepId, "step.failed",
-        ExecutionOutcome.failure, errorMessage, executedBy);
+        ExecutionOutcome.failure, errorMessage, executedBy.value);
     return true;
   }
 
@@ -93,7 +93,7 @@ class StepExecutor {
     stepRepo.update(step);
 
     recordLog(tenantId, step.workflowId, stepId, "step.skipped",
-        ExecutionOutcome.skipped, reason, executedBy);
+        ExecutionOutcome.skipped, reason, executedBy.value);
     return true;
   }
 

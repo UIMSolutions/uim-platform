@@ -20,9 +20,7 @@ class ScenarioRepository : TenantRepository!(IntegrationScenario, ScenarioId), I
   }
 
   IntegrationScenario[] filterByCategory(IntegrationScenario[] scenarios, ScenarioCategory category, size_t offset = 0, size_t limit = 0) {
-    return (limit == 0)
-      ? scenarios.filter!(e => e.category == category).skip(offset).array
-      : scenarios.filter!(e => e.category == category).skip(offset).take(limit).array;
+    return scenarios.filter!(e => e.category == category).array.skip(offset).take(limit);
   }
 
   IntegrationScenario[] findByCategory(TenantId tenantId, ScenarioCategory category) {
@@ -38,9 +36,7 @@ class ScenarioRepository : TenantRepository!(IntegrationScenario, ScenarioId), I
   }
 
   IntegrationScenario[] filterByStatus(IntegrationScenario[] scenarios, ScenarioStatus status, size_t offset = 0, size_t limit = 0) {
-    return (limit == 0)
-      ? scenarios.filter!(e => e.status == status).skip(offset).array
-      : scenarios.filter!(e => e.status == status).skip(offset).take(limit).array;
+    return scenarios.filter!(e => e.status == status).array.skip(offset).take(limit);
   }
 
   IntegrationScenario[] findByStatus(TenantId tenantId, ScenarioStatus status) {
@@ -56,10 +52,8 @@ class ScenarioRepository : TenantRepository!(IntegrationScenario, ScenarioId), I
   }
 
   IntegrationScenario[] filterBySystemType(IntegrationScenario[] scenarios, SystemType systemType, size_t offset = 0, size_t limit = 0) {
-    return (limit == 0)
-      ? scenarios.filter!(e => e.sourceSystemType == systemType || e.targetSystemType == systemType).skip(offset)
-      .array : scenarios.filter!(e => e.sourceSystemType == systemType || e.targetSystemType == systemType).skip(
-        offset).take(limit).array;
+    return scenarios.filter!(e => e.sourceSystemType == systemType || e.targetSystemType == systemType).array.skip(
+        offset).take(limit);
   }
 
   IntegrationScenario[] findBySystemType(TenantId tenantId, SystemType systemType) {

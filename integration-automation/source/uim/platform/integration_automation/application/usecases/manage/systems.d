@@ -42,7 +42,7 @@ class ManageSystemsUseCase { // TODO: UIMUseCase {
     sys.status = ConnectionStatus.inactive;
     sys.environment = req.environment;
     sys.region = req.region;
-    sys.systemId = req.systemId;
+    sys.connectionId = req.connectionId;
     sys.tenantId = req.tenantId;
 
     repo.save(sys);
@@ -62,13 +62,13 @@ class ManageSystemsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateSystem(UpdateSystemRequest req) {
-    if (req.systemId.isEmpty)
+    if (req.connectionId.isEmpty)
       return CommandResult(false, "", "System ID is required");
-
+  
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
 
-    auto existing = repo.findById(req.tenantId, req.systemId);
+    auto existing = repo.findById(req.tenantId, req.connectionId);
     if (existing.isNull)
       return CommandResult(false, "", "System not found");
 
@@ -78,7 +78,7 @@ class ManageSystemsUseCase { // TODO: UIMUseCase {
     if (req.description.length > 0)
       updated.description = req.description;
     updated.systemType = req.systemType;
-    if (req.host.length > 0)
+    if (req.host.isEmpty)
       updated.host = req.host;
     if (req.port > 0)
       updated.port = req.port;
@@ -91,9 +91,9 @@ class ManageSystemsUseCase { // TODO: UIMUseCase {
       updated.environment = req.environment;
     if (req.region.length > 0)
       updated.region = req.region;
-    if (req.systemId.length > 0)
-      updated.systemId = req.systemId;
-    if (req.tenantId.length > 0)
+    if (!req.connectionId.isNull)
+      updated.connectionId = req.connectionId;
+    if (!req.tenantId.isNull)
       updated.tenantId = req.tenantId;
     updated.updatedAt = currentTimestamp();
 

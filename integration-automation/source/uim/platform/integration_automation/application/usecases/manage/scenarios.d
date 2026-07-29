@@ -16,9 +16,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageScenariosUseCase { // TODO: UIMUseCase {
-  private ScenarioRepository repo;
+  private IScenarioRepository repo;
 
-  this(ScenarioRepository repo) {
+  this(IScenarioRepository repo) {
     this.repo = repo;
   }
 
@@ -28,7 +28,7 @@ class ManageScenariosUseCase { // TODO: UIMUseCase {
     if (req.name.isEmpty)
       return CommandResult(false, "", "Scenario name is required");
 
-    auto scenario = IntegrationScenario(req.tenantId, req.createdBy);
+    auto scenario = IntegrationScenario(req.tenantId); //, req.createdBy);
     scenario.name = req.name;
     scenario.description = req.description;
     scenario.category = req.category;
@@ -60,16 +60,16 @@ class ManageScenariosUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateScenario(UpdateScenarioRequest req) {
-    if (req.isNull)
+    if (req.scenarioId.isNull)
       return CommandResult(false, "", "Scenario ID is required");
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
 
-    auto existing = repo.findById(req.tenantId, req.id);
+    auto existing = repo.findById(req.tenantId, req.scenarioId);
     if (existing.isNull)
       return CommandResult(false, "", "Scenario not found");
 
-    auto updated = *existing;
+    auto updated = existing;
     if (req.name.length > 0)
       updated.name = req.name;
     if (req.description.length > 0)

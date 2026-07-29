@@ -69,12 +69,12 @@ Container buildContainer(SrvConfig config) {
   Container c;
 
   // Infrastructure adapters (driven ports)
-  c.scenarioRepo = new MemoryScenarioRepository();
-  c.workflowRepo = new MemoryWorkflowRepository();
-  c.stepRepo = new MemoryStepRepository();
-  c.systemRepo = new MemorySystemRepository();
-  c.destinationRepo = new MemoryDestinationRepository();
-  c.executionLogRepo = new MemoryExecutionLogRepository();
+  c.scenarioRepo = new ScenarioRepository();
+  c.workflowRepo = new WorkflowRepository();
+  c.stepRepo =     new StepRepository();
+  c.systemRepo =   new SystemRepository();
+  c.destinationRepo = new  DestinationRepository();
+  c.executionLogRepo = new ExecutionLogRepository();
 
   // Domain services
   c.workflowEngine = new WorkflowEngine(c.workflowRepo, c.stepRepo);

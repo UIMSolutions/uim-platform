@@ -18,9 +18,7 @@ class ExecutionLogRepository : TenantRepository!(ExecutionLog, ExecutionLogId), 
   }
 
   ExecutionLog[] filterByWorkflow(ExecutionLog[] logs, WorkflowId workflowId, size_t offset = 0, size_t limit = 0) {
-    return (limit == 0)
-      ? logs.filter!(e => e.workflowId == workflowId).skip(offset).array
-      : logs.filter!(e => e.workflowId == workflowId).skip(offset).take(limit).array;
+    return logs.filter!(e => e.workflowId == workflowId).array.skip(offset).take(limit);
   }
 
   ExecutionLog[] findByWorkflow(TenantId tenantId, WorkflowId workflowId) {
@@ -28,18 +26,15 @@ class ExecutionLogRepository : TenantRepository!(ExecutionLog, ExecutionLogId), 
   }
 
   void removeByWorkflow(TenantId tenantId, WorkflowId workflowId) {
-    store = findByTenant(tenantId).filter!(e => !(e.workflowId == workflowId && e.tenantId == tenantId))
-      .array;
+    findByWorkflow(tenantId, workflowId).each!(e => remove(e));
   }
 
   size_t countByStep(TenantId tenantId, WorkflowStepId stepId) {
     return findByStep(tenantId, stepId).length;
   }
 
-  ExecutionLog[] filterByStep(TenantId tenantId, ExecutionLog[] logs, WorkflowStepId stepId, size_t offset = 0, size_t limit = 0) {
-    return (limit == 0)
-      ? logs.filter!(e => e.stepId == stepId).skip(offset).array
-      : logs.filter!(e => e.stepId == stepId).skip(offset).take(limit).array;
+  ExecutionLog[] filterByStep(ExecutionLog[] logs, WorkflowStepId stepId, size_t offset = 0, size_t limit = 0) {
+    return logs.filter!(e => e.stepId == stepId).array.skip(offset).take(limit);
   }
 
   ExecutionLog[] findByStep(TenantId tenantId, WorkflowStepId stepId) {
@@ -55,7 +50,7 @@ class ExecutionLogRepository : TenantRepository!(ExecutionLog, ExecutionLogId), 
     return findByOutcome(tenantId, outcome).length;
   }
 
-  ExecutionLog[] filterByOutcome(TenantId tenantId, ExecutionLog[] logs, ExecutionOutcome outcome, size_t offset = 0, size_t limit = 0) {
+  ExecutionLog[] filterByOutcome(ExecutionLog[] logs, ExecutionOutcome outcome, size_t offset = 0, size_t limit = 0) {
     return logs.filter!(e => e.outcome == outcome).array.skip(offset).take(limit);
   }
 
@@ -72,9 +67,8 @@ class ExecutionLogRepository : TenantRepository!(ExecutionLog, ExecutionLogId), 
     return findByTimeRange(tenantId, timeFrom, timeTo).length;
   }
 
-  ExecutionLog[] filterByTimeRange(TenantId tenantId, ExecutionLog[] logs, long timeFrom, long timeTo, size_t offset = 0, size_t limit = 0) {
-    return (limit == 0)
-      ? logs.filter!((e) {
+  ExecutionLog[] filterByTimeRange(ExecutionLog[] logs, TenantId tenantId, long timeFrom, long timeTo, size_t offset = 0, size_t limit = 0) {
+    return logs.filter!((e) {
         if (e.tenantId != tenantId)
           return false;
         if (timeFrom > 0 && e.timestamp < timeFrom)
@@ -82,15 +76,7 @@ class ExecutionLogRepository : TenantRepository!(ExecutionLog, ExecutionLogId), 
         if (timeTo > 0 && e.timestamp > timeTo)
           return false;
         return true;
-      }).skip(offset).array : logs.filter!((e) {
-        if (e.tenantId != tenantId)
-          return false;
-        if (timeFrom > 0 && e.timestamp < timeFrom)
-          return false;
-        if (timeTo > 0 && e.timestamp > timeTo)
-          return false;
-        return true;
-      }).skip(offset).take(limit).array;
+      }).array.skip(offset).take(limit);
   }
 
   ExecutionLog[] findByTimeRange(TenantId tenantId, long timeFrom, long timeTo) {
@@ -110,7 +96,7 @@ class ExecutionLogRepository : TenantRepository!(ExecutionLog, ExecutionLogId), 
   }
 
   void removeOlderThan(TenantId tenantId, long beforeTimestamp) {
-    findByTenant(tenantId).filter!(e => !(e.timestamp < beforeTimestamp))
+    findByTenant(tenantId).filter!(e => e.timestamp < beforeTimestamp)
       .each!(e => remove(e));
   }
 }

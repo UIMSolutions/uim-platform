@@ -43,7 +43,7 @@ class DestinationController : ManageHttpController {
     r.tenantId = tenantId;
     r.name = data.getString("name");
     r.description = data.getString("description");
-    r.systemId = data.getString("systemId");
+    // r.systemId = data.getString("systemId");
     r.destinationType = toDestinationType(data.getString("destinationType"));
     r.url = data.getString("url");
     r.authenticationType = toAuthenticationType(data.getString("authenticationType"));
@@ -87,8 +87,10 @@ class DestinationController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
-    auto tenantId = precheck.tenantId;
+    auto id = DestinationId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid Destination ID", 400);
+    
     auto dest = useCase.getDestination(tenantId, id);
     if (dest.isNull)
       return errorResponse("Destination not found", 404);
@@ -109,11 +111,11 @@ class DestinationController : ManageHttpController {
 
     auto data = precheck.data;
     auto r = UpdateDestinationRequest();
-    r.id = id;
+    r.destinationId = id;
     r.tenantId = tenantId;
     r.name = data.getString("name");
     r.description = data.getString("description");
-    r.systemId = data.getString("systemId");
+    // r.systemId = data.getString("systemId");
     r.destinationType = toDestinationType(data.getString("destinationType"));
     r.url = data.getString("url");
     r.authenticationType = toAuthenticationType(data.getString("authenticationType"));
@@ -140,8 +142,10 @@ class DestinationController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = precheck.id;
-    auto tenantId = precheck.tenantId;
+    auto id = DestinationId(precheck.id);
+    if (id.isNull)
+      return errorResponse("Invalid Destination ID", 400);
+
     auto result = useCase.deleteDestination(tenantId, id);
     if (result.hasError)
       return errorResponse(result.message, 400);

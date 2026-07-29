@@ -18,9 +18,7 @@ class StepRepository : TenantRepository!(WorkflowStep, WorkflowStepId), IStepRep
   }
 
   WorkflowStep[] filterByWorkflow(WorkflowStep[] steps, WorkflowId workflowId, size_t offset = 0, size_t limit = 0) {
-    return (limit == 0)
-      ? steps.filter!(e => e.workflowId == workflowId).skip(offset).array
-      : steps.filter!(e => e.workflowId == workflowId).skip(offset).take(limit).array;
+    return steps.filter!(e => e.workflowId == workflowId).array.skip(offset).take(limit);
   }
 
   WorkflowStep[] findByWorkflow(TenantId tenantId, WorkflowId workflowId) {
@@ -38,11 +36,11 @@ class StepRepository : TenantRepository!(WorkflowStep, WorkflowStepId), IStepRep
   }
 
   WorkflowStep[] filterByAssignee(WorkflowStep[] steps, UserId assignedTo) {
-    return steps.filter!(e => e.assignedTo == assignedTo).array;
+    return steps.filter!(e => e.assignedTo == assignedTo.value).array;
   }
 
   WorkflowStep[] findByAssignee(TenantId tenantId, UserId assignedTo) {
-    return findByTenant(tenantId).filter!(e => e.tenantId == tenantId && e.assignedTo == assignedTo).array;
+    return findByTenant(tenantId).filter!(e => e.assignedTo == assignedTo.value).array;
   }
 
   void removeByAssignee(TenantId tenantId, UserId assignedTo) {
@@ -90,8 +88,8 @@ class StepRepository : TenantRepository!(WorkflowStep, WorkflowStepId), IStepRep
   WorkflowStep findBySequence(TenantId tenantId, WorkflowId workflowId, int sequenceNumber) {
     foreach (s; findByTenant(tenantId))
       if (s.workflowId == workflowId && s.tenantId == tenantId && s.sequenceNumber == sequenceNumber)
-        return &s;
-    return null;
+        return s;
+    return WorkflowStep.init;
   }
 
   void removeBySequence(TenantId tenantId, WorkflowId workflowId, int sequenceNumber) {
