@@ -6,9 +6,8 @@
 module uim.platform.destination.presentation.http.controllers.fragment;
 
 // import uim.platform.destination.application.usecases.manage.fragments;
-// import uim.platform.destination.application.dto;
 // import uim.platform.destination.domain.entities.destination_fragment;
-// import uim.platform.destination.domain.types;
+
 import uim.platform.destination;
 
 mixin(ShowModule!());

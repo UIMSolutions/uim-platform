@@ -29,9 +29,9 @@ mixin(ShowModule!());
 /// Dependency injection container - wires all layers together.
 struct Container {
   // Repositories (driven adapters)
-  MemoryDestinationRepository destRepo;
-  MemoryCertificateRepository certRepo;
-  MemoryFragmentRepository fragRepo;
+  IDestinationRepository destRepo;
+  ICertificateRepository certRepo;
+  IFragmentRepository fragRepo;
 
   // Use cases (application layer)
   ManageDestinationsUseCase manageDestinations;
@@ -51,9 +51,9 @@ Container buildContainer(SrvConfig config) {
   Container c;
 
   // Infrastructure adapters
-  c.destRepo = new MemoryDestinationRepository();
-  c.certRepo = new MemoryCertificateRepository();
-  c.fragRepo = new MemoryFragmentRepository();
+  c.destRepo = new DestinationRepository();
+  c.certRepo = new CertificateRepository();
+  c.fragRepo = new FragmentRepository();
 
   // Application use cases
   c.manageDestinations = new ManageDestinationsUseCase(c.destRepo);

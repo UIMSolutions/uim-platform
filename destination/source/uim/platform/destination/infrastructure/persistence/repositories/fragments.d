@@ -4,17 +4,16 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.destination.infrastructure.persistence.repositories.fragments;
-// import uim.platform.destination.domain.types;
+
 // import uim.platform.destination.domain.entities.destination_fragment;
 // import uim.platform.destination.domain.ports.repositories.fragments;
-// 
-//  
+
 import uim.platform.destination;
 
 mixin(ShowModule!());
 
 @safe:
-class MemoryFragmentRepository : TenantRepository!(DestinationFragment, DestinationFragmentId), FragmentRepository {
+class FragmentRepository : TenantRepository!(DestinationFragment, DestinationFragmentId), IFragmentRepository {
 
   bool existsByName(TenantId tenantId, SubaccountId subaccountId, string name) {
     return findByTenant(tenantId).any!(e => e.tenantId == tenantId && e.subaccountId == subaccountId && e.name == name);
@@ -65,7 +64,7 @@ class MemoryFragmentRepository : TenantRepository!(DestinationFragment, Destinat
 }
 
 unittest {
-  auto repo = new MemoryFragmentRepository();
+  auto repo = new FragmentRepository();
   auto tenantId = TenantId("test-tenant");
   auto subaccountId = SubaccountId("test-subaccount");
 

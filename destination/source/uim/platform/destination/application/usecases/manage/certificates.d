@@ -4,11 +4,10 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.destination.application.usecases.manage.certificates;
-// import uim.platform.destination.application.dto;
 // import uim.platform.destination.domain.entities.certificate;
 // import uim.platform.destination.domain.ports.repositories.certificates;
 // import uim.platform.destination.domain.services.certificate_validator;
-// import uim.platform.destination.domain.types;
+
 // 
 import std.string : replace, toLower;
 import uim.platform.destination;
@@ -18,7 +17,7 @@ mixin(ShowModule!());
 @safe:
 /// Application service for certificate CRUD operations.
 class ManageCertificatesUseCase { // TODO: UIMUseCase {
-  private CertificateRepository repo;
+  private ICertificateRepository repo;
 
   private string normalizeToken(string value) {
     return value.toLower.replace("-", "").replace("_", "").replace(" ", "");
@@ -58,7 +57,7 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
     }
   }
 
-  this(CertificateRepository repo) {
+  this(ICertificateRepository repo) {
     this.repo = repo;
   }
 
@@ -174,7 +173,7 @@ class ManageCertificatesUseCase { // TODO: UIMUseCase {
 }
 
 unittest {
-  auto repo = new MemoryCertificateRepository();
+  auto repo = new CertificateRepository();
   auto usecase = new ManageCertificatesUseCase(repo);
   auto tenantId = TenantId("test-tenant");
   auto subaccountId = SubaccountId("sub-123");

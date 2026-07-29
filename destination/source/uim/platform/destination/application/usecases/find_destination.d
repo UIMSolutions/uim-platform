@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.destination.application.usecases.find_destination;
-// import uim.platform.destination.application.dto;
 // import uim.platform.destination.domain.entities.destination;
 // import uim.platform.destination.domain.entities.destination_fragment;
 // import uim.platform.destination.domain.entities.auth_token;
@@ -12,8 +11,7 @@ module uim.platform.destination.application.usecases.find_destination;
 // import uim.platform.destination.domain.ports.repositories.destinations;
 // import uim.platform.destination.domain.ports.repositories.fragments;
 // import uim.platform.destination.domain.ports.repositories.certificates;
-// import uim.platform.destination.domain.services.destination_resolver;
-// import uim.platform.destination.domain.types;
+
 
 import uim.platform.destination;
 
@@ -23,11 +21,11 @@ mixin(ShowModule!());
 /// Application service for the "Find Destination" API — resolves a destination
 /// by name, merges fragments, resolves auth tokens, and collects certificates.
 class FindDestinationUseCase { // TODO: UIMUseCase {
-  private DestinationRepository destRepo;
-  private FragmentRepository fragRepo;
-  private CertificateRepository certRepo;
+  private IDestinationRepository destRepo;
+  private IFragmentRepository fragRepo;
+  private ICertificateRepository certRepo;
 
-  this(DestinationRepository destRepo, FragmentRepository fragRepo, CertificateRepository certRepo) {
+  this(IDestinationRepository destRepo, IFragmentRepository fragRepo, ICertificateRepository certRepo) {
     this.destRepo = destRepo;
     this.fragRepo = fragRepo;
     this.certRepo = certRepo;

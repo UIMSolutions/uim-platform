@@ -4,7 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.destination.infrastructure.persistence.repositories.certificates;
-// import uim.platform.destination.domain.types;
+
 // import uim.platform.destination.domain.entities.certificate;
 // import uim.platform.destination.domain.ports.repositories.certificates;
 // 
@@ -14,7 +14,7 @@ import uim.platform.destination;
 mixin(ShowModule!());
 
 @safe:
-class MemoryCertificateRepository : TenantRepository!(Certificate, CertificateId), CertificateRepository {
+class CertificateRepository : TenantRepository!(Certificate, CertificateId), ICertificateRepository {
 
   bool existsByName(TenantId tenantId, SubaccountId subaccountId, string name) {
     foreach (e; findByTenant(tenantId))

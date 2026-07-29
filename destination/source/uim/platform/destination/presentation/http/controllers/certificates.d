@@ -150,7 +150,7 @@ unittest {
 
   @safe class CertificateControllerTest : ControllerTestBase {
     void runTests() {
-      auto repo = new MemoryCertificateRepository();
+      auto repo = new CertificateRepository();
       auto usecase = new ManageCertificatesUseCase(repo);
       auto controller = new CertificateController(usecase);
       auto tenantId = TenantId("test-tenant");

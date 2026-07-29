@@ -4,7 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.destination.infrastructure.persistence.repositories.destinations;
-// import uim.platform.destination.domain.types;
+
 // import uim.platform.destination.domain.entities.destination;
 // import uim.platform.destination.domain.ports.repositories.destinations;
 // 
@@ -14,7 +14,7 @@ import uim.platform.destination;
 mixin(ShowModule!());
 
 @safe:
-class MemoryDestinationRepository : TenantRepository!(Destination, DestinationId), DestinationRepository {
+class DestinationRepository : TenantRepository!(Destination, DestinationId), IDestinationRepository {
 
   bool existsByName(TenantId tenantId, SubaccountId subaccountId, string name) {
     return findByTenant(tenantId).any!(e => e.subaccountId == subaccountId && e.name == name);

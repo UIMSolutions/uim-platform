@@ -5,14 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.destination.domain.ports.repositories.fragments;
 // import uim.platform.destination.domain.entities.destination_fragment;
-// import uim.platform.destination.domain.types;
+
 import uim.platform.destination;
 
 mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — destination fragment persistence.
-interface FragmentRepository : ITenantRepository!(DestinationFragment, DestinationFragmentId) {
+interface IFragmentRepository : ITenantRepository!(DestinationFragment, DestinationFragmentId) {
   
   bool existsByName(TenantId tenantId, SubaccountId subaccountId, string name);
   DestinationFragment findByName(TenantId tenantId, SubaccountId subaccountId, string name);

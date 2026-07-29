@@ -5,9 +5,8 @@
 *****************************************************************************************************************/
 module uim.platform.destination.presentation.http.controllers.certificate;
 // import uim.platform.destination.application.usecases.manage.certificates;
-// import uim.platform.destination.application.dto;
 // import uim.platform.destination.domain.entities.certificate;
-// import uim.platform.destination.domain.types;
+
 import uim.platform.destination;
 
 mixin(ShowModule!());

@@ -6,7 +6,6 @@
 module uim.platform.destination.presentation.http.controllers.find;
 
 // import uim.platform.destination.application.usecases.find_destination;
-// import uim.platform.destination.application.dto;
 // import uim.platform.destination.presentation.http
 import uim.platform.destination;
 
