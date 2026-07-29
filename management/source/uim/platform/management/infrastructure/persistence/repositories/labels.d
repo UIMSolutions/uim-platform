@@ -15,7 +15,7 @@ import uim.platform.management;
 mixin(ShowModule!());
 @safe:
 
-class MemoryLabelRepository : TenantRepository!(Label, LabelId), LabelRepository {
+class LabelRepository : TenantRepository!(Label, LabelId), ILabelRepository {
   // TODO: mixin IdRepositoryTemplate!(MemoryLabelRepository, Label, LabelId);
 
   // #region ByResourceType
@@ -93,7 +93,7 @@ class MemoryLabelRepository : TenantRepository!(Label, LabelId), LabelRepository
 }
 ///
 unittest {
-  auto repo = new MemoryLabelRepository();
+  auto repo = new LabelRepository();
   auto tenantId = TenantId("tenant1");
   auto labelId = LabelId("label1");
   auto label = Label(tenantId);

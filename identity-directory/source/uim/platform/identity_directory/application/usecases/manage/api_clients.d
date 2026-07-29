@@ -5,10 +5,8 @@
 *****************************************************************************************************************/
 module uim.platform.identity_directory.application.usecases.manage.api_clients;
 // import uim.platform.identity_directory.domain.entities.api_client;
-// import uim.platform.identity_directory.domain.entities.audit_event;
 
 // import uim.platform.identity_directory.domain.ports.repositories.api_clients;
-// import uim.platform.identity_directory.domain.ports.repositories.audits;
 
 import uim.platform.identity_directory;
 

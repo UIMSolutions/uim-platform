@@ -14,7 +14,7 @@ import uim.platform.management;
 
 mixin(ShowModule!());
 @safe:
-class MemoryDirectoryRepository : TenantRepository!(Directory, DirectoryId), DirectoryRepository {
+class DirectoryRepository : TenantRepository!(Directory, DirectoryId), IDirectoryRepository {
 
   // #region ByGlobalAccount
   size_t countByGlobalAccount(TenantId tenantId, GlobalAccountId globalAccountId) {
@@ -70,7 +70,7 @@ class MemoryDirectoryRepository : TenantRepository!(Directory, DirectoryId), Dir
 }
 /// 
 unittest {
-  auto repo = new MemoryDirectoryRepository();
+  auto repo = new DirectoryRepository();
 
   auto tenantId = TenantId("tenant1");
   auto gaId = GlobalAccountId("ga1");

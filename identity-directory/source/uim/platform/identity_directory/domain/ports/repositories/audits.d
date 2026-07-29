@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.identity_directory.domain.ports.repositories.audits;
 
-// import uim.platform.identity_directory.domain.entities.audit_event;
 
 import uim.platform.identity_directory;
 
@@ -28,7 +27,6 @@ interface IAuditRepository : ITenantRepository!(AuditEvent, AuditEventId) {
   void removeByType(TenantId tenantId, AuditEventType eventType);
 
   size_t countByTimeRange(TenantId tenantId, long from, long to);
-  AuditEvent[] filterByTimeRange(AuditEvent[] events, long from, long to);
   AuditEvent[] findByTimeRange(TenantId tenantId, long from, long to);
   void removeByTimeRange(TenantId tenantId, long from, long to);
   

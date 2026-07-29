@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — platform event persistence.
-interface EnvironmentEventRepository : ITenantRepository!(EnvironmentEvent, EnvironmentEventId) {
+interface IEnvironmentEventRepository : ITenantRepository!(EnvironmentEvent, EnvironmentEventId) {
 
   EnvironmentEvent[] findByGlobalAccount(TenantId tenantId, GlobalAccountId globalAccountId);
   EnvironmentEvent[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId);

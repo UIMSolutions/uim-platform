@@ -178,7 +178,7 @@ unittest {
   @safe class EntitlementControllerTest : ControllerTestBase {
     void runTests() {
       // 1. Setup
-      auto repo = new MemoryEntitlementRepository();
+      auto repo = new EntitlementRepository();
       auto usecase = new ManageEntitlementsUseCase(repo, new EntitlementEvaluator);
       auto controller = new EntitlementController(usecase);
       auto tenantId = TenantId("test-tenant");

@@ -15,7 +15,7 @@ import uim.platform.management;
 mixin(ShowModule!());
 @safe:
 
-class MemorySubaccountRepository : TenantRepository!(Subaccount, SubaccountId), SubaccountRepository {
+class SubaccountRepository : TenantRepository!(Subaccount, SubaccountId), ISubaccountRepository {
 
   // #region BySubdomain
   bool existsBySubdomain(TenantId tenantId, string subdomain) {
@@ -105,7 +105,7 @@ class MemorySubaccountRepository : TenantRepository!(Subaccount, SubaccountId), 
 }
 ///
 unittest {
-  auto repo = new MemorySubaccountRepository();
+  auto repo = new SubaccountRepository();
 
   auto tenantId = TenantId("tenant1");
   auto gaId = GlobalAccountId("ga1");

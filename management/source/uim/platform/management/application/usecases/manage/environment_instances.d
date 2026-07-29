@@ -18,11 +18,11 @@ mixin(ShowModule!());
 @safe:
 /// Use case: manage environment instance lifecycle (CF, Kyma, ABAP).
 class ManageEnvironmentsUseCase { // TODO: UIMUseCase {
-  private EnvironmentRepository repo;
-  private SubaccountRepository subaccountRepo;
+  private IEnvironmentRepository repo;
+  private ISubaccountRepository subaccountRepo;
   private EnvironmentProvisioner provisioner;
 
-  this(EnvironmentRepository repo, SubaccountRepository subaccountRepo,
+  this(IEnvironmentRepository repo, ISubaccountRepository subaccountRepo,
       EnvironmentProvisioner provisioner) {
     this.repo = repo;
     this.subaccountRepo = subaccountRepo;

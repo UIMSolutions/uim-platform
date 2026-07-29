@@ -17,10 +17,10 @@ mixin(ShowModule!());
 @safe:
 /// Use case: manage subaccount lifecycle within global accounts.
 class ManageSubaccountsUseCase { // TODO: UIMUseCase {
-  private SubaccountRepository repository;
-  private EnvironmentEventRepository eventRepo;
+  private ISubaccountRepository repository;
+  private IEnvironmentEventRepository eventRepo;
 
-  this(SubaccountRepository repository, EnvironmentEventRepository eventRepo) {
+  this(ISubaccountRepository repository, IEnvironmentEventRepository eventRepo) {
     this.repository = repository;
     this.eventRepo = eventRepo;
   }

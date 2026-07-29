@@ -4,9 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.identity_directory.application.usecases.query_auditlog;
-// import uim.platform.identity_directory.domain.entities.audit_event;
 
-// import uim.platform.identity_directory.domain.ports.repositories.audits;
 import uim.platform.identity_directory;
 
 mixin(ShowModule!());
@@ -24,7 +22,7 @@ class QueryAuditLogUseCase { // TODO: UIMUseCase {
   AuditEvent[] listEvents(TenantId tenantId) { // }, size_t offset = 0, size_t limit = 100) {
     return auditRepo.findByTenant(tenantId); // , offset, limit);
   }
-
+  
   /// Find events by actor.
   AuditEvent[] findByActor(TenantId tenantId, string actorId) { // }, size_t offset = 0, size_t limit = 100) {
     return auditRepo.findByActor(tenantId, actorId); // , offset, limit);
@@ -36,8 +34,7 @@ class QueryAuditLogUseCase { // TODO: UIMUseCase {
   }
 
   /// Find events by type.
-  AuditEvent[] findByType(TenantId tenantId, AuditEventType eventType,
-      size_t offset = 0, size_t limit = 100) {
+  AuditEvent[] findByType(TenantId tenantId, AuditEventType eventType) { // size_t offset = 0, size_t limit = 100) {
     return auditRepo.findByType(tenantId, eventType); // , offset, limit);
   }
 

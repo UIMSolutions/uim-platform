@@ -291,29 +291,50 @@ unittest {
 }
 
 /// Audit event type.
-enum AuditEventType {
-  userCreated, // A user account was created
-  userUpdated, // A user account was updated
-  userDeleted, // A user account was deleted
-  userActivated, // A user account was activated
-  userDeactivated, // A user account was deactivated
-  userLocked, // A user account was locked due to too many failed login attempts
-  userUnlocked, // A user account was unlocked by an administrator
-  passwordChanged, // A user changed their password
-  passwordReset, //  A user's password was reset
-  groupCreated, // A group was created
-  groupUpdated, // A group was updated
-  groupDeleted, // A group was deleted
-  memberAdded, // A member was added to a group
-  memberRemoved, // A member was removed from a group
-  schemaCreated, // A schema was created
-  schemaUpdated, // A schema was updated
-  schemaDeleted, // A schema was deleted
-  apiClientCreated, // An API client was created
-  apiClientRevoked, // An API client was revoked
-  loginSuccess, // A user successfully logged in
-  loginFailure, // A user failed to log in due to invalid credentials
+enum AuditEventType : string {
+  // User & Group Management
+  userCreated = "USER_CREATED", // A user account was created
+  userUpdated = "USER_UPDATED", // A user account was updated
+  userDeleted = "USER_DELETED", // A user account was deleted
+  userLocked = "USER_LOCKED", // A user account was locked due to too many failed login attempts
+  userUnlocked = "USER_UNLOCKED", // A user account was unlocked by an administrator
+  userChangePassword = "USER_CHANGE_PASSWORD", // A user changed their password
+  groupModification = "GROUP_MODIFICATION", // A member was added to a group
+  userUncategorized = "USER_UNCATEGORIZED", // A user account was uncategor
+  // Authentication
+  successfulLogin = "SUCCESSFUL_LOGIN", // Authentication success
+  failedLogon = "FAILED_LOGON", // Authentication failure
+  statusUpdate = "STATUS_UPDATE", // A user's status was updated (e.g. activated, deactivated, locked, unlocked)
+  mfaActicated = "MFA_ACTIVATED", // A user activated multi-factor authentication
+  mfaDeactivated = "MFA_DEACTIVATED", // A user
+  // Configuration & Jobs
+  systemCreated = "SYSTEM_CREATED", // A new system was created
+  systemUpdated = "SYSTEM_UPDATED", // A system was updated
+  systemDeleted = "SYSTEM_DELETED", // A system was deleted
+  jobTriggered = "JOB_TRIGGERED", // A new job was created
+  jobCompleted = "JOB_COMPLETED", // A job completed successfully
+  configurationModification = "CONFIGURATION_MODIFICATION", // A configuration was created, updated, or deleted
+  // Schema & API Client Management
+  schemaModification = "SCHEMA_MODIFICATION", // A schema was created, updated, or deleted
+  apiClientModification = "API_CLIENT_MODIFICATION", // An API client was created, updated, or deleted
+  userActivated = "USER_ACTIVATED", // A user account was activated
+  userDeactivated = "USER_DEACTIVATED", // A user account was deactivated
+  passwordChanged = "PASSWORD_CHANGED", // A user changed their password
+  passwordReset = "PASSWORD_RESET", //  A user's password was reset
+  groupCreated = "GROUP_CREATED", // A group was created
+  groupUpdated = "GROUP_UPDATED", // A group was updated
+  groupDeleted = "GROUP_DELETED", // A group was deleted
+  memberAdded = "MEMBER_ADDED", // A member was added to a group
+  memberRemoved = "MEMBER_REMOVED", // A member was removed from a group
+  schemaCreated = "SCHEMA_CREATED", // A schema was created
+  schemaUpdated = "SCHEMA_UPDATED", // A schema was updated
+  schemaDeleted = "SCHEMA_DELETED", // A schema was deleted
+  apiClientCreated = "API_CLIENT_CREATED", // An API client was created
+  apiClientRevoked = "API_CLIENT_REVOKED", // An API client was revoked
+  loginSuccess = "LOGIN_SUCCESS", // A user successfully logged in
+  loginFailure = "LOGIN_FAILURE", // A user failed to log in due to invalid credentials
 }
+
 AuditEventType toAuditEventType(string value) {
   mixin(EnumSwitch("AuditEventType", "loginSuccess"));
 }

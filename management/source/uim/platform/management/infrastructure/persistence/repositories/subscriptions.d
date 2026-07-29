@@ -15,7 +15,7 @@ import uim.platform.management;
 mixin(ShowModule!());
 @safe:
 
-class MemorySubscriptionRepository : TenantRepository!(Subscription, SubscriptionId), SubscriptionRepository {
+class SubscriptionRepository : TenantRepository!(Subscription, SubscriptionId), ISubscriptionRepository {
   // TODO: mixin IdRepositoryTemplate!(MemorySubscriptionRepository, Subscription, SubscriptionId);
 
   size_t countBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
@@ -68,7 +68,7 @@ class MemorySubscriptionRepository : TenantRepository!(Subscription, Subscriptio
 }
 ///
 unittest {
-  auto repo = new MemorySubscriptionRepository();
+  auto repo = new SubscriptionRepository();
   auto tenantId = TenantId("tenant1");
   auto subaccountId = SubaccountId("sub1");
   auto subscriptionId = SubscriptionId("subscr1");

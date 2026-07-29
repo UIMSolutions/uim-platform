@@ -15,9 +15,9 @@ mixin(ShowModule!());
 @safe:
 /// Use case: manage labels (tags) on BTP resources.
 class ManageLabelsUseCase { // TODO: UIMUseCase {
-  private LabelRepository labels;
+  private ILabelRepository labels;
 
-  this(LabelRepository labels) {
+  this(ILabelRepository labels) {
     this.labels = labels;
   }
 

@@ -49,15 +49,15 @@ mixin(ShowModule!());
 /// Dependency injection container — wires all layers together.
 struct Container {
   // Repositories (driven adapters)
-  MemoryGlobalAccountRepository globalAccountRepo;
-  MemoryDirectoryRepository directoryRepo;
-  MemorySubaccountRepository subaccountRepo;
-  MemoryEntitlementRepository entitlementRepo;
-  MemoryEnvironmentRepository environmentRepo;
-  MemorySubscriptionRepository subscriptionRepo;
-  MemoryServicePlanRepository servicePlanRepo;
-  MemoryEnvironmentEventRepository eventRepo;
-  MemoryLabelRepository labelRepo;
+  IGlobalAccountRepository globalAccountRepo;
+  IDirectoryRepository directoryRepo;
+  ISubaccountRepository subaccountRepo;
+  IEntitlementRepository entitlementRepo;
+  IEnvironmentRepository environmentRepo;
+  ISubscriptionRepository subscriptionRepo;
+  IServicePlanRepository servicePlanRepo;
+  IEnvironmentEventRepository eventRepo;
+  ILabelRepository labelRepo;
 
   // Domain services
   EntitlementEvaluator entitlementEvaluator;
@@ -93,15 +93,15 @@ Container buildContainer(SrvConfig config) {
   Container c;
 
   // Infrastructure adapters
-  c.globalAccountRepo = new MemoryGlobalAccountRepository();
-  c.directoryRepo = new MemoryDirectoryRepository();
-  c.subaccountRepo = new MemorySubaccountRepository();
-  c.entitlementRepo = new MemoryEntitlementRepository();
-  c.environmentRepo = new MemoryEnvironmentRepository();
-  c.subscriptionRepo = new MemorySubscriptionRepository();
-  c.servicePlanRepo = new MemoryServicePlanRepository();
-  c.eventRepo = new MemoryEnvironmentEventRepository();
-  c.labelRepo = new MemoryLabelRepository();
+  c.globalAccountRepo = new GlobalAccountRepository();
+  c.directoryRepo = new DirectoryRepository();
+  c.subaccountRepo = new SubaccountRepository();
+  c.entitlementRepo = new EntitlementRepository();
+  c.environmentRepo = new EnvironmentRepository();
+  c.subscriptionRepo = new SubscriptionRepository();
+  c.servicePlanRepo = new ServicePlanRepository();
+  c.eventRepo = new EnvironmentEventRepository();
+  c.labelRepo = new LabelRepository();
 
   // Domain services
   c.entitlementEvaluator = new EntitlementEvaluator();

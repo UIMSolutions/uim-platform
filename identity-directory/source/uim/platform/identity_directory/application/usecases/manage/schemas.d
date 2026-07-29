@@ -5,10 +5,8 @@
 *****************************************************************************************************************/
 module uim.platform.identity_directory.application.usecases.manage.schemas;
 // import uim.platform.identity_directory.domain.entities.schema;
-// import uim.platform.identity_directory.domain.entities.audit_event;
 
 // import uim.platform.identity_directory.domain.ports.repositories.schemas;
-// import uim.platform.identity_directory.domain.ports.repositories.audits;
 
 
 

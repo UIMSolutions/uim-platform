@@ -117,5 +117,54 @@ class UserRepository : TenantRepository!(IDUser, UserId), IUserRepository {
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new UserRepository()));
+  mixin(ShowTest!("UserRepository"));
+
+  void testExistsByUserName() {
+    auto repo = new UserRepository();
+    auto tenantId = TenantId("test-tenant");
+    auto user = IDUser(tenantId, UserId("user1"));
+    user.userName = "testuser";
+    repo.save(user);
+
+    assert(repo.existsByUserName(tenantId, "testuser") == true);
+    assert(repo.existsByUserName(tenantId, "nonexistent") == false);
+  }
+  
+  void testFindByUserName() {
+    auto repo = new UserRepository();
+    auto tenantId = TenantId("test-tenant");
+    auto user = IDUser(tenantId, UserId("user1"));
+    user.userName = "testuser";
+    repo.save(user);
+
+    assert(repo.findByUserName(tenantId, "testuser") == user);
+    assert(repo.findByUserName(tenantId, "nonexistent") == IDUser.init);
+  }
+
+  void testRemoveByUserName() {
+    auto repo = new UserRepository();
+    auto tenantId = TenantId("test-tenant");
+    auto user = IDUser(tenantId, UserId("user1"));
+    user.userName = "testuser";
+    repo.save(user);
+
+    repo.removeByUserName(tenantId, "testuser");
+    assert(repo.existsByUserName(tenantId, "testuser") == false);
+    assert(repo.existsByUserName(tenantId, "nonexistent") == false);
+  }
+
+  bool existsByExternalId(TenantId tenantId, string externalId);
+  IDUser findByExternalId(TenantId tenantId, string externalId);
+  void removeByExternalId(TenantId tenantId, string externalId);
+
+  size_t countByEmail(TenantId tenantId, string email);
+  IDUser[] findByEmail(TenantId tenantId, string email);
+  void removeByEmail(TenantId tenantId, string email);
+
+  size_t countByGroup(TenantId tenantId, GroupId groupId);
+  IDUser[] findByGroup(TenantId tenantId, GroupId groupId);
+  void removeByGroup(TenantId tenantId, GroupId groupId);
+
+  IDUser[] search(TenantId tenantId, string filter); //, size_t offset = 0, size_t limit = 100);
+
 }

@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — directory persistence.
-interface DirectoryRepository : ITenantRepository!(Directory, DirectoryId) {
+interface IDirectoryRepository : ITenantRepository!(Directory, DirectoryId) {
 
   Directory[] findByGlobalAccount(TenantId tenantId, GlobalAccountId globalAccountId);
   Directory[] findByParent(TenantId tenantId, DirectoryId parentDirectoryId);  

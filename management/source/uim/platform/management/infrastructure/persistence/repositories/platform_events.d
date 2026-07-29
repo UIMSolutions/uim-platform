@@ -14,7 +14,7 @@ import uim.platform.management;
 
 mixin(ShowModule!());
 @safe:
-class MemoryEnvironmentEventRepository : TenantRepository!(EnvironmentEvent, EnvironmentEventId), EnvironmentEventRepository {
+class EnvironmentEventRepository : TenantRepository!(EnvironmentEvent, EnvironmentEventId), IEnvironmentEventRepository {
   // TODO: mixin IdRepositoryTemplate!(MemoryEnvironmentEventRepository, EnvironmentEvent, EnvironmentEventId);
 
   // #region ByGlobalAccount

@@ -160,7 +160,7 @@ unittest {
   @safe class DirectoryControllerTest : ControllerTestBase {
     void runTests() {
       // 1. Setup
-      auto repo = new MemoryDirectoryRepository();
+      auto repo = new DirectoryRepository();
       auto usecase = new ManageDirectoriesUseCase(repo);
       auto controller = new DirectoryController(usecase);
 

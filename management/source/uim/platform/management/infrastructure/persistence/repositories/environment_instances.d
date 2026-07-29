@@ -15,7 +15,7 @@ import uim.platform.management;
 mixin(ShowModule!());
 @safe:
 
-class MemoryEnvironmentRepository : TenantRepository!(Environment, EnvironmentId), EnvironmentRepository {
+class EnvironmentRepository : TenantRepository!(Environment, EnvironmentId), IEnvironmentRepository {
   // TODO: mixin IdRepositoryTemplate!(MemoryEnvironmentRepository, Environment, EnvironmentId);
 
   size_t countBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
@@ -69,7 +69,7 @@ class MemoryEnvironmentRepository : TenantRepository!(Environment, EnvironmentId
 }
 ///
 unittest {
-  auto repo = new MemoryEnvironmentRepository();
+  auto repo = new EnvironmentRepository();
 
   auto tenantId = TenantId("tenant1");
   auto subaccountId = SubaccountId("sa1");

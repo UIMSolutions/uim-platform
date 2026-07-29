@@ -6,7 +6,6 @@
 module uim.platform.identity_directory.presentation.http.controllers.audit;
 
 // import uim.platform.identity_directory.application.usecases.query_audit_log;
-// import uim.platform.identity_directory.domain.entities.audit_event;
 import uim.platform.identity_directory;
 
 mixin(ShowModule!());

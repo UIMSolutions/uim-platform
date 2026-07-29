@@ -15,7 +15,7 @@ import uim.platform.management;
 mixin(ShowModule!());
 @safe:
 
-class MemoryGlobalAccountRepository : TenantRepository!(GlobalAccount, GlobalAccountId), GlobalAccountRepository {
+class GlobalAccountRepository : TenantRepository!(GlobalAccount, GlobalAccountId), IGlobalAccountRepository {
   // TODO: mixin IdRepositoryTemplate!(MemoryGlobalAccountRepository, GlobalAccount, GlobalAccountId);
 
   size_t countByStatus(TenantId tenantId, GlobalAccountStatus status) {
@@ -37,7 +37,7 @@ class MemoryGlobalAccountRepository : TenantRepository!(GlobalAccount, GlobalAcc
 }
 ///
 unittest {
-  auto repo = new MemoryGlobalAccountRepository();
+  auto repo = new GlobalAccountRepository();
   auto tenantId = TenantId("tenant1");
   auto gaId = GlobalAccountId("ga1");
   auto ga = GlobalAccount(tenantId);

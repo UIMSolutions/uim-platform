@@ -16,9 +16,9 @@ mixin(ShowModule!());
 @safe:
 /// Use case: manage directory hierarchy within global accounts.
 class ManageDirectoriesUseCase { // TODO: UIMUseCase {
-  private DirectoryRepository directories;
+  private IDirectoryRepository directories;
 
-  this(DirectoryRepository directories) {
+  this(IDirectoryRepository directories) {
     this.directories = directories;
   }
 
@@ -37,7 +37,7 @@ class ManageDirectoriesUseCase { // TODO: UIMUseCase {
     directory.globalAccountId = request.accountId;
     directory.displayName = request.displayName;
     directory.description = request.description;
-    directory.features = parseFeatures(request.features);
+    directory.features = request.features.toDirectoryFeatures;
     directory.manageEntitlements = request.manageEntitlements;
     directory.manageAuthorizations = request.manageAuthorizations;
     directory.labels = request.labels;
@@ -56,12 +56,16 @@ class ManageDirectoriesUseCase { // TODO: UIMUseCase {
 
     if (request.displayName.length > 0)
       directory.displayName = request.displayName;
+
     if (request.description.length > 0)
       directory.description = request.description;
+    
     if (request.labels.length > 0)
       directory.labels = request.labels;
+    
     if (request.customProperties.length > 0)
       directory.customProperties = request.customProperties;
+    
     directory.updatedAt = clockSeconds();
 
     directories.update(directory);
@@ -91,11 +95,6 @@ class ManageDirectoriesUseCase { // TODO: UIMUseCase {
     directories.remove(directory);
     return CommandResult(true, directory.id.value, "");
   }
-
-  private DirectoryFeature[] parseFeatures(string[] features) {
-    return features.map!(f => f.to!DirectoryFeature).array;
-  }
-
 }
 
 ///
@@ -103,5 +102,4 @@ unittest {
     auto directoryRepository = new DirectoryRepository();
     auto usecase = new ManageDirectoriesUseCase(directoryRepository);
     auto tenantId = TenantId("test-tenant");
-
 }

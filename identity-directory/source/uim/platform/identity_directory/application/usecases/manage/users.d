@@ -5,12 +5,10 @@
 *****************************************************************************************************************/
 module uim.platform.identity_directory.application.usecases.manage.users;
 // import uim.platform.identity_directory.domain.entities.user;
-// import uim.platform.identity_directory.domain.entities.audit_event;
 
 // import uim.platform.identity_directory.domain.ports.repositories.users;
 // import uim.platform.identity_directory.domain.ports.repositories.password_service;
 // import uim.platform.identity_directory.domain.ports.repositories.password_policys;
-// import uim.platform.identity_directory.domain.ports.repositories.audits;
 // import uim.platform.identity_directory.domain.services.password_validator;
 
 

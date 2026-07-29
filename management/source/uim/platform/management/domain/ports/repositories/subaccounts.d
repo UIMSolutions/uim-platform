@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — subaccount persistence.
-interface SubaccountRepository : ITenantRepository!(Subaccount, SubaccountId) {
+interface ISubaccountRepository : ITenantRepository!(Subaccount, SubaccountId) {
 
   bool existsBySubdomain(TenantId tenantId, string subdomain);
   Subaccount findBySubdomain(TenantId tenantId, string subdomain);

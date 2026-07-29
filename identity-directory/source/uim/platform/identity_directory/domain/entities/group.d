@@ -54,6 +54,23 @@ struct IDGroup {
     return members.any!(m => m.value == memberId && m.type == "User");
   }
 
+  bool hasGroup(GroupId groupId) const {
+    return members.any!(m => m.value == groupId.value && m.type == "Group");
+  }
+
+  void addMember(UserId userId, string display) {
+    if (hasMember(userId))
+      return;
+
+    members ~= GroupMember(userId.value, "User", display);
+  }
+
+  void addGroup(GroupId groupId, string display) {
+    if (hasGroup(groupId))
+      return;
+
+    members ~= GroupMember(groupId.value, "Group", display);
+  }
 
   Json toJson() const {
     return entityToJson

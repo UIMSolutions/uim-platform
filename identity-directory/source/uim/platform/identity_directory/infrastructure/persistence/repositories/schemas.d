@@ -35,5 +35,37 @@ class SchemaRepository : TenantRepository!(Schema, SchemaId), ISchemaRepository 
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new SchemaRepository()));
+  mixin(ShowTest!("SchemaRepository"));
+
+  void testExistsByName() {
+    auto repo = new SchemaRepository();
+    auto tenantId = TenantId("test-tenant");
+    
+    auto schema = Schema(tenantId, SchemaId("schema1"));
+    schema.name = "Test Schema";
+    repo.save(schema);
+
+    assert(repo.existsByName(tenantId, "Test Schema") == true);
+  }
+
+  void testFindByName() {
+    auto repo = new SchemaRepository();
+    auto tenantId = TenantId("test-tenant");
+    auto schema = Schema(tenantId, SchemaId("schema1"));
+    schema.name = "Test Schema";
+    repo.save(schema);
+
+    assert(repo.findByName(tenantId, "Test Schema") == schema);
+  }
+  void testRemoveByName() {
+    auto repo = new SchemaRepository();
+    auto tenantId = TenantId("test-tenant");
+
+    auto schema = Schema(tenantId, SchemaId("schema1"));
+    schema.name = "Test Schema";
+    repo.save(schema);
+
+    repo.removeByName(tenantId, "Test Schema");
+    assert(repo.existsByName(tenantId, "Test Schema") == false);
+  }
 }

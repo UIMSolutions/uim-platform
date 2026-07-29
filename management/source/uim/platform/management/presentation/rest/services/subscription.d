@@ -38,7 +38,7 @@ class SubscriptionApi : ISubscriptionApi {
 }
 ///
 unittest {
-    // auto repo = new MemorySubscriptionRepository();
+    // auto repo = new SubscriptionRepository();
     // auto usecase = new ManageSubscriptionsUseCase(repo);
     // auto api = new SubscriptionApi(usecase);
     // 

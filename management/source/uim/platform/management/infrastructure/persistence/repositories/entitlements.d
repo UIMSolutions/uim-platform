@@ -15,7 +15,7 @@ import uim.platform.management;
 mixin(ShowModule!());
 @safe:
 
-class MemoryEntitlementRepository : TenantRepository!(Entitlement, EntitlementId), EntitlementRepository {
+class EntitlementRepository : TenantRepository!(Entitlement, EntitlementId), IEntitlementRepository {
   // TODO: mixin IdRepositoryTemplate!(MemoryEntitlementRepository, Entitlement, EntitlementId);
 
   // #region ByGlobalAccount
@@ -93,7 +93,7 @@ Entitlement[] filterByDirectory(Entitlement[] items, DirectoryId directoryId) {
 }
 ///
 unittest {
-  auto repo = new MemoryEntitlementRepository();
+  auto repo = new EntitlementRepository();
 
   auto tenantId = TenantId("tenant1");
   auto globalAccountId = GlobalAccountId("ga1");

@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — service plan catalog persistence.
-interface ServicePlanRepository : ITenantRepository!(ServicePlan, ServicePlanId) {
+interface IServicePlanRepository : ITenantRepository!(ServicePlan, ServicePlanId) {
 
   size_t countByService(TenantId tenantId, string serviceName);
   ServicePlan[] findByService(TenantId tenantId, string serviceName);

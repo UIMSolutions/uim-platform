@@ -16,10 +16,10 @@ mixin(ShowModule!());
 @safe:
 /// Use case: manage service plan entitlements and quota assignments.
 class ManageEntitlementsUseCase { // TODO: UIMUseCase {
-  private EntitlementRepository repo;
+  private IEntitlementRepository repo;
   private EntitlementEvaluator evaluator;
 
-  this(EntitlementRepository repo, EntitlementEvaluator evaluator) {
+  this(IEntitlementRepository repo, EntitlementEvaluator evaluator) {
     this.repo = repo;
     this.evaluator = evaluator;
   }
@@ -38,23 +38,23 @@ class ManageEntitlementsUseCase { // TODO: UIMUseCase {
     foreach (e; existing)
       currentlyAssigned += e.quotaAssigned;
 
-    auto ent = Entitlement(request.tenantId);
-    ent.globalAccountId = request.globalAccountId;
-    ent.directoryId = request.directoryId;
-    ent.subaccountId = request.subaccountId;
-    ent.servicePlanId = request.servicePlanId;
-    ent.serviceName = request.serviceName;
-    ent.planName = request.planName;
-    ent.quotaAssigned = request.quotaAssigned;
-    ent.quotaRemaining = request.quotaAssigned;
-    ent.unlimited = request.unlimited;
-    ent.autoAssign = request.autoAssign;
-    ent.status = EntitlementStatus.active;
-    ent.assignedAt = clockSeconds();
-    ent.assignedBy = request.assignedBy;
+    auto entitlement = Entitlement(request.tenantId);
+    entitlement.globalAccountId = request.globalAccountId;
+    entitlement.directoryId = request.directoryId;
+    entitlement.subaccountId = request.subaccountId;
+    entitlement.servicePlanId = request.servicePlanId;
+    entitlement.serviceName = request.serviceName;
+    entitlement.planName = request.planName;
+    entitlement.quotaAssigned = request.quotaAssigned;
+    entitlement.quotaRemaining = request.quotaAssigned;
+    entitlement.unlimited = request.unlimited;
+    entitlement.autoAssign = request.autoAssign;
+    entitlement.status = EntitlementStatus.active;
+    entitlement.assignedAt = clockSeconds();
+    entitlement.assignedBy = request.assignedBy;
 
-    repo.save(ent);
-    return CommandResult(true, ent.id.value, "");
+    repo.save(entitlement);
+    return CommandResult(true, entitlement.id.value, "");
   }
 
   CommandResult updateEntitlementQuota(UpdateEntitlementQuotaRequest request) {

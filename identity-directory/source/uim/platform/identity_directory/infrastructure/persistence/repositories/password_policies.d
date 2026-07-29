@@ -31,8 +31,49 @@ class PasswordPolicyRepository : TenantRepository!(PasswordPolicy, PasswordPolic
     remove(findActiveForTenant(tenantId));
   }
 }
-
 ///
 unittest {
-    assert(tenantRepositoryTest(new PasswordPolicyRepository()));
+  mixin(ShowTest!("PasswordPolicyRepository"));
+
+  void testExistsActiveForTenant() {
+    auto repo = new PasswordPolicyRepository();
+    auto tenantId = TenantId("test-tenant");
+    auto policy = PasswordPolicy(tenantId, PasswordPolicyId("policy1"));
+    policy.active = true;
+    repo.save(policy);
+
+    assert(repo.existsActiveForTenant(tenantId) == true);
+    assert(repo.findActiveForTenant(tenantId) == policy);
+  }
+  
+  void testFindActiveForTenant() {
+    auto repo = new PasswordPolicyRepository();
+    auto tenantId = TenantId("test-tenant");
+
+    auto policy = PasswordPolicy(tenantId, PasswordPolicyId("policy1"));
+    policy.active = true;
+    repo.save(policy);
+
+    assert(repo.findActiveForTenant(tenantId) == policy);
+  }
+
+  void testRemoveActiveForTenant() {
+    auto repo = new PasswordPolicyRepository();
+
+    auto tenantId = TenantId("test-tenant");
+    auto policy = PasswordPolicy(tenantId, PasswordPolicyId("policy1"));
+    policy.active = true;
+    repo.save(policy);
+
+    repo.removeActiveForTenant(tenantId);
+    assert(repo.existsActiveForTenant(tenantId) == false);
+  }
+
+  void testAll() {
+    testExistsActiveForTenant();
+    testFindActiveForTenant();
+    testRemoveActiveForTenant();
+  }
+
+  testAll();
 }

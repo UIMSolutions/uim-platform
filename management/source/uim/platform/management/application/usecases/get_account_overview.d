@@ -20,16 +20,16 @@ mixin(ShowModule!());
 @safe:
 /// Use case: generate a dashboard overview for a global account.
 class GetAccountOverviewUseCase { // TODO: UIMUseCase {
-  protected SubaccountRepository subaccountRepo;
-  protected DirectoryRepository directoryRepo;
-  protected EntitlementRepository entitlementRepo;
-  protected EnvironmentRepository environmentRepo;
-  protected SubscriptionRepository subscriptionRepo;
-  protected EnvironmentEventRepository eventRepo;
+  protected ISubaccountRepository subaccountRepo;
+  protected IDirectoryRepository directoryRepo;
+  protected IEntitlementRepository entitlementRepo;
+  protected IEnvironmentRepository environmentRepo;
+  protected ISubscriptionRepository subscriptionRepo;
+  protected IEnvironmentEventRepository eventRepo;
 
-  this(SubaccountRepository subaccountRepo, DirectoryRepository directoryRepo, EntitlementRepository entitlementRepo,
-      EnvironmentRepository environmentRepo,
-      SubscriptionRepository subscriptionRepo, EnvironmentEventRepository eventRepo) {
+  this(ISubaccountRepository subaccountRepo, IDirectoryRepository directoryRepo, IEntitlementRepository entitlementRepo,
+      IEnvironmentRepository environmentRepo,
+      ISubscriptionRepository subscriptionRepo, IEnvironmentEventRepository eventRepo) {
     this.subaccountRepo = subaccountRepo;
     this.directoryRepo = directoryRepo;
     this.entitlementRepo = entitlementRepo;

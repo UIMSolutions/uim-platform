@@ -38,7 +38,7 @@ class LabelApi : ILabelApi {
 }
 ///
 unittest {
-    auto repo = new MemoryLabelRepository();
+    auto repo = new LabelRepository();
     auto usecase = new ManageLabelsUseCase(repo);
     auto api = new LabelApi(usecase);
     

@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — subscription persistence.
-interface SubscriptionRepository : ITenantRepository!(Subscription, SubscriptionId) {
+interface ISubscriptionRepository : ITenantRepository!(Subscription, SubscriptionId) {
 
   Subscription[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId);
   Subscription[] findByApp(TenantId tenantId, SubaccountId subaccountId, string appName);

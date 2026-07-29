@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — environment instance persistence.
-interface EnvironmentRepository : ITenantRepository!(Environment, EnvironmentId) {
+interface IEnvironmentRepository : ITenantRepository!(Environment, EnvironmentId) {
 
   Environment[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId);
   Environment[] findByType(TenantId tenantId, SubaccountId subaccountId, EnvironmentType envType);

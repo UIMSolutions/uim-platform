@@ -15,7 +15,7 @@ import uim.platform.management;
 mixin(ShowModule!());
 @safe:
 
-class MemoryServicePlanRepository : TenantRepository!(ServicePlan, ServicePlanId), ServicePlanRepository {
+class ServicePlanRepository : TenantRepository!(ServicePlan, ServicePlanId), IServicePlanRepository {
   // TODO: mixin TenantRepositoryTemplate!(MemoryServicePlanRepository, ServicePlan, ServicePlanId);
 
   // #region ByService
@@ -75,7 +75,7 @@ class MemoryServicePlanRepository : TenantRepository!(ServicePlan, ServicePlanId
 }
 ///
 unittest {
-  auto repo = new MemoryServicePlanRepository();
+  auto repo = new ServicePlanRepository();
 
   auto tenantId = TenantId("tenant1");
   auto servicePlanId = ServicePlanId("plan1");

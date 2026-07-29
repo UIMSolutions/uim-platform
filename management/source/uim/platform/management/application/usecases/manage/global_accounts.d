@@ -17,10 +17,10 @@ mixin(ShowModule!());
 @safe:
 /// Use case: manage global account lifecycle.
 class ManageGlobalAccountsUseCase { // TODO: UIMUseCase {
-  private GlobalAccountRepository repo;
-  private EnvironmentEventRepository eventRepo;
+  private IGlobalAccountRepository repo;
+  private IEnvironmentEventRepository eventRepo;
 
-  this(GlobalAccountRepository repo, EnvironmentEventRepository eventRepo) {
+  this(IGlobalAccountRepository repo, IEnvironmentEventRepository eventRepo) {
     this.repo = repo;
     this.eventRepo = eventRepo;
   }
