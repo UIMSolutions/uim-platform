@@ -12,8 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 interface IAppVersionRepository : ITenantRepository!(AppVersion, AppVersionId) {
+
     AppVersion[] findByMobileApplication(TenantId tenantId, MobileApplicationId appId);
     AppVersion[] findByStatus(TenantId tenantId, AppVersionStatus status);
     AppVersion[] findByDefinition(TenantId tenantId, AppDefinitionId definitionId);
     void removeByMobileApplication(TenantId tenantId, MobileApplicationId appId);
+
 }
