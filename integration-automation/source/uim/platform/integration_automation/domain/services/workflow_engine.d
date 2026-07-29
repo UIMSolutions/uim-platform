@@ -1,0 +1,90 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module uim.platform.integration_automation.domain.services.workflow_engine;
+
+// import uim.platform.integration_automation.domain.entities.workflow;
+// import uim.platform.integration_automation.domain.entities.workflow_step;
+// import uim.platform.integration_automation.domain.ports.repositories.workflows;
+// import uim.platform.integration_automation.domain.ports.repositories.steps;
+import uim.platform.integration_automation;
+
+mixin(ShowModule!());
+
+@safe:
+/// Domain service that orchestrates workflow progression —
+/// advances to the next step, checks dependencies, and updates status.
+class WorkflowEngine {
+  private WorkflowRepository workflowRepo;
+  private StepRepository stepRepo;
+
+  this(WorkflowRepository workflowRepo, StepRepository stepRepo) {
+    this.workflowRepo = workflowRepo;
+    this.stepRepo = stepRepo;
+  }
+
+  /// Check if all dependencies of a step are satisfied.
+  bool areDependenciesMet(TenantId tenantId, WorkflowStep step) {
+    if (step.dependencies.length == 0)
+      return true;
+
+    foreach (depId; step.dependencies) {
+      auto dep = stepRepo.findById(tenantId, depId);
+      if (dep.isNull || dep.status != StepStatus.completed)
+        return false;
+    }
+    return true;
+  }
+
+  /// Advance the workflow to the next pending step if possible.
+  bool advanceWorkflow(TenantId tenantId, WorkflowId workflowId) {
+    auto wf = workflowRepo.findById(tenantId, workflowId);
+    if (wf.isNull || wf.status != WorkflowStatus.inProgress)
+      return false;
+
+    auto steps = stepRepo.findByWorkflow(tenantId, workflowId);
+    if (steps.length == 0)
+      return false;
+
+    // Count completed
+    int completed = 0;
+    foreach (s; steps)
+      if (s.status == StepStatus.completed || s.status == StepStatus.skipped)
+        completed++;
+
+    wf.completedSteps = completed;
+
+    // All steps done?
+    if (completed >= wf.totalSteps) {
+    
+      wf.status = WorkflowStatus.completed;
+      wf.completedAt = currentTimestamp();
+      workflowRepo.update(wf);
+      return true;
+    }
+
+    // Find next pending step whose dependencies are met
+    // import std.algorithm : sort;
+     
+    auto sorted = steps.dup;
+    sorted.sort!((a, b) => a.sequenceNumber < b.sequenceNumber);
+
+    foreach (s; sorted) {
+      if (s.status == StepStatus.pending && areDependenciesMet(tenantId, s)) {
+        wf.currentStepIndex = s.sequenceNumber;
+        workflowRepo.update(wf);
+        return true;
+      }
+    }
+
+    workflowRepo.update(wf);
+    return false;
+  }
+
+  /// Check if the active workflow limit for a tenant is reached (SAP limit: 15).
+  bool isWorkflowLimitReached(TenantId tenantId) {
+    return workflowRepo.countActiveByTenant(tenantId) >= 15;
+  }
+}

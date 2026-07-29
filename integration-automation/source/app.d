@@ -5,9 +5,7 @@
 *****************************************************************************************************************/
 module app;
 
-// import uim.platform.integration.automation.infrastructure.config;
-// import uim.platform.integration.automation.infrastructure.container;
-import uim.platform.integration.automation;
+import uim.platform.integration_automation;
 
 mixin(ShowModule!());
 

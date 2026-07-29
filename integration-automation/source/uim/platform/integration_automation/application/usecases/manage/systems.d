@@ -1,0 +1,125 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module uim.platform.integration_automation.application.usecases.manage.systems;
+
+
+
+// import uim.platform.integration_automation.domain.entities.system_connection;
+// import uim.platform.integration_automation.domain.ports.repositories.systems;
+// import uim.platform.integration_automation.application.dto;
+import uim.platform.integration_automation;
+
+mixin(ShowModule!());
+
+@safe:
+class ManageSystemsUseCase { // TODO: UIMUseCase {
+  private SystemRepository repo;
+
+  this(SystemRepository repo) {
+    this.repo = repo;
+  }
+
+  CommandResult createSystem(CreateSystemRequest req) {
+    if (req.tenantId.isEmpty)
+      return CommandResult(false, "", "Tenant ID is required");
+    if (req.name.isEmpty)
+      return CommandResult(false, "", "System name is required");
+    if (req.host.length == 0)
+      return CommandResult(false, "", "Host is required");
+
+    SystemConnection sys;
+
+    sys.name = req.name;
+    sys.description = req.description;
+    sys.systemType = req.systemType;
+    sys.host = req.host;
+    sys.port = req.port > 0 ? req.port : 443;
+    sys.client = req.client;
+    sys.protocol = req.protocol.length > 0 ? req.protocol : "https";
+    sys.status = ConnectionStatus.inactive;
+    sys.environment = req.environment;
+    sys.region = req.region;
+    sys.systemId = req.systemId;
+    sys.tenant = req.tenant;
+
+    repo.save(sys);
+    return CommandResult(true, sys.id.value, "");
+  }
+
+  SystemConnection getSystem(TenantId tenantId, SystemConnectionId id) {
+    return repo.findById(tenantId, id);
+  }
+
+  SystemConnection[] listSystems(TenantId tenantId) {
+    return repo.findByTenant(tenantId);
+  }
+
+  SystemConnection[] listByType(TenantId tenantId, SystemType systemType) {
+    return repo.findByType(tenantId, systemType);
+  }
+
+  CommandResult updateSystem(UpdateSystemRequest req) {
+    if (req.systemId.isEmpty)
+      return CommandResult(false, "", "System ID is required");
+
+    if (req.tenantId.isEmpty)
+      return CommandResult(false, "", "Tenant ID is required");
+
+    auto existing = repo.findById(req.tenantId, req.systemId);
+    if (existing.isNull)
+      return CommandResult(false, "", "System not found");
+
+    auto updated = *existing;
+    if (req.name.length > 0)
+      updated.name = req.name;
+    if (req.description.length > 0)
+      updated.description = req.description;
+    updated.systemType = req.systemType;
+    if (req.host.length > 0)
+      updated.host = req.host;
+    if (req.port > 0)
+      updated.port = req.port;
+    if (req.client.length > 0)
+      updated.client = req.client;
+    if (req.protocol.length > 0)
+      updated.protocol = req.protocol;
+    updated.status = req.status;
+    if (req.environment.length > 0)
+      updated.environment = req.environment;
+    if (req.region.length > 0)
+      updated.region = req.region;
+    if (req.systemId.length > 0)
+      updated.systemId = req.systemId;
+    if (req.tenant.length > 0)
+      updated.tenant = req.tenant;
+    updated.updatedAt = currentTimestamp();
+
+    repo.update(updated);
+    return CommandResult(true, updated.id.value, "");
+  }
+
+  CommandResult deleteSystem(TenantId tenantId, SystemConnectionId id) {
+    auto existing = repo.findById(tenantId, id);
+    if (existing.isNull)
+      return CommandResult(false, "", "System not found");
+
+    repo.remove(existing);
+    return CommandResult(true, existing.id.value, "");
+  }
+
+  /// Test a system connection (simulated).
+  CommandResult testConnection(TenantId tenantId, SystemConnectionId id) {
+    auto sys = repo.findById(tenantId, id);
+    if (sys.isNull)
+      return CommandResult(false, "", "System not found");
+
+    // Simulate connection test — in production, would actually ping the system
+    sys.status = ConnectionStatus.active;
+    sys.updatedAt = currentTimestamp();
+    repo.update(sys);
+    return CommandResult(true, sys.id.value, "");
+  }
+}
