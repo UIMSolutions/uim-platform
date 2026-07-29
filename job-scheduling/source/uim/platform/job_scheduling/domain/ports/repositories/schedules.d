@@ -11,7 +11,7 @@ import uim.platform.job_scheduling;
 mixin(ShowModule!());
 
 @safe:
-interface ScheduleRepository : ITenantRepository!(Schedule, ScheduleId) {
+interface IScheduleRepository : ITenantRepository!(Schedule, ScheduleId) {
 
     size_t countByJob(TenantId tenantId, JobId jobId);
     Schedule[] findByJob(TenantId tenantId, JobId jobId);

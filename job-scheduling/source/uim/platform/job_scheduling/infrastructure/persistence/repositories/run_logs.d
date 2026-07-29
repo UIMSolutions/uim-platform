@@ -13,7 +13,7 @@ import uim.platform.job_scheduling;
 mixin(ShowModule!());
 
 @safe:
-class MemoryRunLogRepository : TenantRepository!(RunLog, RunLogId), RunLogRepository {
+class RunLogRepository : TenantRepository!(RunLog, RunLogId), IRunLogRepository {
 
     // #region ByJob
     size_t countByJob(TenantId tenantId, JobId jobId) {

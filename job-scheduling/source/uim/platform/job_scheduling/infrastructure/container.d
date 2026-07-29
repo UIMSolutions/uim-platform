@@ -32,10 +32,10 @@ mixin(ShowModule!());
 @safe:
 struct Container {
     // Repositories (driven adapters)
-    MemoryJobRepository jobRepo;
-    MemoryScheduleRepository scheduleRepo;
-    MemoryRunLogRepository runLogRepo;
-    MemoryConfigurationRepository configRepo;
+    IJobRepository jobRepo;
+    IScheduleRepository scheduleRepo;
+    IRunLogRepository runLogRepo;
+    IConfigurationRepository configRepo;
 
     // Use cases (application layer)
     ManageJobsUseCase manageJobs;
@@ -55,10 +55,10 @@ Container buildContainer(SrvConfig config) {
     Container container;
 
     // Infrastructure adapters
-    container.jobRepo = new MemoryJobRepository();
-    container.scheduleRepo = new MemoryScheduleRepository();
-    container.runLogRepo = new MemoryRunLogRepository();
-    container.configRepo = new MemoryConfigurationRepository();
+    container.jobRepo = new JobRepository();
+    container.scheduleRepo = new ScheduleRepository();
+    container.runLogRepo = new RunLogRepository();
+    container.configRepo = new ConfigurationRepository();
 
     // Application use cases
     container.manageJobs = new ManageJobsUseCase(container.jobRepo);

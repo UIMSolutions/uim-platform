@@ -18,9 +18,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageRunLogsUseCase { // TODO: UIMUseCase {
-    private RunLogRepository repo;
+    private IRunLogRepository repo;
 
-    this(RunLogRepository repo) {
+    this(IRunLogRepository repo) {
         this.repo = repo;
     }
 

@@ -18,9 +18,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageSchedulesUseCase { // TODO: UIMUseCase {
-    private ScheduleRepository schedules;
+    private IScheduleRepository schedules;
 
-    this(ScheduleRepository schedules) {
+    this(IScheduleRepository schedules) {
         this.schedules = schedules;
     }
 

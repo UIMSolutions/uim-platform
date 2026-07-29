@@ -11,7 +11,7 @@ import uim.platform.job_scheduling;
 mixin(ShowModule!());
 
 @safe:
-interface ConfigurationRepository : ITenantRepository!(Configuration, ConfigurationId) {
+interface IConfigurationRepository : ITenantRepository!(Configuration, ConfigurationId) {
 
     Configuration get(TenantId tenantId);
 }

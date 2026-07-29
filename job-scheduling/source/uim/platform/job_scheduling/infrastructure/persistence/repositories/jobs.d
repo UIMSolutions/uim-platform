@@ -14,7 +14,7 @@ import uim.platform.job_scheduling;
 mixin(ShowModule!());
 
 @safe:
-class MemoryJobRepository : TenantRepository!(Job, JobId), JobRepository {
+class JobRepository : TenantRepository!(Job, JobId), IJobRepository {
 
     bool existsByName(TenantId tenantId, string name) {
         return findByTenant(tenantId).canFind!(j => j.name == name);
