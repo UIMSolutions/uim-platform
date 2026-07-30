@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryDomainMappingRepository : TenantRepository!(DomainMapping, DomainMappingId), DomainMappingRepository {
+class DomainMappingRepository : TenantRepository!(DomainMapping, DomainMappingId), IDomainMappingRepository {
 
     // #region ByCustomRoute
     DomainMapping findByCustomRoute(TenantId tenantId, string customRoute) {

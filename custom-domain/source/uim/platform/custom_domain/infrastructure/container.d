@@ -13,14 +13,14 @@ mixin(ShowModule!());
 
 struct Container {
     // Repositories (driven adapters)
-    MemoryCustomDomainRepository domainRepo;
-    MemoryPrivateKeyRepository keyRepo;
-    MemoryCertificateRepository certRepo;
-    MemoryTlsConfigurationRepository tlsRepo;
-    MemoryDomainMappingRepository mappingRepo;
-    MemoryTrustedCertificateRepository trustedCertRepo;
-    MemoryDnsRecordRepository dnsRepo;
-    MemoryDomainDashboardRepository dashboardRepo;
+    ICustomDomainRepository domainRepo;
+    IPrivateKeyRepository keyRepo;
+    ICertificateRepository certRepo;
+    ITlsConfigurationRepository tlsRepo;
+    IDomainMappingRepository mappingRepo;
+    ITrustedCertificateRepository trustedCertRepo;
+    IDnsRecordRepository dnsRepo;
+    IDomainDashboardRepository dashboardRepo;
 
     // Use cases (application layer)
     ManageCustomDomainsUseCase manageDomains;
@@ -49,14 +49,14 @@ Container buildContainer(SrvConfig config) {
     Container c;
 
     // Infrastructure adapters
-    c.domainRepo = new MemoryCustomDomainRepository();
-    c.keyRepo = new MemoryPrivateKeyRepository();
-    c.certRepo = new MemoryCertificateRepository();
-    c.tlsRepo = new MemoryTlsConfigurationRepository();
-    c.mappingRepo = new MemoryDomainMappingRepository();
-    c.trustedCertRepo = new MemoryTrustedCertificateRepository();
-    c.dnsRepo = new MemoryDnsRecordRepository();
-    c.dashboardRepo = new MemoryDomainDashboardRepository();
+    c.domainRepo = new CustomDomainRepository();
+    c.keyRepo = new PrivateKeyRepository();
+    c.certRepo = new CertificateRepository();
+    c.tlsRepo = new TlsConfigurationRepository();
+    c.mappingRepo = new DomainMappingRepository();
+    c.trustedCertRepo = new TrustedCertificateRepository();
+    c.dnsRepo = new DnsRecordRepository();
+    c.dashboardRepo = new DomainDashboardRepository();
 
     // Application use cases
     c.manageDomains = new ManageCustomDomainsUseCase(c.domainRepo);

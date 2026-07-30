@@ -5,8 +5,5 @@
 *****************************************************************************************************************/
 module uim.platform.logging.infrastructure.persistence;
 
-public {
-  import uim.platform.logging.infrastructure.persistence.files;
+public:
   import uim.platform.logging.infrastructure.persistence.repositories;
-  import uim.platform.logging.infrastructure.persistence.mongo;
-}

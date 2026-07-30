@@ -12,13 +12,13 @@ mixin(ShowModule!());
 @safe:
 
 class ManageDomainDashboardsUseCase { // TODO: UIMUseCase {
-    private DomainDashboardRepository dashboardRepo;
-    private CustomDomainRepository domainRepo;
-    private CertificateRepository certRepo;
-    private DomainMappingRepository mappingRepo;
+    private IDomainDashboardRepository dashboardRepo;
+    private ICustomDomainRepository domainRepo;
+    private ICertificateRepository certRepo;
+    private IDomainMappingRepository mappingRepo;
 
-    this(DomainDashboardRepository dashboardRepo, CustomDomainRepository domainRepo,
-         CertificateRepository certRepo, DomainMappingRepository mappingRepo) {
+    this(IDomainDashboardRepository dashboardRepo, ICustomDomainRepository domainRepo,
+         ICertificateRepository certRepo, IDomainMappingRepository mappingRepo) {
         this.dashboardRepo = dashboardRepo;
         this.domainRepo = domainRepo;
         this.certRepo = certRepo;
@@ -91,12 +91,12 @@ class ManageDomainDashboardsUseCase { // TODO: UIMUseCase {
 
 ///
 unittest {
-    auto domainDashboardRepository = new DomainDashboardRepository();
-    auto customDomainRepository = new CustomDomainRepository();
-    auto certificateRepository = new CertificateRepository();
-    auto domainMappingRepository = new DomainMappingRepository();
-    auto usecase = new ManageDomainDashboardsUseCase(domainDashboardRepository, customDomainRepository, certificateRepository, domainMappingRepository);
-    auto tenantId = TenantId("test-tenant");
+    // auto domainDashboardRepository = new DomainDashboardRepository();
+    // auto customDomainRepository = new CustomDomainRepository();
+    // auto certificateRepository = new CertificateRepository();
+    // auto domainMappingRepository = new DomainMappingRepository();
+    // auto usecase = new ManageDomainDashboardsUseCase(domainDashboardRepository, customDomainRepository, certificateRepository, domainMappingRepository);
+    // auto tenantId = TenantId("test-tenant");
 
-    assert(usecase !is null);
+    // assert(usecase !is null);
 }

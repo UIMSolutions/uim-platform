@@ -89,8 +89,8 @@ flowchart TB
         DASH["DomainDashboard"]
     end
     subgraph Infrastructure["Infrastructure Layer"]
-        DOM_REPO["InMemoryDomainRepository"]
-        CERT_REPO["InMemoryCertificateRepository"]
+        DOM_REPO["DomainRepository"]
+        CERT_REPO["CertificateRepository"]
     end
 
     REST --> Application

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryCustomDomainRepository : TenantRepository!(CustomDomain, CustomDomainId), CustomDomainRepository {
+class CustomDomainRepository : TenantRepository!(CustomDomain, CustomDomainId), ICustomDomainRepository {
 
     bool existsByDomainName(TenantId tenantId, string domainName) {
         foreach (d; findByTenant(tenantId)) {

@@ -5,8 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.credential_store.infrastructure.persistence;
 
-public {
-  import uim.platform.credential_store.infrastructure.persistence.files;
+public:
   import uim.platform.credential_store.infrastructure.persistence.repositories;
-  import uim.platform.credential_store.infrastructure.persistence.mongo;
-}
+
