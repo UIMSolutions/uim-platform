@@ -5,8 +5,5 @@
 *****************************************************************************************************************/
 module uim.platform.data.privacy.infrastructure.persistence;
 
-public {
-    import uim.platform.data.privacy.infrastructure.persistence.files;
+public:
     import uim.platform.data.privacy.infrastructure.persistence.repositories;
-    import uim.platform.data.privacy.infrastructure.persistence.mongo;
-}

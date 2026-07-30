@@ -5,8 +5,5 @@
 *****************************************************************************************************************/
 module uim.platform.connectivity.infrastructure.persistence;
 
-public {
-    import uim.platform.connectivity.infrastructure.persistence.files;
+public:
     import uim.platform.connectivity.infrastructure.persistence.repositories;
-    import uim.platform.connectivity.infrastructure.persistence.mongo;
-}

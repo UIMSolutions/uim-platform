@@ -5,6 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.management.domain.ports;
 
-public {
+public:
     import uim.platform.management.domain.ports.repositories;
-}
+

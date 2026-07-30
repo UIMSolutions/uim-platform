@@ -103,7 +103,7 @@ class DataSubjectController : ManageHttpController {
     auto data = precheck.data;
 
     UpdateDataSubjectRequest r;
-    r.id = DataSubjectId(precheck.id);
+    r.subjectId = DataSubjectId(precheck.id);
     r.tenantId = tenantId;
     r.displayName = data.getString("displayName");
     r.email = data.getString("email");

@@ -4,8 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.logistic_management.infrastructure.persistence;
-public {
+
+public:
   import uim.platform.logistic_management.infrastructure.persistence.repositories;
-  import uim.platform.logistic_management.infrastructure.persistence.files;
-  import uim.platform.logistic_management.infrastructure.persistence.mongo;
-}

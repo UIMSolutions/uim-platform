@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 /// Aggregated data quality metrics for a tenant / dataset.
 struct QualityDashboard {
-  mixin TenantEntity!(QualityDashboardId);
+  mixin TenantEntity!QualityDashboardId;
 
   DatasetId datasetId;
   string datasetName;

@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 /// An address record for cleansing and geocoding.
 struct AddressRecord {
-  mixin TenantEntity!(AddressId);
+  mixin TenantEntity!AddressId;
 
   RecordId sourceRecordId; // link to originating record
 

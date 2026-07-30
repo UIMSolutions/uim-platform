@@ -100,7 +100,7 @@ class RetentionRuleController : ManageHttpController {
     auto tenantId = precheck.tenantId;
     auto data = precheck.data;
     UpdateRetentionRuleRequest r;
-    r.id = RetentionRuleId(precheck.id);
+    r.ruleId = RetentionRuleId(precheck.id);
     r.tenantId = tenantId;
     r.name = data.getString("name");
     r.description = data.getString("description");

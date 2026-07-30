@@ -5,8 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.html_repository.infrastructure.persistence;
 
-public {
-  import uim.platform.html_repository.infrastructure.persistence.files;
+public:
   import uim.platform.html_repository.infrastructure.persistence.repositories;
-  import uim.platform.html_repository.infrastructure.persistence.mongo;
-}
+

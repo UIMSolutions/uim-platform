@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.data_quality.domain.entities;
 
-public {
+public:
     import uim.platform.data_quality.domain.entities.address_record;
     import uim.platform.data_quality.domain.entities.cleansing_job;
     import uim.platform.data_quality.domain.entities.cleansing_rule;
@@ -14,4 +14,4 @@ public {
     import uim.platform.data_quality.domain.entities.quality_dashboard;
     import uim.platform.data_quality.domain.entities.validation_result;
     import uim.platform.data_quality.domain.entities.validation_rule;
-}
+
