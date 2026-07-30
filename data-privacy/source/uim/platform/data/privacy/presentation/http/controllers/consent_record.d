@@ -136,7 +136,7 @@ class ConsentController : ManageHttpController {
 
     RevokeConsentRequest r;
     r.tenantId = tenantId;
-    r.id = id;
+    r.recordId = id;
 
     auto result = usecase.revokeConsent(r);
     if (result.hasError)

@@ -55,7 +55,7 @@ class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult updateRule(UpdateRetentionRuleRequest req) {
-    auto rule = repo.findById(req.tenantId, req.id);
+    auto rule = repo.findById(req.tenantId, req.ruleId);
     if (rule.isNull)
       return CommandResult(false, "", "Retention rule not found");
 

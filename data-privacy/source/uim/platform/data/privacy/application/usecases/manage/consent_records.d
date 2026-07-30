@@ -76,7 +76,7 @@ class ManageConsentRecordsUseCase { // TODO: UIMUseCase {
   }
 
   CommandResult revokeConsent(RevokeConsentRequest req) {
-    auto record = repo.findById(req.tenantId, req.id);
+    auto record = repo.findById(req.tenantId, req.recordId);
     if (record.isNull)
       return CommandResult(false, "", "Consent record not found");
     if (record.status == ConsentStatus.revoked)
