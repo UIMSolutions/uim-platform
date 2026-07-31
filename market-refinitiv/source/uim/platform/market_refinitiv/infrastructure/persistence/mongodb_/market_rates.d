@@ -105,8 +105,7 @@ class MongoDbMarketRateRepository : MarketRateRepository {
   }
 
   private Bson toDoc(MarketRate rate) {
-    return Bson([
-      "tenantId": Bson(rate.tenantId.value),
+    return Bson(["tenantId": Bson(rate.tenantId.value),
       "id": Bson(rate.id.value),
       "providerCode": Bson(rate.providerCode),
       "category": Bson(cast(string) rate.category),

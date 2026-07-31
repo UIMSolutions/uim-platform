@@ -75,8 +75,7 @@ class GeocodingJobController : ManageHttpController {
         .set("createdAt", item.createdAt);
     }
 
-    return successResponse("Geocoding job list retrieved successfully", 200, Json.emptyObject.set("count", Json(
-        items.length)).set("resources", jarr));
+    return successResponse("Geocoding job list retrieved successfully", 200, Json.emptyObject.set("count", Json(    items.length)).set("resources", jarr));
   }
 
   override protected Json getHandler(HTTPServerRequest req) {

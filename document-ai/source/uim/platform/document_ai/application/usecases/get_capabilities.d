@@ -22,8 +22,7 @@ class GetCapabilitiesUseCase { // TODO: UIMUseCase {
     r.multitenant = true;
     r.supportedFileTypes = ["pdf", "png", "jpeg", "tiff", "xlsx", "docx"];
     r.supportedLanguages = ["en", "de", "fr", "es", "it", "pt", "nl", "ja", "zh", "ko", "ar", "hi"];
-    r.supportedDocumentTypes = [
-      "invoice", "purchase_order", "payment_advice", "delivery_note",
+    r.supportedDocumentTypes = ["invoice", "purchase_order", "payment_advice", "delivery_note",
       "credit_memo", "bank_statement", "receipt", "contract",
       "customs_declaration", "bill_of_lading", "letter_of_credit", "general", "custom"
     ];

@@ -27,8 +27,7 @@ class WebController {
     model.title = "Analytics Web Console";
     model.tenantId = tenantId;
     model.assetCount = assets.length;
-    model.highlights = [
-      "Data preparation metadata",
+    model.highlights = ["Data preparation metadata",
       "Story and dashboard lifecycle",
       "Publication status tracking"
     ];

@@ -32,9 +32,7 @@ struct ThresholdEvaluator {
       result.breached = true;
       result.severity = AlertSeverity.critical;
       result.thresholdValue = rule.criticalThreshold;
-      result.message = "Critical: " ~ rule.metricName ~ " value " ~ formatDouble(
-          value_) ~ " " ~ operatorStr(
-          rule.operator_) ~ " threshold " ~ formatDouble(rule.criticalThreshold);
+      result.message = "Critical: " ~ rule.metricName ~ " value " ~ formatDouble(      value_) ~ " " ~ operatorStr(      rule.operator_) ~ " threshold " ~ formatDouble(rule.criticalThreshold);
       return result;
     }
 
@@ -43,9 +41,7 @@ struct ThresholdEvaluator {
       result.breached = true;
       result.severity = AlertSeverity.warning;
       result.thresholdValue = rule.warningThreshold;
-      result.message = "Warning: " ~ rule.metricName ~ " value " ~ formatDouble(
-          value_) ~ " " ~ operatorStr(
-          rule.operator_) ~ " threshold " ~ formatDouble(rule.warningThreshold);
+      result.message = "Warning: " ~ rule.metricName ~ " value " ~ formatDouble(      value_) ~ " " ~ operatorStr(      rule.operator_) ~ " threshold " ~ formatDouble(rule.warningThreshold);
       return result;
     }
 

@@ -16,8 +16,7 @@ struct CriteriaCondition {
   string[] values;
 
   Json toJson() const {
-    return Json([
-      "column": column,
+    return Json(["column": column,
       "operator": operator,
       "values": values
     ]);

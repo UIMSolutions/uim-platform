@@ -63,11 +63,9 @@ unittest {
     assert(ProgramType.transformation.toString == "transformation");
     assert(ProgramType.unknown.toString == "unknown");
 
-    assert(["report", "modulePool"].toProgramTypes == [
-            ProgramType.report, ProgramType.modulePool
+    assert(["report", "modulePool"].toProgramTypes == [    ProgramType.report, ProgramType.modulePool
         ]);
-    assert([ProgramType.functionGroup, ProgramType.classPool].toStrings == [
-            "functionGroup", "classPool"
+    assert([ProgramType.functionGroup, ProgramType.classPool].toStrings == [    "functionGroup", "classPool"
         ]);
 }
 
@@ -144,11 +142,9 @@ unittest {
     assert(TokenType.eof.toString == "eof");
     assert(TokenType.unknown.toString == "unknown");
 
-    assert(["keyword", "identifier"].toTokenTypes == [
-            TokenType.keyword, TokenType.identifier
+    assert(["keyword", "identifier"].toTokenTypes == [    TokenType.keyword, TokenType.identifier
         ]);
-    assert([TokenType.literal_string, TokenType.operator].toStrings == [
-            "literal_string", "operator"
+    assert([TokenType.literal_string, TokenType.operator].toStrings == [    "literal_string", "operator"
         ]);
 }
 
@@ -202,11 +198,9 @@ unittest {
     assert(OOVisibility.protected_.toString == "protected");
     assert(OOVisibility.private_.toString == "private");
 
-    assert(["public", "private"].toOOVisibilities == [
-            OOVisibility.public_, OOVisibility.private_
+    assert(["public", "private"].toOOVisibilities == [    OOVisibility.public_, OOVisibility.private_
         ]);
-    assert([OOVisibility.protected_, OOVisibility.public_].toStrings == [
-            "protected", "public"
+    assert([OOVisibility.protected_, OOVisibility.public_].toStrings == [    "protected", "public"
         ]);
 }
 
@@ -247,11 +241,9 @@ unittest {
     assert(ProcessingMode.batch.toString == "batch");
     assert(ProcessingMode.rfc.toString == "rfc");
 
-    assert(["normal", "batch"].toProcessingModes == [
-            ProcessingMode.normal, ProcessingMode.batch
+    assert(["normal", "batch"].toProcessingModes == [    ProcessingMode.normal, ProcessingMode.batch
         ]);
-    assert([ProcessingMode.dialog, ProcessingMode.rfc].toStrings == [
-            "dialog", "rfc"
+    assert([ProcessingMode.dialog, ProcessingMode.rfc].toStrings == [    "dialog", "rfc"
         ]);
 }
 
@@ -292,11 +284,9 @@ unittest {
     assert(DiagnosticSeverity.info.toString == "info");
     assert(DiagnosticSeverity.hint.toString == "hint");
 
-    assert(["error", "info"].toDiagnosticSeverities == [
-            DiagnosticSeverity.error, DiagnosticSeverity.info
+    assert(["error", "info"].toDiagnosticSeverities == [    DiagnosticSeverity.error, DiagnosticSeverity.info
         ]);
-    assert([DiagnosticSeverity.warning, DiagnosticSeverity.hint].toStrings == [
-            "warning", "hint"
+    assert([DiagnosticSeverity.warning, DiagnosticSeverity.hint].toStrings == [    "warning", "hint"
         ]);
 }
 
@@ -339,10 +329,8 @@ unittest {
     assert(CompilationStatus.failed.toString == "failed");
     assert(CompilationStatus.aborted.toString == "aborted");
 
-    assert(["pending", "succeeded"].toCompilationStatuses == [
-            CompilationStatus.pending, CompilationStatus.succeeded
+    assert(["pending", "succeeded"].toCompilationStatuses == [    CompilationStatus.pending, CompilationStatus.succeeded
         ]);
-    assert([CompilationStatus.running, CompilationStatus.failed].toStrings == [
-            "running", "failed"
+    assert([CompilationStatus.running, CompilationStatus.failed].toStrings == [    "running", "failed"
         ]);
 }

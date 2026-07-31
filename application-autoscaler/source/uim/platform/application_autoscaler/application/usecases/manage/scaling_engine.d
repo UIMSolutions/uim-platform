@@ -18,8 +18,7 @@ class ScalingEngineUseCase {
   private ScalingHistoryRepository historyRepo;
   private ScalingEvaluatorService  evaluator;
 
-  this(
-    ScalingPolicyRepository  policyRepo,
+  this(ScalingPolicyRepository  policyRepo,
     AppBindingRepository     bindingRepo,
     ScalingHistoryRepository historyRepo,
     ScalingEvaluatorService  evaluator

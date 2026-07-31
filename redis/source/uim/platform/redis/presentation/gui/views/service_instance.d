@@ -65,8 +65,7 @@ class GuiServiceInstanceView {
         return Json.emptyObject
             .set("widget", "form")
             .set("title",  "Create Service Instance")
-            .set("fields", Json([
-                Json.emptyObject.set("name","name").set("type","text").set("label","Name").set("required", true),
+            .set("fields", Json([        Json.emptyObject.set("name","name").set("type","text").set("label","Name").set("required", true),
                 Json.emptyObject.set("name","planId").set("type","text").set("label","Plan ID").set("required", true),
                 Json.emptyObject.set("name","region").set("type","text").set("label","Region"),
                 Json.emptyObject.set("name","memoryMb").set("type","number").set("label","Memory MB").set("default", 256),

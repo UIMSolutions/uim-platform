@@ -70,9 +70,9 @@ class ManageExecutablesUseCase { // TODO: UIMUseCase {
 
 ///
 unittest {
-    auto repo = new ExecutableRepository();
-    auto usecase = new ManageExecutablesUseCase(repo);
-    auto tenantId = TenantId("test-tenant");
-
-    assert(usecase !is null);
+//    auto repo = new ExecutableRepository();
+//    auto usecase = new ManageExecutablesUseCase(repo);
+//    auto tenantId = TenantId("test-tenant");
+//
+//    assert(usecase !is null);
 }

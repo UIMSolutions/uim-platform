@@ -162,8 +162,7 @@ class DuplicateDetector {
       ++k;
     }
 
-    double jaro = (cast(double) matches / a.length + cast(
-        double) matches / b.length + cast(double)(matches - transpositions / 2) / matches) / 3.0;
+    double jaro = (cast(double) matches / a.length + cast(    double) matches / b.length + cast(double)(matches - transpositions / 2) / matches) / 3.0;
 
     // Winkler bonus for common prefix (up to 4 chars)
     int prefix = 0;

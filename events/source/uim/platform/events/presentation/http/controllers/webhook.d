@@ -84,8 +84,7 @@ class WebhookController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
 
-        return successResponse("Webhook created successfully", 201, Json.emptyObject.set(
-                "id", result.id));
+        return successResponse("Webhook created successfully", 201, Json.emptyObject.set(            "id", result.id));
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -109,8 +108,7 @@ class WebhookController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
 
-        return successResponse("Webhook updated successfully", 200, Json.emptyObject.set(
-                "id", result.id));
+        return successResponse("Webhook updated successfully", 200, Json.emptyObject.set(            "id", result.id));
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -127,7 +125,6 @@ class WebhookController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
 
-        return successResponse("Webhook deleted successfully", 200, Json.emptyObject.set(
-                "id", result.id));
+        return successResponse("Webhook deleted successfully", 200, Json.emptyObject.set(            "id", result.id));
     }
 }

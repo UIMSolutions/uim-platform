@@ -153,8 +153,7 @@ class ScalingPolicyController : ManageHttpController {
     UpdateScalingPolicyRequest r;
     r.scalingPolicyId = id;
     r.instanceMinCount = data.getInteger("instance_min_count");
-    r.instanceMaxCount = data.getInteger(
-      "instance_max_count");
+    r.instanceMaxCount = data.getInteger(  "instance_max_count");
     r.timezone = data.getString("timezone");
     r.customMetricAllowFrom = data
       .getString("custom_metric_allow_from");
@@ -165,11 +164,9 @@ class ScalingPolicyController : ManageHttpController {
         ScalingRuleRequest rr;
         rr.metricType = rdata.getString("metric_type");
         rr.customMetricName = rdata.getString("custom_metric_name");
-        rr.threshold = rdata.getInteger(
-          "threshold");
+        rr.threshold = rdata.getInteger(      "threshold");
         rr.operator = rdata.getString("operator");
-        rr.breachDurationSecs = rdata.getInteger(
-          "breach_duration_secs");
+        rr.breachDurationSecs = rdata.getInteger(      "breach_duration_secs");
         rr.coolDownSecs = rdata.getInteger("cool_down_secs");
         rr.adjustment = rdata.getString("adjustment");
         r.scalingRules ~= rr;

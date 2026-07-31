@@ -40,8 +40,7 @@ class MongoConfigurationRepository : ConfigurationRepository {
     }
 
     private Bson toBson(Configuration e) {
-        return Bson([
-            "id":                         Bson(e.id.value),
+        return Bson([    "id":                         Bson(e.id.value),
             "tenantId":                   Bson(e.tenantId.value),
             "instanceId":                 Bson(e.instanceId.value),
             "auditLogLevels":             Bson(e.auditLogLevels),

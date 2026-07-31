@@ -41,8 +41,7 @@ class MonthlyUsageReportHandler {
   void create(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto json = req.json;
-      auto cmd = CreateMonthlyUsageReportRequest(
-        json["globalAccountId"].get!string,
+      auto cmd = CreateMonthlyUsageReportRequest(    json["globalAccountId"].get!string,
         json["reportingYear"].get!int,
         json["reportingMonth"].get!int,
       );

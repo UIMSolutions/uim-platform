@@ -1,1 +1,1 @@
-[]
+[{"cloudProvider":"sap","msgVpnName":"","id":"broker-1","datacenter":"","createdBy":"user-1","createdAt":0,"name":"Updated Broker","smfPort":"","version":"","maxMessageSize":"","restHost":"","serviceType":"standard","webSocketHost":"","restPort":"","updatedBy":"user-2","updatedAt":0,"smfHost":"","maxQueueDepth":"","amqpPort":"","webSocketPort":"","maxConnections":"","amqpHost":"","status":"provisioning","mqttPort":"","serviceClass":"standardKilo","adminUrl":"","mqttHost":"","region":"eu-central-1","description":"A test broker service","tenantId":"test-tenant"}]

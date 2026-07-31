@@ -38,15 +38,13 @@ unittest {
     assert(toCatalogType("") == CatalogType.custom);
     assert(toCatalogType("unknown") == CatalogType.custom);
 
-    assert(toCatalogTypes(["system", "custom", "unknown"]) == [
-            CatalogType.system, CatalogType.custom, CatalogType.custom
+    assert(toCatalogTypes(["system", "custom", "unknown"]) == [    CatalogType.system, CatalogType.custom, CatalogType.custom
         ]);
 
     assert(toString(CatalogType.system) == "system");
     assert(toString(CatalogType.custom) == "custom");
 
-    assert(toStrings([CatalogType.system, CatalogType.custom]) == [
-            "system", "custom"
+    assert(toStrings([CatalogType.system, CatalogType.custom]) == [    "system", "custom"
         ]);
 }
 
@@ -77,16 +75,14 @@ unittest {
     assert(toCatalogStatus("inactive") == CatalogStatus.inactive);
     assert(toCatalogStatus("archived") == CatalogStatus.archived);
 
-    assert(toCatalogStatuses(["active", "inactive", "archived"]) == [
-            CatalogStatus.active, CatalogStatus.inactive, CatalogStatus.archived
+    assert(toCatalogStatuses(["active", "inactive", "archived"]) == [    CatalogStatus.active, CatalogStatus.inactive, CatalogStatus.archived
         ]);
 
     assert(toString(CatalogStatus.active) == "active");
     assert(toString(CatalogStatus.inactive) == "inactive");
     assert(toString(CatalogStatus.archived) == "archived");
 
-    assert(toStrings([
-            CatalogStatus.active, CatalogStatus.inactive, CatalogStatus.archived
+    assert(toStrings([    CatalogStatus.active, CatalogStatus.inactive, CatalogStatus.archived
         ]) == ["active", "inactive", "archived"]);
 }
 
@@ -133,8 +129,7 @@ unittest {
     assert("".toCommandStatus == CommandStatus.active);
     assert("unknown".toCommandStatus == CommandStatus.active);
 
-    assert(["active", "inactive", "deprecated", "unknown"].toCommandStatuses == [
-            CommandStatus.active, CommandStatus.inactive,
+    assert(["active", "inactive", "deprecated", "unknown"].toCommandStatuses == [    CommandStatus.active, CommandStatus.inactive,
             CommandStatus.deprecated_,
             CommandStatus.active
         ]);
@@ -143,8 +138,7 @@ unittest {
     assert(CommandStatus.inactive.toString == "inactive");
     assert(CommandStatus.deprecated_.toString == "deprecated");
 
-    assert([
-            CommandStatus.active, CommandStatus.inactive,
+    assert([    CommandStatus.active, CommandStatus.inactive,
             CommandStatus.deprecated_
         ].toStrings == ["active", "inactive", "deprecated"]);
 }
@@ -181,10 +175,8 @@ unittest {
     assert("".toCommandType == CommandType.simple);
     assert("unknown".toCommandType == CommandType.simple);
 
-    assert([
-            "simple", "composite", "httpRequest", "script", "unknown"
-        ].toCommandTypes == [
-        CommandType.simple, CommandType.composite, CommandType.httpRequest,
+    assert([    "simple", "composite", "httpRequest", "script", "unknown"
+        ].toCommandTypes == [CommandType.simple, CommandType.composite, CommandType.httpRequest,
         CommandType.script, CommandType.simple
     ]);
 
@@ -193,8 +185,7 @@ unittest {
     assert(CommandType.httpRequest.toString == "httpRequest");
     assert(CommandType.script.toString == "script");
 
-    assert([
-            CommandType.simple, CommandType.composite, CommandType.httpRequest,
+    assert([    CommandType.simple, CommandType.composite, CommandType.httpRequest,
             CommandType.script
         ].toStrings == ["simple", "composite", "httpRequest", "script"]);
 }
@@ -235,11 +226,9 @@ unittest {
     assert("".toExecutionStatus == ExecutionStatus.pending);
     assert("unknown".toExecutionStatus == ExecutionStatus.pending);
 
-    assert([
-            "pending", "running", "completed", "failed", "cancelled", "timedOut",
+    assert([    "pending", "running", "completed", "failed", "cancelled", "timedOut",
             "unknown"
-        ].toExecutionStatuses == [
-        ExecutionStatus.pending, ExecutionStatus.running,
+        ].toExecutionStatuses == [ExecutionStatus.pending, ExecutionStatus.running,
         ExecutionStatus.completed, ExecutionStatus.failed,
         ExecutionStatus.cancelled, ExecutionStatus.timedOut,
         ExecutionStatus.pending
@@ -252,12 +241,10 @@ unittest {
     assert(ExecutionStatus.cancelled.toString == "cancelled");
     assert(ExecutionStatus.timedOut.toString == "timedOut");
 
-    assert([
-            ExecutionStatus.pending, ExecutionStatus.running,
+    assert([    ExecutionStatus.pending, ExecutionStatus.running,
             ExecutionStatus.completed, ExecutionStatus.failed,
             ExecutionStatus.cancelled, ExecutionStatus.timedOut
-        ].toStrings == [
-        "pending", "running", "completed", "failed", "cancelled", "timedOut"
+        ].toStrings == ["pending", "running", "completed", "failed", "cancelled", "timedOut"
     ]);
 }
 
@@ -293,10 +280,8 @@ unittest {
     assert("".toExecutionPriority == ExecutionPriority.medium);
     assert("unknown".toExecutionPriority == ExecutionPriority.medium);
 
-    assert([
-            "low", "medium", "high", "critical", "unknown"
-        ].toExecutionPriorities == [
-        ExecutionPriority.low, ExecutionPriority.medium, ExecutionPriority.high,
+    assert([    "low", "medium", "high", "critical", "unknown"
+        ].toExecutionPriorities == [ExecutionPriority.low, ExecutionPriority.medium, ExecutionPriority.high,
         ExecutionPriority.critical, ExecutionPriority.medium
     ]);
 
@@ -305,8 +290,7 @@ unittest {
     assert(ExecutionPriority.high.toString == "high");
     assert(ExecutionPriority.critical.toString == "critical");
 
-    assert([
-            ExecutionPriority.low, ExecutionPriority.medium,
+    assert([    ExecutionPriority.low, ExecutionPriority.medium,
             ExecutionPriority.high, ExecutionPriority.critical
         ].toStrings == ["low", "medium", "high", "critical"]);
 }
@@ -341,8 +325,7 @@ unittest {
     assert("".toScheduleType == ScheduleType.oneTime);
     assert("unknown".toScheduleType == ScheduleType.oneTime);
 
-    assert(["oneTime", "recurring", "cron", "unknown"].toScheduleTypes == [
-            ScheduleType.oneTime, ScheduleType.recurring, ScheduleType.cron,
+    assert(["oneTime", "recurring", "cron", "unknown"].toScheduleTypes == [    ScheduleType.oneTime, ScheduleType.recurring, ScheduleType.cron,
             ScheduleType.oneTime
         ]);
 
@@ -350,8 +333,7 @@ unittest {
     assert(ScheduleType.recurring.toString == "recurring");
     assert(ScheduleType.cron.toString == "cron");
 
-    assert([
-            ScheduleType.oneTime, ScheduleType.recurring, ScheduleType.cron
+    assert([    ScheduleType.oneTime, ScheduleType.recurring, ScheduleType.cron
         ].toStrings == ["oneTime", "recurring", "cron"]);
 }
 
@@ -387,10 +369,8 @@ unittest {
     assert("".toScheduleStatus == ScheduleStatus.active);
     assert("unknown".toScheduleStatus == ScheduleStatus.active);
 
-    assert([
-            "active", "paused", "completed", "expired", "unknown"
-        ].toScheduleStatuses == [
-        ScheduleStatus.active, ScheduleStatus.paused, ScheduleStatus.completed,
+    assert([    "active", "paused", "completed", "expired", "unknown"
+        ].toScheduleStatuses == [ScheduleStatus.active, ScheduleStatus.paused, ScheduleStatus.completed,
         ScheduleStatus.expired, ScheduleStatus.active
     ]);
 
@@ -399,8 +379,7 @@ unittest {
     assert(ScheduleStatus.completed.toString == "completed");
     assert(ScheduleStatus.expired.toString == "expired");
 
-    assert([
-            ScheduleStatus.active, ScheduleStatus.paused, ScheduleStatus.completed,
+    assert([    ScheduleStatus.active, ScheduleStatus.paused, ScheduleStatus.completed,
             ScheduleStatus.expired
         ].toStrings == ["active", "paused", "completed", "expired"]);
 }
@@ -437,8 +416,7 @@ unittest {
     assert("".toTriggerType == TriggerType.event);
     assert("unknown".toTriggerType == TriggerType.event);
 
-    assert(["event", "webhook", "alertNotification", "manual", "unknown"].toTriggerTypes == [
-            TriggerType.event, TriggerType.webhook, TriggerType.alertNotification,
+    assert(["event", "webhook", "alertNotification", "manual", "unknown"].toTriggerTypes == [    TriggerType.event, TriggerType.webhook, TriggerType.alertNotification,
             TriggerType.manual, TriggerType.event
         ]);
 
@@ -447,8 +425,7 @@ unittest {
     assert(TriggerType.alertNotification.toString == "alertNotification");
     assert(TriggerType.manual.toString == "manual");
 
-    assert([
-        TriggerType.event, TriggerType.webhook, TriggerType.alertNotification,
+    assert([TriggerType.event, TriggerType.webhook, TriggerType.alertNotification,
         TriggerType.manual
     ].toStrings == ["event", "webhook", "alertNotification", "manual"]);
 }
@@ -483,8 +460,7 @@ unittest {
     assert("".toTriggerStatus == TriggerStatus.active);
     assert("unknown".toTriggerStatus == TriggerStatus.active);
 
-    assert(["active", "inactive", "disabled", "unknown"].toTriggerStatuses == [
-            TriggerStatus.active, TriggerStatus.inactive, TriggerStatus.disabled,
+    assert(["active", "inactive", "disabled", "unknown"].toTriggerStatuses == [    TriggerStatus.active, TriggerStatus.inactive, TriggerStatus.disabled,
             TriggerStatus.active
         ]);
 
@@ -492,8 +468,7 @@ unittest {
     assert(TriggerStatus.inactive.toString == "inactive");
     assert(TriggerStatus.disabled.toString == "disabled");
 
-    assert([
-            TriggerStatus.active, TriggerStatus.inactive, TriggerStatus.disabled
+    assert([    TriggerStatus.active, TriggerStatus.inactive, TriggerStatus.disabled
         ].toStrings == ["active", "inactive", "disabled"]);
 }
 
@@ -527,7 +502,7 @@ InputType[] toInputType(string[] values) {
 }
 
 string toString(InputType type) {
-    return type.to!string;
+    return cast(string)type;
 }
 
 string[] toStrings(InputType[] types) {
@@ -544,8 +519,7 @@ unittest {
     assert("".toInputType == InputType.string_);
     assert("unknown".toInputType == InputType.string_);
 
-    assert(["string", "integer"].toInputType == [
-            InputType.string_, InputType.integer
+    assert(["string", "integer"].toInputType == [    InputType.string_, InputType.integer
         ]);
 
     assert(InputType.string_.toString == "string");
@@ -554,8 +528,7 @@ unittest {
     assert(InputType.json.toString == "json");
     assert(InputType.secret.toString == "secret");
 
-    assert([InputType.string_, InputType.integer].toStrings == [
-            "string", "integer"
+    assert([InputType.string_, InputType.integer].toStrings == [    "string", "integer"
         ]);
 }
 
@@ -589,16 +562,14 @@ unittest {
     assert("".toInputSensitivity == InputSensitivity.normal);
     assert("unknown".toInputSensitivity == InputSensitivity.normal);
 
-    assert(["normal", "secret"].toInputSensitivities == [
-            InputSensitivity.normal, InputSensitivity.secret
+    assert(["normal", "secret"].toInputSensitivities == [    InputSensitivity.normal, InputSensitivity.secret
         ]);
 
     assert(InputSensitivity.normal.toString == "normal");
     assert(InputSensitivity.sensitive.toString == "sensitive");
     assert(InputSensitivity.secret.toString == "secret");
 
-    assert([InputSensitivity.normal, InputSensitivity.secret].toStrings == [
-            "normal", "secret"
+    assert([InputSensitivity.normal, InputSensitivity.secret].toStrings == [    "normal", "secret"
         ]);
 }
 
@@ -632,16 +603,14 @@ unittest {
     assert("".toServiceAccountStatus == ServiceAccountStatus.active);
     assert("unknown".toServiceAccountStatus == ServiceAccountStatus.active);
 
-    assert(["active", "inactive"].toServiceAccountStatuses == [
-            ServiceAccountStatus.active, ServiceAccountStatus.inactive
+    assert(["active", "inactive"].toServiceAccountStatuses == [    ServiceAccountStatus.active, ServiceAccountStatus.inactive
         ]);
 
     assert(ServiceAccountStatus.active.toString == "active");
     assert(ServiceAccountStatus.inactive.toString == "inactive");
     assert(ServiceAccountStatus.revoked.toString == "revoked");
 
-    assert([ServiceAccountStatus.active, ServiceAccountStatus.revoked].toStrings == [
-            "active", "revoked"
+    assert([ServiceAccountStatus.active, ServiceAccountStatus.revoked].toStrings == [    "active", "revoked"
         ]);
 }
 
@@ -677,8 +646,7 @@ unittest {
     assert("".toConnectorType == ConnectorType.github);
     assert("unknown".toConnectorType == ConnectorType.github);
 
-    assert(["github", "gitLab"].toConnectorTypes == [
-            ConnectorType.github, ConnectorType.gitLab
+    assert(["github", "gitLab"].toConnectorTypes == [    ConnectorType.github, ConnectorType.gitLab
         ]);
 
     assert(ConnectorType.github.toString == "github");
@@ -686,8 +654,7 @@ unittest {
     assert(ConnectorType.bitbucket.toString == "bitbucket");
     assert(ConnectorType.s3.toString == "s3");
 
-    assert([ConnectorType.github, ConnectorType.gitLab].toStrings == [
-            "github", "gitLab"
+    assert([ConnectorType.github, ConnectorType.gitLab].toStrings == [    "github", "gitLab"
         ]);
 }
 
@@ -721,16 +688,14 @@ unittest {
     assert("".toConnectorStatus == ConnectorStatus.connected);
     assert("unknown".toConnectorStatus == ConnectorStatus.connected);
 
-    assert(["connected", "disconnected"].toConnectorStatuses == [
-            ConnectorStatus.connected, ConnectorStatus.disconnected
+    assert(["connected", "disconnected"].toConnectorStatuses == [    ConnectorStatus.connected, ConnectorStatus.disconnected
         ]);
 
     assert(ConnectorStatus.connected.toString == "connected");
     assert(ConnectorStatus.disconnected.toString == "disconnected");
     assert(ConnectorStatus.error.toString == "error");
 
-    assert([ConnectorStatus.connected, ConnectorStatus.disconnected].toStrings == [
-            "connected", "disconnected"
+    assert([ConnectorStatus.connected, ConnectorStatus.disconnected].toStrings == [    "connected", "disconnected"
         ]);
 }
 
@@ -766,8 +731,7 @@ unittest {
     assert("".toBackupStatus == BackupStatus.pending);
     assert("unknown".toBackupStatus == BackupStatus.pending);
 
-    assert(["pending", "inProgress"].toBackupStatuses == [
-            BackupStatus.pending, BackupStatus.inProgress
+    assert(["pending", "inProgress"].toBackupStatuses == [    BackupStatus.pending, BackupStatus.inProgress
         ]);
 
     assert(BackupStatus.pending.toString == "pending");
@@ -775,7 +739,6 @@ unittest {
     assert(BackupStatus.completed.toString == "completed");
     assert(BackupStatus.failed.toString == "failed");
 
-    assert([BackupStatus.pending, BackupStatus.inProgress].toStrings == [
-            "pending", "inProgress"
+    assert([BackupStatus.pending, BackupStatus.inProgress].toStrings == [    "pending", "inProgress"
         ]);
 }

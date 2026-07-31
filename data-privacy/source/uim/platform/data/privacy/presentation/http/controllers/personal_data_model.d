@@ -69,8 +69,7 @@ class PersonalDataModelController : ManageHttpController {
     auto catParam = req.headers.get("X-Category-Filter", "");
 
     PersonalDataModel[] items = catParam.length > 0
-      ? usecase.listModels(tenantId, catParam.to!PersonalDataCategory) : usecase.listModels(
-        tenantId);
+      ? usecase.listModels(tenantId, catParam.to!PersonalDataCategory) : usecase.listModels(    tenantId);
 
     auto list = items.map!(item => item.toJson()).array.toJson;
 

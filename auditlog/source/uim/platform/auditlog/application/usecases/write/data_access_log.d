@@ -41,8 +41,7 @@ class WriteDataAccessLogUseCase { // TODO: UIMUseCase {
     entry.outcome = AuditOutcome.success;
     entry.objectType = req.dataObjectType;
     entry.objectId = req.dataObjectId;
-    entry.message = "Data access: %s / %s by %s purpose=%s".format(
-      req.dataObjectType, req.dataObjectId, 
+    entry.message = "Data access: %s / %s by %s purpose=%s".format(  req.dataObjectType, req.dataObjectId, 
       req.accessedBy, req.purpose);
     entry.timestamp = entry.createdAt; // Set timestamp to current time in initEntity
 

@@ -106,8 +106,7 @@ class FileFeatureFlagRepository : FeatureFlagRepository {
         f.updatedBy   = j["updatedBy"].get!string;
 
         foreach (v; j["variants"])
-            f.variants ~= FlagVariant(
-                VariantId(v["id"].get!string), v["key"].get!string,
+            f.variants ~= FlagVariant(            VariantId(v["id"].get!string), v["key"].get!string,
                 v["name"].get!string, v["description"].get!string,
                 v["value"].get!string, cast(uint) v["weight"].get!long
             );

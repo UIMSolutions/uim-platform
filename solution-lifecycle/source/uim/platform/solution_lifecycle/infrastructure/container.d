@@ -52,8 +52,7 @@ Container buildContainer(SrvConfig config) {
     c.manageMtas          = new ManageMtasUseCase(c.mtaRepo, c.mtaOperationRepo,
                                                    c.mtaArchiveRepo, c.deploymentEngine);
     c.manageMtaOperations = new ManageMtaOperationsUseCase(c.mtaOperationRepo, c.deploymentEngine);
-    c.manageMtaSubscriptions = new ManageMtaSubscriptionsUseCase(
-                                    c.mtaSubscriptionRepo, c.mtaOperationRepo, c.deploymentEngine);
+    c.manageMtaSubscriptions = new ManageMtaSubscriptionsUseCase(                                c.mtaSubscriptionRepo, c.mtaOperationRepo, c.deploymentEngine);
 
     // Presentation controllers
     c.mtaArchiveController      = new MtaArchiveController(c.manageMtaArchives);

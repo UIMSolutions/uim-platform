@@ -210,11 +210,9 @@ unittest {
   assert(ModelType.regression.toString == "regression");
   assert(ModelType.recommendation.toString == "recommendation");
 
-  assert(["classification", "recommendation"].toModelTypes == [
-      ModelType.classification, ModelType.recommendation
+  assert(["classification", "recommendation"].toModelTypes == [ModelType.classification, ModelType.recommendation
     ]);
-  assert([ModelType.classification, ModelType.recommendation].toStrings == [
-      "classification", "recommendation"
+  assert([ModelType.classification, ModelType.recommendation].toStrings == ["classification", "recommendation"
     ]);
 }
 

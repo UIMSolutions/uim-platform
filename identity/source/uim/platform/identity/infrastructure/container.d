@@ -76,10 +76,8 @@ Container buildContainer(SrvConfig config) @trusted {
     c.identityProviderController = new IdentityProviderController(c.manageIdentityProvidersUseCase);
     c.provisioningJobController = new ProvisioningJobController(c.manageProvisioningJobsUseCase);
 
-    // c.identityWebController = new IdentityWebController(
-    //     c.manageUsersUseCase, c.manageGroupsUseCase, c.manageApplicationsUseCase);
-    // c.identityCliController = new IdentityCliController(
-    //     c.manageUsersUseCase, c.manageGroupsUseCase, c.manageApplicationsUseCase, c.manageProvisioningJobsUseCase);
+    // c.identityWebController = new IdentityWebController(//     c.manageUsersUseCase, c.manageGroupsUseCase, c.manageApplicationsUseCase);
+    // c.identityCliController = new IdentityCliController(//     c.manageUsersUseCase, c.manageGroupsUseCase, c.manageApplicationsUseCase, c.manageProvisioningJobsUseCase);
 
     return c;
 }

@@ -41,8 +41,7 @@ class MongoEventTopicRepository : EventTopicRepository {
     }
 
     private Bson toBson(EventTopic t) {
-        return Bson([
-            "id":          Bson(t.id.value),
+        return Bson([    "id":          Bson(t.id.value),
             "tenantId":    Bson(t.tenantId.value),
             "name":        Bson(t.name),
             "namespace":   Bson(t.namespace),

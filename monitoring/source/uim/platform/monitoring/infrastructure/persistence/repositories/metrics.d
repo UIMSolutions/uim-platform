@@ -74,8 +74,7 @@ class MetricRepository : TenantRepository!(Metric, MetricId), IMetricRepository 
 
   Metric[] findInTimeRange(TenantId tenantId, MonitoredResourceId resourceId,
     string metricName, long startTime, long endTime) {
-    return findByResourceAndName(tenantId, resourceId, metricName).filter!(
-      m => m.timestamp >= startTime && m.timestamp <= endTime).array;
+    return findByResourceAndName(tenantId, resourceId, metricName).filter!(  m => m.timestamp >= startTime && m.timestamp <= endTime).array;
   }
 
   void removeInTimeRange(TenantId tenantId, MonitoredResourceId resourceId, string metricName, long startTime, long endTime) {

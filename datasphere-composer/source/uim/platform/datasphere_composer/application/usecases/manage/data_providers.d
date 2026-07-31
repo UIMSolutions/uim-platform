@@ -16,8 +16,7 @@ class ManageDataProvidersUseCase {
   this(DataProviderRepository repo) { this.repo = repo; }
 
   CommandResult create(CreateDataProviderRequest r) {
-    auto err = ComposerValidator.validateDataProvider(DataProvider(
-      DataProviderId(r.id), TenantId(r.tenantId), r.name, r.description));
+    auto err = ComposerValidator.validateDataProvider(DataProvider(  DataProviderId(r.id), TenantId(r.tenantId), r.name, r.description));
     if (err !is null) return CommandResult(false, r.id, err);
 
     DataProvider p;

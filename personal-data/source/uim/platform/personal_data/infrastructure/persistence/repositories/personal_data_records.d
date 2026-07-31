@@ -59,14 +59,11 @@ class MemoryPersonalDataRecordRepository : TenantRepository!(PersonalDataRecord,
     }
 
     PersonalDataRecord[] findByDataSubjectAndApplication(TenantId tenantId, DataSubjectId dataSubjectId, RegisteredApplicationId applicationId) {
-        return filterByApplication(
-            filterByDataSubject(
-                findByTenant(tenantId), dataSubjectId), applicationId);
+        return filterByApplication(        filterByDataSubject(            findByTenant(tenantId), dataSubjectId), applicationId);
     }
 
     void removeByDataSubjectAndApplication(TenantId tenantId, DataSubjectId dataSubjectId, RegisteredApplicationId applicationId) {
-        findByDataSubjectAndApplication(tenantId, dataSubjectId, applicationId).each!(
-            v => remove(v));
+        findByDataSubjectAndApplication(tenantId, dataSubjectId, applicationId).each!(        v => remove(v));
     }
     // #endregion ByDataSubjectAndApplication
 

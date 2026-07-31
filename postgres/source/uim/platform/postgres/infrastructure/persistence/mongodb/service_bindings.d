@@ -40,8 +40,7 @@ class MongoServiceBindingRepository : ServiceBindingRepository {
     }
 
     private Bson toBson(ServiceBinding e) {
-        return Bson([
-            "id":          Bson(e.id.value),
+        return Bson([    "id":          Bson(e.id.value),
             "tenantId":    Bson(e.tenantId.value),
             "instanceId":  Bson(e.instanceId.value),
             "appId":       Bson(e.appId),

@@ -43,8 +43,7 @@ Container buildContainer(SrvConfig config) {
     c.subscriptionJobRepo = new MemorySubscriptionJobRepository();
 
     // Domain service
-    c.subscriptionEngine = new SubscriptionEngine(
-        c.saasApplicationRepo,
+    c.subscriptionEngine = new SubscriptionEngine(    c.saasApplicationRepo,
         c.appSubscriptionRepo,
         c.subscriptionJobRepo);
 

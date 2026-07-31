@@ -22,8 +22,7 @@ class ProduceEventsUseCase {
     private EventMatcher             matcher;
     private EventDispatcher          dispatcher;
 
-    this(
-        SubscriptionRepository   subscriptions,
+    this(    SubscriptionRepository   subscriptions,
         ConditionRepository      conditions,
         ActionRepository         actions,
         MatchedEventRepository   matchedEvents,

@@ -17,8 +17,7 @@ class HealthController : HttpController {
   }
 
   protected void handleHealth(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    res.writeJsonBody(
-      Json.emptyObject
+    res.writeJsonBody(  Json.emptyObject
         .set("status", "UP")
         .set("service", "UIM UI Flexibility Service"),
       200

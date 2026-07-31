@@ -62,11 +62,9 @@ unittest {
   assert(ArtifactStatus.stopping.toString == "stopping");
   assert(ArtifactStatus.error_.toString == "error");
 
-  assert(["draft", "deployed"].toArtifactStatuses == [
-      ArtifactStatus.draft, ArtifactStatus.deployed
+  assert(["draft", "deployed"].toArtifactStatuses == [ArtifactStatus.draft, ArtifactStatus.deployed
     ]);
-  assert([ArtifactStatus.draft, ArtifactStatus.deployed].toStrings == [
-      "draft", "deployed"
+  assert([ArtifactStatus.draft, ArtifactStatus.deployed].toStrings == ["draft", "deployed"
     ]);
 }
 
@@ -99,11 +97,9 @@ unittest {
   assert(FlowDirection.outbound.toString == "outbound");
   assert(FlowDirection.bidirectional.toString == "bidirectional");
 
-  assert(["inbound", "outbound"].toFlowDirections == [
-      FlowDirection.inbound, FlowDirection.outbound
+  assert(["inbound", "outbound"].toFlowDirections == [FlowDirection.inbound, FlowDirection.outbound
     ]);
-  assert([FlowDirection.inbound, FlowDirection.outbound].toStrings == [
-      "inbound", "outbound"
+  assert([FlowDirection.inbound, FlowDirection.outbound].toStrings == ["inbound", "outbound"
     ]);
 }
 
@@ -200,8 +196,7 @@ unittest {
   assert(AdapterType.ariba.toString == "ariba");
   assert(AdapterType.openConnector.toString == "openConnector");
 
-  assert(["http", "soap"].toAdapterTypes == [
-      AdapterType.http_, AdapterType.soap
+  assert(["http", "soap"].toAdapterTypes == [AdapterType.http_, AdapterType.soap
     ]);
   assert([AdapterType.http_, AdapterType.soap].toStrings == ["http", "soap"]);
 }
@@ -250,11 +245,9 @@ unittest {
   assert(PolicyType.transform.toString == "transform");
   assert(PolicyType.routing.toString == "routing");
 
-  assert(["security", "quota"].toPolicyTypes == [
-      PolicyType.security, PolicyType.quota
+  assert(["security", "quota"].toPolicyTypes == [PolicyType.security, PolicyType.quota
     ]);
-  assert([PolicyType.security, PolicyType.quota].toStrings == [
-      "security", "quota"
+  assert([PolicyType.security, PolicyType.quota].toStrings == ["security", "quota"
     ]);
 }
 
@@ -290,11 +283,9 @@ unittest {
   assert(ApiProxyStatus.deprecated_.toString == "deprecated");
   assert(ApiProxyStatus.retired.toString == "retired");
 
-  assert(["draft", "published"].toApiProxyStatuses == [
-      ApiProxyStatus.draft, ApiProxyStatus.published
+  assert(["draft", "published"].toApiProxyStatuses == [ApiProxyStatus.draft, ApiProxyStatus.published
     ]);
-  assert([ApiProxyStatus.draft, ApiProxyStatus.published].toStrings == [
-      "draft", "published"
+  assert([ApiProxyStatus.draft, ApiProxyStatus.published].toStrings == ["draft", "published"
     ]);
 }
 
@@ -339,11 +330,9 @@ unittest {
   assert(QueueStatus.suspended.toString == "suspended");
   assert(QueueStatus.deleted_.toString == "deleted");
 
-  assert(["active", "suspended"].toQueueStatuses == [
-      QueueStatus.active, QueueStatus.suspended
+  assert(["active", "suspended"].toQueueStatuses == [QueueStatus.active, QueueStatus.suspended
     ]);
-  assert([QueueStatus.active, QueueStatus.suspended].toStrings == [
-      "active", "suspended"
+  assert([QueueStatus.active, QueueStatus.suspended].toStrings == ["active", "suspended"
     ]);
 }
 
@@ -385,11 +374,9 @@ unittest {
   assert(SubscriptionStatus.inactive.toString == "inactive");
   assert(SubscriptionStatus.error_.toString == "error");
 
-  assert(["active", "inactive"].toSubscriptionStatuses == [
-      SubscriptionStatus.active, SubscriptionStatus.inactive
+  assert(["active", "inactive"].toSubscriptionStatuses == [SubscriptionStatus.active, SubscriptionStatus.inactive
     ]);
-  assert([SubscriptionStatus.active, SubscriptionStatus.inactive].toStrings == [
-      "active", "inactive"
+  assert([SubscriptionStatus.active, SubscriptionStatus.inactive].toStrings == ["active", "inactive"
     ]);
 }
 
@@ -437,11 +424,9 @@ string[] toStrings(B2bStandard[] values)
   assert(B2bStandard.hl7.toString == "HL7");
   assert(B2bStandard.idoc.toString == "IDoc");  
 
-  assert(["edifact", "x12"].toB2bStandards == [
-      B2bStandard.edifact, B2bStandard.x12
+  assert(["edifact", "x12"].toB2bStandards == [B2bStandard.edifact, B2bStandard.x12
     ]);
-  assert([B2bStandard.edifact, B2bStandard.x12].toStrings == [
-      "EDIFACT", "X12"
+  assert([B2bStandard.edifact, B2bStandard.x12].toStrings == ["EDIFACT", "X12"
     ]);
 }
 
@@ -475,11 +460,9 @@ unittest {
   assert(PartnerType.subsidiary.toString == "subsidiary");
   assert(PartnerType.tradingPartner.toString == "tradingPartner");
 
-  assert(["company", "subsidiary"].toPartnerTypes == [
-      PartnerType.company, PartnerType.subsidiary
+  assert(["company", "subsidiary"].toPartnerTypes == [PartnerType.company, PartnerType.subsidiary
     ]);
-  assert([PartnerType.company, PartnerType.subsidiary].toStrings == [
-      "company", "subsidiary"
+  assert([PartnerType.company, PartnerType.subsidiary].toStrings == ["company", "subsidiary"
     ]);
 }
 
@@ -513,11 +496,9 @@ unittest {
   assert(MappingStatus.active.toString == "active");
   assert(MappingStatus.deprecated_.toString == "deprecated");
 
-  assert(["draft", "active"].toMappingStatuses == [
-      MappingStatus.draft, MappingStatus.active
+  assert(["draft", "active"].toMappingStatuses == [MappingStatus.draft, MappingStatus.active
     ]);
-  assert([MappingStatus.draft, MappingStatus.active].toStrings == [
-      "draft", "active"
+  assert([MappingStatus.draft, MappingStatus.active].toStrings == ["draft", "active"
     ]);
 }
 
@@ -557,11 +538,9 @@ unittest {
   assert(DeploymentStatus.failed.toString == "failed");
   assert(DeploymentStatus.error_.toString == "error");
 
-  assert(["pending", "running"].toDeploymentStatuses == [
-      DeploymentStatus.pending, DeploymentStatus.running
+  assert(["pending", "running"].toDeploymentStatuses == [DeploymentStatus.pending, DeploymentStatus.running
     ]);
-  assert([DeploymentStatus.pending, DeploymentStatus.running].toStrings == [
-      "pending", "running"
+  assert([DeploymentStatus.pending, DeploymentStatus.running].toStrings == ["pending", "running"
     ]);
 }
 
@@ -604,10 +583,8 @@ unittest {
   assert(IntegrationUserRole.apiDeveloper.toString == "apiDeveloper");
   assert(IntegrationUserRole.b2bSpecialist.toString == "b2bSpecialist");
 
-  assert(["admin", "developer"].toIntegrationUserRoles == [
-      IntegrationUserRole.admin, IntegrationUserRole.developer
+  assert(["admin", "developer"].toIntegrationUserRoles == [IntegrationUserRole.admin, IntegrationUserRole.developer
     ]);
-  assert([IntegrationUserRole.admin, IntegrationUserRole.developer].toStrings == [
-      "admin", "developer"
+  assert([IntegrationUserRole.admin, IntegrationUserRole.developer].toStrings == ["admin", "developer"
     ]);
 }

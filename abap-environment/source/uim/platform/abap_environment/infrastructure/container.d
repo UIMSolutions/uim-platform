@@ -88,10 +88,8 @@ Container buildContainer(SrvConfig config) {
 
   // Application use cases
   c.manageSystemInstances = new ManageSystemInstancesUseCase(c.systemInstanceRepo);
-  c.manageSoftwareComponents = new ManageSoftwareComponentsUseCase(
-      c.softwareComponentRepo, c.systemInstanceRepo);
-  c.manageCommunicationArrangements = new ManageCommunicationArrangementsUseCase(
-      c.communicationArrangementRepo);
+  c.manageSoftwareComponents = new ManageSoftwareComponentsUseCase(  c.softwareComponentRepo, c.systemInstanceRepo);
+  c.manageCommunicationArrangements = new ManageCommunicationArrangementsUseCase(  c.communicationArrangementRepo);
   c.manageServiceBindings = new ManageServiceBindingsUseCase(c.serviceBindingRepo);
   c.manageBusinessUsers = new ManageBusinessUsersUseCase(c.businessUserRepo, c.businessRoleRepo);
   c.manageBusinessRoles = new ManageBusinessRolesUseCase(c.businessRoleRepo);
@@ -101,8 +99,7 @@ Container buildContainer(SrvConfig config) {
   // Presentation controllers
   c.systemInstanceController = new SystemInstanceController(c.manageSystemInstances);
   c.softwareComponentController = new SoftwareComponentController(c.manageSoftwareComponents);
-  c.communicationArrangementController = new CommunicationArrangementController(
-      c.manageCommunicationArrangements);
+  c.communicationArrangementController = new CommunicationArrangementController(  c.manageCommunicationArrangements);
   c.serviceBindingController = new ServiceBindingController(c.manageServiceBindings);
   c.businessUserController = new BusinessUserController(c.manageBusinessUsers);
   c.businessRoleController = new BusinessRoleController(c.manageBusinessRoles);

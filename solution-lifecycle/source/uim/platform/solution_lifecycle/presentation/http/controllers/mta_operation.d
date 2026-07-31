@@ -36,8 +36,7 @@ class MtaOperationController : ManageHttpController {
 
         auto tenantId = precheck.tenantId;
         auto ops = usecase.listOperations(tenantId).map!(op => op.toJson()).array.toJson;
-        return successResponse("Operations retrieved successfully", "Retrieved", 200, Json.emptyObject.set(
-                "operations", ops).set("count", ops.length));
+        return successResponse("Operations retrieved successfully", "Retrieved", 200, Json.emptyObject.set(            "operations", ops).set("count", ops.length));
     }
 
     override protected Json getHandler(HTTPServerRequest req) {

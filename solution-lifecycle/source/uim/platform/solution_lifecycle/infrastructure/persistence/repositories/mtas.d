@@ -15,8 +15,7 @@ class MemoryMtaRepository
     : TenantRepository!(Mta, MtaId),
       MtaRepository
 {
-    // size_t countByMta(
-    /// Find all MTAs for a tenant with a given MTA application ID
+    // size_t countByMta(/// Find all MTAs for a tenant with a given MTA application ID
     Mta[] findByMta(TenantId tenantId, string mtaId) {
         Mta[] result;
         foreach (m; findByTenant(tenantId))

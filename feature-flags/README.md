@@ -125,12 +125,10 @@ curl -X POST http://localhost:8097/api/v1/feature-flags/flags \
     "type": "BOOLEAN",
     "instanceId": "my-app-instance",
     "defaultVariant": "off",
-    "variants": [
-      { "key": "on",  "name": "On",  "value": "true",  "weight": 0 },
+    "variants": [{ "key": "on",  "name": "On",  "value": "true",  "weight": 0 },
       { "key": "off", "name": "Off", "value": "false", "weight": 0 }
     ],
-    "rules": [
-      {
+    "rules": [{
         "name": "Beta users",
         "type": "USER_MATCH",
         "variantKey": "on",

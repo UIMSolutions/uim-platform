@@ -63,8 +63,7 @@ class BlockingController : ManageHttpController {
     auto statusParam = req.headers.get("X-Status-Filter", "");
 
     BlockingRequest[] items = statusParam.length > 0
-      ? usecase.listByStatus(tenantId, statusParam.toBlockingStatus) : usecase.listRequests(
-        tenantId);
+      ? usecase.listByStatus(tenantId, statusParam.toBlockingStatus) : usecase.listRequests(    tenantId);
 
     auto list = items.map!(item => item.toJson()).array.toJson;
 

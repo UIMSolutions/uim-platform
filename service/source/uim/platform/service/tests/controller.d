@@ -19,8 +19,7 @@ abstract class ControllerTestBase {
      *   tenantId = The tenant identifier for context.
      *   data = The JSON payload for mutations.
      */
-    protected HTTPServerRequest createMockRequest(
-        string method = "GET", 
+    protected HTTPServerRequest createMockRequest(    string method = "GET", 
         string url = "/api/v1/application-vulnerability/test", 
         TenantId tenantId = "test-tenant", 
         Json data = Json.undefined

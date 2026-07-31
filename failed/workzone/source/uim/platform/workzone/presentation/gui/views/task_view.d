@@ -56,8 +56,7 @@ class TaskInboxView : Box {
 
         immutable overdue = _model.overdueCount();
         
-        _summaryLabel.setText(
-            _model.count.to!string ~ " task(s)" ~
+        _summaryLabel.setText(        _model.count.to!string ~ " task(s)" ~
             (overdue > 0 ? "  ⚠ " ~ overdue.to!string ~ " overdue" : "")
         );
 

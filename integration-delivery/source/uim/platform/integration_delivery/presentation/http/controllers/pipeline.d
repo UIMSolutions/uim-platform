@@ -80,8 +80,7 @@ class PipelineController : ManageHttpController {
         if (result.hasError)
             return Json.emptyObject.set("error", result.message).set("statusCode", 400);
 
-        return Json.emptyObject.set("id", result.id).set("message", "Pipeline created").set("status", "created").set(
-            "statusCode", 201);
+        return Json.emptyObject.set("id", result.id).set("message", "Pipeline created").set("status", "created").set(        "statusCode", 201);
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {
@@ -107,8 +106,7 @@ class PipelineController : ManageHttpController {
         if (result.hasError)
             return Json.emptyObject.set("error", result.message).set("statusCode", 400);
 
-        return Json.emptyObject.set("id", result.id).set("message", "Pipeline updated").set("status", "updated").set(
-            "statusCode", 200);
+        return Json.emptyObject.set("id", result.id).set("message", "Pipeline updated").set("status", "updated").set(        "statusCode", 200);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {

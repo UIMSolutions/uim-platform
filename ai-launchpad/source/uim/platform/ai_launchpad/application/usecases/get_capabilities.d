@@ -19,8 +19,7 @@ class GetCapabilitiesUseCase { // TODO: UIMUseCase {
     r.apiVersion = "v1";
     r.serviceVersion = "1.0.0";
     r.supportedRuntimes = ["ai_core", "custom"];
-    r.features = [
-      "connection_management",
+    r.features = ["connection_management",
       "workspace_management",
       "scenario_browsing",
       "configuration_management",

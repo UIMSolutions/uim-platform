@@ -95,8 +95,7 @@ class FlagEvaluator {
 
     EvaluationResult buildResult(FeatureFlag flag_, string variantKey, string reason) const {
         auto variant = flag_.findVariant(variantKey);
-        return EvaluationResult(
-            flag_.name,
+        return EvaluationResult(        flag_.name,
             variantKey,
             variant.value,
             flag_.type_,

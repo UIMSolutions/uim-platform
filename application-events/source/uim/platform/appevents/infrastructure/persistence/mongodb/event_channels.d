@@ -43,8 +43,7 @@ class MongoEventChannelRepository : EventChannelRepository {
     }
 
     private Bson toBson(EventChannel ch) {
-        return Bson([
-            "id":           Bson(ch.id.value),
+        return Bson([    "id":           Bson(ch.id.value),
             "tenantId":     Bson(ch.tenantId.value),
             "name":         Bson(ch.name),
             "topicId":      Bson(ch.topicId.value),

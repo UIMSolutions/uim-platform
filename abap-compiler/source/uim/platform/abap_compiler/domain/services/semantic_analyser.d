@@ -16,8 +16,7 @@ mixin(ShowModule!());
 ///   - Missing END* counterparts for block openers
 ///   - Deprecated statements (FORM/PERFORM discouraged in OO programs)
 struct SemanticAnalyser {
-    private static /* immutable */ string[] BLOCK_OPENERS = [
-        "IF", "LOOP", "WHILE", "DO", "TRY",
+    private static /* immutable */ string[] BLOCK_OPENERS = ["IF", "LOOP", "WHILE", "DO", "TRY",
         "CLASS", "METHOD", "FORM", "FUNCTION", "SELECT",
         "CASE"
     ];
@@ -56,8 +55,7 @@ struct SemanticAnalyser {
             foreach (opener, closer; BLOCK_CLOSERS) {
                 if (upper == closer) {
                     if (openBlocks.length == 0 || openBlocks[$ - 1] != opener) {
-                        diagnostics ~= Diagnostic(
-                            DiagnosticSeverity.error,
+                        diagnostics ~= Diagnostic(                        DiagnosticSeverity.error,
                             "Unexpected '" ~ upper ~ "' without matching '" ~ opener ~ "'",
                             stmt.startLine, 0,
                             "ABAP-S001"
@@ -71,8 +69,7 @@ struct SemanticAnalyser {
 
             // Deprecation hint: PERFORM inside CLASS … ENDCLASS
             if (upper == "PERFORM") {
-                diagnostics ~= Diagnostic(
-                    DiagnosticSeverity.warning,
+                diagnostics ~= Diagnostic(                DiagnosticSeverity.warning,
                     "PERFORM (subroutine call) is deprecated in ABAP Objects — use METHOD instead",
                     stmt.startLine, 0,
                     "ABAP-W001"
@@ -83,8 +80,7 @@ struct SemanticAnalyser {
         // Unclosed blocks
         foreach (remaining; openBlocks) {
             auto closer = BLOCK_CLOSERS.get(remaining, "END" ~ remaining);
-            diagnostics ~= Diagnostic(
-                DiagnosticSeverity.error,
+            diagnostics ~= Diagnostic(            DiagnosticSeverity.error,
                 "Unclosed block '" ~ remaining ~ "': missing '" ~ closer ~ "'",
                 0, 0,
                 "ABAP-S002"

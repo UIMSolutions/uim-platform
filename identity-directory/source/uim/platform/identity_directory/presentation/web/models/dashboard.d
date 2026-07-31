@@ -106,8 +106,7 @@ WebPageModel buildApiClientsModel(string tenantId, ApiClient[] clients) {
   ];
   model.table.headers = ["Name", "Client ID", "Active", "Expires At", "Scopes"];
   foreach (client; clients) {
-    model.table.rows ~= [
-      client.name,
+    model.table.rows ~= [client.name,
       client.clientId,
       client.active ? "active" : "inactive",
       client.expiresAt > 0 ? client.expiresAt.to!string : "never",
@@ -144,8 +143,7 @@ WebPageModel buildAuditModel(string tenantId, AuditEvent[] events) {
   ];
   model.table.headers = ["Type", "Actor", "Target", "Description", "Timestamp"];
   foreach (event; events) {
-    model.table.rows ~= [
-      event.eventType.to!string,
+    model.table.rows ~= [event.eventType.to!string,
       event.actorId,
       event.targetType ~ ": " ~ event.targetId,
       event.description,
@@ -191,8 +189,7 @@ WebPageModel buildUsersModel(string tenantId, IDUser[] users) {
   ];
   model.table.headers = ["User Name", "Display Name", "Status", "Primary Email", "Groups"];
   foreach (user; users) {
-    model.table.rows ~= [
-      user.userName,
+    model.table.rows ~= [user.userName,
       user.getDisplayName(),
       user.isActive() ? "active" : "inactive",
       user.primaryEmail(),
@@ -246,8 +243,7 @@ WebPageModel buildGroupsModel(string tenantId, IDGroup[] groups) {
   ];
   model.table.headers = ["Display Name", "Members", "Description", "Type"];
   foreach (group; groups) {
-    model.table.rows ~= [
-      group.displayName,
+    model.table.rows ~= [group.displayName,
       group.memberCount().to!string,
       group.description,
       group.groupType.to!string,
@@ -289,8 +285,7 @@ WebPageModel buildSchemasModel(string tenantId, Schema[] schemas) {
   ];
   model.table.headers = ["Name", "Attribute Count", "Description"];
   foreach (schema; schemas) {
-    model.table.rows ~= [
-      schema.name,
+    model.table.rows ~= [schema.name,
       schema.attributes.length.to!string,
       schema.description,
     ];
@@ -342,8 +337,7 @@ WebPageModel buildPasswordPoliciesModel(string tenantId, PasswordPolicy[] polici
   ];
   model.table.headers = ["Name", "Active", "Min Length", "Expiry Days", "Special Char"];
   foreach (policy; policies) {
-    model.table.rows ~= [
-      policy.name,
+    model.table.rows ~= [policy.name,
       policy.active ? "active" : "inactive",
       policy.minLength.to!string,
       policy.expiryDays.to!string,

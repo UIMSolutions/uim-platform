@@ -117,8 +117,7 @@ class TranslationJobController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
 
-        return successResponse("Translation job cancelled successfully", 200, Json.emptyObject.set("jobId", id).set(
-                "status", "cancelled"));
+        return successResponse("Translation job cancelled successfully", 200, Json.emptyObject.set("jobId", id).set(            "status", "cancelled"));
     }
 
     mixin(HandleTemplate!("handleCancel", "cancelHandler"));

@@ -28,8 +28,7 @@ struct TranslationResult {
 /// or the SAP Multilingual Text Repository via an HTTP adapter.
 class TranslationEngine {
     /// Translate a single text string.
-    TranslationResult translate(
-        string text,
+    TranslationResult translate(    string text,
         string sourceLang,
         string targetLang,
         TranslationProvider provider
@@ -68,8 +67,7 @@ class TranslationEngine {
     }
 
     /// Translate multiple texts in a batch.
-    TranslationResult[] translateBatch(
-        string[] texts,
+    TranslationResult[] translateBatch(    string[] texts,
         string sourceLang,
         string targetLang,
         TranslationProvider provider
@@ -87,8 +85,7 @@ class TranslationEngine {
     }
 
     /// All supported BCP-47 language codes.
-    static immutable string[] supportedLanguages = [
-        "en", "de", "fr", "es", "it", "pt", "nl", "pl", "sv", "da",
+    static immutable string[] supportedLanguages = ["en", "de", "fr", "es", "it", "pt", "nl", "pl", "sv", "da",
         "nb", "fi", "cs", "sk", "hu", "ro", "bg", "hr", "sl", "et",
         "lv", "lt", "el", "tr", "ru", "uk", "ar", "he", "zh", "ja",
         "ko", "th", "vi", "id", "ms", "hi", "bn", "ur", "fa", "sw",

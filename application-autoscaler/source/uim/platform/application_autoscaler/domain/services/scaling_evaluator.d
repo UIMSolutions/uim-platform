@@ -17,8 +17,7 @@ class ScalingEvaluatorService {
 
   /// Returns the computed new instance count for the given policy
   /// given current metric value. Returns current count if no rule fires.
-  int evaluate(
-    ScalingPolicyEntity policy,
+  int evaluate(ScalingPolicyEntity policy,
     string              metricType,
     double              currentValue,
     int                 currentInstances

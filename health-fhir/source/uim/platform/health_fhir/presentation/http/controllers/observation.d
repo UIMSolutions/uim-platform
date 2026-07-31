@@ -28,8 +28,7 @@ class ObservationController : ManageHttpController {
   }
 
   private static void writeFhirError(scope HTTPServerResponse res, int status, string msg) {
-    res.writeJsonBody(
-      Json.emptyObject.set("resourceType", "OperationOutcome")
+    res.writeJsonBody(  Json.emptyObject.set("resourceType", "OperationOutcome")
         .set("issue", Json.emptyArray ~= Json.emptyObject
           .set("severity", "error").set("code", "processing").set("diagnostics", msg)),
         status

@@ -40,8 +40,7 @@ class OperationController : ManageHttpController {
                 .set("type", e.type.to!string)
                 .set("status", e.status.to!string);
         }
-        return successResponse("Operations retrieved successfully", 200, Json.emptyObject.set("items", jarr).set(
-                "totalCount", items.length));
+        return successResponse("Operations retrieved successfully", 200, Json.emptyObject.set("items", jarr).set(            "totalCount", items.length));
     }
 
     override protected Json getHandler(HTTPServerRequest req) {

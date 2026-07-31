@@ -55,14 +55,12 @@ unittest {
     assert("".toDnsRecordType == DnsRecordType.aRecord);    
     assert("invalid".toDnsRecordType == DnsRecordType.aRecord);
 
-    assert([
-        DnsRecordType.aRecord, DnsRecordType.aaaaRecord, DnsRecordType.cnameRecord,
+    assert([DnsRecordType.aRecord, DnsRecordType.aaaaRecord, DnsRecordType.cnameRecord,
         DnsRecordType.txtRecord, DnsRecordType.mxRecord
     ].toStrings ==
         ["aRecord", "aaaaRecord", "cnameRecord", "txtRecord", "mxRecord"]);
 
-    assert([
-        "aRecord", "aaaaRecord", "cnameRecord", "txtRecord", "mxRecord"
+    assert(["aRecord", "aaaaRecord", "cnameRecord", "txtRecord", "mxRecord"
     ].toDnsRecordTypes ==
         [DnsRecordType.aRecord, DnsRecordType.aaaaRecord, DnsRecordType.cnameRecord,
         DnsRecordType.txtRecord, DnsRecordType.mxRecord]);
@@ -103,14 +101,12 @@ unittest {
     assert("".toDnsValidationStatus == DnsValidationStatus.pending);
     assert("invalid".toDnsValidationStatus == DnsValidationStatus.pending);
 
-    assert([
-        DnsValidationStatus.pending, DnsValidationStatus.validated,
+    assert([DnsValidationStatus.pending, DnsValidationStatus.validated,
         DnsValidationStatus.failed, DnsValidationStatus.expired
     ].toStrings ==
         ["pending", "validated", "failed", "expired"]);
 
-    assert([
-        "pending", "validated", "failed", "expired"
+    assert(["pending", "validated", "failed", "expired"
     ].toDnsValidationStatuses ==
         [DnsValidationStatus.pending, DnsValidationStatus.validated,
         DnsValidationStatus.failed, DnsValidationStatus.expired]);

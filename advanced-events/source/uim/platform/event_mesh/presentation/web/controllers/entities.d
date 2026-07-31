@@ -64,10 +64,8 @@ class WebBrokerServiceController {
     }
 
     void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        writeHtml(
-            res,
-            view.renderMutation(
-                model.update(tenantFromRequest(req), idFromRequest(req), bodyFromRequest(req))));
+        writeHtml(        res,
+            view.renderMutation(            model.update(tenantFromRequest(req), idFromRequest(req), bodyFromRequest(req))));
     }
 
     void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -105,10 +103,8 @@ class WebQueueController {
     }
 
     void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        writeHtml(
-            res,
-            view.renderMutation(
-                model.update(tenantFromRequest(req), idFromRequest(req), bodyFromRequest(req))));
+        writeHtml(        res,
+            view.renderMutation(            model.update(tenantFromRequest(req), idFromRequest(req), bodyFromRequest(req))));
     }
 
     void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -146,10 +142,8 @@ class WebTopicController {
     }
 
     void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        writeHtml(
-            res,
-            view.renderMutation(
-                model.update(tenantFromRequest(req), idFromRequest(req), bodyFromRequest(req))));
+        writeHtml(        res,
+            view.renderMutation(            model.update(tenantFromRequest(req), idFromRequest(req), bodyFromRequest(req))));
     }
 
     void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -187,10 +181,8 @@ class WebSubscriptionController {
     }
 
     void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        writeHtml(
-            res,
-            view.renderMutation(
-                model.update(tenantFromRequest(req), idFromRequest(req), bodyFromRequest(req))));
+        writeHtml(        res,
+            view.renderMutation(            model.update(tenantFromRequest(req), idFromRequest(req), bodyFromRequest(req))));
     }
 
     void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -228,10 +220,8 @@ class WebEventMessageController {
     }
 
     void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        writeHtml(
-            res,
-            view.renderMutation(
-                model.update(tenantFromRequest(req), idFromRequest(req), bodyFromRequest(req))));
+        writeHtml(        res,
+            view.renderMutation(            model.update(tenantFromRequest(req), idFromRequest(req), bodyFromRequest(req))));
     }
 
     void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -269,10 +259,8 @@ class WebEventSchemaController {
     }
 
     void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        writeHtml(
-            res,
-            view.renderMutation(
-                model.update(tenantFromRequest(req), idFromRequest(req), bodyFromRequest(req))));
+        writeHtml(        res,
+            view.renderMutation(            model.update(tenantFromRequest(req), idFromRequest(req), bodyFromRequest(req))));
     }
 
     void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -310,10 +298,8 @@ class WebEventApplicationController {
     }
 
     void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        writeHtml(
-            res,
-            view.renderMutation(
-                model.update(tenantFromRequest(req), idFromRequest(req), bodyFromRequest(req))));
+        writeHtml(        res,
+            view.renderMutation(            model.update(tenantFromRequest(req), idFromRequest(req), bodyFromRequest(req))));
     }
 
     void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
@@ -351,10 +337,8 @@ class WebMeshBridgeController {
     }
 
     void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        writeHtml(
-            res,
-            view.renderMutation(
-                model.update(tenantFromRequest(req), idFromRequest(req), bodyFromRequest(req))));
+        writeHtml(        res,
+            view.renderMutation(            model.update(tenantFromRequest(req), idFromRequest(req), bodyFromRequest(req))));
     }
 
     void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {

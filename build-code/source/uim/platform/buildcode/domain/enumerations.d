@@ -109,11 +109,9 @@ unittest {
   assert(TechStack.nodejs.toString == "nodejs");
   assert(TechStack.other.toString == "other");
 
-  assert(["cap-java", "sapui5"].toTechStack == [
-      TechStack.capJava, TechStack.sapui5
+  assert(["cap-java", "sapui5"].toTechStack == [TechStack.capJava, TechStack.sapui5
     ]);
-  assert([TechStack.capJava, TechStack.sapui5].toStrings == [
-      "cap-java", "sapui5"
+  assert([TechStack.capJava, TechStack.sapui5].toStrings == ["cap-java", "sapui5"
     ]);
 }
 
@@ -152,11 +150,9 @@ unittest {
   assert(ProjectStatus.inactive.toString == "inactive");
   assert(ProjectStatus.archived.toString == "archived");
 
-  assert(["active", "archived"].toProjectStatus == [
-      ProjectStatus.active, ProjectStatus.archived
+  assert(["active", "archived"].toProjectStatus == [ProjectStatus.active, ProjectStatus.archived
     ]);
-  assert([ProjectStatus.active, ProjectStatus.archived].toStrings == [
-      "active", "archived"
+  assert([ProjectStatus.active, ProjectStatus.archived].toStrings == ["active", "archived"
     ]);
 }
 
@@ -201,11 +197,9 @@ unittest {
   assert(DevSpaceStatus.stopping.toString == "stopping");
   assert(DevSpaceStatus.error_.toString == "error");
 
-  assert(["starting", "stopped"].toDevSpaceStatus == [
-      DevSpaceStatus.starting, DevSpaceStatus.stopped
+  assert(["starting", "stopped"].toDevSpaceStatus == [DevSpaceStatus.starting, DevSpaceStatus.stopped
     ]);
-  assert([DevSpaceStatus.starting, DevSpaceStatus.stopped].toStrings == [
-      "starting", "stopped"
+  assert([DevSpaceStatus.starting, DevSpaceStatus.stopped].toStrings == ["starting", "stopped"
     ]);
 }
 
@@ -247,11 +241,9 @@ unittest {
   assert(PipelineStage.deploy.toString == "deploy");
   assert(PipelineStage.full.toString == "full");
 
-  assert(["build", "deploy"].toPipelineStage == [
-      PipelineStage.build, PipelineStage.deploy
+  assert(["build", "deploy"].toPipelineStage == [PipelineStage.build, PipelineStage.deploy
     ]);
-  assert([PipelineStage.build, PipelineStage.deploy].toStrings == [
-      "build", "deploy"
+  assert([PipelineStage.build, PipelineStage.deploy].toStrings == ["build", "deploy"
     ]);
 }
 
@@ -296,8 +288,7 @@ unittest {
   assert(JobStatus.failed.toString == "failed");
   assert(JobStatus.cancelled.toString == "cancelled");
 
-  assert(["queued", "failed"].toJobStatus == [
-      JobStatus.queued, JobStatus.failed
+  assert(["queued", "failed"].toJobStatus == [JobStatus.queued, JobStatus.failed
     ]);
   assert([JobStatus.queued, JobStatus.failed].toStrings == ["queued", "failed"]);
 }
@@ -343,11 +334,9 @@ unittest {
   assert(DeploymentEnvironment.neo.toString == "neo");
   assert(DeploymentEnvironment.other.toString == "other");
 
-  assert(["cloud-foundry", "kyma"].toDeploymentEnvironment == [
-      DeploymentEnvironment.cloudFoundry, DeploymentEnvironment.kyma
+  assert(["cloud-foundry", "kyma"].toDeploymentEnvironment == [DeploymentEnvironment.cloudFoundry, DeploymentEnvironment.kyma
     ]);
-  assert([DeploymentEnvironment.cloudFoundry, DeploymentEnvironment.kyma].toStrings == [
-      "cloud-foundry", "kyma"
+  assert([DeploymentEnvironment.cloudFoundry, DeploymentEnvironment.kyma].toStrings == ["cloud-foundry", "kyma"
     ]);
 }
 
@@ -392,11 +381,9 @@ unittest {
   assert(DeploymentStatus.failed.toString == "failed");
   assert(DeploymentStatus.rolling_back.toString == "rolling-back");
 
-  assert(["pending", "succeeded"].toDeploymentStatus == [
-      DeploymentStatus.pending, DeploymentStatus.succeeded
+  assert(["pending", "succeeded"].toDeploymentStatus == [DeploymentStatus.pending, DeploymentStatus.succeeded
     ]);
-  assert([DeploymentStatus.pending, DeploymentStatus.succeeded].toStrings == [
-      "pending", "succeeded"
+  assert([DeploymentStatus.pending, DeploymentStatus.succeeded].toStrings == ["pending", "succeeded"
     ]);
 }
 
@@ -438,11 +425,9 @@ unittest {
   assert(AIRequestStatus.completed.toString == "completed");
   assert(AIRequestStatus.failed.toString == "failed");
 
-  assert(["pending", "completed"].toAIRequestStatus == [
-      AIRequestStatus.pending, AIRequestStatus.completed
+  assert(["pending", "completed"].toAIRequestStatus == [AIRequestStatus.pending, AIRequestStatus.completed
     ]);
-  assert([AIRequestStatus.pending, AIRequestStatus.completed].toStrings == [
-      "pending", "completed"
+  assert([AIRequestStatus.pending, AIRequestStatus.completed].toStrings == ["pending", "completed"
     ]);
 }
 
@@ -490,11 +475,9 @@ unittest {
   assert(AIGenerationType.codeFragment.toString == "code-fragment");
   assert(AIGenerationType.fullApp.toString == "full-app");
 
-  assert(["data-model", "service"].toAIGenerationType == [
-      AIGenerationType.dataModel, AIGenerationType.service
+  assert(["data-model", "service"].toAIGenerationType == [AIGenerationType.dataModel, AIGenerationType.service
     ]);
-  assert([AIGenerationType.dataModel, AIGenerationType.service].toStrings == [
-      "data-model", "service"
+  assert([AIGenerationType.dataModel, AIGenerationType.service].toStrings == ["data-model", "service"
     ]);
 }
 
@@ -533,10 +516,8 @@ unittest {
   assert(BindingStatus.inactive_.toString == "inactive");
   assert(BindingStatus.error_.toString == "error");
 
-  assert(["active", "inactive"].toBindingStatus == [
-      BindingStatus.active, BindingStatus.inactive_
+  assert(["active", "inactive"].toBindingStatus == [BindingStatus.active, BindingStatus.inactive_
     ]);
-  assert([BindingStatus.active, BindingStatus.inactive_].toStrings == [
-      "active", "inactive"
+  assert([BindingStatus.active, BindingStatus.inactive_].toStrings == ["active", "inactive"
     ]);
 }

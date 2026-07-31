@@ -59,8 +59,7 @@ Container buildContainer(SrvConfig cfg) @safe {
     c.manageConditions    = new ManageConditionsUseCase(c.conditionRepo);
     c.manageActions       = new ManageActionsUseCase(c.actionRepo);
     c.manageSubscriptions = new ManageSubscriptionsUseCase(c.subscriptionRepo);
-    c.produceEvents       = new ProduceEventsUseCase(
-        c.subscriptionRepo, c.conditionRepo, c.actionRepo,
+    c.produceEvents       = new ProduceEventsUseCase(    c.subscriptionRepo, c.conditionRepo, c.actionRepo,
         c.matchedEventRepo, c.undeliveredEventRepo,
         c.matcher, c.dispatcher
     );

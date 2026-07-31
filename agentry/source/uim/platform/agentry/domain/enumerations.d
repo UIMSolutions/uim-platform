@@ -55,12 +55,10 @@ unittest {
     assert(AppPlatform.cross.toString == "cross");
 
     assert(["ios", "android", "windows", "web", "cross"].toAppPlatforms ==
-            [
-                AppPlatform.ios, AppPlatform.android, AppPlatform.windows,
+            [        AppPlatform.ios, AppPlatform.android, AppPlatform.windows,
                 AppPlatform.web, AppPlatform.cross
             ]);
-    assert([
-        AppPlatform.ios, AppPlatform.android, AppPlatform.windows,
+    assert([AppPlatform.ios, AppPlatform.android, AppPlatform.windows,
         AppPlatform.web, AppPlatform.cross
     ].toStrings ==
         ["ios", "android", "windows", "web", "cross"]);
@@ -117,12 +115,10 @@ unittest {
     assert(AppStatus.archived.toString == "archived");
 
     assert(["draft", "active", "deprecated", "archived"].toAppStatuses ==
-            [
-                AppStatus.draft, AppStatus.active, AppStatus.deprecated_,
+            [        AppStatus.draft, AppStatus.active, AppStatus.deprecated_,
                 AppStatus.archived
             ]);
-    assert([
-            AppStatus.draft, AppStatus.active, AppStatus.deprecated_,
+    assert([    AppStatus.draft, AppStatus.active, AppStatus.deprecated_,
             AppStatus.archived
         ].toStrings ==
         ["draft", "active", "deprecated", "archived"]);
@@ -164,12 +160,10 @@ unittest {
     assert(DefinitionStatus.archived.toString == "archived");
 
     assert(["draft", "published", "archived"].toDefinitionStatuses ==
-            [
-                DefinitionStatus.draft, DefinitionStatus.published,
+            [        DefinitionStatus.draft, DefinitionStatus.published,
                 DefinitionStatus.archived
             ]);
-    assert([
-            DefinitionStatus.draft, DefinitionStatus.published,
+    assert([    DefinitionStatus.draft, DefinitionStatus.published,
             DefinitionStatus.archived
         ].toStrings ==
         ["draft", "published", "archived"]);
@@ -225,12 +219,10 @@ unittest {
 
     assert(["pending", "published", "deprecated", "withdrawn"].map!(toAppVersionStatus)
             .array ==
-            [
-                AppVersionStatus.pending, AppVersionStatus.published,
+            [        AppVersionStatus.pending, AppVersionStatus.published,
                 AppVersionStatus.deprecated_, AppVersionStatus.withdrawn
             ]);
-    assert([
-            AppVersionStatus.pending, AppVersionStatus.published,
+    assert([    AppVersionStatus.pending, AppVersionStatus.published,
             AppVersionStatus.deprecated_, AppVersionStatus.withdrawn
         ].toStrings ==
         ["pending", "published", "deprecated", "withdrawn"]);
@@ -274,12 +266,10 @@ unittest {
     assert(DeviceStatus.removed.toString == "removed");
 
     assert(["enrolled", "active", "suspended", "removed"].toDeviceStatuses ==
-            [
-                DeviceStatus.enrolled, DeviceStatus.active, DeviceStatus.suspended,
+            [        DeviceStatus.enrolled, DeviceStatus.active, DeviceStatus.suspended,
                 DeviceStatus.removed
             ]);
-    assert(toStrings([
-            DeviceStatus.enrolled, DeviceStatus.active, DeviceStatus.suspended,
+    assert(toStrings([    DeviceStatus.enrolled, DeviceStatus.active, DeviceStatus.suspended,
             DeviceStatus.removed
         ]) ==
         ["enrolled", "active", "suspended", "removed"]);
@@ -329,12 +319,10 @@ unittest {
     assert(SyncStatus.cancelled.toString == "cancelled");
 
     assert(["pending", "inProgress", "completed", "failed", "cancelled"].toSyncStatuses ==
-            [
-                SyncStatus.pending, SyncStatus.inProgress, SyncStatus.completed,
+            [        SyncStatus.pending, SyncStatus.inProgress, SyncStatus.completed,
                 SyncStatus.failed, SyncStatus.cancelled
             ]);
-    assert(toStrings([
-            SyncStatus.pending, SyncStatus.inProgress, SyncStatus.completed,
+    assert(toStrings([    SyncStatus.pending, SyncStatus.inProgress, SyncStatus.completed,
             SyncStatus.failed, SyncStatus.cancelled
         ]) ==
         ["pending", "inProgress", "completed", "failed", "cancelled"]);
@@ -376,12 +364,10 @@ unittest {
     assert(SyncDirection.bidirectional.toString == "bidirectional");
 
     assert(["upload", "download", "bidirectional"].toSyncDirections ==
-            [
-                SyncDirection.upload, SyncDirection.download,
+            [        SyncDirection.upload, SyncDirection.download,
                 SyncDirection.bidirectional
             ]);
-    assert(toStrings([
-            SyncDirection.upload, SyncDirection.download,
+    assert(toStrings([    SyncDirection.upload, SyncDirection.download,
             SyncDirection.bidirectional
         ]) ==
         ["upload", "download", "bidirectional"]);
@@ -428,12 +414,10 @@ unittest {
     assert(BackendType.custom.toString == "custom");
 
     assert(["s4hana", "ecc", "btp", "crm", "unknown"].toBackendTypes ==
-            [
-                BackendType.s4hana, BackendType.ecc, BackendType.btp,
+            [        BackendType.s4hana, BackendType.ecc, BackendType.btp,
                 BackendType.crm, BackendType.custom
             ]);
-    assert([
-        BackendType.s4hana, BackendType.ecc, BackendType.btp, BackendType.crm,
+    assert([BackendType.s4hana, BackendType.ecc, BackendType.btp, BackendType.crm,
         BackendType.custom
     ].toStrings ==
         ["s4hana", "ecc", "btp", "crm", "custom"]);
@@ -477,13 +461,11 @@ unittest {
     assert(ConnectionStatus.testing.toString == "testing");
 
     assert(["active", "inactive", "error", "testing", "unknown"].toConnectionStatuses ==
-            [
-                ConnectionStatus.active, ConnectionStatus.inactive,
+            [        ConnectionStatus.active, ConnectionStatus.inactive,
                 ConnectionStatus.error, ConnectionStatus.testing,
                 ConnectionStatus.inactive
             ]);
-    assert([
-        ConnectionStatus.active, ConnectionStatus.inactive, ConnectionStatus.error,
+    assert([ConnectionStatus.active, ConnectionStatus.inactive, ConnectionStatus.error,
         ConnectionStatus.testing
     ].toStrings ==
         ["active", "inactive", "error", "testing"]);
@@ -530,16 +512,13 @@ unittest {
     assert(DeploymentStatus.failed.toString == "failed");
     assert(DeploymentStatus.rolledBack.toString == "rolledBack");
 
-    assert([
-        "pending", "deploying", "deployed", "failed", "rolledBack", "unknown"
+    assert(["pending", "deploying", "deployed", "failed", "rolledBack", "unknown"
     ].toDeploymentStatuses ==
-        [
-            DeploymentStatus.pending, DeploymentStatus.deploying,
+        [    DeploymentStatus.pending, DeploymentStatus.deploying,
             DeploymentStatus.deployed, DeploymentStatus.failed,
             DeploymentStatus.rolledBack, DeploymentStatus.pending
         ]);
-    assert([
-        DeploymentStatus.pending, DeploymentStatus.deploying,
+    assert([DeploymentStatus.pending, DeploymentStatus.deploying,
         DeploymentStatus.deployed, DeploymentStatus.failed,
         DeploymentStatus.rolledBack
     ].toStrings ==
@@ -579,12 +558,10 @@ unittest {
     assert(DeploymentScope.group.toString == "group");
     assert(DeploymentScope.tenant.toString == "tenant");
     assert(["device", "group", "tenant", "unknown"].toDeploymentScopes ==
-            [
-                DeploymentScope.device, DeploymentScope.group,
+            [        DeploymentScope.device, DeploymentScope.group,
                 DeploymentScope.tenant, DeploymentScope.tenant
             ]);
-    assert([
-        DeploymentScope.device, DeploymentScope.group, DeploymentScope.tenant
+    assert([DeploymentScope.device, DeploymentScope.group, DeploymentScope.tenant
     ].toStrings ==
         ["device", "group", "tenant"]);
 }

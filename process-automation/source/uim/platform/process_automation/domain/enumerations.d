@@ -151,14 +151,11 @@ unittest {
     assert(ProcessStatus.releasing.toString == "releasing");
     assert(ProcessStatus.released.toString == "released");
 
-    assert(["active", "inactive", "deprecated"].toProcessStatuses == [
-            ProcessStatus.active, ProcessStatus.inactive,
+    assert(["active", "inactive", "deprecated"].toProcessStatuses == [    ProcessStatus.active, ProcessStatus.inactive,
             ProcessStatus.deprecated_
         ]);
-    assert([
-        ProcessStatus.active, ProcessStatus.inactive, ProcessStatus.deprecated_
-    ].toStrings == [
-        "active", "inactive", "deprecated"
+    assert([ProcessStatus.active, ProcessStatus.inactive, ProcessStatus.deprecated_
+    ].toStrings == ["active", "inactive", "deprecated"
     ]);
 }
 
@@ -210,15 +207,12 @@ unittest {
     assert(ProcessCategory.hybrid.toString == "hybrid");
     assert(ProcessCategory.custom.toString == "custom");
 
-    assert(["workflow", "approval", "notification"].toProcessCategories == [
-            ProcessCategory.workflow, ProcessCategory.approval,
+    assert(["workflow", "approval", "notification"].toProcessCategories == [    ProcessCategory.workflow, ProcessCategory.approval,
             ProcessCategory.notification
         ]);
-    assert([
-        ProcessCategory.workflow, ProcessCategory.approval,
+    assert([ProcessCategory.workflow, ProcessCategory.approval,
         ProcessCategory.notification
-    ].toStrings == [
-        "workflow", "approval", "notification"
+    ].toStrings == ["workflow", "approval", "notification"
     ]);
 }
 
@@ -327,11 +321,9 @@ unittest {
     assert(StepType.condition.toString == "condition");
     assert(StepType.custom.toString == "custom");
 
-    assert(["startEvent", "endEvent", "userTask"].toStepTypes == [
-            StepType.startEvent, StepType.endEvent, StepType.userTask
+    assert(["startEvent", "endEvent", "userTask"].toStepTypes == [    StepType.startEvent, StepType.endEvent, StepType.userTask
         ]);
-    assert([StepType.startEvent, StepType.endEvent, StepType.userTask].toStrings == [
-            "startEvent", "endEvent", "userTask"
+    assert([StepType.startEvent, StepType.endEvent, StepType.userTask].toStrings == [    "startEvent", "endEvent", "userTask"
         ]);
 }
 
@@ -392,15 +384,12 @@ unittest {
     assert(InstanceStatus.error.toString == "error");
     assert(InstanceStatus.unknown.toString == "unknown");
 
-    assert(["running", "completed", "failed"].toInstanceStatuses == [
-            InstanceStatus.running, InstanceStatus.completed,
+    assert(["running", "completed", "failed"].toInstanceStatuses == [    InstanceStatus.running, InstanceStatus.completed,
             InstanceStatus.failed
         ]);
 
-    assert([
-        InstanceStatus.running, InstanceStatus.completed, InstanceStatus.failed
-    ].toStrings == [
-        "running", "completed", "failed"
+    assert([InstanceStatus.running, InstanceStatus.completed, InstanceStatus.failed
+    ].toStrings == ["running", "completed", "failed"
     ]);
 }
 
@@ -445,14 +434,11 @@ unittest {
     assert(InstancePriority.high.toString == "high");
     assert(InstancePriority.critical.toString == "critical");
 
-    assert(["low", "medium", "high"].toInstancePriorities == [
-            InstancePriority.low, InstancePriority.medium, InstancePriority.high
+    assert(["low", "medium", "high"].toInstancePriorities == [    InstancePriority.low, InstancePriority.medium, InstancePriority.high
         ]);
 
-    assert([
-        InstancePriority.low, InstancePriority.medium, InstancePriority.high
-    ].toStrings == [
-        "low", "medium", "high"
+    assert([InstancePriority.low, InstancePriority.medium, InstancePriority.high
+    ].toStrings == ["low", "medium", "high"
     ]);
 }
 
@@ -509,15 +495,12 @@ unittest {
     assert(EventCategory.exception_.toString == "exception_");
     assert(EventCategory.custom.toString == "custom");
 
-    assert(["NOTIFICATION", "ALERT", "EXCEPTION"].toEventCategories == [
-            EventCategory.notification, EventCategory.alert,
+    assert(["NOTIFICATION", "ALERT", "EXCEPTION"].toEventCategories == [    EventCategory.notification, EventCategory.alert,
             EventCategory.exception_
         ]);
 
-    assert([
-        EventCategory.notification, EventCategory.alert, EventCategory.exception_
-    ].toStrings == [
-        "notification", "alert", "exception_"
+    assert([EventCategory.notification, EventCategory.alert, EventCategory.exception_
+    ].toStrings == ["notification", "alert", "exception_"
     ]);
 }
 
@@ -580,12 +563,10 @@ unittest {
     assert(TaskStatus.forwarded.toString == "forwarded");
     assert(TaskStatus.unknown.toString == "unknown");
 
-    assert(["ready", "reserved", "inProgress"].toTaskStatuses == [
-            TaskStatus.ready, TaskStatus.reserved, TaskStatus.inProgress
+    assert(["ready", "reserved", "inProgress"].toTaskStatuses == [    TaskStatus.ready, TaskStatus.reserved, TaskStatus.inProgress
         ]);
 
-    assert([TaskStatus.ready, TaskStatus.reserved, TaskStatus.inProgress].toStrings == [
-            "ready", "reserved", "inProgress"
+    assert([TaskStatus.ready, TaskStatus.reserved, TaskStatus.inProgress].toStrings == [    "ready", "reserved", "inProgress"
         ]);
 }
 
@@ -723,15 +704,12 @@ unittest {
     assert(DecisionStatus.inactive.toString == "inactive");
     assert(DecisionStatus.deprecated_.toString == "deprecated");
 
-    assert(["draft", "active", "inactive"].toDecisionStatuses == [
-            DecisionStatus.draft, DecisionStatus.active,
+    assert(["draft", "active", "inactive"].toDecisionStatuses == [    DecisionStatus.draft, DecisionStatus.active,
             DecisionStatus.inactive
         ]);
 
-    assert([
-        DecisionStatus.draft, DecisionStatus.active, DecisionStatus.inactive
-    ].toStrings == [
-        "draft", "active", "inactive"
+    assert([DecisionStatus.draft, DecisionStatus.active, DecisionStatus.inactive
+    ].toStrings == ["draft", "active", "inactive"
     ]);
 }
 
@@ -817,18 +795,14 @@ unittest {
     assert(HitPolicy.ruleOrder.toString == "ruleOrder");
     assert(HitPolicy.outputOrder.toString == "outputOrder");
 
-    assert([
-        "first", "any", "priority", "unique", "collect", "ruleOrder",
+    assert(["first", "any", "priority", "unique", "collect", "ruleOrder",
         "outputOrder"
-    ].toHitPolicies == [
-        HitPolicy.first, HitPolicy.any, HitPolicy.priority, HitPolicy.unique,
+    ].toHitPolicies == [HitPolicy.first, HitPolicy.any, HitPolicy.priority, HitPolicy.unique,
         HitPolicy.collect, HitPolicy.ruleOrder, HitPolicy.outputOrder
     ]);
-    assert([
-        HitPolicy.first, HitPolicy.any, HitPolicy.priority, HitPolicy.unique,
+    assert([HitPolicy.first, HitPolicy.any, HitPolicy.priority, HitPolicy.unique,
         HitPolicy.collect, HitPolicy.ruleOrder, HitPolicy.outputOrder
-    ].toStrings == [
-        "first", "any", "priority", "unique", "collect", "ruleOrder",
+    ].toStrings == ["first", "any", "priority", "unique", "collect", "ruleOrder",
         "outputOrder"
     ]);
 }
@@ -933,14 +907,11 @@ unittest {
     assert(ConditionType.in_.toString == "in");
     assert(ConditionType.notIn.toString == "not_in");
 
-    assert([
-        ConditionType.equals, ConditionType.notEquals, ConditionType.greaterThan
-    ].toStrings == [
-        "equals", "not_equals", "greater_than"
+    assert([ConditionType.equals, ConditionType.notEquals, ConditionType.greaterThan
+    ].toStrings == ["equals", "not_equals", "greater_than"
     ]);
 
-    assert(["equals", "not_equals", "greater_than"].toConditionTypes == [
-            ConditionType.equals, ConditionType.notEquals,
+    assert(["equals", "not_equals", "greater_than"].toConditionTypes == [    ConditionType.equals, ConditionType.notEquals,
             ConditionType.greaterThan
         ]);
 }
@@ -1010,11 +981,9 @@ unittest {
     assert(FormStatus.archived.toString == "archived");
     assert(FormStatus.error.toString == "error");
 
-    assert(["draft", "published", "inactive"].toFormStatuses == [
-            FormStatus.draft, FormStatus.published, FormStatus.inactive
+    assert(["draft", "published", "inactive"].toFormStatuses == [    FormStatus.draft, FormStatus.published, FormStatus.inactive
         ]);
-    assert([FormStatus.draft, FormStatus.published, FormStatus.inactive].toStrings == [
-            "draft", "published", "inactive"
+    assert([FormStatus.draft, FormStatus.published, FormStatus.inactive].toStrings == [    "draft", "published", "inactive"
         ]);
 }
 
@@ -1097,12 +1066,10 @@ unittest {
     assert(FieldType.link.toString == "link");
     assert(FieldType.image.toString == "image");
 
-    assert(["text", "number", "date"].toFieldTypes == [
-            FieldType.text, FieldType.number, FieldType.date
+    assert(["text", "number", "date"].toFieldTypes == [    FieldType.text, FieldType.number, FieldType.date
         ]);
 
-    assert([FieldType.text, FieldType.number, FieldType.date].toStrings == [
-            "text", "number", "date"
+    assert([FieldType.text, FieldType.number, FieldType.date].toStrings == [    "text", "number", "date"
         ]);
 }
 // --- Automation (RPA Bot) ---
@@ -1148,15 +1115,12 @@ unittest {
     assert(AutomationStatus.inactive.toString == "inactive");
     assert(AutomationStatus.error.toString == "error");
 
-    assert(["draft", "active", "inactive"].toAutomationStatuses == [
-            AutomationStatus.draft, AutomationStatus.active,
+    assert(["draft", "active", "inactive"].toAutomationStatuses == [    AutomationStatus.draft, AutomationStatus.active,
             AutomationStatus.inactive
         ]);
 
-    assert([
-        AutomationStatus.draft, AutomationStatus.active, AutomationStatus.inactive
-    ].toStrings == [
-        "draft", "active", "inactive"
+    assert([AutomationStatus.draft, AutomationStatus.active, AutomationStatus.inactive
+    ].toStrings == ["draft", "active", "inactive"
     ]);
 
 }
@@ -1202,14 +1166,11 @@ unittest {
     assert(AutomationType.hybrid.toString == "hybrid");
     assert(AutomationType.api.toString == "api");
 
-    assert(["attended", "unattended", "hybrid"].toAutomationTypes == [
-            AutomationType.attended, AutomationType.unattended,
+    assert(["attended", "unattended", "hybrid"].toAutomationTypes == [    AutomationType.attended, AutomationType.unattended,
             AutomationType.hybrid
         ]);
-    assert([
-        AutomationType.attended, AutomationType.unattended, AutomationType.hybrid
-    ].toStrings == [
-        "attended", "unattended", "hybrid"
+    assert([AutomationType.attended, AutomationType.unattended, AutomationType.hybrid
+    ].toStrings == ["attended", "unattended", "hybrid"
     ]);
 }
 
@@ -1262,8 +1223,7 @@ unittest {
     assert(AutomationRunStatus.cancelled.toString == "cancelled");
     assert(AutomationRunStatus.timedOut.toString == "timedOut");
 
-    assert(["queued", "running", "completed"].toAutomationRunStatuses == [
-            AutomationRunStatus.queued, AutomationRunStatus.running,
+    assert(["queued", "running", "completed"].toAutomationRunStatuses == [    AutomationRunStatus.queued, AutomationRunStatus.running,
             AutomationRunStatus.completed
         ]);
 }
@@ -1323,11 +1283,9 @@ unittest {
     assert(TriggerType.webhook.toString == "webhook");
     assert(TriggerType.formSubmission.toString == "formSubmission");
 
-    assert(["manual", "scheduled", "api"].toTriggerType == [
-            TriggerType.manual, TriggerType.scheduled, TriggerType.api
+    assert(["manual", "scheduled", "api"].toTriggerType == [    TriggerType.manual, TriggerType.scheduled, TriggerType.api
         ]);
-    assert([TriggerType.manual, TriggerType.scheduled, TriggerType.api].toStrings == [
-            "manual", "scheduled", "api"
+    assert([TriggerType.manual, TriggerType.scheduled, TriggerType.api].toStrings == [    "manual", "scheduled", "api"
         ]);
 }
 
@@ -1367,8 +1325,7 @@ unittest {
     assert(TriggerStatus.inactive.toString == "inactive");
     assert(TriggerStatus.error.toString == "error");
 
-    assert(["active", "inactive", "error"].toTriggerStatuses == [
-            TriggerStatus.active, TriggerStatus.inactive, TriggerStatus.error
+    assert(["active", "inactive", "error"].toTriggerStatuses == [    TriggerStatus.active, TriggerStatus.inactive, TriggerStatus.error
         ]);
     assert([TriggerStatus.active, TriggerStatus.inactive, TriggerStatus.error].toStrings == ["active", "inactive", "error"]);
 }
@@ -1430,8 +1387,7 @@ unittest {
     assert(ScheduleFrequency.yearly.toString == "yearly");
     assert(ScheduleFrequency.cron.toString == "cron");
 
-    assert(["once", "hourly", "daily"].toScheduleFrequencies == [
-            ScheduleFrequency.once, ScheduleFrequency.hourly, ScheduleFrequency.daily
+    assert(["once", "hourly", "daily"].toScheduleFrequencies == [    ScheduleFrequency.once, ScheduleFrequency.hourly, ScheduleFrequency.daily
         ]);
     assert([ScheduleFrequency.once, ScheduleFrequency.hourly, ScheduleFrequency.daily].toStrings
         == ["once", "hourly", "daily"]);
@@ -1480,12 +1436,10 @@ unittest {
     assert("".toActionStatus == ActionStatus.draft);
     assert("unknown".toActionStatus == ActionStatus.draft);
 
-    assert(["draft", "active", "inactive", "error"].toActionStatuses == [
-            ActionStatus.draft, ActionStatus.active, ActionStatus.inactive,
+    assert(["draft", "active", "inactive", "error"].toActionStatuses == [    ActionStatus.draft, ActionStatus.active, ActionStatus.inactive,
             ActionStatus.error
         ]);
-    assert([
-        ActionStatus.draft, ActionStatus.active, ActionStatus.inactive,
+    assert([ActionStatus.draft, ActionStatus.active, ActionStatus.inactive,
         ActionStatus.error
     ].toStrings == ["draft", "active", "inactive", "error"]);
 }
@@ -1537,12 +1491,10 @@ unittest {
     assert("".toActionType == ActionType.custom);
     assert("unknown".toActionType == ActionType.custom);
 
-    assert(["rest_api", "odata", "rfc", "soap", "graphql", "custom"].toActionTypes == [
-            ActionType.restApi, ActionType.odata, ActionType.rfc,
+    assert(["rest_api", "odata", "rfc", "soap", "graphql", "custom"].toActionTypes == [    ActionType.restApi, ActionType.odata, ActionType.rfc,
             ActionType.soap, ActionType.graphql, ActionType.custom
         ]);
-    assert([
-        ActionType.restApi, ActionType.odata, ActionType.rfc, ActionType.soap,
+    assert([ActionType.restApi, ActionType.odata, ActionType.rfc, ActionType.soap,
         ActionType.graphql, ActionType.custom
     ].toStrings == ["restApi", "odata", "rfc", "soap", "graphql", "custom"]);
 
@@ -1588,8 +1540,7 @@ unittest {
     assert(VisibilityStatus.inactive.toString == "inactive");
     assert(VisibilityStatus.error.toString == "error");
 
-    assert(["active", "inactive", "error"].toVisibilityStatuses == [
-            VisibilityStatus.active, VisibilityStatus.inactive, VisibilityStatus.error
+    assert(["active", "inactive", "error"].toVisibilityStatuses == [    VisibilityStatus.active, VisibilityStatus.inactive, VisibilityStatus.error
         ]);
 } 
 

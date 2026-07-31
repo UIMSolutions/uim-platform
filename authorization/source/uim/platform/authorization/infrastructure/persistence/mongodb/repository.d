@@ -57,8 +57,7 @@ private:
     foreach (a; assignments.filter!(e => e.tenantId == tenantId)) asgArr ~= a.toJson();
     state["assignments"] = asgArr;
 
-    collection.update(
-      Bson(["tenantId": Bson(tenantId)]),
+    collection.update(  Bson(["tenantId": Bson(tenantId)]),
       Bson(["$set": Bson(["tenantId": Bson(tenantId), "stateJson": Bson(state.toString())])]),
       UpdateFlags.upsert
     );

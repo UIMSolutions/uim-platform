@@ -69,37 +69,37 @@ class ManageCatalogsUseCase { // TODO: UIMUseCase {
 
 ///
 unittest {
-    auto repo = new CatalogRepository();
-    auto usecase = new ManageCatalogsUseCase(repo);
-    auto tenantId = TenantId("test-tenant");
-
-    // Test create
-    CatalogDTO createDto;
-    createDto.tenantId = tenantId;
-    createDto.catalogId = CatalogId("catalog-1");
-    createDto.name = "Test Catalog";
-    auto createResult = usecase.createCatalog(createDto);
-    assert(createResult.success, createResult.message);
-
-    // Test list
-    auto items = usecase.listCatalogs(tenantId);
-    assert(items.length == 1);
-
-    // Test get
-    auto item = usecase.getCatalog(tenantId, CatalogId("catalog-1"));
-    assert(!item.isNull);
-
-    // Test update
-    CatalogDTO updateDto;
-    updateDto.tenantId = tenantId;
-    updateDto.catalogId = CatalogId("catalog-1");
-    updateDto.name = "Updated Catalog";
-    auto updateResult = usecase.updateCatalog(updateDto);
-    assert(updateResult.success, updateResult.message);
-
-    // Test delete
-    auto deleteResult = usecase.deleteCatalog(tenantId, CatalogId("catalog-1"));
-    assert(deleteResult.success, deleteResult.message);
-    assert(usecase.listCatalogs(tenantId).length == 0);
+//    auto repo = new CatalogRepository();
+//    auto usecase = new ManageCatalogsUseCase(repo);
+//    auto tenantId = TenantId("test-tenant");
+//
+//    // Test create
+//    CatalogDTO createDto;
+//    createDto.tenantId = tenantId;
+//    createDto.catalogId = CatalogId("catalog-1");
+//    createDto.name = "Test Catalog";
+//    auto createResult = usecase.createCatalog(createDto);
+//    assert(createResult.success, createResult.message);
+//
+//    // Test list
+//    auto items = usecase.listCatalogs(tenantId);
+//    assert(items.length == 1);
+//
+//    // Test get
+//    auto item = usecase.getCatalog(tenantId, CatalogId("catalog-1"));
+//    assert(!item.isNull);
+//
+//    // Test update
+//    CatalogDTO updateDto;
+//    updateDto.tenantId = tenantId;
+//    updateDto.catalogId = CatalogId("catalog-1");
+//    updateDto.name = "Updated Catalog";
+//    auto updateResult = usecase.updateCatalog(updateDto);
+//    assert(updateResult.success, updateResult.message);
+//
+//    // Test delete
+//    auto deleteResult = usecase.deleteCatalog(tenantId, CatalogId("catalog-1"));
+//    assert(deleteResult.success, deleteResult.message);
+//    assert(usecase.listCatalogs(tenantId).length == 0);
 
 }

@@ -102,16 +102,14 @@ unittest {
     ConnectionType.sql, ConnectionType.file, ConnectionType.kafka,
     ConnectionType.abap, ConnectionType.other
   ].toString ==
-    [
-      "hana", "s4hana", "bw", "adp", "hdl", "odata", "sql", "file", "kafka",
+    ["hana", "s4hana", "bw", "adp", "hdl", "odata", "sql", "file", "kafka",
       "abap", "other"
     ]);
   assert([
     "hana", "s4hana", "bw", "adp", "hdl", "odata", "sql", "file", "kafka", "abap",
     "other"
   ].toConnectionTypes ==
-    [
-      ConnectionType.hana, ConnectionType.s4hana, ConnectionType.bw,
+    [ConnectionType.hana, ConnectionType.s4hana, ConnectionType.bw,
       ConnectionType.adp, ConnectionType.hdl, ConnectionType.odata,
       ConnectionType.sql, ConnectionType.file, ConnectionType.kafka,
       ConnectionType.abap, ConnectionType.other

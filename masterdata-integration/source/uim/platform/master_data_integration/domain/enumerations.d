@@ -57,8 +57,7 @@ unittest {
   assert("supplierMaterial".toMasterDataCategory == MasterDataCategory.supplierMaterial);
   assert("custom".toMasterDataCategory == MasterDataCategory.custom);
 
-  assert(["businessPartner", "plant"].toMasterDataCategories == [
-      MasterDataCategory.businessPartner, MasterDataCategory.plant
+  assert(["businessPartner", "plant"].toMasterDataCategories == [MasterDataCategory.businessPartner, MasterDataCategory.plant
     ]);
 }
 
@@ -92,11 +91,9 @@ unittest {
   assert("blocked".toRecordStatus == RecordStatus.blocked);
   assert("markedForDeletion".toRecordStatus == RecordStatus.markedForDeletion);
 
-  assert(["active", "blocked"].toRecordStatuses == [
-      RecordStatus.active, RecordStatus.blocked
+  assert(["active", "blocked"].toRecordStatuses == [RecordStatus.active, RecordStatus.blocked
     ]);
-  assert([RecordStatus.active, RecordStatus.blocked].toStrings == [
-      "active", "blocked"
+  assert([RecordStatus.active, RecordStatus.blocked].toStrings == ["active", "blocked"
     ]);
 }
 
@@ -149,11 +146,9 @@ unittest {
   assert("activate".toChangeType == ChangeType.activate);
   assert("deactivate".toChangeType == ChangeType.deactivate);
 
-  assert(["create", "delete"].toChangeTypes == [
-      ChangeType.create_, ChangeType.delete_
+  assert(["create", "delete"].toChangeTypes == [ChangeType.create_, ChangeType.delete_
     ]);
-  assert([ChangeType.create_, ChangeType.delete_].toStrings == [
-      "create_", "delete_"
+  assert([ChangeType.create_, ChangeType.delete_].toStrings == ["create_", "delete_"
     ]);
 }
 
@@ -185,11 +180,9 @@ unittest {
   assert("inactive".toDistributionModelStatus == DistributionModelStatus.inactive);
   assert("draft".toDistributionModelStatus == DistributionModelStatus.draft);
 
-  assert(["active", "draft"].toDistributionModelStatuses == [
-      DistributionModelStatus.active, DistributionModelStatus.draft
+  assert(["active", "draft"].toDistributionModelStatuses == [DistributionModelStatus.active, DistributionModelStatus.draft
     ]);
-  assert([DistributionModelStatus.active, DistributionModelStatus.draft].toStrings == [
-      "active", "draft"
+  assert([DistributionModelStatus.active, DistributionModelStatus.draft].toStrings == ["active", "draft"
     ]);
 }
 
@@ -221,11 +214,9 @@ unittest {
   assert("inbound".toDistributionDirection == DistributionDirection.inbound);
   assert("bidirectional".toDistributionDirection == DistributionDirection.bidirectional);
 
-  assert(["outbound", "inbound"].toDistributionDirections == [
-      DistributionDirection.outbound, DistributionDirection.inbound
+  assert(["outbound", "inbound"].toDistributionDirections == [DistributionDirection.outbound, DistributionDirection.inbound
     ]);
-  assert([DistributionDirection.outbound, DistributionDirection.inbound].toStrings == [
-      "outbound", "inbound"
+  assert([DistributionDirection.outbound, DistributionDirection.inbound].toStrings == ["outbound", "inbound"
     ]);
 }
 
@@ -259,11 +250,9 @@ unittest {
   assert("error".toClientStatus == ClientStatus.error);
   assert("suspended".toClientStatus == ClientStatus.suspended);
 
-  assert(["connected", "error"].toClientStatuses == [
-      ClientStatus.connected, ClientStatus.error
+  assert(["connected", "error"].toClientStatuses == [ClientStatus.connected, ClientStatus.error
     ]);
-  assert([ClientStatus.connected, ClientStatus.error].toStrings == [
-      "connected", "error"
+  assert([ClientStatus.connected, ClientStatus.error].toStrings == ["connected", "error"
     ]);
 }
 
@@ -305,11 +294,9 @@ unittest {
   assert("thirdParty".toClientType == ClientType.thirdParty);
   assert("custom".toClientType == ClientType.custom);
 
-  assert(["sapS4Hana", "thirdParty"].toClientTypes == [
-      ClientType.sapS4Hana, ClientType.thirdParty
+  assert(["sapS4Hana", "thirdParty"].toClientTypes == [ClientType.sapS4Hana, ClientType.thirdParty
     ]);
-  assert([ClientType.sapS4Hana, ClientType.thirdParty].toStrings == [
-      "sapS4Hana", "thirdParty"
+  assert([ClientType.sapS4Hana, ClientType.thirdParty].toStrings == ["sapS4Hana", "thirdParty"
     ]);
 }
 
@@ -346,11 +333,9 @@ unittest {
   assert("cancelled".toReplicationJobStatus == ReplicationJobStatus.cancelled);
   assert("paused".toReplicationJobStatus == ReplicationJobStatus.paused);
 
-  assert(["pending", "failed"].toReplicationJobStatuses == [
-      ReplicationJobStatus.pending, ReplicationJobStatus.failed
+  assert(["pending", "failed"].toReplicationJobStatuses == [ReplicationJobStatus.pending, ReplicationJobStatus.failed
     ]);
-  assert([ReplicationJobStatus.pending, ReplicationJobStatus.failed].toStrings == [
-      "pending", "failed"
+  assert([ReplicationJobStatus.pending, ReplicationJobStatus.failed].toStrings == ["pending", "failed"
     ]);
 }
 
@@ -384,11 +369,9 @@ unittest {
   assert("eventDriven".toReplicationTrigger == ReplicationTrigger.eventDriven);
   assert("onChange".toReplicationTrigger == ReplicationTrigger.onChange);
 
-  assert(["manual", "eventDriven"].toReplicationTriggers == [
-      ReplicationTrigger.manual, ReplicationTrigger.eventDriven
+  assert(["manual", "eventDriven"].toReplicationTriggers == [ReplicationTrigger.manual, ReplicationTrigger.eventDriven
     ]);
-  assert([ReplicationTrigger.manual, ReplicationTrigger.eventDriven].toStrings == [
-      "manual", "eventDriven"
+  assert([ReplicationTrigger.manual, ReplicationTrigger.eventDriven].toStrings == ["manual", "eventDriven"
     ]);
 }
 
@@ -438,11 +421,9 @@ unittest {
   assert("isNull".toFilterOperator == FilterOperator.isNull);
   assert("isNotNull".toFilterOperator == FilterOperator.isNotNull);
 
-  assert(["equals", "contains"].toFilterOperators == [
-      FilterOperator.equals, FilterOperator.contains
+  assert(["equals", "contains"].toFilterOperators == [FilterOperator.equals, FilterOperator.contains
     ]);
-  assert([FilterOperator.equals, FilterOperator.contains].toStrings == [
-      "equals", "contains"
+  assert([FilterOperator.equals, FilterOperator.contains].toStrings == ["equals", "contains"
     ]);
 }
 
@@ -507,11 +488,9 @@ unittest {
   assert("array".toFieldType == FieldType.array_);
   assert("object".toFieldType == FieldType.object_);
 
-  assert(["string", "date"].toFieldTypes == [
-      FieldType.string_, FieldType.date
+  assert(["string", "date"].toFieldTypes == [FieldType.string_, FieldType.date
     ]);
-  assert([FieldType.string_, FieldType.date].toStrings == [
-      "string_", "date"
+  assert([FieldType.string_, FieldType.date].toStrings == ["string_", "date"
     ]);
 }
 
@@ -543,10 +522,8 @@ unittest {
   assert("remote".toKeyMappingSourceType == KeyMappingSourceType.remote);
   assert("universal".toKeyMappingSourceType == KeyMappingSourceType.universal);
 
-  assert(["local", "remote"].toKeyMappingSourceTypes == [
-      KeyMappingSourceType.local, KeyMappingSourceType.remote
+  assert(["local", "remote"].toKeyMappingSourceTypes == [KeyMappingSourceType.local, KeyMappingSourceType.remote
     ]);
-  assert([KeyMappingSourceType.local, KeyMappingSourceType.remote].toStrings == [
-      "local", "remote"
+  assert([KeyMappingSourceType.local, KeyMappingSourceType.remote].toStrings == ["local", "remote"
     ]);
 }

@@ -127,17 +127,13 @@ class RepositoryController : ManageHttpController {
             RepositoryDTO dto;
             dto.repositoryId = id;
             dto.tenantId = tenantId;
-            dto.name = data.getString(
-                "name");
+            dto.name = data.getString(            "name");
             dto.description = data.getString("description");
-            dto.externalUrl = data.getString(
-                "externalUrl");
+            dto.externalUrl = data.getString(            "externalUrl");
             dto.region = data.getString("region");
-            dto.isDefault = data.getBoolean(
-                "isDefault");
+            dto.isDefault = data.getBoolean(            "isDefault");
             dto.isReadOnly = data.getBoolean("isReadOnly");
-            dto.versioningEnabled = data.getBoolean(
-                "versioningEnabled");
+            dto.versioningEnabled = data.getBoolean(            "versioningEnabled");
             dto.fullTextSearchEnabled = data.getBoolean("fullTextSearchEnabled");
             dto.updatedBy = UserId(data.getString("updatedBy"));
 

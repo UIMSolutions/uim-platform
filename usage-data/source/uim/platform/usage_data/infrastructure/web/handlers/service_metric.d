@@ -41,8 +41,7 @@ class ServiceMetricHandler {
   void create(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto json = req.json;
-      auto cmd = CreateServiceMetricRequest(
-        json["serviceId"].get!string,
+      auto cmd = CreateServiceMetricRequest(    json["serviceId"].get!string,
         json["serviceName"].get!string,
         json["planId"].get!string,
         json["planName"].get!string,

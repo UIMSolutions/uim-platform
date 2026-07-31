@@ -30,8 +30,7 @@ class EntitlementEvaluator {
       v.valid = false;
       
 
-      v.reason = "Insufficient quota: requested " ~ requestedQuota.to!string ~ ", available " ~ (
-          maxAvailable - currentlyAssigned).to!string ~ " of " ~ maxAvailable.to!string;
+      v.reason = "Insufficient quota: requested " ~ requestedQuota.to!string ~ ", available " ~ (      maxAvailable - currentlyAssigned).to!string ~ " of " ~ maxAvailable.to!string;
       return v;
     }
 

@@ -68,8 +68,7 @@ unittest {
   auto pipelineRepo = new MemoryPipelineRepository();
   auto channelRepo = new MemoryNotificationChannelRepository();
 
-  auto usecase = new GetOverviewUseCase(
-    logRepo,
+  auto usecase = new GetOverviewUseCase(logRepo,
     spanRepo,
     streamRepo,
     dashboardRepo,

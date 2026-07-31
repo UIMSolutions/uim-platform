@@ -55,12 +55,10 @@ unittest {
   assert(toString(ApplicationType.webAndMobile) == "webAndMobile");
 
   assert(["web", "mobile", "webAndMobile"].toApplicationTypes ==
-      [
-        ApplicationType.web, ApplicationType.mobile,
+      [ApplicationType.web, ApplicationType.mobile,
         ApplicationType.webAndMobile
       ]);
-  assert(toStrings([
-      ApplicationType.web, ApplicationType.mobile,
+  assert(toStrings([ApplicationType.web, ApplicationType.mobile,
       ApplicationType.webAndMobile
     ]) ==
     ["web", "mobile", "webAndMobile"]);
@@ -120,8 +118,7 @@ unittest {
   assert(ApplicationStatus.error.toString == "error");
 
   assert(["draft", "active", "published", "archived", "error"].toApplicationStatuses ==
-      [
-        ApplicationStatus.draft, ApplicationStatus.active,
+      [ApplicationStatus.draft, ApplicationStatus.active,
         ApplicationStatus.published, ApplicationStatus.archived,
         ApplicationStatus.error
       ]);
@@ -207,19 +204,16 @@ unittest {
     "blank", "list", "detail", "form", "dashboard", "login", "settings",
     "custom"
   ].toPageTypes ==
-    [
-      PageType.blank, PageType.list, PageType.detail, PageType.form,
+    [PageType.blank, PageType.list, PageType.detail, PageType.form,
       PageType.dashboard, PageType.login, PageType.settings,
       PageType.custom
     ]);
 
-  assert([
-      PageType.blank, PageType.list, PageType.detail, PageType.form,
+  assert([PageType.blank, PageType.list, PageType.detail, PageType.form,
       PageType.dashboard, PageType.login, PageType.settings,
       PageType.custom
     ].toStrings ==
-    [
-      "blank", "list", "detail", "form", "dashboard", "login",
+    ["blank", "list", "detail", "form", "dashboard", "login",
       "settings", "custom"
     ]);
 }
@@ -280,12 +274,10 @@ unittest {
   assert(PageStatus.error.toString == "error");
 
   assert(["draft", "active", "published", "archived", "error"].toPageStatuses ==
-      [
-        PageStatus.draft, PageStatus.active, PageStatus.published,
+      [PageStatus.draft, PageStatus.active, PageStatus.published,
         PageStatus.archived, PageStatus.error
       ]);
-  assert([
-      PageStatus.draft, PageStatus.active, PageStatus.published,
+  assert([PageStatus.draft, PageStatus.active, PageStatus.published,
       PageStatus.archived, PageStatus.error
     ].toStrings ==
     ["draft", "active", "published", "archived", "error"]);
@@ -364,20 +356,17 @@ unittest {
     "basic", "layout", "input", "display", "navigation", "media", "chart",
     "custom"
   ].toComponentCategories ==
-    [
-      ComponentCategory.basic, ComponentCategory.layout,
+    [ComponentCategory.basic, ComponentCategory.layout,
       ComponentCategory.input, ComponentCategory.display,
       ComponentCategory.navigation, ComponentCategory.media,
       ComponentCategory.chart, ComponentCategory.custom
     ]);
-  assert([
-      ComponentCategory.basic, ComponentCategory.layout,
+  assert([ComponentCategory.basic, ComponentCategory.layout,
       ComponentCategory.input, ComponentCategory.display,
       ComponentCategory.navigation, ComponentCategory.media,
       ComponentCategory.chart, ComponentCategory.custom
   ].toStrings ==
-    [
-      "basic", "layout", "input", "display", "navigation", "media",
+    ["basic", "layout", "input", "display", "navigation", "media",
       "chart", "custom"
     ]);
 }
@@ -435,12 +424,10 @@ unittest {
   assert(ComponentStatus.experimental.toString == "experimental");
 
   assert(["active", "deprecated", "experimental"].toComponentStatus ==
-      [
-        ComponentStatus.active, ComponentStatus.deprecated_,
+      [ComponentStatus.active, ComponentStatus.deprecated_,
         ComponentStatus.experimental
       ]);
-  assert([
-      ComponentStatus.active, ComponentStatus.deprecated_,
+  assert([ComponentStatus.active, ComponentStatus.deprecated_,
       ComponentStatus.experimental
     ].toStrings ==
     ["active", "deprecated", "experimental"]);
@@ -541,20 +528,17 @@ unittest {
     "text", "number", "boolean", "date", "dateTime", "object", "list",
     "image", "file", "reference"
   ].toFieldTypes ==
-    [
-      FieldType.text, FieldType.number, FieldType.boolean_,
+    [FieldType.text, FieldType.number, FieldType.boolean_,
       FieldType.date, FieldType.dateTime, FieldType.object_,
       FieldType.list, FieldType.image, FieldType.file,
       FieldType.reference
     ]);
-  assert([
-      FieldType.text, FieldType.number, FieldType.boolean_,
+  assert([FieldType.text, FieldType.number, FieldType.boolean_,
       FieldType.date, FieldType.dateTime, FieldType.object_,
       FieldType.list, FieldType.image, FieldType.file,
       FieldType.reference
     ].toStrings ==
-    [
-      "text", "number", "boolean", "date", "dateTime", "object", "list",
+    ["text", "number", "boolean", "date", "dateTime", "object", "list",
       "image", "file", "reference"
     ]);
 }
@@ -609,12 +593,10 @@ unittest {
   assert(toString(DataEntityStatus.deprecated_) == "deprecated");
 
   assert(["draft", "active", "deprecated"].toDataEntityStatuses ==
-      [
-        DataEntityStatus.draft, DataEntityStatus.active,
+      [DataEntityStatus.draft, DataEntityStatus.active,
         DataEntityStatus.deprecated_
       ]);
-  assert(toStrings([
-      DataEntityStatus.draft, DataEntityStatus.active,
+  assert(toStrings([DataEntityStatus.draft, DataEntityStatus.active,
       DataEntityStatus.deprecated_
     ]) ==
     ["draft", "active", "deprecated"]);
@@ -676,8 +658,7 @@ unittest {
   assert("".toConnectionStatus == ConnectionStatus.disconnected); // Default case
 
   assert(["disconnected", "connected", "error", "pending"].toConnectionStatuses ==
-      [
-        ConnectionStatus.disconnected, ConnectionStatus.connected,
+      [ConnectionStatus.disconnected, ConnectionStatus.connected,
         ConnectionStatus.error, ConnectionStatus.pending
       ]);
 
@@ -741,8 +722,7 @@ unittest {
   assert("".toAuthMethod == AuthMethod.none); // Default case
 
   assert(["none", "basicAuth", "oauth2", "apiKey", "sapBtpAuth", "certificate"].toAuthMethods ==
-      [
-        AuthMethod.none, AuthMethod.basicAuth, AuthMethod.oauth2,
+      [AuthMethod.none, AuthMethod.basicAuth, AuthMethod.oauth2,
         AuthMethod.apiKey, AuthMethod.sapBtpAuth, AuthMethod.certificate
       ]);
 
@@ -807,8 +787,7 @@ unittest {
   assert("noexists".toFlowTrigger == FlowTrigger.custom);
 
   assert(["componentEvent", "pageMount", "pageUnmount", "appLaunch", "dataChange", "timer", "custom"].toFlowTriggers ==
-      [
-        FlowTrigger.componentEvent, FlowTrigger.pageMount, FlowTrigger.pageUnmount,
+      [FlowTrigger.componentEvent, FlowTrigger.pageMount, FlowTrigger.pageUnmount,
         FlowTrigger.appLaunch, FlowTrigger.dataChange, FlowTrigger.timer,
         FlowTrigger.custom
       ]);
@@ -859,8 +838,7 @@ unittest {
   assert("unknown".toFlowStatus == FlowStatus.inactive);
 
   assert(["active", "inactive", "error"].toFlowStatuses ==
-      [
-        FlowStatus.active, FlowStatus.inactive, FlowStatus.error
+      [FlowStatus.active, FlowStatus.inactive, FlowStatus.error
       ]);
 
   assert([
@@ -911,8 +889,7 @@ unittest {
   assert("unknown".toBuildTarget == BuildTarget.web);
 
   assert(["web", "ios", "android", "webAndMobile"].toBuildTargets ==
-      [
-        BuildTarget.web, BuildTarget.ios, BuildTarget.android,
+      [BuildTarget.web, BuildTarget.ios, BuildTarget.android,
         BuildTarget.webAndMobile
       ]);
   assert([
@@ -968,8 +945,7 @@ unittest {
   assert("noexists".toBuildStatus == BuildStatus.pending); // Default case
 
   assert(["pending", "building", "succeeded", "failed", "cancelled"].toBuildStatuses ==
-      [
-        BuildStatus.pending, BuildStatus.building, BuildStatus.succeeded,
+      [BuildStatus.pending, BuildStatus.building, BuildStatus.succeeded,
         BuildStatus.failed, BuildStatus.cancelled
       ]);
   assert([
@@ -1021,8 +997,7 @@ unittest {
   assert("noexists".toDeployStatus == DeployStatus.notDeployed); // Default case
 
   assert(["notDeployed", "deploying", "deployed", "failed"].toDeployStatuses ==
-      [
-        DeployStatus.notDeployed, DeployStatus.deploying,
+      [DeployStatus.notDeployed, DeployStatus.deploying,
         DeployStatus.deployed, DeployStatus.failed
       ]);
   assert([
@@ -1074,8 +1049,7 @@ unittest {
   assert("noexists".toMemberRole == MemberRole.viewer); // Default case
 
   assert(["owner", "editor", "viewer", "tester"].toMemberRoles ==
-      [
-        MemberRole.owner, MemberRole.editor, MemberRole.viewer,
+      [MemberRole.owner, MemberRole.editor, MemberRole.viewer,
         MemberRole.tester
       ]);
   assert([
@@ -1123,8 +1097,7 @@ unittest {
   assert("noexists".toMemberStatus == MemberStatus.invited); // Default case
 
   assert(["active", "invited", "removed"].toMemberStatuses ==
-      [
-        MemberStatus.active, MemberStatus.invited, MemberStatus.removed
+      [MemberStatus.active, MemberStatus.invited, MemberStatus.removed
       ]);
   assert([
     MemberStatus.active, MemberStatus.invited, MemberStatus.removed

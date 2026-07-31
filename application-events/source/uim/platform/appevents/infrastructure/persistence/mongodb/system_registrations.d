@@ -39,8 +39,7 @@ class MongoSystemRegistrationRepository : SystemRegistrationRepository {
     }
 
     private Bson toBson(SystemRegistration r) {
-        return Bson([
-            "id":           Bson(r.id.value),
+        return Bson([    "id":           Bson(r.id.value),
             "tenantId":     Bson(r.tenantId.value),
             "formationId":  Bson(r.formationId.value),
             "systemId":     Bson(r.systemId),

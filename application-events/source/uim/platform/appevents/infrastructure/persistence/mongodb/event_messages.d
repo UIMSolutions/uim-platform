@@ -41,8 +41,7 @@ class MongoEventMessageRepository : EventMessageRepository {
     }
 
     private Bson toBson(EventMessage m) {
-        return Bson([
-            "id":             Bson(m.id.value),
+        return Bson([    "id":             Bson(m.id.value),
             "tenantId":       Bson(m.tenantId.value),
             "channelId":      Bson(m.channelId.value),
             "eventType":      Bson(m.eventType),

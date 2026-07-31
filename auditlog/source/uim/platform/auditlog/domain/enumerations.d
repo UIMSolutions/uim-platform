@@ -68,11 +68,9 @@ unittest {
   assert(AuditCategory.dataAccess.toString == "audit.data-access");
   assert(AuditCategory.dataModification.toString == "audit.data-modification");
 
-  assert(["audit.security-events", "audit.data-access"].toAuditCategories == [
-      AuditCategory.securityEvents, AuditCategory.dataAccess
+  assert(["audit.security-events", "audit.data-access"].toAuditCategories == [AuditCategory.securityEvents, AuditCategory.dataAccess
     ]);
-  assert([AuditCategory.securityEvents, AuditCategory.dataAccess].toStrings == [
-      "audit.security-events", "audit.data-access"
+  assert([AuditCategory.securityEvents, AuditCategory.dataAccess].toStrings == ["audit.security-events", "audit.data-access"
     ]);
 }
 // #endregion AuditCategory
@@ -114,11 +112,9 @@ unittest {
   assert(AuditSeverity.error.toString == "error");
   assert(AuditSeverity.critical.toString == "critical");
 
-  assert(toAuditSeverities(["info", "error"]) == [
-      AuditSeverity.info, AuditSeverity.error
+  assert(toAuditSeverities(["info", "error"]) == [AuditSeverity.info, AuditSeverity.error
     ]);
-  assert([AuditSeverity.info, AuditSeverity.error].toStrings == [
-      "info", "error"
+  assert([AuditSeverity.info, AuditSeverity.error].toStrings == ["info", "error"
     ]);
 }
 
@@ -246,11 +242,9 @@ unittest {
   assert(AuditAction.mfaEnroll.toString == "mfaEnroll");
   assert(AuditAction.mfaVerify.toString == "mfaVerify");
 
-  assert(["create", "login"].toAuditActions == [
-      AuditAction.create, AuditAction.login
+  assert(["create", "login"].toAuditActions == [AuditAction.create, AuditAction.login
     ]);
-  assert([AuditAction.create, AuditAction.login].toStrings == [
-      "create", "login"
+  assert([AuditAction.create, AuditAction.login].toStrings == ["create", "login"
     ]);
 }
 
@@ -291,11 +285,9 @@ unittest {
   assert(AuditOutcome.denied.toString == "denied");
   assert(AuditOutcome.error.toString == "error");
 
-  assert(["success", "failure"].toAuditOutcomes == [
-      AuditOutcome.success, AuditOutcome.failure
+  assert(["success", "failure"].toAuditOutcomes == [AuditOutcome.success, AuditOutcome.failure
     ]);
-  assert([AuditOutcome.success, AuditOutcome.failure].toStrings == [
-      "success", "failure"
+  assert([AuditOutcome.success, AuditOutcome.failure].toStrings == ["success", "failure"
     ]);
 }
 
@@ -333,11 +325,9 @@ unittest {
   assert(RetentionStatus.inactive.toString == "inactive");
   assert(RetentionStatus.expired.toString == "expired");
 
-  assert(["active", "expired"].toRetentionStatuses == [
-      RetentionStatus.active, RetentionStatus.expired
+  assert(["active", "expired"].toRetentionStatuses == [RetentionStatus.active, RetentionStatus.expired
     ]);
-  assert([RetentionStatus.active, RetentionStatus.expired].toStrings == [
-      "active", "expired"
+  assert([RetentionStatus.active, RetentionStatus.expired].toStrings == ["active", "expired"
     ]);
 }
 
@@ -378,11 +368,9 @@ unittest {
   assert(ExportStatus.completed.toString == "completed");
   assert(ExportStatus.failed.toString == "failed");
 
-  assert(["pending", "completed"].toExportStatuses == [
-      ExportStatus.pending, ExportStatus.completed
+  assert(["pending", "completed"].toExportStatuses == [ExportStatus.pending, ExportStatus.completed
     ]);
-  assert([ExportStatus.pending, ExportStatus.completed].toStrings == [
-      "pending", "completed"
+  assert([ExportStatus.pending, ExportStatus.completed].toStrings == ["pending", "completed"
     ]);
 }
 
@@ -417,8 +405,7 @@ unittest {
   assert(ExportFormat.json.toString == "json");
   assert(ExportFormat.csv.toString == "csv");
 
-  assert(["json", "csv"].toExportFormats == [
-      ExportFormat.json, ExportFormat.csv
+  assert(["json", "csv"].toExportFormats == [ExportFormat.json, ExportFormat.csv
     ]);
   assert([ExportFormat.json, ExportFormat.csv].toStrings == ["json", "csv"]);
 }
@@ -454,10 +441,8 @@ unittest {
   assert(ConfigStatus.enabled.toString == "enabled");
   assert(ConfigStatus.disabled.toString == "disabled");
 
-  assert(["enabled", "disabled"].toConfigStatuses == [
-      ConfigStatus.enabled, ConfigStatus.disabled
+  assert(["enabled", "disabled"].toConfigStatuses == [ConfigStatus.enabled, ConfigStatus.disabled
     ]);
-  assert([ConfigStatus.enabled, ConfigStatus.disabled].toStrings == [
-      "enabled", "disabled"
+  assert([ConfigStatus.enabled, ConfigStatus.disabled].toStrings == ["enabled", "disabled"
     ]);
 }

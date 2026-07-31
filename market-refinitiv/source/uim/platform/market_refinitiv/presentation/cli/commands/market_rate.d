@@ -9,8 +9,7 @@ class MarketRateCliCommand {
   private ManageProvidersUseCase providersUC;
   private ManageAuditLogsUseCase auditUC;
 
-  this(
-    ManageMarketRatesUseCase ratesUC,
+  this(ManageMarketRatesUseCase ratesUC,
     ManageProvidersUseCase providersUC,
     ManageAuditLogsUseCase auditUC
   ) {

@@ -72,11 +72,9 @@ unittest {
   assert(SystemPlan.test.toString == "test");
   assert(SystemPlan.production.toString == "production");
 
-  assert(toSystemPlans(["standard", "free", "unknown"]) == [
-      SystemPlan.standard, SystemPlan.free_, SystemPlan.standard
+  assert(toSystemPlans(["standard", "free", "unknown"]) == [SystemPlan.standard, SystemPlan.free_, SystemPlan.standard
     ]);
-  assert(toStrings([SystemPlan.standard, SystemPlan.free_]) == [
-      "standard", "free"
+  assert(toStrings([SystemPlan.standard, SystemPlan.free_]) == ["standard", "free"
     ]);
 }
 
@@ -127,11 +125,9 @@ unittest {
   assert(SystemStatus.deleted.toString == "deleted");
   assert(SystemStatus.error.toString == "error");
 
-  assert(["active", "provisioning", "unknown"].toSystemStatuses == [
-      SystemStatus.active, SystemStatus.provisioning, SystemStatus.active
+  assert(["active", "provisioning", "unknown"].toSystemStatuses == [SystemStatus.active, SystemStatus.provisioning, SystemStatus.active
     ]);
-  assert([SystemStatus.active, SystemStatus.error].toStrings == [
-      "active", "error"
+  assert([SystemStatus.active, SystemStatus.error].toStrings == ["active", "error"
     ]);
 }
 
@@ -173,12 +169,10 @@ unittest {
   assert(ComponentType.extensibility.toString == "extensibility");
   assert(ComponentType.customCode.toString == "customCode");
 
-  assert(toComponentTypes(["developmentPackage", "extensibility", "unknown"]) == [
-      ComponentType.developmentPackage, ComponentType.extensibility,
+  assert(toComponentTypes(["developmentPackage", "extensibility", "unknown"]) == [ComponentType.developmentPackage, ComponentType.extensibility,
       ComponentType.developmentPackage
     ]);
-  assert(toStrings([
-      ComponentType.businessConfiguration, ComponentType.customCode
+  assert(toStrings([ComponentType.businessConfiguration, ComponentType.customCode
     ]) == ["businessConfiguration", "customCode"]);
 }
 
@@ -223,12 +217,10 @@ unittest {
   assert(ComponentStatus.pulling.toString == "pulling");
   assert(ComponentStatus.error.toString == "error");
 
-  assert(["notCloned", "cloning", "unknown"].toComponentStatuses == [
-      ComponentStatus.notCloned, ComponentStatus.cloning,
+  assert(["notCloned", "cloning", "unknown"].toComponentStatuses == [ComponentStatus.notCloned, ComponentStatus.cloning,
       ComponentStatus.notCloned
     ]);
-  assert([ComponentStatus.cloned, ComponentStatus.error].toStrings == [
-      "cloned", "error"
+  assert([ComponentStatus.cloned, ComponentStatus.error].toStrings == ["cloned", "error"
     ]);
 }
 
@@ -270,11 +262,9 @@ unittest {
   assert(BranchStrategy.feature.toString == "feature");
   assert(BranchStrategy.correction.toString == "correction");
 
-  assert(["main", "feature", "unknown"].toBranchStrategies == [
-      BranchStrategy.main, BranchStrategy.feature, BranchStrategy.main
+  assert(["main", "feature", "unknown"].toBranchStrategies == [BranchStrategy.main, BranchStrategy.feature, BranchStrategy.main
     ]);
-  assert([BranchStrategy.release, BranchStrategy.correction].toStrings == [
-      "release", "correction"
+  assert([BranchStrategy.release, BranchStrategy.correction].toStrings == ["release", "correction"
     ]);
 }
 
@@ -311,8 +301,7 @@ unittest {
   assert(CommunicationDirection.inbound.toString == "inbound");
   assert(CommunicationDirection.outbound.toString == "outbound");
 
-  assert(["inbound", "outbound", "unknown"].toCommunicationDirections == [
-      CommunicationDirection.inbound, CommunicationDirection.outbound,
+  assert(["inbound", "outbound", "unknown"].toCommunicationDirections == [CommunicationDirection.inbound, CommunicationDirection.outbound,
       CommunicationDirection.inbound
     ]);
   assert([CommunicationDirection.inbound, CommunicationDirection.outbound].toStrings == ["inbound", "outbound"]);
@@ -359,8 +348,7 @@ unittest {
   assert(CommunicationProtocol.odataV2.toString == "odataV2");
   assert(CommunicationProtocol.odataV4.toString == "odataV4");
 
-  assert(["httpRest", "rfc", "unknown"].toCommunicationProtocols == [
-      CommunicationProtocol.httpRest, CommunicationProtocol.rfc,
+  assert(["httpRest", "rfc", "unknown"].toCommunicationProtocols == [CommunicationProtocol.httpRest, CommunicationProtocol.rfc,
       CommunicationProtocol.httpRest
     ]);
   assert([CommunicationProtocol.httpSoap, CommunicationProtocol.odataV2].toStrings == ["httpSoap", "odataV2"]);
@@ -451,12 +439,10 @@ unittest {
   assert(ArrangementStatus.inactive.toString == "inactive");
   assert(ArrangementStatus.error.toString == "error");
 
-  assert(["active", "inactive", "unknown"].toArrangementStatuses == [
-      ArrangementStatus.active, ArrangementStatus.inactive,
+  assert(["active", "inactive", "unknown"].toArrangementStatuses == [ArrangementStatus.active, ArrangementStatus.inactive,
       ArrangementStatus.active
     ]);
-  assert([ArrangementStatus.active, ArrangementStatus.error].toStrings == [
-      "active", "error"
+  assert([ArrangementStatus.active, ArrangementStatus.error].toStrings == ["active", "error"
     ]);
 }
 
@@ -505,11 +491,9 @@ unittest {
   assert(BindingType.sql.toString == "sql");
   assert(BindingType.inboundRfc.toString == "inboundRfc");
 
-  assert(["odataV4", "restHttp", "unknown"].toBindingTypes == [
-      BindingType.odataV4, BindingType.restHttp, BindingType.odataV4
+  assert(["odataV4", "restHttp", "unknown"].toBindingTypes == [BindingType.odataV4, BindingType.restHttp, BindingType.odataV4
     ]);
-  assert([BindingType.soapHttp, BindingType.sql].toStrings == [
-      "soapHttp", "sql"
+  assert([BindingType.soapHttp, BindingType.sql].toStrings == ["soapHttp", "sql"
     ]);
 }
 
@@ -557,11 +541,9 @@ unittest {
   assert(BindingStatus.inactive.toString == "inactive");
   assert(BindingStatus.deprecated_.toString == "deprecated");
 
-  assert(["active", "deprecated", "unknown"].toBindingStatuses == [
-      BindingStatus.active, BindingStatus.deprecated_, BindingStatus.active
+  assert(["active", "deprecated", "unknown"].toBindingStatuses == [BindingStatus.active, BindingStatus.deprecated_, BindingStatus.active
     ]);
-  assert([BindingStatus.inactive, BindingStatus.deprecated_].toStrings == [
-      "inactive", "deprecated"
+  assert([BindingStatus.inactive, BindingStatus.deprecated_].toStrings == ["inactive", "deprecated"
     ]);
 }
 // ─── Users and Roles ───
@@ -603,11 +585,9 @@ unittest {
   assert(UserStatus.locked.toString == "locked");
   assert(UserStatus.passwordLocked.toString == "passwordLocked");
 
-  assert(["active", "locked", "unknown"].toUserStatuses == [
-      UserStatus.active, UserStatus.locked, UserStatus.active
+  assert(["active", "locked", "unknown"].toUserStatuses == [UserStatus.active, UserStatus.locked, UserStatus.active
     ]);
-  assert([UserStatus.inactive, UserStatus.passwordLocked].toStrings == [
-      "inactive", "passwordLocked"
+  assert([UserStatus.inactive, UserStatus.passwordLocked].toStrings == ["inactive", "passwordLocked"
     ]);
 }
 
@@ -646,11 +626,9 @@ unittest {
   assert(RoleType.restricted.toString == "restricted");
   assert(RoleType.custom.toString == "custom");
 
-  assert(["unrestricted", "custom", "unknown"].toRoleTypes == [
-      RoleType.unrestricted, RoleType.custom, RoleType.unrestricted
+  assert(["unrestricted", "custom", "unknown"].toRoleTypes == [RoleType.unrestricted, RoleType.custom, RoleType.unrestricted
     ]);
-  assert([RoleType.restricted, RoleType.custom].toStrings == [
-      "restricted", "custom"
+  assert([RoleType.restricted, RoleType.custom].toStrings == ["restricted", "custom"
     ]);
 }
 
@@ -690,12 +668,10 @@ unittest {
   assert(TransportType.customizing.toString == "customizing");
   assert(TransportType.transportOfCopies.toString == "transportOfCopies");
 
-  assert(["workbench", "customizing", "unknown"].toTransportTypes == [
-      TransportType.workbench, TransportType.customizing,
+  assert(["workbench", "customizing", "unknown"].toTransportTypes == [TransportType.workbench, TransportType.customizing,
       TransportType.workbench
     ]);
-  assert([TransportType.workbench, TransportType.transportOfCopies].toStrings == [
-      "workbench", "transportOfCopies"
+  assert([TransportType.workbench, TransportType.transportOfCopies].toStrings == ["workbench", "transportOfCopies"
     ]);
 }
 
@@ -737,12 +713,10 @@ unittest {
   assert(TransportStatus.imported.toString == "imported");
   assert(TransportStatus.error.toString == "error");
 
-  assert(["modifiable", "released", "unknown"].toTransportStatuses == [
-      TransportStatus.modifiable, TransportStatus.released,
+  assert(["modifiable", "released", "unknown"].toTransportStatuses == [TransportStatus.modifiable, TransportStatus.released,
       TransportStatus.modifiable
     ]);
-  assert([TransportStatus.imported, TransportStatus.error].toStrings == [
-      "imported", "error"
+  assert([TransportStatus.imported, TransportStatus.error].toStrings == ["imported", "error"
     ]);
 }
 
@@ -788,11 +762,9 @@ unittest {
   assert(JobFrequency.weekly.toString == "weekly");
   assert(JobFrequency.monthly.toString == "monthly");
 
-  assert(["once", "daily", "unknown"].toJobFrequencies == [
-      JobFrequency.once, JobFrequency.daily, JobFrequency.once
+  assert(["once", "daily", "unknown"].toJobFrequencies == [JobFrequency.once, JobFrequency.daily, JobFrequency.once
     ]);
-  assert(toStrings([JobFrequency.hourly, JobFrequency.weekly]) == [
-      "hourly", "weekly"
+  assert(toStrings([JobFrequency.hourly, JobFrequency.weekly]) == ["hourly", "weekly"
     ]);
 }
 
@@ -837,10 +809,8 @@ unittest {
   assert(JobStatus.failed.toString == "failed");
   assert(JobStatus.canceled.toString == "canceled");
 
-  assert(["scheduled", "running", "unknown"].toJobStatuses == [
-      JobStatus.scheduled, JobStatus.running, JobStatus.scheduled
+  assert(["scheduled", "running", "unknown"].toJobStatuses == [JobStatus.scheduled, JobStatus.running, JobStatus.scheduled
     ]);
-  assert([JobStatus.completed, JobStatus.failed].toStrings == [
-      "completed", "failed"
+  assert([JobStatus.completed, JobStatus.failed].toStrings == ["completed", "failed"
     ]);
 }

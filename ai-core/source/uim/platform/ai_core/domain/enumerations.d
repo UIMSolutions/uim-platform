@@ -7,7 +7,7 @@ module uim.platform.ai_core.domain.enumerations;
 
 import uim.platform.ai_core;
 
-mixin(ShowModule!()); 
+mixin(ShowModule!());
 
 @safe:
 
@@ -84,8 +84,8 @@ unittest {
   assert("stopped".toExecutionStatus == ExecutionStatus.stopped);
   assert("dead".toExecutionStatus == ExecutionStatus.dead);
 
-  assert("unknown".toExecutionStatus == ExecutionStatus.pending);
   assert("".toExecutionStatus == ExecutionStatus.pending);
+  assert("something".toExecutionStatus == ExecutionStatus.pending);
 
   assert(ExecutionStatus.pending.toString == "pending");
   assert(ExecutionStatus.running.toString == "running");
@@ -94,18 +94,16 @@ unittest {
   assert(ExecutionStatus.stopped.toString == "stopped");
   assert(ExecutionStatus.dead.toString == "dead");
 
-  assert(toExecutionStatuses([
-      "pending", "running", "completed", "failed", "stopped", "dead", "unknown"
-    ]) ==
-    [
-      ExecutionStatus.pending, ExecutionStatus.running, ExecutionStatus.completed,
+  assert(["pending", "running", "completed", "failed", "stopped", "dead", "unknown"
+    ].toExecutionStatuses ==
+    [ExecutionStatus.pending, ExecutionStatus.running, ExecutionStatus.completed,
       ExecutionStatus.failed, ExecutionStatus.stopped, ExecutionStatus.dead,
-      ExecutionStatus.pending
+      ExecutionStatus.unknown
     ]);
   assert([
-      ExecutionStatus.pending, ExecutionStatus.running, ExecutionStatus.completed,
-      ExecutionStatus.failed, ExecutionStatus.stopped, ExecutionStatus.dead
-    ].toStrings ==
+    ExecutionStatus.pending, ExecutionStatus.running, ExecutionStatus.completed,
+    ExecutionStatus.failed, ExecutionStatus.stopped, ExecutionStatus.dead
+  ].toStrings ==
     ["pending", "running", "completed", "failed", "stopped", "dead"]);
 }
 
@@ -140,23 +138,23 @@ unittest {
   assert("stopped".toDeploymentStatus == DeploymentStatus.stopped);
   assert("dead".toDeploymentStatus == DeploymentStatus.dead);
 
-  assert("unknown".toDeploymentStatus == DeploymentStatus.pending);
   assert("".toDeploymentStatus == DeploymentStatus.pending);
+  assert("something".toDeploymentStatus == DeploymentStatus.pending);
 
   assert(DeploymentStatus.pending.toString == "pending");
   assert(DeploymentStatus.running.toString == "running");
   assert(DeploymentStatus.stopped.toString == "stopped");
   assert(DeploymentStatus.dead.toString == "dead");
 
-  assert(["pending", "running", "stopped", "dead", "unknown"]) ==
-      [
-        DeploymentStatus.pending, DeploymentStatus.running,
-        DeploymentStatus.stopped, DeploymentStatus.dead, DeploymentStatus.pending
-      ].toDeploymentStatuses;
+  assert(["pending", "running", "stopped", "dead", "unknown"].toDeploymentStatuses ==
+      [DeploymentStatus.pending, DeploymentStatus.running,
+        DeploymentStatus.stopped, DeploymentStatus.dead, DeploymentStatus.unknown
+      ]);
   assert([
-      DeploymentStatus.pending, DeploymentStatus.running, DeploymentStatus.stopped,
-      DeploymentStatus.dead
-    ].toStrings ==
+    DeploymentStatus.pending, DeploymentStatus.running,
+    DeploymentStatus.stopped,
+    DeploymentStatus.dead
+  ].toStrings ==
     ["pending", "running", "stopped", "dead"]);
 }
 
@@ -172,39 +170,33 @@ ArtifactKind toArtifactKind(string value) {
   mixin(EnumSwitch("ArtifactKind", "model"));
 }
 
-ArtifactKind[] toArtifactKind(string[] kinds)
+ArtifactKind[] toArtifactKinds(string[] kinds)
   => kinds.map!(toArtifactKind).array;
-
 string toString(ArtifactKind kind)
   => kind.to!string; // This will return the enum member name as a string, e.g. "model", "dataset", etc
 
 string[] toStrings(ArtifactKind[] kinds)
-  => kinds.map!toString.array;
-
-///
+  => kinds.map!toString.array; ///
 unittest {
   assert("model".toArtifactKind == ArtifactKind.model);
   assert("dataset".toArtifactKind == ArtifactKind.dataset);
   assert("resultset".toArtifactKind == ArtifactKind.resultset);
   assert("other".toArtifactKind == ArtifactKind.other);
-
   assert("unknown".toArtifactKind == ArtifactKind.model);
   assert("".toArtifactKind == ArtifactKind.model);
-
   assert(ArtifactKind.model.toString == "model");
   assert(ArtifactKind.dataset.toString == "dataset");
   assert(ArtifactKind.resultset.toString == "resultset");
   assert(ArtifactKind.other.toString == "other");
-
-  assert(["model", "dataset", "resultset", "other", "unknown"].toArtifactKinds ==
-      [
-        ArtifactKind.model, ArtifactKind.dataset, ArtifactKind.resultset,
+  assert(["model", "dataset", "resultset", "other", "unknown"
+    ].toArtifactKinds ==
+      [ArtifactKind.model, ArtifactKind.dataset, ArtifactKind.resultset,
         ArtifactKind.other, ArtifactKind.model
       ]);
   assert([
-      ArtifactKind.model, ArtifactKind.dataset, ArtifactKind.resultset,
-      ArtifactKind.other
-    ].toStrings ==
+    ArtifactKind.model, ArtifactKind.dataset, ArtifactKind.resultset,
+    ArtifactKind.other
+  ].toStrings ==
     ["model", "dataset", "resultset", "other"]);
 }
 
@@ -248,26 +240,21 @@ unittest {
   assert("stopped".toTargetStatus == TargetStatus.stopped);
   assert("deleted".toTargetStatus == TargetStatus.deleted_);
   assert("completed".toTargetStatus == TargetStatus.completed);
-
   assert("unknown".toTargetStatus == TargetStatus.running);
   assert("".toTargetStatus == TargetStatus.running);
-
   assert(TargetStatus.running.toString == "RUNNING");
   assert(TargetStatus.stopped.toString == "STOPPED");
   assert(TargetStatus.deleted_.toString == "DELETED");
   assert(TargetStatus.completed.toString == "COMPLETED");
-
-  assert([
-      "running", "stopped", "deleted", "completed", "unknown"
+  assert(["running", "stopped", "deleted", "completed", "unknown"
     ].toTargetStatuses ==
-    [
-      TargetStatus.running, TargetStatus.stopped, TargetStatus.deleted_,
-      TargetStatus.completed, TargetStatus.running
-    ]);
+      [TargetStatus.running, TargetStatus.stopped, TargetStatus.deleted_,
+        TargetStatus.completed, TargetStatus.running
+      ]);
   assert([
-      TargetStatus.running, TargetStatus.stopped, TargetStatus.deleted_,
-      TargetStatus.completed
-    ].toStrings ==
+    TargetStatus.running, TargetStatus.stopped, TargetStatus.deleted_,
+    TargetStatus.completed
+  ].toStrings ==
     ["RUNNING", "STOPPED", "DELETED", "COMPLETED"]);
 }
 
@@ -307,23 +294,21 @@ unittest {
   assert("string".toMetricValueType == MetricValueType.string_);
   assert("float".toMetricValueType == MetricValueType.float_);
   assert("int".toMetricValueType == MetricValueType.int_);
-
   assert("".toMetricValueType == MetricValueType.string_);
   assert("unknown".toMetricValueType == MetricValueType.string_);
-
-  assert(MetricValueType.string_.toString == "string_");
-  assert(MetricValueType.float_.toString == "float_");
-  assert(MetricValueType.int_.toString == "int_");
-
-  assert(["string", "float", "int", "unknown"].toMetricValueTypes ==
-      [
-        MetricValueType.string_, MetricValueType.float_, MetricValueType.int_,
+  assert(MetricValueType.string_.toString == "string");
+  assert(MetricValueType.float_.toString == "float");
+  assert(MetricValueType.int_.toString == "int");
+  assert(["string", "float", "int", "unknown"
+    ].toMetricValueTypes ==
+      [MetricValueType.string_, MetricValueType.float_,
+        MetricValueType.int_,
         MetricValueType.string_
       ]);
-  assert([
-      MetricValueType.string_, MetricValueType.float_, MetricValueType.int_
+  assert([MetricValueType.string_, MetricValueType.float_,
+      MetricValueType.int_
     ].toStrings ==
-    ["string_", "float_", "int_"]);
+      ["string", "float", "int"]);
 }
 
 // Log severity levels
@@ -353,68 +338,47 @@ unittest {
   assert("info".toLogSeverity == LogSeverity.info);
   assert("warn".toLogSeverity == LogSeverity.warn);
   assert("error".toLogSeverity == LogSeverity.error);
-
   assert("unknown".toLogSeverity == LogSeverity.info);
   assert("".toLogSeverity == LogSeverity.info);
-
   assert(LogSeverity.info.toString == "info");
   assert(LogSeverity.warn.toString == "warn");
   assert(LogSeverity.error.toString == "error");
-
-  assert(["info", "warn", "error", "unknown"].toLogSeverities ==
-      [LogSeverity.info, LogSeverity.warn, LogSeverity.error, LogSeverity.info]);
-  assert([LogSeverity.info, LogSeverity.warn, LogSeverity.error].toStrings ==
+  assert(["info", "warn", "error", "unknown"
+    ].toLogSeverities ==
+      [LogSeverity.info, LogSeverity.warn,
+        LogSeverity.error, LogSeverity.info
+      ]);
+  assert([LogSeverity.info, LogSeverity.warn, LogSeverity.error
+    ].toStrings ==
       ["info", "warn", "error"]);
 }
 
 // Schedule status
 enum ScheduleStatus {
   // Used for schedules that are currently active and will trigger executions according to their defined schedule
-  active,
-  // Used for schedules that have been deactivated, which may indicate that they are no longer in use or have been temporarily disabled, and will not trigger any executions until they are reactivated
-  inactive,
-  // Used for schedules that have been deleted, which may indicate that they are no longer in use and have been removed from the system
-  deleted,
-  // Used for schedules that have encountered an error during the scheduling or execution process, which may require troubleshooting and resolution before they can be reactivated or used again
-  error,
-  // Used for schedules that have been completed, which may indicate that they have reached their end date or have fulfilled their intended purpose, and may require review or archiving before they can be reactivated or used again
-  completed,
-  // Used for schedules that are in the process of being deleted, which may indicate that they are still active but may require additional steps to complete the deletion process and remove them from the system
-  deleting,
-  // Used for schedules that have been deleted but are still within the retention period, which may indicate that they can be restored or reactivated before they are permanently removed from the system
-  deleted_retention,
-  // Used for schedules that have been deleted and are no longer within the retention period, which may indicate that they are permanently removed from the system and cannot be restored or reactivated
-  deleted_expired,
-  // Used for schedules that are in the process of being restored from deletion, which may indicate that they are still deleted but may require additional steps to complete the restoration process and reactivate them
-  restoring,
-  // Used for schedules that have been restored from deletion, which may indicate that they are now active again after being deleted and can be used as before
-  restored,
-
-  // Used for schedules that are in the process of being triggered, which may indicate that they are still active but may require additional steps to complete the triggering process and execute the associated workflow or serving
-  triggering,
-  // Used for schedules that have been triggered and are currently executing, which may indicate that they
+  active, // Used for schedules that have been deactivated, which may indicate that they are no longer in use or have been temporarily disabled, and will not trigger any executions until they are reactivated
+  inactive, // Used for schedules that have been deleted, which may indicate that they are no longer in use and have been removed from the system
+  deleted, // Used for schedules that have encountered an error during the scheduling or execution process, which may require troubleshooting and resolution before they can be reactivated or used again
+  error, // Used for schedules that have been completed, which may indicate that they have reached their end date or have fulfilled their intended purpose, and may require review or archiving before they can be reactivated or used again
+  completed, // Used for schedules that are in the process of being deleted, which may indicate that they are still active but may require additional steps to complete the deletion process and remove them from the system
+  deleting, // Used for schedules that have been deleted but are still within the retention period, which may indicate that they can be restored or reactivated before they are permanently removed from the system
+  deleted_retention, // Used for schedules that have been deleted and are no longer within the retention period, which may indicate that they are permanently removed from the system and cannot be restored or reactivated
+  deleted_expired, // Used for schedules that are in the process of being restored from deletion, which may indicate that they are still deleted but may require additional steps to complete the restoration process and reactivate them
+  restoring, // Used for schedules that have been restored from deletion, which may indicate that they are now active again after being deleted and can be used as before
+  restored, // Used for schedules that are in the process of being triggered, which may indicate that they are still active but may require additional steps to complete the triggering process and execute the associated workflow or serving
+  triggering, // Used for schedules that have been triggered and are currently executing, which may indicate that they
   // are still active but may require monitoring and management during the execution process, and may transition to other statuses such as completed, failed, or error based on the execution outcome
-  executing,
-  // Used for schedules that have been triggered but have encountered an error during the triggering or execution process, which may require troubleshooting and resolution before they can be reactivated or used again
-  triggered_error,
-  // Used for schedules that have been triggered and have completed execution, which may indicate that they have fulfilled their intended purpose and may require review or archiving before they can be reactivated or used again
-  triggered_completed,
-  // Used for schedules that are in the process of being updated, which may indicate that they are still active but may require additional steps to complete the update process and apply the changes to the schedule
-  updating,
-  // Used for schedules that have been updated, which may indicate that they are now active with the updated configuration and can be used as before, but may require monitoring to ensure that the changes have
+  executing, // Used for schedules that have been triggered but have encountered an error during the triggering or execution process, which may require troubleshooting and resolution before they can be reactivated or used again
+  triggered_error, // Used for schedules that have been triggered and have completed execution, which may indicate that they have fulfilled their intended purpose and may require review or archiving before they can be reactivated or used again
+  triggered_completed, // Used for schedules that are in the process of being updated, which may indicate that they are still active but may require additional steps to complete the update process and apply the changes to the schedule
+  updating, // Used for schedules that have been updated, which may indicate that they are now active with the updated configuration and can be used as before, but may require monitoring to ensure that the changes have
   // been applied correctly and that the schedule is functioning as intended
-  updated,
-  // Used for schedules that have been suspended due to non-payment, which may indicate that they are temporarily inactive until the outstanding payment is resolved and the schedule can be reactivated
-  suspended_nonpayment,
-  // Used for schedules that have been suspended due to abuse, which may indicate that they are temporarily inactive until the abuse issue is resolved and the schedule can be reactivated
-  suspended_abuse,
-  // Used for schedules that have been suspended due to legal issues, which may indicate that they are temporarily inactive until the legal issue is resolved and the schedule can be reactivated
-  suspended_legal,
-  // Used for schedules that have been suspended due to security issues, which may indicate that they are temporarily inactive until the security issue is resolved and the schedule can be reactivated
-  suspended_security,
-  // Used for schedules that have been suspended due to policy violations, which may indicate that they are temporarily inactive until the policy violation is resolved and the schedule can be reactivated
-  suspended_policy,
-  // Used for schedules that have been suspended due to other reasons, which may indicate that they are temporarily inactive until the underlying issue is resolved and the schedule can be reactivated
+  updated, // Used for schedules that have been suspended due to non-payment, which may indicate that they are temporarily inactive until the outstanding payment is resolved and the schedule can be reactivated
+  suspended_nonpayment, // Used for schedules that have been suspended due to abuse, which may indicate that they are temporarily inactive until the abuse issue is resolved and the schedule can be reactivated
+  suspended_abuse, // Used for schedules that have been suspended due to legal issues, which may indicate that they are temporarily inactive until the legal issue is resolved and the schedule can be reactivated
+  suspended_legal, // Used for schedules that have been suspended due to security issues, which may indicate that they are temporarily inactive until the security issue is resolved and the schedule can be reactivated
+  suspended_security, // Used for schedules that have been suspended due to policy violations, which may indicate that they are temporarily inactive until the policy violation is resolved and the schedule can be reactivated
+  suspended_policy, // Used for schedules that have been suspended due to other reasons, which may indicate that they are temporarily inactive until the underlying issue is resolved and the schedule can be reactivated
   suspended_other,
 }
 
@@ -442,13 +406,18 @@ unittest {
   assert("completed".toScheduleStatus == ScheduleStatus.completed);
   assert("deleting".toScheduleStatus == ScheduleStatus.deleting);
   assert("updated".toScheduleStatus == ScheduleStatus.updated);
-  assert("suspended_nonpayment".toScheduleStatus == ScheduleStatus.suspended_nonpayment);
-  assert("suspended_abuse".toScheduleStatus == ScheduleStatus.suspended_abuse);
-  assert("suspended_legal".toScheduleStatus == ScheduleStatus.suspended_legal);
-  assert("suspended_security".toScheduleStatus == ScheduleStatus.suspended_security);
-  assert("suspended_policy".toScheduleStatus == ScheduleStatus.suspended_policy);
-  assert("suspended_other".toScheduleStatus == ScheduleStatus.suspended_other);
-
+  assert("suspended_nonpayment".toScheduleStatus == ScheduleStatus
+      .suspended_nonpayment);
+  assert("suspended_abuse".toScheduleStatus == ScheduleStatus
+      .suspended_abuse);
+  assert("suspended_legal".toScheduleStatus == ScheduleStatus
+      .suspended_legal);
+  assert("suspended_security".toScheduleStatus == ScheduleStatus
+      .suspended_security);
+  assert("suspended_policy".toScheduleStatus == ScheduleStatus
+      .suspended_policy);
+  assert("suspended_other".toScheduleStatus == ScheduleStatus
+      .suspended_other);
   assert("unknown".toScheduleStatus == ScheduleStatus.active);
   assert("".toScheduleStatus == ScheduleStatus.active);
 
@@ -467,29 +436,47 @@ unittest {
   assert(ScheduleStatus.suspended_other.toString == "suspended_other");
 
   assert([
-      "active", "inactive", "deleted", "error", "completed", "deleting", "updated",
-      "suspended_nonpayment", "suspended_abuse", "suspended_legal",
-      "suspended_security", "suspended_policy", "suspended_other", "unknown"
-    ].toScheduleStatuses ==
-    [
-      ScheduleStatus.active, ScheduleStatus.inactive, ScheduleStatus.deleted,
-      ScheduleStatus.error, ScheduleStatus.completed, ScheduleStatus.deleting,
-      ScheduleStatus.updated, ScheduleStatus.suspended_nonpayment,
-      ScheduleStatus.suspended_abuse, ScheduleStatus.suspended_legal,
-      ScheduleStatus.suspended_security, ScheduleStatus.suspended_policy,
-      ScheduleStatus.suspended_other, ScheduleStatus.active
+    "active", "inactive", "deleted", "error",
+    "completed", "deleting", "updated",
+    "suspended_nonpayment", "suspended_abuse",
+    "suspended_legal",
+    "suspended_security", "suspended_policy",
+    "suspended_other", "unknown"
+  ].toScheduleStatuses ==
+    [ScheduleStatus.active,
+      ScheduleStatus.inactive,
+      ScheduleStatus.deleted,
+      ScheduleStatus.error,
+      ScheduleStatus.completed,
+      ScheduleStatus.deleting,
+      ScheduleStatus.updated,
+      ScheduleStatus.suspended_nonpayment,
+      ScheduleStatus.suspended_abuse,
+      ScheduleStatus.suspended_legal,
+      ScheduleStatus.suspended_security,
+      ScheduleStatus.suspended_policy,
+      ScheduleStatus.suspended_other,
+      ScheduleStatus.active
     ]);
-  assert(toStrings([
-      ScheduleStatus.active, ScheduleStatus.inactive, ScheduleStatus.deleted,
-      ScheduleStatus.error, ScheduleStatus.completed, ScheduleStatus.deleting,
-      ScheduleStatus.updated, ScheduleStatus.suspended_nonpayment,
-      ScheduleStatus.suspended_abuse, ScheduleStatus.suspended_legal,
-      ScheduleStatus.suspended_security, ScheduleStatus.suspended_policy,
+  assert(toStrings([ScheduleStatus.active,
+      ScheduleStatus.inactive,
+      ScheduleStatus.deleted,
+      ScheduleStatus.error,
+      ScheduleStatus.completed,
+      ScheduleStatus.deleting,
+      ScheduleStatus.updated,
+      ScheduleStatus.suspended_nonpayment,
+      ScheduleStatus.suspended_abuse,
+      ScheduleStatus.suspended_legal,
+      ScheduleStatus.suspended_security,
+      ScheduleStatus.suspended_policy,
       ScheduleStatus.suspended_other
     ]) ==
-    [
-      "active", "inactive", "deleted", "error", "completed", "deleting", "updated",
-      "suspended_nonpayment", "suspended_abuse", "suspended_legal",
-      "suspended_security", "suspended_policy", "suspended_other"
+    ["active", "inactive", "deleted", "error",
+      "completed", "deleting", "updated",
+      "suspended_nonpayment", "suspended_abuse",
+      "suspended_legal",
+      "suspended_security", "suspended_policy",
+      "suspended_other"
     ]);
 }

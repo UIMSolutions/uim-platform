@@ -81,8 +81,7 @@ struct WorkspaceListItem {
     size_t memberCount;
 
     static WorkspaceListItem from(const Workspace ws) {
-        return WorkspaceListItem(
-            ws.id.value, ws.name, ws.alias_,
+        return WorkspaceListItem(        ws.id.value, ws.name, ws.alias_,
             WorkspaceViewModel.labelForType(ws.type),
             WorkspaceViewModel.cssForStatus(ws.status),
             WorkspaceViewModel.labelForStatus(ws.status),

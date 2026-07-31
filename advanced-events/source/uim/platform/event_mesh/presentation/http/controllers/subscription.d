@@ -199,8 +199,7 @@ unittest {
             Json updateData = Json.emptyObject
                 .set("name", "Updated Subscription")
                 .set("updatedBy", "user-2");
-            auto reqUpdate = createMockRequest(
-                "PUT",
+            auto reqUpdate = createMockRequest(            "PUT",
                 "/api/v1/event-mesh/subscriptions/" ~ createdId,
                 tenantId,
                 updateData);

@@ -115,8 +115,7 @@ Container buildContainer(SrvConfig config) {
   container.manageAlerts = new ManageAlertsUseCase(container.alertRepo);
   container.manageChannels = new ManageNotificationChannelsUseCase(container.channelRepo);
   container.managePipelines = new ManagePipelinesUseCase(container.pipelineRepo);
-  container.getOverview = new GetOverviewUseCase(
-    container.logEntryRepo, container.spanRepo, container.logStreamRepo, container.dashboardRepo,
+  container.getOverview = new GetOverviewUseCase(container.logEntryRepo, container.spanRepo, container.logStreamRepo, container.dashboardRepo,
     container.alertRepo, container.pipelineRepo, container.channelRepo);
 
   // Presentation controllers

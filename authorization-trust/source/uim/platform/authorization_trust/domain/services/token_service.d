@@ -43,8 +43,7 @@ class TokenService {
     long expiresAt = issuedAt + expiresInSeconds;
 
     string header  = Base64.encode(cast(ubyte[]) `{"alg":"none","typ":"JWT"}`.representation).idup;
-    string payload = Base64.encode(cast(ubyte[]) format(
-      `{"sub":"%s","scope":"%s","iat":%d,"exp":%d}`,
+    string payload = Base64.encode(cast(ubyte[]) format(  `{"sub":"%s","scope":"%s","iat":%d,"exp":%d}`,
       clientId,
       scopes.joiner(" ").array,
       issuedAt,

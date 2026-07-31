@@ -69,8 +69,7 @@ class CorsRuleController : ManageHttpController {
     auto rules = usecase.listRules(tenantId, bucketId);
     auto arr = rules.map!(r => r.toJson).array.toJson;
 
-    return successResponse(
-      "CORS rules retrieved successfully", 200, Json.emptyObject
+    return successResponse(  "CORS rules retrieved successfully", 200, Json.emptyObject
         .set("items", arr)
         .set("totalCount", rules.length));
   }

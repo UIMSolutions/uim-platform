@@ -25,8 +25,7 @@ struct AbapLexer {
     // ABAP 7.51 keyword set (core subset sufficient for parsing class pools,
     // function groups, reports, and ABAP Objects — see ABAP keyword documentation)
     // ---------------------------------------------------------------------------
-    private static immutable string[] KEYWORDS = [
-        "ABAP", "ADD", "AND", "APPEND", "ASSIGN", "AT",
+    private static immutable string[] KEYWORDS = ["ABAP", "ADD", "AND", "APPEND", "ASSIGN", "AT",
         "BEGIN", "BETWEEN", "BY",
         "CALL", "CASE", "CHECK", "CLASS", "CLASS-DATA", "CLASS-METHODS",
         "CLEAR", "CLOSE", "COLLECT", "COMMIT", "COMPUTE", "CONDENSE",

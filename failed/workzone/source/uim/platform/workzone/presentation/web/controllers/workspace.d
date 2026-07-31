@@ -96,8 +96,7 @@ class WorkspaceWebController : ManageHttpController {
                 res.writeBody(renderNotFound("Workspace", id), "text/html; charset=utf-8");
                 return;
             }
-            res.writeBody(
-                renderWorkspaceForm(ws.id.value, ws.name, ws.description,
+            res.writeBody(            renderWorkspaceForm(ws.id.value, ws.name, ws.description,
                                     ws.alias_, ws.type.to!string, ""),
                 "text/html; charset=utf-8"
             );

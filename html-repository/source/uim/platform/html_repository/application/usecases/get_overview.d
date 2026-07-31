@@ -27,8 +27,7 @@ class GetOverviewUseCase { // TODO: UIMUseCase {
     private AppRouteRepository routeRepo;
     private ContentCacheRepository cacheRepo;
 
-    this(
-        HtmlAppRepository appRepo,
+    this(    HtmlAppRepository appRepo,
         AppVersionRepository versionRepo,
         AppFileRepository fileRepo,
         ServiceInstanceRepository instanceRepo,

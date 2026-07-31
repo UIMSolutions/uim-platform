@@ -64,8 +64,7 @@ class AuthorizationWebController : ManageHttpController {
     }
 
     auto tenantId = precheck.tenantId.to!string;
-    auto html = view.renderDashboard(
-      tenantId,
+    auto html = view.renderDashboard(  tenantId,
       model.listApplications(tenantId).length,
       model.listPolicies(tenantId).length,
       model.listAssignments(tenantId).length

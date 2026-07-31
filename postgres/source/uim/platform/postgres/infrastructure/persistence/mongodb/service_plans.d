@@ -39,8 +39,7 @@ class MongoServicePlanRepository : ServicePlanRepository {
     }
 
     private Bson toBson(ServicePlan e) {
-        return Bson([
-            "id":               Bson(e.id.value),
+        return Bson([    "id":               Bson(e.id.value),
             "tenantId":         Bson(e.tenantId.value),
             "name":             Bson(e.name),
             "description":      Bson(e.description),

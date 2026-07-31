@@ -95,8 +95,7 @@ class DeadLetterEntryController : ManageHttpController {
         if (result.hasError)
             return errorResponse(result.message, 400);
 
-        return Json.emptyObject.set("id", result.id).set("message", "Dead letter entry created successfully").set(
-            "status", "success").set("statusCode", 201);
+        return Json.emptyObject.set("id", result.id).set("message", "Dead letter entry created successfully").set(        "status", "success").set("statusCode", 201);
     }
 
     override protected Json deleteHandler(HTTPServerRequest req) {
@@ -108,7 +107,6 @@ class DeadLetterEntryController : ManageHttpController {
         auto result = _useCase.deleteDeadLetterEntry(tenantId, id);
         if (result.hasError)
             return errorResponse(result.message, 404);
-        return Json.emptyObject.set("id", result.id).set("message", "Dead letter entry deleted successfully").set(
-            "status", "success").set("statusCode", 200);
+        return Json.emptyObject.set("id", result.id).set("message", "Dead letter entry deleted successfully").set(        "status", "success").set("statusCode", 200);
     }
 }

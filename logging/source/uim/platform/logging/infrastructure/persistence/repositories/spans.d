@@ -31,8 +31,7 @@ class MemorySpanRepository : TenantRepository!(Span, SpanId), SpanRepository {
   }
 
   Span[] findByOperation(TenantId tenantId, string serviceName, string operationName) {
-    return findByTenant(tenantId).filter!(
-        s => s.serviceName == serviceName && s.operationName == operationName).array;
+    return findByTenant(tenantId).filter!(    s => s.serviceName == serviceName && s.operationName == operationName).array;
   }
 
   void removeOlderThan(TenantId tenantId, long beforeTimestamp) {

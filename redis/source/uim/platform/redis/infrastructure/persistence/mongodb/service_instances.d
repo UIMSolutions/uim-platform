@@ -49,8 +49,7 @@ class MongoServiceInstanceRepository : ServiceInstanceRepository {
     }
 
     private Bson toBson(ServiceInstance inst) {
-        return Bson([
-            "id":          Bson(inst.id.value),
+        return Bson([    "id":          Bson(inst.id.value),
             "tenantId":    Bson(inst.tenantId.value),
             "name":        Bson(inst.name),
             "description": Bson(inst.description),

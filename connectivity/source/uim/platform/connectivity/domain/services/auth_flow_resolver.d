@@ -93,8 +93,7 @@ struct AuthFlowResolver {
       break;
 
     case AuthenticationType.principalPropagation:
-      if (
-        dest.proxyType != ProxyType.onPremise)
+      if (    dest.proxyType != ProxyType.onPremise)
         errors ~= "Principal Propagation is only supported with ProxyType.onPremise";
       break;
 

@@ -25,8 +25,7 @@ int main(string[] args) {
     auto container = buildContainer(config);
 
     // Route command
-    auto router = new CliRouter(
-        container.manageWorkspaces,
+    auto router = new CliRouter(    container.manageWorkspaces,
         container.manageTasks,
         tenantId
     );

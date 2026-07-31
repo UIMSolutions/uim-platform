@@ -53,8 +53,7 @@ class UIMTenantRepository {
   void loadTenantsFromJson(string jsonData) {
   auto json = parseJsonString(jsonData);
   foreach (tenantJson; json["tenants"].array.toJson) {
-    tenants[Tenant(tenantJson["id"].get!string, tenantJson["name"].getString).id] = Tenant(
-    tenantJson["id"].get!string, tenantJson["name"].getString);
+    tenants[Tenant(tenantJson["id"].get!string, tenantJson["name"].getString).id] = Tenant(tenantJson["id"].get!string, tenantJson["name"].getString);
   }
   }
 }

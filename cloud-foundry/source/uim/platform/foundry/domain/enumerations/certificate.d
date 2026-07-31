@@ -65,8 +65,7 @@ unittest {
     assert("".toCertificateStatus == CertificateStatus.draft);
     assert("unknown".toCertificateStatus == CertificateStatus.draft);
 
-    assert([
-        CertificateStatus.draft, CertificateStatus.approved, CertificateStatus.rejected,
+    assert([CertificateStatus.draft, CertificateStatus.approved, CertificateStatus.rejected,
         CertificateStatus.pending, CertificateStatus.active, CertificateStatus.expired,
         CertificateStatus.revoked, CertificateStatus.deactivated
     ].toStrings ==
@@ -124,8 +123,7 @@ unittest {
     assert("".toCertificateType == CertificateType.standard);
     assert("unknown".toCertificateType == CertificateType.standard);
 
-    assert([
-        CertificateType.standard, CertificateType.wildcard, CertificateType.multiDomain,
+    assert([CertificateType.standard, CertificateType.wildcard, CertificateType.multiDomain,
         CertificateType.client, CertificateType.codeSigning, CertificateType.emailSigning,
         CertificateType.documentSigning
     ].toStrings ==

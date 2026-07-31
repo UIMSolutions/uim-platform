@@ -67,8 +67,7 @@ final class IdentityDirectoryGuiController {
     }
 
     private guiModels.GuiPageModel[] buildPages(TenantId tenantId) {
-        return [
-            guiModels.buildApiClientsModel(tenantId.value, apiClients.listClients(tenantId)),
+        return [    guiModels.buildApiClientsModel(tenantId.value, apiClients.listClients(tenantId)),
             guiModels.buildAuditModel(tenantId.value, auditLog.listEvents(tenantId)),
             guiModels.buildUsersModel(tenantId.value, users.listUsers(tenantId)),
             guiModels.buildGroupsModel(tenantId.value, groups.listGroups(tenantId)),

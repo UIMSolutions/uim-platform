@@ -52,11 +52,9 @@ unittest {
   assert(toString(AppVisibility.private_) == "private");
   assert(toString(AppVisibility.public_) == "public");
 
-  assert(toStrings([AppVisibility.private_, AppVisibility.public_]) == [
-      "private", "public"
+  assert(toStrings([AppVisibility.private_, AppVisibility.public_]) == ["private", "public"
     ]);
-  assert(toAppVisibilities(["private", "public"]) == [
-      AppVisibility.private_, AppVisibility.public_
+  assert(toAppVisibilities(["private", "public"]) == [AppVisibility.private_, AppVisibility.public_
     ]);
 }
 
@@ -94,11 +92,9 @@ unittest {
   assert(toString(AppStatus.inactive) == "inactive");
   assert(toString(AppStatus.deleted_) == "deleted");
 
-  assert(toStrings([AppStatus.active, AppStatus.inactive, AppStatus.deleted_]) == [
-      "active", "inactive", "deleted"
+  assert(toStrings([AppStatus.active, AppStatus.inactive, AppStatus.deleted_]) == ["active", "inactive", "deleted"
     ]);
-  assert(toAppStatuses(["active", "inactive", "deleted"]) == [
-      AppStatus.active, AppStatus.inactive, AppStatus.deleted_
+  assert(toAppStatuses(["active", "inactive", "deleted"]) == [AppStatus.active, AppStatus.inactive, AppStatus.deleted_
     ]);
 }
 
@@ -136,11 +132,9 @@ unittest {
   assert(toString(VersionStatus.superseded) == "superseded");
   assert(toString(VersionStatus.archived) == "archived");
 
-  assert(toStrings([
-      VersionStatus.active, VersionStatus.superseded, VersionStatus.archived
+  assert(toStrings([VersionStatus.active, VersionStatus.superseded, VersionStatus.archived
     ]) == ["active", "superseded", "archived"]);
-  assert(toVersionStatuses(["active", "superseded", "archived"]) == [
-      VersionStatus.active, VersionStatus.superseded, VersionStatus.archived
+  assert(toVersionStatuses(["active", "superseded", "archived"]) == [VersionStatus.active, VersionStatus.superseded, VersionStatus.archived
     ]);
 }
 
@@ -187,13 +181,11 @@ unittest {
   assert(toString(DeploymentStatus.failed) == "failed");
   assert(toString(DeploymentStatus.rolledBack) == "rolledBack");
 
-  assert(toStrings([
-      DeploymentStatus.pending, DeploymentStatus.inProgress,
+  assert(toStrings([DeploymentStatus.pending, DeploymentStatus.inProgress,
       DeploymentStatus.completed, DeploymentStatus.failed,
       DeploymentStatus.rolledBack
     ]) == ["pending", "inProgress", "completed", "failed", "rolledBack"]);
-  assert(toDeploymentStatuses([
-      "pending", "inProgress", "completed", "failed", "rolledBack"
+  assert(toDeploymentStatuses(["pending", "inProgress", "completed", "failed", "rolledBack"
     ]) == [
     DeploymentStatus.pending, DeploymentStatus.inProgress,
     DeploymentStatus.completed, DeploymentStatus.failed,
@@ -238,12 +230,10 @@ unittest {
   assert(toString(DeploymentOperation.undeploy) == "undeploy");
   assert(toString(DeploymentOperation.redeploy) == "redeploy");
 
-  assert(toStrings([
-      DeploymentOperation.deploy, DeploymentOperation.undeploy,
+  assert(toStrings([DeploymentOperation.deploy, DeploymentOperation.undeploy,
       DeploymentOperation.redeploy
     ]) == ["deploy", "undeploy", "redeploy"]);
-  assert(toDeploymentOperations(["deploy", "undeploy", "redeploy"]) == [
-      DeploymentOperation.deploy, DeploymentOperation.undeploy,
+  assert(toDeploymentOperations(["deploy", "undeploy", "redeploy"]) == [DeploymentOperation.deploy, DeploymentOperation.undeploy,
       DeploymentOperation.redeploy
     ]);
 }
@@ -282,11 +272,9 @@ unittest {
   assert(toString(ServicePlan.appHost) == "appHost");
   assert(toString(ServicePlan.appRuntime) == "appRuntime");
 
-  assert(toStrings([ServicePlan.appHost, ServicePlan.appRuntime]) == [
-      "appHost", "appRuntime"
+  assert(toStrings([ServicePlan.appHost, ServicePlan.appRuntime]) == ["appHost", "appRuntime"
     ]);
-  assert(toServicePlans(["appHost", "appRuntime"]) == [
-      ServicePlan.appHost, ServicePlan.appRuntime
+  assert(toServicePlans(["appHost", "appRuntime"]) == [ServicePlan.appHost, ServicePlan.appRuntime
     ]);
 }
 
@@ -336,11 +324,9 @@ unittest {
   assert(toString(InstanceStatus.suspended) == "suspended");
   assert(toString(InstanceStatus.deleted_) == "deleted");
 
-  assert(toStrings([
-      InstanceStatus.active, InstanceStatus.suspended, InstanceStatus.deleted_
+  assert(toStrings([InstanceStatus.active, InstanceStatus.suspended, InstanceStatus.deleted_
     ]) == ["active", "suspended", "deleted"]);
-  assert(toInstanceStatuses(["active", "suspended", "deleted"]) == [
-      InstanceStatus.active, InstanceStatus.suspended, InstanceStatus.deleted_
+  assert(toInstanceStatuses(["active", "suspended", "deleted"]) == [InstanceStatus.active, InstanceStatus.suspended, InstanceStatus.deleted_
     ]);
 }
 
@@ -381,11 +367,9 @@ unittest {
   assert(toString(CacheStatus.stale) == "stale");
   assert(toString(CacheStatus.expired) == "expired");
 
-  assert(toStrings([CacheStatus.valid, CacheStatus.stale, CacheStatus.expired]) == [
-      "valid", "stale", "expired"
+  assert(toStrings([CacheStatus.valid, CacheStatus.stale, CacheStatus.expired]) == ["valid", "stale", "expired"
     ]);
-  assert(toCacheStatuses(["valid", "stale", "expired"]) == [
-      CacheStatus.valid, CacheStatus.stale, CacheStatus.expired
+  assert(toCacheStatuses(["valid", "stale", "expired"]) == [CacheStatus.valid, CacheStatus.stale, CacheStatus.expired
     ]);
 }
 
@@ -441,13 +425,11 @@ unittest {
   assert(toString(FileCategory.xml) == "xml");
   assert(toString(FileCategory.other) == "other");
 
-  assert(toStrings([
-      FileCategory.html, FileCategory.css, FileCategory.javascript,
+  assert(toStrings([FileCategory.html, FileCategory.css, FileCategory.javascript,
       FileCategory.image, FileCategory.font, FileCategory.json, FileCategory.xml,
       FileCategory.other
     ]) == ["html", "css", "javascript", "image", "font", "json", "xml", "other"]);
-  assert(toFileCategories([
-      "html", "css", "javascript", "image", "font", "json", "xml", "other"
+  assert(toFileCategories(["html", "css", "javascript", "image", "font", "json", "xml", "other"
     ]) == [
     FileCategory.html, FileCategory.css, FileCategory.javascript,
     FileCategory.image, FileCategory.font, FileCategory.json, FileCategory.xml,
@@ -489,10 +471,8 @@ unittest {
   assert(toString(RouteStatus.active) == "active");
   assert(toString(RouteStatus.inactive) == "inactive");
 
-  assert(toStrings([RouteStatus.active, RouteStatus.inactive]) == [
-      "active", "inactive"
+  assert(toStrings([RouteStatus.active, RouteStatus.inactive]) == ["active", "inactive"
     ]);
-  assert(toRouteStatuses(["active", "inactive"]) == [
-      RouteStatus.active, RouteStatus.inactive
+  assert(toRouteStatuses(["active", "inactive"]) == [RouteStatus.active, RouteStatus.inactive
     ]);
 }

@@ -125,8 +125,7 @@ unittest {
     assert("restoring".toDomainStatus == DomainStatus.restoring);
     assert("restored".toDomainStatus == DomainStatus.restored);
 
-    assert([
-        DomainStatus.pending, DomainStatus.active, DomainStatus.inactive, DomainStatus.error,
+    assert([DomainStatus.pending, DomainStatus.active, DomainStatus.inactive, DomainStatus.error,
         DomainStatus.deactivated, DomainStatus.revoked, DomainStatus.expired, DomainStatus.renewing,
         DomainStatus.suspended, DomainStatus.transferring, DomainStatus.locked, DomainStatus.unlocking,
         DomainStatus.archived, DomainStatus.suspended_nonpayment, DomainStatus.suspended_abuse, DomainStatus.suspended_legal,
@@ -168,8 +167,7 @@ unittest {
     assert("kyma".toDomainEnvironment == DomainEnvironment.kyma);
     assert("neo".toDomainEnvironment == DomainEnvironment.neo);
 
-    assert([
-        DomainEnvironment.cloudFoundry, DomainEnvironment.kyma, DomainEnvironment.neo
+    assert([DomainEnvironment.cloudFoundry, DomainEnvironment.kyma, DomainEnvironment.neo
     ].toStrings ==
         ["cloudFoundry", "kyma", "neo"]);
         

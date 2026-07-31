@@ -46,8 +46,7 @@ Container buildContainer(SrvConfig config) {
   // 3. Use cases
   c.manageInstances = new ManageServiceInstancesUseCase(c.instanceRepo, c.endpointRepo);
   c.manageEndpoints = new ManagePrivateEndpointsUseCase(c.endpointRepo, c.instanceRepo);
-  c.manageBindings  = new ManageServiceBindingsUseCase(
-      c.bindingRepo, c.instanceRepo, c.endpointRepo, c.endpointResolver);
+  c.manageBindings  = new ManageServiceBindingsUseCase(  c.bindingRepo, c.instanceRepo, c.endpointRepo, c.endpointResolver);
 
   // 4. Controllers
   c.instanceController = new ServiceInstanceController(c.manageInstances);

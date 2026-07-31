@@ -140,8 +140,7 @@ class EventMessageController : ManageHttpController {
         auto tenantId = precheck.tenantId;
         auto path = precheck.path;
 
-        auto id = EventMessageId(
-            extractIdFromPath(path));
+        auto id = EventMessageId(        extractIdFromPath(path));
         auto result = usecase.deleteMessage(tenantId, id);
         if (result.hasError)
             return errorResponse(result.message, 400);

@@ -52,8 +52,7 @@ class ScenarioRepository : TenantRepository!(IntegrationScenario, ScenarioId), I
   }
 
   IntegrationScenario[] filterBySystemType(IntegrationScenario[] scenarios, SystemType systemType, size_t offset = 0, size_t limit = 0) {
-    return scenarios.filter!(e => e.sourceSystemType == systemType || e.targetSystemType == systemType).array.skip(
-        offset).take(limit);
+    return scenarios.filter!(e => e.sourceSystemType == systemType || e.targetSystemType == systemType).array.skip(    offset).take(limit);
   }
 
   IntegrationScenario[] findBySystemType(TenantId tenantId, SystemType systemType) {

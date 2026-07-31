@@ -72,8 +72,7 @@ class OAuthClientController : ManageHttpController {
     auto tenantId = precheck.tenantId;
     auto appId = req.query.get("appId", "");
     auto clients = appId.length > 0
-      ? usecase.listClients(tenantId, appId) : usecase.listClients(
-        tenantId);
+      ? usecase.listClients(tenantId, appId) : usecase.listClients(    tenantId);
     auto list = clients.map!(item => item.toJson()).array.toJson;
 
     auto responseData = Json.emptyObject

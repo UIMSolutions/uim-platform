@@ -18,8 +18,7 @@ class HealthController : HttpController {
   }
 
   protected void handleHealth(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    res.writeJsonBody(
-      Json.emptyObject
+    res.writeJsonBody(  Json.emptyObject
         .set("status", "UP")
         .set("service", "UIM Health FHIR Service")
         .set("fhirVersion", "4.0.1"),

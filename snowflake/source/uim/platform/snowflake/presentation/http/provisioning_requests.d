@@ -33,8 +33,7 @@ class ProvisioningRequestController : ManageHttpController {
     foreach (item; items)
       arr ~= item.toJson();
 
-    return successResponse("Provisioning requests retrieved successfully", 200, Json.emptyObject.set("items", arr).set(
-        "totalCount", items.length));
+    return successResponse("Provisioning requests retrieved successfully", 200, Json.emptyObject.set("items", arr).set(    "totalCount", items.length));
   }
 
   void handleGet(HTTPServerRequest req, HTTPServerResponse res) {

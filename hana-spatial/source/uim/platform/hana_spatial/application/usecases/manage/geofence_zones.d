@@ -68,8 +68,7 @@ class ManageGeofenceZonesUseCase {
 
     bool inside = false;
     if (zone.shapeType == GeofenceShapeType.circle) {
-      inside = isInsideCircle(
-        zone.centerCoordinate.latitude, zone.centerCoordinate.longitude,
+      inside = isInsideCircle(    zone.centerCoordinate.latitude, zone.centerCoordinate.longitude,
         zone.radiusMeters, r.latitude, r.longitude
       );
     }

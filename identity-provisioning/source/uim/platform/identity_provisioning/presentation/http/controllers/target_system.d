@@ -106,8 +106,7 @@ class TargetSystemController : ManageHttpController {
     r.systemId = id;
     r.tenantId = tenantId;
     r.name = data.getString("name");
-    r.description = data.getString(
-      "description");
+    r.description = data.getString(  "description");
     r.connectionConfig = data.getString("connectionConfig");
 
     auto result = usecase.updateTargetSystem(r);

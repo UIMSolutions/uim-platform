@@ -65,8 +65,7 @@ class MongoDbAuditLogRepository : AuditLogRepository {
   }
 
   private Bson toDoc(AuditLog log) {
-    return Bson([
-      "tenantId": Bson(log.tenantId.value),
+    return Bson(["tenantId": Bson(log.tenantId.value),
       "id": Bson(log.id.value),
       "providerCode": Bson(log.providerCode),
       "operation": Bson(log.operation.to!string),

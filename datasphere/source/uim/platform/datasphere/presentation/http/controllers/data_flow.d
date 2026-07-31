@@ -112,11 +112,9 @@ class DataFlowController : ManageHttpController {
     auto tenantId = precheck.tenantId;
     auto id = DataFlowId(precheck.id);
     auto spaceId = SpaceId(req.headers.get("X-Space-Id", ""));
-    auto result = usecase.deleteDataFlow(
-      tenantId, spaceId, id);
+    auto result = usecase.deleteDataFlow(  tenantId, spaceId, id);
     if (result.hasError)
-      return errorResponse(
-        result.message, 400);
+      return errorResponse(    result.message, 400);
 
     auto responseData = Json.emptyObject.set("id", result.id);
     return successResponse("Data flow deleted successfully", "Deleted", 200, responseData);

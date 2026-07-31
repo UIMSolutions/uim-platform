@@ -61,12 +61,10 @@ unittest {
   assert(BrokerServiceStatus.failed.toString == "failed");
   assert(BrokerServiceStatus.decommissioned.toString == "decommissioned");
 
-  assert(["running", "unknown", "provisioning"].toBrokerServiceStatuses == [
-      BrokerServiceStatus.running, BrokerServiceStatus.failed,
+  assert(["running", "unknown", "provisioning"].toBrokerServiceStatuses == [BrokerServiceStatus.running, BrokerServiceStatus.failed,
       BrokerServiceStatus.provisioning
     ]);
-  assert([BrokerServiceStatus.stopped, BrokerServiceStatus.degraded].toStrings == [
-      "stopped", "degraded"
+  assert([BrokerServiceStatus.stopped, BrokerServiceStatus.degraded].toStrings == ["stopped", "degraded"
     ]);
 }
 
@@ -104,12 +102,10 @@ unittest {
   assert(BrokerServiceType.standard.toString == "standard");
   assert(BrokerServiceType.premium.toString == "premium");
 
-  assert(["developer", "unknown", "premium"].toBrokerServiceTypes == [
-      BrokerServiceType.developer, BrokerServiceType.standard,
+  assert(["developer", "unknown", "premium"].toBrokerServiceTypes == [BrokerServiceType.developer, BrokerServiceType.standard,
       BrokerServiceType.premium
     ]);
-  assert([BrokerServiceType.enterprise, BrokerServiceType.standard].toStrings == [
-      "enterprise", "standard"
+  assert([BrokerServiceType.enterprise, BrokerServiceType.standard].toStrings == ["enterprise", "standard"
     ]);
 }
 
@@ -155,12 +151,10 @@ unittest {
   assert(BrokerServiceClass.standardKilo.toString == "standardKilo");
   assert(BrokerServiceClass.standardMega.toString == "standardMega");
 
-  assert(["enterprisekilo", "unknown", "standardmega"].toBrokerServiceClasses == [
-      BrokerServiceClass.enterpriseKilo, BrokerServiceClass.standardKilo,
+  assert(["enterprisekilo", "unknown", "standardmega"].toBrokerServiceClasses == [BrokerServiceClass.enterpriseKilo, BrokerServiceClass.standardKilo,
       BrokerServiceClass.standardMega
     ]);
-  assert([
-      BrokerServiceClass.developerKilo, BrokerServiceClass.enterpriseGiga
+  assert([BrokerServiceClass.developerKilo, BrokerServiceClass.enterpriseGiga
     ].toStrings == ["developerKilo", "enterpriseGiga"]);
 }
 
@@ -203,11 +197,9 @@ unittest {
   assert(CloudProvider.sap.toString == "sap");
   assert(CloudProvider.onPremise.toString == "onPremise");
 
-  assert(["aws", "unknown", "gcp"].toCloudProviders == [
-      CloudProvider.aws, CloudProvider.sap, CloudProvider.gcp
+  assert(["aws", "unknown", "gcp"].toCloudProviders == [CloudProvider.aws, CloudProvider.sap, CloudProvider.gcp
     ]);
-  assert([CloudProvider.azure, CloudProvider.onPremise].toStrings == [
-      "azure", "onPremise"
+  assert([CloudProvider.azure, CloudProvider.onPremise].toStrings == ["azure", "onPremise"
     ]);
 }
 
@@ -238,20 +230,17 @@ unittest {
   assert("".toQueueAccessType == QueueAccessType.exclusive); // default case
   assert("unknown".toQueueAccessType == QueueAccessType.exclusive); // default case
 
-  assert(["exclusive", "unknown", "nonexclusive"].toQueueAccessTypes == [
-      QueueAccessType.exclusive, QueueAccessType.exclusive,
+  assert(["exclusive", "unknown", "nonexclusive"].toQueueAccessTypes == [QueueAccessType.exclusive, QueueAccessType.exclusive,
       QueueAccessType.nonExclusive
     ]);
 
   assert(QueueAccessType.exclusive.toString == "exclusive");
   assert(QueueAccessType.nonExclusive.toString == "nonExclusive");
 
-  assert(["exclusive", "unknown", "nonexclusive"].toQueueAccessTypes == [
-      QueueAccessType.exclusive, QueueAccessType.exclusive,
+  assert(["exclusive", "unknown", "nonexclusive"].toQueueAccessTypes == [QueueAccessType.exclusive, QueueAccessType.exclusive,
       QueueAccessType.nonExclusive
     ]);
-  assert([QueueAccessType.exclusive, QueueAccessType.nonExclusive].toStrings == [
-      "exclusive", "nonExclusive"
+  assert([QueueAccessType.exclusive, QueueAccessType.nonExclusive].toStrings == ["exclusive", "nonExclusive"
     ]);
 }
 
@@ -289,11 +278,9 @@ unittest {
   assert(QueueStatus.shuttingDown.toString == "shuttingDown");
   assert(QueueStatus.pendingDelete.toString == "pendingDelete");
 
-  assert(["active", "unknown", "shuttingdown"].toQueueStatuses == [
-      QueueStatus.active, QueueStatus.inactive, QueueStatus.shuttingDown
+  assert(["active", "unknown", "shuttingdown"].toQueueStatuses == [QueueStatus.active, QueueStatus.inactive, QueueStatus.shuttingDown
     ]);
-  assert([QueueStatus.inactive, QueueStatus.pendingDelete].toStrings == [
-      "inactive", "pendingDelete"
+  assert([QueueStatus.inactive, QueueStatus.pendingDelete].toStrings == ["inactive", "pendingDelete"
     ]);
 }
 
@@ -328,11 +315,9 @@ unittest {
   assert(QueueType.nonDurable.toString == "nonDurable");
   assert(QueueType.temporary.toString == "temporary");
 
-  assert(["durable", "unknown", "temporary"].toQueueTypes == [
-      QueueType.durable, QueueType.durable, QueueType.temporary
+  assert(["durable", "unknown", "temporary"].toQueueTypes == [QueueType.durable, QueueType.durable, QueueType.temporary
     ]);
-  assert([QueueType.nonDurable, QueueType.temporary].toStrings == [
-      "nonDurable", "temporary"
+  assert([QueueType.nonDurable, QueueType.temporary].toStrings == ["nonDurable", "temporary"
     ]);
 }
 
@@ -368,12 +353,10 @@ unittest {
   assert(TopicStatus.inactive.toString == "inactive");
   assert(TopicStatus.pendingDelete.toString == "pendingDelete");
 
-  assert(["active", "unknown", "pendingdelete"].toTopicStatuses == [
-      TopicStatus.active, TopicStatus.inactive,
+  assert(["active", "unknown", "pendingdelete"].toTopicStatuses == [TopicStatus.active, TopicStatus.inactive,
       TopicStatus.pendingDelete
     ]);
-  assert([TopicStatus.inactive, TopicStatus.pendingDelete].toStrings == [
-      "inactive", "pendingDelete"
+  assert([TopicStatus.inactive, TopicStatus.pendingDelete].toStrings == ["inactive", "pendingDelete"
     ]);
 }
 
@@ -409,12 +392,10 @@ unittest {
   assert(SubscriptionStatus.suspended.toString == "suspended");
   assert(SubscriptionStatus.pendingDelete.toString == "pendingDelete");
 
-  assert(["active", "unknown", "pendingdelete"].toSubscriptionStatuses == [
-      SubscriptionStatus.active, SubscriptionStatus.suspended,
+  assert(["active", "unknown", "pendingdelete"].toSubscriptionStatuses == [SubscriptionStatus.active, SubscriptionStatus.suspended,
       SubscriptionStatus.pendingDelete
     ]);
-  assert([
-      SubscriptionStatus.suspended, SubscriptionStatus.pendingDelete
+  assert([SubscriptionStatus.suspended, SubscriptionStatus.pendingDelete
     ].toStrings == ["suspended", "pendingDelete"]);
 }
 
@@ -449,12 +430,10 @@ unittest {
   assert(SubscriptionType.queueBased.toString == "queueBased");
   assert(SubscriptionType.topicEndpoint.toString == "topicEndpoint");
 
-  assert(["direct", "unknown", "queuebased"].toSubscriptionTypes == [
-      SubscriptionType.direct, SubscriptionType.direct,
+  assert(["direct", "unknown", "queuebased"].toSubscriptionTypes == [SubscriptionType.direct, SubscriptionType.direct,
       SubscriptionType.queueBased
     ]);
-  assert([
-      SubscriptionType.queueBased, SubscriptionType.topicEndpoint
+  assert([SubscriptionType.queueBased, SubscriptionType.topicEndpoint
     ].toStrings == ["queueBased", "topicEndpoint"]);
 }
 
@@ -489,12 +468,10 @@ unittest {
   assert(DeliveryMode.persistent.toString == "persistent");
   assert(DeliveryMode.nonPersistent.toString == "nonPersistent");
 
-  assert(["direct", "unknown", "persistent"].toDeliveryModes == [
-      DeliveryMode.direct, DeliveryMode.direct,
+  assert(["direct", "unknown", "persistent"].toDeliveryModes == [DeliveryMode.direct, DeliveryMode.direct,
       DeliveryMode.persistent
     ]);
-  assert([DeliveryMode.persistent, DeliveryMode.nonPersistent].toStrings == [
-      "persistent", "nonPersistent"
+  assert([DeliveryMode.persistent, DeliveryMode.nonPersistent].toStrings == ["persistent", "nonPersistent"
     ]);
 }
 
@@ -538,12 +515,10 @@ unittest {
   assert(MessageStatus.expired.toString == "expired");
   assert(MessageStatus.deadLettered.toString == "deadLettered");
 
-  assert(["pending", "unknown", "delivered"].toMessageStatuses == [
-      MessageStatus.pending, MessageStatus.pending,
+  assert(["pending", "unknown", "delivered"].toMessageStatuses == [MessageStatus.pending, MessageStatus.pending,
       MessageStatus.delivered
     ]);
-  assert([MessageStatus.acknowledged, MessageStatus.rejected].toStrings == [
-      "acknowledged", "rejected"
+  assert([MessageStatus.acknowledged, MessageStatus.rejected].toStrings == ["acknowledged", "rejected"
     ]);
 }
 
@@ -582,12 +557,10 @@ unittest {
   assert(MessagePriority.high.toString == "high");
   assert(MessagePriority.urgent.toString == "urgent");
 
-  assert(["low", "unknown", "high"].toMessagePriorities == [
-      MessagePriority.low, MessagePriority.normal,
+  assert(["low", "unknown", "high"].toMessagePriorities == [MessagePriority.low, MessagePriority.normal,
       MessagePriority.high
     ]);
-  assert([MessagePriority.normal, MessagePriority.urgent].toStrings == [
-      "normal", "urgent"
+  assert([MessagePriority.normal, MessagePriority.urgent].toStrings == ["normal", "urgent"
     ]);
 }
 
@@ -631,11 +604,9 @@ unittest {
   assert(SchemaFormat.xml.toString == "xml");
   assert(SchemaFormat.asyncapi.toString == "asyncapi");
 
-  assert(["json", "unknown", "xml"].toSchemaFormats == [
-      SchemaFormat.json, SchemaFormat.json, SchemaFormat.xml
+  assert(["json", "unknown", "xml"].toSchemaFormats == [SchemaFormat.json, SchemaFormat.json, SchemaFormat.xml
     ]);
-  assert([SchemaFormat.avro, SchemaFormat.protobuf].toStrings == [
-      "avro", "protobuf"
+  assert([SchemaFormat.avro, SchemaFormat.protobuf].toStrings == ["avro", "protobuf"
     ]);
 }
 
@@ -689,11 +660,9 @@ unittest {
   assert(SchemaStatus.deprecated_.toString == "deprecated");
   assert(SchemaStatus.retired.toString == "retired");
 
-  assert(["draft", "unknown", "active"].toSchemaStatuses == [
-      SchemaStatus.draft, SchemaStatus.draft, SchemaStatus.active
+  assert(["draft", "unknown", "active"].toSchemaStatuses == [SchemaStatus.draft, SchemaStatus.draft, SchemaStatus.active
     ]);
-  assert([SchemaStatus.deprecated_, SchemaStatus.retired].toStrings == [
-      "deprecated", "retired"
+  assert([SchemaStatus.deprecated_, SchemaStatus.retired].toStrings == ["deprecated", "retired"
     ]);
 }
 
@@ -726,8 +695,7 @@ unittest {
   assert("registered".toEventApplicationStatus == EventApplicationStatus.registered);
   assert("active".toEventApplicationStatus == EventApplicationStatus.active);
   assert("suspended".toEventApplicationStatus == EventApplicationStatus.suspended);
-  assert(
-    "deregistered".toEventApplicationStatus == EventApplicationStatus.deregistered);
+  assert("deregistered".toEventApplicationStatus == EventApplicationStatus.deregistered);
   assert("unknown".toEventApplicationStatus == EventApplicationStatus.registered); // default case
 
   assert(EventApplicationStatus.registered.toString == "registered");
@@ -735,13 +703,11 @@ unittest {
   assert(EventApplicationStatus.suspended.toString == "suspended");
   assert(EventApplicationStatus.deregistered.toString == "deregistered");
 
-  assert(["active", "unknown", "suspended"].toEventApplicationStatuses == [
-      EventApplicationStatus.active,
+  assert(["active", "unknown", "suspended"].toEventApplicationStatuses == [EventApplicationStatus.active,
       EventApplicationStatus.registered,
       EventApplicationStatus.suspended
     ]);
-  assert([
-      EventApplicationStatus.active,
+  assert([EventApplicationStatus.active,
       EventApplicationStatus.deregistered
     ].toStrings == ["active", "deregistered"]);
 }
@@ -782,14 +748,11 @@ unittest {
   assert(EventApplicationType.subscriber.toString == "subscriber");
   assert(EventApplicationType.both.toString == "both");
 
-  assert(["publisher", "unknown", "subscriber"].toEventApplicationTypes == [
-      EventApplicationType.publisher, EventApplicationType.both,
+  assert(["publisher", "unknown", "subscriber"].toEventApplicationTypes == [EventApplicationType.publisher, EventApplicationType.both,
       EventApplicationType.subscriber
     ]);
-  assert([
-      EventApplicationType.subscriber, EventApplicationType.both
-    ].toStrings == [
-      "subscriber", "both"
+  assert([EventApplicationType.subscriber, EventApplicationType.both
+    ].toStrings == ["subscriber", "both"
     ]);
 }
 
@@ -835,12 +798,10 @@ unittest {
   assert(BridgeStatus.degraded.toString == "degraded");
   assert(BridgeStatus.failed.toString == "failed");
 
-  assert(["active", "unknown", "degraded"].toBridgeStatuses == [
-      BridgeStatus.active, BridgeStatus.failed,
+  assert(["active", "unknown", "degraded"].toBridgeStatuses == [BridgeStatus.active, BridgeStatus.failed,
       BridgeStatus.degraded
     ]);
-  assert([BridgeStatus.inactive, BridgeStatus.failed].toStrings == [
-      "inactive", "failed"
+  assert([BridgeStatus.inactive, BridgeStatus.failed].toStrings == ["inactive", "failed"
     ]);
 }
 
@@ -884,11 +845,9 @@ unittest {
   assert(BridgeType.kafka.toString == "kafka");
   assert(BridgeType.jms.toString == "jms");
 
-  assert(["vpn", "unknown", "rest"].toBridgeTypes == [
-      BridgeType.vpn, BridgeType.mesh, BridgeType.rest
+  assert(["vpn", "unknown", "rest"].toBridgeTypes == [BridgeType.vpn, BridgeType.mesh, BridgeType.rest
     ]);
-  assert([BridgeType.kafka, BridgeType.jms].toStrings == [
-      "kafka", "jms"
+  assert([BridgeType.kafka, BridgeType.jms].toStrings == ["kafka", "jms"
     ]);
 }
 
@@ -937,10 +896,8 @@ unittest {
   assert(ProtocolType.jms.toString == "jms");
   assert(ProtocolType.websocket.toString == "websocket");
 
-  assert(["mqtt", "unknown", "rest"].toProtocolTypes == [
-      ProtocolType.mqtt, ProtocolType.mqtt, ProtocolType.rest
+  assert(["mqtt", "unknown", "rest"].toProtocolTypes == [ProtocolType.mqtt, ProtocolType.mqtt, ProtocolType.rest
     ]);
-  assert([ProtocolType.amqp, ProtocolType.websocket].toStrings == [
-      "amqp", "websocket"
+  assert([ProtocolType.amqp, ProtocolType.websocket].toStrings == ["amqp", "websocket"
     ]);
 }

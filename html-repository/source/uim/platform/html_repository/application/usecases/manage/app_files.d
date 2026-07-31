@@ -100,8 +100,7 @@ class ManageAppFilesUseCase { // TODO: UIMUseCase {
             return FileCategory.javascript;
         if (filePath.endsWith(".css"))
             return FileCategory.stylesheet;
-        if (filePath.endsWith(".png") || filePath.endsWith(".jpg") || filePath.endsWith(".gif") || filePath.endsWith(
-                ".svg"))
+        if (filePath.endsWith(".png") || filePath.endsWith(".jpg") || filePath.endsWith(".gif") || filePath.endsWith(            ".svg"))
             return FileCategory.image;
         if (filePath.endsWith(".json"))
             return FileCategory.configuration;

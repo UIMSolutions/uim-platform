@@ -73,57 +73,41 @@ class BusinessPartnerController : ManageHttpController {
         BusinessPartnerDTO dto;
         dto.tenantId = tenantId;
         dto.bpNumber = data.getString("bpNumber");
-        dto.firstName = data.getString(
-            "firstName");
+        dto.firstName = data.getString(        "firstName");
         dto.lastName = data.getString("lastName");
-        dto.title = data.getString(
-            "title");
+        dto.title = data.getString(        "title");
         dto.gender = data.getString("gender");
-        dto.dateOfBirth = data.getString(
-            "dateOfBirth");
+        dto.dateOfBirth = data.getString(        "dateOfBirth");
         dto.nationality = data.getString("nationality");
         dto.organizationName = data.getString("organizationName");
         dto.organizationNameAdditional = data
             .getString("organizationNameAdditional");
-        dto.industryCode = data.getString(
-            "industryCode");
-        dto.industryDescription = data.getString(
-            "industryDescription");
+        dto.industryCode = data.getString(        "industryCode");
+        dto.industryDescription = data.getString(        "industryDescription");
         dto.email = data.getString("email");
-        dto.phone = data.getString(
-            "phone");
+        dto.phone = data.getString(        "phone");
         dto.mobile = data.getString("mobile");
-        dto.fax = data.getString(
-            "fax");
+        dto.fax = data.getString(        "fax");
         dto.website = data.getString("website");
-        dto.street = data.getString(
-            "street");
+        dto.street = data.getString(        "street");
         dto.houseNumber = data.getString("houseNumber");
-        dto.postalCode = data.getString(
-            "postalCode");
+        dto.postalCode = data.getString(        "postalCode");
         dto.city = data.getString("city");
-        dto.region = data.getString(
-            "region");
+        dto.region = data.getString(        "region");
         dto.country = data.getString("country");
-        dto.addressType = data.getString(
-            "addressType");
+        dto.addressType = data.getString(        "addressType");
         dto.taxNumber = data.getString("taxNumber");
-        dto.vatNumber = data.getString(
-            "vatNumber");
+        dto.vatNumber = data.getString(        "vatNumber");
         dto.taxJurisdiction = data.getString("taxJurisdiction");
         dto.roles = data.getString("roles");
-        dto.bankAccountNumber = data.getString(
-            "bankAccountNumber");
-        dto.bankRoutingNumber = data.getString(
-            "bankRoutingNumber");
+        dto.bankAccountNumber = data.getString(        "bankAccountNumber");
+        dto.bankRoutingNumber = data.getString(        "bankRoutingNumber");
         dto.bankName = data.getString("bankName");
         dto.bankCountry = data.getString("bankCountry");
-        dto.externalBpId = data.getString(
-            "externalBpId");
+        dto.externalBpId = data.getString(        "externalBpId");
         dto.sourceSystem = data.getString("sourceSystem");
         dto.searchTerms = data.getString("searchTerms");
-        dto.language = data.getString(
-            "language");
+        dto.language = data.getString(        "language");
         dto.createdBy = UserId(data.getString("createdBy"));
 
         auto result = usecase.createBusinessPartner(dto);
@@ -148,28 +132,22 @@ class BusinessPartnerController : ManageHttpController {
         BusinessPartnerDTO dto;
         dto.businessPartnerId = id;
         dto.tenantId = tenantId;
-        dto.firstName = data.getString(
-            "firstName");
+        dto.firstName = data.getString(        "firstName");
         dto.lastName = data.getString("lastName");
         dto.title = data.getString("title");
-        dto.organizationName = data.getString(
-            "organizationName");
+        dto.organizationName = data.getString(        "organizationName");
         dto.industryCode = data.getString("industryCode");
         dto.email = data.getString("email");
         dto.phone = data.getString("phone");
         dto.mobile = data.getString("mobile");
-        dto.website = data.getString(
-            "website");
+        dto.website = data.getString(        "website");
         dto.street = data.getString("street");
-        dto.postalCode = data.getString(
-            "postalCode");
+        dto.postalCode = data.getString(        "postalCode");
         dto.city = data.getString("city");
-        dto.country = data.getString(
-            "country");
+        dto.country = data.getString(        "country");
         dto.taxNumber = data.getString("taxNumber");
         dto.vatNumber = data.getString("vatNumber");
-        dto.roles = data.getString(
-            "roles");
+        dto.roles = data.getString(        "roles");
         dto.searchTerms = data.getString("searchTerms");
         dto.updatedBy = UserId(data.getString("updatedBy"));
 

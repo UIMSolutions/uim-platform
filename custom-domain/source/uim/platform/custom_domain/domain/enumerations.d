@@ -45,11 +45,9 @@ unittest {
     assert(DomainStatus.error.toString == "error");
     assert(DomainStatus.deactivated.toString == "deactivated");
 
-    assert(["pending", "active", "inactive"].toDomainStatuses == [
-            DomainStatus.pending, DomainStatus.active, DomainStatus.inactive
+    assert(["pending", "active", "inactive"].toDomainStatuses == [    DomainStatus.pending, DomainStatus.active, DomainStatus.inactive
         ]);
-    assert([DomainStatus.pending, DomainStatus.active, DomainStatus.inactive].toStrings == [
-            "pending", "active", "inactive"
+    assert([DomainStatus.pending, DomainStatus.active, DomainStatus.inactive].toStrings == [    "pending", "active", "inactive"
         ]);
 }
 
@@ -85,11 +83,9 @@ unittest {
     assert(DomainEnvironment.kyma.toString == "kyma");
     assert(DomainEnvironment.neo.toString == "neo");
 
-    assert(["cloudFoundry", "kyma"].toDomainEnvironments == [
-            DomainEnvironment.cloudFoundry, DomainEnvironment.kyma
+    assert(["cloudFoundry", "kyma"].toDomainEnvironments == [    DomainEnvironment.cloudFoundry, DomainEnvironment.kyma
         ]);
-    assert([DomainEnvironment.cloudFoundry, DomainEnvironment.kyma].toStrings == [
-            "cloudFoundry", "kyma"
+    assert([DomainEnvironment.cloudFoundry, DomainEnvironment.kyma].toStrings == [    "cloudFoundry", "kyma"
         ]);
 }
 
@@ -130,11 +126,9 @@ unittest {
     assert(KeyAlgorithm.ecdsaP256.toString == "ecdsaP256");
     assert(KeyAlgorithm.ecdsaP384.toString == "ecdsaP384");
 
-    assert(["rsa2048", "ecdsaP256"].toKeyAlgorithms == [
-            KeyAlgorithm.rsa2048, KeyAlgorithm.ecdsaP256
+    assert(["rsa2048", "ecdsaP256"].toKeyAlgorithms == [    KeyAlgorithm.rsa2048, KeyAlgorithm.ecdsaP256
         ]);
-    assert([KeyAlgorithm.rsa2048, KeyAlgorithm.ecdsaP256].toStrings == [
-            "rsa2048", "ecdsaP256"
+    assert([KeyAlgorithm.rsa2048, KeyAlgorithm.ecdsaP256].toStrings == [    "rsa2048", "ecdsaP256"
         ]);
 }
 
@@ -172,11 +166,9 @@ unittest {
     assert(KeyStatus.inactive.toString == "inactive");
     assert(KeyStatus.deleted.toString == "deleted");
 
-    assert(["active", "inactive"].toKeyStatuses == [
-            KeyStatus.active, KeyStatus.inactive
+    assert(["active", "inactive"].toKeyStatuses == [    KeyStatus.active, KeyStatus.inactive
         ]);
-    assert([KeyStatus.active, KeyStatus.inactive].toStrings == [
-            "active", "inactive"
+    assert([KeyStatus.active, KeyStatus.inactive].toStrings == [    "active", "inactive"
         ]);
 }
 
@@ -222,11 +214,9 @@ unittest {
     assert(CertificateStatus.revoked.toString == "revoked");
     assert(CertificateStatus.deactivated.toString == "deactivated");
 
-    assert(["pending", "active"].toCertificateStatuses == [
-            CertificateStatus.pending, CertificateStatus.active
+    assert(["pending", "active"].toCertificateStatuses == [    CertificateStatus.pending, CertificateStatus.active
         ]);
-    assert([CertificateStatus.pending, CertificateStatus.active].toStrings == [
-            "pending", "active"
+    assert([CertificateStatus.pending, CertificateStatus.active].toStrings == [    "pending", "active"
         ]);
 }
 
@@ -262,11 +252,9 @@ unittest {
     assert(CertificateType.wildcard.toString == "wildcard");
     assert(CertificateType.multiDomain.toString == "multiDomain");
 
-    assert(["standard", "wildcard"].toCertificateTypes == [
-            CertificateType.standard, CertificateType.wildcard
+    assert(["standard", "wildcard"].toCertificateTypes == [    CertificateType.standard, CertificateType.wildcard
         ]);
-    assert([CertificateType.standard, CertificateType.wildcard].toStrings == [
-            "standard", "wildcard"
+    assert([CertificateType.standard, CertificateType.wildcard].toStrings == [    "standard", "wildcard"
         ]);
 }
 
@@ -306,11 +294,9 @@ unittest {
     assert(TlsProtocolVersion.tls1_2.toString == "tls1_2");
     assert(TlsProtocolVersion.tls1_3.toString == "tls1_3");
 
-    assert(["tls1_0", "tls1_2"].toTlsProtocolVersions == [
-            TlsProtocolVersion.tls1_0, TlsProtocolVersion.tls1_2
+    assert(["tls1_0", "tls1_2"].toTlsProtocolVersions == [    TlsProtocolVersion.tls1_0, TlsProtocolVersion.tls1_2
         ]);
-    assert([TlsProtocolVersion.tls1_0, TlsProtocolVersion.tls1_2].toStrings == [
-            "tls1_0", "tls1_2"
+    assert([TlsProtocolVersion.tls1_0, TlsProtocolVersion.tls1_2].toStrings == [    "tls1_0", "tls1_2"
         ]);
 }
 
@@ -345,11 +331,9 @@ unittest {
     assert(CipherSuiteStrength.medium.toString == "medium");
     assert(CipherSuiteStrength.weak.toString == "weak");
 
-    assert(["strong", "weak"].toCipherSuiteStrengths == [
-            CipherSuiteStrength.strong, CipherSuiteStrength.weak
+    assert(["strong", "weak"].toCipherSuiteStrengths == [    CipherSuiteStrength.strong, CipherSuiteStrength.weak
         ]);
-    assert([CipherSuiteStrength.strong, CipherSuiteStrength.weak].toStrings == [
-            "strong", "weak"
+    assert([CipherSuiteStrength.strong, CipherSuiteStrength.weak].toStrings == [    "strong", "weak"
         ]);
 }
 
@@ -389,11 +373,9 @@ unittest {
     assert(MappingStatus.pending.toString == "pending");
     assert(MappingStatus.error.toString == "error");
 
-    assert(["active", "pending"].toMappingStatuses == [
-            MappingStatus.active, MappingStatus.pending
+    assert(["active", "pending"].toMappingStatuses == [    MappingStatus.active, MappingStatus.pending
         ]);
-    assert([MappingStatus.active, MappingStatus.pending].toStrings == [
-            "active", "pending"
+    assert([MappingStatus.active, MappingStatus.pending].toStrings == [    "active", "pending"
         ]);
 }
 
@@ -429,11 +411,9 @@ unittest {
     assert(MappingType.saasRoute.toString == "saasRoute");
     assert(MappingType.staticRoute.toString == "staticRoute");
 
-    assert(["applicationRoute", "staticRoute"].toMappingTypes == [
-            MappingType.applicationRoute, MappingType.staticRoute
+    assert(["applicationRoute", "staticRoute"].toMappingTypes == [    MappingType.applicationRoute, MappingType.staticRoute
         ]);
-    assert([MappingType.applicationRoute, MappingType.staticRoute].toStrings == [
-            "applicationRoute", "staticRoute"
+    assert([MappingType.applicationRoute, MappingType.staticRoute].toStrings == [    "applicationRoute", "staticRoute"
         ]);
 }
 
@@ -470,11 +450,9 @@ unittest {
     assert(TrustedCertificateStatus.inactive.toString == "inactive");
     assert(TrustedCertificateStatus.expired.toString == "expired");
 
-    assert(["active", "expired"].toTrustedCertificateStatuses == [
-            TrustedCertificateStatus.active, TrustedCertificateStatus.expired
+    assert(["active", "expired"].toTrustedCertificateStatuses == [    TrustedCertificateStatus.active, TrustedCertificateStatus.expired
         ]);
-    assert([TrustedCertificateStatus.active, TrustedCertificateStatus.expired].toStrings == [
-            "active", "expired"
+    assert([TrustedCertificateStatus.active, TrustedCertificateStatus.expired].toStrings == [    "active", "expired"
         ]);
 }
 
@@ -509,11 +487,9 @@ unittest {
     assert(ClientAuthMode.optional.toString == "optional");
     assert(ClientAuthMode.disabled.toString == "disabled");
 
-    assert(["required", "disabled"].toClientAuthModes == [
-            ClientAuthMode.required, ClientAuthMode.disabled
+    assert(["required", "disabled"].toClientAuthModes == [    ClientAuthMode.required, ClientAuthMode.disabled
         ]);
-    assert([ClientAuthMode.required, ClientAuthMode.disabled].toStrings == [
-            "required", "disabled"
+    assert([ClientAuthMode.required, ClientAuthMode.disabled].toStrings == [    "required", "disabled"
         ]);
 }
 
@@ -556,11 +532,9 @@ unittest {
     assert(DnsRecordType.txtRecord.toString == "txtRecord");
     assert(DnsRecordType.mxRecord.toString == "mxRecord");
 
-    assert(["aRecord", "txtRecord"].toDnsRecordTypes == [
-            DnsRecordType.aRecord, DnsRecordType.txtRecord
+    assert(["aRecord", "txtRecord"].toDnsRecordTypes == [    DnsRecordType.aRecord, DnsRecordType.txtRecord
         ]);
-    assert([DnsRecordType.aRecord, DnsRecordType.txtRecord].toStrings == [
-            "aRecord", "txtRecord"
+    assert([DnsRecordType.aRecord, DnsRecordType.txtRecord].toStrings == [    "aRecord", "txtRecord"
         ]);
 }
 
@@ -601,11 +575,9 @@ unittest {
     assert(DnsValidationStatus.failed.toString == "failed");
     assert(DnsValidationStatus.expired.toString == "expired");
 
-    assert(["pending", "validated"].toDnsValidationStatuses == [
-            DnsValidationStatus.pending, DnsValidationStatus.validated
+    assert(["pending", "validated"].toDnsValidationStatuses == [    DnsValidationStatus.pending, DnsValidationStatus.validated
         ]);
-    assert([DnsValidationStatus.pending, DnsValidationStatus.validated].toStrings == [
-            "pending", "validated"
+    assert([DnsValidationStatus.pending, DnsValidationStatus.validated].toStrings == [    "pending", "validated"
         ]);
 }
 
@@ -639,8 +611,7 @@ string[] toStrings(DashboardMetricType[] values)
 unittest {
     mixin(ShowTest!("DashboardMetricType"));
 
-    assert(
-        "certificateExpiration".toDashboardMetricType == DashboardMetricType.certificateExpiration);
+    assert(    "certificateExpiration".toDashboardMetricType == DashboardMetricType.certificateExpiration);
     assert("domainHealth".toDashboardMetricType == DashboardMetricType.domainHealth);
     assert("requestVolume".toDashboardMetricType == DashboardMetricType.requestVolume);
     assert("tlsHandshakeErrors".toDashboardMetricType == DashboardMetricType.tlsHandshakeErrors);
@@ -659,12 +630,10 @@ unittest {
     assert(DashboardMetricType.domainCount.toString == "domainCount");
     assert(DashboardMetricType.mappingCount.toString == "mappingCount");
 
-    assert(["certificateExpiration", "domainHealth"].toDashboardMetricTypes == [
-            DashboardMetricType.certificateExpiration,
+    assert(["certificateExpiration", "domainHealth"].toDashboardMetricTypes == [    DashboardMetricType.certificateExpiration,
             DashboardMetricType.domainHealth
         ]);
-    assert([
-        DashboardMetricType.certificateExpiration,
+    assert([DashboardMetricType.certificateExpiration,
         DashboardMetricType.domainHealth
     ].toStrings == ["certificateExpiration", "domainHealth"]);
 }
@@ -704,11 +673,9 @@ unittest {
     assert(HealthStatus.critical.toString == "critical");
     assert(HealthStatus.unknown.toString == "unknown");
 
-    assert(["healthy", "critical"].toHealthStatuses == [
-            HealthStatus.healthy, HealthStatus.critical
+    assert(["healthy", "critical"].toHealthStatuses == [    HealthStatus.healthy, HealthStatus.critical
         ]);
-    assert([HealthStatus.healthy, HealthStatus.critical].toStrings == [
-            "healthy", "critical"
+    assert([HealthStatus.healthy, HealthStatus.critical].toStrings == [    "healthy", "critical"
         ]);
 }
 
@@ -750,10 +717,8 @@ unittest {
     assert(ExpirationSeverity.critical.toString == "critical");
     assert(ExpirationSeverity.expired.toString == "expired");
 
-    assert(["none", "warning"].toExpirationSeverities == [
-            ExpirationSeverity.none, ExpirationSeverity.warning
+    assert(["none", "warning"].toExpirationSeverities == [    ExpirationSeverity.none, ExpirationSeverity.warning
         ]);
-    assert([ExpirationSeverity.none, ExpirationSeverity.warning].toStrings == [
-            "none", "warning"
+    assert([ExpirationSeverity.none, ExpirationSeverity.warning].toStrings == [    "none", "warning"
         ]);
 }

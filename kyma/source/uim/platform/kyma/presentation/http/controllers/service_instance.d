@@ -116,15 +116,12 @@ override protected Json updateHandler(HTTPServerRequest req) {
   UpdateServiceInstanceRequest r;
   r.tenantId = tenantId;
   r.serviceInstanceId = id;
-  r.description = data.getString(
-    "description");
+  r.description = data.getString("description");
   r.servicePlanName = data.getString("servicePlanName");
   r.servicePlanId = data.getString("servicePlanId");
-  r.parametersJson = data.getString(
-    "parameters");
+  r.parametersJson = data.getString("parameters");
   r.labels = data.jsonStrMap("labels");
-  auto result = usecase.updateServiceInstance(
-    r);
+  auto result = usecase.updateServiceInstance(r);
 
   if (result.hasError)
     return errorResponse(result.message, 400);
@@ -146,8 +143,7 @@ override protected Json deleteHandler(HTTPServerRequest req) {
     return errorResponse(result.message, 400);
   auto responseData = Json
     .emptyObject.set("id", result.id);
-  return successResponse(
-    "Service instance deleted successfully", 200, responseData);
+  return successResponse("Service instance deleted successfully", 200, responseData);
 }
 
 }

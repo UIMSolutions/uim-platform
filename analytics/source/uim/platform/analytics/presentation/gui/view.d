@@ -13,8 +13,7 @@ struct GuiView {
     buffer.put("body{font-family:Verdana,sans-serif;background:#f7fafc;margin:0;padding:1.25rem}");
     buffer.put("h1{margin:.25rem 0}.sub{color:#4a5568;margin-bottom:1rem}");
     buffer.put(".grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem}");
-    buffer.put(
-      ".tile{background:#fff;border:1px solid #e2e8f0;border-radius:14px;" ~
+    buffer.put(  ".tile{background:#fff;border:1px solid #e2e8f0;border-radius:14px;" ~
       "padding:1rem;box-shadow:0 4px 14px rgba(0,0,0,.06)}"
     );
     buffer.put("</style></head><body>");

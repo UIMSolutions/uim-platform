@@ -96,8 +96,7 @@ class ProviderController : ManageHttpController {
     auto result = useCase.updateProvider(updateReq);
     if (result.hasError)
       return errorResponse(result.message, 404);
-    return successResponse(
-      "Content provider updated successfully", "OK", 200, Json.emptyObject);
+    return successResponse(  "Content provider updated successfully", "OK", 200, Json.emptyObject);
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {

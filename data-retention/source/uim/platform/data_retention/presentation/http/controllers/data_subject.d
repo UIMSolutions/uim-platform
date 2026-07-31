@@ -43,8 +43,7 @@ class DataSubjectController : ManageHttpController {
             return errorResponse(result.message, 400);
 
         auto response = Json.emptyObject.set("id", result.id);
-        return successResponse(
-            "Data subject created successfully", "Created", 201, response);
+        return successResponse(        "Data subject created successfully", "Created", 201, response);
     }
 
     override protected Json listHandler(HTTPServerRequest req) {
@@ -63,8 +62,7 @@ class DataSubjectController : ManageHttpController {
                 .set("applicationGroupId", ds.applicationGroupId.value)
                 .set("lifecycleStatus", ds.lifecycleStatus.to!string);
         }
-        return successResponse(
-            "Data subjects retrieved successfully", "Retrieved", 200, Json.emptyObject.set("items", jarr)
+        return successResponse(        "Data subjects retrieved successfully", "Retrieved", 200, Json.emptyObject.set("items", jarr)
                 .set("totalCount", items.length));
     }
 

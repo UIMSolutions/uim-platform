@@ -55,8 +55,7 @@ class DocumentTranslationController : HttpController {
     /// Clients should POST to /api/v1/translation/jobs instead.
     protected void handleAsyncTranslate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            res.writeJsonBody(
-                Json.emptyObject
+            res.writeJsonBody(            Json.emptyObject
                     .set("message", "Use POST /api/v1/translation/jobs to submit an async translation job")
                     .set("endpoint", "/api/v1/translation/jobs"),
                 307

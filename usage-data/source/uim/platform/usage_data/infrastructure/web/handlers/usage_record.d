@@ -41,8 +41,7 @@ class UsageRecordHandler {
   void submit(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto json = req.json;
-      auto cmd = CreateUsageRecordRequest(
-        json["globalAccountId"].get!string,
+      auto cmd = CreateUsageRecordRequest(    json["globalAccountId"].get!string,
         json["subaccountId"].get!string,
         json.isObject && json["directoryId"].type != Json.Type.undefined
           ? json["directoryId"].get!string : "",

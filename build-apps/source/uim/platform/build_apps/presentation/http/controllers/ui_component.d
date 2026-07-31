@@ -106,14 +106,12 @@ class UIComponentController : ManageHttpController {
         dto.componentId = UIComponentId(precheck.id);
         dto.name = data.getString("name");
         dto.description = data.getString("description");
-        dto.version_ = data.getString(
-            "version");
+        dto.version_ = data.getString(        "version");
         dto.updatedBy = UserId(data.getString("updatedBy"));
 
         auto result = components.updateUIComponent(dto);
         if (result.hasError)
-            return errorResponse(
-                result.message, 400);
+            return errorResponse(            result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
         return successResponse("UI component updated successfully", "Updated", 200, responseData);

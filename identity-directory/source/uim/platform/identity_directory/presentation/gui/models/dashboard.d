@@ -50,21 +50,18 @@ GuiPageModel buildDashboardModel(string tenantId, size_t apiClientCount, size_t 
     model.title = "Management Dashboard";
     model.tenantId = tenantId.length > 0 ? tenantId : "default";
     model.intro = "Operate the six identity-directory areas from a single GTK MVC surface.";
-    model.highlights = [
-        "Desktop navigation for the full identity lifecycle",
+    model.highlights = ["Desktop navigation for the full identity lifecycle",
         "Live counts from the application layer",
         "Entity-specific workspaces with request previews",
     ];
-    model.metrics = [
-        GuiMetricModel("API clients", apiClientCount.to!string),
+    model.metrics = [GuiMetricModel("API clients", apiClientCount.to!string),
         GuiMetricModel("Audit events", auditCount.to!string),
         GuiMetricModel("Users", userCount.to!string),
         GuiMetricModel("Groups", groupCount.to!string),
         GuiMetricModel("Schemas", schemaCount.to!string),
         GuiMetricModel("Password policies", passwordPolicyCount.to!string),
     ];
-    model.actions = [
-        GuiActionModel("Open API clients", "GET", "api-clients", ""),
+    model.actions = [GuiActionModel("Open API clients", "GET", "api-clients", ""),
         GuiActionModel("Open audit log", "GET", "audit", ""),
         GuiActionModel("Open users", "GET", "users", ""),
         GuiActionModel("Open groups", "GET", "groups", ""),
@@ -77,8 +74,7 @@ GuiPageModel buildDashboardModel(string tenantId, size_t apiClientCount, size_t 
 GuiPageModel buildApiClientsModel(string tenantId, ApiClient[] clients) {
     auto model = buildPageModel("api-clients", "API Clients", tenantId,
         "Create, inspect, and revoke technical clients used for service-to-service access.",
-        [
-            "Technical credentials with scopes",
+        [    "Technical credentials with scopes",
             "Revoke-first lifecycle control",
             "Audit-friendly client administration",
         ],
@@ -92,8 +88,7 @@ GuiPageModel buildApiClientsModel(string tenantId, ApiClient[] clients) {
 }
 }));
     foreach (client; clients) {
-        model.table.rows ~= [
-            client.name,
+        model.table.rows ~= [    client.name,
             client.clientId,
             client.active ? "active" : "inactive",
             client.expiresAt > 0 ? client.expiresAt.to!string : "never",
@@ -108,16 +103,14 @@ GuiPageModel buildApiClientsModel(string tenantId, ApiClient[] clients) {
 GuiPageModel buildAuditModel(string tenantId, AuditEvent[] events) {
     auto model = buildPageModel("audit", "Audit Log", tenantId,
         "Inspect audit activity by actor, target, or event type.",
-        [
-            "Actor and target drilldowns",
+        [    "Actor and target drilldowns",
             "Security and lifecycle history",
             "Tenant-scoped event stream",
         ],
         ["Type", "Actor", "Target", "Description", "Timestamp"],
         GuiActionModel("Filter by actor", "GET", "/api/v1/audit-logs/actor/{actorId}", ""));
     foreach (event; events) {
-        model.table.rows ~= [
-            event.eventType.to!string,
+        model.table.rows ~= [    event.eventType.to!string,
             event.actorId,
             event.targetType ~ ": " ~ event.targetId,
             event.description,
@@ -132,8 +125,7 @@ GuiPageModel buildAuditModel(string tenantId, AuditEvent[] events) {
 GuiPageModel buildUsersModel(string tenantId, IDUser[] users) {
     auto model = buildPageModel("users", "Users", tenantId,
         "Manage SCIM users, search records, and review account status.",
-        [
-            "SCIM profile data",
+        [    "SCIM profile data",
             "Password change workflow",
             "Search and deactivate controls",
         ],
@@ -151,8 +143,7 @@ GuiPageModel buildUsersModel(string tenantId, IDUser[] users) {
 }
 }));
     foreach (user; users) {
-        model.table.rows ~= [
-            user.userName,
+        model.table.rows ~= [    user.userName,
             user.getDisplayName(),
             user.isActive() ? "active" : "inactive",
             user.primaryEmail(),
@@ -167,8 +158,7 @@ GuiPageModel buildUsersModel(string tenantId, IDUser[] users) {
 GuiPageModel buildGroupsModel(string tenantId, IDGroup[] groups) {
     auto model = buildPageModel("groups", "Groups", tenantId,
         "Create groups and manage their membership graph.",
-        [
-            "SCIM groups",
+        [    "SCIM groups",
             "Membership add/remove flows",
             "Change history in audit log",
         ],
@@ -181,8 +171,7 @@ GuiPageModel buildGroupsModel(string tenantId, IDGroup[] groups) {
 }
 }));
     foreach (group; groups) {
-        model.table.rows ~= [
-            group.displayName,
+        model.table.rows ~= [    group.displayName,
             group.memberCount().to!string,
             group.description,
             group.groupType.to!string,
@@ -196,8 +185,7 @@ GuiPageModel buildGroupsModel(string tenantId, IDGroup[] groups) {
 GuiPageModel buildSchemasModel(string tenantId, Schema[] schemas) {
     auto model = buildPageModel("schemas", "Schemas", tenantId,
         "Design and maintain custom SCIM schema extensions.",
-        [
-            "Attribute metadata management",
+        [    "Attribute metadata management",
             "Reusable custom schema definitions",
             "Attribute count visibility",
         ],
@@ -212,8 +200,7 @@ GuiPageModel buildSchemasModel(string tenantId, Schema[] schemas) {
 }
 }));
     foreach (schema; schemas) {
-        model.table.rows ~= [
-            schema.name,
+        model.table.rows ~= [    schema.name,
             schema.attributes.length.to!string,
             schema.description,
         ];
@@ -226,8 +213,7 @@ GuiPageModel buildSchemasModel(string tenantId, Schema[] schemas) {
 GuiPageModel buildPasswordPoliciesModel(string tenantId, PasswordPolicy[] policies) {
     auto model = buildPageModel("password-policies", "Password Policies", tenantId,
         "Review and define the active password policy for a tenant.",
-        [
-            "Strength and lockout controls",
+        [    "Strength and lockout controls",
             "Active policy visibility",
             "History and expiry settings",
         ],
@@ -251,8 +237,7 @@ GuiPageModel buildPasswordPoliciesModel(string tenantId, PasswordPolicy[] polici
 }
 }));
     foreach (policy; policies) {
-        model.table.rows ~= [
-            policy.name,
+        model.table.rows ~= [    policy.name,
             policy.active ? "active" : "inactive",
             policy.minLength.to!string,
             policy.expiryDays.to!string,

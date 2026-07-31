@@ -59,8 +59,7 @@ unittest {
   assert(SystemType.azure_ad.toString == "azure_ad");
   assert(SystemType.custom.toString == "custom");
 
-  assert(["ias", "scim"].toSystemTypes == [
-      SystemType.ias, SystemType.scim
+  assert(["ias", "scim"].toSystemTypes == [SystemType.ias, SystemType.scim
     ]);
   assert([SystemType.ias, SystemType.scim].toStrings == ["ias", "scim"]);
 }
@@ -103,11 +102,9 @@ unittest {
   assert(SystemStatus.error.toString == "error");
   assert(SystemStatus.configuring.toString == "configuring");
 
-  assert(["active", "error"].toSystemStatuses == [
-      SystemStatus.active, SystemStatus.error
+  assert(["active", "error"].toSystemStatuses == [SystemStatus.active, SystemStatus.error
     ]);
-  assert([SystemStatus.active, SystemStatus.error].toStrings == [
-      "active", "error"
+  assert([SystemStatus.active, SystemStatus.error].toStrings == ["active", "error"
     ]);
 }
 
@@ -146,8 +143,7 @@ unittest {
   assert(SystemRole.target.toString == "target");
   assert(SystemRole.proxy.toString == "proxy");
 
-  assert(["source", "proxy"].toSystemRoles == [
-      SystemRole.source, SystemRole.proxy
+  assert(["source", "proxy"].toSystemRoles == [SystemRole.source, SystemRole.proxy
     ]);
   assert([SystemRole.source, SystemRole.proxy].toStrings == ["source", "proxy"]);
 }
@@ -187,8 +183,7 @@ unittest {
   assert(JobType.delta.toString == "delta");
   assert(JobType.simulate.toString == "simulate");
 
-  assert(["full", "simulate"].toJobTypes == [
-      JobType.full, JobType.simulate
+  assert(["full", "simulate"].toJobTypes == [JobType.full, JobType.simulate
     ]);
   assert([JobType.full, JobType.simulate].toStrings == ["full", "simulate"]);
 }
@@ -234,11 +229,9 @@ unittest {
   assert(JobStatus.failed.toString == "failed");
   assert(JobStatus.cancelled.toString == "cancelled");
 
-  assert(["scheduled", "failed"].toJobStatuses == [
-      JobStatus.scheduled, JobStatus.failed
+  assert(["scheduled", "failed"].toJobStatuses == [JobStatus.scheduled, JobStatus.failed
     ]);
-  assert([JobStatus.scheduled, JobStatus.failed].toStrings == [
-      "scheduled", "failed"
+  assert([JobStatus.scheduled, JobStatus.failed].toStrings == ["scheduled", "failed"
     ]);
 }
 
@@ -293,11 +286,9 @@ unittest {
   assert(OperationType.delete_.toString == "delete_");
   assert(OperationType.skip.toString == "skip");
 
-  assert(["create", "skip"].toOperationTypes == [
-      OperationType.create, OperationType.skip
+  assert(["create", "skip"].toOperationTypes == [OperationType.create, OperationType.skip
     ]);
-  assert([OperationType.create, OperationType.skip].toStrings == [
-      "create", "skip"
+  assert([OperationType.create, OperationType.skip].toStrings == ["create", "skip"
     ]);
 }
 
@@ -336,11 +327,9 @@ unittest {
   assert(LogStatus.failed.toString == "failed");
   assert(LogStatus.skipped.toString == "skipped");
 
-  assert(["success", "skipped"].toLogStatuses == [
-      LogStatus.success, LogStatus.skipped
+  assert(["success", "skipped"].toLogStatuses == [LogStatus.success, LogStatus.skipped
     ]);
-  assert([LogStatus.success, LogStatus.skipped].toStrings == [
-      "success", "skipped"
+  assert([LogStatus.success, LogStatus.skipped].toStrings == ["success", "skipped"
     ]);
 }
 
@@ -376,8 +365,7 @@ unittest {
   assert(EntityType.user.toString == "user");
   assert(EntityType.group.toString == "group");
 
-  assert(["user", "group"].toEntityTypes == [
-      EntityType.user, EntityType.group
+  assert(["user", "group"].toEntityTypes == [EntityType.user, EntityType.group
     ]);
   assert([EntityType.user, EntityType.group].toStrings == ["user", "group"]);
 }
@@ -420,10 +408,8 @@ unittest {
   assert(EntityStatus.pending.toString == "pending");
   assert(EntityStatus.error.toString == "error");
 
-  assert(["active", "error"].toEntityStatuses == [
-      EntityStatus.active, EntityStatus.error
+  assert(["active", "error"].toEntityStatuses == [EntityStatus.active, EntityStatus.error
     ]);
-  assert([EntityStatus.active, EntityStatus.error].toStrings == [
-      "active", "error"
+  assert([EntityStatus.active, EntityStatus.error].toStrings == ["active", "error"
     ]);
 }

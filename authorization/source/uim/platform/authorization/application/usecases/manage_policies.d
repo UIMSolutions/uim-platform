@@ -107,8 +107,7 @@ class ManagePoliciesUseCase {
       string action;
     }
 
-    auto templates = [
-      BaseTemplate("admin", "Administrative full access", "*", "*"),
+    auto templates = [BaseTemplate("admin", "Administrative full access", "*", "*"),
       BaseTemplate("reader", "Read-only access", "*", "Read"),
       BaseTemplate("support", "Support read access for incident-like resources", "Incident", "Read")
     ];

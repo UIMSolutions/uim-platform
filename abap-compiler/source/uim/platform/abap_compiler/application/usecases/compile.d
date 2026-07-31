@@ -42,8 +42,7 @@ class CompileUseCase {
         if (source.length == 0) {
             auto prog = programRepo.findById(req.tenantId, req.programId);
             if (prog.isNull)
-                return CompileResponse(
-                    CompilationJobId(""), CompilationStatus.failed.toString, [], [], false,
+                return CompileResponse(                CompilationJobId(""), CompilationStatus.failed.toString, [], [], false,
                     "Program '" ~ req.programId.value ~ "' not found"
                 );
             source = prog.sourceCode;
@@ -91,8 +90,7 @@ class CompileUseCase {
         job.finishedAt = MonoTime.currTime.ticks;
         jobRepo.update(job);
 
-        return CompileResponse(
-            job.id, finalStatus.toString, allDiags, irCode,
+        return CompileResponse(        job.id, finalStatus.toString, allDiags, irCode,
             finalStatus == CompilationStatus.succeeded,
             anyErrors ? "Compilation failed with errors" : ""
         );

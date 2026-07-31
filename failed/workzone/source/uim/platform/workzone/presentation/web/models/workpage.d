@@ -23,8 +23,7 @@ struct WorkpageViewModel {
     string visibilityLabel;
 
     static WorkpageViewModel from(const Workpage wp) {
-        return WorkpageViewModel(
-            wp.id.value,
+        return WorkpageViewModel(        wp.id.value,
             wp.workspaceId.value,
             wp.tenantId,
             wp.title,

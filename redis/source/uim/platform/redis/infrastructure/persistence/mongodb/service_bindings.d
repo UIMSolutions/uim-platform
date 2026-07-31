@@ -35,8 +35,7 @@ class MongoServiceBindingRepository : ServiceBindingRepository {
     }
 
     private Bson toBson(ServiceBinding b) {
-        return Bson([
-            "id": Bson(b.id.value), "tenantId": Bson(b.tenantId.value),
+        return Bson([    "id": Bson(b.id.value), "tenantId": Bson(b.tenantId.value),
             "instanceId": Bson(b.instanceId.value), "appId": Bson(b.appId), "name": Bson(b.name),
             "status": Bson(b.status.to!string), "bindingHost": Bson(b.bindingHost),
             "bindingPort": Bson(cast(long) b.bindingPort), "expiresAt": Bson(b.expiresAt),

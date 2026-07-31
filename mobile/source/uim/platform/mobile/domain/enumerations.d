@@ -108,8 +108,7 @@ unittest {
   assert(toString(AppStatus.inactive) == "inactive");
   assert(toString(AppStatus.suspended) == "suspended");
   assert(toString(AppStatus.deleted_) == "deleted");
-  assert(toStrings([
-      AppStatus.active, AppStatus.inactive, AppStatus.suspended,
+  assert(toStrings([AppStatus.active, AppStatus.inactive, AppStatus.suspended,
       AppStatus.deleted_
     ]) == ["active", "inactive", "suspended", "deleted"]);
   assert([
@@ -159,8 +158,7 @@ unittest {
   assert(toString(DeviceStatus.wiped) == "wiped");
   assert(toString(DeviceStatus.blocked) == "blocked");
 
-  assert(toStrings([
-      DeviceStatus.registered, DeviceStatus.locked, DeviceStatus.wiped,
+  assert(toStrings([DeviceStatus.registered, DeviceStatus.locked, DeviceStatus.wiped,
       DeviceStatus.blocked
     ]) == ["registered", "locked", "wiped", "blocked"]);
   assert([
@@ -213,8 +211,7 @@ unittest {
   assert(toString(PushProvider.wns) == "wns");
   assert(toString(PushProvider.w3c) == "w3c");
 
-  assert(toStrings([
-      PushProvider.fcm, PushProvider.apns, PushProvider.wns, PushProvider.w3c
+  assert(toStrings([PushProvider.fcm, PushProvider.apns, PushProvider.wns, PushProvider.w3c
     ]) == ["fcm", "apns", "wns", "w3c"]);
   assert([
     PushProvider.fcm, PushProvider.apns, PushProvider.wns, PushProvider.w3c
@@ -361,11 +358,9 @@ unittest {
   assert(toString(PushRegStatus.expired) == "expired");
   assert(toString(PushRegStatus.revoked) == "revoked");
 
-  assert(toStrings([
-      PushRegStatus.active, PushRegStatus.expired, PushRegStatus.revoked
+  assert(toStrings([PushRegStatus.active, PushRegStatus.expired, PushRegStatus.revoked
     ]) == ["active", "expired", "revoked"]);
-  assert(["active", "expired", "revoked"].toPushRegStatuses == [
-      PushRegStatus.active, PushRegStatus.expired, PushRegStatus.revoked
+  assert(["active", "expired", "revoked"].toPushRegStatuses == [PushRegStatus.active, PushRegStatus.expired, PushRegStatus.revoked
     ]);
 }
 
@@ -417,8 +412,7 @@ unittest {
   assert(toString(RestrictionType.percentage) == "percentage");
   assert(toString(RestrictionType.whitelist) == "whitelist");
 
-  assert(toStrings([
-      RestrictionType.boolean_, RestrictionType.percentage,
+  assert(toStrings([RestrictionType.boolean_, RestrictionType.percentage,
       RestrictionType.whitelist
     ]) == ["boolean", "percentage", "whitelist"]);
   assert([
@@ -468,8 +462,7 @@ unittest {
   assert(ClientResourceType.certificate.toString == "certificate");
   assert(ClientResourceType.translation.toString == "translation");
 
-  assert(["bundle", "configuration", "certificate", "translation"].toClientResourceTypes == [
-      ClientResourceType.bundle, ClientResourceType.configuration,
+  assert(["bundle", "configuration", "certificate", "translation"].toClientResourceTypes == [ClientResourceType.bundle, ClientResourceType.configuration,
       ClientResourceType.certificate, ClientResourceType.translation
     ]);
   assert([
@@ -540,8 +533,7 @@ unittest {
   assert(VersionStatus.deprecated_.toString == "deprecated");
   assert(VersionStatus.archived.toString == "archived");
 
-  assert(toStrings([
-      VersionStatus.draft, VersionStatus.published, VersionStatus.mandatory,
+  assert(toStrings([VersionStatus.draft, VersionStatus.published, VersionStatus.mandatory,
       VersionStatus.deprecated_, VersionStatus.archived
     ]) == ["draft", "published", "mandatory", "deprecated", "archived"]);
   assert([
@@ -585,11 +577,9 @@ unittest {
   assert(OfflineStoreType.odata.toString == "odata");
   assert(OfflineStoreType.custom.toString == "custom");
 
-  assert(["odata", "custom"].toOfflineStoreTypes == [
-      OfflineStoreType.odata, OfflineStoreType.custom
+  assert(["odata", "custom"].toOfflineStoreTypes == [OfflineStoreType.odata, OfflineStoreType.custom
     ]);
-  assert([OfflineStoreType.odata, OfflineStoreType.custom].toStrings == [
-      "odata", "custom"
+  assert([OfflineStoreType.odata, OfflineStoreType.custom].toStrings == ["odata", "custom"
     ]);
 }
 
@@ -640,8 +630,7 @@ unittest {
   assert([
     SyncStatus.idle, SyncStatus.syncing, SyncStatus.error, SyncStatus.completed
   ].toStrings == ["idle", "syncing", "error", "completed"]);
-  assert(["idle", "syncing", "error", "completed"].toSyncStatuses == [
-      SyncStatus.idle, SyncStatus.syncing, SyncStatus.error, SyncStatus.completed
+  assert(["idle", "syncing", "error", "completed"].toSyncStatuses == [SyncStatus.idle, SyncStatus.syncing, SyncStatus.error, SyncStatus.completed
     ]);
 }
 
@@ -682,11 +671,9 @@ unittest {
   assert(SessionStatus.expired.toString == "expired");
   assert(SessionStatus.terminated.toString == "terminated");
 
-  assert(["active", "expired", "terminated"].toSessionStatuses == [
-      SessionStatus.active, SessionStatus.expired, SessionStatus.terminated
+  assert(["active", "expired", "terminated"].toSessionStatuses == [SessionStatus.active, SessionStatus.expired, SessionStatus.terminated
     ]);
-  assert([SessionStatus.active, SessionStatus.expired, SessionStatus.terminated].toStrings == [
-      "active", "expired", "terminated"
+  assert([SessionStatus.active, SessionStatus.expired, SessionStatus.terminated].toStrings == ["active", "expired", "terminated"
     ]);
 }
 
@@ -731,11 +718,9 @@ unittest {
   assert(LogSource.push.toString == "push");
   assert(LogSource.sync.toString == "sync");
 
-  assert(toStrings([
-      LogSource.client, LogSource.server, LogSource.push, LogSource.sync
+  assert(toStrings([LogSource.client, LogSource.server, LogSource.push, LogSource.sync
     ]) == ["client", "server", "push", "sync"]);
-  assert([LogSource.client, LogSource.server, LogSource.push, LogSource.sync].toStrings == [
-      "client", "server", "push", "sync"
+  assert([LogSource.client, LogSource.server, LogSource.push, LogSource.sync].toStrings == ["client", "server", "push", "sync"
     ]);
 }
 
@@ -796,8 +781,7 @@ unittest {
   assert(MetricType.crash.toString == "crash");
   assert(MetricType.custom.toString == "custom");
 
-  assert(toStrings([
-      MetricType.appLaunch, MetricType.screenView, MetricType.apiCall,
+  assert(toStrings([MetricType.appLaunch, MetricType.screenView, MetricType.apiCall,
       MetricType.pushReceived, MetricType.syncCompleted, MetricType.crash,
       MetricType.custom
     ]) == [

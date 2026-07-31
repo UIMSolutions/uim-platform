@@ -130,23 +130,18 @@ class ViewController : ManageHttpController {
 
     UpdateViewRequest r;
     r.tenantId = tenantId;
-    r.spaceId = SpaceId(
-      req.headers.get("X-Space-Id", ""));
+    r.spaceId = SpaceId(  req.headers.get("X-Space-Id", ""));
     r.viewId = ViewId(precheck.id);
-    r.name = data.getString(
-      "name");
+    r.name = data.getString(  "name");
     r.description = data.getString("description");
-    r.businessName = data.getString(
-      "businessName");
+    r.businessName = data.getString(  "businessName");
     r.sqlExpression = data.getString("sqlExpression");
     r
       .isExposed = data.getBoolean("isExposed", false);
-    r.isPersisted = data.getBoolean(
-      "isPersisted", false);
+    r.isPersisted = data.getBoolean(  "isPersisted", false);
     auto result = usecase.update(r);
     if (result.hasError)
-      return errorResponse(
-        result.message, 400);
+      return errorResponse(    result.message, 400);
 
     auto resp = Json.emptyObject.set("id", result.id);
     return successResponse("View updated successfully", 200, resp);
@@ -158,8 +153,7 @@ class ViewController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto spaceId = SpaceId(
-      req.headers.get("X-Space-Id", ""));
+    auto spaceId = SpaceId(  req.headers.get("X-Space-Id", ""));
     auto id = ViewId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid view ID", 400);

@@ -31,8 +31,7 @@ class JwtTokenService : TokenService {
     // import std.array : join;
 
     auto now = currentTimestamp();
-    auto payload = user.id.value ~ "|" ~ app.id.value ~ "|" ~ tokenType.to!string ~ "|" ~ scopes.join(
-        ",") ~ "|" ~ now.to!string;
+    auto payload = user.id.value ~ "|" ~ app.id.value ~ "|" ~ tokenType.to!string ~ "|" ~ scopes.join(    ",") ~ "|" ~ now.to!string;
 
     // Sign payload
     auto signature = sign(payload);

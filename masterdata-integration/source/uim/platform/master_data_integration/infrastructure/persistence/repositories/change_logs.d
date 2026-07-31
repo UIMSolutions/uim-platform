@@ -18,8 +18,7 @@ class MemoryChangeLogRepository : TenantRepository!(ChangeLogEntry, ChangeLogEnt
     return findByObject(tenantId, objectId).length;
   }
 
-  ChangeLogEntry[] filterByObject(
-    ChangeLogEntry[] entries,
+  ChangeLogEntry[] filterByObject(ChangeLogEntry[] entries,
     MasterDataObjectId objectId,
     size_t offset = 0,
     size_t limit = 0
@@ -43,8 +42,7 @@ class MemoryChangeLogRepository : TenantRepository!(ChangeLogEntry, ChangeLogEnt
     return findByCategory(tenantId, category).length;
   }
 
-  ChangeLogEntry[] filterByCategory(
-    ChangeLogEntry[] entries,
+  ChangeLogEntry[] filterByCategory(ChangeLogEntry[] entries,
     MasterDataCategory category,
     size_t offset = 0,
     size_t limit = 0
@@ -68,8 +66,7 @@ class MemoryChangeLogRepository : TenantRepository!(ChangeLogEntry, ChangeLogEnt
     return findSinceDeltaToken(tenantId, deltaToken).length;
   }
 
-  ChangeLogEntry[] filterSinceDeltaToken(
-    ChangeLogEntry[] entries,
+  ChangeLogEntry[] filterSinceDeltaToken(ChangeLogEntry[] entries,
     string deltaToken, size_t offset = 0, size_t limit = 0
   ) {
     return (limit == 0)
@@ -92,8 +89,7 @@ class MemoryChangeLogRepository : TenantRepository!(ChangeLogEntry, ChangeLogEnt
     return findSinceTimestamp(tenantId, sinceTimestamp).length;
   }
 
-  ChangeLogEntry[] filterSinceTimestamp(
-    ChangeLogEntry[] entries,
+  ChangeLogEntry[] filterSinceTimestamp(ChangeLogEntry[] entries,
     long sinceTimestamp,
     size_t offset = 0,
     size_t limit = 0

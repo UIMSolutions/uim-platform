@@ -38,8 +38,7 @@ class MongoDeadLetterEntryRepository : DeadLetterEntryRepository {
     }
 
     private Bson toBson(DeadLetterEntry e) {
-        return Bson([
-            "id":                Bson(e.id.value),
+        return Bson([    "id":                Bson(e.id.value),
             "tenantId":          Bson(e.tenantId.value),
             "originalMessageId": Bson(e.originalMessageId.value),
             "channelId":         Bson(e.channelId.value),

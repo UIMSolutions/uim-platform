@@ -286,11 +286,9 @@ unittest {
   assert(AggregationMethod.last.toString == "last");
   assert(AggregationMethod.count.toString == "count");
 
-  assert(["average", "count"].toAggregationMethods == [
-      AggregationMethod.average, AggregationMethod.count
+  assert(["average", "count"].toAggregationMethods == [AggregationMethod.average, AggregationMethod.count
     ]);
-  assert([AggregationMethod.average, AggregationMethod.count].toStrings == [
-      "average", "count"
+  assert([AggregationMethod.average, AggregationMethod.count].toStrings == ["average", "count"
     ]);
 }
 
@@ -338,11 +336,9 @@ unittest {
   assert(CheckType.database.toString == "database");
   assert(CheckType.certificate.toString == "certificate");
 
-  assert(["availability", "database"].toCheckTypes == [
-      CheckType.availability, CheckType.database
+  assert(["availability", "database"].toCheckTypes == [CheckType.availability, CheckType.database
     ]);
-  assert([CheckType.availability, CheckType.database].toStrings == [
-      "availability", "database"
+  assert([CheckType.availability, CheckType.database].toStrings == ["availability", "database"
     ]);
 }
 
@@ -386,11 +382,9 @@ unittest {
   assert(CheckStatus.critical.toString == "critical");
   assert(CheckStatus.disabled.toString == "disabled");
 
-  assert(["ok", "critical"].toCheckStatuses == [
-      CheckStatus.ok, CheckStatus.critical
+  assert(["ok", "critical"].toCheckStatuses == [CheckStatus.ok, CheckStatus.critical
     ]);
-  assert([CheckStatus.ok, CheckStatus.critical].toStrings == [
-      "ok", "critical"
+  assert([CheckStatus.ok, CheckStatus.critical].toStrings == ["ok", "critical"
     ]);
 }
 
@@ -432,11 +426,9 @@ unittest {
   assert(AlertState.resolved.toString == "resolved");
   assert(AlertState.expired.toString == "expired");
 
-  assert(["open", "resolved"].toAlertStates == [
-      AlertState.open, AlertState.resolved
+  assert(["open", "resolved"].toAlertStates == [AlertState.open, AlertState.resolved
     ]);
-  assert([AlertState.open, AlertState.resolved].toStrings == [
-      "open", "resolved"
+  assert([AlertState.open, AlertState.resolved].toStrings == ["open", "resolved"
     ]);
 }
 
@@ -483,11 +475,9 @@ unittest {
   assert(ThresholdOperator.equal.toString == "equal");
   assert(ThresholdOperator.notEqual.toString == "notEqual");
 
-  assert(["greaterThan", "equal"].toThresholdOperators == [
-      ThresholdOperator.greaterThan, ThresholdOperator.equal
+  assert(["greaterThan", "equal"].toThresholdOperators == [ThresholdOperator.greaterThan, ThresholdOperator.equal
     ]);
-  assert([ThresholdOperator.greaterThan, ThresholdOperator.equal].toStrings == [
-      "greaterThan", "equal"
+  assert([ThresholdOperator.greaterThan, ThresholdOperator.equal].toStrings == ["greaterThan", "equal"
     ]);
 }
 
@@ -540,10 +530,8 @@ unittest {
   assert(ChannelState.inactive.toString == "inactive");
   assert(ChannelState.error.toString == "error");
 
-  assert(["active", "error"].toChannelStates == [
-      ChannelState.active, ChannelState.error
+  assert(["active", "error"].toChannelStates == [ChannelState.active, ChannelState.error
     ]);
-  assert([ChannelState.active, ChannelState.error].toStrings == [
-      "active", "error"
+  assert([ChannelState.active, ChannelState.error].toStrings == ["active", "error"
     ]);
 }

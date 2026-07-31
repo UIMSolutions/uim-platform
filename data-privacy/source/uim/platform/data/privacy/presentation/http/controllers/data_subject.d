@@ -65,8 +65,7 @@ class DataSubjectController : ManageHttpController {
     auto typeParam = req.headers.get("X-Subject-Type", "");
 
     DataSubject[] items = typeParam.length > 0
-      ? usecase.listByType(tenantId, typeParam.toDataSubjectType()) : usecase.listSubjects(
-        tenantId);
+      ? usecase.listByType(tenantId, typeParam.toDataSubjectType()) : usecase.listSubjects(    tenantId);
 
     auto list = items.map!(item => item.toJson()).array.toJson;
 

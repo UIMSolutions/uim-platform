@@ -76,8 +76,7 @@ class SpatialFeatureController : ManageHttpController {
         .set("createdAt", item.createdAt);
     }
 
-    return successResponse("Spatial features retrieved successfully", "Retrieved", 200, Json.emptyObject.set("count", Json(
-        items.length)).set("resources", jarr));
+    return successResponse("Spatial features retrieved successfully", "Retrieved", 200, Json.emptyObject.set("count", Json(    items.length)).set("resources", jarr));
   }
 
   override protected Json getHandler(HTTPServerRequest req) {

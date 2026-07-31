@@ -110,8 +110,7 @@ unittest {
   assert(getString(parseJsonString(`{"name": "test"}`), "name") == "test");
   assert(getString(parseJsonString(`{"name": "test"}`), "missing") == "");
 
-  assert(getStrings(parseJsonString(`{"tags": ["a", "b"]}`), "tags") == [
-      "a", "b"
+  assert(getStrings(parseJsonString(`{"tags": ["a", "b"]}`), "tags") == ["a", "b"
     ]);
   // assert(getStrings(parseJsonString(`{}`), "tags").isNull);
 }

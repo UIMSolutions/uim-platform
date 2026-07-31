@@ -36,8 +36,7 @@ struct PwaDashboardView {
   }
 
   static string renderManifest() {
-    return [
-      "{",
+    return ["{",
       "  \"name\": \"Identity Directory PWA\",",
       "  \"short_name\": \"ID PWA\",",
       "  \"start_url\": \"/pwa\",",
@@ -51,8 +50,7 @@ struct PwaDashboardView {
   }
 
   static string renderServiceWorker() {
-    return [
-      "const CACHE_NAME = 'identity-directory-pwa-v1';",
+    return ["const CACHE_NAME = 'identity-directory-pwa-v1';",
       "const ASSETS = ['/pwa', '/pwa/index.html', '/pwa/manifest.webmanifest'];",
       "",
       "self.addEventListener('install', event => {",
@@ -160,8 +158,7 @@ struct PwaDashboardView {
   }
 
   private static string renderScript() {
-    return [
-      "<script>",
+    return ["<script>",
       "(() => {",
       "  const baseUrl = document.getElementById('base-url');",
       "  const tenantId = document.getElementById('tenant-id');",
@@ -223,8 +220,7 @@ struct PwaDashboardView {
   }
 
   private static string baseStyles() {
-    return [
-      ":root {",
+    return [":root {",
       "  color-scheme: dark;",
       "  --bg: #09131f;",
       "  --panel: rgba(12, 22, 36, 0.86);",

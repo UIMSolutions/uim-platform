@@ -24,8 +24,7 @@ struct CardViewModel {
     string activeCssClass;
 
     static CardViewModel from(const Card c) {
-        return CardViewModel(
-            c.id.value, c.tenantId, c.title, c.subtitle, c.description, c.icon,
+        return CardViewModel(        c.id.value, c.tenantId, c.title, c.subtitle, c.description, c.icon,
             labelForType(c.cardType),
             c.active,
             c.active ? "Active" : "Inactive",

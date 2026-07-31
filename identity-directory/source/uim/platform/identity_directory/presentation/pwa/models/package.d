@@ -47,12 +47,10 @@ PwaPageModel buildPwaPageModel(string tenantId) {
     "ManagePasswordPoliciesUseCase",
   ];
   model.domains = [
-    PwaDomain(
-      "api-client",
+    PwaDomain(  "api-client",
       "API Clients",
       "Provision and revoke technical clients used by automation and integrations.",
-      [
-        PwaEndpoint("GET", "/api/v1/api-clients", "List clients", ""),
+      [PwaEndpoint("GET", "/api/v1/api-clients", "List clients", ""),
         PwaEndpoint("POST", "/api/v1/api-clients", "Create client", q{
 {
   "name": "analytics-client",
@@ -65,22 +63,18 @@ PwaPageModel buildPwaPageModel(string tenantId) {
         PwaEndpoint("DELETE", "/api/v1/api-clients/{id}", "Revoke client", ""),
       ]
     ),
-    PwaDomain(
-      "audit",
+    PwaDomain(  "audit",
       "Audit Log",
       "Inspect who changed what, when, and against which target.",
-      [
-        PwaEndpoint("GET", "/api/v1/audit-logs", "List audit events", ""),
+      [PwaEndpoint("GET", "/api/v1/audit-logs", "List audit events", ""),
         PwaEndpoint("GET", "/api/v1/audit-logs/actor/{actorId}", "Filter by actor", ""),
         PwaEndpoint("GET", "/api/v1/audit-logs/target/{targetId}", "Filter by target", ""),
       ]
     ),
-    PwaDomain(
-      "user",
+    PwaDomain(  "user",
       "Users",
       "Create, query, modify, search, deactivate, and change passwords for SCIM users.",
-      [
-        PwaEndpoint("POST", "/scim/Users", "Create user", q{
+      [PwaEndpoint("POST", "/scim/Users", "Create user", q{
 {
   "userName": "jane.doe",
   "displayName": "Jane Doe",
@@ -118,12 +112,10 @@ PwaPageModel buildPwaPageModel(string tenantId) {
         PwaEndpoint("GET", "/scim/Users/search?filter=userName%20eq%20\"jane.doe\"", "Search users", ""),
       ]
     ),
-    PwaDomain(
-      "group",
+    PwaDomain(  "group",
       "Groups",
       "Manage SCIM groups and membership changes.",
-      [
-        PwaEndpoint("POST", "/scim/Groups", "Create group", q{
+      [PwaEndpoint("POST", "/scim/Groups", "Create group", q{
 {
   "displayName": "Platform Admins",
   "description": "Administrators for the platform",
@@ -155,12 +147,10 @@ PwaPageModel buildPwaPageModel(string tenantId) {
 }),
       ]
     ),
-    PwaDomain(
-      "schema",
+    PwaDomain(  "schema",
       "Schemas",
       "Manage custom schema definitions used by SCIM resources.",
-      [
-        PwaEndpoint("POST", "/scim/Schemas", "Create schema", q{
+      [PwaEndpoint("POST", "/scim/Schemas", "Create schema", q{
 {
   "name": "costCenterSchema",
   "description": "Custom attribute schema for cost centers",
@@ -181,12 +171,10 @@ PwaPageModel buildPwaPageModel(string tenantId) {
         PwaEndpoint("DELETE", "/scim/Schemas/{id}", "Delete schema", ""),
       ]
     ),
-    PwaDomain(
-      "password-policy",
+    PwaDomain(  "password-policy",
       "Password Policies",
       "Create and review the active policy that governs password strength.",
-      [
-        PwaEndpoint("POST", "/api/v1/password-policies", "Create policy", q{
+      [PwaEndpoint("POST", "/api/v1/password-policies", "Create policy", q{
 {
   "name": "default-policy",
   "description": "Standard policy for employee identities",

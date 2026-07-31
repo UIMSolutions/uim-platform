@@ -29,8 +29,7 @@ class ManageSchedulesUseCase { // TODO: UIMUseCase {
             return CommandResult(false, "", "Job ID is required");
 
         // Validate cron if provided
-        if (request.cronExpression.length > 0 && !ScheduleValidator.isValidCron(
-                request.cronExpression))
+        if (request.cronExpression.length > 0 && !ScheduleValidator.isValidCron(            request.cronExpression))
             return CommandResult(false, "", "Invalid cron expression");
 
         auto schedule = Schedule(request.tenantId); // , request.createdBy);
@@ -69,8 +68,7 @@ class ManageSchedulesUseCase { // TODO: UIMUseCase {
         if (existing.isNull)
             return CommandResult(false, "", "Schedule not found");
 
-        if (request.cronExpression.length > 0 && !ScheduleValidator.isValidCron(
-                request.cronExpression))
+        if (request.cronExpression.length > 0 && !ScheduleValidator.isValidCron(            request.cronExpression))
             return CommandResult(false, "", "Invalid cron expression");
 
         if (request.description.length > 0)

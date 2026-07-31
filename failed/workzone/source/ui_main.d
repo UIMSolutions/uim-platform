@@ -33,8 +33,7 @@ int main(string[] args) {
     auto container = buildContainer(config);
 
     // Launch GTK application
-    auto appCtrl = new WorkZoneAppController(
-        container.manageWorkspaces,
+    auto appCtrl = new WorkZoneAppController(    container.manageWorkspaces,
         container.manageWorkpages,
         container.manageTasks,
         tenantId

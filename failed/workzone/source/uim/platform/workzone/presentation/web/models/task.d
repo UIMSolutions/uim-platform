@@ -32,8 +32,7 @@ struct TaskViewModel {
         bool overdue = (t.dueDate > 0) &&
                        (t.status != TaskStatus.completed) &&
                        (t.dueDate < Clock.currTime.toUnixTime());
-        return TaskViewModel(
-            t.id.value, t.tenantId, t.title, t.description,
+        return TaskViewModel(        t.id.value, t.tenantId, t.title, t.description,
             t.assigneeName, t.creatorName,
             labelForStatus(t.status), cssForStatus(t.status),
             labelForPriority(t.priority), cssForPriority(t.priority),

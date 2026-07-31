@@ -83,8 +83,7 @@ class QualityScorer {
     d.rating = scoreToRating(d.overallScore);
 
     // Severity breakdown
-    d.violationsBySeverity = [
-      RuleSeverityCount(RuleSeverity.info, severityCounts[0]),
+    d.violationsBySeverity = [RuleSeverityCount(RuleSeverity.info, severityCounts[0]),
       RuleSeverityCount(RuleSeverity.warning, severityCounts[1]),
       RuleSeverityCount(RuleSeverity.error, severityCounts[2]),
       RuleSeverityCount(RuleSeverity.critical, severityCounts[3]),

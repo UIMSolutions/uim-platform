@@ -39,8 +39,7 @@ class MongoEventFilterRepository : EventFilterRepository {
     }
 
     private Bson toBson(EventFilter f) {
-        return Bson([
-            "id":             Bson(f.id.value),
+        return Bson([    "id":             Bson(f.id.value),
             "tenantId":       Bson(f.tenantId.value),
             "subscriptionId": Bson(f.subscriptionId.value),
             "filterType":     Bson(f.filterType.to!string),

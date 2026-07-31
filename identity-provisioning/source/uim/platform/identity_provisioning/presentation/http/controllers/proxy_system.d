@@ -64,11 +64,9 @@ class ProxySystemController : ManageHttpController {
     if (precheck.hasError)
       return precheck;
     auto tenantId = precheck.tenantId;
-    auto items = usecase.listProxySystems(
-      tenantId);
+    auto items = usecase.listProxySystems(  tenantId);
     auto arr = items.map!(s => s.toJson).array.toJson;
-    auto list = items.map!(
-      item => item.toJson()).array.toJson;
+    auto list = items.map!(  item => item.toJson()).array.toJson;
     auto responseData = Json.emptyObject
       .set("count", list.length)
       .set("resources", list);
@@ -103,8 +101,7 @@ class ProxySystemController : ManageHttpController {
     r.tenantId = tenantId;
     r.systemId = id;
     r.name = data.getString("name");
-    r.description = data.getString(
-      "description");
+    r.description = data.getString(  "description");
     r.connectionConfig = data.getString("connectionConfig");
 
     auto result = usecase.updateProxySystem(r);
@@ -179,7 +176,6 @@ override protected Json deleteHandler(HTTPServerRequest req) {
 
   auto resp = Json.emptyObject.set("id", result
       .id);
-  return successResponse(
-    "Proxy system deleted successfully", 200, resp);
+  return successResponse("Proxy system deleted successfully", 200, resp);
 }
 }

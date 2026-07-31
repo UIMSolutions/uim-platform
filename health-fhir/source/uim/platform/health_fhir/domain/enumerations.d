@@ -60,8 +60,7 @@ unittest {
   assert(Gender.other_.toString == "other");
   assert(Gender.unknown_.toString == "unknown");
 
-  assert(["male", "female"].toGenders == [
-      Gender.male_, Gender.female_
+  assert(["male", "female"].toGenders == [Gender.male_, Gender.female_
     ]);
 
   assert([Gender.male_, Gender.female_].toStrings == ["male", "female"]);
@@ -115,12 +114,10 @@ unittest {
   assert(AdministrativeGender.other_.toString == "other");
   assert(AdministrativeGender.unknown_.toString == "unknown");
 
-  assert(["male", "female"].toAdministrativeGenders == [
-      AdministrativeGender.male_, AdministrativeGender.female_
+  assert(["male", "female"].toAdministrativeGenders == [AdministrativeGender.male_, AdministrativeGender.female_
     ]);
 
-  assert([AdministrativeGender.male_, AdministrativeGender.female_].toStrings == [
-      "male", "female"
+  assert([AdministrativeGender.male_, AdministrativeGender.female_].toStrings == ["male", "female"
     ]);
 }
 
@@ -173,12 +170,10 @@ unittest {
   assert(MaritalStatus.divorced_.toString == "divorced");
   assert(MaritalStatus.widowed_.toString == "widowed");
 
-  assert(["unmarried", "married"].toMaritalStatuses == [
-      MaritalStatus.unmarried_, MaritalStatus.married_
+  assert(["unmarried", "married"].toMaritalStatuses == [MaritalStatus.unmarried_, MaritalStatus.married_
     ]);
 
-  assert([MaritalStatus.unmarried_, MaritalStatus.married_].toStrings == [
-      "unmarried", "married"
+  assert([MaritalStatus.unmarried_, MaritalStatus.married_].toStrings == ["unmarried", "married"
     ]);
 }
 
@@ -246,12 +241,10 @@ unittest {
   assert(ObservationStatus.cancelled_.toString == "cancelled");
   assert(ObservationStatus.enteredInError.toString == "entered-in-error");
 
-  assert(["registered", "preliminary"].toObservationStatuses == [
-      ObservationStatus.registered_, ObservationStatus.preliminary_
+  assert(["registered", "preliminary"].toObservationStatuses == [ObservationStatus.registered_, ObservationStatus.preliminary_
     ]);
 
-  assert([ObservationStatus.registered_, ObservationStatus.preliminary_].toStrings == [
-      "registered", "preliminary"
+  assert([ObservationStatus.registered_, ObservationStatus.preliminary_].toStrings == ["registered", "preliminary"
     ]);
 }
 
@@ -313,11 +306,9 @@ unittest {
   assert(ConditionClinicalStatus.remission_.toString == "remission");
   assert(ConditionClinicalStatus.resolved_.toString == "resolved");
 
-  assert(["active", "recurrence"].toConditionClinicalStatuses == [
-      ConditionClinicalStatus.active_, ConditionClinicalStatus.recurrence_
+  assert(["active", "recurrence"].toConditionClinicalStatuses == [ConditionClinicalStatus.active_, ConditionClinicalStatus.recurrence_
     ]);
-  assert([ConditionClinicalStatus.active_, ConditionClinicalStatus.recurrence_].toStrings == [
-      "active", "recurrence"
+  assert([ConditionClinicalStatus.active_, ConditionClinicalStatus.recurrence_].toStrings == ["active", "recurrence"
     ]);
 }
 
@@ -390,11 +381,9 @@ unittest {
   assert(EncounterStatus.cancelled_.toString == "cancelled");
   assert(EncounterStatus.enteredInError.toString == "entered-in-error");
 
-  assert(["planned", "arrived"].toEncounterStatuses == [
-      EncounterStatus.planned_, EncounterStatus.arrived_
+  assert(["planned", "arrived"].toEncounterStatuses == [EncounterStatus.planned_, EncounterStatus.arrived_
     ]);
-  assert([EncounterStatus.planned_, EncounterStatus.arrived_].toStrings == [
-      "planned", "arrived"
+  assert([EncounterStatus.planned_, EncounterStatus.arrived_].toStrings == ["planned", "arrived"
     ]);
 }
 
@@ -462,11 +451,9 @@ unittest {
   assert(MedicationRequestStatus.stopped_.toString == "stopped");
   assert(MedicationRequestStatus.draft_.toString == "draft");
 
-  assert(["active", "on-hold"].toMedicationRequestStatuses == [
-      MedicationRequestStatus.active_, MedicationRequestStatus.onHold_
+  assert(["active", "on-hold"].toMedicationRequestStatuses == [MedicationRequestStatus.active_, MedicationRequestStatus.onHold_
     ]);
-  assert([MedicationRequestStatus.active_, MedicationRequestStatus.onHold_].toStrings == [
-      "active", "on-hold"
+  assert([MedicationRequestStatus.active_, MedicationRequestStatus.onHold_].toStrings == ["active", "on-hold"
     ]);
 }
 
@@ -504,10 +491,8 @@ unittest {
   assert(StorageBackend.files_.toString == "files");
   assert(StorageBackend.mongodb_.toString == "mongodb");
 
-  assert(["memory", "files"].toStorageBackends == [
-      StorageBackend.memory_, StorageBackend.files_
+  assert(["memory", "files"].toStorageBackends == [StorageBackend.memory_, StorageBackend.files_
     ]);
-  assert([StorageBackend.memory_, StorageBackend.files_].toStrings == [
-      "memory", "files"
+  assert([StorageBackend.memory_, StorageBackend.files_].toStrings == ["memory", "files"
     ]);
 }

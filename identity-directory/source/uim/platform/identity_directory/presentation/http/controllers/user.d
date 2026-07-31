@@ -210,8 +210,7 @@ private Email[] parseEmails(Json j) {
   if (!value.isArray)
     return result;
 
-  return value.toArray.map!(item => Email(item.getString("value"), item.getString(
-      "type"), getBoolean(item, "primary"))).array;
+  return value.toArray.map!(item => Email(item.getString("value"), item.getString(  "type"), getBoolean(item, "primary"))).array;
 }
 
 private PhoneNumber[] parsePhoneNumbers(Json j) {
@@ -226,8 +225,7 @@ private PhoneNumber[] parsePhoneNumbers(Json j) {
   if (!value.isArray)
     return result;
 
-  return value.toArray.map!(item => PhoneNumber(item.getString("value"), item.getString(
-      "type"),
+  return value.toArray.map!(item => PhoneNumber(item.getString("value"), item.getString(  "type"),
       item.getBoolean("primary"))).array;
 }
 

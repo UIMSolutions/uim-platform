@@ -58,8 +58,7 @@ unittest {
     assert(DashboardMetricType.domainCount.toString == "domainCount");
     assert(DashboardMetricType.mappingCount.toString == "mappingCount");
 
-    assert([
-        DashboardMetricType.certificateExpiration,
+    assert([DashboardMetricType.certificateExpiration,
         DashboardMetricType.domainHealth,
         DashboardMetricType.requestVolume,
         DashboardMetricType.tlsHandshakeErrors,
@@ -68,8 +67,7 @@ unittest {
         DashboardMetricType.domainCount,
         DashboardMetricType.mappingCount
     ].toStrings ==
-        [
-            "certificateExpiration",
+        [    "certificateExpiration",
             "domainHealth",
             "requestVolume",
             "tlsHandshakeErrors",
@@ -79,8 +77,7 @@ unittest {
             "mappingCount"
         ]);
 
-    assert([
-        "certificateExpiration",
+    assert(["certificateExpiration",
         "domainHealth",
         "requestVolume",
         "tlsHandshakeErrors",
@@ -89,8 +86,7 @@ unittest {
         "domainCount",
         "mappingCount"
     ].toDashboardMetricTypes ==
-        [
-            DashboardMetricType.certificateExpiration,
+        [    DashboardMetricType.certificateExpiration,
             DashboardMetricType.domainHealth,
             DashboardMetricType.requestVolume,
             DashboardMetricType.tlsHandshakeErrors,
@@ -137,8 +133,7 @@ unittest {
     assert(HealthStatus.warning.toString == "warning");
     assert(HealthStatus.critical.toString == "critical");
     assert(HealthStatus.unknown.toString == "unknown");
-    assert([
-        HealthStatus.healthy,
+    assert([HealthStatus.healthy,
         HealthStatus.warning,
         HealthStatus.critical,
         HealthStatus.unknown
@@ -148,14 +143,12 @@ unittest {
             "critical",
             "unknown"]);
 
-    assert([
-        "healthy",
+    assert(["healthy",
         "warning",
         "critical",
         "unknown"
     ].toHealthStatuses ==
-        [
-            HealthStatus.healthy,
+        [    HealthStatus.healthy,
             HealthStatus.warning,
             HealthStatus.critical,
             HealthStatus.unknown
@@ -202,8 +195,7 @@ unittest {
     assert(ExpirationSeverity.critical.toString == "critical");
     assert(ExpirationSeverity.expired.toString == "expired");
 
-    assert([
-        ExpirationSeverity.none,
+    assert([ExpirationSeverity.none,
         ExpirationSeverity.info,
         ExpirationSeverity.warning,
         ExpirationSeverity.critical,
@@ -214,8 +206,7 @@ unittest {
             "critical",
             "expired"]);
 
-    assert(["none", "info", "warning", "critical", "expired"].toExpirationSeverities == [
-        ExpirationSeverity.none,
+    assert(["none", "info", "warning", "critical", "expired"].toExpirationSeverities == [ExpirationSeverity.none,
         ExpirationSeverity.info,
         ExpirationSeverity.warning,
         ExpirationSeverity.critical,

@@ -27,8 +27,7 @@ class MedicationController : ManageHttpController {
   }
 
   private static void writeFhirError(scope HTTPServerResponse res, int status, string msg) {
-    res.writeJsonBody(
-      Json.emptyObject.set("resourceType", "OperationOutcome")
+    res.writeJsonBody(  Json.emptyObject.set("resourceType", "OperationOutcome")
         .set("issue", Json.emptyArray ~= Json.emptyObject
           .set("severity", "error").set("code", "processing").set("diagnostics", msg)),
         status
@@ -115,8 +114,7 @@ class MedicationController : ManageHttpController {
     if (result.hasError)
       return errorResponse(result.message, 400);
 
-    return successResponse("Medication updated successfully", 200, Json.emptyObject.set(
-        "resourceType", "Medication").set("id", result.id));
+    return successResponse("Medication updated successfully", 200, Json.emptyObject.set(    "resourceType", "Medication").set("id", result.id));
 
     //   res.writeJsonBody(Json.emptyObject.set("resourceType", "Medication").set("id", result.id), 200);
     // else

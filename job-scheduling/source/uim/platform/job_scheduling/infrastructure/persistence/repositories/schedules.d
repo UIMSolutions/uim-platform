@@ -69,8 +69,7 @@ class ScheduleRepository : TenantRepository!(Schedule, ScheduleId), IScheduleRep
 
     Schedule[] search(TenantId tenantId, string query) {
         auto q = query.toLower;
-        return findByTenant(tenantId).filter!(s => s.description.toLower.canFind(q) || s.jobId.value.toLower.canFind(
-                q)).array;
+        return findByTenant(tenantId).filter!(s => s.description.toLower.canFind(q) || s.jobId.value.toLower.canFind(            q)).array;
     }
 
 }

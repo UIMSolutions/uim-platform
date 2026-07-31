@@ -64,11 +64,9 @@ class TransformationController : ManageHttpController {
     if (precheck.hasError)
       return precheck;
     auto tenantId = precheck.tenantId;
-    auto items = usecase.listTransformations(
-      tenantId);
+    auto items = usecase.listTransformations(  tenantId);
     auto arr = items.map!(t => t.toJson).array.toJson;
-    auto list = items.map!(
-      item => item.toJson()).array.toJson;
+    auto list = items.map!(  item => item.toJson()).array.toJson;
     auto responseData = Json.emptyObject
       .set("count", list.length)
       .set("resources", list);
@@ -100,11 +98,9 @@ class TransformationController : ManageHttpController {
     r.tenantId = tenantId;
     r.transformationId = TransformationId(id);
     r.name = data.getString("name");
-    r.mappingRules = data.getString(
-      "mappingRules");
+    r.mappingRules = data.getString(  "mappingRules");
     r.conditions = data.getString("conditions");
-    auto result = usecase.updateTransformation(
-      r);
+    auto result = usecase.updateTransformation(  r);
     if (result.hasError)
       return errorResponse(result.message, 400);
 
@@ -121,8 +117,7 @@ class TransformationController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto data = precheck.data;
-    auto systemId = data.getString(
-      "systemId");
+    auto systemId = data.getString(  "systemId");
     auto inputAttributes = data.getString("inputAttributes");
 
     if (systemId.isEmpty || inputAttributes.length == 0)

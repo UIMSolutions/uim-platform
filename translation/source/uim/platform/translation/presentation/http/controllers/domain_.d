@@ -24,8 +24,7 @@ class DomainController : ManageHttpController {
         if (precheck.hasError)
             return precheck;
 
-        static immutable string[] domains = [
-            "IT", "HR", "Finance", "Legal", "Supply Chain", "Manufacturing",
+        static immutable string[] domains = [    "IT", "HR", "Finance", "Legal", "Supply Chain", "Manufacturing",
             "Sales", "Marketing", "Customer Service", "Healthcare", "Education",
             "Government", "Retail", "Automotive", "Banking", "Insurance",
                 "Energy", "Telecommunications", "Travel", "Logistics",

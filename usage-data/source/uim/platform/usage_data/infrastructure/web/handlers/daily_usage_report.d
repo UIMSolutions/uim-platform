@@ -42,8 +42,7 @@ class DailyUsageReportHandler {
   void create(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto json = req.json;
-      auto cmd = CreateDailyUsageReportRequest(
-        json["globalAccountId"].get!string,
+      auto cmd = CreateDailyUsageReportRequest(    json["globalAccountId"].get!string,
         json["subaccountId"].get!string,
         json["reportDate"].get!string,
       );

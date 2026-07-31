@@ -48,8 +48,7 @@ unittest {
   assert(KeystoreFormat.p12.toString == "p12");
   assert(KeystoreFormat.pem.toString == "pem");
 
-  assert(["jks", "p12"].toKeystoreFormats == [
-      KeystoreFormat.jks, KeystoreFormat.p12
+  assert(["jks", "p12"].toKeystoreFormats == [KeystoreFormat.jks, KeystoreFormat.p12
     ]);
   assert([KeystoreFormat.jks, KeystoreFormat.p12].toStrings == ["jks", "p12"]);
 }
@@ -88,11 +87,9 @@ unittest {
   assert(KeystoreLevel.application.toString == "application");
   assert(KeystoreLevel.subscription.toString == "subscription");
 
-  assert(["account", "subscription"].toKeystoreLevels == [
-      KeystoreLevel.account, KeystoreLevel.subscription
+  assert(["account", "subscription"].toKeystoreLevels == [KeystoreLevel.account, KeystoreLevel.subscription
     ]);
-  assert([KeystoreLevel.account, KeystoreLevel.subscription].toStrings == [
-      "account", "subscription"
+  assert([KeystoreLevel.account, KeystoreLevel.subscription].toStrings == ["account", "subscription"
     ]);
 }
 
@@ -133,10 +130,8 @@ unittest {
   assert(KeyEntryType.certificate.toString == "certificate");
   assert(KeyEntryType.secretKey.toString == "secretKey");
 
-  assert(["trustedCertificate", "privateKey"].toKeyEntryTypes == [
-      KeyEntryType.trustedCertificate, KeyEntryType.privateKey
+  assert(["trustedCertificate", "privateKey"].toKeyEntryTypes == [KeyEntryType.trustedCertificate, KeyEntryType.privateKey
     ]);
-  assert([KeyEntryType.trustedCertificate, KeyEntryType.privateKey].toStrings == [
-      "trustedCertificate", "privateKey"
+  assert([KeyEntryType.trustedCertificate, KeyEntryType.privateKey].toStrings == ["trustedCertificate", "privateKey"
     ]);
 }

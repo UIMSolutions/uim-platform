@@ -77,12 +77,10 @@ class ProjectTemplateController : ManageHttpController {
         dto.name = data.getString("name");
         dto.description = data.getString("description");
         dto.version_ = data.getString("version");
-        dto.requiredExtensions = data.getString(
-            "requiredExtensions");
+        dto.requiredExtensions = data.getString(        "requiredExtensions");
         dto.scaffoldConfig = data.getString("scaffoldConfig");
         dto.defaultFiles = data.getString("defaultFiles");
-        dto.iconUrl = data.getString(
-            "iconUrl");
+        dto.iconUrl = data.getString(        "iconUrl");
         dto.createdBy = UserId(data.getString("createdBy"));
 
         auto result = usecase.createProjectTemplate(dto);
@@ -108,17 +106,14 @@ class ProjectTemplateController : ManageHttpController {
         ProjectTemplateDTO dto;
         dto.tenantId = tenantId;
         dto.templateId = id;
-        dto.name = data.getString(
-            "name");
+        dto.name = data.getString(        "name");
         dto.description = data.getString("description");
-        dto.version_ = data.getString(
-            "version");
+        dto.version_ = data.getString(        "version");
         dto.updatedBy = UserId(data.getString("updatedBy"));
 
         auto result = usecase.updateProjectTemplate(dto);
         if (result.hasError)
-            return errorResponse(
-                result.message, 400);
+            return errorResponse(            result.message, 400);
 
         auto responseData = Json.emptyObject.set("id", result.id);
         return successResponse("Project template updated successfully", "Updated", 200, responseData);

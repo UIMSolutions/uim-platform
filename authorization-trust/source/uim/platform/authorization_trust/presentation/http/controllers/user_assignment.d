@@ -60,8 +60,7 @@ class UserAssignmentController : ManageHttpController {
     auto userId = UserId(req.query.get("userId", ""));
 
     auto assignments =
-      userId.isEmpty ? usecase.listAssignments(
-        tenantId) : usecase.listAssignments(tenantId, userId);
+      userId.isEmpty ? usecase.listAssignments(    tenantId) : usecase.listAssignments(tenantId, userId);
 
     auto list = assignments.map!(item => item.toJson()).array.toJson;
 

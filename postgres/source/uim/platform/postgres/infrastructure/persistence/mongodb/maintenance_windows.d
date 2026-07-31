@@ -38,8 +38,7 @@ class MongoMaintenanceWindowRepository : MaintenanceWindowRepository {
     }
 
     private Bson toBson(MaintenanceWindow e) {
-        return Bson([
-            "id":                      Bson(e.id.value),
+        return Bson([    "id":                      Bson(e.id.value),
             "tenantId":                Bson(e.tenantId.value),
             "instanceId":              Bson(e.instanceId.value),
             "dayOfWeek":               Bson(e.dayOfWeek),

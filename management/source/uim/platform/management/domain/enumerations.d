@@ -43,11 +43,9 @@ unittest {
   assert(GlobalAccountStatus.terminated.toString == "terminated");
   assert(GlobalAccountStatus.migrating.toString == "migrating");
 
-  assert(["active", "suspended"].toGlobalAccountStatuses == [
-      GlobalAccountStatus.active, GlobalAccountStatus.suspended
+  assert(["active", "suspended"].toGlobalAccountStatuses == [GlobalAccountStatus.active, GlobalAccountStatus.suspended
     ]);
-  assert([GlobalAccountStatus.active, GlobalAccountStatus.suspended].toStrings == [
-      "active", "suspended"
+  assert([GlobalAccountStatus.active, GlobalAccountStatus.suspended].toStrings == ["active", "suspended"
     ]);
 }
 
@@ -92,11 +90,9 @@ unittest {
   assert(LicenseType.partner.toString == "partner");
   assert(LicenseType.internal.toString == "internal");
 
-  assert(["enterprise", "trial"].toLicenseTypes == [
-      LicenseType.enterprise, LicenseType.trial
+  assert(["enterprise", "trial"].toLicenseTypes == [LicenseType.enterprise, LicenseType.trial
     ]);
-  assert([LicenseType.enterprise, LicenseType.trial].toStrings == [
-      "enterprise", "trial"
+  assert([LicenseType.enterprise, LicenseType.trial].toStrings == ["enterprise", "trial"
     ]);
 }
 
@@ -138,11 +134,9 @@ unittest {
   assert(DirectoryStatus.inactive.toString == "inactive");
   assert(DirectoryStatus.deleting.toString == "deleting");
 
-  assert(["active", "inactive"].toDirectoryStatuses == [
-      DirectoryStatus.active, DirectoryStatus.inactive
+  assert(["active", "inactive"].toDirectoryStatuses == [DirectoryStatus.active, DirectoryStatus.inactive
     ]);
-  assert([DirectoryStatus.active, DirectoryStatus.inactive].toStrings == [
-      "active", "inactive"
+  assert([DirectoryStatus.active, DirectoryStatus.inactive].toStrings == ["active", "inactive"
     ]);
 }
 
@@ -199,11 +193,9 @@ unittest {
   assert(DirectoryType.scim.toString == "scim");
   assert(DirectoryType.custom.toString == "custom");
 
-  assert(["default", "ldap"].toDirectoryTypes == [
-      DirectoryType.default_, DirectoryType.ldap
+  assert(["default", "ldap"].toDirectoryTypes == [DirectoryType.default_, DirectoryType.ldap
     ]);
-  assert([DirectoryType.default_, DirectoryType.ldap].toStrings == [
-      "default_", "ldap"
+  assert([DirectoryType.default_, DirectoryType.ldap].toStrings == ["default_", "ldap"
     ]);
 }
 
@@ -254,11 +246,9 @@ unittest {
   assert(DirectoryFeature.entitlements.toString == "entitlements");
   assert(DirectoryFeature.authorizations.toString == "authorizations");
 
-  assert(["default", "entitlements"].toDirectoryFeatures == [
-      DirectoryFeature.default_, DirectoryFeature.entitlements
+  assert(["default", "entitlements"].toDirectoryFeatures == [DirectoryFeature.default_, DirectoryFeature.entitlements
     ]);
-  assert([DirectoryFeature.default_, DirectoryFeature.entitlements].toStrings == [
-      "default_", "entitlements"
+  assert([DirectoryFeature.default_, DirectoryFeature.entitlements].toStrings == ["default_", "entitlements"
     ]);
 }
 
@@ -318,11 +308,9 @@ unittest {
   assert(SubaccountStatus.moveInProgress.toString == "moveInProgress");
   assert(SubaccountStatus.moveFailed.toString == "moveFailed");
 
-  assert(["active", "suspended"].toSubaccountStatuses == [
-      SubaccountStatus.active, SubaccountStatus.suspended
+  assert(["active", "suspended"].toSubaccountStatuses == [SubaccountStatus.active, SubaccountStatus.suspended
     ]);
-  assert([SubaccountStatus.active, SubaccountStatus.suspended].toStrings == [
-      "active", "suspended"
+  assert([SubaccountStatus.active, SubaccountStatus.suspended].toStrings == ["active", "suspended"
     ]);
 }
 
@@ -376,11 +364,9 @@ unittest {
   assert(SubaccountUsage.staging.toString == "staging");
   assert(SubaccountUsage.demo.toString == "demo");
 
-  assert(["unset", "production"].toSubaccountUsages == [
-      SubaccountUsage.unset, SubaccountUsage.production
+  assert(["unset", "production"].toSubaccountUsages == [SubaccountUsage.unset, SubaccountUsage.production
     ]);
-  assert([SubaccountUsage.unset, SubaccountUsage.production].toStrings == [
-      "unset", "production"
+  assert([SubaccountUsage.unset, SubaccountUsage.production].toStrings == ["unset", "production"
     ]);
 }
 
@@ -422,11 +408,9 @@ unittest {
   assert(EntitlementStatus.revoked.toString == "revoked");
   assert(EntitlementStatus.expired.toString == "expired");
 
-  assert(["active", "pending"].toEntitlementStatuses == [
-      EntitlementStatus.active, EntitlementStatus.pending
+  assert(["active", "pending"].toEntitlementStatuses == [EntitlementStatus.active, EntitlementStatus.pending
     ]);
-  assert([EntitlementStatus.active, EntitlementStatus.pending].toStrings == [
-      "active", "pending"
+  assert([EntitlementStatus.active, EntitlementStatus.pending].toStrings == ["active", "pending"
     ]);
 }
 
@@ -472,11 +456,9 @@ unittest {
   assert(ServicePlanCategory.environment.toString == "environment");
   assert(ServicePlanCategory.elasticService.toString == "elasticService");
 
-  assert(["service", "application"].toServicePlanCategories == [
-      ServicePlanCategory.service, ServicePlanCategory.application
+  assert(["service", "application"].toServicePlanCategories == [ServicePlanCategory.service, ServicePlanCategory.application
     ]);
-  assert([ServicePlanCategory.service, ServicePlanCategory.application].toStrings == [
-      "service", "application"
+  assert([ServicePlanCategory.service, ServicePlanCategory.application].toStrings == ["service", "application"
     ]);
 }
 
@@ -527,11 +509,9 @@ unittest {
   assert(ServicePlanStatus.deprecated_.toString == "deprecated_");
   assert(ServicePlanStatus.deleted.toString == "deleted");
 
-  assert(["active", "deprecated"].toServicePlanStatuses == [
-      ServicePlanStatus.active, ServicePlanStatus.deprecated_
+  assert(["active", "deprecated"].toServicePlanStatuses == [ServicePlanStatus.active, ServicePlanStatus.deprecated_
     ]);
-  assert([ServicePlanStatus.active, ServicePlanStatus.deprecated_].toStrings == [
-      "active", "deprecated_"
+  assert([ServicePlanStatus.active, ServicePlanStatus.deprecated_].toStrings == ["active", "deprecated_"
     ]);
 }
 
@@ -577,11 +557,9 @@ unittest {
   assert(PricingModel.consumption.toString == "consumption");
   assert(PricingModel.byol.toString == "byol");
 
-  assert(["free", "subscription"].toPricingModels == [
-      PricingModel.free, PricingModel.subscription
+  assert(["free", "subscription"].toPricingModels == [PricingModel.free, PricingModel.subscription
     ]);
-  assert([PricingModel.free, PricingModel.subscription].toStrings == [
-      "free", "subscription"
+  assert([PricingModel.free, PricingModel.subscription].toStrings == ["free", "subscription"
     ]);
 }
 
@@ -629,11 +607,9 @@ unittest {
   assert(QuotaStatus.deprecated_.toString == "deprecated_");
   assert(QuotaStatus.deleted.toString == "deleted");
 
-  assert(["active", "deprecated"].toQuotaStatuses == [
-      QuotaStatus.active, QuotaStatus.deprecated_
+  assert(["active", "deprecated"].toQuotaStatuses == [QuotaStatus.active, QuotaStatus.deprecated_
     ]);
-  assert([QuotaStatus.active, QuotaStatus.deprecated_].toStrings == [
-      "active", "deprecated_"
+  assert([QuotaStatus.active, QuotaStatus.deprecated_].toStrings == ["active", "deprecated_"
     ]);
 }
 
@@ -706,11 +682,9 @@ unittest {
   assert(SubscriptionStatus.error.toString == "error");
   assert(SubscriptionStatus.suspended.toString == "suspended");
 
-  assert(["subscribed", "subscribing"].toSubscriptionStatuses == [
-      SubscriptionStatus.subscribed, SubscriptionStatus.subscribing
+  assert(["subscribed", "subscribing"].toSubscriptionStatuses == [SubscriptionStatus.subscribed, SubscriptionStatus.subscribing
     ]);
-  assert([SubscriptionStatus.subscribed, SubscriptionStatus.subscribing].toStrings == [
-      "subscribed", "subscribing"
+  assert([SubscriptionStatus.subscribed, SubscriptionStatus.subscribing].toStrings == ["subscribed", "subscribing"
     ]);
 }
 
@@ -755,11 +729,9 @@ unittest {
   assert(ServiceInstanceStatus.deleting.toString == "deleting");
   assert(ServiceInstanceStatus.updating.toString == "updating");
 
-  assert(["creating", "ready"].toServiceInstanceStatuses == [
-      ServiceInstanceStatus.creating, ServiceInstanceStatus.ready
+  assert(["creating", "ready"].toServiceInstanceStatuses == [ServiceInstanceStatus.creating, ServiceInstanceStatus.ready
     ]);
-  assert([ServiceInstanceStatus.creating, ServiceInstanceStatus.ready].toStrings == [
-      "creating", "ready"
+  assert([ServiceInstanceStatus.creating, ServiceInstanceStatus.ready].toStrings == ["creating", "ready"
     ]);
 }
 
@@ -805,11 +777,9 @@ unittest {
   assert(EnvironmentType.abap.toString == "abap");
   assert(EnvironmentType.neo.toString == "neo");
 
-  assert(["cloudFoundry", "kyma"].toEnvironmentTypes == [
-      EnvironmentType.cloudFoundry, EnvironmentType.kyma
+  assert(["cloudFoundry", "kyma"].toEnvironmentTypes == [EnvironmentType.cloudFoundry, EnvironmentType.kyma
     ]);
-  assert([EnvironmentType.cloudFoundry, EnvironmentType.kyma].toStrings == [
-      "cloudFoundry", "kyma"
+  assert([EnvironmentType.cloudFoundry, EnvironmentType.kyma].toStrings == ["cloudFoundry", "kyma"
     ]);
 }
 
@@ -852,19 +822,15 @@ string[] toStrings(EnvironmentEventCategory[] values) {
 unittest {
   mixin(ShowTest!("EnvironmentEventCategory"));
 
-  assert(
-    "subaccountLifecycle".toEnvironmentEventCategory == EnvironmentEventCategory
+  assert("subaccountLifecycle".toEnvironmentEventCategory == EnvironmentEventCategory
       .subaccountLifecycle);
-  assert(
-    "entitlementChange".toEnvironmentEventCategory == EnvironmentEventCategory.entitlementChange);
-  assert(
-    "environmentLifecycle".toEnvironmentEventCategory == EnvironmentEventCategory
+  assert("entitlementChange".toEnvironmentEventCategory == EnvironmentEventCategory.entitlementChange);
+  assert("environmentLifecycle".toEnvironmentEventCategory == EnvironmentEventCategory
       .environmentLifecycle);
   assert("subscriptionLifecycle".toEnvironmentEventCategory == EnvironmentEventCategory
       .subscriptionLifecycle);
   assert("directoryChange".toEnvironmentEventCategory == EnvironmentEventCategory.directoryChange);
-  assert(
-    "globalAccountChange".toEnvironmentEventCategory == EnvironmentEventCategory
+  assert("globalAccountChange".toEnvironmentEventCategory == EnvironmentEventCategory
       .globalAccountChange);
   assert("quotaChange".toEnvironmentEventCategory == EnvironmentEventCategory.quotaChange);
   assert("securityEvent".toEnvironmentEventCategory == EnvironmentEventCategory.securityEvent);
@@ -879,8 +845,7 @@ unittest {
   assert(EnvironmentEventCategory.quotaChange.toString == "quotaChange");
   assert(EnvironmentEventCategory.securityEvent.toString == "securityEvent");
 
-  assert(["subaccountLifecycle", "entitlementChange"].toEnvironmentEventCategories == [
-      EnvironmentEventCategory.subaccountLifecycle,
+  assert(["subaccountLifecycle", "entitlementChange"].toEnvironmentEventCategories == [EnvironmentEventCategory.subaccountLifecycle,
       EnvironmentEventCategory.entitlementChange
     ]);
   assert([
@@ -933,11 +898,9 @@ unittest {
   assert(EnvironmentEventSeverity.error.toString == "error");
   assert(EnvironmentEventSeverity.critical.toString == "critical");
 
-  assert(["info", "warning"].toEnvironmentEventSeverities == [
-      EnvironmentEventSeverity.info, EnvironmentEventSeverity.warning
+  assert(["info", "warning"].toEnvironmentEventSeverities == [EnvironmentEventSeverity.info, EnvironmentEventSeverity.warning
     ]);
-  assert([EnvironmentEventSeverity.info, EnvironmentEventSeverity.warning].toStrings == [
-      "info", "warning"
+  assert([EnvironmentEventSeverity.info, EnvironmentEventSeverity.warning].toStrings == ["info", "warning"
     ]);
 }
 
@@ -987,10 +950,8 @@ unittest {
   assert(LabeledResourceType.environment.toString == "environment");
   assert(LabeledResourceType.subscription.toString == "subscription");
 
-  assert(["subaccount", "globalAccount"].toLabeledResourceTypes == [
-      LabeledResourceType.subaccount, LabeledResourceType.globalAccount
+  assert(["subaccount", "globalAccount"].toLabeledResourceTypes == [LabeledResourceType.subaccount, LabeledResourceType.globalAccount
     ]);
-  assert([LabeledResourceType.subaccount, LabeledResourceType.globalAccount].toStrings == [
-      "subaccount", "globalAccount"
+  assert([LabeledResourceType.subaccount, LabeledResourceType.globalAccount].toStrings == ["subaccount", "globalAccount"
     ]);
 }

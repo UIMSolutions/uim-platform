@@ -81,8 +81,7 @@ class CicdRepositoryController : ManageHttpController {
         if (result.hasError)
             return Json.emptyObject.set("error", result.message).set("statusCode", 400);
 
-        return Json.emptyObject.set("id", result.id).set("message", "Repository created").set("status", "created").set(
-            "statusCode", 201);
+        return Json.emptyObject.set("id", result.id).set("message", "Repository created").set("status", "created").set(        "statusCode", 201);
     }
 
     override protected Json updateHandler(HTTPServerRequest req) {

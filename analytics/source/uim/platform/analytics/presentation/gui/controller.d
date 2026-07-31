@@ -27,8 +27,7 @@ class GuiController {
     GuiModel model;
     model.heading = "Analytics GUI";
     model.subtitle = "Visual shell with MVC separation for GUI channel";
-    model.tiles = [
-      "Tenant: " ~ tenantId,
+    model.tiles = ["Tenant: " ~ tenantId,
       "Total Assets: " ~ assets.length.to!string,
       "Storage-agnostic use case orchestration",
       "Ready for richer widget integration"

@@ -39,8 +39,7 @@ unittest {
   assert(CredentialType.key.toString == "key");
   assert(CredentialType.keyring.toString == "keyring");
 
-  assert(["password", "key"].toCredentialTypes == [
-      CredentialType.password, CredentialType.key
+  assert(["password", "key"].toCredentialTypes == [CredentialType.password, CredentialType.key
     ]);
   assert([CredentialType.password, CredentialType.key].toStrings == ["password", "key"]);
 }
@@ -88,11 +87,9 @@ unittest {
   assert(CredentialStatus.disabled.toString == "disabled");
   assert(CredentialStatus.deleted_.toString == "deleted");
 
-  assert(["active", "disabled"].toCredentialStatuses == [
-      CredentialStatus.active, CredentialStatus.disabled
+  assert(["active", "disabled"].toCredentialStatuses == [CredentialStatus.active, CredentialStatus.disabled
     ]);
-  assert([CredentialStatus.active, CredentialStatus.disabled].toStrings == [
-      "active", "disabled"
+  assert([CredentialStatus.active, CredentialStatus.disabled].toStrings == ["active", "disabled"
     ]);
 
 }
@@ -170,11 +167,9 @@ unittest {
   assert(OperationType.generate.toString == "generate");
   assert(OperationType.rotate.toString == "rotate");
 
-  assert(["create", "read"].toOperationTypes == [
-      OperationType.create, OperationType.read
+  assert(["create", "read"].toOperationTypes == [OperationType.create, OperationType.read
     ]);
-  assert([OperationType.create, OperationType.read].toStrings == [
-      "create", "read"
+  assert([OperationType.create, OperationType.read].toStrings == ["create", "read"
     ]);
 }
 
@@ -224,11 +219,9 @@ unittest {
   assert(ResourceType.serviceBinding.toString == "serviceBinding");
   assert(ResourceType.dek.toString == "dek");
 
-  assert(["namespace", "key"].toResourceTypes == [
-      ResourceType.namespace, ResourceType.key
+  assert(["namespace", "key"].toResourceTypes == [ResourceType.namespace, ResourceType.key
     ]);
-  assert([ResourceType.namespace, ResourceType.key].toStrings == [
-      "namespace", "key"
+  assert([ResourceType.namespace, ResourceType.key].toStrings == ["namespace", "key"
     ]);
 }
 
@@ -266,11 +259,9 @@ unittest {
   assert(PermissionLevel.readOnly.toString == "readOnly");
   assert(PermissionLevel.admin.toString == "admin");
 
-  assert(["readWrite", "admin"].toPermissionLevels == [
-      PermissionLevel.readWrite, PermissionLevel.admin
+  assert(["readWrite", "admin"].toPermissionLevels == [PermissionLevel.readWrite, PermissionLevel.admin
     ]);
-  assert([PermissionLevel.readWrite, PermissionLevel.admin].toStrings == [
-      "readWrite", "admin"
+  assert([PermissionLevel.readWrite, PermissionLevel.admin].toStrings == ["readWrite", "admin"
     ]);
 }
 
@@ -305,11 +296,9 @@ unittest {
   assert(BindingStatus.active.toString == "active");
   assert(BindingStatus.revoked.toString == "revoked");
 
-  assert(["active", "revoked"].toBindingStatuses == [
-      BindingStatus.active, BindingStatus.revoked
+  assert(["active", "revoked"].toBindingStatuses == [BindingStatus.active, BindingStatus.revoked
     ]);
-  assert([BindingStatus.active, BindingStatus.revoked].toStrings == [
-      "active", "revoked"
+  assert([BindingStatus.active, BindingStatus.revoked].toStrings == ["active", "revoked"
     ]);
 }
 
@@ -366,10 +355,8 @@ unittest {
   assert(KeyringRotationPeriod.days180.toString == "180");
   assert(KeyringRotationPeriod.days365.toString == "365");
 
-  assert(["30", "90"].toKeyringRotationPeriods == [
-      KeyringRotationPeriod.days30, KeyringRotationPeriod.days90
+  assert(["30", "90"].toKeyringRotationPeriods == [KeyringRotationPeriod.days30, KeyringRotationPeriod.days90
     ]);
-  assert([KeyringRotationPeriod.days30, KeyringRotationPeriod.days90].toStrings == [
-      "30", "90"
+  assert([KeyringRotationPeriod.days30, KeyringRotationPeriod.days90].toStrings == ["30", "90"
     ]);
 } 

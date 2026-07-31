@@ -93,8 +93,7 @@ Container buildContainer(SrvConfig config) @trusted {
     c.printWebController = new PrintWebController(c.managePrintQueuesUseCase, c.managePrintTasksUseCase);
 
     // CLI controller
-    c.printCliController = new PrintCliController(
-        c.managePrintQueuesUseCase,
+    c.printCliController = new PrintCliController(    c.managePrintQueuesUseCase,
         c.managePrintTasksUseCase,
         c.managePrintersUseCase
     );

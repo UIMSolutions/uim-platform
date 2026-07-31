@@ -39,8 +39,7 @@ final class CliBrokerServiceView {
         }
 
         foreach (service; services) {
-            output.put(format(
-                "- %s (%s) region=%s vpn=%s\n",
+            output.put(format(            "- %s (%s) region=%s vpn=%s\n",
                 service.id.value,
                 service.name,
                 service.region,

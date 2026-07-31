@@ -19,8 +19,7 @@ struct ViewColumn {
   bool isMeasure;
 
   Json toJson() const {
-    return Json([
-      "name": name,
+    return Json(["name": name,
       "dataType": dataType,
       "semanticType": semanticType,
       "description": description,
@@ -36,8 +35,7 @@ struct ViewAssociation {
   string[] onColumns;
 
   Json toJson() const {
-    return Json([
-      "targetViewId": targetViewId,
+    return Json(["targetViewId": targetViewId,
       "joinType": joinType,
       "onColumns": onColumns
     ]);

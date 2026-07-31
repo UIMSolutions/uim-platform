@@ -55,8 +55,7 @@ unittest {
   assert(PackageStatus.delivered.toString == "delivered");
   assert(PackageStatus.error.toString == "error");
 
-  assert(["draft", "exported"].toPackageStatuses == [
-      PackageStatus.draft, PackageStatus.exported
+  assert(["draft", "exported"].toPackageStatuses == [PackageStatus.draft, PackageStatus.exported
     ]);
   assert([PackageStatus.draft, PackageStatus.exported].toStrings == ["draft", "exported"]);
 }
@@ -94,8 +93,7 @@ unittest {
   assert(ContentFormat.zip.toString == "zip");
   assert(ContentFormat.json.toString == "json");
 
-  assert(["mtar", "json"].toContentFormats == [
-      ContentFormat.mtar, ContentFormat.json
+  assert(["mtar", "json"].toContentFormats == [ContentFormat.mtar, ContentFormat.json
     ]);
   assert([ContentFormat.mtar, ContentFormat.json].toStrings == ["mtar", "json"]);
 }
@@ -136,8 +134,7 @@ unittest {
   assert(ProviderStatus.error.toString == "error");
   assert(ProviderStatus.deregistered.toString == "deregistered");
 
-  assert(["active", "error"].toProviderStatuses == [
-      ProviderStatus.active, ProviderStatus.error
+  assert(["active", "error"].toProviderStatuses == [ProviderStatus.active, ProviderStatus.error
     ]);
   assert([ProviderStatus.active, ProviderStatus.error].toStrings == ["active", "error"]);
 }
@@ -223,8 +220,7 @@ unittest {
   assert(ContentCategory.accessPolicy.toString == "accessPolicy");
   assert(ContentCategory.functionLibrary.toString == "functionLibrary");
 
-  assert(["custom", "destination"].toContentCategories == [
-      ContentCategory.custom, ContentCategory.destination
+  assert(["custom", "destination"].toContentCategories == [ContentCategory.custom, ContentCategory.destination
     ]);
   assert([ContentCategory.custom, ContentCategory.destination].toStrings == ["custom", "destination"]);
 }
@@ -283,8 +279,7 @@ unittest {
   assert(TransportStatus.failed.toString == "failed");
   assert(TransportStatus.cancelled.toString == "cancelled");
 
-  assert(["created", "exported"].toTransportStatuses == [
-      TransportStatus.created, TransportStatus.exported
+  assert(["created", "exported"].toTransportStatuses == [TransportStatus.created, TransportStatus.exported
     ]);
   assert([TransportStatus.created, TransportStatus.exported].toStrings == ["created", "exported"]);
 }
@@ -335,8 +330,7 @@ unittest {
   assert(ExportStatus.failed.toString == "failed");
   assert(ExportStatus.cancelled.toString == "cancelled");
 
-  assert(["pending", "completed"].toExportStatuses == [
-      ExportStatus.pending, ExportStatus.completed
+  assert(["pending", "completed"].toExportStatuses == [ExportStatus.pending, ExportStatus.completed
     ]);
   assert([ExportStatus.pending, ExportStatus.completed].toStrings == ["pending", "completed"]);
 }
@@ -388,8 +382,7 @@ unittest {
   assert(ImportStatus.failed.toString == "failed");
   assert(ImportStatus.cancelled.toString == "cancelled");
 
-  assert(["pending", "completed"].toImportStatuses == [
-      ImportStatus.pending, ImportStatus.completed
+  assert(["pending", "completed"].toImportStatuses == [ImportStatus.pending, ImportStatus.completed
     ]);
   assert([ImportStatus.pending, ImportStatus.completed].toStrings == ["pending", "completed"]);
 }
@@ -431,11 +424,9 @@ unittest {
   assert(TransportMode.directExport.toString == "directExport");
   assert(TransportMode.fileDownload.toString == "fileDownload");
 
-  assert(["cloudTransportManagement", "fileDownload"].toTransportModes == [
-      TransportMode.cloudTransportManagement, TransportMode.fileDownload
+  assert(["cloudTransportManagement", "fileDownload"].toTransportModes == [TransportMode.cloudTransportManagement, TransportMode.fileDownload
     ]);
-  assert([TransportMode.cloudTransportManagement, TransportMode.fileDownload].toStrings == [
-      "cloudTransportManagement", "fileDownload"
+  assert([TransportMode.cloudTransportManagement, TransportMode.fileDownload].toStrings == ["cloudTransportManagement", "fileDownload"
     ]);
 }
 
@@ -473,11 +464,9 @@ unittest {
   assert(QueueType.ctsPlus.toString == "ctsPlus");
   assert(QueueType.local.toString == "local");
 
-  assert(["cloudTMS", "local"].toQueueTypes == [
-      QueueType.cloudTMS, QueueType.local
+  assert(["cloudTMS", "local"].toQueueTypes == [QueueType.cloudTMS, QueueType.local
     ]);
-  assert([QueueType.cloudTMS, QueueType.local].toStrings == [
-      "cloudTMS", "local"
+  assert([QueueType.cloudTMS, QueueType.local].toStrings == ["cloudTMS", "local"
     ]);
 }
 
@@ -557,12 +546,10 @@ unittest {
   assert(ActivityType.importFailed.toString == "importFailed");
   assert(ActivityType.queueConfigured.toString == "queueConfigured");
 
-  assert(["packageCreated", "exportCompleted"].toActivityTypes == [
-      ActivityType.packageCreated, ActivityType.exportCompleted
+  assert(["packageCreated", "exportCompleted"].toActivityTypes == [ActivityType.packageCreated, ActivityType.exportCompleted
     ]);
 
-  assert([ActivityType.packageCreated, ActivityType.exportCompleted].toStrings == [
-      "packageCreated", "exportCompleted"
+  assert([ActivityType.packageCreated, ActivityType.exportCompleted].toStrings == ["packageCreated", "exportCompleted"
     ]);
 }
 
@@ -600,8 +587,7 @@ unittest {
   assert(ActivitySeverity.warning.toString == "warning");
   assert(ActivitySeverity.error.toString == "error");
 
-  assert(["info", "error"].toActivitySeverities == [
-      ActivitySeverity.info, ActivitySeverity.error
+  assert(["info", "error"].toActivitySeverities == [ActivitySeverity.info, ActivitySeverity.error
     ]);
   assert([ActivitySeverity.info, ActivitySeverity.error].toStrings == ["info", "error"]);
 }

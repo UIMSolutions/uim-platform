@@ -25,8 +25,7 @@ class GetOverviewUseCase { // TODO: UIMUseCase {
     private UserSessionRepository sessionRepo;
     private ClientLogRepository logRepo;
 
-    this(
-        MobileAppRepository appRepo,
+    this(    MobileAppRepository appRepo,
         DeviceRegistrationRepository deviceRepo,
         PushNotificationRepository pushNotifRepo,
         UsageReportRepository usageRepo,

@@ -39,8 +39,7 @@ class MongoFormationRepository : FormationRepository {
     }
 
     private Bson toBson(Formation f) {
-        return Bson([
-            "id":              Bson(f.id.value),
+        return Bson([    "id":              Bson(f.id.value),
             "tenantId":        Bson(f.tenantId.value),
             "name":            Bson(f.name),
             "description":     Bson(f.description),

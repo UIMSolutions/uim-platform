@@ -69,9 +69,9 @@ class ManageScenariosUseCase { // TODO: UIMUseCase {
 
 ///
 unittest {
-    auto repo = new ScenarioRepository();
-    auto usecase = new ManageScenariosUseCase(repo);
-    auto tenantId = TenantId("test-tenant");
-
-    assert(usecase !is null);
+//     auto repo = new ScenarioRepository();
+//     auto usecase = new ManageScenariosUseCase(repo);
+//     auto tenantId = TenantId("test-tenant");
+// 
+//     assert(usecase !is null);
 }

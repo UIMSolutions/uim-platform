@@ -424,8 +424,7 @@ curl -X POST http://localhost:8090/api/v1/scenarios \
     "targetSystemType": "sapS4HanaCloud",
     "createdBy": "admin",
     "prerequisites": ["VPN connectivity established", "SAP user accounts provisioned"],
-    "stepTemplates": [
-      {
+    "stepTemplates": [{
         "name": "Configure RFC Connection",
         "description": "Set up RFC destination in SM59",
         "type_": "manual",

@@ -176,8 +176,7 @@ struct CustomDomainWebView {
     }
 
     private string script() const {
-        return [
-            "<script>",
+        return [    "<script>",
             "(() => {",
             "  const baseUrl = document.getElementById('base-url');",
             "  const requestPath = document.getElementById('request-path');",
@@ -223,8 +222,7 @@ struct CustomDomainWebView {
     }
 
     private string styles() const {
-        return [
-            ":root {",
+        return [    ":root {",
             "  color-scheme: dark;",
             "  --bg: #08111b;",
             "  --panel: rgba(13, 22, 35, 0.84);",

@@ -300,8 +300,7 @@ class TaskController : ManageHttpController {
         import std.algorithm : endsWith;
 
         return path.endsWith("/claim") || path.endsWith("/release") ||
-            path.endsWith(
-                "/forward") || path.endsWith("/complete") ||
+            path.endsWith(            "/forward") || path.endsWith("/complete") ||
             path.endsWith("/cancel");
     }
 }

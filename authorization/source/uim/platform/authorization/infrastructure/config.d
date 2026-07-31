@@ -61,8 +61,7 @@ SrvConfig loadConfig() {
   auto mongoCollection = environment.get("AUTHORIZATION_MONGO_COLLECTION", "");
   if (mongoCollection.length) cfg.mongoCollection = mongoCollection;
 
-  cfg.seedBasePoliciesOnStartup = parseBoolEnv(
-    environment.get("AUTHORIZATION_SEED_BASE_POLICIES", ""),
+  cfg.seedBasePoliciesOnStartup = parseBoolEnv(environment.get("AUTHORIZATION_SEED_BASE_POLICIES", ""),
     cfg.seedBasePoliciesOnStartup
   );
 

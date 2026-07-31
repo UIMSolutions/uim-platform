@@ -15,8 +15,7 @@ struct CatalogTag {
   string value;
 
   Json toJson() const {
-    return Json([
-      "key": key,
+    return Json(["key": key,
       "value": value
     ]);
   }

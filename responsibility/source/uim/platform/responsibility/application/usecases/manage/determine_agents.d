@@ -47,8 +47,7 @@ class DetermineAgentsUseCase {
                             "No rules for context " ~ req.contextId, startMs);
 
         // Use first (highest priority) matching rule
-        string[] agents = _determinator.determine(
-            req.tenantId, rules[0], req.objectType, req.objectId);
+        string[] agents = _determinator.determine(        req.tenantId, rules[0], req.objectType, req.objectId);
 
         immutable status = agents.length > 0
             ? DeterminationStatus.success
@@ -81,8 +80,7 @@ class DetermineAgentsUseCase {
 
         _logRepo.save(log);
 
-        return DetermineAgentsResult(
-            status == DeterminationStatus.success,
+        return DetermineAgentsResult(        status == DeterminationStatus.success,
             agents,
             log.id.value,
             errorMsg

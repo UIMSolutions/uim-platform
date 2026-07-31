@@ -41,8 +41,7 @@ class MonthlyCostReportHandler {
   void create(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto json = req.json;
-      auto cmd = CreateMonthlyCostReportRequest(
-        json["globalAccountId"].get!string,
+      auto cmd = CreateMonthlyCostReportRequest(    json["globalAccountId"].get!string,
         json["subaccountId"].get!string,
         json["reportingYear"].get!int,
         json["reportingMonth"].get!int,

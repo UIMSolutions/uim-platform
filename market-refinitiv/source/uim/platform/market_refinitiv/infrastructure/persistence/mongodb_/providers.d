@@ -60,8 +60,7 @@ class MongoDbProviderRepository : ProviderRepository {
   }
 
   private Bson toDoc(Provider provider) {
-    return Bson([
-      "tenantId": Bson(provider.tenantId.value),
+    return Bson(["tenantId": Bson(provider.tenantId.value),
       "id": Bson(provider.id.value),
       "code": Bson(provider.code),
       "isActive": Bson(provider.isActive),

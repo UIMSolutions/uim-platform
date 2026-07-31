@@ -53,11 +53,9 @@ unittest {
     assert(toString(RepositoryType.gerrit) == "gerrit");
     assert(toString(RepositoryType.local) == "local");
 
-    assert(toStrings([RepositoryType.github, RepositoryType.gitlab]) == [
-            "github", "gitlab"
+    assert(toStrings([RepositoryType.github, RepositoryType.gitlab]) == [    "github", "gitlab"
         ]);
-    assert(toRepositoryTypes(["github", "gitlab"]) == [
-            RepositoryType.github, RepositoryType.gitlab
+    assert(toRepositoryTypes(["github", "gitlab"]) == [    RepositoryType.github, RepositoryType.gitlab
         ]);
 }
 
@@ -97,11 +95,9 @@ unittest {
     assert(RepositoryStatus.inactive.toString == "inactive");
     assert(RepositoryStatus.error_.toString == "error_");
 
-    assert(toStrings([RepositoryStatus.active, RepositoryStatus.inactive]) == [
-            "active", "inactive"
+    assert(toStrings([RepositoryStatus.active, RepositoryStatus.inactive]) == [    "active", "inactive"
         ]);
-    assert(toRepositoryStatuses(["active", "inactive"]) == [
-            RepositoryStatus.active, RepositoryStatus.inactive
+    assert(toRepositoryStatuses(["active", "inactive"]) == [    RepositoryStatus.active, RepositoryStatus.inactive
         ]);
 }
 
@@ -147,11 +143,9 @@ unittest {
     assert(CredentialType.serviceKey.toString == "serviceKey");
     assert(CredentialType.oauth2.toString == "oauth2");
 
-    assert(toStrings([CredentialType.basicAuth, CredentialType.token]) == [
-            "basicAuth", "token"
+    assert(toStrings([CredentialType.basicAuth, CredentialType.token]) == [    "basicAuth", "token"
         ]);
-    assert(toCredentialTypes(["basicAuth", "token"]) == [
-            CredentialType.basicAuth, CredentialType.token
+    assert(toCredentialTypes(["basicAuth", "token"]) == [    CredentialType.basicAuth, CredentialType.token
         ]);
 }
 
@@ -191,11 +185,9 @@ unittest {
     assert(CredentialStatus.inactive.toString == "inactive");
     assert(CredentialStatus.expired.toString == "expired");
 
-    assert(toStrings([CredentialStatus.active, CredentialStatus.inactive]) == [
-            "active", "inactive"
+    assert(toStrings([CredentialStatus.active, CredentialStatus.inactive]) == [    "active", "inactive"
         ]);
-    assert(toCredentialStatuses(["active", "inactive"]) == [
-            CredentialStatus.active, CredentialStatus.inactive
+    assert(toCredentialStatuses(["active", "inactive"]) == [    CredentialStatus.active, CredentialStatus.inactive
         ]);
 }
 
@@ -251,8 +243,7 @@ unittest {
     assert(PipelineType.custom.toString == "custom");
 
     assert(toStrings([PipelineType.cap, PipelineType.fiori]) == ["cap", "fiori"]);
-    assert(toPipelineTypes(["cap", "fiori"]) == [
-            PipelineType.cap, PipelineType.fiori
+    assert(toPipelineTypes(["cap", "fiori"]) == [    PipelineType.cap, PipelineType.fiori
         ]);
 }
 
@@ -292,11 +283,9 @@ unittest {
     assert(PipelineStatus.inactive.toString == "inactive");
     assert(PipelineStatus.draft_.toString == "draft");
 
-    assert(toStrings([PipelineStatus.active, PipelineStatus.inactive]) == [
-            "active", "inactive"
+    assert(toStrings([PipelineStatus.active, PipelineStatus.inactive]) == [    "active", "inactive"
         ]);
-    assert(toPipelineStatuses(["active", "inactive"]) == [
-            PipelineStatus.active, PipelineStatus.inactive
+    assert(toPipelineStatuses(["active", "inactive"]) == [    PipelineStatus.active, PipelineStatus.inactive
         ]);
 }
 
@@ -336,11 +325,9 @@ unittest {
     assert(JobStatus.inactive.toString == "inactive");
     assert(JobStatus.paused.toString == "paused");
 
-    assert(toStrings([JobStatus.active, JobStatus.inactive]) == [
-            "active", "inactive"
+    assert(toStrings([JobStatus.active, JobStatus.inactive]) == [    "active", "inactive"
         ]);
-    assert(toJobStatuses(["active", "inactive"]) == [
-            JobStatus.active, JobStatus.inactive
+    assert(toJobStatuses(["active", "inactive"]) == [    JobStatus.active, JobStatus.inactive
         ]);
 }
 
@@ -435,11 +422,9 @@ unittest {
     assert(BuildStatus.aborted.toString == "aborted");
     assert(BuildStatus.initializing.toString == "initializing");
 
-    assert(toStrings([BuildStatus.pending, BuildStatus.running]) == [
-            "pending", "running"
+    assert(toStrings([BuildStatus.pending, BuildStatus.running]) == [    "pending", "running"
         ]);
-    assert(toBuildStatuses(["pending", "running"]) == [
-            BuildStatus.pending, BuildStatus.running
+    assert(toBuildStatuses(["pending", "running"]) == [    BuildStatus.pending, BuildStatus.running
         ]);
 }
 
@@ -482,11 +467,9 @@ unittest {
     assert(BuildTrigger.scheduled.toString == "scheduled");
     assert(BuildTrigger.api_.toString == "api");
 
-    assert(toStrings([BuildTrigger.manual, BuildTrigger.webhook]) == [
-            "manual", "webhook"
+    assert(toStrings([BuildTrigger.manual, BuildTrigger.webhook]) == [    "manual", "webhook"
         ]);
-    assert(toBuildTriggers(["manual", "webhook"]) == [
-            BuildTrigger.manual, BuildTrigger.webhook
+    assert(toBuildTriggers(["manual", "webhook"]) == [    BuildTrigger.manual, BuildTrigger.webhook
         ]);
 }
 
@@ -547,11 +530,9 @@ unittest {
     assert(StageType.containerBuild.toString == "containerBuild");
     assert(StageType.containerPush.toString == "containerPush");
 
-    assert(toStrings([StageType.buildLint, StageType.unitTests]) == [
-            "buildLint", "unitTests"
+    assert(toStrings([StageType.buildLint, StageType.unitTests]) == [    "buildLint", "unitTests"
         ]);
-    assert(toStageTypes(["buildLint", "unitTests"]) == [
-            StageType.buildLint, StageType.unitTests
+    assert(toStageTypes(["buildLint", "unitTests"]) == [    StageType.buildLint, StageType.unitTests
         ]);
 }
 
@@ -596,12 +577,10 @@ unittest {
     assert(StageStatus.skipped.toString == "skipped");
     assert(StageStatus.aborted.toString == "aborted");
 
-    assert(toStrings([StageStatus.pending, StageStatus.running]) == [
-            "pending", "running"
+    assert(toStrings([StageStatus.pending, StageStatus.running]) == [    "pending", "running"
         ]);
 
-        assert(toStageStatuses(["pending", "running"]) == [
-            StageStatus.pending, StageStatus.running
+        assert(toStageStatuses(["pending", "running"]) == [    StageStatus.pending, StageStatus.running
         ]);
 }
 
@@ -638,12 +617,10 @@ unittest {
     assert(WebhookStatus.inactive.toString == "inactive");
     assert(WebhookStatus.error_.toString == "error");
 
-    assert(toStrings([WebhookStatus.active, WebhookStatus.inactive]) == [
-            "active", "inactive"
+    assert(toStrings([WebhookStatus.active, WebhookStatus.inactive]) == [    "active", "inactive"
         ]);
 
-    assert(toWebhookStatuses(["active", "inactive"]) == [
-            WebhookStatus.active, WebhookStatus.inactive
+    assert(toWebhookStatuses(["active", "inactive"]) == [    WebhookStatus.active, WebhookStatus.inactive
         ]);
 }
 
@@ -682,11 +659,9 @@ unittest {
     assert(WebhookEvent.tag.toString == "tag");
     assert(WebhookEvent.release.toString == "release");
 
-    assert(toStrings([WebhookEvent.push, WebhookEvent.pullRequest]) == [
-            "push", "pullRequest"
+    assert(toStrings([WebhookEvent.push, WebhookEvent.pullRequest]) == [    "push", "pullRequest"
         ]);
-    assert(toWebhookEvents(["push", "pullRequest"]) == [
-            WebhookEvent.push, WebhookEvent.pullRequest
+    assert(toWebhookEvents(["push", "pullRequest"]) == [    WebhookEvent.push, WebhookEvent.pullRequest
         ]);
 }
 
@@ -728,11 +703,9 @@ unittest {
     assert(DeploymentTargetType.kubernetes.toString == "kubernetes");
     assert(DeploymentTargetType.containerRegistry.toString == "containerRegistry");
 
-    assert(toStrings([DeploymentTargetType.cloudFoundry, DeploymentTargetType.kyma]) == [
-            "cloudFoundry", "kyma"
+    assert(toStrings([DeploymentTargetType.cloudFoundry, DeploymentTargetType.kyma]) == [    "cloudFoundry", "kyma"
         ]);
-    assert(toDeploymentTargetTypes(["cloudFoundry", "kyma"]) == [
-            DeploymentTargetType.cloudFoundry, DeploymentTargetType.kyma
+    assert(toDeploymentTargetTypes(["cloudFoundry", "kyma"]) == [    DeploymentTargetType.cloudFoundry, DeploymentTargetType.kyma
         ]);
 }
 
@@ -767,12 +740,10 @@ unittest {
     assert(DeploymentTargetStatus.inactive.toString == "inactive");
     assert(DeploymentTargetStatus.error_.toString == "error");  
 
-    assert(toStrings([DeploymentTargetStatus.active, DeploymentTargetStatus.inactive]) == [
-            "active", "inactive"
+    assert(toStrings([DeploymentTargetStatus.active, DeploymentTargetStatus.inactive]) == [    "active", "inactive"
         ]);
 
-    assert(toDeploymentTargetStatuses(["active", "inactive"]) == [
-            DeploymentTargetStatus.active, DeploymentTargetStatus.inactive
+    assert(toDeploymentTargetStatuses(["active", "inactive"]) == [    DeploymentTargetStatus.active, DeploymentTargetStatus.inactive
         ]);
 }
 

@@ -61,8 +61,7 @@ class TaskCliController {
 
         auto tv = TableView(["ID", "Title", "Priority", "Status", "Assignee", "Due"]);
         foreach (t; tasks) {
-            tv.addRow(
-                t.id.value,
+            tv.addRow(            t.id.value,
                 truncate(t.title, 40),
                 t.priority.to!string,
                 t.status.to!string,

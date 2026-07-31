@@ -43,8 +43,7 @@ class MongoEventSubscriptionRepository : EventSubscriptionRepository {
     }
 
     private Bson toBson(EventSubscription s) {
-        return Bson([
-            "id":               Bson(s.id.value),
+        return Bson([    "id":               Bson(s.id.value),
             "tenantId":         Bson(s.tenantId.value),
             "name":             Bson(s.name),
             "description":      Bson(s.description),

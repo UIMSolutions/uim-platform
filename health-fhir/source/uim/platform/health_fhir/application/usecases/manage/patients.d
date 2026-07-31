@@ -18,8 +18,7 @@ class ManagePatientsUseCase {
   }
 
   CommandResult createPatient(CreatePatientRequest r) {
-    auto err = FhirValidator.validatePatient(
-      r.patientId.value,
+    auto err = FhirValidator.validatePatient(  r.patientId.value,
       r.name_.length > 0 ? r.name_[0].family_ : ""
     );
     if (err.length > 0) return CommandResult(false, "", err);

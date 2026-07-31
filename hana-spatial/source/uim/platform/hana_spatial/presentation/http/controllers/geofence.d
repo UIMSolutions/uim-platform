@@ -75,8 +75,7 @@ class GeofenceController : ManageHttpController {
         .set("createdAt", item.createdAt);
     }
 
-    return successResponse("Geofence zones retrieved successfully", 200, Json.emptyObject.set("count", Json(
-        items.length)).set("resources", jarr));
+    return successResponse("Geofence zones retrieved successfully", 200, Json.emptyObject.set("count", Json(    items.length)).set("resources", jarr));
   }
 
   override protected Json getHandler(HTTPServerRequest req) {
@@ -114,8 +113,7 @@ class GeofenceController : ManageHttpController {
     if (result.hasError)
       return errorResponse(result.message, 400);
 
-    return successResponse("Geofence zone updated successfully", 200, Json.emptyObject.set(
-        "id", result.id));
+    return successResponse("Geofence zone updated successfully", 200, Json.emptyObject.set(    "id", result.id));
   }
 
   override protected Json deleteHandler(HTTPServerRequest req) {
@@ -129,8 +127,7 @@ class GeofenceController : ManageHttpController {
     if (result.hasError)
       return errorResponse(result.message, 400);
 
-    return successResponse("Geofence zone deleted successfully", 200, Json.emptyObject.set(
-        "id", result.id));
+    return successResponse("Geofence zone deleted successfully", 200, Json.emptyObject.set(    "id", result.id));
 }
 
 private void handleCheck(scope HTTPServerRequest req, scope HTTPServerResponse res) {

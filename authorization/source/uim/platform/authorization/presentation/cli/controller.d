@@ -16,8 +16,7 @@ class AuthorizationCliController {
   }
 
   void printSummary(string tenantId) {
-    view.renderSummary(
-      tenantId,
+    view.renderSummary(  tenantId,
       model.applicationCount(tenantId),
       model.policyCount(tenantId),
       model.assignmentCount(tenantId)

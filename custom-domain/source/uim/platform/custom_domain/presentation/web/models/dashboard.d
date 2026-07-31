@@ -54,21 +54,18 @@ WebPageModel buildDashboardModel(string tenantId, DomainDashboard dashboard,
     model.title = "Management Dashboard";
     model.tenantId = tenantId.length > 0 ? tenantId : "default";
     model.intro = "Manage domains, mappings, certificates, keys, DNS records, and TLS settings from HTML.";
-    model.highlights = [
-        "Tenant-scoped operational overview",
+    model.highlights = ["Tenant-scoped operational overview",
         "Certificate and TLS lifecycle visibility",
         "Domain-to-route mapping control",
     ];
-    model.metrics = [
-        WebMetricModel("Total domains", dashboard.totalDomains.to!string),
+    model.metrics = [WebMetricModel("Total domains", dashboard.totalDomains.to!string),
         WebMetricModel("Active domains", dashboard.activeDomains.to!string),
         WebMetricModel("Total certificates", dashboard.totalCertificates.to!string),
         WebMetricModel("Active certificates", dashboard.activeCertificates.to!string),
         WebMetricModel("Total mappings", dashboard.totalMappings.to!string),
         WebMetricModel("Active mappings", dashboard.activeMappings.to!string),
     ];
-    model.actions = [
-        WebActionModel("Domains", "GET", "/web/custom-domain/domains?tenantId=" ~ model.tenantId, ""),
+    model.actions = [WebActionModel("Domains", "GET", "/web/custom-domain/domains?tenantId=" ~ model.tenantId, ""),
         WebActionModel("TLS configs", "GET", "/web/custom-domain/tls-configurations?tenantId=" ~ model.tenantId, ""),
         WebActionModel("Mappings", "GET", "/web/custom-domain/mappings?tenantId=" ~ model.tenantId, ""),
         WebActionModel("DNS records", "GET", "/web/custom-domain/dns-records?tenantId=" ~ model.tenantId, ""),
@@ -99,8 +96,7 @@ WebPageModel buildDomainsModel(string tenantId, CustomDomain[] items) {
 }
 }));
     foreach (item; items) {
-        model.table.rows ~= [
-            item.domainName,
+        model.table.rows ~= [    item.domainName,
             item.status.to!string(),
             item.environment.to!string(),
             item.isShared ? "yes" : "no",
@@ -125,8 +121,7 @@ WebPageModel buildTlsConfigurationsModel(string tenantId, TlsConfiguration[] ite
 }
 }));
     foreach (item; items) {
-        model.table.rows ~= [
-            item.name,
+        model.table.rows ~= [    item.name,
             item.minProtocolVersion.to!string(),
             item.maxProtocolVersion.to!string(),
             item.http2Enabled ? "yes" : "no",
@@ -149,8 +144,7 @@ WebPageModel buildMappingsModel(string tenantId, DomainMapping[] items) {
 }
 }));
     foreach (item; items) {
-        model.table.rows ~= [
-            item.customDomainId.value,
+        model.table.rows ~= [    item.customDomainId.value,
             item.standardRoute,
             item.customRoute,
             item.mappingType.to!string(),
@@ -173,8 +167,7 @@ WebPageModel buildDnsRecordsModel(string tenantId, DnsRecord[] items) {
 }
 }));
     foreach (item; items) {
-        model.table.rows ~= [
-            item.hostname,
+        model.table.rows ~= [    item.hostname,
             item.recordType.to!string(),
             item.value,
             item.ttl.to!string(),
@@ -196,8 +189,7 @@ WebPageModel buildPrivateKeysModel(string tenantId, PrivateKey[] items) {
 }
 }));
     foreach (item; items) {
-        model.table.rows ~= [
-            item.subject,
+        model.table.rows ~= [    item.subject,
             item.algorithm.to!string(),
             item.status.to!string(),
             item.keySize.to!string(),
@@ -217,8 +209,7 @@ WebPageModel buildCertificatesModel(string tenantId, Certificate[] items) {
 }
 }));
     foreach (item; items) {
-        model.table.rows ~= [
-            item.subjectDn,
+        model.table.rows ~= [    item.subjectDn,
             item.status.to!string(),
             item.type.to!string(),
             item.validTo.to!string(),
@@ -239,8 +230,7 @@ WebPageModel buildTrustedCertificatesModel(string tenantId, TrustedCertificate[]
 }
 }));
     foreach (item; items) {
-        model.table.rows ~= [
-            item.customDomainId.value,
+        model.table.rows ~= [    item.customDomainId.value,
             item.subjectDn,
             item.status.to!string(),
             item.authMode.to!string(),
@@ -256,8 +246,7 @@ WebPageModel buildEntityModel(string title, string tenantId, string[] headers, W
     model.title = title;
     model.tenantId = tenantId.length > 0 ? tenantId : "default";
     model.intro = "HTML management page for " ~ title.toLower;
-    model.highlights = [
-        "Tenant scoped view",
+    model.highlights = ["Tenant scoped view",
         "Request templates",
         "Readable resource summaries",
     ];

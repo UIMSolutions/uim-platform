@@ -28,8 +28,7 @@ class PractitionerController : ManageHttpController {
   }
 
   private static void writeFhirError(scope HTTPServerResponse res, int status, string msg) {
-    res.writeJsonBody(
-      Json.emptyObject.set("resourceType", "OperationOutcome")
+    res.writeJsonBody(  Json.emptyObject.set("resourceType", "OperationOutcome")
         .set("issue", Json.emptyArray ~= Json.emptyObject
           .set("severity", "error").set("code", "processing").set("diagnostics", msg)),
         status
@@ -72,8 +71,7 @@ class PractitionerController : ManageHttpController {
     auto practitioners = usecase.listPractitioners(tenantId);
     auto entries = practitioners.map!(p => p.toJson).array.toJson;
 
-    // res.writeJsonBody(
-    //   Json.emptyObject.set("resourceType", "Bundle").set("type", "searchset")
+    // res.writeJsonBody(//   Json.emptyObject.set("resourceType", "Bundle").set("type", "searchset")
     //     .set("total", practitioners.length).set("entry", entries),
     //     200
     // );
@@ -122,8 +120,7 @@ class PractitionerController : ManageHttpController {
     if (result.hasError)
       return errorResponse(result.message, 400);
 
-    return successResponse("Practitioner updated successfully", "Updated", 200, Json.emptyObject.set(
-        "resourceType", "Practitioner")
+    return successResponse("Practitioner updated successfully", "Updated", 200, Json.emptyObject.set(    "resourceType", "Practitioner")
         .set("id", result.id));
 
     //   res.writeJsonBody(Json.emptyObject.set("resourceType", "Practitioner")
