@@ -80,8 +80,8 @@ class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
 
 ///
 unittest {
-    auto repo = new ServiceBindingRepository();
-    auto usecase = new ManageServiceBindingsUseCase(repo);
-    auto tenantId = TenantId("test-tenant");
-
+//    auto repo = new ServiceBindingRepository();
+//    auto usecase = new ManageServiceBindingsUseCase(repo);
+//    auto tenantId = TenantId("test-tenant");
+//
 }

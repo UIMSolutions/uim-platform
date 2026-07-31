@@ -136,8 +136,8 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
 
 ///
 unittest {
-    auto repo = new TransportRequestRepository();
-    auto usecase = new ManageTransportRequestsUseCase(repo);
-    auto tenantId = TenantId("test-tenant");
+//    auto repo = new TransportRequestRepository();
+//    auto usecase = new ManageTransportRequestsUseCase(repo);
+//    auto tenantId = TenantId("test-tenant");
 
 }

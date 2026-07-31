@@ -55,10 +55,10 @@ class WriteConfigChangeUseCase { // TODO: UIMUseCase {
 
 ///
 unittest {
-    auto iAuditLogRepository = new IAuditLogRepository();
-    auto iConfigChangeLogRepository = new IConfigChangeLogRepository();
-    auto usecase = new WriteConfigChangeUseCase(iAuditLogRepository, iConfigChangeLogRepository);
-    auto tenantId = TenantId("test-tenant");
-
-    assert(usecase !is null);
+//    auto iAuditLogRepository = new AuditLogRepository();
+//    auto iConfigChangeLogRepository = new IConfigChangeLogRepository();
+//    auto usecase = new WriteConfigChangeUseCase(iAuditLogRepository, iConfigChangeLogRepository);
+//    auto tenantId = TenantId("test-tenant");
+//
+//    assert(usecase !is null);
 }

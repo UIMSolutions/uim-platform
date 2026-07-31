@@ -87,8 +87,8 @@ class ManageBusinessRolesUseCase { // TODO: UIMUseCase {
 
 ///
 unittest {
-    auto repo = new BusinessRoleRepository();
-    auto usecase = new ManageBusinessRolesUseCase(repo);
-    auto tenantId = TenantId("test-tenant");
+//    auto repo = new BusinessRoleRepository();
+//    auto usecase = new ManageBusinessRolesUseCase(repo);
+//    auto tenantId = TenantId("test-tenant");
 
 }

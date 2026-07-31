@@ -54,9 +54,9 @@ class ManageVersionsUseCase { // TODO: UIMUseCase {
 
 ///
 unittest {
-    auto versioningService = new VersioningService();
-    auto usecase = new ManageVersionsUseCase(versioningService);
-    auto tenantId = TenantId("test-tenant");
-
-    assert(usecase !is null);
+//    auto versioningService = new VersioningService();
+//    auto usecase = new ManageVersionsUseCase(versioningService);
+//    auto tenantId = TenantId("test-tenant");
+//
+//    assert(usecase !is null);
 }

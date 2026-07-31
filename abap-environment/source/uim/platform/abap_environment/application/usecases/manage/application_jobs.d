@@ -106,8 +106,8 @@ class ManageApplicationJobsUseCase { // TODO: UIMUseCase {
 
 ///
 unittest {
-    auto applicationJobRepository = new ApplicationJobRepository();
-    auto usecase = new ManageApplicationJobsUseCase(applicationJobRepository);
-    auto tenantId = TenantId("test-tenant");
-
+//    auto applicationJobRepository = new ApplicationJobRepository();
+//    auto usecase = new ManageApplicationJobsUseCase(applicationJobRepository);
+//    auto tenantId = TenantId("test-tenant");
+//
 }

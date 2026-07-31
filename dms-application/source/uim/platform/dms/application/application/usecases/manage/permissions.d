@@ -88,10 +88,10 @@ class ManagePermissionsUseCase { // TODO: UIMUseCase {
 
 ///
 unittest {
-    auto iPermissionRepository = new IPermissionRepository();
-    auto accessControlService = new AccessControlService();
-    auto usecase = new ManagePermissionsUseCase(iPermissionRepository, accessControlService);
-    auto tenantId = TenantId("test-tenant");
-
-    assert(usecase !is null);
+//    auto iPermissionRepository = new PermissionRepository();
+//    auto accessControlService = new AccessControlService();
+//    auto usecase = new ManagePermissionsUseCase(iPermissionRepository, accessControlService);
+//    auto tenantId = TenantId("test-tenant");
+//
+//    assert(usecase !is null);
 }

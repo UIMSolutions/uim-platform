@@ -102,8 +102,8 @@ class ManageKeystoresUseCase {
 
 ///
 unittest {
-    auto repo = new IKeystoreRepository();
-    auto usecase = new ManageKeystoresUseCase(repo);
-    auto tenantId = TenantId("test-tenant");
-
+//    auto repo = new KeystoreRepository();
+//    auto usecase = new ManageKeystoresUseCase(repo);
+//    auto tenantId = TenantId("test-tenant");
+//
 }

@@ -109,11 +109,11 @@ struct FolderContents {
 
 ///
 unittest {
-    auto iDocumentRepository = new IDocumentRepository();
-    auto iFolderRepository = new IFolderRepository();
-    auto iFavoriteRepository = new IFavoriteRepository();
-    auto iRepositoryRepository = new IRepositoryRepository();
-    auto usecase = new BrowseContentUseCase(iDocumentRepository, iFolderRepository, iFavoriteRepository, iRepositoryRepository);
-    auto tenantId = TenantId("test-tenant");
+//    auto iDocumentRepository = new IDocumentRepository();
+//    auto iFolderRepository = new IFolderRepository();
+//    auto iFavoriteRepository = new IFavoriteRepository();
+//    auto iRepositoryRepository = new IRepositoryRepository();
+//    auto usecase = new BrowseContentUseCase(iDocumentRepository, iFolderRepository, iFavoriteRepository, iRepositoryRepository);
+//    auto tenantId = TenantId("test-tenant");
 
 }

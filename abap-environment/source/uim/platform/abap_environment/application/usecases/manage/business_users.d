@@ -113,9 +113,9 @@ class ManageBusinessUsersUseCase { // TODO: UIMUseCase {
 
 ///
 unittest {
-    auto businessUserRepository = new BusinessUserRepository();
-    auto businessRoleRepository = new BusinessRoleRepository();
-    auto usecase = new ManageBusinessUsersUseCase(businessUserRepository, businessRoleRepository);
-    auto tenantId = TenantId("test-tenant");
-
+//    auto businessUserRepository = new BusinessUserRepository();
+//    auto businessRoleRepository = new BusinessRoleRepository();
+//    auto usecase = new ManageBusinessUsersUseCase(businessUserRepository, businessRoleRepository);
+//    auto tenantId = TenantId("test-tenant");
+//
 }

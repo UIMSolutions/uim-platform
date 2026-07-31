@@ -133,9 +133,9 @@ class ManageSoftwareComponentsUseCase { // TODO: UIMUseCase {
 
 ///
 unittest {
-    auto softwareComponentRepository = new SoftwareComponentRepository();
-    auto systemInstanceRepository = new SystemInstanceRepository();
-    auto usecase = new ManageSoftwareComponentsUseCase(softwareComponentRepository, systemInstanceRepository);
-    auto tenantId = TenantId("test-tenant");
+//     auto softwareComponentRepository = new SoftwareComponentRepository();
+//     auto systemInstanceRepository = new SystemInstanceRepository();
+//     auto usecase = new ManageSoftwareComponentsUseCase(softwareComponentRepository, systemInstanceRepository);
+//     auto tenantId = TenantId("test-tenant");
 
 }

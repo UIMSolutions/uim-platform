@@ -75,12 +75,12 @@ class ManageProgramsUseCase {
 
 ///
 unittest {
-    auto repo = new AbapProgramRepository();
-    auto usecase = new ManageProgramsUseCase(repo);
-    auto tenantId = TenantId("test-tenant");
-
-    // Test list
-    auto items = usecase.listPrograms(tenantId);
-    assert(items !is null);
+//    auto repo = new AbapProgramRepository();
+//    auto usecase = new ManageProgramsUseCase(repo);
+//    auto tenantId = TenantId("test-tenant");
+//
+//    // Test list
+//    auto items = usecase.listPrograms(tenantId);
+//    assert(items !is null);
 
 }

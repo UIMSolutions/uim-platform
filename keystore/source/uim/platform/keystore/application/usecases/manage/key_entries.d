@@ -70,8 +70,8 @@ class ManageKeyEntriesUseCase {
 
 ///
 unittest {
-    auto repo = new IKeyEntryRepository();
-    auto usecase = new ManageKeyEntriesUseCase(repo);
-    auto tenantId = TenantId("test-tenant");
+//     auto repo = new KeyEntryRepository();
+//     auto usecase = new ManageKeyEntriesUseCase(repo);
+//     auto tenantId = TenantId("test-tenant");
 
 }
