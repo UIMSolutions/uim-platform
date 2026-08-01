@@ -14,9 +14,9 @@ mixin(ShowModule!());
 /// Dependency-injection container — wires all repos, services, use cases and controllers.
 struct Container {
     // Repositories (driven adapters)
-    MemorySaasApplicationRepository saasApplicationRepo;
-    MemoryAppSubscriptionRepository appSubscriptionRepo;
-    MemorySubscriptionJobRepository subscriptionJobRepo;
+    ISaasApplicationRepository saasApplicationRepo;
+    IAppSubscriptionRepository appSubscriptionRepo;
+    ISubscriptionJobRepository subscriptionJobRepo;
 
     // Domain services
     SubscriptionEngine subscriptionEngine;

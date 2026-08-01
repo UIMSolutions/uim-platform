@@ -47,16 +47,16 @@ mixin(ShowModule!());
 @safe:
 struct Container {
   // Repositories (driven adapters)
-  MemoryInstanceRepository instanceRepo;
-  MemoryDataLakeRepository dataLakeRepo;
-  MemorySchemaRepository schemaRepo;
-  MemoryDatabaseUserRepository databaseUserRepo;
-  MemoryBackupRepository backupRepo;
-  MemoryAlertRepository alertRepo;
-  MemoryHDIContainerRepository hdiContainerRepo;
-  MemoryReplicationTaskRepository replicationTaskRepo;
-  MemoryConfigurationRepository configurationRepo;
-  MemoryDatabaseConnectionRepository databaseConnectionRepo;
+  IInstanceRepository instanceRepo;
+  IDataLakeRepository dataLakeRepo;
+  ISchemaRepository schemaRepo;
+  IDatabaseUserRepository databaseUserRepo;
+  IBackupRepository backupRepo;
+  IAlertRepository alertRepo;
+  IHDIContainerRepository hdiContainerRepo;
+  IReplicationTaskRepository replicationTaskRepo;
+  IConfigurationRepository configurationRepo;
+  IDatabaseConnectionRepository databaseConnectionRepo;
 
   // Use cases (application layer)
   ManageInstancesUseCase manageInstances;

@@ -13,10 +13,10 @@ mixin(ShowModule!());
 
 struct Container {
     // Repositories (driven adapters)
-    MemoryMtaArchiveRepository     mtaArchiveRepo;
-    MemoryMtaRepository            mtaRepo;
-    MemoryMtaOperationRepository   mtaOperationRepo;
-    MemoryMtaSubscriptionRepository mtaSubscriptionRepo;
+    IMtaArchiveRepository     mtaArchiveRepo;
+    IMtaRepository            mtaRepo;
+    IMtaOperationRepository   mtaOperationRepo;
+    IMtaSubscriptionRepository mtaSubscriptionRepo;
 
     // Domain services
     DeploymentEngine deploymentEngine;

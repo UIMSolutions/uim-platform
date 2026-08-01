@@ -13,14 +13,14 @@ mixin(ShowModule!());
 
 struct Container {
   // Repositories (driven adapters)
-  MemoryProjectRepository        projectRepo;
-  MemoryDevSpaceRepository       devSpaceRepo;
-  MemoryTemplateRepository       templateRepo;
-  MemoryPipelineRepository       pipelineRepo;
-  MemoryBuildJobRepository       buildJobRepo;
-  MemoryDeploymentRepository     deploymentRepo;
-  MemoryAIRequestRepository      aiRequestRepo;
-  MemoryServiceBindingRepository serviceBindingRepo;
+  IProjectRepository        projectRepo;
+  IDevSpaceRepository       devSpaceRepo;
+  ITemplateRepository       templateRepo;
+  IPipelineRepository       pipelineRepo;
+  IBuildJobRepository       buildJobRepo;
+  IDeploymentRepository     deploymentRepo;
+  IAIRequestRepository      aiRequestRepo;
+  IServiceBindingRepository serviceBindingRepo;
 
   // Use cases (application layer)
   ManageProjectsUseCase        manageProjects;

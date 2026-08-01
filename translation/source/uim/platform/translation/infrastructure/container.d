@@ -13,9 +13,9 @@ mixin(ShowModule!());
 
 struct Container {
     // Repositories (driven adapters)
-    MemoryTranslationProjectRepository translationProjectRepo;
-    MemoryGlossaryEntryRepository glossaryEntryRepo;
-    MemoryTranslationJobRepository translationJobRepo;
+    ITranslationProjectRepository translationProjectRepo;
+    IGlossaryEntryRepository glossaryEntryRepo;
+    ITranslationJobRepository translationJobRepo;
 
     // Domain services
     TranslationEngine translationEngine;

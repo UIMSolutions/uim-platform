@@ -14,11 +14,11 @@ mixin(ShowModule!());
 /// Dependency-injection container — wires all layers together.
 struct Container {
     // Repositories
-    MemoryConditionRepository     conditionRepo;
-    MemoryActionRepository        actionRepo;
-    MemorySubscriptionRepository  subscriptionRepo;
-    MemoryMatchedEventRepository  matchedEventRepo;
-    MemoryUndeliveredEventRepository undeliveredEventRepo;
+    IConditionRepository     conditionRepo;
+    IActionRepository        actionRepo;
+    ISubscriptionRepository  subscriptionRepo;
+    IMatchedEventRepository  matchedEventRepo;
+    IUndeliveredEventRepository undeliveredEventRepo;
 
     // Domain services
     EventMatcher    matcher;

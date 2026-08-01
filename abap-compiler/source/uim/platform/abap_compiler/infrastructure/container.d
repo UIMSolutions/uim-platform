@@ -13,8 +13,8 @@ mixin(ShowModule!());
 /// Dependency-injection container wired at startup.
 struct Container {
     // Driven adapters (repositories)
-    MemoryAbapProgramRepository    programRepo;
-    MemoryCompilationJobRepository jobRepo;
+    IAbapProgramRepository    programRepo;
+    ICompilationJobRepository jobRepo;
 
     // Application use cases
     ManageProgramsUseCase  managePrograms;

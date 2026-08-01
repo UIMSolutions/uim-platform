@@ -49,7 +49,7 @@ struct Container {
   // Repositories (driven adapters)
   IUserRepository userRepo;
   IGroupRepository groupRepo;
-  // MemoryTenantRepository tenantRepo;
+  // ITenantRepository tenantRepo;
   IApplicationRepository appRepo;
   ISessionRepository sessionRepo;
   ITokenRepository tokenRepo;

@@ -47,16 +47,16 @@ mixin(ShowModule!());
 /// Dependency injection container — wires all layers together.
 struct Container {
   // Repositories (driven adapters)
-  MemoryWorkspaceRepository workspaceRepo;
-  MemoryWorkpageRepository workpageRepo;
-  MemoryCardRepository cardRepo;
-  MemoryContentRepository contentRepo;
-  MemoryFeedRepository feedRepo;
-  MemoryNotificationRepository notificationRepo;
-  MemoryTaskRepository taskRepo;
-  MemoryChannelRepository channelRepo;
-  MemoryAppRepository appRepo;
-  MemoryWidgetRepository widgetRepo;
+  IWorkspaceRepository workspaceRepo;
+  IWorkpageRepository workpageRepo;
+  ICardRepository cardRepo;
+  IContentRepository contentRepo;
+  IFeedRepository feedRepo;
+  INotificationRepository notificationRepo;
+  ITaskRepository taskRepo;
+  IChannelRepository channelRepo;
+  IAppRepository appRepo;
+  IWidgetRepository widgetRepo;
 
   // Use cases (application layer)
   ManageWorkspacesUseCase manageWorkspaces;

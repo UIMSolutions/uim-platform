@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.document_ai.infrastructure.persistence.repositories.extraction_result;
+module uim.platform.document_ai.infrastructure.persistence.repositories.extraction_results;
 
 // import uim.platform.document_ai.domain.entities.extraction_result;
 // import uim.platform.document_ai.domain.ports.repositories.extraction_results;
@@ -13,52 +13,67 @@ import uim.platform.document_ai;
 mixin(ShowModule!());
 
 @safe:
-class ExtractionResultRepository : ExtractionResultRepository {
-  private ExtractionResult[][string] store;
-
-  bool existsById(ClientId clientId, ExtractionResultId id) {
+class ExtractionResultRepository : TenantRepository!(ExtractionResult, ExtractionResultId), IExtractionResultRepository {
+  bool existsById(TenantId tenantId, ClientId clientId, ExtractionResultId id) {
     return clientId in store ? store[clientId].any!(r => r.id == id) : false;
   }
 
-  ExtractionResult findById(ClientId clientId, ExtractionResultId id) {
-    if (clientId !in store)
+  ExtractionResult findById(TenantId tenantId, ClientId clientId, ExtractionResultId id) {
+    if (clientId !in findByTenant(tenantId))
       return ExtractionResult.init;
-
-    foreach (r; store[clientId]) {
+  
+    foreach (r; findByTenant(tenantId)[clientId]) {
       if (r.id == id)
         return r;
     }
     return ExtractionResult.init;
   }
 
-  ExtractionResult findByDocument(ClientId clientId, DocumentId docId) {
-    if (clientId !in store)
+  // #
+  size_t countByClient(TenantId tenantId, ClientId clientId) {
+    return clientId in findByTenant(tenantId) ? findByTenant(tenantId)[clientId].length : 0;
+  }
+
+  ExtractionResult[] filterByClient(ExtractionResult[] results, ClientId clientId) {
+    return results.filter!(r => r.clientId == clientId).array;
+  }
+
+  ExtractionResult[] findByClient(TenantId tenantId, ClientId clientId) {
+    return filterByClient(findByTenant(tenantId), clientId);
+  }
+
+  void removeByClient(TenantId tenantId, ClientId clientId) {
+    findByClient(tenantId, clientId).each!(r => remove(r));
+  }
+
+  ExtractionResult findByDocument(TenantId tenantId, ClientId clientId, DocumentId docId) {
+    if (clientId !in findByTenant(tenantId))
       return ExtractionResult.init;
 
-    foreach (r; store[clientId]) {
+    foreach (r; findByTenant(tenantId)[clientId]) {
       if (r.documentId == docId)
         return r;
     }
     return ExtractionResult.init;
   }
 
-  ExtractionResult[] findByClient(ClientId clientId) {
-    return clientId in store ? store[clientId] : null;
+  ExtractionResult[] findByClient(TenantId tenantId, ClientId clientId) {
+    return clientId in findByTenant(tenantId) ? findByTenant(tenantId)[clientId] : null;
   }
 
-  ExtractionResult[] findBySchema(SchemaId schemaId, ClientId clientId) {
-    return clientId in store ? store[clientId].filter!(r => r.schemaId == schemaId).array : null;
+  ExtractionResult[] findBySchema(TenantId tenantId, SchemaId schemaId, ClientId clientId) {
+    return clientId in findByTenant(tenantId) ? findByTenant(tenantId)[clientId].filter!(r => r.schemaId == schemaId).array : null;
   }
 
-  void save(ExtractionResult r) {
-    store[r.clientId] ~= r;
+  void save(TenantId tenantId, ExtractionResult r) {
+    findByTenant(tenantId)[r.clientId] ~= r;
   }
 
-  void update(ExtractionResult r) {
-    if (r.clientId !in store) {
+  void update(TenantId tenantId, ExtractionResult r) {
+    if (r.clientId !in findByTenant(tenantId)) {
       return;
     }
-    foreach (existing; store[r.clientId]) {
+    foreach (existing; findByTenant(tenantId)[r.clientId]) {
       if (existing.id == r.id) {
         existing = r;
         return;

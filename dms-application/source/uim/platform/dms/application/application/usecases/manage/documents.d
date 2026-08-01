@@ -20,12 +20,12 @@ import uim.platform.dms.application;
 mixin(ShowModule!());
 @safe:
 class ManageDocumentsUseCase { // TODO: UIMUseCase {
-  private MemoryDocumentRepository docs;
-  private MemoryDocumentVersionRepository versions;
-  private MemoryFolderRepository folders;
+  private IDocumentRepository docs;
+  private IDocumentVersionRepository versions;
+  private IFolderRepository folders;
 
-  this(MemoryDocumentRepository docs, MemoryDocumentVersionRepository versions,
-      MemoryFolderRepository folders) {
+  this(IDocumentRepository docs, IDocumentVersionRepository versions,
+      IFolderRepository folders) {
     this.docs = docs;
     this.versions = versions;
     this.folders = folders;

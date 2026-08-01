@@ -12,9 +12,9 @@ mixin(ShowModule!());
 /// Dependency injection container — wires all layers of the Private Link Service.
 struct Container {
   // ── Repositories (primary ports adapters) ─────────────────────────────────
-  MemoryServiceInstanceRepository instanceRepo;
-  MemoryPrivateEndpointRepository endpointRepo;
-  MemoryServiceBindingRepository  bindingRepo;
+  IServiceInstanceRepository instanceRepo;
+  IPrivateEndpointRepository endpointRepo;
+  IServiceBindingRepository  bindingRepo;
 
   // ── Domain services ────────────────────────────────────────────────────────
   EndpointResolver endpointResolver;

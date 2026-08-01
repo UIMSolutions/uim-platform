@@ -14,5 +14,5 @@ public {
   import uim.platform.document_ai.presentation.http.controllers.training_job;
   import uim.platform.document_ai.presentation.http.controllers.client;
   import uim.platform.document_ai.presentation.http.controllers.capabilities;
-  import uim.platform.document_ai.presentation.http.controllers.health;
+  // import uim.platform.document_ai.presentation.http.controllers.health;
 }

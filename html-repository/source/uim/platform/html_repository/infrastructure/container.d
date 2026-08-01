@@ -41,13 +41,13 @@ mixin(ShowModule!());
 @safe:
 struct Container {
   // Repositories (driven adapters)
-  HtmlAppMemoryRepository appRepo;
-  AppVersionMemoryRepository versionRepo;
-  AppFileMemoryRepository fileRepo;
-  ServiceInstanceMemoryRepository instanceRepo;
-  DeploymentRecordMemoryRepository deploymentRepo;
-  AppRouteMemoryRepository routeRepo;
-  ContentCacheMemoryRepository cacheRepo;
+  IHtmlAppRepository appRepo;
+  IAppVersionRepository versionRepo;
+  IAppFileRepository fileRepo;
+  IServiceInstanceRepository instanceRepo;
+  IDeploymentRecordRepository deploymentRepo;
+  IAppRouteRepository routeRepo;
+  IContentCacheRepository cacheRepo;
 
   // Use cases (application layer)
   ManageHtmlAppsUseCase manageApps;
@@ -77,13 +77,13 @@ Container buildContainer(SrvConfig config) {
   Container c;
 
   // Infrastructure adapters
-  c.appRepo = new HtmlAppMemoryRepository();
-  c.versionRepo = new AppVersionMemoryRepository();
-  c.fileRepo = new AppFileMemoryRepository();
-  c.instanceRepo = new ServiceInstanceMemoryRepository();
-  c.deploymentRepo = new DeploymentRecordMemoryRepository();
-  c.routeRepo = new AppRouteMemoryRepository();
-  c.cacheRepo = new ContentCacheMemoryRepository();
+  c.appRepo = new HtmlAppRepository();
+  c.versionRepo = new AppVersionRepository();
+  c.fileRepo = new AppFileRepository();
+  c.instanceRepo = new ServiceInstanceRepository();
+  c.deploymentRepo = new DeploymentRecordRepository();
+  c.routeRepo = new AppRouteRepository();
+  c.cacheRepo = new ContentCacheRepository();
 
   // Application use cases
   c.manageApps = new ManageHtmlAppsUseCase(c.appRepo);
