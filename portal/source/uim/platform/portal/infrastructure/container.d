@@ -54,16 +54,16 @@ mixin(ShowModule!());
 /// Dependency injection container — wires all layers together.
 struct Container {
   // Repositories (driven adapters)
-  MemorySiteRepository siteRepo;
-  MemoryPageRepository pageRepo;
-  MemorySectionRepository sectionRepo;
-  MemoryTileRepository tileRepo;
-  MemoryCatalogRepository catalogRepo;
-  MemoryProviderRepository providerRepo;
-  MemoryRoleRepository roleRepo;
-  MemoryThemeRepository themeRepo;
-  MemoryMenuItemRepository menuItemRepo;
-  MemoryTranslationRepository translationRepo;
+  ISiteRepository siteRepo;
+  IPageRepository pageRepo;
+  ISectionRepository sectionRepo;
+  ITileRepository tileRepo;
+  ICatalogRepository catalogRepo;
+  IProviderRepository providerRepo;
+  IRoleRepository roleRepo;
+  IThemeRepository themeRepo;
+  IMenuItemRepository menuItemRepo;
+  ITranslationRepository translationRepo;
 
   // Use cases (application layer)
   ManageSitesUseCase manageSites;

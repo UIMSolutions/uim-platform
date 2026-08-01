@@ -40,14 +40,14 @@ mixin(ShowModule!());
 @safe:
 struct Container {
   // Repositories (driven adapters)
-  MemoryDocumentRepository documentRepo;
-  MemoryExtractionResultRepository extractionResultRepo;
-  MemorySchemaRepository schemaRepo;
-  MemoryTemplateRepository templateRepo;
-  MemoryDocumentTypeRepository documentTypeRepo;
-  MemoryEnrichmentDataRepository enrichmentDataRepo;
-  MemoryTrainingJobRepository trainingJobRepo;
-  MemoryClientRepository clientRepo;
+  IDocumentRepository documentRepo;
+  IExtractionResultRepository extractionResultRepo;
+  ISchemaRepository schemaRepo;
+  ITemplateRepository templateRepo;
+  IDocumentTypeRepository documentTypeRepo;
+  IEnrichmentDataRepository enrichmentDataRepo;
+  ITrainingJobRepository trainingJobRepo;
+  IClientRepository clientRepo;
 
   // Use cases (application layer)
   ProcessDocumentsUseCase processDocuments;

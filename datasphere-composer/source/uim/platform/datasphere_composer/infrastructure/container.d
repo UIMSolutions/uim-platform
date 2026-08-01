@@ -12,14 +12,14 @@ mixin(ShowModule!());
 @safe:
 struct Container {
   // Repositories
-  MemoryDataProviderRepository    dataProviderRepo;
-  MemoryDataProductRepository     dataProductRepo;
-  MemoryUnificationRuleRepository unificationRuleRepo;
-  MemoryDataSourceConfigRepository dataSourceConfigRepo;
-  MemoryAttributeMappingRepository attributeMappingRepo;
-  MemoryCustomerProfileRepository customerProfileRepo;
-  MemoryCompositionRunRepository  compositionRunRepo;
-  MemoryTenantUserRepository      tenantUserRepo;
+  IDataProviderRepository    dataProviderRepo;
+  IDataProductRepository     dataProductRepo;
+  IUnificationRuleRepository unificationRuleRepo;
+  IDataSourceConfigRepository dataSourceConfigRepo;
+  IAttributeMappingRepository attributeMappingRepo;
+  ICustomerProfileRepository customerProfileRepo;
+  ICompositionRunRepository  compositionRunRepo;
+  ITenantUserRepository      tenantUserRepo;
 
   // Use Cases
   ManageDataProvidersUseCase    dataProviders;

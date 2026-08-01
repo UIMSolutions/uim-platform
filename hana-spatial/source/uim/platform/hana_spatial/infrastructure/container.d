@@ -12,15 +12,15 @@ mixin(ShowModule!());
 @safe:
 struct Container {
   // Repositories (driven adapters)
-  MemoryGeocodingResultRepository geocodingResultRepo;
-  MemoryRouteRepository routeRepo;
-  MemoryPointOfInterestRepository poiRepo;
-  MemoryIsolineRepository isolineRepo;
-  MemoryGeofenceZoneRepository geofenceZoneRepo;
-  MemorySpatialLayerRepository spatialLayerRepo;
-  MemorySpatialFeatureRepository spatialFeatureRepo;
-  MemoryProviderRepository providerRepo;
-  MemoryGeocodingJobRepository geocodingJobRepo;
+  IGeocodingResultRepository geocodingResultRepo;
+  IRouteRepository routeRepo;
+  IPointOfInterestRepository poiRepo;
+  IIsolineRepository isolineRepo;
+  IGeofenceZoneRepository geofenceZoneRepo;
+  ISpatialLayerRepository spatialLayerRepo;
+  ISpatialFeatureRepository spatialFeatureRepo;
+  IProviderRepository providerRepo;
+  IGeocodingJobRepository geocodingJobRepo;
 
   // Use cases (application layer)
   ManageGeocodingResultsUseCase manageGeocodingResults;

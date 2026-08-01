@@ -46,16 +46,16 @@ mixin(ShowModule!());
 @safe:
 struct Container {
     // Repositories (driven adapters)
-    MemoryProcessRepository processRepo;
-    MemoryProcessInstanceRepository processInstanceRepo;
-    MemoryTaskRepository taskRepo;
-    MemoryDecisionRepository decisionRepo;
-    MemoryFormRepository formRepo;
-    MemoryAutomationRepository automationRepo;
-    MemoryTriggerRepository triggerRepo;
-    MemoryActionRepository actionRepo;
-    MemoryVisibilityRepository visibilityRepo;
-    MemoryArtifactRepository artifactRepo;
+    IProcessRepository processRepo;
+    IProcessInstanceRepository processInstanceRepo;
+    ITaskRepository taskRepo;
+    IDecisionRepository decisionRepo;
+    IFormRepository formRepo;
+    IAutomationRepository automationRepo;
+    ITriggerRepository triggerRepo;
+    IActionRepository actionRepo;
+    IVisibilityRepository visibilityRepo;
+    IArtifactRepository artifactRepo;
 
     // Use cases (application layer)
     ManageProcessesUseCase manageProcesses;

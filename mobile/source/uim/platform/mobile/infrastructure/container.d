@@ -54,18 +54,18 @@ import uim.platform.mobile;
 @safe:
 struct Container {
   // Repositories (driven adapters)
-  MemoryMobileAppRepository appRepo;
-  MemoryDeviceRegistrationRepository deviceRepo;
-  MemoryPushNotificationRepository pushNotifRepo;
-  MemoryPushRegistrationRepository pushRegRepo;
-  MemoryAppConfigurationRepository configRepo;
-  MemoryFeatureRestrictionRepository featureRepo;
-  MemoryClientResourceRepository resourceRepo;
-  MemoryAppVersionRepository versionRepo;
-  MemoryUsageReportRepository usageRepo;
-  MemoryOfflineStoreRepository offlineRepo;
-  MemoryUserSessionRepository sessionRepo;
-  MemoryClientLogRepository logRepo;
+  IMobileAppRepository appRepo;
+  IDeviceRegistrationRepository deviceRepo;
+  IPushNotificationRepository pushNotifRepo;
+  IPushRegistrationRepository pushRegRepo;
+  IAppConfigurationRepository configRepo;
+  IFeatureRestrictionRepository featureRepo;
+  IClientResourceRepository resourceRepo;
+  IAppVersionRepository versionRepo;
+  IUsageReportRepository usageRepo;
+  IOfflineStoreRepository offlineRepo;
+  IUserSessionRepository sessionRepo;
+  IClientLogRepository logRepo;
 
   // Use cases (application layer)
   ManageMobileAppsUseCase manageApps;

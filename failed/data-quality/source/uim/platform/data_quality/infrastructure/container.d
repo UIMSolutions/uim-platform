@@ -46,13 +46,13 @@ mixin(ShowModule!());
 /// Dependency injection container - wires all layers together.
 struct Container {
   // Repositories (driven adapters)
-  MemoryValidationRuleRepository validationRuleRepo;
-  MemoryValidationResultRepository validationResultRepo;
-  MemoryAddressRepository addressRepo;
-  MemoryMatchGroupRepository matchGroupRepo;
-  MemoryDataProfileRepository dataProfileRepo;
-  MemoryCleansingRuleRepository cleansingRuleRepo;
-  MemoryCleansingJobRepository cleansingJobRepo;
+  IValidationRuleRepository validationRuleRepo;
+  IValidationResultRepository validationResultRepo;
+  IAddressRepository addressRepo;
+  IMatchGroupRepository matchGroupRepo;
+  IDataProfileRepository dataProfileRepo;
+  ICleansingRuleRepository cleansingRuleRepo;
+  ICleansingJobRepository cleansingJobRepo;
 
   // Domain services
   ValidationEngine validationEngine;

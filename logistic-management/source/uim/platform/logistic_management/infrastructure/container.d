@@ -11,12 +11,12 @@ mixin(ShowModule!());
 @safe:
 struct Container {
   // Repositories
-  MemoryCarrierRepository        carrierRepo;
-  MemoryFreightOrderRepository   freightOrderRepo;
-  MemoryShipmentRepository       shipmentRepo;
-  MemoryDeliveryRepository       deliveryRepo;
-  MemoryWarehouseOrderRepository warehouseOrderRepo;
-  MemoryWarehouseTaskRepository  warehouseTaskRepo;
+  ICarrierRepository        carrierRepo;
+  IFreightOrderRepository   freightOrderRepo;
+  IShipmentRepository       shipmentRepo;
+  IDeliveryRepository       deliveryRepo;
+  IWarehouseOrderRepository warehouseOrderRepo;
+  IWarehouseTaskRepository  warehouseTaskRepo;
 
   // Domain services
   LogisticsPlanner logisticsPlanner;

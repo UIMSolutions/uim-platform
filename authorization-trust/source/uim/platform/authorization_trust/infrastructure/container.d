@@ -38,12 +38,12 @@ mixin(ShowModule!());
 @safe:
 struct Container {
   // Repositories (driven adapters)
-  MemoryOAuthClientRepository      oauthClientRepo;
-  MemoryScopeRepository            scopeRepo;
-  MemoryRoleRepository             roleRepo;
-  MemoryRoleCollectionRepository   roleCollectionRepo;
-  MemoryUserAssignmentRepository   userAssignmentRepo;
-  MemoryIdentityProviderRepository identityProviderRepo;
+  IOAuthClientRepository      oauthClientRepo;
+  IScopeRepository            scopeRepo;
+  IRoleRepository             roleRepo;
+  IRoleCollectionRepository   roleCollectionRepo;
+  IUserAssignmentRepository   userAssignmentRepo;
+  IIdentityProviderRepository identityProviderRepo;
 
   // Domain services
   TokenService tokenService;

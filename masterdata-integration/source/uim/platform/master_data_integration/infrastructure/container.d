@@ -47,14 +47,14 @@ mixin(ShowModule!());
 /// Dependency injection container — wires all layers together.
 struct Container {
   // Repositories (driven adapters)
-  MemoryMasterDataObjectRepository mdoRepo;
-  MemoryDataModelRepository dataModelRepo;
-  MemoryDistributionModelRepository distRepo;
-  MemoryKeyMappingRepository keyMapRepo;
-  MemoryChangeLogRepository changeLogRepo;
-  MemoryClientRepository clientRepo;
-  MemoryReplicationJobRepository replJobRepo;
-  MemoryFilterRuleRepository filterRuleRepo;
+  IMasterDataObjectRepository mdoRepo;
+  IDataModelRepository dataModelRepo;
+  IDistributionModelRepository distRepo;
+  IKeyMappingRepository keyMapRepo;
+  IChangeLogRepository changeLogRepo;
+  IClientRepository clientRepo;
+  IReplicationJobRepository replJobRepo;
+  IFilterRuleRepository filterRuleRepo;
 
   // Domain services
   KeyMappingResolver keyMapResolver;

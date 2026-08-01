@@ -35,12 +35,12 @@ mixin(ShowModule!());
 /// Dependency injection container - wires all layers together.
 struct Container {
   // Repositories (driven adapters)
-  MemoryDestinationRepository destinationRepo;
-  MemoryConnectorRepository connectorRepo;
-  MemoryChannelRepository channelRepo;
-  MemoryAccessRuleRepository accessRuleRepo;
-  MemoryCertificateRepository certificateRepo;
-  MemoryConnectivityLogRepository logRepo;
+  IDestinationRepository destinationRepo;
+  IConnectorRepository connectorRepo;
+  IChannelRepository channelRepo;
+  IAccessRuleRepository accessRuleRepo;
+  ICertificateRepository certificateRepo;
+  IConnectivityLogRepository logRepo;
 
   // Use cases (application layer)
   ManageDestinationsUseCase manageDestinations;

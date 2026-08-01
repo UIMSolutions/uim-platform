@@ -51,16 +51,15 @@ struct Container {
   
 
   // Repositories (driven adapters)
-  MemoryEnvironmentRepository envRepo;
-
-  MemoryNamespaceRepository nsRepo;
-  MemoryFunctionRepository fnRepo;
-  MemoryApiRuleRepository apiRuleRepo;
-  MemoryServiceInstanceRepository siRepo;
-  MemoryServiceBindingRepository sbRepo;
-  MemoryEventSubscriptionRepository eventSubRepo;
-  MemoryModuleRepository moduleRepo;
-  MemoryApplicationRepository appRepo;
+  IEnvironmentRepository envRepo;
+  INamespaceRepository nsRepo;
+  IFunctionRepository fnRepo;
+  IApiRuleRepository apiRuleRepo;
+  IServiceInstanceRepository siRepo;
+  IServiceBindingRepository sbRepo;
+  IEventSubscriptionRepository eventSubRepo;
+  IModuleRepository moduleRepo;
+  IApplicationRepository appRepo;
 
   // Domain services
   ModuleDependencyResolver depResolver;

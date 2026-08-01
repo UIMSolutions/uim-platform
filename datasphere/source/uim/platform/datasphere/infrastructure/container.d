@@ -44,15 +44,15 @@ mixin(ShowModule!());
 
 struct Container {
   // Repositories (driven adapters)
-  MemorySpaceRepository spaceRepo;
-  MemoryConnectionRepository connectionRepo;
-  MemoryRemoteTableRepository remoteTableRepo;
-  MemoryDataFlowRepository dataFlowRepo;
-  MemoryViewRepository viewRepo;
-  MemoryTaskRepository taskRepo;
-  MemoryTaskChainRepository taskChainRepo;
-  MemoryDataAccessControlRepository dataAccessControlRepo;
-  MemoryCatalogAssetRepository catalogAssetRepo;
+  ISpaceRepository spaceRepo;
+  IConnectionRepository connectionRepo;
+  IRemoteTableRepository remoteTableRepo;
+  IDataFlowRepository dataFlowRepo;
+  IViewRepository viewRepo;
+  ITaskRepository taskRepo;
+  ITaskChainRepository taskChainRepo;
+  IDataAccessControlRepository dataAccessControlRepo;
+  ICatalogAssetRepository catalogAssetRepo;
 
   // Use cases (application layer)
   ManageSpacesUseCase manageSpaces;

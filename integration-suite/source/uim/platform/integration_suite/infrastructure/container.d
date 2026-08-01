@@ -8,15 +8,15 @@ mixin(ShowModule!());
 /// Dependency injection container — wires all architecture layers together.
 struct Container {
   // --- Repositories (driven adapters / infrastructure) ---
-  MemoryIntegrationPackageRepository packageRepo;
-  MemoryIntegrationFlowRepository    flowRepo;
-  MemoryApiProxyRepository           apiProxyRepo;
-  MemoryApiProductRepository         apiProductRepo;
-  MemoryMessageQueueRepository       queueRepo;
-  MemoryTopicSubscriptionRepository  subscriptionRepo;
-  MemoryTradingPartnerRepository     partnerRepo;
-  MemoryMessageMappingRepository     mappingRepo;
-  MemoryIntegrationUserRepository    userRepo;
+  IIntegrationPackageRepository packageRepo;
+  IIntegrationFlowRepository    flowRepo;
+  IApiProxyRepository           apiProxyRepo;
+  IApiProductRepository         apiProductRepo;
+  IMessageQueueRepository       queueRepo;
+  ITopicSubscriptionRepository  subscriptionRepo;
+  ITradingPartnerRepository     partnerRepo;
+  IMessageMappingRepository     mappingRepo;
+  IIntegrationUserRepository    userRepo;
 
   // --- Use cases (application layer) ---
   ManageIntegrationPackagesUseCase managePackages;

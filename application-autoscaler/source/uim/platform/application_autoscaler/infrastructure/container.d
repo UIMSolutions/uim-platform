@@ -38,10 +38,10 @@ mixin(ShowModule!());
 @safe: 
 struct Container {
   // Repositories (driven adapters)
-  MemoryScalingPolicyRepository  policyRepo;
-  MemoryAppBindingRepository     bindingRepo;
-  MemoryCustomMetricRepository   customMetricRepo;
-  MemoryScalingHistoryRepository historyRepo;
+  IScalingPolicyRepository  policyRepo;
+  IAppBindingRepository     bindingRepo;
+  ICustomMetricRepository   customMetricRepo;
+  IScalingHistoryRepository historyRepo;
 
   // Domain services
   ScalingEvaluatorService evaluator;

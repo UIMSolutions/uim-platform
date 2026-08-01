@@ -62,18 +62,18 @@ struct Container {
   PromptEnricher promptEnricher;
 
   // Repositories (driven adapters)
-  MemoryConnectionRepository connectionRepo;
-  MemoryWorkspaceRepository workspaceRepo;
-  MemoryScenarioRepository scenarioRepo;
-  MemoryConfigurationRepository configurationRepo;
-  MemoryExecutionRepository executionRepo;
-  MemoryDeploymentRepository deploymentRepo;
-  MemoryModelRepository modelRepo;
-  MemoryDatasetRepository datasetRepo;
-  MemoryPromptRepository promptRepo;
-  MemoryPromptCollectionRepository promptCollectionRepo;
-  MemoryResourceGroupRepository resourceGroupRepo;
-  MemoryUsageStatisticRepository usageStatisticRepo;
+  IConnectionRepository connectionRepo;
+  IWorkspaceRepository workspaceRepo;
+  IScenarioRepository scenarioRepo;
+  IConfigurationRepository configurationRepo;
+  IExecutionRepository executionRepo;
+  IDeploymentRepository deploymentRepo;
+  IModelRepository modelRepo;
+  IDatasetRepository datasetRepo;
+  IPromptRepository promptRepo;
+  IPromptCollectionRepository promptCollectionRepo;
+  IResourceGroupRepository resourceGroupRepo;
+  IUsageStatisticRepository usageStatisticRepo;
 
   // Use cases (application layer)
   ManageConnectionsUseCase manageConnections;

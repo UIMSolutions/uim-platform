@@ -12,14 +12,14 @@ mixin(ShowModule!());
 @safe:
 struct Container {
     // Repositories (driven adapters)
-    MemorySituationTemplateRepository templateRepo;
-    MemorySituationInstanceRepository instanceRepo;
-    MemorySituationActionRepository actionRepo;
-    MemoryAutomationRuleRepository ruleRepo;
-    MemoryEntityTypeRepository entityTypeRepo;
-    MemoryDataContextRepository dataContextRepo;
-    MemoryNotificationRepository notificationRepo;
-    MemoryDashboardRepository dashboardRepo;
+    ISituationTemplateRepository templateRepo;
+    ISituationInstanceRepository instanceRepo;
+    ISituationActionRepository actionRepo;
+    IAutomationRuleRepository ruleRepo;
+    IEntityTypeRepository entityTypeRepo;
+    IDataContextRepository dataContextRepo;
+    INotificationRepository notificationRepo;
+    IDashboardRepository dashboardRepo;
 
     // Use cases (application layer)
     ManageSituationTemplatesUseCase manageTemplates;

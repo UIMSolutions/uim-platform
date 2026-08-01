@@ -8,16 +8,16 @@ mixin(ShowModule!());
 /// DI container — wires all architecture layers together.
 struct Container {
   // --- Repositories (driven adapters) ---
-  MemoryWorkspaceRepository    workspaceRepo;
-  MemoryClusterRepository      clusterRepo;
-  MemoryNotebookRepository     notebookRepo;
-  MemoryJobRepository          jobRepo;
-  MemoryJobRunRepository       jobRunRepo;
-  MemoryDeltaTableRepository   deltaTableRepo;
-  MemoryDataProductRepository  dataProductRepo;
-  MemoryMlExperimentRepository mlExperimentRepo;
-  MemoryMlModelRepository      mlModelRepo;
-  MemorySqlWarehouseRepository sqlWarehouseRepo;
+  IWorkspaceRepository    workspaceRepo;
+  IClusterRepository      clusterRepo;
+  INotebookRepository     notebookRepo;
+  IJobRepository          jobRepo;
+  IJobRunRepository       jobRunRepo;
+  IDeltaTableRepository   deltaTableRepo;
+  IDataProductRepository  dataProductRepo;
+  IMlExperimentRepository mlExperimentRepo;
+  IMlModelRepository      mlModelRepo;
+  ISqlWarehouseRepository sqlWarehouseRepo;
 
   // --- Use cases (application layer) ---
   ManageWorkspacesUseCase    manageWorkspaces;

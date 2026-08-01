@@ -5,14 +5,14 @@ mixin(ShowModule!());
 @safe:
 struct Container {
   // Repositories
-  MemorySnowflakeAccountRepository   accountRepo;
-  MemoryZerocopyConnectorRepository  connectorRepo;
-  MemorySnowflakeWarehouseRepository warehouseRepo;
-  MemorySnowflakeDatabaseRepository  databaseRepo;
-  MemoryDataProductShareRepository   shareRepo;
-  MemorySnowflakeRoleRepository      roleRepo;
-  MemorySnowflakeTenantUserRepository tenantUserRepo;
-  MemoryProvisioningRequestRepository provisioningRepo;
+  ISnowflakeAccountRepository   accountRepo;
+  IZerocopyConnectorRepository  connectorRepo;
+  ISnowflakeWarehouseRepository warehouseRepo;
+  ISnowflakeDatabaseRepository  databaseRepo;
+  IDataProductShareRepository   shareRepo;
+  ISnowflakeRoleRepository      roleRepo;
+  ISnowflakeTenantUserRepository tenantUserRepo;
+  IProvisioningRequestRepository provisioningRepo;
 
   // Use Cases
   ManageSnowflakeAccountsUseCase    accounts;

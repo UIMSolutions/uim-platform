@@ -13,14 +13,14 @@ mixin(ShowModule!());
 
 struct Container {
     // Repositories (driven adapters)
-    MemoryDataSubjectRepository subjectRepo;
-    MemoryDataSubjectRequestRepository requestRepo;
-    MemoryPersonalDataRecordRepository recordRepo;
-    MemoryRegisteredApplicationRepository appRepo;
-    MemoryProcessingPurposeRepository purposeRepo;
-    MemoryConsentRecordRepository consentRepo;
-    MemoryRetentionRuleRepository retentionRepo;
-    MemoryDataProcessingLogRepository logRepo;
+    IDataSubjectRepository subjectRepo;
+    IDataSubjectRequestRepository requestRepo;
+    IPersonalDataRecordRepository recordRepo;
+    IRegisteredApplicationRepository appRepo;
+    IProcessingPurposeRepository purposeRepo;
+    IConsentRecordRepository consentRepo;
+    IRetentionRuleRepository retentionRepo;
+    IDataProcessingLogRepository logRepo;
 
     // Use cases (application layer)
     ManageDataSubjectsUseCase manageSubjects;

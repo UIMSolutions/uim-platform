@@ -81,27 +81,27 @@ mixin(ShowModule!());
 /// Dependency injection container — wires all layers together.
 struct Container {
   // Repositories (driven adapters)
-  MemoryDataSubjectRepository dataSubjectRepo;
-  MemoryPersonalDataModelRepository personalDataModelRepo;
-  MemoryDeletionRequestRepository deletionRequestRepo;
-  MemoryBlockingRequestRepository blockingRequestRepo;
-  MemoryLegalGroundRepository legalGroundRepo;
-  MemoryRetentionRuleRepository retentionRuleRepo;
-  MemoryConsentRecordRepository consentRecordRepo;
-  MemoryDataRetrievalRequestRepository dataRetrievalRepo;
-  MemoryDataControllerRepository dataControllerRepo;
-  MemoryDataControllerGroupRepository dataControllerGroupRepo;
-  MemoryBusinessContextRepository businessContextRepo;
-  MemoryBusinessProcessRepository businessProcessRepo;
-  MemoryBusinessSubprocessRepository businessSubprocessRepo;
-  MemoryCorrectionRequestRepository correctionRequestRepo;
-  MemoryArchiveRequestRepository archiveRequestRepo;
-  MemoryDestructionRequestRepository destructionRequestRepo;
-  MemoryPurposeRecordRepository purposeRecordRepo;
-  MemoryConsentPurposeRepository consentPurposeRepo;
-  MemoryRuleSetRepository ruleSetRepo;
-  MemoryInformationReportRepository informationReportRepo;
-  MemoryAnonymizationConfigRepository anonymizationConfigRepo;
+  IDataSubjectRepository dataSubjectRepo;
+  IPersonalDataModelRepository personalDataModelRepo;
+  IDeletionRequestRepository deletionRequestRepo;
+  IBlockingRequestRepository blockingRequestRepo;
+  ILegalGroundRepository legalGroundRepo;
+  IRetentionRuleRepository retentionRuleRepo;
+  IConsentRecordRepository consentRecordRepo;
+  IDataRetrievalRequestRepository dataRetrievalRepo;
+  IDataControllerRepository dataControllerRepo;
+  IDataControllerGroupRepository dataControllerGroupRepo;
+  IBusinessContextRepository businessContextRepo;
+  IBusinessProcessRepository businessProcessRepo;
+  IBusinessSubprocessRepository businessSubprocessRepo;
+  ICorrectionRequestRepository correctionRequestRepo;
+  IArchiveRequestRepository archiveRequestRepo;
+  IDestructionRequestRepository destructionRequestRepo;
+  IPurposeRecordRepository purposeRecordRepo;
+  IConsentPurposeRepository consentPurposeRepo;
+  IRuleSetRepository ruleSetRepo;
+  IInformationReportRepository informationReportRepo;
+  IAnonymizationConfigRepository anonymizationConfigRepo;
 
   // Use cases (application layer)
   ManageDataSubjectsUseCase manageDataSubjects;

@@ -8,16 +8,16 @@ mixin(ShowModule!());
 
 struct Container {
     // Repositories (driven adapters)
-    MemoryBusinessPurposeRepository businessPurposeRepo;
-    MemoryLegalGroundRepository legalGroundRepo;
-    MemoryRetentionRuleRepository retentionRuleRepo;
-    MemoryResidenceRuleRepository residenceRuleRepo;
-    MemoryDataSubjectRepository dataSubjectRepo;
-    MemoryDeletionRequestRepository deletionRequestRepo;
-    MemoryArchivingJobRepository archivingJobRepo;
-    MemoryApplicationGroupRepository applicationGroupRepo;
-    MemoryLegalEntityRepository legalEntityRepo;
-    MemoryDataSubjectRoleRepository dataSubjectRoleRepo;
+    IBusinessPurposeRepository businessPurposeRepo;
+    ILegalGroundRepository legalGroundRepo;
+    IRetentionRuleRepository retentionRuleRepo;
+    IResidenceRuleRepository residenceRuleRepo;
+    IDataSubjectRepository dataSubjectRepo;
+    IDeletionRequestRepository deletionRequestRepo;
+    IArchivingJobRepository archivingJobRepo;
+    IApplicationGroupRepository applicationGroupRepo;
+    ILegalEntityRepository legalEntityRepo;
+    IDataSubjectRoleRepository dataSubjectRoleRepo;
 
     // Use cases (application layer)
     ManageBusinessPurposesUseCase manageBusinessPurposes;

@@ -44,13 +44,13 @@ mixin(ShowModule!());
 @safe:/// Dependency injection container - wires all layers together.
 struct Container {
   // Repositories (driven adapters)
-  MemoryDatasetRepository datasetRepo;
-  DataRecordRepository recordRepo;
-  MemoryModelConfigRepository configRepo;
-  MemoryTrainingJobRepository jobRepo;
-  MemoryDeploymentRepository deploymentRepo;
-  MemoryInferenceRequestRepository inferenceRequestRepo;
-  MemoryInferenceResultRepository inferenceResultRepo;
+  IDatasetRepository datasetRepo;
+  IDataRecordRepository recordRepo;
+  IModelConfigRepository configRepo;
+  ITrainingJobRepository jobRepo;
+  IDeploymentRepository deploymentRepo;
+  IInferenceRequestRepository inferenceRequestRepo;
+  IInferenceResultRepository inferenceResultRepo;
 
   // Domain services
   ModelTrainer modelTrainer;

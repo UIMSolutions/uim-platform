@@ -35,11 +35,11 @@ mixin(ShowModule!());
 @safe:
 struct Container {
   // Repositories (driven adapters)
-  MemoryNamespaceRepository nsRepo;
-  MemoryCredentialRepository credRepo;
-  MemoryKeyringVersionRepository versionRepo;
-  MemoryServiceBindingRepository bindingRepo;
-  MemoryAuditLogRepository auditRepo;
+  INamespaceRepository nsRepo;
+  ICredentialRepository credRepo;
+  IKeyringVersionRepository versionRepo;
+  IServiceBindingRepository bindingRepo;
+  IAuditLogRepository auditRepo;
 
   // Use cases (application layer)
   ManageNamespacesUseCase manageNamespaces;

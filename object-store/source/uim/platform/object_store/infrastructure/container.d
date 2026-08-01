@@ -40,13 +40,13 @@ mixin(ShowModule!());
 /// Dependency injection container - wires all layers together.
 struct Container {
   // Repositories (driven adapters)
-  MemoryBucketRepository bucketRepo;
-  MemoryStorageObjectRepository objectRepo;
-  MemoryObjectVersionRepository versionRepo;
-  MemoryAccessPolicyRepository policyRepo;
-  MemoryLifecycleRuleRepository lifecycleRepo;
-  MemoryCorsRuleRepository corsRepo;
-  MemoryServiceBindingRepository bindingRepo;
+  IBucketRepository bucketRepo;
+  IStorageObjectRepository objectRepo;
+  IObjectVersionRepository versionRepo;
+  IAccessPolicyRepository policyRepo;
+  ILifecycleRuleRepository lifecycleRepo;
+  ICorsRuleRepository corsRepo;
+  IServiceBindingRepository bindingRepo;
 
   // Use cases (application layer)
   ManageBucketsUseCase manageBuckets;

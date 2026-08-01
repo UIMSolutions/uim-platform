@@ -39,14 +39,13 @@ mixin(ShowModule!());
 /// Dependency injection container - wires all layers together.
 struct Container {
   // Repositories (driven adapters)
-  MemoryContentPackageRepository packageRepo;
-
-  MemoryContentProviderRepository providerRepo;
-  MemoryTransportRequestRepository transportRequestRepo;
-  MemoryExportJobRepository exportJobRepo;
-  MemoryImportJobRepository importJobRepo;
-  MemoryTransportQueueRepository queueRepo;
-  MemoryContentActivityRepository activityRepo;
+  IContentPackageRepository packageRepo;
+  IContentProviderRepository providerRepo;
+  ITransportRequestRepository transportRequestRepo;
+  IExportJobRepository exportJobRepo;
+  IImportJobRepository importJobRepo;
+  ITransportQueueRepository queueRepo;
+  IContentActivityRepository activityRepo;
 
   // Use cases (application layer)
   ManageContentPackagesUseCase managePackages;

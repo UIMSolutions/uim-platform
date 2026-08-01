@@ -50,16 +50,16 @@ mixin(ShowModule!());
 
 struct Container {
   // Repositories (driven adapters)
-  MemoryLogEntryRepository logEntryRepo;
-  MemoryLogStreamRepository logStreamRepo;
-  MemorySpanRepository spanRepo;
-  MemoryDashboardRepository dashboardRepo;
-  MemoryRetentionPolicyRepository retentionRepo;
-  MemoryAlertRuleRepository alertRuleRepo;
-  MemoryAlertRepository alertRepo;
-  MemoryNotificationChannelRepository channelRepo;
-  MemoryPipelineRepository pipelineRepo;
-  MemoryIngestionTokenRepository tokenRepo;
+  ILogEntryRepository logEntryRepo;
+  ILogStreamRepository logStreamRepo;
+  ISpanRepository spanRepo;
+  IDashboardRepository dashboardRepo;
+  IRetentionPolicyRepository retentionRepo;
+  IAlertRuleRepository alertRuleRepo;
+  IAlertRepository alertRepo;
+  INotificationChannelRepository channelRepo;
+  IPipelineRepository pipelineRepo;
+  IIngestionTokenRepository tokenRepo;
 
   // Use cases (application layer)
   IngestLogsUseCase ingestLogs;
