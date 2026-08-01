@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — menu item persistence.
-interface MenuItemRepository : ITenantRepository!(MenuItem, MenuItemId) {
+interface IMenuItemRepository : ITenantRepository!(MenuItem, MenuItemId) {
 
   bool existsById(TenantId tenantId, MenuItemId id);
   MenuItem findById(TenantId tenantId, MenuItemId id);

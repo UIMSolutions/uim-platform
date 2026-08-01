@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — content provider persistence.
-interface ProviderRepository : ITenantRepository!(ContentProvider, ProviderId) {
+interface IProviderRepository : ITenantRepository!(ContentProvider, ProviderId) {
 
   bool existsByName(string name);
   ContentProvider findByName(string name);

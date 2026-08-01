@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port for persisting address records.
-interface AddressRepository : ITenantRepository!(AddressRecord, AddressId) {
+interface IAddressRepository : ITenantRepository!(AddressRecord, AddressId) {
 
   size_t countBySourceRecord(TenantId tenantId, RecordId sourceRecordId);
   AddressRecord[] findBySourceRecord(TenantId tenantId, RecordId sourceRecordId);

@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — API rule persistence.
-interface ApiRuleRepository : ITenantRepository!(ApiRule, ApiRuleId) {
+interface IApiRuleRepository : ITenantRepository!(ApiRule, ApiRuleId) {
 
   bool existsByName(TenantId tenantId, NamespaceId nsId, string name);
   ApiRule findByName(TenantId tenantId, NamespaceId nsId, string name);

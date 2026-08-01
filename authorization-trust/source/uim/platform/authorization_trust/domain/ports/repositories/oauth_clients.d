@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface OAuthClientRepository : ITenantRepository!(OAuthClient, OAuthClientId) {
+interface IOAuthClientRepository : ITenantRepository!(OAuthClient, OAuthClientId) {
 
   size_t countByApp(TenantId tenantId, string appId);
   OAuthClient[] findByApp(TenantId tenantId, string appId);

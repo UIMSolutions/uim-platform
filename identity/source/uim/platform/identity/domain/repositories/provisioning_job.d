@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ProvisioningJobRepository : ITenantRepository!(ProvisioningJob, ProvisioningJobId) {
+interface IProvisioningJobRepository : ITenantRepository!(ProvisioningJob, ProvisioningJobId) {
 
     ProvisioningJob[] findByStatus(TenantId tenantId, JobStatus status);
     ProvisioningJob[] findByType(TenantId tenantId, JobType type_);

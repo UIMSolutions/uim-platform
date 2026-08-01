@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing - access rule persistence.
-interface AccessRuleRepository : ITenantRepository!(AccessRule, RuleId) {
+interface IAccessRuleRepository : ITenantRepository!(AccessRule, RuleId) {
   
   size_t countByConnector(TenantId tenantId, ConnectorId connectorId);
   AccessRule[] findByConnector(TenantId tenantId, ConnectorId connectorId);

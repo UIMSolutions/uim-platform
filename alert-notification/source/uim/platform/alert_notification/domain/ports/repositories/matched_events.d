@@ -11,6 +11,6 @@ mixin(ShowModule!());
 
 @safe:
 
-interface MatchedEventRepository : ITenantRepository!(MatchedEvent, MatchedEventId) {
+interface IMatchedEventRepository : ITenantRepository!(MatchedEvent, MatchedEventId) {
     MatchedEvent[] findBySubscription(TenantId tenantId, string subscriptionName);
 }

@@ -11,4 +11,4 @@ mixin(ShowModule!());
 
 @safe:
 
-interface MtaRepository : ITenantRepository!(Mta, MtaId) {}
+interface IMtaRepository : ITenantRepository!(Mta, MtaId) {}

@@ -10,7 +10,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ObservationRepository : ITenantRepository!(Observation, ObservationId) {
+interface IObservationRepository : ITenantRepository!(Observation, ObservationId) {
   bool existsById(TenantId tenantId, ObservationId id);
   Observation findById(TenantId tenantId, ObservationId id);
   void removeById(TenantId tenantId, ObservationId id);

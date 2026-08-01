@@ -10,7 +10,7 @@ import uim.platform.usage_data;
 mixin(ShowModule!());
 @safe:
 /// Port: outgoing repository interface for MonthlyCostReport persistence.
-interface MonthlyCostReportRepository
+interface IMonthlyCostReportRepository
     : ITenantRepository!(MonthlyCostReport, MonthlyCostReportId) {
 
   MonthlyCostReport[] findByGlobalAccount(TenantId tenantId, string globalAccountId);

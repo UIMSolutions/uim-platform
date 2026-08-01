@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ProjectMemberRepository : ITenantRepository!(ProjectMember, ProjectMemberId) {
+interface IProjectMemberRepository : ITenantRepository!(ProjectMember, ProjectMemberId) {
 
     size_t countByApplication(TenantId tenantId, ApplicationId applicationId);
     ProjectMember[] findByApplication(TenantId tenantId, ApplicationId applicationId);

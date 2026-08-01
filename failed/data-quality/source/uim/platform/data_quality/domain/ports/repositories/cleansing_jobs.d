@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port for persisting cleansing job records.
-interface CleansingJobRepository : ITenantRepository!(CleansingJob, CleansingJobId) {
+interface ICleansingJobRepository : ITenantRepository!(CleansingJob, CleansingJobId) {
 
   size_t countByDataset(TenantId tenantId, DatasetId datasetId);
   CleansingJob[] findByDataset(TenantId tenantId, DatasetId datasetId);

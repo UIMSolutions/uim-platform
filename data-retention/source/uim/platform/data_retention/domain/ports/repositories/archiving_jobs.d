@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ArchivingJobRepository : ITenantRepository!(ArchivingJob, ArchivingJobId) {
+interface IArchivingJobRepository : ITenantRepository!(ArchivingJob, ArchivingJobId) {
     
     ArchivingJob[] findByApplicationGroup(TenantId tenantId, ApplicationGroupId groupId);
     ArchivingJob[] findByStatus(TenantId tenantId, ArchivingJobStatus status);

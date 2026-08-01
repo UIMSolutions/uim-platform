@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface CacheEntryRepository : ITenantRepository!(CacheEntry, CacheEntryId) {
+interface ICacheEntryRepository : ITenantRepository!(CacheEntry, CacheEntryId) {
     CacheEntry[] findByInstance(TenantId tenantId, ServiceInstanceId instanceId);
     CacheEntry   findByKey(TenantId tenantId, ServiceInstanceId instanceId, string key);
     CacheEntry[] findByType(TenantId tenantId, ServiceInstanceId instanceId, CacheEntryType entryType);

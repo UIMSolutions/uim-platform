@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ProjectRepository : ITenantRepository!(Project, ProjectId) {
+interface IProjectRepository : ITenantRepository!(Project, ProjectId) {
 
     size_t countByDevSpace(TenantId tenantId, DevSpaceId devSpaceId);
     Project[] findByDevSpace(TenantId tenantId, DevSpaceId devSpaceId);

@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — external application connectivity persistence.
-interface ApplicationRepository : ITenantRepository!(Application, ApplicationId) {
+interface IApplicationRepository : ITenantRepository!(Application, ApplicationId) {
 
   bool existsByName(KymaEnvironmentId envId, string name);
   Application findByName(KymaEnvironmentId envId, string name);

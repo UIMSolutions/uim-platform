@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface MessageClientRepository : ITenantRepository!(MessageClient, MessageClientId) {
+interface IMessageClientRepository : ITenantRepository!(MessageClient, MessageClientId) {
     size_t countByService(TenantId tenantId, MessagingServiceId serviceId);
     MessageClient[] findByService(TenantId tenantId, MessagingServiceId serviceId);
     MessageClient[] findByStatus(TenantId tenantId, MessageClientStatus status);

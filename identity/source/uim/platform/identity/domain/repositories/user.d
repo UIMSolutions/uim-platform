@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface UserRepository : ITenantRepository!(User, UserId) {
+interface IUserRepository : ITenantRepository!(User, UserId) {
 
     User findByUserName(TenantId tenantId, string userName);
     User findByEmail(TenantId tenantId, string email);

@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface MlModelRepository : TenantRepository!(MlModel, MlModelId) {
+interface IMlModelRepository : TenantRepository!(MlModel, MlModelId) {
   MlModel[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId);
   MlModel[] findByStage(TenantId tenantId, ModelStage stage);
   MlModel   findByName(TenantId tenantId, string name);

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface PrintQueueRepository : ITenantRepository!(PrintQueue, PrintQueueId) {
+interface IPrintQueueRepository : ITenantRepository!(PrintQueue, PrintQueueId) {
     PrintQueue[] findByStatus(TenantId tenantId, PrintQueueStatus status);
     PrintQueue[] findByPrinter(TenantId tenantId, PrinterId printerId);
     PrintQueue findDefault(TenantId tenantId);

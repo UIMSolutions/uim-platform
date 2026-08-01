@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface CatalogRepository : ITenantRepository!(Catalog, CatalogId) {
+interface ICatalogRepository : ITenantRepository!(Catalog, CatalogId) {
 
     size_t countByStatus(TenantId tenantId, CatalogStatus status);
     Catalog[] findByStatus(TenantId tenantId, CatalogStatus status);

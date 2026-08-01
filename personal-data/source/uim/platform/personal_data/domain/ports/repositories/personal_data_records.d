@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface PersonalDataRecordRepository : ITenantRepository!(PersonalDataRecord, PersonalDataRecordId) {
+interface IPersonalDataRecordRepository : ITenantRepository!(PersonalDataRecord, PersonalDataRecordId) {
 
     size_t countByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
     PersonalDataRecord[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);

@@ -11,7 +11,7 @@ import uim.platform.mobile;
 
 @safe:
 
-interface UserSessionRepository : ITenantRepository!(UserSession, UserSessionId) {
+interface IUserSessionRepository : ITenantRepository!(UserSession, UserSessionId) {
 
   size_t countByUser(TenantId tenantId, UserId userId);
   UserSession[] findByUser(TenantId tenantId, UserId userId);

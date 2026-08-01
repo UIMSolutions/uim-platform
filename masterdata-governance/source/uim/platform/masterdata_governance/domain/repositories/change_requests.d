@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ChangeRequestRepository : ITenantRepository!(ChangeRequest, ChangeRequestId) {
+interface IChangeRequestRepository : ITenantRepository!(ChangeRequest, ChangeRequestId) {
 
     size_t countByStatus(TenantId tenantId, ChangeRequestStatus status);
     ChangeRequest[] findByStatus(TenantId tenantId, ChangeRequestStatus status);

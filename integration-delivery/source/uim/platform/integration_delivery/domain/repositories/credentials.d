@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface CredentialRepository : ITenantRepository!(Credential, CredentialId) {
+interface ICredentialRepository : ITenantRepository!(Credential, CredentialId) {
     Credential[] findByStatus(TenantId tenantId, CredentialStatus status);
     Credential[] findByType(TenantId tenantId, CredentialType credentialType);
     bool nameExists(TenantId tenantId, string name);

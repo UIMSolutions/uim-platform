@@ -10,7 +10,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ConditionRepository : ITenantRepository!(Condition, ConditionId) {
+interface IConditionRepository : ITenantRepository!(Condition, ConditionId) {
   bool existsById(TenantId tenantId, ConditionId id);
   Condition findById(TenantId tenantId, ConditionId id);
   void removeById(TenantId tenantId, ConditionId id);

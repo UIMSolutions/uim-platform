@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface CustomerRepository : ITenantRepository!(Customer, CustomerId) {
+interface ICustomerRepository : ITenantRepository!(Customer, CustomerId) {
     Customer findByEmail(TenantId tenantId, string email);
     Customer findByPhone(TenantId tenantId, string phone);
     Customer[] findByStatus(TenantId tenantId, CustomerStatus status);

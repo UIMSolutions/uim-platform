@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface PrinterRepository : ITenantRepository!(Printer, PrinterId) {
+interface IPrinterRepository : ITenantRepository!(Printer, PrinterId) {
     Printer[] findByStatus(TenantId tenantId, PrinterStatus status);
     Printer[] findByClient(TenantId tenantId, PrintClientId clientId);
     Printer[] findByProtocol(TenantId tenantId, PrinterProtocol protocol);

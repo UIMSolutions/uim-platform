@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ApplicationGroupRepository : ITenantRepository!(ApplicationGroup, ApplicationGroupId) {
+interface IApplicationGroupRepository : ITenantRepository!(ApplicationGroup, ApplicationGroupId) {
 
     ApplicationGroup[] findActive(TenantId tenantId);
 

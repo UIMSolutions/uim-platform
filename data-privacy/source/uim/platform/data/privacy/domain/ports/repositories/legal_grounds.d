@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port for persisting legal grounds for data processing.
-interface LegalGroundRepository : ITenantRepository!(LegalGround, LegalGroundId) {
+interface ILegalGroundRepository : ITenantRepository!(LegalGround, LegalGroundId) {
 
   size_t countByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
   LegalGround[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);

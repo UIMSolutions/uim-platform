@@ -10,7 +10,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface OrganizationRepository : ITenantRepository!(Organization, OrganizationId) {
+interface IOrganizationRepository : ITenantRepository!(Organization, OrganizationId) {
   bool existsById(TenantId tenantId, OrganizationId id);
   Organization findById(TenantId tenantId, OrganizationId id);
   void removeById(TenantId tenantId, OrganizationId id);

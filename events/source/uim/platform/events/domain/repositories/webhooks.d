@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface WebhookRepository : ITenantRepository!(Webhook, WebhookId) {
+interface IWebhookRepository : ITenantRepository!(Webhook, WebhookId) {
     size_t countByService(TenantId tenantId, MessagingServiceId serviceId);
     Webhook[] findByService(TenantId tenantId, MessagingServiceId serviceId);
     Webhook[] findByStatus(TenantId tenantId, WebhookStatus status);

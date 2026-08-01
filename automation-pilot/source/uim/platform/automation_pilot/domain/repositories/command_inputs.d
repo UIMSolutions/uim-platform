@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface CommandInputRepository : ITenantRepository!(CommandInput, CommandInputId) {
+interface ICommandInputRepository : ITenantRepository!(CommandInput, CommandInputId) {
 
     size_t countByType(TenantId tenantId, InputType inputType);    
     CommandInput[] findByType(TenantId tenantId, InputType inputType);

@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing - content activity (audit log) persistence.
-interface ContentActivityRepository : ITenantRepository!(ContentActivity, ContentActivityId) {
+interface IContentActivityRepository : ITenantRepository!(ContentActivity, ContentActivityId) {
   
   size_t countByEntity(TenantId tenantId, string entityId);
   ContentActivity[] findByEntity(TenantId tenantId, string entityId);

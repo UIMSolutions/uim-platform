@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface CicdRepositoryRepository : ITenantRepository!(CicdRepository, CicdRepositoryId) {
+interface ICicdRepositoryRepository : ITenantRepository!(CicdRepository, CicdRepositoryId) {
     CicdRepository[] findByStatus(TenantId tenantId, RepositoryStatus status);
     CicdRepository[] findByType(TenantId tenantId, RepositoryType repositoryType);
     CicdRepository findByUrl(TenantId tenantId, string url);

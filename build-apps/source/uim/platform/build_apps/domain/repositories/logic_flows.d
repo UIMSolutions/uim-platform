@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface LogicFlowRepository : ITenantRepository!(LogicFlow, LogicFlowId) {
+interface ILogicFlowRepository : ITenantRepository!(LogicFlow, LogicFlowId) {
 
     size_t countByApplication(TenantId tenantId, ApplicationId applicationId);
     LogicFlow[] findByApplication(TenantId tenantId, ApplicationId applicationId);

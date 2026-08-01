@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port for persisting and querying consent purpose configurations.
-interface ConsentPurposeRepository : ITenantRepository!(ConsentPurpose, ConsentPurposeId) {
+interface IConsentPurposeRepository : ITenantRepository!(ConsentPurpose, ConsentPurposeId) {
   
   size_t countByController(TenantId tenantId, DataControllerId controllerId);
   ConsentPurpose[] findByController(TenantId tenantId, DataControllerId controllerId);

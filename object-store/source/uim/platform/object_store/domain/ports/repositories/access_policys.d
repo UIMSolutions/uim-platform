@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing - access policy persistence.
-interface AccessPolicyRepository : ITenantRepository!(AccessPolicy, AccessPolicyId) {
+interface IAccessPolicyRepository : ITenantRepository!(AccessPolicy, AccessPolicyId) {
 
   size_t countByBucket(TenantId tenantId, BucketId bucketId);
   AccessPolicy[] findByBucket(TenantId tenantId, BucketId bucketId);

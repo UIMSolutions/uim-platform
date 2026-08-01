@@ -3,7 +3,7 @@ module uim.platform.analytics.domain.ports.repositories.asset_repository;
 import uim.platform.analytics.domain.entities.insight_asset;
 import uim.platform.analytics.domain.types;
 
-interface AssetRepository {
+interface IAssetRepository {
   AssetId save(InsightAsset asset);
   bool update(InsightAsset asset);
   bool remove(TenantId tenantId, AssetId id);

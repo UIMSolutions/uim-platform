@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port for persisting validation results.
-interface ValidationResultRepository : ITenantRepository!(ValidationResult, ValidationResultId) {
+interface IValidationResultRepository : ITenantRepository!(ValidationResult, ValidationResultId) {
 
   bool existsByRecord(TenantId tenantId, RecordId recordId);
   ValidationResult findByRecord(TenantId tenantId, RecordId recordId);

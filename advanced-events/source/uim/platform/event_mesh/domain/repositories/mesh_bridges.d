@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface MeshBridgeRepository : ITenantRepository!(MeshBridge, MeshBridgeId) {
+interface IMeshBridgeRepository : ITenantRepository!(MeshBridge, MeshBridgeId) {
 
     size_t countBySourceBrokerService(TenantId tenantId, BrokerServiceId sourceBrokerId);
     MeshBridge[] findBySourceBrokerService(TenantId tenantId, BrokerServiceId sourceBrokerId);

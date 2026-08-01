@@ -11,7 +11,7 @@ import uim.platform.mobile;
 
 @safe:
 
-interface PushRegistrationRepository : ITenantRepository!(PushRegistration, PushRegistrationId) {
+interface IPushRegistrationRepository : ITenantRepository!(PushRegistration, PushRegistrationId) {
 
   bool existsByDeviceAndApp(TenantId tenantId, DeviceRegistrationId deviceId, MobileAppId appId);
   PushRegistration findByDeviceAndApp(TenantId tenantId, DeviceRegistrationId deviceId, MobileAppId appId);

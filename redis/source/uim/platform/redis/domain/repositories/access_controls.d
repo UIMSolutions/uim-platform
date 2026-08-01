@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface AccessControlRepository : ITenantRepository!(AccessControl, AccessControlId) {
+interface IAccessControlRepository : ITenantRepository!(AccessControl, AccessControlId) {
     AccessControl[] findByInstance(TenantId tenantId, ServiceInstanceId instanceId);
     AccessControl[] findByStatus(TenantId tenantId, AccessControlStatus status);
     bool cidrExists(TenantId tenantId, ServiceInstanceId instanceId, string cidr);

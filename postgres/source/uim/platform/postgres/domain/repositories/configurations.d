@@ -11,6 +11,6 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ConfigurationRepository : ITenantRepository!(Configuration, ConfigurationId) {
+interface IConfigurationRepository : ITenantRepository!(Configuration, ConfigurationId) {
     Configuration findByInstance(TenantId tenantId, ServiceInstanceId instanceId);
 }

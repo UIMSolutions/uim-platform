@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface JobRepository : TenantRepository!(Job, JobId) {
+interface IJobRepository : TenantRepository!(Job, JobId) {
   Job[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId);
   Job[] findByStatus(TenantId tenantId, JobStatus status);
   Job[] findByCreator(TenantId tenantId, string creatorId);

@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port for persisting personal data model definitions.
-interface PersonalDataModelRepository : ITenantRepository!(PersonalDataModel, PersonalDataModelId) {
+interface IPersonalDataModelRepository : ITenantRepository!(PersonalDataModel, PersonalDataModelId) {
 
   size_t countByCategory(TenantId tenantId, PersonalDataCategory category);
   PersonalDataModel[] findByCategory(TenantId tenantId, PersonalDataCategory category);

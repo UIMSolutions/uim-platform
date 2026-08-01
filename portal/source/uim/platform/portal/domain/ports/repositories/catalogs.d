@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — catalog persistence.
-interface CatalogRepository : IRepository!(Catalog, CatalogId) {
+interface ICatalogRepository : IRepository!(Catalog, CatalogId) {
 
   size_t countByProvider(ProviderId providerId);
   Catalog[] findByProvider(ProviderId providerId);

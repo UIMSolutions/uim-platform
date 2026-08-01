@@ -11,7 +11,7 @@ import uim.platform.process_automation;
 mixin(ShowModule!());
 
 @safe:
-interface ProcessInstanceRepository : ITenantRepository!(ProcessInstance, ProcessInstanceId) {
+interface IProcessInstanceRepository : ITenantRepository!(ProcessInstance, ProcessInstanceId) {
 
     size_t countByProcess(TenantId tenantId, ProcessId processId);
     ProcessInstance[] findByProcess(TenantId tenantId, ProcessId processId);

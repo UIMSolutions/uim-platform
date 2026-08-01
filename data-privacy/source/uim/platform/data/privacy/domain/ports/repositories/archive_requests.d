@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port for persisting and querying archive requests.
-interface ArchiveRequestRepository : ITenantRepository!(ArchiveRequest, ArchiveRequestId) {
+interface IArchiveRequestRepository : ITenantRepository!(ArchiveRequest, ArchiveRequestId) {
 
   size_t countByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
   ArchiveRequest[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);

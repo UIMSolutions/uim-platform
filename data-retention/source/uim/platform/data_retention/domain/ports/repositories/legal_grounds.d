@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface LegalGroundRepository : ITenantRepository!(LegalGround, LegalGroundId) {
+interface ILegalGroundRepository : ITenantRepository!(LegalGround, LegalGroundId) {
 
     LegalGround[] findByBusinessPurpose(TenantId tenantId, BusinessPurposeId purposeId);
     LegalGround[] findByType(TenantId tenantId, LegalGroundType type);

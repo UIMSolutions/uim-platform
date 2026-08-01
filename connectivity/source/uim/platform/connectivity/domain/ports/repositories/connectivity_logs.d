@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing - connectivity event log persistence.
-interface ConnectivityLogRepository : ITenantRepository!(ConnectivityLogEntry, ConnectivityLogEntryId) {
+interface IConnectivityLogRepository : ITenantRepository!(ConnectivityLogEntry, ConnectivityLogEntryId) {
 
   size_t countBySeverity(TenantId tenantId, LogSeverity severity);
   ConnectivityLogEntry[] findBySeverity(TenantId tenantId, LogSeverity severity);

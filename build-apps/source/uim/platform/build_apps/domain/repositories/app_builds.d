@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface AppBuildRepository : ITenantRepository!(AppBuild, AppBuildId) {
+interface IAppBuildRepository : ITenantRepository!(AppBuild, AppBuildId) {
     
     size_t countByApplication(TenantId tenantId, ApplicationId applicationId);
     AppBuild[] findByApplication(TenantId tenantId, ApplicationId applicationId);

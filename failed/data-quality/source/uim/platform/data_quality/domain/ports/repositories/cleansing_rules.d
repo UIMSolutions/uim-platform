@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port for persisting data cleansing rules.
-interface CleansingRuleRepository : ITenantRepository!(CleansingRule, CleansingRuleId) {
+interface ICleansingRuleRepository : ITenantRepository!(CleansingRule, CleansingRuleId) {
 
   size_t countByDataset(TenantId tenantId, string datasetPattern);
   CleansingRule[] findByDataset(TenantId tenantId, string datasetPattern);

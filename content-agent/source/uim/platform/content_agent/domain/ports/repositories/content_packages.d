@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing - content package persistence.
-interface ContentPackageRepository : ITenantRepository!(ContentPackage, ContentPackageId) {
+interface IContentPackageRepository : ITenantRepository!(ContentPackage, ContentPackageId) {
   bool existsByName(TenantId tenantId, string name);
   ContentPackage findByName(TenantId tenantId, string name);
   void removeByName(TenantId tenantId, string name);

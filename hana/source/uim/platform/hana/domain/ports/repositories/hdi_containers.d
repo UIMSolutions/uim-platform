@@ -11,7 +11,7 @@ import uim.platform.hana;
 mixin(ShowModule!());
 
 @safe:
-interface HDIContainerRepository : ITenantRepository!(HDIContainer, HDIContainerId) {
+interface IHDIContainerRepository : ITenantRepository!(HDIContainer, HDIContainerId) {
 
   size_t countByInstance(DatabaseInstanceId instanceId);
   HDIContainer[] findByInstance(DatabaseInstanceId instanceId);

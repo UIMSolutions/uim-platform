@@ -6,7 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface AuthorizationRepository {
+interface IAuthorizationRepository {
   bool applicationNameExists(string tenantId, string name);
   void saveApplication(ManagedApplication app);
   ManagedApplication findApplicationById(string tenantId, string id);

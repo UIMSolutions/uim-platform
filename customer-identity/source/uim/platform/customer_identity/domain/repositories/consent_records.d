@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ConsentRecordRepository : ITenantRepository!(ConsentRecord, ConsentRecordId) {
+interface IConsentRecordRepository : ITenantRepository!(ConsentRecord, ConsentRecordId) {
     ConsentRecord[] findByCustomer(TenantId tenantId, CustomerId customerId);
     ConsentRecord[] findByType(TenantId tenantId, ConsentType consentType);
     ConsentRecord[] findGrantedByCustomer(TenantId tenantId, CustomerId customerId);

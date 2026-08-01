@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface AutomationRuleRepository : ITenantRepository!(AutomationRule, AutomationRuleId) {
+interface IAutomationRuleRepository : ITenantRepository!(AutomationRule, AutomationRuleId) {
     
     size_t countByTemplate(TenantId tenantId, SituationTemplateId templateId);
     AutomationRule[] findByTemplate(TenantId tenantId, SituationTemplateId templateId);

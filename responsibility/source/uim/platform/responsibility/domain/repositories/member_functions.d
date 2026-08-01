@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface MemberFunctionRepository : ITenantRepository!(MemberFunction, MemberFunctionId) {
+interface IMemberFunctionRepository : ITenantRepository!(MemberFunction, MemberFunctionId) {
     MemberFunction[] findByStatus(TenantId tenantId, FunctionStatus status);
     MemberFunction findByCode(TenantId tenantId, string code);
 }

@@ -11,7 +11,7 @@ import uim.platform.html_repository;
 mixin(ShowModule!());
 
 @safe:
-interface AppVersionRepository : ITenantRepository!(AppVersion, AppVersionId) {
+interface IAppVersionRepository : ITenantRepository!(AppVersion, AppVersionId) {
   
   bool existsLatest(HtmlAppId appId);
   AppVersion findLatest(HtmlAppId appId);

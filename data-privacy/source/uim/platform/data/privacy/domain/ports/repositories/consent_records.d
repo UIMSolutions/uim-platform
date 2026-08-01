@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port for persisting consent records.
-interface ConsentRecordRepository : ITenantRepository!(ConsentRecord, ConsentRecordId) {
+interface IConsentRecordRepository : ITenantRepository!(ConsentRecord, ConsentRecordId) {
 
   size_t countByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
   ConsentRecord[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);

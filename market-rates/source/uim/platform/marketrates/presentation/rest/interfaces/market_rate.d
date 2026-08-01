@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-// interface MarketRateController : SAPController {
+// interface IMarketRateController : SAPController {
 //     @headerParam("tenantId", "X-Tenant-ID")
 //     MarketRate[] getMarketRates(string tenantId);
 

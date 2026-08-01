@@ -10,7 +10,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: repository contract for PrivateEndpoint persistence.
-interface PrivateEndpointRepository : ITenantRepository!(PrivateEndpoint, PrivateEndpointId) {
+interface IPrivateEndpointRepository : ITenantRepository!(PrivateEndpoint, PrivateEndpointId) {
   PrivateEndpoint[] findByServiceInstance(TenantId tenantId, ServiceInstanceId instanceId);
   PrivateEndpoint[] findByStatus(TenantId tenantId, EndpointStatus status);
   void removeByServiceInstance(TenantId tenantId, ServiceInstanceId instanceId);

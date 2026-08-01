@@ -11,6 +11,6 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ConditionRepository : ITenantRepository!(Condition, ConditionId) {
+interface IConditionRepository : ITenantRepository!(Condition, ConditionId) {
     Condition findByName(TenantId tenantId, string name);
 }

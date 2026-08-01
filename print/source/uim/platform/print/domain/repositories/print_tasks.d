@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface PrintTaskRepository : ITenantRepository!(PrintTask, PrintTaskId) {
+interface IPrintTaskRepository : ITenantRepository!(PrintTask, PrintTaskId) {
     PrintTask[] findByQueue(TenantId tenantId, PrintQueueId queueId);
     PrintTask[] findByStatus(TenantId tenantId, PrintTaskStatus status);
     PrintTask[] findPendingByQueue(TenantId tenantId, PrintQueueId queueId);

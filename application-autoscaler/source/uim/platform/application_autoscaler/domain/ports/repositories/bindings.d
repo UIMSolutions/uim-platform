@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface AppBindingRepository : ITenantRepository!(AppBinding, AppBindingId) {
+interface IAppBindingRepository : ITenantRepository!(AppBinding, AppBindingId) {
 
   bool existsByAppGuid(TenantId tenantId, string appGuid);
   AppBinding findByAppGuid(TenantId tenantId, string appGuid);

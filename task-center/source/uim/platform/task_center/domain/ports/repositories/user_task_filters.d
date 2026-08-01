@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface UserTaskFilterRepository : ITenantRepository!(UserTaskFilter, UserTaskFilterId) {
+interface IUserTaskFilterRepository : ITenantRepository!(UserTaskFilter, UserTaskFilterId) {
 
     // bool existsDefault(TenantId tenantId, UserId userId);
     // UserTaskFilter findDefault(TenantId tenantId, UserId userId);

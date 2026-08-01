@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface CustomerSessionRepository : ITenantRepository!(CustomerSession, CustomerSessionId) {
+interface ICustomerSessionRepository : ITenantRepository!(CustomerSession, CustomerSessionId) {
     CustomerSession findByToken(TenantId tenantId, string token);
     CustomerSession[] findByCustomer(TenantId tenantId, CustomerId customerId);
     CustomerSession[] findActive(TenantId tenantId);

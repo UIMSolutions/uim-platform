@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface NotebookRepository : TenantRepository!(Notebook, NotebookId) {
+interface INotebookRepository : TenantRepository!(Notebook, NotebookId) {
   Notebook[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId);
   Notebook[] findByLanguage(TenantId tenantId, NotebookLanguage language);
   Notebook[] findByStatus(TenantId tenantId, NotebookStatus status);

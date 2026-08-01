@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface NotificationRepository : ITenantRepository!(Notification, NotificationId) {
+interface INotificationRepository : ITenantRepository!(Notification, NotificationId) {
 
     size_t countByRecipient(TenantId tenantId, string recipientId);
     Notification[] findByRecipient(TenantId tenantId, string recipientId);

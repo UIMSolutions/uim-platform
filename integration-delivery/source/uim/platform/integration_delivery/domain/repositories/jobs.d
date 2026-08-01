@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface JobRepository : ITenantRepository!(Job, JobId) {
+interface IJobRepository : ITenantRepository!(Job, JobId) {
     Job[] findByPipeline(TenantId tenantId, PipelineId pipelineId);
     Job[] findByRepository(TenantId tenantId, CicdRepositoryId repositoryId);
     Job[] findByStatus(TenantId tenantId, JobStatus status);

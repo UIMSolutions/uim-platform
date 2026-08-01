@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface QueueRepository : ITenantRepository!(Queue, QueueId) {
+interface IQueueRepository : ITenantRepository!(Queue, QueueId) {
     size_t countByService(TenantId tenantId, MessagingServiceId serviceId);
     Queue[] findByService(TenantId tenantId, MessagingServiceId serviceId);
     Queue[] findByStatus(TenantId tenantId, QueueStatus status);

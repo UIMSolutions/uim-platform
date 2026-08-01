@@ -11,7 +11,7 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-interface NotificationRepository : ITenantRepository!(Notification, NotificationId) {
+interface INotificationRepository : ITenantRepository!(Notification, NotificationId) {
 
   size_t countByRecipient(TenantId tenantId, UserId recipientId);
   Notification[] findByRecipient(TenantId tenantId, UserId recipientId);

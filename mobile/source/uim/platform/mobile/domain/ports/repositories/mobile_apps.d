@@ -11,7 +11,7 @@ import uim.platform.mobile;
 
 @safe:
 
-interface MobileAppRepository : ITenantRepository!(MobileApp, MobileAppId) {
+interface IMobileAppRepository : ITenantRepository!(MobileApp, MobileAppId) {
 
   size_t countByBundleId(TenantId tenantId, string bundleId);
   MobileApp findByBundleId(TenantId tenantId, string bundleId);

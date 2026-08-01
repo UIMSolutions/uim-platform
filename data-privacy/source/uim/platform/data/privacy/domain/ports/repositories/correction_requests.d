@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port for persisting and querying correction requests.
-interface CorrectionRequestRepository : ITenantRepository!(CorrectionRequest, CorrectionRequestId) {
+interface ICorrectionRequestRepository : ITenantRepository!(CorrectionRequest, CorrectionRequestId) {
   
   size_t countByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
   CorrectionRequest[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ApplicationRepository : ITenantRepository!(Application, ApplicationId) {
+interface IApplicationRepository : ITenantRepository!(Application, ApplicationId) {
 
     size_t countByOwner(TenantId tenantId, string owner);
     Application[] findByOwner(TenantId tenantId, string owner);

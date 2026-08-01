@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface PrintClientRepository : ITenantRepository!(PrintClient, PrintClientId) {
+interface IPrintClientRepository : ITenantRepository!(PrintClient, PrintClientId) {
     PrintClient[] findByStatus(TenantId tenantId, PrintClientStatus status);
     PrintClient findByToken(TenantId tenantId, string authToken);
 }

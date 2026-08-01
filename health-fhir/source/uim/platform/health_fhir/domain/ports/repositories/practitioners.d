@@ -10,7 +10,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface PractitionerRepository : ITenantRepository!(Practitioner, PractitionerId) {
+interface IPractitionerRepository : ITenantRepository!(Practitioner, PractitionerId) {
   bool existsById(TenantId tenantId, PractitionerId id);
   Practitioner findById(TenantId tenantId, PractitionerId id);
   void removeById(TenantId tenantId, PractitionerId id);

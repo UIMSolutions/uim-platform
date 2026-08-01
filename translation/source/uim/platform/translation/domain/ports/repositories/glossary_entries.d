@@ -11,4 +11,4 @@ mixin(ShowModule!());
 
 @safe:
 
-interface GlossaryEntryRepository : ITenantRepository!(GlossaryEntry, GlossaryEntryId) {}
+interface IGlossaryEntryRepository : ITenantRepository!(GlossaryEntry, GlossaryEntryId) {}

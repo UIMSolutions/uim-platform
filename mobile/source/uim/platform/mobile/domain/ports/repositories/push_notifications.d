@@ -10,7 +10,7 @@ import uim.platform.mobile;
 // mixin(Showmodule!());
 
 @safe:
-interface PushNotificationRepository : ITenantRepository!(PushNotification, PushNotificationId) {
+interface IPushNotificationRepository : ITenantRepository!(PushNotification, PushNotificationId) {
 
   size_t countByApp(TenantId tenantId, MobileAppId appId);
   PushNotification[] findByApp(TenantId tenantId, MobileAppId appId);

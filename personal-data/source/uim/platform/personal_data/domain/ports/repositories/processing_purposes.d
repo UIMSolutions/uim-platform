@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ProcessingPurposeRepository : ITenantRepository!(ProcessingPurpose, ProcessingPurposeId) {
+interface IProcessingPurposeRepository : ITenantRepository!(ProcessingPurpose, ProcessingPurposeId) {
 
     size_t countByLegalBasis(TenantId tenantId, LegalBasis basis);
     ProcessingPurpose[] findByLegalBasis(TenantId tenantId, LegalBasis basis);

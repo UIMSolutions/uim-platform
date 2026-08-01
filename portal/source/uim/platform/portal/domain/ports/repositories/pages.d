@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — page persistence.
-interface PageRepository {
+interface IPageRepository {
   bool existsById(PageId id);
   Page findById(PageId id);
 

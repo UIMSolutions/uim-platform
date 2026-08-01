@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface GroupRepository : ITenantRepository!(IDMGroup, IDMGroupId) {
+interface IGroupRepository : ITenantRepository!(IDMGroup, IDMGroupId) {
 
     IDMGroup findByName(TenantId tenantId, string name);
     IDMGroup[] findByType(TenantId tenantId, GroupType type_);

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface AuditLogRepository : ITenantRepository!(AuditLog, AuditLogId) {
+interface IAuditLogRepository : ITenantRepository!(AuditLog, AuditLogId) {
     AuditLog[] findByActor(TenantId tenantId, string actorId);
     AuditLog[] findByAction(TenantId tenantId, AuditAction action);
     AuditLog[] findByResource(TenantId tenantId, ResourceType resourceType, string resourceId);

@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing - cloud connector persistence.
-interface ConnectorRepository : ITenantRepository!(CloudConnector, ConnectorId) {
+interface IConnectorRepository : ITenantRepository!(CloudConnector, ConnectorId) {
 
   bool existsByLocation(TenantId tenantId, SubaccountId subaccountId, string locationId);
   CloudConnector findByLocation(TenantId tenantId, SubaccountId subaccountId, string locationId);

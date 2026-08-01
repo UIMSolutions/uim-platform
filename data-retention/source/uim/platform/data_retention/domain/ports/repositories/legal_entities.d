@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface LegalEntityRepository : ITenantRepository!(LegalEntity, LegalEntityId) {
+interface ILegalEntityRepository : ITenantRepository!(LegalEntity, LegalEntityId) {
 
     LegalEntity[] findActive(TenantId tenantId);
 

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface PageRepository : ITenantRepository!(Page, PageId) {
+interface IPageRepository : ITenantRepository!(Page, PageId) {
 
     size_t countByApplication(TenantId tenantId, ApplicationId applicationId);
     Page[] findByApplication(TenantId tenantId, ApplicationId applicationId);

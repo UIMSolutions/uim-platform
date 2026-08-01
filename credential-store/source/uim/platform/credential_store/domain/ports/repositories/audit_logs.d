@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface AuditLogRepository : ITenantRepository!(AuditLogEntry, AuditLogEntryId) {
+interface IAuditLogRepository : ITenantRepository!(AuditLogEntry, AuditLogEntryId) {
 
   size_t countByNamespace(TenantId tenantId, NamespaceId namespaceId);
   AuditLogEntry[] findByNamespace(TenantId tenantId, NamespaceId namespaceId);

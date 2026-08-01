@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface PermissionRepository : ITenantRepository!(Permission, PermissionId) {
+interface IPermissionRepository : ITenantRepository!(Permission, PermissionId) {
 
     Permission[] findByDocument(TenantId tenantId, DocumentId documentId);
     void removeByDocument(TenantId tenantId, DocumentId documentId);

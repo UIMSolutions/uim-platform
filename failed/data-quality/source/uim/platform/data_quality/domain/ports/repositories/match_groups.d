@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port for persisting duplicate match groups.
-interface MatchGroupRepository : ITenantRepository!(MatchGroup, MatchGroupId) {
+interface IMatchGroupRepository : ITenantRepository!(MatchGroup, MatchGroupId) {
 
   size_t countByDataset(TenantId tenantId, DatasetId datasetId);
   MatchGroup[] findByDataset(TenantId tenantId, DatasetId datasetId);

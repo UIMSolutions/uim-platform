@@ -10,7 +10,7 @@ import uim.platform.hana_spatial;
 mixin(ShowModule!());
 
 @safe:
-interface PointOfInterestRepository : ITenantRepository!(PointOfInterest, PointOfInterestId) {
+interface IPointOfInterestRepository : ITenantRepository!(PointOfInterest, PointOfInterestId) {
   PointOfInterest[] findByCategory(TenantId tenantId, PoiCategory category);
   PointOfInterest[] findByProvider(TenantId tenantId, string providerId);
 }

@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing - certificate store persistence.
-interface CertificateRepository : ITenantRepository!(Certificate, CertificateId) {
+interface ICertificateRepository : ITenantRepository!(Certificate, CertificateId) {
 
   bool existsByName(TenantId tenantId, string name);
   Certificate findByName(TenantId tenantId, string name);

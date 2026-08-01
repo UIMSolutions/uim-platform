@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ApplicationRepository : ITenantRepository!(Application, ApplicationId) {
+interface IApplicationRepository : ITenantRepository!(Application, ApplicationId) {
 
     Application findByClient(TenantId tenantId, string clientId);
     Application[] findByStatus(TenantId tenantId, AppStatus status);

@@ -10,7 +10,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface MedicationRequestRepository : ITenantRepository!(MedicationRequest, MedicationRequestId) {
+interface IMedicationRequestRepository : ITenantRepository!(MedicationRequest, MedicationRequestId) {
   bool existsById(TenantId tenantId, MedicationRequestId id);
   MedicationRequest findById(TenantId tenantId, MedicationRequestId id);
   void removeById(TenantId tenantId, MedicationRequestId id);

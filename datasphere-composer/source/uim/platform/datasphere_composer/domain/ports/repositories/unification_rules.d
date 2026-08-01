@@ -8,7 +8,7 @@ module uim.platform.datasphere_composer.domain.ports.repositories.unification_ru
 import uim.platform.datasphere_composer;
 
 @safe:
-interface UnificationRuleRepository : ITenantRepository!(UnificationRule, UnificationRuleId) {
+interface IUnificationRuleRepository : ITenantRepository!(UnificationRule, UnificationRuleId) {
   UnificationRule[] findByPriority(TenantId tenantId);
   UnificationRule[] findActive(TenantId tenantId);
 }

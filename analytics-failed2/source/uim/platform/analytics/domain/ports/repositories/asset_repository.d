@@ -7,7 +7,7 @@ import uim.platform.analytics;
 mixin(ShowModule!());
 
 @safe:  
-interface AssetRepository {
+interface IAssetRepository {
   AssetId save(InsightAsset asset);
   bool update(InsightAsset asset);
   bool remove(TenantId tenantId, AssetId id);

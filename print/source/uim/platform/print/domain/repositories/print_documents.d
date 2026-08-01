@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface PrintDocumentRepository : ITenantRepository!(PrintDocument, PrintDocumentId) {
+interface IPrintDocumentRepository : ITenantRepository!(PrintDocument, PrintDocumentId) {
     PrintDocument[] findByFormat(TenantId tenantId, DocumentFormat format);
     PrintDocument[] findExpired(TenantId tenantId, long nowTimestamp);
     void removeExpired(TenantId tenantId, long nowTimestamp);

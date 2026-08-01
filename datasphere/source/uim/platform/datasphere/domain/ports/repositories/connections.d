@@ -11,7 +11,7 @@ import uim.platform.datasphere;
 mixin(ShowModule!()); 
 
 @safe:
-interface ConnectionRepository {
+interface IConnectionRepository {
   Connection findById(SpaceId spaceId, ConnectionId id);
   Connection[] findBySpace(SpaceId spaceId);
   Connection[] findByType(SpaceId spaceId, ConnectionType type);

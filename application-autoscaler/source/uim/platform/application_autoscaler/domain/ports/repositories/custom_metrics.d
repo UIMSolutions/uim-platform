@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface CustomMetricRepository : ITenantRepository!(CustomMetricEntity, CustomMetricId) {
+interface ICustomMetricRepository : ITenantRepository!(CustomMetricEntity, CustomMetricId) {
 
   size_t countByApp(TenantId tenantId, AppBindingId appId);
   CustomMetricEntity[] findByApp(TenantId tenantId, AppBindingId appId);

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface WebhookRepository : ITenantRepository!(Webhook, WebhookId) {
+interface IWebhookRepository : ITenantRepository!(Webhook, WebhookId) {
     Webhook[] findByRepository(TenantId tenantId, CicdRepositoryId repositoryId);
     Webhook[] findByJob(TenantId tenantId, JobId jobId);
     Webhook[] findByStatus(TenantId tenantId, WebhookStatus status);

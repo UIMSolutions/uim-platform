@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface MaintenanceWindowRepository : ITenantRepository!(MaintenanceWindow, MaintenanceWindowId) {
+interface IMaintenanceWindowRepository : ITenantRepository!(MaintenanceWindow, MaintenanceWindowId) {
     MaintenanceWindow findByInstance(TenantId tenantId, ServiceInstanceId instanceId);
     MaintenanceWindow[] findByStatus(TenantId tenantId, MaintenanceStatus status);
 }

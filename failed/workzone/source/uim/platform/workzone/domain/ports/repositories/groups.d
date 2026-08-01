@@ -12,7 +12,7 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-interface GroupRepository : ITenantRepository!(WZGroup, GroupId) {
+interface IGroupRepository : ITenantRepository!(WZGroup, GroupId) {
 
   size_t countByMember(TenantId tenantId, UserId userId);
   WZGroup[] findByMember(TenantId tenantId, UserId userId);

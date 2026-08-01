@@ -7,7 +7,7 @@ module uim.platform.analytics.app.ports.notification_port;
 import uim.platform.analytics;
 @safe:
 /// Outgoing port: send notifications (email, in-app, webhook).
-interface NotificationPort {
+interface INotificationPort {
   void notify(UserId userId, string subject, string body_);
   void notifyGroup(string[] userIds, string subject, string body_);
 }

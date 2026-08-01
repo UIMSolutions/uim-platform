@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ContentConnectorRepository : ITenantRepository!(ContentConnector, ContentConnectorId) {
+interface IContentConnectorRepository : ITenantRepository!(ContentConnector, ContentConnectorId) {
 
     size_t countByType(TenantId tenantId, ConnectorType connectorType);
     ContentConnector[] findByType(TenantId tenantId, ConnectorType connectorType);

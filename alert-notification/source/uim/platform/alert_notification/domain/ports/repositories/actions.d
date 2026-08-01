@@ -11,6 +11,6 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ActionRepository : ITenantRepository!(Action, ActionId) {
+interface IActionRepository : ITenantRepository!(Action, ActionId) {
     Action findByName(TenantId tenantId, string name);
 }
