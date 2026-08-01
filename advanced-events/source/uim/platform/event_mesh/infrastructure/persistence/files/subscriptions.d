@@ -17,7 +17,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class FileSubscriptionRepository : MemorySubscriptionRepository {
+class FileSubscriptionRepository : TenantRepository!(), ISubscriptionRepository {
     private string basePath;
     private bool[TenantId] loadedTenants;
 

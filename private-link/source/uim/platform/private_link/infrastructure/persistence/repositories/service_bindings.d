@@ -9,19 +9,42 @@ import uim.platform.private_link;
 mixin(ShowModule!());
 
 @safe:
-class ServiceBindingRepository
-    : TenantRepository!(ServiceBinding, ServiceBindingId),
-      ServiceBindingRepository {
+class ServiceBindingRepository : TenantRepository!(ServiceBinding, ServiceBindingId), IServiceBindingRepository {
 
-  ServiceBinding[] findByServiceInstance(TenantId tenantId, ServiceInstanceId instanceId) {
-    return findByTenant(tenantId).filter!(b => b.serviceInstanceId.value == instanceId.value).array;
+  // #region ByServiceInstance
+  size_t countByServiceInstance(TenantId tenantId, ServiceInstanceId instanceId) {
+    return findByServiceInstance(tenantId, instanceId).length;
   }
 
-  ServiceBinding[] findByApplication(TenantId tenantId, string applicationId) {
-    return findByTenant(tenantId).filter!(b => b.applicationId == applicationId).array;
+  ServiceBinding[] filterByServiceInstance(ServiceBinding[] bindings, ServiceInstanceId instanceId) {
+    return bindings.filter!(b => b.serviceInstanceId.value == instanceId.value).array;
+  }
+
+  ServiceBinding[] findByServiceInstance(TenantId tenantId, ServiceInstanceId instanceId) {
+    return filterByServiceInstance(findByTenant(tenantId), instanceId);
   }
 
   void removeByServiceInstance(TenantId tenantId, ServiceInstanceId instanceId) {
     findByServiceInstance(tenantId, instanceId).each!(b => remove(b));
   }
+  // #endregion ByServiceInstance
+
+  // #region ByApplication
+  size_t countByApplication(TenantId tenantId, string applicationId) {
+    return findByApplication(tenantId, applicationId).length;
+  }
+
+  ServiceBinding[] filterByApplication(ServiceBinding[] bindings, string applicationId) {
+    return bindings.filter!(b => b.applicationId == applicationId).array;
+  }
+
+  ServiceBinding[] findByApplication(TenantId tenantId, string applicationId) {
+    return filterByApplication(findByTenant(tenantId), applicationId);
+  }
+
+  void removeByApplication(TenantId tenantId, string applicationId) {
+    findByApplication(tenantId, applicationId).each!(b => remove(b));
+  }
+  // #endregion ByApplication
+  
 }

@@ -27,20 +27,20 @@ class ManageServiceBindingsUseCase {
   }
 
   CommandResult createBinding(CreateServiceBindingRequest req) {
-    auto inst = instances.findById(req.tenantId, req.serviceInstanceId);
+    auto inst = instances.findById(req.tenantId, req.instanceId);
     if (inst.id.value.length == 0)
       return CommandResult(false, "", "Service instance not found");
     if (inst.status != InstanceStatus.ready)
       return CommandResult(false, "", "Service instance is not ready");
 
-    auto ep = resolver.resolveForInstance(req.tenantId, req.serviceInstanceId);
+    auto ep = resolver.resolveForInstance(req.tenantId, req.instanceId);
     if (ep.id.value.length == 0)
       return CommandResult(false, "", "No ready private endpoint found for this instance");
 
     auto binding = ServiceBinding();
     binding.id = ServiceBindingId(generateId());
     binding.tenantId = req.tenantId;
-    binding.serviceInstanceId = req.serviceInstanceId;
+    binding.serviceInstanceId = req.instanceId;
     binding.applicationId = req.applicationId;
     binding.hostname = ep.hostname;
     binding.privateIpAddress = ep.privateIpAddress;

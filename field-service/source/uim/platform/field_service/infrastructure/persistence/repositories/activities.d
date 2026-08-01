@@ -11,8 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ActivityRepository : TenantRepository!(Activity, ActivityId), ActivityRepository {
-
+class ActivityRepository : TenantRepository!(Activity, ActivityId), IActivityRepository {
 
     size_t countByServiceCall(TenantId tenantId, ServiceCallId serviceCallId) {
         return findByServiceCall(tenantId, serviceCallId).length;

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class SmartformRepository : TenantRepository!(Smartform, SmartformId), SmartformRepository {
+class SmartformRepository : TenantRepository!(Smartform, SmartformId), ISmartformRepository {
 
     size_t countByServiceCall(TenantId tenantId, ServiceCallId serviceCallId) {
         return findByServiceCall(tenantId, serviceCallId).length;

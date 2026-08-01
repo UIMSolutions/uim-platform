@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class EquipmentRepository : TenantRepository!(Equipment, EquipmentId), EquipmentRepository {
+class EquipmentRepository : TenantRepository!(Equipment, EquipmentId), IEquipmentRepository {
 
     size_t countByCustomer(TenantId tenantId, CustomerId customerId) {
         return findByCustomer(tenantId, customerId).length;

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class SkillRepository : TenantRepository!(Skill, SkillId), SkillRepository {
+class SkillRepository : TenantRepository!(Skill, SkillId), ISkillRepository {
 
 
     size_t countByTechnician(TenantId tenantId, TechnicianId technicianId) {

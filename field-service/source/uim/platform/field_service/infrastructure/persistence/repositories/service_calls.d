@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ServiceCallRepository : TenantRepository!(ServiceCall, ServiceCallId), ServiceCallRepository {
+class ServiceCallRepository : TenantRepository!(ServiceCall, ServiceCallId), IServiceCallRepository {
 
     size_t countByStatus(TenantId tenantId, ServiceCallStatus status) {
         return findByStatus(tenantId, status).length;

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 @safe:
 class ServiceInstanceRepository
     : TenantRepository!(ServiceInstance, ServiceInstanceId),
-      ServiceInstanceRepository {
+      IServiceInstanceRepository {
 
   bool existsByName(TenantId tenantId, string name) {
     return findByTenant(tenantId).any!(i => i.name == name);
@@ -25,11 +25,40 @@ class ServiceInstanceRepository
     return ServiceInstance.init;
   }
 
+  // #region ByStatus
+  size_t countByStatus(TenantId tenantId, InstanceStatus status) {
+    return findByStatus(tenantId, status).length;
+  }
+
+  ServiceInstance[] filterByStatus(ServiceInstance[] instances, InstanceStatus status) {
+    return instances.filter!(i => i.status == status).array;
+  }
+  
   ServiceInstance[] findByStatus(TenantId tenantId, InstanceStatus status) {
-    return findByTenant(tenantId).filter!(i => i.status == status).array;
+    return filterByStatus(findByTenant(tenantId), status);
+  }
+
+  void removeByStatus(TenantId tenantId, InstanceStatus status) {
+    findByStatus(tenantId, status).each!(i => remove(i));
+  }
+  // #endregion ByStatus
+
+  // #region ByIaasProvider
+  size_t countByIaasProvider(TenantId tenantId, IaasProvider provider) {
+    return findByIaasProvider(tenantId, provider).length;
+  }
+
+  ServiceInstance[] filterByIaasProvider(ServiceInstance[] instances, IaasProvider provider) {
+    return instances.filter!(i => i.iaasProvider == provider).array;
   }
 
   ServiceInstance[] findByIaasProvider(TenantId tenantId, IaasProvider provider) {
-    return findByTenant(tenantId).filter!(i => i.iaasProvider == provider).array;
+    return filterByIaasProvider(findByTenant(tenantId), provider);
   }
+
+  void removeByIaasProvider(TenantId tenantId, IaasProvider provider) {
+    findByIaasProvider(tenantId, provider).each!(i => remove(i));
+  }
+  // #endregion ByIaasProvider
+  
 }
