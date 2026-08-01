@@ -36,14 +36,14 @@ Container buildContainer(SrvConfig config) {
     Container c;
 
     // Repositories
-    auto applicationRepo = new MemoryApplicationRepository();
-    auto pageRepo = new MemoryPageRepository();
-    auto uiComponentRepo = new MemoryUIComponentRepository();
-    auto dataEntityRepo = new MemoryDataEntityRepository();
-    auto dataConnectionRepo = new MemoryDataConnectionRepository();
-    auto logicFlowRepo = new MemoryLogicFlowRepository();
-    auto appBuildRepo = new MemoryAppBuildRepository();
-    auto projectMemberRepo = new MemoryProjectMemberRepository();
+    auto applicationRepo = new ApplicationRepository();
+    auto pageRepo = new PageRepository();
+    auto uiComponentRepo = new UIComponentRepository();
+    auto dataEntityRepo = new DataEntityRepository();
+    auto dataConnectionRepo = new DataConnectionRepository();
+    auto logicFlowRepo = new LogicFlowRepository();
+    auto appBuildRepo = new AppBuildRepository();
+    auto projectMemberRepo = new ProjectMemberRepository();
 
     // Use Cases
     c.manageApplicationsUseCase = new ManageApplicationsUseCase(applicationRepo);

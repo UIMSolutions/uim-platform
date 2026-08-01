@@ -10,7 +10,7 @@ import uim.platform.rfc;
 mixin(ShowModule!());
 @safe:
 
-class MemoryRfcQueueRepository : RfcQueueRepository {
+class RfcQueueRepository : RfcQueueRepository {
 
     private RfcQueueEntry[string] _store;
 

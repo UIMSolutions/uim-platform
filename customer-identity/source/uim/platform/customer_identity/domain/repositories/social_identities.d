@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface SocialIdentityRepository : ITenantRepository!(SocialIdentity, SocialIdentityId) {
+interface ISocialIdentityRepository : ITenantRepository!(SocialIdentity, SocialIdentityId) {
     SocialIdentity[] findByCustomer(TenantId tenantId, CustomerId customerId);
     SocialIdentity findByProvider(TenantId tenantId, LoginProvider provider, string providerUserId);
     void unlinkByCustomerAndProvider(TenantId tenantId, CustomerId customerId, LoginProvider provider);

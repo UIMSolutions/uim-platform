@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryMarketRateRepository : MarketRateRepository {
+class MarketRateRepository : MarketRateRepository {
   private MarketRate[string] store;
 
   // --- ITenantRepository ---

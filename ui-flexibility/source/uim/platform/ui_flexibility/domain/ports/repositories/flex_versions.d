@@ -10,7 +10,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface FlexVersionRepository : ITenantRepository!(FlexVersion, FlexVersionId) {
+interface IFlexVersionRepository : ITenantRepository!(FlexVersion, FlexVersionId) {
   bool existsById(TenantId tenantId, FlexVersionId id);
   FlexVersion findById(TenantId tenantId, FlexVersionId id);
   bool removeById(TenantId tenantId, FlexVersionId id);

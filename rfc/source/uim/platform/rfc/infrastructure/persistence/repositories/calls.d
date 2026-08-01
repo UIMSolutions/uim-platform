@@ -10,7 +10,7 @@ import uim.platform.rfc;
 mixin(ShowModule!());
 @safe:
 
-class MemoryRfcCallRepository : RfcCallRepository {
+class RfcCallRepository : RfcCallRepository {
 
     private RfcCall[string] _store;
 

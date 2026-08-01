@@ -10,7 +10,7 @@ import uim.platform.hana_spatial;
 mixin(ShowModule!());
 
 @safe:
-class MemoryGeocodingJobRepository
+class GeocodingJobRepository
   : TenantRepository!(GeocodingJob, GeocodingJobId),
     GeocodingJobRepository {
 

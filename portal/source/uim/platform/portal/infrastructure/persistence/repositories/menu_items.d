@@ -13,7 +13,7 @@ import uim.platform.portal;
 mixin(ShowModule!());
 
 @safe:
-class MemoryMenuItemRepository : MenuItemRepository {
+class MenuItemRepository : MenuItemRepository {
   private MenuItem[MenuItemId] store;
 
   bool existsById(MenuItemId id) {

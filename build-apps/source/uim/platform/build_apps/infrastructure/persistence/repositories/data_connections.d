@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryDataConnectionRepository : TenantRepository!(DataConnection, DataConnectionId), DataConnectionRepository {
+class DataConnectionRepository : TenantRepository!(DataConnection, DataConnectionId), DataConnectionRepository {
 
     size_t countByApplication(TenantId tenantId, ApplicationId applicationId) {
         return findByApplication(tenantId, applicationId).length;

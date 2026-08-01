@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryWebhookRepository
+class WebhookRepository
     : TenantRepository!(Webhook, WebhookId), WebhookRepository {
 
     size_t countByService(TenantId tenantId, MessagingServiceId serviceId) {

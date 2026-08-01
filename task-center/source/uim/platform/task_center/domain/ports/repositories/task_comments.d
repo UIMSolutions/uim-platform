@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface TaskCommentRepository : ITenantRepository!(TaskComment, TaskCommentId) {
+interface ITaskCommentRepository : ITenantRepository!(TaskComment, TaskCommentId) {
 
     size_t countByTask(TenantId tenantId, TaskId taskId);
     TaskComment[] findByTask(TenantId tenantId, TaskId taskId);

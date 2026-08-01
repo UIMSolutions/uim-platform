@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface SubscriptionRepository : ITenantRepository!(EventSubscription, EventSubscriptionId) {
+interface ISubscriptionRepository : ITenantRepository!(EventSubscription, EventSubscriptionId) {
 
     size_t countByBrokerService(TenantId tenantId, BrokerServiceId brokerServiceId);
     EventSubscription[] findByBrokerService(TenantId tenantId, BrokerServiceId brokerServiceId);

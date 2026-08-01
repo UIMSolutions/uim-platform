@@ -150,7 +150,7 @@ unittest {
     @safe class EventSchemaControllerTest : ControllerTestBase {
         void runTests() {
             // 1. Setup
-            auto repo = new MemoryEventSchemaRepository();
+            auto repo = new EventSchemaRepository();
             auto usecase = new ManageEventSchemasUseCase(repo);
             auto controller = new EventSchemaController(usecase);
             auto tenantId = TenantId("test-tenant");

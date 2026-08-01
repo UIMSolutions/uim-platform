@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryTriggerRepository : TenantRepository!(Trigger, TriggerId), TriggerRepository {
+class TriggerRepository : TenantRepository!(Trigger, TriggerId), TriggerRepository {
 
     size_t countByCommand(TenantId tenantId, CommandId commandId) {
         return findByCommand(tenantId, commandId).length;

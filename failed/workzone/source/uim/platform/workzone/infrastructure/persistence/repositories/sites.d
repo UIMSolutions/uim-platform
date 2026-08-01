@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
  
 
-class MemorySiteRepository : TenantRepository!(Site, SiteId), SiteRepository {
+class SiteRepository : TenantRepository!(Site, SiteId), SiteRepository {
 
   // #region ByAlias
   bool existsByAlias(TenantId tenantId, string alias_) {

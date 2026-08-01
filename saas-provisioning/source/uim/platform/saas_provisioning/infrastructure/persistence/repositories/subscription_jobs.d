@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 /// In-memory implementation of SubscriptionJobRepository.
-class MemorySubscriptionJobRepository
+class SubscriptionJobRepository
     : TenantRepository!(SubscriptionJob, SubscriptionJobId),
       SubscriptionJobRepository
 {

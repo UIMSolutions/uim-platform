@@ -13,7 +13,7 @@ import uim.platform.kyma;
 mixin(ShowModule!());
 
 @safe:
-class MemoryServiceInstanceRepository : ServiceInstanceRepository {
+class ServiceInstanceRepository : ServiceInstanceRepository {
   private ServiceInstance[ServiceInstanceId] store;
 
   bool existsById(ServiceInstanceId id) {

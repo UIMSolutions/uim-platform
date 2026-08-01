@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface TopicRepository : ITenantRepository!(Topic, TopicId) {
+interface ITopicRepository : ITenantRepository!(Topic, TopicId) {
 
     size_t countByBrokerService(TenantId tenantId, BrokerServiceId brokerServiceId);
     Topic[] findByBrokerService(TenantId tenantId, BrokerServiceId brokerServiceId);

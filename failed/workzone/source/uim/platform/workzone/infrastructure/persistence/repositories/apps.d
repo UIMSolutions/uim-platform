@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
  
 
-class MemoryAppRepository : TenantRepository!(AppRegistration, AppId), AppRepository {
+class AppRepository : TenantRepository!(AppRegistration, AppId), AppRepository {
 
   size_t countByStatus(TenantId tenantId, AppStatus status) {
     return findByStatus(tenantId, status).length;

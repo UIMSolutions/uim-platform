@@ -10,7 +10,7 @@ import uim.platform.hana_spatial;
 mixin(ShowModule!());
 
 @safe:
-class MemoryProviderRepository
+class ProviderRepository
   : TenantRepository!(Provider, ProviderId),
     ProviderRepository {
 

@@ -86,13 +86,13 @@ Container buildContainer(SrvConfig config) {
   Container c;
 
   // Infrastructure adapters
-  c.validationRuleRepo = new MemoryValidationRuleRepository();
-  c.validationResultRepo = new MemoryValidationResultRepository();
-  c.addressRepo = new MemoryAddressRepository();
-  c.matchGroupRepo = new MemoryMatchGroupRepository();
-  c.dataProfileRepo = new MemoryDataProfileRepository();
-  c.cleansingRuleRepo = new MemoryCleansingRuleRepository();
-  c.cleansingJobRepo = new MemoryCleansingJobRepository();
+  c.validationRuleRepo = new ValidationRuleRepository();
+  c.validationResultRepo = new ValidationResultRepository();
+  c.addressRepo = new AddressRepository();
+  c.matchGroupRepo = new MatchGroupRepository();
+  c.dataProfileRepo = new DataProfileRepository();
+  c.cleansingRuleRepo = new CleansingRuleRepository();
+  c.cleansingJobRepo = new CleansingJobRepository();
 
   // Domain services
   c.validationEngine = new ValidationEngine();

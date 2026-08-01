@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface DataProcessingLogRepository : ITenantRepository!(DataProcessingLog, DataProcessingLogId) {
+interface IDataProcessingLogRepository : ITenantRepository!(DataProcessingLog, DataProcessingLogId) {
 
     size_t countByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
     DataProcessingLog[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);

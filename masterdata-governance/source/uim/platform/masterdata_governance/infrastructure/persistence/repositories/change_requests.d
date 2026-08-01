@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryChangeRequestRepository
+class ChangeRequestRepository
     : TenantRepository!(ChangeRequest, ChangeRequestId), ChangeRequestRepository {
 
     size_t countByStatus(TenantId tenantId, ChangeRequestStatus status) {

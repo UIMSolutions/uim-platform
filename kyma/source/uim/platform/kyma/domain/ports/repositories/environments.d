@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — Kyma environment persistence.
-interface EnvironmentRepository : ITenantRepository!(KymaEnvironment, KymaEnvironmentId) {
+interface IEnvironmentRepository : ITenantRepository!(KymaEnvironment, KymaEnvironmentId) {
 
   size_t countBySubaccount(TenantId tenantId, SubaccountId subaccountId);
   KymaEnvironment[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId);

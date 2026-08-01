@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ResponsibilityContextRepository : ITenantRepository!(ResponsibilityContext, ResponsibilityContextId) {
+interface IResponsibilityContextRepository : ITenantRepository!(ResponsibilityContext, ResponsibilityContextId) {
     ResponsibilityContext[] findByStatus(TenantId tenantId, ContextStatus status);
     ResponsibilityContext findByObjectType(TenantId tenantId, string objectType);
 }

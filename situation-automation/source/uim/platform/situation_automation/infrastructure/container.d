@@ -47,14 +47,14 @@ Container buildContainer(SrvConfig config) {
     Container c;
 
     // Infrastructure adapters
-    c.templateRepo = new MemorySituationTemplateRepository();
-    c.instanceRepo = new MemorySituationInstanceRepository();
-    c.actionRepo = new MemorySituationActionRepository();
-    c.ruleRepo = new MemoryAutomationRuleRepository();
-    c.entityTypeRepo = new MemoryEntityTypeRepository();
-    c.dataContextRepo = new MemoryDataContextRepository();
-    c.notificationRepo = new MemoryNotificationRepository();
-    c.dashboardRepo = new MemoryDashboardRepository();
+    c.templateRepo = new SituationTemplateRepository();
+    c.instanceRepo = new SituationInstanceRepository();
+    c.actionRepo = new SituationActionRepository();
+    c.ruleRepo = new AutomationRuleRepository();
+    c.entityTypeRepo = new EntityTypeRepository();
+    c.dataContextRepo = new DataContextRepository();
+    c.notificationRepo = new NotificationRepository();
+    c.dashboardRepo = new DashboardRepository();
 
     // Application use cases
     c.manageTemplates = new ManageSituationTemplatesUseCase(c.templateRepo);

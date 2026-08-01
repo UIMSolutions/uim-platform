@@ -10,7 +10,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryClusterRepository : TenantRepository!(Cluster, ClusterId), ClusterRepository {
+class ClusterRepository : TenantRepository!(Cluster, ClusterId), ClusterRepository {
   Cluster[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
     import std.algorithm : filter;
     import std.array : array;
@@ -32,5 +32,5 @@ class MemoryClusterRepository : TenantRepository!(Cluster, ClusterId), ClusterRe
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryClusterRepository()));
+    assert(tenantRepositoryTest(new ClusterRepository()));
 }

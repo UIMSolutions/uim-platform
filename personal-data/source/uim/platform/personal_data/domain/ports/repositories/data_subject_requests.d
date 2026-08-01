@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface DataSubjectRequestRepository : ITenantRepository!(DataSubjectRequest, DataSubjectRequestId) {
+interface IDataSubjectRequestRepository : ITenantRepository!(DataSubjectRequest, DataSubjectRequestId) {
 
     size_t countByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
     DataSubjectRequest[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);

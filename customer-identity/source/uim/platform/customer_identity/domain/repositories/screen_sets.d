@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ScreenSetRepository : ITenantRepository!(ScreenSet, ScreenSetId) {
+interface IScreenSetRepository : ITenantRepository!(ScreenSet, ScreenSetId) {
     ScreenSet[] findByFlowType(TenantId tenantId, ScreenSetFlowType flowType);
     ScreenSet[] findActive(TenantId tenantId);
     ScreenSet findByNameAndLocale(TenantId tenantId, string name, string locale);

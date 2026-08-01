@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port for persisting data blocking / restriction requests.
-interface BlockingRequestRepository : ITenantRepository!(BlockingRequest, BlockingRequestId) {
+interface IBlockingRequestRepository : ITenantRepository!(BlockingRequest, BlockingRequestId) {
 
   size_t countByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
   BlockingRequest[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);

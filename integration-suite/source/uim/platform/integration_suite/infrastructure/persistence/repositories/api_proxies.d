@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryApiProxyRepository
+class ApiProxyRepository
     : TenantRepository!(ApiProxy, ApiProxyId),
       ApiProxyRepository {
 

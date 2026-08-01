@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryScalingHistoryRepository : TenantRepository!(ScalingHistory, ScalingHistoryId), ScalingHistoryRepository {
+class ScalingHistoryRepository : TenantRepository!(ScalingHistory, ScalingHistoryId), ScalingHistoryRepository {
 
   size_t countByApp(TenantId tenantId, AppBindingId appId) {
     return findByApp(tenantId, appId).length;

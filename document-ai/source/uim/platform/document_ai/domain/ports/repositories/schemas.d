@@ -11,7 +11,7 @@ import uim.platform.document_ai;
 mixin(ShowModule!());
 
 @safe:
-interface SchemaRepository {
+interface ISchemaRepository {
   bool existsById(SchemaId id, ClientId clientId);
   Schema findById(SchemaId id, ClientId clientId);
 

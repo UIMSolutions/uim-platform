@@ -11,7 +11,7 @@ import uim.platform.datasphere;
 mixin(ShowModule!()); 
 
 @safe:
-interface TaskChainRepository {
+interface ITaskChainRepository {
   TaskChain findById(SpaceId spaceId, TaskChainId id);
   TaskChain[] findBySpace(SpaceId spaceId);
   TaskChain[] findByStatus(SpaceId spaceId, TaskStatus status);

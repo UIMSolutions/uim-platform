@@ -36,14 +36,14 @@ Container buildContainer(SrvConfig config) {
     Container c;
 
     // Repositories
-    auto customerRepo = new MemoryCustomerRepository();
-    auto sessionRepo = new MemoryCustomerSessionRepository();
-    auto socialRepo = new MemorySocialIdentityRepository();
-    auto consentRepo = new MemoryConsentRecordRepository();
-    auto auditRepo = new MemoryAuditLogRepository();
-    auto idpRepo = new MemoryIdentityProviderRepository();
-    auto screenSetRepo = new MemoryScreenSetRepository();
-    auto policyRepo = new MemorySitePolicyRepository();
+    auto customerRepo = new CustomerRepository();
+    auto sessionRepo = new CustomerSessionRepository();
+    auto socialRepo = new SocialIdentityRepository();
+    auto consentRepo = new ConsentRecordRepository();
+    auto auditRepo = new AuditLogRepository();
+    auto idpRepo = new IdentityProviderRepository();
+    auto screenSetRepo = new ScreenSetRepository();
+    auto policyRepo = new SitePolicyRepository();
 
     // Use Cases
     c.manageCustomersUseCase = new ManageCustomersUseCase(customerRepo);

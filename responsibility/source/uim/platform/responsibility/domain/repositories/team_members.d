@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface TeamMemberRepository : ITenantRepository!(TeamMember, TeamMemberId) {
+interface ITeamMemberRepository : ITenantRepository!(TeamMember, TeamMemberId) {
     TeamMember[] findByTeam(TenantId tenantId, string teamId);
     TeamMember[] findByUser(TenantId tenantId, string userId);
     TeamMember[] findByFunction(TenantId tenantId, string functionId);

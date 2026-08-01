@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryFeatureFlagRepository : FeatureFlagRepository {
+class FeatureFlagRepository : FeatureFlagRepository {
     private FeatureFlag[string] store; // key = tenantId ~ ":" ~ flagId
 
     void save(FeatureFlag flag_) {

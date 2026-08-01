@@ -11,7 +11,7 @@ import uim.platform.process_automation;
 mixin(ShowModule!());
 
 @safe:
-interface TaskRepository : ITenantRepository!(PATask, TaskId) {
+interface ITaskRepository : ITenantRepository!(PATask, TaskId) {
 
     size_t countByAssignee(TenantId tenantId, string assignee);
     PATask[] findByAssignee(TenantId tenantId, string assignee);

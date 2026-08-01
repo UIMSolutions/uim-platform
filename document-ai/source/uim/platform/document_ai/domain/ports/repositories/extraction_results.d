@@ -11,7 +11,7 @@ import uim.platform.document_ai;
 mixin(ShowModule!());
 
 @safe:
-interface ExtractionResultRepository {
+interface IExtractionResultRepository {
   bool existsById(ExtractionResultId id, ClientId clientId);
   ExtractionResult findById(ExtractionResultId id, ClientId clientId);
 

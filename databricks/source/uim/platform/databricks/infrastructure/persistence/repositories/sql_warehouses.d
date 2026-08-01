@@ -10,7 +10,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemorySqlWarehouseRepository : TenantRepository!(SqlWarehouse, SqlWarehouseId), SqlWarehouseRepository {
+class SqlWarehouseRepository : TenantRepository!(SqlWarehouse, SqlWarehouseId), SqlWarehouseRepository {
   SqlWarehouse[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
     import std.algorithm : filter;
     import std.array : array;
@@ -36,5 +36,5 @@ class MemorySqlWarehouseRepository : TenantRepository!(SqlWarehouse, SqlWarehous
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemorySqlWarehouseRepository()));
+    assert(tenantRepositoryTest(new SqlWarehouseRepository()));
 }

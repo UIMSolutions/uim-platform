@@ -57,9 +57,9 @@ Container buildContainer(SrvConfig config) {
             break;
 
         default: // "MEMORY"
-            flagRepo  = new MemoryFeatureFlagRepository();
-            instRepo  = new MemoryServiceInstanceRepository();
-            auditRepo = new MemoryAuditEntryRepository();
+            flagRepo  = new FeatureFlagRepository();
+            instRepo  = new ServiceInstanceRepository();
+            auditRepo = new AuditEntryRepository();
             break;
     }
 

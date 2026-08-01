@@ -181,14 +181,14 @@ classDiagram
     ManageSubscriptionJobsUseCase --> SubscriptionJobRepository
 
     %% ── Infrastructure ──────────────────────────────────────────────
-    class MemorySaasApplicationRepository {
+    class SaasApplicationRepository {
         +findByAppName(tenantId, appName) SaasApplication
     }
-    class MemoryAppSubscriptionRepository {
+    class AppSubscriptionRepository {
         +findByAppName(tenantId, appName) AppSubscription[]
         +findBySubscriberTenant(providerTenantId, subscriberTenantId) AppSubscription[]
     }
-    class MemorySubscriptionJobRepository {
+    class SubscriptionJobRepository {
         +findBySubscription(tenantId, subscriptionId) SubscriptionJob[]
     }
 

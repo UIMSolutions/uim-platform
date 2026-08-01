@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 /// Port: persistence contract for the SubscriptionJob aggregate.
-interface SubscriptionJobRepository : ITenantRepository!(SubscriptionJob, SubscriptionJobId) {
+interface ISubscriptionJobRepository : ITenantRepository!(SubscriptionJob, SubscriptionJobId) {
     /// Retrieve all jobs associated with a given subscription record.
     SubscriptionJob[] findBySubscription(TenantId tenantId, string subscriptionId);
 }

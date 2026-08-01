@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryScopeRepository : TenantRepository!(ScopeEntity, ScopeId), ScopeRepository {
+class ScopeRepository : TenantRepository!(ScopeEntity, ScopeId), ScopeRepository {
 
   bool existsByName(TenantId tenantId, string name) {
     return findByTenant(tenantId).any!(s => s.name == name);
@@ -44,5 +44,5 @@ class MemoryScopeRepository : TenantRepository!(ScopeEntity, ScopeId), ScopeRepo
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryScopeRepository()));
+    assert(tenantRepositoryTest(new ScopeRepository()));
 }

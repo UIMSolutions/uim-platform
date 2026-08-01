@@ -70,14 +70,14 @@ Container buildContainer(SrvConfig config) @trusted {
             break;
         case "memory": goto default;
         default:
-            instanceRepo    = new MemoryServiceInstanceRepository();
-            bindingRepo     = new MemoryServiceBindingRepository();
-            planRepo        = new MemoryServicePlanRepository();
-            configRepo      = new MemoryConfigurationRepository();
-            backupRepo      = new MemoryBackupPolicyRepository();
-            userRepo        = new MemoryDatabaseUserRepository();
-            extensionRepo   = new MemoryDatabaseExtensionRepository();
-            maintenanceRepo = new MemoryMaintenanceWindowRepository();
+            instanceRepo    = new ServiceInstanceRepository();
+            bindingRepo     = new ServiceBindingRepository();
+            planRepo        = new ServicePlanRepository();
+            configRepo      = new ConfigurationRepository();
+            backupRepo      = new BackupPolicyRepository();
+            userRepo        = new DatabaseUserRepository();
+            extensionRepo   = new DatabaseExtensionRepository();
+            maintenanceRepo = new MaintenanceWindowRepository();
             break;
     }
 

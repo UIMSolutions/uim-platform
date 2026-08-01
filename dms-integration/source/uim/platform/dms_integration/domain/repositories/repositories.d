@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface RepositoryRepository : ITenantRepository!(Repository_, RepositoryId) {
+interface IRepositoryRepository : ITenantRepository!(Repository_, RepositoryId) {
 
     size_t countByStatus(TenantId tenantId, RepositoryStatus status);
     Repository_[] findByStatus(TenantId tenantId, RepositoryStatus status);

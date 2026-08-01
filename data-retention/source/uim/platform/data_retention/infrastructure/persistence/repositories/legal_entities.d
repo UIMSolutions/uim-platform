@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryLegalEntityRepository : TenantRepository!(LegalEntity, LegalEntityId), LegalEntityRepository {
+class LegalEntityRepository : TenantRepository!(LegalEntity, LegalEntityId), LegalEntityRepository {
 
         size_t countByActive(TenantId tenantId) {
             return findActive(tenantId).length;

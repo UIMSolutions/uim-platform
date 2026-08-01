@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface DataQualityScoreRepository : ITenantRepository!(DataQualityScore, DataQualityScoreId) {
+interface IDataQualityScoreRepository : ITenantRepository!(DataQualityScore, DataQualityScoreId) {
 
     DataQualityScore findByBusinessPartner(TenantId tenantId, BusinessPartnerId bpId);
     DataQualityScore[] findByQualityStatus(TenantId tenantId, QualityStatus status);

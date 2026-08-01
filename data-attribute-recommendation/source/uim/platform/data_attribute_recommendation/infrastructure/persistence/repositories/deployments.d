@@ -12,7 +12,7 @@ import uim.platform.data_attribute_recommendation;
 mixin(ShowModule!());
 
 @safe:
-class MemoryDeploymentRepository : TenantRepository!(ModelDeployment, DeploymentId), IDeploymentRepository {
+class DeploymentRepository : TenantRepository!(ModelDeployment, DeploymentId), IDeploymentRepository {
 
   bool existsByTrainingJob(TenantId tenantId, TrainingJobId jobId) {
     return findByTenant(tenantId).any!(e => e.trainingJobId == jobId);
@@ -70,7 +70,7 @@ unittest {
   import uim.platform.data_attribute_recommendation.domain.ports.deployments;
 
   void testDeploymentRepository() {
-    auto repo = new MemoryDeploymentRepository();
+    auto repo = new DeploymentRepository();
     auto tenantId = TenantId("1");
     
     auto deployment1 = ModelDeployment(tenantId);
@@ -95,7 +95,7 @@ unittest {
   }
 
   void testDeploymentRepositoryWithEmptyTenant() {
-    auto repo = new MemoryDeploymentRepository();
+    auto repo = new DeploymentRepository();
     auto tenantId = TenantId("1");
     
     auto deployment1 = ModelDeployment(tenantId);
@@ -121,7 +121,7 @@ unittest {
   }
 
   void testDeploymentRepositoryWithNonExistentTrainingJob() {
-    auto repo = new MemoryDeploymentRepository();
+    auto repo = new DeploymentRepository();
     auto tenantId = TenantId("1");
     
     auto deployment1 = ModelDeployment(tenantId);
@@ -146,7 +146,7 @@ unittest {
   }
 
   void testDeploymentRepositoryByModelConfig() {
-    auto repo = new MemoryDeploymentRepository();
+    auto repo = new DeploymentRepository();
     auto tenantId = TenantId("1");
     
     auto deployment1 = ModelDeployment(tenantId);
@@ -176,7 +176,7 @@ unittest {
   } 
 
   void testDeploymentRepositoryByStatus() {
-    auto repo = new MemoryDeploymentRepository();
+    auto repo = new DeploymentRepository();
     auto tenantId = TenantId("1");
     
     auto deployment1 = ModelDeployment(tenantId);

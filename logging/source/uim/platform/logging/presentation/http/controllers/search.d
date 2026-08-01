@@ -128,7 +128,7 @@ unittest {
 
   @safe class SearchControllerTest : ControllerTestBase {
     void runTests() {
-      auto repo = new MemoryLogEntryRepository();
+      auto repo = new LogEntryRepository();
       auto usecase = new SearchLogsUseCase(repo);
       auto controller = new SearchController(usecase);
       auto tenantId = TenantId("test-tenant");

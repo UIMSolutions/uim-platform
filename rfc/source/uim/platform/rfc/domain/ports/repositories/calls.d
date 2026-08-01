@@ -10,7 +10,7 @@ import uim.platform.rfc;
 mixin(ShowModule!());
 @safe:
 
-interface RfcCallRepository {
+interface IRfcCallRepository {
     RfcCall   findById(TenantId tenantId, RfcCallId id);
     RfcCall[] findByTenant(TenantId tenantId);
     RfcCall[] findByDestination(TenantId tenantId, DestinationId destId);

@@ -3,7 +3,7 @@ import uim.platform.snowflake;
 
 mixin(ShowModule!());
 @safe:
-class MemoryDataProductShareRepository
+class DataProductShareRepository
     : TenantRepository!(DataProductShare, DataProductShareId),
       DataProductShareRepository {
 

@@ -173,7 +173,7 @@ class BusinessRoleController : ManageHttpController {
 }
 /// 
 unittest {
-  auto usecase = new ManageBusinessRolesUseCase(new MemoryBusinessRoleRepository);
+  auto usecase = new ManageBusinessRolesUseCase(new BusinessRoleRepository);
   auto controller = new BusinessRoleController(usecase);
 
   // Test createHandler with missing tenant ID

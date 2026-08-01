@@ -65,11 +65,11 @@ Container buildContainer(SrvConfig config) {
   Container c;
 
   // Infrastructure adapters
-  c.nsRepo = new MemoryNamespaceRepository();
-  c.credRepo = new MemoryCredentialRepository();
-  c.versionRepo = new MemoryKeyringVersionRepository();
-  c.bindingRepo = new MemoryServiceBindingRepository();
-  c.auditRepo = new MemoryAuditLogRepository();
+  c.nsRepo = new NamespaceRepository();
+  c.credRepo = new CredentialRepository();
+  c.versionRepo = new KeyringVersionRepository();
+  c.bindingRepo = new ServiceBindingRepository();
+  c.auditRepo = new AuditLogRepository();
 
   // Application use cases
   c.manageNamespaces = new ManageNamespacesUseCase(c.nsRepo);

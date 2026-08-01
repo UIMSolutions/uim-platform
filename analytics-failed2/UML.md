@@ -86,7 +86,7 @@ classDiagram
     +CommandResult publishAsset(string tenantId, string id)
   }
 
-  class MemoryAssetRepository
+  class AssetRepository
   class FileAssetRepository
   class MongoAssetRepository
   class AnalyticsAssetsController

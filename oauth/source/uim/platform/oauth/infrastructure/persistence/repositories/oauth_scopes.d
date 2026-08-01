@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryOAuthScopeRepository : TenantRepository!(OAuthScope, OAuthScopeId), IOAuthScopeRepository {
+class OAuthScopeRepository : TenantRepository!(OAuthScope, OAuthScopeId), IOAuthScopeRepository {
 
     bool existsByName(TenantId tenantId, string name) {
         return findByTenant(tenantId).any!(e => e.name == name);
@@ -60,5 +60,5 @@ class MemoryOAuthScopeRepository : TenantRepository!(OAuthScope, OAuthScopeId), 
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryOAuthScopeRepository()));
+    assert(tenantRepositoryTest(new OAuthScopeRepository()));
 }

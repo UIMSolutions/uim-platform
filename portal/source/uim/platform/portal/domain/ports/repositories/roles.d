@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — role persistence.
-interface RoleRepository : ITeanantRepository!(Role, RoleId) {
+interface IRoleRepository : ITeanantRepository!(Role, RoleId) {
 
   bool existsByName(TenantId tenantId, string name);
   Role findByName(TenantId tenantId, string name);

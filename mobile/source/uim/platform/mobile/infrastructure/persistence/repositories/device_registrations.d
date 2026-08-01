@@ -14,7 +14,7 @@ import uim.platform.mobile;
 
 @safe:
 
-class MemoryDeviceRegistrationRepository : TenantRepository!(DeviceRegistration, DeviceRegistrationId), DeviceRegistrationRepository {
+class DeviceRegistrationRepository : TenantRepository!(DeviceRegistration, DeviceRegistrationId), DeviceRegistrationRepository {
 
   bool existsByDeviceToken(TenantId tenantId, string deviceToken) {
     return findByTenant(tenantId).any!(r => r.deviceToken == deviceToken);

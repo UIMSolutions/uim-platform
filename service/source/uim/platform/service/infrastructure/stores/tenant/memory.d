@@ -6,7 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryTenantStore(TEntity, TId) : ITenantStore!(TEntity, TId) {
+class TenantStore(TEntity, TId) : ITenantStore!(TEntity, TId) {
     this() {
         initialize();
     }
@@ -135,7 +135,7 @@ class MemoryTenantStore(TEntity, TId) : ITenantStore!(TEntity, TId) {
 }
 ///
 unittest {
-    auto store = new MemoryTenantStore!(User, UserId)();
+    auto store = new TenantStore!(User, UserId)();
 
     auto tenantId = TenantId("tenant1");
     auto user1 = User(tenantId, UserId("user1"));

@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port for persisting and querying business subprocesses.
-interface BusinessSubprocessRepository : ITenantRepository!(BusinessSubprocess, BusinessSubprocessId) {
+interface IBusinessSubprocessRepository : ITenantRepository!(BusinessSubprocess, BusinessSubprocessId) {
 
   bool existsByParentProcess(TenantId tenantId, BusinessProcessId parentId);
   BusinessSubprocess[] findByParentProcess(TenantId tenantId, BusinessProcessId parentId);

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryMtaOperationRepository : TenantRepository!(MtaOperation, MtaOperationId), MtaOperationRepository {
+class MtaOperationRepository : TenantRepository!(MtaOperation, MtaOperationId), MtaOperationRepository {
 
     size_t countByMta(TenantId tenantId, string mtaId) {
         return findByMtaId(tenantId, mtaId).length;

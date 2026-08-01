@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface SqlWarehouseRepository : TenantRepository!(SqlWarehouse, SqlWarehouseId) {
+interface ISqlWarehouseRepository : TenantRepository!(SqlWarehouse, SqlWarehouseId) {
   SqlWarehouse[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId);
   SqlWarehouse[] findByState(TenantId tenantId, WarehouseState state);
   SqlWarehouse[] findByType(TenantId tenantId, WarehouseType warehouseType);

@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryAccessControlRepository
+class AccessControlRepository
     : TenantRepository!(AccessControl, AccessControlId)
     , AccessControlRepository
 {

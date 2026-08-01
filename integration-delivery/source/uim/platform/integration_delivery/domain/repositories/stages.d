@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface StageRepository : ITenantRepository!(Stage, StageId) {
+interface IStageRepository : ITenantRepository!(Stage, StageId) {
     Stage[] findByBuild(TenantId tenantId, BuildId buildId);
     Stage[] findByStatus(TenantId tenantId, StageStatus status);
     Stage[] findByBuildOrdered(TenantId tenantId, BuildId buildId);

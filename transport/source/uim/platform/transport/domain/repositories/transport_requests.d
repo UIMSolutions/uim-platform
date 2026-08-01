@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface TransportRequestRepository : ITenantRepository!(TransportRequest, TransportRequestId) {
+interface ITransportRequestRepository : ITenantRepository!(TransportRequest, TransportRequestId) {
     TransportRequest[] findByStatus(TenantId tenantId, RequestStatus status);
     TransportRequest[] findBySourceNode(TenantId tenantId, TransportNodeId nodeId);
     TransportRequest[] findByContentType(TenantId tenantId, ContentType contentType);

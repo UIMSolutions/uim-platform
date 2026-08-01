@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryPrintDocumentRepository
+class PrintDocumentRepository
     : TenantRepository!(PrintDocument, PrintDocumentId), PrintDocumentRepository {
 
     PrintDocument[] findByFormat(TenantId tenantId, DocumentFormat format) {

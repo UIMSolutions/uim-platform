@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface EventSchemaRepository : ITenantRepository!(EventSchema, EventSchemaId) {
+interface IEventSchemaRepository : ITenantRepository!(EventSchema, EventSchemaId) {
 
     size_t countByFormat(TenantId tenantId, SchemaFormat format);
     EventSchema[] findByFormat(TenantId tenantId, SchemaFormat format);

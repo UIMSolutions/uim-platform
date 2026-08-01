@@ -154,7 +154,7 @@ unittest {
 
   @safe class PipelineControllerTest : ControllerTestBase {
     void runTests() {
-      auto repo = new MemoryPipelineRepository();
+      auto repo = new PipelineRepository();
       auto usecase = new ManagePipelinesUseCase(repo);
       auto controller = new PipelineController(usecase);
       auto tenantId = TenantId("test-tenant");

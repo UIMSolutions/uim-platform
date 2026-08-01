@@ -42,14 +42,14 @@ import uim.platform.abap_environment;
 /// Dependency injection container - wires all layers together.
 struct Container {
   // Repositories (driven adapters)
-  MemorySystemInstanceRepository systemInstanceRepo;
-  MemorySoftwareComponentRepository softwareComponentRepo;
-  MemoryCommunicationArrangementRepository communicationArrangementRepo;
-  MemoryServiceBindingRepository serviceBindingRepo;
-  MemoryBusinessUserRepository businessUserRepo;
-  MemoryBusinessRoleRepository businessRoleRepo;
-  MemoryTransportRequestRepository transportRequestRepo;
-  MemoryApplicationJobRepository applicationJobRepo;
+  ISystemInstanceRepository systemInstanceRepo;
+  ISoftwareComponentRepository softwareComponentRepo;
+  ICommunicationArrangementRepository communicationArrangementRepo;
+  IServiceBindingRepository serviceBindingRepo;
+  IBusinessUserRepository businessUserRepo;
+  IBusinessRoleRepository businessRoleRepo;
+  ITransportRequestRepository transportRequestRepo;
+  IApplicationJobRepository applicationJobRepo;
 
   // Use cases (application layer)
   ManageSystemInstancesUseCase manageSystemInstances;
@@ -77,14 +77,14 @@ Container buildContainer(SrvConfig config) {
   Container c;
 
   // Infrastructure adapters
-  c.systemInstanceRepo = new MemorySystemInstanceRepository();
-  c.softwareComponentRepo = new MemorySoftwareComponentRepository();
-  c.communicationArrangementRepo = new MemoryCommunicationArrangementRepository();
-  c.serviceBindingRepo = new MemoryServiceBindingRepository();
-  c.businessUserRepo = new MemoryBusinessUserRepository();
-  c.businessRoleRepo = new MemoryBusinessRoleRepository();
-  c.transportRequestRepo = new MemoryTransportRequestRepository();
-  c.applicationJobRepo = new MemoryApplicationJobRepository();
+  c.systemInstanceRepo = new SystemInstanceRepository();
+  c.softwareComponentRepo = new SoftwareComponentRepository();
+  c.communicationArrangementRepo = new CommunicationArrangementRepository();
+  c.serviceBindingRepo = new ServiceBindingRepository();
+  c.businessUserRepo = new BusinessUserRepository();
+  c.businessRoleRepo = new BusinessRoleRepository();
+  c.transportRequestRepo = new TransportRequestRepository();
+  c.applicationJobRepo = new ApplicationJobRepository();
 
   // Application use cases
   c.manageSystemInstances = new ManageSystemInstancesUseCase(c.systemInstanceRepo);

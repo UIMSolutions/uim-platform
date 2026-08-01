@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface TriggerRepository : ITenantRepository!(Trigger, TriggerId) {
+interface ITriggerRepository : ITenantRepository!(Trigger, TriggerId) {
     
     size_t countByStatus(TenantId tenantId, TriggerStatus status);
     Trigger[] findByStatus(TenantId tenantId, TriggerStatus status);

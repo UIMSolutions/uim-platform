@@ -13,7 +13,7 @@ import uim.platform.ai_core;
 mixin(ShowModule!());
 
 @safe:
-class MemoryArtifactRepository : TenantRepository!(Artifact, ArtifactId), ArtifactRepository {
+class ArtifactRepository : TenantRepository!(Artifact, ArtifactId), IArtifactRepository {
 
   bool existsById(TenantId tenantId, ResourceGroupId rgId, ArtifactId id) {
     return findByResourceGroup(tenantId, rgId).any!(a => a.id == id);
@@ -95,5 +95,5 @@ class MemoryArtifactRepository : TenantRepository!(Artifact, ArtifactId), Artifa
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryArtifactRepository()));
+    assert(tenantRepositoryTest(new ArtifactRepository()));
 }

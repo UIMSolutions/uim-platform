@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryScheduledExecutionRepository : TenantRepository!(ScheduledExecution, ScheduledExecutionId), ScheduledExecutionRepository {
+class ScheduledExecutionRepository : TenantRepository!(ScheduledExecution, ScheduledExecutionId), ScheduledExecutionRepository {
 
     size_t countByCommand(TenantId tenantId, CommandId commandId) {
         return findByCommand(tenantId, commandId).length;

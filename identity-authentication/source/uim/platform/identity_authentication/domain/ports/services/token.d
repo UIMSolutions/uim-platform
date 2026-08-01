@@ -12,7 +12,7 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// Port: outgoing — token generation and validation.
-interface TokenService {
+interface ITokenService {
   /// Generate an access/id/refresh token.
   string generateToken(IAUser user, Application app, TokenType tokenType, string[] scopes);
 

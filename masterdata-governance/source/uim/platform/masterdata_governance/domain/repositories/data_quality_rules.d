@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface DataQualityRuleRepository : ITenantRepository!(DataQualityRule, DataQualityRuleId) {
+interface IDataQualityRuleRepository : ITenantRepository!(DataQualityRule, DataQualityRuleId) {
 
     DataQualityRule[] findByFieldName(TenantId tenantId, string fieldName);
     DataQualityRule[] findByRuleType(TenantId tenantId, RuleType ruleType);

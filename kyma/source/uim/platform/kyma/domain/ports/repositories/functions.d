@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — serverless function persistence.
-interface FunctionRepository {
+interface IFunctionRepository {
   bool existsById(ServerlessFunctionId functionId);
   ServerlessFunction findById(ServerlessFunctionId functionId);
   

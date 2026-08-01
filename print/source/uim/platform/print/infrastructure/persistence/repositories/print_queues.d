@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryPrintQueueRepository
+class PrintQueueRepository
     : TenantRepository!(PrintQueue, PrintQueueId), PrintQueueRepository {
 
     PrintQueue[] findByStatus(TenantId tenantId, PrintQueueStatus status) {

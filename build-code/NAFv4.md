@@ -78,7 +78,7 @@ All source-code dependencies point **inward**: Infrastructure â†’ Application â†
 | `DevSpaceRepository` | findByProject, findByStatus |
 | `TemplateRepository` | findByProjectType, findByTechStack, findBuiltIn |
 | `PipelineRepository` | findByProject, findByStage, findActive |
-| `BuildJobRepository` | findByPipeline, findByProject, findByStatus, findByBranch |
+| `IBuildJobRepository` | findByPipeline, findByProject, findByStatus, findByBranch |
 | `DeploymentRepository` | findByProject, findByEnvironment, findByStatus, findByBuildJob |
 | `AIRequestRepository` | findByProject, findByStatus, findByType, findByUser |
 | `ServiceBindingRepository` | findByProject, findByServiceName, findByStatus |

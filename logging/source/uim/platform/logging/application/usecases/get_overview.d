@@ -60,13 +60,13 @@ class GetOverviewUseCase { // TODO: UIMUseCase {
 
 unittest {
   // Setup Mock Repositories
-  auto logRepo = new MemoryLogEntryRepository();
-  auto spanRepo = new MemorySpanRepository();
-  auto streamRepo = new MemoryLogStreamRepository();
-  auto dashboardRepo = new MemoryDashboardRepository();
-  auto alertRepo = new MemoryAlertRepository();
-  auto pipelineRepo = new MemoryPipelineRepository();
-  auto channelRepo = new MemoryNotificationChannelRepository();
+  auto logRepo = new LogEntryRepository();
+  auto spanRepo = new SpanRepository();
+  auto streamRepo = new LogStreamRepository();
+  auto dashboardRepo = new DashboardRepository();
+  auto alertRepo = new AlertRepository();
+  auto pipelineRepo = new PipelineRepository();
+  auto channelRepo = new NotificationChannelRepository();
 
   auto usecase = new GetOverviewUseCase(logRepo,
     spanRepo,

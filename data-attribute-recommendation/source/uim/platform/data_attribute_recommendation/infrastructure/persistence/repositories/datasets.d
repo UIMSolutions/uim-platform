@@ -11,7 +11,7 @@ import uim.platform.data_attribute_recommendation;
 mixin(ShowModule!());
 
 @safe:
-class MemoryDatasetRepository : TenantRepository!(Dataset, DatasetId), IDatasetRepository {
+class DatasetRepository : TenantRepository!(Dataset, DatasetId), IDatasetRepository {
 
   // #region ByName
   bool existsByName(TenantId tenantId, string name) {
@@ -73,7 +73,7 @@ unittest {
   import std.exception;
 
   void testDatasetRepositoryWithEmptyTenant() {
-    auto repo = new MemoryDatasetRepository();
+    auto repo = new DatasetRepository();
     auto tenantId = TenantId("1");
     
     auto dataset1 = Dataset(tenantId);
@@ -95,7 +95,7 @@ unittest {
   }
 
   void testDatasetRepositoryWithNonEmptyTenant() {
-    auto repo = new MemoryDatasetRepository();
+    auto repo = new DatasetRepository();
     auto tenantId = TenantId("1");
     
     auto dataset1 = Dataset(tenantId);
@@ -115,7 +115,7 @@ unittest {
   }
 
   void testDatasetRepositoryByName() {
-    auto repo = new MemoryDatasetRepository();
+    auto repo = new DatasetRepository();
     auto tenantId = TenantId("1");
     
     auto dataset1 = Dataset(tenantId);
@@ -133,7 +133,7 @@ unittest {
   }
 
   void testDatasetRepositoryByStatus() {
-    auto repo = new MemoryDatasetRepository();
+    auto repo = new DatasetRepository();
     auto tenantId = TenantId("1");
     
     auto dataset1 = Dataset(tenantId);
@@ -152,7 +152,7 @@ unittest {
   }
 
   void testDatasetRepositoryByDataType() {
-    auto repo = new MemoryDatasetRepository();
+    auto repo = new DatasetRepository();
     auto tenantId = TenantId("1");
     
     auto dataset1 = Dataset(tenantId);
@@ -171,7 +171,7 @@ unittest {
   }
 
   void testDatasetRepositoryWithMultipleTenants() {
-    auto repo = new MemoryDatasetRepository();
+    auto repo = new DatasetRepository();
     auto tenantId1 = TenantId("1");
     auto tenantId2 = TenantId("2");
     
@@ -191,7 +191,7 @@ unittest {
   }
 
   void testDatasetRepositoryWithNonexistentDataset() {
-    auto repo = new MemoryDatasetRepository();
+    auto repo = new DatasetRepository();
     auto tenantId = TenantId("1");
     
     assert(!repo.existsByName(tenantId, "Nonexistent Dataset"));
@@ -199,7 +199,7 @@ unittest {
   }
 
   void testDatasetRepositoryWithMultipleDatasets() {
-    auto repo = new MemoryDatasetRepository();
+    auto repo = new DatasetRepository();
     auto tenantId = TenantId("1");
     
     auto dataset1 = Dataset(tenantId);

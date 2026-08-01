@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryMessageBindingRepository
+class MessageBindingRepository
     : TenantRepository!(MessageBinding, MessageBindingId), MessageBindingRepository {
 
     size_t countByClient(TenantId tenantId, MessageClientId clientId) {

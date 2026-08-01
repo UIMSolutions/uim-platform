@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface TaskActionRepository : ITenantRepository!(TaskAction, TaskActionId) {
+interface ITaskActionRepository : ITenantRepository!(TaskAction, TaskActionId) {
 
     size_t countByTask(TenantId tenantId, TaskId taskId);
     TaskAction[] findByTask(TenantId tenantId, TaskId taskId);

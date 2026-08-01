@@ -94,15 +94,15 @@ Container buildContainer(SrvConfig config) {
   Container c;
 
   // Infrastructure adapters
-  c.envRepo = new MemoryEnvironmentRepository();
-  c.nsRepo = new MemoryNamespaceRepository();
-  c.fnRepo = new MemoryFunctionRepository();
-  c.apiRuleRepo = new MemoryApiRuleRepository();
-  c.siRepo = new MemoryServiceInstanceRepository();
-  c.sbRepo = new MemoryServiceBindingRepository();
-  c.eventSubRepo = new MemoryEventSubscriptionRepository();
-  c.moduleRepo = new MemoryModuleRepository();
-  c.appRepo = new MemoryApplicationRepository();
+  c.envRepo = new EnvironmentRepository();
+  c.nsRepo = new NamespaceRepository();
+  c.fnRepo = new FunctionRepository();
+  c.apiRuleRepo = new ApiRuleRepository();
+  c.siRepo = new ServiceInstanceRepository();
+  c.sbRepo = new ServiceBindingRepository();
+  c.eventSubRepo = new EventSubscriptionRepository();
+  c.moduleRepo = new ModuleRepository();
+  c.appRepo = new ApplicationRepository();
 
   // Domain services
   c.depResolver = new ModuleDependencyResolver();

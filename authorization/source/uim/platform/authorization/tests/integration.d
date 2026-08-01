@@ -9,7 +9,7 @@ mixin(ShowModule!());
 @safe:
 
 unittest {
-  auto repo = new MemoryAuthorizationRepository();
+  auto repo = new AuthorizationRepository();
   auto evaluator = new PolicyEvaluator();
 
   auto apps = new ManageApplicationsUseCase(repo);
@@ -67,7 +67,7 @@ unittest {
 }
 
 unittest {
-  auto repo = new MemoryAuthorizationRepository();
+  auto repo = new AuthorizationRepository();
   auto apps = new ManageApplicationsUseCase(repo);
   auto policies = new ManagePoliciesUseCase(repo);
 

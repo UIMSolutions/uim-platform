@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryCacheEntryRepository
+class CacheEntryRepository
     : TenantRepository!(CacheEntry, CacheEntryId)
     , CacheEntryRepository
 {

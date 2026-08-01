@@ -13,7 +13,7 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// In-memory adapter for tenant persistence.
-class MemoryTenantRepository : IdMTenantRepository {
+class TenantRepository : IdMTenantRepository {
   private IdMTenant[IdMTenantId] store;
 
   bool existsById(IdMTenantId id) {

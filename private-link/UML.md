@@ -253,9 +253,9 @@ interface ServiceInstanceRepository
 interface PrivateEndpointRepository
 interface ServiceBindingRepository
 
-class MemoryServiceInstanceRepository  implements ServiceInstanceRepository
-class MemoryPrivateEndpointRepository  implements PrivateEndpointRepository
-class MemoryServiceBindingRepository   implements ServiceBindingRepository
+class ServiceInstanceRepository  implements ServiceInstanceRepository
+class PrivateEndpointRepository  implements PrivateEndpointRepository
+class ServiceBindingRepository   implements ServiceBindingRepository
 
 class FileServiceInstanceRepository    implements ServiceInstanceRepository
 class MongoServiceInstanceRepository   implements ServiceInstanceRepository

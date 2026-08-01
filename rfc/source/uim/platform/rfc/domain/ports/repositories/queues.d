@@ -10,7 +10,7 @@ import uim.platform.rfc;
 mixin(ShowModule!());
 @safe:
 
-interface RfcQueueRepository {
+interface IRfcQueueRepository {
     RfcQueueEntry   findById(TenantId tenantId, string id);
     RfcQueueEntry[] findByQueue(TenantId tenantId, QueueName queueName);
     RfcQueueEntry[] findByTid(TenantId tenantId, TidValue tid);

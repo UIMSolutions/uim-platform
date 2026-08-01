@@ -3,7 +3,7 @@ import uim.platform.snowflake;
 
 mixin(ShowModule!());
 @safe:
-class MemorySnowflakeWarehouseRepository
+class SnowflakeWarehouseRepository
     : TenantRepository!(SnowflakeWarehouse, SnowflakeWarehouseId),
       SnowflakeWarehouseRepository {
 

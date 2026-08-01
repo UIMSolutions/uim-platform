@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface DataContextRepository : ITenantRepository!(DataContext, DataContextId) {
+interface IDataContextRepository : ITenantRepository!(DataContext, DataContextId) {
 
     size_t countByInstance(TenantId tenantId, SituationInstanceId instanceId);
     DataContext[] findByInstance(TenantId tenantId, SituationInstanceId instanceId);

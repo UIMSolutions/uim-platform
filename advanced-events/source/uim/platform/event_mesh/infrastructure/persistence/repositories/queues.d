@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryQueueRepository : TenantRepository!(Queue, QueueId), QueueRepository {
+class QueueRepository : TenantRepository!(Queue, QueueId), QueueRepository {
 
     size_t countByBrokerService(TenantId tenantId, BrokerServiceId serviceId) {
         return findByBrokerService(tenantId, serviceId).length;

@@ -183,7 +183,7 @@ package "Domain" {
   interface DevSpaceRepository       as DSR
   interface TemplateRepository       as TR
   interface PipelineRepository       as PLR
-  interface BuildJobRepository       as BJR
+  interface IBuildJobRepository       as BJR
   interface DeploymentRepository     as DR
   interface AIRequestRepository      as AIR
   interface ServiceBindingRepository as SBR

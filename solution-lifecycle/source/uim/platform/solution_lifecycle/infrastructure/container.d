@@ -39,10 +39,10 @@ Container buildContainer(SrvConfig config) {
     Container c;
 
     // Infrastructure adapters
-    c.mtaArchiveRepo      = new MemoryMtaArchiveRepository();
-    c.mtaRepo             = new MemoryMtaRepository();
-    c.mtaOperationRepo    = new MemoryMtaOperationRepository();
-    c.mtaSubscriptionRepo = new MemoryMtaSubscriptionRepository();
+    c.mtaArchiveRepo      = new MtaArchiveRepository();
+    c.mtaRepo             = new MtaRepository();
+    c.mtaOperationRepo    = new MtaOperationRepository();
+    c.mtaSubscriptionRepo = new MtaSubscriptionRepository();
 
     // Domain services
     c.deploymentEngine = new DeploymentEngine();

@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryCatalogAssetRepository : TenantRepository!(CatalogAsset, CatalogAssetId), CatalogAssetRepository {
+class CatalogAssetRepository : TenantRepository!(CatalogAsset, CatalogAssetId), CatalogAssetRepository {
 
   // #region ById
   bool existsById(TenantId tenantId, SpaceId spaceId, CatalogAssetId id) {

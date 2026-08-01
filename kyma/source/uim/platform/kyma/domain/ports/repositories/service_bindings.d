@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — service binding persistence.
-interface ServiceBindingRepository : ITenantRepository!(ServiceBinding, ServiceBindingId) {
+interface IServiceBindingRepository : ITenantRepository!(ServiceBinding, ServiceBindingId) {
   
   bool existsById(ServiceBindingId id);
   ServiceBinding findById(ServiceBindingId id);

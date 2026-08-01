@@ -14,7 +14,7 @@ mixin(ShowModule!());
 @safe:
  
 
-class MemoryDataProfileRepository : TenantRepository!(DataProfile, DataProfileId), DataProfileRepository {
+class DataProfileRepository : TenantRepository!(DataProfile, DataProfileId), DataProfileRepository {
 
   DataProfile findLatestByDataset(TenantId tenantId, DatasetId datasetId) {
     DataProfile latest;

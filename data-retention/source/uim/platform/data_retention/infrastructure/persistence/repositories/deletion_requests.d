@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryDeletionRequestRepository : TenantRepository!(DeletionRequest, DeletionRequestId), DeletionRequestRepository {
+class DeletionRequestRepository : TenantRepository!(DeletionRequest, DeletionRequestId), DeletionRequestRepository {
 
     size_t countByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
         return findByDataSubject(tenantId, subjectId).length;

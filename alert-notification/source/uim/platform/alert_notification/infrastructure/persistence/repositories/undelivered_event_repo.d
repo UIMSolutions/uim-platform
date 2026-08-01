@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryUndeliveredEventRepository
+class UndeliveredEventRepository
     : TenantRepository!(UndeliveredEvent, UndeliveredEventId),
       UndeliveredEventRepository
 {

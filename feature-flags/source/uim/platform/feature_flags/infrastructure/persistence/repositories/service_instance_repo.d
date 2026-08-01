@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryServiceInstanceRepository : ServiceInstanceRepository {
+class ServiceInstanceRepository : ServiceInstanceRepository {
     private ServiceInstance[string] store;
 
     void save(ServiceInstance inst) {

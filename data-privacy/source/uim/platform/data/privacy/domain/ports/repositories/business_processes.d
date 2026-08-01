@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port for persisting and querying business processes.
-interface BusinessProcessRepository : ITenantRepository!(BusinessProcess, BusinessProcessId) {
+interface IBusinessProcessRepository : ITenantRepository!(BusinessProcess, BusinessProcessId) {
   
   size_t countByController(TenantId tenantId, DataControllerId controllerId);
   BusinessProcess[] findByController(TenantId tenantId, DataControllerId controllerId);

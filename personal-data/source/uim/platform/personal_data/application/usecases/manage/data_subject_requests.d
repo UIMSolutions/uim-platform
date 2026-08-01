@@ -100,7 +100,7 @@ unittest {
     mixin(ShowTest!("ManageDataSubjectRequestsUseCase"));
 
     void testCreateRequest() {
-        auto repo = new MemoryDataSubjectRequestRepository();
+        auto repo = new DataSubjectRequestRepository();
         auto useCase = new ManageDataSubjectRequestsUseCase(repo);
 
         // Test creating a data subject request
@@ -125,7 +125,7 @@ unittest {
     }
 
     void testSecond() {
-        auto repo = new MemoryDataSubjectRequestRepository();
+        auto repo = new DataSubjectRequestRepository();
         auto useCase = new ManageDataSubjectRequestsUseCase(repo);
 
         // Test listing data subject requests
@@ -153,7 +153,7 @@ unittest {
     }
 
     void testThird() {
-        auto repo = new MemoryDataSubjectRequestRepository();
+        auto repo = new DataSubjectRequestRepository();
         auto useCase = new ManageDataSubjectRequestsUseCase(repo);
 
         // Create a request to test updating
@@ -191,7 +191,7 @@ unittest {
     }
 
     void testDelete() {
-        auto repo = new MemoryDataSubjectRequestRepository();
+        auto repo = new DataSubjectRequestRepository();
         auto useCase = new ManageDataSubjectRequestsUseCase(repo);
 
         // Create a request to test deletion

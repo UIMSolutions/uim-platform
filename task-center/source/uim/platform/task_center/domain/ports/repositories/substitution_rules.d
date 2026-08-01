@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface SubstitutionRuleRepository : ITenantRepository!(SubstitutionRule, SubstitutionRuleId) {
+interface ISubstitutionRuleRepository : ITenantRepository!(SubstitutionRule, SubstitutionRuleId) {
 
     size_t countByUser(TenantId tenantId, UserId userId);
     SubstitutionRule[] findByUser(TenantId tenantId, UserId userId);

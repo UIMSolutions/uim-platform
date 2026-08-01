@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryIdentityProviderRepository : TenantRepository!(IdentityProvider, IdentityProviderId), IdentityProviderRepository {
+class IdentityProviderRepository : TenantRepository!(IdentityProvider, IdentityProviderId), IdentityProviderRepository {
 
   bool existsByAlias(TenantId tenantId, string alias_) {
     return findByTenant(tenantId).any!(idp => idp.alias_ == alias_);
@@ -46,5 +46,5 @@ class MemoryIdentityProviderRepository : TenantRepository!(IdentityProvider, Ide
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryIdentityProviderRepository()));
+    assert(tenantRepositoryTest(new IdentityProviderRepository()));
 }

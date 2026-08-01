@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface DocumentRepository : ITenantRepository!(Document, DocumentId) {
+interface IDocumentRepository : ITenantRepository!(Document, DocumentId) {
 
     size_t countByRepository(TenantId tenantId, RepositoryId repositoryId);
     Document[] findByRepository(TenantId tenantId, RepositoryId repositoryId);

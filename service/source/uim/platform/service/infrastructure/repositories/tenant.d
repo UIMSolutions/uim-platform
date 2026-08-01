@@ -23,7 +23,7 @@ class TenantRepository(TEntity, TId) : ITenantRepository!(TEntity, TId) {
     //   return false;
     // }
 
-    _store = new MemoryTenantStore!(TEntity, TId)();
+    _store = new TenantStore!(TEntity, TId)();
     return true;
   }
 

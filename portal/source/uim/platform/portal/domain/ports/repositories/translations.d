@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — translation persistence.
-interface TranslationRepository {
+interface ITranslationRepository {
   bool existsById(TranslationId id);
   Translation findById(TranslationId id);
 

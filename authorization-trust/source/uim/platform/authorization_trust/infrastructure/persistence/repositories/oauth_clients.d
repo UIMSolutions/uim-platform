@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryOAuthClientRepository : TenantRepository!(OAuthClient, OAuthClientId), OAuthClientRepository {
+class OAuthClientRepository : TenantRepository!(OAuthClient, OAuthClientId), OAuthClientRepository {
   
   size_t countByApp(TenantId tenantId, string appId) {
     return filterByApp(findByTenant(tenantId), appId).length;
@@ -29,5 +29,5 @@ class MemoryOAuthClientRepository : TenantRepository!(OAuthClient, OAuthClientId
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryOAuthClientRepository()));
+    assert(tenantRepositoryTest(new OAuthClientRepository()));
 }

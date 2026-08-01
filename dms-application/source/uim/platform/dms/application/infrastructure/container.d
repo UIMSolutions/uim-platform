@@ -82,13 +82,13 @@ Container buildContainer(SrvConfig config) {
   Container c;
 
   // Infrastructure adapters
-  c.repoRepo = new MemoryRepositoryRepository();
-  c.folderRepo = new MemoryFolderRepository();
-  c.docRepo = new MemoryDocumentRepository();
-  c.versionRepo = new MemoryDocumentVersionRepository();
-  c.shareRepo = new MemoryShareRepository();
-  c.permRepo = new MemoryPermissionRepository();
-  c.favRepo = new MemoryFavoriteRepository();
+  c.repoRepo = new RepositoryRepository();
+  c.folderRepo = new FolderRepository();
+  c.docRepo = new DocumentRepository();
+  c.versionRepo = new DocumentVersionRepository();
+  c.shareRepo = new ShareRepository();
+  c.permRepo = new PermissionRepository();
+  c.favRepo = new FavoriteRepository();
 
   // Domain services
   c.versioningService = new VersioningService(c.docRepo, c.versionRepo);

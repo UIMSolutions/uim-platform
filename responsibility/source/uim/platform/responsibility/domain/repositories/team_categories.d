@@ -11,6 +11,6 @@ mixin(ShowModule!());
 
 @safe:
 
-interface TeamCategoryRepository : ITenantRepository!(TeamCategory, TeamCategoryId) {
+interface ITeamCategoryRepository : ITenantRepository!(TeamCategory, TeamCategoryId) {
     TeamCategory findByCode(TenantId tenantId, string code);
 }

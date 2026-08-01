@@ -46,15 +46,15 @@ Container buildContainer(SrvConfig config) {
   Container c;
 
   // Infrastructure adapters
-  c.packageRepo      = new MemoryIntegrationPackageRepository();
-  c.flowRepo         = new MemoryIntegrationFlowRepository();
-  c.apiProxyRepo     = new MemoryApiProxyRepository();
-  c.apiProductRepo   = new MemoryApiProductRepository();
-  c.queueRepo        = new MemoryMessageQueueRepository();
-  c.subscriptionRepo = new MemoryTopicSubscriptionRepository();
-  c.partnerRepo      = new MemoryTradingPartnerRepository();
-  c.mappingRepo      = new MemoryMessageMappingRepository();
-  c.userRepo         = new MemoryIntegrationUserRepository();
+  c.packageRepo      = new IntegrationPackageRepository();
+  c.flowRepo         = new IntegrationFlowRepository();
+  c.apiProxyRepo     = new ApiProxyRepository();
+  c.apiProductRepo   = new ApiProductRepository();
+  c.queueRepo        = new MessageQueueRepository();
+  c.subscriptionRepo = new TopicSubscriptionRepository();
+  c.partnerRepo      = new TradingPartnerRepository();
+  c.mappingRepo      = new MessageMappingRepository();
+  c.userRepo         = new IntegrationUserRepository();
 
   // Application use cases
   c.managePackages      = new ManageIntegrationPackagesUseCase(c.packageRepo);

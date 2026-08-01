@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — section persistence.
-interface SectionRepository : ITenantRepository!(PortalSection, SectionId) {
+interface ISectionRepository : ITenantRepository!(PortalSection, SectionId) {
 
   size_t countByPage(TenantId tenantId, PageId pageId);
   PortalSection[] findByPage(TenantId tenantId, PageId pageId);

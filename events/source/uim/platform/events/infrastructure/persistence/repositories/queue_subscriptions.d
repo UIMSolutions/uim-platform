@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryQueueSubscriptionRepository
+class QueueSubscriptionRepository
     : TenantRepository!(QueueSubscription, QueueSubscriptionId), QueueSubscriptionRepository {
 
     size_t countByQueue(TenantId tenantId, QueueId queueId) {

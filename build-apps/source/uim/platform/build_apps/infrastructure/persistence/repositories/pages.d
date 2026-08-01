@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryPageRepository : TenantRepository!(Page, PageId), PageRepository {
+class PageRepository : TenantRepository!(Page, PageId), PageRepository {
 
     size_t countByApplication(TenantId tenantId, ApplicationId applicationId) {
         return findByApplication(tenantId, applicationId).length;

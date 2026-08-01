@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryTranslationJobRepository
+class TranslationJobRepository
     : TenantRepository!(TranslationJob, TranslationJobId),
       TranslationJobRepository
 {

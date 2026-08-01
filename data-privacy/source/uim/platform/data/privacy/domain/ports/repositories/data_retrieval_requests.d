@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port for persisting data subject access / retrieval requests.
-interface DataRetrievalRequestRepository : ITenantRepository!(DataRetrievalRequest, DataRetrievalRequestId) {
+interface IDataRetrievalRequestRepository : ITenantRepository!(DataRetrievalRequest, DataRetrievalRequestId) {
 
   size_t countByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
   DataRetrievalRequest[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);

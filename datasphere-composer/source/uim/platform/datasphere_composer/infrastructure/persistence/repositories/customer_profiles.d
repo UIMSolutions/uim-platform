@@ -10,7 +10,7 @@ import uim.platform.datasphere_composer;
 mixin(ShowModule!());
 
 @safe:
-class MemoryCustomerProfileRepository
+class CustomerProfileRepository
     : TenantRepository!(CustomerProfile, CustomerProfileId),
       CustomerProfileRepository {
 

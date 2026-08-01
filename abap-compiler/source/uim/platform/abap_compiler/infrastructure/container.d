@@ -32,8 +32,8 @@ Container buildContainer(SrvConfig config) {
     Container c;
 
     // Infrastructure
-    c.programRepo = new MemoryAbapProgramRepository();
-    c.jobRepo     = new MemoryCompilationJobRepository();
+    c.programRepo = new AbapProgramRepository();
+    c.jobRepo     = new CompilationJobRepository();
 
     // Application
     c.managePrograms = new ManageProgramsUseCase(c.programRepo);

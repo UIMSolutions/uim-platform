@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — tile / app launcher persistence.
-interface TileRepository : TTenantRepository!(Tile, TileId) {
+interface ITileRepository : TTenantRepository!(Tile, TileId) {
 
   size_t countByCatalog(CatalogId catalogId);
   Tile[] findByCatalog(CatalogId catalogId, size_t offset = 0, size_t limit = 100);

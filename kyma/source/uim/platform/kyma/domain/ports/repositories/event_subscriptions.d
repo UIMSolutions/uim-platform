@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — event subscription persistence.
-interface EventSubscriptionRepository {
+interface IEventSubscriptionRepository {
   bool existsById(EventSubscriptionId id);
   EventSubscription findById(EventSubscriptionId id);
 

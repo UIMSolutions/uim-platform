@@ -37,13 +37,13 @@ version (unittest) {
     // ──────────────────────────────────────────────
 
     // 1. Outgoing adapters (driven side — persistence)
-    auto dashboardRepo = new MemoryDashboardRepository();
-    auto storyRepo = new MemoryStoryRepository();
-    auto datasetRepo = new MemoryDatasetRepository();
-    auto widgetRepo = new MemoryWidgetRepository();
-    auto dataSourceRepo = new MemoryDataSourceRepository();
-    auto planningRepo = new MemoryPlanningRepository();
-    auto predictionRepo = new MemoryPredictionRepository();
+    auto dashboardRepo = new DashboardRepository();
+    auto storyRepo = new StoryRepository();
+    auto datasetRepo = new DatasetRepository();
+    auto widgetRepo = new WidgetRepository();
+    auto dataSourceRepo = new DataSourceRepository();
+    auto planningRepo = new PlanningRepository();
+    auto predictionRepo = new PredictionRepository();
 
     // 2. Outgoing adapters (driven side — external services)
     auto dataConnector = new StubDataConnector();

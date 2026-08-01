@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryMtaArchiveRepository : TenantRepository!(MtaArchive, MtaArchiveId),
+class MtaArchiveRepository : TenantRepository!(MtaArchive, MtaArchiveId),
 MtaArchiveRepository {
     /// Find archives by MTA application ID
     MtaArchive[] findByMtaId(TenantId tenantId, string mtaId) {

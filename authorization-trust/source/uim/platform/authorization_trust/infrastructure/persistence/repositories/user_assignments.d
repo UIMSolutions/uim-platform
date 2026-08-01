@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryUserAssignmentRepository : TenantRepository!(UserAssignment, UserAssignmentId), UserAssignmentRepository {
+class UserAssignmentRepository : TenantRepository!(UserAssignment, UserAssignmentId), UserAssignmentRepository {
 
   size_t countByUser(TenantId tenantId, UserId userId) {
     return findByUser(tenantId, userId).length;
@@ -45,5 +45,5 @@ class MemoryUserAssignmentRepository : TenantRepository!(UserAssignment, UserAss
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryUserAssignmentRepository()));
+    assert(tenantRepositoryTest(new UserAssignmentRepository()));
 }

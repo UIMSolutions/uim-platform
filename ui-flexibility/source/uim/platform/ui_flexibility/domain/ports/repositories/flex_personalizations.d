@@ -10,7 +10,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface FlexPersonalizationRepository : ITenantRepository!(FlexPersonalization, FlexPersonalizationId) {
+interface IFlexPersonalizationRepository : ITenantRepository!(FlexPersonalization, FlexPersonalizationId) {
   bool existsById(TenantId tenantId, FlexPersonalizationId id);
   FlexPersonalization findById(TenantId tenantId, FlexPersonalizationId id);
   bool removeById(TenantId tenantId, FlexPersonalizationId id);

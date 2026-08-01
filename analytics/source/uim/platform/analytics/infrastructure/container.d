@@ -23,7 +23,7 @@ Container buildContainer(AppConfig config) {
 
   final switch (config.storage) {
     case StorageBackend.memory_:
-      c.assetRepository = new MemoryAssetRepository();
+      c.assetRepository = new AssetRepository();
       break;
 
     case StorageBackend.files_:
@@ -32,7 +32,7 @@ Container buildContainer(AppConfig config) {
 
     case StorageBackend.mongodb_:
       if (config.mongoUri.length == 0) {
-        c.assetRepository = new MemoryAssetRepository();
+        c.assetRepository = new AssetRepository();
       } else {
         auto db = connectMongoDB(config.mongoUri).getDatabase(config.mongoDb);
         c.assetRepository = new MongoAssetRepository(db["insight_assets"]);

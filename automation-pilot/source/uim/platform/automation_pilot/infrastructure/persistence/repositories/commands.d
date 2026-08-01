@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryCommandRepository : TenantRepository!(Command, CommandId), CommandRepository {
+class CommandRepository : TenantRepository!(Command, CommandId), CommandRepository {
 
     // #region ByCatalog
     size_t countByCatalog(TenantId tenantId, CatalogId catalogId) {

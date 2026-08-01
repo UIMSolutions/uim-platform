@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ResponsibilityRuleRepository : ITenantRepository!(ResponsibilityRule, ResponsibilityRuleId) {
+interface IResponsibilityRuleRepository : ITenantRepository!(ResponsibilityRule, ResponsibilityRuleId) {
     ResponsibilityRule[] findByStatus(TenantId tenantId, RuleStatus status);
     ResponsibilityRule[] findByType(TenantId tenantId, RuleType ruleType);
     ResponsibilityRule[] findByContext(TenantId tenantId, string contextId);

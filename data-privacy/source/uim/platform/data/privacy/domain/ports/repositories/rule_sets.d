@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port for persisting and querying rule sets.
-interface RuleSetRepository : ITenantRepository!(RuleSet, RuleSetId) {
+interface IRuleSetRepository : ITenantRepository!(RuleSet, RuleSetId) {
 
   size_t countByBusinessContext(TenantId tenantId, BusinessContextId contextId);
   RuleSet[] findByBusinessContext(TenantId tenantId, BusinessContextId contextId);

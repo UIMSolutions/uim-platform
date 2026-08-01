@@ -10,7 +10,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryMlExperimentRepository : TenantRepository!(MlExperiment, MlExperimentId), MlExperimentRepository {
+class MlExperimentRepository : TenantRepository!(MlExperiment, MlExperimentId), MlExperimentRepository {
   MlExperiment[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
     import std.algorithm : filter;
     import std.array : array;
@@ -33,5 +33,5 @@ class MemoryMlExperimentRepository : TenantRepository!(MlExperiment, MlExperimen
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryMlExperimentRepository()));
+    assert(tenantRepositoryTest(new MlExperimentRepository()));
 }

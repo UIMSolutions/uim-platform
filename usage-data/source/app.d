@@ -12,11 +12,11 @@ void main() {
   auto cfg = ServiceConfig.load();
 
   // Repositories (in-memory)
-  auto usageRecordRepo = new MemoryUsageRecordRepository();
-  auto monthlyUsageRepo = new MemoryMonthlyUsageReportRepository();
-  auto dailyUsageRepo = new MemoryDailyUsageReportRepository();
-  auto monthlyCostRepo = new MemoryMonthlyCostReportRepository();
-  auto serviceMetricRepo = new MemoryServiceMetricRepository();
+  auto usageRecordRepo = new UsageRecordRepository();
+  auto monthlyUsageRepo = new MonthlyUsageReportRepository();
+  auto dailyUsageRepo = new DailyUsageReportRepository();
+  auto monthlyCostRepo = new MonthlyCostReportRepository();
+  auto serviceMetricRepo = new ServiceMetricRepository();
 
   // Use cases
   auto usageRecordUseCases = new UsageRecordUseCases(usageRecordRepo);

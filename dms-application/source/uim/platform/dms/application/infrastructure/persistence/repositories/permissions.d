@@ -12,7 +12,7 @@ import uim.platform.dms.application;
 
 mixin(ShowModule!());
 @safe:
-class MemoryPermissionRepository : TenantRepository!(Permission, PermissionId), IPermissionRepository {
+class PermissionRepository : TenantRepository!(Permission, PermissionId), IPermissionRepository {
   // #region byResource
   size_t countByResource(TenantId tenantId, string resourceId, ResourceType resourceType) {
     return findByResource(tenantId, resourceId, resourceType).count;
@@ -64,5 +64,5 @@ Permission[] filterByUser(Permission[] permissions, UserId userId) {
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryPermissionRepository()));
+    assert(tenantRepositoryTest(new PermissionRepository()));
 }

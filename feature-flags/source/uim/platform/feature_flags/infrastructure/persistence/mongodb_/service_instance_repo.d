@@ -19,7 +19,7 @@ class MongoDbServiceInstanceRepository : ServiceInstanceRepository {
     this(string connectionUri, string dbName) {
         this.connectionUri = connectionUri;
         this.dbName        = dbName;
-        this.fallback      = new MemoryServiceInstanceRepository();
+        this.fallback      = new ServiceInstanceRepository();
         // TODO: connect and wire mongo collection
     }
 

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ServicePlanRepository : ITenantRepository!(ServicePlan, ServicePlanId) {
+interface IServicePlanRepository : ITenantRepository!(ServicePlan, ServicePlanId) {
     ServicePlan[] findByTier(TenantId tenantId, PlanTier tier);
     ServicePlan[] findAvailable(TenantId tenantId);
     bool nameExists(TenantId tenantId, string name);

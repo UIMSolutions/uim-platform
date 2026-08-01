@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface DataSubjectRepository : ITenantRepository!(DataSubject, DataSubjectId) {
+interface IDataSubjectRepository : ITenantRepository!(DataSubject, DataSubjectId) {
 
     bool existsByEmail(TenantId tenantId, string email);
     DataSubject findByEmail(TenantId tenantId, string email);

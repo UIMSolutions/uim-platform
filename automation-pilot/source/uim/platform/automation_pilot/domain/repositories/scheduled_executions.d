@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ScheduledExecutionRepository : ITenantRepository!(ScheduledExecution, ScheduledExecutionId) {
+interface IScheduledExecutionRepository : ITenantRepository!(ScheduledExecution, ScheduledExecutionId) {
     
     size_t countByCommand(TenantId tenantId, CommandId commandId);
     ScheduledExecution[] findByCommand(TenantId tenantId, CommandId commandId);

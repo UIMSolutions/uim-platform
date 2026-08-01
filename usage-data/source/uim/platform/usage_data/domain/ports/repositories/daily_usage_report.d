@@ -10,7 +10,7 @@ import uim.platform.usage_data;
 mixin(ShowModule!());
 @safe:
 /// Port: outgoing repository interface for DailyUsageReport persistence.
-interface DailyUsageReportRepository
+interface IDailyUsageReportRepository
     : ITenantRepository!(DailyUsageReport, DailyUsageReportId) {
 
   DailyUsageReport[] findBySubaccount(TenantId tenantId, string subaccountId);

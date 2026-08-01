@@ -164,7 +164,7 @@ unittest {
   @safe class QueueControllerTest : ControllerTestBase {
     void runTests() {
       // 1. Setup
-      auto repo = new MemoryQueueRepository();
+      auto repo = new QueueRepository();
       auto usecase = new ManageQueuesUseCase(repo);
       auto controller = new QueueController(usecase);
       auto tenantId = TenantId("test-tenant");

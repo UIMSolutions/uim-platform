@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryScalingPolicyRepository : TenantRepository!(ScalingPolicyEntity, ScalingPolicyId), ScalingPolicyRepository {
+class ScalingPolicyRepository : TenantRepository!(ScalingPolicyEntity, ScalingPolicyId), ScalingPolicyRepository {
 
   bool existsByApp(TenantId tenantId, AppBindingId appId) {
     return findByApp(tenantId, appId).isNull ? false : true;

@@ -14,7 +14,7 @@ import uim.platform.mobile;
 
 @safe:
 
-class MemoryMobileAppRepository : TenantRepository!(MobileApp, MobileAppId), MobileAppRepository {
+class MobileAppRepository : TenantRepository!(MobileApp, MobileAppId), MobileAppRepository {
 
   size_t countByBundleId(TenantId tenantId, string bundleId) {
     return findByBundleId(tenantId, bundleId) == MobileApp.init ? 0 : 1;

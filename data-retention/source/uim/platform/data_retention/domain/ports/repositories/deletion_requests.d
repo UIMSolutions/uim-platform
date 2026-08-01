@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface DeletionRequestRepository : ITenantRepository!(DeletionRequest, DeletionRequestId) {
+interface IDeletionRequestRepository : ITenantRepository!(DeletionRequest, DeletionRequestId) {
 
     DeletionRequest[] findByDataSubject(TenantId tenantId, DataSubjectId subjectId);
     DeletionRequest[] findByStatus(TenantId tenantId, DeletionRequestStatus status);

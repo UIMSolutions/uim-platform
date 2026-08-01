@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface TeamRepository : ITenantRepository!(Team, TeamId) {
+interface ITeamRepository : ITenantRepository!(Team, TeamId) {
     Team[] findByStatus(TenantId tenantId, TeamStatus status);
     Team[] findByType(TenantId tenantId, string teamTypeId);
     Team[] findByCategory(TenantId tenantId, string categoryId);

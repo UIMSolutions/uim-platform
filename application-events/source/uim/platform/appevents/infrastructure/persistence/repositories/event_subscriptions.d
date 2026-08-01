@@ -19,7 +19,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryEventSubscriptionRepository
+class EventSubscriptionRepository
     : TenantRepository!(EventSubscription, EventSubscriptionId)
     , EventSubscriptionRepository
 {

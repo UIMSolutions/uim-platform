@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface DataEntityRepository : ITenantRepository!(DataEntity, DataEntityId) {
+interface IDataEntityRepository : ITenantRepository!(DataEntity, DataEntityId) {
 
     size_t countByApplication(TenantId tenantId, ApplicationId applicationId);
     DataEntity[] findByApplication(TenantId tenantId, ApplicationId applicationId);

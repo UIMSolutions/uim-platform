@@ -39,14 +39,14 @@ struct Container {
 Container buildContainer(SrvConfig cfg) {
   Container c;
 
-  c.accountRepo     = new MemorySnowflakeAccountRepository();
-  c.connectorRepo   = new MemoryZerocopyConnectorRepository();
-  c.warehouseRepo   = new MemorySnowflakeWarehouseRepository();
-  c.databaseRepo    = new MemorySnowflakeDatabaseRepository();
-  c.shareRepo       = new MemoryDataProductShareRepository();
-  c.roleRepo        = new MemorySnowflakeRoleRepository();
-  c.tenantUserRepo  = new MemorySnowflakeTenantUserRepository();
-  c.provisioningRepo = new MemoryProvisioningRequestRepository();
+  c.accountRepo     = new SnowflakeAccountRepository();
+  c.connectorRepo   = new ZerocopyConnectorRepository();
+  c.warehouseRepo   = new SnowflakeWarehouseRepository();
+  c.databaseRepo    = new SnowflakeDatabaseRepository();
+  c.shareRepo       = new DataProductShareRepository();
+  c.roleRepo        = new SnowflakeRoleRepository();
+  c.tenantUserRepo  = new SnowflakeTenantUserRepository();
+  c.provisioningRepo = new ProvisioningRequestRepository();
 
   c.accounts    = new ManageSnowflakeAccountsUseCase(c.accountRepo);
   c.connectors  = new ManageZerocopyConnectorsUseCase(c.connectorRepo);

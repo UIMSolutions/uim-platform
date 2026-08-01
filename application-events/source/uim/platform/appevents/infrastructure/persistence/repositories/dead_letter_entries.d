@@ -19,7 +19,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryDeadLetterEntryRepository
+class DeadLetterEntryRepository
     : TenantRepository!(DeadLetterEntry, DeadLetterEntryId)
     , DeadLetterEntryRepository
 {

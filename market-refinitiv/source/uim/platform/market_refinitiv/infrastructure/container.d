@@ -48,14 +48,14 @@ Container buildContainer(AppConfig cfg) {
       c.auditRepo    = new MongoDbAuditLogRepository(cfg.mongoUri, cfg.mongoDb);
       break;
     case "MEMORY":
-      c.rateRepo     = new MemoryMarketRateRepository();
-      c.providerRepo = new MemoryProviderRepository();
-      c.auditRepo    = new MemoryAuditLogRepository();
+      c.rateRepo     = new MarketRateRepository();
+      c.providerRepo = new ProviderRepository();
+      c.auditRepo    = new AuditLogRepository();
       break;
     default:
-      c.rateRepo     = new MemoryMarketRateRepository();
-      c.providerRepo = new MemoryProviderRepository();
-      c.auditRepo    = new MemoryAuditLogRepository();
+      c.rateRepo     = new MarketRateRepository();
+      c.providerRepo = new ProviderRepository();
+      c.auditRepo    = new AuditLogRepository();
       break;
   }
 

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface EventMessageRepository : ITenantRepository!(EventMessage, EventMessageId) {
+interface IEventMessageRepository : ITenantRepository!(EventMessage, EventMessageId) {
 
     size_t countByBrokerService(TenantId tenantId, BrokerServiceId brokerServiceId);
     EventMessage[] findByBrokerService(TenantId tenantId, BrokerServiceId brokerServiceId);

@@ -30,11 +30,11 @@ Container buildContainer(SrvConfig config) {
     Container c;
 
     // Repositories
-    auto repositoryRepo = new MemoryRepositoryRepository();
-    auto documentRepo = new MemoryDocumentRepository();
-    auto folderRepo = new MemoryFolderRepository();
-    auto documentVersionRepo = new MemoryDocumentVersionRepository();
-    auto permissionRepo = new MemoryPermissionRepository();
+    auto repositoryRepo = new RepositoryRepository();
+    auto documentRepo = new DocumentRepository();
+    auto folderRepo = new FolderRepository();
+    auto documentVersionRepo = new DocumentVersionRepository();
+    auto permissionRepo = new PermissionRepository();
 
     // Use Cases
     c.manageRepositoriesUseCase = new ManageRepositoriesUseCase(repositoryRepo);

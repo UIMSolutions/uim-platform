@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryTopicSubscriptionRepository
+class TopicSubscriptionRepository
     : TenantRepository!(TopicSubscription, TopicSubscriptionId),
       TopicSubscriptionRepository {
 

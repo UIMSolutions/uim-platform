@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface BusinessPurposeRepository : ITenantRepository!(BusinessPurpose, BusinessPurposeId) {
+interface IBusinessPurposeRepository : ITenantRepository!(BusinessPurpose, BusinessPurposeId) {
 
     BusinessPurpose[] findByApplicationGroup(TenantId tenantId, ApplicationGroupId groupId);
     BusinessPurpose[] findByStatus(TenantId tenantId, BusinessPurposeStatus status);

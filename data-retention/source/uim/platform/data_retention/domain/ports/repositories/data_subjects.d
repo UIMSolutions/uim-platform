@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface DataSubjectRepository : ITenantRepository!(DataSubject, DataSubjectId) {
+interface IDataSubjectRepository : ITenantRepository!(DataSubject, DataSubjectId) {
     
     DataSubject[] findByApplicationGroup(TenantId tenantId, ApplicationGroupId groupId);
     DataSubject[] findByLifecycleStatus(TenantId tenantId, DataLifecycleStatus status);

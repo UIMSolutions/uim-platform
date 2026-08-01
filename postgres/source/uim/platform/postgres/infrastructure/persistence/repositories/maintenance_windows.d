@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryMaintenanceWindowRepository
+class MaintenanceWindowRepository
     : TenantRepository!(MaintenanceWindow, MaintenanceWindowId)
     , MaintenanceWindowRepository
 {

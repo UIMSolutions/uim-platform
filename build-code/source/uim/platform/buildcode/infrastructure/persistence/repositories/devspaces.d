@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryDevSpaceRepository : DevSpaceRepository {
+class DevSpaceRepository : DevSpaceRepository {
   private DevSpace[string] _store;
 
   override void save(DevSpace entity)             { _store[entity.id.value] = entity; }

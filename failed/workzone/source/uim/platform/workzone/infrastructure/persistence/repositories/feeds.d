@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
  
 
-class MemoryFeedRepository : TenantRepository!(FeedEntry, FeedEntryId), FeedRepository {
+class FeedRepository : TenantRepository!(FeedEntry, FeedEntryId), FeedRepository {
 
   size_t countByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
     return findByWorkspace(tenantId, workspaceId).length;

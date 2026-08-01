@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryDatabaseUserRepository
+class DatabaseUserRepository
     : TenantRepository!(DatabaseUser, DatabaseUserId)
     , DatabaseUserRepository
 {

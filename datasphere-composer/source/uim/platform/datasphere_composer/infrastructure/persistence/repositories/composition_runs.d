@@ -10,7 +10,7 @@ import uim.platform.datasphere_composer;
 mixin(ShowModule!());
 
 @safe:
-class MemoryCompositionRunRepository
+class CompositionRunRepository
     : TenantRepository!(CompositionRun, CompositionRunId),
       CompositionRunRepository {
 

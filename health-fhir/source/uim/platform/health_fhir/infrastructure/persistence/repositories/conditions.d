@@ -10,7 +10,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryConditionRepository : TenantRepository!(Condition, ConditionId), ConditionRepository {
+class ConditionRepository : TenantRepository!(Condition, ConditionId), ConditionRepository {
 
   bool existsById(TenantId tenantId, ConditionId id) {
     return !findById(tenantId, id).isNull;

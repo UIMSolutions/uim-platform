@@ -14,7 +14,7 @@ import uim.platform.object_store;
 mixin(ShowModule!());
 
 @safe:
-class MemoryLifecycleRuleRepository : TenantRepository!(LifecycleRule, LifecycleRuleId),  LifecycleRuleRepository {
+class LifecycleRuleRepository : TenantRepository!(LifecycleRule, LifecycleRuleId),  LifecycleRuleRepository {
 
   size_t countByBucket(TenantId tenantId, BucketId bucketId) {
     return findByBucket(tenantId, bucketId).length;

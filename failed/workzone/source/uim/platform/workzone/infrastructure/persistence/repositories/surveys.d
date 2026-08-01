@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
  
 
-class MemorySurveyRepository : TenantRepository!(Survey, SurveyId), SurveyRepository {
+class SurveyRepository : TenantRepository!(Survey, SurveyId), SurveyRepository {
 
   // #region ByWorkspace
   size_t countByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {

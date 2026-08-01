@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryQueueRepository
+class QueueRepository
     : TenantRepository!(Queue, QueueId), QueueRepository {
 
     size_t countByService(TenantId tenantId, MessagingServiceId serviceId) {

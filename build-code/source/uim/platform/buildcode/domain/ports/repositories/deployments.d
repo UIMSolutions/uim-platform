@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface DeploymentRepository : ITenantRepository!(Deployment, DeploymentId) {
+interface IDeploymentRepository : ITenantRepository!(Deployment, DeploymentId) {
   Deployment[]  findByProject(TenantId tenantId, string projectId);
   Deployment[]  findByEnvironment(TenantId tenantId, DeploymentEnvironment env);
   Deployment[]  findByStatus(TenantId tenantId, DeploymentStatus status);

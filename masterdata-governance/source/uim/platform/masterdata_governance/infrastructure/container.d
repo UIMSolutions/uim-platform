@@ -30,11 +30,11 @@ Container buildContainer(SrvConfig config) {
     Container c;
 
     // Repositories
-    auto businessPartnerRepo = new MemoryBusinessPartnerRepository();
-    auto changeRequestRepo = new MemoryChangeRequestRepository();
-    auto dataQualityRuleRepo = new MemoryDataQualityRuleRepository();
-    auto dataQualityScoreRepo = new MemoryDataQualityScoreRepository();
-    auto replicationRepo = new MemoryReplicationRepository();
+    auto businessPartnerRepo = new BusinessPartnerRepository();
+    auto changeRequestRepo = new ChangeRequestRepository();
+    auto dataQualityRuleRepo = new DataQualityRuleRepository();
+    auto dataQualityScoreRepo = new DataQualityScoreRepository();
+    auto replicationRepo = new ReplicationRepository();
 
     // Use Cases
     c.manageBusinessPartnersUseCase = new ManageBusinessPartnersUseCase(businessPartnerRepo);

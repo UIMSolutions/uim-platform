@@ -11,7 +11,7 @@ import uim.platform.datasphere;
 mixin(ShowModule!()); 
 
 @safe:
-interface DataFlowRepository : ITenantRepository!(DataFlow, DataFlowId) {
+interface IDataFlowRepository : ITenantRepository!(DataFlow, DataFlowId) {
 
   bool existsById(TenantId tenantId, SpaceId spaceId, DataFlowId id);
   DataFlow findById(TenantId tenantId, SpaceId spaceId, DataFlowId id);

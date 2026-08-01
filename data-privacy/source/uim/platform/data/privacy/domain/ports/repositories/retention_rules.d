@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port for persisting data retention rules.
-interface RetentionRuleRepository : ITenantRepository!(RetentionRule, RetentionRuleId) {
+interface IRetentionRuleRepository : ITenantRepository!(RetentionRule, RetentionRuleId) {
 
   bool existsDefault(TenantId tenantId);
   RetentionRule findDefault(TenantId tenantId);

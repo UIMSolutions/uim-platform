@@ -86,14 +86,14 @@ Container buildContainer(SrvConfig config) {
   Container c;
 
   // Infrastructure adapters
-  c.mdoRepo = new MemoryMasterDataObjectRepository();
-  c.dataModelRepo = new MemoryDataModelRepository();
-  c.distRepo = new MemoryDistributionModelRepository();
-  c.keyMapRepo = new MemoryKeyMappingRepository();
-  c.changeLogRepo = new MemoryChangeLogRepository();
-  c.clientRepo = new MemoryClientRepository();
-  c.replJobRepo = new MemoryReplicationJobRepository();
-  c.filterRuleRepo = new MemoryFilterRuleRepository();
+  c.mdoRepo = new MasterDataObjectRepository();
+  c.dataModelRepo = new DataModelRepository();
+  c.distRepo = new DistributionModelRepository();
+  c.keyMapRepo = new KeyMappingRepository();
+  c.changeLogRepo = new ChangeLogRepository();
+  c.clientRepo = new ClientRepository();
+  c.replJobRepo = new ReplicationJobRepository();
+  c.filterRuleRepo = new FilterRuleRepository();
 
   // Domain services
   c.keyMapResolver = new KeyMappingResolver();

@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing - storage object persistence.
-interface StorageObjectRepository : ITenantRepository!(StorageObject, StorageObjectId) {
+interface IStorageObjectRepository : ITenantRepository!(StorageObject, StorageObjectId) {
 
   bool existsByKey(TenantId tenantId, BucketId bucketId, string key);
   StorageObject findByKey(TenantId tenantId, BucketId bucketId, string key);

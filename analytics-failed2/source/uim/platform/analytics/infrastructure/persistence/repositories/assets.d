@@ -6,7 +6,7 @@ import uim.platform.analytics;
 mixin(ShowModule!());
 
 @safe:  
-class MemoryAssetRepository : AssetRepository {
+class AssetRepository : AssetRepository {
   private InsightAsset[][TenantId] byTenant;
 
   AssetId save(InsightAsset asset) {
@@ -56,7 +56,7 @@ class MemoryAssetRepository : AssetRepository {
 }
 
 unittest {
-  auto repo = new MemoryAssetRepository();
+  auto repo = new AssetRepository();
 
   InsightAsset a;
   a.id = "m1";

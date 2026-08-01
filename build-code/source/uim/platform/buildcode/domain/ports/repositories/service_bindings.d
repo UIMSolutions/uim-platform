@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ServiceBindingRepository : ITenantRepository!(ServiceBinding, ServiceBindingId) {
+interface IServiceBindingRepository : ITenantRepository!(ServiceBinding, ServiceBindingId) {
   ServiceBinding[]  findByProject(TenantId tenantId, string projectId);
   ServiceBinding[]  findByServiceName(TenantId tenantId, string serviceName);
   ServiceBinding[]  findByStatus(TenantId tenantId, BindingStatus status);

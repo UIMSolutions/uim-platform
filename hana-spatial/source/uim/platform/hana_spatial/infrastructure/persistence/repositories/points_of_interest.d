@@ -10,7 +10,7 @@ import uim.platform.hana_spatial;
 mixin(ShowModule!());
 
 @safe:
-class MemoryPointOfInterestRepository
+class PointOfInterestRepository
   : TenantRepository!(PointOfInterest, PointOfInterestId),
     PointOfInterestRepository {
 

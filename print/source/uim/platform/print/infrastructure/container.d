@@ -45,11 +45,11 @@ Container buildContainer(SrvConfig config) @trusted {
 
     final switch (config.backend) {
         case PersistenceBackend.memory:
-            queueRepo = new MemoryPrintQueueRepository();
-            taskRepo = new MemoryPrintTaskRepository();
-            printerRepo = new MemoryPrinterRepository();
-            docRepo = new MemoryPrintDocumentRepository();
-            clientRepo = new MemoryPrintClientRepository();
+            queueRepo = new PrintQueueRepository();
+            taskRepo = new PrintTaskRepository();
+            printerRepo = new PrinterRepository();
+            docRepo = new PrintDocumentRepository();
+            clientRepo = new PrintClientRepository();
             break;
 
         case PersistenceBackend.file_:

@@ -136,15 +136,15 @@ classDiagram
     }
 
     %% Infrastructure
-    class MemoryTranslationProjectRepository {
+    class TranslationProjectRepository {
         +existsByName(TenantId, string) bool
         +findByName(TenantId, string) TranslationProject
     }
-    class MemoryGlossaryEntryRepository {
+    class GlossaryEntryRepository {
         +findByLanguagePair(TenantId, src, tgt) GlossaryEntry[]
         +findByDomain(TenantId, string) GlossaryEntry[]
     }
-    class MemoryTranslationJobRepository {
+    class TranslationJobRepository {
         +findByStatus(TenantId, JobStatus) TranslationJob[]
         +findPending(TenantId) TranslationJob[]
     }

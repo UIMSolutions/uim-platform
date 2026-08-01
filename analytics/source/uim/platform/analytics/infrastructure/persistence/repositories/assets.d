@@ -2,7 +2,7 @@ module uim.platform.analytics.infrastructure.persistence.repositories.assets;
 
 import uim.platform.analytics.domain;
 
-class MemoryAssetRepository : AssetRepository {
+class AssetRepository : AssetRepository {
   private InsightAsset[][TenantId] byTenant;
 
   AssetId save(InsightAsset asset) {
@@ -52,7 +52,7 @@ class MemoryAssetRepository : AssetRepository {
 }
 
 unittest {
-  auto repo = new MemoryAssetRepository();
+  auto repo = new AssetRepository();
 
   InsightAsset a;
   a.id = "m1";

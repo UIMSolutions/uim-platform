@@ -3,7 +3,7 @@ import uim.platform.snowflake;
 
 mixin(ShowModule!());
 @safe:
-class MemorySnowflakeRoleRepository
+class SnowflakeRoleRepository
     : TenantRepository!(SnowflakeRole, SnowflakeRoleId),
       SnowflakeRoleRepository {
 

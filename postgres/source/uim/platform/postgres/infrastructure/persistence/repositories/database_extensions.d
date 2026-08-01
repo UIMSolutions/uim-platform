@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryDatabaseExtensionRepository
+class DatabaseExtensionRepository
     : TenantRepository!(DatabaseExtension, DatabaseExtensionId)
     , DatabaseExtensionRepository
 {

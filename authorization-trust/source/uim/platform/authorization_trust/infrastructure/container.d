@@ -71,12 +71,12 @@ Container buildContainer(SrvConfig config) {
   Container c;
 
   // Infrastructure — repositories
-  c.oauthClientRepo      = new MemoryOAuthClientRepository();
-  c.scopeRepo            = new MemoryScopeRepository();
-  c.roleRepo             = new MemoryRoleRepository();
-  c.roleCollectionRepo   = new MemoryRoleCollectionRepository();
-  c.userAssignmentRepo   = new MemoryUserAssignmentRepository();
-  c.identityProviderRepo = new MemoryIdentityProviderRepository();
+  c.oauthClientRepo      = new OAuthClientRepository();
+  c.scopeRepo            = new ScopeRepository();
+  c.roleRepo             = new RoleRepository();
+  c.roleCollectionRepo   = new RoleCollectionRepository();
+  c.userAssignmentRepo   = new UserAssignmentRepository();
+  c.identityProviderRepo = new IdentityProviderRepository();
 
   // Domain services
   c.tokenService = new TokenService(c.oauthClientRepo);

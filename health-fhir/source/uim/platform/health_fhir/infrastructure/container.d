@@ -51,35 +51,35 @@ Container buildContainer(SrvConfig config) {
   final switch (config.storage) {
     case StorageBackend.files_:
       c.patientRepo            = new FilePatientRepository(config.dataPath);
-      c.practitionerRepo       = new MemoryPractitionerRepository();
-      c.observationRepo        = new MemoryObservationRepository();
-      c.conditionRepo          = new MemoryConditionRepository();
-      c.organizationRepo       = new MemoryOrganizationRepository();
-      c.encounterRepo          = new MemoryEncounterRepository();
-      c.medicationRepo         = new MemoryMedicationRepository();
-      c.medicationRequestRepo  = new MemoryMedicationRequestRepository();
+      c.practitionerRepo       = new PractitionerRepository();
+      c.observationRepo        = new ObservationRepository();
+      c.conditionRepo          = new ConditionRepository();
+      c.organizationRepo       = new OrganizationRepository();
+      c.encounterRepo          = new EncounterRepository();
+      c.medicationRepo         = new MedicationRepository();
+      c.medicationRequestRepo  = new MedicationRequestRepository();
       break;
 
     case StorageBackend.mongodb_:
       c.patientRepo            = new MongoPatientRepository(config.mongoUri);
-      c.practitionerRepo       = new MemoryPractitionerRepository();
-      c.observationRepo        = new MemoryObservationRepository();
-      c.conditionRepo          = new MemoryConditionRepository();
-      c.organizationRepo       = new MemoryOrganizationRepository();
-      c.encounterRepo          = new MemoryEncounterRepository();
-      c.medicationRepo         = new MemoryMedicationRepository();
-      c.medicationRequestRepo  = new MemoryMedicationRequestRepository();
+      c.practitionerRepo       = new PractitionerRepository();
+      c.observationRepo        = new ObservationRepository();
+      c.conditionRepo          = new ConditionRepository();
+      c.organizationRepo       = new OrganizationRepository();
+      c.encounterRepo          = new EncounterRepository();
+      c.medicationRepo         = new MedicationRepository();
+      c.medicationRequestRepo  = new MedicationRequestRepository();
       break;
 
     case StorageBackend.memory_:
-      c.patientRepo            = new MemoryPatientRepository();
-      c.practitionerRepo       = new MemoryPractitionerRepository();
-      c.observationRepo        = new MemoryObservationRepository();
-      c.conditionRepo          = new MemoryConditionRepository();
-      c.organizationRepo       = new MemoryOrganizationRepository();
-      c.encounterRepo          = new MemoryEncounterRepository();
-      c.medicationRepo         = new MemoryMedicationRepository();
-      c.medicationRequestRepo  = new MemoryMedicationRequestRepository();
+      c.patientRepo            = new PatientRepository();
+      c.practitionerRepo       = new PractitionerRepository();
+      c.observationRepo        = new ObservationRepository();
+      c.conditionRepo          = new ConditionRepository();
+      c.organizationRepo       = new OrganizationRepository();
+      c.encounterRepo          = new EncounterRepository();
+      c.medicationRepo         = new MedicationRepository();
+      c.medicationRequestRepo  = new MedicationRequestRepository();
       break;
   }
 

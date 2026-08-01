@@ -36,14 +36,14 @@ Container buildContainer(SrvConfig config) {
     Container c;
 
     // Repositories
-    auto serviceCallRepo = new MemoryServiceCallRepository();
-    auto activityRepo = new MemoryActivityRepository();
-    auto assignmentRepo = new MemoryAssignmentRepository();
-    auto equipmentRepo = new MemoryEquipmentRepository();
-    auto technicianRepo = new MemoryTechnicianRepository();
-    auto customerRepo = new MemoryCustomerRepository();
-    auto skillRepo = new MemorySkillRepository();
-    auto smartformRepo = new MemorySmartformRepository();
+    auto serviceCallRepo = new ServiceCallRepository();
+    auto activityRepo = new ActivityRepository();
+    auto assignmentRepo = new AssignmentRepository();
+    auto equipmentRepo = new EquipmentRepository();
+    auto technicianRepo = new TechnicianRepository();
+    auto customerRepo = new CustomerRepository();
+    auto skillRepo = new SkillRepository();
+    auto smartformRepo = new SmartformRepository();
 
     // Use Cases
     c.manageServiceCallsUseCase = new ManageServiceCallsUseCase(serviceCallRepo);

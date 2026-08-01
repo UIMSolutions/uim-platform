@@ -11,7 +11,7 @@ import uim.platform.process_automation;
 mixin(ShowModule!());
 
 @safe:
-interface FormRepository : ITenantRepository!(Form, FormId) {
+interface IFormRepository : ITenantRepository!(Form, FormId) {
 
     size_t countByProject(TenantId tenantId, ProjectId projectId);
     Form[] findByProject(TenantId tenantId, ProjectId projectId);

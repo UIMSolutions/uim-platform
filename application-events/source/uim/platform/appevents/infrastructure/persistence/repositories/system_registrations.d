@@ -20,7 +20,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemorySystemRegistrationRepository
+class SystemRegistrationRepository
     : TenantRepository!(SystemRegistration, SystemRegistrationId)
     , SystemRegistrationRepository
 {

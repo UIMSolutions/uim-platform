@@ -134,7 +134,7 @@ unittest {
 
   @safe class ScopeControllerTest : ControllerTestBase {
     void runTests() {
-      auto repo = new MemoryScopeRepository();
+      auto repo = new ScopeRepository();
       auto usecase = new ManageScopesUseCase(repo);
       auto controller = new ScopeController(usecase);
       auto tenantId = TenantId("test-tenant");

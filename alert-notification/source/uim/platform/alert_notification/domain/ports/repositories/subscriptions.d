@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface SubscriptionRepository : ITenantRepository!(Subscription, SubscriptionId) {
+interface ISubscriptionRepository : ITenantRepository!(Subscription, SubscriptionId) {
     Subscription findByName(TenantId tenantId, string name);
     Subscription[] findEnabled(TenantId tenantId);
 }

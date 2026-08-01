@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryProjectRepository : ProjectRepository {
+class ProjectRepository : ProjectRepository {
   private Project[string] _store;
 
   override void save(Project entity) {

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryUserTaskFilterRepository : TenantRepository!(UserTaskFilter, UserTaskFilterId), UserTaskFilterRepository {
+class UserTaskFilterRepository : TenantRepository!(UserTaskFilter, UserTaskFilterId), UserTaskFilterRepository {
 
     // bool existsDefault(TenantId tenantId, UserId userId) {
     //     return findDefault(tenantId, userId).id != UserTaskFilterId.init;

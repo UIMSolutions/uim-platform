@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryAuditLogRepository : TenantRepository!(AuditLog, AuditLogId), AuditLogRepository {
+class AuditLogRepository : TenantRepository!(AuditLog, AuditLogId), AuditLogRepository {
 
   size_t countByOperation(TenantId tenantId, AuditOperation op) {
     return findByOperation(tenantId, op).length;

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryAuditLogRepository : TenantRepository!(AuditLog, AuditLogId), AuditLogRepository {
+class AuditLogRepository : TenantRepository!(AuditLog, AuditLogId), AuditLogRepository {
 
     AuditLog[] findByActor(TenantId tenantId, string actorId) {
         return findByTenant(tenantId).filter!(al => al.actorId == actorId).array;

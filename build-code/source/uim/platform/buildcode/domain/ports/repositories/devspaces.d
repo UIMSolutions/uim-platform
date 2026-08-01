@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface DevSpaceRepository : ITenantRepository!(DevSpace, DevSpaceId) {
+interface IDevSpaceRepository : ITenantRepository!(DevSpace, DevSpaceId) {
   DevSpace[]  findByProject(TenantId tenantId, string projectId);
   DevSpace[]  findByStatus(TenantId tenantId, DevSpaceStatus status);
 }

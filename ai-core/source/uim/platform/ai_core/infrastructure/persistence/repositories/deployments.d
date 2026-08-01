@@ -13,7 +13,7 @@ import uim.platform.ai_core;
 mixin(ShowModule!());
 
 @safe:
-class MemoryDeploymentRepository : TenantRepository!(Deployment, DeploymentId), DeploymentRepository {
+class DeploymentRepository : TenantRepository!(Deployment, DeploymentId), DeploymentRepository {
 
   bool existsById(TenantId tenantId, ResourceGroupId rgId, DeploymentId id) {
     return findByResourceGroup(tenantId, rgId).any!(d => d.id == id);
@@ -94,5 +94,5 @@ class MemoryDeploymentRepository : TenantRepository!(Deployment, DeploymentId), 
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryDeploymentRepository()));
+    assert(tenantRepositoryTest(new DeploymentRepository()));
 }

@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryAuditEntryRepository : AuditEntryRepository {
+class AuditEntryRepository : AuditEntryRepository {
     private AuditEntry[] entries;
 
     void append(AuditEntry entry) {

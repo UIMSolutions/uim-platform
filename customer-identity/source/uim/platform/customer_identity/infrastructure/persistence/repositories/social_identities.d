@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemorySocialIdentityRepository : TenantRepository!(SocialIdentity, SocialIdentityId), SocialIdentityRepository {
+class SocialIdentityRepository : TenantRepository!(SocialIdentity, SocialIdentityId), SocialIdentityRepository {
 
     SocialIdentity[] findByCustomer(TenantId tenantId, CustomerId customerId) {
         return findByTenant(tenantId).filter!(si => si.customerId.value == customerId.value).array;

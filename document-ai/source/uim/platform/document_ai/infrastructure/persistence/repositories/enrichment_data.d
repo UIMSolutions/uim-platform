@@ -13,7 +13,7 @@ import uim.platform.document_ai;
 mixin(ShowModule!());
 
 @safe:
-class MemoryEnrichmentDataRepository : EnrichmentDataRepository {
+class EnrichmentDataRepository : EnrichmentDataRepository {
   private EnrichmentData[][string] store;
 
   bool existsById(ClientId clientId, EnrichmentDataId id) {

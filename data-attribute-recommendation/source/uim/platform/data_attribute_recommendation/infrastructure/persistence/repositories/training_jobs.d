@@ -12,7 +12,7 @@ import uim.platform.data_attribute_recommendation;
 mixin(ShowModule!());
 
 @safe:
-class MemoryTrainingJobRepository : TenantRepository!(TrainingJob, TrainingJobId), ITrainingJobRepository {
+class TrainingJobRepository : TenantRepository!(TrainingJob, TrainingJobId), ITrainingJobRepository {
   
   size_t countByModelConfig(TenantId tenantId, ModelConfigurationId configId) {
     return findByModelConfig(tenantId, configId).length;
@@ -49,5 +49,5 @@ class MemoryTrainingJobRepository : TenantRepository!(TrainingJob, TrainingJobId
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryTrainingJobRepository()));
+    assert(tenantRepositoryTest(new TrainingJobRepository()));
 }

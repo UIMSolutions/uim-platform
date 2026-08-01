@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface TaskRepository : ITenantRepository!(UIMTask, TaskId) {
+interface ITaskRepository : ITenantRepository!(UIMTask, TaskId) {
 
     size_t countByAssignee(TenantId tenantId, string assignee);
     UIMTask[] findByAssignee(TenantId tenantId, string assignee);

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ScalingPolicyRepository : ITenantRepository!(ScalingPolicyEntity, ScalingPolicyId) {
+interface IScalingPolicyRepository : ITenantRepository!(ScalingPolicyEntity, ScalingPolicyId) {
 
   bool existsByApp(TenantId tenantId, AppBindingId appId);
   ScalingPolicyEntity findByApp(TenantId tenantId, AppBindingId appId);

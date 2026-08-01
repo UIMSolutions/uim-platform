@@ -38,9 +38,9 @@ Container buildContainer(SrvConfig config) {
     Container c;
 
     // Repos
-    c.saasApplicationRepo = new MemorySaasApplicationRepository();
-    c.appSubscriptionRepo = new MemoryAppSubscriptionRepository();
-    c.subscriptionJobRepo = new MemorySubscriptionJobRepository();
+    c.saasApplicationRepo = new SaasApplicationRepository();
+    c.appSubscriptionRepo = new AppSubscriptionRepository();
+    c.subscriptionJobRepo = new SubscriptionJobRepository();
 
     // Domain service
     c.subscriptionEngine = new SubscriptionEngine(    c.saasApplicationRepo,

@@ -36,13 +36,13 @@ Container buildContainer(SrvConfig config) {
     Container c;
 
     // Repositories
-    auto messagingServiceRepo = new MemoryMessagingServiceRepository();
-    auto messageClientRepo    = new MemoryMessageClientRepository();
-    auto queueRepo            = new MemoryQueueRepository();
-    auto queueSubRepo         = new MemoryQueueSubscriptionRepository();
-    auto webhookRepo          = new MemoryWebhookRepository();
-    auto eventChannelRepo     = new MemoryEventChannelRepository();
-    auto messageBindingRepo   = new MemoryMessageBindingRepository();
+    auto messagingServiceRepo = new MessagingServiceRepository();
+    auto messageClientRepo    = new MessageClientRepository();
+    auto queueRepo            = new QueueRepository();
+    auto queueSubRepo         = new QueueSubscriptionRepository();
+    auto webhookRepo          = new WebhookRepository();
+    auto eventChannelRepo     = new EventChannelRepository();
+    auto messageBindingRepo   = new MessageBindingRepository();
 
     // Use Cases
     c.messagingServicesUseCase   = new ManageMessagingServicesUseCase(messagingServiceRepo);

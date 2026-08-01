@@ -32,12 +32,12 @@ Container buildContainer(SrvConfig config) {
     Container c;
 
     // Repositories
-    auto oauthClientRepo = new MemoryOAuthClientRepository();
-    auto oauthScopeRepo = new MemoryOAuthScopeRepository();
+    auto oauthClientRepo = new OAuthClientRepository();
+    auto oauthScopeRepo = new OAuthScopeRepository();
     auto accessTokenRepo = new AccessTokenRepository();
-    auto refreshTokenRepo = new MemoryRefreshTokenRepository();
+    auto refreshTokenRepo = new RefreshTokenRepository();
     auto authorizationCodeRepo = new AuthorizationCodeRepository();
-    auto brandingConfigRepo = new MemoryBrandingConfigRepository();
+    auto brandingConfigRepo = new BrandingConfigRepository();
 
     // Use Cases
     c.manageOAuthClientsUseCase = new ManageOAuthClientsUseCase(oauthClientRepo);

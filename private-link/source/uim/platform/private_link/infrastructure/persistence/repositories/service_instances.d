@@ -9,7 +9,7 @@ import uim.platform.private_link;
 mixin(ShowModule!());
 
 @safe:
-class MemoryServiceInstanceRepository
+class ServiceInstanceRepository
     : TenantRepository!(ServiceInstance, ServiceInstanceId),
       ServiceInstanceRepository {
 

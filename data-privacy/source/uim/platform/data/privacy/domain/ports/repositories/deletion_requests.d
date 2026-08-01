@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port for persisting data deletion requests.
-interface DeletionRequestRepository : ITenantRepository!(DeletionRequest, DeletionRequestId) {
+interface IDeletionRequestRepository : ITenantRepository!(DeletionRequest, DeletionRequestId) {
 
   size_t countByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
   DeletionRequest[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);

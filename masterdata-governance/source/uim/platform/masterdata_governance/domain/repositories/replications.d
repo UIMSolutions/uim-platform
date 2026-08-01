@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ReplicationRepository : ITenantRepository!(Replication, ReplicationId) {
+interface IReplicationRepository : ITenantRepository!(Replication, ReplicationId) {
 
     size_t countByStatus(TenantId tenantId, ReplicationStatus status);
     Replication[] findByStatus(TenantId tenantId, ReplicationStatus status);

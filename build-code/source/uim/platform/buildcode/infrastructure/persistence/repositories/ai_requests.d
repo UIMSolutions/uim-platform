@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryAIRequestRepository : AIRequestRepository {
+class AIRequestRepository : AIRequestRepository {
   private AIRequest[string] _store;
 
   override void save(AIRequest entity)                { _store[entity.id.value] = entity; }

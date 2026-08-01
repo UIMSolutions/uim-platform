@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryRunConfigurationRepository : TenantRepository!(RunConfiguration, RunConfigurationId), RunConfigurationRepository {
+class RunConfigurationRepository : TenantRepository!(RunConfiguration, RunConfigurationId), RunConfigurationRepository {
 
     size_t countByProject(TenantId tenantId, ProjectId projectId) {
         return findByProject(tenantId, projectId).length;

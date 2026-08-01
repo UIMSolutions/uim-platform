@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryResponsibilityRuleRepository
+class ResponsibilityRuleRepository
     : TenantRepository!(ResponsibilityRule, ResponsibilityRuleId),
       ResponsibilityRuleRepository {
 

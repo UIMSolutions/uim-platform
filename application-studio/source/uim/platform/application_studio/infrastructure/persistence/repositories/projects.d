@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryProjectRepository : TenantRepository!(Project, ProjectId), ProjectRepository {
+class ProjectRepository : TenantRepository!(Project, ProjectId), ProjectRepository {
 
     size_t countByType(TenantId tenantId, ProjectType projectType) {
         return findByType(tenantId, projectType).length;

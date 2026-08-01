@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryRoleCollectionRepository : TenantRepository!(RoleCollectionEntity, RoleCollectionId), RoleCollectionRepository {
+class RoleCollectionRepository : TenantRepository!(RoleCollectionEntity, RoleCollectionId), RoleCollectionRepository {
 
   bool existsByName(TenantId tenantId, string name) {
     return findByTenant(tenantId).any!(rc => rc.name == name);
@@ -31,5 +31,5 @@ class MemoryRoleCollectionRepository : TenantRepository!(RoleCollectionEntity, R
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryRoleCollectionRepository()));
+    assert(tenantRepositoryTest(new RoleCollectionRepository()));
 }

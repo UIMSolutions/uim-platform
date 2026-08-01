@@ -16,7 +16,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemorySpanRepository : TenantRepository!(Span, SpanId), SpanRepository {
+class SpanRepository : TenantRepository!(Span, SpanId), SpanRepository {
 
   Span[] findByTrace(TenantId tenantId, TraceId traceId) {
     return findByTenant(tenantId).filter!(s => s.traceId == traceId).array;

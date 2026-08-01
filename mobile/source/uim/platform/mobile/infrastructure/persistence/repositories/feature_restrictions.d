@@ -14,7 +14,7 @@ import uim.platform.mobile;
 
 @safe:
 
-class MemoryFeatureRestrictionRepository : TenantRepository!(FeatureRestriction,FeatureRestrictionId), FeatureRestrictionRepository {
+class FeatureRestrictionRepository : TenantRepository!(FeatureRestriction,FeatureRestrictionId), FeatureRestrictionRepository {
 
   bool existsByKey(TenantId tenantId, MobileAppId appId, string featureKey) {
     return findByApp(tenantId, appId).any!(r => r.featureKey == featureKey);

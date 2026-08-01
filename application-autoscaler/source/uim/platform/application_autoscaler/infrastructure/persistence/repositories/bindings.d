@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryAppBindingRepository : TenantRepository!(AppBinding, AppBindingId), AppBindingRepository {
+class AppBindingRepository : TenantRepository!(AppBinding, AppBindingId), AppBindingRepository {
   bool existsByAppGuid(TenantId tenantId, string appGuid) {
     return findByAppGuid(tenantId, appGuid).isNull ? false : true;
   }

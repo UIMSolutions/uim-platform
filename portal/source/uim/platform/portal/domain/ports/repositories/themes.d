@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — theme persistence.
-interface ThemeRepository : ITenantRepository!(Theme, ThemeId) {
+interface IThemeRepository : ITenantRepository!(Theme, ThemeId) {
 
   bool existsDefault(TenantId tenantId);
   Theme findDefault(TenantId tenantId);

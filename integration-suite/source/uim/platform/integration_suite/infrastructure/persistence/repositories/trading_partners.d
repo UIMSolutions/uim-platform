@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryTradingPartnerRepository
+class TradingPartnerRepository
     : TenantRepository!(TradingPartner, TradingPartnerId),
       TradingPartnerRepository {
 

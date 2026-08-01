@@ -64,12 +64,12 @@ Container buildContainer(SrvConfig config) {
   Container c;
 
   // Infrastructure adapters
-  c.destinationRepo = new MemoryDestinationRepository();
-  c.connectorRepo = new MemoryConnectorRepository();
-  c.channelRepo = new MemoryChannelRepository();
-  c.accessRuleRepo = new MemoryAccessRuleRepository();
-  c.certificateRepo = new MemoryCertificateRepository();
-  c.logRepo = new MemoryConnectivityLogRepository();
+  c.destinationRepo = new DestinationRepository();
+  c.connectorRepo = new ConnectorRepository();
+  c.channelRepo = new ChannelRepository();
+  c.accessRuleRepo = new AccessRuleRepository();
+  c.certificateRepo = new CertificateRepository();
+  c.logRepo = new ConnectivityLogRepository();
 
   // Application use cases
   c.manageDestinations = new ManageDestinationsUseCase(c.destinationRepo, c.logRepo);

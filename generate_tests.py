@@ -155,7 +155,7 @@ def find_memory_class_for_interface(iface_type, pkg_dir):
                     c = open(fpath).read()
                 except:
                     continue
-                # Look for class Memory...Repository that implements the interface
+                # Look for class ...Repository that implements the interface
                 m = re.search(r'class\s+(Memory\w+Repository)[^{]*:\s*[^{]*' + re.escape(iface_type), c)
                 if m:
                     return m.group(1)

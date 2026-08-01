@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryIntegrationFlowRepository
+class IntegrationFlowRepository
     : TenantRepository!(IntegrationFlow, IntegrationFlowId),
       IntegrationFlowRepository {
 

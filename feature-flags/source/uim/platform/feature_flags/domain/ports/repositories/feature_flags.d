@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 /// Port (secondary port) for feature flag persistence.
-interface FeatureFlagRepository {
+interface IFeatureFlagRepository {
     /// Persist a new flag (id must already be set).
     void save(FeatureFlag flag_);
 

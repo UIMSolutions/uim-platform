@@ -78,13 +78,13 @@ Container buildContainer(SrvConfig config) {
   Container c;
 
   // Infrastructure adapters
-  c.datasetRepo = new MemoryDatasetRepository();
+  c.datasetRepo = new DatasetRepository();
   c.recordRepo = new DataRecordRepository();
-  c.configRepo = new MemoryModelConfigRepository();
-  c.jobRepo = new MemoryTrainingJobRepository();
-  c.deploymentRepo = new MemoryDeploymentRepository();
-  c.inferenceRequestRepo = new MemoryInferenceRequestRepository();
-  c.inferenceResultRepo = new MemoryInferenceResultRepository();
+  c.configRepo = new ModelConfigRepository();
+  c.jobRepo = new TrainingJobRepository();
+  c.deploymentRepo = new DeploymentRepository();
+  c.inferenceRequestRepo = new InferenceRequestRepository();
+  c.inferenceResultRepo = new InferenceResultRepository();
 
   // Domain services
   c.modelTrainer = new ModelTrainer(c.datasetRepo, c.configRepo, c.jobRepo, c.recordRepo);

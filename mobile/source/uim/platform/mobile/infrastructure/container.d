@@ -103,18 +103,18 @@ Container buildContainer(SrvConfig config) {
   Container c;
 
   // Infrastructure adapters
-  c.appRepo = new MemoryMobileAppRepository();
-  c.deviceRepo = new MemoryDeviceRegistrationRepository();
-  c.pushNotifRepo = new MemoryPushNotificationRepository();
-  c.pushRegRepo = new MemoryPushRegistrationRepository();
-  c.configRepo = new MemoryAppConfigurationRepository();
-  c.featureRepo = new MemoryFeatureRestrictionRepository();
-  c.resourceRepo = new MemoryClientResourceRepository();
-  c.versionRepo = new MemoryAppVersionRepository();
-  c.usageRepo = new MemoryUsageReportRepository();
-  c.offlineRepo = new MemoryOfflineStoreRepository();
-  c.sessionRepo = new MemoryUserSessionRepository();
-  c.logRepo = new MemoryClientLogRepository();
+  c.appRepo = new MobileAppRepository();
+  c.deviceRepo = new DeviceRegistrationRepository();
+  c.pushNotifRepo = new PushNotificationRepository();
+  c.pushRegRepo = new PushRegistrationRepository();
+  c.configRepo = new AppConfigurationRepository();
+  c.featureRepo = new FeatureRestrictionRepository();
+  c.resourceRepo = new ClientResourceRepository();
+  c.versionRepo = new AppVersionRepository();
+  c.usageRepo = new UsageReportRepository();
+  c.offlineRepo = new OfflineStoreRepository();
+  c.sessionRepo = new UserSessionRepository();
+  c.logRepo = new ClientLogRepository();
 
   // Application use cases
   c.manageApps = new ManageMobileAppsUseCase(c.appRepo);

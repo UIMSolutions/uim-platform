@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryMatchGroupRepository : TenantRepository!(MatchGroup, MatchGroupId), MatchGroupRepository {
+class MatchGroupRepository : TenantRepository!(MatchGroup, MatchGroupId), MatchGroupRepository {
 
   // #region ByDataset
   size_t countByDataset(TenantId tenantId, DatasetId datasetId) {

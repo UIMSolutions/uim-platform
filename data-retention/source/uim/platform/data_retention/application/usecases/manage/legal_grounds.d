@@ -34,8 +34,8 @@ class ManageLegalGroundsUseCase { // TODO: UIMUseCase {
         return CommandResult(true, lg.id.value, "");
     }
 
-    CommandResult updateLegalGround(LegalGroundId id, UpdateLegalGroundRequest req) {
-        auto lg = repo.findById(tenantId, id);
+    CommandResult updateLegalGround(UpdateLegalGroundRequest req) {
+        auto lg = repo.findById(req.tenantId, req.groundId);
         if (lg.isNull)
             return CommandResult(false, "", "Legal ground not found");
 
@@ -50,7 +50,7 @@ class ManageLegalGroundsUseCase { // TODO: UIMUseCase {
         lg.updatedAt = clockSeconds();
 
         repo.update(lg);
-        return CommandResult(true, id.value, "");
+        return CommandResult(true, req.id.value, "");
     }
 
     bool hasLegalGround(LegalGroundId id) {
@@ -69,7 +69,7 @@ class ManageLegalGroundsUseCase { // TODO: UIMUseCase {
         return repo.findByBusinessPurpose(tenantId, purposeId);
     }
 
-    CommandResult deleteLegalGround(LegalGroundId id) {
+    CommandResult deleteLegalGround(TenantId tenantId, LegalGroundId id) {
         auto entity = repo.findById(tenantId, id);
         if (entity.isNull)            
             return CommandResult(false, "", "Legal ground not found");

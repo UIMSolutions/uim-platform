@@ -45,11 +45,11 @@ Container buildContainer(SrvConfig cfg) @safe {
     Container c;
 
     // Repositories
-    c.conditionRepo        = new MemoryConditionRepository();
-    c.actionRepo           = new MemoryActionRepository();
-    c.subscriptionRepo     = new MemorySubscriptionRepository();
-    c.matchedEventRepo     = new MemoryMatchedEventRepository();
-    c.undeliveredEventRepo = new MemoryUndeliveredEventRepository();
+    c.conditionRepo        = new ConditionRepository();
+    c.actionRepo           = new ActionRepository();
+    c.subscriptionRepo     = new SubscriptionRepository();
+    c.matchedEventRepo     = new MatchedEventRepository();
+    c.undeliveredEventRepo = new UndeliveredEventRepository();
 
     // Domain services
     c.matcher    = new EventMatcher();

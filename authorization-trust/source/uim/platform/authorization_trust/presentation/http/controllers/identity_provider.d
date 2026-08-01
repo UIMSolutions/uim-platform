@@ -152,7 +152,7 @@ unittest {
 
   @safe class IdentityProviderControllerTest : ControllerTestBase {
     void runTests() {
-      auto repo = new MemoryIdentityProviderRepository();
+      auto repo = new IdentityProviderRepository();
       auto usecase = new ManageIdentityProvidersUseCase(repo);
       auto controller = new IdentityProviderController(usecase);
       auto tenantId = TenantId("test-tenant");

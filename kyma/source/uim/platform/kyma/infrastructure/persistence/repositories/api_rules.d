@@ -13,7 +13,7 @@ import uim.platform.kyma;
 mixin(ShowModule!());
 
 @safe:
-class MemoryApiRuleRepository : TenantRepository!(ApiRule, ApiRuleId), ApiRuleRepository {
+class ApiRuleRepository : TenantRepository!(ApiRule, ApiRuleId), ApiRuleRepository {
 
 
 

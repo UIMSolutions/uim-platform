@@ -49,16 +49,16 @@ Container buildContainer(SrvConfig config) {
     Container c;
 
     // Infrastructure adapters
-    c.businessPurposeRepo = new MemoryBusinessPurposeRepository();
-    c.legalGroundRepo = new MemoryLegalGroundRepository();
-    c.retentionRuleRepo = new MemoryRetentionRuleRepository();
-    c.residenceRuleRepo = new MemoryResidenceRuleRepository();
-    c.dataSubjectRepo = new MemoryDataSubjectRepository();
-    c.deletionRequestRepo = new MemoryDeletionRequestRepository();
-    c.archivingJobRepo = new MemoryArchivingJobRepository();
-    c.applicationGroupRepo = new MemoryApplicationGroupRepository();
-    c.legalEntityRepo = new MemoryLegalEntityRepository();
-    c.dataSubjectRoleRepo = new MemoryDataSubjectRoleRepository();
+    c.businessPurposeRepo = new BusinessPurposeRepository();
+    c.legalGroundRepo = new LegalGroundRepository();
+    c.retentionRuleRepo = new RetentionRuleRepository();
+    c.residenceRuleRepo = new ResidenceRuleRepository();
+    c.dataSubjectRepo = new DataSubjectRepository();
+    c.deletionRequestRepo = new DeletionRequestRepository();
+    c.archivingJobRepo = new ArchivingJobRepository();
+    c.applicationGroupRepo = new ApplicationGroupRepository();
+    c.legalEntityRepo = new LegalEntityRepository();
+    c.dataSubjectRoleRepo = new DataSubjectRoleRepository();
 
     // Application use cases
     c.manageBusinessPurposes = new ManageBusinessPurposesUseCase(c.businessPurposeRepo);

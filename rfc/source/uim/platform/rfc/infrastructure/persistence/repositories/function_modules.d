@@ -10,7 +10,7 @@ import uim.platform.rfc;
 mixin(ShowModule!());
 @safe:
 
-class MemoryFunctionModuleRepository : FunctionModuleRepository {
+class FunctionModuleRepository : FunctionModuleRepository {
 
     private FunctionModule[string] _store;
 

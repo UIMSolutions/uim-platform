@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface SituationActionRepository : ITenantRepository!(SituationAction, SituationActionId) {
+interface ISituationActionRepository : ITenantRepository!(SituationAction, SituationActionId) {
 
     size_t countByType(TenantId tenantId, ActionType type);
     SituationAction[] findByType(TenantId tenantId, ActionType type);

@@ -10,7 +10,7 @@ import uim.platform.usage_data;
 mixin(ShowModule!());
 @safe:
 /// In-memory adapter implementing UsageRecordRepository port.
-class MemoryUsageRecordRepository
+class UsageRecordRepository
     : TenantRepository!(UsageRecord, UsageRecordId), UsageRecordRepository {
 
   UsageRecord[] findByGlobalAccount(TenantId tenantId, string globalAccountId) {

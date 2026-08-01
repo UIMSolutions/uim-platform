@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ExtensionRepository : ITenantRepository!(Extension, ExtensionId) {
+interface IExtensionRepository : ITenantRepository!(Extension, ExtensionId) {
     
     size_t countByScope(TenantId tenantId, ExtensionScope scope_);
     Extension[] findByScope(TenantId tenantId, ExtensionScope scope_);

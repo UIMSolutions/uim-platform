@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryServiceBindingRepository
+class ServiceBindingRepository
     : TenantRepository!(ServiceBinding, ServiceBindingId)
     , ServiceBindingRepository
 {

@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
  
 
-class MemoryWorkpageRepository : TenantRepository!(Workpage, WorkpageId), WorkpageRepository {
+class WorkpageRepository : TenantRepository!(Workpage, WorkpageId), WorkpageRepository {
 
   size_t countByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
     return findByWorkspace(tenantId, workspaceId).length;

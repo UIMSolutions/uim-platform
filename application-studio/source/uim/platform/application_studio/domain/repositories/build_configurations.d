@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface BuildConfigurationRepository : ITenantRepository!(BuildConfiguration, BuildConfigurationId) {
+interface IBuildConfigurationRepository : ITenantRepository!(BuildConfiguration, BuildConfigurationId) {
 
     size_t countByProject(TenantId tenantId, ProjectId projectId);
     BuildConfiguration[] findByProject(TenantId tenantId, ProjectId projectId);

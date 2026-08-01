@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryMarketRateRepository : TenantRepository!(MarketRate, MarketRateId), MarketRateRepository {
+class MarketRateRepository : TenantRepository!(MarketRate, MarketRateId), MarketRateRepository {
 
   size_t countByProvider(TenantId tenantId, string code) {
     return findByProvider(tenantId, code).length;

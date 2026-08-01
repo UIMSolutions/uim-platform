@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface RegisteredApplicationRepository : ITenantRepository!(RegisteredApplication, RegisteredApplicationId) {
+interface IRegisteredApplicationRepository : ITenantRepository!(RegisteredApplication, RegisteredApplicationId) {
 
     bool existsByName(TenantId tenantId, string name);
     RegisteredApplication findByName(TenantId tenantId, string name);

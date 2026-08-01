@@ -10,7 +10,7 @@ import uim.platform.hana_spatial;
 mixin(ShowModule!());
 
 @safe:
-class MemoryRouteRepository
+class RouteRepository
   : TenantRepository!(Route, RouteId),
     RouteRepository {
 

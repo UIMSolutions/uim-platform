@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing - transport request persistence.
-interface TransportRequestRepository : ITenantRepository!(TransportRequest, TransportRequestId) {
+interface ITransportRequestRepository : ITenantRepository!(TransportRequest, TransportRequestId) {
 
   size_t countByStatus(TenantId tenantId, TransportStatus status);
   TransportRequest[] findByStatus(TenantId tenantId, TransportStatus status);

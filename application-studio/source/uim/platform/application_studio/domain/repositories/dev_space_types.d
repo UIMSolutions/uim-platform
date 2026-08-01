@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface DevSpaceTypeRepository : ITenantRepository!(DevSpaceType, DevSpaceTypeId) {
+interface IDevSpaceTypeRepository : ITenantRepository!(DevSpaceType, DevSpaceTypeId) {
 
     size_t countByCategory(TenantId tenantId, DevSpaceTypeCategory category);
     DevSpaceType[] findByCategory(TenantId tenantId, DevSpaceTypeCategory category);

@@ -43,31 +43,31 @@ Container buildContainer(SrvConfig config) @trusted {
   // ── Repositories ─────────────────────────────────────────────────────────
   final switch (config.storage) {
     case StorageBackend.memory_:
-      c.changeRepo          = new MemoryFlexChangeRepository();
-      c.variantRepo         = new MemoryFlexVariantRepository();
-      c.versionRepo         = new MemoryFlexVersionRepository();
-      c.draftRepo           = new MemoryFlexDraftRepository();
-      c.personalizationRepo = new MemoryFlexPersonalizationRepository();
-      c.applicationRepo     = new MemoryFlexApplicationRepository();
+      c.changeRepo          = new FlexChangeRepository();
+      c.variantRepo         = new FlexVariantRepository();
+      c.versionRepo         = new FlexVersionRepository();
+      c.draftRepo           = new FlexDraftRepository();
+      c.personalizationRepo = new FlexPersonalizationRepository();
+      c.applicationRepo     = new FlexApplicationRepository();
       break;
 
     case StorageBackend.files_:
       c.changeRepo          = new FileFlexChangeRepository(config.dataPath);
       // others use memory fallback; file backends can be added incrementally
-      c.variantRepo         = new MemoryFlexVariantRepository();
-      c.versionRepo         = new MemoryFlexVersionRepository();
-      c.draftRepo           = new MemoryFlexDraftRepository();
-      c.personalizationRepo = new MemoryFlexPersonalizationRepository();
-      c.applicationRepo     = new MemoryFlexApplicationRepository();
+      c.variantRepo         = new FlexVariantRepository();
+      c.versionRepo         = new FlexVersionRepository();
+      c.draftRepo           = new FlexDraftRepository();
+      c.personalizationRepo = new FlexPersonalizationRepository();
+      c.applicationRepo     = new FlexApplicationRepository();
       break;
 
     case StorageBackend.mongodb_:
       c.changeRepo          = new MongoFlexChangeRepository(config.mongoUri);
-      c.variantRepo         = new MemoryFlexVariantRepository();
-      c.versionRepo         = new MemoryFlexVersionRepository();
-      c.draftRepo           = new MemoryFlexDraftRepository();
-      c.personalizationRepo = new MemoryFlexPersonalizationRepository();
-      c.applicationRepo     = new MemoryFlexApplicationRepository();
+      c.variantRepo         = new FlexVariantRepository();
+      c.versionRepo         = new FlexVersionRepository();
+      c.draftRepo           = new FlexDraftRepository();
+      c.personalizationRepo = new FlexPersonalizationRepository();
+      c.applicationRepo     = new FlexApplicationRepository();
       break;
   }
 

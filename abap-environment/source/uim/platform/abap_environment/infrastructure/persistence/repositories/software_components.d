@@ -12,7 +12,7 @@ import uim.platform.abap_environment;
 
 // mixin(ShowModule!());
 @safe:
-class MemorySoftwareComponentRepository : TenantRepository!(SoftwareComponent, SoftwareComponentId), SoftwareComponentRepository {
+class SoftwareComponentRepository : TenantRepository!(SoftwareComponent, SoftwareComponentId), SoftwareComponentRepository {
 
   bool existsByName(TenantId tenantId, SystemInstanceId systemId, string name) {
     return findBySystem(tenantId, systemId).any!(e => e.name == name);
@@ -51,5 +51,5 @@ class MemorySoftwareComponentRepository : TenantRepository!(SoftwareComponent, S
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemorySoftwareComponentRepository()));
+    assert(tenantRepositoryTest(new SoftwareComponentRepository()));
 }

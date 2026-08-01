@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryImportQueueEntryRepository : TenantRepository!(ImportQueueEntry, ImportQueueEntryId), ImportQueueEntryRepository {
+class ImportQueueEntryRepository : TenantRepository!(ImportQueueEntry, ImportQueueEntryId), ImportQueueEntryRepository {
 
     ImportQueueEntry[] findByNode(TenantId tenantId, TransportNodeId nodeId) {
         return findByTenant(tenantId).filter!(e => e.nodeId.value == nodeId.value).array;

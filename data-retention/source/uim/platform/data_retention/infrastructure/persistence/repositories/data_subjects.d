@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryDataSubjectRepository : TenantRepository!(DataSubject, DataSubjectId), DataSubjectRepository {
+class DataSubjectRepository : TenantRepository!(DataSubject, DataSubjectId), DataSubjectRepository {
 
         size_t countByApplicationGroup(TenantId tenantId, ApplicationGroupId groupId) {
             return findByApplicationGroup(tenantId, groupId).length;

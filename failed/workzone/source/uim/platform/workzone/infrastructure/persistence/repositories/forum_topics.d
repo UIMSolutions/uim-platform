@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
  
 
-class MemoryForumTopicRepository : TenantRepository!(ForumTopic, ForumTopicId), ForumTopicRepository {
+class ForumTopicRepository : TenantRepository!(ForumTopic, ForumTopicId), ForumTopicRepository {
 
   size_t countByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
     return findByWorkspace(tenantId, workspaceId).length;

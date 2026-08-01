@@ -10,7 +10,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryWorkspaceRepository : TenantRepository!(Workspace, WorkspaceId), WorkspaceRepository {
+class WorkspaceRepository : TenantRepository!(Workspace, WorkspaceId), WorkspaceRepository {
   Workspace[] findByStatus(TenantId tenantId, WorkspaceStatus status) {
     import std.algorithm : filter;
     import std.array : array;
@@ -32,5 +32,5 @@ class MemoryWorkspaceRepository : TenantRepository!(Workspace, WorkspaceId), Wor
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryWorkspaceRepository()));
+    assert(tenantRepositoryTest(new WorkspaceRepository()));
 }

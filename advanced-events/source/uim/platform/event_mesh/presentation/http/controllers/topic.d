@@ -162,7 +162,7 @@ unittest {
   @safe class TopicControllerTest : ControllerTestBase {
     void runTests() {
       // 1. Setup
-      auto repo = new MemoryTopicRepository();
+      auto repo = new TopicRepository();
       auto usecase = new ManageTopicsUseCase(repo);
       auto controller = new TopicController(usecase);
       auto tenantId = TenantId("test-tenant");

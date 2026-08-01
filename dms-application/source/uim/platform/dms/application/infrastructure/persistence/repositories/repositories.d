@@ -12,7 +12,7 @@ import uim.platform.dms.application;
 
 mixin(ShowModule!());
 @safe:
-class MemoryRepositoryRepository : TenantRepository!(DmsRepository, RepositoryId), IRepositoryRepository {
+class RepositoryRepository : TenantRepository!(DmsRepository, RepositoryId), IRepositoryRepository {
   // #region byName
   bool existsByName(TenantId tenantId, string name) {
     return findByTenant(tenantId).any!(e => e.name == name);
@@ -50,5 +50,5 @@ class MemoryRepositoryRepository : TenantRepository!(DmsRepository, RepositoryId
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryRepositoryRepository()));
+    assert(tenantRepositoryTest(new RepositoryRepository()));
 }

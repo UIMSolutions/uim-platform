@@ -13,7 +13,7 @@ import uim.platform.dms.application;
 mixin(ShowModule!());
 @safe:
 
-class MemoryDocumentVersionRepository : TenantRepository!(DocumentVersion, DocumentVersionId), IDocumentVersionRepository {
+class DocumentVersionRepository : TenantRepository!(DocumentVersion, DocumentVersionId), IDocumentVersionRepository {
   size_t countByDocument(TenantId tenantId, DocumentId documentId) {
     return findByDocument(tenantId, documentId).length;
   }
@@ -40,5 +40,5 @@ class MemoryDocumentVersionRepository : TenantRepository!(DocumentVersion, Docum
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryDocumentVersionRepository()));
+    assert(tenantRepositoryTest(new DocumentVersionRepository()));
 }

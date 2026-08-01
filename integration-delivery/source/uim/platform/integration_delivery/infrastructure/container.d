@@ -36,14 +36,14 @@ Container buildContainer(SrvConfig config) {
     Container c;
 
     // Repositories
-    auto cicdRepositoryRepo = new MemoryCicdRepositoryRepository();
-    auto credentialRepo = new MemoryCredentialRepository();
-    auto pipelineRepo = new MemoryPipelineRepository();
-    auto jobRepo = new MemoryJobRepository();
-    auto buildRepo = new MemoryBuildRepository();
-    auto stageRepo = new MemoryStageRepository();
-    auto webhookRepo = new MemoryWebhookRepository();
-    auto deploymentTargetRepo = new MemoryDeploymentTargetRepository();
+    auto cicdRepositoryRepo = new CicdRepositoryRepository();
+    auto credentialRepo = new CredentialRepository();
+    auto pipelineRepo = new PipelineRepository();
+    auto jobRepo = new JobRepository();
+    auto buildRepo = new BuildRepository();
+    auto stageRepo = new StageRepository();
+    auto webhookRepo = new WebhookRepository();
+    auto deploymentTargetRepo = new DeploymentTargetRepository();
 
     // Use Cases
     c.manageCicdRepositoriesUseCase = new ManageCicdRepositoriesUseCase(cicdRepositoryRepo);

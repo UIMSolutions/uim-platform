@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryGlossaryEntryRepository : TenantRepository!(GlossaryEntry, GlossaryEntryId),
+class GlossaryEntryRepository : TenantRepository!(GlossaryEntry, GlossaryEntryId),
 GlossaryEntryRepository {
 
     size_t countByLanguagePair(TenantId tenantId, string sourceLang, string targetLang) {

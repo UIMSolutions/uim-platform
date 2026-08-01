@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface TaskAttachmentRepository : ITenantRepository!(TaskAttachment, TaskAttachmentId) {
+interface ITaskAttachmentRepository : ITenantRepository!(TaskAttachment, TaskAttachmentId) {
 
     size_t countByTask(TenantId tenantId, TaskId taskId);
     TaskAttachment[] findByTask(TenantId tenantId, TaskId taskId);

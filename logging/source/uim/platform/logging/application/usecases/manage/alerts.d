@@ -88,7 +88,7 @@ class ManageAlertsUseCase : TenantUseCase!(AlertRepository, Alert, AlertId) {
 }
 
 unittest {
-  auto repo = new MemoryAlertRepository();
+  auto repo = new AlertRepository();
   auto usecase = new ManageAlertsUseCase(repo);
   auto tenantId = TenantId("test-tenant");
 

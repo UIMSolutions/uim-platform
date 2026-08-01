@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryWebhookRepository : TenantRepository!(Webhook, WebhookId), WebhookRepository {
+class WebhookRepository : TenantRepository!(Webhook, WebhookId), WebhookRepository {
     Webhook[] findByRepository(TenantId tenantId, CicdRepositoryId repositoryId) {
         return findByTenant(tenantId).filter!(w => w.repositoryId == repositoryId).array;
     }

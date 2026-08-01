@@ -75,14 +75,14 @@ Container buildContainer(SrvConfig config) {
   Container c;
 
   // Infrastructure adapters
-  c.documentRepo = new MemoryDocumentRepository();
-  c.extractionResultRepo = new MemoryExtractionResultRepository();
-  c.schemaRepo = new MemorySchemaRepository();
-  c.templateRepo = new MemoryTemplateRepository();
-  c.documentTypeRepo = new MemoryDocumentTypeRepository();
-  c.enrichmentDataRepo = new MemoryEnrichmentDataRepository();
-  c.trainingJobRepo = new MemoryTrainingJobRepository();
-  c.clientRepo = new MemoryClientRepository();
+  c.documentRepo = new DocumentRepository();
+  c.extractionResultRepo = new ExtractionResultRepository();
+  c.schemaRepo = new SchemaRepository();
+  c.templateRepo = new TemplateRepository();
+  c.documentTypeRepo = new DocumentTypeRepository();
+  c.enrichmentDataRepo = new EnrichmentDataRepository();
+  c.trainingJobRepo = new TrainingJobRepository();
+  c.clientRepo = new ClientRepository();
 
   // Application use cases
   c.processDocuments = new ProcessDocumentsUseCase(c.documentRepo, c.extractionResultRepo);

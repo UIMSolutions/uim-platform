@@ -13,7 +13,7 @@ import uim.platform.portal;
 mixin(ShowModule!());
 
 @safe:
-class MemoryTileRepository : TenantRepository!(Tile, TileId), TileRepository {
+class TileRepository : TenantRepository!(Tile, TileId), TileRepository {
 
   // #region ByCatalog
   size_t countByCatalog(TenantId tenantId, CatalogId catalogId) {

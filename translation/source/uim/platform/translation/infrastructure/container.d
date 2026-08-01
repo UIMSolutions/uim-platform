@@ -42,9 +42,9 @@ Container buildContainer(SrvConfig config) {
     Container c;
 
     // Infrastructure adapters
-    c.translationProjectRepo = new MemoryTranslationProjectRepository();
-    c.glossaryEntryRepo = new MemoryGlossaryEntryRepository();
-    c.translationJobRepo = new MemoryTranslationJobRepository();
+    c.translationProjectRepo = new TranslationProjectRepository();
+    c.glossaryEntryRepo = new GlossaryEntryRepository();
+    c.translationJobRepo = new TranslationJobRepository();
 
     // Domain services
     c.translationEngine = new TranslationEngine();

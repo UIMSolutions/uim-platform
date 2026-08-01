@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — service instance persistence.
-interface ServiceInstanceRepository {
+interface IServiceInstanceRepository {
   bool existsById(ServiceInstanceId id);
   ServiceInstance findById(ServiceInstanceId id);
 

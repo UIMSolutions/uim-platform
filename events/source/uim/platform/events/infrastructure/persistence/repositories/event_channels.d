@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryEventChannelRepository
+class EventChannelRepository
     : TenantRepository!(EventChannel, EventChannelId), EventChannelRepository {
 
     size_t countByService(TenantId tenantId, MessagingServiceId serviceId) {

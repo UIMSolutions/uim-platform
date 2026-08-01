@@ -113,8 +113,8 @@ struct CreateLegalGroundRequest {
 }
 
 struct UpdateLegalGroundRequest {
-  LegalGroundId id;
   TenantId tenantId;
+  LegalGroundId groundId;
   string description;
   string legalReference;
   string[] categories;

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface FolderRepository : ITenantRepository!(Folder, FolderId) {
+interface IFolderRepository : ITenantRepository!(Folder, FolderId) {
 
     size_t countByRepository(TenantId tenantId, RepositoryId repositoryId);
     Folder[] findByRepository(TenantId tenantId, RepositoryId repositoryId);

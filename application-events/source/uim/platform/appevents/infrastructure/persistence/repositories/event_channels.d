@@ -20,7 +20,7 @@ mixin(ShowModule!());
 @safe:
 
 
-class MemoryEventChannelRepository
+class EventChannelRepository
     : TenantRepository!(EventChannel, EventChannelId)
     , EventChannelRepository
 {

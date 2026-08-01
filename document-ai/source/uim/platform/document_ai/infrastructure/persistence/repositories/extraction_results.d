@@ -13,7 +13,7 @@ import uim.platform.document_ai;
 mixin(ShowModule!());
 
 @safe:
-class MemoryExtractionResultRepository : ExtractionResultRepository {
+class ExtractionResultRepository : ExtractionResultRepository {
   private ExtractionResult[][string] store;
 
   bool existsById(ClientId clientId, ExtractionResultId id) {

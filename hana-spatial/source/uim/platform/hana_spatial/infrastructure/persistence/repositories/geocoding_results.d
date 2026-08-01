@@ -10,7 +10,7 @@ import uim.platform.hana_spatial;
 mixin(ShowModule!());
 
 @safe:
-class MemoryGeocodingResultRepository
+class GeocodingResultRepository
   : TenantRepository!(GeocodingResult, GeocodingResultId),
     GeocodingResultRepository {
 

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryRefreshTokenRepository : TenantRepository!(RefreshToken, RefreshTokenId), IRefreshTokenRepository {
+class RefreshTokenRepository : TenantRepository!(RefreshToken, RefreshTokenId), IRefreshTokenRepository {
 
     // #region ByTokenValue
     bool existsByTokenValue(TenantId tenantId, string tokenValue) {
@@ -74,5 +74,5 @@ class MemoryRefreshTokenRepository : TenantRepository!(RefreshToken, RefreshToke
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryRefreshTokenRepository()));
+    assert(tenantRepositoryTest(new RefreshTokenRepository()));
 }

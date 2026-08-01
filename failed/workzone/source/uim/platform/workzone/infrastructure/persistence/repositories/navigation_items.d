@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
  
 
-class MemoryNavigationItemRepository : TenantRepository!(NavigationItem, NavigationItemId), NavigationItemRepository {
+class NavigationItemRepository : TenantRepository!(NavigationItem, NavigationItemId), NavigationItemRepository {
 
   // #region bySite
   size_t countBySite(TenantId tenantId, SiteId siteId) {

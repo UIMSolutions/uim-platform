@@ -48,14 +48,14 @@ Container buildContainer(AppConfig config) @safe {
   Container c;
 
   // Repositories
-  c.projectRepo        = new MemoryProjectRepository();
-  c.devSpaceRepo       = new MemoryDevSpaceRepository();
-  c.templateRepo       = new MemoryTemplateRepository();
-  c.pipelineRepo       = new MemoryPipelineRepository();
-  c.buildJobRepo       = new MemoryBuildJobRepository();
-  c.deploymentRepo     = new MemoryDeploymentRepository();
-  c.aiRequestRepo      = new MemoryAIRequestRepository();
-  c.serviceBindingRepo = new MemoryServiceBindingRepository();
+  c.projectRepo        = new ProjectRepository();
+  c.devSpaceRepo       = new DevSpaceRepository();
+  c.templateRepo       = new TemplateRepository();
+  c.pipelineRepo       = new PipelineRepository();
+  c.buildJobRepo       = new BuildJobRepository();
+  c.deploymentRepo     = new DeploymentRepository();
+  c.aiRequestRepo      = new AIRequestRepository();
+  c.serviceBindingRepo = new ServiceBindingRepository();
 
   // Use cases
   c.manageProjects        = new ManageProjectsUseCase(c.projectRepo);

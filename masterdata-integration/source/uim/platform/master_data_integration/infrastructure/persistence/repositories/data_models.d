@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryDataModelRepository : TenantRepository!(DataModel, DataModelId), DataModelRepository {
+class DataModelRepository : TenantRepository!(DataModel, DataModelId), DataModelRepository {
 
   // #region ByName
   /**

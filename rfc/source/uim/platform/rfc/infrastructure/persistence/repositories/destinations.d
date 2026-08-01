@@ -10,7 +10,7 @@ import uim.platform.rfc;
 mixin(ShowModule!());
 @safe:
 
-class MemoryDestinationRepository : DestinationRepository {
+class DestinationRepository : DestinationRepository {
 
     private Destination[string] _store;
 

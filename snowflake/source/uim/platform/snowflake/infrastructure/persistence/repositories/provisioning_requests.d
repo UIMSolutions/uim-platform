@@ -3,7 +3,7 @@ import uim.platform.snowflake;
 
 mixin(ShowModule!());
 @safe:
-class MemoryProvisioningRequestRepository
+class ProvisioningRequestRepository
     : TenantRepository!(ProvisioningRequest, ProvisioningRequestId),
       ProvisioningRequestRepository {
 

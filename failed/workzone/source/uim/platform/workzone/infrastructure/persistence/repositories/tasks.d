@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
  
 
-class MemoryTaskRepository : TenantRepository!(WZTask, TaskId), TaskRepository {
+class TaskRepository : TenantRepository!(WZTask, TaskId), TaskRepository {
 
   // #region ByAssignee
   size_t countByAssignee(TenantId tenantId, UserId assigneeId) {

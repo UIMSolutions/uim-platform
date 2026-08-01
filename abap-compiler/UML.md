@@ -167,11 +167,11 @@ classDiagram
         +size_t countByTenant(tenantId)
     }
 
-    class MemoryAbapProgramRepository {
+    class AbapProgramRepository {
         -AbapProgram[string] _store
     }
 
-    class MemoryCompilationJobRepository {
+    class CompilationJobRepository {
         -CompilationJob[string] _store
     }
 

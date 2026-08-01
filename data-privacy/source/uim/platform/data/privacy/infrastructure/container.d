@@ -155,27 +155,27 @@ Container buildContainer(SrvConfig config) {
   Container c;
 
   // Infrastructure adapters
-  c.dataSubjectRepo = new MemoryDataSubjectRepository();
-  c.personalDataModelRepo = new MemoryPersonalDataModelRepository();
-  c.deletionRequestRepo = new MemoryDeletionRequestRepository();
-  c.blockingRequestRepo = new MemoryBlockingRequestRepository();
-  c.legalGroundRepo = new MemoryLegalGroundRepository();
-  c.retentionRuleRepo = new MemoryRetentionRuleRepository();
-  c.consentRecordRepo = new MemoryConsentRecordRepository();
-  c.dataRetrievalRepo = new MemoryDataRetrievalRequestRepository();
-  c.dataControllerRepo = new MemoryDataControllerRepository();
-  c.dataControllerGroupRepo = new MemoryDataControllerGroupRepository();
-  c.businessContextRepo = new MemoryBusinessContextRepository();
-  c.businessProcessRepo = new MemoryBusinessProcessRepository();
-  c.businessSubprocessRepo = new MemoryBusinessSubprocessRepository();
-  c.correctionRequestRepo = new MemoryCorrectionRequestRepository();
-  c.archiveRequestRepo = new MemoryArchiveRequestRepository();
-  c.destructionRequestRepo = new MemoryDestructionRequestRepository();
-  c.purposeRecordRepo = new MemoryPurposeRecordRepository();
-  c.consentPurposeRepo = new MemoryConsentPurposeRepository();
-  c.ruleSetRepo = new MemoryRuleSetRepository();
-  c.informationReportRepo = new MemoryInformationReportRepository();
-  c.anonymizationConfigRepo = new MemoryAnonymizationConfigRepository();
+  c.dataSubjectRepo = new DataSubjectRepository();
+  c.personalDataModelRepo = new PersonalDataModelRepository();
+  c.deletionRequestRepo = new DeletionRequestRepository();
+  c.blockingRequestRepo = new BlockingRequestRepository();
+  c.legalGroundRepo = new LegalGroundRepository();
+  c.retentionRuleRepo = new RetentionRuleRepository();
+  c.consentRecordRepo = new ConsentRecordRepository();
+  c.dataRetrievalRepo = new DataRetrievalRequestRepository();
+  c.dataControllerRepo = new DataControllerRepository();
+  c.dataControllerGroupRepo = new DataControllerGroupRepository();
+  c.businessContextRepo = new BusinessContextRepository();
+  c.businessProcessRepo = new BusinessProcessRepository();
+  c.businessSubprocessRepo = new BusinessSubprocessRepository();
+  c.correctionRequestRepo = new CorrectionRequestRepository();
+  c.archiveRequestRepo = new ArchiveRequestRepository();
+  c.destructionRequestRepo = new DestructionRequestRepository();
+  c.purposeRecordRepo = new PurposeRecordRepository();
+  c.consentPurposeRepo = new ConsentPurposeRepository();
+  c.ruleSetRepo = new RuleSetRepository();
+  c.informationReportRepo = new InformationReportRepository();
+  c.anonymizationConfigRepo = new AnonymizationConfigRepository();
 
   // Application use cases
   c.manageDataSubjects = new ManageDataSubjectsUseCase(c.dataSubjectRepo);

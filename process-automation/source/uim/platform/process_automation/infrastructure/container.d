@@ -87,16 +87,16 @@ Container buildContainer(SrvConfig config) {
     Container c;
 
     // Infrastructure adapters
-    c.processRepo = new MemoryProcessRepository();
-    c.processInstanceRepo = new MemoryProcessInstanceRepository();
-    c.taskRepo = new MemoryTaskRepository();
-    c.decisionRepo = new MemoryDecisionRepository();
-    c.formRepo = new MemoryFormRepository();
-    c.automationRepo = new MemoryAutomationRepository();
-    c.triggerRepo = new MemoryTriggerRepository();
-    c.actionRepo = new MemoryActionRepository();
-    c.visibilityRepo = new MemoryVisibilityRepository();
-    c.artifactRepo = new MemoryArtifactRepository();
+    c.processRepo = new ProcessRepository();
+    c.processInstanceRepo = new ProcessInstanceRepository();
+    c.taskRepo = new TaskRepository();
+    c.decisionRepo = new DecisionRepository();
+    c.formRepo = new FormRepository();
+    c.automationRepo = new AutomationRepository();
+    c.triggerRepo = new TriggerRepository();
+    c.actionRepo = new ActionRepository();
+    c.visibilityRepo = new VisibilityRepository();
+    c.artifactRepo = new ArtifactRepository();
 
     // Application use cases
     c.manageProcesses = new ManageProcessesUseCase(c.processRepo);

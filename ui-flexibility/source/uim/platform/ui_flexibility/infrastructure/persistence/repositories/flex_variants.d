@@ -10,7 +10,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryFlexVariantRepository : TenantRepository!(FlexVariant, FlexVariantId), FlexVariantRepository {
+class FlexVariantRepository : TenantRepository!(FlexVariant, FlexVariantId), FlexVariantRepository {
 
   bool existsById(TenantId tenantId, FlexVariantId id) {
     return !findById(tenantId, id).isNull;

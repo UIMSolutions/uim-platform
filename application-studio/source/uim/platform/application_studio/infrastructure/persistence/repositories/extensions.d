@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryExtensionRepository : TenantRepository!(Extension, ExtensionId), ExtensionRepository {
+class ExtensionRepository : TenantRepository!(Extension, ExtensionId), ExtensionRepository {
 
     size_t countByScope(TenantId tenantId, ExtensionScope scope_) {
         return findByScope(tenantId, scope_).length;

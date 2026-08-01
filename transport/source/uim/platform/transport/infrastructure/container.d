@@ -30,11 +30,11 @@ Container buildContainer(SrvConfig config) {
     Container c;
 
     // Repositories (in-memory adapters)
-    auto nodeRepo = new MemoryTransportNodeRepository();
-    auto routeRepo = new MemoryTransportRouteRepository();
-    auto requestRepo = new MemoryTransportRequestRepository();
-    auto queueEntryRepo = new MemoryImportQueueEntryRepository();
-    auto actionRepo = new MemoryTransportActionRepository();
+    auto nodeRepo = new TransportNodeRepository();
+    auto routeRepo = new TransportRouteRepository();
+    auto requestRepo = new TransportRequestRepository();
+    auto queueEntryRepo = new ImportQueueEntryRepository();
+    auto actionRepo = new TransportActionRepository();
 
     // Use Cases
     c.manageNodesUseCase = new ManageTransportNodesUseCase(nodeRepo);

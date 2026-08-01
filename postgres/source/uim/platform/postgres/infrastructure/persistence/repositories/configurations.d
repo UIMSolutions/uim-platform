@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryConfigurationRepository
+class ConfigurationRepository
     : TenantRepository!(Configuration, ConfigurationId)
     , ConfigurationRepository
 {

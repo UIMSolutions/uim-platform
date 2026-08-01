@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryConditionRepository
+class ConditionRepository
     : TenantRepository!(Condition, ConditionId),
       ConditionRepository
 {

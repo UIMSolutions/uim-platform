@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port for persisting data profiling results.
-interface DataProfileRepository : ITenantRepository!(DataProfile, DataProfileId) {
+interface IDataProfileRepository : ITenantRepository!(DataProfile, DataProfileId) {
   DataProfile findLatestByDataset(TenantId tenantId, DatasetId datasetId);
 
   size_t countByDataset(TenantId tenantId, DatasetId datasetId);

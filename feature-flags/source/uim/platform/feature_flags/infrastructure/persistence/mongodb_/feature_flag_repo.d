@@ -23,7 +23,7 @@ class MongoDbFeatureFlagRepository : FeatureFlagRepository {
     this(string connectionUri, string dbName) {
         this.connectionUri = connectionUri;
         this.dbName        = dbName;
-        this.fallback      = new MemoryFeatureFlagRepository();
+        this.fallback      = new FeatureFlagRepository();
         // TODO: connect(connectionUri) and wire mongo collection
         // auto client = connectMongoDB(connectionUri);
         // this.collection = client.getDatabase(dbName)["feature_flags"];

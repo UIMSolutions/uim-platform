@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface TaskDefinitionRepository : ITenantRepository!(TaskDefinition, TaskDefinitionId) {
+interface ITaskDefinitionRepository : ITenantRepository!(TaskDefinition, TaskDefinitionId) {
 
     bool existsByName(TenantId tenantId, string name);
     TaskDefinition findByName(TenantId tenantId, string name);

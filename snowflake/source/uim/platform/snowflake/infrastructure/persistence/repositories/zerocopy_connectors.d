@@ -3,7 +3,7 @@ import uim.platform.snowflake;
 
 mixin(ShowModule!());
 @safe:
-class MemoryZerocopyConnectorRepository
+class ZerocopyConnectorRepository
     : TenantRepository!(ZerocopyConnector, ZerocopyConnectorId),
       ZerocopyConnectorRepository {
 

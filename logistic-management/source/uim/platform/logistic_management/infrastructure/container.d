@@ -43,12 +43,12 @@ Container buildContainer(SrvConfig cfg) @safe {
   Container c;
 
   // Repositories
-  c.carrierRepo        = new MemoryCarrierRepository();
-  c.freightOrderRepo   = new MemoryFreightOrderRepository();
-  c.shipmentRepo       = new MemoryShipmentRepository();
-  c.deliveryRepo       = new MemoryDeliveryRepository();
-  c.warehouseOrderRepo = new MemoryWarehouseOrderRepository();
-  c.warehouseTaskRepo  = new MemoryWarehouseTaskRepository();
+  c.carrierRepo        = new CarrierRepository();
+  c.freightOrderRepo   = new FreightOrderRepository();
+  c.shipmentRepo       = new ShipmentRepository();
+  c.deliveryRepo       = new DeliveryRepository();
+  c.warehouseOrderRepo = new WarehouseOrderRepository();
+  c.warehouseTaskRepo  = new WarehouseTaskRepository();
 
   // Domain services
   c.logisticsPlanner = new LogisticsPlanner(c.carrierRepo);

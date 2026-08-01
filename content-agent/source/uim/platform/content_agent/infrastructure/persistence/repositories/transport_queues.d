@@ -13,7 +13,7 @@ import uim.platform.content_agent;
 mixin(ShowModule!());
 
 @safe:
-class MemoryTransportQueueRepository : TenantRepository!(TransportQueue, TransportQueueId) {
+class TransportQueueRepository : TenantRepository!(TransportQueue, TransportQueueId) {
 
   bool existsDefault(TenantId tenantId) {
     foreach (e; findByTenant(tenantId))

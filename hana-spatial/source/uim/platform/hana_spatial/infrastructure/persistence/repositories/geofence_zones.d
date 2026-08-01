@@ -10,7 +10,7 @@ import uim.platform.hana_spatial;
 mixin(ShowModule!());
 
 @safe:
-class MemoryGeofenceZoneRepository
+class GeofenceZoneRepository
   : TenantRepository!(GeofenceZone, GeofenceZoneId),
     GeofenceZoneRepository {
 

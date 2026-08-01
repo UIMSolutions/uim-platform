@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface DataSubjectRoleRepository : ITenantRepository!(DataSubjectRole, DataSubjectRoleId) {
+interface IDataSubjectRoleRepository : ITenantRepository!(DataSubjectRole, DataSubjectRoleId) {
 
     DataSubjectRole[] findActive(TenantId tenantId);
 

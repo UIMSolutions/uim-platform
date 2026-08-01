@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ServiceAccountRepository : ITenantRepository!(ServiceAccount, ServiceAccountId) {
+interface IServiceAccountRepository : ITenantRepository!(ServiceAccount, ServiceAccountId) {
 
     size_t countByStatus(TenantId tenantId, ServiceAccountStatus status);
     ServiceAccount[] findByStatus(TenantId tenantId, ServiceAccountStatus status);

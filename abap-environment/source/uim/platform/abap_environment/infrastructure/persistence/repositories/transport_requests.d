@@ -13,7 +13,7 @@ import uim.platform.abap_environment;
 // mixin(ShowModule!());
 @safe:
 
-class MemoryTransportRequestRepository : TenantRepository!(TransportRequest, TransportRequestId), TransportRequestRepository {
+class TransportRequestRepository : TenantRepository!(TransportRequest, TransportRequestId), TransportRequestRepository {
 
   // #region BySystem
   size_t countBySystem(TenantId tenantId, SystemInstanceId systemId) {
@@ -73,5 +73,5 @@ TransportRequest[] filterByStatus(  TransportRequest[] requests, TransportStatus
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryTransportRequestRepository()));
+    assert(tenantRepositoryTest(new TransportRequestRepository()));
 }

@@ -166,15 +166,15 @@ interface AuditEntryRepository {
   +findByTenantPaged(TenantId, offset, limit) : AuditEntry[]
 }
 
-class MemoryFeatureFlagRepository
+class FeatureFlagRepository
 class FileFeatureFlagRepository
 class MongoDbFeatureFlagRepository
 
-class MemoryServiceInstanceRepository
+class ServiceInstanceRepository
 class FileServiceInstanceRepository
 class MongoDbServiceInstanceRepository
 
-class MemoryAuditEntryRepository
+class AuditEntryRepository
 class FileAuditEntryRepository
 class MongoDbAuditEntryRepository
 

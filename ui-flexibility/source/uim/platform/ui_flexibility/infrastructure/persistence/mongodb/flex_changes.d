@@ -19,7 +19,7 @@ class MongoFlexChangeRepository : FlexChangeRepository {
 
   this(string mongoUri) {
     // TODO: initialize MongoClient(mongoUri) and collection handle
-    delegate_ = new MemoryFlexChangeRepository();
+    delegate_ = new FlexChangeRepository();
   }
 
   FlexChangeId save(TenantId tenantId, FlexChange c) {

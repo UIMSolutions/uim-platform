@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface BuildRepository : ITenantRepository!(Build, BuildId) {
+interface IBuildRepository : ITenantRepository!(Build, BuildId) {
     Build[] findByJob(TenantId tenantId, JobId jobId);
     Build[] findByStatus(TenantId tenantId, BuildStatus status);
     Build[] findByJobAndStatus(TenantId tenantId, JobId jobId, BuildStatus status);

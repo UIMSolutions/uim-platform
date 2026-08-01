@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryDataQualityScoreRepository
+class DataQualityScoreRepository
     : TenantRepository!(DataQualityScore, DataQualityScoreId), DataQualityScoreRepository {
 
     DataQualityScore findByBusinessPartner(TenantId tenantId, BusinessPartnerId bpId) {

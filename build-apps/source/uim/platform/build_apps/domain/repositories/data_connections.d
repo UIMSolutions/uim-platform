@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface DataConnectionRepository : ITenantRepository!(DataConnection, DataConnectionId) {
+interface IDataConnectionRepository : ITenantRepository!(DataConnection, DataConnectionId) {
 
     size_t countByApplication(TenantId tenantId, ApplicationId applicationId);
     DataConnection[] findByApplication(TenantId tenantId, ApplicationId applicationId);

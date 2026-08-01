@@ -13,7 +13,7 @@ import uim.platform.content_agent;
 mixin(ShowModule!());
 
 @safe:
-class MemoryContentProviderRepository :
+class ContentProviderRepository :
     TenantRepository!(ContentProvider, ContentProviderId),
     ContentProviderRepository {
 

@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryServicePlanRepository
+class ServicePlanRepository
     : TenantRepository!(ServicePlan, ServicePlanId)
     , ServicePlanRepository
 {

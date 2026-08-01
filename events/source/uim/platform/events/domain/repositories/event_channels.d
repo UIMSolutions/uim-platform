@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface EventChannelRepository : ITenantRepository!(EventChannel, EventChannelId) {
+interface IEventChannelRepository : ITenantRepository!(EventChannel, EventChannelId) {
     size_t countByService(TenantId tenantId, MessagingServiceId serviceId);
     EventChannel[] findByService(TenantId tenantId, MessagingServiceId serviceId);
     EventChannel[] findByNamespace(TenantId tenantId, string namespace);

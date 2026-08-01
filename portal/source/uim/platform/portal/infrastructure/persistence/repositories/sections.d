@@ -13,7 +13,7 @@ import uim.platform.portal;
 mixin(ShowModule!());
 
 @safe:
-class MemorySectionRepository : SectionRepository {
+class SectionRepository : SectionRepository {
   private PortalSection[SectionId] store;
 
   bool existsById(SectionId id) {

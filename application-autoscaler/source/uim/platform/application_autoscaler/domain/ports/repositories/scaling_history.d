@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ScalingHistoryRepository : ITenantRepository!(ScalingHistory, ScalingHistoryId) {
+interface IScalingHistoryRepository : ITenantRepository!(ScalingHistory, ScalingHistoryId) {
 
   size_t countByApp(TenantId tenantId, AppBindingId appId);
   ScalingHistory[] findByApp(TenantId tenantId, AppBindingId appId);

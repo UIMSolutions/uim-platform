@@ -93,16 +93,16 @@ Container buildContainer(SrvConfig config) {
   Container container;
 
   // Infrastructure adapters
-  container.logEntryRepo = new MemoryLogEntryRepository();
-  container.logStreamRepo = new MemoryLogStreamRepository();
-  container.spanRepo = new MemorySpanRepository();
-  container.dashboardRepo = new MemoryDashboardRepository();
-  container.retentionRepo = new MemoryRetentionPolicyRepository();
-  container.alertRuleRepo = new MemoryAlertRuleRepository();
-  container.alertRepo = new MemoryAlertRepository();
-  container.channelRepo = new MemoryNotificationChannelRepository();
-  container.pipelineRepo = new MemoryPipelineRepository();
-  container.tokenRepo = new MemoryIngestionTokenRepository();
+  container.logEntryRepo = new LogEntryRepository();
+  container.logStreamRepo = new LogStreamRepository();
+  container.spanRepo = new SpanRepository();
+  container.dashboardRepo = new DashboardRepository();
+  container.retentionRepo = new RetentionPolicyRepository();
+  container.alertRuleRepo = new AlertRuleRepository();
+  container.alertRepo = new AlertRepository();
+  container.channelRepo = new NotificationChannelRepository();
+  container.pipelineRepo = new PipelineRepository();
+  container.tokenRepo = new IngestionTokenRepository();
 
   // Application use cases
   container.ingestLogs = new IngestLogsUseCase(container.logEntryRepo, container.logStreamRepo);

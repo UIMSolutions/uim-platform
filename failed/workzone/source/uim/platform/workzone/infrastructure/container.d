@@ -88,16 +88,16 @@ Container buildContainer(SrvConfig config) {
   Container c;
 
   // Infrastructure adapters
-  c.workspaceRepo = new MemoryWorkspaceRepository();
-  c.workpageRepo = new MemoryWorkpageRepository();
-  c.cardRepo = new MemoryCardRepository();
-  c.contentRepo = new MemoryContentRepository();
-  c.feedRepo = new MemoryFeedRepository();
-  c.notificationRepo = new MemoryNotificationRepository();
-  c.taskRepo = new MemoryTaskRepository();
-  c.channelRepo = new MemoryChannelRepository();
-  c.appRepo = new MemoryAppRepository();
-  c.widgetRepo = new MemoryWidgetRepository();
+  c.workspaceRepo = new WorkspaceRepository();
+  c.workpageRepo = new WorkpageRepository();
+  c.cardRepo = new CardRepository();
+  c.contentRepo = new ContentRepository();
+  c.feedRepo = new FeedRepository();
+  c.notificationRepo = new NotificationRepository();
+  c.taskRepo = new TaskRepository();
+  c.channelRepo = new ChannelRepository();
+  c.appRepo = new AppRepository();
+  c.widgetRepo = new WidgetRepository();
 
   // Application use cases
   c.manageWorkspaces = new ManageWorkspacesUseCase(c.workspaceRepo);

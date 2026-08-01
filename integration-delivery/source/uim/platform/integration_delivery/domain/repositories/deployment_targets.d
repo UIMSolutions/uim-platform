@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface DeploymentTargetRepository : ITenantRepository!(DeploymentTarget, DeploymentTargetId) {
+interface IDeploymentTargetRepository : ITenantRepository!(DeploymentTarget, DeploymentTargetId) {
     DeploymentTarget[] findByStatus(TenantId tenantId, DeploymentTargetStatus status);
     DeploymentTarget[] findByType(TenantId tenantId, DeploymentTargetType targetType);
     bool nameExists(TenantId tenantId, string name);

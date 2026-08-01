@@ -10,7 +10,7 @@ import uim.platform.rfc;
 mixin(ShowModule!());
 @safe:
 
-interface TidRepository {
+interface ITidRepository {
     Tid    findById(TenantId tenantId, TidValue value);
     Tid[]  findByTenant(TenantId tenantId);
     Tid[]  findByDestination(TenantId tenantId, DestinationId destId);

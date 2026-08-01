@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryMtaRepository
+class MtaRepository
     : TenantRepository!(Mta, MtaId),
       MtaRepository
 {

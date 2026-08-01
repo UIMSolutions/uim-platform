@@ -11,7 +11,7 @@ import uim.platform.document_ai;
 mixin(ShowModule!());
 
 @safe:
-interface EnrichmentDataRepository {
+interface IEnrichmentDataRepository {
   bool findById(EnrichmentDataId id, ClientId clientId);
   EnrichmentData findById(EnrichmentDataId id, ClientId clientId);
 

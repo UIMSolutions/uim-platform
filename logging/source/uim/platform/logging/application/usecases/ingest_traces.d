@@ -81,7 +81,7 @@ class IngestTracesUseCase { // TODO: UIMUseCase {
 }
 
 unittest {
-  auto repo = new MemorySpanRepository();
+  auto repo = new SpanRepository();
   auto usecase = new IngestTracesUseCase(repo);
   auto tenantId = TenantId("test-tenant");
 

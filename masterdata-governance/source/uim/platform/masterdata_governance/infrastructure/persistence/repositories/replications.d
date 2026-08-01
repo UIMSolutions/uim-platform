@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryReplicationRepository
+class ReplicationRepository
     : TenantRepository!(Replication, ReplicationId), ReplicationRepository {
 
     size_t countByStatus(TenantId tenantId, ReplicationStatus status) {

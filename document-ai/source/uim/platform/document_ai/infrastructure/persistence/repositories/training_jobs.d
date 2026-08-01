@@ -13,7 +13,7 @@ import uim.platform.document_ai;
 mixin(ShowModule!());
 
 @safe:
-class MemoryTrainingJobRepository : TrainingJobRepository {
+class TrainingJobRepository : TrainingJobRepository {
   private TrainingJob[][string] store;
 
   bool existsById(ClientId clientId, TrainingJobId id) {

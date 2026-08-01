@@ -36,9 +36,9 @@ Container buildContainer(SrvConfig config) {
   Container c;
 
   // 1. Repositories
-  c.instanceRepo = new MemoryServiceInstanceRepository();
-  c.endpointRepo = new MemoryPrivateEndpointRepository();
-  c.bindingRepo  = new MemoryServiceBindingRepository();
+  c.instanceRepo = new ServiceInstanceRepository();
+  c.endpointRepo = new PrivateEndpointRepository();
+  c.bindingRepo  = new ServiceBindingRepository();
 
   // 2. Domain services
   c.endpointResolver = new EndpointResolver(c.endpointRepo);

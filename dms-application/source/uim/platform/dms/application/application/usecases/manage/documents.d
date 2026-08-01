@@ -161,9 +161,9 @@ class ManageDocumentsUseCase { // TODO: UIMUseCase {
 
 ///
 unittest {
-//    auto memoryDocumentRepository = new MemoryDocumentRepository();
-//    auto memoryDocumentVersionRepository = new MemoryDocumentVersionRepository();
-//    auto memoryFolderRepository = new MemoryFolderRepository();
+//    auto memoryDocumentRepository = new DocumentRepository();
+//    auto memoryDocumentVersionRepository = new DocumentVersionRepository();
+//    auto memoryFolderRepository = new FolderRepository();
 //    auto usecase = new ManageDocumentsUseCase(memoryDocumentRepository, memoryDocumentVersionRepository, memoryFolderRepository);
 //    auto tenantId = TenantId("test-tenant");
 //

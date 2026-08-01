@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port for persisting and querying data controller groups.
-interface DataControllerGroupRepository : ITenantRepository!(DataControllerGroup, DataControllerGroupId) {
+interface IDataControllerGroupRepository : ITenantRepository!(DataControllerGroup, DataControllerGroupId) {
 
   size_t countByName(TenantId tenantId, string name);
   DataControllerGroup[] findByName(TenantId tenantId, string name);

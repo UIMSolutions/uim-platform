@@ -11,4 +11,4 @@ mixin(ShowModule!());
 
 @safe:
 
-interface TranslationProjectRepository : ITenantRepository!(TranslationProject, TranslationProjectId) {}
+interface ITranslationProjectRepository : ITenantRepository!(TranslationProject, TranslationProjectId) {}

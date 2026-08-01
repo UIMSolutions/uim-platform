@@ -14,7 +14,7 @@ import uim.platform.abap_environment;
 // mixin(ShowModule!());
 
 @safe:
-class MemoryCommunicationArrangementRepository : TenantRepository!(CommunicationArrangement, CommunicationArrangementId), CommunicationArrangementRepository {
+class CommunicationArrangementRepository : TenantRepository!(CommunicationArrangement, CommunicationArrangementId), CommunicationArrangementRepository {
   
   // #region BySystem
   size_t countBySystem(TenantId tenantId, SystemInstanceId systemId) {
@@ -56,5 +56,5 @@ class MemoryCommunicationArrangementRepository : TenantRepository!(Communication
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryCommunicationArrangementRepository()));
+    assert(tenantRepositoryTest(new CommunicationArrangementRepository()));
 }

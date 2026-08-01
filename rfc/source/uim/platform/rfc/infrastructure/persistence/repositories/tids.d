@@ -10,7 +10,7 @@ import uim.platform.rfc;
 mixin(ShowModule!());
 @safe:
 
-class MemoryTidRepository : TidRepository {
+class TidRepository : TidRepository {
 
     private Tid[string] _store;
 

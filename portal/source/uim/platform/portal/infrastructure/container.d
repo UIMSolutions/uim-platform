@@ -95,16 +95,16 @@ Container buildContainer(SrvConfig config) {
   Container c;
 
   // Infrastructure adapters
-  c.siteRepo = new MemorySiteRepository();
-  c.pageRepo = new MemoryPageRepository();
-  c.sectionRepo = new MemorySectionRepository();
-  c.tileRepo = new MemoryTileRepository();
-  c.catalogRepo = new MemoryCatalogRepository();
-  c.providerRepo = new MemoryProviderRepository();
-  c.roleRepo = new MemoryRoleRepository();
-  c.themeRepo = new MemoryThemeRepository();
-  c.menuItemRepo = new MemoryMenuItemRepository();
-  c.translationRepo = new MemoryTranslationRepository();
+  c.siteRepo = new SiteRepository();
+  c.pageRepo = new PageRepository();
+  c.sectionRepo = new SectionRepository();
+  c.tileRepo = new TileRepository();
+  c.catalogRepo = new CatalogRepository();
+  c.providerRepo = new ProviderRepository();
+  c.roleRepo = new RoleRepository();
+  c.themeRepo = new ThemeRepository();
+  c.menuItemRepo = new MenuItemRepository();
+  c.translationRepo = new TranslationRepository();
 
   // Application use cases
   c.manageSites = new ManageSitesUseCase(c.siteRepo);

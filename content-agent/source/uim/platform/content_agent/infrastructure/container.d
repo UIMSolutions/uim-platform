@@ -72,13 +72,13 @@ Container buildContainer(SrvConfig config) {
   Container c;
 
   // Infrastructure adapters
-  c.packageRepo = new MemoryContentPackageRepository();
-  c.providerRepo = new MemoryContentProviderRepository();
-  c.transportRequestRepo = new MemoryTransportRequestRepository();
-  c.exportJobRepo = new MemoryExportJobRepository();
-  c.importJobRepo = new MemoryImportJobRepository();
-  c.queueRepo = new MemoryTransportQueueRepository();
-  c.activityRepo = new MemoryContentActivityRepository();
+  c.packageRepo = new ContentPackageRepository();
+  c.providerRepo = new ContentProviderRepository();
+  c.transportRequestRepo = new TransportRequestRepository();
+  c.exportJobRepo = new ExportJobRepository();
+  c.importJobRepo = new ImportJobRepository();
+  c.queueRepo = new TransportQueueRepository();
+  c.activityRepo = new ContentActivityRepository();
 
   // Application use cases
   c.managePackages = new ManageContentPackagesUseCase(c.packageRepo, c.providerRepo, c.activityRepo);

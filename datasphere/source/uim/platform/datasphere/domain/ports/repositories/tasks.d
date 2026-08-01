@@ -11,7 +11,7 @@ import uim.platform.datasphere;
 mixin(ShowModule!()); 
 
 @safe:
-interface TaskRepository : ITenantRepository!(DSTask, TaskId) {
+interface ITaskRepository : ITenantRepository!(DSTask, TaskId) {
 
   size_t countBySpace(TenantId tenantId, SpaceId spaceId);
   DSTask[] findBySpace(TenantId tenantId, SpaceId spaceId);

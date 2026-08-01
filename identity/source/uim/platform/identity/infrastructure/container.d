@@ -37,11 +37,11 @@ Container buildContainer(SrvConfig config) @trusted {
 
     final switch (config.backend) {
         case PersistenceBackend.memory:
-            userRepo = new MemoryUserRepository();
-            groupRepo = new MemoryGroupRepository();
-            appRepo = new MemoryApplicationRepository();
-            idpRepo = new MemoryIdentityProviderRepository();
-            jobRepo = new MemoryProvisioningJobRepository();
+            userRepo = new UserRepository();
+            groupRepo = new GroupRepository();
+            appRepo = new ApplicationRepository();
+            idpRepo = new IdentityProviderRepository();
+            jobRepo = new ProvisioningJobRepository();
             break;
         case PersistenceBackend.file_:
             // import std.file : mkdirRecurse;

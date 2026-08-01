@@ -11,7 +11,7 @@ import uim.platform.document_ai;
 mixin(ShowModule!());
 
 @safe:
-interface TemplateRepository {
+interface ITemplateRepository {
   bool existsById(TemplateId id, ClientId clientId);
   Template findById(TemplateId id, ClientId clientId);
 

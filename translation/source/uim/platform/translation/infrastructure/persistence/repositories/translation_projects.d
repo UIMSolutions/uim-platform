@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryTranslationProjectRepository : TenantRepository!(TranslationProject, TranslationProjectId),
+class TranslationProjectRepository : TenantRepository!(TranslationProject, TranslationProjectId),
 TranslationProjectRepository {
     
     bool existsByName(TenantId tenantId, string name) {

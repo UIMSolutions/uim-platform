@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryDataQualityRuleRepository
+class DataQualityRuleRepository
     : TenantRepository!(DataQualityRule, DataQualityRuleId), DataQualityRuleRepository {
 
     DataQualityRule[] findByFieldName(TenantId tenantId, string fieldName) {

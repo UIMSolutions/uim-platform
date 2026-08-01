@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface DatabaseExtensionRepository : ITenantRepository!(DatabaseExtension, DatabaseExtensionId) {
+interface IDatabaseExtensionRepository : ITenantRepository!(DatabaseExtension, DatabaseExtensionId) {
     DatabaseExtension[] findByInstance(TenantId tenantId, ServiceInstanceId instanceId);
     DatabaseExtension[] findByStatus(TenantId tenantId, ExtensionStatus status);
     bool extensionExists(TenantId tenantId, ServiceInstanceId instanceId, string extensionName);

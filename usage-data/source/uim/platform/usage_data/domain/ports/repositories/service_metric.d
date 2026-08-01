@@ -10,7 +10,7 @@ import uim.platform.usage_data;
 mixin(ShowModule!());
 @safe:
 /// Port: outgoing repository interface for ServiceMetric persistence.
-interface ServiceMetricRepository
+interface IServiceMetricRepository
     : ITenantRepository!(ServiceMetric, ServiceMetricId) {
 
   ServiceMetric[] findByService(TenantId tenantId, string serviceId);

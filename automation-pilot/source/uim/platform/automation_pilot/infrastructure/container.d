@@ -36,14 +36,14 @@ Container buildContainer(SrvConfig config) {
     Container c;
 
     // Repositories
-    auto catalogRepo = new MemoryCatalogRepository();
-    auto commandRepo = new MemoryCommandRepository();
-    auto commandInputRepo = new MemoryCommandInputRepository();
-    auto executionRepo = new MemoryExecutionRepository();
-    auto scheduledExecutionRepo = new MemoryScheduledExecutionRepository();
-    auto triggerRepo = new MemoryTriggerRepository();
-    auto serviceAccountRepo = new MemoryServiceAccountRepository();
-    auto contentConnectorRepo = new MemoryContentConnectorRepository();
+    auto catalogRepo = new CatalogRepository();
+    auto commandRepo = new CommandRepository();
+    auto commandInputRepo = new CommandInputRepository();
+    auto executionRepo = new ExecutionRepository();
+    auto scheduledExecutionRepo = new ScheduledExecutionRepository();
+    auto triggerRepo = new TriggerRepository();
+    auto serviceAccountRepo = new ServiceAccountRepository();
+    auto contentConnectorRepo = new ContentConnectorRepository();
 
     // Use Cases
     c.manageCatalogsUseCase = new ManageCatalogsUseCase(catalogRepo);

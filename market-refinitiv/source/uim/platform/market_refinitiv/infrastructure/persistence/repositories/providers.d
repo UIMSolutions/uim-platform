@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryProviderRepository : ProviderRepository {
+class ProviderRepository : ProviderRepository {
   private Provider[string] store;
 
   override Provider   findById(TenantId t, ProviderId id) {

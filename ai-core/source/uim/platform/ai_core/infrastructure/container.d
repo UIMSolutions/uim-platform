@@ -41,14 +41,14 @@ mixin(ShowModule!());
 @safe:
 struct Container {
   // Repositories (driven adapters)
-  MemoryScenarioRepository scenarioRepo;
-  MemoryExecutableRepository executableRepo;
-  MemoryConfigurationRepository configurationRepo;
-  MemoryExecutionRepository executionRepo;
-  MemoryDeploymentRepository deploymentRepo;
-  MemoryArtifactRepository artifactRepo;
-  MemoryResourceGroupRepository resourceGroupRepo;
-  MemoryMetricRepository metricRepo;
+  IScenarioRepository scenarioRepo;
+  IExecutableRepository executableRepo;
+  IConfigurationRepository configurationRepo;
+  IExecutionRepository executionRepo;
+  IDeploymentRepository deploymentRepo;
+  IArtifactRepository artifactRepo;
+  IResourceGroupRepository resourceGroupRepo;
+  IMetricRepository metricRepo;
 
   // Use cases (application layer)
   ManageScenariosUseCase manageScenarios;
@@ -77,14 +77,14 @@ Container buildContainer(SrvConfig config) {
   Container c;
 
   // Infrastructure adapters
-  c.scenarioRepo = new MemoryScenarioRepository();
-  c.executableRepo = new MemoryExecutableRepository();
-  c.configurationRepo = new MemoryConfigurationRepository();
-  c.executionRepo = new MemoryExecutionRepository();
-  c.deploymentRepo = new MemoryDeploymentRepository();
-  c.artifactRepo = new MemoryArtifactRepository();
-  c.resourceGroupRepo = new MemoryResourceGroupRepository();
-  c.metricRepo = new MemoryMetricRepository();
+  c.scenarioRepo = new ScenarioRepository();
+  c.executableRepo = new ExecutableRepository();
+  c.configurationRepo = new ConfigurationRepository();
+  c.executionRepo = new ExecutionRepository();
+  c.deploymentRepo = new DeploymentRepository();
+  c.artifactRepo = new ArtifactRepository();
+  c.resourceGroupRepo = new ResourceGroupRepository();
+  c.metricRepo = new MetricRepository();
 
   // Application use cases
   c.manageScenarios = new ManageScenariosUseCase(c.scenarioRepo);

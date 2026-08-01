@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemorySituationActionRepository : TenantRepository!(SituationAction, SituationActionId), SituationActionRepository {
+class SituationActionRepository : TenantRepository!(SituationAction, SituationActionId), SituationActionRepository {
 
     // #region ByType
     size_t countByType(TenantId tenantId, ActionType type) {

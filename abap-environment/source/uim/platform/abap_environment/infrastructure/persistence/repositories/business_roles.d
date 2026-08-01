@@ -13,7 +13,7 @@ import uim.platform.abap_environment;
 // mixin(ShowModule!());
 @safe:
 
-class MemoryBusinessRoleRepository : TenantRepository!(BusinessRole, BusinessRoleId), BusinessRoleRepository {
+class BusinessRoleRepository : TenantRepository!(BusinessRole, BusinessRoleId), IBusinessRoleRepository {
 
   // #region ByName
   bool existsByName(TenantId tenantId, SystemInstanceId systemId, string name) {
@@ -57,5 +57,5 @@ class MemoryBusinessRoleRepository : TenantRepository!(BusinessRole, BusinessRol
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryBusinessRoleRepository()));
+    assert(tenantRepositoryTest(new BusinessRoleRepository()));
 }

@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryApiProductRepository
+class ApiProductRepository
     : TenantRepository!(ApiProduct, ApiProductId),
       ApiProductRepository {
 

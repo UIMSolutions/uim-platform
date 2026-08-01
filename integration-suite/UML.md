@@ -180,7 +180,7 @@ classDiagram
         +findByStatus(TenantId, ArtifactStatus) IntegrationPackage[]
         +findByVendor(TenantId, string) IntegrationPackage[]
     }
-    class MemoryIntegrationPackageRepository {
+    class IntegrationPackageRepository {
         +findByStatus(TenantId, ArtifactStatus) IntegrationPackage[]
         +findByVendor(TenantId, string) IntegrationPackage[]
     }
@@ -190,7 +190,7 @@ classDiagram
         +findByStatus(TenantId, ArtifactStatus) IntegrationFlow[]
         +findByDeploymentStatus(TenantId, DeploymentStatus) IntegrationFlow[]
     }
-    class MemoryIntegrationFlowRepository {
+    class IntegrationFlowRepository {
         +findByPackage(TenantId, IntegrationPackageId) IntegrationFlow[]
         +findByStatus(TenantId, ArtifactStatus) IntegrationFlow[]
         +findByDeploymentStatus(TenantId, DeploymentStatus) IntegrationFlow[]

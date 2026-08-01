@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface SitePolicyRepository : ITenantRepository!(SitePolicy, SitePolicyId) {
+interface ISitePolicyRepository : ITenantRepository!(SitePolicy, SitePolicyId) {
     SitePolicy[] findByType(TenantId tenantId, PolicyType policyType);
     SitePolicy findActiveByType(TenantId tenantId, PolicyType policyType);
 }

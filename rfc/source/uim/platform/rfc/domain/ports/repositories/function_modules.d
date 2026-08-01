@@ -10,7 +10,7 @@ import uim.platform.rfc;
 mixin(ShowModule!());
 @safe:
 
-interface FunctionModuleRepository {
+interface IFunctionModuleRepository {
     FunctionModule   findById(TenantId tenantId, FunctionModuleId id);
     FunctionModule[] findByTenant(TenantId tenantId);
     FunctionModule[] findByFunctionGroup(TenantId tenantId, string functionGroup);

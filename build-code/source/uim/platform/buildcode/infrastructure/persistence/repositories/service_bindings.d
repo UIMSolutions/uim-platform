@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryServiceBindingRepository : ServiceBindingRepository {
+class ServiceBindingRepository : ServiceBindingRepository {
   private ServiceBinding[string] _store;
 
   override void save(ServiceBinding entity)                    { _store[entity.id.value] = entity; }

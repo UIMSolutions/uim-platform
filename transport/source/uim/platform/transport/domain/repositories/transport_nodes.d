@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface TransportNodeRepository : ITenantRepository!(TransportNode, TransportNodeId) {
+interface ITransportNodeRepository : ITenantRepository!(TransportNode, TransportNodeId) {
     size_t countByStatus(TenantId tenantId, NodeStatus status);
     TransportNode[] findByStatus(TenantId tenantId, NodeStatus status);
     TransportNode[] findByType(TenantId tenantId, NodeType nodeType);

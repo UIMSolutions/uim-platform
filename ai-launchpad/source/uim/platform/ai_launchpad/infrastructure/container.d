@@ -115,18 +115,18 @@ Container buildContainer(SrvConfig config) {
   c.promptEnricher = new PromptEnricher();
 
   // Infrastructure adapters
-  c.connectionRepo = new MemoryConnectionRepository();
-  c.workspaceRepo = new MemoryWorkspaceRepository();
-  c.scenarioRepo = new MemoryScenarioRepository();
-  c.configurationRepo = new MemoryConfigurationRepository();
-  c.executionRepo = new MemoryExecutionRepository();
-  c.deploymentRepo = new MemoryDeploymentRepository();
-  c.modelRepo = new MemoryModelRepository();
-  c.datasetRepo = new MemoryDatasetRepository();
-  c.promptRepo = new MemoryPromptRepository();
-  c.promptCollectionRepo = new MemoryPromptCollectionRepository();
-  c.resourceGroupRepo = new MemoryResourceGroupRepository();
-  c.usageStatisticRepo = new MemoryUsageStatisticRepository();
+  c.connectionRepo = new ConnectionRepository();
+  c.workspaceRepo = new WorkspaceRepository();
+  c.scenarioRepo = new ScenarioRepository();
+  c.configurationRepo = new ConfigurationRepository();
+  c.executionRepo = new ExecutionRepository();
+  c.deploymentRepo = new DeploymentRepository();
+  c.modelRepo = new ModelRepository();
+  c.datasetRepo = new DatasetRepository();
+  c.promptRepo = new PromptRepository();
+  c.promptCollectionRepo = new PromptCollectionRepository();
+  c.resourceGroupRepo = new ResourceGroupRepository();
+  c.usageStatisticRepo = new UsageStatisticRepository();
 
   // Application use cases
   c.manageConnections = new ManageConnectionsUseCase(c.connectionRepo, c.connectionValidator);

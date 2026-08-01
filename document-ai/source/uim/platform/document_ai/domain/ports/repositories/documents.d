@@ -11,7 +11,7 @@ import uim.platform.document_ai;
 mixin(ShowModule!());
 
 @safe:
-interface DocumentRepository {
+interface IDocumentRepository {
   bool existsById(DocumentId id, ClientId clientId);
   Document findById(DocumentId id, ClientId clientId);
 

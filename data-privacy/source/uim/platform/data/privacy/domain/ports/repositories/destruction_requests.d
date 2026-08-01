@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port for persisting and querying destruction requests.
-interface DestructionRequestRepository : ITenantRepository!(DestructionRequest, DestructionRequestId) {
+interface IDestructionRequestRepository : ITenantRepository!(DestructionRequest, DestructionRequestId) {
 
   size_t countByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
   DestructionRequest[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);

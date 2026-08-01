@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryConsentRecordRepository : TenantRepository!(ConsentRecord, ConsentRecordId), ConsentRecordRepository {
+class ConsentRecordRepository : TenantRepository!(ConsentRecord, ConsentRecordId), ConsentRecordRepository {
 
     ConsentRecord[] findByCustomer(TenantId tenantId, CustomerId customerId) {
         return findByTenant(tenantId).filter!(cr => cr.customerId.value == customerId.value).array;

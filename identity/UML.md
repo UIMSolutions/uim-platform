@@ -169,7 +169,7 @@ classDiagram
     }
 
     %% Persistence Adapters
-    class MemoryUserRepository {
+    class UserRepository {
         -User[string] store
     }
     class FileUserRepository {

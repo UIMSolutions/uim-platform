@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryPrintTaskRepository
+class PrintTaskRepository
     : TenantRepository!(PrintTask, PrintTaskId), PrintTaskRepository {
 
     PrintTask[] findByQueue(TenantId tenantId, PrintQueueId queueId) {

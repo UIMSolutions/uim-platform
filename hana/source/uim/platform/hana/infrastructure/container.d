@@ -88,16 +88,16 @@ Container buildContainer(SrvConfig config) {
   Container c;
 
   // Infrastructure adapters
-  c.instanceRepo = new MemoryInstanceRepository();
-  c.dataLakeRepo = new MemoryDataLakeRepository();
-  c.schemaRepo = new MemorySchemaRepository();
-  c.databaseUserRepo = new MemoryDatabaseUserRepository();
-  c.backupRepo = new MemoryBackupRepository();
-  c.alertRepo = new MemoryAlertRepository();
-  c.hdiContainerRepo = new MemoryHDIContainerRepository();
-  c.replicationTaskRepo = new MemoryReplicationTaskRepository();
-  c.configurationRepo = new MemoryConfigurationRepository();
-  c.databaseConnectionRepo = new MemoryDatabaseConnectionRepository();
+  c.instanceRepo = new InstanceRepository();
+  c.dataLakeRepo = new DataLakeRepository();
+  c.schemaRepo = new SchemaRepository();
+  c.databaseUserRepo = new DatabaseUserRepository();
+  c.backupRepo = new BackupRepository();
+  c.alertRepo = new AlertRepository();
+  c.hdiContainerRepo = new HDIContainerRepository();
+  c.replicationTaskRepo = new ReplicationTaskRepository();
+  c.configurationRepo = new ConfigurationRepository();
+  c.databaseConnectionRepo = new DatabaseConnectionRepository();
 
   // Application use cases
   c.manageInstances = new ManageInstancesUseCase(c.instanceRepo);

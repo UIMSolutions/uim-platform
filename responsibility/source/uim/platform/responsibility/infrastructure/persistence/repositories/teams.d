@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryTeamRepository
+class TeamRepository
     : TenantRepository!(Team, TeamId),
       TeamRepository {
 

@@ -10,7 +10,7 @@ import uim.platform.hana_spatial;
 mixin(ShowModule!());
 
 @safe:
-class MemoryIsolineRepository
+class IsolineRepository
   : TenantRepository!(Isoline, IsolineId),
     IsolineRepository {
 

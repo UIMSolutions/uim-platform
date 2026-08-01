@@ -11,7 +11,7 @@ import std.array : array;
 mixin(ShowModule!());
 
 @safe:
-class MemoryCarrierRepository : TenantRepository!(Carrier, CarrierId), CarrierRepository {
+class CarrierRepository : TenantRepository!(Carrier, CarrierId), CarrierRepository {
   override Carrier[] findByStatus(TenantId tenantId, CarrierStatus status) {
     return findByTenant(tenantId).filter!(c => c.status == status).array;
   }

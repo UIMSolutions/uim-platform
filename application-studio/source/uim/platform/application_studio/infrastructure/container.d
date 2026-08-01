@@ -36,14 +36,14 @@ Container buildContainer(SrvConfig config) {
     Container c;
 
     // Repositories
-    auto devSpaceRepo = new MemoryDevSpaceRepository();
-    auto devSpaceTypeRepo = new MemoryDevSpaceTypeRepository();
-    auto extensionRepo = new MemoryExtensionRepository();
-    auto projectRepo = new MemoryProjectRepository();
-    auto projectTemplateRepo = new MemoryProjectTemplateRepository();
-    auto serviceBindingRepo = new MemoryServiceBindingRepository();
-    auto runConfigurationRepo = new MemoryRunConfigurationRepository();
-    auto buildConfigurationRepo = new MemoryBuildConfigurationRepository();
+    auto devSpaceRepo = new DevSpaceRepository();
+    auto devSpaceTypeRepo = new DevSpaceTypeRepository();
+    auto extensionRepo = new ExtensionRepository();
+    auto projectRepo = new ProjectRepository();
+    auto projectTemplateRepo = new ProjectTemplateRepository();
+    auto serviceBindingRepo = new ServiceBindingRepository();
+    auto runConfigurationRepo = new RunConfigurationRepository();
+    auto buildConfigurationRepo = new BuildConfigurationRepository();
 
     // Use Cases
     c.manageDevSpacesUseCase = new ManageDevSpacesUseCase(devSpaceRepo);

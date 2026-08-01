@@ -13,7 +13,7 @@ import uim.platform.kyma;
 mixin(ShowModule!());
 
 @safe:
-class MemoryServiceBindingRepository : ServiceBindingRepository {
+class ServiceBindingRepository : ServiceBindingRepository {
   private ServiceBinding[ServiceBindingId] store;
 
   bool existsById(ServiceBindingId id) {

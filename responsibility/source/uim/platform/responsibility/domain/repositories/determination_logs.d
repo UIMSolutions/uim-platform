@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface DeterminationLogRepository : ITenantRepository!(DeterminationLog, DeterminationLogId) {
+interface IDeterminationLogRepository : ITenantRepository!(DeterminationLog, DeterminationLogId) {
 
     DeterminationLog[] findByContext(TenantId tenantId, string contextId);
 

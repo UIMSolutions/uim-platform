@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryPipelineRepository : PipelineRepository {
+class PipelineRepository : PipelineRepository {
   private Pipeline[string] _store;
 
   override void save(Pipeline entity)              { _store[entity.id.value] = entity; }

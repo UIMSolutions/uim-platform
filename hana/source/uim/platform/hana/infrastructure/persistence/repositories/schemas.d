@@ -13,7 +13,7 @@ import uim.platform.hana;
 mixin(ShowModule!());
 
 @safe:
-class MemorySchemaRepository : TenantRepository!(Schema, SchemaId), SchemaRepository {
+class SchemaRepository : TenantRepository!(Schema, SchemaId), SchemaRepository {
 
   size_t countByInstance(DatabaseInstanceId instanceId) {
     return findByInstance(instanceId).length;

@@ -8,6 +8,6 @@ module uim.platform.datasphere_composer.domain.ports.repositories.data_providers
 import uim.platform.datasphere_composer;
 
 @safe:
-interface DataProviderRepository : ITenantRepository!(DataProvider, DataProviderId) {
+interface IDataProviderRepository : ITenantRepository!(DataProvider, DataProviderId) {
   DataProvider[] findByStatus(TenantId tenantId, DataProviderStatus status);
 }

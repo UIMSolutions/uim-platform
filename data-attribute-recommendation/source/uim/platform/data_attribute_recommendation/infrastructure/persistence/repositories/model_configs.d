@@ -13,7 +13,7 @@ import uim.platform.data_attribute_recommendation;
 mixin(ShowModule!());
 
 @safe:
-class MemoryModelConfigRepository : TenantRepository!(ModelConfiguration, ModelConfigurationId), IModelConfigRepository {
+class ModelConfigRepository : TenantRepository!(ModelConfiguration, ModelConfigurationId), IModelConfigRepository {
 
   // #region ByName
   bool existsByName(TenantId tenantId, string name) {
@@ -71,7 +71,7 @@ unittest {
   mixin(ShowTest!("MemoryModelConfigRepository Tests"));
 
   void testExistsByName() {
-    auto repo = new MemoryModelConfigRepository();
+    auto repo = new ModelConfigRepository();
     auto tenantId = TenantId("tenant1");
 
     // Add a model configuration
@@ -86,7 +86,7 @@ unittest {
   }
 
   void testFindByName() {
-    auto repo = new MemoryModelConfigRepository();
+    auto repo = new ModelConfigRepository();
     auto tenantId = TenantId("tenant1");
 
     // Add a model configuration
@@ -105,7 +105,7 @@ unittest {
   } 
 
   void testRemoveByName() {
-    auto repo = new MemoryModelConfigRepository();
+    auto repo = new ModelConfigRepository();
     auto tenantId = TenantId("tenant1");
 
     // Add a model configuration
@@ -122,7 +122,7 @@ unittest {
   }
 
   void testFindByDataset() {
-    auto repo = new MemoryModelConfigRepository();
+    auto repo = new ModelConfigRepository();
     auto tenantId = TenantId("tenant1");
     auto datasetId = DatasetId("dataset1");
 
@@ -139,7 +139,7 @@ unittest {
   }
 
   void testRemoveByDataset() {
-    auto repo = new MemoryModelConfigRepository();
+    auto repo = new ModelConfigRepository();
     auto tenantId = TenantId("tenant1");
     auto datasetId = DatasetId("dataset1");
 
@@ -157,7 +157,7 @@ unittest {
   }
 
   void testFindByStatus() {
-    auto repo = new MemoryModelConfigRepository();
+    auto repo = new ModelConfigRepository();
     auto tenantId = TenantId("tenant1");
     auto status = ModelConfigStatus.ready;
 
@@ -174,7 +174,7 @@ unittest {
   }
 
   void testRemoveByStatus() {
-    auto repo = new MemoryModelConfigRepository();
+    auto repo = new ModelConfigRepository();
     auto tenantId = TenantId("tenant1");
     auto status = ModelConfigStatus.ready;
 
@@ -192,7 +192,7 @@ unittest {
   }
 
   void testFilterByDataset() {
-    auto repo = new MemoryModelConfigRepository();
+    auto repo = new ModelConfigRepository();
     auto tenantId = TenantId("tenant1");
     auto datasetId1 = DatasetId("dataset1");
     auto datasetId2 = DatasetId("dataset2");
@@ -217,7 +217,7 @@ unittest {
   }
 
   void testFilterByStatus() {
-    auto repo = new MemoryModelConfigRepository();
+    auto repo = new ModelConfigRepository();
     auto tenantId = TenantId("tenant1");
     auto status1 = ModelConfigStatus.ready;
     auto status2 = ModelConfigStatus.draft;
@@ -242,7 +242,7 @@ unittest {
   }
 
   void testCountByDataset() {
-    auto repo = new MemoryModelConfigRepository();
+    auto repo = new ModelConfigRepository();
     auto tenantId = TenantId("tenant1");
     auto datasetId = DatasetId("dataset1");
 
@@ -257,7 +257,7 @@ unittest {
   }
 
   void testCountByStatus() {
-    auto repo = new MemoryModelConfigRepository();
+    auto repo = new ModelConfigRepository();
     auto tenantId = TenantId("tenant1");
     auto status = ModelConfigStatus.ready;
 
@@ -272,7 +272,7 @@ unittest {
   }
 
   void testRemoveNonExistentByName() {
-    auto repo = new MemoryModelConfigRepository();
+    auto repo = new ModelConfigRepository();
     auto tenantId = TenantId("tenant1");
 
     // Attempt to remove a non-existent model configuration by name
@@ -282,7 +282,7 @@ unittest {
   }
 
   void testRemoveNonExistentByDataset() {
-    auto repo = new MemoryModelConfigRepository();
+    auto repo = new ModelConfigRepository();
     auto tenantId = TenantId("tenant1");
     auto datasetId = DatasetId("nonExistentDataset");
 
@@ -293,7 +293,7 @@ unittest {
   }
 
   void testRemoveNonExistentByStatus() {
-    auto repo = new MemoryModelConfigRepository();
+    auto repo = new ModelConfigRepository();
     auto tenantId = TenantId("tenant1");
     auto status = ModelConfigStatus.ready;
 
@@ -304,7 +304,7 @@ unittest {
   }
 
   void testRemoveByNameWithMultipleConfigs() {
-    auto repo = new MemoryModelConfigRepository();
+    auto repo = new ModelConfigRepository();
     auto tenantId = TenantId("tenant1");
 
     // Add multiple model configurations

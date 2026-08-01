@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryRetentionRuleRepository : TenantRepository!(RetentionRule, RetentionRuleId), RetentionRuleRepository {
+class RetentionRuleRepository : TenantRepository!(RetentionRule, RetentionRuleId), RetentionRuleRepository {
 
     size_t countByBusinessPurpose(TenantId tenantId, BusinessPurposeId purposeId) {
         return findByBusinessPurpose(tenantId, purposeId).length;

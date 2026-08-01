@@ -14,7 +14,7 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-class MemoryChannelRepository : TenantRepository!(Channel, ChannelId), ChannelRepository {
+class ChannelRepository : TenantRepository!(Channel, ChannelId), ChannelRepository {
 
   size_t countByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
     return findByWorkspace(tenantId, workspaceId).length;

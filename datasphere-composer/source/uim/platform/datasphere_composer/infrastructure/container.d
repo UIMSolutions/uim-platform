@@ -46,14 +46,14 @@ struct Container {
 Container buildContainer(SrvConfig cfg) {
   Container c;
 
-  c.dataProviderRepo       = new MemoryDataProviderRepository();
-  c.dataProductRepo        = new MemoryDataProductRepository();
-  c.unificationRuleRepo    = new MemoryUnificationRuleRepository();
-  c.dataSourceConfigRepo   = new MemoryDataSourceConfigRepository();
-  c.attributeMappingRepo   = new MemoryAttributeMappingRepository();
-  c.customerProfileRepo    = new MemoryCustomerProfileRepository();
-  c.compositionRunRepo     = new MemoryCompositionRunRepository();
-  c.tenantUserRepo         = new MemoryTenantUserRepository();
+  c.dataProviderRepo       = new DataProviderRepository();
+  c.dataProductRepo        = new DataProductRepository();
+  c.unificationRuleRepo    = new UnificationRuleRepository();
+  c.dataSourceConfigRepo   = new DataSourceConfigRepository();
+  c.attributeMappingRepo   = new AttributeMappingRepository();
+  c.customerProfileRepo    = new CustomerProfileRepository();
+  c.compositionRunRepo     = new CompositionRunRepository();
+  c.tenantUserRepo         = new TenantUserRepository();
 
   c.dataProviders    = new ManageDataProvidersUseCase(c.dataProviderRepo);
   c.dataProducts     = new ManageDataProductsUseCase(c.dataProductRepo);

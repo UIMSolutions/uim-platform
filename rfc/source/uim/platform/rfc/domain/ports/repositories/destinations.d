@@ -10,7 +10,7 @@ import uim.platform.rfc;
 mixin(ShowModule!());
 @safe:
 
-interface DestinationRepository {
+interface IDestinationRepository {
     Destination   findById(TenantId tenantId, DestinationId id);
     Destination[] findByTenant(TenantId tenantId);
     bool          save(Destination dest);

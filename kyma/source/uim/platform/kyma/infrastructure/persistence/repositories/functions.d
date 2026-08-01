@@ -13,7 +13,7 @@ import uim.platform.kyma;
 mixin(ShowModule!());
 
 @safe:
-class MemoryFunctionRepository : FunctionRepository {
+class FunctionRepository : FunctionRepository {
   private ServerlessFunction[ServerlessFunctionId] store;
 
   bool existsById(ServerlessFunctionId functionId) {

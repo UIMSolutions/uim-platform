@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryAuditLogRepository : AuditLogRepository {
+class AuditLogRepository : AuditLogRepository {
   private AuditLog[string] store;
 
   override AuditLog   findById(TenantId t, AuditLogId id) {

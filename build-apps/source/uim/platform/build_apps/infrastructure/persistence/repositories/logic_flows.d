@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryLogicFlowRepository : TenantRepository!(LogicFlow, LogicFlowId), LogicFlowRepository {
+class LogicFlowRepository : TenantRepository!(LogicFlow, LogicFlowId), LogicFlowRepository {
 
     size_t countByApplication(TenantId tenantId, ApplicationId applicationId) {
         return findByApplication(tenantId, applicationId).length;

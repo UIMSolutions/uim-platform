@@ -10,7 +10,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryJobRunRepository : TenantRepository!(JobRun, JobRunId), JobRunRepository {
+class JobRunRepository : TenantRepository!(JobRun, JobRunId), JobRunRepository {
   JobRun[] findByJob(TenantId tenantId, JobId jobId) {
     import std.algorithm : filter;
     import std.array : array;
@@ -36,5 +36,5 @@ class MemoryJobRunRepository : TenantRepository!(JobRun, JobRunId), JobRunReposi
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryJobRunRepository()));
+    assert(tenantRepositoryTest(new JobRunRepository()));
 }

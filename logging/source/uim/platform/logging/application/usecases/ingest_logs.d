@@ -72,8 +72,8 @@ class IngestLogsUseCase { // TODO: UIMUseCase {
 }
 
 unittest {
-  auto logRepo = new MemoryLogEntryRepository();
-  auto streamRepo = new MemoryLogStreamRepository();
+  auto logRepo = new LogEntryRepository();
+  auto streamRepo = new LogStreamRepository();
   auto usecase = new IngestLogsUseCase(logRepo, streamRepo);
   auto tenantId = TenantId("test-tenant");
 

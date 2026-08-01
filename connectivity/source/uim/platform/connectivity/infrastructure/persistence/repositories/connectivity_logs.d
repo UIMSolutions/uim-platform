@@ -13,7 +13,7 @@ import uim.platform.connectivity;
 mixin(ShowModule!());
 
 @safe:
-class MemoryConnectivityLogRepository : TenantRepository!(ConnectivityLogEntry, ConnectivityLogEntryId), ConnectivityLogRepository {
+class ConnectivityLogRepository : TenantRepository!(ConnectivityLogEntry, ConnectivityLogEntryId), ConnectivityLogRepository {
 
   // #region BySeverity
   size_t countBySeverity(TenantId tenantId, LogSeverity severity) {

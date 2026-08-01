@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryBackupPolicyRepository
+class BackupPolicyRepository
     : TenantRepository!(BackupPolicy, BackupPolicyId)
     , BackupPolicyRepository
 {

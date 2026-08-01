@@ -8,7 +8,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryAuthorizationRepository : AuthorizationRepository {
+class AuthorizationRepository : AuthorizationRepository {
 protected:
   ManagedApplication[] applications;
   ApplicationApi[] apis;

@@ -24,7 +24,7 @@ class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
         rr.businessPurposeId = BusinessPurposeId(req.businessPurposeId);
         rr.legalGroundId = LegalGroundId(req.legalGroundId);
         rr.duration = req.duration;
-        rr.periodUnit = parsePeriodUnit(req.periodUnit);
+        rr.periodUnit = req.periodUnit.toPeriodUnit();
         rr.actionOnExpiry = toDeletionActionType(req.actionOnExpiry);
         rr.isActive = true;
         rr.createdBy = req.createdBy;
@@ -35,14 +35,14 @@ class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
     }
 
     CommandResult updateRetentionRule(UpdateRetentionRuleRequest req) {
-        auto rule = repo.findById(req.tenantId, req.id);
+        auto rule = repo.findById(req.tenantId, req.ruleId);
         if (rule.isNull)
             return CommandResult(false, "", "Retention rule not found");
 
         if (req.duration > 0)
             rule.duration = req.duration;
         if (req.periodUnit.length > 0)
-            rule.periodUnit = toPeriodUnit(req.periodUnit);
+            rule.periodUnit = req.periodUnit.toPeriodUnit();
         if (req.actionOnExpiry.length > 0)
             rule.actionOnExpiry = toDeletionActionType(req.actionOnExpiry);
         rule.isActive = req.isActive;
@@ -52,11 +52,11 @@ class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
         return CommandResult(true, rule.id.value, "");
     }
 
-    bool hasById(RetentionRuleId id) {
-        return repo.existsById(id);
+    bool hasById(TenantId tenantId, RetentionRuleId id) {
+        return repo.existsById(tenantId, id);
     }
 
-    RetentionRule getById(RetentionRuleId id) {
+    RetentionRule getById(TenantId tenantId, RetentionRuleId id) {
         return repo.findById(tenantId, id);
     }
 
@@ -68,7 +68,7 @@ class ManageRetentionRulesUseCase { // TODO: UIMUseCase {
         return repo.findByBusinessPurpose(tenantId, purposeId);
     }
 
-    CommandResult deleteRetentionRule(RetentionRuleId id) {
+    CommandResult deleteRetentionRule(TenantId tenantId, RetentionRuleId id) {
         auto rule = repo.findById(tenantId, id);
         if (rule.isNull)
             return CommandResult(false, "", "Retention rule not found");

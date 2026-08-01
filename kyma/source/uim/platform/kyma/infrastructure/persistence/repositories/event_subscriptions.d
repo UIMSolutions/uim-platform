@@ -13,7 +13,7 @@ import uim.platform.kyma;
 mixin(ShowModule!());
 
 @safe:
-class MemoryEventSubscriptionRepository : EventSubscriptionRepository {
+class EventSubscriptionRepository : EventSubscriptionRepository {
   private EventSubscription[EventSubscriptionId] store;
 
   bool existsById(EventSubscriptionId id) {

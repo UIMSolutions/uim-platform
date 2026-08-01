@@ -50,16 +50,16 @@ Container buildContainer(SrvConfig config) {
   Container c;
 
   // Infrastructure adapters
-  c.workspaceRepo    = new MemoryWorkspaceRepository();
-  c.clusterRepo      = new MemoryClusterRepository();
-  c.notebookRepo     = new MemoryNotebookRepository();
-  c.jobRepo          = new MemoryJobRepository();
-  c.jobRunRepo       = new MemoryJobRunRepository();
-  c.deltaTableRepo   = new MemoryDeltaTableRepository();
-  c.dataProductRepo  = new MemoryDataProductRepository();
-  c.mlExperimentRepo = new MemoryMlExperimentRepository();
-  c.mlModelRepo      = new MemoryMlModelRepository();
-  c.sqlWarehouseRepo = new MemorySqlWarehouseRepository();
+  c.workspaceRepo    = new WorkspaceRepository();
+  c.clusterRepo      = new ClusterRepository();
+  c.notebookRepo     = new NotebookRepository();
+  c.jobRepo          = new JobRepository();
+  c.jobRunRepo       = new JobRunRepository();
+  c.deltaTableRepo   = new DeltaTableRepository();
+  c.dataProductRepo  = new DataProductRepository();
+  c.mlExperimentRepo = new MlExperimentRepository();
+  c.mlModelRepo      = new MlModelRepository();
+  c.sqlWarehouseRepo = new SqlWarehouseRepository();
 
   // Application use cases
   c.manageWorkspaces    = new ManageWorkspacesUseCase(c.workspaceRepo);

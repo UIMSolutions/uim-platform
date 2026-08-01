@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ExecutionRepository : ITenantRepository!(Execution, ExecutionId) {
+interface IExecutionRepository : ITenantRepository!(Execution, ExecutionId) {
 
     size_t countByCommand(TenantId tenantId, CommandId commandId);
     Execution[] findByCommand(TenantId tenantId, CommandId commandId);

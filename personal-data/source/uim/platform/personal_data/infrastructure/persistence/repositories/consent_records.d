@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryConsentRecordRepository : TenantRepository!(ConsentRecord, ConsentRecordId), ConsentRecordRepository {
+class ConsentRecordRepository : TenantRepository!(ConsentRecord, ConsentRecordId), ConsentRecordRepository {
 
     size_t countByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
         return findByDataSubject(tenantId, dataSubjectId).length;

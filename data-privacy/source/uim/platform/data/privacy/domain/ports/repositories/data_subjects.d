@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port for persisting and querying data subjects.
-interface DataSubjectRepository : ITenantRepository!(DataSubject, DataSubjectId) {
+interface IDataSubjectRepository : ITenantRepository!(DataSubject, DataSubjectId) {
 
   bool existsByExternalId(TenantId tenantId, string externalId);
   DataSubject findByExternalId(TenantId tenantId, string externalId);

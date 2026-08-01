@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryCommandInputRepository : TenantRepository!(CommandInput, CommandInputId), CommandInputRepository {
+class CommandInputRepository : TenantRepository!(CommandInput, CommandInputId), CommandInputRepository {
 
     size_t countByType(TenantId tenantId, InputType inputType) {
         return findByType(tenantId, inputType).length;

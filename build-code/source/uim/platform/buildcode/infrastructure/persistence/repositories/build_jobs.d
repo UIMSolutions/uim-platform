@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryBuildJobRepository : BuildJobRepository {
+class BuildJobRepository : IBuildJobRepository {
   private BuildJob[string] _store;
 
   override void save(BuildJob entity)               { _store[entity.id.value] = entity; }

@@ -13,7 +13,7 @@ import uim.platform.dms.application;
 mixin(ShowModule!());
 
 @safe:
-class MemoryFolderRepository : TenantRepository!(DmsFolder, FolderId), IFolderRepository {
+class FolderRepository : TenantRepository!(DmsFolder, FolderId), IFolderRepository {
   bool existsByPath(TenantId tenantId, RepositoryId repositoryId, string path) {
     return findByTenant(tenantId).any!(e => e.repositoryId == repositoryId && e.path == path);
   }
@@ -58,5 +58,5 @@ class MemoryFolderRepository : TenantRepository!(DmsFolder, FolderId), IFolderRe
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryFolderRepository()));
+    assert(tenantRepositoryTest(new FolderRepository()));
 }

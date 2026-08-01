@@ -10,7 +10,7 @@ import uim.platform.usage_data;
 mixin(ShowModule!());
 @safe:
 /// In-memory adapter implementing DailyUsageReportRepository port.
-class MemoryDailyUsageReportRepository
+class DailyUsageReportRepository
     : TenantRepository!(DailyUsageReport, DailyUsageReportId),
       DailyUsageReportRepository {
 

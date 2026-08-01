@@ -66,10 +66,10 @@ Container buildContainer(SrvConfig config) {
   Container c;
 
   // Infrastructure — repositories
-  c.policyRepo       = new MemoryScalingPolicyRepository();
-  c.bindingRepo      = new MemoryAppBindingRepository();
-  c.customMetricRepo = new MemoryCustomMetricRepository();
-  c.historyRepo      = new MemoryScalingHistoryRepository();
+  c.policyRepo       = new ScalingPolicyRepository();
+  c.bindingRepo      = new AppBindingRepository();
+  c.customMetricRepo = new CustomMetricRepository();
+  c.historyRepo      = new ScalingHistoryRepository();
 
   // Domain services
   c.evaluator = new ScalingEvaluatorService();

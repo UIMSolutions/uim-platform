@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 /// In-memory implementation of SaasApplicationRepository.
-class MemorySaasApplicationRepository
+class SaasApplicationRepository
     : TenantRepository!(SaasApplication, SaasApplicationId),
       SaasApplicationRepository
 {

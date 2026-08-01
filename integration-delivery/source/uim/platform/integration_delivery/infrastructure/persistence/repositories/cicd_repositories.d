@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryCicdRepositoryRepository : TenantRepository!(CicdRepository, CicdRepositoryId), CicdRepositoryRepository {
+class CicdRepositoryRepository : TenantRepository!(CicdRepository, CicdRepositoryId), CicdRepositoryRepository {
     CicdRepository[] findByStatus(TenantId tenantId, RepositoryStatus status) {
         return findByTenant(tenantId).filter!(r => r.status == status).array;
     }

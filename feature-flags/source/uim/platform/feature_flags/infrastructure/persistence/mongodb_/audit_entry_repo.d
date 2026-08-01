@@ -19,7 +19,7 @@ class MongoDbAuditEntryRepository : AuditEntryRepository {
     this(string connectionUri, string dbName) {
         this.connectionUri = connectionUri;
         this.dbName        = dbName;
-        this.fallback      = new MemoryAuditEntryRepository();
+        this.fallback      = new AuditEntryRepository();
         // TODO: connect and wire mongo collection
     }
 

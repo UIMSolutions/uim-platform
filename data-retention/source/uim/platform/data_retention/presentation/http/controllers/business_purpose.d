@@ -152,7 +152,7 @@ class BusinessPurposeController : ManageHttpController {
         if (parts.length >= 6)
             id = parts[$ - 2];
 
-        auto result = usecase.activateBusinessPurpose(        BusinessPurposeControllerId(id));
+        auto result = usecase.activateBusinessPurpose(tenantId, BusinessPurposeId(id));
         if (result.hasError)
             return errorResponse(            result.message, 400);
 
@@ -171,7 +171,7 @@ class BusinessPurposeController : ManageHttpController {
             return precheck;
 
         auto tenantId = precheck.tenantId;
-        auto id = BusinessPurposeControllerId(precheck.id);
+        auto id = BusinessPurposeId(precheck.id);
         if (id.isNull)
             return errorResponse("Invalid business purpose ID", 400);
 

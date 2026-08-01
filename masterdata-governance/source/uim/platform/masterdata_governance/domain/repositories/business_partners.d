@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface BusinessPartnerRepository : ITenantRepository!(BusinessPartner, BusinessPartnerId) {
+interface IBusinessPartnerRepository : ITenantRepository!(BusinessPartner, BusinessPartnerId) {
 
     BusinessPartner findByBpNumber(TenantId tenantId, string bpNumber);
 

@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing — site persistence.
-interface SiteRepository : ITenantRepository!(Site, SiteId) {
+interface ISiteRepository : ITenantRepository!(Site, SiteId) {
 
   bool existsByAlias(TenantId tenantId, string alias_);
   Site findByAlias(TenantId tenantId, string alias_);

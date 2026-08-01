@@ -13,7 +13,7 @@ import uim.platform.data_attribute_recommendation;
 mixin(ShowModule!());
 
 @safe:
-class MemoryInferenceResultRepository : TenantRepository!(InferenceResult, InferenceResultId), IInferenceResultRepository {
+class InferenceResultRepository : TenantRepository!(InferenceResult, InferenceResultId), IInferenceResultRepository {
 
   bool existsByRequest(TenantId tenantId, InferenceRequestId requestId) {
     foreach (e; findByTenant(tenantId))
@@ -53,5 +53,5 @@ class MemoryInferenceResultRepository : TenantRepository!(InferenceResult, Infer
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryInferenceResultRepository()));
+    assert(tenantRepositoryTest(new InferenceResultRepository()));
 }

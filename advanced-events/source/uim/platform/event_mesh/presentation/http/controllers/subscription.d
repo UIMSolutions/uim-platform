@@ -159,7 +159,7 @@ unittest {
     @safe class SubscriptionControllerTest : ControllerTestBase {
         void runTests() {
             // 1. Setup
-            auto repo = new MemorySubscriptionRepository();
+            auto repo = new SubscriptionRepository();
             auto usecase = new ManageSubscriptionsUseCase(repo);
             auto controller = new SubscriptionController(usecase);
             auto tenantId = TenantId("test-tenant");

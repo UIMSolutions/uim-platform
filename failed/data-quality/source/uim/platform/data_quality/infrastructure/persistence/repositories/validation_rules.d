@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryValidationRuleRepository : TenantRepository!(ValidationRule, ValidationRuleId), ValidationRuleRepository {
+class ValidationRuleRepository : TenantRepository!(ValidationRule, ValidationRuleId), ValidationRuleRepository {
 
   size_t countByDataset(TenantId tenantId, string datasetPattern) {
     return findByDataset(tenantId, datasetPattern).length;

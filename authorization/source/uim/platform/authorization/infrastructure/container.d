@@ -73,7 +73,7 @@ Container buildContainer(SrvConfig config) {
       c.repository = new MongoAuthorizationRepository(config.mongoUri, config.mongoDb, config.mongoCollection);
       break;
     default:
-      c.repository = new MemoryAuthorizationRepository();
+      c.repository = new AuthorizationRepository();
       break;
   }
 

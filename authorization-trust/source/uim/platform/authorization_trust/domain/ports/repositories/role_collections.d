@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface RoleCollectionRepository : ITenantRepository!(RoleCollectionEntity, RoleCollectionId) {
+interface IRoleCollectionRepository : ITenantRepository!(RoleCollectionEntity, RoleCollectionId) {
 
   bool existsByName(TenantId tenantId, string name);
   RoleCollectionEntity findByName(TenantId tenantId, string name);

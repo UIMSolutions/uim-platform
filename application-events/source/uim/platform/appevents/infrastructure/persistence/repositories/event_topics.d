@@ -20,7 +20,7 @@ mixin(ShowModule!());
 @safe:
 
 
-class MemoryEventTopicRepository
+class EventTopicRepository
     : TenantRepository!(EventTopic, EventTopicId)
     , EventTopicRepository
 {

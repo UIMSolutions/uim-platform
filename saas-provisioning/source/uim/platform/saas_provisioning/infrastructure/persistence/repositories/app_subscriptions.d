@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 /// In-memory implementation of AppSubscriptionRepository.
-class MemoryAppSubscriptionRepository
+class AppSubscriptionRepository
     : TenantRepository!(AppSubscription, AppSubscriptionId),
       AppSubscriptionRepository
 {

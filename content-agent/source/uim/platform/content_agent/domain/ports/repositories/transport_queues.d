@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing - transport queue persistence.
-interface TransportQueueRepository : ITenantRepository!(TransportQueue, TransportQueueId) {
+interface ITransportQueueRepository : ITenantRepository!(TransportQueue, TransportQueueId) {
 
   bool existsDefault(TenantId tenantId);
   TransportQueue findDefault(TenantId tenantId);

@@ -13,7 +13,7 @@ import uim.platform.document_ai;
 mixin(ShowModule!());
 
 @safe:
-class MemoryDocumentRepository : DocumentRepository {
+class DocumentRepository : DocumentRepository {
   private Document[][string] store;
 
   bool existsById(DocumentId id, ClientId clientId) {

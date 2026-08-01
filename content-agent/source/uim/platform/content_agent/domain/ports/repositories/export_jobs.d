@@ -13,7 +13,7 @@ import uim.platform.content_agent;
 mixin(ShowModule!());
 @safe:
 /// Port: outgoing - export job persistence.
-interface ExportJobRepository : ITenantRepository!(ExportJob, ExportJobId) {
+interface IExportJobRepository : ITenantRepository!(ExportJob, ExportJobId) {
 
   // size_t countByFormat(TenantId tenantId, ExportFormat format);
   // ExportJob[] findByFormat(TenantId tenantId, ExportFormat format);

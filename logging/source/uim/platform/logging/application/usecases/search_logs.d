@@ -56,7 +56,7 @@ class SearchLogsUseCase { // TODO: UIMUseCase {
 }
 
 unittest {
-  auto logRepo = new MemoryLogEntryRepository();
+  auto logRepo = new LogEntryRepository();
   auto usecase = new SearchLogsUseCase(logRepo);
   auto tenantId = TenantId("test-tenant");
 

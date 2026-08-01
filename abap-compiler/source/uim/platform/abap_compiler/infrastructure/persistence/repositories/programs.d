@@ -11,7 +11,7 @@ mixin(ShowModule!());
 @safe:
 
 /// In-memory implementation of AbapProgramRepository (driven adapter).
-class MemoryAbapProgramRepository : TenantRepository!(AbapProgram, AbapProgramId), AbapProgramRepository {
+class AbapProgramRepository : TenantRepository!(AbapProgram, AbapProgramId), AbapProgramRepository {
 
     size_t countByProgramType(TenantId tenantId, ProgramType programType) {
         return findByProgramType(tenantId, programType).length;
@@ -48,5 +48,5 @@ class MemoryAbapProgramRepository : TenantRepository!(AbapProgram, AbapProgramId
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryAbapProgramRepository()));
+    assert(tenantRepositoryTest(new AbapProgramRepository()));
 }

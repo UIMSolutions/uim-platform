@@ -37,11 +37,11 @@ Container buildContainer(SrvConfig config) @trusted {
     Container c;
 
     // 1. Repositories
-    c.destinationRepo    = new MemoryDestinationRepository();
-    c.functionModuleRepo = new MemoryFunctionModuleRepository();
-    c.callRepo           = new MemoryRfcCallRepository();
-    c.tidRepo            = new MemoryTidRepository();
-    c.queueRepo          = new MemoryRfcQueueRepository();
+    c.destinationRepo    = new DestinationRepository();
+    c.functionModuleRepo = new FunctionModuleRepository();
+    c.callRepo           = new RfcCallRepository();
+    c.tidRepo            = new TidRepository();
+    c.queueRepo          = new RfcQueueRepository();
 
     // 2. Use cases
     c.invokeRfc            = new InvokeRfcUseCase(c.destinationRepo, c.functionModuleRepo,

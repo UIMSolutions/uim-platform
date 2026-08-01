@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryDocumentVersionRepository : TenantRepository!(DocumentVersion, DocumentVersionId), DocumentVersionRepository {
+class DocumentVersionRepository : TenantRepository!(DocumentVersion, DocumentVersionId), DocumentVersionRepository {
 
     DocumentVersion[] findByDocument(TenantId tenantId, DocumentId documentId) {
         return findByTenant(tenantId).filter!(e => e.documentId == documentId).array;

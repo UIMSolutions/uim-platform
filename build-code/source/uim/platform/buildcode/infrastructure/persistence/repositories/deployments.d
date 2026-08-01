@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryDeploymentRepository : DeploymentRepository {
+class DeploymentRepository : DeploymentRepository {
   private Deployment[string] _store;
 
   override void save(Deployment entity)                { _store[entity.id.value] = entity; }

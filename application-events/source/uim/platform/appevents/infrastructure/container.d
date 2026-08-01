@@ -91,14 +91,14 @@ Container buildContainer(SrvConfig config) @trusted {
             break;
         }
         case "memory": {
-            auto subscriptionRepo    = new MemoryEventSubscriptionRepository();
-            auto topicRepo           = new MemoryEventTopicRepository();
-            auto channelRepo         = new MemoryEventChannelRepository();
-            auto messageRepo         = new MemoryEventMessageRepository();
-            auto filterRepo          = new MemoryEventFilterRepository();
-            auto deadLetterRepo      = new MemoryDeadLetterEntryRepository();
-            auto formationRepo       = new MemoryFormationRepository();
-            auto systemRepo          = new MemorySystemRegistrationRepository();
+            auto subscriptionRepo    = new EventSubscriptionRepository();
+            auto topicRepo           = new EventTopicRepository();
+            auto channelRepo         = new EventChannelRepository();
+            auto messageRepo         = new EventMessageRepository();
+            auto filterRepo          = new EventFilterRepository();
+            auto deadLetterRepo      = new DeadLetterEntryRepository();
+            auto formationRepo       = new FormationRepository();
+            auto systemRepo          = new SystemRegistrationRepository();
 
             c.eventSubscriptions  = new ManageEventSubscriptionsUseCase(subscriptionRepo);
             c.eventTopics         = new ManageEventTopicsUseCase(topicRepo);

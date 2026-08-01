@@ -218,7 +218,7 @@ sequenceDiagram
     participant Admin
     participant BC as BusinessUserController
     participant BUC as ManageBusinessUsersUseCase
-    participant BR as BusinessUserRepository
+    participant BR as IBusinessUserRepository
 
     Admin->>BC: POST /business-users { username, email }
     BC->>BUC: createBusinessUser(dto)

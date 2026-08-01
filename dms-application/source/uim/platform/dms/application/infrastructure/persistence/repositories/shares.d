@@ -13,7 +13,7 @@ import uim.platform.dms.application;
 mixin(ShowModule!());
 
 @safe:
-class MemoryShareRepository : TenantRepository!(Share, ShareId), IShareRepository {
+class ShareRepository : TenantRepository!(Share, ShareId), IShareRepository {
   size_t countByDocument(TenantId tenantId, DocumentId documentId) {
     return findByDocument(tenantId, documentId).length;
   }
@@ -53,5 +53,5 @@ class MemoryShareRepository : TenantRepository!(Share, ShareId), IShareRepositor
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryShareRepository()));
+    assert(tenantRepositoryTest(new ShareRepository()));
 }

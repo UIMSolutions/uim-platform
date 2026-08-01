@@ -10,7 +10,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: repository contract for ServiceBinding persistence.
-interface ServiceBindingRepository : ITenantRepository!(ServiceBinding, ServiceBindingId) {
+interface IServiceBindingRepository : ITenantRepository!(ServiceBinding, ServiceBindingId) {
   ServiceBinding[] findByServiceInstance(TenantId tenantId, ServiceInstanceId instanceId);
   ServiceBinding[] findByApplication(TenantId tenantId, string applicationId);
   void removeByServiceInstance(TenantId tenantId, ServiceInstanceId instanceId);

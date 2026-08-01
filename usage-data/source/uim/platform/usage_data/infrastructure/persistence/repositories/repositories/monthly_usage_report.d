@@ -10,7 +10,7 @@ import uim.platform.usage_data;
 mixin(ShowModule!());
 @safe:
 /// In-memory adapter implementing MonthlyUsageReportRepository port.
-class MemoryMonthlyUsageReportRepository
+class MonthlyUsageReportRepository
     : TenantRepository!(MonthlyUsageReport, MonthlyUsageReportId),
       MonthlyUsageReportRepository {
 

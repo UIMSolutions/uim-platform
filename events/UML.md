@@ -142,7 +142,7 @@ classDiagram
         +findBySubscription(TenantId, QueueSubscriptionId) Webhook[]
     }
 
-    class MemoryMessagingServiceRepository {
+    class MessagingServiceRepository {
         -MessagingService[] store
         +findByStatus() MessagingService[]
         +findByNamespace() MessagingService[]

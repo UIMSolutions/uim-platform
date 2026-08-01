@@ -10,7 +10,7 @@ import uim.platform.datasphere_composer;
 mixin(ShowModule!());
 
 @safe:
-class MemoryAttributeMappingRepository
+class AttributeMappingRepository
     : TenantRepository!(AttributeMapping, AttributeMappingId),
       AttributeMappingRepository {
 

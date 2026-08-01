@@ -82,15 +82,15 @@ Container buildContainer(SrvConfig config) {
   Container c;
 
   // Infrastructure adapters
-  c.spaceRepo = new MemorySpaceRepository();
-  c.connectionRepo = new MemoryConnectionRepository();
-  c.remoteTableRepo = new MemoryRemoteTableRepository();
-  c.dataFlowRepo = new MemoryDataFlowRepository();
-  c.viewRepo = new MemoryViewRepository();
-  c.taskRepo = new MemoryTaskRepository();
-  c.taskChainRepo = new MemoryTaskChainRepository();
-  c.dataAccessControlRepo = new MemoryDataAccessControlRepository();
-  c.catalogAssetRepo = new MemoryCatalogAssetRepository();
+  c.spaceRepo = new SpaceRepository();
+  c.connectionRepo = new ConnectionRepository();
+  c.remoteTableRepo = new RemoteTableRepository();
+  c.dataFlowRepo = new DataFlowRepository();
+  c.viewRepo = new ViewRepository();
+  c.taskRepo = new TaskRepository();
+  c.taskChainRepo = new TaskChainRepository();
+  c.dataAccessControlRepo = new DataAccessControlRepository();
+  c.catalogAssetRepo = new CatalogAssetRepository();
 
   // Application use cases
   c.manageSpaces = new ManageSpacesUseCase(c.spaceRepo);

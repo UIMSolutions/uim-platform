@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryTransportNodeRepository : TenantRepository!(TransportNode, TransportNodeId), TransportNodeRepository {
+class TransportNodeRepository : TenantRepository!(TransportNode, TransportNodeId), TransportNodeRepository {
 
     size_t countByStatus(TenantId tenantId, NodeStatus status) {
         return findByStatus(tenantId, status).length;

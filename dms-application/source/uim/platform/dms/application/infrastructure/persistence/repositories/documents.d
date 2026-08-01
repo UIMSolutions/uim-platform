@@ -13,7 +13,7 @@ import uim.platform.dms.application;
 mixin(ShowModule!());
 @safe:
 
-class MemoryDocumentRepository : TenantRepository!(Document, DocumentId), IDocumentRepository {
+class DocumentRepository : TenantRepository!(Document, DocumentId), IDocumentRepository {
 
   size_t countByRepository(TenantId tenantId, RepositoryId repositoryId) {
     return findByTenant(tenantId).filter!(e => e.repositoryId == repositoryId).count;
@@ -67,5 +67,5 @@ class MemoryDocumentRepository : TenantRepository!(Document, DocumentId), IDocum
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryDocumentRepository()));
+    assert(tenantRepositoryTest(new DocumentRepository()));
 }

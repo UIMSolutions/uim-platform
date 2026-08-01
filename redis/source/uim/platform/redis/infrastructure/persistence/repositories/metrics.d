@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryMetricRepository
+class MetricRepository
     : TenantRepository!(Metric, MetricId)
     , MetricRepository
 {

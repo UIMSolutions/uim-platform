@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryMemberFunctionRepository
+class MemberFunctionRepository
     : TenantRepository!(MemberFunction, MemberFunctionId),
       MemberFunctionRepository {
 

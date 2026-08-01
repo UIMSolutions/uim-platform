@@ -97,7 +97,7 @@ class ManageLogStreamsUseCase { // TODO: UIMUseCase {
 }
 
 unittest {
-  auto repo = new MemoryLogStreamRepository();
+  auto repo = new LogStreamRepository();
   auto usecase = new ManageLogStreamsUseCase(repo);
   auto tenantId = TenantId("test-tenant");
 

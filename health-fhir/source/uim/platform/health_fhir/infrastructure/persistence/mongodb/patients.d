@@ -29,7 +29,7 @@ class MongoPatientRepository : PatientRepository {
   private MemoryPatientRepository _fallback;
 
   private MemoryPatientRepository fallback() @trusted {
-    if (_fallback is null) _fallback = new MemoryPatientRepository();
+    if (_fallback is null) _fallback = new PatientRepository();
     return _fallback;
   }
 

@@ -10,7 +10,7 @@ import uim.platform.usage_data;
 mixin(ShowModule!());
 @safe:
 /// In-memory adapter implementing ServiceMetricRepository port.
-class MemoryServiceMetricRepository
+class ServiceMetricRepository
     : TenantRepository!(ServiceMetric, ServiceMetricId), ServiceMetricRepository {
 
   ServiceMetric[] findByService(TenantId tenantId, string serviceId) {

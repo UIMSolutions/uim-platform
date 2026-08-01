@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface TransportRouteRepository : ITenantRepository!(TransportRoute, TransportRouteId) {
+interface ITransportRouteRepository : ITenantRepository!(TransportRoute, TransportRouteId) {
     TransportRoute[] findBySourceNode(TenantId tenantId, TransportNodeId sourceNodeId);
     TransportRoute[] findByDestinationNode(TenantId tenantId, TransportNodeId destNodeId);
     TransportRoute[] findByStatus(TenantId tenantId, RouteStatus status);

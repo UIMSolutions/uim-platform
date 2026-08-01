@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface DevSpaceRepository : ITenantRepository!(DevSpace, DevSpaceId) {
+interface IDevSpaceRepository : ITenantRepository!(DevSpace, DevSpaceId) {
 
     size_t countByOwner(TenantId tenantId, string owner);
     DevSpace[] findByOwner(TenantId tenantId, string owner);

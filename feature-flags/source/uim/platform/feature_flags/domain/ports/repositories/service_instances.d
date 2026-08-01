@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 /// Port for service instance persistence.
-interface ServiceInstanceRepository {
+interface IServiceInstanceRepository {
     void save(ServiceInstance instance_);
     void update(ServiceInstance instance_);
     void remove(ServiceInstance instance_);

@@ -10,7 +10,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryDeltaTableRepository : TenantRepository!(DeltaTable, DeltaTableId), DeltaTableRepository {
+class DeltaTableRepository : TenantRepository!(DeltaTable, DeltaTableId), DeltaTableRepository {
   DeltaTable[] findByWorkspace(TenantId tenantId, WorkspaceId workspaceId) {
     import std.algorithm : filter;
     import std.array : array;
@@ -40,5 +40,5 @@ class MemoryDeltaTableRepository : TenantRepository!(DeltaTable, DeltaTableId), 
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryDeltaTableRepository()));
+    assert(tenantRepositoryTest(new DeltaTableRepository()));
 }

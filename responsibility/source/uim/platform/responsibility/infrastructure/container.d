@@ -42,15 +42,15 @@ Container buildContainer(SrvConfig config) {
     Container c;
 
     // Repositories
-    auto ruleRepo       = new MemoryResponsibilityRuleRepository();
-    auto categoryRepo   = new MemoryTeamCategoryRepository();
-    auto typeRepo       = new MemoryTeamTypeRepository();
-    auto teamRepo       = new MemoryTeamRepository();
-    auto memberRepo     = new MemoryTeamMemberRepository();
-    auto functionRepo   = new MemoryMemberFunctionRepository();
-    auto contextRepo    = new MemoryResponsibilityContextRepository();
-    auto definitionRepo = new MemoryResponsibilityDefinitionRepository();
-    auto logRepo        = new MemoryDeterminationLogRepository();
+    auto ruleRepo       = new ResponsibilityRuleRepository();
+    auto categoryRepo   = new TeamCategoryRepository();
+    auto typeRepo       = new TeamTypeRepository();
+    auto teamRepo       = new TeamRepository();
+    auto memberRepo     = new TeamMemberRepository();
+    auto functionRepo   = new MemberFunctionRepository();
+    auto contextRepo    = new ResponsibilityContextRepository();
+    auto definitionRepo = new ResponsibilityDefinitionRepository();
+    auto logRepo        = new DeterminationLogRepository();
 
     // Domain service
     auto determinator   = new AgentDeterminator(memberRepo, definitionRepo);

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface DocumentVersionRepository : ITenantRepository!(DocumentVersion, DocumentVersionId) {
+interface IDocumentVersionRepository : ITenantRepository!(DocumentVersion, DocumentVersionId) {
 
     DocumentVersion[] findByDocument(TenantId tenantId, DocumentId documentId);
     void removeByDocument(TenantId tenantId, DocumentId documentId);

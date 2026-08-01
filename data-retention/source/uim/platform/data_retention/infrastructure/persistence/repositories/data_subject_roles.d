@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryDataSubjectRoleRepository : TenantRepository!(DataSubjectRole, DataSubjectRoleId), DataSubjectRoleRepository {
+class DataSubjectRoleRepository : TenantRepository!(DataSubjectRole, DataSubjectRoleId), DataSubjectRoleRepository {
 
     size_t countActive(TenantId tenantId) {
         return findActive(tenantId).length;

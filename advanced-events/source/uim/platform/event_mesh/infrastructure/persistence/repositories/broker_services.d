@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryBrokerServiceRepository : TenantRepository!(BrokerService, BrokerServiceId), IBrokerServiceRepository {
+class BrokerServiceRepository : TenantRepository!(BrokerService, BrokerServiceId), IBrokerServiceRepository {
 
     size_t countByStatus(TenantId tenantId, BrokerServiceStatus status) {
         return findByStatus(tenantId, status).length;
@@ -44,7 +44,7 @@ class MemoryBrokerServiceRepository : TenantRepository!(BrokerService, BrokerSer
 }
 
 unittest {
-    auto repo = new MemoryBrokerServiceRepository();
+    auto repo = new BrokerServiceRepository();
     auto tenantId = TenantId("test-tenant");
 
     // Create sample services

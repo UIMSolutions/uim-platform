@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ScopeRepository : ITenantRepository!(ScopeEntity, ScopeId) {
+interface IScopeRepository : ITenantRepository!(ScopeEntity, ScopeId) {
 
   bool existsByName(TenantId tenantId, string name);
   ScopeEntity findByName(TenantId tenantId, string name);

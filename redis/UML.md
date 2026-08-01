@@ -317,7 +317,7 @@ ITenantRepository <|-- MetricRepository
 ITenantRepository <|-- BackupPolicyRepository
 ITenantRepository <|-- AccessControlRepository
 
-class MemoryServiceInstanceRepository implements ServiceInstanceRepository
+class ServiceInstanceRepository implements ServiceInstanceRepository
 class FileServiceInstanceRepository implements ServiceInstanceRepository
 class MongoServiceInstanceRepository implements ServiceInstanceRepository
 @enduml

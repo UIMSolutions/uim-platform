@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryTemplateRepository : TemplateRepository {
+class TemplateRepository : TemplateRepository {
   private ProjectTemplate[string] _store;
 
   override void save(ProjectTemplate entity)              { _store[entity.id.value] = entity; }

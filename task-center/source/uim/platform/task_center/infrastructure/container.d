@@ -36,14 +36,14 @@ Container buildContainer(SrvConfig config) {
     Container c;
 
     // Repositories
-    auto taskRepo = new MemoryTaskRepository();
-    auto defRepo = new MemoryTaskDefinitionRepository();
-    auto commentRepo = new MemoryTaskCommentRepository();
-    auto attachRepo = new MemoryTaskAttachmentRepository();
-    auto providerRepo = new MemoryTaskProviderRepository();
-    auto subRepo = new MemorySubstitutionRuleRepository();
-    auto actionRepo = new MemoryTaskActionRepository();
-    auto filterRepo = new MemoryUserTaskFilterRepository();
+    auto taskRepo = new TaskRepository();
+    auto defRepo = new TaskDefinitionRepository();
+    auto commentRepo = new TaskCommentRepository();
+    auto attachRepo = new TaskAttachmentRepository();
+    auto providerRepo = new TaskProviderRepository();
+    auto subRepo = new SubstitutionRuleRepository();
+    auto actionRepo = new TaskActionRepository();
+    auto filterRepo = new UserTaskFilterRepository();
 
     // Use Cases
     c.manageTasksUseCase = new ManageTasksUseCase(taskRepo);

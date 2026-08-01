@@ -48,14 +48,14 @@ Container buildContainer(SrvConfig config) {
     Container c;
 
     // Infrastructure adapters
-    c.subjectRepo = new MemoryDataSubjectRepository();
-    c.requestRepo = new MemoryDataSubjectRequestRepository();
-    c.recordRepo = new MemoryPersonalDataRecordRepository();
-    c.appRepo = new MemoryRegisteredApplicationRepository();
-    c.purposeRepo = new MemoryProcessingPurposeRepository();
-    c.consentRepo = new MemoryConsentRecordRepository();
-    c.retentionRepo = new MemoryRetentionRuleRepository();
-    c.logRepo = new MemoryDataProcessingLogRepository();
+    c.subjectRepo = new DataSubjectRepository();
+    c.requestRepo = new DataSubjectRequestRepository();
+    c.recordRepo = new PersonalDataRecordRepository();
+    c.appRepo = new RegisteredApplicationRepository();
+    c.purposeRepo = new ProcessingPurposeRepository();
+    c.consentRepo = new ConsentRecordRepository();
+    c.retentionRepo = new RetentionRuleRepository();
+    c.logRepo = new DataProcessingLogRepository();
 
     // Application use cases
     c.manageSubjects = new ManageDataSubjectsUseCase(c.subjectRepo);

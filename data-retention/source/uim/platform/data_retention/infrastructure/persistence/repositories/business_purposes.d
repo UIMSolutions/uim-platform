@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryBusinessPurposeRepository : TenantRepository!(BusinessPurpose, BusinessPurposeId), BusinessPurposeRepository {
+class BusinessPurposeRepository : TenantRepository!(BusinessPurpose, BusinessPurposeId), BusinessPurposeRepository {
 
     size_t countByApplicationGroup(TenantId tenantId, ApplicationGroupId groupId) {
         return findByApplicationGroup(tenantId, groupId).length;

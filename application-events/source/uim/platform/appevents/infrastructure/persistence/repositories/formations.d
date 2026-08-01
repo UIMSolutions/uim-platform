@@ -20,7 +20,7 @@ mixin(ShowModule!());
 @safe:
 
 
-class MemoryFormationRepository
+class FormationRepository
     : TenantRepository!(Formation, FormationId)
     , FormationRepository
 {

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryBusinessPartnerRepository
+class BusinessPartnerRepository
     : TenantRepository!(BusinessPartner, BusinessPartnerId), BusinessPartnerRepository {
 
     BusinessPartner findByBpNumber(TenantId tenantId, string bpNumber) {

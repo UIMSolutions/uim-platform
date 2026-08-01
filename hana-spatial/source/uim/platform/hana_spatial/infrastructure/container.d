@@ -50,15 +50,15 @@ Container buildContainer(SrvConfig config) {
   Container c;
 
   // Infrastructure adapters
-  c.geocodingResultRepo = new MemoryGeocodingResultRepository();
-  c.routeRepo = new MemoryRouteRepository();
-  c.poiRepo = new MemoryPointOfInterestRepository();
-  c.isolineRepo = new MemoryIsolineRepository();
-  c.geofenceZoneRepo = new MemoryGeofenceZoneRepository();
-  c.spatialLayerRepo = new MemorySpatialLayerRepository();
-  c.spatialFeatureRepo = new MemorySpatialFeatureRepository();
-  c.providerRepo = new MemoryProviderRepository();
-  c.geocodingJobRepo = new MemoryGeocodingJobRepository();
+  c.geocodingResultRepo = new GeocodingResultRepository();
+  c.routeRepo = new RouteRepository();
+  c.poiRepo = new PointOfInterestRepository();
+  c.isolineRepo = new IsolineRepository();
+  c.geofenceZoneRepo = new GeofenceZoneRepository();
+  c.spatialLayerRepo = new SpatialLayerRepository();
+  c.spatialFeatureRepo = new SpatialFeatureRepository();
+  c.providerRepo = new ProviderRepository();
+  c.geocodingJobRepo = new GeocodingJobRepository();
 
   // Application use cases
   c.manageGeocodingResults = new ManageGeocodingResultsUseCase(c.geocodingResultRepo);

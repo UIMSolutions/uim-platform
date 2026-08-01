@@ -11,7 +11,7 @@ import uim.platform.ai_core;
 mixin(ShowModule!()); 
 
 @safe:
-interface ExecutionRepository : ITenantRepository!(Execution, ExecutionId) {
+interface IExecutionRepository : ITenantRepository!(Execution, ExecutionId) {
 
   bool existsById(TenantId tenantId, ResourceGroupId rgId, ExecutionId id);
   Execution findById(TenantId tenantId, ResourceGroupId rgId, ExecutionId id);

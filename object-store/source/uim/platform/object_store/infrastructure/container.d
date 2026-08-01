@@ -71,13 +71,13 @@ Container buildContainer(SrvConfig config) {
   Container c;
 
   // Infrastructure adapters
-  c.bucketRepo = new MemoryBucketRepository();
-  c.objectRepo = new MemoryStorageObjectRepository();
-  c.versionRepo = new MemoryObjectVersionRepository();
-  c.policyRepo = new MemoryAccessPolicyRepository();
-  c.lifecycleRepo = new MemoryLifecycleRuleRepository();
-  c.corsRepo = new MemoryCorsRuleRepository();
-  c.bindingRepo = new MemoryServiceBindingRepository();
+  c.bucketRepo = new BucketRepository();
+  c.objectRepo = new StorageObjectRepository();
+  c.versionRepo = new ObjectVersionRepository();
+  c.policyRepo = new AccessPolicyRepository();
+  c.lifecycleRepo = new LifecycleRuleRepository();
+  c.corsRepo = new CorsRuleRepository();
+  c.bindingRepo = new ServiceBindingRepository();
 
   // Application use cases
   c.manageBuckets = new ManageBucketsUseCase(c.bucketRepo);

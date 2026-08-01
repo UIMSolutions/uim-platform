@@ -9,6 +9,8 @@ mixin(ShowModule!());
 
 struct CreateBusinessPurposeRequest {
     TenantId tenantId;
+    BusinessPurposeId purposeId;
+
     string name;
     string description;
     string applicationGroupId;
@@ -19,6 +21,9 @@ struct CreateBusinessPurposeRequest {
 }
 
 struct UpdateBusinessPurposeRequest {
+    TenantId tenantId;
+    BusinessPurposeId purposeId;
+
     string name;
     string description;
     string applicationGroupId;
@@ -31,6 +36,8 @@ struct UpdateBusinessPurposeRequest {
 
 struct CreateLegalGroundRequest {
     TenantId tenantId;
+    LegalGroundId groundId;
+
     string name;
     string description;
     string businessPurposeId;
@@ -40,6 +47,8 @@ struct CreateLegalGroundRequest {
 }
 
 struct UpdateLegalGroundRequest {
+    TenantId tenantId;
+    LegalGroundId groundId;
     string name;
     string description;
     string type;
@@ -50,7 +59,7 @@ struct UpdateLegalGroundRequest {
 
 struct CreateRetentionRuleRequest {
     TenantId tenantId;
-    ResidenceRuleId ruleId;
+    RetentionRuleId ruleId;
     string businessPurposeId;
     string legalGroundId;
     int duration;
@@ -61,7 +70,8 @@ struct CreateRetentionRuleRequest {
 
 struct UpdateRetentionRuleRequest {
     TenantId tenantId;
-    ResidenceRuleId ruleId;
+    RetentionRuleId ruleId;
+
     int duration;
     string periodUnit;
     string actionOnExpiry;
@@ -72,14 +82,17 @@ struct UpdateRetentionRuleRequest {
 
 struct CreateResidenceRuleRequest {
     TenantId tenantId;
-    string businessPurposeId;
-    string legalGroundId;
+    BusinessPurposeId businessPurposeId;
+    LegalGroundId legalGroundId;
     int duration;
     string periodUnit;
     UserId createdBy;
 }
 
 struct UpdateResidenceRuleRequest {
+    TenantId tenantId;
+    ResidenceRuleId ruleId;
+
     int duration;
     string periodUnit;
     bool isActive;
@@ -104,6 +117,7 @@ struct UpdateDataSubjectRequest {
 
 struct CreateDeletionRequestRequest {
     TenantId tenantId;
+    DeletionRequestId requestId;
     string dataSubjectId;
     string applicationGroupId;
     string actionType;
@@ -112,6 +126,8 @@ struct CreateDeletionRequestRequest {
 }
 
 struct UpdateDeletionRequestRequest {
+    TenantId tenantId;
+    DeletionRequestId requestId;
     string status;
     string errorMessage;
 }
@@ -120,7 +136,8 @@ struct UpdateDeletionRequestRequest {
 
 struct CreateArchivingJobRequest {
     TenantId tenantId;
-    string applicationGroupId;
+    ApplicationGroupId applicationGroupId;
+    
     string operationType;
     string selectionCriteria;
     long scheduledAt;

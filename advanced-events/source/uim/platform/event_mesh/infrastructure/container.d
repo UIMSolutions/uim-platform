@@ -71,14 +71,14 @@ Container buildContainer(SrvConfig config) {
         eventApplicationRepo = new FileEventApplicationRepository(config.fileRepositoryBasePath);
         meshBridgeRepo = new FileMeshBridgeRepository(config.fileRepositoryBasePath);
     } else {
-        brokerServiceRepo = new MemoryBrokerServiceRepository();
-        queueRepo = new MemoryQueueRepository();
-        topicRepo = new MemoryTopicRepository();
-        subscriptionRepo = new MemorySubscriptionRepository();
-        eventMessageRepo = new MemoryEventMessageRepository();
-        eventSchemaRepo = new MemoryEventSchemaRepository();
-        eventApplicationRepo = new MemoryEventApplicationRepository();
-        meshBridgeRepo = new MemoryMeshBridgeRepository();
+        brokerServiceRepo = new BrokerServiceRepository();
+        queueRepo = new QueueRepository();
+        topicRepo = new TopicRepository();
+        subscriptionRepo = new SubscriptionRepository();
+        eventMessageRepo = new EventMessageRepository();
+        eventSchemaRepo = new EventSchemaRepository();
+        eventApplicationRepo = new EventApplicationRepository();
+        meshBridgeRepo = new MeshBridgeRepository();
     }
 
     // Use Cases

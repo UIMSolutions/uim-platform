@@ -10,7 +10,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface FlexChangeRepository : ITenantRepository!(FlexChange, FlexChangeId) {
+interface IFlexChangeRepository : ITenantRepository!(FlexChange, FlexChangeId) {
   bool existsById(TenantId tenantId, FlexChangeId id);
   FlexChange findById(TenantId tenantId, FlexChangeId id);
   bool removeById(TenantId tenantId, FlexChangeId id);

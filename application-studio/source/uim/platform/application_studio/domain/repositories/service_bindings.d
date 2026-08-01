@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface ServiceBindingRepository : ITenantRepository!(ServiceBinding, ServiceBindingId) {
+interface IServiceBindingRepository : ITenantRepository!(ServiceBinding, ServiceBindingId) {
 
     size_t countByDevSpace(TenantId tenantId, DevSpaceId devSpaceId);
     ServiceBinding[] findByDevSpace(TenantId tenantId, DevSpaceId devSpaceId);

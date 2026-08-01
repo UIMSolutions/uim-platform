@@ -9,7 +9,7 @@ import uim.platform.private_link;
 mixin(ShowModule!());
 
 @safe:
-class MemoryPrivateEndpointRepository
+class PrivateEndpointRepository
     : TenantRepository!(PrivateEndpoint, PrivateEndpointId),
       PrivateEndpointRepository {
 

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface TransportActionRepository : ITenantRepository!(TransportAction, TransportActionId) {
+interface ITransportActionRepository : ITenantRepository!(TransportAction, TransportActionId) {
     TransportAction[] findByNode(TenantId tenantId, TransportNodeId nodeId);
     TransportAction[] findByRequest(TenantId tenantId, TransportRequestId requestId);
     TransportAction[] findByType(TenantId tenantId, ActionType actionType);

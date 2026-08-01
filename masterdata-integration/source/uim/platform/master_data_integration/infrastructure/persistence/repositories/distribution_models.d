@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryDistributionModelRepository :
+class DistributionModelRepository :
   TenantRepository!(DistributionModel, DistributionModelId),
   DistributionModelRepository {
 

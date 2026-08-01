@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryUserRepository : TenantRepository!(User, UserId), UserRepository {
+class UserRepository : TenantRepository!(User, UserId), UserRepository {
     User findByUserName(TenantId tenantId, string userName) {
         foreach (u; findByTenant(tenantId))
             if (u.userName == userName) return u;

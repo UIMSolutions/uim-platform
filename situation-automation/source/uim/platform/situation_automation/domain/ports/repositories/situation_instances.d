@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface SituationInstanceRepository : ITenantRepository!(SituationInstance, SituationInstanceId) {
+interface ISituationInstanceRepository : ITenantRepository!(SituationInstance, SituationInstanceId) {
 
     size_t countByTemplate(TenantId tenantId, SituationTemplateId templateId);
     SituationInstance[] findByTemplate(TenantId tenantId, SituationTemplateId templateId);

@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryLegalGroundRepository : TenantRepository!(LegalGround, LegalGroundId), LegalGroundRepository {
+class LegalGroundRepository : TenantRepository!(LegalGround, LegalGroundId), LegalGroundRepository {
 
     LegalGround[] findAll(TenantId tenantId) {
         return findByTenant(tenantId);

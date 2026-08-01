@@ -10,7 +10,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface FlexDraftRepository : ITenantRepository!(FlexDraft, FlexDraftId) {
+interface IFlexDraftRepository : ITenantRepository!(FlexDraft, FlexDraftId) {
   bool existsById(TenantId tenantId, FlexDraftId id);
   FlexDraft findById(TenantId tenantId, FlexDraftId id);
   bool removeById(TenantId tenantId, FlexDraftId id);

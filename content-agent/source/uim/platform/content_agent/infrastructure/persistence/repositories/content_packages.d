@@ -13,7 +13,7 @@ import uim.platform.content_agent;
 mixin(ShowModule!());
 
 @safe:
-class MemoryContentPackageRepository : TenantRepository!(ContentPackage, ContentPackageId), ContentPackageRepository {
+class ContentPackageRepository : TenantRepository!(ContentPackage, ContentPackageId), ContentPackageRepository {
 
   // #region byName
   bool existsByName(TenantId tenantId, string name) {

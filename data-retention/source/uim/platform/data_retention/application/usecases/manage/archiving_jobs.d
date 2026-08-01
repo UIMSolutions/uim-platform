@@ -20,7 +20,7 @@ class ManageArchivingJobsUseCase { // TODO: UIMUseCase {
 
         auto aj = ArchivingJob(req.tenantId, ArchivingJobId(generateId), req.createdBy);
         aj.applicationGroupId = ApplicationGroupId(req.applicationGroupId);
-        aj.operationType = toArchivingJobOperationType(req.operationType);
+        aj.operationType = req.operationType.toArchivingJobOperationType;
         aj.status = ArchivingJobStatus.scheduled;
         aj.selectionCriteria = req.selectionCriteria;
         aj.scheduledAt = req.scheduledAt > 0 ? req.scheduledAt : clockSeconds();

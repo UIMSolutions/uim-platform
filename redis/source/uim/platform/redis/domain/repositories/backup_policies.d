@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface BackupPolicyRepository : ITenantRepository!(BackupPolicy, BackupPolicyId) {
+interface IBackupPolicyRepository : ITenantRepository!(BackupPolicy, BackupPolicyId) {
     BackupPolicy findByInstance(TenantId tenantId, ServiceInstanceId instanceId);
     BackupPolicy[] findByStatus(TenantId tenantId, BackupStatus status);
 }

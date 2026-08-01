@@ -13,7 +13,7 @@ import uim.platform.document_ai;
 mixin(ShowModule!());
 
 @safe:
-class MemoryTemplateRepository : TemplateRepository {
+class TemplateRepository : TemplateRepository {
   private Template[][string] store;
 
   bool existsById(ClientId clientId, TemplateId id) {

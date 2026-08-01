@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryOAuthClientRepository : TenantRepository!(OAuthClient, OAuthClientId), IOAuthClientRepository {
+class OAuthClientRepository : TenantRepository!(OAuthClient, OAuthClientId), IOAuthClientRepository {
 
     // #region ByClient
     bool existsByClient(TenantId tenantId, string clientId) {
@@ -52,5 +52,5 @@ class MemoryOAuthClientRepository : TenantRepository!(OAuthClient, OAuthClientId
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryOAuthClientRepository()));
+    assert(tenantRepositoryTest(new OAuthClientRepository()));
 }

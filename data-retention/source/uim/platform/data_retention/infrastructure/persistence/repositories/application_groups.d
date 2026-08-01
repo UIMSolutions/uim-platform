@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryApplicationGroupRepository : TenantRepository!(ApplicationGroup, ApplicationGroupId), ApplicationGroupRepository {
+class ApplicationGroupRepository : TenantRepository!(ApplicationGroup, ApplicationGroupId), ApplicationGroupRepository {
 
     size_t countByActive(TenantId tenantId) {
         return findActive(tenantId).length;

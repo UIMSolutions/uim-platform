@@ -10,7 +10,7 @@ import uim.platform.hana_spatial;
 mixin(ShowModule!());
 
 @safe:
-class MemorySpatialFeatureRepository
+class SpatialFeatureRepository
   : TenantRepository!(SpatialFeature, SpatialFeatureId),
     SpatialFeatureRepository {
 

@@ -12,7 +12,7 @@ import uim.platform.data_attribute_recommendation;
 mixin(ShowModule!());
 
 @safe:
-class MemoryInferenceRequestRepository : TenantRepository!(InferenceRequest, InferenceRequestId), IInferenceRequestRepository {
+class InferenceRequestRepository : TenantRepository!(InferenceRequest, InferenceRequestId), IInferenceRequestRepository {
   
   // #region ByDeployment
   size_t countByDeployment(TenantId tenantId, DeploymentId deploymentId) {
@@ -49,5 +49,5 @@ class MemoryInferenceRequestRepository : TenantRepository!(InferenceRequest, Inf
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryInferenceRequestRepository()));
+    assert(tenantRepositoryTest(new InferenceRequestRepository()));
 }

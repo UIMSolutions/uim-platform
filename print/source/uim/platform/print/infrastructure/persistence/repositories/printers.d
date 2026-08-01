@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryPrinterRepository
+class PrinterRepository
     : TenantRepository!(Printer, PrinterId), PrinterRepository {
 
     Printer[] findByStatus(TenantId tenantId, PrinterStatus status) {

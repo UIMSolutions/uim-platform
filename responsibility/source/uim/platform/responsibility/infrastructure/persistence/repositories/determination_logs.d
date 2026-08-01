@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryDeterminationLogRepository
+class DeterminationLogRepository
     : TenantRepository!(DeterminationLog, DeterminationLogId),
       DeterminationLogRepository {
 

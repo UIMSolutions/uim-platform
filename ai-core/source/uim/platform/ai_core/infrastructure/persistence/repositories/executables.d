@@ -13,7 +13,7 @@ import uim.platform.ai_core;
 mixin(ShowModule!());
 
 @safe:
-class MemoryExecutableRepository : TenantRepository!(Executable, ExecutableId), ExecutableRepository {
+class ExecutableRepository : TenantRepository!(Executable, ExecutableId), ExecutableRepository {
 
   bool existsById(TenantId tenantId, ResourceGroupId rgId, ExecutableId id) {
     return findByResourceGroup(tenantId, rgId).any!(e => e.id == id);
@@ -66,5 +66,5 @@ class MemoryExecutableRepository : TenantRepository!(Executable, ExecutableId), 
 
 ///
 unittest {
-    assert(tenantRepositoryTest(new MemoryExecutableRepository()));
+    assert(tenantRepositoryTest(new ExecutableRepository()));
 }

@@ -10,7 +10,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: repository contract for ServiceInstance persistence.
-interface ServiceInstanceRepository : ITenantRepository!(ServiceInstance, ServiceInstanceId) {
+interface IServiceInstanceRepository : ITenantRepository!(ServiceInstance, ServiceInstanceId) {
   bool existsByName(TenantId tenantId, string name);
   ServiceInstance findByName(TenantId tenantId, string name);
   ServiceInstance[] findByStatus(TenantId tenantId, InstanceStatus status);

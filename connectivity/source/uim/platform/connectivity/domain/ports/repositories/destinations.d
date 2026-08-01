@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing - destination persistence.
-interface DestinationRepository : ITenantRepository!(Destination, DestinationId) {
+interface IDestinationRepository : ITenantRepository!(Destination, DestinationId) {
   bool existsByName(TenantId tenantId, string name);
   Destination findByName(TenantId tenantId, string name);
   

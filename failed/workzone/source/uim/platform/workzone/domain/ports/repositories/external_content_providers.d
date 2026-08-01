@@ -11,7 +11,7 @@ import uim.platform.workzone;
 mixin(ShowModule!());
 
 @safe:
-interface ExternalContentProviderRepository : ITenantRepository!(ExternalContentProvider, ExternalContentProviderId) {
+interface IExternalContentProviderRepository : ITenantRepository!(ExternalContentProvider, ExternalContentProviderId) {
 
   size_t countByStatus(TenantId tenantId, ProviderStatus status);
   ExternalContentProvider[] findByStatus(TenantId tenantId, ProviderStatus status);

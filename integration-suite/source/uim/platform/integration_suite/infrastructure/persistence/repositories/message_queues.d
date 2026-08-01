@@ -5,7 +5,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryMessageQueueRepository
+class MessageQueueRepository
     : TenantRepository!(MessageQueue, MessageQueueId),
       MessageQueueRepository {
 

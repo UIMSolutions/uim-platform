@@ -3,7 +3,7 @@ import uim.platform.snowflake;
 
 mixin(ShowModule!());
 @safe:
-class MemorySnowflakeDatabaseRepository
+class SnowflakeDatabaseRepository
     : TenantRepository!(SnowflakeDatabase, SnowflakeDatabaseId),
       SnowflakeDatabaseRepository {
 

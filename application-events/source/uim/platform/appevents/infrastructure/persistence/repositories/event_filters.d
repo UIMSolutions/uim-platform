@@ -18,7 +18,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryEventFilterRepository
+class EventFilterRepository
     : TenantRepository!(EventFilter, EventFilterId)
     , EventFilterRepository
 {
