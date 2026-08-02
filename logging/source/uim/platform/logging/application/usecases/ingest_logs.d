@@ -17,10 +17,10 @@ mixin(ShowModule!());
 
 @safe:
 class IngestLogsUseCase { // TODO: UIMUseCase {
-  private LogEntryRepository logRepo;
-  private LogStreamRepository streamRepo;
+  private ILogEntryRepository logRepo;
+  private ILogStreamRepository streamRepo;
 
-  this(LogEntryRepository logRepo, LogStreamRepository streamRepo) {
+  this(ILogEntryRepository logRepo, ILogStreamRepository streamRepo) {
     this.logRepo = logRepo;
     this.streamRepo = streamRepo;
   }

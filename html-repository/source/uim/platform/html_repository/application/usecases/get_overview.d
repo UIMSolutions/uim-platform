@@ -19,22 +19,21 @@ mixin(ShowModule!());
 
 @safe:
 class GetOverviewUseCase { // TODO: UIMUseCase {
-    private HtmlAppRepository appRepo;
-    private AppVersionRepository versionRepo;
-    private AppFileRepository fileRepo;
-    private ServiceInstanceRepository instanceRepo;
-    private DeploymentRecordRepository deploymentRepo;
-    private AppRouteRepository routeRepo;
-    private ContentCacheRepository cacheRepo;
+    private IHtmlAppRepository appRepo;
+    private IAppVersionRepository versionRepo;
+    private IAppFileRepository fileRepo;
+    private IServiceInstanceRepository instanceRepo;
+    private IDeploymentRecordRepository deploymentRepo;
+    private IAppRouteRepository routeRepo;
+    private IContentCacheRepository cacheRepo;
 
-    this(    HtmlAppRepository appRepo,
-        AppVersionRepository versionRepo,
-        AppFileRepository fileRepo,
-        ServiceInstanceRepository instanceRepo,
-        DeploymentRecordRepository deploymentRepo,
-        AppRouteRepository routeRepo,
-        ContentCacheRepository cacheRepo,
-    ) {
+    this(IHtmlAppRepository appRepo,
+        IAppVersionRepository versionRepo,
+        IAppFileRepository fileRepo,
+        IServiceInstanceRepository instanceRepo,
+        IDeploymentRecordRepository deploymentRepo,
+        IAppRouteRepository routeRepo,
+        IContentCacheRepository cacheRepo) {
         this.appRepo = appRepo;
         this.versionRepo = versionRepo;
         this.fileRepo = fileRepo;

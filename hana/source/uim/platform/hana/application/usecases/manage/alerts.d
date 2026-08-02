@@ -15,9 +15,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageAlertsUseCase { // TODO: UIMUseCase {
-  private AlertRepository repo;
+  private IAlertRepository repo;
 
-  this(AlertRepository repo) {
+  this(IAlertRepository repo) {
     this.repo = repo;
   }
 

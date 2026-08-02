@@ -16,9 +16,9 @@ mixin(ShowModule!());
 @safe:
 /// Application service for connected client system management.
 class ManageClientsUseCase { // TODO: UIMUseCase {
-  private ClientRepository repo;
+  private IClientRepository repo;
 
-  this(ClientRepository repo) {
+  this(IClientRepository repo) {
     this.repo = repo;
   }
 

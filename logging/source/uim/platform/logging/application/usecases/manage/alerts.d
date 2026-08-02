@@ -12,8 +12,8 @@ import uim.platform.logging;
 mixin(ShowModule!());
 
 @safe:
-class ManageAlertsUseCase : TenantUseCase!(AlertRepository, Alert, AlertId) {
-  this(AlertRepository repository) {
+class ManageAlertsUseCase : TenantUseCase!(IAlertRepository, Alert, AlertId) {
+  this(IAlertRepository repository) {
     super(repository);
   }
 

@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 class ManagePipelinesUseCase { // TODO: UIMUseCase {
-  private PipelineRepository repo;
+  private IPipelineRepository repo;
 
   private bool tryParseSourceType(string raw, out PipelineSourceType sourceType) {
     auto normalized = raw.toLower;
@@ -58,7 +58,7 @@ class ManagePipelinesUseCase { // TODO: UIMUseCase {
     }
   }
 
-  this(PipelineRepository repo) {
+  this(IPipelineRepository repo) {
     this.repo = repo;
   }
 

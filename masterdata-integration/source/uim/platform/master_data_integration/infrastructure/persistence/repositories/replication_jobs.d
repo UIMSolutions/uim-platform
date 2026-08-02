@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ReplicationJobRepository : TenantRepository!(ReplicationJob, ReplicationJobId), ReplicationJobRepository {
+class ReplicationJobRepository : TenantRepository!(ReplicationJob, ReplicationJobId), IReplicationJobRepository {
 
   size_t countByStatus(TenantId tenantId, ReplicationJobStatus status) {
     return findByStatus(tenantId, status).length;

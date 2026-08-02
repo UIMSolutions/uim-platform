@@ -16,7 +16,7 @@ mixin(ShowModule!());
 
 @safe:
 class ManageLogStreamsUseCase { // TODO: UIMUseCase {
-  private LogStreamRepository repo;
+  private ILogStreamRepository repo;
 
   private bool tryParseSourceType(string raw, out LogSourceType sourceType) {
     auto normalized = raw.toLower;
@@ -33,7 +33,7 @@ class ManageLogStreamsUseCase { // TODO: UIMUseCase {
     }
   }
 
-  this(LogStreamRepository repo) {
+  this(ILogStreamRepository repo) {
     this.repo = repo;
   }
 

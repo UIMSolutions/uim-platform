@@ -15,9 +15,9 @@ mixin(ShowModule!());
 
 @safe:
 class IngestTracesUseCase { // TODO: UIMUseCase {
-  private SpanRepository spanRepo;
+  private ISpanRepository spanRepo;
 
-  this(SpanRepository spanRepo) {
+  this(ISpanRepository spanRepo) {
     this.spanRepo = spanRepo;
   }
 

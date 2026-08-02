@@ -17,7 +17,7 @@ mixin(ShowModule!());
 
 class DistributionModelRepository :
   TenantRepository!(DistributionModel, DistributionModelId),
-  DistributionModelRepository {
+  IDistributionModelRepository {
 
   size_t countByStatus(TenantId tenantId, DistributionModelStatus status) {
     return findByStatus(tenantId, status).length;

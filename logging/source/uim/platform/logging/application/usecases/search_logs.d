@@ -15,9 +15,9 @@ mixin(ShowModule!());
 
 @safe:
 class SearchLogsUseCase { // TODO: UIMUseCase {
-  private LogEntryRepository logRepo;
+  private ILogEntryRepository logRepo;
 
-  this(LogEntryRepository logRepo) {
+  this(ILogEntryRepository logRepo) {
     this.logRepo = logRepo;
   }
 

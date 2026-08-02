@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManagePipelinesUseCase {
-    private PipelineRepository repo;
+    private IPipelineRepository repo;
 
-    this(PipelineRepository repo) {
+    this(IPipelineRepository repo) {
         this.repo = repo;
     }
 

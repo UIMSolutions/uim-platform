@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ChangeLogRepository : TenantRepository!(ChangeLogEntry, ChangeLogEntryId), ChangeLogRepository {
+class ChangeLogRepository : TenantRepository!(ChangeLogEntry, ChangeLogEntryId), IChangeLogRepository {
 
   // #region ByObject
   size_t countByObject(TenantId tenantId, MasterDataObjectId objectId) {

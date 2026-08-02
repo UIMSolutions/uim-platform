@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class ManagePipelinesUseCase {
-  private PipelineRepository  _repo;
+  private IPipelineRepository  _repo;
   private QuotaService        _quota;
 
-  this(PipelineRepository repo) {
+  this(IPipelineRepository repo) {
     _repo  = repo;
     _quota = QuotaService();
   }

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ClientRepository : TenantRepository!(Client, ClientId), ClientRepository {
+class ClientRepository : TenantRepository!(Client, ClientId), IClientRepository {
 
   size_t countByStatus(TenantId tenantId, ClientStatus status) {
     return findByStatus(tenantId, status).length;

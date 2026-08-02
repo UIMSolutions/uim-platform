@@ -15,9 +15,9 @@ mixin(ShowModule!());
 @safe:
 /// Application service for data model / schema management.
 class ManageDataModelsUseCase { // TODO: UIMUseCase {
-  private DataModelRepository repo;
+  private IDataModelRepository repo;
 
-  this(DataModelRepository repo) {
+  this(IDataModelRepository repo) {
     this.repo = repo;
   }
 

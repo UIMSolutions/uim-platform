@@ -15,9 +15,9 @@ mixin(ShowModule!());
 @safe:
 /// Application service for replication job lifecycle management.
 class ManageReplicationJobsUseCase { // TODO: UIMUseCase {
-  private ReplicationJobRepository repo;
+  private IReplicationJobRepository repo;
 
-  this(ReplicationJobRepository repo) {
+  this(IReplicationJobRepository repo) {
     this.repo = repo;
   }
 

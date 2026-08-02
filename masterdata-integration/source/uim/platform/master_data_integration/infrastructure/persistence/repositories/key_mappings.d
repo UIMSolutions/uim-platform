@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class KeyMappingRepository : TenantRepository!(KeyMapping, KeyMappingId), KeyMappingRepository {
+class KeyMappingRepository : TenantRepository!(KeyMapping, KeyMappingId), IKeyMappingRepository {
 
   bool existsByClientKey(TenantId tenantId, ClientId clientId, string localKey) {
     return findByClientKey(tenantId, clientId, localKey).id != KeyMappingId.init;

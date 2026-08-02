@@ -15,9 +15,9 @@ mixin(ShowModule!());
 @safe:
 /// Application service for filter rule management.
 class ManageFilterRulesUseCase { // TODO: UIMUseCase {
-  private FilterRuleRepository repo;
+  private IFilterRuleRepository repo;
 
-  this(FilterRuleRepository repo) {
+  this(IFilterRuleRepository repo) {
     this.repo = repo;
   }
 

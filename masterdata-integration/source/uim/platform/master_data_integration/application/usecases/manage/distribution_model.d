@@ -15,9 +15,9 @@ mixin(ShowModule!());
 @safe:
 /// Application service for distribution model management.
 class ManageDistributionModelsUseCase { // TODO: UIMUseCase {
-  private DistributionModelRepository repo;
+  private IDistributionModelRepository repo;
 
-  this(DistributionModelRepository repo) {
+  this(IDistributionModelRepository repo) {
     this.repo = repo;
   }
 

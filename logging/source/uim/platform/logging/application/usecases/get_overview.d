@@ -19,18 +19,18 @@ mixin(ShowModule!());
 
 @safe:
 class GetOverviewUseCase { // TODO: UIMUseCase {
-  private LogEntryRepository logRepo;
-  private SpanRepository spanRepo;
-  private LogStreamRepository streamRepo;
-  private DashboardRepository dashboardRepo;
-  private AlertRepository alertRepo;
-  private PipelineRepository pipelineRepo;
-  private NotificationChannelRepository channelRepo;
+  private ILogEntryRepository logRepo;
+  private ISpanRepository spanRepo;
+  private ILogStreamRepository streamRepo;
+  private IDashboardRepository dashboardRepo;
+  private IAlertRepository alertRepo;
+  private IPipelineRepository pipelineRepo;
+  private INotificationChannelRepository channelRepo;
 
-  this(LogEntryRepository logRepo, SpanRepository spanRepo,
-      LogStreamRepository streamRepo, DashboardRepository dashboardRepo,
-      AlertRepository alertRepo, PipelineRepository pipelineRepo,
-      NotificationChannelRepository channelRepo) {
+  this(ILogEntryRepository logRepo, ISpanRepository spanRepo,
+      ILogStreamRepository streamRepo, IDashboardRepository dashboardRepo,
+      IAlertRepository alertRepo, IPipelineRepository pipelineRepo,
+      INotificationChannelRepository channelRepo) {
     this.logRepo = logRepo;
     this.spanRepo = spanRepo;
     this.streamRepo = streamRepo;

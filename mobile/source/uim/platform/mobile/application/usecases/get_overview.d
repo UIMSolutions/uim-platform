@@ -18,20 +18,19 @@ import uim.platform.mobile;
 
 @safe:
 class GetOverviewUseCase { // TODO: UIMUseCase {
-    private MobileAppRepository appRepo;
-    private DeviceRegistrationRepository deviceRepo;
-    private PushNotificationRepository pushNotifRepo;
-    private UsageReportRepository usageRepo;
-    private UserSessionRepository sessionRepo;
-    private ClientLogRepository logRepo;
+    private IMobileAppRepository appRepo;
+    private IDeviceRegistrationRepository deviceRepo;
+    private IPushNotificationRepository pushNotifRepo;
+    private IUsageReportRepository usageRepo;
+    private IUserSessionRepository sessionRepo;
+    private IClientLogRepository logRepo;
 
-    this(    MobileAppRepository appRepo,
-        DeviceRegistrationRepository deviceRepo,
-        PushNotificationRepository pushNotifRepo,
-        UsageReportRepository usageRepo,
-        UserSessionRepository sessionRepo,
-        ClientLogRepository logRepo,
-    ) {
+    this(IMobileAppRepository appRepo,
+        IDeviceRegistrationRepository deviceRepo,
+        IPushNotificationRepository pushNotifRepo,
+        IUsageReportRepository usageRepo,
+        IUserSessionRepository sessionRepo,
+        IClientLogRepository logRepo) {
         this.appRepo = appRepo;
         this.deviceRepo = deviceRepo;
         this.pushNotifRepo = pushNotifRepo;
