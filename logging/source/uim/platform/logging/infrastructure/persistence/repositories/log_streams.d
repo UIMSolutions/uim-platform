@@ -12,7 +12,7 @@ import uim.platform.logging;
 mixin(ShowModule!());
 
 @safe:
-class LogStreamRepository : TenantRepository!(LogStream, LogStreamId), LogStreamRepository {
+class LogStreamRepository : TenantRepository!(LogStream, LogStreamId), ILogStreamRepository {
   bool existsByName(TenantId tenantId, string name) {
     return findByTenant(tenantId).any!(s => s.name == name);
   }

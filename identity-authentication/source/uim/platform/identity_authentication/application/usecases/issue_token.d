@@ -28,10 +28,10 @@ class IssueTokenUseCase { // TODO: UIMUseCase {
   private IApplicationRepository appRepo;
   private ITokenRepository tokenRepo;
   private ISessionRepository sessionRepo;
-  private TokenService tokenSvc;
+  private ITokenService tokenSvc;
 
   this(IUserRepository userRepo, IApplicationRepository appRepo,
-      ITokenRepository tokenRepo, ISessionRepository sessionRepo, TokenService tokenSvc) {
+      ITokenRepository tokenRepo, ISessionRepository sessionRepo, ITokenService tokenSvc) {
     this.userRepo = userRepo;
     this.appRepo = appRepo;
     this.tokenRepo = tokenRepo;

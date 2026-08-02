@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class QueueSubscriptionRepository
-    : TenantRepository!(QueueSubscription, QueueSubscriptionId), QueueSubscriptionRepository {
+    : TenantRepository!(QueueSubscription, QueueSubscriptionId), IQueueSubscriptionRepository {
 
     size_t countByQueue(TenantId tenantId, QueueId queueId) {
         return findByQueue(tenantId, queueId).length;

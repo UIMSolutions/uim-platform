@@ -13,7 +13,7 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// Adapter: SHA-256 based password hashing (use bcrypt/argon2 in production via C bindings).
-class Sha256PasswordService : PasswordService {
+class Sha256PasswordService : IPasswordService {
   string hashPassword(string plaintext) {
     // Generate salt
     auto salt = generateId[0 .. 8];

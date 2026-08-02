@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class EventChannelRepository
-    : TenantRepository!(EventChannel, EventChannelId), EventChannelRepository {
+    : TenantRepository!(EventChannel, EventChannelId), IEventChannelRepository {
 
     size_t countByService(TenantId tenantId, MessagingServiceId serviceId) {
         return findByService(tenantId, serviceId).length;

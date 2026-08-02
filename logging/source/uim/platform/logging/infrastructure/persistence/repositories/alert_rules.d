@@ -12,7 +12,7 @@ import uim.platform.logging;
 mixin(ShowModule!());
 
 @safe:
-class AlertRuleRepository : TenantRepository!(AlertRule, AlertRuleId), AlertRuleRepository {
+class AlertRuleRepository : TenantRepository!(AlertRule, AlertRuleId), IAlertRuleRepository {
 
   size_t countEnabled(TenantId tenantId) {
     return findEnabled(tenantId).length;

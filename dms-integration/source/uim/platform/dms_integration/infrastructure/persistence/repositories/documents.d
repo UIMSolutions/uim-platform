@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DocumentRepository : TenantRepository!(Document, DocumentId), DocumentRepository {
+class DocumentRepository : TenantRepository!(Document, DocumentId), IDocumentRepository {
 
     size_t countByRepository(TenantId tenantId, RepositoryId repositoryId) {
         return findByRepository(tenantId, repositoryId).length;

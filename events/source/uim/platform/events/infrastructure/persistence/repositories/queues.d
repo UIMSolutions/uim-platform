@@ -11,8 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class QueueRepository
-    : TenantRepository!(Queue, QueueId), QueueRepository {
+class QueueRepository : TenantRepository!(Queue, QueueId), IQueueRepository {
 
     size_t countByService(TenantId tenantId, MessagingServiceId serviceId) {
         return findByService(tenantId, serviceId).length;

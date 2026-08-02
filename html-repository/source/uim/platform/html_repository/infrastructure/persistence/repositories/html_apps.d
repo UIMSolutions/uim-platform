@@ -13,7 +13,7 @@ import uim.platform.html_repository;
 mixin(ShowModule!());
 
 @safe:
-class HtmlAppMemoryRepository : TenantRepository!(HtmlApp, HtmlAppId), HtmlAppRepository {
+class HtmlAppRepository : TenantRepository!(HtmlApp, HtmlAppId), IHtmlAppRepository {
 
 
   size_t countBySpace(SpaceId spaceId) {

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class PermissionRepository : TenantRepository!(Permission, PermissionId), PermissionRepository {
+class PermissionRepository : TenantRepository!(Permission, PermissionId), IPermissionRepository {
 
     Permission[] findByDocument(TenantId tenantId, DocumentId documentId) {
         return findByTenant(tenantId).filter!(e => e.documentId == documentId).array;

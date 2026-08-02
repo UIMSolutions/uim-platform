@@ -9,20 +9,20 @@ module uim.platform.credential_store.application.usecases.get.overview;
 // import uim.platform.credential_store.domain.ports.repositories.service_bindings;
 // import uim.platform.credential_store.domain.ports.repositories.audit_logs;
 
-// import uim.platform.credential_store.application.dto;
+
 import uim.platform.credential_store;
 
 mixin(ShowModule!());
 
 @safe:
 class GetOverviewUseCase { // TODO: UIMUseCase {
-  private NamespaceRepository nsRepo;
-  private CredentialRepository credRepo;
-  private ServiceBindingRepository bindingRepo;
-  private AuditLogRepository auditRepo;
+  private INamespaceRepository nsRepo;
+  private ICredentialRepository credRepo;
+  private IServiceBindingRepository bindingRepo;
+  private IAuditLogRepository auditRepo;
 
-  this(NamespaceRepository nsRepo, CredentialRepository credRepo,
-      ServiceBindingRepository bindingRepo, AuditLogRepository auditRepo) {
+  this(INamespaceRepository nsRepo, ICredentialRepository credRepo,
+      IServiceBindingRepository bindingRepo, IAuditLogRepository auditRepo) {
     this.nsRepo = nsRepo;
     this.credRepo = credRepo;
     this.bindingRepo = bindingRepo;

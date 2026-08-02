@@ -14,9 +14,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageDashboardsUseCase { // TODO: UIMUseCase {
-  private DashboardRepository repo;
+  private IDashboardRepository repo;
 
-  this(DashboardRepository repo) {
+  this(IDashboardRepository repo) {
     this.repo = repo;
   }
 

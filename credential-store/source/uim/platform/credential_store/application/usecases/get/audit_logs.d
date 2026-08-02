@@ -4,19 +4,16 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.credential_store.application.usecases.get.audit_logs;
-// import uim.platform.credential_store.domain.ports.repositories.audit_logs;
-// import uim.platform.credential_store.domain.entities.audit_log_entry;
 
-// import uim.platform.credential_store.application.dto;
 import uim.platform.credential_store;
 
 mixin(ShowModule!());
 
 @safe:
 class GetAuditLogsUseCase { // TODO: UIMUseCase {
-  private AuditLogRepository repo;
+  private IAuditLogRepository repo;
 
-  this(AuditLogRepository repo) {
+  this(IAuditLogRepository repo) {
     this.repo = repo;
   }
 

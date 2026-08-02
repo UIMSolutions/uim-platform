@@ -26,13 +26,13 @@ mixin(ShowModule!());
 /// Application use case: authenticate a user with form-based credentials.
 class AuthenticateUserUseCase { // TODO: UIMUseCase {
   private IUserRepository userRepo;
-  private PasswordService passwordSvc;
+  private IPasswordService passwordSvc;
   private ISessionRepository sessionRepo;
   private IRiskRuleRepository riskRuleRepo;
-  private MfaService mfaSvc;
+  private IMfaService mfaSvc;
 
-  this(IUserRepository userRepo, PasswordService passwordSvc,
-      ISessionRepository sessionRepo, IRiskRuleRepository riskRuleRepo, MfaService mfaSvc) {
+  this(IUserRepository userRepo, IPasswordService passwordSvc,
+      ISessionRepository sessionRepo, IRiskRuleRepository riskRuleRepo, IMfaService mfaSvc) {
     this.userRepo = userRepo;
     this.passwordSvc = passwordSvc;
     this.sessionRepo = sessionRepo;

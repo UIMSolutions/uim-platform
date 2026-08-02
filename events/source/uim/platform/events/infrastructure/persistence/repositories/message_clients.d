@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class MessageClientRepository
-    : TenantRepository!(MessageClient, MessageClientId), MessageClientRepository {
+    : TenantRepository!(MessageClient, MessageClientId), IMessageClientRepository {
 
     size_t countByService(TenantId tenantId, MessagingServiceId serviceId) {
         return findByService(tenantId, serviceId).length;

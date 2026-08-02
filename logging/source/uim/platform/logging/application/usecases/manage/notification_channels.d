@@ -14,9 +14,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageNotificationChannelsUseCase { // TODO: UIMUseCase {
-  private NotificationChannelRepository repo;
+  private INotificationChannelRepository repo;
 
-  this(NotificationChannelRepository repo) {
+  this(INotificationChannelRepository repo) {
     this.repo = repo;
   }
 

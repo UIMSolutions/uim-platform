@@ -11,14 +11,16 @@ mixin(ShowModule!());
 
 @safe:
 
-class RepositoryRepository : TenantRepository!(Repository_, RepositoryId), RepositoryRepository {
+class RepositoryRepository : TenantRepository!(Repository_, RepositoryId), IRepositoryRepository {
 
     size_t countByStatus(TenantId tenantId, RepositoryStatus status) {
         return findByStatus(tenantId, status).length;
     }
+
     Repository_[] findByStatus(TenantId tenantId, RepositoryStatus status) {
         return findByTenant(tenantId).filter!(e => e.status == status).array;
     }
+
     void removeByStatus(TenantId tenantId, RepositoryStatus status) {
         findByStatus(tenantId, status).each!(e => remove(e));
     }
@@ -26,6 +28,7 @@ class RepositoryRepository : TenantRepository!(Repository_, RepositoryId), Repos
     size_t countByType(TenantId tenantId, RepositoryType repositoryType) {
         return findByType(tenantId, repositoryType).length;
     }
+
     Repository_[] findByType(TenantId tenantId, RepositoryType repositoryType) {
         return findByTenant(tenantId).filter!(e => e.repositoryType == repositoryType).array;
     }

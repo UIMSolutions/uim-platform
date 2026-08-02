@@ -8,7 +8,7 @@ module uim.platform.credential_store.application.usecases.manage.namespaces;
 // import uim.platform.credential_store.domain.entities.namespace;
 // import uim.platform.credential_store.domain.services.credential_validator;
 
-// import uim.platform.credential_store.application.dto;
+
 
 
 import uim.platform.credential_store;
@@ -17,9 +17,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageNamespacesUseCase { // TODO: UIMUseCase {
-  private NamespaceRepository namespaces;
+  private INamespaceRepository namespaces;
 
-  this(NamespaceRepository namespaces) {
+  this(INamespaceRepository namespaces) {
     this.namespaces = namespaces;
   }
 

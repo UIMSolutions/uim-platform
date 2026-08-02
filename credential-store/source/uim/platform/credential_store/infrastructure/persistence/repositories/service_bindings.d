@@ -13,7 +13,7 @@ import uim.platform.credential_store;
 mixin(ShowModule!());
 
 @safe:
-class ServiceBindingRepository : TenantRepository!(ServiceBinding, ServiceBindingId), ServiceBindingRepository {
+class ServiceBindingRepository : TenantRepository!(ServiceBinding, ServiceBindingId), IServiceBindingRepository {
 
   size_t countByClient(TenantId tenantId, string clientId) {
     return findByClient(tenantId, clientId).length;

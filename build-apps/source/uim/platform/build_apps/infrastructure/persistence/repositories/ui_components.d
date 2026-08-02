@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class UIComponentRepository : TenantRepository!(UIComponent, UIComponentId), UIComponentRepository {
+class UIComponentRepository : TenantRepository!(UIComponent, UIComponentId), IUIComponentRepository {
 
     size_t countByCategory(TenantId tenantId, ComponentCategory category) {
         return findByCategory(tenantId, category).length;

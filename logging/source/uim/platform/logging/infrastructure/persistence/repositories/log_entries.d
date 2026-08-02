@@ -14,7 +14,7 @@ import uim.platform.logging;
 mixin(ShowModule!());
 
 @safe:
-class LogEntryRepository : TenantRepository!(LogEntry, LogEntryId), LogEntryRepository {
+class LogEntryRepository : TenantRepository!(LogEntry, LogEntryId), ILogEntryRepository {
 
   size_t countByStream(TenantId tenantId, LogStreamId streamId) {
     return findByStream(tenantId, streamId).length;

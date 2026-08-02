@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class MessageBindingRepository
-    : TenantRepository!(MessageBinding, MessageBindingId), MessageBindingRepository {
+    : TenantRepository!(MessageBinding, MessageBindingId), IMessageBindingRepository {
 
     size_t countByClient(TenantId tenantId, MessageClientId clientId) {
         return findByClient(tenantId, clientId).length;

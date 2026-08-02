@@ -7,8 +7,6 @@ module uim.platform.identity_authentication.infrastructure.security.totp_mfa_ser
 // import uim.platform.identity_authentication.domain.types;
 // import uim.platform.identity_authentication.domain.ports.repositories.mfa_service;
 // 
-// 
-// 
 // import std.digest.sha : SHA256, toHexString;
 // 
 import uim.platform.identity_authentication;
@@ -17,7 +15,7 @@ mixin(ShowModule!());
 @safe:
 /// Adapter: TOTP-based MFA service.
 /// In production, implement with proper RFC 6238 TOTP and SMS/email gateways.
-class TotpMfaService : MfaService {
+class TotpMfaService : IMfaService {
   string generateSecret(MfaType mfaType) {
     return generateId;
   }

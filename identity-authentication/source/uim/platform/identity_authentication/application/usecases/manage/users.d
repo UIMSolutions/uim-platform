@@ -20,9 +20,9 @@ mixin(ShowModule!());
 /// Application use case: SCIM-like user management (CRUD).
 class ManageUsersUseCase { // TODO: UIMUseCase {
   private IUserRepository userRepo;
-  private PasswordService passwordSvc;
+  private IPasswordService passwordSvc;
 
-  this(IUserRepository userRepo, PasswordService passwordSvc) {
+  this(IUserRepository userRepo, IPasswordService passwordSvc) {
     this.userRepo = userRepo;
     this.passwordSvc = passwordSvc;
   }

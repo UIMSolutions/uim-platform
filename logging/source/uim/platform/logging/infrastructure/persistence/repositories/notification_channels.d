@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class NotificationChannelRepository : TenantRepository!(NotificationChannel, NotificationChannelId), NotificationChannelRepository {
+class NotificationChannelRepository : TenantRepository!(NotificationChannel, NotificationChannelId), INotificationChannelRepository {
 
   size_t countActive(TenantId tenantId) {
     return findActive(tenantId).length;

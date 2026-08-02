@@ -7,7 +7,7 @@ module uim.platform.credential_store.application.usecases.manage.service_binding
 // import uim.platform.credential_store.domain.ports.repositories.service_bindings;
 // import uim.platform.credential_store.domain.entities.service_binding;
 
-// import uim.platform.credential_store.application.dto;
+
 
 
 import uim.platform.credential_store;
@@ -16,9 +16,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageServiceBindingsUseCase { // TODO: UIMUseCase {
-  private ServiceBindingRepository bindings;
+  private IServiceBindingRepository bindings;
 
-  this(ServiceBindingRepository bindings) {
+  this(IServiceBindingRepository bindings) {
     this.bindings = bindings;
   }
 

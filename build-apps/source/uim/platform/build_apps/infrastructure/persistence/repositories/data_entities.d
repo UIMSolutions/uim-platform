@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DataEntityRepository : TenantRepository!(DataEntity, DataEntityId), DataEntityRepository {
+class DataEntityRepository : TenantRepository!(DataEntity, DataEntityId), IDataEntityRepository {
 
     size_t countByApplication(TenantId tenantId, ApplicationId applicationId) {
         return findByApplication(tenantId, applicationId).length;

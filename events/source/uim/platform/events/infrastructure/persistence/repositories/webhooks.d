@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 class WebhookRepository
-    : TenantRepository!(Webhook, WebhookId), WebhookRepository {
+    : TenantRepository!(Webhook, WebhookId), IWebhookRepository {
 
     size_t countByService(TenantId tenantId, MessagingServiceId serviceId) {
         return findByService(tenantId, serviceId).length;

@@ -13,7 +13,7 @@ import uim.platform.credential_store;
 mixin(ShowModule!());
 
 @safe:
-class NamespaceRepository : TenantRepository!(Namespace, NamespaceId), NamespaceRepository {
+class NamespaceRepository : TenantRepository!(Namespace, NamespaceId), INamespaceRepository {
 
   bool existsByName(TenantId tenantId, string name) {
     return findByName(tenantId, name).id.value != "";

@@ -12,7 +12,7 @@ import uim.platform.logging;
 mixin(ShowModule!());
 
 @safe:
-class AlertRepository : TenantRepository!(Alert, AlertId), AlertRepository {
+class AlertRepository : TenantRepository!(Alert, AlertId), IAlertRepository {
 
   size_t countByState(TenantId tenantId, AlertState state) {
     return findByState(tenantId, state).length;

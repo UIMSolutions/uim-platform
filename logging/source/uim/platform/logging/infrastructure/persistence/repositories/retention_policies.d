@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class RetentionPolicyRepository : TenantRepository!(RetentionPolicy, RetentionPolicyId), RetentionPolicyRepository {
+class RetentionPolicyRepository : TenantRepository!(RetentionPolicy, RetentionPolicyId), IRetentionPolicyRepository {
 
   bool existsDefault(TenantId tenantId) {
     return findByTenant(tenantId).any!(p => p.isDefault);

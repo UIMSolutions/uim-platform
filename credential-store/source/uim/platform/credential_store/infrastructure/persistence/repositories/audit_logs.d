@@ -16,7 +16,7 @@ import uim.platform.credential_store;
 mixin(ShowModule!());
 
 @safe:
-class AuditLogRepository : TenantRepository!(AuditLogEntry, AuditLogEntryId), AuditLogRepository {
+class AuditLogRepository : TenantRepository!(AuditLogEntry, AuditLogEntryId), IAuditLogRepository {
 
   size_t countByNamespace(TenantId tenantId, NamespaceId namespaceId) {
     return findByNamespace(tenantId, namespaceId).length;
