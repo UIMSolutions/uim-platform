@@ -16,7 +16,7 @@ mixin(ShowModule!());
 @safe:
 class ContentActivityRepository :
     TenantRepository!(ContentActivity, ContentActivityId),
-    ContentActivityRepository {
+    IContentActivityRepository {
 
   // #region byEntity
   size_t countByEntity(TenantId tenantId, string entityId) {

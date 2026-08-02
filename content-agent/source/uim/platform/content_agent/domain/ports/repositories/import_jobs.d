@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Port: outgoing - import job persistence.
-interface ImportJobRepository : ITenantRepository!(ImportJob, ImportJobId) {
+interface IImportJobRepository : ITenantRepository!(ImportJob, ImportJobId) {
   size_t countByPackage(TenantId tenantId, ContentPackageId packageId);
   ImportJob[] findByPackage(TenantId tenantId, ContentPackageId packageId);
   void removeByPackage(TenantId tenantId, ContentPackageId packageId);

@@ -20,12 +20,12 @@ mixin(ShowModule!());
 @safe:
 /// Application service for exporting content packages.
 class ExportContentUseCase { // TODO: UIMUseCase {
-  private ExportJobRepository exportRepo;
-  private ContentPackageRepository packageRepo;
-  private ContentActivityRepository activityRepo;
+  private IExportJobRepository exportRepo;
+  private IContentPackageRepository packageRepo;
+  private IContentActivityRepository activityRepo;
 
-  this(ExportJobRepository exportRepo, ContentPackageRepository packageRepo,
-    ContentActivityRepository activityRepo) {
+  this(IExportJobRepository exportRepo, IContentPackageRepository packageRepo,
+    IContentActivityRepository activityRepo) {
     this.exportRepo = exportRepo;
     this.packageRepo = packageRepo;
     this.activityRepo = activityRepo;

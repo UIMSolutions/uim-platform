@@ -20,12 +20,12 @@ mixin(ShowModule!());
 @safe:
 /// Application service for content package CRUD and assembly.
 class ManageContentPackagesUseCase { // TODO: UIMUseCase {
-  private ContentPackageRepository packages;
-  private ContentProviderRepository providers;
-  private ContentActivityRepository activities;
+  private IContentPackageRepository packages;
+  private IContentProviderRepository providers;
+  private IContentActivityRepository activities;
 
-  this(ContentPackageRepository packages,
-      ContentProviderRepository providers, ContentActivityRepository activities) {
+  this(IContentPackageRepository packages,
+      IContentProviderRepository providers, IContentActivityRepository activities) {
     this.packages = packages;
     this.providers = providers;
     this.activities = activities;

@@ -54,11 +54,11 @@ struct PackageAssembler {
     // Validate provider references
     bool[string] providerIds;
     foreach (p; providers)
-      providerIds[p.id] = true;
+      providerIds[p.id.value] = true;
 
     foreach (item; pkg.items) {
-      if (item.providerId.length > 0 && item.providerId !in providerIds)
-        errors ~= "Item '" ~ item.name ~ "' references unknown provider: " ~ item.providerId;
+      if (item.providerId.value.length > 0 && item.providerId.value !in providerIds)
+        errors ~= "Item '" ~ item.name ~ "' references unknown provider: " ~ item.providerId.value;
     }
 
     long size = 0;

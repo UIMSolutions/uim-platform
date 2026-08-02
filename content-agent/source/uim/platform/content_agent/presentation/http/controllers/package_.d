@@ -49,7 +49,7 @@ class PackageController : ManageHttpController {
     r.format = data.getString("format");
     r.tags = data.getStrings("tags");
     r.createdBy = UserId(req.headers.get("X-User-Id", ""));
-    r.items = parseContentItems(j);
+    r.items = parseContentItems(data);
 
     auto result = usecase.createPackage(r);
     if (result.hasError)

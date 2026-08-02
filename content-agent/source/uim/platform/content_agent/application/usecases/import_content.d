@@ -19,12 +19,12 @@ mixin(ShowModule!());
 @safe:
 /// Application service for importing content packages.
 class ImportContentUseCase { // TODO: UIMUseCase {
-  private ImportJobRepository importRepo;
-  private ContentPackageRepository packageRepo;
-  private ContentActivityRepository activityRepo;
+  private IImportJobRepository importRepo;
+  private IContentPackageRepository packageRepo;
+  private IContentActivityRepository activityRepo;
 
-  this(ImportJobRepository importRepo, ContentPackageRepository packageRepo,
-      ContentActivityRepository activityRepo) {
+  this(IImportJobRepository importRepo, IContentPackageRepository packageRepo,
+      IContentActivityRepository activityRepo) {
     this.importRepo = importRepo;
     this.packageRepo = packageRepo;
     this.activityRepo = activityRepo;

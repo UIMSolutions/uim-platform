@@ -13,9 +13,8 @@ import uim.platform.content_agent;
 mixin(ShowModule!());
 
 @safe:
-class ContentProviderRepository :
-    TenantRepository!(ContentProvider, ContentProviderId),
-    ContentProviderRepository {
+class ContentProviderRepository : TenantRepository!(ContentProvider, ContentProviderId),
+    IContentProviderRepository {
 
   // #region byName
   bool existsByName(TenantId tenantId, string name) {
@@ -29,15 +28,12 @@ class ContentProviderRepository :
     foreach (e; findByTenant(tenantId))
       if (e.name == name)
         return e;
+
     return ContentProvider.init;
   }
 
   void removeByName(TenantId tenantId, string name) {
-    foreach (e; findByTenant(tenantId))
-      if (e.name == name) {
-        remove(e.id);
-        return;
-      }
+    remove(findByName(tenantId, name));
   }
   // #region byName
   

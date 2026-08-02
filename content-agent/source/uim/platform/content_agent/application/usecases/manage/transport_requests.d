@@ -23,13 +23,13 @@ mixin(ShowModule!());
 @safe:
 /// Application service for transport request lifecycle management.
 class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
-  private TransportRequestRepository requestRepo;
-  private ContentPackageRepository packageRepo;
-  private TransportQueueRepository queueRepo;
-  private ContentActivityRepository activityRepo;
+  private ITransportRequestRepository requestRepo;
+  private IContentPackageRepository packageRepo;
+  private ITransportQueueRepository queueRepo;
+  private IContentActivityRepository activityRepo;
 
-  this(TransportRequestRepository requestRepo, ContentPackageRepository packageRepo,
-    TransportQueueRepository queueRepo, ContentActivityRepository activityRepo) {
+  this(ITransportRequestRepository requestRepo, IContentPackageRepository packageRepo,
+    ITransportQueueRepository queueRepo, IContentActivityRepository activityRepo) {
     this.requestRepo = requestRepo;
     this.packageRepo = packageRepo;
     this.queueRepo = queueRepo;
@@ -53,7 +53,7 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
     // Resolve queue
     TransportQueue queue = req.queueId.isNull
       ? queueRepo.findDefault(req.tenantId)
-      : queueRepo.findById(req.queueId);
+      : queueRepo.findById(req.tenantId, req.queueId);
 
     auto tr = TransportRequest(req.tenantId, req.requestId.isNull ? TransportRequestId(createId()) : req.requestId, req.createdBy);
     tr.sourceSubaccount = req.sourceSubaccount;

@@ -13,7 +13,7 @@ import uim.platform.content_agent;
 mixin(ShowModule!());
 
 @safe:
-class ExportJobRepository : TenantRepository!(ExportJob, ExportJobId), ExportJobRepository {
+class ExportJobRepository : TenantRepository!(ExportJob, ExportJobId), IExportJobRepository {
 
   size_t countByPackage(TenantId tenantId, ContentPackageId packageId) {
     return findByPackage(tenantId, packageId).length;

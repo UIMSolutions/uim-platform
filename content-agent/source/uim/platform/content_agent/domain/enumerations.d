@@ -22,7 +22,7 @@ enum PackageStatus {
   error,
 }
 
-PackageStatus toPackageStatus(string status) {
+PackageStatus toPackageStatus(string value) {
   mixin(EnumSwitch("PackageStatus", "draft"));
 }
 PackageStatus[] toPackageStatuses(string[] statuses)
@@ -66,7 +66,7 @@ enum ContentFormat {
   zip,
   json,
 }
-ContentFormat toContentFormat(string format) {
+ContentFormat toContentFormat(string value) {
   mixin(EnumSwitch("ContentFormat", "mtar"));
 }
 ContentFormat[] toContentFormats(string[] formats)
@@ -105,7 +105,7 @@ enum ProviderStatus {
   error,
   deregistered,
 }
-ProviderStatus toProviderStatus(string status) {
+ProviderStatus toProviderStatus(string value) {
   mixin(EnumSwitch("ProviderStatus", "active"));
 }
 ProviderStatus[] toProviderStatuses(string[] statuses)
@@ -238,7 +238,7 @@ enum TransportStatus {
   failed,
   cancelled,
 }
-TransportStatus toTransportStatus(string status) {
+TransportStatus toTransportStatus(string value) {
   mixin(EnumSwitch("TransportStatus", "created"));
 }
 TransportStatus[] toTransportStatuses(string[] statuses)
@@ -294,7 +294,7 @@ enum ExportStatus {
   failed,
   cancelled,
 }
-ExportStatus toExportStatus(string status) {
+ExportStatus toExportStatus(string value) {
   mixin(EnumSwitch("ExportStatus", "pending"));
 }
 
@@ -346,7 +346,7 @@ enum ImportStatus {
   cancelled,
 }
 
-ImportStatus toImportStatus(string status) {
+ImportStatus toImportStatus(string value) {
   mixin(EnumSwitch("ImportStatus", "pending"));
 }
 
