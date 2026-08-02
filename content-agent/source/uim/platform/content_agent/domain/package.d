@@ -5,13 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.content_agent.domain;
 
-public { // Packages
+public: // Packages
   import uim.platform.content_agent.domain.entities;
   import uim.platform.content_agent.domain.ports;
   import uim.platform.content_agent.domain.services;
-}
 
-public { // Modules
+public: // Modules
   import uim.platform.content_agent.domain.enumerations;
   import uim.platform.content_agent.domain.types;
-}
+

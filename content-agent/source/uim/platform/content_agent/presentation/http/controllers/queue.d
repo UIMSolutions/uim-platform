@@ -63,13 +63,11 @@ class QueueController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-
-    auto queues = usecase.listQueues(tenantId);
-    auto list = queues.map!(q => q.toJson).array.toJson;
+    auto queues = usecase.listQueues(tenantId).map!(q => q.toJson).array.toJson;
 
     auto responseData = Json.emptyObject
-      .set("count", list.length)
-      .set("resources", list);
+      .set("count", queues.length)
+      .set("resources", queues);
     return successResponse("Queue list retrieved successfully", 200, responseData);
   }
 
@@ -79,7 +77,7 @@ class QueueController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = QueueId(precheck.id);
+    auto id = TransportQueueId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid queue ID", 400);
 
@@ -97,7 +95,7 @@ class QueueController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = QueueId(precheck.id);
+    auto id = TransportQueueId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid queue ID", 400);
 
@@ -109,7 +107,7 @@ class QueueController : ManageHttpController {
     r.authToken = data.getString("authToken");
     r.isDefault = data.getBoolean("isDefault");
 
-    auto result = usecase.updateQueue(id, r);
+    auto result = usecase.updateQueue(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
 
@@ -123,7 +121,7 @@ class QueueController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = QueueId(precheck.id);
+    auto id = TransportQueueId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid queue ID", 400);
 

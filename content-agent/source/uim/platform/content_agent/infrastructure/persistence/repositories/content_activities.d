@@ -53,7 +53,7 @@ class ContentActivityRepository :
   }
 
   ContentActivity[] findRecent(TenantId tenantId, int limit) {
-    auto filtered = findByTenant(tenantId).sort!((a, b) => a.timestamp > b.timestamp);
+    auto filtered = findByTenant(tenantId).sort!((a, b) => a.timestamp > b.timestamp).array;
     if (filtered.length > limit)
       return filtered[0 .. limit];
     return filtered;

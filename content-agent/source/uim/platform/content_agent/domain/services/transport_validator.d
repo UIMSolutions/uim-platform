@@ -41,7 +41,7 @@ struct TransportValidator {
     // Verify all referenced packages exist and are in assembled state
     bool[string] pkgIds;
     foreach (p; packages)
-      pkgIds[p.id] = true;
+      pkgIds[p.id.value] = true;
 
     // foreach (pid; request.packageIds) {
     //   if (pid !in pkgIds)

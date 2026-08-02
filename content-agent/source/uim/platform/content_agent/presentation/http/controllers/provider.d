@@ -79,7 +79,7 @@ class ProviderController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = ProviderId(precheck.id);
+    auto id = ContentProviderId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid provider ID", 400);
 
@@ -97,7 +97,7 @@ class ProviderController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = ProviderId(precheck.id);
+    auto id = ContentProviderId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid provider ID", 400);
 
@@ -108,7 +108,7 @@ class ProviderController : ManageHttpController {
     r.endpoint = data.getString("endpoint");
     r.authToken = data.getString("authToken");
 
-    auto result = usecase.updateProvider(id, r);
+    auto result = usecase.updateProvider(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
 
@@ -122,7 +122,7 @@ class ProviderController : ManageHttpController {
       return precheck;
 
     auto tenantId = precheck.tenantId;
-    auto id = ProviderId(precheck.id);
+    auto id = ContentProviderId(precheck.id);
     if (id.isNull)
       return errorResponse("Invalid provider ID", 400);
 
@@ -143,9 +143,9 @@ class ProviderController : ManageHttpController {
 
     auto tenantId = precheck.tenantId;
     auto data = precheck.data;
-    auto providerId = data.getString("providerId");
+    auto providerId = ContentProviderId(data.getString("providerId"));
 
-    auto result = usecase.syncProvider(providerId);
+    auto result = usecase.syncProvider(tenantId, providerId);
     if (result.hasError)
       return errorResponse(result.message, 400);
 

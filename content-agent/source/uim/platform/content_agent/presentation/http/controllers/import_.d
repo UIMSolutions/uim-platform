@@ -40,7 +40,7 @@ class ImportController : ManageHttpController {
     auto r = StartImportRequest();
     r.tenantId = tenantId;
     r.packageId = ContentPackageId(data.getString("packageId"));
-    r.transportRequestId = TransportRequestId(data.getString("transportRequestId"));
+    r.requestId = TransportRequestId(data.getString("transportRequestId"));
     r.sourceFilePath = data.getString("sourceFilePath");
     r.startedBy = UserId(req.headers.get("X-User-Id", ""));
 

@@ -7,7 +7,7 @@ module uim.platform.content_agent.presentation.http.controllers.export_;
 
 // import uim.platform.content_agent.application.usecases.export_content;
 
-// import uim.platform.content_agent.domain.entities.export_job;
+
 
 import uim.platform.content_agent;
 
@@ -40,7 +40,7 @@ class ExportController : ManageHttpController {
     auto r = StartExportRequest();
     r.tenantId = tenantId;
     r.packageId = ContentPackageId(data.getString("packageId"));
-    r.transportRequestId = TransportRequestId(data.getString("transportRequestId"));
+    r.requestId = TransportRequestId(data.getString("transportRequestId"));
     r.queueId = TransportQueueId(data.getString("queueId"));
     r.startedBy = UserId(req.headers.get("X-User-Id", ""));
 

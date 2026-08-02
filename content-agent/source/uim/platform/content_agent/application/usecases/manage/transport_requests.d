@@ -92,8 +92,8 @@ class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
       return CommandResult(false, "", "Transport request is not in a releasable state");
 
     tr.status = TransportStatus.released;
-    tr.releasedAt = currentTimestamp;
-    tr.updatedAt = tr.releasedAt;
+    // tr.releasedAt = currentTimestamp;
+    // tr.updatedAt = tr.releasedAt;
 
     requestRepo.update(tr);
     recordActivity(req.tenantId, ActivityType.transportReleased, tr.id.value,

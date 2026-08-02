@@ -67,7 +67,7 @@ class PackageController : ManageHttpController {
     auto tenantId = precheck.tenantId;
     auto packages = usecase.listPackages(tenantId);
 
-    auto list = items.map!(item => item.toJson()).array.toJson;
+    auto list = packages.map!(item => item.toJson()).array.toJson;
 
     auto responseData = Json.emptyObject
       .set("count", list.length)
@@ -103,9 +103,9 @@ class PackageController : ManageHttpController {
     r.description = data.getString("description");
     r.version_ = data.getString("version");
     r.tags = data.getStrings("tags");
-    r.items = parseContentItems(j);
+    r.items = parseContentItems(data);
 
-    auto result = usecase.updatePackage(id, r);
+    auto result = usecase.updatePackage(r);
     if (result.hasError)
       return errorResponse(result.message, 400);
     auto responseData = Json.emptyObject.set("id", result.id);
@@ -150,7 +150,7 @@ class PackageController : ManageHttpController {
 
   mixin(HandleTemplate!("handleAssemble", "assembleHandler"));
 
-  private static ContentItem[] parseContentItems(Json j) {
+  private static ContentItem[] parseContentItems(Json data) {
     ContentItem[] items;
 
     foreach (itemJson; data.getArray("items")) {
