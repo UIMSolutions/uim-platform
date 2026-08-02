@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MeshBridgeRepository : TenantRepository!(MeshBridge, MeshBridgeId), MeshBridgeRepository {
+class MeshBridgeRepository : TenantRepository!(MeshBridge, MeshBridgeId), IMeshBridgeRepository {
 
     size_t countBySourceBrokerService(TenantId tenantId, BrokerServiceId sourceServiceId) {
         return findBySourceBrokerService(tenantId, sourceServiceId).length;

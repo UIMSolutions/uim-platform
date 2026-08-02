@@ -12,9 +12,9 @@ import uim.platform.abap_environment;
 @safe:
 /// Application service for ABAP system instance lifecycle management.
 class ManageSystemInstancesUseCase { // TODO: UIMUseCase {
-  private SystemInstanceRepository repo;
+  private ISystemInstanceRepository repo;
 
-  this(SystemInstanceRepository repo) {
+  this(ISystemInstanceRepository repo) {
     this.repo = repo;
   }
 

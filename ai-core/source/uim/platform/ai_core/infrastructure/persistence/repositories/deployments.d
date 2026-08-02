@@ -13,7 +13,7 @@ import uim.platform.ai_core;
 mixin(ShowModule!());
 
 @safe:
-class DeploymentRepository : TenantRepository!(Deployment, DeploymentId), DeploymentRepository {
+class DeploymentRepository : TenantRepository!(Deployment, DeploymentId), IDeploymentRepository {
 
   bool existsById(TenantId tenantId, ResourceGroupId rgId, DeploymentId id) {
     return findByResourceGroup(tenantId, rgId).any!(d => d.id == id);

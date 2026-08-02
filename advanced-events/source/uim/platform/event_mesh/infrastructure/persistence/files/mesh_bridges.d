@@ -16,7 +16,7 @@ import uim.platform.event_mesh.infrastructure.persistence.files.common;
 mixin(ShowModule!());
 
 @safe:
-
+/*
 class FileMeshBridgeRepository : MemoryMeshBridgeRepository {
     private string basePath;
     private bool[TenantId] loadedTenants;
@@ -106,3 +106,4 @@ class FileMeshBridgeRepository : MemoryMeshBridgeRepository {
         persistTenant(tenantId);
     }
 }
+*/

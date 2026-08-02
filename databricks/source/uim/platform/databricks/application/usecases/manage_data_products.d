@@ -12,10 +12,10 @@ mixin(ShowModule!());
 
 class ManageDataProductsUseCase {
 private:
-  DataProductRepository _repo;
+  IDataProductRepository _repo;
 
 public:
-  this(DataProductRepository repo) { _repo = repo; }
+  this(IDataProductRepository repo) { _repo = repo; }
 
   UseCaseResult!DataProduct create(CreateDataProductRequest r) {
     auto dp = DataProduct();

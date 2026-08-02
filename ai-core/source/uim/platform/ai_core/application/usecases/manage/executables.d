@@ -14,9 +14,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageExecutablesUseCase { // TODO: UIMUseCase {
-    private ExecutableRepository repo;
+    private IExecutableRepository repo;
 
-    this(ExecutableRepository repo) {
+    this(IExecutableRepository repo) {
         this.repo = repo;
     }
 

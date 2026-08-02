@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageProjectsUseCase { // TODO: UIMUseCase {
-    private ProjectRepository projects;
+    private IProjectRepository projects;
 
-    this(ProjectRepository projects) {
+    this(IProjectRepository projects) {
         this.projects = projects;
     }
 

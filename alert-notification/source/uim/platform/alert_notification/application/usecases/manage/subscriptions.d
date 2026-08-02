@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageSubscriptionsUseCase {
-    private SubscriptionRepository repo;
+    private ISubscriptionRepository repo;
 
-    this(SubscriptionRepository repo) { this.repo = repo; }
+    this(ISubscriptionRepository repo) { this.repo = repo; }
 
     CommandResult createSubscription(TenantId tenantId, CreateSubscriptionRequest req) {
         if (repo.existsByName(tenantId, req.name))

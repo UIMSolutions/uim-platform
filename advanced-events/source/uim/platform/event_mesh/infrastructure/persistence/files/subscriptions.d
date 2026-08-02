@@ -17,6 +17,7 @@ mixin(ShowModule!());
 
 @safe:
 
+/*
 class FileSubscriptionRepository : TenantRepository!(), ISubscriptionRepository {
     private string basePath;
     private bool[TenantId] loadedTenants;
@@ -103,3 +104,4 @@ class FileSubscriptionRepository : TenantRepository!(), ISubscriptionRepository 
         persistTenant(tenantId);
     }
 }
+*/

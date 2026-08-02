@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class EventSchemaRepository : TenantRepository!(EventSchema, EventSchemaId), EventSchemaRepository {
+class EventSchemaRepository : TenantRepository!(EventSchema, EventSchemaId), IEventSchemaRepository {
 
     size_t countByFormat(TenantId tenantId, SchemaFormat format) {
         return findByFormat(tenantId, format).length;

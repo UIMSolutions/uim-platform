@@ -6,9 +6,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageLegalGroundsUseCase { // TODO: UIMUseCase {
-    private LegalGroundRepository repo;
+    private ILegalGroundRepository repo;
 
-    this(LegalGroundRepository repo) {
+    this(ILegalGroundRepository repo) {
         this.repo = repo;
     }
 

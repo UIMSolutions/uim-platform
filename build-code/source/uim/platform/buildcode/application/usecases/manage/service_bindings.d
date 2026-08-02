@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageServiceBindingsUseCase {
-  private ServiceBindingRepository  _repo;
+  private IServiceBindingRepository  _repo;
 
-  this(ServiceBindingRepository repo) { _repo = repo; }
+  this(IServiceBindingRepository repo) { _repo = repo; }
 
   CommandResult create(TenantId tenantId, CreateServiceBindingRequest req) {
     auto sb = ServiceBinding(tenantId);

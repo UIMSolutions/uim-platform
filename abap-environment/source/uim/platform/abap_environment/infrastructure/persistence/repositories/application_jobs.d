@@ -14,7 +14,7 @@ import uim.platform.abap_environment;
 
 @safe:
 
-class ApplicationJobRepository : TenantRepository!(ApplicationJob, ApplicationJobId), ApplicationJobRepository {
+class ApplicationJobRepository : TenantRepository!(ApplicationJob, ApplicationJobId), IApplicationJobRepository {
 
   // #region BySystem
   size_t countBySystem(TenantId tenantId, SystemInstanceId systemId) {

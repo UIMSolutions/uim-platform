@@ -18,10 +18,10 @@ mixin(ShowModule!());
 
 @safe:
 class ManageDeploymentsUseCase { // TODO: UIMUseCase {
-  private DeploymentRepository deployments;
-  private ConfigurationRepository configurations;
+  private IDeploymentRepository deployments;
+  private IConfigurationRepository configurations;
 
-  this(DeploymentRepository deployments, ConfigurationRepository configurations) {
+  this(IDeploymentRepository deployments, IConfigurationRepository configurations) {
     this.deployments = deployments;
     this.configurations = configurations;
   }
@@ -29,6 +29,7 @@ class ManageDeploymentsUseCase { // TODO: UIMUseCase {
   CommandResult createDeployment(CreateDeploymentRequest r) {
     if (r.configurationId.isEmpty)
       return CommandResult(false, "", "Configuration ID is required");
+      
     if (r.resourceGroupId.isEmpty)
       return CommandResult(false, "", "Resource group ID is required");
 

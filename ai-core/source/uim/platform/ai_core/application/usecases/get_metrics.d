@@ -16,9 +16,9 @@ mixin(ShowModule!());
 
 @safe:
 class GetMetricsUseCase { // TODO: UIMUseCase {
-  private MetricRepository repo;
+  private IMetricRepository repo;
 
-  this(MetricRepository repo) {
+  this(IMetricRepository repo) {
     this.repo = repo;
   }
 

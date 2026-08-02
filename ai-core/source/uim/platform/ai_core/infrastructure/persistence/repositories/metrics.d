@@ -13,7 +13,7 @@ import uim.platform.ai_core;
 mixin(ShowModule!()); 
 
 @safe:
-class MetricRepository : TenantRepository!(Metric, MetricId), MetricRepository {
+class MetricRepository : TenantRepository!(Metric, MetricId), IMetricRepository {
   
   bool existsById(TenantId tenantId, ResourceGroupId rgId, MetricId id) {
     return findByResourceGroup(tenantId, rgId).any!(m => m.id == id);

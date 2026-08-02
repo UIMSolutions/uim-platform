@@ -17,6 +17,7 @@ mixin(ShowModule!());
 
 @safe:
 
+/*
 class FileEventApplicationRepository : MemoryEventApplicationRepository {
     private string basePath;
     private bool[TenantId] loadedTenants;
@@ -107,3 +108,4 @@ class FileEventApplicationRepository : MemoryEventApplicationRepository {
         persistTenant(tenantId);
     }
 }
+*/

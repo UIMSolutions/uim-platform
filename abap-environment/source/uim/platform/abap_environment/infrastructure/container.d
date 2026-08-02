@@ -88,7 +88,7 @@ Container buildContainer(SrvConfig config) {
 
   // Application use cases
   c.manageSystemInstances = new ManageSystemInstancesUseCase(c.systemInstanceRepo);
-  c.manageSoftwareComponents = new ManageSoftwareComponentsUseCase(  c.softwareComponentRepo, c.systemInstanceRepo);
+  c.manageSoftwareComponents = new ManageSoftwareComponentsUseCase(c.softwareComponentRepo, c.systemInstanceRepo);
   c.manageCommunicationArrangements = new ManageCommunicationArrangementsUseCase(  c.communicationArrangementRepo);
   c.manageServiceBindings = new ManageServiceBindingsUseCase(c.serviceBindingRepo);
   c.manageBusinessUsers = new ManageBusinessUsersUseCase(c.businessUserRepo, c.businessRoleRepo);

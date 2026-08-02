@@ -16,9 +16,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageSitesUseCase { // TODO: UIMUseCase {
-  private SiteRepository repo;
+  private ISiteRepository repo;
 
-  this(SiteRepository repo) {
+  this(ISiteRepository repo) {
     this.repo = repo;
   }
 

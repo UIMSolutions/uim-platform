@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageRunConfigurationsUseCase { // TODO: UIMUseCase {
-    private RunConfigurationRepository configurations;
+    private IRunConfigurationRepository configurations;
 
-    this(RunConfigurationRepository configurations) {
+    this(IRunConfigurationRepository configurations) {
         this.configurations = configurations;
     }
 

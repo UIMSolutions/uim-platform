@@ -18,15 +18,15 @@ mixin(ShowModule!());
 ///   3. Semantic analysis  — validate structure (SemanticAnalyser)
 ///   4. Code generation    — emit IR (CodeGenerator)
 class CompileUseCase {
-    private AbapProgramRepository programRepo;
-    private CompilationJobRepository jobRepo;
+    private IAbapProgramRepository programRepo;
+    private ICompilationJobRepository jobRepo;
 
     private AbapLexer lexer;
     private AbapParser parser;
     private SemanticAnalyser analyser;
     private CodeGenerator codeGen;
 
-    this(AbapProgramRepository programRepo, CompilationJobRepository jobRepo) {
+    this(IAbapProgramRepository programRepo, ICompilationJobRepository jobRepo) {
         this.programRepo = programRepo;
         this.jobRepo = jobRepo;
         this.lexer = AbapLexer();

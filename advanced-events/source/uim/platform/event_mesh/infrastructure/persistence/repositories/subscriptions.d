@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class SubscriptionRepository : TenantRepository!(EventSubscription, EventSubscriptionId), SubscriptionRepository {
+class SubscriptionRepository : TenantRepository!(EventSubscription, EventSubscriptionId), ISubscriptionRepository {
 
     // #region ByBrokerService
     size_t countByBrokerService(TenantId tenantId, BrokerServiceId brokerServiceId) {

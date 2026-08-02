@@ -18,10 +18,10 @@ mixin(ShowModule!());
 
 @safe:
 class ManageExecutionsUseCase { // TODO: UIMUseCase {
-  private ExecutionRepository execRepo;
-  private ConfigurationRepository confRepo;
+  private IExecutionRepository execRepo;
+  private IConfigurationRepository confRepo;
 
-  this(ExecutionRepository execRepo, ConfigurationRepository confRepo) {
+  this(IExecutionRepository execRepo, IConfigurationRepository confRepo) {
     this.execRepo = execRepo;
     this.confRepo = confRepo;
   }

@@ -13,9 +13,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageGeofenceZonesUseCase {
-  private GeofenceZoneRepository repo;
+  private IGeofenceZoneRepository repo;
 
-  this(GeofenceZoneRepository repo) {
+  this(IGeofenceZoneRepository repo) {
     this.repo = repo;
   }
 

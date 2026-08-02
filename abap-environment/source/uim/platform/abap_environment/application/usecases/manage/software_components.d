@@ -12,10 +12,10 @@ import uim.platform.abap_environment;
 @safe:
 /// Application service for software component lifecycle (clone, pull, manage).
 class ManageSoftwareComponentsUseCase { // TODO: UIMUseCase {
-  private SoftwareComponentRepository repo;
-  private SystemInstanceRepository systemRepo;
+  private ISoftwareComponentRepository repo;
+  private ISystemInstanceRepository systemRepo;
 
-  this(SoftwareComponentRepository repo, SystemInstanceRepository systemRepo) {
+  this(ISoftwareComponentRepository repo, ISystemInstanceRepository systemRepo) {
     this.repo = repo;
     this.systemRepo = systemRepo;
   }

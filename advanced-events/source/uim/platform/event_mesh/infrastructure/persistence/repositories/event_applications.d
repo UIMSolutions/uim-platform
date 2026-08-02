@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class EventApplicationRepository : TenantRepository!(EventApplication, EventApplicationId), EventApplicationRepository {
+class EventApplicationRepository : TenantRepository!(EventApplication, EventApplicationId), IEventApplicationRepository {
 
     size_t countByBrokerService(TenantId tenantId, BrokerServiceId brokerServiceId) {
         return findByBrokerService(tenantId, brokerServiceId).length;

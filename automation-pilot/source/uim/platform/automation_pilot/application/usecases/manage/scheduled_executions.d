@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageScheduledExecutionsUseCase { // TODO: UIMUseCase {
-    private ScheduledExecutionRepository repo;
+    private IScheduledExecutionRepository repo;
 
-    this(ScheduledExecutionRepository repo) {
+    this(IScheduledExecutionRepository repo) {
         this.repo = repo;
     }
 

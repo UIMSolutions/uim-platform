@@ -15,9 +15,9 @@ import uim.platform.appevents.application.dto;
 @safe:
 
 class ManageEventMessagesUseCase {
-    private EventMessageRepository repo;
+    private IEventMessageRepository repo;
 
-    this(EventMessageRepository repo) { this.repo = repo; }
+    this(IEventMessageRepository repo) { this.repo = repo; }
 
     EventMessage getEventMessage(TenantId tenantId, EventMessageId id) {
         return repo.findById(tenantId, id);

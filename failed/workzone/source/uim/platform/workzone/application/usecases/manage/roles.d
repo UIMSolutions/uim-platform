@@ -16,9 +16,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageRolesUseCase { // TODO: UIMUseCase {
-  private RoleRepository repo;
+  private IRoleRepository repo;
 
-  this(RoleRepository repo) {
+  this(IRoleRepository repo) {
     this.repo = repo;
   }
 

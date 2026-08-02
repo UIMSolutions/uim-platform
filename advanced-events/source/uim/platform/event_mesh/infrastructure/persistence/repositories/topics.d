@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class TopicRepository : TenantRepository!(Topic, TopicId), TopicRepository {
+class TopicRepository : TenantRepository!(Topic, TopicId), ITopicRepository {
 
     size_t countByBrokerService(TenantId tenantId, BrokerServiceId serviceId) {
         return findByBrokerService(tenantId, serviceId).length;

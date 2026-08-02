@@ -19,10 +19,10 @@ mixin(ShowModule!());
 
 @safe:
 class ManageKeyringsUseCase { // TODO: UIMUseCase {
-  private CredentialRepository credRepo;
-  private KeyringVersionRepository versionRepo;
+  private ICredentialRepository credRepo;
+  private IKeyringVersionRepository versionRepo;
 
-  this(CredentialRepository credRepo, KeyringVersionRepository versionRepo) {
+  this(ICredentialRepository credRepo, IKeyringVersionRepository versionRepo) {
     this.credRepo = credRepo;
     this.versionRepo = versionRepo;
   }

@@ -17,7 +17,8 @@ mixin(ShowModule!());
 
 @safe:
 
-class FileEventSchemaRepository : MemoryEventSchemaRepository {
+/*
+class FileEventSchemaRepository : EventSchemaRepository {
     private string basePath;
     private bool[TenantId] loadedTenants;
 
@@ -98,3 +99,4 @@ class FileEventSchemaRepository : MemoryEventSchemaRepository {
         persistTenant(tenantId);
     }
 }
+*/

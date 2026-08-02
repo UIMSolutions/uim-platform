@@ -12,17 +12,19 @@ import uim.platform.abap_environment;
 @safe:
 /// Application service for transport request management (CTS-like).
 class ManageTransportRequestsUseCase { // TODO: UIMUseCase {
-  private TransportRequestRepository repo;
+  private ITransportRequestRepository repo;
 
-  this(TransportRequestRepository repo) {
+  this(ITransportRequestRepository repo) {
     this.repo = repo;
   }
 
   CommandResult createTransportRequest(CreateTransportRequestRequest req) {
     if (req.description.length == 0)
       return CommandResult(false, "", "Transport request description is required");
+
     if (req.owner.length == 0)
       return CommandResult(false, "", "Owner is required");
+    
     if (req.sourceSystemId.isEmpty)
       return CommandResult(false, "", "Source system ID is required");
 

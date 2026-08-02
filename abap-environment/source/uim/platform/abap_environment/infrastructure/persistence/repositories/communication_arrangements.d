@@ -14,7 +14,7 @@ import uim.platform.abap_environment;
 // mixin(ShowModule!());
 
 @safe:
-class CommunicationArrangementRepository : TenantRepository!(CommunicationArrangement, CommunicationArrangementId), CommunicationArrangementRepository {
+class CommunicationArrangementRepository : TenantRepository!(CommunicationArrangement, CommunicationArrangementId), ICommunicationArrangementRepository {
   
   // #region BySystem
   size_t countBySystem(TenantId tenantId, SystemInstanceId systemId) {

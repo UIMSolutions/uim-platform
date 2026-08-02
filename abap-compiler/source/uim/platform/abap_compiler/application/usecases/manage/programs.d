@@ -12,9 +12,9 @@ mixin(ShowModule!());
 
 /// Application use case: CRUD management of ABAP source programs in the repository.
 class ManageProgramsUseCase {
-    private AbapProgramRepository repo;
+    private IAbapProgramRepository repo;
 
-    this(AbapProgramRepository repo) {
+    this(IAbapProgramRepository repo) {
         this.repo = repo;
     }
 

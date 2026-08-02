@@ -62,14 +62,14 @@ Container buildContainer(SrvConfig config) {
     MeshBridgeRepository meshBridgeRepo;
 
     if (config.repositoryBackend == "file") {
-        brokerServiceRepo = new FileBrokerServiceRepository(config.fileRepositoryBasePath);
-        queueRepo = new FileQueueRepository(config.fileRepositoryBasePath);
-        topicRepo = new FileTopicRepository(config.fileRepositoryBasePath);
-        subscriptionRepo = new FileSubscriptionRepository(config.fileRepositoryBasePath);
-        eventMessageRepo = new FileEventMessageRepository(config.fileRepositoryBasePath);
-        eventSchemaRepo = new FileEventSchemaRepository(config.fileRepositoryBasePath);
-        eventApplicationRepo = new FileEventApplicationRepository(config.fileRepositoryBasePath);
-        meshBridgeRepo = new FileMeshBridgeRepository(config.fileRepositoryBasePath);
+        // brokerServiceRepo = new FileBrokerServiceRepository(config.fileRepositoryBasePath);
+        // queueRepo = new FileQueueRepository(config.fileRepositoryBasePath);
+        // topicRepo = new FileTopicRepository(config.fileRepositoryBasePath);
+        // subscriptionRepo = new FileSubscriptionRepository(config.fileRepositoryBasePath);
+        // eventMessageRepo = new FileEventMessageRepository(config.fileRepositoryBasePath);
+        // eventSchemaRepo = new FileEventSchemaRepository(config.fileRepositoryBasePath);
+        // eventApplicationRepo = new FileEventApplicationRepository(config.fileRepositoryBasePath);
+        // meshBridgeRepo = new FileMeshBridgeRepository(config.fileRepositoryBasePath);
     } else {
         brokerServiceRepo = new BrokerServiceRepository();
         queueRepo = new QueueRepository();
@@ -106,23 +106,30 @@ Container buildContainer(SrvConfig config) {
     c.odataSubscriptionController = new ODataSubscriptionController(c.manageSubscriptionsUseCase);
     c.odataEventMessageController = new ODataEventMessageController(c.manageEventMessagesUseCase);
     c.odataEventSchemaController = new ODataEventSchemaController(c.manageEventSchemasUseCase);
-    c.odataEventApplicationController = new ODataEventApplicationController(c.manageEventApplicationsUseCase);
+    c.odataEventApplicationController = new ODataEventApplicationController(
+        c.manageEventApplicationsUseCase);
     c.odataMeshBridgeController = new ODataMeshBridgeController(c.manageMeshBridgesUseCase);
-    c.webBrokerServiceController = new WebBrokerServiceController(    new WebBrokerServiceModel(c.manageBrokerServicesUseCase),
+    c.webBrokerServiceController = new WebBrokerServiceController(
+        new WebBrokerServiceModel(c.manageBrokerServicesUseCase),
         new WebBrokerServiceView());
-    c.webQueueController = new WebQueueController(    new WebQueueModel(c.manageQueuesUseCase),
+    c.webQueueController = new WebQueueController(new WebQueueModel(c.manageQueuesUseCase),
         new WebQueueView());
-    c.webTopicController = new WebTopicController(    new WebTopicModel(c.manageTopicsUseCase),
+    c.webTopicController = new WebTopicController(new WebTopicModel(c.manageTopicsUseCase),
         new WebTopicView());
-    c.webSubscriptionController = new WebSubscriptionController(    new WebSubscriptionModel(c.manageSubscriptionsUseCase),
+    c.webSubscriptionController = new WebSubscriptionController(
+        new WebSubscriptionModel(c.manageSubscriptionsUseCase),
         new WebSubscriptionView());
-    c.webEventMessageController = new WebEventMessageController(    new WebEventMessageModel(c.manageEventMessagesUseCase),
+    c.webEventMessageController = new WebEventMessageController(
+        new WebEventMessageModel(c.manageEventMessagesUseCase),
         new WebEventMessageView());
-    c.webEventSchemaController = new WebEventSchemaController(    new WebEventSchemaModel(c.manageEventSchemasUseCase),
+    c.webEventSchemaController = new WebEventSchemaController(
+        new WebEventSchemaModel(c.manageEventSchemasUseCase),
         new WebEventSchemaView());
-    c.webEventApplicationController = new WebEventApplicationController(    new WebEventApplicationModel(c.manageEventApplicationsUseCase),
+    c.webEventApplicationController = new WebEventApplicationController(
+        new WebEventApplicationModel(c.manageEventApplicationsUseCase),
         new WebEventApplicationView());
-    c.webMeshBridgeController = new WebMeshBridgeController(    new WebMeshBridgeModel(c.manageMeshBridgesUseCase),
+    c.webMeshBridgeController = new WebMeshBridgeController(
+        new WebMeshBridgeModel(c.manageMeshBridgesUseCase),
         new WebMeshBridgeView());
     c.healthController = new HealthController();
 

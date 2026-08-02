@@ -12,10 +12,10 @@ mixin(ShowModule!());
 
 class ManageMlExperimentsUseCase {
 private:
-  MlExperimentRepository _repo;
+  IMlExperimentRepository _repo;
 
 public:
-  this(MlExperimentRepository repo) { _repo = repo; }
+  this(IMlExperimentRepository repo) { _repo = repo; }
 
   UseCaseResult!MlExperiment create(CreateMlExperimentRequest r) {
     auto e = MlExperiment();

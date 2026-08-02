@@ -17,7 +17,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class FileBrokerServiceRepository : MemoryBrokerServiceRepository {
+class FileBrokerServiceRepository : BrokerServiceRepository {
     private string basePath;
     private bool[TenantId] loadedTenants;
 

@@ -13,7 +13,7 @@ import uim.platform.ai_core;
 mixin(ShowModule!());
 
 @safe:
-class ResourceGroupRepository : TenantRepository!(ResourceGroup, ResourceGroupId), ResourceGroupRepository {
+class ResourceGroupRepository : TenantRepository!(ResourceGroup, ResourceGroupId), IResourceGroupRepository {
 
   size_t countByStatus(TenantId tenantId, string status) {
     return findByStatus(tenantId, status).length;

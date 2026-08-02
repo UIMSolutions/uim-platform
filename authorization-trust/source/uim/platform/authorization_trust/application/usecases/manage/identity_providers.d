@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageIdentityProvidersUseCase {
-  private IdentityProviderRepository repo;
+  private IIdentityProviderRepository repo;
 
-  this(IdentityProviderRepository repo) {
+  this(IIdentityProviderRepository repo) {
     this.repo = repo;
   }
 

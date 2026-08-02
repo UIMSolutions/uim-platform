@@ -12,9 +12,9 @@ mixin(ShowModule!());
 
 /// Application use case: query / manage compilation jobs.
 class ManageJobsUseCase {
-    private CompilationJobRepository repo;
+    private ICompilationJobRepository repo;
 
-    this(CompilationJobRepository repo) {
+    this(ICompilationJobRepository repo) {
         this.repo = repo;
     }
 

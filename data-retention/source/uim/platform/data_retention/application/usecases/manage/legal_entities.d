@@ -6,9 +6,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageLegalEntitiesUseCase { // TODO: UIMUseCase {
-    private LegalEntityRepository repo;
+    private ILegalEntityRepository repo;
 
-    this(LegalEntityRepository repo) {
+    this(ILegalEntityRepository repo) {
         this.repo = repo;
     }
 

@@ -17,6 +17,7 @@ mixin(ShowModule!());
 
 @safe:
 
+/*
 class FileQueueRepository : MemoryQueueRepository {
     private string basePath;
     private bool[TenantId] loadedTenants;
@@ -109,3 +110,4 @@ class FileQueueRepository : MemoryQueueRepository {
         persistTenant(tenantId);
     }
 }
+*/

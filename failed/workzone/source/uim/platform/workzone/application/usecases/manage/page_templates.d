@@ -11,9 +11,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManagePageTemplatesUseCase { // TODO: UIMUseCase {
-  private PageTemplateRepository repo;
+  private IPageTemplateRepository repo;
 
-  this(PageTemplateRepository repo) {
+  this(IPageTemplateRepository repo) {
     this.repo = repo;
   }
 

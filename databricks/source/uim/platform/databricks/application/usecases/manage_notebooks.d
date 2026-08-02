@@ -12,7 +12,7 @@ mixin(ShowModule!());
 
 class ManageNotebooksUseCase {
 private:
-  NotebookRepository _repo;
+  INotebookRepository _repo;
 
 public:
   this(NotebookRepository repo) { _repo = repo; }

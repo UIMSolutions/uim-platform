@@ -13,7 +13,7 @@ import uim.platform.abap_environment;
 // mixin(ShowModule!());
 @safe:
 
-class TransportRequestRepository : TenantRepository!(TransportRequest, TransportRequestId), TransportRequestRepository {
+class TransportRequestRepository : TenantRepository!(TransportRequest, TransportRequestId), ITransportRequestRepository {
 
   // #region BySystem
   size_t countBySystem(TenantId tenantId, SystemInstanceId systemId) {
