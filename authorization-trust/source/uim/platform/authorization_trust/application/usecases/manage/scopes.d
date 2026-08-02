@@ -12,9 +12,9 @@ mixin(ShowModule!());
 @safe:
 
 class ManageScopesUseCase {
-  private ScopeRepository repo;
+  private IScopeRepository repo;
 
-  this(ScopeRepository repo) {
+  this(IScopeRepository repo) {
     this.repo = repo;
   }
 

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ApplicationRepository : TenantRepository!(Application, ApplicationId), ApplicationRepository {
+class ApplicationRepository : TenantRepository!(Application, ApplicationId), IApplicationRepository {
 
     size_t countByOwner(TenantId tenantId, string owner) {
         return findByOwner(tenantId, owner).length;

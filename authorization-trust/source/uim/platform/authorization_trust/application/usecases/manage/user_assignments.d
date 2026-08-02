@@ -12,10 +12,10 @@ mixin(ShowModule!());
 @safe:
 
 class ManageUserAssignmentsUseCase {
-  private UserAssignmentRepository repo;
-  private RoleCollectionRepository roleCollectionRepo;
+  private IUserAssignmentRepository repo;
+  private IRoleCollectionRepository roleCollectionRepo;
 
-  this(UserAssignmentRepository repo, RoleCollectionRepository roleCollectionRepo) {
+  this(IUserAssignmentRepository repo, IRoleCollectionRepository roleCollectionRepo) {
     this.repo = repo;
     this.roleCollectionRepo = roleCollectionRepo;
   }

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class AppBuildRepository : TenantRepository!(AppBuild, AppBuildId), AppBuildRepository {
+class AppBuildRepository : TenantRepository!(AppBuild, AppBuildId), IAppBuildRepository {
 
   size_t countByApplication(TenantId tenantId, ApplicationId applicationId) {
     return findByApplication(tenantId, applicationId).length;

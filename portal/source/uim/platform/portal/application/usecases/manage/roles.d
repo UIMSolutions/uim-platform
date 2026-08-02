@@ -20,9 +20,9 @@ mixin(ShowModule!());
 
 @safe:
 class ManageRolesUseCase { // TODO: UIMUseCase {
-  private RoleRepository roleRepo;
+  private IRoleRepository roleRepo;
 
-  this(RoleRepository roleRepo) {
+  this(IRoleRepository roleRepo) {
     this.roleRepo = roleRepo;
   }
 

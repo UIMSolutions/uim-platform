@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ProjectMemberRepository : TenantRepository!(ProjectMember, ProjectMemberId), ProjectMemberRepository {
+class ProjectMemberRepository : TenantRepository!(ProjectMember, ProjectMemberId), IProjectMemberRepository {
 
     size_t countByApplication(TenantId tenantId, ApplicationId applicationId) {
         return findByApplication(tenantId, applicationId).length;

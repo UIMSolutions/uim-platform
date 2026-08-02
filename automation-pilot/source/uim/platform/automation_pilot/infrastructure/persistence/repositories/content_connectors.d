@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ContentConnectorRepository : TenantRepository!(ContentConnector, ContentConnectorId), ContentConnectorRepository {
+class ContentConnectorRepository : TenantRepository!(ContentConnector, ContentConnectorId), IContentConnectorRepository {
 
     size_t countByType(TenantId tenantId, ConnectorType connectorType) {
         return findByType(tenantId, connectorType).length;
