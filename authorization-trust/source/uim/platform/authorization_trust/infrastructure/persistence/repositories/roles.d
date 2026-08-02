@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class RoleRepository : TenantRepository!(RoleEntity, RoleId), RoleRepository {
+class RoleRepository : TenantRepository!(RoleEntity, RoleId), IRoleRepository {
 
   bool existsByName(TenantId tenantId, string name, string appId) {
     return findByTenant(tenantId).any!(r => r.name == name && r.appId == appId);

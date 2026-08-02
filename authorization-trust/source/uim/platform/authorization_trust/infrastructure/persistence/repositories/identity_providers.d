@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class IdentityProviderRepository : TenantRepository!(IdentityProvider, IdentityProviderId), IdentityProviderRepository {
+class IdentityProviderRepository : TenantRepository!(IdentityProvider, IdentityProviderId), IIdentityProviderRepository {
 
   bool existsByAlias(TenantId tenantId, string alias_) {
     return findByTenant(tenantId).any!(idp => idp.alias_ == alias_);

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ScopeRepository : TenantRepository!(ScopeEntity, ScopeId), ScopeRepository {
+class ScopeRepository : TenantRepository!(ScopeEntity, ScopeId), IScopeRepository {
 
   bool existsByName(TenantId tenantId, string name) {
     return findByTenant(tenantId).any!(s => s.name == name);

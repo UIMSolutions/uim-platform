@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface IdentityProviderRepository : ITenantRepository!(IdentityProvider, IdentityProviderId) {
+interface IIdentityProviderRepository : ITenantRepository!(IdentityProvider, IdentityProviderId) {
 
   bool existsByAlias(TenantId tenantId, string alias_);
   IdentityProvider findByAlias(TenantId tenantId, string alias_);

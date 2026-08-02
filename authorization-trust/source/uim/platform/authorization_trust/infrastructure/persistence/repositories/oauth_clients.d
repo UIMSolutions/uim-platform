@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class OAuthClientRepository : TenantRepository!(OAuthClient, OAuthClientId), OAuthClientRepository {
+class OAuthClientRepository : TenantRepository!(OAuthClient, OAuthClientId), IOAuthClientRepository {
   
   size_t countByApp(TenantId tenantId, string appId) {
     return filterByApp(findByTenant(tenantId), appId).length;
