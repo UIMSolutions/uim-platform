@@ -1,5 +1,10 @@
 # Custom Domain Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A cloud-native custom domain management service built with **D language** and **vibe.d**, following clean/hexagonal architecture principles. This service provides features similar to the SAP Custom Domain Service, enabling organizations to manage custom domains, TLS/SSL certificates, DNS records, and route mappings for their cloud applications.
 
 ## Features

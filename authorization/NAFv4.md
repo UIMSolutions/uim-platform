@@ -1,5 +1,10 @@
 # NAF v4 - Authorization Management Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 ## Capability View
 
 - Application authorization domain management

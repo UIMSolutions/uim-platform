@@ -1,5 +1,10 @@
 # UIM Platform — Feature Flags Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A SAP BTP Feature Flags-compatible microservice built with **D** and **vibe.d**, following **Hexagonal Architecture** (Ports & Adapters) and **MVC** patterns across HTTP, CLI, Web and GUI presentation layers.
 
 ---

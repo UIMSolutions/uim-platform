@@ -1,5 +1,10 @@
 # Data Privacy Integration Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A D/vibe.d microservice implementing SAP Data Privacy Integration-like functionality for the UIM Platform. Provides comprehensive personal data lifecycle management including data subjects, consent tracking, deletion/blocking/correction requests, retention rules, anonymisation, and GDPR compliance workflows.
 
 ## Architecture

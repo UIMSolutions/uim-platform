@@ -1,5 +1,10 @@
 # ABAP Environment Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A D/vibe.d microservice implementing SAP BTP ABAP Environment-like functionality for the UIM Platform. Provides ABAP system lifecycle management, software component versioning, communication arrangements, and business user/role administration.
 
 ## Architecture

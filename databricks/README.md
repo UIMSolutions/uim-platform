@@ -1,5 +1,10 @@
 # UIM Databricks Platform Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A D-language microservice modelling the features of **SAP Databricks** (SAP Business Data Cloud) built with vibe.d, following **Clean + Hexagonal Architecture** and the **MVC pattern** for all presentation layers.
 
 ## Features

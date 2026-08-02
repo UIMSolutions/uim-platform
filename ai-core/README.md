@@ -1,5 +1,10 @@
 # AI Core Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A D/vibe.d microservice implementing SAP AI Core-like functionality for the UIM Platform. Provides a full ML lifecycle API (AI API v2) covering scenarios, executables, configurations, executions, deployments, artifacts, metrics, and resource group administration.
 
 ## Architecture

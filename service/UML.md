@@ -1,5 +1,10 @@
 # UML — Service Library (uim-platform-service)
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 > The `service` package is a **shared D library** — not an HTTP service.
 > It provides the hexagonal-architecture scaffolding mixins, interfaces,
 > base entities, and use-case helpers that every UIM Platform service depends on.

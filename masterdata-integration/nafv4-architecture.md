@@ -1,5 +1,10 @@
 # NAF v4 Architecture Description — Master Data Integration Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 > NATO Architecture Framework v4 (NAF v4) description for the UIM Platform
 > Master Data Integration Service — master data object distribution, data model
 > governance, replication jobs, filter rules, key mapping, and change audit.

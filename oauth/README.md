@@ -1,5 +1,10 @@
 # OAuth 2.0 Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A microservice providing OAuth 2.0 authorization capabilities similar to **SAP OAuth 2.0 on SAP BTP**. Built with D and vibe.d using a combination of clean and hexagonal architecture. Enables OAuth client registration, authorization code and client credentials grant flows, access and refresh token management, scope-based authorization, token revocation, and corporate branding customization for authorization pages.
 
 ## Features

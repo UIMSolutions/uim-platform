@@ -1,5 +1,10 @@
 # UIM Platform - Authorization Management Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 Authorization Management Service implemented with D and vibe.d using a combination of Clean Architecture and Hexagonal Architecture.
 
 This service mirrors the core concepts and workflows described for SAP Cloud Identity Service Authorization Management Service (AMS):

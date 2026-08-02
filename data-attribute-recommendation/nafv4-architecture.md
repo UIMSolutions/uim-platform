@@ -1,5 +1,10 @@
 # NAF v4 Architecture Description — Data Attribute Recommendation Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 > NATO Architecture Framework v4 (NAF v4) description for the UIM Platform
 > Data Attribute Recommendation Service — ML-based field value prediction,
 > dataset management, model training and deployment, and inference execution.

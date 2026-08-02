@@ -1,5 +1,10 @@
 # UIM Connectivity Platform Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A microservice for managing cloud-to-on-premise connectivity, destination
 routing, Cloud Connector tunnels, service channels, access control rules,
 certificate stores, and connectivity monitoring, inspired by the

@@ -1,5 +1,10 @@
 # Cloud Foundry Runtime Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A D/vibe.d microservice implementing SAP BTP Cloud Foundry Runtime-like functionality for the UIM Platform. Provides organisation, space, application, service, route, buildpack, and domain lifecycle management.
 
 ## Architecture

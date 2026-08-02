@@ -1,5 +1,10 @@
 # NAF v4 Architecture Description — Application Studio Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 > NATO Architecture Framework v4 (NAF v4) description for the UIM Platform
 > Application Studio Service — cloud-based IDE with dev space management,
 > project scaffolding, run/build configurations, and service bindings modelled

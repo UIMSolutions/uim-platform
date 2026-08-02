@@ -1,5 +1,10 @@
 # NAFv4 Architecture Description — UIM RFC Interface Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 ## 1. Architecture Overview
 
 This document describes the UIM RFC Interface Service in terms of the **NATO Architecture Framework version 4 (NAFv4)** viewpoints. The service acts as a platform-managed RFC gateway, exposing all SAP RFC variant protocols (sRFC, aRFC, tRFC, qRFC, bgRFC, LDQ) via a RESTful HTTP API and an interactive CLI.

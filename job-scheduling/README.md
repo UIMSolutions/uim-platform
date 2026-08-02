@@ -1,5 +1,10 @@
 # Job Scheduling Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 SAP BTP-style Job Scheduling Service built with D, vibe-d, and uim-framework.
 
 Define and manage one-time and recurring jobs using flexible schedules. This service provides similar features to the SAP Job Scheduling Service for SAP BTP.

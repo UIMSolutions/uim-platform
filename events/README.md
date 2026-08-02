@@ -1,5 +1,10 @@
 # SAP Event Mesh Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A microservice modelling the **SAP Event Mesh** (formerly SAP Enterprise Messaging) capabilities on SAP BTP, built with [D](https://dlang.org/) and [vibe.d](https://vibed.org/) following **Hexagonal (Ports & Adapters)** and **Clean Architecture** principles.
 
 ---

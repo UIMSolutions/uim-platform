@@ -1,5 +1,10 @@
 # Customer Identity Service — NAFv4 Architecture Views
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 ## NOV-1: High-Level Operational Concept
 
 The Customer Identity Service (CIAM B2C) provides identity lifecycle management for Business-to-Consumer scenarios within the UIM Platform. It manages customer registration, authentication, social login federation, consent, audit, and policy enforcement.

@@ -1,5 +1,10 @@
 # NAFv4 Architecture — Responsibility Management Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 ## NV-1: Overview
 
 The **Responsibility Management Service** is a tenant-scoped microservice that provides RACI-based agent determination for business processes. It is deployed as a containerised workload within the UIM Platform, co-located with other BTP-analogous platform services.

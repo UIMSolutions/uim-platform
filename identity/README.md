@@ -1,5 +1,10 @@
 # UIM Identity Platform Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 SAP Cloud Identity Services equivalent built with D (dlang), vibe.d, and hexagonal/clean architecture. Covers the four core components of SAP Cloud Identity Services:
 
 - **Identity Authentication Service (IAS)** — user lifecycle, group management, application registration, identity provider federation

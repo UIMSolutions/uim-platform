@@ -1,5 +1,10 @@
 # NAF v4 Architecture Description — Identity Provisioning Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 > NATO Architecture Framework v4 (NAF v4) description for the UIM Platform
 > Identity Provisioning Service — identity synchronisation, source/target system
 > configuration, transformation scripting, and provisioning job management.

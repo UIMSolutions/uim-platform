@@ -1,5 +1,10 @@
 # Task Center Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A unified task inbox microservice inspired by **SAP Task Center**, built with **D (dlang)** and **vibe.d** using clean and hexagonal architecture principles. It federates tasks from multiple provider applications into a single entry point, enabling users to access, process, and manage all their business-critical tasks from one place.
 
 ## Features

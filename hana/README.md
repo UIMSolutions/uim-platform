@@ -1,5 +1,10 @@
 # HANA Cloud Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A SAP BTP-style HANA Cloud management service built with D, vibe-d, and uim-framework using hexagonal (clean) architecture.
 
 ## Features

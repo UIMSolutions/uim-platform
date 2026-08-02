@@ -1,5 +1,10 @@
 # NAF v4 Architecture Description — Service Library (uim-platform-service)
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 > NATO Architecture Framework v4 (NAF v4) description for the UIM Platform
 > Service Library — the shared hexagonal-architecture scaffolding, interfaces,
 > mixins, and base entities used by every UIM Platform HTTP service.

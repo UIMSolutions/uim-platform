@@ -1,5 +1,10 @@
 # Usage Data Management Service for UIM Platform
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A **D language / vibe.d** microservice modelling the capabilities of the **SAP Usage Data Management Service for SAP BTP**. It collects raw usage records, aggregates them into monthly and daily reports, tracks cost distribution across subaccounts, and maintains a service metric catalog — all behind a RESTful API.
 
 ## Features

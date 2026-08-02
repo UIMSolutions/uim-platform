@@ -1,5 +1,10 @@
 # UML — PostgreSQL on SAP BTP, Hyperscaler Option
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 ## Domain Model (Class Diagram)
 
 ```plantuml

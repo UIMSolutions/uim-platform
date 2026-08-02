@@ -1,5 +1,10 @@
 # NAFv4 Architecture Description — Redis on SAP BTP, Hyperscaler Option
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 **NATO Architecture Framework v4 (NAFv4)** views for the UIM Platform Redis service.
 
 ---

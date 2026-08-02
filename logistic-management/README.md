@@ -1,5 +1,10 @@
 # SAP Logistics Management — UIM Platform Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A cloud-native microservice that mirrors SAP Logistics Management (SAP BTP) capabilities, built with **D** (dlang), **vibe.d**, and **hexagonal (Ports & Adapters) + Clean Architecture**.
 
 ---

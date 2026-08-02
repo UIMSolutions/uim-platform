@@ -11,7 +11,7 @@ mixin(ShowModule!());
 @safe:
 
 /// In-memory implementation of CompilationJobRepository (driven adapter).
-class CompilationJobRepository : TenantRepository!(CompilationJob, CompilationJobId), CompilationJobRepository {
+class CompilationJobRepository : TenantRepository!(CompilationJob, CompilationJobId), ICompilationJobRepository {
     
     size_t countByProgram(TenantId tenantId, AbapProgramId pid) {
         return findByProgram(tenantId, pid).length;

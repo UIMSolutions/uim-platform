@@ -1,5 +1,10 @@
 # UIM ABAP Compiler Platform Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A microservice implementing an **SAP ABAP 7.51 compiler pipeline** — lexer,
 parser, semantic analyser, and IR code generator. Built with **D** and
 **vibe.d**, following **Clean Architecture** and **Hexagonal Architecture**

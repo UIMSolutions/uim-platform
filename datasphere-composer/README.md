@@ -1,5 +1,10 @@
 # Datasphere Data Composer — UIM Platform Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A D-language microservice implementing the **SAP BDC Datasphere Data Composer** feature set, built with [vibe.d](https://vibed.org) and structured around **Hexagonal (Ports & Adapters)** and **Clean Architecture** principles.
 
 ---

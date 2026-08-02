@@ -1,5 +1,10 @@
 # HTML5 Application Repository Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A central repository service for HTML5 application static content, inspired by SAP HTML5 Application Repository Service for SAP BTP. Built with D language (dlang), vibe.d HTTP framework, and clean/hexagonal architecture.
 
 ## Features

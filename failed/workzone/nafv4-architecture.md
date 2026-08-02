@@ -1,5 +1,10 @@
 # NAF v4 Architecture Description — Workzone Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 > NATO Architecture Framework v4 (NAF v4) description for the UIM Platform
 > Workzone Service — digital workplace portal combining site management, content
 > publishing, UI card catalogue, app registration, knowledge base, tasks, and

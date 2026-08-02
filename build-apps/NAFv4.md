@@ -1,5 +1,10 @@
 # NAF v4 Architecture Description — Build Apps Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 > NATO Architecture Framework v4 (NAF v4) description for the UIM Platform
 > Build Apps Service — low-code application builder with UI components,
 > logic flows, data connections, and build pipeline management modelled on

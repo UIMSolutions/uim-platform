@@ -1,5 +1,10 @@
 # NAF v4 Architecture Description — Application Autoscaler Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 > NATO Architecture Framework v4 (NAF v4) description for the UIM Platform
 > Application Autoscaler Service — policy-driven automatic scaling of Cloud Foundry
 > applications based on metrics, schedules, and custom thresholds.

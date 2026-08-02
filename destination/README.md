@@ -1,5 +1,10 @@
 # Destination Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A D/vibe.d microservice implementing SAP BTP Destination Service-like functionality for the UIM Platform. Provides centralised management of connectivity destinations, certificates, and destination fragments for outbound HTTP/RFC connections.
 
 ## Architecture

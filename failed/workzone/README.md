@@ -1,5 +1,10 @@
 # Work Zone Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A D/vibe.d microservice implementing SAP Work Zone-like functionality for the UIM Platform. Provides collaborative digital workplace capabilities including workspaces, work pages, integration cards, content management, feeds, notifications, tasks, channels, app registrations, and widgets.
 
 ## Architecture

@@ -1,5 +1,10 @@
 # NAFv4 Architecture — SAP Continuous Integration and Delivery Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 ## NOV-1: High-Level Operational Concept
 
 The SAP Continuous Integration and Delivery (CI/CD) platform service enables automated build, test, and deployment workflows for SAP BTP applications. It supports all major SAP BTP pipeline types (CAP, Fiori, ABAP Fiori, Kyma Native, Integration Suite, Cloud Foundry, Container Registry) and integrates with popular source control systems.

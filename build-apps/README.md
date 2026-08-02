@@ -1,5 +1,10 @@
 # Build Apps Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A microservice providing no-code application development capabilities similar to **SAP Build Apps**. Built with D and vibe.d using a combination of clean and hexagonal architecture. Enables visual drag-and-drop UI building, cloud-based data persistence and backend logic, integration with SAP and external systems, and multi-target app builds for web and native mobile platforms.
 
 ## Features

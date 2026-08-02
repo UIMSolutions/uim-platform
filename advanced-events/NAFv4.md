@@ -1,5 +1,10 @@
 # NAF v4 Architecture Description — Advanced Event Mesh Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 > NATO Architecture Framework v4 (NAF v4) description for the UIM Platform
 > Advanced Event Mesh Service — multi-protocol event brokering, topic/queue
 > management, event schema governance, subscription routing, and cross-broker

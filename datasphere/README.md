@@ -1,5 +1,10 @@
 # SAP Datasphere Service for UIM Platform
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A BTP-style Datasphere service built with D language using vibe.d, following clean and hexagonal architecture principles.
 
 ## Features

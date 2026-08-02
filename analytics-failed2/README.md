@@ -1,5 +1,10 @@
 # Analytics Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 Analytics microservice with D and vibe.d that follows a hybrid of Clean Architecture and Hexagonal Architecture, inspired by capability domains of SAP Analytics Cloud in SAP Business Data Cloud.
 
 The implementation intentionally focuses on feature categories (data preparation, modeling, visualization assets, sharing lifecycle, API access) and does not replicate SAP proprietary implementations.

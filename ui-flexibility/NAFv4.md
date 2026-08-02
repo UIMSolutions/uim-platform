@@ -1,5 +1,10 @@
 # UIM UI Flexibility Platform Service — NAFv4 Architecture
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 ## NOv-2 Operational Node Connectivity Description
 
 ```

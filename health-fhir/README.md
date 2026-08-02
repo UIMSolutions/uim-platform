@@ -1,5 +1,10 @@
 # UIM Health FHIR Platform Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 HL7 FHIR R4 platform service for SAP BTP, implemented in D (dlang) using vibe.d.
 
 ## Overview

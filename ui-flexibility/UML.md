@@ -1,5 +1,10 @@
 # UIM UI Flexibility Platform Service — UML Documentation
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 ## 1. Hexagonal Architecture Overview
 
 ```

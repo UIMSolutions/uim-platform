@@ -1,5 +1,10 @@
 # PostgreSQL on SAP BTP, Hyperscaler Option — UIM Platform Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A managed **PostgreSQL** database service for SAP BTP, Hyperscaler Option, built with [D language](https://dlang.org/) and [vibe.d](https://vibed.org/), implementing **Hexagonal Architecture** (Ports & Adapters) combined with **Clean Architecture** layering.
 
 ## Overview

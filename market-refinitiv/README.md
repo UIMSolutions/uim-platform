@@ -1,5 +1,10 @@
 # UIM Platform - Market Rates Management (Refinitiv Data Option)
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A D/vibe.d microservice inspired by SAP BTP Market Rates Management with focus on the Refinitiv data option. The service is implemented with clean architecture + hexagonal architecture and includes MVC adapters for HTTP, CLI, Web, and GUI.
 
 ## Features

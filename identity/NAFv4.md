@@ -1,5 +1,10 @@
 # NAFv4 Architecture — UIM Identity Platform Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 Aligned with NATO Architecture Framework v4 (NAFv4) viewpoints.
 
 ---

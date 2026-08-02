@@ -1,5 +1,10 @@
 # SAP Build Code Platform Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A D/vibe.d microservice modelling the features of **SAP Build Code** — SAP BTP's AI-powered cloud development environment for building enterprise applications.
 
 ## Overview

@@ -1,5 +1,10 @@
 # NAF v4 Architecture Views — UIM Databricks Platform Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 ## C1 — Capability Taxonomy
 
 | Capability | Sub-Capability | Service Feature |

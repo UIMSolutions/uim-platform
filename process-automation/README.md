@@ -1,5 +1,10 @@
 # Process Automation Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A comprehensive process automation platform built with D (dlang) and vibe.d, following clean/hexagonal architecture. Provides features similar to SAP Build Process Automation including workflow management, task handling, business rules/decisions, forms, RPA automations, triggers, API actions, process visibility dashboards, and an artifact store.
 
 ## Features

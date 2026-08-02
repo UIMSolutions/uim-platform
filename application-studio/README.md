@@ -1,5 +1,10 @@
 # Application Studio Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A microservice providing cloud-based IDE capabilities similar to **SAP Business Application Studio**. Built with D and vibe.d using a combination of clean and hexagonal architecture. Enables managing development spaces, extensions, project templates, service bindings, and build/run configurations for SAP BTP application development.
 
 ## Features

@@ -1,5 +1,10 @@
 # NAFv4 Architecture — SAP Snowflake Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 ## 1. Overview
 
 The **SAP Snowflake** service is a UIM Platform microservice that integrates with Snowflake Data Cloud as part of SAP Business Data Cloud (BDC). It manages Snowflake account provisioning, zero-copy connector enrollment, warehouse/database lifecycle, data product sharing, role management, and tenant user administration.

@@ -1,5 +1,10 @@
 # NAF v4 Architecture Description — Kyma Runtime Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 > NATO Architecture Framework v4 (NAF v4) description for the UIM Platform
 > Kyma Runtime Service — Kubernetes-based extension platform management,
 > serverless functions, service instances and bindings, API rules, and event subscriptions.

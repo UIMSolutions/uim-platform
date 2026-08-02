@@ -1,5 +1,10 @@
 # UIM RFC Interface Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A SAP RFC (Remote Function Call) interface microservice built with **D** and **vibe.d**, following hexagonal (ports & adapters) and clean architecture principles.
 
 ## Overview

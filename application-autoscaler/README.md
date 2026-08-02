@@ -1,5 +1,10 @@
 # Application Autoscaler — UIM Platform Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A **SAP BTP Application Autoscaler**-compatible microservice built with **D (dlang)** and **vibe.d**, following **Hexagonal (Ports & Adapters)** and **Clean Architecture** principles.
 
 ---

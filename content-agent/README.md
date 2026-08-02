@@ -1,5 +1,10 @@
 # Content Agent Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A D/vibe.d microservice implementing SAP Content Agent Service-like functionality for the UIM Platform. Provides content package assembly, provider synchronisation, transport lifecycle management, import/export orchestration, and activity tracking.
 
 ## Architecture

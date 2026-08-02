@@ -1,5 +1,10 @@
 # Data Attribute Recommendation Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A D/vibe.d microservice implementing SAP Data Attribute Recommendation-like functionality for the UIM Platform. Provides ML-driven attribute suggestion with dataset management, model training, deployment, and inference pipelines.
 
 ## Architecture

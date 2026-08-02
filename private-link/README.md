@@ -1,5 +1,10 @@
 # SAP Private Link Service — UIM Platform
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A **D-language** / **vibe.d** microservice that mirrors the features of
 [SAP Private Link Service on BTP](https://help.sap.com/docs/private-link).
 

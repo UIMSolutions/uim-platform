@@ -1,5 +1,10 @@
 # UIM Identity Directory Platform Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A microservice for identity provisioning, group management, custom schema
 extensions, password policies, API client credentials, and audit logging,
 inspired by **SAP Cloud Identity Directory (IDS / SCIM)**. Built with **D** and

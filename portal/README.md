@@ -1,5 +1,10 @@
 # UIM Cloud Portal Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A microservice for enterprise portal site management, inspired by **SAP Fiori
 Launchpad** and **SAP Build Work Zone**. Built with **D** and **vibe.d**,
 following **Clean Architecture** and **Hexagonal Architecture** (Ports &

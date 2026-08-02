@@ -1,5 +1,10 @@
 # NAFv4 - Analytics Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 ## 1. Purpose
 
 Provide an analytics-oriented service with capabilities aligned to key SAP Analytics Cloud feature domains:

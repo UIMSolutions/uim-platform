@@ -1,5 +1,10 @@
 # Cloud Management Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A D/vibe.d microservice implementing SAP BTP Cloud Management Service-like functionality for the UIM Platform. Provides global account hierarchy management, directory and subaccount administration, entitlements, environment provisioning, SaaS subscriptions, service catalogue, resource labels, and platform event streaming.
 
 ## Architecture

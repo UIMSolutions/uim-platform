@@ -1,5 +1,10 @@
 # Personal Data Manager Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A GDPR-compliant personal data management service inspired by **SAP Personal Data Manager**. Built with D (dlang) and vibe.d using clean/hexagonal architecture principles.
 
 ## Overview

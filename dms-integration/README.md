@@ -1,5 +1,10 @@
 # DMS Integration Platform Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 SAP Document Management Service — Integration Option implementation using D/vibe.d with clean hexagonal architecture.
 
 ## Overview

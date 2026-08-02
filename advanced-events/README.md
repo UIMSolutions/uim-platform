@@ -1,5 +1,10 @@
 # Event Mesh Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A microservice providing event mesh capabilities similar to **SAP Integration Suite, Advanced Event Mesh**. Built with D and vibe.d using a combination of clean and hexagonal architecture.
 
 ## Features

@@ -1,5 +1,10 @@
 # NAFv4 Architecture Description — SAP SaaS Provisioning Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 > NATO Architecture Framework version 4 (NAFv4) applied to the SAP BTP SaaS Provisioning service implementation.
 
 ---

@@ -1,5 +1,10 @@
 # Data Retention Manager Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A microservice providing data retention management capabilities similar to **SAP Data Retention Manager**. Built with D and vibe.d using a combination of clean and hexagonal architecture. Enables managing residence and retention rules to block or destroy personal data and related transactional data for applications, irrespective of the data model they use.
 
 ## Features

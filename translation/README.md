@@ -1,5 +1,10 @@
 # Translation Hub Service — UIM Platform
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A BTP-style Translation Hub service built with D language and vibe.d, following clean and hexagonal architecture principles. Modelled after **SAP Translation Hub** on SAP BTP.
 
 ## Features

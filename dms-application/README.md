@@ -1,5 +1,10 @@
 # Document Management Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A D/vibe.d microservice implementing SAP Document Management Service (DMS)-like functionality for the UIM Platform. Provides repository management, folder hierarchies, document storage with versioning, sharing, permissions, and content browsing.
 
 ## Architecture

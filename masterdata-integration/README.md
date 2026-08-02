@@ -1,5 +1,10 @@
 # Master Data Integration Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A D/vibe.d microservice implementing SAP Master Data Integration (MDI)-like functionality for the UIM Platform. Provides master data orchestration across connected business systems with change-log-based delta distribution, key mapping, client management, and replication job scheduling.
 
 ## Architecture

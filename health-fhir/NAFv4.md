@@ -1,5 +1,10 @@
 # NAF v4 Architecture — UIM Health FHIR Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 ## Service Node: UIM Health FHIR Platform Service
 
 | Attribute | Value |

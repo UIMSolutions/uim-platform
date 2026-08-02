@@ -1,5 +1,10 @@
 # NAFv4 Architecture — PostgreSQL on SAP BTP, Hyperscaler Option
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 ## 1. Overview (NAFv4 Architecture View)
 
 This document describes the architecture of the **PostgreSQL on SAP BTP, Hyperscaler Option** UIM Platform service using the **NATO Architecture Framework version 4 (NAFv4)** viewpoints.

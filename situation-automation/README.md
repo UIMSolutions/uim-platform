@@ -1,5 +1,10 @@
 # Situation Automation Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 SAP BTP-style Intelligent Situation Automation service built with D language and vibe.d, following clean/hexagonal architecture.
 
 Automates resolution of business situations using configurable rules and actions, with monitoring dashboards and notification support.

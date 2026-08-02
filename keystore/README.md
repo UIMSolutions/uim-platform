@@ -1,5 +1,10 @@
 # UIM Platform — Keystore Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A SAP BTP Keystore Service-compatible microservice built with **D** (dlang), **vibe.d**, and **Hexagonal / Clean Architecture**. Deployable with Docker, Podman, and Kubernetes.
 
 ---

@@ -1,5 +1,10 @@
 # SAP Integration Suite Platform Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A D/vibe.d microservice implementing SAP Integration Suite-like functionality for the UIM Platform. Covers Cloud Integration (iPaaS), API Management, Advanced Event Mesh (AEM), B2B / Trading Partner Management, and Message Mapping.
 
 ## Architecture

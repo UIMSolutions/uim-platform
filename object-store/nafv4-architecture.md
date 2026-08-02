@@ -1,5 +1,10 @@
 # NAF v4 Architecture Description — Object Store Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 > NATO Architecture Framework v4 (NAF v4) description for the UIM Platform
 > Object Store Service — S3-compatible object storage, bucket management,
 > object versioning, lifecycle policies, access controls, and CORS configuration.

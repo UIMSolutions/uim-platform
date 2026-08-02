@@ -1,5 +1,10 @@
 # Alert Notification Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 > **UIM Platform — Alert Notification Service**
 > A D/vibe.d microservice inspired by [SAP Alert Notification Service for SAP BTP](https://help.sap.com/viewer/product/ALERT_NOTIFICATION/Cloud/en-US).
 

@@ -1,5 +1,10 @@
 # Field Service Management
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A microservice implementing features similar to SAP Field Service Management (SAP FSM) - a comprehensive cloud solution for optimizing field service operations, improving technician utilization, dispatching, service call management, equipment tracking, smartforms, and workforce scheduling.
 
 Built with D (dlang) and vibe.d using a combination of clean and hexagonal architecture patterns.

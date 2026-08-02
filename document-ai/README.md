@@ -1,5 +1,10 @@
 # Document AI Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A Document AI microservice for the UIM Platform that provides intelligent document processing, extraction, and management capabilities — similar to the SAP Document AI Service for SAP BTP.
 
 Built with **D (dlang)** and **vibe.d**, following **Clean/Hexagonal Architecture** principles.

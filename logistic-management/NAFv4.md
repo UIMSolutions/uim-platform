@@ -1,5 +1,10 @@
 # NAF v4 Architecture Views — Logistics Management Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 ## NV-1: Overview (Capability Vision)
 
 The **Logistics Management Service** provides a cloud-native, tenant-aware REST API that mirrors

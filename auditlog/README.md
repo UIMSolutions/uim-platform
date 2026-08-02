@@ -1,5 +1,10 @@
 # UIM AuditLog Platform Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A microservice for recording, querying, and managing audit logs across
 multi-tenant cloud environments, inspired by the
 **SAP BTP Audit Log Service**. Built with **D** and **vibe.d**, following

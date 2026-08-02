@@ -1,5 +1,10 @@
 # NAFv4 Architecture — Usage Data Management Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 ## 1. Architecture Overview (Ar)
 
 The **Usage Data Management Service** is a BTP-aligned microservice responsible for collecting, aggregating, and exposing platform consumption data across global accounts, subaccounts, services, and environments. It mirrors the capabilities of the **SAP Usage Data Management Service for SAP BTP** (reporting-ga-admin plan).

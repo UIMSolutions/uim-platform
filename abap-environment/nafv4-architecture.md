@@ -1,5 +1,10 @@
 # NAF v4 Architecture Description — ABAP Environment Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 > NATO Architecture Framework v4 (NAF v4) description for the UIM Platform
 > ABAP Environment Service — ABAP system lifecycle, software component versioning,
 > communication arrangements, and business user/role administration.

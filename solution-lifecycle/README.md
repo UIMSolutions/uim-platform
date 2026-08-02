@@ -1,5 +1,10 @@
 # Solution Lifecycle Management Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A D-language microservice implementing the core features of the **SAP Solution Lifecycle Management service for SAP BTP**. Built with [vibe.d](https://vibed.org/) using **Clean Architecture** (Hexagonal/Ports-and-Adapters) principles.
 
 ## Overview

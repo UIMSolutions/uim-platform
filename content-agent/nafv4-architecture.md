@@ -1,5 +1,10 @@
 # NAF v4 Architecture Description — Content Agent Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 > NATO Architecture Framework v4 (NAF v4) description for the UIM Platform
 > Content Agent Service — content export/import, transport request management,
 > transport queue orchestration, and content provider integration.

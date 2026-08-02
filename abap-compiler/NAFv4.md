@@ -1,5 +1,10 @@
 # NAFv4 Architecture Description — ABAP Compiler Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 > NATO Architecture Framework version 4 (NAFv4) viewpoints applied to the
 > UIM ABAP Compiler Platform Service.
 

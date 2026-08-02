@@ -1,5 +1,10 @@
 # SAP Master Data Governance, Cloud Edition
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A microservice implementing features similar to [SAP Master Data Governance, cloud edition (MDG CE)](https://help.sap.com/docs/MDG_CE) — a cloud solution for maintaining high-level master data quality, managing core attributes of business partners, and evaluating their quality.
 
 Built with D (dlang) and vibe.d using a combination of clean and hexagonal architecture patterns.

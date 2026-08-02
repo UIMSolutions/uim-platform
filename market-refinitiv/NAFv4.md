@@ -1,5 +1,10 @@
 # NAFv4 Architecture - Market Rates Management (Refinitiv)
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 ## 1. Capability View
 
 - Capability: Market rates lifecycle management for enterprise applications

@@ -1,5 +1,10 @@
 # UIM HANA Spatial Platform Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A microservice for SAP BTP-compatible spatial and geolocation capabilities, modeled on **SAP HANA Spatial Services for SAP BTP**. Built with D Language and vibe.d using hexagonal (ports & adapters) architecture.
 
 ## Overview

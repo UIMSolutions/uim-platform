@@ -1,5 +1,10 @@
 # NAF v4 Architecture Description — OAuth Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 > NATO Architecture Framework v4 (NAF v4) description for the UIM Platform
 > OAuth Service — OAuth 2.0 client management, access and refresh token lifecycle,
 > authorization codes, scope definitions, and branding configuration modelled on

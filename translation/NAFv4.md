@@ -1,5 +1,10 @@
 # NAF v4 Architecture Description — Translation Hub Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 > NATO Architecture Framework v4 (NAF v4) description for the UIM Platform
 > Translation Hub Service — AI-powered software and document translation,
 > custom translation memory management, and async job processing.

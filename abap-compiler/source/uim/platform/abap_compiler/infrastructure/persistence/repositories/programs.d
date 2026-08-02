@@ -11,8 +11,9 @@ mixin(ShowModule!());
 @safe:
 
 /// In-memory implementation of AbapProgramRepository (driven adapter).
-class AbapProgramRepository : TenantRepository!(AbapProgram, AbapProgramId), AbapProgramRepository {
+class AbapProgramRepository : TenantRepository!(AbapProgram, AbapProgramId), IAbapProgramRepository {
 
+    // #region ByProgramType
     size_t countByProgramType(TenantId tenantId, ProgramType programType) {
         return findByProgramType(tenantId, programType).length;
     }
@@ -28,7 +29,9 @@ class AbapProgramRepository : TenantRepository!(AbapProgram, AbapProgramId), Aba
     void removeByProgramType(TenantId tenantId, ProgramType programType) {
         findByProgramType(tenantId, programType).each!(p => remove(p));
     }
+    // #endregion ByProgramType
 
+    // #region ByLanguage
     size_t countByLanguage(TenantId tenantId, string language) {
         return findByLanguage(tenantId, language).length;
     }
@@ -44,6 +47,9 @@ class AbapProgramRepository : TenantRepository!(AbapProgram, AbapProgramId), Aba
     void removeByLanguage(TenantId tenantId, string language) {
         findByLanguage(tenantId, language).each!(p => remove(p));
     }
+    
+    // #endregion ByLanguage
+
 }
 
 ///

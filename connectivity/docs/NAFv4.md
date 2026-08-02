@@ -1,5 +1,10 @@
 # Connectivity Service – NAF v4 Architecture Description
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 This document describes the **UIM Connectivity Platform Service**
 using the **NATO Architecture Framework v4 (NAF v4)** viewpoints, adapted for
 a microservice based on SAP BTP Connectivity Service concepts.

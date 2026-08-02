@@ -1,5 +1,10 @@
 # NAF v4 Architecture Description — DMS Integration Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 > NATO Architecture Framework v4 (NAF v4) description for the UIM Platform
 > DMS Integration Service — document management integration with repository
 > federation, folder management, and permission control modelled on

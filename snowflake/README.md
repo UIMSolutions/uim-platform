@@ -1,5 +1,10 @@
 # SAP Snowflake — UIM Platform Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A vibe.d / D-language microservice that implements features similar to **SAP Snowflake** in SAP Business Data Cloud (BDC). It follows a combination of **Hexagonal Architecture** (ports & adapters) and **Clean Architecture** (layered dependency rule), with **MVC stubs** for CLI, Web, and GUI presentation layers.
 
 ---

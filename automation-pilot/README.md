@@ -1,5 +1,10 @@
 # Automation Pilot Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A microservice providing DevOps automation capabilities similar to **SAP Automation Pilot**. Built with D and vibe.d using a combination of clean and hexagonal architecture. Enables designing and running automation flows for routine operations, scheduled tasks, and event-driven workflows.
 
 ## Features

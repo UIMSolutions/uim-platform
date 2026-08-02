@@ -1,5 +1,10 @@
 # Monitoring Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A D/vibe.d microservice implementing cloud platform monitoring functionality for the UIM Platform. Provides resource monitoring, metric ingestion and querying, health checks, alerting rules, alert management, notification channels, and a monitoring dashboard.
 
 ## Architecture

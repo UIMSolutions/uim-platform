@@ -1,5 +1,10 @@
 # UIM Responsibility Management Platform Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 ## Overview
 
 The **Responsibility Management Service** is a microservice within the UIM Platform that provides agent determination capabilities for SAP BTP-inspired scenarios. It allows tenants to define teams, team types, team categories, member functions, responsibility contexts, rules, and definitions — and then resolve the responsible agents for any business object at runtime.

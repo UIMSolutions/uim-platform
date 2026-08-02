@@ -1,5 +1,10 @@
 # AI Launchpad Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A D/vibe.d microservice implementing SAP AI Launchpad-like functionality for the UIM Platform. Provides a unified management interface for AI runtimes, workspaces, ML lifecycle, and Generative AI Hub capabilities.
 
 ## Architecture

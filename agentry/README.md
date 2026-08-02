@@ -1,5 +1,10 @@
 # Agentry Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A microservice providing metadata-driven mobile application platform capabilities similar to **SAP BTP Agentry**. Built with D and vibe.d using a combination of clean and hexagonal architecture.
 
 ## Overview

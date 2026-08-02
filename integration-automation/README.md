@@ -1,5 +1,10 @@
 # UIM Integration Automation Platform Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A microservice for guided integration workflow automation, system landscape
 management, and destination connectivity, inspired by **SAP Cloud Integration
 Automation Service (CIAS)**. Built with **D** and **vibe.d**, following

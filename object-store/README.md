@@ -1,5 +1,10 @@
 # Object Store Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A D/vibe.d microservice implementing SAP Object Store Service-like functionality for the UIM Platform. Provides S3-compatible object storage with bucket management, object versioning, access policies, lifecycle rules, CORS configuration, and service binding administration.
 
 ## Architecture

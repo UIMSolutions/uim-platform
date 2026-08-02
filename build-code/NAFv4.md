@@ -1,5 +1,10 @@
 # NAFv4 Architecture — SAP Build Code Platform Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 ## 1. Architecture Overview (Ar)
 
 ### 1.1 Strategic Context

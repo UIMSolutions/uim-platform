@@ -1,5 +1,10 @@
 # Redis on SAP BTP, Hyperscaler Option — UIM Platform Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A D/vibe.d microservice implementing the **Redis on SAP BTP, Hyperscaler Option** feature set, following **clean + hexagonal architecture** with a full MVC presentation stack and multi-backend persistence.
 
 ---

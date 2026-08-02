@@ -1,5 +1,10 @@
 # SAP Continuous Integration and Delivery — Platform Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 Microservice implementation of [SAP Continuous Integration and Delivery](https://help.sap.com/docs/continuous-integration-and-delivery) for the UIM Platform. Built with D + vibe.d using clean/hexagonal architecture.
 
 ## Features

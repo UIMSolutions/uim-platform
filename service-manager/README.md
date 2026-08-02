@@ -1,5 +1,10 @@
 # SAP Service Manager - Platform Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A microservice implementing SAP Service Manager capabilities using D (dlang) and vibe.d, following clean and hexagonal architecture principles.
 
 SAP Service Manager is the central registry for service brokers and platforms in SAP BTP. It enables consuming platform services in connected runtime environments, tracking service instance creation, and sharing services between environments.

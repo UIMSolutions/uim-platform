@@ -1,5 +1,10 @@
 # Transport Platform Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A microservice implementing **SAP Cloud Transport Management**-like capabilities for the UIM Platform.  
 Built with [D](https://dlang.org/) + [vibe.d](https://vibed.org/) following **Clean + Hexagonal Architecture**.
 

@@ -1,5 +1,10 @@
 # Market Rates Management – Bring Your Own Rates (BYOR)
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A **D / vibe.d** microservice that replicates the core capabilities of
 **SAP Market Rates Management, Bring Your Own Rates data option** on SAP BTP.
 

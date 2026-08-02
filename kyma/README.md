@@ -1,5 +1,10 @@
 # Kyma Runtime Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A D/vibe.d microservice implementing SAP BTP Kyma Runtime-like functionality for the UIM Platform. Provides Kubernetes-native serverless functions, API exposure rules, service catalogue integration, event-driven subscriptions, module management, and application connectivity.
 
 ## Architecture

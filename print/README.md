@@ -1,5 +1,10 @@
 # UIM Print Platform Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A cloud-native print queue management service for the UIM Platform, modeled on the SAP BTP Print Service. Built with [D language](https://dlang.org/) and [vibe.d](https://vibed.org/) using Hexagonal/Clean Architecture.
 
 ---

@@ -1,5 +1,10 @@
 # UIM UI Flexibility Platform Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A SAP BTP-compatible **UI Flexibility** service built with **D language** and **vibe.d**, following a strict **Hexagonal + Clean Architecture**. It manages SAPUI5 flexibility artefacts — change records, variants, versions, drafts, and end-user personalizations — across multiple tenants, with pluggable storage backends (memory, files, MongoDB).
 
 ---

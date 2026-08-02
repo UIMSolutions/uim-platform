@@ -1,5 +1,10 @@
 # NAFv4 Architecture Description — SAP Cloud Application Event Hub Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 ## 1. Architecture Overview (Ar3 — Architecture Overview)
 
 This service is a microservice adapter for **SAP Cloud Application Event Hub** capabilities within the UIM Platform. It enables event-driven integration by distributing business events between SAP cloud applications in a customer's BTP landscape. The service follows **Clean Architecture** combined with **Hexagonal Architecture** (Ports & Adapters pattern) implemented in D/vibe.d.

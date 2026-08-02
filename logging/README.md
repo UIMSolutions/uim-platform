@@ -1,5 +1,10 @@
 # Cloud Logging Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A cloud logging service for the UIM Platform, inspired by the SAP Cloud Logging Service for SAP BTP. Built with D language (dlang), vibe.d HTTP framework, and clean/hexagonal architecture.
 
 ## Features

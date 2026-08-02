@@ -1,5 +1,10 @@
 # Identity Provisioning Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A D/vibe.d microservice implementing SAP Cloud Identity Services — Provisioning (IPS)-like functionality for the UIM Platform. Provides source/target/proxy system configuration, provisioning job execution, transformation rules, provisioned entity tracking, and audit logging.
 
 ## Architecture

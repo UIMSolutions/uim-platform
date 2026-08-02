@@ -1,5 +1,10 @@
 # NAFv4 Architecture — UIM HANA Spatial Platform Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 NATO Architecture Framework version 4 (NAFv4) documentation for the UIM HANA Spatial Platform Service.
 
 ---

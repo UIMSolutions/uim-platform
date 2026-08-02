@@ -1,5 +1,10 @@
 # Identity Authentication Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A D/vibe.d microservice implementing SAP Cloud Identity Services — Authentication (IAS)-like functionality for the UIM Platform. Provides authentication flows, user and group management, application registration, tenant configuration, and policy enforcement.
 
 ## Architecture

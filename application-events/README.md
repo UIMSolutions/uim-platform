@@ -1,5 +1,10 @@
 # SAP Cloud Application Event Hub — UIM Platform Adapter
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 A D/vibe.d microservice that mirrors the capabilities of **SAP Cloud Application Event Hub** on SAP BTP, following **Clean Architecture** combined with **Hexagonal Architecture** (Ports & Adapters).
 
 ## Overview

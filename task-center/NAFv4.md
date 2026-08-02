@@ -1,5 +1,10 @@
 # NAF v4 Architecture Description — Task Center Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 > NATO Architecture Framework v4 (NAF v4) description for the UIM Platform
 > Task Center Service — unified inbox for human tasks aggregated from SAP and
 > third-party providers, including task definitions, actions, comments,

@@ -1,5 +1,10 @@
 # Customer Identity Service
 
+
+## Documentation update
+
+This document is maintained alongside the implementation, deployment manifests, and tests for the same package so the service documentation stays aligned with the codebase.
+
 SAP Customer Identity and Access Management (CIAM) for B2C — microservice platform implementation.
 
 This service provides a complete customer identity lifecycle management solution based on SAP Customer Data Cloud capabilities, including registration, authentication, social login, federation, consent management, audit logging, screen sets, and site policies.
