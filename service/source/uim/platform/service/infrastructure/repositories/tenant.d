@@ -157,39 +157,38 @@ class TestRepository : TenantRepository!(TestEntity, TestEntityId) {
 }
 
 unittest {
-  writeln("Running TenantRepository tests...");
+  mixin(ShowTest!("Running TenantRepository tests..."));
   auto tenantId = TenantId("tenant1");
   
-  writeln("Creating test entities for tenant: ", tenantId);
-  writeln("Creating entity1...");
+  // Creating test entities for tenant: ", tenantId);
+  // writeln("Creating entity1...");
   auto entity1 = TestEntity(tenantId, TestEntityId("1"), UserId("user1"));
   entity1.name = "Entity 1";
 
-  writeln("Creating entity2...");
+  // writeln("Creating entity2...");
   auto entity2 = TestEntity(tenantId, TestEntityId("2"), UserId("user2"));
   entity2.name = "Entity 2";
 
-  writeln("Saving entities...");
+  // writeln("Saving entities...");
   auto repo = new TestRepository();
   repo.save(entity1);
   repo.save(entity2);
 
-  writeln("Count after saving: ", repo.countByTenant(entity1.tenantId));
+  // writeln("Count after saving: ", repo.countByTenant(entity1.tenantId));
   assert(repo.exists(entity1));
   assert(repo.existsById(entity1.tenantId, entity1.id));
   assert(repo.countByTenant(entity1.tenantId) == 2);
 
-  writeln("Removing entity1...");
+  // writeln("Removing entity1...");
   repo.remove(entity1);
   assert(!repo.exists(entity1));
-  writeln("Count after removal: ", repo.countByTenant(entity1.tenantId));
+  // writeln("Count after removal: ", repo.countByTenant(entity1.tenantId));
   assert(repo.countByTenant(entity1.tenantId) == 1);
 
-  writeln("Removing entity2...");
+  // writeln("Removing entity2...");
   repo.remove(entity2);
   assert(!repo.exists(entity2));
-  writeln("Count after removal: ", repo.countByTenant(entity1.tenantId));
+  // writeln("Count after removal: ", repo.countByTenant(entity1.tenantId));
   assert(repo.countByTenant(entity1.tenantId) == 0);
 
-  writeln("All tests passed.");
 }

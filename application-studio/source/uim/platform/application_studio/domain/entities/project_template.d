@@ -15,6 +15,7 @@ struct ProjectTemplate {
     mixin TenantEntity!(ProjectTemplateId);
 
     string name;
+    string title; // TODO: SAP Fiori Launchpad title?
     string description;
     TemplateCategory category = TemplateCategory.general;
     ProjectType targetProjectType = ProjectType.basic;

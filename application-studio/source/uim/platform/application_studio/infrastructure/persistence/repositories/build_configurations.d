@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class BuildConfigurationRepository : TenantRepository!(BuildConfiguration, BuildConfigurationId), BuildConfigurationRepository {
+class BuildConfigurationRepository : TenantRepository!(BuildConfiguration, BuildConfigurationId), IBuildConfigurationRepository {
 
     size_t countByProject(TenantId tenantId, ProjectId projectId) {
         return findByProject(tenantId, projectId).length;

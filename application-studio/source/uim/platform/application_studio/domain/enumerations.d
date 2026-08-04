@@ -243,7 +243,7 @@ unittest {
     assert("inactive".toExtensionStatus == ExtensionStatus.inactive);
     assert("deprecated".toExtensionStatus == ExtensionStatus.deprecated_);
 
-    assert(["active", "inactive", "deprecated"].toExtensionStatus ==
+    assert(["active", "inactive", "deprecated"].toExtensionStatuses ==
            [ExtensionStatus.active, ExtensionStatus.inactive, ExtensionStatus.deprecated_]);
     assert([ExtensionStatus.active, ExtensionStatus.inactive, ExtensionStatus.deprecated_].toStrings ==
            ["active", "inactive", "deprecated"]);
@@ -441,6 +441,7 @@ enum TemplateCategory {
     // The general template category includes templates that do not fall into any specific category.
     general
 }
+
 TemplateCategory toTemplateCategory(string value) {
     mixin(EnumSwitch("TemplateCategory", "general"));
 }

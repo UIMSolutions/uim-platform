@@ -18,6 +18,7 @@ unittest {
     assert(formatTimestamp(0) == "—");
     auto now = Clock.currTime();
     auto ts = now.toUnixTime;
-    writeln("Formatted current time: ", formatTimestamp(ts));
+    
+    // writeln("Formatted current time: ", formatTimestamp(ts));
     assert(formatTimestamp(ts) == format!"%04d-%02d-%02d"(now.year, cast(int) now.month, now.day));
 }   

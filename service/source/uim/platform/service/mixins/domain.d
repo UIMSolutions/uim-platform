@@ -42,8 +42,8 @@ string IdTemplate() {
 
 ///
 unittest {
-  writeln("Testing IdDefinition mixin...");
-  writeln("IdDefinition for 'Test':");
+  mixin(ShowTest!"Testing IdDefinition mixin...");
+  // writeln("IdDefinition for 'Test':");
   struct TestId {
     mixin(IdTemplate);
   }

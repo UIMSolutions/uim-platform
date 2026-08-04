@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ServiceBindingRepository : TenantRepository!(ServiceBinding, ServiceBindingId), ServiceBindingRepository {
+class ServiceBindingRepository : TenantRepository!(ServiceBinding, ServiceBindingId), IServiceBindingRepository {
 
     size_t countByDevSpace(TenantId tenantId, DevSpaceId devSpaceId) {
         return findByDevSpace(tenantId, devSpaceId).length;
